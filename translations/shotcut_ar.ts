@@ -16,12 +16,12 @@
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="52"/>
         <source>File name extension</source>
-        <translation type="unfinished"></translation>
+        <translation>امتداد اسم الملف</translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="59"/>
         <source>for example, mp4</source>
-        <translation type="unfinished"></translation>
+        <translation>للمثال , mp4</translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="84"/>
@@ -34,42 +34,42 @@
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="235"/>
         <source>Reference audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>مرجع للمقطع الصوتي</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="250"/>
         <source>Speed adjustment range</source>
-        <translation type="unfinished"></translation>
+        <translation>نطاق تحديد السرعة</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="253"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>خالي</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="254"/>
         <source>Narrow</source>
-        <translation type="unfinished"></translation>
+        <translation>ضئيل</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="256"/>
         <source>Normal</source>
-        <translation type="unfinished">عادي</translation>
+        <translation>عادي</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="258"/>
         <source>Wide</source>
-        <translation type="unfinished"></translation>
+        <translation>واسع</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="259"/>
         <source>Very wide</source>
-        <translation type="unfinished"></translation>
+        <translation>واسع جدا</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="299"/>
         <source>Process</source>
-        <translation type="unfinished"></translation>
+        <translation>معالجة</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="302"/>
@@ -79,7 +79,7 @@
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="305"/>
         <source>Process + Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>معالجة وتطبيق</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="343"/>
@@ -173,7 +173,7 @@
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="166"/>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>وقت</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="168"/>
