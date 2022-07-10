@@ -2165,9 +2165,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
                 m_playlistDock->setIndex(9);
             }
         }
-        if (m_keyframesDock->isVisible() && (event->modifiers() & Qt::AltModifier)) {
-            emit m_keyframesDock->zoomToFit();
-        }
         break;
     case Qt::Key_X: // Avid Extract
         if (event->modifiers() == Qt::ShiftModifier && m_playlistDock->model()->rowCount() > 0) {
@@ -2181,17 +2178,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
-        }
-        break;
-    case Qt::Key_Minus:
-        if (m_keyframesDock->isVisible() && (event->modifiers() & Qt::AltModifier)) {
-            emit m_keyframesDock->zoomOut();
-        }
-        break;
-    case Qt::Key_Equal:
-    case Qt::Key_Plus:
-        if (m_keyframesDock->isVisible() && (event->modifiers() & Qt::AltModifier)) {
-            emit m_keyframesDock->zoomIn();
         }
         break;
     case Qt::Key_Enter: // Seek to current playlist item
@@ -2223,62 +2209,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         LOG_DEBUG() << "Current focusWidget:" << QApplication::focusWidget();
         LOG_DEBUG() << "Current focusObject:" << QApplication::focusObject();
         LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
-        break;
-    case Qt::Key_BracketLeft:
-        if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
-            if (event->modifiers() == Qt::AltModifier) {
-                emit m_keyframesDock->seekPreviousSimple();
-            } else {
-                int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
-                if (filterController()->currentFilter()->allowTrim()) {
-                    m_keyframesDock->model().trimFilterIn(i);
-                }
-            }
-        }
-        break;
-    case Qt::Key_BracketRight:
-        if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
-            if (event->modifiers() == Qt::AltModifier) {
-                emit m_keyframesDock->seekNextSimple();
-            } else {
-                int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
-                if (filterController()->currentFilter()->allowTrim()) {
-                    m_keyframesDock->model().trimFilterOut(i);
-                }
-            }
-        }
-        break;
-    case Qt::Key_BraceLeft:
-        if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
-            int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in() -
-                    filterController()->currentFilter()->in();
-            if (filterController()->currentFilter()->allowAnimateIn()) {
-                filterController()->currentFilter()->setAnimateIn(i);
-            }
-        }
-        break;
-    case Qt::Key_BraceRight:
-        if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
-            int i = filterController()->currentFilter()->out() - (m_filtersDock->qmlProducer()->position() +
-                                                                  m_filtersDock->qmlProducer()->in());
-            if (filterController()->currentFilter()->allowAnimateOut()) {
-                filterController()->currentFilter()->setAnimateOut(i);
-            }
-        }
-        break;
-    case Qt::Key_Semicolon:
-        if (filterController()->currentFilter() && m_filtersDock->qmlProducer()
-                && m_keyframesDock->currentParameter() >= 0) {
-            auto position = m_filtersDock->qmlProducer()->position() -
-                            (filterController()->currentFilter()->in() - m_filtersDock->qmlProducer()->in());
-            auto parameterIndex = m_keyframesDock->currentParameter();
-            if (m_keyframesDock->model().isKeyframe(parameterIndex, position)) {
-                auto keyframeIndex = m_keyframesDock->model().keyframeIndex(parameterIndex, position);
-                m_keyframesDock->model().remove(parameterIndex, keyframeIndex);
-            } else {
-                m_keyframesDock->model().addKeyframe(parameterIndex, position);
-            }
-        }
         break;
     default:
         handled = false;

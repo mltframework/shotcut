@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ Rectangle {
     property bool inRange: position >= (filter.in - producer.in) && position <= (filter.out - producer.in)
 
     signal clicked(var keyframe)
+    signal rightClicked(var keyframe)
 
     SystemPalette { id: activePalette }
 
@@ -72,7 +73,7 @@ Rectangle {
         acceptedButtons: Qt.RightButton
         onClicked: {
             parent.clicked(keyframeRoot)
-            menu.popup()
+            parent.rightClicked(keyframeRoot)
         }
         hoverEnabled: true
         ToolTip {
@@ -144,44 +145,5 @@ Rectangle {
             }
         }
         cursorShape: Qt.PointingHandCursor
-    }
-
-    Menu {
-        id: menu
-        Menu {
-            id: keyframeTypeSubmenu
-            title: qsTr('Keyframe Type')
-            MenuItem {
-                text: qsTr('Hold')
-                checkable: true
-                checked: interpolation === KeyframesModel.DiscreteInterpolation
-                onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.DiscreteInterpolation)
-            }
-            MenuItem {
-                text: qsTr('Linear')
-                checkable: true
-                checked: interpolation === KeyframesModel.LinearInterpolation
-                onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.LinearInterpolation)
-            }
-            MenuItem {
-                text: qsTr('Smooth')
-                checkable: true
-                checked: interpolation === KeyframesModel.SmoothInterpolation
-                enabled: metadata.keyframes.allowSmooth
-                onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.SmoothInterpolation)
-            }
-        }
-        MenuItem {
-            id: removeMenuItem
-            text: qsTr('Remove')
-            onTriggered: {
-                parameters.remove(parameterIndex, index)
-                root.selection = []
-            }
-        }
-        MenuItem {
-            text: qsTr('Cancel')
-            onTriggered: menu.dismiss()
-        }
     }
 }

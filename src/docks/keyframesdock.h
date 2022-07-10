@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Meltytech, LLC
+ * Copyright (c) 2016-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ class QmlMetadata;
 class MetadataModel;
 class AttachedFiltersModel;
 class QmlProducer;
+class QMenu;
 
 class KeyframesDock : public QDockWidget
 {
@@ -50,12 +51,16 @@ public:
 
 signals:
     void changed(); /// Notifies when a filter parameter changes.
+    void setZoom(double value);
     void zoomIn();
     void zoomOut();
     void zoomToFit();
     void resetZoom();
     void seekPreviousSimple();
     void seekNextSimple();
+    void newFilter(); // Notifies when the filter itself has been changed
+    void timeScaleChanged();
+    void dockClicked();
 
 public slots:
     void setCurrentFilter(QmlFilter *filter, QmlMetadata *meta);
@@ -69,13 +74,21 @@ protected:
 
 private slots:
     void onVisibilityChanged(bool visible);
+    void onDockRightClicked();
+    void onKeyframeRightClicked();
+    void onClipRightClicked();
 
 private:
+    void setupActions();
     QQuickWidget m_qview;
-    QmlMetadata m_emptyQmlMetadata;
-    QmlFilter m_emptyQmlFilter;
     KeyframesModel m_model;
+    QmlMetadata *m_metadata;
+    QmlFilter *m_filter;
     QmlProducer *m_qmlProducer;
+    QHash<QString, QAction *> m_actions;
+    QMenu *m_mainMenu;
+    QMenu *m_keyMenu;
+    QMenu *m_clipMenu;
 };
 
 #endif // KEYFRAMESDOCK_H

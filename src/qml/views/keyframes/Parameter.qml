@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ Item {
     property bool isLocked: false
 
     signal clicked(var keyframe, var parameter)
+    signal rightClicked(var keyframe, var parameter)
 
     function setMinMax(zoomHeight) {
         minimum = zoomHeight ? model.lowest : model.minimum
@@ -156,6 +157,7 @@ Item {
             maximum: parameterRoot.maximum
             parameterIndex: parameterRoot.DelegateModel.itemsIndex
             onClicked: parameterRoot.clicked(keyframe, parameterRoot)
+            onRightClicked: parameterRoot.rightClicked(keyframe, parameterRoot)
             onInterpolationChanged: canvas.requestPaint()
             Component.onCompleted: {
                 position = (filter.in - producer.in) + model.frame
