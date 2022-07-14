@@ -1649,6 +1649,8 @@ void MainWindow::hideProducer()
     // This is a hack to release references to the old producer, but it
     // probably leaves a reference to the new color producer somewhere not
     // yet identified (root cause).
+    QCoreApplication::processEvents();
+
     openCut(new Mlt::Producer(MLT.profile(), "color:_hide"));
     QCoreApplication::processEvents();
     openCut(new Mlt::Producer(MLT.profile(), "color:_hide"));
