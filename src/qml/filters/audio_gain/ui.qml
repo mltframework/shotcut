@@ -52,13 +52,11 @@ Item {
     Connections {
         target: filter
         function onChanged() { setControls() }
-        function onInChanged() updateFilter(null) }
-        function onOutChanged() updateFilter(null) }
+        function onInChanged() { updateFilter(null) }
+        function onOutChanged() { updateFilter(null) }
         function onAnimateInChanged() { updateFilter(null) }
         function onAnimateOutChanged() { updateFilter(null) }
-        function onPropertyChanged(name) {
-            setControls()
-        }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
