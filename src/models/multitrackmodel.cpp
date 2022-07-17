@@ -2734,14 +2734,15 @@ void MultitrackModel::removeTrack(int trackIndex)
 {
     if (trackIndex >= 0 && trackIndex < m_trackList.size()) {
         const Track &track = m_trackList.value(trackIndex);
+        QScopedPointer<Mlt::Field> field(m_tractor->field());
         QScopedPointer<Mlt::Transition> transition(getVideoBlendTransition(track.mlt_index));
 
         // Remove transitions.
         if (transition && transition->is_valid())
-            m_tractor->field()->disconnect_service(*transition);
+            field->disconnect_service(*transition);
         transition.reset(getTransition("mix", track.mlt_index));
         if (transition && transition->is_valid())
-            m_tractor->field()->disconnect_service(*transition);
+            field->disconnect_service(*transition);
 
 //        foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
 //        LOG_DEBUG() << trackIndex << "mlt_index" << track.mlt_index;
@@ -3512,6 +3513,8 @@ void MultitrackModel::addBlackTrackIfNeeded()
 
 void MultitrackModel::convertOldDoc()
 {
+    QScopedPointer<Mlt::Field> field(m_tractor->field());
+
     // Convert composite to frei0r.cairoblend.
     int n = m_tractor->count();
     for (int i = 1; i < n; ++i) {
@@ -3519,7 +3522,7 @@ void MultitrackModel::convertOldDoc()
         if (transition) {
             Mlt::Transition composite(MLT.profile(), "frei0r.cairoblend");
             composite.set("disable", transition->get_int("disable"));
-            m_tractor->field()->disconnect_service(*transition);
+            field->disconnect_service(*transition);
             m_tractor->plant_transition(composite, transition->get_int("a_track"), i);
         }
     }
@@ -3530,7 +3533,7 @@ void MultitrackModel::convertOldDoc()
         if (service->type() == mlt_service_filter_type) {
             Mlt::Filter f((mlt_filter) service->get_service());
             if (QString::fromLatin1(f.get("mlt_service")) == "movit.rect") {
-                m_tractor->field()->disconnect_service(f);
+                field->disconnect_service(f);
             }
         }
         service.reset(service->producer());
