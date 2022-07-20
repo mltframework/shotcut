@@ -406,6 +406,17 @@ void MainWindow::setupAndConnectDocks()
     connect(m_playlistDock->model(), &PlaylistModel::inChanged, this, &MainWindow::onPlaylistInChanged);
     connect(m_playlistDock->model(), &PlaylistModel::outChanged, this,
             &MainWindow::onPlaylistOutChanged);
+    QMenu *viewModeMenu = ui->menuPlaylist->addMenu(tr("View mode"));
+    viewModeMenu->addAction(m_playlistDock->findChild<QAction *>("playlistViewDetailsAction"));
+    viewModeMenu->addAction(m_playlistDock->findChild<QAction *>("playlistViewTilesAction"));
+    viewModeMenu->addAction(m_playlistDock->findChild<QAction *>("playlistViewIconsAction"));
+    QMenu *subMenu = ui->menuPlaylist->addMenu(tr("Thumbnails"));
+    subMenu->addAction(m_playlistDock->findChild<QAction *>("playlistThumbnailsHiddenAction"));
+    subMenu->addAction(m_playlistDock->findChild<QAction *>("playlistThumbnailsLeftAndRightAction"));
+    subMenu->addAction(m_playlistDock->findChild<QAction *>("playlistThumbnailsTopAndBottomAction"));
+    subMenu->addAction(m_playlistDock->findChild<QAction *>("playlistThumbnailsInOnlySmallAction"));
+    subMenu->addAction(m_playlistDock->findChild<QAction *>("playlistThumbnailsInOnlyLargeAction"));
+    ui->menuPlaylist->addAction(m_playlistDock->findChild<QAction *>("playlistPlayAfterOpenAction"));
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
@@ -1114,7 +1125,7 @@ void MainWindow::open(Mlt::Producer *producer)
             emit profileChanged();
     }
     m_player->setFocus();
-    m_playlistDock->setUpdateButtonEnabled(false);
+    m_playlistDock->enableUpdate(false);
 
     // Needed on Windows. Upon first file open, window is deactivated, perhaps OpenGL-related.
     activateWindow();
@@ -2006,33 +2017,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         stepLeftBySeconds(seconds * directionMultiplier);
     }
     break;
-    case Qt::Key_A:
-        if (event->modifiers() == Qt::ShiftModifier) {
-            m_playlistDock->show();
-            m_playlistDock->raise();
-            m_playlistDock->on_actionAppendCut_triggered();
-        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
-            m_playlistDock->show();
-            m_playlistDock->raise();
-            m_playlistDock->on_actionSelectAll_triggered();
-        }
-        break;
-    case Qt::Key_C:
-        if (event->modifiers() == Qt::ShiftModifier && m_playlistDock->model()->rowCount() > 0) {
-            m_playlistDock->show();
-            m_playlistDock->raise();
-            m_playlistDock->on_actionCopy_triggered();
-        }
-        break;
-    case Qt::Key_D:
-        if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
-            m_playlistDock->show();
-            m_playlistDock->raise();
-            m_playlistDock->on_actionSelectNone_triggered();
-        } else {
-            handled = false;
-        }
-        break;
     case Qt::Key_F:
         if (event->modifiers() == Qt::NoModifier || event->modifiers() == Qt::ControlModifier) {
             m_filtersDock->show();
@@ -2081,31 +2065,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_T:
         m_player->focusPositionSpinner();
         break;
-    case Qt::Key_V: // Avid Splice In
-        if (event->modifiers() == Qt::ShiftModifier) {
-            m_playlistDock->show();
-            m_playlistDock->raise();
-            m_playlistDock->on_actionInsertCut_triggered();
-        }
-        break;
-    case Qt::Key_B:
-        if (event->modifiers() == Qt::ShiftModifier) {
-            if (m_playlistDock->model()->rowCount() > 0) {
-                // Update playlist item.
-                m_playlistDock->show();
-                m_playlistDock->raise();
-                m_playlistDock->on_actionUpdate_triggered();
-            }
-        }
-        break;
     case Qt::Key_Escape: // Avid Toggle Active Monitor
         if (MLT.isPlaylist()) {
             if (isMultitrackValid())
                 m_player->onTabBarClicked(Player::ProjectTabIndex);
             else if (MLT.savedProducer())
                 m_player->onTabBarClicked(Player::SourceTabIndex);
-            else
-                m_playlistDock->on_actionOpen_triggered();
         } else if (MLT.isMultitrack()) {
             if (MLT.savedProducer())
                 m_player->onTabBarClicked(Player::SourceTabIndex);
@@ -2113,80 +2078,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         } else {
             if (isMultitrackValid() || (playlist() && playlist()->count() > 0))
                 m_player->onTabBarClicked(Player::ProjectTabIndex);
-        }
-        break;
-    case Qt::Key_Up:
-        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier
-                && m_playlistDock->model()->rowCount() > 0) {
-            m_playlistDock->raise();
-            m_playlistDock->decrementIndex();
-            m_playlistDock->on_actionOpen_triggered();
-        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
-            if (m_playlistDock->model()->rowCount() > 0) {
-                m_playlistDock->raise();
-                m_playlistDock->moveClipUp();
-                m_playlistDock->decrementIndex();
-            }
-        }
-        break;
-    case Qt::Key_Down:
-        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier
-                && m_playlistDock->model()->rowCount() > 0) {
-            m_playlistDock->raise();
-            m_playlistDock->incrementIndex();
-            m_playlistDock->on_actionOpen_triggered();
-        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
-            if (m_playlistDock->model()->rowCount() > 0) {
-                m_playlistDock->raise();
-                m_playlistDock->moveClipDown();
-                m_playlistDock->incrementIndex();
-            }
-        }
-        break;
-    case Qt::Key_1:
-    case Qt::Key_2:
-    case Qt::Key_3:
-    case Qt::Key_4:
-    case Qt::Key_5:
-    case Qt::Key_6:
-    case Qt::Key_7:
-    case Qt::Key_8:
-    case Qt::Key_9:
-        if ((event->modifiers() == Qt::NoModifier || event->modifiers() == Qt::KeypadModifier) &&
-                m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(event->key() - Qt::Key_1);
-        }
-        break;
-    case Qt::Key_0:
-        if ((event->modifiers() == Qt::NoModifier || event->modifiers() == Qt::KeypadModifier)) {
-            if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
-                m_playlistDock->raise();
-                m_playlistDock->setIndex(9);
-            }
-        }
-        break;
-    case Qt::Key_X: // Avid Extract
-        if (event->modifiers() == Qt::ShiftModifier && m_playlistDock->model()->rowCount() > 0) {
-            m_playlistDock->show();
-            m_playlistDock->raise();
-            m_playlistDock->on_removeButton_clicked();
-        }
-        break;
-    case Qt::Key_Z: // Avid Lift
-        if (event->modifiers() == Qt::ShiftModifier && m_playlistDock->model()->rowCount() > 0) {
-            m_playlistDock->show();
-            m_playlistDock->raise();
-            m_playlistDock->on_removeButton_clicked();
-        }
-        break;
-    case Qt::Key_Enter: // Seek to current playlist item
-    case Qt::Key_Return:
-        if (m_playlistDock->isVisible() && m_playlistDock->position() >= 0) {
-            if (event->modifiers() == Qt::ShiftModifier)
-                m_playlistDock->on_actionGoto_triggered();
-            else if (event->modifiers() == Qt::ControlModifier)
-                m_playlistDock->on_actionOpen_triggered();
         }
         break;
     case Qt::Key_F2:
@@ -2447,7 +2338,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         openMultiple(mimeData->urls());
         event->acceptProposedAction();
     } else if (mimeData->hasFormat(Mlt::XmlMimeType )) {
-        m_playlistDock->on_actionOpen_triggered();
+        m_playlistDock->onOpenActionTriggered();
         event->acceptProposedAction();
     }
 }
@@ -2611,8 +2502,9 @@ void MainWindow::onProducerChanged()
 {
     MLT.refreshConsumer();
     if (playlist() && MLT.producer() && MLT.producer()->is_valid()
-            && MLT.producer()->get_int(kPlaylistIndexProperty))
-        m_playlistDock->setUpdateButtonEnabled(true);
+            && MLT.producer()->get_int(kPlaylistIndexProperty)) {
+        m_playlistDock->enableUpdate(true);
+    }
     sourceUpdated();
 }
 
@@ -2948,8 +2840,9 @@ void MainWindow::onCutModified()
     if (!playlist() && !multitrack()) {
         setWindowModified(true);
     }
-    if (playlist())
-        m_playlistDock->setUpdateButtonEnabled(true);
+    if (playlist()) {
+        m_playlistDock->enableUpdate(true);
+    }
     sourceUpdated();
 }
 
@@ -2964,8 +2857,9 @@ void MainWindow::onFilterModelChanged()
     MLT.refreshConsumer();
     setWindowModified(true);
     sourceUpdated();
-    if (playlist())
-        m_playlistDock->setUpdateButtonEnabled(true);
+    if (playlist()) {
+        m_playlistDock->enableUpdate(true);
+    }
 }
 
 void MainWindow::updateMarkers()

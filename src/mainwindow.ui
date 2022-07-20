@@ -198,6 +198,11 @@
       <string>Timeline</string>
      </property>
     </widget>
+    <widget class="QMenu" name="menuPlaylist">
+     <property name="title">
+      <string>Playlist</string>
+     </property>
+    </widget>
     <widget class="QMenu" name="menuData_Directory">
      <property name="title">
       <string>App Data Directory</string>
@@ -251,6 +256,7 @@
     <addaction name="actionSync"/>
     <addaction name="separator"/>
     <addaction name="menuTimeline"/>
+    <addaction name="menuPlaylist"/>
     <addaction name="separator"/>
     <addaction name="actionUser_Interface"/>
     <addaction name="menuLanguage"/>
