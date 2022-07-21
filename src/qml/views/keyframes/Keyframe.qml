@@ -109,8 +109,15 @@ Rectangle {
                else
                    drag.axis = Drag.XAndYAxis
             }
-            var newPosition = Math.round((parent.x + parent.width/2) / timeScale)
+            var keyX = parent.x + parent.width/2;
+            var cursorX = producer.position * timeScale
+            var newPosition = Math.round((keyX) / timeScale)
             var keyPosition = newPosition - (filter.in - producer.in)
+            // Snap to cursor
+            if (keyX > cursorX - 10 && keyX < cursorX + 10) {
+                keyPosition = Math.round((cursorX) / timeScale)
+                parent.x = cursorX - (parent.width / 2)
+            }
             var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
             trackValue = minimum + trackValue * (maximum - minimum)
             if (drag.axis === Drag.XAxis && newPosition !== keyframeRoot.position) {
