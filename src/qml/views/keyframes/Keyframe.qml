@@ -43,7 +43,19 @@ Rectangle {
 
     SystemPalette { id: activePalette }
 
-    x: position * timeScale - width/2
+    function updateX() {
+        x = position * timeScale - width/2
+    }
+
+    onPositionChanged: updateX()
+
+    Connections {
+        target: root
+        function onTimeScaleChanged() {
+            updateX()
+        }
+    }
+
     anchors.verticalCenter: parameterRoot.verticalCenter
     anchors.verticalCenterOffset: isCurve ? minimum != maximum ? trackValue : 0 : 0
     height: 10
