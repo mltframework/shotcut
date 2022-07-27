@@ -912,7 +912,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qml/views/timeline/Clip.qml" line="720"/>
         <source>Align To Reference Track</source>
-        <translation type="unfinished"></translation>
+        <translation>與參考軌道對齊</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/Clip.qml" line="757"/>
@@ -1911,7 +1911,7 @@ in temporal compression</source>
         <location filename="../src/docks/encodedock.cpp" line="407"/>
         <location filename="../src/docks/encodedock.cpp" line="414"/>
         <source>Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>標記點</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="425"/>
@@ -4524,12 +4524,12 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="60"/>
         <source>Marker Color</source>
-        <translation type="unfinished"></translation>
+        <translation>標記點顏色</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="71"/>
         <source>Marker Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>標記點操作</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="73"/>
@@ -4544,12 +4544,12 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="84"/>
         <source>Choose Color...</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇顏色...</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="93"/>
         <source>Choose Recent Color</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇最近的顏色...</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="116"/>
@@ -4567,32 +4567,32 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="164"/>
         <source>Add a marker at the current time</source>
-        <translation type="unfinished"></translation>
+        <translation>在播放點加入標記點</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="174"/>
         <source>Remove the selected marker</source>
-        <translation type="unfinished"></translation>
+        <translation>刪除選取的標記點</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="184"/>
         <source>Deselect the marker</source>
-        <translation type="unfinished"></translation>
+        <translation>取消選曲標記點</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="195"/>
         <source>Markers Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>標記點清單</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="199"/>
         <source>Remove All Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>移除所有標記點</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="200"/>
         <source>Add Marker Around Selected Clips</source>
-        <translation type="unfinished"></translation>
+        <translation>在選取的片段間插入標記點</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="204"/>
@@ -4975,7 +4975,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/docks/notesdock.cpp" line="28"/>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>筆記</translation>
     </message>
 </context>
 <context>
@@ -6124,12 +6124,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1349"/>
         <source>Move track down</source>
-        <translation type="unfinished"></translation>
+        <translation>向下移動軌道</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1351"/>
         <source>Move track up</source>
-        <translation type="unfinished"></translation>
+        <translation>向上移動軌道</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1373"/>
@@ -6248,27 +6248,27 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="29"/>
         <source>Delete marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>刪除標記點</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="48"/>
         <source>Add marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>加入標記點</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="71"/>
         <source>Move marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>移動標記點</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="73"/>
         <source>Edit marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>移動標記點</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="113"/>
         <source>Clear markers</source>
-        <translation type="unfinished"></translation>
+        <translation>清除所有標記點</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="40"/>
@@ -7223,12 +7223,12 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="545"/>
         <source>Can not move audio track above video track</source>
-        <translation type="unfinished"></translation>
+        <translation>不能將音軌移到影片軌上方</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="561"/>
         <source>Can not move video track below audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>不能將影片軌移到音軌下方</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="650"/>
@@ -7238,7 +7238,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="691"/>
         <source>Align To Reference Track</source>
-        <translation type="unfinished"></translation>
+        <translation>對齊參考軌道</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="758"/>
@@ -7273,7 +7273,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1246"/>
         <source>Select a clip in the timeline to create a marker around it</source>
-        <translation type="unfinished"></translation>
+        <translation>選取時間軸的短片來在周遭創造標記點</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1277"/>
@@ -7416,7 +7416,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="42"/>
         <source>Timeline Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>時間軸清單</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="54"/>
@@ -7441,7 +7441,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="87"/>
         <source>Ripple Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>刪除波紋</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="94"/>
@@ -7461,17 +7461,17 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="120"/>
         <source>Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>標記點</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="127"/>
         <source>Previous Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>前一個標記點</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="134"/>
         <source>Next Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>下一個標記點</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="150"/>
@@ -7496,7 +7496,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="194"/>
         <source>Ripple Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>連動標記</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="206"/>
@@ -10080,22 +10080,22 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="271"/>
         <source>Move %1</source>
-        <translation type="unfinished"></translation>
+        <translation>移動%1</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="311"/>
         <source>Can not move audio track above video track</source>
-        <translation type="unfinished"></translation>
+        <translation>不能將音軌移到影片軌上方</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="313"/>
         <source>Can not move video track below audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>不能將影片軌移到音軌下方</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="315"/>
         <source>Track %1 was not moved</source>
-        <translation type="unfinished"></translation>
+        <translation>軌道%1沒有被移動</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="533"/>
@@ -10135,12 +10135,12 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="622"/>
         <source>Move Track Up</source>
-        <translation type="unfinished"></translation>
+        <translation>向上移動軌道</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="627"/>
         <source>Move Track Down</source>
-        <translation type="unfinished"></translation>
+        <translation>向下移動軌道</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="649"/>
@@ -10155,7 +10155,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="655"/>
         <source>Select All On Current Track</source>
-        <translation type="unfinished"></translation>
+        <translation>全選目前軌道上所有的</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="659"/>
