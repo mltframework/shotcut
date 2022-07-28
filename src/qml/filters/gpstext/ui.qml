@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -172,7 +172,6 @@ Item {
         speed_multiplier.value = filter.get('speed_multiplier');
         updates_per_second.text = filter.get('updates_per_second');
         gps_processing_start.text = filter.get('gps_processing_start_time');
-        checkbox_swap_180.checked = (filter.get('swap_180_meridian') == 1);
     }
     
     //this function combines the text values from sign combobox * days/hours/mins/sec TextFields into an int
@@ -271,16 +270,16 @@ Item {
                     recompute_time_offset()
                 }
             }
-            Label {
-                text: qsTr('days:')
-                Layout.alignment: Qt.AlignRight
-            }
+//            Label {
+//                text: qsTr('days:')
+//                Layout.alignment: Qt.AlignRight
+//            }
             TextField {
                 id: offset_days
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator {bottom: 0; top: 36600;}
-                implicitWidth: 25
+                implicitWidth: 30
                 MouseArea {
                     anchors.fill: parent
                     onWheel: wheel_offset( wheel.angleDelta.y>0 ? 86400 : -86400 )
@@ -291,7 +290,7 @@ Item {
                 Shotcut.HoverTip { text: qsTr('Number of days to add/subtract to video time to sync them.') }
             }
             Label {
-                text: qsTr(' h:')
+                text: qsTr(':')
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
@@ -299,7 +298,7 @@ Item {
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator {bottom: 0; top: 59;}
-                implicitWidth: 20
+                implicitWidth: 30
                 MouseArea {
                     anchors.fill: parent
                     onWheel: wheel_offset( wheel.angleDelta.y>0 ? 3600 : -3600 )
@@ -310,7 +309,7 @@ Item {
                 Shotcut.HoverTip { text: qsTr('Number of hours to add/subtract to video time to sync them.') }
             }
             Label {
-                text: qsTr('m:')
+                text: qsTr(':')
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
@@ -318,7 +317,7 @@ Item {
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator {bottom: 0; top: 59;}
-                implicitWidth: 20
+                implicitWidth: 30
                 MouseArea {
                     anchors.fill: parent
                     onWheel: wheel_offset( wheel.angleDelta.y>0 ? 60 : -60 )
@@ -329,7 +328,7 @@ Item {
                 Shotcut.HoverTip { text: qsTr('Number of minutes to add/subtract to video time to sync them.') }
             }
             Label {
-                text: qsTr('s:')
+                text: qsTr(':')
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
@@ -337,7 +336,7 @@ Item {
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator {bottom: 0; top: 59;}
-                implicitWidth: 20
+                implicitWidth: 30
                 MouseArea {
                     anchors.fill: parent
                     onWheel: wheel_offset( wheel.angleDelta.y>0 ? 1 : -1 )
@@ -708,37 +707,6 @@ Item {
                     filter.set('updates_per_second', 1)
                     updates_per_second.text = '1';
                 }
-            }
-        }
-
-        Label {
-            Layout.alignment: Qt.AlignRight
-            text: qsTr('Swap 180 meridian')
-            Shotcut.HoverTip { text: qsTr('If the gps track passes the 180 meridian it will mess up all processing. Enable this to flip everything by 180 degrees.') }
-        }
-        RowLayout {
-            CheckBox {
-                id: checkbox_swap_180
-                leftPadding: 0
-                onClicked: filter.set('swap_180_meridian', checked ? 1 : 0)
-            }
-            Label {
-                Layout.alignment: Qt.AlignLeft
-                text: qsTr('Only applies to the next file read!')
-            }
-        }
-
-        Rectangle {
-            Layout.columnSpan: parent.columns
-            Layout.fillWidth: true
-            Layout.minimumHeight: 12
-            color: 'transparent'
-            Rectangle {
-                anchors.verticalCenter: parent.verticalCenter
-                width: parent.width
-                height: 2
-                radius: 2
-                color: activePalette.text
             }
         }
 

@@ -28,7 +28,7 @@ import QtQml.Models 2.12
 Item {
     id: gpsGraphRoot
     width: 350
-    height: 850
+    height: 800
 
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
@@ -115,36 +115,36 @@ Item {
 
 
             usedParams = set_graph_data_params(0,1, _,_, 0, 99, 100,  0, 99, 100)
-            usedParams.push( set_graph_style_params(3, 1, 0, 0, 5, _, _, _, 1) )
+            usedParams.push( set_graph_style_params(1, 1, 0, 0, 8, _, _, _, 1) )
             filter.savePreset(usedParams, "Map style: show GPS points as dots @99%")
 
-            usedParams = set_graph_style_params(3, 1, 0, 0, 5,  default_rect, 0, _, 0)
+            usedParams = set_graph_style_params(2, 1, 0, 0, 5,  default_rect, 0, _, 0)
             usedParams.push( set_graph_colors(_, default_colors[0], '#00ffffff') )
             filter.savePreset(usedParams, "Map style: hide future path")
 
-            usedParams = set_graph_style_params(1, 1, 0, 0, 5,  default_rect, 0, _, 0)
+            usedParams = set_graph_style_params(2, 1, 0, 0, 5,  default_rect, 0, _, 0)
             usedParams.push( set_graph_colors(_, default_colors[0], '#40ffffff') )
             filter.savePreset(usedParams, "Map style: 25% opacity thin future path")
 
             usedParams = set_graph_data_params(3,0,  0,100,  0, 0, 100,  0, 100, 100)
-            usedParams.push( set_graph_style_params(3, 1, 0, 0, 5,  '10%/10%:80%x10%', 0, _, 0) )
+            usedParams.push( set_graph_style_params(1, 1, 0, 0, 5,  '10%/10%:80%x10%', 0, _, 0) )
             usedParams.push( set_graph_colors(color_white, default_colors[0], color_white) )
             usedParams.push( set_graph_background_params("!") )
             filter.savePreset(usedParams, "Simple line progressbar")
 
             //speedometer example
             usedParams = set_graph_data_params(3,2,  _,_,  0,0,100,  1,0,30)
-            usedParams.push( set_graph_style_params(3,  1,1,  0, _, _,  1, 'km/h', _) )
+            usedParams.push( set_graph_style_params(1,  1,1,  0, _, _,  1, 'km/h', _) )
             usedParams.push( set_graph_background_params("!") )
             filter.savePreset(usedParams, "Speedometer: 0-30 km/h")
 
             usedParams = set_graph_data_params(3,2,  _,_,  0,0,100,  1,0,60)
-            usedParams.push( set_graph_style_params(3,  1,1,  0, _, _,  1, 'mi/h', _) )
+            usedParams.push( set_graph_style_params(1,  1,1,  0, _, _,  1, 'mi/h', _) )
             usedParams.push( set_graph_background_params("!") )
             filter.savePreset(usedParams, "Speedometer: 0-60 mi/h")
 
             usedParams = set_graph_data_params(3,2,  _,_,  0,0,100,  0,0,100)
-            usedParams.push( set_graph_style_params(3,  1,1,  0, _, _,  0, 'km/h', _) )
+            usedParams.push( set_graph_style_params(1,  1,1,  0, _, _,  0, 'km/h', _) )
             usedParams.push( set_graph_background_params("!") )
             filter.savePreset(usedParams, "Speedometer: min-max km/h")
 
@@ -346,8 +346,7 @@ Item {
         rectW.value = filterRect.width
         rectH.value = filterRect.height
         //advanced options
-        checkbox_swap_180.checked = (filter.get('swap_180_meridian') == 1)
-        checkbox_draw_individual_dots.checked = (filter.get("draw_individual_dots") == 1)
+//        checkbox_draw_individual_dots.checked = (filter.get("draw_individual_dots") == 1)
         bg_img_path.text = filter.get("bg_img_path")
         slider_scaleW.value = filter.getDouble('bg_scale_w')
 
@@ -452,16 +451,16 @@ Item {
                     recompute_time_offset()
                 }
             }
-            Label {
-                text: qsTr('days:')
-                Layout.alignment: Qt.AlignRight
-            }
+//            Label {
+//                text: qsTr('days:')
+//                Layout.alignment: Qt.AlignRight
+//            }
             TextField {
                 id: offset_days
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator {bottom: 0; top: 36600;}
-                implicitWidth: 25
+                implicitWidth: 30
                 MouseArea {
                     anchors.fill: parent
                     onWheel: wheel_offset( wheel.angleDelta.y>0 ? 86400 : -86400 )
@@ -472,7 +471,7 @@ Item {
                 Shotcut.HoverTip { text: qsTr('Number of days to add/subtract to video time to sync them.') }
             }
             Label {
-                text: qsTr(' h:')
+                text: qsTr(':')
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
@@ -480,7 +479,7 @@ Item {
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator {bottom: 0; top: 59;}
-                implicitWidth: 20
+                implicitWidth: 30
                 MouseArea {
                     anchors.fill: parent
                     onWheel: wheel_offset( wheel.angleDelta.y>0 ? 3600 : -3600 )
@@ -491,7 +490,7 @@ Item {
                 Shotcut.HoverTip { text: qsTr('Number of hours to add/subtract to video time to sync them.') }
             }
             Label {
-                text: qsTr('m:')
+                text: qsTr(':')
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
@@ -499,7 +498,7 @@ Item {
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator {bottom: 0; top: 59;}
-                implicitWidth: 20
+                implicitWidth: 30
                 MouseArea {
                     anchors.fill: parent
                     onWheel: wheel_offset( wheel.angleDelta.y>0 ? 60 : -60 )
@@ -510,7 +509,7 @@ Item {
                 Shotcut.HoverTip { text: qsTr('Number of minutes to add/subtract to video time to sync them.') }
             }
             Label {
-                text: qsTr('s:')
+                text: qsTr(':')
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
@@ -518,7 +517,7 @@ Item {
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator {bottom: 0; top: 59;}
-                implicitWidth: 20
+                implicitWidth: 30
                 MouseArea {
                     anchors.fill: parent
                     onWheel: wheel_offset( wheel.angleDelta.y>0 ? 1 : -1 )
@@ -949,9 +948,9 @@ Item {
                 model:
                     [
                         qsTr('One color'),              //0
+                        qsTr('Two colors'),
                         qsTr('Solid past, thin future'),
                         qsTr('Solid future, thin past'),
-                        qsTr('Two colors'),
                         qsTr('Vertical gradient'),      //4
                         qsTr('Horizontal gradient'),
                         qsTr('Color by duration'),      //6
@@ -1144,16 +1143,16 @@ Item {
             }
         }
 
-        Label {
-            Layout.alignment: Qt.AlignRight
-            text: qsTr('Draw dots only')
-            Shotcut.HoverTip { text: qsTr('Change graph draw style to only show individual points instead of lines. Must be very zoomed in to see them.') }
-        }
-        CheckBox {
-            id: checkbox_draw_individual_dots
-            leftPadding: 0
-            onClicked: filter.set('draw_individual_dots', checked ? 1 : 0)
-        }
+//        Label {
+//            Layout.alignment: Qt.AlignRight
+//            text: qsTr('Draw dots only')
+//            Shotcut.HoverTip { text: qsTr('Change graph draw style to only show individual points instead of lines. Must be very zoomed in to see them.') }
+//        }
+//        CheckBox {
+//            id: checkbox_draw_individual_dots
+//            leftPadding: 0
+//            onClicked: filter.set('draw_individual_dots', checked ? 1 : 0)
+//        }
 
 
         Label {
@@ -1325,30 +1324,11 @@ Item {
             }
         }
 
-        Label {
-            topPadding: 10
-            text: qsTr('<b>Advanced options</b>')
-            Layout.columnSpan: 2
-        }
-
-        Label {
-            Layout.alignment: Qt.AlignRight
-            text: qsTr('Swap 180 meridian')
-            Shotcut.HoverTip { text: qsTr('If the gps track passes the 180 meridian it will look wrong and small. Enable this to flip everything by 180 degrees.') }
-        }
-        RowLayout {
-            CheckBox {
-                id: checkbox_swap_180
-                leftPadding: 0
-                onClicked: filter.set('swap_180_meridian', checked ? 1 : 0)
-            }
-            Label {
-                Layout.alignment: Qt.AlignLeft
-                text: qsTr('Only applies to the next file read!')
-            }
-        }
-
-
+//        Label {
+//            topPadding: 10
+//            text: qsTr('<b>Advanced options</b>')
+//            Layout.columnSpan: 2
+//        }
 
         Item {
             Layout.fillHeight: true
