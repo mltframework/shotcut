@@ -2725,7 +2725,11 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)
         QQuickWidget *focusedQuickWidget = qobject_cast<QQuickWidget *>(qApp->focusWidget());
         if (focusedQuickWidget && focusedQuickWidget->quickWindow()->activeFocusItem()) {
             event->accept();
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
             qApp->sendEvent(focusedQuickWidget->quickWindow()->activeFocusItem(), event);
+#else
+            focusedQuickWidget->quickWindow()->sendEvent(focusedQuickWidget->quickWindow()->activeFocusItem(), event);
+#endif
             QWidget *w = focusedQuickWidget->parentWidget();
             if (!event->isAccepted())
                 qApp->sendEvent(w, event);
