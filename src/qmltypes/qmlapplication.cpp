@@ -230,7 +230,7 @@ QDir QmlApplication::dataDir()
     dir.cdUp();
     dir.cd("Resources");
 #else
-#if defined(Q_OS_UNIX)
+#if defined(Q_OS_UNIX) || (defined(Q_OS_WIN) && defined(NODEPLOY))
     dir.cdUp();
 #endif
     dir.cd("share");

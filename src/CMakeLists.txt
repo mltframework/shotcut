@@ -257,7 +257,13 @@ if(WIN32)
   target_link_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/x64/lib)
   target_link_libraries(shotcut PRIVATE debug exchndl)
 
-  install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
+  if(WINDOWS_DEPLOY)
+    install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
+  else()
+    target_compile_definitions(shotcut PRIVATE NODEPLOY)
+    install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  endif()
+
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
 endif()
 

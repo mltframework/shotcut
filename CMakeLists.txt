@@ -15,6 +15,10 @@ project(shotcut
   LANGUAGES CXX
 )
 
+if(WIN32)
+  option(WINDOWS_DEPLOY "Install exes/libs directly to prefix (no subdir /bin)" ON)
+endif()
+
 include(FeatureSummary)
 
 set(CMAKE_CXX_STANDARD 11)
