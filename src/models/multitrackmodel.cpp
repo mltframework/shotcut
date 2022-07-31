@@ -3044,32 +3044,34 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
     // Take a copy of the track
     QScopedPointer<Mlt::Producer> producer(m_tractor->multitrack()->track(fromMltIndex));
 
-    // Save the transition b tracks and calculate the new mix mode indices to be reapplied later.
-    QVector<int> bTracks;
-    QMap<int, QString> modes;
+    // Take a copy of all the transitions
+    // Save the transitions in order of their new track index
+    QMap<int, Mlt::Transition> videoTransitions;
+    QMap<int, Mlt::Transition> audioTransitions;
     QScopedPointer<Mlt::Service> service(m_tractor->producer());
     while (service && service->is_valid()) {
         if (service->type() == mlt_service_transition_type) {
             Mlt::Transition t((mlt_transition) service->get_service());
             int newBTrack = t.get_b_track();
-            if (service->get("mlt_service") != QString("mix") ) {
-                // Figure out how the blend modes will be moved to match the track move
-                if (newBTrack == fromMltIndex) {
-                    newBTrack = toMltIndex;
-                } else {
-                    if (newBTrack > fromMltIndex) {
-                        newBTrack--;
-                    }
-                    if (newBTrack >= toMltIndex) {
-                        newBTrack++;
-                    }
+            if (newBTrack == fromMltIndex) {
+                newBTrack = toMltIndex;
+            } else {
+                if (newBTrack > fromMltIndex) {
+                    newBTrack--;
                 }
-                modes[newBTrack] = t.get("1");
+                if (newBTrack >= toMltIndex) {
+                    newBTrack++;
+                }
             }
-            bTracks.push_back(newBTrack);
+            if (service->get("mlt_service") != QString("mix") ) {
+                videoTransitions[newBTrack] = *service;
+            } else {
+                audioTransitions[newBTrack] = *service;
+            }
         }
         service.reset(service->producer());
     }
+
 
     if (toTrackIndex > fromTrackIndex) {
         beginMoveRows(QModelIndex(), fromTrackIndex, fromTrackIndex, QModelIndex(), toTrackIndex + 1);
@@ -3087,39 +3089,47 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
         }
     }
 
+    // Remove all the transitions
+    // (remove_track() and insert_track() would mess them up)
+    service.reset(m_tractor->producer());
+    QScopedPointer<Mlt::Field> field(m_tractor->field());
+    while (service && service->is_valid()) {
+        Mlt::Service s(service->get_service());
+        service.reset(service->producer());
+        if (s.type() == mlt_service_transition_type) {
+            field->disconnect_service(s);
+            s.disconnect_all_producers();
+        }
+    }
+
+    // Remove the track and add it in the new position
     m_tractor->remove_track(fromMltIndex);
     m_tractor->insert_track(*producer, toMltIndex);
 
-    // remove_track() and insert_track() modify a & b tracks on the transitions.
-    // Here we will restore them to the right values
-    // Also move around the blend mode settings to follow the tracks that moved.
-    service.reset(m_tractor->producer());
-    while (service && service->is_valid()) {
-        if (service->type() == mlt_service_transition_type) {
-            Mlt::Transition t((mlt_transition) service->get_service());
-            int aTrack = 0;
-            int bTrack = bTracks.front();
-            bTracks.pop_front();
-            if (service->get("mlt_service") != QString("mix") ) {
-
-                if (bTrack == 1) {
-                    t.set("disable", 1);
-                } else {
-                    // video transitions mix with track 1
-                    // (except track 1 which mixes with track 0)
-                    aTrack = 1;
-                    t.set("disable", 0);
-                }
-                // Transfer the blend mode to this video transition
-                if (!modes[bTrack].isEmpty()) {
-                    t.set("1", modes[bTrack].toUtf8().constData());
-                } else {
-                    t.clear("1");
+    // Add the transitions back in the new positions
+    for (auto i = audioTransitions.keyBegin(); i != audioTransitions.keyEnd(); i++) {
+        int bTrack = *i;
+        int aTrack = 0;
+        Mlt::Transition &aTransition = audioTransitions[bTrack];
+        if (aTransition.is_valid()) {
+            m_tractor->plant_transition(aTransition, aTrack, bTrack);
+        }
+        Mlt::Transition &vTransition = videoTransitions[bTrack];
+        if (vTransition.is_valid()) {
+            if (bTrack == 1) {
+                vTransition.set("disable", 1);
+            } else {
+                // video transitions mix with track 1
+                // (except track 1 which mixes with track 0)
+                aTrack = 1;
+                vTransition.set("disable", 0);
+                QString mode = vTransition.get("1");
+                if (mode.isEmpty()) {
+                    vTransition.set("1", "normal");
                 }
             }
-            t.set_tracks(aTrack, bTrack);
+            m_tractor->plant_transition(vTransition, aTrack, bTrack);
         }
-        service.reset(service->producer());
     }
 
     m_trackList.clear();
