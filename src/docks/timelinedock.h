@@ -215,6 +215,8 @@ protected:
 
 private:
     bool isBlank(int trackIndex, int clipIndex);
+    bool clipsAreSelected();
+    bool blankIsSelected();
     bool isTransition(int trackIndex, int clipIndex);
     void emitNonSeekableWarning();
     void addTrackIfNeeded(int mltTrackIndex, Mlt::Producer *srcTrack);

@@ -578,7 +578,15 @@ Rectangle {
                 var trackIndex = track.DelegateModel.itemsIndex
                 var clipIndex = clip.DelegateModel.itemsIndex
                 timeline.currentTrack = trackIndex
-                if (mouse && mouse.modifiers & Qt.ControlModifier)
+                if (timeline.selection.length == 1 &&
+                    tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x).isBlank) {
+                    //  Clear previous blank selection
+                    timeline.selection = []
+                }
+                if (tracksRepeater.itemAt(trackIndex).clipAt(clipIndex).isBlank)
+                    // Only allow one blank to be selected
+                    timeline.selection = [Qt.point(clipIndex, trackIndex)]
+                else if (mouse && mouse.modifiers & Qt.ControlModifier)
                     timeline.selection = Logic.toggleSelection(trackIndex, clipIndex)
                 else if (mouse && mouse.modifiers & Qt.ShiftModifier)
                     timeline.selection = Logic.selectRange(trackIndex, clipIndex)

@@ -157,37 +157,6 @@ MarkersDock::MarkersDock(QWidget *parent) :
     QHBoxLayout *buttonLayout = new QHBoxLayout();
     vboxLayout->addLayout(buttonLayout);
 
-    m_addButton = new QToolButton(this);
-    m_addButton->setIcon(QIcon::fromTheme("list-add",
-                                          QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
-    m_addButton->setMaximumSize(22, 22);
-    m_addButton->setToolTip(tr("Add a marker at the current time"));
-    m_addButton->setAutoRaise(true);
-    if (!connect(m_addButton, &QAbstractButton::clicked, this, &MarkersDock::onAddRequested))
-        connect(m_addButton, SIGNAL(clicked()), SLOT(onAddRequested()));
-    buttonLayout->addWidget(m_addButton);
-
-    m_removeButton = new QToolButton(this);
-    m_removeButton->setIcon(QIcon::fromTheme("list-remove",
-                                             QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
-    m_removeButton->setMaximumSize(22, 22);
-    m_removeButton->setToolTip(tr("Remove the selected marker"));
-    m_removeButton->setAutoRaise(true);
-    if (!connect(m_removeButton, &QAbstractButton::clicked, this, &MarkersDock::onRemoveRequested))
-        connect(m_removeButton, SIGNAL(clicked()), SLOT(onRemoveRequested()));
-    buttonLayout->addWidget(m_removeButton);
-
-    m_clearButton = new QToolButton(this);
-    m_clearButton->setIcon(QIcon::fromTheme("window-close",
-                                            QIcon(":/icons/oxygen/32x32/actions/window-close.png")));
-    m_clearButton->setMaximumSize(22, 22);
-    m_clearButton->setToolTip(tr("Deselect the marker"));
-    m_clearButton->setAutoRaise(true);
-    if (!connect(m_clearButton, &QAbstractButton::clicked, this,
-                 &MarkersDock::onClearSelectionRequested))
-        connect(m_clearButton, SIGNAL(clicked()), SLOT(onClearSelectionRequested()));
-    buttonLayout->addWidget(m_clearButton);
-
     m_moreButton = new QToolButton(this);
     m_moreButton->setIcon(QIcon::fromTheme("show-menu",
                                            QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
@@ -221,6 +190,37 @@ MarkersDock::MarkersDock(QWidget *parent) :
     m_moreButton->setMenu(moreMenu);
     m_moreButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
     buttonLayout->addWidget(m_moreButton);
+
+    m_addButton = new QToolButton(this);
+    m_addButton->setIcon(QIcon::fromTheme("list-add",
+                                          QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
+    m_addButton->setMaximumSize(22, 22);
+    m_addButton->setToolTip(tr("Add a marker at the current time"));
+    m_addButton->setAutoRaise(true);
+    if (!connect(m_addButton, &QAbstractButton::clicked, this, &MarkersDock::onAddRequested))
+        connect(m_addButton, SIGNAL(clicked()), SLOT(onAddRequested()));
+    buttonLayout->addWidget(m_addButton);
+
+    m_removeButton = new QToolButton(this);
+    m_removeButton->setIcon(QIcon::fromTheme("list-remove",
+                                             QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
+    m_removeButton->setMaximumSize(22, 22);
+    m_removeButton->setToolTip(tr("Remove the selected marker"));
+    m_removeButton->setAutoRaise(true);
+    if (!connect(m_removeButton, &QAbstractButton::clicked, this, &MarkersDock::onRemoveRequested))
+        connect(m_removeButton, SIGNAL(clicked()), SLOT(onRemoveRequested()));
+    buttonLayout->addWidget(m_removeButton);
+
+    m_clearButton = new QToolButton(this);
+    m_clearButton->setIcon(QIcon::fromTheme("window-close",
+                                            QIcon(":/icons/oxygen/32x32/actions/window-close.png")));
+    m_clearButton->setMaximumSize(22, 22);
+    m_clearButton->setToolTip(tr("Deselect the marker"));
+    m_clearButton->setAutoRaise(true);
+    if (!connect(m_clearButton, &QAbstractButton::clicked, this,
+                 &MarkersDock::onClearSelectionRequested))
+        connect(m_clearButton, SIGNAL(clicked()), SLOT(onClearSelectionRequested()));
+    buttonLayout->addWidget(m_clearButton);
 
     m_searchField = new QLineEdit(this);
     m_searchField->setPlaceholderText(tr("search"));

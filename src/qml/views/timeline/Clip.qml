@@ -70,7 +70,7 @@ Rectangle {
     }
 
     border.color: (selected || Drag.active || trackIndex != originalTrackIndex)? 'red' : 'black'
-    border.width: isBlank? 0 : 1
+    border.width: isBlank && !selected ? 0 : 1
     clip: true
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
@@ -340,6 +340,7 @@ Rectangle {
         acceptedButtons: Qt.RightButton
         onClicked: {
             timeline.position = timeline.position // pause
+            clipRoot.clicked(clipRoot, mouse)
             clipRoot.clipRightClicked(clipRoot, mouse)
         }
     }

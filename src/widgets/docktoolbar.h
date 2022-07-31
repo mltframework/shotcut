@@ -25,12 +25,16 @@ class DockToolBar : public QToolBar
     Q_OBJECT
 public:
     explicit DockToolBar(const QString &title, QWidget *parent = nullptr);
+    void setAreaHint(Qt::ToolBarArea area);
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void updateStyle();
+
+private:
+    Qt::ToolBarArea m_area;
 };
 
 #endif // DOCKTOOLBAR_H

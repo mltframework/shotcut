@@ -27,6 +27,7 @@
 
 DockToolBar::DockToolBar(const QString &title, QWidget *parent)
     : QToolBar(title, parent)
+    , m_area(Qt::TopToolBarArea)
 {
     setMovable(false);
     setToolButtonStyle(Qt::ToolButtonFollowStyle);
@@ -36,23 +37,30 @@ DockToolBar::DockToolBar(const QString &title, QWidget *parent)
     connect(&Settings, SIGNAL(smallIconsChanged()), SLOT(updateStyle()));
 }
 
+void DockToolBar::setAreaHint(Qt::ToolBarArea area)
+{
+    m_area = area;
+}
+
 void DockToolBar::paintEvent(QPaintEvent *event)
 {
-    // Apply the same styling that is applied to main window toolbars.
-    // This creates extra lines of separation between the toolbar and the
-    // dock contents.
     QPainter p(this);
     QLinearGradient gradient = QLinearGradient(rect().left(), rect().center().y(),
                                                rect().right(), rect().center().y());
     gradient.setColorAt(0, palette().window().color().lighter(104));
     gradient.setColorAt(1, palette().window().color());
     p.fillRect(rect(), gradient);
-    QColor light = QColor(255, 255, 255, 90);
-    QColor shadow = QColor(0, 0, 0, 60);
-    p.setPen(shadow);
-    p.drawLine(rect().bottomLeft(), rect().bottomRight());
-    p.setPen(light);
-    p.drawLine(rect().topLeft(), rect().topRight());
+    if (m_area == Qt::TopToolBarArea) {
+        // Apply the same styling that is applied to main window toolbars.
+        // This creates extra lines of separation between the toolbar and the
+        // dock contents.
+        QColor light = QColor(255, 255, 255, 90);
+        QColor shadow = QColor(0, 0, 0, 60);
+        p.setPen(shadow);
+        p.drawLine(rect().bottomLeft(), rect().bottomRight());
+        p.setPen(light);
+        p.drawLine(rect().topLeft(), rect().topRight());
+    }
 }
 
 void DockToolBar::updateStyle()

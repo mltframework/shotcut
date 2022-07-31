@@ -190,7 +190,6 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     selectMenu->addAction(m_actions["playlistSelectClip7Action"]);
     selectMenu->addAction(m_actions["playlistSelectClip8Action"]);
     selectMenu->addAction(m_actions["playlistSelectClip9Action"]);
-    selectMenu->addAction(m_actions["playlistSelectClip10Action"]);
     m_mainMenu->addSeparator();
     m_mainMenu->addAction(m_actions["playlistRemoveAllAction"]);
     m_mainMenu->addAction(m_actions["playlistAddToTimelineAction"]);
@@ -201,7 +200,8 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     sortByMenu->addAction(m_actions["playlistSortByDateAction"]);
     m_mainMenu->addSeparator();
 
-    DockToolBar *toolbar = new DockToolBar(tr("Timeline Controls"));
+    DockToolBar *toolbar = new DockToolBar(tr("Playlist Controls"));
+    toolbar->setAreaHint(Qt::BottomToolBarArea);
     QToolButton *menuButton = new QToolButton();
     menuButton->setIcon(QIcon::fromTheme("show-menu",
                                          QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
@@ -221,7 +221,8 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     toolbar->addAction(m_actions["playlistViewIconsAction"]);
     toolbar->addSeparator();
 
-    ui->verticalLayout->setMenuBar(toolbar);
+    ui->verticalLayout->addWidget(toolbar);
+    ui->verticalLayout->addSpacing(2);
 
     ui->stackedWidget->setCurrentIndex(0);
 
@@ -243,7 +244,6 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
         connect(view, SIGNAL(customContextMenuRequested(QPoint)),
                 SLOT(viewCustomContextMenuRequested(QPoint)));
         connect(view, SIGNAL(doubleClicked(QModelIndex)), SLOT(viewDoubleClicked(QModelIndex)));
-
     }
 
     connect(ui->tableView, SIGNAL(movedToEnd()), SLOT(onMovedToEnd()));
@@ -775,19 +775,6 @@ void PlaylistDock::setupActions()
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 8);
-    });
-    m_actions[action->objectName()] = action;
-
-    action = new QAction(tr("Select Clip 10"), this);
-    action->setObjectName("playlistSelectClip10Action");
-    action->setShortcut(QKeySequence(Qt::Key_0));
-    action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [ = ]() {
-        raise();
-        setIndex(9);
-    });
-    connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 9);
     });
     m_actions[action->objectName()] = action;
 }
