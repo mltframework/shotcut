@@ -16,12 +16,12 @@
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="52"/>
         <source>File name extension</source>
-        <translation type="unfinished"></translation>
+        <translation>檔案名稱擴充</translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="59"/>
         <source>for example, mp4</source>
-        <translation type="unfinished"></translation>
+        <translation>舉例：mp4</translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="84"/>
@@ -34,82 +34,82 @@
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="235"/>
         <source>Reference audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>參考音訊軌道</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="250"/>
         <source>Speed adjustment range</source>
-        <translation type="unfinished"></translation>
+        <translation>速度調整範圍</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="253"/>
         <source>None</source>
-        <translation type="unfinished">無</translation>
+        <translation>無</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="254"/>
         <source>Narrow</source>
-        <translation type="unfinished"></translation>
+        <translation>窄</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="256"/>
         <source>Normal</source>
-        <translation type="unfinished">標準</translation>
+        <translation>標準</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="258"/>
         <source>Wide</source>
-        <translation type="unfinished"></translation>
+        <translation>寬</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="259"/>
         <source>Very wide</source>
-        <translation type="unfinished"></translation>
+        <translation>非常寬</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="299"/>
         <source>Process</source>
-        <translation type="unfinished"></translation>
+        <translation>處理</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="302"/>
         <source>Apply</source>
-        <translation type="unfinished">套用</translation>
+        <translation>套用</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="305"/>
         <source>Process + Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>處理+套用</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="343"/>
         <source>This clip will be skipped because it is on the reference track.</source>
-        <translation type="unfinished"></translation>
+        <translation>因為這個片段在參考軌道上，所以它會被跳過</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="349"/>
         <source>This item can not be aligned.</source>
-        <translation type="unfinished"></translation>
+        <translation>這個項目不能被對齊</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="359"/>
         <source>Align Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>對齊音訊</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="466"/>
         <source>Analyze Reference Track</source>
-        <translation type="unfinished"></translation>
+        <translation>分析參考軌道</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="474"/>
         <source>Analyze Clips</source>
-        <translation type="unfinished"></translation>
+        <translation>分析短片</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="483"/>
         <source>Alignment not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法對齊</translation>
     </message>
 </context>
 <context>
@@ -117,17 +117,17 @@
     <message>
         <location filename="../src/models/alignclipsmodel.cpp" line="200"/>
         <source>Clip</source>
-        <translation type="unfinished">短片</translation>
+        <translation>短片</translation>
     </message>
     <message>
         <location filename="../src/models/alignclipsmodel.cpp" line="202"/>
         <source>Offset</source>
-        <translation type="unfinished">位移</translation>
+        <translation>位移</translation>
     </message>
     <message>
         <location filename="../src/models/alignclipsmodel.cpp" line="204"/>
         <source>Speed</source>
-        <translation type="unfinished">速度</translation>
+        <translation>速度</translation>
     </message>
 </context>
 <context>
@@ -496,22 +496,22 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="592"/>
         <source>90</source>
-        <translation type="unfinished">90</translation>
+        <translation>90</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="597"/>
         <source>180</source>
-        <translation type="unfinished">180</translation>
+        <translation>180</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="602"/>
         <source>270</source>
-        <translation type="unfinished">270</translation>
+        <translation>270</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="610"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>度</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="633"/>
@@ -553,7 +553,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="945"/>
         <source>Properties Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>性質清單</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1032"/>
@@ -578,7 +578,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="247"/>
         <source>Color range</source>
-        <translation type="unfinished"></translation>
+        <translation>色彩範圍</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="931"/>
@@ -713,7 +713,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="584"/>
         <source>This file format (HDV) is not reliable for editing.</source>
-        <translation type="unfinished"></translation>
+        <translation>這個檔案格式（HDV）不能作為編輯</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="776"/>
@@ -942,12 +942,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qml/views/keyframes/Clip.qml" line="251"/>
         <source>Confirm Removing Advanced Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>確認移除進階關鍵影格</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Clip.qml" line="252"/>
         <source>This will remove all advanced keyframes to enable simple keyframes.&lt;p&gt;Do you still want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>這會移除所有進階關鍵影格已使用簡易關鍵影格</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Clip.qml" line="532"/>
@@ -1365,7 +1365,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/editmarkerwidget.cpp" line="46"/>
         <source>Set the name for this marker.</source>
-        <translation type="unfinished"></translation>
+        <translation>設定這個標記點的名稱</translation>
     </message>
     <message>
         <location filename="../src/widgets/editmarkerwidget.cpp" line="49"/>
@@ -1380,7 +1380,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/editmarkerwidget.cpp" line="62"/>
         <source>Set the start time for this marker.</source>
-        <translation type="unfinished"></translation>
+        <translation>設定這個標記點的開始時間</translation>
     </message>
     <message>
         <location filename="../src/widgets/editmarkerwidget.cpp" line="66"/>
@@ -1390,12 +1390,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/editmarkerwidget.cpp" line="71"/>
         <source>Set the end time for this marker.</source>
-        <translation type="unfinished"></translation>
+        <translation>設定這個標記點的結束時間</translation>
     </message>
     <message>
         <location filename="../src/widgets/editmarkerwidget.cpp" line="75"/>
         <source>Duration:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1624,7 +1624,7 @@ YADIF 反交錯處理就曾被回報過有問題。</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="515"/>
         <source>Color range</source>
-        <translation type="unfinished"></translation>
+        <translation>色彩範圍</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="533"/>
@@ -2387,7 +2387,7 @@ OpenGL 2.0。</translation>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="567"/>
         <source>Preparing Glaxnimate preview....</source>
-        <translation type="unfinished"></translation>
+        <translation>正在準備Glaxnimate預覽....</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="619"/>
@@ -2395,12 +2395,14 @@ OpenGL 2.0。</translation>
 
 Click OK to open a file dialog to choose its location.
 Click Cancel if you do not have Glaxnimate.</source>
-        <translation type="unfinished"></translation>
+        <translation>找不到Glaxnimate程式
+按OK來開啟檔案管理器選擇他的位置
+按「取消」如果你沒有Glaxnimate</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="628"/>
         <source>Find Glaxnimate</source>
-        <translation type="unfinished"></translation>
+        <translation>尋找Glaxnimate</translation>
     </message>
 </context>
 <context>
@@ -2408,67 +2410,67 @@ Click Cancel if you do not have Glaxnimate.</source>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">表單</translation>
+        <translation>表單</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="20"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>動畫</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="30"/>
         <source>Comments:</source>
-        <translation type="unfinished">註解：</translation>
+        <translation>註解：</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="61"/>
         <source>Background color...</source>
-        <translation type="unfinished">背景色彩…</translation>
+        <translation>背景色彩…</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="76"/>
         <source>#00000000</source>
-        <translation type="unfinished">#00000000</translation>
+        <translation>#00000000</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="103"/>
         <source>Edit...</source>
-        <translation type="unfinished">編輯…</translation>
+        <translation>編輯…</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="110"/>
         <source>Reload</source>
-        <translation type="unfinished">重新載入</translation>
+        <translation>重新載入</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="132"/>
         <source>Duration</source>
-        <translation type="unfinished">長度</translation>
+        <translation>長度</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="68"/>
         <source>black</source>
-        <translation type="unfinished">黑色</translation>
+        <translation>黑色</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="70"/>
         <source>transparent</source>
-        <translation type="unfinished">透明</translation>
+        <translation>透明</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="197"/>
         <source>animation</source>
-        <translation type="unfinished"></translation>
+        <translation>動畫</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="198"/>
         <source>Glaxnimate (*.rawr);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Glaxnimate (*.rawr);;全部檔案 (*)</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="199"/>
         <source>New Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>新動畫</translation>
     </message>
 </context>
 <context>
@@ -2552,7 +2554,7 @@ Click to change</source>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="261"/>
         <source>Properties Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>性質清單</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="303"/>
@@ -2743,7 +2745,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/jobsdock.ui" line="129"/>
         <source>Jobs Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>工作清單</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="156"/>
@@ -2850,12 +2852,12 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="94"/>
         <source>Confirm Removing Simple Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>確定移除簡易關鍵影格</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="95"/>
         <source>This will remove all simple keyframes for all parameters.&lt;p&gt;Simple keyframes will be converted to advanced keyframes.&lt;p&gt;Do you still want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>這會移除所有參數的簡易關鍵影格&lt;p&gt;簡易關鍵影格會被轉換為進階關鍵影格&lt;p&gt確定要這樣做媽？</translation>
     </message>
 </context>
 <context>
@@ -2889,7 +2891,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="38"/>
         <source>Keyframes Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>關鍵影格清單</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="55"/>
@@ -2904,22 +2906,22 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="79"/>
         <source>Set the first simple keyframe ({)</source>
-        <translation type="unfinished"></translation>
+        <translation>設定第一個簡易關鍵影格</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="108"/>
         <source>Zoom Keyframes out</source>
-        <translation type="unfinished"></translation>
+        <translation>放大關鍵影格</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="123"/>
         <source>Zoom Keyframes in</source>
-        <translation type="unfinished"></translation>
+        <translation>縮小關鍵影格</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="135"/>
         <source>Zoom Keyframes to fit</source>
-        <translation type="unfinished"></translation>
+        <translation>縮放關鍵影格到適當大小</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="91"/>
@@ -3362,7 +3364,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="194"/>
         <source>Job Priority</source>
-        <translation type="unfinished"></translation>
+        <translation>工作順序</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="425"/>
@@ -3602,7 +3604,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="829"/>
         <source>Low</source>
-        <translation type="unfinished"></translation>
+        <translation>低</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="837"/>
@@ -3653,24 +3655,24 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1143"/>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>記事</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1308"/>
         <source>Markers as Chapters...</source>
-        <translation type="unfinished"></translation>
+        <translation>章節區分標記點</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1311"/>
         <location filename="../src/mainwindow.ui" line="1314"/>
         <location filename="../src/mainwindow.cpp" line="5290"/>
         <source>Export Chapters</source>
-        <translation type="unfinished"></translation>
+        <translation>輸出章節</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1319"/>
         <source>Audio/Video Device...</source>
-        <translation type="unfinished"></translation>
+        <translation>音訊/視訊裝置...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="970"/>
@@ -3681,7 +3683,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="328"/>
         <source>Open a video, audio, image, or project file</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟一個影片、音訊、圖片或專案檔</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="468"/>
@@ -3778,7 +3780,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1134"/>
         <source>Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>標記點</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1192"/>
@@ -3874,23 +3876,23 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="931"/>
         <source>EDL...</source>
-        <translation type="unfinished"></translation>
+        <translation>剪輯決策表（EDL）專案交換格式...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="942"/>
         <source>Frame...</source>
-        <translation type="unfinished"></translation>
+        <translation>框架...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="956"/>
         <source>Video...</source>
-        <translation type="unfinished"></translation>
+        <translation>影片</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="959"/>
         <location filename="../src/mainwindow.ui" line="962"/>
         <source>Export Video</source>
-        <translation type="unfinished"></translation>
+        <translation>匯出影片</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1086"/>
@@ -3989,7 +3991,7 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
     <message>
         <location filename="../src/mainwindow.cpp" line="1042"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>動畫</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1045"/>
@@ -4089,7 +4091,7 @@ Do you want to disable GPU effects and restart?</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="1161"/>
         <source>Save Repaired XML</source>
-        <translation type="unfinished"></translation>
+        <translation>保存修復的XML</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1194"/>
@@ -4224,22 +4226,22 @@ Or save and restart Shotcut.</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="5266"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
-        <translation type="unfinished"></translation>
+        <translation>包含範圍（長度 &gt; 1 frame)?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="5277"/>
         <source>Choose Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇標記點</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="5292"/>
         <source>Text (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>文字(*.txt);;全部檔案 (*)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="5346"/>
         <source>Failed to open export-chapters.js</source>
-        <translation type="unfinished"></translation>
+        <translation>打開export-chapters.js失敗</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1163"/>
@@ -4320,12 +4322,14 @@ You must reopen your project after all proxy jobs are finished.</source>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+你使用的檔案用到GPU特效，但GPU特效不能使用
+GPU特效還是「實驗性」、「不穩定」、「不支援」！不支援指的是起不要回覆有關的bug</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1937"/>
         <source>&lt;h1&gt;Shotcut version %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Licensed under the %5&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://glaxnimate.mattbas.org/&quot;&gt;Glaxnimate&lt;/a&gt; vector animation program&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h1&gt;Shotcut版本%2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; 免費、開放原始碼、跨平台的影片剪輯軟體&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;許可為 %5&lt;/p&gt;&lt;p&gt;這個專案自豪地使用了以下的專案:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; 應用程式與UI架構&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; 多媒體創作架構&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; 多媒體檔案轉換與編碼程式庫&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://glaxnimate.mattbas.org/&quot;&gt;Glaxnimate&lt;/a&gt; vector animation program&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;建構這個專案的來源程式碼可以在以下下載 &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;這個專案發行的目的是為了讓人們使用，但不包含「任何保固」，甚至不會有任何保固的「隱藏宣傳」或是「特定用途的適用」.&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="3621"/>
@@ -4456,14 +4460,15 @@ Do you want to restart now?</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="4422"/>
         <source>Export frame from proxy?</source>
-        <translation type="unfinished"></translation>
+        <translation>從代理素材匯出此影格？</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="4423"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>此影格可能來自較低畫質的代理素材而非原始來源
+你還要繼續嗎？</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="945"/>
@@ -4562,7 +4567,7 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="132"/>
         <source>Markers</source>
-        <translation type="unfinished"></translation>
+        <translation">標記點</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="164"/>
@@ -5065,7 +5070,7 @@ Try again with a different folder.</source>
         <location filename="../src/openotherdialog.cpp" line="83"/>
         <location filename="../src/openotherdialog.cpp" line="161"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>動畫</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="87"/>
@@ -5594,7 +5599,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="252"/>
         <source>Playlist Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>播放清單</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="297"/>
@@ -5762,7 +5767,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="681"/>
         <source>Failed to open </source>
-        <translation type="unfinished">無法開啟</translation>
+        <translation>無法開啟</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="880"/>
@@ -6154,7 +6159,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1606"/>
         <source>Align clips to reference track</source>
-        <translation type="unfinished"></translation>
+        <translation>向參考軌道對齊短片</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="3736"/>
@@ -6218,7 +6223,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1600"/>
         <source>Failed to open </source>
-        <translation type="unfinished">無法開啟</translation>
+        <translation>無法開啟</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1616"/>
@@ -6238,12 +6243,12 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/database.cpp" line="66"/>
         <source>Converting Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>轉換縮圖</translation>
     </message>
     <message>
         <location filename="../src/database.cpp" line="85"/>
         <source>Please wait for this one-time update to the thumbnail cache...</source>
-        <translation type="unfinished"></translation>
+        <translation>請等待這個縮圖緩存的一次性更新</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="29"/>
@@ -6274,12 +6279,12 @@ Do you want to use %1 = %2/1001 instead?</source>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="40"/>
         <source>transparent</source>
         <comment>Open Other &gt; Animation</comment>
-        <translation type="unfinished">透明</translation>
+        <translation>透明</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="562"/>
         <source>Edit With Glaxnimate</source>
-        <translation type="unfinished"></translation>
+        <translation>使用Glaxnimate編輯</translation>
     </message>
 </context>
 <context>
@@ -7218,7 +7223,7 @@ If the duration is 0, no transition will be created.</source>
         <location filename="../src/docks/timelinedock.cpp" line="540"/>
         <location filename="../src/docks/timelinedock.cpp" line="573"/>
         <source>Track %1 was not moved</source>
-        <translation type="unfinished"></translation>
+        <translation>軌道%1沒有被移動</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="545"/>
@@ -7243,12 +7248,12 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="758"/>
         <source>Append multiple to timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>加入多個到時間軸</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="862"/>
         <source>Cut %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>從時間軸剪掉%1</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="864"/>
@@ -7278,22 +7283,22 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1277"/>
         <source>Added marker: &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>加入標記點: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1297"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
-        <translation type="unfinished"></translation>
+        <translation>已加入的標記點： &quot;%1&quot;持著%2然後移動並創造一個範圍</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1687"/>
         <source>Insert multiple into timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>插入多個到時間軸內</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1805"/>
         <source>Overwrite multiple onto timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>複寫多個到時間軸上</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1893"/>
@@ -7310,38 +7315,38 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2224"/>
         <source>voiceover</source>
-        <translation type="unfinished"></translation>
+        <translation>配音</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2225"/>
         <source>Opus (*.opus);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Opus (*.opus);;全部檔案(*)</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2226"/>
         <location filename="../src/docks/timelinedock.cpp" line="2341"/>
         <source>Record Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>錄製音訊</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2237"/>
         <source>Record Audio: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>錄製音訊：%1</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2318"/>
         <source>Record Audio error: check PulseAudio settings</source>
-        <translation type="unfinished"></translation>
+        <translation>錄製音訊失敗：請檢查</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2320"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <translation>錄製音訊錯誤：選擇檔案 &gt; 開啟其他 &gt; 音訊/影片設備</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2347"/>
         <source>Saving audio recording...</source>
-        <translation type="unfinished"></translation>
+        <translation>儲存音訊錄著...</translation>
     </message>
 </context>
 <context>
@@ -7364,7 +7369,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="246"/>
         <source>Edit...</source>
-        <translation type="unfinished">編輯…</translation>
+        <translation type=>編輯…</translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="73"/>
@@ -7501,22 +7506,22 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="206"/>
         <source>Zoom Timeline out</source>
-        <translation type="unfinished"></translation>
+        <translation>放大時間軸</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="216"/>
         <source>Zoom Timeline in</source>
-        <translation type="unfinished"></translation>
+        <translation>縮小時間軸</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="223"/>
         <source>Zoom Timeline to fit</source>
-        <translation type="unfinished"></translation>
+        <translation>縮放時間軸以適應</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="235"/>
         <source>Record Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>錄製音訊</translation>
     </message>
 </context>
 <context>
@@ -7781,7 +7786,7 @@ only the currently selected one.</source>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="223"/>
         <source>If the source is interlaced, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果來源是交錯的，每個交錯的區域會被轉換成漸進的影格以符合雙重影格速率</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="226"/>
@@ -8038,7 +8043,7 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="262"/>
         <source>PulseAudio</source>
-        <translation>PulseAudio</translation>
+        <translation>脈衝音訊</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="267"/>
@@ -8672,7 +8677,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/main.cpp" line="373"/>
         <source>Expiring cache...</source>
-        <translation type="unfinished"></translation>
+        <translation>過期的緩存...</translation>
     </message>
 </context>
 <context>
@@ -8762,19 +8767,19 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="16"/>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="16"/>
         <source>Cutoff</source>
-        <translation type="unfinished"></translation>
+        <translation>剪除</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="24"/>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="24"/>
         <source>Rolloff rate</source>
-        <translation type="unfinished">滾落速率</translation>
+        <translation>滾落速率</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="31"/>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="31"/>
         <source>Wetness</source>
-        <translation type="unfinished"></translation>
+        <translation>濕度</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="7"/>
@@ -8824,37 +8829,37 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="16"/>
         <source>Room size</source>
-        <translation type="unfinished">房間大小</translation>
+        <translation>房間大小</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="24"/>
         <source>Reverb time</source>
-        <translation type="unfinished">殘響時間</translation>
+        <translation>殘響時間</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="32"/>
         <source>Damping</source>
-        <translation type="unfinished">阻尼</translation>
+        <translation>阻尼</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="40"/>
         <source>Input bandwidth</source>
-        <translation type="unfinished">輸入頻寬</translation>
+        <translation>輸入頻寬</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="48"/>
         <source>Dry signal level</source>
-        <translation type="unfinished">乾訊號位準</translation>
+        <translation>乾訊號位準</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="56"/>
         <source>Early reflection level</source>
-        <translation type="unfinished">早反射位準</translation>
+        <translation>早反射位準</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="64"/>
         <source>Tail level</source>
-        <translation type="unfinished">尾聲位準</translation>
+        <translation>尾聲位準</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/meta.qml" line="7"/>
@@ -9379,7 +9384,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="7"/>
         <source>360: Equirectangular to Stereographic</source>
-        <translation type="unfinished"></translation>
+        <translation>360：從等角法到立體法</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="46"/>
@@ -9691,49 +9696,49 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/deband/meta.qml" line="26"/>
         <source>Deband</source>
-        <translation type="unfinished"></translation>
+        <translation>去除色帶</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="23"/>
         <source>GPS Text</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS文字</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reflect/meta.qml" line="6"/>
         <source>Reflect</source>
-        <translation type="unfinished"></translation>
+        <translation>反映</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="23"/>
         <source>Mask: Chroma Key</source>
-        <translation type="unfinished"></translation>
+        <translation>遮罩：影片去背</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="7"/>
         <source>Equalizer: 15-Band</source>
-        <translation type="unfinished"></translation>
+        <translation>等化器：15頻段</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="17"/>
         <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="17"/>
         <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="17"/>
         <source>Equalizer</source>
-        <translation type="unfinished"></translation>
+        <translation>等化器</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="7"/>
         <source>Equalizer: Parametric</source>
-        <translation type="unfinished"></translation>
+        <translation>等化器：參數</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/meta.qml" line="7"/>
         <source>Audio Level Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>音訊等級視覺化</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="7"/>
         <source>Equalizer: 3-Band (Bass &amp; Treble)</source>
-        <translation type="unfinished"></translation>
+        <translation>等化器：3頻段(Bass &amp; Treble)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="7"/>
@@ -9745,12 +9750,12 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/meta.qml" line="7"/>
         <source>Stereo Enhancer</source>
-        <translation type="unfinished"></translation>
+        <translation>立體聲強化器</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/meta.qml" line="6"/>
         <source>Mask: Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>遮罩：畫圖</translation>
     </message>
 </context>
 <context>
@@ -10175,7 +10180,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="878"/>
         <source>Do you want to insert an audio or video track?</source>
-        <translation type="unfinished"></translation>
+        <translation>你確定想要插入音訊或影片軌道嗎？</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="884"/>
@@ -10864,12 +10869,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="42"/>
         <source>%1 LUFS</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 LUFS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="45"/>
         <source>%1 dB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1分貝</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="49"/>
@@ -10886,22 +10891,22 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="119"/>
         <source>Detected Loudness:</source>
-        <translation type="unfinished"></translation>
+        <translation>偵測音量</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="121"/>
         <source>The loudness calculated by the analysis.</source>
-        <translation type="unfinished"></translation>
+        <translation>分析計算的音量</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="129"/>
         <source>Normalization Gain:</source>
-        <translation type="unfinished"></translation>
+        <translation>正規化增益</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="131"/>
-        <source>The gain applied to normalize to the Target Loudness.</source>
-        <translation type="unfinished"></translation>
+        <source>應用在正規化到目標響度的增益。</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="127"/>
@@ -11285,12 +11290,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="119"/>
         <source>Segment</source>
-        <translation type="unfinished"></translation>
+        <translation>段</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="135"/>
         <source>Graph Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>圖案顏色</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="160"/>
@@ -11312,12 +11317,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="245"/>
         <source>Mirror the levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>水平鏡像</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="255"/>
         <source>Reverse the levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>水平反轉</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="261"/>
@@ -11327,12 +11332,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="278"/>
         <source>Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>段</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="295"/>
         <source>Segment Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>分段差距</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="82"/>
@@ -11413,7 +11418,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="129"/>
         <source>&lt;b&gt;Low Shelf&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;低架子(Low Shelf)&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="195"/>
@@ -11436,7 +11441,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="236"/>
         <source>&lt;b&gt;Band 1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;頻段1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="284"/>
@@ -11451,22 +11456,22 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="362"/>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="431"/>
         <source> octaves</source>
-        <translation type="unfinished"></translation>
+        <translation>八度</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="305"/>
         <source>&lt;b&gt;Band 2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;頻段2&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="374"/>
         <source>&lt;b&gt;Band 3&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;頻段ˇ&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="443"/>
         <source>&lt;b&gt;High Shelf&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;高架子(High Shelf)&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="207"/>
@@ -12152,7 +12157,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="263"/>
         <source>Click in the rectangle atop the video to edit the text.</source>
-        <translation type="unfinished"></translation>
+        <translation>點擊影片上分的矩形來編輯文字</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="327"/>
@@ -12556,18 +12561,19 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="133"/>
         <source>Modify current mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>設定目前的映射</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="134"/>
         <source>Lock current mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>鎖定目前映射</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="146"/>
         <source>&quot;Modify current mapping&quot; will modify the input time at the current position.
 &quot;Lock current mapping&quot; will lock the input time at the current position and modify the value of an adjacent keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;設定目前的映射&quot; 會調整目前位置的輸入時間
+&quot;鎖定目前映射&quot; 會鎖定目前位置的輸入時間並調整相鄰關鍵數值的數值</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="268"/>
@@ -12612,17 +12618,17 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="375"/>
         <source>Speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>速度：</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="395"/>
         <source>Input Time:</source>
-        <translation type="unfinished"></translation>
+        <translation>輸入時間：</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="405"/>
         <source>Output Time:</source>
-        <translation type="unfinished"></translation>
+        <translation>匯出時間：</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="259"/>
@@ -12639,7 +12645,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="385"/>
         <source>Direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>方向</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="387"/>
@@ -12734,7 +12740,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="220"/>
         <source>A value of 0 will run the timer to the end of the filter</source>
-        <translation type="unfinished"></translation>
+        <translation>0的數值會使計時器跑到濾鏡的結尾</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="254"/>
@@ -12746,98 +12752,98 @@ When the direction is Up, the timer will count up starting from Offset.</source>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="276"/>
         <source>Timer seconds per playback second. Scales Duration but does not affect Start Delay or Offset.</source>
-        <translation type="unfinished"></translation>
+        <translation>每播放一秒計時器的秒數，影響長度但不影響開始延遲或偏移</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="153"/>
         <source>Minimal strength</source>
-        <translation type="unfinished"></translation>
+        <translation>最小力道</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="165"/>
         <source>Average strength</source>
-        <translation type="unfinished"></translation>
+        <translation>平均力道</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="177"/>
         <source>Blue sky</source>
-        <translation type="unfinished"></translation>
+        <translation>藍天空</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="189"/>
         <source>Red sky</source>
-        <translation type="unfinished"></translation>
+        <translation>紅天空</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="201"/>
         <source>Full range to limited range</source>
-        <translation type="unfinished"></translation>
+        <translation>全範圍到限制範圍</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="238"/>
         <source>Contrast threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>對比閥值</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="239"/>
         <source>Banding similarity within first component
 Y (luma) in YCbCr mode
 Red in RGB mode</source>
-        <translation type="unfinished"></translation>
+        <translation>第一部分的色帶相似度Y(luma)在YCbCr模式</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="257"/>
         <source>Blue threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>藍色閥值</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="258"/>
         <source>Banding similarity within second component
 Cb (blue) in YCbCr mode
 Green in RGB mode</source>
-        <translation type="unfinished"></translation>
+        <translation>第二部分的色帶相似度Cb(blue)在YCbCr模式</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="276"/>
         <source>Red threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>紅色閥值</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="277"/>
         <source>Banding similarity within third component
 Cr (red) in YCbCr mode
 Blue in RGB mode</source>
-        <translation type="unfinished"></translation>
+        <translation>第三部分的色帶相似度Cr (red) 在YCbCr模式</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="295"/>
         <source>Alpha threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>透明度閥值</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="296"/>
         <source>Banding similarity within fourth component</source>
-        <translation type="unfinished"></translation>
+        <translation>第四部分的色帶相似度</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="318"/>
         <source>Link thresholds</source>
-        <translation type="unfinished"></translation>
+        <translation>連結閥值</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="328"/>
         <source>Pixel range</source>
-        <translation type="unfinished"></translation>
+        <translation>像素範圍</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="329"/>
         <source>The size of bands being targeted</source>
-        <translation type="unfinished"></translation>
+        <translation>針對目標帶的範圍</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="353"/>
         <source>Randomize pixel range between zero and value</source>
-        <translation type="unfinished"></translation>
+        <translation>在0和其他數值隨機選擇</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="363"/>
@@ -12852,32 +12858,36 @@ Down = 90°
 Left = 180°
 Right = 0° or 360°
 All = 360° + Randomize</source>
-        <translation type="unfinished"></translation>
+        <translation>上 = 270°
+下 = 90°
+左 = 180°
+右 = 0° or 360°
+全部 = 360° + 隨機</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="388"/>
         <source>Randomize direction between zero degrees and value</source>
-        <translation type="unfinished"></translation>
+        <translation>0和其他數值隨機調整方向</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="402"/>
         <source>Measure similarity using average of neighbors</source>
-        <translation type="unfinished"></translation>
+        <translation>用附近數值平均估計相似度</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="403"/>
         <source>Compare to thresholds using average versus exact neighbor values</source>
-        <translation type="unfinished"></translation>
+        <translation>利用平均和實際周遭數值與閥值進行比較</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="420"/>
         <source>All components required to trigger deband</source>
-        <translation type="unfinished"></translation>
+        <translation>觸發去除色帶所有的部件</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="421"/>
         <source>Deband only if all pixel components (including alpha) are within thresholds</source>
-        <translation type="unfinished"></translation>
+        <translation>只有當所有像素組成（包括透明）都在閥值配才能去除色帶</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="421"/>
@@ -13394,18 +13404,19 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="187"/>
         <source>Mouse over filter elements for tips.</source>
-        <translation type="unfinished"></translation>
+        <translation>鼠標移到濾鏡元件上放觀看提醒</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="189"/>
         <source>No File Loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>沒有檔案載入</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="191"/>
         <source>No GPS file loaded.
 Click &quot;Open&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>沒有GPS檔案載入
+按&quot;開啟&quot;來載入檔案</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="251"/>
@@ -13415,176 +13426,182 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="255"/>
         <source>Open GPS File</source>
-        <translation type="unfinished"></translation>
+        <translation開啟GPS檔案></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="268"/>
         <source>&lt;b&gt;GPS options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;GPS選項&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="274"/>
         <source>GPS offset</source>
-        <translation type="unfinished"></translation>
+        <translation">GPS位移</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="277"/>
         <source>This is added to video time to sync with gps time.</source>
-        <translation type="unfinished"></translation>
+        <translation>這個被夾到影片時間以同步GPS時間</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="290"/>
         <source>+ : Adds time to video (use if GPS is ahead).
  - : Subtracts time from video (use if video is ahead).</source>
-        <translation type="unfinished"></translation>
+        <translation>+：為影片加入時間（使用如果GPS在前面）
+-：為影片減少時間（使用如果影片在前面）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="297"/>
         <source>days:</source>
-        <translation type="unfinished"></translation>
+        <translation>天：</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="313"/>
         <source>Number of days to add/subtract to video time to sync them.</source>
-        <translation type="unfinished"></translation>
+        <translation>天數增加/減少影片的時刻來同步他們</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="316"/>
         <source> h:</source>
-        <translation type="unfinished"></translation>
+        <translation>小時：</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="332"/>
         <source>Number of hours to add/subtract to video time to sync them.</source>
-        <translation type="unfinished"></translation>
+        <translation>小時數增加/減少影片的時刻來同步他們</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="335"/>
         <source>m:</source>
-        <translation type="unfinished"></translation>
+        <translation>分：</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="351"/>
         <source>Number of minutes to add/subtract to video time to sync them.</source>
-        <translation type="unfinished"></translation>
+        <translation>分鐘數增加/減少影片的時刻來同步他們</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="354"/>
         <source>s:</source>
-        <translation type="unfinished"></translation>
+        <translation>秒：</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="370"/>
         <source>Number of seconds to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
-        <translation type="unfinished"></translation>
+        <translation>秒數增加/減少影片的時刻來同步他們
+提醒：可以用滾輪改變數值</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="390"/>
         <source>Sync start of GPS to start of video file.
 Tip: use this if you started GPS and video recording at the same time.</source>
-        <translation type="unfinished"></translation>
+        <translation>同步GPS開始時間和影片開始時間
+提醒：GPS定位和影片錄製是同個時刻就使用這個</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="397"/>
         <source>Sync start of GPS to current video time.
 Tip: use this if you recorded the moment of the first GPS fix.</source>
-        <translation type="unfinished"></translation>
+        <translation>同步GPS開始時間和目前影片時間
+提醒：如果你紀錄了第一個GPS定位的時刻就使用這個
+</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="408"/>
         <source>GPS smoothing</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS平滑化</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="411"/>
         <source>Average nearby GPS points to smooth out errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>平均附近GPS點來平滑化誤差</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="418"/>
         <source>0 (raw data)</source>
-        <translation type="unfinished"></translation>
+        <translation>0（原始資料）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="419"/>
         <source>1 (interpolate and process data)</source>
-        <translation type="unfinished"></translation>
+        <translation>1（插值與處理數據）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="420"/>
         <source>3 points</source>
-        <translation type="unfinished"></translation>
+        <translation>3點</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="421"/>
         <source>5 points</source>
-        <translation type="unfinished"></translation>
+        <translation>5點</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="422"/>
         <source>7 points</source>
-        <translation type="unfinished"></translation>
+        <translation>7點</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="423"/>
         <source>11 points</source>
-        <translation type="unfinished"></translation>
+        <translation>11點</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="424"/>
         <source>15 points</source>
-        <translation type="unfinished"></translation>
+        <translation>15點</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="425"/>
         <source>31 points</source>
-        <translation type="unfinished"></translation>
+        <translation>31點</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="426"/>
         <source>63 points</source>
-        <translation type="unfinished"></translation>
+        <translation>63點</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="427"/>
         <source>127 points</source>
-        <translation type="unfinished"></translation>
+        <translation>127點</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="429"/>
         <source>GPS data processing is done only if smoothing is not 0.</source>
-        <translation type="unfinished"></translation>
+        <translation>只有平滑化非0GPS資料才能處理完成</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="477"/>
         <source>Processing start</source>
-        <translation type="unfinished"></translation>
+        <translation>開始處理</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="480"/>
         <source>Distances are calculated since the start of the gps file, use this field to reset them (GPS time).</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟gps檔案距離即被計算，用這個區域重新設置他們（GPS時間）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="489"/>
         <source>Insert date and time formatted exactly as: YYYY-MM-DD HH:MM:SS (GPS time).</source>
-        <translation type="unfinished"></translation>
+        <translation>加入的日期和時間格式須確實符合：YYYY-MM-DD HH:MM:SS (GPS時間
+        )</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="494"/>
         <source>Set start of GPS processing to current video time.</source>
-        <translation type="unfinished"></translation>
+        <translation>設定GPS處理目前的影片時間</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="514"/>
         <source>&lt;b&gt;Text options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;文字選項&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="605"/>
         <source>Insert GPS field</source>
-        <translation type="unfinished"></translation>
+        <translation>插入GPS區域</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="611"/>
@@ -13593,246 +13610,250 @@ Distance units: m [km|ft|mi].
 Speed units: km/h [mi/h|m/s|ft/s].
 Time default: %Y-%m-%d %H:%M:%S, extra offset can be added as +/-seconds (+3600).
 Extra keyword: RAW (prints only values from file).</source>
-        <translation type="unfinished"></translation>
+        <translation>額外的參數可以加進關鍵字：
+距離單位：公尺[公里|英尺|英里]
+速度單位：公里/小時[英里/小時|公尺/秒|英尺/秒]
+時間預設：%年-%月-%日 %時%分%秒（%Y-%m-%d %H:%M:%S），其他偏移量可以增加+/-秒（+3600）
+額外關鍵字：RAW（只會印出檔案的數值）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="614"/>
         <source>GPS latitude</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS緯度</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="615"/>
         <source>GPS longitude</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS經度</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="616"/>
         <source>Elevation (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>抬升（公尺）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="617"/>
         <source>Speed (km/h)</source>
-        <translation>速度 (公里/小時)</translation>
+        <translation>速度(公里/小時)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="618"/>
         <source>Distance (m)</source>
-        <translation>距離 (公尺)</translation>
+        <translation>距離(公尺)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="619"/>
         <source>GPS date-time</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS日期-時間（date-time）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="620"/>
         <source>Video file date-time</source>
-        <translation type="unfinished"></translation>
+        <translation>影片檔日期-時間（date-time）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="621"/>
         <source>Heart-rate (bpm)</source>
-        <translation type="unfinished"></translation>
+        <translation>心律（bpm）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="622"/>
         <source>Bearing (degrees)</source>
-        <translation type="unfinished"></translation>
+        <translation>方位（角度）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="623"/>
         <source>Bearing (compass)</source>
-        <translation type="unfinished"></translation>
+        <translation>方位（羅盤）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="624"/>
         <source>Elevation gain (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>抬升增益(公尺)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="625"/>
         <source>Elevation loss (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>抬升損失(公尺)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="626"/>
         <source>Distance uphill (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>上坡距離(公尺)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="627"/>
         <source>Distance downhill (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>下坡距離(公尺)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="628"/>
         <source>Distance flat (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>平坦距離(公尺)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="694"/>
         <source>&lt;b&gt;Speed options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;速度選項&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="699"/>
         <source>Video speed</source>
-        <translation type="unfinished"></translation>
+        <translation>影片速度</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="702"/>
         <source>If the current video is sped up (timelapse) or slowed down use this field to set the speed.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果目前的影片已經被加速或緩速，使用這個區域設定速度</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="712"/>
         <source>Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).</source>
-        <translation type="unfinished"></translation>
+        <translation>允許小數時間(0.25=4倍慢動作，5=5倍縮時)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="725"/>
         <source>Update speed</source>
-        <translation type="unfinished"></translation>
+        <translation>更新速度</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="728"/>
         <source>Set how many text updates to show per second.
 Set to 0 to only print real points (no interpolation).</source>
-        <translation type="unfinished"></translation>
+        <translation>設定每秒的文字更新速度（0就只會有真實的點，不會有插值）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="738"/>
         <source>Fractional times are also allowed (0.25 = update every 4 seconds, 5 = 5 updates per second).</source>
-        <translation type="unfinished"></translation>
+        <translation>允許小數時間（0.25=4秒更新一次，5=1秒更新5次）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="741"/>
         <source> per second</source>
-        <translation type="unfinished"></translation>
+        <translation>每秒</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="767"/>
         <source>Video start time:</source>
-        <translation type="unfinished"></translation>
+        <translation>影片開始時間</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="770"/>
         <source>Detected date-time for the video file.</source>
-        <translation type="unfinished"></translation>
+        <translation>偵測到影片檔的日期時間（date-time）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="781"/>
         <source>GPS start time:</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS開始時間</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="784"/>
         <source>Detected date-time for the GPS file.</source>
-        <translation type="unfinished"></translation>
+        <translation>偵測到GPS檔案的日期-時間（date-time）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="789"/>
         <source>This time will be used for synchronization.</source>
-        <translation type="unfinished"></translation>
+        <translation>這個時間會用於同步化</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="354"/>
         <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="104"/>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="158"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="370"/>
-        <source>Tip: Mask other video filters by adding filters after this one followed by &lt;b&gt;Mask: Apply&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>Mask other video filters by adding filters after this one followed by &lt;b&gt;Mask: Apply&lt;/b&gt;</source>
+        <translation>提醒：在&lt;b&gt;遮罩：套用&lt;/b&gt;後面的其他的影片濾鏡會被遮掩</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="129"/>
         <source>50 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="189"/>
         <source>100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="210"/>
         <source>156 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>156赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="231"/>
         <source>220 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>220赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="252"/>
         <source>311 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>311赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="273"/>
         <source>440 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>440赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="294"/>
         <source>622 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>622赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="315"/>
         <source>880 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>880赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="336"/>
         <source>1250 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>1250赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="357"/>
         <source>1750 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>1750赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="378"/>
         <source>2500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>2500赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="399"/>
         <source>3500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>3500赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="420"/>
         <source>5000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50000赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="441"/>
         <source>10000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>10000赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="462"/>
         <source>20000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>20000赫茲</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="113"/>
         <source>Low</source>
-        <translation type="unfinished"></translation>
+        <translation>低</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="161"/>
         <source>Mid</source>
-        <translation type="unfinished"></translation>
+        <translation>中</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="182"/>
         <source>High</source>
-        <translation type="unfinished"></translation>
+        <translation>高</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="88"/>
@@ -13842,67 +13863,67 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="94"/>
         <source>Middle (L+R)</source>
-        <translation type="unfinished"></translation>
+        <translation>中央（左+右）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="94"/>
         <source>Side (L-R)</source>
-        <translation type="unfinished"></translation>
+        <translation>旁邊（左-右）</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="111"/>
         <source>Left delay</source>
-        <translation type="unfinished"></translation>
+        <translation>左方增益</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="133"/>
         <source>Left delay gain</source>
-        <translation type="unfinished"></translation>
+        <translation>左方延遲增益</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="155"/>
         <source>Right delay</source>
-        <translation type="unfinished"></translation>
+        <translation>右方增益</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="177"/>
         <source>Right delay gain</source>
-        <translation type="unfinished"></translation>
+        <translation>右方延遲增益</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="199"/>
         <source>Output gain</source>
-        <translation type="unfinished"></translation>
+        <translation>輸出增益</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="107"/>
         <source>New...</source>
-        <translation type="unfinished"></translation>
+        <translation>新...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="118"/>
         <source>New Animation File</source>
-        <translation type="unfinished"></translation>
+        <translation>新動畫檔案</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="127"/>
         <source>Open Animation File</source>
-        <translation type="unfinished"></translation>
+        <translation>打開動畫檔案</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="135"/>
         <source>Click &lt;b&gt;New...&lt;/b&gt; or &lt;b&gt;Open...&lt;/b&gt; to use this filter</source>
-        <translation type="unfinished"></translation>
+        <translation>點擊&lt;b&gt;New...&lt;/b&gt;或是&lt;b&gt;打開&lt;/b&gt;已使用這個濾鏡</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="142"/>
         <source>Edit...</source>
-        <translation type="unfinished">編輯…</translation>
+        <translation>編輯…</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="146"/>
         <source>Reload</source>
-        <translation type="unfinished">重新載入</translation>
+        <translation>重新載入</translation>
     </message>
 </context>
 <context>
@@ -14334,7 +14355,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="130"/>
         <source>Segment</source>
-        <translation type="unfinished"></translation>
+        <translation>分段</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="146"/>
@@ -14384,12 +14405,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="296"/>
         <source>Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>分段</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="313"/>
         <source>Segment Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>分段差距</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="330"/>
