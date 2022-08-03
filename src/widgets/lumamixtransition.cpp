@@ -21,6 +21,8 @@
 #include "mltcontroller.h"
 #include "mainwindow.h"
 #include "util.h"
+#include "widgets/producerpreviewwidget.h"
+
 #include <QFileDialog>
 #include <QFileInfo>
 #include <Logger.h>
@@ -37,6 +39,8 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_2);
     m_maxStockIndex = ui->lumaCombo->count() - 1;
+
+    // Load the wipes in AppDatDir/wipes
     QDir dir(Settings.appDataLocation());
     if (dir.cd("wipes")) {
         for (auto &s : dir.entryList(QDir::Files | QDir::Readable)) {
@@ -59,6 +63,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         } else if (!resource.isEmpty()) {
             ui->lumaCombo->setCurrentRow(kLumaComboCustomIndex);
         } else {
+            ui->lumaCombo->setCurrentRow(kLumaComboDissolveIndex);
             ui->invertCheckBox->setDisabled(true);
             ui->softnessSlider->setDisabled(true);
             ui->softnessSpinner->setDisabled(true);
@@ -79,10 +84,14 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         }
         ui->mixSlider->setValue(qRound(transition->get_double("start") * 100.0));
     }
+    m_preview = new ProducerPreviewWidget(MLT.profile().dar());
+    ui->horizontalLayout->addWidget(m_preview, 0, Qt::AlignCenter);
+    connect(this, SIGNAL(modified()), this, SLOT(startPreview()), Qt::QueuedConnection);
 }
 
 LumaMixTransition::~LumaMixTransition()
 {
+    m_preview->stop();
     delete ui;
 }
 
@@ -234,5 +243,13 @@ void LumaMixTransition::on_lumaCombo_currentRowChanged(int index)
         updateCustomLumaLabel(*transition);
         MLT.refreshConsumer();
         emit modified();
+    }
+}
+
+void LumaMixTransition::startPreview()
+{
+    if (m_producer.is_valid()) {
+        m_preview->stop();
+        m_preview->start(new Mlt::Producer(m_producer));
     }
 }

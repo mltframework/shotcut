@@ -25,6 +25,7 @@
 namespace Ui {
 class LumaMixTransition;
 }
+class ProducerPreviewWidget;
 
 class LumaMixTransition : public QWidget
 {
@@ -50,10 +51,13 @@ private slots:
 
     void on_lumaCombo_currentRowChanged(int index);
 
+    void startPreview();
+
 private:
     Ui::LumaMixTransition *ui;
     Mlt::Producer m_producer;
     int m_maxStockIndex;
+    ProducerPreviewWidget *m_preview;
 
     Mlt::Transition *getTransition(const QString &name);
     void updateCustomLumaLabel(Mlt::Transition &transition);
