@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ class QmlApplication : public QObject
     Q_PROPERTY(bool hasFiltersOnClipboard READ hasFiltersOnClipboard NOTIFY filtersCopied)
     Q_PROPERTY(qreal devicePixelRatio READ devicePixelRatio CONSTANT)
     Q_PROPERTY(int maxTextureSize READ maxTextureSize CONSTANT)
+    Q_PROPERTY(QStringList wipes READ wipes CONSTANT)
 
 public:
     static QmlApplication &singleton();
@@ -62,6 +63,7 @@ public:
     Q_INVOKABLE static bool confirmOutputFilter();
     static QDir dataDir();
     Q_INVOKABLE static QColor contrastingColor(QString color);
+    static QStringList wipes();
 
 signals:
     void paletteChanged();

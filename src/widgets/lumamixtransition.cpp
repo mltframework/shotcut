@@ -22,6 +22,7 @@
 #include "mainwindow.h"
 #include "util.h"
 #include "widgets/producerpreviewwidget.h"
+#include "qmltypes/qmlapplication.h"
 
 #include <QFileDialog>
 #include <QFileInfo>
@@ -41,13 +42,10 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     m_maxStockIndex = ui->lumaCombo->count() - 1;
 
     // Load the wipes in AppDatDir/wipes
-    QDir dir(Settings.appDataLocation());
-    if (dir.cd("wipes")) {
-        for (auto &s : dir.entryList(QDir::Files | QDir::Readable)) {
-            auto i = new QListWidgetItem(s);
-            i->setData(Qt::UserRole, dir.filePath(s));
-            ui->lumaCombo->addItem(i);
-        }
+    for (auto &s : QmlApplication::wipes()) {
+        auto i = new QListWidgetItem(QFileInfo(s).fileName());
+        i->setData(Qt::UserRole, s);
+        ui->lumaCombo->addItem(i);
     }
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
@@ -61,7 +59,14 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
             ui->softnessSlider->setValue(qRound(QColor(resource.mid(6)).redF() * 100.0));
             ui->invertCheckBox->setDisabled(true);
         } else if (!resource.isEmpty()) {
-            ui->lumaCombo->setCurrentRow(kLumaComboCustomIndex);
+            for (int i = kLumaComboCustomIndex; i < ui->lumaCombo->count(); ++i) {
+                if (ui->lumaCombo->item(i)->data(Qt::UserRole).toString() == resource) {
+                    ui->lumaCombo->setCurrentRow(i);
+                    break;
+                }
+            }
+            if (ui->lumaCombo->currentRow() < 0)
+                ui->lumaCombo->setCurrentRow(kLumaComboCustomIndex);
         } else {
             ui->lumaCombo->setCurrentRow(kLumaComboDissolveIndex);
             ui->invertCheckBox->setDisabled(true);

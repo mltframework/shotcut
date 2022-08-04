@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -241,4 +241,16 @@ QDir QmlApplication::dataDir()
 QColor QmlApplication::contrastingColor(QString color)
 {
     return Util::textColor(color);
+}
+
+QStringList QmlApplication::wipes()
+{
+    QStringList result;
+    QDir dir(Settings.appDataLocation());
+    if (dir.cd("wipes")) {
+        for (auto &s : dir.entryList(QDir::Files | QDir::Readable)) {
+            result << dir.filePath(s);
+        }
+    }
+    return result;
 }

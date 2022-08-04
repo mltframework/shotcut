@@ -84,7 +84,7 @@ Item {
         setKeyframedControls()
         shapeFile.url = filter.get('filter.resource')
         if (shapeFile.fileName.substring(0,5) === '%luma') {
-            for (var i = 1; i < resourceCombo.model.length; ++i) {
+            for (var i = 1; i < resourceCombo.model.count; ++i) {
                 var s = (i < 10) ? '%luma0%1.pgm' : '%luma%1.pgm'
                 if (s.arg(i) === shapeFile.fileName) {
                     resourceCombo.currentIndex = (i === 1)? 0 : i
@@ -93,7 +93,15 @@ Item {
             }
             alphaRadioButton.enabled = false
         } else {
-            resourceCombo.currentIndex = 1
+            for (i in application.wipes) {
+                if (shapeFile.filePath === application.wipes[i]) {
+                    resourceCombo.currentIndex = i + 23;
+                    break
+                }
+            }
+            if (resourceCombo.currentIndex === -1) {
+                resourceCombo.currentIndex = 1
+            }
             fileLabel.text = shapeFile.fileName
             fileLabelTip.text = shapeFile.filePath
             alphaRadioButton.enabled = true
@@ -211,10 +219,43 @@ Item {
             text: qsTr('File')
             Layout.alignment: Qt.AlignRight
         }
+        Shotcut.File { id: wipeFile }
         Shotcut.ComboBox {
             id: resourceCombo
-            implicitWidth: 250
-            model: [qsTr('Bar Horizontal'), qsTr('Custom...'), qsTr('Bar Vertical'), qsTr('Barn Door Horizontal'), qsTr('Barn Door Vertical'), qsTr('Barn Door Diagonal SW-NE'), qsTr('Barn Door Diagonal NW-SE'), qsTr('Diagonal Top Left'), qsTr('Diagonal Top Right'), qsTr('Matrix Waterfall Horizontal'), qsTr('Matrix Waterfall Vertical'), qsTr('Matrix Snake Horizontal'), qsTr('Matrix Snake Parallel Horizontal'), qsTr('Matrix Snake Vertical'), qsTr('Matrix Snake Parallel Vertical'), qsTr('Barn V Up'), qsTr('Iris Circle'), qsTr('Double Iris'), qsTr('Iris Box'), qsTr('Box Bottom Right'), qsTr('Box Bottom Left'), qsTr('Box Right Center'), qsTr('Clock Top')]
+            implicitWidth: 300
+            model: ListModel {
+                id: listModel
+                ListElement { text: qsTr('Bar Horizontal'); value: '%luma01.pgm' }
+                ListElement { text: qsTr('Custom...'); value: '' }
+                ListElement { text: qsTr('Bar Vertical'); value: '%luma02.pgm' }
+                ListElement { text: qsTr('Barn Door Horizontal'); value: '%luma03.pgm' }
+                ListElement { text: qsTr('Barn Door Vertical'); value: '%luma04.pgm' }
+                ListElement { text: qsTr('Barn Door Diagonal SW-NE'); value: '%luma05.pgm' }
+                ListElement { text: qsTr('Barn Door Diagonal NW-SE'); value: '%luma06.pgm' }
+                ListElement { text: qsTr('Diagonal Top Left'); value: '%luma07.pgm' }
+                ListElement { text: qsTr('Diagonal Top Right'); value: '%luma08.pgm' }
+                ListElement { text: qsTr('Matrix Waterfall Horizontal'); value: '%luma09.pgm' }
+                ListElement { text: qsTr('Matrix Waterfall Vertical'); value: '%luma10.pgm' }
+                ListElement { text: qsTr('Matrix Snake Horizontal'); value: '%luma11.pgm' }
+                ListElement { text: qsTr('Matrix Snake Parallel Horizontal'); value: '%luma12.pgm' }
+                ListElement { text: qsTr('Matrix Snake Vertical'); value: '%luma13.pgm' }
+                ListElement { text: qsTr('Matrix Snake Parallel Vertical'); value: '%luma14.pgm' }
+                ListElement { text: qsTr('Barn V Up'); value: '%luma15.pgm' }
+                ListElement { text: qsTr('Iris Circle'); value: '%luma16.pgm' }
+                ListElement { text: qsTr('Double Iris'); value: '%luma17.pgm' }
+                ListElement { text: qsTr('Iris Box'); value: '%luma18.pgm' }
+                ListElement { text: qsTr('Box Bottom Right'); value: '%luma19.pgm' }
+                ListElement { text: qsTr('Box Bottom Left'); value: '%luma20.pgm' }
+                ListElement { text: qsTr('Box Right Center'); value: '%luma21.pgm' }
+                ListElement { text: qsTr('Clock Top'); value: '%luma22.pgm' }
+                Component.onCompleted: {
+                    application.wipes.forEach(function(el) {
+                        wipeFile.url = el
+                        append({text: wipeFile.fileName, value: el})
+                    })
+                }
+            }
+            textRole: 'text'
             currentIndex: 0
             Shotcut.HoverTip {
                 text: qsTr('Set a mask from another file\'s brightness or alpha.')
@@ -235,12 +276,12 @@ Item {
                     fileDialog.title = qsTr('Open Mask File')
                     fileDialog.open()
                 } else {
-                    var s = (index < 10) ? '%luma0%1.pgm' : '%luma%1.pgm'
-                    filter.set('filter.resource', s.arg(index === 0? 1 : index))
+                    var s = resourceCombo.model.get(index).value
+                    filter.set('filter.resource', s)
                     previousResourceComboIndex = index
                     brightnessRadioButton.checked = true
                     filter.set('filter.use_luminance', 1)
-                    alphaRadioButton.enabled = false
+                    alphaRadioButton.enabled = index >= 23
                 }
             }
         }
@@ -391,6 +432,6 @@ Item {
     }
     Connections {
         target: producer
-        function onPositionChanged() setKeyframedControls()
+        function onPositionChanged() { setKeyframedControls() }
     }
 }
