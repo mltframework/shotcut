@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ Item {
     function updateFilter() {
         var name = (filter.get('alpha') != 1)? 'alpha' : 'level'
         filter.resetProperty(name)
-        filter.set(name, 1, filter.duration - duration)
+        filter.set(name, 1, Math.max(filter.duration - duration, 0))
         filter.set(name, 0, filter.duration - 1)
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ Item {
 
     function updateFilter() {
         filter.resetProperty('level')
-        filter.set('level', 0, filter.duration - duration)
+        filter.set('level', 0, Math.max(filter.duration - duration, 0))
         filter.set('level', -60, filter.duration - 1)
     }
 

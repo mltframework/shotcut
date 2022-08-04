@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ Item {
                     filter.animateIn = duration
                     filter.resetProperty('level')
                     filter.set('level', -60, 0)
-                    filter.set('level', 0, duration - 1)
+                    filter.set('level', 0, Math.min(duration, filter.duration) - 1)
                 }
                 onSetDefaultClicked: {
                     duration = Math.ceil(settings.audioInDuration * profile.fps)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ Item {
                     filter.animateIn = duration
                     filter.resetProperty('opacity')
                     filter.set('opacity', 0, 0, KeyframesModel.SmoothInterpolation)
-                    filter.set('opacity', 1, duration - 1)
+                    filter.set('opacity', 1, Math.min(duration, filter.duration) - 1)
                 }
                 onSetDefaultClicked: {
                     duration = Math.ceil(settings.videoInDuration * profile.fps)

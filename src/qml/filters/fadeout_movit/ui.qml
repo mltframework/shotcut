@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +49,7 @@ Item {
 
     function updateFilter() {
         var filterDuration = producer.duration
-        filter.set('opacity', '%1~=1; %2=0'.arg(filterDuration - duration).arg(filterDuration - 1))
+        filter.set('opacity', '%1~=1; %2=0'.arg(Math.max(filterDuration - duration, 0)).arg(filterDuration - 1))
     }
 
     ColumnLayout {
