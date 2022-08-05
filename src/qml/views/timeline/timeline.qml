@@ -39,6 +39,8 @@ Rectangle {
             targetX = tracksFlickable.contentX + tracksFlickable.width / 2
         var offset = targetX - tracksFlickable.contentX
         var before = multitrack.scaleFactor
+        if (isNaN(value))
+            value = 0.00
         multitrack.scaleFactor = Math.pow(value, 3) + 0.01
         if (!settings.timelineCenterPlayhead && !settings.timelineScrollZoom)
             tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset
