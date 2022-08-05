@@ -181,6 +181,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     zoomSlider->setMinimum(0);
     zoomSlider->setMaximum(300);
     zoomSlider->setValue(100);
+    zoomSlider->setTracking(false);
     connect(zoomSlider, &QSlider::valueChanged, this, [&](int value) {
         if (!isVisible() || !m_quickView.rootObject()) return;
         setZoom(value / 100.0);
