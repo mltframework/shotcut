@@ -33,7 +33,6 @@ ProducerPreviewWidget::ProducerPreviewWidget(double dar)
     , m_previewSize(320, 320)
     , m_seekTo(-1)
     , m_timerId(0)
-    , m_producer(nullptr)
     , m_queue(10, DataQueue<QueueItem>::OverflowModeWait)
     , m_generateFrames(false)
 {
@@ -72,14 +71,14 @@ ProducerPreviewWidget::~ProducerPreviewWidget()
     stop();
 }
 
-void ProducerPreviewWidget::start(Mlt::Producer *producer)
+void ProducerPreviewWidget::start(const Mlt::Producer &producer)
 {
     m_producer = producer;
 
-    if ( m_producer ) {
+    if (m_producer.is_valid()) {
         // Set up the preview display and timer
         m_scrubber->setFramerate(MLT.profile().fps());
-        m_scrubber->setScale(m_producer->get_length());
+        m_scrubber->setScale(m_producer.get_length());
         // Display preview at half frame rate.
         int milliseconds = 2 * 1000.0 / MLT.profile().fps();
         m_timerId = startTimer(milliseconds);
@@ -101,10 +100,7 @@ void ProducerPreviewWidget::ProducerPreviewWidget::stop()
         m_queue.pop();
     }
     m_future.waitForFinished();
-    if (m_producer) {
-        delete m_producer;
-        m_producer = nullptr;
-    }
+    m_producer = Mlt::Producer();
     while ( m_queue.count() > 0 ) {
         m_queue.pop();
     }
@@ -136,22 +132,22 @@ void ProducerPreviewWidget::timerEvent(QTimerEvent *)
 
 void ProducerPreviewWidget::frameGeneratorThread()
 {
-    while ( m_generateFrames && m_producer ) {
+    while (m_generateFrames && m_producer.is_valid()) {
         // Check for seek
         if (m_seekTo != -1) {
-            m_producer->seek(m_seekTo);
+            m_producer.seek(m_seekTo);
             m_seekTo = -1;
             while ( m_queue.count() > 1 ) {
                 m_queue.pop();
             }
         }
         // Get the image
-        int position = m_producer->position();
-        int length = m_producer->get_length();
+        int position = m_producer.position();
+        int length = m_producer.get_length();
         int width = m_previewSize.width();
         int height = m_previewSize.height();
         mlt_image_format format = mlt_image_rgb;
-        Mlt::Frame *frame = m_producer->get_frame();
+        Mlt::Frame *frame = m_producer.get_frame();
         frame->set( "rescale.interp", "bilinear" );
         uint8_t *mltImage = frame->get_image( format, width, height, 0 );
         QImage image( mltImage, width, height, QImage::Format_RGB888 );
@@ -160,15 +156,15 @@ void ProducerPreviewWidget::frameGeneratorThread()
         QueueItem item;
         item.pixmap.convertFromImage(image);
         item.position = position;
-        item.positionText = QString::fromLatin1(m_producer->frame_time()) + QString(" / ") +
-                            QString::fromLatin1(m_producer->get_length_time());
+        item.positionText = QString::fromLatin1(m_producer.frame_time()) + QString(" / ") +
+                            QString::fromLatin1(m_producer.get_length_time());
         m_queue.push(item);
 
         // Seek to the next frame (every other frame with repeat)
         if (position + 2 >= length) {
-            m_producer->seek(0);
+            m_producer.seek(0);
         } else {
-            m_producer->seek(position + 2);
+            m_producer.seek(position + 2);
         }
         delete frame;
     }

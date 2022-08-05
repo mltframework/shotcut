@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 #ifndef SLIDESHOWGENERATORWIDGET_H
 #define SLIDESHOWGENERATORWIDGET_H
 
+#include <MltProducer.h>
+
 #include <QFuture>
 #include <QMutex>
 #include <QWidget>
@@ -29,7 +31,6 @@ class QSpinBox;
 namespace Mlt {
 class Filter;
 class Playlist;
-class Producer;
 class Transition;
 }
 class ProducerPreviewWidget;
@@ -77,7 +78,7 @@ private:
     QMutex m_mutex;
     bool m_refreshPreview;
     SlideshowConfig m_config;
-    Mlt::Producer *m_previewProducer;
+    Mlt::Producer m_previewProducer;
 };
 
 #endif // SLIDESHOWGENERATORWIDGET_H

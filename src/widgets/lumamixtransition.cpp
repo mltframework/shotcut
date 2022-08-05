@@ -255,6 +255,6 @@ void LumaMixTransition::startPreview()
 {
     if (m_producer.is_valid()) {
         m_preview->stop();
-        m_preview->start(new Mlt::Producer(m_producer));
+        m_preview->start(m_producer);
     }
 }

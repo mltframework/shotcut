@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,6 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     : QWidget(parent)
     , m_clips(clips)
     , m_refreshPreview(false)
-    , m_previewProducer(nullptr)
 {
     QGridLayout *grid = new QGridLayout();
     setLayout(grid);
@@ -155,9 +154,6 @@ SlideshowGeneratorWidget::~SlideshowGeneratorWidget()
 {
     m_future.waitForFinished();
     m_preview->stop();
-    if (m_previewProducer) {
-        delete m_previewProducer;
-    }
 }
 
 Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
@@ -460,19 +456,12 @@ void SlideshowGeneratorWidget::generatePreviewSlideshow()
         m_refreshPreview = false;
 
         m_mutex.unlock();
-        Mlt::Producer *newProducer = getSlideshow();
+        Mlt::Producer newProducer = getSlideshow();
         m_mutex.lock();
 
         if (!m_refreshPreview) {
-            if (m_previewProducer) {
-                delete m_previewProducer;
-            }
             m_previewProducer = newProducer;
             QMetaObject::invokeMethod(this, "startPreview", Qt::QueuedConnection);
-        } else {
-            // Another refresh was requested while we generated this producer.
-            // Delete it and make a new one.
-            delete newProducer;
         }
     }
     m_mutex.unlock();
@@ -481,9 +470,9 @@ void SlideshowGeneratorWidget::generatePreviewSlideshow()
 void SlideshowGeneratorWidget::startPreview()
 {
     m_mutex.lock();
-    if (m_previewProducer) {
+    if (m_previewProducer.is_valid()) {
         m_preview->start(m_previewProducer);
     }
-    m_previewProducer = nullptr;
+    m_previewProducer = Mlt::Producer();
     m_mutex.unlock();
 }

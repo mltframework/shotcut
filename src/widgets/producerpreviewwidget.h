@@ -20,15 +20,14 @@
 
 #include "dataqueue.h"
 
+#include <MltProducer.h>
+
 #include <QFuture>
 #include <QPixmap>
 #include <QWidget>
 
 class QLabel;
 class ScrubBar;
-namespace Mlt {
-class Producer;
-}
 
 class ProducerPreviewWidget : public QWidget
 {
@@ -38,7 +37,7 @@ public:
     explicit ProducerPreviewWidget(double dar);
     virtual ~ProducerPreviewWidget();
 
-    void start(Mlt::Producer *producer);
+    void start(const Mlt::Producer &producer);
     void stop();
     void showText(QString text);
 
@@ -55,7 +54,7 @@ private:
     QLabel *m_posLabel;
     int m_seekTo;
     int m_timerId;
-    Mlt::Producer *m_producer;
+    Mlt::Producer m_producer;
     struct QueueItem {
         QPixmap pixmap;
         int position;
