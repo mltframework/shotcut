@@ -524,7 +524,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Set Current Track Above"), this);
     action->setObjectName("timelineCurrentTrackAboveAction");
-    action->setShortcut(QKeySequence(Qt::Key_Up));
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::META + Qt::Key_Up));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         incrementCurrentTrack(-1);
@@ -533,7 +533,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Set Current Track Below"), this);
     action->setObjectName("timelineCurrentTrackBelowAction");
-    action->setShortcut(QKeySequence(Qt::Key_Down));
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::META + Qt::Key_Down));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         incrementCurrentTrack(1);
