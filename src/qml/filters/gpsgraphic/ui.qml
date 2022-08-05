@@ -53,11 +53,6 @@ Item {
     signal fileOpened(string path)
     onFileOpened: settings.openPath = path
 
-    FontMetrics {
-        id: fontMetrics
-        font: offset_days.font
-    }
-
     Component.onCompleted: {
         filter.blockSignals = true
 
