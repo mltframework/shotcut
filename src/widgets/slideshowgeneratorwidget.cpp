@@ -22,6 +22,7 @@
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "widgets/producerpreviewwidget.h"
+#include "qmltypes/qmlapplication.h"
 
 #include <QComboBox>
 #include <QDebug>
@@ -128,6 +129,9 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     m_transitionStyleCombo->addItem(tr("Box Bottom Left"));
     m_transitionStyleCombo->addItem(tr("Box Right Center"));
     m_transitionStyleCombo->addItem(tr("Clock Top"));
+    for (auto &s : QmlApplication::wipes()) {
+        m_transitionStyleCombo->addItem(QFileInfo(s).fileName(), s);
+    }
     m_transitionStyleCombo->setToolTip(tr("Choose a transition effect."));
     m_transitionStyleCombo->setCurrentIndex(1);
     connect(m_transitionStyleCombo, SIGNAL(currentIndexChanged(int)), this,
@@ -407,9 +411,11 @@ void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition *lu
     if (index == 1) {
         // Dissolve
         luma->set("resource", "");
-    } else {
+    } else if (index <= 23) {
         luma->set("resource", QString("%luma%1.pgm").arg(index - 1, 2, 10,
                                                          QChar('0')).toLatin1().constData());
+    } else {
+        luma->set("resource", m_transitionStyleCombo->itemData(index).toString().toUtf8().constData());
     }
     luma->set("softness", config.transitionSoftness / 100.0);
     luma->set("progressive", 1);
