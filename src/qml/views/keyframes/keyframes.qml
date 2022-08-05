@@ -56,6 +56,8 @@ Rectangle {
             targetX = tracksFlickable.contentX + tracksFlickable.width / 2
         var offset = targetX - tracksFlickable.contentX
         var before = timeScale
+        if (isNaN(value))
+            value = 0.0
         timeScale = Math.pow(value, 3) + 0.01
         tracksFlickable.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x)
     }
