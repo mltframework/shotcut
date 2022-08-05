@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -768,17 +768,23 @@ void QmlFilter::deselect()
 
 bool QmlFilter::allowTrim() const
 {
-    return const_cast<QmlMetadata *>(m_metadata)->keyframes()->allowTrim();
+    if (m_metadata && m_metadata->keyframes())
+        return m_metadata->keyframes()->allowTrim();
+    return false;
 }
 
 bool QmlFilter::allowAnimateIn() const
 {
-    return const_cast<QmlMetadata *>(m_metadata)->keyframes()->allowAnimateIn();
+    if (m_metadata && m_metadata->keyframes())
+        return m_metadata->keyframes()->allowAnimateIn();
+    return false;
 }
 
 bool QmlFilter::allowAnimateOut() const
 {
-    return const_cast<QmlMetadata *>(m_metadata)->keyframes()->allowAnimateOut();
+    if (m_metadata && m_metadata->keyframes())
+        return m_metadata->keyframes()->allowAnimateOut();
+    return false;
 }
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter &filter)

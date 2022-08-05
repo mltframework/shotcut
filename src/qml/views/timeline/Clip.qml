@@ -45,6 +45,7 @@ Rectangle {
     property bool isTrackMute: false
 
     signal clicked(var clip, var mouse)
+    signal clipRightClicked(var clip, var mouse)
     signal moved(var clip)
     signal dragged(var clip, var mouse)
     signal dropped(var clip)
@@ -69,7 +70,7 @@ Rectangle {
     }
 
     border.color: (selected || Drag.active || trackIndex != originalTrackIndex)? 'red' : 'black'
-    border.width: isBlank? 0 : 1
+    border.width: isBlank && !selected ? 0 : 1
     clip: true
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
@@ -94,6 +95,20 @@ Rectangle {
         for (var i = 0; i < waveformRepeater.count; i++)
             waveformRepeater.itemAt(0).update()
     }
+
+    function updateThumbnails() {
+        var s = inThumbnail.source.toString()
+        if (s.substring(s.length - 1) !== '!') {
+            inThumbnail.source = s + '!'
+            resetThumbnailsSourceTimer.restart()
+        }
+        s = outThumbnail.source.toString()
+        if (s.substring(s.length - 1) !== '!') {
+            outThumbnail.source = s + '!'
+            resetThumbnailsSourceTimer.restart()
+        }
+    }
+
 
     function imagePath(time) {
         if (isAudio || isBlank || isTransition) {
@@ -325,7 +340,8 @@ Rectangle {
         acceptedButtons: Qt.RightButton
         onClicked: {
             timeline.position = timeline.position // pause
-            menu.show()
+            clipRoot.clicked(clipRoot, mouse)
+            clipRoot.clipRightClicked(clipRoot, mouse)
         }
     }
 
@@ -396,7 +412,7 @@ Rectangle {
                 timeline.position = timeline.position // pause
                 clipRoot.forceActiveFocus();
                 clipRoot.clicked(clipRoot, mouse)
-                menu.show()
+                clipRoot.clipRightClicked(clipRoot, mouse)
             }
         }
     }
@@ -660,102 +676,6 @@ Rectangle {
             }
             onEntered: parent.opacity = 0.5
             onExited: parent.opacity = 0
-        }
-    }
-    Menu {
-        id: menu
-        function show() {
-            mergeItem.enabled = timeline.mergeClipWithNext(trackIndex, index, true)
-            popup()
-        }
-        MenuItem {
-            enabled: !isBlank && !isTransition
-            text: qsTr('Cut') + (application.OS === 'OS X'? '    ⌘X' : ' (Ctrl+X)')
-            onTriggered: {
-                if (!trackRoot.isLocked) {
-                    timeline.removeSelection(true)
-                } else {
-                    root.pulseLockButtonOnTrack(timeline.currentTrack)
-                }
-            }
-        }
-        MenuItem {
-            enabled: !isBlank && !isTransition
-            text: qsTr('Copy') + (application.OS === 'OS X'? '    ⌘C' : ' (Ctrl+C)')
-            onTriggered: timeline.copy(trackIndex, index)
-        }
-        MenuItem {
-            text: qsTr('Remove') + (isBlank? '' : (application.OS === 'OS X'? '    X' : ' (X)'))
-            onTriggered: isBlank? timeline.remove(trackIndex, index) : timeline.removeSelection(false)
-        }
-        MenuItem {
-            enabled: !isBlank && !isTransition
-            text: qsTr('Split At Playhead') + (application.OS === 'OS X'? '    S' : ' (S)')
-            onTriggered: timeline.splitClip(trackIndex, index)
-        }
-        Menu {
-            title: qsTr('More')
-            MenuItem {
-                enabled: !isBlank
-                text: qsTr('Lift') + (application.OS === 'OS X'? '    Z' : ' (Z)')
-                onTriggered: timeline.liftSelection()
-            }
-            MenuItem {
-                enabled: !isTransition
-                text: qsTr('Replace') + (application.OS === 'OS X'? '    R' : ' (R)')
-                onTriggered: timeline.replace(trackIndex, index)
-            }
-            MenuItem {
-                id: mergeItem
-                text: qsTr('Merge with next clip')
-                onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
-            }
-            MenuItem {
-                enabled: !isBlank && !isTransition && !isAudio && (parseInt(audioIndex) > -1 || audioIndex === 'all')
-                text: qsTr('Detach Audio')
-                onTriggered: timeline.detachAudio(trackIndex, index)
-            }
-            MenuItem {
-                enabled: !isBlank
-                text: qsTr('Align To Reference Track')
-                onTriggered: {
-                    timeline.alignSelectedClips()
-                }
-            }
-            MenuItem {
-                enabled: !isBlank && !isTransition && settings.timelineShowThumbnails && !isAudio
-                text: qsTr('Update Thumbnails')
-                onTriggered: {
-                    var s = inThumbnail.source.toString()
-                    if (s.substring(s.length - 1) !== '!') {
-                        inThumbnail.source = s + '!'
-                        resetThumbnailsSourceTimer.restart()
-                    }
-                    s = outThumbnail.source.toString()
-                    if (s.substring(s.length - 1) !== '!') {
-                        outThumbnail.source = s + '!'
-                        resetThumbnailsSourceTimer.restart()
-                    }
-                }
-            }
-            MenuItem {
-                enabled: !isBlank && !isTransition && settings.timelineShowWaveforms
-                text: qsTr('Rebuild Audio Waveform')
-                onTriggered: timeline.remakeAudioLevels(trackIndex, index)
-            }
-        }
-        MenuItem {
-            enabled: !isBlank
-            text: qsTr('Properties')
-            onTriggered: {
-                clipRoot.forceActiveFocus()
-                clipRoot.clicked(clipRoot, null)
-                timeline.openProperties()
-            }
-        }
-        MenuItem {
-            text: qsTr('Cancel')
-            onTriggered: menu.dismiss()
         }
     }
 

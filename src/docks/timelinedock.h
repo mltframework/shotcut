@@ -28,14 +28,12 @@
 #include "sharedframe.h"
 #include "jobs/ffmpegjob.h"
 
-namespace Ui {
-class TimelineDock;
-}
 namespace Timeline {
 class UpdateCommand;
 class TrimCommand;
 }
 class UndoHelper;
+class QMenu;
 
 class TimelineDock : public QDockWidget
 {
@@ -132,14 +130,14 @@ signals:
     void zoomIn();
     void zoomOut();
     void zoomToFit();
-    void resetZoom();
-    void makeTracksShorter();
-    void makeTracksTaller();
+    void setZoom(double value);
     void markerRangesChanged();
     void markerSeeked(int markerIndex);
     void isRecordingChanged(bool);
     void multitrackSelected();
     void warnTrackLocked(int trackIndex);
+    void refreshWaveforms();
+    void updateThumbnails(int trackIndex, int clipIndex);
 
 public slots:
     void addAudioTrack();
@@ -217,10 +215,17 @@ protected:
 
 private:
     bool isBlank(int trackIndex, int clipIndex);
+    bool clipsAreSelected();
+    bool blankIsSelected();
+    bool isTransition(int trackIndex, int clipIndex);
     void emitNonSeekableWarning();
     void addTrackIfNeeded(int mltTrackIndex, Mlt::Producer *srcTrack);
+    void setupActions();
+    bool isMultitrackValid()
+    {
+        return m_model.tractor() && !m_model.trackList().empty();
+    }
 
-    Ui::TimelineDock *ui;
     QQuickWidget m_quickView;
     MultitrackModel m_model;
     MarkersModel m_markersModel;
@@ -248,6 +253,9 @@ private:
     int m_recordingTrackIndex;
     int m_recordingClipIndex;
     int m_currentTrack {0};
+    QHash<QString, QAction *> m_actions;
+    QMenu *m_mainMenu;
+    QMenu *m_clipMenu;
 
 private slots:
     void load(bool force = false);
@@ -260,6 +268,8 @@ private slots:
     void updateRecording();
     void onRecordFinished(AbstractJob *, bool);
     void onWarnTrackLocked();
+    void onTimelineRightClicked();
+    void onClipRightClicked();
 };
 
 class TimelineSelectionBlocker

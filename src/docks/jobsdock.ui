@@ -99,6 +99,17 @@
        <number>6</number>
       </property>
       <item>
+       <widget class="QPushButton" name="menuButton">
+        <property name="toolTip">
+         <string>Jobs Menu</string>
+        </property>
+        <property name="icon">
+         <iconset theme="show-menu" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/light/32x32/format-justify-fill.png</normaloff>:/icons/light/32x32/show-menu.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="pauseButton">
         <property name="toolTip">
          <string>Stop automatically processing the next pending job in
@@ -120,17 +131,6 @@ the list. This does not stop a currently running job. Right-
         </property>
         <property name="text">
          <string>Clean</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="menuButton">
-        <property name="toolTip">
-         <string>Jobs Menu</string>
-        </property>
-        <property name="icon">
-         <iconset theme="show-menu" resource="../../icons/resources.qrc">
-          <normaloff>:/icons/light/32x32/format-justify-fill.png</normaloff>:/icons/light/32x32/show-menu.png</iconset>
         </property>
        </widget>
       </item>

@@ -38,7 +38,9 @@ Rectangle {
     property var selection: []
     property alias paramRepeater: parametersRepeater
 
-    signal keyframeClicked()
+    signal rightClicked()
+    signal keyframeRightClicked()
+    signal clipRightClicked()
 
     onTimeScaleChanged: redrawWaveforms()
 
@@ -54,9 +56,7 @@ Rectangle {
             targetX = tracksFlickable.contentX + tracksFlickable.width / 2
         var offset = targetX - tracksFlickable.contentX
         var before = timeScale
-
-        keyframesToolbar.scaleSlider.value = value
-
+        timeScale = Math.pow(value, 3) + 0.01
         tracksFlickable.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x)
     }
 
@@ -69,7 +69,8 @@ Rectangle {
     }
 
     function adjustZoom(by, targetX) {
-        setZoom(keyframesToolbar.scaleSlider.value + by, targetX)
+        var value = Math.pow(timeScale - 0.01, 1.0 / 3.0)
+        setZoom(value + by, targetX)
         if (settings.timelineScrollZoom)
             scrollZoomTimer.restart()
     }
@@ -94,19 +95,11 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
-        onClicked: menu.popup()
-    }
-
-    KeyframesToolbar {
-        id: keyframesToolbar
-        width: parent.width
-        anchors.top: parent.top
-        z: 1
+        onClicked: root.rightClicked()
     }
 
     Row {
         anchors.fill: parent
-        anchors.topMargin: keyframesToolbar.height
         Column {
             z: 1
 
@@ -133,7 +126,7 @@ Rectangle {
                         trackName: metadata !== null? metadata.name : ''
                         width: headerWidth
                         height: Logic.trackHeight(true)
-//                        onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
+                        onRightClicked: root.rightClicked()
                     }
                     Repeater {
                         id: trackHeaderRepeater
@@ -142,12 +135,11 @@ Rectangle {
                             trackName: model.name
                             delegateIndex: index
                             isCurve: model.isCurve
-//                            isLocked: model.locked
                             width: headerWidth
                             height: Logic.trackHeight(isCurve)
                             current: index === currentTrack
-//                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
                             onClicked: currentTrack = index
+                            onRightClicked: root.rightClicked()
                         }
                     }
                 }
@@ -255,7 +247,7 @@ Rectangle {
                     id: tracksFlickable
                     y: ruler.height
                     width: root.width - headerWidth - 16
-                    height: root.height - keyframesToolbar.height - ruler.height - 16
+                    height: root.height - ruler.height - 16
                     clip: true
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
                     onContentXChanged: rulerFlickable.contentX = contentX
@@ -330,6 +322,7 @@ Rectangle {
                                         hash: producer.hash
                                         speed: producer.speed
                                         outThumbnailVisible: false
+                                        onRightClicked: root.clipRightClicked()
                                     }
                                     Clip {
                                         id: activeClip
@@ -375,6 +368,7 @@ Rectangle {
                                             }
                                         }
                                         onTrimmedOut: bubbleHelp.hide()
+                                        onRightClicked: root.clipRightClicked()
                                     }
                                     Clip {
                                         id: afterClip
@@ -389,6 +383,7 @@ Rectangle {
                                         hash: producer.hash
                                         speed: producer.speed
                                         inThumbnailVisible: false
+                                        onRightClicked: root.clipRightClicked()
                                     }
                                 }
                             }
@@ -404,7 +399,7 @@ Rectangle {
                 visible: producer.position > -1 && metadata !== null
                 color: activePalette.text
                 width: 1
-                height: root.height - keyframesToolbar.height - horizontalScrollBar.height
+                height: root.height - horizontalScrollBar.height
                 x: producer.position * timeScale - tracksFlickable.contentX
                 y: 0
             }
@@ -450,7 +445,7 @@ Rectangle {
         }
         function show(x, y, text) {
             bubbleHelp.x = x + tracksArea.x - tracksFlickable.contentX - bubbleHelpLabel.width
-            bubbleHelp.y = Math.max(keyframesToolbar.height, y + tracksArea.y - tracksFlickable.contentY - bubbleHelpLabel.height)
+            bubbleHelp.y = Math.max(0, y + tracksArea.y - tracksFlickable.contentY - bubbleHelpLabel.height)
             bubbleHelp.text = text
             if (bubbleHelp.state !== 'visible')
                 bubbleHelp.state = 'visible'
@@ -472,58 +467,6 @@ Rectangle {
         fast: true
     }
 
-    Menu {
-        id: menu
-        Menu {
-            title: qsTr('Options')
-            width: 310
-            MenuItem {
-                text: qsTr('Show Audio Waveforms')
-                checkable: true
-                checked: settings.timelineShowWaveforms
-                onTriggered: {
-                    if (checked) {
-                        if (settings.timelineShowWaveforms) {
-                            settings.timelineShowWaveforms = checked
-                            redrawWaveforms()
-                        } else {
-                            settings.timelineShowWaveforms = checked
-                            producer.remakeAudioLevels()
-                        }
-                    } else {
-                        settings.timelineShowWaveforms = checked
-                    }
-                }
-            }
-            MenuItem {
-                text: qsTr('Show Video Thumbnails')
-                checkable: true
-                checked: settings.timelineShowThumbnails
-                onTriggered: settings.timelineShowThumbnails = checked
-            }
-            MenuItem {
-                text: qsTr('Center the Playhead') + (application.OS === 'OS X'? '    ⇧⌘P' : ' (Ctrl+Shift+P)')
-                checkable: true
-                checked: settings.timelineCenterPlayhead
-                onTriggered: settings.timelineCenterPlayhead = checked
-            }
-            MenuItem {
-                text: qsTr('Scroll to Playhead on Zoom') + (application.OS === 'OS X'? '    ⌥⌘P' : ' (Ctrl+Alt+P)')
-                checkable: true
-                checked: settings.timelineScrollZoom
-                onTriggered: settings.timelineScrollZoom = checked
-            }
-        }
-        MenuItem {
-            text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
-            onTriggered: parameters.reload()
-        }
-        MenuItem {
-            text: qsTr('Cancel')
-            onTriggered: menu.dismiss()
-        }
-    }
-
     DelegateModel {
         id: parameterDelegateModel
         model: parameters
@@ -537,8 +480,8 @@ Rectangle {
             onClicked: {
                 currentTrack = parameter.DelegateModel.itemsIndex
                 root.selection = [keyframe.DelegateModel.itemsIndex]
-                root.keyframeClicked()
             }
+            onRightClicked: root.keyframeRightClicked()
         }
     }
 
@@ -564,6 +507,7 @@ Rectangle {
 
     Connections {
         target: keyframes
+        function onSetZoom(value) { setZoom(value) }
         function onZoomIn() { zoomIn() }
         function onZoomOut() {zoomOut() }
         function onZoomToFit() { zoomToFit() }

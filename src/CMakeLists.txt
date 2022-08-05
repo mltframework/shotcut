@@ -46,7 +46,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/recentdock.ui
   docks/scopedock.cpp docks/scopedock.h
   docks/timelinedock.cpp docks/timelinedock.h
-  docks/timelinedock.ui
   glwidget.cpp glwidget.h
   jobqueue.cpp jobqueue.h
   jobs/abstractjob.cpp jobs/abstractjob.h
@@ -121,6 +120,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/decklinkproducerwidget.ui
   widgets/directshowvideowidget.cpp widgets/directshowvideowidget.h
   widgets/directshowvideowidget.ui
+  widgets/docktoolbar.cpp widgets/docktoolbar.h
   widgets/editmarkerwidget.cpp widgets/editmarkerwidget.h
   widgets/exportpresetstreeview.cpp widgets/exportpresetstreeview.h
   widgets/frameratewidget.cpp widgets/frameratewidget.h

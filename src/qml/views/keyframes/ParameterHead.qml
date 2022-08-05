@@ -31,6 +31,7 @@ Rectangle {
     property bool zoomHeight: false
     property int delegateIndex: -1
     signal clicked()
+    signal rightClicked()
 
     SystemPalette { id: activePalette }
     color: selected ? selectedTrackColor : (delegateIndex % 2)? activePalette.alternateBase : activePalette.base
@@ -80,7 +81,7 @@ Rectangle {
         onClicked: {
             parent.clicked()
             if (mouse.button == Qt.RightButton)
-                menu.popup()
+                parent.rightClicked()
         }
     }
     Flow {

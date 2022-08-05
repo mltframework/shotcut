@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021 Meltytech, LLC
+ * Copyright (c) 2016-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@ Rectangle {
     signal trimmedIn(var clip)
     signal trimmingOut(var clip, real delta, var mouse)
     signal trimmedOut(var clip)
+    signal rightClicked()
 
     SystemPalette { id: activePalette }
     gradient: Gradient {
@@ -229,7 +230,7 @@ Rectangle {
         cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active)? Qt.SizeHorCursor :
             (animateInMouseArea.drag.active || animateOutMouseArea.drag.active)? Qt.PointingHandCursor :
             Qt.ArrowCursor
-        onClicked: menu.popup()
+        onClicked: clipRoot.rightClicked()
     }
 
     Shotcut.TimelineTriangle {
@@ -523,14 +524,6 @@ Rectangle {
                     }
                 }
             }
-        }
-    }
-    Menu {
-        id: menu
-        MenuItem {
-            visible: !isBlank && settings.timelineShowWaveforms
-            text: qsTr('Rebuild Audio Waveform')
-            onTriggered: producer.remakeAudioLevels()
         }
     }
 }

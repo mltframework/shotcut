@@ -24,9 +24,7 @@
 #include "mltcontroller.h"
 #include "MltPlaylist.h"
 
-#define kDetailedMode "detailed"
-#define kIconsMode "icons"
-#define kTiledMode "tiled"
+
 
 class PlaylistModel : public QAbstractTableModel
 {

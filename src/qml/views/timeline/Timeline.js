@@ -37,7 +37,7 @@ function scrollIfNeeded(center) {
 
 function dragging(pos, duration) {
     if (tracksRepeater.count > 0) {
-        var headerHeight = ruler.height + toolbar.height
+        var headerHeight = ruler.height
         dropTarget.x = pos.x
         dropTarget.width = duration * multitrack.scaleFactor
 
@@ -79,7 +79,7 @@ function dragging(pos, duration) {
             scrollTimer.stop()
         }
 
-        if (toolbar.scrub) {
+        if (settings.timelineDragScrub) {
             timeline.position = Math.round(
                 (pos.x + tracksFlickable.contentX - headerWidth) / multitrack.scaleFactor)
         }
@@ -156,6 +156,9 @@ function toggleSelection(trackIndex, clipIndex) {
     var result = []
     var skip = false
     timeline.selection.forEach(function(el) {
+        if (tracksRepeater.itemAt(el.y).clipAt(el.x).isBlank)
+            // Do not support multiselect for blank clips
+            return
         if (el.x !== clipIndex || el.y !== trackIndex)
             result.push(el)
         else
@@ -173,10 +176,12 @@ function selectRange(trackIndex, clipIndex) {
         var x
         if (clipIndex > result[0].x) {
             for (x = result[0].x + 1; x <= clipIndex; x++)
-                result.push(Qt.point(x, trackIndex))
+                if (!tracksRepeater.itemAt(trackIndex).clipAt(x).isBlank)
+                    result.push(Qt.point(x, trackIndex))
         } else {
             for (x = clipIndex; x < result[0].x; x++)
-                result.push(Qt.point(x, trackIndex))
+                if (!tracksRepeater.itemAt(trackIndex).clipAt(x).isBlank)
+                    result.push(Qt.point(x, trackIndex))
         }
     }
     return result

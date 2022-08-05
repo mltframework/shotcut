@@ -916,6 +916,20 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_8">
      <item>
+      <widget class="QPushButton" name="menuButton">
+       <property name="toolTip">
+        <string>Properties Menu</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset theme="show-menu" resource="../../icons/resources.qrc">
+         <normaloff>:/icons/oxygen/32x32/actions/show-menu.png</normaloff>:/icons/oxygen/32x32/actions/show-menu.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="reverseButton">
        <property name="text">
         <string>Reverse...</string>
@@ -936,20 +950,6 @@
       <widget class="QPushButton" name="proxyButton">
        <property name="text">
         <string>Proxy</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="menuButton">
-       <property name="toolTip">
-        <string>Properties Menu</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset theme="show-menu" resource="../../icons/resources.qrc">
-         <normaloff>:/icons/oxygen/32x32/actions/show-menu.png</normaloff>:/icons/oxygen/32x32/actions/show-menu.png</iconset>
        </property>
       </widget>
      </item>

@@ -28,6 +28,8 @@ class PlaylistDock;
 }
 
 class QAbstractItemView;
+class QItemSelectionModel;
+class QMenu;
 class PlaylistIconView;
 
 class PlaylistDock : public QDockWidget
@@ -49,120 +51,72 @@ signals:
     void itemActivated(int start);
     void showStatusMessage(QString);
     void addAllTimeline(Mlt::Playlist *, bool skipProxy = false);
+    void producerOpened();
+    void selectionChanged();
+    void enableUpdate(bool);
 
 public slots:
-    void incrementIndex();
-    void decrementIndex();
-    void setIndex(int row);
-    void moveClipUp();
-    void moveClipDown();
-    void on_actionOpen_triggered();
-    void on_actionInsertCut_triggered();
-    void on_actionAppendCut_triggered();
-    void on_actionUpdate_triggered();
-    void on_removeButton_clicked();
-    void setUpdateButtonEnabled(bool modified);
+    void onOpenActionTriggered();
+    void onAppendCutActionTriggered();
     void onProducerOpened();
     void onInChanged();
     void onOutChanged();
-    void on_actionCopy_triggered();
-    void on_actionSelectAll_triggered();
-    void on_actionSelectNone_triggered();
     void onProducerChanged(Mlt::Producer *producer);
-    void on_actionGoto_triggered();
-
-private slots:
-    void on_menuButton_clicked();
-
-    void on_actionInsertBlank_triggered();
-
-    void on_actionAppendBlank_triggered();
-
-    void viewCustomContextMenuRequested(const QPoint &pos);
-
-    void viewDoubleClicked(const QModelIndex &index);
-
-    void on_actionRemoveAll_triggered();
-
-    void on_actionSortByName_triggered();
-
-    void on_actionSortByDate_triggered();
-
-    void on_actionSetFileDate_triggered();
-
-    void onPlaylistCreated();
-
-    void onPlaylistLoaded();
-
+    void onProducerModified();
+    void onPlayerDragStarted();
     void onPlaylistModified();
-
+    void onPlaylistCreated();
+    void onPlaylistLoaded();
     void onPlaylistCleared();
 
-    void onPlaylistClosed();
+private slots:
 
+    void viewCustomContextMenuRequested(const QPoint &pos);
+    void viewDoubleClicked(const QModelIndex &index);
     void onDropped(const QMimeData *data, int row);
-
     void onMoveClip(int from, int to);
-
-    void onPlayerDragStarted();
-
-    void on_addButton_clicked();
-
-    void on_actionThumbnailsHidden_triggered(bool checked);
-
-    void on_actionLeftAndRight_triggered(bool checked);
-
-    void on_actionTopAndBottom_triggered(bool checked);
-
-    void on_actionInOnlySmall_triggered(bool checked);
-
-    void on_actionInOnlyLarge_triggered(bool checked);
-
-    void on_actionAddToTimeline_triggered();
-
-    void on_actionAddToSlideshow_triggered();
-
-    void on_updateButton_clicked();
-
-    void updateViewModeFromActions();
-
-    void on_tilesButton_clicked();
-
-    void on_iconsButton_clicked();
-
-    void on_detailsButton_clicked();
-
     void onMovedToEnd();
-
     void onInTimerFired();
-
     void onOutTimerFired();
-
-    void on_actionPlayAfterOpen_triggered(bool checked);
-
-    void on_actionUpdateThumbnails_triggered();
-
-    void onProducerModified();
-
-    void on_addFilesButton_clicked();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 
 private:
-    void setViewMode(PlaylistModel::ViewMode mode);
+    void setupActions();
     void resetPlaylistIndex();
     void emitDataChanged(const QVector<int> &roles);
     void setPlaylistIndex(Mlt::Producer *producer, int row);
+    void updateViewMode();
+    void onAddFilesActionTriggered();
+    void onUpdateThumbnailsActionTriggered();
+    void onAddToTimelineActionTriggered();
+    void onAddToSlideshowActionTriggered();
+    void onSetFileDateActionTriggered();
+    void onRemoveAllActionTriggered();
+    void onGotoActionTriggered();
+    void onCopyActionTriggered();
+    void onSelectAllActionTriggered();
+    void onInsertCutActionTriggered();
+    void onUpdateActionTriggered();
+    void onRemoveActionTriggered();
+    void incrementIndex();
+    void decrementIndex();
+    void setIndex(int row);
+    void moveClipUp();
+    void moveClipDown();
 
     Ui::PlaylistDock *ui;
     QAbstractItemView *m_view;
     PlaylistIconView *m_iconsView;
     PlaylistModel m_model;
+    QItemSelectionModel *m_selectionModel;
     int m_defaultRowHeight;
     QTimer m_inChangedTimer;
     QTimer m_outChangedTimer;
+    QHash<QString, QAction *> m_actions;
+    QMenu *m_mainMenu;
 };
 
 #endif // PLAYLISTDOCK_H

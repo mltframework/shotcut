@@ -76,7 +76,7 @@ function snapClip(clip, repeater) {
         clip.x = nextMarkerX - clip.width
         return
     }
-    if (!toolbar.scrub) {
+    if (!settings.timelineDragScrub) {
         var cursorX = tracksFlickable.contentX + cursor.x
         if (left > cursorX - SNAP && left < cursorX + SNAP)
             // Snap around cursor/playhead.
@@ -211,7 +211,7 @@ function snapDrop(pos, repeater) {
             }
         }
     }
-    if (!toolbar.scrub) {
+    if (!settings.timelineDragScrub) {
         var cursorX = tracksFlickable.contentX + cursor.x
         if (left > cursorX - SNAP && left < cursorX + SNAP)
             // Snap around cursor/playhead.

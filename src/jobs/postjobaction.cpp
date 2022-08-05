@@ -54,7 +54,7 @@ void OpenPostJobAction::doAction()
         QFile::remove(m_fileNameToRemove);
     }
     MAIN.open(m_dstFile);
-    MAIN.playlistDock()->on_actionAppendCut_triggered();
+    MAIN.playlistDock()->onAppendCutActionTriggered();
 }
 
 void ReplaceOnePostJobAction::doAction()

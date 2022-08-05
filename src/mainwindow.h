@@ -211,7 +211,6 @@ private:
     QMutex m_autosaveMutex;
     QTimer m_autosaveTimer;
     int m_exitCode;
-    int m_navigationPosition;
     QScopedPointer<QAction> m_statusBarAction;
     QNetworkAccessManager m_network;
     QString m_upgradeUrl;
@@ -344,10 +343,6 @@ private slots:
     void onPlayerTabIndexChanged(int index);
     void onUpgradeCheckFinished(QNetworkReply *reply);
     void onUpgradeTriggered();
-    void onTimelineSelectionChanged();
-    void on_actionCut_triggered();
-    void on_actionCopy_triggered();
-    void on_actionPaste_triggered();
     void onClipCopied();
     void on_actionExportEDL_triggered();
     void on_actionExportFrame_triggered();
