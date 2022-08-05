@@ -37,7 +37,7 @@ Item {
     onFileOpened: settings.openPath = path
     
     Component.onCompleted: {
-        var resource = filter.get('gps.file')
+        var resource = filter.get('resource')
         gpsFile.url = resource
    
         filter.blockSignals = true
@@ -115,7 +115,7 @@ Item {
             fileLabel.color = activePalette.text
             fileLabelTip.text = gpsFile.filePath
             console.log("url= " + gpsFile.url)
-            filter.set('gps.file', gpsFile.url)
+            filter.set('resource', gpsFile.url)
             filter.set('gps_start_text', '')
             filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
             gpsFinishParseTimer.restart()
@@ -376,15 +376,8 @@ Item {
                 implicitHeight: 20
                 onClicked: { set_sec_offset_to_textfields(filter.get('auto_gps_offset_now')) }
             }
-            Shotcut.Button {
-                icon.name: 'document-save'
-                Shotcut.HoverTip { text: qsTr('Save the current offset as default to use in other GPS filters.') }
-                implicitWidth: 20
-                implicitHeight: 20
-                onClicked: settings.saved_gps_offset = filter.get("time_offset")
-            }
             Shotcut.UndoButton {
-                onClicked: set_sec_offset_to_textfields( settings.saved_gps_offset ? settings.saved_gps_offset : 0 )
+                onClicked: set_sec_offset_to_textfields( 0 )
             }
         }
         

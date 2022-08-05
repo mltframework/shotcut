@@ -53,10 +53,15 @@ Item {
     signal fileOpened(string path)
     onFileOpened: settings.openPath = path
 
+    FontMetrics {
+        id: fontMetrics
+        font: offset_days.font
+    }
+
     Component.onCompleted: {
         filter.blockSignals = true
 
-        var resource = filter.get('gps.file')
+        var resource = filter.get('resource')
         gpsFile.url = resource
         if (filter.isNew) {
             var usedParams
@@ -68,6 +73,7 @@ Item {
             usedParams.push( set_graph_background_params(bgpath, scalew, opacity) )
             usedParams.push( set_graph_colors(cdot, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10) )       */
 
+            //main preset
             usedParams = set_graph_data_params(0,0,  0,100,  0, 0, 100,  0, 0, 100)
             usedParams.push( set_graph_style_params(1, 1, 0, 0, 5,  default_rect, 0, _, 0) )
             usedParams.push( set_graph_colors(color_white, default_colors[0], color_white) )
@@ -178,6 +184,7 @@ Item {
             filter.savePreset(usedParams, "Colors: default (5)")
             usedParams = set_graph_colors(_, default_colors[4], default_colors[3], default_colors[2], default_colors[1], default_colors[0])
             filter.savePreset(usedParams, "Colors: inversed default (5)")
+
             usedParams = reset_all_params()
             filter.savePreset(usedParams)
         }
@@ -208,7 +215,7 @@ Item {
             fileLabel.color = activePalette.text
             fileLabelTip.text = gpsFile.filePath
             console.log("url= " + gpsFile.url)
-            filter.set('gps.file', gpsFile.url)
+            filter.set('resource', gpsFile.url)
             filter.set('gps_start_text', '')
             gpsFinishParseTimer.restart()
         }
@@ -557,15 +564,8 @@ Item {
                 implicitHeight: 20
                 onClicked: { set_sec_offset_to_textfields(filter.get('auto_gps_offset_now')) }
             }
-            Shotcut.Button {
-                icon.name: 'document-save'
-                Shotcut.HoverTip { text: qsTr('Save the current offset as default to use in other GPS filters.') }
-                implicitWidth: 20
-                implicitHeight: 20
-                onClicked: settings.saved_gps_offset = filter.get("time_offset")
-            }
             Shotcut.UndoButton {
-                onClicked: set_sec_offset_to_textfields( settings.saved_gps_offset ? settings.saved_gps_offset : 0 )
+                onClicked: set_sec_offset_to_textfields( 0 )
             }
         }
 
@@ -1360,7 +1360,7 @@ Item {
         used_params.push(set_gps_file_params(0, 5, 1))
         used_params.push(set_graph_data_params(0, 0,  0, 100,  0, 0, 100,  0, 0, 100,))
         used_params.push(set_graph_style_params(1, 1, 0, 0, 5, default_rect, 0, '', 0))
-        used_params.push(set_graph_colors(color_white, default_colors[0], color_white, default_colors[2], default_colors[3], default_colors[4], default_colors[5]))
+        used_params.push(set_graph_colors(default_now_dot, default_colors[0], color_white, default_colors[2], default_colors[3], default_colors[4], default_colors[5]))
         used_params.push(set_graph_background_params("!", 1, 1))
         return used_params
     }
