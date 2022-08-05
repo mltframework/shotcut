@@ -129,6 +129,10 @@ Rectangle {
             // Snap to cursor
             if (keyX > cursorX - 10 && keyX < cursorX + 10) {
                 keyPosition = Math.round((cursorX) / timeScale) - (filter.in - producer.in)
+                if (keyPosition < model.minimumFrame)
+                    keyPosition = model.minimumFrame
+                else if (keyPosition > model.maximumFrame)
+                    keyPosition = model.maximumFrame
                 parent.x = cursorX - (parent.width / 2)
             }
             var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
