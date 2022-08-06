@@ -65,7 +65,7 @@ Item {
             //main preset
             usedParams = set_graph_data_params(0,0,  0,100,  0, 0, 100,  0, 0, 100)
             usedParams.push( set_graph_style_params(1, 1, 0, 0, 5,  default_rect, 0, _, 0) )
-            usedParams.push( set_graph_colors(color_white, default_colors[0], color_white) )
+            usedParams.push( set_graph_colors(default_now_dot, default_colors[0], color_white) )
             filter.savePreset(usedParams, "2D map: full map progress line")
 
             usedParams = set_graph_data_params(0,1, _,_, 0, 90, 100,  0, 90, 100)
@@ -123,7 +123,7 @@ Item {
 
             usedParams = set_graph_data_params(3,0,  0,100,  0, 0, 100,  0, 100, 100)
             usedParams.push( set_graph_style_params(1, 1, 0, 0, 5,  '10%/10%:80%x10%', 0, _, 0) )
-            usedParams.push( set_graph_colors(color_white, default_colors[0], color_white) )
+            usedParams.push( set_graph_colors(default_now_dot, default_colors[0], color_white) )
             usedParams.push( set_graph_background_params("!") )
             filter.savePreset(usedParams, "Simple line progressbar")
 
