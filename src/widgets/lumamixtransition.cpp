@@ -47,6 +47,10 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         i->setData(Qt::UserRole, s);
         ui->lumaCombo->addItem(i);
     }
+    for (int i = 0; i < ui->lumaCombo->count(); ++i) {
+        auto item = ui->lumaCombo->item(i);
+        item->setToolTip(item->text());
+    }
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
@@ -90,6 +94,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         ui->mixSlider->setValue(qRound(transition->get_double("start") * 100.0));
     }
     m_preview = new ProducerPreviewWidget(MLT.profile().dar());
+    m_preview->setLooping(false);
     ui->horizontalLayout->addWidget(m_preview, 0, Qt::AlignCenter);
     connect(this, SIGNAL(modified()), this, SLOT(startPreview()), Qt::QueuedConnection);
 }

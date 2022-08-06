@@ -38,8 +38,12 @@ public:
     virtual ~ProducerPreviewWidget();
 
     void start(const Mlt::Producer &producer);
-    void stop();
+    void stop(bool releaseProducer = true);
     void showText(QString text);
+    void setLooping(bool enabled);
+
+public slots:
+    void restart();
 
 private slots:
     void seeked(int);
@@ -47,6 +51,7 @@ private slots:
 private:
     void timerEvent(QTimerEvent *) override;
     void frameGeneratorThread();
+    void generateFrame();
 
     QSize m_previewSize;
     QLabel *m_imageLabel;
@@ -63,6 +68,7 @@ private:
     DataQueue<QueueItem> m_queue;
     QFuture<void> m_future;
     bool m_generateFrames;
+    bool m_isLooping;
 };
 
 #endif // PRODUCERPREVIEWWIDGET_H
