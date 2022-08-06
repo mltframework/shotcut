@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick 2.0
+import org.shotcut.qml 1.0
 
-Shotcut.TextFilterVui {
+Metadata {
+    type: Metadata.Filter
+    name: qsTr("GPS Graphic")
+    mlt_service: 'gpsgraphic'
+    qml: 'ui.qml'
+    vui: 'vui.qml'
+    allowMultiple: true
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['geometry']
+        parameters: [
+            Parameter {
+                name: qsTr('Position / Size')
+                property: 'geometry'
+                isRectangle: true
+            }
+        ]
+    }
 }
