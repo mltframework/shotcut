@@ -127,7 +127,7 @@ Rectangle {
             var newPosition = Math.round((keyX) / timeScale)
             var keyPosition = newPosition - (filter.in - producer.in)
             // Snap to cursor
-            if (keyX > cursorX - 10 && keyX < cursorX + 10) {
+            if (keyX > cursorX - 10 && keyX < cursorX + 10 && cursorX > minDragX + parent.width/2 && cursorX < maxDragX + parent.width/2) {
                 keyPosition = Math.round((cursorX) / timeScale) - (filter.in - producer.in)
                 parent.x = cursorX - (parent.width / 2)
             }
