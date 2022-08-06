@@ -28,7 +28,7 @@ import QtQml.Models 2.12
 Item {
     id: gpsGraphRoot
     width: 350
-    height: 800
+    height: 850
 
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
@@ -61,12 +61,6 @@ Item {
         if (filter.isNew) {
             var usedParams
             var _ = undefined //skip params faster
-
-         /* usedParams.push( set_gps_file_params(offset, smooth, speed) )
-            usedParams.push( set_graph_data_params(src, type,  startp, endp,  modeh, leftp, rightp,  modev, botp, topp) )
-            usedParams.push( set_graph_style_params(style,  nowdot, nowtext,  angle, thick, rect,  grid, legendunit, drawdots) )
-            usedParams.push( set_graph_background_params(bgpath, scalew, opacity) )
-            usedParams.push( set_graph_colors(cdot, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10) )       */
 
             //main preset
             usedParams = set_graph_data_params(0,0,  0,100,  0, 0, 100,  0, 0, 100)
@@ -209,7 +203,6 @@ Item {
             fileLabel.text = gpsFile.fileName
             fileLabel.color = activePalette.text
             fileLabelTip.text = gpsFile.filePath
-            console.log("url= " + gpsFile.url)
             filter.set('resource', gpsFile.url)
             filter.set('gps_start_text', '')
             gpsFinishParseTimer.restart()
@@ -348,7 +341,6 @@ Item {
         rectW.value = filterRect.width
         rectH.value = filterRect.height
         //advanced options
-//        checkbox_draw_individual_dots.checked = (filter.get("draw_individual_dots") == 1)
         bg_img_path.text = filter.get("bg_img_path")
         slider_scaleW.value = filter.getDouble('bg_scale_w')
 
@@ -453,34 +445,35 @@ Item {
                     recompute_time_offset()
                 }
             }
-//            Label {
-//                text: qsTr('days:')
-//                Layout.alignment: Qt.AlignRight
-//            }
             TextField {
                 id: offset_days
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator {bottom: 0; top: 36600;}
-                implicitWidth: 30
+                implicitWidth: 60
                 MouseArea {
                     anchors.fill: parent
                     onWheel: wheel_offset( wheel.angleDelta.y>0 ? 86400 : -86400 )
                     onClicked: offset_days.forceActiveFocus()
                 }
                 onFocusChanged: if (focus) selectAll()
+                onTextChanged:
+                {
+                    if(!acceptableInput)
+                        offset_days.undo()
+                }
                 onEditingFinished: recompute_time_offset()
-                Shotcut.HoverTip { text: qsTr('Number of days to add/subtract to video time to sync them.') }
+                Shotcut.HoverTip { text: qsTr('Number of days to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.') }
             }
             Label {
-                text: qsTr(':')
+                text: ':'
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
                 id: offset_hours
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
-                validator: IntValidator {bottom: 0; top: 59;}
+                validator: IntValidator {bottom: 0; top: 23;}
                 implicitWidth: 30
                 MouseArea {
                     anchors.fill: parent
@@ -488,11 +481,16 @@ Item {
                     onClicked: { offset_hours.forceActiveFocus() }
                 }
                 onFocusChanged: if (focus) selectAll()
+                onTextChanged:
+                {
+                    if(!acceptableInput)
+                        offset_hours.undo()
+                }
                 onEditingFinished: recompute_time_offset();
-                Shotcut.HoverTip { text: qsTr('Number of hours to add/subtract to video time to sync them.') }
+                Shotcut.HoverTip { text: qsTr('Number of hours to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.') }
             }
             Label {
-                text: qsTr(':')
+                text: ':'
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
@@ -507,11 +505,16 @@ Item {
                     onClicked: { offset_mins.forceActiveFocus() }
                 }
                 onFocusChanged: if (focus) selectAll()
+                onTextChanged:
+                {
+                    if(!acceptableInput)
+                        offset_mins.undo()
+                }
                 onEditingFinished: recompute_time_offset()
-                Shotcut.HoverTip { text: qsTr('Number of minutes to add/subtract to video time to sync them.') }
+                Shotcut.HoverTip { text: qsTr('Number of minutes to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.') }
             }
             Label {
-                text: qsTr(':')
+                text: ':'
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
@@ -526,6 +529,11 @@ Item {
                     onClicked: { offset_secs.forceActiveFocus() }
                 }
                 onFocusChanged: if (focus) selectAll()
+                onTextChanged:
+                {
+                    if(!acceptableInput)
+                        offset_secs.undo()
+                }
                 onEditingFinished: recompute_time_offset()
                 Shotcut.HoverTip { text: qsTr('Number of seconds to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.') }
             }
@@ -1138,17 +1146,6 @@ Item {
             }
         }
 
-//        Label {
-//            Layout.alignment: Qt.AlignRight
-//            text: qsTr('Draw dots only')
-//            Shotcut.HoverTip { text: qsTr('Change graph draw style to only show individual points instead of lines. Must be very zoomed in to see them.') }
-//        }
-//        CheckBox {
-//            id: checkbox_draw_individual_dots
-//            leftPadding: 0
-//            onClicked: filter.set('draw_individual_dots', checked ? 1 : 0)
-//        }
-
 
         Label {
             text: qsTr('Position')
@@ -1319,11 +1316,45 @@ Item {
             }
         }
 
-//        Label {
-//            topPadding: 10
-//            text: qsTr('<b>Advanced options</b>')
-//            Layout.columnSpan: 2
-//        }
+
+        Rectangle {
+            Layout.columnSpan: parent.columns
+            Layout.fillWidth: true
+            Layout.minimumHeight: 12
+            color: 'transparent'
+            Rectangle {
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
+                height: 2
+                radius: 2
+                color: activePalette.text
+            }
+        }
+        Label {
+            text: qsTr('Video start time:')
+            leftPadding: 10
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip { text: qsTr('Detected date-time for the video file.') }
+        }
+        Label {
+            id: video_start
+            text: filter.get('video_start_text')
+            Layout.alignment: Qt.AlignLeft
+            Shotcut.HoverTip { text: "This time will be used for synchronization." }
+        }
+
+        Label {
+            id: start_location_datetime
+            text: qsTr('GPS start time:')
+            leftPadding: 10
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip { text: qsTr('Detected date-time for the GPS file.') }
+        } Label {
+            id: gps_start
+            text: filter.get('gps_start_text')
+            Layout.alignment: Qt.AlignLeft
+            Shotcut.HoverTip { text: qsTr('This time will be used for synchronization.') }
+        }
 
         Item {
             Layout.fillHeight: true
@@ -1336,8 +1367,6 @@ Item {
             var newValue = filter.getRect(rectProperty)
             if (filterRect !== newValue) {
                 filterRect = newValue
-//                filter.set(rectProperty, newValue)
-//                setFilter()
                 setControls()
             }
         }

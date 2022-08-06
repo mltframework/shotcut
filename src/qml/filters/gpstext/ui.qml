@@ -27,7 +27,7 @@ import QtQml.Models 2.12
 Item {
     id: gpsTextRoot
     width: 300
-    height: 700
+    height: 800
     
     property url settingsOpenPath: 'file:///' + settings.openPath
     Shotcut.File { id: gpsFile }
@@ -38,6 +38,8 @@ Item {
     
     Component.onCompleted: {
         var resource = filter.get('resource')
+        if (!resource)
+            resource = filter.get('gps.file')
         gpsFile.url = resource
    
         filter.blockSignals = true
@@ -114,7 +116,6 @@ Item {
             fileLabel.text = gpsFile.fileName
             fileLabel.color = activePalette.text
             fileLabelTip.text = gpsFile.filePath
-            console.log("url= " + gpsFile.url)
             filter.set('resource', gpsFile.url)
             filter.set('gps_start_text', '')
             filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
@@ -160,14 +161,8 @@ Item {
             fileLabel.color = 'red'
             fileLabelTip.text = qsTr('No GPS file loaded.\nClick "Open" to load a file.')
         }
-
-        if (filter.isNew) {
-            set_sec_offset_to_textfields(0);
-        }
-        else {
-            set_sec_offset_to_textfields(filter.get('time_offset'));
-            combo_smoothing.currentIndex = combo_smoothing.get_smooth_index_from_val(filter.get('smoothing_value'));
-        }
+        set_sec_offset_to_textfields(filter.get('time_offset'));
+        combo_smoothing.currentIndex = combo_smoothing.get_smooth_index_from_val(filter.get('smoothing_value'));
 
         speed_multiplier.value = filter.get('speed_multiplier');
         updates_per_second.text = filter.get('updates_per_second');
@@ -270,34 +265,35 @@ Item {
                     recompute_time_offset()
                 }
             }
-//            Label {
-//                text: qsTr('days:')
-//                Layout.alignment: Qt.AlignRight
-//            }
             TextField {
                 id: offset_days
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator {bottom: 0; top: 36600;}
-                implicitWidth: 30
+                implicitWidth: 60
                 MouseArea {
                     anchors.fill: parent
                     onWheel: wheel_offset( wheel.angleDelta.y>0 ? 86400 : -86400 )
                     onClicked: offset_days.forceActiveFocus()
                 }
                 onFocusChanged: if (focus) selectAll()
+                onTextChanged:
+                {
+                    if(!acceptableInput)
+                        offset_days.undo()
+                }
                 onEditingFinished: recompute_time_offset()
-                Shotcut.HoverTip { text: qsTr('Number of days to add/subtract to video time to sync them.') }
+                Shotcut.HoverTip { text: qsTr('Number of days to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.') }
             }
             Label {
-                text: qsTr(':')
+                text: ':'
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
                 id: offset_hours
                 text: '0'
                 horizontalAlignment: TextInput.AlignRight
-                validator: IntValidator {bottom: 0; top: 59;}
+                validator: IntValidator {bottom: 0; top: 23;}
                 implicitWidth: 30
                 MouseArea {
                     anchors.fill: parent
@@ -305,11 +301,16 @@ Item {
                     onClicked: { offset_hours.forceActiveFocus() }
                 }
                 onFocusChanged: if (focus) selectAll()
+                onTextChanged:
+                {
+                    if(!acceptableInput)
+                        offset_hours.undo()
+                }
                 onEditingFinished: recompute_time_offset();
-                Shotcut.HoverTip { text: qsTr('Number of hours to add/subtract to video time to sync them.') }
+                Shotcut.HoverTip { text: qsTr('Number of hours to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.') }
             }
             Label {
-                text: qsTr(':')
+                text: ':'
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
@@ -324,11 +325,16 @@ Item {
                     onClicked: { offset_mins.forceActiveFocus() }
                 }
                 onFocusChanged: if (focus) selectAll()
+                onTextChanged:
+                {
+                    if(!acceptableInput)
+                        offset_mins.undo()
+                }
                 onEditingFinished: recompute_time_offset()
-                Shotcut.HoverTip { text: qsTr('Number of minutes to add/subtract to video time to sync them.') }
+                Shotcut.HoverTip { text: qsTr('Number of minutes to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.') }
             }
             Label {
-                text: qsTr(':')
+                text: ':'
                 Layout.alignment: Qt.AlignRight
             }
             TextField {
@@ -343,6 +349,11 @@ Item {
                     onClicked: { offset_secs.forceActiveFocus() }
                 }
                 onFocusChanged: if (focus) selectAll()
+                onTextChanged:
+                {
+                    if(!acceptableInput)
+                        offset_secs.undo()
+                }
                 onEditingFinished: recompute_time_offset()
                 Shotcut.HoverTip { text: qsTr('Number of seconds to add/subtract to video time to sync them.\nTip: you can use mousewheel to change values.') }
             }
@@ -701,6 +712,45 @@ Item {
                     updates_per_second.text = '1';
                 }
             }
+        }
+
+        Rectangle {
+            Layout.columnSpan: parent.columns
+            Layout.fillWidth: true
+            Layout.minimumHeight: 12
+            color: 'transparent'
+            Rectangle {
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
+                height: 2
+                radius: 2
+                color: activePalette.text
+            }
+        }
+        Label {
+            text: qsTr('Video start time:')
+            leftPadding: 10
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip { text: qsTr('Detected date-time for the video file.') }
+        }
+        Label {
+            id: video_start
+            text: filter.get('video_start_text')
+            Layout.alignment: Qt.AlignLeft
+            Shotcut.HoverTip { text: "This time will be used for synchronization." }
+        }
+
+        Label {
+            id: start_location_datetime
+            text: qsTr('GPS start time:')
+            leftPadding: 10
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip { text: qsTr('Detected date-time for the GPS file.') }
+        } Label {
+            id: gps_start
+            text: filter.get('gps_start_text')
+            Layout.alignment: Qt.AlignLeft
+            Shotcut.HoverTip { text: qsTr('This time will be used for synchronization.') }
         }
 
         Item { Layout.fillHeight: true }
