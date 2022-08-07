@@ -85,7 +85,6 @@ private:
     QmlMetadata *m_metadata;
     QmlFilter *m_filter;
     QmlProducer *m_qmlProducer;
-    QHash<QString, QAction *> m_actions;
     QMenu *m_mainMenu;
     QMenu *m_keyMenu;
     QMenu *m_clipMenu;

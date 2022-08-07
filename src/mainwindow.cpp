@@ -17,6 +17,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "actions.h"
 #include "scrubbar.h"
 #include "openotherdialog.h"
 #include "player.h"
@@ -407,16 +408,16 @@ void MainWindow::setupAndConnectDocks()
     connect(m_playlistDock->model(), &PlaylistModel::outChanged, this,
             &MainWindow::onPlaylistOutChanged);
     QMenu *viewModeMenu = ui->menuPlaylist->addMenu(tr("View mode"));
-    viewModeMenu->addAction(m_playlistDock->findChild<QAction *>("playlistViewDetailsAction"));
-    viewModeMenu->addAction(m_playlistDock->findChild<QAction *>("playlistViewTilesAction"));
-    viewModeMenu->addAction(m_playlistDock->findChild<QAction *>("playlistViewIconsAction"));
+    viewModeMenu->addAction(Actions["playlistViewDetailsAction"]);
+    viewModeMenu->addAction(Actions["playlistViewTilesAction"]);
+    viewModeMenu->addAction(Actions["playlistViewIconsAction"]);
     QMenu *subMenu = ui->menuPlaylist->addMenu(tr("Thumbnails"));
-    subMenu->addAction(m_playlistDock->findChild<QAction *>("playlistThumbnailsHiddenAction"));
-    subMenu->addAction(m_playlistDock->findChild<QAction *>("playlistThumbnailsLeftAndRightAction"));
-    subMenu->addAction(m_playlistDock->findChild<QAction *>("playlistThumbnailsTopAndBottomAction"));
-    subMenu->addAction(m_playlistDock->findChild<QAction *>("playlistThumbnailsInOnlySmallAction"));
-    subMenu->addAction(m_playlistDock->findChild<QAction *>("playlistThumbnailsInOnlyLargeAction"));
-    ui->menuPlaylist->addAction(m_playlistDock->findChild<QAction *>("playlistPlayAfterOpenAction"));
+    subMenu->addAction(Actions["playlistThumbnailsHiddenAction"]);
+    subMenu->addAction(Actions["playlistThumbnailsLeftAndRightAction"]);
+    subMenu->addAction(Actions["playlistThumbnailsTopAndBottomAction"]);
+    subMenu->addAction(Actions["playlistThumbnailsInOnlySmallAction"]);
+    subMenu->addAction(Actions["playlistThumbnailsInOnlyLargeAction"]);
+    ui->menuPlaylist->addAction(Actions["playlistPlayAfterOpenAction"]);
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
@@ -450,21 +451,20 @@ void MainWindow::setupAndConnectDocks()
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
     connect(m_timelineDock, SIGNAL(isRecordingChanged(bool)), m_player,
             SLOT(onMuteButtonToggled(bool)));
-    ui->menuEdit->addAction(m_timelineDock->findChild<QAction *>("timelineCutAction"));
-    ui->menuEdit->addAction(m_timelineDock->findChild<QAction *>("timelineCopyAction"));
-    ui->menuEdit->addAction(m_timelineDock->findChild<QAction *>("timelinePasteAction"));
-    ui->menuTimeline->addAction(m_timelineDock->findChild<QAction *>("timelineSnapAction"));
-    ui->menuTimeline->addAction(m_timelineDock->findChild<QAction *>("timelineSnapAction"));
-    ui->menuTimeline->addAction(m_timelineDock->findChild<QAction *>("timelineScrubDragAction"));
-    ui->menuTimeline->addAction(m_timelineDock->findChild<QAction *>("timelineRippleAction"));
-    ui->menuTimeline->addAction(m_timelineDock->findChild<QAction *>("timelineRippleAllTracksAction"));
-    ui->menuTimeline->addAction(m_timelineDock->findChild<QAction *>("timelineRippleMarkersAction"));
-    ui->menuTimeline->addAction(m_timelineDock->findChild<QAction *>("timelineShowWaveformsAction"));
-    ui->menuTimeline->addAction(
-        m_timelineDock->findChild<QAction *>("timelinePerformanceWaveformsAction"));
-    ui->menuTimeline->addAction(m_timelineDock->findChild<QAction *>("timelineShowThumbnailsAction"));
-    ui->menuTimeline->addAction(m_timelineDock->findChild<QAction *>("timelineCenterPlayheadAction"));
-    ui->menuTimeline->addAction(m_timelineDock->findChild<QAction *>("timelineScrollZoomAction"));
+    ui->menuEdit->addAction(Actions["timelineCutAction"]);
+    ui->menuEdit->addAction(Actions["timelineCopyAction"]);
+    ui->menuEdit->addAction(Actions["timelinePasteAction"]);
+    ui->menuTimeline->addAction(Actions["timelineSnapAction"]);
+    ui->menuTimeline->addAction(Actions["timelineSnapAction"]);
+    ui->menuTimeline->addAction(Actions["timelineScrubDragAction"]);
+    ui->menuTimeline->addAction(Actions["timelineRippleAction"]);
+    ui->menuTimeline->addAction(Actions["timelineRippleAllTracksAction"]);
+    ui->menuTimeline->addAction(Actions["timelineRippleMarkersAction"]);
+    ui->menuTimeline->addAction(Actions["timelineShowWaveformsAction"]);
+    ui->menuTimeline->addAction(Actions["timelinePerformanceWaveformsAction"]);
+    ui->menuTimeline->addAction(Actions["timelineShowThumbnailsAction"]);
+    ui->menuTimeline->addAction(Actions["timelineCenterPlayheadAction"]);
+    ui->menuTimeline->addAction(Actions["timelineScrollZoomAction"]);
 
     m_filterController = new FilterController(this);
     m_filtersDock = new FiltersDock(m_filterController->metadataModel(),

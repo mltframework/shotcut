@@ -17,6 +17,7 @@
 
 #include "keyframesdock.h"
 
+#include "actions.h"
 #include "models/attachedfiltersmodel.h"
 #include "qmltypes/qmlproducer.h"
 #include "qmltypes/qmlutilities.h"
@@ -59,29 +60,29 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     setupActions();
 
     m_mainMenu = new QMenu(tr("Keyframes Main Menu"), this);
-    m_mainMenu->addAction(m_actions["keyframesTrimInAction"]);
-    m_mainMenu->addAction(m_actions["keyframesTrimOutAction"]);
-    m_mainMenu->addAction(m_actions["keyframesAnimateInAction"]);
-    m_mainMenu->addAction(m_actions["keyframesAnimateOutAction"]);
-    m_mainMenu->addAction(m_actions["keyframesToggleKeyframeAction"]);
-    m_mainMenu->addAction(m_actions["keyframesSeekPreviousSimpleAction"]);
-    m_mainMenu->addAction(m_actions["keyframesSeekNextSimpleAction"]);
+    m_mainMenu->addAction(Actions["keyframesTrimInAction"]);
+    m_mainMenu->addAction(Actions["keyframesTrimOutAction"]);
+    m_mainMenu->addAction(Actions["keyframesAnimateInAction"]);
+    m_mainMenu->addAction(Actions["keyframesAnimateOutAction"]);
+    m_mainMenu->addAction(Actions["keyframesToggleKeyframeAction"]);
+    m_mainMenu->addAction(Actions["keyframesSeekPreviousSimpleAction"]);
+    m_mainMenu->addAction(Actions["keyframesSeekNextSimpleAction"]);
     QMenu *viewMenu = new QMenu(tr("View"), this);
-    viewMenu->addAction(m_actions["keyframesZoomOutAction"]);
-    viewMenu->addAction(m_actions["keyframesZoomInAction"]);
-    viewMenu->addAction(m_actions["keyframesZoomFitAction"]);
+    viewMenu->addAction(Actions["keyframesZoomOutAction"]);
+    viewMenu->addAction(Actions["keyframesZoomInAction"]);
+    viewMenu->addAction(Actions["keyframesZoomFitAction"]);
     m_mainMenu->addMenu(viewMenu);
 
     m_keyMenu = new QMenu(tr("Keyframes Context Menu"), this);
     QMenu *keyTypeMenu = new QMenu(tr("Keyframe Type"), this);
-    keyTypeMenu->addAction(m_actions["keyframesTypeHoldAction"]);
-    keyTypeMenu->addAction(m_actions["keyframesTypeLinearAction"]);
-    keyTypeMenu->addAction(m_actions["keyframesTypeSmoothAction"]);
+    keyTypeMenu->addAction(Actions["keyframesTypeHoldAction"]);
+    keyTypeMenu->addAction(Actions["keyframesTypeLinearAction"]);
+    keyTypeMenu->addAction(Actions["keyframesTypeSmoothAction"]);
     m_keyMenu->addMenu(keyTypeMenu);
-    m_keyMenu->addAction(m_actions["keyframesRemoveAction"]);
+    m_keyMenu->addAction(Actions["keyframesRemoveAction"]);
 
     m_clipMenu = new QMenu(tr("Keyframes Clip Menu"), this);
-    m_clipMenu->addAction(m_actions["keyframesRebuildAudioWaveformAction"]);
+    m_clipMenu->addAction(Actions["keyframesRebuildAudioWaveformAction"]);
 
     QVBoxLayout *vboxLayout = new QVBoxLayout();
     vboxLayout->setSpacing(0);
@@ -97,12 +98,12 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     menuButton->setMenu(m_mainMenu);
     toolbar->addWidget(menuButton);
     toolbar->addSeparator();
-    toolbar->addAction(m_actions["keyframesTrimInAction"]);
-    toolbar->addAction(m_actions["keyframesTrimOutAction"]);
-    toolbar->addAction(m_actions["keyframesAnimateInAction"]);
-    toolbar->addAction(m_actions["keyframesAnimateOutAction"]);
+    toolbar->addAction(Actions["keyframesTrimInAction"]);
+    toolbar->addAction(Actions["keyframesTrimOutAction"]);
+    toolbar->addAction(Actions["keyframesAnimateInAction"]);
+    toolbar->addAction(Actions["keyframesAnimateOutAction"]);
     toolbar->addSeparator();
-    toolbar->addAction(m_actions["keyframesZoomOutAction"]);
+    toolbar->addAction(Actions["keyframesZoomOutAction"]);
     QSlider *zoomSlider = new QSlider();
     zoomSlider->setOrientation(Qt::Horizontal);
     zoomSlider->setMaximumWidth(200);
@@ -123,8 +124,8 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
         }
     });
     toolbar->addWidget(zoomSlider);
-    toolbar->addAction(m_actions["keyframesZoomInAction"]);
-    toolbar->addAction(m_actions["keyframesZoomFitAction"]);
+    toolbar->addAction(Actions["keyframesZoomInAction"]);
+    toolbar->addAction(Actions["keyframesZoomFitAction"]);
 
     vboxLayout->setMenuBar(toolbar);
 
@@ -156,7 +157,6 @@ void KeyframesDock::setupActions()
     QAction *action;
 
     action = new QAction(tr("Set Filter Start"), this);
-    action->setObjectName("keyframesTrimInAction");
     action->setShortcut(QKeySequence(Qt::Key_BracketLeft));
     icon = QIcon::fromTheme("keyframes-filter-in",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-in.png"));
@@ -173,10 +173,9 @@ void KeyframesDock::setupActions()
             enabled = true;
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesTrimInAction", action);
 
     action = new QAction(tr("Set Filter End"), this);
-    action->setObjectName("keyframesTrimOutAction");
     action->setShortcut(QKeySequence(Qt::Key_BracketRight));
     icon = QIcon::fromTheme("keyframes-filter-out",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-out.png"));
@@ -193,10 +192,9 @@ void KeyframesDock::setupActions()
             enabled = true;
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesTrimOutAction", action);
 
     action = new QAction(tr("Set First Simple Keyframe"), this);
-    action->setObjectName("keyframesAnimateInAction");
     action->setShortcut(QKeySequence(Qt::Key_BraceLeft));
     icon = QIcon::fromTheme("keyframes-simple-in",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-simple-in.png"));
@@ -213,10 +211,9 @@ void KeyframesDock::setupActions()
             enabled = true;
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesAnimateInAction", action);
 
     action = new QAction(tr("Set Second Simple Keyframe"), this);
-    action->setObjectName("keyframesAnimateOutAction");
     action->setShortcut(QKeySequence(Qt::Key_BraceRight));
     icon = QIcon::fromTheme("keyframes-simple-out",
                             QIcon(":/icons/oxygen/32x32/actions/keyframes-simple-out.png"));
@@ -233,10 +230,9 @@ void KeyframesDock::setupActions()
             enabled = true;
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesAnimateOutAction", action);
 
     action = new QAction(tr("Zoom Keyframes Out"), this);
-    action->setObjectName("keyframesZoomOutAction");
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Minus));
     icon = QIcon::fromTheme("zoom-out",
                             QIcon(":/icons/oxygen/32x32/actions/zoom-out.png"));
@@ -245,10 +241,9 @@ void KeyframesDock::setupActions()
         if (!isVisible() || !m_qview.rootObject()) return;
         zoomOut();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesZoomOutAction", action);
 
     action = new QAction(tr("Zoom Keyframes In"), this);
-    action->setObjectName("keyframesZoomInAction");
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Plus));
     icon = QIcon::fromTheme("zoom-in",
                             QIcon(":/icons/oxygen/32x32/actions/zoom-in.png"));
@@ -257,10 +252,9 @@ void KeyframesDock::setupActions()
         if (!isVisible() || !m_qview.rootObject()) return;
         zoomIn();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesZoomInAction", action);
 
     action = new QAction(tr("Zoom Keyframes To Fit"), this);
-    action->setObjectName("keyframesZoomFitAction");
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_0));
     icon = QIcon::fromTheme("zoom-fit-best",
                             QIcon(":/icons/oxygen/32x32/actions/zoom-fit-best.png"));
@@ -269,13 +263,12 @@ void KeyframesDock::setupActions()
         if (!isVisible() || !m_qview.rootObject()) return;
         zoomToFit();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesZoomFitAction", action);
 
     QActionGroup *keyframeTypeActionGroup = new QActionGroup(this);
     keyframeTypeActionGroup->setExclusive(true);
 
     action = new QAction(tr("Hold"), this);
-    action->setObjectName("keyframesTypeHoldAction");
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible() || !m_qview.rootObject()) return;
         int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
@@ -285,10 +278,9 @@ void KeyframesDock::setupActions()
         }
     });
     keyframeTypeActionGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesTypeHoldAction", action);
 
     action = new QAction(tr("Linear"), this);
-    action->setObjectName("keyframesTypeLinearAction");
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible() || !m_qview.rootObject()) return;
         int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
@@ -297,10 +289,9 @@ void KeyframesDock::setupActions()
         }
     });
     keyframeTypeActionGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesTypeLinearAction", action);
 
     action = new QAction(tr("Smooth"), this);
-    action->setObjectName("keyframesTypeSmoothAction");
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible() || !m_qview.rootObject()) return;
         int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
@@ -309,10 +300,9 @@ void KeyframesDock::setupActions()
         }
     });
     keyframeTypeActionGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesTypeSmoothAction", action);
 
     action = new QAction(tr("Remove"), this);
-    action->setObjectName("keyframesRemoveAction");
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible() || !m_qview.rootObject()) return;
         int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
@@ -320,10 +310,9 @@ void KeyframesDock::setupActions()
             m_model.remove(currentTrack, keyframeIndex.toInt());
         }
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesRemoveAction", action);
 
     action = new QAction(tr("Rebuild Audio Waveform"), this);
-    action->setObjectName("keyframesRebuildAudioWaveformAction");
     action->setEnabled(Settings.timelineShowWaveforms());
     connect(action, &QAction::triggered, this, [&](bool checked) {
         if (m_qmlProducer && Settings.timelineShowWaveforms()) {
@@ -333,10 +322,9 @@ void KeyframesDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineShowWaveformsChanged, action, [ = ]() {
         action->setEnabled(Settings.timelineShowWaveforms());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesRebuildAudioWaveformAction", action);
 
     action = new QAction(tr("Seek Previous Simple Keyframe"), this);
-    action->setObjectName("keyframesSeekPreviousSimpleAction");
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_BracketLeft));
     action->setEnabled(m_qmlProducer && m_filter);
     connect(action, &QAction::triggered, this, [&]() {
@@ -347,10 +335,9 @@ void KeyframesDock::setupActions()
     connect(this, &KeyframesDock::newFilter, action, [ = ]() {
         action->setEnabled(m_qmlProducer && m_filter);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesSeekPreviousSimpleAction", action);
 
     action = new QAction(tr("Seek Next Simple Keyframe"), this);
-    action->setObjectName("keyframesSeekNextSimpleAction");
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_BracketRight));
     action->setEnabled(m_qmlProducer && m_filter);
     connect(action, &QAction::triggered, this, [&]() {
@@ -361,10 +348,9 @@ void KeyframesDock::setupActions()
     connect(this, &KeyframesDock::newFilter, action, [ = ]() {
         action->setEnabled(m_qmlProducer && m_filter);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesSeekNextSimpleAction", action);
 
     action = new QAction(tr("Toggle Keyframe At Playhead"), this);
-    action->setObjectName("keyframesToggleKeyframeAction");
     action->setShortcut(QKeySequence(Qt::Key_Semicolon));
     action->setEnabled(m_qmlProducer && m_filter);
     connect(action, &QAction::triggered, this, [&]() {
@@ -382,7 +368,7 @@ void KeyframesDock::setupActions()
     connect(this, &KeyframesDock::newFilter, action, [ = ]() {
         action->setEnabled(m_qmlProducer && m_filter);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("keyframesToggleKeyframeAction", action);
 }
 
 int KeyframesDock::seekPrevious()

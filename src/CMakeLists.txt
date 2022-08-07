@@ -1,5 +1,6 @@
 add_executable(shotcut WIN32 MACOSX_BUNDLE
   abstractproducerwidget.cpp abstractproducerwidget.h
+  actions.cpp actions.h
   autosavefile.cpp autosavefile.h
   commands/markercommands.cpp commands/markercommands.h
   commands/playlistcommands.cpp commands/playlistcommands.h

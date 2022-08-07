@@ -115,7 +115,6 @@ private:
     int m_defaultRowHeight;
     QTimer m_inChangedTimer;
     QTimer m_outChangedTimer;
-    QHash<QString, QAction *> m_actions;
     QMenu *m_mainMenu;
 };
 

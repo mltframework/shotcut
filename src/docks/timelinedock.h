@@ -253,7 +253,6 @@ private:
     int m_recordingTrackIndex;
     int m_recordingClipIndex;
     int m_currentTrack {0};
-    QHash<QString, QAction *> m_actions;
     QMenu *m_mainMenu;
     QMenu *m_clipMenu;
 

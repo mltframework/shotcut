@@ -16,6 +16,8 @@
  */
 
 #include "timelinedock.h"
+
+#include "actions.h"
 #include "models/audiolevelstask.h"
 #include "models/multitrackmodel.h"
 #include "qmltypes/thumbnailprovider.h"
@@ -78,67 +80,67 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     m_mainMenu = new QMenu(this);
     QMenu *trackOperationsMenu = new QMenu(tr("Track Operations"), this);
-    trackOperationsMenu->addAction(m_actions["timelineAddAudioTrackAction"]);
-    trackOperationsMenu->addAction(m_actions["timelineAddVideoTrackAction"]);
-    trackOperationsMenu->addAction(m_actions["timelineInsertTrackAction"]);
-    trackOperationsMenu->addAction(m_actions["timelineRemoveTrackAction"]);
-    trackOperationsMenu->addAction(m_actions["timelineMoveTrackUpAction"]);
-    trackOperationsMenu->addAction(m_actions["timelineMoveTrackDownAction"]);
-    trackOperationsMenu->addAction(m_actions["timelineToggleTrackHiddenAction"]);
-    trackOperationsMenu->addAction(m_actions["timelineToggleTrackLockedAction"]);
-    trackOperationsMenu->addAction(m_actions["timelineToggleTrackMuteAction"]);
-    trackOperationsMenu->addAction(m_actions["timelineToggleTrackBlendingAction"]);
+    trackOperationsMenu->addAction(Actions["timelineAddAudioTrackAction"]);
+    trackOperationsMenu->addAction(Actions["timelineAddVideoTrackAction"]);
+    trackOperationsMenu->addAction(Actions["timelineInsertTrackAction"]);
+    trackOperationsMenu->addAction(Actions["timelineRemoveTrackAction"]);
+    trackOperationsMenu->addAction(Actions["timelineMoveTrackUpAction"]);
+    trackOperationsMenu->addAction(Actions["timelineMoveTrackDownAction"]);
+    trackOperationsMenu->addAction(Actions["timelineToggleTrackHiddenAction"]);
+    trackOperationsMenu->addAction(Actions["timelineToggleTrackLockedAction"]);
+    trackOperationsMenu->addAction(Actions["timelineToggleTrackMuteAction"]);
+    trackOperationsMenu->addAction(Actions["timelineToggleTrackBlendingAction"]);
     m_mainMenu->addMenu(trackOperationsMenu);
     QMenu *trackHeightMenu = new QMenu(tr("Track Height"), this);
-    trackHeightMenu->addAction(m_actions["timelineTracksShorterAction"]);
-    trackHeightMenu->addAction(m_actions["timelineTracksTallerAction"]);
-    trackHeightMenu->addAction(m_actions["timelineResetTrackHeightAction"]);
+    trackHeightMenu->addAction(Actions["timelineTracksShorterAction"]);
+    trackHeightMenu->addAction(Actions["timelineTracksTallerAction"]);
+    trackHeightMenu->addAction(Actions["timelineResetTrackHeightAction"]);
     m_mainMenu->addMenu(trackHeightMenu);
     QMenu *selectionMenu = new QMenu(tr("Selection"), this);
-    selectionMenu->addAction(m_actions["timelineSelectAllAction"]);
-    selectionMenu->addAction(m_actions["timelineSelectAllOnTrackAction"]);
-    selectionMenu->addAction(m_actions["timelineSelectNoneAction"]);
-    selectionMenu->addAction(m_actions["timelineSelectNextClipAction"]);
-    selectionMenu->addAction(m_actions["timelineSelectPrevClipAction"]);
-    selectionMenu->addAction(m_actions["timelineSelectClipAboveAction"]);
-    selectionMenu->addAction(m_actions["timelineSelectClipBelowAction"]);
-    selectionMenu->addAction(m_actions["timelineSelectClipUnderPlayheadAction"]);
-    selectionMenu->addAction(m_actions["timelineCurrentTrackAboveAction"]);
-    selectionMenu->addAction(m_actions["timelineCurrentTrackBelowAction"]);
+    selectionMenu->addAction(Actions["timelineSelectAllAction"]);
+    selectionMenu->addAction(Actions["timelineSelectAllOnTrackAction"]);
+    selectionMenu->addAction(Actions["timelineSelectNoneAction"]);
+    selectionMenu->addAction(Actions["timelineSelectNextClipAction"]);
+    selectionMenu->addAction(Actions["timelineSelectPrevClipAction"]);
+    selectionMenu->addAction(Actions["timelineSelectClipAboveAction"]);
+    selectionMenu->addAction(Actions["timelineSelectClipBelowAction"]);
+    selectionMenu->addAction(Actions["timelineSelectClipUnderPlayheadAction"]);
+    selectionMenu->addAction(Actions["timelineCurrentTrackAboveAction"]);
+    selectionMenu->addAction(Actions["timelineCurrentTrackBelowAction"]);
     m_mainMenu->addMenu(selectionMenu);
     QMenu *editMenu = new QMenu(tr("Edit"), this);
-    editMenu->addAction(m_actions["timelinePasteAction"]);
-    editMenu->addAction(m_actions["timelineAppendAction"]);
-    editMenu->addAction(m_actions["timelineOverwriteAction"]);
-    editMenu->addAction(m_actions["timelineSplitAction"]);
-    editMenu->addAction(m_actions["timelineRecordAudioAction"]);
+    editMenu->addAction(Actions["timelinePasteAction"]);
+    editMenu->addAction(Actions["timelineAppendAction"]);
+    editMenu->addAction(Actions["timelineOverwriteAction"]);
+    editMenu->addAction(Actions["timelineSplitAction"]);
+    editMenu->addAction(Actions["timelineRecordAudioAction"]);
     m_mainMenu->addMenu(editMenu);
     QMenu *viewMenu = new QMenu(tr("View"), this);
-    viewMenu->addAction(m_actions["timelineZoomOutAction"]);
-    viewMenu->addAction(m_actions["timelineZoomInAction"]);
-    viewMenu->addAction(m_actions["timelineZoomFitAction"]);
-    viewMenu->addAction(m_actions["timelinePropertiesAction"]);
+    viewMenu->addAction(Actions["timelineZoomOutAction"]);
+    viewMenu->addAction(Actions["timelineZoomInAction"]);
+    viewMenu->addAction(Actions["timelineZoomFitAction"]);
+    viewMenu->addAction(Actions["timelinePropertiesAction"]);
     m_mainMenu->addMenu(viewMenu);
     QMenu *markerMenu = new QMenu(tr("Marker"), this);
-    markerMenu->addAction(m_actions["timelineMarkerAction"]);
-    markerMenu->addAction(m_actions["timelinePrevMarkerAction"]);
-    markerMenu->addAction(m_actions["timelineNextMarkerAction"]);
-    markerMenu->addAction(m_actions["timelineDeleteMarkerAction"]);
-    markerMenu->addAction(m_actions["timelineMarkSelectedClipAction"]);
+    markerMenu->addAction(Actions["timelineMarkerAction"]);
+    markerMenu->addAction(Actions["timelinePrevMarkerAction"]);
+    markerMenu->addAction(Actions["timelineNextMarkerAction"]);
+    markerMenu->addAction(Actions["timelineDeleteMarkerAction"]);
+    markerMenu->addAction(Actions["timelineMarkSelectedClipAction"]);
     m_mainMenu->addMenu(markerMenu);
 
     m_clipMenu = new QMenu(this);
-    m_clipMenu->addAction(m_actions["timelineCutAction"]);
-    m_clipMenu->addAction(m_actions["timelineCopyAction"]);
-    m_clipMenu->addAction(m_actions["timelineDeleteAction"]);
-    m_clipMenu->addAction(m_actions["timelineLiftAction"]);
-    m_clipMenu->addAction(m_actions["timelineReplaceAction"]);
-    m_clipMenu->addAction(m_actions["timelineMergeWithNextAction"]);
-    m_clipMenu->addAction(m_actions["timelineDetachAudioAction"]);
-    m_clipMenu->addAction(m_actions["timelineAlignToReferenceAction"]);
-    m_clipMenu->addAction(m_actions["timelineUpdateThumbnailsAction"]);
-    m_clipMenu->addAction(m_actions["timelineRebuildAudioWaveformAction"]);
-    m_clipMenu->addAction(m_actions["timelinePropertiesAction"]);
+    m_clipMenu->addAction(Actions["timelineCutAction"]);
+    m_clipMenu->addAction(Actions["timelineCopyAction"]);
+    m_clipMenu->addAction(Actions["timelineDeleteAction"]);
+    m_clipMenu->addAction(Actions["timelineLiftAction"]);
+    m_clipMenu->addAction(Actions["timelineReplaceAction"]);
+    m_clipMenu->addAction(Actions["timelineMergeWithNextAction"]);
+    m_clipMenu->addAction(Actions["timelineDetachAudioAction"]);
+    m_clipMenu->addAction(Actions["timelineAlignToReferenceAction"]);
+    m_clipMenu->addAction(Actions["timelineUpdateThumbnailsAction"]);
+    m_clipMenu->addAction(Actions["timelineRebuildAudioWaveformAction"]);
+    m_clipMenu->addAction(Actions["timelinePropertiesAction"]);
 
     QVBoxLayout *vboxLayout = new QVBoxLayout();
     vboxLayout->setSpacing(0);
@@ -154,27 +156,27 @@ TimelineDock::TimelineDock(QWidget *parent) :
     menuButton->setMenu(m_mainMenu);
     toolbar->addWidget(menuButton);
     toolbar->addSeparator();
-    toolbar->addAction(m_actions["timelineCutAction"]);
-    toolbar->addAction(m_actions["timelineCopyAction"]);
-    toolbar->addAction(m_actions["timelinePasteAction"]);
+    toolbar->addAction(Actions["timelineCutAction"]);
+    toolbar->addAction(Actions["timelineCopyAction"]);
+    toolbar->addAction(Actions["timelinePasteAction"]);
     toolbar->addSeparator();
-    toolbar->addAction(m_actions["timelineAppendAction"]);
-    toolbar->addAction(m_actions["timelineDeleteAction"]);
-    toolbar->addAction(m_actions["timelineLiftAction"]);
-    toolbar->addAction(m_actions["timelineOverwriteAction"]);
-    toolbar->addAction(m_actions["timelineSplitAction"]);
+    toolbar->addAction(Actions["timelineAppendAction"]);
+    toolbar->addAction(Actions["timelineDeleteAction"]);
+    toolbar->addAction(Actions["timelineLiftAction"]);
+    toolbar->addAction(Actions["timelineOverwriteAction"]);
+    toolbar->addAction(Actions["timelineSplitAction"]);
     toolbar->addSeparator();
-    toolbar->addAction(m_actions["timelineMarkerAction"]);
-    toolbar->addAction(m_actions["timelinePrevMarkerAction"]);
-    toolbar->addAction(m_actions["timelineNextMarkerAction"]);
+    toolbar->addAction(Actions["timelineMarkerAction"]);
+    toolbar->addAction(Actions["timelinePrevMarkerAction"]);
+    toolbar->addAction(Actions["timelineNextMarkerAction"]);
     toolbar->addSeparator();
-    toolbar->addAction(m_actions["timelineSnapAction"]);
-    toolbar->addAction(m_actions["timelineScrubDragAction"]);
-    toolbar->addAction(m_actions["timelineRippleAction"]);
-    toolbar->addAction(m_actions["timelineRippleAllTracksAction"]);
-    toolbar->addAction(m_actions["timelineRippleMarkersAction"]);
+    toolbar->addAction(Actions["timelineSnapAction"]);
+    toolbar->addAction(Actions["timelineScrubDragAction"]);
+    toolbar->addAction(Actions["timelineRippleAction"]);
+    toolbar->addAction(Actions["timelineRippleAllTracksAction"]);
+    toolbar->addAction(Actions["timelineRippleMarkersAction"]);
     toolbar->addSeparator();
-    toolbar->addAction(m_actions["timelineZoomOutAction"]);
+    toolbar->addAction(Actions["timelineZoomOutAction"]);
     QSlider *zoomSlider = new QSlider();
     zoomSlider->setOrientation(Qt::Horizontal);
     zoomSlider->setMaximumWidth(200);
@@ -191,10 +193,10 @@ TimelineDock::TimelineDock(QWidget *parent) :
         zoomSlider->setValue(value);
     });
     toolbar->addWidget(zoomSlider);
-    toolbar->addAction(m_actions["timelineZoomInAction"]);
-    toolbar->addAction(m_actions["timelineZoomFitAction"]);
+    toolbar->addAction(Actions["timelineZoomInAction"]);
+    toolbar->addAction(Actions["timelineZoomFitAction"]);
     toolbar->addSeparator();
-    toolbar->addAction(m_actions["timelineRecordAudioAction"]);
+    toolbar->addAction(Actions["timelineRecordAudioAction"]);
     vboxLayout->setMenuBar(toolbar);
 
     qmlRegisterType<MultitrackModel>("Shotcut.Models", 1, 0, "MultitrackModel");
@@ -263,37 +265,33 @@ void TimelineDock::setupActions()
     QAction *action;
 
     action = new QAction(tr("Add Audio Track"), this);
-    action->setObjectName("timelineAddAudioTrackAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_U));
     connect(action, &QAction::triggered, this, [&]() {
         show();
         raise();
         addAudioTrack();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineAddAudioTrackAction", action);
 
     action = new QAction(tr("Add Video Track"), this);
-    action->setObjectName("timelineAddVideoTrackAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_I));
     connect(action, &QAction::triggered, this, [&]() {
         show();
         raise();
         addVideoTrack();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineAddVideoTrackAction", action);
 
     action = new QAction(tr("Insert Track"), this);
-    action->setObjectName("timelineInsertTrackAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_I));
     connect(action, &QAction::triggered, this, [&]() {
         show();
         raise();
         insertTrack();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineInsertTrackAction", action);
 
     action = new QAction(tr("Remove Track"), this);
-    action->setObjectName("timelineRemoveTrackAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_U));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -301,10 +299,9 @@ void TimelineDock::setupActions()
         raise();
         removeTrack();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineRemoveTrackAction", action);
 
     action = new QAction(tr("Move Track Up"), this);
-    action->setObjectName("timelineMoveTrackUpAction");
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::ALT + Qt::Key_Up));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -312,10 +309,9 @@ void TimelineDock::setupActions()
         raise();
         moveTrackUp();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineMoveTrackUpAction", action);
 
     action = new QAction(tr("Move Track Down"), this);
-    action->setObjectName("timelineMoveTrackDownAction");
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::ALT + Qt::Key_Down));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -323,10 +319,9 @@ void TimelineDock::setupActions()
         raise();
         moveTrackDown();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineMoveTrackDownAction", action);
 
     action = new QAction(tr("Show/Hide Selected Track"), this);
-    action->setObjectName("timelineToggleTrackHiddenAction");
 #ifdef Q_OS_MAC
     // OS X uses Cmd+H to hide an app.
     action->setShortcut(QKeySequence(Qt::META + Qt::Key_H));
@@ -339,10 +334,9 @@ void TimelineDock::setupActions()
         raise();
         toggleTrackHidden(currentTrack());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineToggleTrackHiddenAction", action);
 
     action = new QAction(tr("Lock/Unlock Selected Track"), this);
-    action->setObjectName("timelineToggleTrackLockedAction");
 #ifdef Q_OS_MAC
     // OS X uses Cmd+H to hide an app and Cmd+M to minimize. Therefore, we force
     // it to be the apple keyboard control key aka meta. Therefore, to be
@@ -358,10 +352,9 @@ void TimelineDock::setupActions()
         raise();
         setTrackLock(currentTrack(), !isTrackLocked(currentTrack()));
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineToggleTrackLockedAction", action);
 
     action = new QAction(tr("Mute/Unmute Selected Track"), this);
-    action->setObjectName("timelineToggleTrackMuteAction");
 #ifdef Q_OS_MAC
     // OS X uses Cmd+M to minimize an app.
     action->setShortcut(QKeySequence(Qt::META + Qt::Key_M));
@@ -374,10 +367,9 @@ void TimelineDock::setupActions()
         raise();
         toggleTrackMute(currentTrack());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineToggleTrackMuteAction", action);
 
     action = new QAction(tr("Blend/Unblend Selected Track"), this);
-    action->setObjectName("timelineToggleTrackBlendingAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_B));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -390,37 +382,33 @@ void TimelineDock::setupActions()
             setTrackComposite(trackIndex, !isComposite);
         }
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineToggleTrackBlendingAction", action);
 
     action = new QAction(tr("Make Tracks Shorter"), this);
-    action->setObjectName("timelineTracksShorterAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Minus));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         m_model.setTrackHeight(std::max(10, m_model.trackHeight() - 20));
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineTracksShorterAction", action);
 
     action = new QAction(tr("Make Tracks Taller"), this);
-    action->setObjectName("timelineTracksTallerAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Plus));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         m_model.setTrackHeight(m_model.trackHeight() + 20);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineTracksTallerAction", action);
 
     action = new QAction(tr("Reset Track Height"), this);
-    action->setObjectName("timelineResetTrackHeightAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Equal));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         m_model.setTrackHeight(50);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineResetTrackHeightAction", action);
 
     action = new QAction(tr("Select All"), this);
-    action->setObjectName("timelineSelectAllAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_A));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -428,10 +416,9 @@ void TimelineDock::setupActions()
         raise();
         selectAll();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineSelectAllAction", action);
 
     action = new QAction(tr("Select All On Current Track"), this);
-    action->setObjectName("timelineSelectAllOnTrackAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_A));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -439,10 +426,9 @@ void TimelineDock::setupActions()
         raise();
         selectAllOnCurrentTrack();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineSelectAllOnTrackAction", action);
 
     action = new QAction(tr("Select None"), this);
-    action->setObjectName("timelineSelectNoneAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_D));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -451,10 +437,9 @@ void TimelineDock::setupActions()
         setSelection();
         model()->reload();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineSelectNoneAction", action);
 
     action = new QAction(tr("Select Next Clip"), this);
-    action->setObjectName("timelineSelectNextClipAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Right));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
@@ -466,10 +451,9 @@ void TimelineDock::setupActions()
                 setSelection(QList<QPoint>() << QPoint(newIndex, selection().first().y()));
         }
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineSelectNextClipAction", action);
 
     action = new QAction(tr("Select Previous Clip"), this);
-    action->setObjectName("timelineSelectPrevClipAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Left));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
@@ -481,10 +465,9 @@ void TimelineDock::setupActions()
                 setSelection(QList<QPoint>() << QPoint(newIndex, selection().first().y()));
         }
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineSelectPrevClipAction", action);
 
     action = new QAction(tr("Select Clip Above"), this);
-    action->setObjectName("timelineSelectClipAboveAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
@@ -501,10 +484,9 @@ void TimelineDock::setupActions()
             setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
         }
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineSelectClipAboveAction", action);
 
     action = new QAction(tr("Select Clip Below"), this);
-    action->setObjectName("timelineSelectClipBelowAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
@@ -521,28 +503,25 @@ void TimelineDock::setupActions()
             setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
         }
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineSelectClipBelowAction", action);
 
     action = new QAction(tr("Set Current Track Above"), this);
-    action->setObjectName("timelineCurrentTrackAboveAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::META + Qt::Key_Up));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         incrementCurrentTrack(-1);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineCurrentTrackAboveAction", action);
 
     action = new QAction(tr("Set Current Track Below"), this);
-    action->setObjectName("timelineCurrentTrackBelowAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::META + Qt::Key_Down));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         incrementCurrentTrack(1);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineCurrentTrackBelowAction", action);
 
     action = new QAction(tr("Select Clip Under Playhead"), this);
-    action->setObjectName("timelineSelectClipUnderPlayheadAction");
     QList<QKeySequence> clipUnderPlayheadShortcuts;
     clipUnderPlayheadShortcuts << QKeySequence(Qt::CTRL + Qt::Key_Space);
 #ifdef Q_OS_MAC
@@ -554,10 +533,9 @@ void TimelineDock::setupActions()
         if (!isMultitrackValid() || !isVisible()) return;
         selectClipUnderPlayhead();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineSelectClipUnderPlayheadAction", action);
 
     action = new QAction(tr("Cu&t"), this);
-    action->setObjectName("timelineCutAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
     icon = QIcon::fromTheme("edit-cut",
                             QIcon(":/icons/oxygen/32x32/actions/edit-cut.png"));
@@ -577,10 +555,9 @@ void TimelineDock::setupActions()
         }
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineCutAction", action);
 
     action = new QAction(tr("&Copy"), this);
-    action->setObjectName("timelineCopyAction");
     QList<QKeySequence> copyShortcuts;
     copyShortcuts << QKeySequence(Qt::CTRL + Qt::Key_C);
     copyShortcuts << QKeySequence(Qt::Key_C);
@@ -608,10 +585,9 @@ void TimelineDock::setupActions()
         }
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineCopyAction", action);
 
     action = new QAction(tr("&Paste"), this);
-    action->setObjectName("timelinePasteAction");
     QList<QKeySequence> pasteShortcuts;
     pasteShortcuts << QKeySequence(Qt::CTRL + Qt::Key_V);
     pasteShortcuts << QKeySequence(Qt::Key_V);
@@ -624,10 +600,9 @@ void TimelineDock::setupActions()
         raise();
         insert(-1);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelinePasteAction", action);
 
     action = new QAction(tr("Append"), this);
-    action->setObjectName("timelineAppendAction");
     action->setShortcut(QKeySequence(Qt::Key_A));
     icon = QIcon::fromTheme("list-add",
                             QIcon(":/icons/oxygen/32x32/actions/list-add.png"));
@@ -637,10 +612,9 @@ void TimelineDock::setupActions()
         raise();
         append(currentTrack());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineAppendAction", action);
 
     action = new QAction(tr("Ripple Delete"), this);
-    action->setObjectName("timelineDeleteAction");
     QList<QKeySequence> deleteShortcuts;
     deleteShortcuts << QKeySequence(Qt::Key_X);
     deleteShortcuts << QKeySequence(Qt::SHIFT + Qt::Key_Backspace);
@@ -659,10 +633,9 @@ void TimelineDock::setupActions()
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_selection.selectedClips.length() > 0);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineDeleteAction", action);
 
     action = new QAction(tr("Lift"), this);
-    action->setObjectName("timelineLiftAction");
     action->setShortcut(QKeySequence(Qt::Key_Z));
     QList<QKeySequence> liftShortcuts;
     liftShortcuts << QKeySequence(Qt::Key_Z);
@@ -682,10 +655,9 @@ void TimelineDock::setupActions()
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
         action->setEnabled(clipsAreSelected());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineLiftAction", action);
 
     action = new QAction(tr("Overwrite"), this);
-    action->setObjectName("timelineOverwriteAction");
     action->setShortcut(QKeySequence(Qt::Key_B));
     icon = QIcon::fromTheme("overwrite",
                             QIcon(":/icons/oxygen/32x32/actions/overwrite.png"));
@@ -696,10 +668,9 @@ void TimelineDock::setupActions()
         raise();
         overwrite(currentTrack());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineOverwriteAction", action);
 
     action = new QAction(tr("Split At Playhead"), this);
-    action->setObjectName("timelineSplitAction");
     action->setShortcut(QKeySequence(Qt::Key_S));
     icon = QIcon::fromTheme("slice",
                             QIcon(":/icons/oxygen/32x32/actions/slice.png"));
@@ -710,10 +681,9 @@ void TimelineDock::setupActions()
         raise();
         splitClip(currentTrack());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineSplitAction", action);
 
     action = new QAction(tr("Replace"), this);
-    action->setObjectName("timelineReplaceAction");
     action->setShortcut(QKeySequence(Qt::Key_R));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -729,10 +699,9 @@ void TimelineDock::setupActions()
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
         action->setEnabled(!blankIsSelected());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineReplaceAction", action);
 
     action = new QAction(tr("Create/Edit Marker"), this);
-    action->setObjectName("timelineMarkerAction");
     action->setShortcut(QKeySequence(Qt::Key_M));
     icon = QIcon::fromTheme("marker",
                             QIcon(":/icons/oxygen/32x32/actions/marker.png"));
@@ -743,10 +712,9 @@ void TimelineDock::setupActions()
         raise();
         createOrEditMarker();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineMarkerAction", action);
 
     action = new QAction(tr("Previous Marker"), this);
-    action->setObjectName("timelinePrevMarkerAction");
     action->setShortcut(QKeySequence(Qt::Key_Less));
     icon = QIcon::fromTheme("format-indent-less",
                             QIcon(":/icons/oxygen/32x32/actions/format-indent-less.png"));
@@ -757,10 +725,9 @@ void TimelineDock::setupActions()
         raise();
         seekPrevMarker();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelinePrevMarkerAction", action);
 
     action = new QAction(tr("Next Marker"), this);
-    action->setObjectName("timelineNextMarkerAction");
     action->setShortcut(QKeySequence(Qt::Key_Greater));
     icon = QIcon::fromTheme("format-indent-more",
                             QIcon(":/icons/oxygen/32x32/actions/format-indent-more.png"));
@@ -771,10 +738,9 @@ void TimelineDock::setupActions()
         raise();
         seekNextMarker();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineNextMarkerAction", action);
 
     action = new QAction(tr("Delete Marker"), this);
-    action->setObjectName("timelineDeleteMarkerAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_M));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -782,10 +748,9 @@ void TimelineDock::setupActions()
         raise();
         deleteMarker();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineDeleteMarkerAction", action);
 
     action = new QAction(tr("Create Marker Around Selected Clip"), this);
-    action->setObjectName("timelineMarkSelectedClipAction");
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_M));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -793,10 +758,9 @@ void TimelineDock::setupActions()
         raise();
         createOrEditSelectionMarker();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineMarkSelectedClipAction", action);
 
     action = new QAction(tr("Snap"), this);
-    action->setObjectName("timelineSnapAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_P));
     icon = QIcon::fromTheme("snap",
                             QIcon(":/icons/oxygen/32x32/actions/snap.png"));
@@ -809,10 +773,9 @@ void TimelineDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineSnapChanged, action, [ = ]() {
         action->setChecked(Settings.timelineSnap());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineSnapAction", action);
 
     action = new QAction(tr("Scrub While Dragging"), this);
-    action->setObjectName("timelineScrubDragAction");
     icon = QIcon::fromTheme("scrub_drag",
                             QIcon(":/icons/oxygen/32x32/actions/scrub_drag.png"));
     action->setIcon(icon);
@@ -824,10 +787,9 @@ void TimelineDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineDragScrubChanged, action, [ = ]() {
         action->setChecked(Settings.timelineDragScrub());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineScrubDragAction", action);
 
     action = new QAction(tr("Ripple"), this);
-    action->setObjectName("timelineRippleAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
     icon = QIcon::fromTheme("target",
                             QIcon(":/icons/oxygen/32x32/actions/target.png"));
@@ -840,10 +802,9 @@ void TimelineDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineRippleChanged, action, [ = ]() {
         action->setChecked(Settings.timelineRipple());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineRippleAction", action);
 
     action = new QAction(tr("Ripple All Tracks"), this);
-    action->setObjectName("timelineRippleAllTracksAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_R));
     icon = QIcon::fromTheme("ripple-all",
                             QIcon(":/icons/oxygen/32x32/actions/ripple-all.png"));
@@ -856,10 +817,9 @@ void TimelineDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineRippleAllTracksChanged, action, [ = ]() {
         action->setChecked(Settings.timelineRippleAllTracks());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineRippleAllTracksAction", action);
 
     action = new QAction(tr("Ripple Markers"), this);
-    action->setObjectName("timelineRippleMarkersAction");
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_R));
     icon = QIcon::fromTheme("ripple-marker",
                             QIcon(":/icons/oxygen/32x32/actions/ripple-marker.png"));
@@ -872,10 +832,9 @@ void TimelineDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineRippleMarkersChanged, action, [ = ]() {
         action->setChecked(Settings.timelineRippleMarkers());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineRippleMarkersAction", action);
 
     action = new QAction(tr("Show Audio Waveforms"), this);
-    action->setObjectName("timelineShowWaveformsAction");
     action->setCheckable(true);
     action->setChecked(Settings.timelineShowWaveforms());
     connect(action, &QAction::triggered, this, [&](bool checked) {
@@ -886,10 +845,9 @@ void TimelineDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineShowWaveformsChanged, action, [ = ]() {
         action->setChecked(Settings.timelineShowWaveforms());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineShowWaveformsAction", action);
 
     action = new QAction(tr("Use Higher Performance Waveforms"), this);
-    action->setObjectName("timelinePerformanceWaveformsAction");
     action->setCheckable(true);
     action->setChecked(Settings.timelineFramebufferWaveform());
     connect(action, &QAction::triggered, this, [&](bool checked) {
@@ -902,10 +860,9 @@ void TimelineDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineFramebufferWaveformChanged, action, [ = ]() {
         action->setChecked(Settings.timelineFramebufferWaveform());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelinePerformanceWaveformsAction", action);
 
     action = new QAction(tr("Show Video Thumbnails"), this);
-    action->setObjectName("timelineShowThumbnailsAction");
     action->setCheckable(true);
     action->setChecked(Settings.timelineShowThumbnails());
     connect(action, &QAction::triggered, this, [&](bool checked) {
@@ -914,10 +871,9 @@ void TimelineDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineShowThumbnailsChanged, action, [ = ]() {
         action->setChecked(Settings.timelineShowThumbnails());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineShowThumbnailsAction", action);
 
     action = new QAction(tr("Center the Playhead"), this);
-    action->setObjectName("timelineCenterPlayheadAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_P));
     action->setCheckable(true);
     action->setChecked(Settings.timelineCenterPlayhead());
@@ -927,10 +883,9 @@ void TimelineDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineCenterPlayheadChanged, action, [ = ]() {
         action->setChecked(Settings.timelineCenterPlayhead());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineCenterPlayheadAction", action);
 
     action = new QAction(tr("Scroll to Playhead on Zoom"), this);
-    action->setObjectName("timelineScrollZoomAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_P));
     action->setCheckable(true);
     action->setChecked(Settings.timelineScrollZoom());
@@ -940,10 +895,9 @@ void TimelineDock::setupActions()
     connect(&Settings, &ShotcutSettings::timelineScrollZoomChanged, action, [ = ]() {
         action->setChecked(Settings.timelineScrollZoom());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineScrollZoomAction", action);
 
     action = new QAction(tr("Zoom Timeline Out"), this);
-    action->setObjectName("timelineZoomOutAction");
     action->setShortcut(QKeySequence(Qt::Key_Minus));
     icon = QIcon::fromTheme("zoom-out",
                             QIcon(":/icons/oxygen/32x32/actions/zoom-out.png"));
@@ -952,10 +906,9 @@ void TimelineDock::setupActions()
         if (!isVisible() || !m_quickView.rootObject()) return;
         zoomOut();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineZoomOutAction", action);
 
     action = new QAction(tr("Zoom Timeline In"), this);
-    action->setObjectName("timelineZoomInAction");
     action->setShortcut(QKeySequence(Qt::Key_Plus));
     icon = QIcon::fromTheme("zoom-in",
                             QIcon(":/icons/oxygen/32x32/actions/zoom-in.png"));
@@ -964,10 +917,9 @@ void TimelineDock::setupActions()
         if (!isVisible() || !m_quickView.rootObject()) return;
         zoomIn();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineZoomInAction", action);
 
     action = new QAction(tr("Zoom Timeline To Fit"), this);
-    action->setObjectName("timelineZoomFitAction");
     action->setShortcut(QKeySequence(Qt::Key_0));
     icon = QIcon::fromTheme("zoom-fit-best",
                             QIcon(":/icons/oxygen/32x32/actions/zoom-fit-best.png"));
@@ -976,10 +928,9 @@ void TimelineDock::setupActions()
         if (!isVisible()) return;
         zoomToFit();
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineZoomFitAction", action);
 
     action = new QAction(tr("Record Audio"), this);
-    action->setObjectName("timelineRecordAudioAction");
     icon = QIcon::fromTheme("audio-input-microphone",
                             QIcon(":/icons/oxygen/32x32/devices/audio-input-microphone.png"));
     action->setIcon(icon);
@@ -994,20 +945,18 @@ void TimelineDock::setupActions()
     connect(this, &TimelineDock::isRecordingChanged, action, [ = ]() {
         action->setChecked(isRecording());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineRecordAudioAction", action);
 
     action = new QAction(tr("Properties"), this);
-    action->setObjectName("timelinePropertiesAction");
     connect(action, &QAction::triggered, this, [&](bool checked) {
         openProperties();
     });
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
         action->setEnabled(!blankIsSelected());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelinePropertiesAction", action);
 
     action = new QAction(tr("Rejoin With Next Clip"), this);
-    action->setObjectName("timelineMergeWithNextAction");
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&](bool checked) {
         if (m_selection.selectedClips.length() == 1) {
@@ -1021,10 +970,9 @@ void TimelineDock::setupActions()
         }
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineMergeWithNextAction", action);
 
     action = new QAction(tr("Detach Audio"), this);
-    action->setObjectName("timelineDetachAudioAction");
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&](bool checked) {
         if (m_selection.selectedClips.length() == 1) {
@@ -1049,10 +997,9 @@ void TimelineDock::setupActions()
         }
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineDetachAudioAction", action);
 
     action = new QAction(tr("Align To Reference Track"), this);
-    action->setObjectName("timelineAlignToReferenceAction");
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&](bool checked) {
         if (m_selection.selectedClips.length() > 0) {
@@ -1070,10 +1017,9 @@ void TimelineDock::setupActions()
         }
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineAlignToReferenceAction", action);
 
     action = new QAction(tr("Update Thumbnails"), this);
-    action->setObjectName("timelineUpdateThumbnailsAction");
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&](bool checked) {
         foreach (auto point, selection()) {
@@ -1095,10 +1041,9 @@ void TimelineDock::setupActions()
         }
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineUpdateThumbnailsAction", action);
 
     action = new QAction(tr("Rebuild Audio Waveform"), this);
-    action->setObjectName("timelineRebuildAudioWaveformAction");
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&](bool checked) {
         foreach (auto point, selection()) {
@@ -1120,7 +1065,7 @@ void TimelineDock::setupActions()
         }
         action->setEnabled(enabled);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("timelineRebuildAudioWaveformAction", action);
 }
 
 void TimelineDock::setPosition(int position)

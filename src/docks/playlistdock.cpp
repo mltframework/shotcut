@@ -17,6 +17,7 @@
 
 #include "playlistdock.h"
 #include "ui_playlistdock.h"
+#include "actions.h"
 #include "dialogs/durationdialog.h"
 #include "dialogs/filedatedialog.h"
 #include "dialogs/longuitask.h"
@@ -165,39 +166,39 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     setupActions();
 
     m_mainMenu = new QMenu(tr("Playlist Main Menu"), this);
-    m_mainMenu->addAction(m_actions["playlistOpenAction"]);
-    m_mainMenu->addAction(m_actions["playlistOpenPreviousAction"]);
-    m_mainMenu->addAction(m_actions["playlistOpenNextAction"]);
-    m_mainMenu->addAction(m_actions["playlistGoToAction"]);
-    m_mainMenu->addAction(m_actions["playlistRemoveCutAction"]);
-    m_mainMenu->addAction(m_actions["playlistCopyAction"]);
-    m_mainMenu->addAction(m_actions["playlistInsertCutAction"]);
-    m_mainMenu->addAction(m_actions["playlistUpdateAction"]);
-    m_mainMenu->addAction(m_actions["playlistMoveUpAction"]);
-    m_mainMenu->addAction(m_actions["playlistMoveDownAction"]);
-    m_mainMenu->addAction(m_actions["playlistUpdateThumbnailsAction"]);
-    m_mainMenu->addAction(m_actions["playlistSetFileDateAction"]);
+    m_mainMenu->addAction(Actions["playlistOpenAction"]);
+    m_mainMenu->addAction(Actions["playlistOpenPreviousAction"]);
+    m_mainMenu->addAction(Actions["playlistOpenNextAction"]);
+    m_mainMenu->addAction(Actions["playlistGoToAction"]);
+    m_mainMenu->addAction(Actions["playlistRemoveCutAction"]);
+    m_mainMenu->addAction(Actions["playlistCopyAction"]);
+    m_mainMenu->addAction(Actions["playlistInsertCutAction"]);
+    m_mainMenu->addAction(Actions["playlistUpdateAction"]);
+    m_mainMenu->addAction(Actions["playlistMoveUpAction"]);
+    m_mainMenu->addAction(Actions["playlistMoveDownAction"]);
+    m_mainMenu->addAction(Actions["playlistUpdateThumbnailsAction"]);
+    m_mainMenu->addAction(Actions["playlistSetFileDateAction"]);
     m_mainMenu->addSeparator();
     QMenu *selectMenu = m_mainMenu->addMenu(tr("Select"));
-    selectMenu->addAction(m_actions["playlistSelectAllAction"]);
-    selectMenu->addAction(m_actions["playlistSelectNoneAction"]);
-    selectMenu->addAction(m_actions["playlistSelectClip1Action"]);
-    selectMenu->addAction(m_actions["playlistSelectClip2Action"]);
-    selectMenu->addAction(m_actions["playlistSelectClip3Action"]);
-    selectMenu->addAction(m_actions["playlistSelectClip4Action"]);
-    selectMenu->addAction(m_actions["playlistSelectClip5Action"]);
-    selectMenu->addAction(m_actions["playlistSelectClip6Action"]);
-    selectMenu->addAction(m_actions["playlistSelectClip7Action"]);
-    selectMenu->addAction(m_actions["playlistSelectClip8Action"]);
-    selectMenu->addAction(m_actions["playlistSelectClip9Action"]);
+    selectMenu->addAction(Actions["playlistSelectAllAction"]);
+    selectMenu->addAction(Actions["playlistSelectNoneAction"]);
+    selectMenu->addAction(Actions["playlistSelectClip1Action"]);
+    selectMenu->addAction(Actions["playlistSelectClip2Action"]);
+    selectMenu->addAction(Actions["playlistSelectClip3Action"]);
+    selectMenu->addAction(Actions["playlistSelectClip4Action"]);
+    selectMenu->addAction(Actions["playlistSelectClip5Action"]);
+    selectMenu->addAction(Actions["playlistSelectClip6Action"]);
+    selectMenu->addAction(Actions["playlistSelectClip7Action"]);
+    selectMenu->addAction(Actions["playlistSelectClip8Action"]);
+    selectMenu->addAction(Actions["playlistSelectClip9Action"]);
     m_mainMenu->addSeparator();
-    m_mainMenu->addAction(m_actions["playlistRemoveAllAction"]);
-    m_mainMenu->addAction(m_actions["playlistAddToTimelineAction"]);
-    m_mainMenu->addAction(m_actions["playlistAddToSlideshowAction"]);
+    m_mainMenu->addAction(Actions["playlistRemoveAllAction"]);
+    m_mainMenu->addAction(Actions["playlistAddToTimelineAction"]);
+    m_mainMenu->addAction(Actions["playlistAddToSlideshowAction"]);
     m_mainMenu->addSeparator();
     QMenu *sortByMenu = m_mainMenu->addMenu(tr("Sort"));
-    sortByMenu->addAction(m_actions["playlistSortByNameAction"]);
-    sortByMenu->addAction(m_actions["playlistSortByDateAction"]);
+    sortByMenu->addAction(Actions["playlistSortByNameAction"]);
+    sortByMenu->addAction(Actions["playlistSortByDateAction"]);
     m_mainMenu->addSeparator();
 
     DockToolBar *toolbar = new DockToolBar(tr("Playlist Controls"));
@@ -211,14 +212,14 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     menuButton->setMenu(m_mainMenu);
     toolbar->addWidget(menuButton);
     toolbar->addSeparator();
-    toolbar->addAction(m_actions["playlistAppendCutAction"]);
-    toolbar->addAction(m_actions["playlistRemoveCutAction"]);
-    toolbar->addAction(m_actions["playlistAddFilesAction"]);
-    toolbar->addAction(m_actions["playlistUpdateAction"]);
+    toolbar->addAction(Actions["playlistAppendCutAction"]);
+    toolbar->addAction(Actions["playlistRemoveCutAction"]);
+    toolbar->addAction(Actions["playlistAddFilesAction"]);
+    toolbar->addAction(Actions["playlistUpdateAction"]);
     toolbar->addSeparator();
-    toolbar->addAction(m_actions["playlistViewDetailsAction"]);
-    toolbar->addAction(m_actions["playlistViewTilesAction"]);
-    toolbar->addAction(m_actions["playlistViewIconsAction"]);
+    toolbar->addAction(Actions["playlistViewDetailsAction"]);
+    toolbar->addAction(Actions["playlistViewTilesAction"]);
+    toolbar->addAction(Actions["playlistViewIconsAction"]);
     toolbar->addSeparator();
 
     ui->verticalLayout->addWidget(toolbar);
@@ -259,23 +260,23 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     m_defaultRowHeight = ui->tableView->verticalHeader()->defaultSectionSize();
     QString thumbs = Settings.playlistThumbnails();
     if (thumbs == "wide") {
-        m_actions["playlistThumbnailsLeftAndRightAction"]->trigger();
+        Actions["playlistThumbnailsLeftAndRightAction"]->trigger();
     } else if (thumbs == "tall") {
-        m_actions["playlistThumbnailsTopAndBottomAction"]->trigger();
+        Actions["playlistThumbnailsTopAndBottomAction"]->trigger();
     } else if (thumbs == "small") {
-        m_actions["playlistThumbnailsInOnlySmallAction"]->trigger();
+        Actions["playlistThumbnailsInOnlySmallAction"]->trigger();
     } else if (thumbs == "large") {
-        m_actions["playlistThumbnailsInOnlyLargeAction"]->trigger();
+        Actions["playlistThumbnailsInOnlyLargeAction"]->trigger();
     } else {
-        m_actions["playlistThumbnailsHiddenAction"]->trigger();
+        Actions["playlistThumbnailsHiddenAction"]->trigger();
     }
 
     if (Settings.viewMode() == kDetailedMode) {
-        m_actions["playlistViewDetailsAction"]->trigger();
+        Actions["playlistViewDetailsAction"]->trigger();
     } else if (Settings.viewMode() == kTiledMode) {
-        m_actions["playlistViewTilesAction"]->trigger();
+        Actions["playlistViewTilesAction"]->trigger();
     } else { /* if (Settings.viewMode() == kIconsMode) */
-        m_actions["playlistViewIconsAction"]->trigger();
+        Actions["playlistViewIconsAction"]->trigger();
     }
 
     m_inChangedTimer.setInterval(kInOutChangedTimeoutMs);
@@ -299,7 +300,6 @@ void PlaylistDock::setupActions()
     QAction *action;
 
     action = new QAction(tr("Append"), this);
-    action->setObjectName("playlistAppendCutAction");
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_A));
     action->setToolTip(tr("Add the Source to the playlist"));
     icon = QIcon::fromTheme("list-add",
@@ -310,11 +310,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::producerOpened, action, [ = ]() {
         action->setEnabled(!MLT.isMultitrack() && !MLT.isPlaylist());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistAppendCutAction", action);
 
     action = new QAction(tr("Remove"), this);
-    action->setObjectName("playlistRemoveCutAction");
-
     QList<QKeySequence> removeShortcuts;
     removeShortcuts << QKeySequence(Qt::SHIFT + Qt::Key_X);
     removeShortcuts << QKeySequence(Qt::SHIFT + Qt::Key_Z);
@@ -328,32 +326,29 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_view->selectionModel()->selectedIndexes().size() > 0);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistRemoveCutAction", action);
 
     action = new QAction(tr("Add Files"), this);
-    action->setObjectName("playlistAddFilesAction");
     action->setToolTip(tr("Add files to playlist"));
     icon = QIcon::fromTheme("list-add-files",
                             QIcon(":/icons/oxygen/32x32/actions/list-add-files.png"));
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, &PlaylistDock::onAddFilesActionTriggered);
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistAddFilesAction", action);
 
     action = new QAction(tr("Update"), this);
-    action->setObjectName("playlistUpdateAction");
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_B));
     icon = QIcon::fromTheme("dialog-ok",
                             QIcon(":/icons/oxygen/32x32/actions/dialog-ok.png"));
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, &PlaylistDock::onUpdateActionTriggered);
     connect(this, &PlaylistDock::enableUpdate, action, &QAction::setEnabled);
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistUpdateAction", action);
 
     QActionGroup *modeGroup = new QActionGroup(this);
     modeGroup->setExclusive(true);
 
     action = new QAction(tr("Tiles"), this);
-    action->setObjectName("playlistViewTilesAction");
     action->setToolTip(tr("View as tiles"));
     icon = QIcon::fromTheme("view-list-details",
                             QIcon(":/icons/oxygen/32x32/actions/view-list-details.png"));
@@ -364,10 +359,9 @@ void PlaylistDock::setupActions()
         updateViewMode();
     });
     modeGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistViewTilesAction", action);
 
     action = new QAction(tr("Icons"), this);
-    action->setObjectName("playlistViewIconsAction");
     action->setToolTip(tr("View as icons"));
     icon = QIcon::fromTheme("view-list-icons",
                             QIcon(":/icons/oxygen/32x32/actions/view-list-icons.png"));
@@ -378,10 +372,9 @@ void PlaylistDock::setupActions()
         updateViewMode();
     });
     modeGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistViewIconsAction", action);
 
     action = new QAction(tr("Details"), this);
-    action->setObjectName("playlistViewDetailsAction");
     action->setToolTip(tr("View as details"));
     icon = QIcon::fromTheme("view-list-text",
                             QIcon(":/icons/oxygen/32x32/actions/view-list-text.png"));
@@ -392,10 +385,9 @@ void PlaylistDock::setupActions()
         updateViewMode();
     });
     modeGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistViewDetailsAction", action);
 
     action = new QAction(tr("Open"), this);
-    action->setObjectName("playlistOpenAction");
     action->setToolTip(tr("Open the clip in the Source player"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
     action->setEnabled(false);
@@ -403,10 +395,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistOpenAction", action);
 
     action = new QAction(tr("GoTo"), this);
-    action->setObjectName("playlistGoToAction");
     action->setToolTip(tr("Go to the start of this clip in the Project player"));
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Return));
     action->setEnabled(false);
@@ -414,10 +405,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::producerOpened, action, [ = ]() {
         action->setEnabled(!MLT.isMultitrack() && !MLT.isPlaylist());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistGoToAction", action);
 
     action = new QAction(tr("Copy"), this);
-    action->setObjectName("playlistCopyAction");
     action->setToolTip(tr("Open a copy of the clip in the Source player"));
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_C));
     action->setEnabled(false);
@@ -425,10 +415,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistCopyAction", action);
 
     action = new QAction(tr("Insert"), this);
-    action->setObjectName("playlistInsertCutAction");
     action->setToolTip(tr("Insert"));
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_V));
     action->setEnabled(false);
@@ -436,55 +425,49 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::producerOpened, action, [ = ]() {
         action->setEnabled(MLT.isClip() || MLT.savedProducer());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistInsertCutAction", action);
 
     action = new QAction(tr("Update Thumbnails"), this);
-    action->setObjectName("playlistUpdateThumbnailsAction");
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onUpdateThumbnailsActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 0);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistUpdateThumbnailsAction", action);
 
     action = new QAction(tr("Set Creation Time..."), this);
-    action->setObjectName("playlistSetFileDateAction");
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onSetFileDateActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSetFileDateAction", action);
 
     action = new QAction(tr("Remove All"), this);
-    action->setObjectName("playlistRemoveAllAction");
     action->setToolTip(tr("Remove all items from the playlist"));
     connect(action, &QAction::triggered, this, &PlaylistDock::onRemoveAllActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 0);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistRemoveAllAction", action);
 
     action = new QAction(tr("Select All"), this);
-    action->setObjectName("playlistSelectAllAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_A));
     connect(action, &QAction::triggered, this, &PlaylistDock::onSelectAllActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 0);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectAllAction", action);
 
     action = new QAction(tr("Select None"), this);
-    action->setObjectName("playlistSelectNoneAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_D));
     connect(action, &QAction::triggered, m_selectionModel, &QItemSelectionModel::clearSelection);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_selectionModel->selection().size() > 0);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectNoneAction", action);
 
     action = new QAction(tr("Move Up"), this);
-    action->setObjectName("playlistMoveUpAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_Up));
     connect(action, &QAction::triggered, m_selectionModel, [ = ]() {
         raise();
@@ -494,10 +477,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistMoveUpAction", action);
 
     action = new QAction(tr("Move Down"), this);
-    action->setObjectName("playlistMoveDownAction");
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_Down));
     connect(action, &QAction::triggered, m_selectionModel, [ = ]() {
         raise();
@@ -507,47 +489,42 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistMoveDownAction", action);
 
     action = new QAction(tr("Add Selected to Timeline"), this);
-    action->setObjectName("playlistAddToTimelineAction");
     connect(action, &QAction::triggered, this, &PlaylistDock::onAddToTimelineActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_selectionModel->selection().size() > 0);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistAddToTimelineAction", action);
 
     action = new QAction(tr("Add Selected to Slideshow"), this);
-    action->setObjectName("playlistAddToSlideshowAction");
     connect(action, &QAction::triggered, this, &PlaylistDock::onAddToSlideshowActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_selectionModel->selection().size() > 0);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistAddToSlideshowAction", action);
 
     action = new QAction(tr("Sort By Name"), this);
-    action->setObjectName("playlistSortByNameAction");
     connect(action, &QAction::triggered, this, [&](bool checked) {
         resetPlaylistIndex();
         MAIN.undoStack()->push(new Playlist::SortCommand(m_model, PlaylistModel::COLUMN_RESOURCE,
                                                          Qt::AscendingOrder));
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSortByNameAction", action);
 
     action = new QAction(tr("Sort By Date"), this);
-    action->setObjectName("playlistSortByDateAction");
     connect(action, &QAction::triggered, this, [&](bool checked) {
         resetPlaylistIndex();
         MAIN.undoStack()->push(new Playlist::SortCommand(m_model, PlaylistModel::COLUMN_DATE,
                                                          Qt::AscendingOrder));
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSortByDateAction", action);
 
     QActionGroup *thumbnailGroup = new QActionGroup(this);
     thumbnailGroup->setExclusive(true);
 
     action = new QAction(tr("Hidden"), this);
-    action->setObjectName("playlistThumbnailsHiddenAction");
     action->setCheckable(true);
     connect(action, &QAction::triggered, this, [&](bool checked) {
         if (checked) {
@@ -557,10 +534,9 @@ void PlaylistDock::setupActions()
         }
     });
     thumbnailGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistThumbnailsHiddenAction", action);
 
     action = new QAction(tr("In and Out - Left/Right"), this);
-    action->setObjectName("playlistThumbnailsLeftAndRightAction");
     action->setCheckable(true);
     connect(action, &QAction::triggered, this, [&](bool checked) {
         if (checked) {
@@ -573,10 +549,9 @@ void PlaylistDock::setupActions()
         }
     });
     thumbnailGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistThumbnailsLeftAndRightAction", action);
 
     action = new QAction(tr("In and Out - Top/Bottom"), this);
-    action->setObjectName("playlistThumbnailsTopAndBottomAction");
     action->setCheckable(true);
     connect(action, &QAction::triggered, this, [&](bool checked) {
         if (checked) {
@@ -589,10 +564,9 @@ void PlaylistDock::setupActions()
         }
     });
     thumbnailGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistThumbnailsTopAndBottomAction", action);
 
     action = new QAction(tr("In Only - Small"), this);
-    action->setObjectName("playlistThumbnailsInOnlySmallAction");
     action->setCheckable(true);
     connect(action, &QAction::triggered, this, [&](bool checked) {
         if (checked) {
@@ -605,10 +579,9 @@ void PlaylistDock::setupActions()
         }
     });
     thumbnailGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistThumbnailsInOnlySmallAction", action);
 
     action = new QAction(tr("In Only - Large"), this);
-    action->setObjectName("playlistThumbnailsInOnlyLargeAction");
     action->setCheckable(true);
     connect(action, &QAction::triggered, this, [&](bool checked) {
         if (checked) {
@@ -621,19 +594,17 @@ void PlaylistDock::setupActions()
         }
     });
     thumbnailGroup->addAction(action);
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistThumbnailsInOnlyLargeAction", action);
 
     action = new QAction(tr("Play After Open"), this);
-    action->setObjectName("playlistPlayAfterOpenAction");
     action->setCheckable(true);
     action->setChecked(Settings.playlistAutoplay());
     connect(action, &QAction::triggered, this, [&](bool checked) {
         Settings.setPlaylistAutoplay(checked);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistPlayAfterOpenAction", action);
 
     action = new QAction(tr("Open Previous"), this);
-    action->setObjectName("playlistOpenPreviousAction");
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Up));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -644,10 +615,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistOpenPreviousAction", action);
 
     action = new QAction(tr("Open Next"), this);
-    action->setObjectName("playlistOpenNextAction");
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Down));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -658,10 +628,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistOpenNextAction", action);
 
     action = new QAction(tr("Select Clip 1"), this);
-    action->setObjectName("playlistSelectClip1Action");
     action->setShortcut(QKeySequence(Qt::Key_1));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -671,11 +640,10 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 0);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectClip1Action", action);
     \
 
     action = new QAction(tr("Select Clip 2"), this);
-    action->setObjectName("playlistSelectClip2Action");
     action->setShortcut(QKeySequence(Qt::Key_2));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -685,10 +653,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 1);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectClip2Action", action);
 
     action = new QAction(tr("Select Clip 3"), this);
-    action->setObjectName("playlistSelectClip3Action");
     action->setShortcut(QKeySequence(Qt::Key_3));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -698,10 +665,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 2);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectClip3Action", action);
 
     action = new QAction(tr("Select Clip 4"), this);
-    action->setObjectName("playlistSelectClip4Action");
     action->setShortcut(QKeySequence(Qt::Key_4));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -711,10 +677,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 3);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectClip4Action", action);
 
     action = new QAction(tr("Select Clip 5"), this);
-    action->setObjectName("playlistSelectClip5Action");
     action->setShortcut(QKeySequence(Qt::Key_5));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -724,10 +689,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 4);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectClip5Action", action);
 
     action = new QAction(tr("Select Clip 6"), this);
-    action->setObjectName("playlistSelectClip6Action");
     action->setShortcut(QKeySequence(Qt::Key_6));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -737,10 +701,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 5);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectClip6Action", action);
 
     action = new QAction(tr("Select Clip 7"), this);
-    action->setObjectName("playlistSelectClip7Action");
     action->setShortcut(QKeySequence(Qt::Key_7));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -750,10 +713,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 6);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectClip7Action", action);
 
     action = new QAction(tr("Select Clip 8"), this);
-    action->setObjectName("playlistSelectClip8Action");
     action->setShortcut(QKeySequence(Qt::Key_8));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -763,10 +725,9 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 7);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectClip8Action", action);
 
     action = new QAction(tr("Select Clip 9"), this);
-    action->setObjectName("playlistSelectClip9Action");
     action->setShortcut(QKeySequence(Qt::Key_9));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
@@ -776,7 +737,7 @@ void PlaylistDock::setupActions()
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 8);
     });
-    m_actions[action->objectName()] = action;
+    Actions.add("playlistSelectClip9Action", action);
 }
 
 int PlaylistDock::position()
@@ -1043,15 +1004,15 @@ void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
     QModelIndex index = m_view->currentIndex();
     if (index.isValid() && m_model.playlist()) {
         QMenu menu(this);
-        menu.addAction(m_actions["playlistOpenAction"]);
-        menu.addAction(m_actions["playlistGoToAction"]);
-        menu.addAction(m_actions["playlistRemoveCutAction"]);
-        menu.addAction(m_actions["playlistCopyAction"]);
-        menu.addAction(m_actions["playlistInsertCutAction"]);
-        menu.addAction(m_actions["playlistUpdateAction"]);
-        menu.addAction(m_actions["playlistUpdateThumbnailsAction"]);
-        menu.addAction(m_actions["playlistUpdateThumbnailsAction"]);
-        menu.addAction(m_actions["playlistSetFileDateAction"]);
+        menu.addAction(Actions["playlistOpenAction"]);
+        menu.addAction(Actions["playlistGoToAction"]);
+        menu.addAction(Actions["playlistRemoveCutAction"]);
+        menu.addAction(Actions["playlistCopyAction"]);
+        menu.addAction(Actions["playlistInsertCutAction"]);
+        menu.addAction(Actions["playlistUpdateAction"]);
+        menu.addAction(Actions["playlistUpdateThumbnailsAction"]);
+        menu.addAction(Actions["playlistUpdateThumbnailsAction"]);
+        menu.addAction(Actions["playlistSetFileDateAction"]);
         menu.exec(mapToGlobal(pos));
     }
 }
