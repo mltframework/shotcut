@@ -3295,6 +3295,7 @@ void MultitrackModel::load()
     }
     emit loaded();
     emit filteredChanged();
+    emit scaleFactorChanged();
 }
 
 void MultitrackModel::reload(bool asynchronous)
