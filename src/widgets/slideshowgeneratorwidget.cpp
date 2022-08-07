@@ -105,6 +105,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
 
     grid->addWidget(new QLabel(tr("Transition type")), 4, 0, Qt::AlignRight);
     m_transitionStyleCombo = new QComboBox();
+    m_transitionStyleCombo->setMaximumWidth(350);
     m_transitionStyleCombo->addItem(tr("Random"));
     m_transitionStyleCombo->addItem(tr("Dissolve"));
     m_transitionStyleCombo->addItem(tr("Bar Horizontal"));
@@ -405,7 +406,7 @@ void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition *lu
 
     if (index == 0) {
         // Random: pick any number other than 0
-        index = rand() % 24 + 1;
+        index = rand() % m_transitionStyleCombo->count() + 1;
     }
 
     if (index == 1) {
