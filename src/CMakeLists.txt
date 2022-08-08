@@ -9,6 +9,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   controllers/filtercontroller.cpp controllers/filtercontroller.h
   controllers/scopecontroller.cpp controllers/scopecontroller.h
   database.cpp database.h
+  dialogs/actionsdialog.cpp dialogs/actionsdialog.h
   dialogs/addencodepresetdialog.cpp dialogs/addencodepresetdialog.h
   dialogs/addencodepresetdialog.ui
   dialogs/alignaudiodialog.cpp dialogs/alignaudiodialog.h
@@ -63,6 +64,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   mainwindow.ui
   mltcontroller.cpp mltcontroller.h
   mltxmlchecker.cpp mltxmlchecker.h
+  models/actionsmodel.cpp models/actionsmodel.h
   models/alignclipsmodel.cpp models/alignclipsmodel.h
   models/attachedfiltersmodel.cpp models/attachedfiltersmodel.h
   models/audiolevelstask.cpp models/audiolevelstask.h

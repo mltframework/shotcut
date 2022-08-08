@@ -52,6 +52,7 @@
 #include "controllers/filtercontroller.h"
 #include "controllers/scopecontroller.h"
 #include "docks/filtersdock.h"
+#include "dialogs/actionsdialog.h"
 #include "dialogs/customprofiledialog.h"
 #include "dialogs/saveimagedialog.h"
 #include "settings.h"
@@ -4045,7 +4046,9 @@ void MainWindow::on_actionNew_triggered()
 
 void MainWindow::on_actionKeyboardShortcuts_triggered()
 {
-    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/howtos/keyboard-shortcuts/"));
+    ActionsDialog *dialog = new ActionsDialog();
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
 }
 
 void MainWindow::on_actionLayoutLogging_triggered()
