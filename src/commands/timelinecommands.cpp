@@ -120,7 +120,7 @@ void InsertCommand::redo()
             clip.set_in_and_out(info->frame_in, info->frame_out);
             bool lastClip = i == 0;
             m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false, lastClip);
-            shift += clip.get_playtime();
+            shift += info->frame_count;
         }
     } else {
         shift = clip.get_playtime();
