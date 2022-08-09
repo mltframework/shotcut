@@ -114,7 +114,7 @@ QVariant ActionsModel::headerData(int section, Qt::Orientation orientation, int 
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
         case COLUMN_GROUP:
-            return tr("Panel");
+            return tr("View");
         case COLUMN_ACTION:
             return tr("Action");
         case COLUMN_SEQUENCE1:

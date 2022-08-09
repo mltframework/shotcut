@@ -29,7 +29,8 @@
 ActionsDialog::ActionsDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(tr("Shotcut Shortcuts"));
+    setWindowTitle(tr("Keyboard Shortcuts"));
+    setSizeGripEnabled(true) ;
 
     QVBoxLayout *vlayout = new QVBoxLayout();
 
