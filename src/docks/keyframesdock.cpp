@@ -88,11 +88,11 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     vboxLayout->setSpacing(0);
     vboxLayout->setContentsMargins(0, 0, 0, 0);
 
-    DockToolBar *toolbar = new DockToolBar(tr("Timeline Controls"));
+    DockToolBar *toolbar = new DockToolBar(tr("Keyframes Controls"));
     QToolButton *menuButton = new QToolButton();
     menuButton->setIcon(QIcon::fromTheme("show-menu",
                                          QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
-    menuButton->setToolTip(tr("Timeline Menu"));
+    menuButton->setToolTip(tr("Keyframes Menu"));
     menuButton->setAutoRaise(true);
     menuButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
     menuButton->setMenu(m_mainMenu);
@@ -102,6 +102,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     toolbar->addAction(Actions["keyframesTrimOutAction"]);
     toolbar->addAction(Actions["keyframesAnimateInAction"]);
     toolbar->addAction(Actions["keyframesAnimateOutAction"]);
+    toolbar->addAction(Actions["timelineSnapAction"]);
     toolbar->addSeparator();
     toolbar->addAction(Actions["keyframesZoomOutAction"]);
     QSlider *zoomSlider = new QSlider();
