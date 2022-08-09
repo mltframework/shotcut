@@ -193,14 +193,14 @@ const QStringList Util::sortedFileList(const QList<QUrl> &urls)
 
     // First look for GoPro main files.
     foreach (QUrl url, urls) {
-        QFileInfo fi(removeFileScheme(url));
+        QFileInfo fi(removeFileScheme(url, false));
         if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProFirstFilePrefix(fi)) {
             goproFiles[fi.baseName().mid(4)] << fi.filePath();
         }
     }
     // Then, look for GoPro split files.
     foreach (QUrl url, urls) {
-        QFileInfo fi(removeFileScheme(url));
+        QFileInfo fi(removeFileScheme(url, false));
         if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProPrefix(fi)
                 && !isValidGoProFirstFilePrefix(fi)) {
             QString goproNumber = fi.baseName().mid(4);
@@ -222,7 +222,7 @@ const QStringList Util::sortedFileList(const QList<QUrl> &urls)
     }
     // Add all the non-GoPro files.
     for (auto url : urls) {
-        QFileInfo fi(removeFileScheme(url));
+        QFileInfo fi(removeFileScheme(url, false));
         if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) &&
                 (isValidGoProFirstFilePrefix(fi) || isValidGoProPrefix(fi))) {
             QString goproNumber = fi.baseName().mid(4);
@@ -243,7 +243,7 @@ QList<QUrl> Util::expandDirectories(const QList<QUrl> &urls)
 {
     QList<QUrl> result;
     foreach (QUrl url, urls) {
-        QString path = Util::removeFileScheme(url);
+        QString path = Util::removeFileScheme(url, false);
         QFileInfo fi(path);
         if (fi.isDir()) {
             QDir dir(path);

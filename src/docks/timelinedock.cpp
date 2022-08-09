@@ -2553,14 +2553,13 @@ static QString convertUrlsToXML(const QString &xml)
         Mlt::Playlist playlist(MLT.profile());
         QList<QUrl> urls;
         const auto &strings = xml.split(kFilesUrlDelimiter);
-        for (auto s : strings) {
+        for (const auto &s : strings) {
 #ifdef Q_OS_WIN
             if (!s.startsWith(kFileUrlProtocol)) {
                 s.prepend(kFileUrlProtocol);
             }
 #endif
-            QUrl url(s);
-            urls << Util::removeFileScheme(url);
+            urls << s;
         }
         int i = 0, count = urls.size();
         for (const auto &path : Util::sortedFileList(urls)) {

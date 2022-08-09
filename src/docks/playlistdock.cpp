@@ -1295,6 +1295,8 @@ void PlaylistDock::updateViewMode()
 
 void PlaylistDock::resetPlaylistIndex()
 {
+    if (!m_model.playlist() || !m_model.playlist()->is_valid())
+        return;
     if (MLT.producer())
         MLT.producer()->set(kPlaylistIndexProperty, nullptr, 0);
     // Clear the old values
