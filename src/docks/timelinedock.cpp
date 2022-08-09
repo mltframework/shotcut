@@ -2047,6 +2047,10 @@ void TimelineDock::onRowsInserted(const QModelIndex &parent, int first, int last
         int n = last - first + 1;
         if (parent.isValid()) {
             foreach (auto i, m_selection.selectedClips) {
+                if (parent.row() != i.y()) {
+                    newSelection << QPoint(i.x(), i.y());
+                    continue;
+                }
                 if (i.x() < first)
                     newSelection << QPoint(i.x(), parent.row());
                 else
@@ -2075,6 +2079,10 @@ void TimelineDock::onRowsRemoved(const QModelIndex &parent, int first, int last)
         int n = last - first + 1;
         if (parent.isValid()) {
             foreach (auto i, m_selection.selectedClips) {
+                if (parent.row() != i.y()) {
+                    newSelection << QPoint(i.x(), i.y());
+                    continue;
+                }
                 if (i.x() < first)
                     newSelection << QPoint(i.x(), parent.row());
                 else if (i.x() > last)
