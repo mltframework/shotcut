@@ -4046,9 +4046,15 @@ void MainWindow::on_actionNew_triggered()
 
 void MainWindow::on_actionKeyboardShortcuts_triggered()
 {
-    ActionsDialog *dialog = new ActionsDialog();
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    auto name = QString::fromLatin1("actionsDialog");
+    auto dialog = QObject::findChild<ActionsDialog *>(name, Qt::FindDirectChildrenOnly);
+    if (!dialog) {
+        dialog = new ActionsDialog(this);
+        dialog->setObjectName(name);
+        dialog->setAttribute(Qt::WA_DeleteOnClose);
+    }
     dialog->show();
+    dialog->activateWindow();
 }
 
 void MainWindow::on_actionLayoutLogging_triggered()
