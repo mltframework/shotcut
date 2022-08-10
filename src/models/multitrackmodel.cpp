@@ -2123,7 +2123,8 @@ bool MultitrackModel::removeTransitionByTrimInValid(int trackIndex, int clipInde
         if (clipIndex > 1) {
             // Check if there is a transition and its new length is 0 or less.
             if (isTransition(playlist, clipIndex - 1)
-                    && playlist.clip_length(clipIndex - 1) - qAbs(delta) <= 0) {
+                    && playlist.clip_length(clipIndex - 1) - qAbs(delta) <= 0
+                    && ((delta < 0 && !m_isMakingTransition) || (delta > 0 && m_isMakingTransition))) {
                 result = true;
                 m_isMakingTransition = false;
             }
@@ -2143,7 +2144,8 @@ bool MultitrackModel::removeTransitionByTrimOutValid(int trackIndex, int clipInd
             // Check if there is a transition and its new length is 0 or less.
 //            LOG_DEBUG() << "transition length" << playlist.clip_length(clipIndex + 1) << "delta" << delta << playlist.clip_length(clipIndex + 1) - qAbs(delta);
             if (isTransition(playlist, clipIndex + 1)
-                    && playlist.clip_length(clipIndex + 1) - qAbs(delta) <= 0) {
+                    && playlist.clip_length(clipIndex + 1) - qAbs(delta) <= 0
+                    && ((delta < 0 && !m_isMakingTransition) || (delta > 0 && m_isMakingTransition))) {
                 result = true;
                 m_isMakingTransition = false;
             }
