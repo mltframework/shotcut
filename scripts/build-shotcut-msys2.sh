@@ -57,6 +57,7 @@ VMAF_REVISION="v2.3.1"
 ENABLE_GLAXNIMATE=1
 GLAXNIMATE_HEAD=0
 GLAXNIMATE_REVISION="origin/shotcut"
+ENABLE_GOPRO2GPX=1
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -172,6 +173,9 @@ function to_key {
     ;;
     glaxnimate)
       echo 13
+    ;;
+    gopro2gpx)
+      echo 14
     ;;
     *)
       echo UNKNOWN
@@ -361,6 +365,9 @@ function set_globals {
     if test "$ENABLE_GLAXNIMATE" = 1 ; then
         SUBDIRS="$SUBDIRS glaxnimate"
     fi
+    if test "$ENABLE_GOPRO2GPX" = 1 ; then
+        SUBDIRS="$SUBDIRS gopro2gpx"
+    fi
     SUBDIRS="$SUBDIRS mlt shotcut"
   fi
 
@@ -400,6 +407,7 @@ function set_globals {
   REPOLOCS[11]="https://aomedia.googlesource.com/aom"
   REPOLOCS[12]="https://github.com/Netflix/vmaf.git"
   REPOLOCS[13]="https://gitlab.com/ddennedy/glaxnimate.git"
+  REPOLOCS[14]="https://github.com/NetworkAndSoftware/gopro2gpx"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -416,6 +424,7 @@ function set_globals {
   REPOTYPES[11]="git"
   REPOTYPES[12]="git"
   REPOTYPES[13]="git"
+  REPOTYPES[14]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -465,6 +474,7 @@ function set_globals {
   if test 0 = "$GLAXNIMATE_HEAD" -a "$GLAXNIMATE_REVISION" ; then
     REVISIONS[13]="$GLAXNIMATE_REVISION"
   fi
+  REVISIONS[14]=""
 
   # Figure out the number of cores in the system. Used both by make and startup script
   CPUS=$(nproc)
@@ -601,6 +611,12 @@ function set_globals {
   fi
   CFLAGS_[13]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[13]="$ASAN_LDFLAGS $LDFLAGS"
+
+  #####
+  # gopro2gpx
+  CONFIG[14]="cmake -G Ninja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  CFLAGS_[14]="$CFLAGS"
+  LDFLAGS_[14]="$LDFLAGS"
 }
 
 ######################################################################
@@ -956,6 +972,8 @@ function configure_compile_install_subproject {
   elif test "glaxnimate" = "$1"; then
     cmd ninja translations || die "Unable to build translations for $1"
     cmd ninja install || die "Unable to install $1"
+  elif test "gopro2gpx" = "$1" ; then
+    cmd install -p -c gopro2gpx "$FINAL_INSTALL_DIR" || die "Unable to install $1"
   elif test "$MYCONFIG" != "" ; then
     cmd make install || die "Unable to install $1"
   fi

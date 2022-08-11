@@ -87,6 +87,7 @@ VMAF_REVISION="v2.3.1"
 ENABLE_GLAXNIMATE=1
 GLAXNIMATE_HEAD=0
 GLAXNIMATE_REVISION="origin/shotcut"
+ENABLE_GOPRO2GPX=1
 
 PYTHON_VERSION_DEFAULT=3.8
 PYTHON_VERSION_DARWIN=3.10
@@ -235,6 +236,9 @@ function to_key {
     ;;
     glaxnimate)
       echo 24
+    ;;
+    gopro2gpx)
+      echo 25
     ;;
     *)
       echo UNKNOWN
@@ -467,6 +471,9 @@ function set_globals {
     if test "$ENABLE_GLAXNIMATE" = 1 ; then
         SUBDIRS="$SUBDIRS glaxnimate"
     fi
+    if test "$ENABLE_GOPRO2GPX" = 1 ; then
+        SUBDIRS="$SUBDIRS gopro2gpx"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -513,6 +520,7 @@ function set_globals {
   REPOLOCS[22]="https://aomedia.googlesource.com/aom"
   REPOLOCS[23]="https://github.com/Netflix/vmaf.git"
   REPOLOCS[24]="https://gitlab.com/ddennedy/glaxnimate.git"
+  REPOLOCS[25]="https://github.com/NetworkAndSoftware/gopro2gpx"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -537,6 +545,7 @@ function set_globals {
   REPOTYPES[22]="git"
   REPOTYPES[23]="git"
   REPOTYPES[24]="git"
+  REPOTYPES[25]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -616,6 +625,7 @@ function set_globals {
   if test 0 = "$GLAXNIMATE_HEAD" -a "$GLAXNIMATE_REVISION" ; then
     REVISIONS[24]="$GLAXNIMATE_REVISION"
   fi
+  REVISIONS[25]=""
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
@@ -894,6 +904,12 @@ function set_globals {
   CONFIG[24]="cmake -G Ninja -DCMAKE_PREFIX_PATH=$QTDIR -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
   CFLAGS_[24]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[24]="$ASAN_LDFLAGS $LDFLAGS"
+
+  #####
+  # gopro2gpx
+  CONFIG[25]="cmake -G Ninja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  CFLAGS_[25]="$CFLAGS"
+  LDFLAGS_[25]="$LDFLAGS"
 }
 
 ######################################################################
@@ -1361,6 +1377,8 @@ EOF
     elif test "glaxnimate" = "$1" ; then
       cmd ninja translations || die "Unable to build translations for $1"
       cmd ninja install || die "Unable to install $1"
+    elif test "gopro2gpx" = "$1" ; then
+      cmd install -p -c gopro2gpx "$FINAL_INSTALL_DIR"/bin || die "Unable to install $1"
     elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
     fi
@@ -1619,7 +1637,7 @@ function deploy_mac
 
   log Copying supplementary executables
   cmd mkdir -p MacOS 2>/dev/null
-  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe,glaxnimate} MacOS
+  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx} MacOS
   cmd mkdir -p Frameworks 2>/dev/null
   cmd cp -p ../../lib/libCuteLogger.dylib Frameworks
   for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe MacOS/glaxnimate; do
