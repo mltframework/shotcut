@@ -226,6 +226,12 @@ private:
     bool m_rippleMarkers;
     UndoHelper m_undoHelper;
     QMultiMap<int, Mlt::Producer> m_selection; // ordered by position
+    QList<int> m_newTrackIndexList;
+    QList<int> m_playlistStartList;
+    QList<int> m_trackIndexList;
+    QList<int> m_clipIndexList;
+    QList<int> m_inList;
+    QList<int> m_outList;
     bool m_redo;
     int m_start;
     int m_trackIndex;
