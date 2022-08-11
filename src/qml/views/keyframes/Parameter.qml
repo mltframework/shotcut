@@ -161,7 +161,6 @@ Item {
             onInterpolationChanged: canvas.requestPaint()
             Component.onCompleted: {
                 position = (filter.in - producer.in) + model.frame
-                updateX()
             }
             onFrameChanged: {
                 position = (filter.in - producer.in) + model.frame
