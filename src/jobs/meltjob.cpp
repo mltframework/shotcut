@@ -50,6 +50,7 @@ MeltJob::MeltJob(const QString &name, const QString &xml, int frameRateNum, int 
     } else {
         // Not an EncodeJob
         QAction *action = new QAction(tr("Open"), this);
+        action->setData("Open");
         action->setToolTip(tr("Open the output file in the Shotcut player"));
         connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
         m_successActions << action;

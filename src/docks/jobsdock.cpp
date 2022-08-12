@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -173,7 +173,7 @@ void JobsDock::on_treeView_doubleClicked(const QModelIndex &index)
     if (job && job->ran() && job->state() == QProcess::NotRunning
             && job->exitStatus() == QProcess::NormalExit) {
         foreach (QAction *action, job->successActions()) {
-            if (action->text() == "Open") {
+            if (action->data() == "Open") {
                 action->trigger();
                 break;
             }

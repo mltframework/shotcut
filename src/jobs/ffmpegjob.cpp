@@ -37,6 +37,7 @@ FfmpegJob::FfmpegJob(const QString &name, const QStringList &args, bool isOpenLo
     , m_isOpenLog(isOpenLog)
 {
     QAction *action = new QAction(tr("Open"), this);
+    action->setData("Open");
     connect(action, SIGNAL(triggered()), this, SLOT(onOpenTriggered()));
     m_successActions << action;
     m_args.append(args);

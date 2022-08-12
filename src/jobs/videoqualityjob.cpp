@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +33,7 @@ VideoQualityJob::VideoQualityJob(const QString &name, const QString &xml,
     , m_reportPath(reportPath)
 {
     QAction *action = new QAction(tr("Open"), this);
+    action->setData("Open");
     action->setToolTip(tr("Open original and encoded side-by-side in the Shotcut player"));
     connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
     m_successActions << action;
