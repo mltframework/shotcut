@@ -937,7 +937,7 @@ function configure_compile_install_subproject {
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
     cmd make -j$MAKEJ libmovit.la || die "Unable to build $1"
-  elif test "frei0r" = "$1" -o "bigsh0t" = "$1" -o "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1" -o "glaxnimate" = "$1"; then
+  elif test "frei0r" = "$1" -o "bigsh0t" = "$1" -o "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1" -o "glaxnimate" = "$1" -o "gopro2gpx" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "dav1d" = "$1"; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"

@@ -1320,7 +1320,7 @@ function configure_compile_install_subproject {
     cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.la || die "Unable to build $1"
   elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
-  elif test "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1"  -o "glaxnimate" = "$1"; then
+  elif test "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1"  -o "glaxnimate" = "$1" -o "gopro2gpx" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "x265" = "$1" ; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
