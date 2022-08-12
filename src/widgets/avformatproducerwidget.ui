@@ -1042,6 +1042,17 @@
     <string>Measure Video Quality...</string>
    </property>
   </action>
+  <action name="actionExportGPX">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Export GPX</string>
+   </property>
+   <property name="toolTip">
+    <string>Export GPX</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

@@ -124,6 +124,8 @@ private slots:
 
     void on_rotationComboBox_activated(int index);
 
+    void on_actionExportGPX_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

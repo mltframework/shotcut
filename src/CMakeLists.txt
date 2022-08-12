@@ -54,6 +54,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   jobs/encodejob.cpp jobs/encodejob.h
   jobs/ffmpegjob.cpp jobs/ffmpegjob.h
   jobs/ffprobejob.cpp jobs/ffprobejob.h
+  jobs/gopro2gpxjob.cpp jobs/gopro2gpxjob.h
   jobs/meltjob.cpp jobs/meltjob.h
   jobs/postjobaction.cpp jobs/postjobaction.h
   jobs/qimagejob.cpp jobs/qimagejob.h

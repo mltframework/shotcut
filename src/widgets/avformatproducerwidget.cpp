@@ -26,6 +26,7 @@
 #include "jobs/ffmpegjob.h"
 #include "jobs/meltjob.h"
 #include "jobs/postjobaction.h"
+#include "jobs/gopro2gpxjob.h"
 #include "settings.h"
 #include "mainwindow.h"
 #include "Logger.h"
@@ -553,6 +554,10 @@ void AvformatProducerWidget::onFrameDecoded()
                 ui->metadataTable->setRowCount(row + 1);
                 ui->metadataTable->setItem(row, 0, new QTableWidgetItem(name.section('.', -2, -2)));
                 ui->metadataTable->setItem(row, 1, new QTableWidgetItem(m_producer->get(i)));
+                if (ui->metadataTable->item(row, 0)->text() == "handler_name"
+                        && QString(m_producer->get(i)).contains("GoPro")) {
+                    ui->actionExportGPX->setEnabled(true);
+                }
                 ui->tabWidget->setTabEnabled(2, true);
             }
         }
@@ -728,6 +733,9 @@ void AvformatProducerWidget::on_menuButton_clicked()
         menu.addAction(ui->actionSetEquirectangular);
     }
     menu.addAction(ui->actionFFmpegVideoQuality);
+    if (ui->actionExportGPX->isEnabled()) {
+        menu.addAction(ui->actionExportGPX);
+    }
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -1486,3 +1494,13 @@ void AvformatProducerWidget::on_rotationComboBox_activated(int index)
         recreateProducer();
     }
 }
+
+void AvformatProducerWidget::on_actionExportGPX_triggered()
+{
+    QString resource = Util::GetFilenameFromProducer(producer());
+    QStringList args;
+    args << "-s";
+    args << resource;
+    JOBS.add(new GoPro2GpxJob(resource, args));
+}
+
