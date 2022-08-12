@@ -57,6 +57,10 @@ Rectangle {
         }
     }
 
+    Component.onCompleted: {
+        updateX()
+    }
+    
     anchors.verticalCenter: parameterRoot.verticalCenter
     anchors.verticalCenterOffset: isCurve ? minimum != maximum ? trackValue : 0 : 0
     height: 10
