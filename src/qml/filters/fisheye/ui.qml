@@ -80,7 +80,7 @@ Item {
             // tries to keep all 4 borders in frame. straighten left/right edge. zoomed center, makes motion look faster
             //
             //Focused
-            // close match gopro studio, trimed left/right edges, centre zoom slightly, makes motion look faster
+            // close match gopro studio, trimmed left/right edges, centre zoom slightly, makes motion look faster
             //
             //Linear
             // minimal distortion at frame centre. edges have increased croped to suit
@@ -193,7 +193,7 @@ Item {
         filter.set(scaleYParam, idx10)      // scaleY 
     }
 
-    //fix scrollbar height when dynamic slider visability changes
+    //fix scrollbar height when dynamic slider visibility changes
     function setScollbarHeight(){
         var h = 240
         h += stretchShowSlider? 26: 0
@@ -589,7 +589,7 @@ Item {
         }
 
 
-        //line seperator #1
+        //line separator #1
          RowLayout {
             Layout.columnSpan: 3
             Label { text: qsTr('Scale')}  
@@ -703,7 +703,7 @@ Item {
             onClicked: scaleYSlider.value = 0
         }        
 
-        //line seperator #2
+        //line separator #2
          RowLayout {
             Layout.columnSpan: 3
             Label { text: qsTr('Aspect')}  
@@ -768,7 +768,7 @@ Item {
             onClicked: aspectManualSlider.value = 0
         }
 
-        //line seperator #3
+        //line separator #3
          RowLayout {
             visible: cameraShowNew
             Layout.columnSpan: 3
