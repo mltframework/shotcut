@@ -26,7 +26,7 @@ Item {
     property bool _disableUpdate: false
 
     width: 350
-    height: 425
+    height: 350
 
     Component.onCompleted: {
         if (filter.isNew) {

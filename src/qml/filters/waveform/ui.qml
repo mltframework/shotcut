@@ -26,8 +26,8 @@ Item {
     property var defaultParameters: [rectProperty, 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'bgcolor', 'thickness', 'fill', 'show_channel', 'window']
     property bool _disableUpdate: true
 
-    width: 350
-    height: 425
+    width: 425
+    height: 270
 
     Component.onCompleted: {
         if (filter.isNew) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ Item {
     property bool _disableUpdate: true
 
     width: 350
-    height: 425
+    height: 225
 
     Component.onCompleted: {
         if (filter.isNew) {

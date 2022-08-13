@@ -28,8 +28,8 @@ Item {
     property int _minFreqDelta: 1000
     property bool _disableUpdate: true
 
-    width: 350
-    height: 425
+    width: 400
+    height: 475
 
     Component.onCompleted: {
         if (filter.isNew) {
