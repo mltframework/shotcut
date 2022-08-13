@@ -146,7 +146,7 @@ Item {
             //basic text only presets
             usedParams = set_graph_data_params(0,0,  0,100,  0, 0, 0,  0, 0, 0)
             usedParams.push( set_graph_style_params(_, 0, 1, 0, 5,  default_rect, 0, " ", 0) )
-            filter.savePreset(usedParams, "Text only: GPS coordonates")
+            filter.savePreset(usedParams, "Text only: GPS coordinates")
             usedParams = set_graph_data_params(1,0,  0,100,  0, 0, 0,  0, 0, 0)
             usedParams.push( set_graph_style_params(_, 0, 1, 0, 5,  default_rect, 0, 'm', 0) )
             filter.savePreset(usedParams, "Text only: Altitude")
@@ -703,7 +703,7 @@ Item {
         Label {
             text: qsTr('Trim time')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('Hides part of the graph at begining or end.\nThis does not recompute min/max for any field.') }
+            Shotcut.HoverTip { text: qsTr('Hides part of the graph at beginning or end.\nThis does not recompute min/max for any field.') }
         }
         GridLayout {
             columns: 2
@@ -712,7 +712,7 @@ Item {
                     id: spin_start
                     value: 0
                     horizontalAlignment: Qt.AlignRight
-                    Shotcut.HoverTip { text: qsTr('Hides part of the begining of the graph.') }
+                    Shotcut.HoverTip { text: qsTr('Hides part of the beginning of the graph.') }
                     Layout.minimumWidth: 80
                     from: 0
                     to: 100
@@ -1271,7 +1271,7 @@ Item {
             }
             Button {
                 icon.name: 'dialog-information'
-                Shotcut.HoverTip { text: qsTr('Get the center coordonate of GPS map. This does not change with trim or crop.\nTIP:OpenStreetMap website can save the current standard map centered on searched location (but only at screen resolution).\nGoogle Earth for desktop can center on a coordonate and save a 4K image of it. Disable the Terrain layer for best results.') }
+                Shotcut.HoverTip { text: qsTr('Get the center coordinate of GPS map. This does not change with trim or crop.\nTIP:OpenStreetMap website can save the current standard map centered on searched location (but only at screen resolution).\nGoogle Earth for desktop can center on a coordinate and save a 4K image of it. Disable the Terrain layer for best results.') }
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: bg_img_path.text = "! " + qsTr("GPS file center is: ") + filter.get("map_coords_hint")

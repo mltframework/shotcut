@@ -1221,7 +1221,7 @@ else
     var parent = parser.tags[parser.tags.length - 1] || parser
     var tag = parser.tag = { name: parser.tagName, attributes: {} }
 
-    // will be overridden if tag contails an xmlns="foo" or xmlns:foo="bar"
+    // will be overridden if tag contains an xmlns="foo" or xmlns:foo="bar"
     if (parser.opt.xmlns) {
       tag.ns = parent.ns
     }
@@ -4275,7 +4275,7 @@ process.nextTick = function (fun) {
     }
 };
 
-// v8 likes predictible objects
+// v8 likes predictable objects
 function Item(fun, array) {
     this.fun = fun;
     this.array = array;
