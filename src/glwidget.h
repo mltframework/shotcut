@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2020 Meltytech, LLC
+ * Copyright (c) 2011-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -144,7 +144,7 @@ signals:
     void rectChanged();
     void gridChanged();
     void zoomChanged();
-    void offsetChanged();
+    void offsetChanged(const QPoint &offset = QPoint());
     void imageReady();
     void snapToGridChanged();
     void toggleZoom(bool);
@@ -180,6 +180,8 @@ private:
     QTimer m_refreshTimer;
     bool m_scrubAudio;
     GLint m_maxTextureSize;
+    QPoint m_mousePosition;
+
 
     static void on_frame_show(mlt_consumer, GLWidget *widget, mlt_event_data);
 

@@ -340,6 +340,8 @@ Player::Player(QWidget *parent)
     connect(this, SIGNAL(zoomChanged(float)), MLT.videoWidget(), SLOT(setZoom(float)));
     connect(m_horizontalScroll, SIGNAL(valueChanged(int)), MLT.videoWidget(), SLOT(setOffsetX(int)));
     connect(m_verticalScroll, SIGNAL(valueChanged(int)), MLT.videoWidget(), SLOT(setOffsetY(int)));
+    connect(MLT.videoWidget(), SIGNAL(offsetChanged(const QPoint &)),
+            SLOT(onOffsetChanged(const QPoint &)));
     setFocusPolicy(Qt::StrongFocus);
 }
 
@@ -912,6 +914,14 @@ void Player::onFadeOutFinished()
     m_statusLabel->disconnect(SIGNAL(clicked(bool)));
     m_statusLabel->setToolTip(QString());
     showIdleStatus();
+}
+
+void Player::onOffsetChanged(const QPoint &offset)
+{
+    if (!offset.isNull() && m_horizontalScroll->isVisible()) {
+        m_horizontalScroll->setValue(offset.x());
+        m_verticalScroll->setValue(offset.y());
+    }
 }
 
 void Player::adjustScrollBars(float horizontal, float vertical)

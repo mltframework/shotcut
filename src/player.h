@@ -191,6 +191,7 @@ private slots:
     void onGridToggled();
     void toggleGrid(bool checked);
     void onFadeOutFinished();
+    void onOffsetChanged(const QPoint &offset);
 };
 
 #endif // PLAYER_H

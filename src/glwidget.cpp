@@ -489,6 +489,8 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
     if (event->isAccepted()) return;
     if (event->button() == Qt::LeftButton)
         m_dragStart = event->pos();
+    else if (event->button() == Qt::MiddleButton)
+        m_mousePosition = event->pos();
     if (MLT.isClip())
         emit dragStarted();
 }
@@ -497,6 +499,11 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     QQuickWidget::mouseMoveEvent(event);
     if (event->isAccepted()) return;
+    if (event->buttons() & Qt::MiddleButton) {
+        emit offsetChanged(m_offset + m_mousePosition - event->pos());
+        m_mousePosition = event->pos();
+        return;
+    }
     if (event->modifiers() == (Qt::ShiftModifier | Qt::AltModifier) && m_producer) {
         emit seekTo(m_producer->get_length() * event->x() / width());
         return;

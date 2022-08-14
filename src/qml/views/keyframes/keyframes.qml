@@ -156,69 +156,73 @@ Rectangle {
                 }
             }
         }
-        MouseArea {
+        Item {
             id: tracksArea
             width: root.width - headerWidth
             height: root.height
-
-            // This provides continuous scrubbing and scimming at the left/right edges.
             focus: true
-            hoverEnabled: true
-            onClicked: {
-                producer.position = (tracksFlickable.contentX + mouse.x) / timeScale
-                bubbleHelp.hide()
-            }
-            onWheel: Logic.onMouseWheel(wheel)
-            onDoubleClicked: {
-                // Figure out which parameter row that is in.
-                for (var i = 0; i < parametersRepeater.count; i++) {
-                    var parameter = parametersRepeater.itemAt(i)
-                    // Only for parameters with curves.
-                    if (parameter.isCurve) {
-                        var point = tracksArea.mapToItem(parameter, mouse.x, mouse.y)
-                        var position = Math.round(point.x / timeScale) - (filter.in - producer.in)
-                        var trackHeight = parameter.height
-                        var interpolation = 1
-                        // Get the interpolation from the previous keyframe if any.
-                        for (var j = 0; j < parameter.getKeyframeCount(); j++) {
-                            var k = parameter.getKeyframe(j)
-                            if (k.position - (filter.in - producer.in) < position)
-                                interpolation = k.interpolation
-                            else
+
+            MouseArea {
+                // This provides skimming and continuous scrubbing at the left/right edges.
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: {
+                    producer.position = (tracksFlickable.contentX + mouse.x) / timeScale
+                    bubbleHelp.hide()
+                }
+                onWheel: Logic.onMouseWheel(wheel)
+                onDoubleClicked: {
+                    // Figure out which parameter row that is in.
+                    for (var i = 0; i < parametersRepeater.count; i++) {
+                        var parameter = parametersRepeater.itemAt(i)
+                        // Only for parameters with curves.
+                        if (parameter.isCurve) {
+                            var point = tracksArea.mapToItem(parameter, mouse.x, mouse.y)
+                            var position = Math.round(point.x / timeScale) - (filter.in - producer.in)
+                            var trackHeight = parameter.height
+                            var interpolation = 1
+                            // Get the interpolation from the previous keyframe if any.
+                            for (var j = 0; j < parameter.getKeyframeCount(); j++) {
+                                var k = parameter.getKeyframe(j)
+                                if (k.position - (filter.in - producer.in) < position)
+                                    interpolation = k.interpolation
+                                else
+                                    break
+                            }
+                            // If click position is within range.
+                            if (position >= 0 && position < filter.duration
+                                && point.y > 0 && point.y < trackHeight) {
+                                // Determine the value to set.
+                                var keyframeHeight = 10
+                                var trackValue = Math.min(Math.max(0, 1.0 - (point.y - keyframeHeight/2) / (trackHeight - keyframeHeight)), 1.0)
+                                var value = parameter.minimum + trackValue * (parameter.maximum - parameter.minimum)
+                                //console.log('clicked parameter ' + i + ' frame ' + position + ' trackValue ' + trackValue + ' value ' + value)
+                                parameters.addKeyframe(i, value, position, interpolation)
                                 break
+                            }
                         }
-                        // If click position is within range.
-                        if (position >= 0 && position < filter.duration
-                            && point.y > 0 && point.y < trackHeight) {
-                            // Determine the value to set.
-                            var keyframeHeight = 10
-                            var trackValue = Math.min(Math.max(0, 1.0 - (point.y - keyframeHeight/2) / (trackHeight - keyframeHeight)), 1.0)
-                            var value = parameter.minimum + trackValue * (parameter.maximum - parameter.minimum)
-                            //console.log('clicked parameter ' + i + ' frame ' + position + ' trackValue ' + trackValue + ' value ' + value)
-                            parameters.addKeyframe(i, value, position, interpolation)
-                            break
-                        }
+                    }
+                }
+
+                property bool skim: false
+                onReleased: skim = false
+                onExited: skim = false
+                onPositionChanged: {
+                    if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
+                        producer.position = (tracksFlickable.contentX + mouse.x) / timeScale
+                        bubbleHelp.hide()
+                        skim = true
+                    } else {
+                        skim = false
                     }
                 }
             }
 
-            property bool scim: false
-            onReleased: scim = false
-            onExited: scim = false
-            onPositionChanged: {
-                if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
-                    producer.position = (tracksFlickable.contentX + mouse.x) / timeScale
-                    bubbleHelp.hide()
-                    scim = true
-                }
-                else
-                    scim = false
-            }
             Timer {
                 id: scrubTimer
                 interval: 25
                 repeat: true
-                running: parent.scim && parent.containsMouse
+                running: parent.skim && parent.containsMouse
                          && (parent.mouseX < 50 || parent.mouseX > parent.width - 50)
                          && (producer.position * timeScale >= 50)
                 onTriggered: {
@@ -226,6 +230,29 @@ Rectangle {
                         producer.position -= 10
                     else
                         producer.position += 10
+                }
+            }
+
+            MouseArea {
+                // This provides drag-scrolling the timeline with the middle mouse button.
+                anchors.fill: parent
+                acceptedButtons: Qt.MiddleButton
+                cursorShape: drag.active? Qt.ClosedHandCursor : Qt.ArrowCursor
+                drag.axis: Drag.XAndYAxis
+                drag.filterChildren: true
+                property real startX: mouseX
+                property real startY: mouseY
+                onPressed: {
+                    startX = mouse.x
+                    startY = mouse.y
+                }
+                onPositionChanged: {
+                    var n = mouse.x - startX
+                    startX = mouse.x
+                    tracksFlickable.contentX = Logic.clamp(tracksFlickable.contentX - n, 0, Logic.scrollMax().x)
+                    n = mouse.y - startY
+                    startY = mouse.y
+                    tracksFlickable.contentY = Logic.clamp(tracksFlickable.contentY - n, 0, Logic.scrollMax().y)
                 }
             }
 
@@ -279,10 +306,9 @@ Rectangle {
                         background: Rectangle { color: parent.palette.alternateBase }
                     }
 
-                    MouseArea {
+                    Item {
+                        id: tracksLayers
                         anchors.fill: parent
-                        acceptedButtons: Qt.NoButton
-                        onWheel: Logic.onMouseWheel(wheel)
 
                         Column {
                             Rectangle {

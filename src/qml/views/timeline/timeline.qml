@@ -315,37 +315,40 @@ Rectangle {
                 }
             }
         }
-        MouseArea {
+        Item {
             id: tracksArea
             width: root.width - headerWidth
             height: root.height
-
-            // This provides continuous scrubbing and scimming at the left/right edges.
             focus: true
-            hoverEnabled: true
-            onClicked: {
-                timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor
-                bubbleHelp.hide()
-            }
-            property bool scim: false
-            onReleased: scim = false
-            onExited: scim = false
-            onPositionChanged: {
-                if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
+
+            MouseArea {
+                // This provides skimming and continuous scrubbing at the left/right edges.
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: {
                     timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor
                     bubbleHelp.hide()
-                    scim = true
-                } else {
-                    scim = false
+                }
+                onWheel: Logic.onMouseWheel(wheel)
+                property bool skim: false
+                onReleased: skim = false
+                onExited: skim = false
+                onPositionChanged: {
+                    if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
+                        timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor
+                        bubbleHelp.hide()
+                        skim = true
+                    } else {
+                        skim = false
+                    }
                 }
             }
-            onWheel: Logic.onMouseWheel(wheel)
 
             Timer {
                 id: scrubTimer
                 interval: 25
                 repeat: true
-                running: parent.scim && parent.containsMouse
+                running: parent.skim && parent.containsMouse
                          && (parent.mouseX < 50 || parent.mouseX > parent.width - 50)
                          && (timeline.position * multitrack.scaleFactor >= 50)
                 onTriggered: {
@@ -353,6 +356,29 @@ Rectangle {
                         timeline.position -= 10
                     else
                         timeline.position += 10
+                }
+            }
+
+            MouseArea {
+                // This provides drag-scrolling the timeline with the middle mouse button.
+                anchors.fill: parent
+                acceptedButtons: Qt.MiddleButton
+                cursorShape: drag.active? Qt.ClosedHandCursor : Qt.ArrowCursor
+                drag.axis: Drag.XAndYAxis
+                drag.filterChildren: true
+                property real startX: mouseX
+                property real startY: mouseY
+                onPressed: {
+                    startX = mouse.x
+                    startY = mouse.y
+                }
+                onPositionChanged: {
+                    var n = mouse.x - startX
+                    startX = mouse.x
+                    tracksFlickable.contentX = Logic.clamp(tracksFlickable.contentX - n, 0, Logic.scrollMax().x)
+                    n = mouse.y - startY
+                    startY = mouse.y
+                    tracksFlickable.contentY = Logic.clamp(tracksFlickable.contentY - n, 0, Logic.scrollMax().y)
                 }
             }
 
@@ -413,10 +439,9 @@ Rectangle {
                         background: Rectangle { color: parent.palette.alternateBase }
                     }
         
-                    MouseArea {
+                    Item {
+                        id: tracksLayers
                         anchors.fill: parent
-                        acceptedButtons: Qt.NoButton
-                        onWheel: Logic.onMouseWheel(wheel)
 
                         Column {
                             // These make the striped background for the tracks.
