@@ -499,7 +499,9 @@ void MoveClipCommand::redo()
             QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(MLT.uuid(clip), trackIndex, clipIndex));
             if (info && info->producer && info->producer->is_valid() && info->cut) {
                 m_newTrackIndexList << qBound(0, trackIndex + m_trackDelta, m_model.trackList().size() - 1);
+                info->producer->pass_property(*info->cut, kPlaylistStartProperty);
                 m_playlistStartList << info->cut->get_int(kPlaylistStartProperty);
+                info->producer->set(kTrackIndexProperty, trackIndex);
                 m_trackIndexList << trackIndex;
                 m_clipIndexList << clipIndex;
                 m_inList << info->frame_in;
