@@ -1067,8 +1067,7 @@ void PlaylistDock::onPlaylistLoaded()
 
 void PlaylistDock::onPlaylistModified()
 {
-    if (m_model.rowCount() == 1)
-        ui->tableView->resizeColumnsToContents();
+    ui->tableView->resizeColumnsToContents();
 }
 
 void PlaylistDock::onPlaylistCleared()
