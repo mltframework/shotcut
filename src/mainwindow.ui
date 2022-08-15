@@ -255,10 +255,9 @@
     <addaction name="menuGamma"/>
     <addaction name="actionSync"/>
     <addaction name="separator"/>
-    <addaction name="menuTimeline"/>
-    <addaction name="menuPlaylist"/>
-    <addaction name="separator"/>
     <addaction name="actionUser_Interface"/>
+    <addaction name="menuPlaylist"/>
+    <addaction name="menuTimeline"/>
     <addaction name="menuLanguage"/>
     <addaction name="menuTheme"/>
     <addaction name="menuDrawingMethod"/>
