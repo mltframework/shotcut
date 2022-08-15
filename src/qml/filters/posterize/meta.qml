@@ -7,6 +7,7 @@ Metadata {
     objectName: 'posterize'
     mlt_service: "frei0r.posterize"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -21,4 +22,5 @@ Metadata {
             }
         ]
     }
+
 }

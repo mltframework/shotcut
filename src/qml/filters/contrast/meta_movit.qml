@@ -9,6 +9,7 @@ Metadata {
     needsGPU: true
     qml: "ui.qml"
     isFavorite: true
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -21,4 +22,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "movit.glow"
     needsGPU: true
     qml: "ui_movit.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -31,8 +32,9 @@ Metadata {
                 property: 'highlight_cutoff'
                 isCurve: true
                 minimum: 0.1
-                maximum: 1.0
+                maximum: 1
             }
         ]
     }
+
 }

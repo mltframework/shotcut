@@ -15,13 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import "Keyframes.js" as Logic
 import QtQuick 2.12
-import org.shotcut.qml 1.0
 import QtQuick.Controls 2.12
-import 'Keyframes.js' as Logic
+import org.shotcut.qml 1.0
 
 Rectangle {
     id: keyframeRoot
+
     property int position
     property int interpolation: KeyframesModel.DiscreteInterpolation // rectangle for discrete
     property bool isSelected: false
@@ -30,11 +31,11 @@ Rectangle {
     property int parameterIndex
     property bool isCurve: false
     property int trackHeight: Logic.trackHeight(isCurve)
-    property double minimum: 0.0
-    property double maximum: 1.0
-    property double trackValue: (0.5 - (value - minimum) / (maximum - minimum)) * (trackHeight - height - 2.0 * border.width)
-    property double minDragX: activeClip.x - width/2
-    property double maxDragX: activeClip.x + activeClip.width - width/2
+    property double minimum: 0
+    property double maximum: 1
+    property double trackValue: (0.5 - (value - minimum) / (maximum - minimum)) * (trackHeight - height - 2 * border.width)
+    property double minDragX: activeClip.x - width / 2
+    property double maxDragX: activeClip.x + activeClip.width - width / 2
     property double minDragY: activeClip.y
     property double maxDragY: activeClip.y + activeClip.height - width
     property bool inRange: position >= (filter.in - producer.in) && position <= (filter.out - producer.in)
@@ -42,115 +43,124 @@ Rectangle {
     signal clicked(var keyframe)
     signal rightClicked(var keyframe)
 
-    SystemPalette { id: activePalette }
-
     function updateX() {
-        x = position * timeScale - width/2
+        x = position * timeScale - width / 2;
     }
 
     onPositionChanged: updateX()
-
-    Connections {
-        target: root
-        function onTimeScaleChanged() {
-            updateX()
-        }
-    }
-
     Component.onCompleted: {
-        updateX()
+        updateX();
     }
-    
     anchors.verticalCenter: parameterRoot.verticalCenter
     anchors.verticalCenterOffset: isCurve ? minimum != maximum ? trackValue : 0 : 0
     height: 10
     width: height
     color: isSelected ? 'red' : activePalette.buttonText
     border.color: activePalette.button
-    opacity: inRange ? 1.0 : 0.3
+    opacity: inRange ? 1 : 0.3
     border.width: 1
-    radius: (interpolation === KeyframesModel.SmoothInterpolation)? height/2 : 0 // circle for smooth
-    rotation: (interpolation === KeyframesModel.LinearInterpolation)? 45 : 0    // diamond for linear
+    radius: (interpolation === KeyframesModel.SmoothInterpolation) ? height / 2 : 0 // circle for smooth
+    rotation: (interpolation === KeyframesModel.LinearInterpolation) ? 45 : 0 // diamond for linear
+
+    SystemPalette {
+        id: activePalette
+    }
+
+    Connections {
+        function onTimeScaleChanged() {
+            updateX();
+        }
+
+        target: root
+    }
 
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
         onClicked: {
-            parent.clicked(keyframeRoot)
-            parent.rightClicked(keyframeRoot)
+            parent.clicked(keyframeRoot);
+            parent.rightClicked(keyframeRoot);
         }
         hoverEnabled: true
+
         ToolTip {
             text: name
             visible: parent.containsMouse
-            delay: mouseAreaLeft.pressed? 0 : 1000
-            timeout: mouseAreaLeft.pressed? -1 : 5000
+            delay: mouseAreaLeft.pressed ? 0 : 1000
+            timeout: mouseAreaLeft.pressed ? -1 : 5000
         }
+
     }
+
     MouseArea {
         id: mouseAreaLeft
+
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
         onClicked: producer.position = position
         onDoubleClicked: removeMenuItem.triggered()
+        onPressed: {
+            parent.clicked(keyframeRoot);
+            if (isCurve) {
+                if (minimum == maximum) {
+                    // Do not allow vertical dragging when there is no range to drag across
+                    drag.minimumY = parent.y;
+                    drag.maximumY = parent.y;
+                } else {
+                    drag.minimumY = minDragY;
+                    drag.maximumY = maxDragY;
+                }
+            }
+        }
+        onEntered: {
+            if (isCurve)
+                parent.anchors.verticalCenter = undefined;
+
+        }
+        onReleased: {
+            if (isCurve)
+                parent.anchors.verticalCenter = parameterRoot.verticalCenter;
+
+        }
+        onPositionChanged: {
+            if (isCurve) {
+                if (mouse.modifiers & Qt.ControlModifier)
+                    drag.axis = Drag.YAxis;
+                else if (mouse.modifiers & Qt.AltModifier)
+                    drag.axis = Drag.XAxis;
+                else
+                    drag.axis = Drag.XAndYAxis;
+            }
+            var keyX = parent.x + parent.width / 2;
+            var cursorX = producer.position * timeScale;
+            var newPosition = Math.round((keyX) / timeScale);
+            var keyPosition = newPosition - (filter.in - producer.in);
+            // Snap to cursor
+            if (settings.timelineSnap && keyX > cursorX - 10 && keyX < cursorX + 10 && cursorX > minDragX + parent.width / 2 && cursorX < maxDragX + parent.width / 2) {
+                keyPosition = Math.round((cursorX) / timeScale) - (filter.in - producer.in);
+                parent.x = cursorX - (parent.width / 2);
+            }
+            var trackValue = Math.min(Math.max(0, 1 - parent.y / (parameterRoot.height - parent.height)), 1);
+            trackValue = minimum + trackValue * (maximum - minimum);
+            if (drag.axis === Drag.XAxis && newPosition !== keyframeRoot.position)
+                parameters.setKeyframePosition(parameterIndex, index, keyPosition);
+            else if (drag.axis === Drag.YAxis || (drag.axis === Drag.XAndYAxis && newPosition === keyframeRoot.position))
+                parameters.setKeyframeValue(parameterIndex, index, trackValue);
+            else if (drag.axis === Drag.XAndYAxis)
+                parameters.setKeyframeValuePosition(parameterIndex, index, trackValue, keyPosition);
+        }
+        cursorShape: Qt.PointingHandCursor
+
         drag {
             target: parent
-            axis: isCurve? Drag.XAndYAxis : Drag.XAxis
+            axis: isCurve ? Drag.XAndYAxis : Drag.XAxis
             threshold: 0
             minimumX: minDragX
             maximumX: maxDragX
             minimumY: minDragY
             maximumY: maxDragY
         }
-        onPressed: {
-            parent.clicked(keyframeRoot)
-            if (isCurve) {
-               if (minimum == maximum) {
-                   // Do not allow vertical dragging when there is no range to drag across
-                   drag.minimumY = parent.y
-                   drag.maximumY = parent.y
-               } else {
-                  drag.minimumY = minDragY
-                  drag.maximumY = maxDragY
-               }
-            }
-        }
-        onEntered: if (isCurve) parent.anchors.verticalCenter = undefined
-        onReleased: if (isCurve) parent.anchors.verticalCenter = parameterRoot.verticalCenter
-        onPositionChanged: {
-            if (isCurve) {
-               if (mouse.modifiers & Qt.ControlModifier)
-                   drag.axis = Drag.YAxis
-               else if (mouse.modifiers & Qt.AltModifier)
-                   drag.axis = Drag.XAxis
-               else
-                   drag.axis = Drag.XAndYAxis
-            }
-            var keyX = parent.x + parent.width/2;
-            var cursorX = producer.position * timeScale
-            var newPosition = Math.round((keyX) / timeScale)
-            var keyPosition = newPosition - (filter.in - producer.in)
-            // Snap to cursor
-            if (settings.timelineSnap &&
-                keyX > cursorX - 10 && keyX < cursorX + 10 &&
-                cursorX > minDragX + parent.width/2 && cursorX < maxDragX + parent.width/2)
-            {
-                keyPosition = Math.round((cursorX) / timeScale) - (filter.in - producer.in)
-                parent.x = cursorX - (parent.width / 2)
-            }
-            var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
-            trackValue = minimum + trackValue * (maximum - minimum)
-            if (drag.axis === Drag.XAxis && newPosition !== keyframeRoot.position) {
-                parameters.setKeyframePosition(parameterIndex, index, keyPosition)
-            }
-            else if (drag.axis === Drag.YAxis ||
-                     (drag.axis === Drag.XAndYAxis && newPosition === keyframeRoot.position)) {
-                parameters.setKeyframeValue(parameterIndex, index, trackValue)
-            }
-            else if (drag.axis === Drag.XAndYAxis) {
-                parameters.setKeyframeValuePosition(parameterIndex, index, trackValue, keyPosition)
-            }
-        }
-        cursorShape: Qt.PointingHandCursor
+
     }
+
 }

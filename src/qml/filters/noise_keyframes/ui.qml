@@ -22,41 +22,39 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Shotcut.KeyframableFilter {
     property string noise: '0'
-    property double noiseDefault: 0.20
-    
+    property double noiseDefault: 0.2
+
+    function setControls() {
+        var position = getPosition();
+        blockUpdate = true;
+        noiseSlider.value = filter.getDouble(noise, position) * noiseSlider.maximumValue;
+        noiseKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(noise) > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
+    }
+
+    function enableControls(enabled) {
+        noiseSlider.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        setControls();
+        updateFilter(noise, noiseSlider.value / noiseSlider.maximumValue, noiseKeyframesButton, null);
+    }
+
     keyframableParameters: [noise]
     startValues: [0.5]
     middleValues: [noiseDefault]
     endValues: [0.5]
-
     width: 350
     height: 100
-
     Component.onCompleted: {
-        filter.set('threads', 0)
+        filter.set('threads', 0);
         if (filter.isNew) {
-            filter.set(noise, noiseDefault)
-            filter.savePreset(preset.parameters)
+            filter.set(noise, noiseDefault);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        noiseSlider.value = filter.getDouble(noise, position) * noiseSlider.maximumValue
-        noiseKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(noise) > 0
-        blockUpdate = false
-        enableControls(isSimpleKeyframesActive())
-    }
-
-    function enableControls(enabled) {
-        noiseSlider.enabled = enabled
-    }
-
-    function updateSimpleKeyframes() {
-        setControls()
-        updateFilter(noise, noiseSlider.value / noiseSlider.maximumValue, noiseKeyframesButton, null)
+        setControls();
     }
 
     GridLayout {
@@ -68,17 +66,18 @@ Shotcut.KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: [noise]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                filter.resetProperty(noise)
-                
+                filter.resetProperty(noise);
             }
             onPresetSelected: {
-                setControls()
-                initializeSimpleKeyframes()
+                setControls();
+                initializeSimpleKeyframes();
             }
         }
 
@@ -86,43 +85,71 @@ Shotcut.KeyframableFilter {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: noiseSlider
-            minimumValue: 0.0
-            maximumValue: 100.0
+
+            minimumValue: 0
+            maximumValue: 100
             stepSize: 0.1
             decimals: 1
             suffix: ' %'
             onValueChanged: updateFilter(noise, noiseSlider.value / noiseSlider.maximumValue, noiseKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: noiseSlider.value = noiseDefault * noiseSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: noiseKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, noise, noiseSlider.value / noiseSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, noise, noiseSlider.value / noiseSlider.maximumValue);
             }
         }
-        
+
         Item {
             Layout.fillHeight: true
         }
+
     }
 
     Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
         target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateSimpleKeyframes() }
-        function onOutChanged() { updateSimpleKeyframes() }
-        function onAnimateInChanged() { updateSimpleKeyframes() }
-        function onAnimateOutChanged() { updateSimpleKeyframes() }
-        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
         target: producer
-        function onPositionChanged() { setControls() }
     }
+
 }

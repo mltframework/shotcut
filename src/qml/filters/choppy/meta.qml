@@ -6,6 +6,7 @@ Metadata {
     name: qsTr('Choppy')
     mlt_service: 'choppy'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -20,4 +21,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -23,6 +23,7 @@ Metadata {
     name: qsTr("Reduce Noise: HQDN3D")
     mlt_service: "frei0r.hqdn3d"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -44,4 +45,5 @@ Metadata {
             }
         ]
     }
+
 }

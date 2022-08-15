@@ -19,13 +19,15 @@
 import QtQuick 2.1
 
 Item {
+    // Set default parameter values
+
+    property string gainParameter: 'gain'
+
     width: 350
     height: 10
-    property string gainParameter: 'gain'
     Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set(gainParameter, 0)
-        }
+        if (filter.isNew)
+            filter.set(gainParameter, 0);
+
     }
 }

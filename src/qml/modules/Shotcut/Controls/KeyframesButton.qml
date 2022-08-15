@@ -22,54 +22,46 @@ import Shotcut.Controls 1.0 as Shotcut
 
 ToolButton {
     id: checkbox
-    enabled: metadata !== null && metadata.keyframes.enabled
-    opacity: enabled? 1.0 : 0.0
 
     signal toggled()
 
+    enabled: metadata !== null && metadata.keyframes.enabled
+    opacity: enabled ? 1 : 0
     padding: 2
     checkable: true
     hoverEnabled: true
-
-    SystemPalette { id: activePalette }
     palette.buttonText: activePalette.buttonText
-
-    Shotcut.HoverTip { text: qsTr('Use Keyframes for this parameter') }
-
-    background: Rectangle {
-        implicitWidth: 20
-        implicitHeight: 20
-        radius: 3
-        color: checked? activePalette.highlight : activePalette.button
-        border.color: activePalette.shadow
-        border.width: 1
-    }
-
     icon.name: 'chronometer'
     icon.source: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
-
     onClicked: {
         if (!checked) {
-           checked = true
-           confirmRemoveAdvancedDialog.visible = true
+            checked = true;
+            confirmRemoveAdvancedDialog.visible = true;
         } else {
             if (parameters.simpleKeyframesInUse()) {
-                checked = false
-                confirmRemoveSimpleDialog.visible = true
+                checked = false;
+                confirmRemoveSimpleDialog.visible = true;
             }
             if (checked) {
-                application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only')
-                    .arg(application.OS === 'OS X'? '⌘' : 'Ctrl')
-                    .arg(application.OS === 'OS X'? '⌥' : 'Alt'))
-                keyframes.show()
-                keyframes.raise()
-                toggled()
+                application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only').arg(application.OS === 'OS X' ? '⌘' : 'Ctrl').arg(application.OS === 'OS X' ? '⌥' : 'Alt'));
+                keyframes.show();
+                keyframes.raise();
+                toggled();
             }
         }
     }
 
+    SystemPalette {
+        id: activePalette
+    }
+
+    Shotcut.HoverTip {
+        text: qsTr('Use Keyframes for this parameter')
+    }
+
     MessageDialog {
         id: confirmRemoveAdvancedDialog
+
         visible: false
         modality: application.dialogModality
         icon: StandardIcon.Question
@@ -77,17 +69,18 @@ ToolButton {
         text: qsTr('This will remove all keyframes for this parameter.<p>Do you still want to do this?')
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
-            checkbox.checked = false
-            checkbox.toggled()
-            parameters.reload()
+            checkbox.checked = false;
+            checkbox.toggled();
+            parameters.reload();
         }
         onNo: {
-            checkbox.checked = true
+            checkbox.checked = true;
         }
     }
 
     MessageDialog {
         id: confirmRemoveSimpleDialog
+
         visible: false
         modality: application.dialogModality
         icon: StandardIcon.Question
@@ -95,12 +88,22 @@ ToolButton {
         text: qsTr('This will remove all simple keyframes for all parameters.<p>Simple keyframes will be converted to advanced keyframes.<p>Do you still want to do this?')
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
-            checkbox.checked = true
-            parameters.removeSimpleKeyframes()
-            parameters.reload()
+            checkbox.checked = true;
+            parameters.removeSimpleKeyframes();
+            parameters.reload();
         }
         onNo: {
-            checkbox.checked = false
+            checkbox.checked = false;
         }
     }
+
+    background: Rectangle {
+        implicitWidth: 20
+        implicitHeight: 20
+        radius: 3
+        color: checked ? activePalette.highlight : activePalette.button
+        border.color: activePalette.shadow
+        border.width: 1
+    }
+
 }

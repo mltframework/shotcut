@@ -25,68 +25,86 @@ RowLayout {
     property string value: "white"
     property bool alpha: false
     property alias eyedropper: pickerButton.visible
-    
-    signal pickStarted
-    signal pickCancelled
-    
-    SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
-    
+
+    signal pickStarted()
+    signal pickCancelled()
+
+    SystemPalette {
+        id: activePalette
+
+        colorGroup: SystemPalette.Active
+    }
+
     Shotcut.ColorPickerItem {
         id: pickerItem
+
         onColorPicked: {
-            value = color
-            pickerButton.checked = false
+            value = color;
+            pickerButton.checked = false;
         }
         onCancelled: pickCancelled()
     }
-    
+
     Shotcut.Button {
         id: colorButton
+
         implicitWidth: 20
         implicitHeight: 20
+        onClicked: colorDialog.visible = true
+
+        Shotcut.HoverTip {
+            text: qsTr('Click to open color dialog')
+        }
+
         background: Rectangle {
             border.width: 1
             border.color: 'gray'
             radius: pickerButton.background.radius
             color: value
         }
-        Shotcut.HoverTip { text: qsTr('Click to open color dialog') }
-        onClicked: colorDialog.visible = true
+
     }
-    
+
     ColorDialog {
         id: colorDialog
+
         title: qsTr("Please choose a color")
         showAlphaChannel: alpha
         color: value
         onAccepted: {
             // Make a copy of the current value.
-            var myColor = Qt.darker(value, 1.0)
+            var myColor = Qt.darker(value, 1);
             // Ignore alpha when comparing.
-            myColor.a = currentColor.a
+            myColor.a = currentColor.a;
             // If the user changed color but left alpha at 0,
             // they probably want to reset alpha to opaque.
-            if (currentColor.a === 0 && (!Qt.colorEqual(currentColor, myColor) ||
-                                         (Qt.colorEqual(currentColor, 'transparent') && Qt.colorEqual(value, 'transparent'))))
-                currentColor.a = 1.0
+            if (currentColor.a === 0 && (!Qt.colorEqual(currentColor, myColor) || (Qt.colorEqual(currentColor, 'transparent') && Qt.colorEqual(value, 'transparent'))))
+                currentColor.a = 1;
+
             // Assign the new color value. Unlike docs say, using currentColor
             // is actually more cross-platform compatible.
-            value = currentColor
+            value = currentColor;
         }
         modality: application.dialogModality
     }
-    
+
     Shotcut.Button {
         id: pickerButton
+
         icon.name: 'color-picker'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/color-picker.png'
-        Shotcut.HoverTip { text: '<p>' + qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>' }
         implicitWidth: 20
         implicitHeight: 20
         checkable: true
         onClicked: {
-            pickStarted()
-            pickerItem.pickColor()
+            pickStarted();
+            pickerItem.pickColor();
         }
+
+        Shotcut.HoverTip {
+            text: '<p>' + qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>'
+        }
+
     }
+
 }

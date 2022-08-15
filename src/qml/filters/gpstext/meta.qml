@@ -24,6 +24,7 @@ Metadata {
     mlt_service: 'gpstext'
     qml: 'ui.qml'
     vui: 'vui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -36,4 +37,5 @@ Metadata {
             }
         ]
     }
+
 }

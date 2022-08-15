@@ -24,76 +24,80 @@ Shotcut.VuiBase {
     property var middleValues: []
     property var endValues: []
 
+    function clamp(x, min, max) {
+        return Math.max(min, Math.min(max, x));
+    }
+
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0);
+    }
+
+    function updateProperty(name, value) {
+        var index = keyframableParameters.indexOf(name);
+        var position = getPosition();
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startValues[index] = value;
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endValues[index] = value;
+            else
+                middleValues[index] = value;
+        }
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty(name);
+            if (filter.animateIn > 0) {
+                filter.set(name, startValues[index], 0);
+                filter.set(name, middleValues[index], filter.animateIn - 1);
+            }
+            if (filter.animateOut > 0) {
+                filter.set(name, middleValues[index], filter.duration - filter.animateOut);
+                filter.set(name, endValues[index], filter.duration - 1);
+            }
+        } else if (filter.keyframeCount(name) <= 0) {
+            filter.resetProperty(name);
+            filter.set(name, middleValues[index]);
+        } else if (position !== null) {
+            filter.set(name, value, position);
+        }
+    }
+
     Connections {
+        function onChanged() {
+            mouseArea.enabled = filter.get('disable') !== '1';
+        }
+
         target: filter
-        function onChanged() { mouseArea.enabled = filter.get('disable') !== '1' }
     }
 
     MouseArea {
         id: mouseArea
-        anchors.fill: parent
 
         property double startYaw
         property double startPitch
         property double startRoll
         property int startX
         property int startY
+
+        anchors.fill: parent
         onPressed: {
-            startX = mouse.x
-            startY = mouse.y
-            startYaw = filter.getDouble('yaw', getPosition())
-            startPitch = filter.getDouble('pitch', getPosition())
-            startRoll = filter.getDouble('roll', getPosition())
+            startX = mouse.x;
+            startY = mouse.y;
+            startYaw = filter.getDouble('yaw', getPosition());
+            startPitch = filter.getDouble('pitch', getPosition());
+            startRoll = filter.getDouble('roll', getPosition());
         }
         onPositionChanged: {
             if (mouse.modifiers == Qt.ControlModifier) {
-                updateProperty('roll', clamp(startRoll + 0.5 * (startY - mouse.y), -180, 180))
+                updateProperty('roll', clamp(startRoll + 0.5 * (startY - mouse.y), -180, 180));
             } else {
-                updateProperty('yaw', clamp(startYaw + 0.2 * (startX - mouse.x), -360, 360))
-                updateProperty('pitch', clamp(startPitch + 0.1 * (mouse.y - startY), -180, 180))
+                updateProperty('yaw', clamp(startYaw + 0.2 * (startX - mouse.x), -360, 360));
+                updateProperty('pitch', clamp(startPitch + 0.1 * (mouse.y - startY), -180, 180));
             }
         }
         onWheel: {
-            var fov = filter.getDouble('fov', getPosition())
-            updateProperty('fov', clamp(fov + 0.03 * wheel.angleDelta.y, 0, 720))
+            var fov = filter.getDouble('fov', getPosition());
+            updateProperty('fov', clamp(fov + 0.03 * wheel.angleDelta.y, 0, 720));
         }
     }
 
-    function clamp(x, min, max) {
-        return Math.max(min, Math.min(max, x))
-    }
-
-    function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0)
-    }
-
-    function updateProperty(name, value) {
-        var index = keyframableParameters.indexOf(name)
-        var position = getPosition()
-
-        if (position !== null) {
-            if (position <= 0 && filter.animateIn > 0) {
-                startValues[index] = value
-            } else if (position >= filter.duration - 1 && filter.animateOut > 0) {
-                endValues[index] = value
-            } else {
-                middleValues[index] = value
-            }
-        } if (filter.animateIn > 0 || filter.animateOut > 0) {
-            filter.resetProperty(name)
-            if (filter.animateIn > 0) {
-                filter.set(name, startValues[index], 0)
-                filter.set(name, middleValues[index], filter.animateIn - 1)
-            }
-            if (filter.animateOut > 0) {
-                filter.set(name, middleValues[index], filter.duration - filter.animateOut)
-                filter.set(name, endValues[index], filter.duration - 1)
-            }
-        } else if (filter.keyframeCount(name) <= 0) {
-            filter.resetProperty(name)
-            filter.set(name, middleValues[index])
-        } else if (position !== null) {
-            filter.set(name, value, position)
-        }
-    }
 }

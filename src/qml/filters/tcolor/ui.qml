@@ -22,21 +22,21 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
+    function setControls() {
+        bySlider.value = filter.get('oversaturate_cr');
+        rgSlider.value = filter.get('oversaturate_cb');
+    }
+
     width: 350
     height: 100
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            filter.set('oversaturate_cr', 190)
-            filter.set('oversaturate_cb', 190)
-            filter.savePreset(preset.parameters)
+            filter.set('oversaturate_cr', 190);
+            filter.set('oversaturate_cb', 190);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        bySlider.value = filter.get('oversaturate_cr')
-        rgSlider.value = filter.get('oversaturate_cb')
+        setControls();
     }
 
     GridLayout {
@@ -48,8 +48,10 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: ['oversaturate_cr', 'oversaturate_cb']
             Layout.columnSpan: 2
             onPresetSelected: setControls()
@@ -59,14 +61,17 @@ Item {
             text: qsTr('Green')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: bySlider
+
             minimumValue: -300
             maximumValue: 300
             value: filter.get('oversaturate_cr')
             label: qsTr(' Red')
             onValueChanged: filter.set('oversaturate_cr', value)
         }
+
         Shotcut.UndoButton {
             onClicked: bySlider.value = 190
         }
@@ -75,14 +80,17 @@ Item {
             text: qsTr('Yellow')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: rgSlider
+
             minimumValue: -300
             maximumValue: 300
             value: filter.get('oversaturate_cb')
             label: qsTr('Blue')
             onValueChanged: filter.set('oversaturate_cb', value)
         }
+
         Shotcut.UndoButton {
             onClicked: rgSlider.value = 190
         }
@@ -90,5 +98,7 @@ Item {
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

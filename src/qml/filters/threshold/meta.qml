@@ -6,6 +6,7 @@ Metadata {
     name: qsTr("Threshold")
     mlt_service: "threshold"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -20,4 +21,5 @@ Metadata {
             }
         ]
     }
+
 }

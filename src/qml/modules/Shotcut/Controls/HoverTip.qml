@@ -19,21 +19,27 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 MouseArea {
-    anchors.fill: parent
     property alias text: tip.text
     property alias metrics: fontMetrics
+
+    anchors.fill: parent
     propagateComposedEvents: true
     acceptedButtons: Qt.NoButton
 
     ToolTip {
         id: tip
+
         visible: text ? parent.containsMouse & parent.enabled : false
         delay: 1000
         timeout: 5000
         Component.onCompleted: parent.hoverEnabled = true
+
         FontMetrics {
             id: fontMetrics
+
             font: tip.font
         }
+
     }
+
 }

@@ -8,6 +8,7 @@ Metadata {
     mlt_service: 'qtcrop'
     qml: 'ui.qml'
     vui: 'vui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -27,4 +28,5 @@ Metadata {
             }
         ]
     }
+
 }

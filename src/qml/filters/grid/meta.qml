@@ -6,6 +6,7 @@ Metadata {
     name: qsTr("Grid")
     mlt_service: "frei0r.cairoimagegrid"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -27,4 +28,5 @@ Metadata {
             }
         ]
     }
+
 }

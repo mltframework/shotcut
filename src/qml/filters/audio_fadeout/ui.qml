@@ -21,35 +21,36 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
+    property alias duration: timeSpinner.value
+
+    function updateFilter() {
+        filter.resetProperty('level');
+        filter.set('level', 0, Math.max(filter.duration - duration, 0));
+        filter.set('level', -60, filter.duration - 1);
+    }
+
     width: 100
     height: 50
     objectName: 'fadeOut'
-    property alias duration: timeSpinner.value
-
     Component.onCompleted: {
         if (filter.isNew) {
-            duration = Math.ceil(settings.audioOutDuration * profile.fps)
+            duration = Math.ceil(settings.audioOutDuration * profile.fps);
         } else if (filter.animateOut === 0) {
             // Convert legacy filter.
-            duration = filter.duration
-            filter.set('in', producer.in )
-            filter.set('out', producer.out )
+            duration = filter.duration;
+            filter.set('in', producer.in);
+            filter.set('out', producer.out);
         } else {
-            duration = filter.animateOut
+            duration = filter.animateOut;
         }
     }
 
     Connections {
-        target: filter
         function onAnimateOutChanged() {
-            duration = filter.animateOut
+            duration = filter.animateOut;
         }
-    }
 
-    function updateFilter() {
-        filter.resetProperty('level')
-        filter.set('level', 0, Math.max(filter.duration - duration, 0))
-        filter.set('level', -60, filter.duration - 1)
+        target: filter
     }
 
     ColumnLayout {
@@ -57,25 +58,33 @@ Item {
         anchors.margins: 8
 
         RowLayout {
-            Label { text: qsTr('Duration') }
+            Label {
+                text: qsTr('Duration')
+            }
+
             Shotcut.TimeSpinner {
                 id: timeSpinner
+
                 minimumValue: 2
                 maximumValue: 5000
                 onValueChanged: {
-                    filter.animateOut = duration
-                    updateFilter()
+                    filter.animateOut = duration;
+                    updateFilter();
                 }
                 onSetDefaultClicked: {
-                    duration = Math.ceil(settings.audioOutDuration * profile.fps)
+                    duration = Math.ceil(settings.audioOutDuration * profile.fps);
                 }
                 onSaveDefaultClicked: {
-                    settings.audioOutDuration = duration / profile.fps
+                    settings.audioOutDuration = duration / profile.fps;
                 }
             }
+
         }
+
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
+
     }
+
 }

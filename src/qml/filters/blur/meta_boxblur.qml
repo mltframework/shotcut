@@ -8,6 +8,7 @@ Metadata {
     qml: "ui_boxblur.qml"
     gpuAlt: "movit.blur"
     isHidden: true
+
     keyframes {
         minimumVersion: '3'
         allowAnimateIn: true
@@ -30,4 +31,5 @@ Metadata {
             }
         ]
     }
+
 }

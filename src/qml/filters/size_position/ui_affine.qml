@@ -16,6 +16,7 @@
  */
 
 import QtQuick 2.12
+
 SizePositionUI {
     fillProperty: 'transition.fill'
     distortProperty: 'transition.distort'
@@ -26,8 +27,8 @@ SizePositionUI {
     backgroundProperty: 'background'
     rotationProperty: 'transition.fix_rotate_x'
     Component.onCompleted: {
-        if (filter.isNew) {
-            filter.set('transition.threads', 0)
-        }
+        if (filter.isNew)
+            filter.set('transition.threads', 0);
+
     }
 }

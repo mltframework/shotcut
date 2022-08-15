@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "brightness"
     qml: "ui.qml"
     gpuAlt: "movit.opacity"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -23,4 +24,5 @@ Metadata {
             }
         ]
     }
+
 }

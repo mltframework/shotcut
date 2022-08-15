@@ -9,6 +9,7 @@ Metadata {
     qml: "ui.qml"
     isFavorite: false
     allowMultiple: false
+
     keyframes {
         allowTrim: false
         allowAnimateIn: false
@@ -24,4 +25,5 @@ Metadata {
             }
         ]
     }
+
 }

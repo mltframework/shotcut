@@ -24,36 +24,34 @@ Shotcut.KeyframableFilter {
     property string amount: 'amount'
     property int amountDefault: 5
 
+    function setControls() {
+        blockUpdate = true;
+        amountSlider.value = filter.getDouble(amount, getPosition());
+        amountKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(amount) > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
+    }
+
+    function enableControls(enabled) {
+        amountSlider.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        updateFilter(amount, amountSlider.value, amountKeyframesButton, null);
+    }
+
     keyframableParameters: [amount]
     startValues: [0]
     middleValues: [amountDefault]
     endValues: [0]
-
-    width : 350
+    width: 350
     height: 100
-
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set(amount, amountDefault)
-            filter.savePreset(preset.parameters)
+            filter.set(amount, amountDefault);
+            filter.savePreset(preset.parameters);
         }
         setControls();
-    }
-
-    function setControls() {
-        blockUpdate = true
-        amountSlider.value = filter.getDouble(amount, getPosition())
-        amountKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(amount) > 0
-        blockUpdate = false
-        enableControls(isSimpleKeyframesActive())
-    }
-
-    function enableControls(enabled) {
-        amountSlider.enabled = enabled
-    }
-
-    function updateSimpleKeyframes() {
-        updateFilter(amount, amountSlider.value, amountKeyframesButton, null)
     }
 
     GridLayout {
@@ -68,14 +66,15 @@ Shotcut.KeyframableFilter {
 
         Shotcut.Preset {
             id: preset
+
             Layout.columnSpan: parent.columns - 1
             parameters: [amount]
             onBeforePresetLoaded: {
-                resetSimpleKeyframes()
+                resetSimpleKeyframes();
             }
             onPresetSelected: {
-                setControls()
-                initializeSimpleKeyframes()
+                setControls();
+                initializeSimpleKeyframes();
             }
         }
 
@@ -83,8 +82,10 @@ Shotcut.KeyframableFilter {
             text: qsTr('Repeat')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: amountSlider
+
             minimumValue: 0
             maximumValue: Math.round(profile.fps)
             stepSize: 1
@@ -92,32 +93,60 @@ Shotcut.KeyframableFilter {
             spinnerWidth: 110
             onValueChanged: updateFilter(amount, amountSlider.value, amountKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: amountSlider.value = amountDefault
         }
+
         Shotcut.KeyframesButton {
             id: amountKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, amount, amountSlider.value)
+                enableControls(true);
+                toggleKeyframes(checked, amount, amountSlider.value);
             }
         }
 
-        Item { Layout.fillHeight: true }
+        Item {
+            Layout.fillHeight: true
+        }
+
     }
 
     Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
         target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateSimpleKeyframes() }
-        function onOutChanged() { updateSimpleKeyframes() }
-        function onAnimateInChanged() { updateSimpleKeyframes() }
-        function onAnimateOutChanged() { updateSimpleKeyframes() }
-        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
         target: producer
-        function onPositionChanged() { setControls() }
     }
+
 }

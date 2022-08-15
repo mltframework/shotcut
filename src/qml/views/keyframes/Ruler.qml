@@ -19,24 +19,29 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 Rectangle {
-    property real intervalSeconds: (timeScale > 5)? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale)))
-
-    SystemPalette { id: activePalette }
-
     id: rulerTop
+
+    property real intervalSeconds: (timeScale > 5) ? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale)))
+
     height: 28
     color: activePalette.base
 
+    SystemPalette {
+        id: activePalette
+    }
+
     Repeater {
         model: parent.width / (intervalSeconds * profile.fps * timeScale)
+
         Rectangle {
+            // right edge
+
             anchors.bottom: rulerTop.bottom
             height: 18
             width: 1
             color: activePalette.windowText
             x: index * intervalSeconds * profile.fps * timeScale
-            visible: ((x + width)   > tracksFlickable.contentX) && // right edge
-                      (x            < tracksFlickable.contentX + tracksFlickable.width) // left edge
+            visible: ((x + width) > tracksFlickable.contentX) && (x < tracksFlickable.contentX + tracksFlickable.width) // left edge
 
             Label {
                 anchors.left: parent.right
@@ -46,7 +51,9 @@ Rectangle {
                 color: activePalette.windowText
                 text: application.timecode(index * intervalSeconds * profile.fps + 2).substr(0, 8)
             }
+
         }
+
     }
 
     MouseArea {
@@ -55,8 +62,9 @@ Rectangle {
         acceptedButtons: Qt.NoButton
         onExited: bubbleHelp.hide()
         onPositionChanged: {
-            var text = application.timecode(mouse.x / timeScale)
-            bubbleHelp.show(mouse.x + bubbleHelp.width - 8, mouse.y + 65, text)
+            var text = application.timecode(mouse.x / timeScale);
+            bubbleHelp.show(mouse.x + bubbleHelp.width - 8, mouse.y + 65, text);
         }
     }
+
 }

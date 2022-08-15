@@ -21,38 +21,41 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
+    property alias duration: timeSpinner.value
+
+    function updateFilter() {
+        var name = (filter.get('alpha') != 1) ? 'alpha' : 'level';
+        filter.resetProperty(name);
+        filter.set(name, 0, 0);
+        filter.set(name, 1, Math.min(duration, filter.duration) - 1);
+    }
+
     width: 100
     height: 50
     objectName: 'fadeIn'
-    property alias duration: timeSpinner.value
-
     Component.onCompleted: {
-        filter.blockSignals = true
+        filter.blockSignals = true;
         if (filter.isNew) {
-            filter.set('alpha', 1)
-            duration = Math.ceil(settings.videoInDuration * profile.fps)
+            filter.set('alpha', 1);
+            duration = Math.ceil(settings.videoInDuration * profile.fps);
         } else if (filter.animateIn === 0) {
             // Convert legacy filter.
-            duration = filter.duration
-            filter.set('in', producer.in )
-            filter.set('out', producer.out )
+            duration = filter.duration;
+            filter.set('in', producer.in);
+            filter.set('out', producer.out);
         } else {
-            duration = filter.animateIn
+            duration = filter.animateIn;
         }
-        alphaCheckbox.checked = filter.get('alpha') != 1
-        filter.blockSignals = false
+        alphaCheckbox.checked = filter.get('alpha') != 1;
+        filter.blockSignals = false;
     }
 
     Connections {
-        target: filter
-        function onAnimateInChanged() { duration = filter.animateIn }
-    }
+        function onAnimateInChanged() {
+            duration = filter.animateIn;
+        }
 
-    function updateFilter() {
-        var name = (filter.get('alpha') != 1)? 'alpha' : 'level'
-        filter.resetProperty(name)
-        filter.set(name, 0, 0)
-        filter.set(name, 1, Math.min(duration, filter.duration) - 1)
+        target: filter
     }
 
     ColumnLayout {
@@ -60,38 +63,48 @@ Item {
         anchors.margins: 8
 
         RowLayout {
-            Label { text: qsTr('Duration') }
+            Label {
+                text: qsTr('Duration')
+            }
+
             Shotcut.TimeSpinner {
                 id: timeSpinner
+
                 minimumValue: 2
                 maximumValue: 5000
                 onValueChanged: {
-                    filter.animateIn = duration
-                    updateFilter()
+                    filter.animateIn = duration;
+                    updateFilter();
                 }
                 onSetDefaultClicked: {
-                    duration = Math.ceil(settings.videoInDuration * profile.fps)
+                    duration = Math.ceil(settings.videoInDuration * profile.fps);
                 }
                 onSaveDefaultClicked: {
-                    settings.videoInDuration = duration / profile.fps
+                    settings.videoInDuration = duration / profile.fps;
                 }
             }
+
         }
+
         CheckBox {
             id: alphaCheckbox
+
             text: qsTr('Adjust opacity instead of fade with black')
             onClicked: {
                 if (checked) {
-                    filter.set('alpha', 0)
-                    filter.set('level', 1)
+                    filter.set('alpha', 0);
+                    filter.set('level', 1);
                 } else {
-                    filter.set('alpha', 1)
+                    filter.set('alpha', 1);
                 }
-                updateFilter()
+                updateFilter();
             }
         }
+
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
+
     }
+
 }

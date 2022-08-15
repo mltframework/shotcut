@@ -14,45 +14,45 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import org.shotcut.qml 1.0 as Shotcut
 import Shotcut.Controls 1.0 as Shotcut
+import org.shotcut.qml 1.0 as Shotcut
 
 Rectangle {
     id: filterWindow
-    visible: false
 
     signal filterSelected(int index)
 
     function open() {
-        filterWindow.visible = true
-        searchField.focus = true
+        filterWindow.visible = true;
+        searchField.focus = true;
     }
 
     function close() {
-        filterWindow.visible = false
-        searchField.text = ''
-        searchField.focus = false
+        filterWindow.visible = false;
+        searchField.text = '';
+        searchField.focus = false;
     }
 
+    visible: false
     onVisibleChanged: {
-        if (metadatamodel.filter == Shotcut.MetadataModel.FavoritesFilter) {
-            favButton.checked = true
-        } else if (metadatamodel.filter == Shotcut.MetadataModel.VideoFilter) {
-            vidButton.checked = true
-        } else if (metadatamodel.filter == Shotcut.MetadataModel.AudioFilter) {
-            audButton.checked = true
-        } else if (metadatamodel.filter == Shotcut.MetadataModel.LinkFilter) {
-            lnkButton.checked = true
-        }
+        if (metadatamodel.filter == Shotcut.MetadataModel.FavoritesFilter)
+            favButton.checked = true;
+        else if (metadatamodel.filter == Shotcut.MetadataModel.VideoFilter)
+            vidButton.checked = true;
+        else if (metadatamodel.filter == Shotcut.MetadataModel.AudioFilter)
+            audButton.checked = true;
+        else if (metadatamodel.filter == Shotcut.MetadataModel.LinkFilter)
+            lnkButton.checked = true;
     }
-
     color: activePalette.window
 
-    SystemPalette { id: activePalette }
+    SystemPalette {
+        id: activePalette
+    }
 
     ColumnLayout {
         anchors.left: parent.left
@@ -61,145 +61,192 @@ Rectangle {
 
         RowLayout {
             id: searchBar
-            Layout.fillWidth: true
+
             property var savedFilter
+
+            Layout.fillWidth: true
 
             TextField {
                 id: searchField
+
                 Layout.fillWidth: true
                 focus: true
                 placeholderText: qsTr("search")
                 selectByMouse: true
                 text: metadatamodel.search
                 onTextChanged: {
-                    if (length !== 1 && text !== metadatamodel.search) {
-                        metadatamodel.search = text
-                    }
+                    if (length !== 1 && text !== metadatamodel.search)
+                        metadatamodel.search = text;
+
                     if (length > 0) {
-                        parent.savedFilter = typeGroup.checkedButton
-                        favButton.checked = vidButton.checked = audButton.checked = false
+                        parent.savedFilter = typeGroup.checkedButton;
+                        favButton.checked = vidButton.checked = audButton.checked = false;
                     } else {
-                        parent.savedFilter.checked = true
+                        parent.savedFilter.checked = true;
                     }
                 }
                 Keys.onReturnPressed: {
-                    menuListView.itemSelected(menuListView.currentIndex)
-                    event.accepted = true
+                    menuListView.itemSelected(menuListView.currentIndex);
+                    event.accepted = true;
                 }
                 Keys.onEnterPressed: Keys.onReturnPressed(event)
                 Keys.onEscapePressed: {
                     if (text !== '')
-                        text = ''
+                        text = '';
                     else
-                        filterWindow.close()
+                        filterWindow.close();
                 }
                 Keys.onUpPressed: menuListView.selectPrevious()
                 Keys.onDownPressed: menuListView.selectNext()
             }
+
             ToolButton {
                 id: clearButton
+
                 padding: 2
                 implicitWidth: 20
                 implicitHeight: 20
                 icon.name: 'edit-clear'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
                 hoverEnabled: true
-                Shotcut.HoverTip { text: qsTr('Clear search') }
                 onClicked: searchField.text = ''
+
+                Shotcut.HoverTip {
+                    text: qsTr('Clear search')
+                }
+
             }
+
         }
 
         RowLayout {
             id: toolBar
+
             Layout.fillWidth: true
 
-            ButtonGroup { id: typeGroup }
+            ButtonGroup {
+                id: typeGroup
+            }
 
             Shotcut.ToggleButton {
                 id: favButton
+
                 checked: true
                 implicitWidth: 82
                 icon.name: 'bookmarks'
                 icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
                 text: qsTr('Favorite')
-                Shotcut.HoverTip { text: qsTr('Show favorite filters') }
                 ButtonGroup.group: typeGroup
                 onClicked: {
                     if (checked) {
-                        metadatamodel.filter = Shotcut.MetadataModel.FavoritesFilter
-                        searchField.text = ''
-                        checked = true
+                        metadatamodel.filter = Shotcut.MetadataModel.FavoritesFilter;
+                        searchField.text = '';
+                        checked = true;
                     }
                 }
+
+                Shotcut.HoverTip {
+                    text: qsTr('Show favorite filters')
+                }
+
             }
+
             Shotcut.ToggleButton {
                 id: vidButton
+
                 implicitWidth: 82
                 icon.name: 'video-television'
                 icon.source: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
                 text: qsTr('Video')
-                Shotcut.HoverTip { text: qsTr('Show video filters') }
                 ButtonGroup.group: typeGroup
                 onClicked: {
                     if (checked) {
-                        metadatamodel.filter = Shotcut.MetadataModel.VideoFilter
-                        searchField.text = ''
-                        checked = true
+                        metadatamodel.filter = Shotcut.MetadataModel.VideoFilter;
+                        searchField.text = '';
+                        checked = true;
                     }
                 }
+
+                Shotcut.HoverTip {
+                    text: qsTr('Show video filters')
+                }
+
             }
+
             Shotcut.ToggleButton {
                 id: audButton
+
                 implicitWidth: 82
                 icon.name: 'speaker'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
                 text: qsTr('Audio')
-                Shotcut.HoverTip { text: qsTr('Show audio filters') }
                 ButtonGroup.group: typeGroup
                 onClicked: {
                     if (checked) {
-                        metadatamodel.filter = Shotcut.MetadataModel.AudioFilter
-                        searchField.text = ''
-                        checked = true
+                        metadatamodel.filter = Shotcut.MetadataModel.AudioFilter;
+                        searchField.text = '';
+                        checked = true;
                     }
                 }
+
+                Shotcut.HoverTip {
+                    text: qsTr('Show audio filters')
+                }
+
             }
+
             Shotcut.ToggleButton {
                 id: lnkButton
+
                 implicitWidth: 82
                 visible: attachedfiltersmodel.supportsLinks
                 icon.name: 'chronometer'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
                 text: qsTr('Time')
-                Shotcut.HoverTip { text: qsTr('Show time filters') }
                 ButtonGroup.group: typeGroup
                 onClicked: {
                     if (checked) {
-                        metadatamodel.filter = Shotcut.MetadataModel.LinkFilter
-                        searchField.text = ''
-                        checked = true
+                        metadatamodel.filter = Shotcut.MetadataModel.LinkFilter;
+                        searchField.text = '';
+                        checked = true;
                     }
                 }
+
+                Shotcut.HoverTip {
+                    text: qsTr('Show time filters')
+                }
+
             }
-            Button { // separator
+            // separator
+
+            Button {
                 enabled: false
                 implicitWidth: 1
                 implicitHeight: 20
             }
+
             Shotcut.Button {
                 id: closeButton
+
                 icon.name: 'window-close'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
                 padding: 2
                 implicitWidth: 20
                 implicitHeight: 20
-                Shotcut.HoverTip { text: qsTr('Close menu') }
                 onClicked: filterWindow.close()
+
+                Shotcut.HoverTip {
+                    text: qsTr('Close menu')
+                }
+
             }
+
             Item {
                 Layout.fillWidth: true
             }
+
         }
+
         ScrollView {
             Layout.fillWidth: true
             Layout.preferredHeight: filterWindow.height - toolBar.height - searchBar.height - parent.anchors.margins * 2
@@ -215,34 +262,39 @@ Rectangle {
 
                 function itemSelected(index) {
                     if (index > -1) {
-                        filterWindow.close()
-                        filterSelected(index)
+                        filterWindow.close();
+                        filterSelected(index);
                     }
                 }
 
                 function selectNext() {
                     do {
-                        currentIndex = Math.min(currentIndex + 1, count - 1)
+                        currentIndex = Math.min(currentIndex + 1, count - 1);
                     } while (currentItem !== null && !currentItem.visible && currentIndex < count - 1)
                 }
 
                 function selectPrevious() {
                     do {
-                        menuListView.currentIndex = Math.max(menuListView.currentIndex - 1, 0)
+                        menuListView.currentIndex = Math.max(menuListView.currentIndex - 1, 0);
                     } while (!menuListView.currentItem.visible && menuListView.currentIndex > 0)
                 }
 
                 anchors.fill: parent
                 model: metadatamodel
-                delegate: FilterMenuDelegate {}
                 boundsBehavior: Flickable.StopAtBounds
                 currentIndex: -1
                 focus: true
-
                 onCountChanged: {
-                    currentIndex = -1
+                    currentIndex = -1;
                 }
+
+                delegate: FilterMenuDelegate {
+                }
+
             }
+
         }
+
     }
+
 }

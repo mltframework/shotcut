@@ -20,69 +20,69 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Shotcut.VuiBase {
     property string rectProperty: 'rect'
-    property real zoom: (video.zoom > 0)? video.zoom : 1.0
+    property real zoom: (video.zoom > 0) ? video.zoom : 1
     property rect filterRect: Qt.rect(-1, -1, -1, -1)
     property bool blockUpdate: false
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
-    property string endValue:  '_shotcut:endValue'
-
-    Component.onCompleted: {
-        application.showStatusMessage(qsTr('Click in rectangle + hold Shift to drag'))
-        setRectangleControl()
-    }
+    property string endValue: '_shotcut:endValue'
 
     function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0)
+        return Math.max(producer.position - (filter.in - producer.in), 0);
     }
 
     function setRectangleControl() {
-        if (blockUpdate) return
-        var position = getPosition()
-        var newValue = filter.getRect(rectProperty, position)
+        if (blockUpdate)
+            return ;
+
+        var position = getPosition();
+        var newValue = filter.getRect(rectProperty, position);
         if (filterRect !== newValue) {
-            filterRect = newValue
-            rectangle.setHandles(filterRect)
+            filterRect = newValue;
+            rectangle.setHandles(filterRect);
         }
-        rectangle.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        rectangle.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
     function setFilter(position) {
-        blockUpdate = true
-        var rect = rectangle.rectangle
-        filterRect.x = Math.round(rect.x / rectangle.widthScale)
-        filterRect.y = Math.round(rect.y / rectangle.heightScale)
-        filterRect.width = Math.round(rect.width / rectangle.widthScale)
-        filterRect.height = Math.round(rect.height / rectangle.heightScale)
-
+        blockUpdate = true;
+        var rect = rectangle.rectangle;
+        filterRect.x = Math.round(rect.x / rectangle.widthScale);
+        filterRect.y = Math.round(rect.y / rectangle.heightScale);
+        filterRect.width = Math.round(rect.width / rectangle.widthScale);
+        filterRect.height = Math.round(rect.height / rectangle.heightScale);
         if (position !== null) {
-            filter.blockSignals = true
+            filter.blockSignals = true;
             if (position <= 0 && filter.animateIn > 0)
-                filter.set(startValue, filterRect)
+                filter.set(startValue, filterRect);
             else if (position >= filter.duration - 1 && filter.animateOut > 0)
-                filter.set(endValue, filterRect)
+                filter.set(endValue, filterRect);
             else
-                filter.set(middleValue, filterRect)
-            filter.blockSignals = false
+                filter.set(middleValue, filterRect);
+            filter.blockSignals = false;
         }
-
         if (filter.animateIn > 0 || filter.animateOut > 0) {
-            filter.resetProperty(rectProperty)
+            filter.resetProperty(rectProperty);
             if (filter.animateIn > 0) {
-                filter.set(rectProperty, filter.getRect(startValue), 0)
-                filter.set(rectProperty, filter.getRect(middleValue), filter.animateIn - 1)
+                filter.set(rectProperty, filter.getRect(startValue), 0);
+                filter.set(rectProperty, filter.getRect(middleValue), filter.animateIn - 1);
             }
             if (filter.animateOut > 0) {
-                filter.set(rectProperty, filter.getRect(middleValue), filter.duration - filter.animateOut)
-                filter.set(rectProperty, filter.getRect(endValue), filter.duration - 1)
+                filter.set(rectProperty, filter.getRect(middleValue), filter.duration - filter.animateOut);
+                filter.set(rectProperty, filter.getRect(endValue), filter.duration - 1);
             }
         } else if (filter.keyframeCount(rectProperty) <= 0) {
-            filter.resetProperty(rectProperty)
-            filter.set(rectProperty, filter.getRect(middleValue))
+            filter.resetProperty(rectProperty);
+            filter.set(rectProperty, filter.getRect(middleValue));
         } else if (position !== null) {
-            filter.set(rectProperty, filterRect, position)
+            filter.set(rectProperty, filterRect, position);
         }
-        blockUpdate = false
+        blockUpdate = false;
+    }
+
+    Component.onCompleted: {
+        application.showStatusMessage(qsTr('Click in rectangle + hold Shift to drag'));
+        setRectangleControl();
     }
 
     Flickable {
@@ -96,6 +96,7 @@ Shotcut.VuiBase {
 
         Item {
             id: videoItem
+
             x: video.rect.x
             y: video.rect.y
             width: video.rect.width
@@ -104,6 +105,7 @@ Shotcut.VuiBase {
 
             Shotcut.RectangleControl {
                 id: rectangle
+
                 widthScale: video.rect.width / profile.width
                 heightScale: video.rect.height / profile.height
                 handleSize: Math.max(Math.round(8 / zoom), 4)
@@ -112,19 +114,26 @@ Shotcut.VuiBase {
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: setFilter(getPosition())
             }
+
         }
+
     }
 
     Connections {
-        target: filter
         function onChanged() {
-            setRectangleControl()
-            videoItem.enabled = filter.get('disable') !== '1'
+            setRectangleControl();
+            videoItem.enabled = filter.get('disable') !== '1';
         }
+
+        target: filter
     }
 
     Connections {
+        function onPositionChanged() {
+            setRectangleControl();
+        }
+
         target: producer
-        function onPositionChanged() { setRectangleControl() }
     }
+
 }

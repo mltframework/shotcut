@@ -23,38 +23,51 @@ import Shotcut.Controls 1.0 as Shotcut
 Item {
     property string typeParam: '0'
     property double typeDefault: 0
+
     width: 200
     height: 50
     Component.onCompleted: {
-        filter.set('threads', 0)
-        if (filter.isNew) {
-            filter.set(typeParam, typeDefault)
-        }
-        if (filter.getDouble(typeParam) === 0.0)
-            greenRadioButton.checked = true
+        filter.set('threads', 0);
+        if (filter.isNew)
+            filter.set(typeParam, typeDefault);
+
+        if (filter.getDouble(typeParam) === 0)
+            greenRadioButton.checked = true;
         else
-            blueRadioButton.checked = true
+            blueRadioButton.checked = true;
     }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 8
 
         RowLayout {
-            ButtonGroup { id: typeGroup }
+            ButtonGroup {
+                id: typeGroup
+            }
+
             RadioButton {
                 id: greenRadioButton
+
                 text: qsTr('Green')
                 ButtonGroup.group: typeGroup
                 onClicked: filter.set(typeParam, 0)
             }
+
             RadioButton {
                 id: blueRadioButton
+
                 text: qsTr('Blue')
                 ButtonGroup.group: typeGroup
                 onClicked: filter.set(typeParam, 1)
             }
+
         }
 
-        Item { Layout.fillHeight: true }
+        Item {
+            Layout.fillHeight: true
+        }
+
     }
+
 }

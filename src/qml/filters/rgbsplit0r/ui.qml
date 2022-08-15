@@ -23,45 +23,43 @@ import Shotcut.Controls 1.0 as Shotcut
 Shotcut.KeyframableFilter {
     property string verSplit: '0'
     property string horSplit: '1'
-    property double  verSplitDefault: 0.4
+    property double verSplitDefault: 0.4
     property double horSplitDefault: 0.4
+
+    function setControls() {
+        var position = getPosition();
+        blockUpdate = true;
+        verSplitSlider.value = filter.getDouble(verSplit, position) * verSplitSlider.maximumValue;
+        verKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(verSplit) > 0;
+        horSplitSlider.value = filter.getDouble(horSplit, position) * horSplitSlider.maximumValue;
+        horKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horSplit) > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
+    }
+
+    function enableControls(enabled) {
+        verSplitSlider.enabled = horSplitSlider.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        setControls();
+        updateFilter(verSplit, verSplitSlider.value / verSplitSlider.maximumValue, verKeyframesButton, null);
+        updateFilter(horSplit, horSplitSlider.value / horSplitSlider.maximumValue, horKeyframesButton, null);
+    }
 
     keyframableParameters: [verSplit, horSplit]
     startValues: [0.5, 0.5]
     middleValues: [verSplitDefault, horSplitDefault]
     endValues: [0.5, 0.5]
-
     width: 350
     height: 100
-
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set(verSplit, verSplitDefault)
-            filter.set(horSplit, horSplitDefault)
-            filter.savePreset(preset.parameters)
+            filter.set(verSplit, verSplitDefault);
+            filter.set(horSplit, horSplitDefault);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        verSplitSlider.value = filter.getDouble(verSplit, position) * verSplitSlider.maximumValue
-        verKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(verSplit) > 0
-        horSplitSlider.value = filter.getDouble(horSplit, position) * horSplitSlider.maximumValue
-        horKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horSplit) > 0
-        blockUpdate = false
-        enableControls(isSimpleKeyframesActive())
-    }
-
-    function enableControls(enabled) {
-        verSplitSlider.enabled = horSplitSlider.enabled = enabled
-    }
-
-    function updateSimpleKeyframes() {
-        setControls()
-        updateFilter(verSplit, verSplitSlider.value / verSplitSlider.maximumValue, verKeyframesButton, null)
-        updateFilter(horSplit, horSplitSlider.value / horSplitSlider.maximumValue, horKeyframesButton, null)
+        setControls();
     }
 
     GridLayout {
@@ -73,14 +71,16 @@ Shotcut.KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: [verSplit, horSplit]
             Layout.columnSpan: 3
             onBeforePresetLoaded: resetSimpleKeyframes()
             onPresetSelected: {
-                setControls()
-                initializeSimpleKeyframes()
+                setControls();
+                initializeSimpleKeyframes();
             }
         }
 
@@ -88,8 +88,10 @@ Shotcut.KeyframableFilter {
             text: qsTr('Vertical')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: verSplitSlider
+
             minimumValue: 0
             maximumValue: 100
             stepSize: 0.1
@@ -97,14 +99,17 @@ Shotcut.KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(verSplit, value / maximumValue, verKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: verSplitSlider.value = verSplitDefault * verSplitSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: verKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, verSplit, verSplitSlider.value / verSplitSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, verSplit, verSplitSlider.value / verSplitSlider.maximumValue);
             }
         }
 
@@ -112,8 +117,10 @@ Shotcut.KeyframableFilter {
             text: qsTr('Horizontal')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: horSplitSlider
+
             minimumValue: 0
             maximumValue: 100
             stepSize: 0.1
@@ -121,34 +128,60 @@ Shotcut.KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(horSplit, value / maximumValue, horKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: horSplitSlider.value = horSplitDefault * horSplitSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: horKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, horSplit, horSplitSlider.value / horSplitSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, horSplit, horSplitSlider.value / horSplitSlider.maximumValue);
             }
         }
 
         Item {
             Layout.fillHeight: true
         }
+
     }
 
     Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
         target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateSimpleKeyframes() }
-        function onOutChanged() { updateSimpleKeyframes() }
-        function onAnimateInChanged() { updateSimpleKeyframes() }
-        function onAnimateOutChanged() { updateSimpleKeyframes() }
-        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
         target: producer
-        function onPositionChanged() { setControls() }
     }
+
 }

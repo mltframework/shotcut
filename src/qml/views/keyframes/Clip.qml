@@ -22,6 +22,7 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: clipRoot
+
     property string clipName: ''
     property string clipResource: ''
     property string mltService: ''
@@ -40,7 +41,7 @@ Rectangle {
     property int originalX: x
     property bool selected: false
     property string hash: ''
-    property double speed: 1.0
+    property double speed: 1
     property bool inThumbnailVisible: true
     property bool outThumbnailVisible: true
 
@@ -50,100 +51,139 @@ Rectangle {
     signal trimmedOut(var clip)
     signal rightClicked()
 
-    SystemPalette { id: activePalette }
-    gradient: Gradient {
-        GradientStop {
-            id: gradientStop
-            position: 0.00
-            color: Qt.lighter(getColor())
-        }
-        GradientStop {
-            id: gradientStop2
-            position: 1.0
-            color: getColor()
-        }
-    }
-
-    width: clipDuration * timeScale
-    border.color: selected? 'red' : 'black'
-    border.width: 1
-    clip: true
-    opacity: isBlank? 0.5 : 1.0
-
     function getColor() {
-        return isAudio? 'darkseagreen' : root.shotcutBlue
+        return isAudio ? 'darkseagreen' : root.shotcutBlue;
     }
 
     function generateWaveform() {
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
-        waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth)
-        for (var i = 0; i < waveformRepeater.count; i++)
-            waveformRepeater.itemAt(0).update()
+        waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth);
+        for (var i = 0; i < waveformRepeater.count; i++) waveformRepeater.itemAt(0).update()
     }
 
     function imagePath(time) {
-        return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time
+        return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time;
     }
 
+    width: clipDuration * timeScale
+    border.color: selected ? 'red' : 'black'
+    border.width: 1
+    clip: true
+    opacity: isBlank ? 0.5 : 1
     onAudioLevelsChanged: generateWaveform()
+    states: [
+        State {
+            name: 'normal'
+            when: !clipRoot.selected
+
+            PropertyChanges {
+                target: clipRoot
+                z: 0
+            }
+
+        },
+        State {
+            name: 'selectedBlank'
+            when: clipRoot.selected && clipRoot.isBlank
+
+            PropertyChanges {
+                target: gradientStop2
+                color: Qt.lighter(selectedTrackColor)
+            }
+
+            PropertyChanges {
+                target: gradientStop
+                color: Qt.darker(selectedTrackColor)
+            }
+
+        },
+        State {
+            name: 'selected'
+            when: clipRoot.selected
+
+            PropertyChanges {
+                target: clipRoot
+                z: 1
+            }
+
+            PropertyChanges {
+                target: gradientStop
+                color: Qt.darker(getColor())
+            }
+
+        }
+    ]
+
+    SystemPalette {
+        id: activePalette
+    }
 
     Image {
         id: outThumbnail
-        visible: settings.timelineShowThumbnails && outThumbnailVisible && metadata !== null &&
-                 parent.height > 20 && x > inThumbnail.width
+
+        visible: settings.timelineShowThumbnails && outThumbnailVisible && metadata !== null && parent.height > 20 && x > inThumbnail.width
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
         anchors.rightMargin: parent.border.width + 1
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
-        width: height * 16.0/9.0
+        width: height * 16 / 9
         fillMode: Image.PreserveAspectFit
-        source: visible? imagePath(outPoint) : ''
+        source: visible ? imagePath(outPoint) : ''
     }
 
     Image {
         id: inThumbnail
+
         visible: settings.timelineShowThumbnails && inThumbnailVisible && metadata !== null && parent.height > 20
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
-        width: height * 16.0/9.0
+        width: height * 16 / 9
         fillMode: Image.PreserveAspectFit
-        source: visible? imagePath(inPoint) : ''
+        source: visible ? imagePath(inPoint) : ''
     }
 
     Row {
         id: waveform
+
+        property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
+        property int innerWidth: clipRoot.width - clipRoot.border.width * 2
+
         visible: settings.timelineShowWaveforms
-        height: (isAudio || parent.height <= 20)? parent.height : parent.height / 2
+        height: (isAudio || parent.height <= 20) ? parent.height : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: parent.border.width
         opacity: 0.7
-        property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
-        property int innerWidth: clipRoot.width - clipRoot.border.width * 2
 
         Repeater {
             id: waveformRepeater
+
             model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
+
             Shotcut.TimelineWaveform {
+                // right edge
+                // left edge
+                // bottom edge
+
+                property int channels: 2
+
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
                 height: waveform.height
                 fillColor: getColor()
-                property int channels: 2
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
                 levels: audioLevels
-                active: ((clipRoot.x + x + width)   > tracksFlickable.contentX) && // right edge
-                        ((clipRoot.x + x)           < tracksFlickable.contentX + tracksFlickable.width) && // left edge
-                        ((trackRoot.y + y + height) > tracksFlickable.contentY) && // bottom edge
-                        ((trackRoot.y + y)          < tracksFlickable.contentY + tracksFlickable.height) // top edge
+                active: ((clipRoot.x + x + width) > tracksFlickable.contentX) && ((clipRoot.x + x) < tracksFlickable.contentX + tracksFlickable.width) && ((trackRoot.y + y + height) > tracksFlickable.contentY) && ((trackRoot.y + y) < tracksFlickable.contentY + tracksFlickable.height) // top edge
             }
+
         }
+
     }
 
     Rectangle {
@@ -167,74 +207,39 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width +
-            ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width)
+        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width)
         width: label.width + 2
         height: label.height
     }
 
     Text {
         id: label
+
         text: clipName
         visible: !isBlank
         font.pointSize: 8
+        color: 'black'
+
         anchors {
             top: parent.top
             left: parent.left
             topMargin: parent.border.width + 1
-            leftMargin: parent.border.width +
-                ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width) + 1
+            leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width) + 1
         }
-        color: 'black'
-    }
 
-    states: [
-        State {
-            name: 'normal'
-            when: !clipRoot.selected
-            PropertyChanges {
-                target: clipRoot
-                z: 0
-            }
-        },
-        State {
-            name: 'selectedBlank'
-            when: clipRoot.selected && clipRoot.isBlank
-            PropertyChanges {
-                target: gradientStop2
-                color: Qt.lighter(selectedTrackColor)
-            }
-            PropertyChanges {
-                target: gradientStop
-                color: Qt.darker(selectedTrackColor)
-            }
-        },
-        State {
-            name: 'selected'
-            when: clipRoot.selected
-            PropertyChanges {
-                target: clipRoot
-                z: 1
-            }
-            PropertyChanges {
-                target: gradientStop
-                color: Qt.darker(getColor())
-            }
-        }
-    ]
+    }
 
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
         propagateComposedEvents: true
-        cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active)? Qt.SizeHorCursor :
-            (animateInMouseArea.drag.active || animateOutMouseArea.drag.active)? Qt.PointingHandCursor :
-            Qt.ArrowCursor
+        cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active) ? Qt.SizeHorCursor : (animateInMouseArea.drag.active || animateOutMouseArea.drag.active) ? Qt.PointingHandCursor : Qt.ArrowCursor
         onClicked: clipRoot.rightClicked()
     }
 
     Shotcut.TimelineTriangle {
         id: animateInTriangle
+
         visible: !isBlank
         width: parent.animateIn * timeScale
         height: parent.height - parent.border.width * 2
@@ -246,6 +251,7 @@ Rectangle {
 
     MessageDialog {
         id: confirmRemoveAdvancedDialog
+
         visible: false
         modality: application.dialogModality
         icon: StandardIcon.Question
@@ -253,12 +259,13 @@ Rectangle {
         text: qsTr('This will remove all advanced keyframes to enable simple keyframes.<p>Do you still want to do this?')
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
-            parameters.removeAdvancedKeyframes()
+            parameters.removeAdvancedKeyframes();
         }
     }
 
     Rectangle {
         id: animateInControl
+
         visible: metadata !== null && metadata.keyframes.allowAnimateIn
         enabled: !isBlank
         anchors.left: animateInTriangle.right
@@ -272,11 +279,16 @@ Rectangle {
         color: 'black'
         border.width: 2
         border.color: 'white'
-        opacity: enabled? 0.7 : 0
+        opacity: enabled ? 0.7 : 0
         Drag.active: animateInMouseArea.drag.active
 
         MouseArea {
             id: animateInMouseArea
+
+            property int startX
+            property int startFadeIn
+            property bool dragBlocked: false
+
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
@@ -284,65 +296,67 @@ Rectangle {
             drag.axis: Drag.XAxis
             drag.minimumX: 0
             drag.maximumX: clipRoot.width
-            property int startX
-            property int startFadeIn
-            property bool dragBlocked: false
             onPressed: {
                 if (parameters.advancedKeyframesInUse()) {
-                    dragBlocked = true
-                    cursorShape = Qt.ForbiddenCursor
+                    dragBlocked = true;
+                    cursorShape = Qt.ForbiddenCursor;
                 } else {
-                    dragBlocked = false
-                    root.stopScrolling = true
-                    startX = parent.x
-                    startFadeIn = animateIn
-                    parent.anchors.left = undefined
+                    dragBlocked = false;
+                    root.stopScrolling = true;
+                    startX = parent.x;
+                    startFadeIn = animateIn;
+                    parent.anchors.left = undefined;
                 }
             }
             onReleased: {
-                cursorShape = Qt.PointingHandCursor
+                cursorShape = Qt.PointingHandCursor;
                 if (dragBlocked) {
-                    confirmRemoveAdvancedDialog.open()
+                    confirmRemoveAdvancedDialog.open();
                 } else {
-                    root.stopScrolling = false
-                    parent.anchors.left = animateInTriangle.right
-                    bubbleHelp.hide()
+                    root.stopScrolling = false;
+                    parent.anchors.left = animateInTriangle.right;
+                    bubbleHelp.hide();
                 }
             }
             onPositionChanged: {
                 if (!dragBlocked && mouse.buttons === Qt.LeftButton) {
-                    var delta = Math.round((parent.x - startX) / timeScale)
-                    var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration)
-                    filter.animateIn = duration
-
+                    var delta = Math.round((parent.x - startX) / timeScale);
+                    var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration);
+                    filter.animateIn = duration;
                     // Show fade duration as time in a "bubble" help.
-                    var s = application.timecode(Math.max(duration, 0))
-                    bubbleHelp.show(clipRoot.x, trackRoot.y + clipRoot.height, s.substring(6))
+                    var s = application.timecode(Math.max(duration, 0));
+                    bubbleHelp.show(clipRoot.x, trackRoot.y + clipRoot.height, s.substring(6));
                 }
             }
             onDoubleClicked: filter.animateIn = (filter.animateIn > 0) ? 0 : Math.round(profile.fps)
-            onExited: animateInControl.scale = 1.0
+            onExited: animateInControl.scale = 1
         }
+
         SequentialAnimation on scale {
             loops: Animation.Infinite
             running: animateInMouseArea.containsMouse
+
             NumberAnimation {
-                from: 1.0
+                from: 1
                 to: 1.5
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
+
             NumberAnimation {
                 from: 1.5
-                to: 1.0
+                to: 1
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
+
         }
+
     }
 
     Shotcut.TimelineTriangle {
         id: animateOutTriangle
+
         visible: !isBlank
         width: parent.animateOut * timeScale
         height: parent.height - parent.border.width * 2
@@ -350,10 +364,17 @@ Rectangle {
         anchors.top: parent.top
         anchors.margins: parent.border.width
         opacity: 0.5
-        transform: Scale { xScale: -1; origin.x: animateOutTriangle.width / 2}
+
+        transform: Scale {
+            xScale: -1
+            origin.x: animateOutTriangle.width / 2
+        }
+
     }
+
     Rectangle {
         id: animateOutControl
+
         visible: metadata !== null && metadata.keyframes.allowAnimateOut
         enabled: !isBlank
         anchors.right: animateOutTriangle.left
@@ -366,10 +387,16 @@ Rectangle {
         color: 'black'
         border.width: 2
         border.color: 'white'
-        opacity: enabled? 0.7 : 0
+        opacity: enabled ? 0.7 : 0
         Drag.active: animateOutMouseArea.drag.active
+
         MouseArea {
             id: animateOutMouseArea
+
+            property int startX
+            property int startFadeOut
+            property bool dragBlocked: false
+
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
@@ -377,111 +404,117 @@ Rectangle {
             drag.axis: Drag.XAxis
             drag.minimumX: -width - 1
             drag.maximumX: clipRoot.width
-            property int startX
-            property int startFadeOut
-            property bool dragBlocked: false
             onPressed: {
                 if (parameters.advancedKeyframesInUse()) {
-                    dragBlocked = true
-                    cursorShape = Qt.ForbiddenCursor
+                    dragBlocked = true;
+                    cursorShape = Qt.ForbiddenCursor;
                 } else {
-                    dragBlocked = false
-                    root.stopScrolling = true
-                    startX = parent.x
-                    startFadeOut = animateOut
-                    parent.anchors.right = undefined
+                    dragBlocked = false;
+                    root.stopScrolling = true;
+                    startX = parent.x;
+                    startFadeOut = animateOut;
+                    parent.anchors.right = undefined;
                 }
             }
             onReleased: {
-                cursorShape = Qt.PointingHandCursor
+                cursorShape = Qt.PointingHandCursor;
                 if (dragBlocked) {
-                    confirmRemoveAdvancedDialog.open()
+                    confirmRemoveAdvancedDialog.open();
                 } else {
-                    root.stopScrolling = false
-                    parent.anchors.right = animateOutTriangle.left
-                    bubbleHelp.hide()
+                    root.stopScrolling = false;
+                    parent.anchors.right = animateOutTriangle.left;
+                    bubbleHelp.hide();
                 }
             }
             onPositionChanged: {
                 if (!dragBlocked && mouse.buttons === Qt.LeftButton) {
-                    var delta = Math.round((startX - parent.x) / timeScale)
-                    var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration)
-                    filter.animateOut = duration
-
+                    var delta = Math.round((startX - parent.x) / timeScale);
+                    var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration);
+                    filter.animateOut = duration;
                     // Show fade duration as time in a "bubble" help.
-                    var s = application.timecode(duration, 0)
-                    bubbleHelp.show(clipRoot.x + clipRoot.width, trackRoot.y + clipRoot.height, s.substring(6))
+                    var s = application.timecode(duration, 0);
+                    bubbleHelp.show(clipRoot.x + clipRoot.width, trackRoot.y + clipRoot.height, s.substring(6));
                 }
             }
-            onDoubleClicked: filter.animateOut = (filter.animateOut > 0) ?  0 : Math.round(profile.fps)
-            onExited: animateOutControl.scale = 1.0
+            onDoubleClicked: filter.animateOut = (filter.animateOut > 0) ? 0 : Math.round(profile.fps)
+            onExited: animateOutControl.scale = 1
         }
+
         SequentialAnimation on scale {
             loops: Animation.Infinite
             running: animateOutMouseArea.containsMouse
+
             NumberAnimation {
-                from: 1.0
+                from: 1
                 to: 1.5
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
+
             NumberAnimation {
                 from: 1.5
-                to: 1.0
+                to: 1
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
+
         }
+
     }
 
     Rectangle {
         id: trimIn
+
         visible: metadata !== null && metadata.keyframes.allowTrim
         enabled: !isBlank
         anchors.left: parent.left
         anchors.leftMargin: 0
         height: parent.height
         width: 5
-        color: isAudio? 'green' : 'lawngreen'
-        opacity: enabled? 0.5 : 0
+        color: isAudio ? 'green' : 'lawngreen'
+        opacity: enabled ? 0.5 : 0
         Drag.active: trimInMouseArea.drag.active
         Drag.proposedAction: Qt.MoveAction
 
         MouseArea {
             id: trimInMouseArea
+
+            property double startX
+
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.SizeHorCursor
             drag.target: parent
             drag.axis: Drag.XAxis
-            property double startX
-
             onPressed: {
-                root.stopScrolling = true
-                startX = mapToItem(null, x, y).x
-                originalX = 0 // reusing originalX to accumulate delta for bubble help
-                parent.anchors.left = undefined
+                root.stopScrolling = true;
+                startX = mapToItem(null, x, y).x;
+                originalX = 0; // reusing originalX to accumulate delta for bubble help
+                parent.anchors.left = undefined;
             }
             onReleased: {
-                root.stopScrolling = false
-                parent.anchors.left = clipRoot.left
-                clipRoot.trimmedIn(clipRoot)
+                root.stopScrolling = false;
+                parent.anchors.left = clipRoot.left;
+                clipRoot.trimmedIn(clipRoot);
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
-                    var newX = mapToItem(null, x, y).x
-                    var delta = Math.round((newX - startX) / timeScale)
+                    var newX = mapToItem(null, x, y).x;
+                    var delta = Math.round((newX - startX) / timeScale);
                     if (Math.abs(delta) > 0) {
-                        originalX += delta
-                        clipRoot.trimmingIn(clipRoot, delta, mouse)
-                        startX = newX
+                        originalX += delta;
+                        clipRoot.trimmingIn(clipRoot, delta, mouse);
+                        startX = newX;
                     }
                 }
             }
         }
+
     }
+
     Rectangle {
         id: trimOut
+
         visible: metadata !== null && metadata.keyframes.allowTrim
         enabled: !isBlank
         anchors.right: parent.right
@@ -489,41 +522,61 @@ Rectangle {
         height: parent.height
         width: 5
         color: 'red'
-        opacity: enabled? 0.5 : 0
+        opacity: enabled ? 0.5 : 0
         Drag.active: trimOutMouseArea.drag.active
         Drag.proposedAction: Qt.MoveAction
 
         MouseArea {
             id: trimOutMouseArea
+
+            property int duration
+
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.SizeHorCursor
             drag.target: parent
             drag.axis: Drag.XAxis
-            property int duration
-
             onPressed: {
-                root.stopScrolling = true
-                duration = clipDuration
-                originalX = 0 // reusing originalX to accumulate delta for bubble help
-                parent.anchors.right = undefined
+                root.stopScrolling = true;
+                duration = clipDuration;
+                originalX = 0; // reusing originalX to accumulate delta for bubble help
+                parent.anchors.right = undefined;
             }
             onReleased: {
-                root.stopScrolling = false
-                parent.anchors.right = clipRoot.right
-                clipRoot.trimmedOut(clipRoot)
+                root.stopScrolling = false;
+                parent.anchors.right = clipRoot.right;
+                clipRoot.trimmedOut(clipRoot);
             }
             onPositionChanged: {
                 if (mouse.buttons === Qt.LeftButton) {
-                    var newDuration = Math.round((parent.x + parent.width) / timeScale)
-                    var delta = duration - newDuration
+                    var newDuration = Math.round((parent.x + parent.width) / timeScale);
+                    var delta = duration - newDuration;
                     if (Math.abs(delta) > 0) {
-                        originalX += delta
-                        clipRoot.trimmingOut(clipRoot, delta, mouse)
-                        duration = newDuration
+                        originalX += delta;
+                        clipRoot.trimmingOut(clipRoot, delta, mouse);
+                        duration = newDuration;
                     }
                 }
             }
         }
+
     }
+
+    gradient: Gradient {
+        GradientStop {
+            id: gradientStop
+
+            position: 0
+            color: Qt.lighter(getColor())
+        }
+
+        GradientStop {
+            id: gradientStop2
+
+            position: 1
+            color: getColor()
+        }
+
+    }
+
 }

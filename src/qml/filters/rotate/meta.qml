@@ -9,6 +9,7 @@ Metadata {
     qml: "ui.qml"
     isFavorite: true
     isHidden: true
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -40,4 +41,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -23,6 +23,7 @@ Metadata {
     name: qsTr("Distort")
     mlt_service: "frei0r.distort0r"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -51,4 +52,5 @@ Metadata {
             }
         ]
     }
+
 }

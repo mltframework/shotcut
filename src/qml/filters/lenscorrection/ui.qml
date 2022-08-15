@@ -25,56 +25,53 @@ Shotcut.KeyframableFilter {
     property string ycenter: '1'
     property string correctionnearcenter: '2'
     property string correctionnearedges: '3'
-    
-    property double xcenterDefault: 0.500
-    property double ycenterDefault: 0.500
-    property double correctionnearcenterDefault: 0.500
-    property double correctionnearedgesDefault: 0.500
-     
+    property double xcenterDefault: 0.5
+    property double ycenterDefault: 0.5
+    property double correctionnearcenterDefault: 0.5
+    property double correctionnearedgesDefault: 0.5
+
+    function setControls() {
+        var position = getPosition();
+        blockUpdate = true;
+        xcenterSlider.value = filter.getDouble(xcenter, position) * xcenterSlider.maximumValue;
+        xcenterKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(xcenter) > 0;
+        ycenterSlider.value = filter.getDouble(ycenter, position) * ycenterSlider.maximumValue;
+        ycenterKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(ycenter) > 0;
+        correctionnearcenterSlider.value = filter.getDouble(correctionnearcenter, position) * correctionnearcenterSlider.maximumValue;
+        cncenKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(correctionnearcenter) > 0;
+        correctionnearedgesSlider.value = filter.getDouble(correctionnearedges, position) * correctionnearedgesSlider.maximumValue;
+        cnedgeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(correctionnearedges) > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
+    }
+
+    function enableControls(enabled) {
+        xcenterSlider.enabled = ycenterSlider.enabled = correctionnearcenterSlider.enabled = correctionnearedgesSlider.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        setControls();
+        updateFilter(xcenter, xcenterSlider.value / xcenterSlider.maximumValue, xcenKeyframesButton, null);
+        updateFilter(ycenter, ycenterSlider.value / ycenterSlider.maximumValue, ycentKeyframesButton, null);
+        updateFilter(correctionnearcenter, correctionnearcenterSlider.value / correctionnearcenterSlider.maximumValue, cncenKeyframesButton, null);
+        updateFilter(correctionnearedges, correctionnearedgesSlider.value / correctionnearedgesSlider.maximumValue, cnedgeKeyframesButton, null);
+    }
+
     keyframableParameters: [xcenter, ycenter, correctionnearcenter, correctionnearedges]
     startValues: [0.5, 0.5, 0.5, 0.5]
     middleValues: [xcenterDefault, ycenterDefault, correctionnearcenterDefault, correctionnearedgesDefault]
     endValues: [0.5, 0.5, 0.5, 0.5]
-
     width: 300
     height: 150
-
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set(xcenter, xcenterDefault)
-            filter.set(ycenter, ycenterDefault)
-            filter.set(correctionnearcenter, correctionnearcenterDefault)
-            filter.set(correctionnearedges, correctionnearedgesDefault)
-            filter.savePreset(preset.parameters)
+            filter.set(xcenter, xcenterDefault);
+            filter.set(ycenter, ycenterDefault);
+            filter.set(correctionnearcenter, correctionnearcenterDefault);
+            filter.set(correctionnearedges, correctionnearedgesDefault);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        xcenterSlider.value = filter.getDouble(xcenter, position) * xcenterSlider.maximumValue
-        xcenterKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(xcenter) > 0
-        ycenterSlider.value = filter.getDouble(ycenter, position) * ycenterSlider.maximumValue
-        ycenterKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(ycenter) > 0
-        correctionnearcenterSlider.value = filter.getDouble(correctionnearcenter, position) * correctionnearcenterSlider.maximumValue
-        cncenKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(correctionnearcenter) > 0
-        correctionnearedgesSlider.value = filter.getDouble(correctionnearedges, position) * correctionnearedgesSlider.maximumValue
-        cnedgeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(correctionnearedges) > 0
-        blockUpdate = false
-        enableControls(isSimpleKeyframesActive())
-    }
-
-    function enableControls(enabled) {
-        xcenterSlider.enabled = ycenterSlider.enabled = correctionnearcenterSlider.enabled = correctionnearedgesSlider.enabled = enabled
-    }
-
-    function updateSimpleKeyframes() {
-        setControls()
-        updateFilter(xcenter, xcenterSlider.value / xcenterSlider.maximumValue, xcenKeyframesButton, null)
-        updateFilter(ycenter, ycenterSlider.value / ycenterSlider.maximumValue, ycentKeyframesButton, null)
-        updateFilter(correctionnearcenter, correctionnearcenterSlider.value / correctionnearcenterSlider.maximumValue, cncenKeyframesButton, null)
-        updateFilter(correctionnearedges, correctionnearedgesSlider.value / correctionnearedgesSlider.maximumValue, cnedgeKeyframesButton, null)
+        setControls();
     }
 
     GridLayout {
@@ -86,16 +83,18 @@ Shotcut.KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: [xcenter, ycenter, correctionnearcenter, correctionnearedges]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                resetSimpleKeyframes()
+                resetSimpleKeyframes();
             }
             onPresetSelected: {
-                setControls()
-                initializeSimpleKeyframes()
+                setControls();
+                initializeSimpleKeyframes();
             }
         }
 
@@ -103,8 +102,10 @@ Shotcut.KeyframableFilter {
             text: qsTr('X Center')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: xcenterSlider
+
             minimumValue: 0
             maximumValue: 100
             stepSize: 0.1
@@ -112,14 +113,17 @@ Shotcut.KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(xcenter, xcenterSlider.value / xcenterSlider.maximumValue, xcenterKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: xcenterSlider.value = xcenterDefault * xcenterSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: xcenterKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, xcenter, xcenterSlider.value / xcenterSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, xcenter, xcenterSlider.value / xcenterSlider.maximumValue);
             }
         }
 
@@ -127,8 +131,10 @@ Shotcut.KeyframableFilter {
             text: qsTr('Y Center')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: ycenterSlider
+
             minimumValue: 0
             maximumValue: 100
             stepSize: 0.1
@@ -136,14 +142,17 @@ Shotcut.KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(ycenter, ycenterSlider.value / ycenterSlider.maximumValue, ycenterKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: ycenterSlider.value = ycenterDefault * ycenterSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: ycenterKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, ycenter, ycenterSlider.value / ycenterSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, ycenter, ycenterSlider.value / ycenterSlider.maximumValue);
             }
         }
 
@@ -151,8 +160,10 @@ Shotcut.KeyframableFilter {
             text: qsTr('Correction at Center')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: correctionnearcenterSlider
+
             minimumValue: 0
             maximumValue: 100
             stepSize: 0.1
@@ -160,14 +171,17 @@ Shotcut.KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(correctionnearcenter, correctionnearcenterSlider.value / correctionnearcenterSlider.maximumValue, cncenKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: correctionnearcenterSlider.value = correctionnearcenterDefault * correctionnearcenterSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: cncenKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, correctionnearcenter, correctionnearcenterSlider.value / correctionnearcenterSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, correctionnearcenter, correctionnearcenterSlider.value / correctionnearcenterSlider.maximumValue);
             }
         }
 
@@ -175,8 +189,10 @@ Shotcut.KeyframableFilter {
             text: qsTr('Correction at Edges')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: correctionnearedgesSlider
+
             minimumValue: 0
             maximumValue: 100
             stepSize: 0.1
@@ -184,34 +200,60 @@ Shotcut.KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(correctionnearedges, correctionnearedgesSlider.value / correctionnearedgesSlider.maximumValue, cnedgeKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: correctionnearedgesSlider.value = correctionnearedgesDefault * correctionnearedgesSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: cnedgeKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, correctionnearedges, correctionnearedgesSlider.value / correctionnearedgesSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, correctionnearedges, correctionnearedgesSlider.value / correctionnearedgesSlider.maximumValue);
             }
         }
-        
+
         Item {
             Layout.fillHeight: true
         }
+
     }
 
     Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
         target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateSimpleKeyframes() }
-        function onOutChanged() { updateSimpleKeyframes() }
-        function onAnimateInChanged() { updateSimpleKeyframes() }
-        function onAnimateOutChanged() { updateSimpleKeyframes() }
-        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
         target: producer
-        function onPositionChanged() { setControls() }
     }
+
 }

@@ -7,6 +7,7 @@ Metadata {
     mlt_service: 'mask_start'
     objectName: 'maskFromFile'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -21,4 +22,5 @@ Metadata {
             }
         ]
     }
+
 }

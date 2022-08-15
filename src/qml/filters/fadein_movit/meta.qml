@@ -10,8 +10,10 @@ Metadata {
     qml: "ui.qml"
     isFavorite: true
     allowMultiple: false
+
     keyframes {
         allowTrim: false
         allowAnimateIn: true
     }
+
 }

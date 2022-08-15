@@ -21,96 +21,118 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
-    width: 200
-    height: 50
+    //        console.log('level: ' + filter.get('level'))
+
     property bool blockUpdate: true
-    property double startValue: 1.0
-    property double middleValue: 1.0
-    property double endValue: 1.0
-
-    Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('level', 1.0)
-            filter.savePreset(preset.parameters)
-        } else {
-            middleValue = filter.getDouble('level', filter.animateIn)
-            if (filter.animateIn > 0)
-                startValue = filter.getDouble('level', 0)
-            if (filter.animateOut > 0)
-                endValue = filter.getDouble('level', filter.duration - 1)
-        }
-        setControls()
-    }
-
-    Connections {
-        target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateFilter(null) }
-        function onOutChanged() { updateFilter(null) }
-        function onAnimateInChanged() { updateFilter(null) }
-        function onAnimateOutChanged() { updateFilter(null) }
-        function onPropertyChanged(name) { setControls() }
-    }
-
-    Connections {
-        target: producer
-        function onPositionChanged() {
-            if (filter.animateIn > 0 || filter.animateOut > 0) {
-                setControls()
-            } else {
-                blockUpdate = true
-                brightnessSlider.value = filter.getDouble('level', getPosition()) * 100.0
-                blockUpdate = false
-                brightnessSlider.enabled = true
-            }
-        }
-    }
+    property double startValue: 1
+    property double middleValue: 1
+    property double endValue: 1
 
     function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0)
+        return Math.max(producer.position - (filter.in - producer.in), 0);
     }
 
     function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        brightnessSlider.value = filter.getDouble('level', position) * 100.0
-        brightnessKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('level') > 0
-        blockUpdate = false
-        brightnessSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        var position = getPosition();
+        blockUpdate = true;
+        brightnessSlider.value = filter.getDouble('level', position) * 100;
+        brightnessKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('level') > 0;
+        blockUpdate = false;
+        brightnessSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
     function updateFilter(position) {
-        if (blockUpdate) return
-        var value = brightnessSlider.value / 100.0
+        if (blockUpdate)
+            return ;
 
+        var value = brightnessSlider.value / 100;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
-                startValue = value
+                startValue = value;
             else if (position >= filter.duration - 1 && filter.animateOut > 0)
-                endValue = value
+                endValue = value;
             else
-                middleValue = value
+                middleValue = value;
         }
-
         if (filter.animateIn > 0 || filter.animateOut > 0) {
-            filter.resetProperty('level')
-            brightnessKeyframesButton.checked = false
+            filter.resetProperty('level');
+            brightnessKeyframesButton.checked = false;
             if (filter.animateIn > 0) {
-                filter.set('level', startValue, 0)
-                filter.set('level', middleValue, filter.animateIn - 1)
+                filter.set('level', startValue, 0);
+                filter.set('level', middleValue, filter.animateIn - 1);
             }
             if (filter.animateOut > 0) {
-                filter.set('level', middleValue, filter.duration - filter.animateOut)
-                filter.set('level', endValue, filter.duration - 1)
+                filter.set('level', middleValue, filter.duration - filter.animateOut);
+                filter.set('level', endValue, filter.duration - 1);
             }
         } else if (!brightnessKeyframesButton.checked) {
-            filter.resetProperty('level')
-            filter.set('level', middleValue)
+            filter.resetProperty('level');
+            filter.set('level', middleValue);
         } else if (position !== null) {
-            filter.set('level', value, position)
+            filter.set('level', value, position);
         }
-//        console.log('level: ' + filter.get('level'))
+    }
+
+    width: 200
+    height: 50
+    Component.onCompleted: {
+        if (filter.isNew) {
+            // Set default parameter values
+            filter.set('level', 1);
+            filter.savePreset(preset.parameters);
+        } else {
+            middleValue = filter.getDouble('level', filter.animateIn);
+            if (filter.animateIn > 0)
+                startValue = filter.getDouble('level', 0);
+
+            if (filter.animateOut > 0)
+                endValue = filter.getDouble('level', filter.duration - 1);
+
+        }
+        setControls();
+    }
+
+    Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateFilter(null);
+        }
+
+        function onOutChanged() {
+            updateFilter(null);
+        }
+
+        function onAnimateInChanged() {
+            updateFilter(null);
+        }
+
+        function onAnimateOutChanged() {
+            updateFilter(null);
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
+        target: filter
+    }
+
+    Connections {
+        function onPositionChanged() {
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                setControls();
+            } else {
+                blockUpdate = true;
+                brightnessSlider.value = filter.getDouble('level', getPosition()) * 100;
+                blockUpdate = false;
+                brightnessSlider.enabled = true;
+            }
+        }
+
+        target: producer
     }
 
     GridLayout {
@@ -122,20 +144,24 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             Layout.columnSpan: parent.columns - 1
             parameters: ['level']
             onBeforePresetLoaded: {
-                filter.resetProperty(parameters[0])
+                filter.resetProperty(parameters[0]);
             }
             onPresetSelected: {
-                setControls()
-                middleValue = filter.getDouble(parameters[0], filter.animateIn)
+                setControls();
+                middleValue = filter.getDouble(parameters[0], filter.animateIn);
                 if (filter.animateIn > 0)
-                    startValue = filter.getDouble(parameters[0], 0)
+                    startValue = filter.getDouble(parameters[0], 0);
+
                 if (filter.animateOut > 0)
-                    endValue = filter.getDouble(parameters[0], filter.duration - 1)
+                    endValue = filter.getDouble(parameters[0], filter.duration - 1);
+
             }
         }
 
@@ -143,29 +169,34 @@ Item {
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: brightnessSlider
-            minimumValue: 0.0
-            maximumValue: 200.0
+
+            minimumValue: 0
+            maximumValue: 200
             decimals: 1
             suffix: ' %'
             onValueChanged: updateFilter(getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: brightnessSlider.value = 100
         }
+
         Shotcut.KeyframesButton {
             id: brightnessKeyframesButton
+
             onToggled: {
-                var value = brightnessSlider.value / 100.0
+                var value = brightnessSlider.value / 100;
                 if (checked) {
-                    blockUpdate = true
-                    filter.clearSimpleAnimation('level')
-                    blockUpdate = false
-                    filter.set('level', value, getPosition())
+                    blockUpdate = true;
+                    filter.clearSimpleAnimation('level');
+                    blockUpdate = false;
+                    filter.set('level', value, getPosition());
                 } else {
-                    filter.resetProperty('level')
-                    filter.set('level', value)
+                    filter.resetProperty('level');
+                    filter.set('level', value);
                 }
             }
         }
@@ -173,5 +204,7 @@ Item {
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: GPL-2.0-or-later */
+// SPDX-License-Identifier: GPL-2.0-or-later
 import QtQuick 2.0
 import org.shotcut.qml 1.0
 
@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "frei0r.bigsh0t_hemi_to_eq"
     objectName: "bigsh0t_hemi_to_eq"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -106,4 +107,5 @@ Metadata {
             }
         ]
     }
+
 }

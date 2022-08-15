@@ -25,5 +25,4 @@ Metadata {
     mlt_service: 'frei0r.alpha0ps'
     objectName: 'alphaChannelView'
     qml: 'ui.qml'
-    
 }

@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "movit.saturation"
     needsGPU: true
     qml: "ui_movit.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -21,4 +22,5 @@ Metadata {
             }
         ]
     }
+
 }

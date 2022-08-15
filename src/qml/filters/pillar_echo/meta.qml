@@ -8,6 +8,7 @@ Metadata {
     mlt_service: 'pillar_echo'
     qml: 'ui.qml'
     vui: 'vui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -20,4 +21,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -21,6 +21,6 @@ Item {
     width: 10
     height: 10
     Component.onCompleted: {
-        filter.set('transition.threads', 0)
+        filter.set('transition.threads', 0);
     }
 }

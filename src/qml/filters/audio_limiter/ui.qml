@@ -21,33 +21,34 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
+    function setControls() {
+        sliderInput.value = filter.getDouble('0');
+        sliderLimit.value = filter.getDouble('1');
+        sliderRelease.value = filter.getDouble('2');
+    }
+
     width: 350
     height: 125
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            filter.set('0', 0)
-            filter.set('1', 0)
-            filter.set('2', .51)
-            filter.savePreset(preset.parameters)
+            filter.set('0', 0);
+            filter.set('1', 0);
+            filter.set('2', 0.51);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-        timer.start()
-    }
-
-    function setControls() {
-        sliderInput.value = filter.getDouble('0')
-        sliderLimit.value = filter.getDouble('1')
-        sliderRelease.value = filter.getDouble('2')
+        setControls();
+        timer.start();
     }
 
     Timer {
         id: timer
+
         interval: 100
         running: false
         repeat: true
         onTriggered: {
-            grGauge.value = filter.getDouble('3[0]') * -1.0
+            grGauge.value = filter.getDouble('3[0]') * -1;
         }
     }
 
@@ -60,8 +61,10 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: ['0', '1', '2']
             Layout.columnSpan: 2
             onPresetSelected: setControls()
@@ -70,19 +73,26 @@ Item {
         Label {
             text: qsTr('Input gain')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {text: qsTr('Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.')}
+
+            Shotcut.HoverTip {
+                text: qsTr('Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
             id: sliderInput
+
             minimumValue: -20
             maximumValue: 20
             suffix: ' dB'
             decimals: 1
             value: filter.getDouble('0')
             onValueChanged: {
-                filter.set('0', value)
+                filter.set('0', value);
             }
         }
+
         Shotcut.UndoButton {
             onClicked: sliderInput.value = 0
         }
@@ -90,19 +100,26 @@ Item {
         Label {
             text: qsTr('Limit')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {text: qsTr('The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.')}
+
+            Shotcut.HoverTip {
+                text: qsTr('The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
             id: sliderLimit
+
             minimumValue: -20
             maximumValue: 0
             suffix: ' dB'
             decimals: 1
             value: filter.getDouble('1')
             onValueChanged: {
-                filter.set('1', value)
+                filter.set('1', value);
             }
         }
+
         Shotcut.UndoButton {
             onClicked: sliderLimit.value = 0
         }
@@ -110,21 +127,28 @@ Item {
         Label {
             text: qsTr('Release')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {text: qsTr('The time taken for the limiter\'s attenuation to return to 0 dB\'s.')}
+
+            Shotcut.HoverTip {
+                text: qsTr('The time taken for the limiter\'s attenuation to return to 0 dB\'s.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
             id: sliderRelease
-            minimumValue: .01
+
+            minimumValue: 0.01
             maximumValue: 2
             suffix: ' s'
             decimals: 2
             value: filter.getDouble('2')
             onValueChanged: {
-                filter.set('2', value)
+                filter.set('2', value);
             }
         }
+
         Shotcut.UndoButton {
-            onClicked: sliderRelease.value = .51
+            onClicked: sliderRelease.value = 0.51
         }
 
         Rectangle {
@@ -132,6 +156,7 @@ Item {
             Layout.fillWidth: true
             Layout.minimumHeight: 12
             color: 'transparent'
+
             Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 width: parent.width
@@ -139,17 +164,24 @@ Item {
                 radius: 2
                 color: activePalette.text
             }
+
         }
 
         Label {
             text: qsTr('Gain Reduction')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            Shotcut.HoverTip {text: qsTr('Status indicator showing the gain reduction applied by the compressor.')}
+
+            Shotcut.HoverTip {
+                text: qsTr('Status indicator showing the gain reduction applied by the compressor.')
+            }
+
         }
+
         Shotcut.Gauge {
+            id: grGauge
+
             Layout.columnSpan: 2
             Layout.fillWidth: true
-            id: grGauge
             from: -24
             value: 0
             to: 0
@@ -158,7 +190,9 @@ Item {
         }
 
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
+
     }
+
 }

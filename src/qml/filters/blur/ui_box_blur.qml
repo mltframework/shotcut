@@ -21,45 +21,44 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Shotcut.KeyframableFilter {
+    function getPosition() {
+        return Math.max(producer.position - (filter.in - producer.in), 0);
+    }
+
+    function setControls() {
+        var position = getPosition();
+        blockUpdate = true;
+        wslider.value = filter.getDouble('hradius', position);
+        widthKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('hradius') > 0;
+        hslider.value = filter.getDouble('vradius', position);
+        heightKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('vradius') > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
+    }
+
+    function enableControls(enabled) {
+        wslider.enabled = hslider.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        updateFilter('hradius', wslider.value, widthKeyframesButton, null);
+        updateFilter('vradius', hslider.value, heightKeyframesButton, null);
+    }
+
     width: 200
     height: 50
     keyframableParameters: ['hradius', 'vradius']
     startValues: [0, 0]
     middleValues: [5, 5]
     endValues: [0, 0]
-
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            filter.set('hradius', 5)
-            filter.set('vradius', 5)
-            filter.savePreset(preset.parameters)
+            filter.set('hradius', 5);
+            filter.set('vradius', 5);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0)
-    }
-    
-    function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        wslider.value = filter.getDouble('hradius', position)
-        widthKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('hradius') > 0
-        hslider.value = filter.getDouble('vradius', position)
-        heightKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('vradius') > 0
-        blockUpdate = false
-        enableControls(isSimpleKeyframesActive())
-    }
-
-    function enableControls(enabled) {
-        wslider.enabled = hslider.enabled = enabled
-    }
-
-    function updateSimpleKeyframes() {
-        updateFilter('hradius', wslider.value, widthKeyframesButton, null)
-        updateFilter('vradius', hslider.value, heightKeyframesButton, null)
+        setControls();
     }
 
     GridLayout {
@@ -71,17 +70,19 @@ Shotcut.KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             Layout.columnSpan: parent.columns - 1
             parameters: ['hradius', 'vradius']
             onBeforePresetLoaded: {
-                filter.resetProperty('hradius')
-                filter.resetProperty('vradius')
+                filter.resetProperty('hradius');
+                filter.resetProperty('vradius');
             }
             onPresetSelected: {
-                setControls()
-                initializeSimpleKeyframes()
+                setControls();
+                initializeSimpleKeyframes();
             }
         }
 
@@ -89,23 +90,28 @@ Shotcut.KeyframableFilter {
             text: qsTr('Width')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: wslider
+
             minimumValue: 0
             maximumValue: 100
-            stepSize: .1
+            stepSize: 0.1
             decimals: 1
             suffix: ' %'
             onValueChanged: updateFilter('hradius', wslider.value, widthKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: wslider.value = 5
         }
+
         Shotcut.KeyframesButton {
             id: widthKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, 'hradius', wslider.value)
+                enableControls(true);
+                toggleKeyframes(checked, 'hradius', wslider.value);
             }
         }
 
@@ -113,43 +119,71 @@ Shotcut.KeyframableFilter {
             text: qsTr('Height')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: hslider
+
             minimumValue: 0
             maximumValue: 100
-            stepSize: .1
+            stepSize: 0.1
             decimals: 1
             suffix: ' %'
             onValueChanged: updateFilter('vradius', hslider.value, heightKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: hslider.value = 5
         }
+
         Shotcut.KeyframesButton {
             id: heightKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, 'vradius', hslider.value)
+                enableControls(true);
+                toggleKeyframes(checked, 'vradius', hslider.value);
             }
         }
 
         Item {
             Layout.fillHeight: true
         }
+
     }
 
     Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
         target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateSimpleKeyframes() }
-        function onOutChanged() { updateSimpleKeyframes() }
-        function onAnimateInChanged() { updateSimpleKeyframes() }
-        function onAnimateOutChanged() { updateSimpleKeyframes() }
-        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
         target: producer
-        function onPositionChanged() { setControls() }
     }
+
 }

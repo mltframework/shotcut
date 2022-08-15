@@ -7,6 +7,7 @@ Metadata {
     name: qsTr("Noise Gate")
     mlt_service: 'ladspa.1410'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -63,4 +64,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -23,6 +23,7 @@ Metadata {
     name: qsTr("Mosaic")
     mlt_service: "frei0r.pixeliz0r"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -44,4 +45,5 @@ Metadata {
             }
         ]
     }
+
 }

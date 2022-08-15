@@ -24,6 +24,7 @@ Metadata {
     objectName: 'blur_gaussian_av'
     mlt_service: "avfilter.gblur"
     qml: "ui_av.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -39,4 +40,5 @@ Metadata {
             }
         ]
     }
+
 }

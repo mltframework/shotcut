@@ -23,47 +23,100 @@ import org.shotcut.qml 1.0 as Shotcut
 
 Rectangle {
     id: root
+
     property int selectedIndex: Shotcut.Filter.NoCurrentFilter
+
     signal currentFilterRequested(int attachedIndex)
-    
+
     function clearCurrentFilter() {
         if (filterConfig.item) {
-            filterConfig.item.width = 1
-            filterConfig.item.height = 1
+            filterConfig.item.width = 1;
+            filterConfig.item.height = 1;
         }
-        filterConfig.source = ""
+        filterConfig.source = "";
     }
-    
+
     function setCurrentFilter(index) {
-        clearCurrentFilter()
-        attachedFilters.setCurrentFilter(index)
-        selectedIndex = index
-        filterConfig.source = metadata ? metadata.qmlFilePath : ""
+        clearCurrentFilter();
+        attachedFilters.setCurrentFilter(index);
+        selectedIndex = index;
+        filterConfig.source = metadata ? metadata.qmlFilePath : "";
     }
 
     function openFilterMenu() {
         if (attachedfiltersmodel.isProducerSelected)
-            filterMenu.open()
+            filterMenu.open();
+
+    }
+
+    function _setLayout() {
+        if (height > width - attachedFilters.minimumWidth)
+            root.state = "portrait";
+        else
+            root.state = "landscape";
     }
 
     color: activePalette.window
     width: 400
-
     onWidthChanged: _setLayout()
     onHeightChanged: _setLayout()
-    
-    function _setLayout() {
-        if (height > width - attachedFilters.minimumWidth) {
-            root.state = "portrait"
-        } else {
-            root.state = "landscape"
+    states: [
+        State {
+            name: "landscape"
+
+            AnchorChanges {
+                target: filterConfigScrollView
+
+                anchors {
+                    top: titleBackground.bottom
+                    bottom: root.bottom
+                    left: attachedContainer.right
+                    right: root.right
+                }
+
+            }
+
+            PropertyChanges {
+                target: attachedContainer
+                width: attachedFilters.minimumWidth
+                height: root.height - titleBackground.height - titleBackground.anchors.topMargin - titleBackground.anchors.bottomMargin - attachedContainer.anchors.topMargin - attachedContainer.anchors.bottomMargin
+            }
+
+        },
+        State {
+            name: "portrait"
+
+            AnchorChanges {
+                target: filterConfigScrollView
+
+                anchors {
+                    top: attachedContainer.bottom
+                    bottom: root.bottom
+                    left: root.left
+                    right: root.right
+                }
+
+            }
+
+            PropertyChanges {
+                target: attachedContainer
+                width: titleBackground.width
+                height: 165
+            }
+
         }
+    ]
+
+    SystemPalette {
+        id: activePalette
     }
-    
-    SystemPalette { id: activePalette }
-    
+
     Rectangle {
         id: titleBackground
+
+        color: activePalette.highlight
+        visible: attachedfiltersmodel.producerTitle != ""
+
         anchors {
             top: parent.top
             left: parent.left
@@ -73,12 +126,18 @@ Rectangle {
             leftMargin: 10
             rightMargin: 10
         }
-        color: activePalette.highlight
-        visible: attachedfiltersmodel.producerTitle != ""
+
     }
 
     Label {
         id: titleLabel
+
+        text: attachedfiltersmodel.producerTitle
+        elide: Text.ElideLeft
+        color: activePalette.highlightedText
+        font.bold: true
+        horizontalAlignment: Text.AlignHCenter
+
         anchors {
             top: parent.top
             left: parent.left
@@ -87,17 +146,14 @@ Rectangle {
             leftMargin: 10
             rightMargin: 10
         }
-        text: attachedfiltersmodel.producerTitle
-        elide: Text.ElideLeft
-        color: activePalette.highlightedText
-        font.bold: true
-        horizontalAlignment: Text.AlignHCenter
-    }
 
+    }
 
     GridLayout {
         id: attachedContainer
+
         columns: children.length - 1
+
         anchors {
             top: titleBackground.bottom
             left: parent.left
@@ -109,130 +165,206 @@ Rectangle {
 
         AttachedFilters {
             id: attachedFilters
-            property int minimumWidth: application.OS === 'Windows'? 350 : 250
+
+            property int minimumWidth: application.OS === 'Windows' ? 350 : 250
+
             Layout.columnSpan: parent.columns
             Layout.fillWidth: true
             Layout.fillHeight: true
             onFilterClicked: {
-                root.currentFilterRequested(index)
+                root.currentFilterRequested(index);
             }
+
             Label {
                 anchors.centerIn: parent
                 text: qsTr("Nothing selected")
                 color: activePalette.text
                 visible: !attachedfiltersmodel.isProducerSelected
             }
+
         }
 
         Shotcut.Button {
             id: addButton
+
             implicitWidth: height
             icon.name: 'list-add'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
             enabled: attachedfiltersmodel.isProducerSelected
-            opacity: enabled ? 1.0 : 0.5
-            Shotcut.HoverTip { text: qsTr('Add a filter') }
+            opacity: enabled ? 1 : 0.5
             onClicked: {
-                if (application.confirmOutputFilter()) {
-                    filterMenu.open()
-                }
+                if (application.confirmOutputFilter())
+                    filterMenu.open();
+
             }
+
+            Shotcut.HoverTip {
+                text: qsTr('Add a filter')
+            }
+
         }
+
         Shotcut.Button {
             id: removeButton
+
             implicitWidth: height
             icon.name: 'list-remove'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
             enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
-            opacity: enabled ? 1.0 : 0.5
-            Shotcut.HoverTip { text: qsTr('Remove selected filter') }
+            opacity: enabled ? 1 : 0.5
             onClicked: {
-                attachedfiltersmodel.remove(selectedIndex)
+                attachedfiltersmodel.remove(selectedIndex);
             }
+
+            Shotcut.HoverTip {
+                text: qsTr('Remove selected filter')
+            }
+
         }
-        Shotcut.Button { // separator
+        // separator
+
+        Shotcut.Button {
             enabled: false
             implicitWidth: 1
             implicitHeight: 20
         }
+
         Shotcut.Button {
             id: copyButton
+
             implicitWidth: height
             icon.name: 'edit-copy'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
             enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
-            opacity: enabled ? 1.0 : 0.5
-            Shotcut.HoverTip { text: qsTr('Copy the filters') }
+            opacity: enabled ? 1 : 0.5
             onClicked: application.copyFilters()
+
+            Shotcut.HoverTip {
+                text: qsTr('Copy the filters')
+            }
+
         }
+
         Shotcut.Button {
             id: pasteButton
+
             implicitWidth: height
             enabled: attachedfiltersmodel.isProducerSelected
-            opacity: enabled ? 1.0 : 0.5
+            opacity: enabled ? 1 : 0.5
             icon.name: 'edit-paste'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
-            Shotcut.HoverTip { text: qsTr('Paste filters') }
             onClicked: application.pasteFilters()
+
+            Shotcut.HoverTip {
+                text: qsTr('Paste filters')
+            }
+
         }
-        Shotcut.Button { // separator
+        // separator
+
+        Shotcut.Button {
             enabled: false
             implicitWidth: 1
             implicitHeight: 20
         }
+
         Shotcut.Button {
             id: moveUpButton
+
             implicitWidth: height
             enabled: selectedIndex > 0
-            opacity: enabled ? 1.0 : 0.5
+            opacity: enabled ? 1 : 0.5
             icon.name: 'lift'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/lift.png'
-            Shotcut.HoverTip { text: qsTr('Move filter up') }
             onClicked: attachedfiltersmodel.move(selectedIndex, --selectedIndex)
+
+            Shotcut.HoverTip {
+                text: qsTr('Move filter up')
+            }
+
         }
+
         Shotcut.Button {
             id: moveDownButton
+
             implicitWidth: height
             enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter && selectedIndex + 1 < attachedfiltersmodel.rowCount()
-            opacity: enabled ? 1.0 : 0.5
+            opacity: enabled ? 1 : 0.5
             icon.name: 'overwrite'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
-            Shotcut.HoverTip { text: qsTr('Move filter down') }
             onClicked: attachedfiltersmodel.move(selectedIndex, ++selectedIndex)
+
+            Shotcut.HoverTip {
+                text: qsTr('Move filter down')
+            }
+
         }
-        Shotcut.Button { // separator
+        // separator
+
+        Shotcut.Button {
             enabled: false
             implicitWidth: 1
             implicitHeight: 20
         }
+
         Shotcut.Button {
             id: deselectButton
+
             implicitWidth: height
             icon.name: 'window-close'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
             enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
-            opacity: enabled ? 1.0 : 0.5
-            Shotcut.HoverTip { text: qsTr('Deselect the filter') }
+            opacity: enabled ? 1 : 0.5
             onClicked: {
-                clearCurrentFilter()
-                attachedFilters.setCurrentFilter(Shotcut.Filter.DeselectCurrentFilter)
-                selectedIndex = Shotcut.Filter.NoCurrentFilter
-                filter.deselect()
+                clearCurrentFilter();
+                attachedFilters.setCurrentFilter(Shotcut.Filter.DeselectCurrentFilter);
+                selectedIndex = Shotcut.Filter.NoCurrentFilter;
+                filter.deselect();
             }
+
+            Shotcut.HoverTip {
+                text: qsTr('Deselect the filter')
+            }
+
         }
+
         Item {
             Layout.fillWidth: true
         }
+
     }
 
     Flickable {
+        // scroll bar
+
         id: filterConfigScrollView
+
+        function expandWidth() {
+            if (filterConfig.item)
+                filterConfig.item.width = Math.max(filterConfig.minimumWidth, filterConfigScrollView.width - 20);
+
+        }
+
         clip: true
         interactive: false
         anchors.bottomMargin: 16
         anchors.rightMargin: 16
         contentWidth: filterConfig.item ? filterConfig.item.width + 16 : 0
         contentHeight: filterConfig.item ? filterConfig.item.height + 16 : 0
+        onWidthChanged: expandWidth()
+
+        Loader {
+            id: filterConfig
+
+            property int minimumWidth: 0
+
+            enabled: !filterMenu.visible
+            onLoaded: {
+                minimumWidth = item.width;
+                filterConfigScrollView.expandWidth();
+            }
+        }
+
         ScrollBar.horizontal: ScrollBar {
             height: 16
             policy: ScrollBar.AlwaysOn
@@ -241,8 +373,13 @@ Rectangle {
             anchors.top: filterConfigScrollView.bottom
             anchors.left: filterConfigScrollView.left
             anchors.right: filterConfigScrollView.right
-            background: Rectangle { color: parent.palette.alternateBase }
+
+            background: Rectangle {
+                color: parent.palette.alternateBase
+            }
+
         }
+
         ScrollBar.vertical: ScrollBar {
             width: 16
             policy: ScrollBar.AlwaysOn
@@ -251,30 +388,23 @@ Rectangle {
             anchors.top: filterConfigScrollView.top
             anchors.left: filterConfigScrollView.right
             anchors.bottom: filterConfigScrollView.bottom
-            background: Rectangle { color: parent.palette.alternateBase }
+
+            background: Rectangle {
+                color: parent.palette.alternateBase
+            }
+
         }
 
-        function expandWidth() {
-            if (filterConfig.item) {
-                filterConfig.item.width =
-                    Math.max(filterConfig.minimumWidth,
-                             filterConfigScrollView.width - 20 /* scroll bar */)
-            }
-        }
-        onWidthChanged: expandWidth()
-        Loader {
-            id: filterConfig
-            enabled: !filterMenu.visible
-            property int minimumWidth: 0
-            onLoaded: {
-                minimumWidth = item.width
-                filterConfigScrollView.expandWidth()
-            }
-        }
     }
-        
+
     FilterMenu {
         id: filterMenu
+
+        z: 1
+        onFilterSelected: {
+            attachedfiltersmodel.add(metadatamodel.get(index));
+        }
+
         anchors {
             top: titleBackground.bottom
             left: parent.left
@@ -282,55 +412,15 @@ Rectangle {
             bottom: parent.bottom
             topMargin: attachedContainer.anchors.topMargin
         }
-        z: 1
-        onFilterSelected: {
-            attachedfiltersmodel.add(metadatamodel.get(index))
-        }
-    }
 
-    states: [
-        State {
-            name: "landscape"
-            AnchorChanges {
-                target: filterConfigScrollView
-                anchors {
-                    top: titleBackground.bottom
-                    bottom: root.bottom
-                    left: attachedContainer.right
-                    right: root.right
-                }
-            }
-            PropertyChanges {
-                target: attachedContainer
-                width: attachedFilters.minimumWidth
-                height: root.height -
-                    titleBackground.height - titleBackground.anchors.topMargin - titleBackground.anchors.bottomMargin -
-                    attachedContainer.anchors.topMargin - attachedContainer.anchors.bottomMargin
-            }
-        },
-        State {
-            name: "portrait"
-            AnchorChanges {
-                target: filterConfigScrollView
-                anchors {
-                    top: attachedContainer.bottom
-                    bottom: root.bottom
-                    left: root.left
-                    right: root.right
-                }
-            }
-            PropertyChanges {
-                target: attachedContainer
-                width: titleBackground.width
-                height: 165
-            }
-        }
-    ]
+    }
 
     Connections {
-        target: attachedfiltersmodel
         function onIsProducerSelectedChanged() {
-            filterMenu.close()
+            filterMenu.close();
         }
+
+        target: attachedfiltersmodel
     }
+
 }

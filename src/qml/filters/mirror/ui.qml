@@ -18,14 +18,14 @@
 import QtQuick 2.1
 
 Item {
+    // Movit filter
+
     width: 350
     height: 10
-
     Component.onCompleted: {
-        if (filter.get("mlt_service").indexOf("movit.") == 0 ) {
-            // Movit filter
+        if (filter.get("mlt_service").indexOf("movit.") == 0) {
         } else {
-            filter.set('mirror', 'flip')
+            filter.set('mirror', 'flip');
         }
     }
 }

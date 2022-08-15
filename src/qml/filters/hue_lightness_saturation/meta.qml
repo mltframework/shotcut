@@ -23,6 +23,7 @@ Metadata {
     name: qsTr("Hue/Lightness/Saturation")
     mlt_service: 'avfilter.hue'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -51,4 +52,5 @@ Metadata {
             }
         ]
     }
+
 }

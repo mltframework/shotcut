@@ -7,6 +7,7 @@ Metadata {
     name: qsTr("High Pass")
     mlt_service: 'ladspa.1890'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -36,4 +37,5 @@ Metadata {
             }
         ]
     }
+
 }

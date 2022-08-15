@@ -6,6 +6,7 @@ Metadata {
     name: qsTr('Levels', 'Levels video filter')
     mlt_service: 'frei0r.levels'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -34,4 +35,5 @@ Metadata {
             }
         ]
     }
+
 }

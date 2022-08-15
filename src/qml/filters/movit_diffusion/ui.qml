@@ -34,8 +34,10 @@ Item {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: radiusSlider
+
             minimumValue: 0
             maximumValue: 2000
             ratio: 100
@@ -44,6 +46,7 @@ Item {
             value: filter.getDouble('radius') * 100
             onValueChanged: filter.set('radius', value / 100)
         }
+
         Shotcut.UndoButton {
             onClicked: radiusSlider.value = 300
         }
@@ -52,20 +55,25 @@ Item {
             text: qsTr('Blurriness')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: mixSlider
+
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             value: filter.getDouble('mix') * 100
             onValueChanged: filter.set('mix', value / 100)
         }
+
         Shotcut.UndoButton {
             onClicked: mixSlider.value = 30
         }
 
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
+
     }
+
 }

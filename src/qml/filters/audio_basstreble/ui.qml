@@ -22,31 +22,34 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     id: background
+
+    function setControls() {
+        sliderLow.value = filter.getDouble('0');
+        sliderMid.value = filter.getDouble('1');
+        sliderHigh.value = filter.getDouble('2');
+    }
+
     width: 350
     height: 200
-
-    SystemPalette { id: activePalette }
-
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            filter.set('0', 0)
-            filter.set('1', 0)
-            filter.set('2', 0)
-            filter.set('wetness', 1.0)
-            filter.savePreset(preset.parameters)
+            filter.set('0', 0);
+            filter.set('1', 0);
+            filter.set('2', 0);
+            filter.set('wetness', 1);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
+        setControls();
     }
 
-    function setControls() {
-        sliderLow.value = filter.getDouble('0')
-        sliderMid.value = filter.getDouble('1')
-        sliderHigh.value = filter.getDouble('2')
+    SystemPalette {
+        id: activePalette
     }
 
     Rectangle {
         id: topLine
+
         height: 1
         width: lowColumn.width * 3 + 20
         color: activePalette.text
@@ -64,11 +67,13 @@ Item {
     Label {
         text: '+12 dB'
         font.pointSize: bassLabel.font.pointSize - 1
+
         anchors {
             right: topLine.left
             rightMargin: 8
             verticalCenter: topLine.verticalCenter
         }
+
     }
 
     Rectangle {
@@ -88,6 +93,7 @@ Item {
 
     Rectangle {
         id: zeroLine
+
         height: 2
         width: lowColumn.width * 3 + gridLayout.anchors.margins * 2
         color: activePalette.text
@@ -105,11 +111,13 @@ Item {
     Label {
         text: '0 dB'
         font.pointSize: bassLabel.font.pointSize - 1
+
         anchors {
             right: zeroLine.left
             rightMargin: 8
             verticalCenter: zeroLine.verticalCenter
         }
+
     }
 
     Rectangle {
@@ -129,6 +137,7 @@ Item {
 
     Rectangle {
         id: bottomLine
+
         height: 1
         width: lowColumn.width * 3 + gridLayout.anchors.margins * 2
         color: activePalette.text
@@ -146,33 +155,42 @@ Item {
     Label {
         text: '-12 dB'
         font.pointSize: bassLabel.font.pointSize - 1
+
         anchors {
             right: bottomLine.left
             rightMargin: 8
             verticalCenter: bottomLine.verticalCenter
         }
+
     }
 
     GridLayout {
         id: gridLayout
+
+        property double leftMargin: (width - lowColumn.width * 3 - columnSpacing * 2) / 2
+
         anchors.fill: parent
         anchors.margins: 8
         columns: 5
-        property double leftMargin: (width - lowColumn.width * 3 - columnSpacing * 2) / 2
 
         RowLayout {
             id: presetLayout
+
             spacing: 8
             Layout.columnSpan: parent.columns
+
             Label {
                 text: qsTr('Preset')
                 Layout.alignment: Qt.AlignRight
             }
+
             Shotcut.Preset {
                 id: preset
+
                 parameters: ['0', '1', '2']
                 onPresetSelected: setControls()
             }
+
         }
 
         Item {
@@ -181,11 +199,13 @@ Item {
 
         ColumnLayout {
             id: lowColumn
+
             Layout.minimumWidth: 80
             Layout.alignment: Qt.AlignHCenter
 
             Slider {
                 id: sliderLow
+
                 Layout.alignment: Qt.AlignHCenter
                 Layout.fillHeight: true
                 orientation: Qt.Vertical
@@ -193,14 +213,25 @@ Item {
                 to: 12
                 value: filter.getDouble('0')
                 onValueChanged: filter.set('0', value)
-                Shotcut.HoverTip { text: '%1 dB'.arg(Math.round(parent.value * 10) / 10) }
+
+                Shotcut.HoverTip {
+                    text: '%1 dB'.arg(Math.round(parent.value * 10) / 10)
+                }
+
             }
+
             Label {
                 id: bassLabel
+
                 text: qsTr('Bass')
                 Layout.alignment: Qt.AlignHCenter
-                Shotcut.HoverTip { text: '100 Hz' }
+
+                Shotcut.HoverTip {
+                    text: '100 Hz'
+                }
+
             }
+
         }
 
         ColumnLayout {
@@ -209,6 +240,7 @@ Item {
 
             Slider {
                 id: sliderMid
+
                 Layout.alignment: Qt.AlignHCenter
                 Layout.fillHeight: true
                 orientation: Qt.Vertical
@@ -216,13 +248,23 @@ Item {
                 to: 12
                 value: filter.getDouble('1')
                 onValueChanged: filter.set('1', value)
-                Shotcut.HoverTip { text: '%1 dB'.arg(Math.round(parent.value * 10) / 10) }
+
+                Shotcut.HoverTip {
+                    text: '%1 dB'.arg(Math.round(parent.value * 10) / 10)
+                }
+
             }
+
             Label {
                 text: qsTr('Middle', 'Bass & Treble audio filter')
                 Layout.alignment: Qt.AlignHCenter
-                Shotcut.HoverTip { text: '1000 Hz' }
+
+                Shotcut.HoverTip {
+                    text: '1000 Hz'
+                }
+
             }
+
         }
 
         ColumnLayout {
@@ -231,6 +273,7 @@ Item {
 
             Slider {
                 id: sliderHigh
+
                 Layout.alignment: Qt.AlignHCenter
                 Layout.fillHeight: true
                 orientation: Qt.Vertical
@@ -238,17 +281,29 @@ Item {
                 to: 12
                 value: filter.getDouble('2')
                 onValueChanged: filter.set('2', value)
-                Shotcut.HoverTip { text: '%1 dB'.arg(Math.round(parent.value * 10) / 10) }
+
+                Shotcut.HoverTip {
+                    text: '%1 dB'.arg(Math.round(parent.value * 10) / 10)
+                }
+
             }
+
             Label {
                 text: qsTr('Treble')
                 Layout.alignment: Qt.AlignHCenter
-                Shotcut.HoverTip { text: '10000 Hz' }
+
+                Shotcut.HoverTip {
+                    text: '10000 Hz'
+                }
+
             }
+
         }
 
         Item {
             Layout.fillWidth: true
         }
+
     }
+
 }

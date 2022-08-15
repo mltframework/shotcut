@@ -25,48 +25,46 @@ Shotcut.KeyframableFilter {
     property double lightnessDefault: 0
     property double saturationDefault: 1
 
+    function setControls() {
+        var position = getPosition();
+        blockUpdate = true;
+        hueDegreeSlider.value = filter.getDouble('av.h', position);
+        hueKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.h') > 0;
+        lightnessSlider.value = filter.getDouble('av.b', position) * 100 / 10 + 100;
+        lightnessKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.b') > 0;
+        saturationSlider.value = filter.getDouble('av.s', position) * 100;
+        saturationKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.s') > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
+    }
+
+    function enableControls(enabled) {
+        hueDegreeSlider.enabled = enabled;
+        lightnessSlider.enabled = enabled;
+        saturationSlider.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        setControls();
+        updateFilter('av.h', hueDegreeSlider.value, hueKeyframesButton, null);
+        updateFilter('av.b', (lightnessSlider.value - 100) * 10 / 100, lightnessKeyframesButton, null);
+        updateFilter('av.s', saturationSlider.value / 100, saturationKeyframesButton, null);
+    }
 
     keyframableParameters: ['av.h', 'av.b', 'av.s']
     startValues: [hueDegreeDefault, lightnessDefault, saturationDefault]
     middleValues: [hueDegreeDefault, lightnessDefault, saturationDefault]
     endValues: [hueDegreeDefault, lightnessDefault, saturationDefault]
-
     width: 200
     height: 125
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set('av.h', hueDegreeDefault)
-            filter.set('av.b', lightnessDefault)
-            filter.set('av.s', saturationDefault)
-            filter.savePreset(keyframableParameters)
+            filter.set('av.h', hueDegreeDefault);
+            filter.set('av.b', lightnessDefault);
+            filter.set('av.s', saturationDefault);
+            filter.savePreset(keyframableParameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        hueDegreeSlider.value = filter.getDouble('av.h', position)
-        hueKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.h') > 0
-        lightnessSlider.value = filter.getDouble('av.b', position) * 100 / 10 + 100
-        lightnessKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.b') > 0
-        saturationSlider.value = filter.getDouble('av.s', position) * 100
-        saturationKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.s') > 0
-        blockUpdate = false
-        enableControls(isSimpleKeyframesActive())
-    }
-
-    function enableControls(enabled) {
-        hueDegreeSlider.enabled = enabled
-        lightnessSlider.enabled = enabled
-        saturationSlider.enabled = enabled
-    }
-
-    function updateSimpleKeyframes() {
-        setControls()
-        updateFilter('av.h', hueDegreeSlider.value, hueKeyframesButton, null)
-        updateFilter('av.b', (lightnessSlider.value - 100) * 10 / 100, lightnessKeyframesButton, null)
-        updateFilter('av.s', saturationSlider.value / 100, saturationKeyframesButton, null)
+        setControls();
     }
 
     GridLayout {
@@ -78,14 +76,16 @@ Shotcut.KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: presetItem
+
             Layout.columnSpan: 3
             parameters: keyframableParameters
             onBeforePresetLoaded: resetSimpleKeyframes()
             onPresetSelected: {
-                setControls()
-                initializeSimpleKeyframes()
+                setControls();
+                initializeSimpleKeyframes();
             }
         }
 
@@ -93,21 +93,26 @@ Shotcut.KeyframableFilter {
             text: qsTr('Hue')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: hueDegreeSlider
+
             minimumValue: -360
             maximumValue: 360
             suffix: qsTr(' °', 'degrees')
             onValueChanged: updateFilter('av.h', value, hueKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: hueDegreeSlider.value = 0
         }
+
         Shotcut.KeyframesButton {
             id: hueKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, 'av.h', hueDegreeSlider.value)
+                enableControls(true);
+                toggleKeyframes(checked, 'av.h', hueDegreeSlider.value);
             }
         }
 
@@ -115,21 +120,26 @@ Shotcut.KeyframableFilter {
             text: qsTr('Lightness')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: lightnessSlider
+
             minimumValue: 0
             maximumValue: 200
             suffix: ' %'
             onValueChanged: updateFilter('av.b', (value - 100) * 10 / 100, lightnessKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: lightnessSlider.value = 100
         }
+
         Shotcut.KeyframesButton {
             id: lightnessKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, 'av.b', (lightnessSlider.value - 100) * 10 / 100)
+                enableControls(true);
+                toggleKeyframes(checked, 'av.b', (lightnessSlider.value - 100) * 10 / 100);
             }
         }
 
@@ -137,39 +147,69 @@ Shotcut.KeyframableFilter {
             text: qsTr('Saturation')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: saturationSlider
+
             minimumValue: 0
             maximumValue: 500
             suffix: ' %'
-            onValueChanged: updateFilter('av.s', value / 100.0, saturationKeyframesButton, getPosition())
+            onValueChanged: updateFilter('av.s', value / 100, saturationKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: saturationSlider.value = 100
         }
+
         Shotcut.KeyframesButton {
             id: saturationKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, 'av.s', saturationSlider.value / 100)
+                enableControls(true);
+                toggleKeyframes(checked, 'av.s', saturationSlider.value / 100);
             }
         }
 
-        Item { Layout.fillHeight: true }
+        Item {
+            Layout.fillHeight: true
+        }
+
     }
 
     Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
         target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateSimpleKeyframes() }
-        function onOutChanged() { updateSimpleKeyframes() }
-        function onAnimateInChanged() { updateSimpleKeyframes() }
-        function onAnimateOutChanged() { updateSimpleKeyframes() }
-        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
         target: producer
-        function onPositionChanged() { setControls() }
     }
+
 }

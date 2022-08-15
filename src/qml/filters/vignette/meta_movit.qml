@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "movit.vignette"
     needsGPU: true
     qml: "ui_movit.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -28,4 +29,5 @@ Metadata {
             }
         ]
     }
+
 }

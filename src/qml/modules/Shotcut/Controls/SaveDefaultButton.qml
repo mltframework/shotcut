@@ -21,7 +21,11 @@ import Shotcut.Controls 1.0 as Shotcut
 Shotcut.Button {
     icon.name: 'document-save'
     icon.source: 'qrc:///icons/oxygen/32x32/actions/document-save.png'
-    Shotcut.HoverTip { text: qsTr('Set as default') }
     implicitWidth: 20
     implicitHeight: 20
+
+    Shotcut.HoverTip {
+        text: qsTr('Set as default')
+    }
+
 }

@@ -9,7 +9,9 @@ Metadata {
     qml: "ui.qml"
     isClipOnly: true
     allowMultiple: false
+
     keyframes {
         allowTrim: false
     }
+
 }

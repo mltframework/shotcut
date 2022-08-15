@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "frei0r.saturat0r"
     qml: "ui_frei0r.qml"
     gpuAlt: "movit.saturation"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -21,4 +22,5 @@ Metadata {
             }
         ]
     }
+
 }

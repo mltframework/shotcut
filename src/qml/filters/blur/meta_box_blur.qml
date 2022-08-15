@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "box_blur"
     qml: "ui_box_blur.qml"
     gpuAlt: "movit.blur"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -28,4 +29,5 @@ Metadata {
             }
         ]
     }
+
 }

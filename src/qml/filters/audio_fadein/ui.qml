@@ -21,29 +21,30 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
+    property alias duration: timeSpinner.value
+
     width: 100
     height: 50
     objectName: 'fadeIn'
-    property alias duration: timeSpinner.value
-
     Component.onCompleted: {
         if (filter.isNew) {
-            duration = Math.ceil(settings.audioInDuration * profile.fps)
+            duration = Math.ceil(settings.audioInDuration * profile.fps);
         } else if (filter.animateIn === 0) {
             // Convert legacy filter.
-            duration = filter.duration
-            filter.set('in', producer.in )
-            filter.set('out', producer.out )
+            duration = filter.duration;
+            filter.set('in', producer.in);
+            filter.set('out', producer.out);
         } else {
-            duration = filter.animateIn
+            duration = filter.animateIn;
         }
     }
 
     Connections {
-        target: filter
         function onAnimateInChanged() {
-            duration = filter.animateIn
+            duration = filter.animateIn;
         }
+
+        target: filter
     }
 
     ColumnLayout {
@@ -51,27 +52,35 @@ Item {
         anchors.margins: 8
 
         RowLayout {
-            Label { text: qsTr('Duration') }
+            Label {
+                text: qsTr('Duration')
+            }
+
             Shotcut.TimeSpinner {
                 id: timeSpinner
+
                 minimumValue: 2
                 maximumValue: 5000
                 onValueChanged: {
-                    filter.animateIn = duration
-                    filter.resetProperty('level')
-                    filter.set('level', -60, 0)
-                    filter.set('level', 0, Math.min(duration, filter.duration) - 1)
+                    filter.animateIn = duration;
+                    filter.resetProperty('level');
+                    filter.set('level', -60, 0);
+                    filter.set('level', 0, Math.min(duration, filter.duration) - 1);
                 }
                 onSetDefaultClicked: {
-                    duration = Math.ceil(settings.audioInDuration * profile.fps)
+                    duration = Math.ceil(settings.audioInDuration * profile.fps);
                 }
                 onSaveDefaultClicked: {
-                    settings.audioInDuration = duration / profile.fps
+                    settings.audioInDuration = duration / profile.fps;
                 }
             }
+
         }
+
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
+
     }
+
 }

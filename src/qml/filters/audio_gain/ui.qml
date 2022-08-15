@@ -21,101 +21,120 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
-    width: 200
-    height: 50
     property bool blockUpdate: true
-    property double startValue: 0.0
-    property double middleValue: 0.0
-    property double endValue: 0.0
-
-    Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('level', 0)
-            filter.savePreset(preset.parameters)
-        } else {
-            // Convert old version of filter.
-            if (filter.getDouble('gain') !== 0.0) {
-                filter.set('level', toDb(filter.getDouble('gain')))
-                filter.resetProperty('gain')
-            }
-
-            middleValue = filter.getDouble('level', filter.animateIn)
-            if (filter.animateIn > 0)
-                startValue = filter.getDouble('level', 0)
-            if (filter.animateOut > 0)
-                endValue = filter.getDouble('level', filter.duration - 1)
-        }
-        setControls()
-    }
-
-    Connections {
-        target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateFilter(null) }
-        function onOutChanged() { updateFilter(null) }
-        function onAnimateInChanged() { updateFilter(null) }
-        function onAnimateOutChanged() { updateFilter(null) }
-        function onPropertyChanged(name) { setControls() }
-    }
-
-    Connections {
-        target: producer
-        function onPositionChanged() {
-            setControls()
-        }
-    }
+    property double startValue: 0
+    property double middleValue: 0
+    property double endValue: 0
 
     function toDb(value) {
-        return 20 * Math.log(value) / Math.LN10
+        return 20 * Math.log(value) / Math.LN10;
     }
 
     function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0)
+        return Math.max(producer.position - (filter.in - producer.in), 0);
     }
 
     function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        gainSlider.value = filter.getDouble('level', position)
-        if (filter.animateIn > 0 || filter.animateOut > 0) {
-            gainSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
-        } else {
-            gainSlider.enabled = true
-        }
-        gainKeyframesButton.checked = filter.keyframeCount('level') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
-        blockUpdate = false
+        var position = getPosition();
+        blockUpdate = true;
+        gainSlider.value = filter.getDouble('level', position);
+        if (filter.animateIn > 0 || filter.animateOut > 0)
+            gainSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
+        else
+            gainSlider.enabled = true;
+        gainKeyframesButton.checked = filter.keyframeCount('level') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        blockUpdate = false;
     }
 
     function updateFilter(position) {
-        if (blockUpdate) return
+        if (blockUpdate)
+            return ;
 
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
-                startValue = gainSlider.value
+                startValue = gainSlider.value;
             else if (position >= filter.duration - 1 && filter.animateOut > 0)
-                endValue = gainSlider.value
+                endValue = gainSlider.value;
             else
-                middleValue = gainSlider.value
+                middleValue = gainSlider.value;
         }
-
         if (filter.animateIn > 0 || filter.animateOut > 0) {
-            filter.resetProperty('level')
-            gainKeyframesButton.checked = false
+            filter.resetProperty('level');
+            gainKeyframesButton.checked = false;
             if (filter.animateIn > 0) {
-                filter.set('level', startValue, 0)
-                filter.set('level', middleValue, filter.animateIn - 1)
+                filter.set('level', startValue, 0);
+                filter.set('level', middleValue, filter.animateIn - 1);
             }
             if (filter.animateOut > 0) {
-                filter.set('level', middleValue, filter.duration - filter.animateOut)
-                filter.set('level', endValue, filter.duration - 1)
+                filter.set('level', middleValue, filter.duration - filter.animateOut);
+                filter.set('level', endValue, filter.duration - 1);
             }
         } else if (!gainKeyframesButton.checked) {
-            filter.resetProperty('level')
-            filter.set('level', middleValue)
+            filter.resetProperty('level');
+            filter.set('level', middleValue);
         } else if (position !== null) {
-            filter.set('level', gainSlider.value, position)
+            filter.set('level', gainSlider.value, position);
         }
+    }
+
+    width: 200
+    height: 50
+    Component.onCompleted: {
+        if (filter.isNew) {
+            // Set default parameter values
+            filter.set('level', 0);
+            filter.savePreset(preset.parameters);
+        } else {
+            // Convert old version of filter.
+            if (filter.getDouble('gain') !== 0) {
+                filter.set('level', toDb(filter.getDouble('gain')));
+                filter.resetProperty('gain');
+            }
+            middleValue = filter.getDouble('level', filter.animateIn);
+            if (filter.animateIn > 0)
+                startValue = filter.getDouble('level', 0);
+
+            if (filter.animateOut > 0)
+                endValue = filter.getDouble('level', filter.duration - 1);
+
+        }
+        setControls();
+    }
+
+    Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateFilter(null);
+        }
+
+        function onOutChanged() {
+            updateFilter(null);
+        }
+
+        function onAnimateInChanged() {
+            updateFilter(null);
+        }
+
+        function onAnimateOutChanged() {
+            updateFilter(null);
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
+        target: filter
+    }
+
+    Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
+        target: producer
     }
 
     GridLayout {
@@ -127,20 +146,24 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             Layout.columnSpan: parent.columns - 1
             parameters: ['level']
             onBeforePresetLoaded: {
-                filter.resetProperty(parameters[0])
+                filter.resetProperty(parameters[0]);
             }
             onPresetSelected: {
-                setControls()
-                middleValue = filter.getDouble(parameters[0], filter.animateIn)
+                setControls();
+                middleValue = filter.getDouble(parameters[0], filter.animateIn);
                 if (filter.animateIn > 0)
-                    startValue = filter.getDouble(parameters[0], 0)
+                    startValue = filter.getDouble(parameters[0], 0);
+
                 if (filter.animateOut > 0)
-                    endValue = filter.getDouble(parameters[0], filter.duration - 1)
+                    endValue = filter.getDouble(parameters[0], filter.duration - 1);
+
             }
         }
 
@@ -148,28 +171,33 @@ Item {
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: gainSlider
+
             minimumValue: -70
             maximumValue: 24
             suffix: ' dB'
             decimals: 1
             onValueChanged: updateFilter(getPosition())
         }
+
         Shotcut.UndoButton {
-            onClicked: gainSlider.value = 0.0
+            onClicked: gainSlider.value = 0
         }
+
         Shotcut.KeyframesButton {
             id: gainKeyframesButton
+
             onToggled: {
                 if (checked) {
-                    blockUpdate = true
-                    filter.clearSimpleAnimation('level')
-                    blockUpdate = false
-                    filter.set('level', gainSlider.value, getPosition())
+                    blockUpdate = true;
+                    filter.clearSimpleAnimation('level');
+                    blockUpdate = false;
+                    filter.set('level', gainSlider.value, getPosition());
                 } else {
-                    filter.resetProperty('level')
-                    filter.set('level', gainSlider.value)
+                    filter.resetProperty('level');
+                    filter.set('level', gainSlider.value);
                 }
             }
         }
@@ -177,5 +205,7 @@ Item {
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

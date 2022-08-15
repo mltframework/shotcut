@@ -8,6 +8,7 @@ Metadata {
     needsGPU: true
     qml: "ui.qml"
     isFavorite: true
+
     keyframes {
         parameters: [
             Parameter {
@@ -27,4 +28,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -24,80 +24,75 @@ Item {
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
     property var defaultParameters: [rectProperty, 'type', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold', 'segments', 'segment_gap']
-
     property int _minFreqDelta: 1000
     property bool _disableUpdate: true
 
-    width: 400
-    height: 475
-
-    Component.onCompleted: {
-        if (filter.isNew) {
-            filter.set(rectProperty, '0/50%:50%x50%')
-            filter.set('type', 'line')
-            filter.set('color.1', '#ffff0000')
-            filter.set('color.2', '#ffffff00')
-            filter.set('color.3', '#ff00ff00')
-            filter.set('color.4', '#ff00ff00')
-            filter.set('color.5', '#ff00ff00')
-            filter.set('color.6', '#ff00ff00')
-            filter.set('color.7', '#ff00ff00')
-            filter.set('bgcolor', '#00ffffff')
-            filter.set('thickness', '1')
-            filter.set('fill', '0')
-            filter.set('mirror', '0')
-            filter.set('reverse', '0')
-            filter.set('tension', '0.4')
-            filter.set('bands', '31')
-            filter.set('frequency_low', '20')
-            filter.set('frequency_high', '20000')
-            filter.set('threshold', '-60')
-            filter.set('segments', '7')
-            filter.set('segment_gap', '8')
-            filter.savePreset(defaultParameters)
-        }
-        setControls()
-    }
-
     function setFilter() {
-        var x = rectX.value
-        var y = rectY.value
-        var w = rectW.value
-        var h = rectH.value
-        if (x !== filterRect.x ||
-            y !== filterRect.y ||
-            w !== filterRect.width ||
-            h !== filterRect.height) {
-            filterRect.x = x
-            filterRect.y = y
-            filterRect.width = w
-            filterRect.height = h
-            filter.set(rectProperty, filterRect)
+        var x = rectX.value;
+        var y = rectY.value;
+        var w = rectW.value;
+        var h = rectH.value;
+        if (x !== filterRect.x || y !== filterRect.y || w !== filterRect.width || h !== filterRect.height) {
+            filterRect.x = x;
+            filterRect.y = y;
+            filterRect.width = w;
+            filterRect.height = h;
+            filter.set(rectProperty, filterRect);
         }
     }
 
     function setControls() {
-        _disableUpdate = true
-        fgGradient.colors = filter.getGradient('color')
-        bgColor.value = filter.get('bgcolor')
-        thicknessSlider.value = filter.getDouble('thickness')
-        fillCheckbox.checked = filter.get('fill') == 1
-        mirrorCheckbox.checked = filter.get('mirror') == 1
-        reverseCheckbox.checked = filter.get('reverse') == 1
-        tensionSlider.value = filter.getDouble('tension')
-        bandsSlider.value = filter.getDouble('bands')
-        freqLowSlider.value = filter.getDouble('frequency_low')
-        freqHighSlider.value = filter.getDouble('frequency_high')
-        thresholdSlider.value = filter.getDouble('threshold')
-        segmentsSlider.value = filter.getDouble('segments')
-        segmentGapSlider.value = filter.getDouble('segment_gap')
-        rectX.value = filterRect.x
-        rectY.value = filterRect.y
-        rectW.value = filterRect.width
-        rectH.value = filterRect.height
-        typeCombo.currentIndex = typeCombo.valueToIndex()
-        segmentsSlider.enabled = segmentGapSlider.enabled = (typeCombo.currentIndex == 2)
-        _disableUpdate = false
+        _disableUpdate = true;
+        fgGradient.colors = filter.getGradient('color');
+        bgColor.value = filter.get('bgcolor');
+        thicknessSlider.value = filter.getDouble('thickness');
+        fillCheckbox.checked = filter.get('fill') == 1;
+        mirrorCheckbox.checked = filter.get('mirror') == 1;
+        reverseCheckbox.checked = filter.get('reverse') == 1;
+        tensionSlider.value = filter.getDouble('tension');
+        bandsSlider.value = filter.getDouble('bands');
+        freqLowSlider.value = filter.getDouble('frequency_low');
+        freqHighSlider.value = filter.getDouble('frequency_high');
+        thresholdSlider.value = filter.getDouble('threshold');
+        segmentsSlider.value = filter.getDouble('segments');
+        segmentGapSlider.value = filter.getDouble('segment_gap');
+        rectX.value = filterRect.x;
+        rectY.value = filterRect.y;
+        rectW.value = filterRect.width;
+        rectH.value = filterRect.height;
+        typeCombo.currentIndex = typeCombo.valueToIndex();
+        segmentsSlider.enabled = segmentGapSlider.enabled = (typeCombo.currentIndex == 2);
+        _disableUpdate = false;
+    }
+
+    width: 400
+    height: 475
+    Component.onCompleted: {
+        if (filter.isNew) {
+            filter.set(rectProperty, '0/50%:50%x50%');
+            filter.set('type', 'line');
+            filter.set('color.1', '#ffff0000');
+            filter.set('color.2', '#ffffff00');
+            filter.set('color.3', '#ff00ff00');
+            filter.set('color.4', '#ff00ff00');
+            filter.set('color.5', '#ff00ff00');
+            filter.set('color.6', '#ff00ff00');
+            filter.set('color.7', '#ff00ff00');
+            filter.set('bgcolor', '#00ffffff');
+            filter.set('thickness', '1');
+            filter.set('fill', '0');
+            filter.set('mirror', '0');
+            filter.set('reverse', '0');
+            filter.set('tension', '0.4');
+            filter.set('bands', '31');
+            filter.set('frequency_low', '20');
+            filter.set('frequency_high', '20000');
+            filter.set('threshold', '-60');
+            filter.set('segments', '7');
+            filter.set('segment_gap', '8');
+            filter.savePreset(defaultParameters);
+        }
+        setControls();
     }
 
     GridLayout {
@@ -109,14 +104,16 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: defaultParameters
             Layout.columnSpan: 4
             onPresetSelected: setControls()
             onBeforePresetLoaded: {
                 // Clear all gradient colors before loading the new values
-                filter.setGradient('color', [])
+                filter.setGradient('color', []);
             }
         }
 
@@ -124,21 +121,28 @@ Item {
             text: qsTr('Type')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.ComboBox {
-            Layout.columnSpan: 4
             id: typeCombo
-            model: [qsTr('Line'), qsTr('Bar'), qsTr('Segment')]
+
             property var values: ['line', 'bar', 'segment']
+
             function valueToIndex() {
-                var w = filter.get('type')
-                for (var i = 0; i < values.length; ++i)
-                    if (values[i] === w) break;
-                if (i === values.length) i = 0;
+                var w = filter.get('type');
+                for (var i = 0; i < values.length; ++i) if (values[i] === w) {
+                    break;
+                }
+                if (i === values.length)
+                    i = 0;
+
                 return i;
             }
+
+            Layout.columnSpan: 4
+            model: [qsTr('Line'), qsTr('Bar'), qsTr('Segment')]
             onActivated: {
-                filter.set('type', values[index])
-                segmentsSlider.enabled = segmentGapSlider.enabled = (typeCombo.currentIndex == 2)
+                filter.set('type', values[index]);
+                segmentsSlider.enabled = segmentGapSlider.enabled = (typeCombo.currentIndex == 2);
             }
         }
 
@@ -146,12 +150,16 @@ Item {
             text: qsTr('Spectrum Color')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.GradientControl {
-            Layout.columnSpan: 4
             id: fgGradient
+
+            Layout.columnSpan: 4
             onGradientChanged: {
-                 if (_disableUpdate) return
-                 filter.setGradient('color', colors)
+                if (_disableUpdate)
+                    return ;
+
+                filter.setGradient('color', colors);
             }
         }
 
@@ -159,9 +167,11 @@ Item {
             text: qsTr('Background Color')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.ColorPicker {
-            Layout.columnSpan: 4
             id: bgColor
+
+            Layout.columnSpan: 4
             eyedropper: true
             alpha: true
             onValueChanged: filter.set('bgcolor', value)
@@ -171,15 +181,18 @@ Item {
             text: qsTr('Thickness')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
-            Layout.columnSpan: 3
             id: thicknessSlider
+
+            Layout.columnSpan: 3
             minimumValue: 0
             maximumValue: 100
             decimals: 0
             suffix: ' px'
             onValueChanged: filter.set("thickness", value)
         }
+
         Shotcut.UndoButton {
             onClicked: thicknessSlider.value = 1
         }
@@ -188,70 +201,110 @@ Item {
             text: qsTr('Position')
             Layout.alignment: Qt.AlignRight
         }
+
         RowLayout {
             Layout.columnSpan: 4
+
             Shotcut.DoubleSpinBox {
                 id: rectX
+
                 value: filterRect.x
                 Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
                 decimals: 0
                 stepSize: 1
-                from: -999999999
-                to: 999999999
-                onValueModified: if (filterRect.x !== value) setFilter()
+                from: -1e+09
+                to: 1e+09
+                onValueModified: {
+                    if (filterRect.x !== value)
+                        setFilter();
+
+                }
             }
-            Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+
+            Label {
+                text: ','
+                Layout.minimumWidth: 20
+                horizontalAlignment: Qt.AlignHCenter
+            }
+
             Shotcut.DoubleSpinBox {
                 id: rectY
+
                 value: filterRect.y
                 Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
                 decimals: 0
                 stepSize: 1
-                from: -999999999
-                to: 999999999
-                onValueModified: if (filterRect.y !== value) setFilter()
+                from: -1e+09
+                to: 1e+09
+                onValueModified: {
+                    if (filterRect.y !== value)
+                        setFilter();
+
+                }
             }
+
         }
 
         Label {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignRight
         }
+
         RowLayout {
             Layout.columnSpan: 4
+
             Shotcut.DoubleSpinBox {
                 id: rectW
+
                 value: filterRect.width
                 Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
                 decimals: 0
                 stepSize: 1
-                from: -999999999
-                to: 999999999
-                onValueModified: if (filterRect.width !== value) setFilter()
+                from: -1e+09
+                to: 1e+09
+                onValueModified: {
+                    if (filterRect.width !== value)
+                        setFilter();
+
+                }
             }
-            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+
+            Label {
+                text: 'x'
+                Layout.minimumWidth: 20
+                horizontalAlignment: Qt.AlignHCenter
+            }
+
             Shotcut.DoubleSpinBox {
                 id: rectH
+
                 value: filterRect.height
                 Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
                 decimals: 0
                 stepSize: 1
-                from: -999999999
-                to: 999999999
-                onValueModified: if (filterRect.height !== value) setFilter()
+                from: -1e+09
+                to: 1e+09
+                onValueModified: {
+                    if (filterRect.height !== value)
+                        setFilter();
+
+                }
             }
+
         }
 
         Label {
             Layout.alignment: Qt.AlignRight
         }
+
         CheckBox {
-            Layout.columnSpan: 4
             id: fillCheckbox
+
+            Layout.columnSpan: 4
             text: qsTr('Fill the area under the spectrum.')
             onClicked: filter.set('fill', checked ? 1 : 0)
         }
@@ -259,9 +312,11 @@ Item {
         Label {
             Layout.alignment: Qt.AlignRight
         }
+
         CheckBox {
-            Layout.columnSpan: 4
             id: mirrorCheckbox
+
+            Layout.columnSpan: 4
             text: qsTr('Mirror the spectrum.')
             onClicked: filter.set('mirror', checked ? 1 : 0)
         }
@@ -269,9 +324,11 @@ Item {
         Label {
             Layout.alignment: Qt.AlignRight
         }
+
         CheckBox {
-            Layout.columnSpan: 4
             id: reverseCheckbox
+
+            Layout.columnSpan: 4
             text: qsTr('Reverse the spectrum.')
             onClicked: filter.set('reverse', checked ? 1 : 0)
         }
@@ -280,14 +337,17 @@ Item {
             text: qsTr('Tension')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
-            Layout.columnSpan: 3
             id: tensionSlider
-            minimumValue: 0.0
-            maximumValue: 1.0
+
+            Layout.columnSpan: 3
+            minimumValue: 0
+            maximumValue: 1
             decimals: 1
             onValueChanged: filter.set("tension", value)
         }
+
         Shotcut.UndoButton {
             onClicked: tensionSlider.value = 0.4
         }
@@ -296,15 +356,22 @@ Item {
             text: qsTr('Segments')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
-            Layout.columnSpan: 3
             id: segmentsSlider
+
+            Layout.columnSpan: 3
             minimumValue: 2
             maximumValue: 100
             decimals: 0
             onValueChanged: filter.set("segments", value)
-            Shotcut.HoverTip { text: 'The number of segments in the segment graph' }
+
+            Shotcut.HoverTip {
+                text: 'The number of segments in the segment graph'
+            }
+
         }
+
         Shotcut.UndoButton {
             onClicked: segmentGapSlider.value = 8
         }
@@ -313,15 +380,22 @@ Item {
             text: qsTr('Segment Gap')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
-            Layout.columnSpan: 3
             id: segmentGapSlider
+
+            Layout.columnSpan: 3
             minimumValue: 0
             maximumValue: 100
             decimals: 0
             onValueChanged: filter.set("segment_gap", value)
-            Shotcut.HoverTip { text: 'Space between segments in the segment graph (in pixels)' }
+
+            Shotcut.HoverTip {
+                text: 'Space between segments in the segment graph (in pixels)'
+            }
+
         }
+
         Shotcut.UndoButton {
             onClicked: segmentGapSlider.value = 8
         }
@@ -330,14 +404,17 @@ Item {
             text: qsTr('Bands')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
-            Layout.columnSpan: 3
             id: bandsSlider
+
+            Layout.columnSpan: 3
             minimumValue: 2
             maximumValue: 100
             decimals: 0
             onValueChanged: filter.set("bands", value)
         }
+
         Shotcut.UndoButton {
             onClicked: bandsSlider.value = 31
         }
@@ -345,22 +422,29 @@ Item {
         Label {
             text: qsTr('Low Frequency')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('The low end of the frequency range of the spectrum.') }
+
+            Shotcut.HoverTip {
+                text: qsTr('The low end of the frequency range of the spectrum.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
-            Layout.columnSpan: 3
             id: freqLowSlider
+
+            Layout.columnSpan: 3
             minimumValue: 20
             maximumValue: 20000 - _minFreqDelta
             decimals: 0
             suffix: ' Hz'
             onValueChanged: {
-                filter.set("frequency_low", value)
-                if (!_disableUpdate && (value + _minFreqDelta) > freqHighSlider.value) {
-                    freqHighSlider.value = value + _minFreqDelta
-                }
+                filter.set("frequency_low", value);
+                if (!_disableUpdate && (value + _minFreqDelta) > freqHighSlider.value)
+                    freqHighSlider.value = value + _minFreqDelta;
+
             }
         }
+
         Shotcut.UndoButton {
             onClicked: freqLowSlider.value = 20
         }
@@ -368,22 +452,29 @@ Item {
         Label {
             text: qsTr('High Frequency')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('The high end of the frequency range of the spectrum.') }
+
+            Shotcut.HoverTip {
+                text: qsTr('The high end of the frequency range of the spectrum.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
-            Layout.columnSpan: 3
             id: freqHighSlider
+
+            Layout.columnSpan: 3
             minimumValue: 20 + _minFreqDelta
             maximumValue: 20000
             decimals: 0
             suffix: ' Hz'
             onValueChanged: {
-                filter.set("frequency_high", value)
-                if (!_disableUpdate && (value - _minFreqDelta) < freqLowSlider.value) {
-                    freqLowSlider.value = value - _minFreqDelta
-                }
+                filter.set("frequency_high", value);
+                if (!_disableUpdate && (value - _minFreqDelta) < freqLowSlider.value)
+                    freqLowSlider.value = value - _minFreqDelta;
+
             }
         }
+
         Shotcut.UndoButton {
             onClicked: freqHighSlider.value = 20000
         }
@@ -392,30 +483,38 @@ Item {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
-            Layout.columnSpan: 3
             id: thresholdSlider
+
+            Layout.columnSpan: 3
             minimumValue: -60
             maximumValue: 0
             decimals: 0
             suffix: ' dB'
             onValueChanged: filter.set("threshold", value)
         }
+
         Shotcut.UndoButton {
             onClicked: thresholdSlider.value = -60
         }
 
-        Item { Layout.fillHeight: true }
+        Item {
+            Layout.fillHeight: true
+        }
+
     }
 
     Connections {
-        target: filter
         function onChanged() {
-            var newValue = filter.getRect(rectProperty)
+            var newValue = filter.getRect(rectProperty);
             if (filterRect !== newValue) {
-                filterRect = newValue
-                setControls()
+                filterRect = newValue;
+                setControls();
             }
         }
+
+        target: filter
     }
+
 }
