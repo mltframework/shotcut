@@ -18,12 +18,14 @@
 import QtQuick 2.1
 
 Item {
+    // Unpremultiply
+
     width: 350
     height: 10
     Component.onCompleted: {
-        filter.set('threads', 0)
-        if (filter.isNew) {
-            filter.set('0', 1) // Unpremultiply
-        }
+        filter.set('threads', 0);
+        if (filter.isNew)
+            filter.set('0', 1);
+
     }
 }

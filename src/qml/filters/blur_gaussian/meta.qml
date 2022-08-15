@@ -25,6 +25,7 @@ Metadata {
     mlt_service: "frei0r.IIRblur"
     qml: "ui_frei0r.qml"
     isHidden: true
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -39,4 +40,5 @@ Metadata {
             }
         ]
     }
+
 }

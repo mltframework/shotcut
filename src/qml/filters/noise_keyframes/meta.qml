@@ -24,6 +24,7 @@ Metadata {
     objectName: 'noise_keyframes'
     mlt_service: "frei0r.rgbnoise"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -38,4 +39,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -7,6 +7,7 @@ Metadata {
     name: qsTr("Reverb")
     mlt_service: 'ladspa.1216'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -24,7 +25,7 @@ Metadata {
                 name: qsTr('Reverb time')
                 property: '1'
                 isCurve: true
-                minimum: .1
+                minimum: 0.1
                 maximum: 30
                 units: 's'
             },
@@ -70,4 +71,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -24,6 +24,7 @@ Metadata {
     mlt_service: 'frei0r.c0rners'
     qml: 'ui.qml'
     vui: 'vui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -40,21 +41,22 @@ Metadata {
                 isCurve: true
                 minimum: 0
                 maximum: 1
-             },
-             Parameter {
+            },
+            Parameter {
                 name: qsTr('Stretch Y')
                 property: '10'
                 isCurve: true
                 minimum: 0
                 maximum: 1
-             },
-             Parameter {
+            },
+            Parameter {
                 name: qsTr('Feathering')
                 property: '13'
                 isCurve: true
                 minimum: 0
                 maximum: 1
-             }
+            }
         ]
     }
+
 }

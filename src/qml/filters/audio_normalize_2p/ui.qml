@@ -16,48 +16,45 @@
  */
 
 import QtQuick 2.12
-import QtQuick.Dialogs 1.3
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.3
 import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
-    width: 350
-    height: 50
-
-    Component.onCompleted: {
-        setStatus(false)
+    function setStatus(inProgress) {
+        if (inProgress) {
+            status.text = qsTr('Analyzing...');
+            results.text = '--';
+            normalizationGain.text = '--';
+        } else if (filter.get("results").length > 0) {
+            status.text = qsTr('Analysis complete.');
+            var loudnessValue = filter.get("results").split('\t')[0].split('L:')[1];
+            loudnessValue = Math.round(loudnessValue * 100) / 100;
+            results.text = qsTr('%1 LUFS').arg(loudnessValue);
+            var gainValue = programSlider.value - loudnessValue;
+            gainValue = Math.round(gainValue * 100) / 100;
+            normalizationGain.text = qsTr('%1 dB').arg(gainValue);
+        } else {
+            status.text = qsTr('Click "Analyze" to use this filter.');
+            results.text = '--';
+            normalizationGain.text = '--';
+        }
     }
 
-    function setStatus( inProgress ) {
-        if (inProgress) {
-            status.text = qsTr('Analyzing...')
-            results.text = '--'
-            normalizationGain.text = '--'
-        }
-        else if (filter.get("results").length > 0 ) {
-            status.text = qsTr('Analysis complete.')
-            var loudnessValue = filter.get("results").split('\t')[0].split('L:')[1]
-            loudnessValue = Math.round(loudnessValue * 100) / 100
-            results.text = qsTr('%1 LUFS').arg(loudnessValue)
-            var gainValue = programSlider.value - loudnessValue
-            gainValue = Math.round(gainValue * 100) / 100
-            normalizationGain.text = qsTr('%1 dB').arg(gainValue)
-        }
-        else
-        {
-            status.text = qsTr('Click "Analyze" to use this filter.')
-            results.text = '--'
-            normalizationGain.text = '--'
-        }
+    width: 350
+    height: 50
+    Component.onCompleted: {
+        setStatus(false);
     }
 
     Connections {
-        target: filter
         function onAnalyzeFinished() {
-            setStatus(false)
-            button.enabled = true
+            setStatus(false);
+            button.enabled = true;
         }
+
+        target: filter
     }
 
     GridLayout {
@@ -69,33 +66,38 @@ Item {
             Layout.alignment: Qt.AlignRight
             text: qsTr('Target Loudness')
         }
+
         Shotcut.SliderSpinner {
             id: programSlider
-            minimumValue: -50.0
-            maximumValue: -10.0
+
+            minimumValue: -50
+            maximumValue: -10
             decimals: 1
             suffix: ' LUFS'
             spinnerWidth: 100
             value: filter ? filter.getDouble('program') : 0
             onValueChanged: {
-                if (filter) {
-                    filter.set('program', value)
-                }
+                if (filter)
+                    filter.set('program', value);
+
             }
         }
+
         Shotcut.UndoButton {
-            onClicked: programSlider.value = -23.0
+            onClicked: programSlider.value = -23
         }
 
         Label {
         }
+
         Shotcut.Button {
-            Layout.columnSpan: 2
             id: button
+
+            Layout.columnSpan: 2
             text: qsTr('Analyze')
             onClicked: {
-                button.enabled = false
-                setStatus(true)
+                button.enabled = false;
+                setStatus(true);
                 filter.analyze(true);
             }
         }
@@ -105,6 +107,7 @@ Item {
             Layout.fillWidth: true
             Layout.minimumHeight: 12
             color: 'transparent'
+
             Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 width: parent.width
@@ -112,35 +115,51 @@ Item {
                 radius: 2
                 color: activePalette.text
             }
+
         }
 
         Label {
-            Layout.columnSpan: 3
             id: status
+
+            Layout.columnSpan: 3
         }
 
         Label {
             text: qsTr('Detected Loudness:')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {text: qsTr('The loudness calculated by the analysis.')}
+
+            Shotcut.HoverTip {
+                text: qsTr('The loudness calculated by the analysis.')
+            }
+
         }
+
         Label {
-            Layout.columnSpan: 2
             id: results
+
+            Layout.columnSpan: 2
         }
 
         Label {
             text: qsTr('Normalization Gain:')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {text: qsTr('The gain applied to normalize to the Target Loudness.')}
+
+            Shotcut.HoverTip {
+                text: qsTr('The gain applied to normalize to the Target Loudness.')
+            }
+
         }
+
         Label {
-            Layout.columnSpan: 2
             id: normalizationGain
+
+            Layout.columnSpan: 2
         }
 
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
+
     }
+
 }

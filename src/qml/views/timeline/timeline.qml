@@ -15,20 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.12
+import QtGraphicalEffects 1.12
 import QtQml.Models 2.12
+import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.3
-import QtGraphicalEffects 1.12
-import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
+import QtQuick.Window 2.12
 import Shotcut.Controls 1.0 as Shotcut
-import 'Timeline.js' as Logic
+import "Timeline.js" as Logic
 
 Rectangle {
     id: root
-    SystemPalette { id: activePalette }
-    color: activePalette.window
+
+    property int headerWidth: 140
+    property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3)
+    property alias trackCount: tracksRepeater.count
+    property bool stopScrolling: false
+    property color shotcutBlue: Qt.rgba(23 / 255, 92 / 255, 118 / 255, 1)
+    property var dragDelta
 
     signal clipClicked()
     signal timelineRightClicked()
@@ -36,62 +41,63 @@ Rectangle {
 
     function setZoom(value, targetX) {
         if (!targetX)
-            targetX = tracksFlickable.contentX + tracksFlickable.width / 2
-        var offset = targetX - tracksFlickable.contentX
-        var before = multitrack.scaleFactor
-        if (isNaN(value))
-            value = 0.00
-        multitrack.scaleFactor = Math.pow(value, 3) + 0.01
-        if (!settings.timelineCenterPlayhead && !settings.timelineScrollZoom)
-            tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset
+            targetX = tracksFlickable.contentX + tracksFlickable.width / 2;
 
-        for (var i = 0; i < tracksRepeater.count; i++)
-            tracksRepeater.itemAt(i).redrawWaveforms(false)
+        var offset = targetX - tracksFlickable.contentX;
+        var before = multitrack.scaleFactor;
+        if (isNaN(value))
+            value = 0;
+
+        multitrack.scaleFactor = Math.pow(value, 3) + 0.01;
+        if (!settings.timelineCenterPlayhead && !settings.timelineScrollZoom)
+            tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset;
+
+        for (var i = 0; i < tracksRepeater.count; i++) tracksRepeater.itemAt(i).redrawWaveforms(false)
+    }
+
+    function adjustZoom(by, targetX) {
+        var value = Math.pow(multitrack.scaleFactor - 0.01, 1 / 3);
+        setZoom(value + by, targetX);
+        if (settings.timelineScrollZoom && !settings.timelineCenterPlayhead)
+            scrollZoomTimer.restart();
+
+    }
+
+    function pulseLockButtonOnTrack(index) {
+        trackHeaderRepeater.itemAt(index).pulseLockButton();
+    }
+
+    function selectMultitrack() {
+        for (var i = 0; i < trackHeaderRepeater.count; i++) trackHeaderRepeater.itemAt(i).selected = false
+        cornerstone.selected = true;
+    }
+
+    function trackAt(index) {
+        return tracksRepeater.itemAt(index);
+    }
+
+    function resetDrag() {
+        dragDelta = Qt.point(0, 0);
+    }
+
+    function insertTrackPrompt() {
+        trackTypeDialog.show();
+    }
+
+    color: activePalette.window
+
+    SystemPalette {
+        id: activePalette
     }
 
     Timer {
         id: scrollZoomTimer
+
         interval: 100
         onTriggered: {
-            Logic.scrollIfNeeded(true)
+            Logic.scrollIfNeeded(true);
         }
     }
-
-    function adjustZoom(by, targetX) {
-        var value = Math.pow(multitrack.scaleFactor - 0.01, 1.0 / 3.0)
-        setZoom(value + by, targetX)
-        if (settings.timelineScrollZoom && !settings.timelineCenterPlayhead)
-            scrollZoomTimer.restart()
-    }
-
-    function pulseLockButtonOnTrack(index) {
-        trackHeaderRepeater.itemAt(index).pulseLockButton()
-    }
-
-    function selectMultitrack() {
-        for (var i = 0; i < trackHeaderRepeater.count; i++)
-            trackHeaderRepeater.itemAt(i).selected = false
-        cornerstone.selected = true
-    }
-
-    function trackAt(index) {
-        return tracksRepeater.itemAt(index)
-    }
-
-    function resetDrag() {
-        dragDelta = Qt.point(0, 0)
-    }
-
-    function insertTrackPrompt() {
-        trackTypeDialog.show()
-    }
-
-    property int headerWidth: 140
-    property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);
-    property alias trackCount: tracksRepeater.count
-    property bool stopScrolling: false
-    property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
-    property var dragDelta
 
     MouseArea {
         anchors.fill: parent
@@ -103,42 +109,48 @@ Rectangle {
         anchors.fill: parent
         onEntered: {
             if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0 || drag.hasUrls)
-                drag.acceptProposedAction()
+                drag.acceptProposedAction();
+
         }
         onExited: Logic.dropped()
         onPositionChanged: {
             if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0 || drag.hasUrls)
-                Logic.dragging(drag, drag.hasUrls? 0 : parseInt(drag.text))
+                Logic.dragging(drag, drag.hasUrls ? 0 : parseInt(drag.text));
+
         }
         onDropped: {
             if (drop.formats.indexOf('application/vnd.mlt+xml') >= 0) {
                 if (timeline.currentTrack >= 0) {
-                    Logic.acceptDrop(drop.getDataAsString('application/vnd.mlt+xml'))
-                    drop.acceptProposedAction()
+                    Logic.acceptDrop(drop.getDataAsString('application/vnd.mlt+xml'));
+                    drop.acceptProposedAction();
                 }
             } else if (drop.hasUrls) {
-                Logic.acceptDrop(drop.urls)
-                drop.acceptProposedAction()
+                Logic.acceptDrop(drop.urls);
+                drop.acceptProposedAction();
             }
-            Logic.dropped()
+            Logic.dropped();
         }
     }
 
     Row {
         anchors.fill: parent
+
         Column {
             z: 1
 
             Rectangle {
                 id: cornerstone
+
                 property bool selected: false
+
                 width: headerWidth
                 height: ruler.height
-                color: selected? shotcutBlue : activePalette.window
-                border.color: selected? 'red' : 'transparent'
-                border.width: selected? 1 : 0
+                color: selected ? shotcutBlue : activePalette.window
+                border.color: selected ? 'red' : 'transparent'
+                border.width: selected ? 1 : 0
                 visible: trackHeaderRepeater.count
                 z: 1
+
                 Label {
                     text: qsTr('Output')
                     color: activePalette.windowText
@@ -147,32 +159,41 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     width: parent.width - 8
                 }
+
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     onClicked: {
-                        timeline.selectMultitrack()
-                        if (mouse.button == Qt.RightButton) {
-                            root.timelineRightClicked()
-                        }
+                        timeline.selectMultitrack();
+                        if (mouse.button == Qt.RightButton)
+                            root.timelineRightClicked();
+
                     }
                 }
+
                 ToolButton {
                     visible: multitrack.filtered
                     anchors.right: parent.right
                     anchors.rightMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
+                    onClicked: {
+                        timeline.selectMultitrack();
+                        timeline.filteredClicked();
+                    }
+
+                    Shotcut.HoverTip {
+                        text: qsTr('Filters')
+                    }
+
                     action: Action {
                         icon.name: 'view-filter'
                         icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
                     }
-                    Shotcut.HoverTip { text: qsTr('Filters') }
-                    onClicked: {
-                        timeline.selectMultitrack()
-                        timeline.filteredClicked()
-                    }
+
                 }
+
             }
+
             Flickable {
                 // Non-slider scroll area for the track headers.
                 contentY: tracksFlickable.contentY
@@ -182,12 +203,17 @@ Rectangle {
 
                 Column {
                     id: trackHeaders
+
                     Repeater {
                         id: trackHeaderRepeater
+
                         model: multitrack
+
                         TrackHead {
                             id: trackHead
+
                             property var trackIndex: index
+
                             trackName: model.name
                             isMute: model.mute
                             isHidden: model.hidden
@@ -204,11 +230,13 @@ Rectangle {
                             current: index === timeline.currentTrack
                             onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
-                                timeline.currentTrack = index
-                                timeline.selectTrackHead(timeline.currentTrack)
+                                timeline.currentTrack = index;
+                                timeline.selectTrackHead(timeline.currentTrack);
                             }
+
                             MouseArea {
                                 id: dragMouseArea
+
                                 anchors.top: parent.top
                                 anchors.bottom: parent.bottom
                                 anchors.left: parent.left
@@ -217,17 +245,19 @@ Rectangle {
                                 drag.target: dragItem
                                 drag.axis: Drag.YAxis
                                 drag.maximumY: trackHeaders.height - y - height / 2
-                                drag.minimumY : -y - height / 2
+                                drag.minimumY: -y - height / 2
                                 width: containsMouse | drag.active ? Math.max(parent.width, dragItemText.contentWidth + 20) : 8
-                                Behavior on width { PropertyAnimation {easing.type: Easing.InOutCubic} }
                                 onReleased: {
-                                    if (drag.active) {
-                                        dragItem.Drag.drop()
-                                    }
+                                    if (drag.active)
+                                        dragItem.Drag.drop();
+
                                 }
+
                                 Rectangle {
                                     id: dragItem
+
                                     property var trackHead: trackHead
+
                                     anchors.left: dragMouseArea.left
                                     anchors.top: dragMouseArea.top
                                     anchors.bottom: dragMouseArea.bottom
@@ -237,9 +267,30 @@ Rectangle {
                                     Drag.hotSpot.y: height / 2
                                     Drag.keys: ["trackHeader"]
                                     opacity: dragMouseArea.containsMouse | dragMouseArea.drag.active ? 0.7 : 0
-                                    Behavior on opacity { NumberAnimation {} }
+                                    states: [
+                                        State {
+                                            when: dragMouseArea.drag.active | dragMouseArea.containsMouse
+
+                                            ParentChange {
+                                                target: dragItem
+                                                parent: trackHeaders.parent
+                                            }
+
+                                        },
+                                        State {
+                                            when: !dragMouseArea.drag.active & !dragMouseArea.containsMouse
+
+                                            ParentChange {
+                                                target: dragItem
+                                                parent: trackHead
+                                            }
+
+                                        }
+                                    ]
+
                                     Text {
                                         id: dragItemText
+
                                         anchors.fill: parent
                                         text: qsTr("Move %1").arg(trackHead.trackName)
                                         style: Text.Outline
@@ -248,51 +299,59 @@ Rectangle {
                                         verticalAlignment: Text.AlignVCenter
                                         leftPadding: 10
                                     }
-                                    states: [
-                                        State {
-                                            when: dragMouseArea.drag.active | dragMouseArea.containsMouse
-                                            ParentChange { target: dragItem; parent: trackHeaders.parent }
-                                        },
-                                        State {
-                                            when: !dragMouseArea.drag.active & !dragMouseArea.containsMouse
-                                            ParentChange { target: dragItem; parent: trackHead }
+
+                                    Behavior on opacity {
+                                        NumberAnimation {
                                         }
-                                    ]
+
+                                    }
+
                                 }
+
+                                Behavior on width {
+                                    PropertyAnimation {
+                                        easing.type: Easing.InOutCubic
+                                    }
+
+                                }
+
                             }
 
                             DropArea {
                                 id: dropArea
+
                                 property var trackHead: trackHead
+                                property bool containsValidDrag: false
+
                                 anchors.fill: parent
                                 keys: ["trackHeader"]
-                                property bool containsValidDrag: false
                                 onEntered: {
                                     if (trackHead.isVideo == drag.source.trackHead.isVideo) {
-                                        containsValidDrag = true
-                                        timeline.currentTrack = trackHead.trackIndex
+                                        containsValidDrag = true;
+                                        timeline.currentTrack = trackHead.trackIndex;
                                     } else {
-                                        containsValidDrag = false
+                                        containsValidDrag = false;
                                     }
                                 }
                                 onExited: {
-                                    containsValidDrag = false
+                                    containsValidDrag = false;
                                 }
                                 onDropped: {
                                     if (drop.proposedAction == Qt.MoveAction) {
                                         if (trackHead.isVideo && !drop.source.trackHead.isVideo) {
-                                            application.showStatusMessage(qsTr('Can not move audio track above video track'))
+                                            application.showStatusMessage(qsTr('Can not move audio track above video track'));
                                         } else if (!trackHead.isVideo && drop.source.trackHead.isVideo) {
-                                            application.showStatusMessage(qsTr('Can not move video track below audio track'))
+                                            application.showStatusMessage(qsTr('Can not move video track below audio track'));
                                         } else if (trackHead.trackIndex == drop.source.trackHead.trackIndex) {
-                                            application.showStatusMessage(qsTr('Track %1 was not moved').arg(drop.source.trackHead.trackName))
+                                            application.showStatusMessage(qsTr('Track %1 was not moved').arg(drop.source.trackHead.trackName));
                                         } else {
-                                            drop.acceptProposedAction()
-                                            timeline.moveTrack(drop.source.trackHead.trackIndex, trackHead.trackIndex)
+                                            drop.acceptProposedAction();
+                                            timeline.moveTrack(drop.source.trackHead.trackIndex, trackHead.trackIndex);
                                         }
                                     }
-                                    containsValidDrag = false
+                                    containsValidDrag = false;
                                 }
+
                                 Rectangle {
                                     anchors.fill: parent
                                     color: "transparent"
@@ -300,11 +359,15 @@ Rectangle {
                                     border.width: 3
                                     visible: dropArea.containsValidDrag
                                 }
+
                             }
 
                         }
+
                     }
+
                 }
+
                 Rectangle {
                     // thin dividing line between headers and tracks
                     color: activePalette.windowText
@@ -313,72 +376,77 @@ Rectangle {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                 }
+
             }
+
         }
+
         Item {
             id: tracksArea
+
             width: root.width - headerWidth
             height: root.height
             focus: true
 
             MouseArea {
+                property bool skim: false
+
                 // This provides skimming and continuous scrubbing at the left/right edges.
                 anchors.fill: parent
                 hoverEnabled: true
                 onClicked: {
-                    timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor
-                    bubbleHelp.hide()
+                    timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor;
+                    bubbleHelp.hide();
                 }
                 onWheel: Logic.onMouseWheel(wheel)
-                property bool skim: false
                 onReleased: skim = false
                 onExited: skim = false
                 onPositionChanged: {
                     if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
-                        timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor
-                        bubbleHelp.hide()
-                        skim = true
+                        timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor;
+                        bubbleHelp.hide();
+                        skim = true;
                     } else {
-                        skim = false
+                        skim = false;
                     }
                 }
             }
 
             Timer {
                 id: scrubTimer
+
                 interval: 25
                 repeat: true
-                running: parent.skim && parent.containsMouse
-                         && (parent.mouseX < 50 || parent.mouseX > parent.width - 50)
-                         && (timeline.position * multitrack.scaleFactor >= 50)
+                running: parent.skim && parent.containsMouse && (parent.mouseX < 50 || parent.mouseX > parent.width - 50) && (timeline.position * multitrack.scaleFactor >= 50)
                 onTriggered: {
                     if (parent.mouseX < 50)
-                        timeline.position -= 10
+                        timeline.position -= 10;
                     else
-                        timeline.position += 10
+                        timeline.position += 10;
                 }
             }
 
             MouseArea {
+                property real startX: mouseX
+                property real startY: mouseY
+
                 // This provides drag-scrolling the timeline with the middle mouse button.
                 anchors.fill: parent
                 acceptedButtons: Qt.MiddleButton
-                cursorShape: drag.active? Qt.ClosedHandCursor : Qt.ArrowCursor
+                cursorShape: drag.active ? Qt.ClosedHandCursor : Qt.ArrowCursor
                 drag.axis: Drag.XAndYAxis
                 drag.filterChildren: true
-                property real startX: mouseX
-                property real startY: mouseY
                 onPressed: {
-                    startX = mouse.x
-                    startY = mouse.y
+                    startX = mouse.x;
+                    startY = mouse.y;
                 }
                 onPositionChanged: {
-                    var n = mouse.x - startX
-                    startX = mouse.x
-                    tracksFlickable.contentX = Logic.clamp(tracksFlickable.contentX - n, 0, Logic.scrollMax().x)
-                    n = mouse.y - startY
-                    startY = mouse.y
-                    tracksFlickable.contentY = Logic.clamp(tracksFlickable.contentY - n, 0, Logic.scrollMax().y)
+                    var n = mouse.x - startX;
+                    startX = mouse.x;
+                    tracksFlickable.contentX = Logic.clamp(tracksFlickable.contentX - n, 0, Logic.scrollMax().x);
+                    n = mouse.y - startY;
+                    startY = mouse.y;
+                    tracksFlickable.contentY = Logic.clamp(tracksFlickable.contentY - n, 0, Logic.scrollMax().y);
                 }
             }
 
@@ -386,27 +454,36 @@ Rectangle {
                 Flickable {
                     // Non-slider scroll area for the Ruler.
                     id: rulerFlickable
+
                     contentX: tracksFlickable.contentX
                     width: root.width - headerWidth
                     height: ruler.height
                     interactive: false
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
-                    onContentXChanged: if (contentX === 0) contentX = tracksFlickable.contentX
+                    onContentXChanged: {
+                        if (contentX === 0)
+                            contentX = tracksFlickable.contentX;
+
+                    }
 
                     Ruler {
                         id: ruler
+
                         width: tracksContainer.width
                         timeScale: multitrack.scaleFactor
                         onEditMarkerRequested: {
-                            timeline.editMarker(index)
+                            timeline.editMarker(index);
                         }
                         onDeleteMarkerRequested: {
-                            timeline.deleteMarker(index)
+                            timeline.deleteMarker(index);
                         }
                     }
+
                 }
+
                 Flickable {
                     id: tracksFlickable
+
                     y: ruler.height
                     width: root.width - headerWidth - 16
                     height: root.height - ruler.height - 16
@@ -416,8 +493,72 @@ Rectangle {
                     interactive: false
                     contentWidth: tracksContainer.width + headerWidth
                     contentHeight: trackHeaders.height + 30 // 30 is padding
+
+                    Item {
+                        id: tracksLayers
+
+                        anchors.fill: parent
+
+                        Column {
+                            // These make the striped background for the tracks.
+                            // It is important that these are not part of the track visual hierarchy;
+                            // otherwise, the clips will be obscured by the Track's background.
+                            Repeater {
+                                model: multitrack
+
+                                delegate: Rectangle {
+                                    width: tracksContainer.width
+                                    color: (index === timeline.currentTrack) ? selectedTrackColor : (index % 2) ? activePalette.alternateBase : activePalette.base
+                                    height: Logic.trackHeight(audio)
+                                }
+
+                            }
+
+                        }
+
+                        Column {
+                            id: tracksContainer
+
+                            Repeater {
+                                id: tracksRepeater
+
+                                model: trackDelegateModel
+                            }
+
+                        }
+
+                        Item {
+                            id: selectionContainer
+
+                            visible: false
+
+                            Repeater {
+                                id: selectionRepeater
+
+                                model: timeline.selection
+
+                                Rectangle {
+                                    property var clip: trackAt(modelData.y).clipAt(modelData.x)
+                                    property var track: typeof clip === 'undefined' ? trackAt(clip.trackIndex + dragDelta.y) : 0
+
+                                    x: typeof clip === 'undefined' ? clip.x + dragDelta.x : 0
+                                    y: track ? track.y : 0
+                                    width: clip.width
+                                    height: track ? track.height : 0
+                                    color: 'transparent'
+                                    border.color: 'red'
+                                    visible: !clip.Drag.active && clip.trackIndex === clip.originalTrackIndex
+                                }
+
+                            }
+
+                        }
+
+                    }
+
                     ScrollBar.horizontal: ScrollBar {
                         id: horizontalScrollBar
+
                         height: 16
                         policy: ScrollBar.AlwaysOn
                         visible: tracksFlickable.contentWidth > tracksFlickable.width
@@ -425,8 +566,13 @@ Rectangle {
                         anchors.top: tracksFlickable.bottom
                         anchors.left: tracksFlickable.left
                         anchors.right: tracksFlickable.right
-                        background: Rectangle { color: parent.palette.alternateBase }
+
+                        background: Rectangle {
+                            color: parent.palette.alternateBase
+                        }
+
                     }
+
                     ScrollBar.vertical: ScrollBar {
                         width: 16
                         policy: ScrollBar.AlwaysOn
@@ -436,65 +582,26 @@ Rectangle {
                         anchors.left: tracksFlickable.right
                         anchors.bottom: tracksFlickable.bottom
                         anchors.bottomMargin: -16
-                        background: Rectangle { color: parent.palette.alternateBase }
-                    }
-        
-                    Item {
-                        id: tracksLayers
-                        anchors.fill: parent
 
-                        Column {
-                            // These make the striped background for the tracks.
-                            // It is important that these are not part of the track visual hierarchy;
-                            // otherwise, the clips will be obscured by the Track's background.
-                            Repeater {
-                                model: multitrack
-                                delegate: Rectangle {
-                                    width: tracksContainer.width
-                                    color: (index === timeline.currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
-                                    height: Logic.trackHeight(audio)
-                                }
-                            }
-                        }
-                        Column {
-                            id: tracksContainer
-                            Repeater { id: tracksRepeater; model: trackDelegateModel }
-                        }
-                        Item {
-                            id: selectionContainer
-                            visible: false
-                            Repeater {
-                                id: selectionRepeater
-                                model: timeline.selection
-                                Rectangle {
-                                    property var clip: trackAt(modelData.y).clipAt(modelData.x)
-                                    property var track: typeof clip === 'undefined' ? trackAt(clip.trackIndex + dragDelta.y) : 0
-                                    x: typeof clip === 'undefined' ? clip.x + dragDelta.x : 0
-                                    y: track ? track.y : 0
-                                    width: clip.width
-                                    height: track ? track.height : 0
-                                    color: 'transparent'
-                                    border.color: 'red'
-                                    visible: !clip.Drag.active && clip.trackIndex === clip.originalTrackIndex
-                                }
-                            }
+                        background: Rectangle {
+                            color: parent.palette.alternateBase
                         }
 
                     }
+
                 }
+
             }
 
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(timeline.currentTrack).y + ruler.height - tracksFlickable.contentY : 0
-                clip: timeline.selection.length ?
-                        tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x) : null
+                clip: timeline.selection.length ? tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x) : null
                 opacity: clip && clip.x + clip.width < tracksFlickable.contentX ? 1 : 0
             }
 
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(timeline.currentTrack).y + ruler.height - tracksFlickable.contentY : 0
-                clip: timeline.selection.length ?
-                        tracksRepeater.itemAt(timeline.selection[timeline.selection.length - 1].y).clipAt(timeline.selection[timeline.selection.length - 1].x) : null
+                clip: timeline.selection.length ? tracksRepeater.itemAt(timeline.selection[timeline.selection.length - 1].y).clipAt(timeline.selection[timeline.selection.length - 1].x) : null
                 opacity: clip && clip.x > tracksFlickable.contentX + tracksFlickable.width ? 1 : 0
                 anchors.right: parent.right
                 mirrorGradient: true
@@ -502,6 +609,7 @@ Rectangle {
 
             Rectangle {
                 id: cursor
+
                 visible: timeline.position > -1
                 color: activePalette.text
                 width: 1
@@ -509,75 +617,119 @@ Rectangle {
                 x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX
                 y: 0
             }
+
             Shotcut.TimelinePlayhead {
                 id: playhead
+
                 visible: timeline.position > -1
-                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX - width/2
+                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX - width / 2
                 y: 0
                 width: 16
                 height: 8
             }
+
         }
+
     }
 
     Rectangle {
         id: dropTarget
+
         height: multitrack.trackHeight
         opacity: 0.5
         visible: false
+
         Text {
             anchors.fill: parent
             anchors.leftMargin: 100
-            text: settings.timelineRipple? qsTr('Insert') : qsTr('Overwrite')
+            text: settings.timelineRipple ? qsTr('Insert') : qsTr('Overwrite')
             style: Text.Outline
             styleColor: 'white'
             font.pixelSize: Math.min(Math.max(parent.height * 0.8, 15), 30)
             verticalAlignment: Text.AlignVCenter
         }
+
     }
 
     Rectangle {
         id: bubbleHelp
+
         property alias text: bubbleHelpLabel.text
+
+        function show(x, y, text) {
+            bubbleHelp.x = x + tracksArea.x - tracksFlickable.contentX - bubbleHelpLabel.width;
+            bubbleHelp.y = Math.max(0, y + tracksArea.y - tracksFlickable.contentY - bubbleHelpLabel.height);
+            bubbleHelp.text = text;
+            if (bubbleHelp.state !== 'visible')
+                bubbleHelp.state = 'visible';
+
+        }
+
+        function hide() {
+            bubbleHelp.state = 'invisible';
+            bubbleHelp.opacity = 0;
+        }
+
         color: application.toolTipBaseColor
         width: bubbleHelpLabel.width + 8
         height: bubbleHelpLabel.height + 8
         radius: 4
-        states: [
-            State { name: 'invisible'; PropertyChanges { target: bubbleHelp; opacity: 0} },
-            State { name: 'visible'; PropertyChanges { target: bubbleHelp; opacity: 1} }
-        ]
         state: 'invisible'
+        states: [
+            State {
+                name: 'invisible'
+
+                PropertyChanges {
+                    target: bubbleHelp
+                    opacity: 0
+                }
+
+            },
+            State {
+                name: 'visible'
+
+                PropertyChanges {
+                    target: bubbleHelp
+                    opacity: 1
+                }
+
+            }
+        ]
         transitions: [
             Transition {
                 from: 'invisible'
                 to: 'visible'
-                OpacityAnimator { target: bubbleHelp; duration: 200; easing.type: Easing.InOutQuad }
+
+                OpacityAnimator {
+                    target: bubbleHelp
+                    duration: 200
+                    easing.type: Easing.InOutQuad
+                }
+
             },
             Transition {
                 from: 'visible'
                 to: 'invisible'
-                OpacityAnimator { target: bubbleHelp; duration: 200; easing.type: Easing.InOutQuad }
+
+                OpacityAnimator {
+                    target: bubbleHelp
+                    duration: 200
+                    easing.type: Easing.InOutQuad
+                }
+
             }
         ]
+
         Label {
             id: bubbleHelpLabel
+
             textFormat: Text.RichText
             color: application.toolTipTextColor
             anchors.centerIn: parent
         }
-        function show(x, y, text) {
-            bubbleHelp.x = x + tracksArea.x - tracksFlickable.contentX - bubbleHelpLabel.width
-            bubbleHelp.y = Math.max(0, y + tracksArea.y - tracksFlickable.contentY - bubbleHelpLabel.height)
-            bubbleHelp.text = text
-            if (bubbleHelp.state !== 'visible')
-                bubbleHelp.state = 'visible'
-        }
-        function hide() {
-            bubbleHelp.state = 'invisible'
-            bubbleHelp.opacity = 0
-        }
+
     }
+
     DropShadow {
         source: bubbleHelp
         anchors.fill: bubbleHelp
@@ -592,8 +744,14 @@ Rectangle {
 
     DelegateModel {
         id: trackDelegateModel
+
         model: multitrack
+
         Track {
+            // Only allow one blank to be selected
+            // select one
+            //  Clear previous blank selection
+
             model: multitrack
             rootIndex: trackDelegateModel.modelIndex(index)
             height: Logic.trackHeight(audio)
@@ -602,146 +760,186 @@ Rectangle {
             isCurrentTrack: timeline.currentTrack === index
             timeScale: multitrack.scaleFactor
             onClipClicked: {
-                var trackIndex = track.DelegateModel.itemsIndex
-                var clipIndex = clip.DelegateModel.itemsIndex
-                timeline.currentTrack = trackIndex
-                if (timeline.selection.length == 1 &&
-                    tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x).isBlank) {
-                    //  Clear previous blank selection
-                    timeline.selection = []
-                }
+                var trackIndex = track.DelegateModel.itemsIndex;
+                var clipIndex = clip.DelegateModel.itemsIndex;
+                timeline.currentTrack = trackIndex;
+                if (timeline.selection.length == 1 && tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x).isBlank)
+                    timeline.selection = [];
+
                 if (tracksRepeater.itemAt(trackIndex).clipAt(clipIndex).isBlank)
-                    // Only allow one blank to be selected
-                    timeline.selection = [Qt.point(clipIndex, trackIndex)]
+                    timeline.selection = [Qt.point(clipIndex, trackIndex)];
                 else if (mouse && mouse.modifiers & Qt.ControlModifier)
-                    timeline.selection = Logic.toggleSelection(trackIndex, clipIndex)
+                    timeline.selection = Logic.toggleSelection(trackIndex, clipIndex);
                 else if (mouse && mouse.modifiers & Qt.ShiftModifier)
-                    timeline.selection = Logic.selectRange(trackIndex, clipIndex)
+                    timeline.selection = Logic.selectRange(trackIndex, clipIndex);
                 else if (!Logic.selectionContains(trackIndex, clipIndex))
-                    // select one
-                    timeline.selection = [Qt.point(clipIndex, trackIndex)]
-                root.clipClicked()
+                    timeline.selection = [Qt.point(clipIndex, trackIndex)];
+                root.clipClicked();
             }
             onClipRightClicked: root.clipRightClicked()
             onClipDragged: {
                 // This provides continuous scrolling at the left/right edges.
                 if (x > tracksFlickable.contentX + tracksFlickable.width - 50) {
-                    scrollTimer.item = clip
-                    scrollTimer.backwards = false
-                    scrollTimer.start()
+                    scrollTimer.item = clip;
+                    scrollTimer.backwards = false;
+                    scrollTimer.start();
                 } else if (x < 50) {
                     tracksFlickable.contentX = 0;
-                    scrollTimer.stop()
+                    scrollTimer.stop();
                 } else if (x < tracksFlickable.contentX + 50) {
-                    scrollTimer.item = clip
-                    scrollTimer.backwards = true
-                    scrollTimer.start()
+                    scrollTimer.item = clip;
+                    scrollTimer.backwards = true;
+                    scrollTimer.start();
                 } else {
-                    scrollTimer.stop()
+                    scrollTimer.stop();
                 }
-                dragDelta = Qt.point(clip.x - clip.originalX, clip.trackIndex - clip.originalTrackIndex)
-                selectionContainer.visible = true
+                dragDelta = Qt.point(clip.x - clip.originalX, clip.trackIndex - clip.originalTrackIndex);
+                selectionContainer.visible = true;
             }
             onClipDropped: {
-                scrollTimer.running = false
-                bubbleHelp.hide()
-                selectionContainer.visible = false
+                scrollTimer.running = false;
+                bubbleHelp.hide();
+                selectionContainer.visible = false;
             }
             onClipDraggedToTrack: {
-                var i = clip.trackIndex + direction
-                var track = trackAt(i)
-                clip.reparent(track)
-                clip.trackIndex = track.DelegateModel.itemsIndex
+                var i = clip.trackIndex + direction;
+                var track = trackAt(i);
+                clip.reparent(track);
+                clip.trackIndex = track.DelegateModel.itemsIndex;
             }
             onCheckSnap: {
-                for (var i = 0; i < tracksRepeater.count; i++)
-                    tracksRepeater.itemAt(i).snapClip(clip)
+                for (var i = 0; i < tracksRepeater.count; i++) tracksRepeater.itemAt(i).snapClip(clip)
             }
+
             Image {
                 anchors.fill: parent
                 source: "qrc:///icons/light/16x16/track-locked.png"
                 fillMode: Image.Tile
                 opacity: parent.isLocked
                 visible: opacity
-                Behavior on opacity { NumberAnimation {} }
+
                 MouseArea {
                     anchors.fill: parent
                     onPressed: {
                         mouse.accepted = true;
-                        trackHeaderRepeater.itemAt(index).pulseLockButton()
+                        trackHeaderRepeater.itemAt(index).pulseLockButton();
                     }
                 }
+
+                Behavior on opacity {
+                    NumberAnimation {
+                    }
+
+                }
+
             }
+
         }
-    }
-    
-    Connections {
-        target: timeline
-        function onPositionChanged() { if (!stopScrolling) Logic.scrollIfNeeded() }
-        function onDragging() { Logic.dragging(pos, duration) }
-        function onDropped() { Logic.dropped() }
-        function onDropAccepted() { Logic.acceptDrop(xml) }
-        function onSelectionChanged() {
-            cornerstone.selected = timeline.isMultitrackSelected()
-            var selectedTrack = timeline.selectedTrack()
-            for (var i = 0; i < trackHeaderRepeater.count; i++)
-                trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack)
-        }
-        function onZoomIn(){
-            adjustZoom(0.0625)
-        }
-        function onZoomOut(){
-            adjustZoom(-0.0625)
-        }
-        function onZoomToFit() {
-            setZoom(Math.pow((tracksFlickable.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1/3))
-            tracksFlickable.contentX = 0
-        }
-        function onSetZoom(value) { setZoom(value) }
-        function onWarnTrackLocked() { pulseLockButtonOnTrack(trackIndex) }
-        function onMultitrackSelected() { selectMultitrack() }
-        function onRefreshWaveforms() {
-            if (!settings.timelineShowWaveforms) {
-                for (var i = 0; i < tracksRepeater.count; i++)
-                    tracksRepeater.itemAt(i).redrawWaveforms()
-            } else {
-                for (i = 0; i < tracksRepeater.count; i++)
-                    tracksRepeater.itemAt(i).remakeWaveforms(false)
-            }
-        }
-        function onUpdateThumbnails(trackIndex, clipIndex) {
-            if (trackIndex >= 0 && trackIndex < tracksRepeater.count) {
-                tracksRepeater.itemAt(trackIndex).updateThumbnails(clipIndex)
-            }
-        }
+
     }
 
     Connections {
-        target: multitrack
-        function onScaleFactorChanged() {
-            if (settings.timelineCenterPlayhead) Logic.scrollIfNeeded()
+        function onPositionChanged() {
+            if (!stopScrolling)
+                Logic.scrollIfNeeded();
+
         }
+
+        function onDragging() {
+            Logic.dragging(pos, duration);
+        }
+
+        function onDropped() {
+            Logic.dropped();
+        }
+
+        function onDropAccepted() {
+            Logic.acceptDrop(xml);
+        }
+
+        function onSelectionChanged() {
+            cornerstone.selected = timeline.isMultitrackSelected();
+            var selectedTrack = timeline.selectedTrack();
+            for (var i = 0; i < trackHeaderRepeater.count; i++) trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack)
+        }
+
+        function onZoomIn() {
+            adjustZoom(0.0625);
+        }
+
+        function onZoomOut() {
+            adjustZoom(-0.0625);
+        }
+
+        function onZoomToFit() {
+            setZoom(Math.pow((tracksFlickable.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1 / 3));
+            tracksFlickable.contentX = 0;
+        }
+
+        function onSetZoom(value) {
+            setZoom(value);
+        }
+
+        function onWarnTrackLocked() {
+            pulseLockButtonOnTrack(trackIndex);
+        }
+
+        function onMultitrackSelected() {
+            selectMultitrack();
+        }
+
+        function onRefreshWaveforms() {
+            if (!settings.timelineShowWaveforms) {
+                for (var i = 0; i < tracksRepeater.count; i++) tracksRepeater.itemAt(i).redrawWaveforms()
+            } else {
+                for (; i < tracksRepeater.count; i++) tracksRepeater.itemAt(i).remakeWaveforms(false)
+            }
+        }
+
+        function onUpdateThumbnails(trackIndex, clipIndex) {
+            if (trackIndex >= 0 && trackIndex < tracksRepeater.count)
+                tracksRepeater.itemAt(trackIndex).updateThumbnails(clipIndex);
+
+        }
+
+        target: timeline
+    }
+
+    Connections {
+        function onScaleFactorChanged() {
+            if (settings.timelineCenterPlayhead)
+                Logic.scrollIfNeeded();
+
+        }
+
+        target: multitrack
     }
 
     // This provides continuous scrolling at the left/right edges.
     Timer {
         id: scrollTimer
+
+        property var item
+        property bool backwards
+
         interval: 25
         repeat: true
         triggeredOnStart: true
-        property var item
-        property bool backwards
         onTriggered: {
-            var delta = backwards? -10 : 10
-            if (item) item.x += delta
-            tracksFlickable.contentX += delta
+            var delta = backwards ? -10 : 10;
+            if (item)
+                item.x += delta;
+
+            tracksFlickable.contentX += delta;
             if (tracksFlickable.contentX <= 0)
-                stop()
+                stop();
+
         }
     }
 
     Window {
         id: trackTypeDialog
+
         width: 400
         height: 80
         flags: Qt.Dialog
@@ -758,22 +956,33 @@ Rectangle {
                 Layout.columnSpan: 4
                 Layout.alignment: Qt.AlignHCenter
             }
-            Label { Layout.fillWidth: true }
+
+            Label {
+                Layout.fillWidth: true
+            }
+
             RadioButton {
                 text: qsTr("Audio")
                 onClicked: {
-                    timeline.insertAudioTrack()
-                    trackTypeDialog.close()
+                    timeline.insertAudioTrack();
+                    trackTypeDialog.close();
                 }
             }
+
             RadioButton {
                 text: qsTr("Video")
                 onClicked: {
-                    timeline.insertVideoTrack()
-                    trackTypeDialog.close()
+                    timeline.insertVideoTrack();
+                    trackTypeDialog.close();
                 }
             }
-            Label { Layout.fillWidth: true }
+
+            Label {
+                Layout.fillWidth: true
+            }
+
         }
+
     }
+
 }

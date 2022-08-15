@@ -9,6 +9,7 @@ Metadata {
     qml: "ui.qml"
     vui: 'vui.qml'
     isGpuCompatible: false
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -21,4 +22,5 @@ Metadata {
             }
         ]
     }
+
 }

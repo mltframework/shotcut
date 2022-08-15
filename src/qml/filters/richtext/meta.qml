@@ -10,6 +10,7 @@ Metadata {
     vui: 'vui.qml'
     isFavorite: true
     minimumVersion: '2'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -22,4 +23,5 @@ Metadata {
             }
         ]
     }
+
 }

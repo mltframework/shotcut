@@ -22,21 +22,21 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
+    function setControls() {
+        sizeSlider.value = filter.get('maxdiameter');
+        amountSlider.value = filter.get('maxcount');
+    }
+
     width: 350
     height: 100
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            filter.set('maxdiameter', 2)
-            filter.set('maxcount', 10)
-            filter.savePreset(preset.parameters)
+            filter.set('maxdiameter', 2);
+            filter.set('maxcount', 10);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        sizeSlider.value = filter.get('maxdiameter')
-        amountSlider.value = filter.get('maxcount')
+        setControls();
     }
 
     GridLayout {
@@ -48,8 +48,10 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: ['maxdiameter', 'maxcount']
             Layout.columnSpan: 2
             onPresetSelected: setControls()
@@ -59,14 +61,17 @@ Item {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: sizeSlider
+
             minimumValue: 1
             maximumValue: 100
             suffix: ' %'
             value: filter.get('maxdiameter')
             onValueChanged: filter.set('maxdiameter', value)
         }
+
         Shotcut.UndoButton {
             onClicked: sizeSlider.value = 2
         }
@@ -75,19 +80,24 @@ Item {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: amountSlider
+
             minimumValue: 1
             maximumValue: 400
             value: filter.get('maxcount')
             onValueChanged: filter.set('maxcount', value)
         }
+
         Shotcut.UndoButton {
             onClicked: amountSlider.value = 10
         }
-        
+
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

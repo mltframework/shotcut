@@ -23,6 +23,7 @@ Metadata {
     name: qsTr("Lens Correction")
     mlt_service: 'frei0r.lenscorrection'
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -41,14 +42,14 @@ Metadata {
                 isCurve: true
                 minimum: 0
                 maximum: 1
-             },
+            },
             Parameter {
                 name: qsTr('Correction at Center')
                 property: '2'
                 isCurve: true
                 minimum: 0
                 maximum: 1
-             },
+            },
             Parameter {
                 name: qsTr('Correction at Edges')
                 property: '3'
@@ -58,4 +59,5 @@ Metadata {
             }
         ]
     }
+
 }

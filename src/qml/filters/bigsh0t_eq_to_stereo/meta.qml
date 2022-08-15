@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: GPL-2.0-or-later */
+// SPDX-License-Identifier: GPL-2.0-or-later
 import QtQuick 2.0
 import org.shotcut.qml 1.0
 
@@ -9,6 +9,7 @@ Metadata {
     objectName: "bigsh0t_eq_to_stereo"
     qml: "ui.qml"
     vui: "vui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -51,4 +52,5 @@ Metadata {
             }
         ]
     }
+
 }

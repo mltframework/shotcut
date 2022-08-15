@@ -21,25 +21,24 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
-    width: 350
-    height: 100
     property string amount: 'av.frames'
     property int amountDefault: 2
 
-    Component.onCompleted: {
-        if (filter.isNew) {
-            updateFilter(amountDefault)
-            filter.savePreset(preset.parameters)
-        }
-        amountSlider.value = filter.get(amount)
+    function updateFilter(value) {
+        filter.set(amount, value);
+        var weights = [];
+        for (var i = 1; i <= value; i++) weights.push(i)
+        filter.set('av.weights', weights.join(' '));
     }
 
-    function updateFilter(value) {
-        filter.set(amount, value)
-        var weights = []
-        for (var i = 1; i <= value; i++)
-            weights.push(i)
-        filter.set('av.weights', weights.join(' '))
+    width: 350
+    height: 100
+    Component.onCompleted: {
+        if (filter.isNew) {
+            updateFilter(amountDefault);
+            filter.savePreset(preset.parameters);
+        }
+        amountSlider.value = filter.get(amount);
     }
 
     GridLayout {
@@ -51,8 +50,10 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: [amount]
             Layout.columnSpan: parent.columns - 1
             onPresetSelected: amountSlider.value = filter.get(amount)
@@ -62,8 +63,10 @@ Item {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: amountSlider
+
             minimumValue: 2
             maximumValue: Math.round(profile.fps)
             stepSize: 1
@@ -71,10 +74,15 @@ Item {
             spinnerWidth: 110
             onValueChanged: updateFilter(value)
         }
+
         Shotcut.UndoButton {
             onClicked: amountSlider.value = amountDefault
         }
 
-        Item { Layout.fillHeight: true}
+        Item {
+            Layout.fillHeight: true
+        }
+
     }
+
 }

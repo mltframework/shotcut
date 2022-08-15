@@ -19,66 +19,96 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 Menu {
+    id: menu
+
     property var control: parent
 
-    id: menu
     width: 220
 
     MenuItem {
+
         action: Action {
-            text: qsTr('Undo') + (application.OS === 'OS X'? '    ⌘Z' : ' (Ctrl+Z)')
+            text: qsTr('Undo') + (application.OS === 'OS X' ? '    ⌘Z' : ' (Ctrl+Z)')
             onTriggered: control.undo()
         }
+
     }
+
     MenuItem {
+
         action: Action {
-            text: qsTr('Redo') + (application.OS === 'Windows'? ' (Ctrl+Y)' : application.OS === 'OS X'? '    ⇧⌘Z' : ' (Ctrl+Shift+Z)')
+            text: qsTr('Redo') + (application.OS === 'Windows' ? ' (Ctrl+Y)' : application.OS === 'OS X' ? '    ⇧⌘Z' : ' (Ctrl+Shift+Z)')
             onTriggered: control.redo()
         }
+
     }
-    MenuSeparator {}
+
+    MenuSeparator {
+    }
+
     MenuItem {
+
         action: Action {
-            text: qsTr('Cut') + (application.OS === 'OS X'? '    ⌘X' : ' (Ctrl+X)')
+            text: qsTr('Cut') + (application.OS === 'OS X' ? '    ⌘X' : ' (Ctrl+X)')
             onTriggered: control.cut()
         }
+
     }
+
     MenuItem {
+
         action: Action {
-            text: qsTr('Copy') + (application.OS === 'OS X'? '    ⌘C' : ' (Ctrl+C)')
+            text: qsTr('Copy') + (application.OS === 'OS X' ? '    ⌘C' : ' (Ctrl+C)')
             onTriggered: control.copy()
         }
+
     }
+
     MenuItem {
+
         action: Action {
-            text: qsTr('Paste') + (application.OS === 'OS X'? '    ⌘V' : ' (Ctrl+V)')
+            text: qsTr('Paste') + (application.OS === 'OS X' ? '    ⌘V' : ' (Ctrl+V)')
             onTriggered: control.paste()
         }
+
     }
+
     MenuItem {
+
         action: Action {
             text: qsTr('Delete')
             onTriggered: parent.control(control.selectionStart, control.selectionEnd)
         }
+
     }
+
     MenuItem {
+
         action: Action {
             text: qsTr('Clear')
             onTriggered: {
-                control.selectAll()
-                control.remove(control.selectionStart, control.selectionEnd)
+                control.selectAll();
+                control.remove(control.selectionStart, control.selectionEnd);
             }
         }
+
     }
-    MenuSeparator {}
+
+    MenuSeparator {
+    }
+
     MenuItem {
+
         action: Action {
-            text: qsTr('Select All') + (application.OS === 'OS X'? '    ⌘A' : ' (Ctrl+A)')
+            text: qsTr('Select All') + (application.OS === 'OS X' ? '    ⌘A' : ' (Ctrl+A)')
             onTriggered: control.selectAll()
         }
+
     }
+
     MenuItem {
         text: qsTr('Cancel')
         onTriggered: menu.dismiss()
     }
+
 }

@@ -24,6 +24,7 @@ Metadata {
     mlt_service: "frei0r.elastic_scale"
     objectName: 'elastic_scale'
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -42,14 +43,14 @@ Metadata {
                 isCurve: true
                 minimum: 0
                 maximum: 1
-             },
+            },
             Parameter {
                 name: qsTr('Linear scale factor')
                 property: '2'
                 isCurve: true
                 minimum: 0
                 maximum: 1
-             },
+            },
             Parameter {
                 name: qsTr('Non-Linear scale factor')
                 property: '3'
@@ -59,4 +60,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -22,29 +22,32 @@ import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0
 
 Item {
+    property alias duration: timeSpinner.value
+
     width: 100
     height: 50
     objectName: 'fadeIn'
-    property alias duration: timeSpinner.value
-
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set('alpha', 1)
-            duration = Math.ceil(settings.videoInDuration * profile.fps)
+            filter.set('alpha', 1);
+            duration = Math.ceil(settings.videoInDuration * profile.fps);
         } else if (filter.animateIn === 0) {
             // Convert legacy filter.
-            duration = filter.duration
-            filter.set('in', producer.in )
-            filter.set('out', producer.out )
+            duration = filter.duration;
+            filter.set('in', producer.in);
+            filter.set('out', producer.out);
         } else {
-            duration = filter.animateIn
+            duration = filter.animateIn;
         }
-        alphaCheckbox.checked = filter.get('alpha') != 1
+        alphaCheckbox.checked = filter.get('alpha') != 1;
     }
 
     Connections {
+        function onAnimateInChanged() {
+            duration = filter.animateIn;
+        }
+
         target: filter
-        function onAnimateInChanged() { duration = filter.animateIn }
     }
 
     ColumnLayout {
@@ -52,33 +55,43 @@ Item {
         anchors.margins: 8
 
         RowLayout {
-            Label { text: qsTr('Duration') }
+            Label {
+                text: qsTr('Duration')
+            }
+
             Shotcut.TimeSpinner {
                 id: timeSpinner
+
                 minimumValue: 2
                 maximumValue: 5000
                 onValueChanged: {
-                    filter.animateIn = duration
-                    filter.resetProperty('opacity')
-                    filter.set('opacity', 0, 0, KeyframesModel.SmoothInterpolation)
-                    filter.set('opacity', 1, Math.min(duration, filter.duration) - 1)
+                    filter.animateIn = duration;
+                    filter.resetProperty('opacity');
+                    filter.set('opacity', 0, 0, KeyframesModel.SmoothInterpolation);
+                    filter.set('opacity', 1, Math.min(duration, filter.duration) - 1);
                 }
                 onSetDefaultClicked: {
-                    duration = Math.ceil(settings.videoInDuration * profile.fps)
+                    duration = Math.ceil(settings.videoInDuration * profile.fps);
                 }
                 onSaveDefaultClicked: {
-                    settings.videoInDuration = duration / profile.fps
+                    settings.videoInDuration = duration / profile.fps;
                 }
             }
+
         }
+
         CheckBox {
             id: alphaCheckbox
+
             text: qsTr('Adjust opacity instead of fade with black')
             // When =-1, alpha follows opacity value.
-            onClicked: filter.set('alpha', checked? -1 : 1)
+            onClicked: filter.set('alpha', checked ? -1 : 1)
         }
+
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
+
     }
+
 }

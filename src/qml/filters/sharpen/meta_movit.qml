@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "movit.sharpen"
     needsGPU: true
     qml: "ui_movit.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -42,4 +43,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -25,57 +25,54 @@ Shotcut.KeyframableFilter {
     property string linearwidth: '1'
     property string linearscalefactor: '2'
     property string nonlinearscalefactor: '3'
-    
-    property double centerDefault: 0.50
-    property double linearwidthDefault: 0.00
-    property double linearscalefactorDefault: 0.50
-    property double nonlinearscalefactorDefault: 0.50
-     
+    property double centerDefault: 0.5
+    property double linearwidthDefault: 0
+    property double linearscalefactorDefault: 0.5
+    property double nonlinearscalefactorDefault: 0.5
+
+    function setControls() {
+        var position = getPosition();
+        blockUpdate = true;
+        centerSlider.value = filter.getDouble(center, position) * centerSlider.maximumValue;
+        centerKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(center) > 0;
+        linearwidthSlider.value = filter.getDouble(linearwidth, position) * linearwidthSlider.maximumValue;
+        linwKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(linearwidth) > 0;
+        linearscalefactorSlider.value = filter.getDouble(linearscalefactor, position) * linearscalefactorSlider.maximumValue;
+        lsfKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(linearscalefactor) > 0;
+        nonlinearscalefactorSlider.value = filter.getDouble(nonlinearscalefactor, position) * nonlinearscalefactorSlider.maximumValue;
+        nlsfKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(nonlinearscalefactor) > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
+    }
+
+    function enableControls(enabled) {
+        centerSlider.enabled = linearwidthSlider.enabled = linearscalefactorSlider.enabled = nonlinearscalefactorSlider.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        setControls();
+        updateFilter(center, centerSlider.value / centerSlider.maximumValue, centerKeyframesButton, null);
+        updateFilter(linearwidth, linearwidthSlider.value / linearwidthSlider.maximumValue, linwKeyframesButton, null);
+        updateFilter(linearscalefactor, linearscalefactorSlider.value / linearscalefactorSlider.maximumValue, lsfKeyframesButton, null);
+        updateFilter(nonlinearscalefactor, nonlinearscalefactorSlider.value / nonlinearscalefactorSlider.maximumValue, nlsfKeyframesButton, null);
+    }
+
     keyframableParameters: [center, linearwidth, linearscalefactor, nonlinearscalefactor]
     startValues: [0.5, 0.5, 0.5, 0.5]
     middleValues: [centerDefault, linearwidthDefault, linearscalefactorDefault, nonlinearscalefactorDefault]
     endValues: [0.5, 0.5, 0.5, 0.5]
-
     width: 350
     height: 100
-
     Component.onCompleted: {
-        filter.set('threads', 0)
+        filter.set('threads', 0);
         if (filter.isNew) {
-            filter.set(center, centerDefault)
-            filter.set(linearwidth, linearwidthDefault)
-            filter.set(linearscalefactor, linearscalefactorDefault)
-            filter.set(nonlinearscalefactor, nonlinearscalefactorDefault)
-            filter.savePreset(preset.parameters)
+            filter.set(center, centerDefault);
+            filter.set(linearwidth, linearwidthDefault);
+            filter.set(linearscalefactor, linearscalefactorDefault);
+            filter.set(nonlinearscalefactor, nonlinearscalefactorDefault);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        centerSlider.value = filter.getDouble(center, position) * centerSlider.maximumValue
-        centerKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(center) > 0
-        linearwidthSlider.value = filter.getDouble(linearwidth, position) * linearwidthSlider.maximumValue
-        linwKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(linearwidth) > 0
-        linearscalefactorSlider.value = filter.getDouble(linearscalefactor, position) * linearscalefactorSlider.maximumValue
-        lsfKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(linearscalefactor) > 0
-        nonlinearscalefactorSlider.value = filter.getDouble(nonlinearscalefactor, position) * nonlinearscalefactorSlider.maximumValue
-        nlsfKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(nonlinearscalefactor) > 0
-        blockUpdate = false
-        enableControls(isSimpleKeyframesActive())
-    }
-
-    function enableControls(enabled) {
-        centerSlider.enabled = linearwidthSlider.enabled = linearscalefactorSlider.enabled = nonlinearscalefactorSlider.enabled = enabled
-    }
-
-    function updateSimpleKeyframes() {
-        setControls()
-        updateFilter(center, centerSlider.value / centerSlider.maximumValue, centerKeyframesButton, null)
-        updateFilter(linearwidth, linearwidthSlider.value / linearwidthSlider.maximumValue, linwKeyframesButton, null)
-        updateFilter(linearscalefactor, linearscalefactorSlider.value / linearscalefactorSlider.maximumValue, lsfKeyframesButton, null)
-        updateFilter(nonlinearscalefactor, nonlinearscalefactorSlider.value / nonlinearscalefactorSlider.maximumValue, nlsfKeyframesButton, null)
+        setControls();
     }
 
     GridLayout {
@@ -87,136 +84,197 @@ Shotcut.KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: [center, linearwidth, linearscalefactor, nonlinearscalefactor]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                resetSimpleKeyframes()
+                resetSimpleKeyframes();
             }
             onPresetSelected: {
-                setControls()
-                initializeSimpleKeyframes()
+                setControls();
+                initializeSimpleKeyframes();
             }
         }
 
         Label {
             text: qsTr('Center')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('Horizontal center position of the linear area.') }
+
+            Shotcut.HoverTip {
+                text: qsTr('Horizontal center position of the linear area.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
             id: centerSlider
+
             minimumValue: 0
-            maximumValue: 100.0
+            maximumValue: 100
             stepSize: 0.1
             decimals: 1
             suffix: ' '
             onValueChanged: updateFilter(center, centerSlider.value / centerSlider.maximumValue, centerKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: centerSlider.value = centerDefault * centerSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: centerKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, center, centerSlider.value / centerSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, center, centerSlider.value / centerSlider.maximumValue);
             }
         }
 
         Label {
             text: qsTr('Linear width')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('Width of the linear area.') }
+
+            Shotcut.HoverTip {
+                text: qsTr('Width of the linear area.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
             id: linearwidthSlider
+
             minimumValue: 0
-            maximumValue: 100.0
+            maximumValue: 100
             stepSize: 0.1
             decimals: 1
             suffix: ' '
             onValueChanged: updateFilter(linearwidth, linearwidthSlider.value / linearwidthSlider.maximumValue, linwKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: linearwidthSlider.value = linearwidthDefault * linearwidthSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: linwKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, linearwidth, linearwidthSlider.value / linearwidthSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, linearwidth, linearwidthSlider.value / linearwidthSlider.maximumValue);
             }
         }
 
         Label {
             text: qsTr('Linear scale factor')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('Amount the linear area is scaled.') }
+
+            Shotcut.HoverTip {
+                text: qsTr('Amount the linear area is scaled.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
             id: linearscalefactorSlider
+
             minimumValue: 0
-            maximumValue: 100.0
+            maximumValue: 100
             stepSize: 0.1
             decimals: 1
             suffix: ' '
             onValueChanged: updateFilter(linearscalefactor, linearscalefactorSlider.value / linearscalefactorSlider.maximumValue, lsfKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: linearscalefactorSlider.value = linearscalefactorDefault * linearscalefactorSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: lsfKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, linearscalefactor, linearscalefactorSlider.value / linearscalefactorSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, linearscalefactor, linearscalefactorSlider.value / linearscalefactorSlider.maximumValue);
             }
         }
 
         Label {
             text: qsTr('Non-Linear scale factor')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('Amount the outer left and outer right areas are scaled non linearly.') }
+
+            Shotcut.HoverTip {
+                text: qsTr('Amount the outer left and outer right areas are scaled non linearly.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
             id: nonlinearscalefactorSlider
+
             minimumValue: 0
-            maximumValue: 100.0
+            maximumValue: 100
             stepSize: 0.1
             decimals: 1
             suffix: ' '
             onValueChanged: updateFilter(nonlinearscalefactor, nonlinearscalefactorSlider.value / nonlinearscalefactorSlider.maximumValue, nlsfKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: nonlinearscalefactorSlider.value = nonlinearscalefactorDefault * nonlinearscalefactorSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: nlsfKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, nonlinearscalefactor, nonlinearscalefactorSlider.value / nonlinearscalefactorSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, nonlinearscalefactor, nonlinearscalefactorSlider.value / nonlinearscalefactorSlider.maximumValue);
             }
         }
-        
+
         Item {
             Layout.fillHeight: true
         }
+
     }
 
     Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
         target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateSimpleKeyframes() }
-        function onOutChanged() { updateSimpleKeyframes() }
-        function onAnimateInChanged() { updateSimpleKeyframes() }
-        function onAnimateOutChanged() { updateSimpleKeyframes() }
-        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
         target: producer
-        function onPositionChanged() { setControls() }
     }
+
 }

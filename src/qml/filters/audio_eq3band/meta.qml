@@ -8,6 +8,7 @@ Metadata {
     mlt_service: 'ladspa.1204'
     objectName: '3BandEq'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -21,4 +22,5 @@ Metadata {
             }
         ]
     }
+
 }

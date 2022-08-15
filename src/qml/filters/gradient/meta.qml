@@ -8,9 +8,11 @@ Metadata {
     mlt_service: 'frei0r.cairogradient'
     qml: 'ui.qml'
     vui: 'vui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
         simpleProperties: ['shotcut:rect']
     }
+
 }

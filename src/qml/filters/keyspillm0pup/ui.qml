@@ -47,47 +47,45 @@ Item {
     property bool showMaskDefault: false
     property string maskAlphaParam: '12'
     property bool maskAlphaDefault: false
-    property var defaultParameters: [keyColorParam, targetColorParam, maskTypeParam,
-        toleranceParam, slopeParam, hueGateParam, saturationParam, operation1Param,
-        amount1Param, operation2Param, amount2Param]
+    property var defaultParameters: [keyColorParam, targetColorParam, maskTypeParam, toleranceParam, slopeParam, hueGateParam, saturationParam, operation1Param, amount1Param, operation2Param, amount2Param]
+
+    function setControls() {
+        keyColorPicker.value = filter.get(keyColorParam);
+        targetColorPicker.value = filter.get(targetColorParam);
+        maskTypeCombo.currentIndex = filter.get(maskTypeParam);
+        toleranceSlider.value = filter.getDouble(toleranceParam) * 100;
+        slopeSlider.value = filter.getDouble(slopeParam) * 100;
+        hueGateSlider.value = filter.getDouble(hueGateParam) * 100;
+        saturationSlider.value = filter.getDouble(saturationParam) * 100;
+        operation1Combo.currentIndex = filter.get(operation1Param);
+        amount1Slider.value = filter.getDouble(amount1Param) * 100;
+        operation2Combo.currentIndex = filter.get(operation2Param);
+        amount2Slider.value = filter.getDouble(amount2Param) * 100;
+        showMaskCheckbox.checked = parseInt(filter.get(showMaskParam));
+        maskAlphaCheckbox.checked = parseInt(filter.get(maskAlphaParam));
+    }
 
     width: 200
     height: 380
     Component.onCompleted: {
-        filter.set('threads', 0)
+        filter.set('threads', 0);
         if (filter.isNew) {
-            filter.set(keyColorParam, keyColorDefault)
-            filter.set(targetColorParam, targetColorDefault)
-            filter.set(maskTypeParam, maskTypeDefault)
-            filter.set(toleranceParam, toleranceDefault)
-            filter.set(slopeParam, slopeDefault)
-            filter.set(hueGateParam, hueGateDefault)
-            filter.set(saturationParam, saturationDefault)
-            filter.set(operation1Param, operation1Default)
-            filter.set(amount1Param, amount1Default)
-            filter.set(operation2Param, operation2Default)
-            filter.set(amount2Param, amount2Default)
-            filter.set(showMaskParam, showMaskDefault)
-            filter.set(maskAlphaParam, maskAlphaDefault)
-            filter.savePreset(defaultParameters)
+            filter.set(keyColorParam, keyColorDefault);
+            filter.set(targetColorParam, targetColorDefault);
+            filter.set(maskTypeParam, maskTypeDefault);
+            filter.set(toleranceParam, toleranceDefault);
+            filter.set(slopeParam, slopeDefault);
+            filter.set(hueGateParam, hueGateDefault);
+            filter.set(saturationParam, saturationDefault);
+            filter.set(operation1Param, operation1Default);
+            filter.set(amount1Param, amount1Default);
+            filter.set(operation2Param, operation2Default);
+            filter.set(amount2Param, amount2Default);
+            filter.set(showMaskParam, showMaskDefault);
+            filter.set(maskAlphaParam, maskAlphaDefault);
+            filter.savePreset(defaultParameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        keyColorPicker.value = filter.get(keyColorParam)
-        targetColorPicker.value = filter.get(targetColorParam)
-        maskTypeCombo.currentIndex = filter.get(maskTypeParam)
-        toleranceSlider.value = filter.getDouble(toleranceParam) * 100
-        slopeSlider.value = filter.getDouble(slopeParam) * 100
-        hueGateSlider.value = filter.getDouble(hueGateParam) * 100
-        saturationSlider.value = filter.getDouble(saturationParam) * 100
-        operation1Combo.currentIndex = filter.get(operation1Param)
-        amount1Slider.value = filter.getDouble(amount1Param) * 100
-        operation2Combo.currentIndex = filter.get(operation2Param)
-        amount2Slider.value = filter.getDouble(amount2Param) * 100
-        showMaskCheckbox.checked = parseInt(filter.get(showMaskParam))
-        maskAlphaCheckbox.checked = parseInt(filter.get(maskAlphaParam))
+        setControls();
     }
 
     GridLayout {
@@ -99,8 +97,10 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: presetItem
+
             Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: setControls()
@@ -110,13 +110,16 @@ Item {
             text: qsTr('Key color')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.ColorPicker {
             id: keyColorPicker
+
             property bool isReady: false
+
             Component.onCompleted: isReady = true
             onValueChanged: {
                 if (isReady) {
-                    filter.set(keyColorParam, value)
+                    filter.set(keyColorParam, value);
                     filter.set("disable", 0);
                 }
             }
@@ -125,6 +128,7 @@ Item {
             }
             onPickCancelled: filter.set('disable', 0)
         }
+
         Shotcut.UndoButton {
             onClicked: keyColorPicker.value = keyColorDefault
         }
@@ -133,13 +137,16 @@ Item {
             text: qsTr('Target color')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.ColorPicker {
             id: targetColorPicker
+
             property bool isReady: false
+
             Component.onCompleted: isReady = true
             onValueChanged: {
                 if (isReady) {
-                    filter.set(targetColorParam, value)
+                    filter.set(targetColorParam, value);
                     filter.set("disable", 0);
                 }
             }
@@ -148,6 +155,7 @@ Item {
             }
             onPickCancelled: filter.set('disable', 0)
         }
+
         Shotcut.UndoButton {
             onClicked: targetColorPicker.value = targetColorDefault
         }
@@ -156,16 +164,19 @@ Item {
             text: qsTr('Mask type')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.ComboBox {
             id: maskTypeCombo
+
             implicitWidth: 180
             model: [qsTr('Color Distance'), qsTr('Transparency'), qsTr('Edge Inwards'), qsTr('Edge Outwards')]
             onActivated: filter.set(maskTypeParam, currentIndex)
         }
+
         Shotcut.UndoButton {
             onClicked: {
-                filter.set(maskTypeParam, maskTypeDefault)
-                maskTypeCombo.currentIndex = maskTypeDefault
+                filter.set(maskTypeParam, maskTypeDefault);
+                maskTypeCombo.currentIndex = maskTypeDefault;
             }
         }
 
@@ -173,8 +184,10 @@ Item {
             text: qsTr('Tolerance')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: toleranceSlider
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
@@ -182,6 +195,7 @@ Item {
             value: filter.getDouble(toleranceParam) * 100
             onValueChanged: filter.set(toleranceParam, value / 100)
         }
+
         Shotcut.UndoButton {
             onClicked: toleranceSlider.value = toleranceDefault * 100
         }
@@ -190,8 +204,10 @@ Item {
             text: qsTr('Slope')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: slopeSlider
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
@@ -199,6 +215,7 @@ Item {
             value: filter.getDouble(slopeParam) * 100
             onValueChanged: filter.set(slopeParam, value / 100)
         }
+
         Shotcut.UndoButton {
             onClicked: slopeSlider.value = slopeDefault * 100
         }
@@ -207,8 +224,10 @@ Item {
             text: qsTr('Hue gate')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: hueGateSlider
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
@@ -216,6 +235,7 @@ Item {
             value: filter.getDouble(hueGateParam) * 100
             onValueChanged: filter.set(hueGateParam, value / 100)
         }
+
         Shotcut.UndoButton {
             onClicked: hueGateSlider.value = hueGateDefault * 100
         }
@@ -224,8 +244,10 @@ Item {
             text: qsTr('Saturation threshold')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: saturationSlider
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
@@ -233,6 +255,7 @@ Item {
             value: filter.getDouble(saturationParam) * 100
             onValueChanged: filter.set(saturationParam, value / 100)
         }
+
         Shotcut.UndoButton {
             onClicked: saturationSlider.value = saturationDefault * 100
         }
@@ -241,16 +264,19 @@ Item {
             text: qsTr('Operation 1')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.ComboBox {
             id: operation1Combo
+
             implicitWidth: 180
             model: [qsTr('None'), qsTr('De-Key'), qsTr('Desaturate'), qsTr('Adjust Luma')]
             onActivated: filter.set(operation1Param, currentIndex)
         }
+
         Shotcut.UndoButton {
             onClicked: {
-                filter.set(operation1Param, operation1Default)
-                operation1Combo.currentIndex = operation1Default
+                filter.set(operation1Param, operation1Default);
+                operation1Combo.currentIndex = operation1Default;
             }
         }
 
@@ -258,8 +284,10 @@ Item {
             text: qsTr('Amount 1')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: amount1Slider
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
@@ -267,6 +295,7 @@ Item {
             value: filter.getDouble(amount1Param) * 100
             onValueChanged: filter.set(amount1Param, value / 100)
         }
+
         Shotcut.UndoButton {
             onClicked: amount1Slider.value = amount1Default * 100
         }
@@ -275,16 +304,19 @@ Item {
             text: qsTr('Operation 2')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.ComboBox {
             id: operation2Combo
+
             implicitWidth: 180
             model: [qsTr('None'), qsTr('De-Key'), qsTr('Desaturate'), qsTr('Adjust Luma')]
             onActivated: filter.set(operation2Param, currentIndex)
         }
+
         Shotcut.UndoButton {
             onClicked: {
-                filter.set(operation2Param, operation2Default)
-                operation2Combo.currentIndex = operation2Default
+                filter.set(operation2Param, operation2Default);
+                operation2Combo.currentIndex = operation2Default;
             }
         }
 
@@ -292,8 +324,10 @@ Item {
             text: qsTr('Amount 2')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: amount2Slider
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
@@ -301,30 +335,43 @@ Item {
             value: filter.getDouble(amount2Param) * 100
             onValueChanged: filter.set(amount2Param, value / 100)
         }
+
         Shotcut.UndoButton {
             onClicked: amount2Slider.value = amount2Default * 100
         }
 
-        Label {}
+        Label {
+        }
+
         CheckBox {
             id: showMaskCheckbox
+
             text: qsTr('Show mask')
             onCheckedChanged: filter.set(showMaskParam, checked)
         }
+
         Shotcut.UndoButton {
             onClicked: showMaskCheckbox.checked = showMaskDefault
         }
 
-        Label {}
+        Label {
+        }
+
         CheckBox {
             id: maskAlphaCheckbox
+
             text: qsTr('Send mask to alpha channel')
             onCheckedChanged: filter.set(maskAlphaParam, checked)
         }
+
         Shotcut.UndoButton {
             onClicked: maskAlphaCheckbox.checked = maskAlphaDefault
         }
 
-        Item { Layout.fillHeight: true }
+        Item {
+            Layout.fillHeight: true
+        }
+
     }
+
 }

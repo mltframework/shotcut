@@ -22,25 +22,25 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
+    function setControls() {
+        sliderCenter.value = filter.getDouble('0');
+        sliderBandwidth.value = filter.getDouble('1');
+        sliderStages.value = filter.get('2');
+        sliderWetness.value = filter.getDouble('wetness') * sliderWetness.maximumValue;
+    }
+
     width: 350
     height: 150
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            filter.set('0', 322)
-            filter.set('1', 322)
-            filter.set('2', 1)
-            filter.set('wetness', 1.0)
-            filter.savePreset(preset.parameters)
+            filter.set('0', 322);
+            filter.set('1', 322);
+            filter.set('2', 1);
+            filter.set('wetness', 1);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        sliderCenter.value = filter.getDouble('0')
-        sliderBandwidth.value = filter.getDouble('1')
-        sliderStages.value = filter.get('2')
-        sliderWetness.value = filter.getDouble('wetness') * sliderWetness.maximumValue
+        setControls();
     }
 
     GridLayout {
@@ -52,8 +52,10 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: ['0', '1', '2', 'wetness']
             Layout.columnSpan: 2
             onPresetSelected: setControls()
@@ -63,17 +65,20 @@ Item {
             text: qsTr('Center frequency')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: sliderCenter
+
             minimumValue: 5
             maximumValue: 21600
             suffix: ' Hz'
             spinnerWidth: 100
             value: filter.getDouble('0')
             onValueChanged: {
-                filter.set('0', value)
+                filter.set('0', value);
             }
         }
+
         Shotcut.UndoButton {
             onClicked: sliderCenter.value = 322
         }
@@ -82,17 +87,20 @@ Item {
             text: qsTr('Bandwidth')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: sliderBandwidth
+
             minimumValue: 5
             maximumValue: 21600
             suffix: ' Hz'
             spinnerWidth: 100
             value: filter.getDouble('1')
             onValueChanged: {
-                filter.set('1', value)
+                filter.set('1', value);
             }
         }
+
         Shotcut.UndoButton {
             onClicked: sliderBandwidth.value = 322
         }
@@ -101,16 +109,19 @@ Item {
             text: qsTr('Rolloff rate')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: sliderStages
+
             minimumValue: 1
             maximumValue: 10
             spinnerWidth: 100
             value: filter.get('2')
             onValueChanged: {
-                filter.set('2', value)
+                filter.set('2', value);
             }
         }
+
         Shotcut.UndoButton {
             onClicked: sliderStages.value = 1
         }
@@ -119,8 +130,10 @@ Item {
             text: qsTr('Dry')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: sliderWetness
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
@@ -129,15 +142,18 @@ Item {
             suffix: ' %'
             value: filter.getDouble('wetness') * maximumValue
             onValueChanged: {
-                filter.set('wetness', value / maximumValue)
+                filter.set('wetness', value / maximumValue);
             }
         }
+
         Shotcut.UndoButton {
             onClicked: sliderWetness.value = sliderWetness.maximumValue
         }
 
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
+
     }
+
 }

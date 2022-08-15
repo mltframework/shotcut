@@ -11,6 +11,7 @@ Metadata {
     vui: 'vui_movit.qml'
     allowMultiple: false
     isFavorite: true
+
     keyframes {
         allowTrim: false
         allowAnimateIn: true
@@ -24,4 +25,5 @@ Metadata {
             }
         ]
     }
+
 }

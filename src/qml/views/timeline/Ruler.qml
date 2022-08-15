@@ -20,28 +20,34 @@ import QtQuick.Controls 2.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
-    property real timeScale: 1.0
+    id: rulerTop
+
+    property real timeScale: 1
     property int adjustment: 0
-    property real intervalSeconds: ((timeScale > 5)? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale)))) + adjustment
+    property real intervalSeconds: ((timeScale > 5) ? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale)))) + adjustment
+
     signal editMarkerRequested(int index)
     signal deleteMarkerRequested(int index)
 
-    SystemPalette { id: activePalette }
-
-    id: rulerTop
     height: 28
     color: activePalette.base
 
+    SystemPalette {
+        id: activePalette
+    }
+
     Repeater {
         model: parent.width / (intervalSeconds * profile.fps * timeScale)
+
         Rectangle {
+            // right edge
+
             anchors.bottom: rulerTop.bottom
             height: 18
             width: 1
             color: activePalette.windowText
             x: index * intervalSeconds * profile.fps * timeScale
-            visible: ((x + width)   > tracksFlickable.contentX) && // right edge
-                      (x            < tracksFlickable.contentX + tracksFlickable.width) // left edge
+            visible: ((x + width) > tracksFlickable.contentX) && (x < tracksFlickable.contentX + tracksFlickable.width) // left edge
 
             Label {
                 anchors.left: parent.right
@@ -51,7 +57,9 @@ Rectangle {
                 color: activePalette.windowText
                 text: application.timecode(index * intervalSeconds * profile.fps + 2).substr(0, 8)
             }
+
         }
+
     }
 
     MouseArea {
@@ -60,8 +68,8 @@ Rectangle {
         acceptedButtons: Qt.NoButton
         onExited: bubbleHelp.hide()
         onPositionChanged: {
-            var text = application.timecode(mouse.x / timeScale)
-            bubbleHelp.show(mouse.x + bubbleHelp.width - 8, mouse.y + 65, text)
+            var text = application.timecode(mouse.x / timeScale);
+            bubbleHelp.show(mouse.x + bubbleHelp.width - 8, mouse.y + 65, text);
         }
     }
 
@@ -69,67 +77,73 @@ Rectangle {
         anchors.top: rulerTop.top
         anchors.left: parent.left
         anchors.right: parent.right
-        timeScale: root.timeScale ? root.timescale : 1.0
+        timeScale: root.timeScale ? root.timescale : 1
         model: markers
         onEditRequested: {
-            parent.editMarkerRequested(index)
+            parent.editMarkerRequested(index);
         }
         onDeleteRequested: {
-            parent.deleteMarkerRequested(index)
+            parent.deleteMarkerRequested(index);
         }
         onExited: bubbleHelp.hide()
         onMouseStatusChanged: {
-            var msg = "<center>" + text
+            var msg = "<center>" + text;
             if (start === end) {
-                msg += "<br>" + application.timecode(start)
+                msg += "<br>" + application.timecode(start);
             } else {
-                msg += "<br>" + application.timecode(start) + " - " + application.timecode(end)
-                msg += "<br>" + application.timecode(end - start + 1)
+                msg += "<br>" + application.timecode(start) + " - " + application.timecode(end);
+                msg += "<br>" + application.timecode(end - start + 1);
             }
-            msg += "</center>"
-            bubbleHelp.show(mouseX + bubbleHelp.width - 8, mouseY + 87, msg)
+            msg += "</center>";
+            bubbleHelp.show(mouseX + bubbleHelp.width - 8, mouseY + 87, msg);
         }
         onSeekRequested: timeline.position = pos
+
         snapper: QtObject {
             function getSnapPosition(position) {
-                if (!settings.timelineSnap) {
-                    return position
-                }
-                var SNAP = 10
+                if (!settings.timelineSnap)
+                    return position;
+
+                var SNAP = 10;
                 // Snap to clips on tracks.
-                var timeline = root
+                var timeline = root;
                 for (var j = 0; j < timeline.trackCount; j++) {
-                    var track = timeline.trackAt(j)
+                    var track = timeline.trackAt(j);
                     for (var i = 0; i < track.clipCount; i++) {
-                        var item = track.clipAt(i)
+                        var item = track.clipAt(i);
                         if (item.isBlank)
-                            continue
-                        var itemLeft = item.x
-                        var itemRight = itemLeft + item.width
+                            continue;
+
+                        var itemLeft = item.x;
+                        var itemRight = itemLeft + item.width;
                         if (position > itemLeft - SNAP && position < itemLeft + SNAP)
-                            return itemLeft
+                            return itemLeft;
                         else if (position > itemRight - SNAP && position < itemRight + SNAP)
-                            return itemRight
+                            return itemRight;
                         else if (itemRight + SNAP > position)
-                            continue
+                            continue;
                     }
                 }
                 // Snap around cursor/playhead.
-                var cursorX = tracksFlickable.contentX + cursor.x
-                if (position > cursorX - SNAP && position < cursorX + SNAP) {
-                    return cursorX
-                }
-                return position
+                var cursorX = tracksFlickable.contentX + cursor.x;
+                if (position > cursorX - SNAP && position < cursorX + SNAP)
+                    return cursorX;
+
+                return position;
             }
+
         }
+
     }
 
     Connections {
-        target: profile
         function onProfileChanged() {
             // Force a repeater model change to update the labels.
-            ++adjustment
-            --adjustment
+            ++adjustment;
+            --adjustment;
         }
+
+        target: profile
     }
+
 }

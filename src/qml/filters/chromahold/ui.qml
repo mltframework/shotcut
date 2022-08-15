@@ -27,39 +27,38 @@ Shotcut.KeyframableFilter {
     property double distanceDefault: 10
     property var defaultParameters: [colorParam, distanceParam]
 
+    function setControls() {
+        colorPicker.value = filter.get(colorParam);
+        blockUpdate = true;
+        distanceSlider.value = filter.getDouble(distanceParam, getPosition()) * 100;
+        distanceKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(distanceParam) > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
+    }
+
+    function enableControls(enabled) {
+        distanceSlider.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        updateFilter(distanceParam, distanceSlider.value / 100, distanceKeyframesButton, null);
+    }
+
     keyframableParameters: [distanceParam]
     startValues: [1]
     middleValues: [distanceDefault / 100]
     endValues: [1]
-
     width: 350
     height: 50
     Component.onCompleted: {
-        presetItem.parameters = defaultParameters
+        presetItem.parameters = defaultParameters;
         if (filter.isNew) {
             // Set default parameter values
-            filter.set(colorParam, colorDefault)
-            filter.set(distanceParam, distanceDefault / 100)
-            filter.savePreset(defaultParameters)
+            filter.set(colorParam, colorDefault);
+            filter.set(distanceParam, distanceDefault / 100);
+            filter.savePreset(defaultParameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        colorPicker.value = filter.get(colorParam)
-        blockUpdate = true
-        distanceSlider.value = filter.getDouble(distanceParam, getPosition()) * 100
-        distanceKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(distanceParam) > 0
-        blockUpdate = false
-        enableControls(isSimpleKeyframesActive())
-    }
-
-    function enableControls(enabled) {
-        distanceSlider.enabled = enabled
-    }
-
-    function updateSimpleKeyframes() {
-        updateFilter(distanceParam, distanceSlider.value / 100, distanceKeyframesButton, null)
+        setControls();
     }
 
     GridLayout {
@@ -71,13 +70,15 @@ Shotcut.KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: presetItem
+
             Layout.columnSpan: 3
             onBeforePresetLoaded: resetSimpleKeyframes()
             onPresetSelected: {
-                setControls()
-                initializeSimpleKeyframes()
+                setControls();
+                initializeSimpleKeyframes();
             }
         }
 
@@ -86,61 +87,95 @@ Shotcut.KeyframableFilter {
             text: qsTr('Color')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.ColorPicker {
             id: colorPicker
+
             onValueChanged: {
-                filter.set(colorParam, value)
-                filter.set('disable', 0)
+                filter.set(colorParam, value);
+                filter.set('disable', 0);
             }
             onPickStarted: filter.set('disable', 1)
             onPickCancelled: filter.set('disable', 0)
         }
+
         Shotcut.UndoButton {
             onClicked: colorPicker.value = colorDefault
         }
-        Item { Layout.fillWidth: true }
+
+        Item {
+            Layout.fillWidth: true
+        }
 
         // Row 2
         Label {
             text: qsTr('Distance')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: distanceSlider
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
             suffix: ' %'
             onValueChanged: updateFilter(distanceParam, value / 100, distanceKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: distanceSlider.value = distanceDefault
         }
+
         Shotcut.KeyframesButton {
             id: distanceKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, distanceParam, distanceSlider.value / 100)
+                enableControls(true);
+                toggleKeyframes(checked, distanceParam, distanceSlider.value / 100);
             }
         }
 
         Item {
             Layout.fillHeight: true
         }
+
     }
 
     Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
         target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateSimpleKeyframes() }
-        function onOutChanged() { updateSimpleKeyframes() }
-        function onAnimateInChanged() { updateSimpleKeyframes() }
-        function onAnimateOutChanged() { updateSimpleKeyframes() }
-        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
         target: producer
-        function onPositionChanged() { setControls() }
     }
+
 }

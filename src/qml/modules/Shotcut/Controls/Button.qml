@@ -22,11 +22,13 @@ Button {
     verticalPadding: text ? 4 : 2
     horizontalPadding: text ? 10 : 2
     hoverEnabled: true
-
-    SystemPalette { id: activePalette }
     palette.buttonText: activePalette.buttonText
     palette.button: checked ? activePalette.highlight : activePalette.button
-
     Keys.onReturnPressed: clicked()
     Keys.onEnterPressed: clicked()
+
+    SystemPalette {
+        id: activePalette
+    }
+
 }

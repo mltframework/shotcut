@@ -7,6 +7,7 @@ Metadata {
     mlt_service: 'mask_start'
     objectName: 'maskSimpleShape'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -49,4 +50,5 @@ Metadata {
             }
         ]
     }
+
 }

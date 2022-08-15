@@ -24,44 +24,42 @@ Shotcut.KeyframableFilter {
     property string phaseincrement: '0'
     property string zoomrate: '1'
     property double phaseincrementDefault: 0.02
-    property double zoomrateDefault: 0.20
+    property double zoomrateDefault: 0.2
+
+    function setControls() {
+        var position = getPosition();
+        blockUpdate = true;
+        phaseincrementSlider.value = filter.getDouble(phaseincrement, position) * phaseincrementSlider.maximumValue;
+        phaseKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(phaseincrement) > 0;
+        zoomrateSlider.value = filter.getDouble(zoomrate, position) * zoomrateSlider.maximumValue;
+        zoomKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(zoomrate) > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
+    }
+
+    function enableControls(enabled) {
+        phaseincrementSlider.enabled = zoomrateSlider.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        setControls();
+        updateFilter(phaseincrement, phaseincrementSlider.value / phaseincrementSlider.maximumValue, phaseKeyframesButton, null);
+        updateFilter(zoomrate, zoomrateSlider.value / zoomrateSlider.maximumValue, zoomKeyframesButton, null);
+    }
 
     keyframableParameters: [phaseincrement, zoomrate]
     startValues: [0.5, 0.5]
     middleValues: [phaseincrementDefault, zoomrateDefault]
     endValues: [0.5, 0.5]
-
     width: 350
     height: 100
-
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set(phaseincrement, phaseincrementDefault)
-            filter.set(zoomrate, zoomrateDefault)
-            filter.savePreset(preset.parameters)
+            filter.set(phaseincrement, phaseincrementDefault);
+            filter.set(zoomrate, zoomrateDefault);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        phaseincrementSlider.value = filter.getDouble(phaseincrement, position) * phaseincrementSlider.maximumValue
-        phaseKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(phaseincrement) > 0
-        zoomrateSlider.value = filter.getDouble(zoomrate, position) * zoomrateSlider.maximumValue
-        zoomKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(zoomrate) > 0
-        blockUpdate = false
-        enableControls(isSimpleKeyframesActive())
-    }
-
-    function enableControls(enabled) {
-        phaseincrementSlider.enabled = zoomrateSlider.enabled = enabled
-    }
-
-    function updateSimpleKeyframes() {
-        setControls()
-        updateFilter(phaseincrement, phaseincrementSlider.value / phaseincrementSlider.maximumValue, phaseKeyframesButton, null)
-        updateFilter(zoomrate, zoomrateSlider.value / zoomrateSlider.maximumValue, zoomKeyframesButton, null)
+        setControls();
     }
 
     GridLayout {
@@ -73,16 +71,18 @@ Shotcut.KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: [phaseincrement, zoomrate]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                resetSimpleKeyframes()
+                resetSimpleKeyframes();
             }
             onPresetSelected: {
-                setControls()
-                initializeSimpleKeyframes()
+                setControls();
+                initializeSimpleKeyframes();
             }
         }
 
@@ -90,23 +90,28 @@ Shotcut.KeyframableFilter {
             text: qsTr('Speed')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: phaseincrementSlider
-            minimumValue: 0.0
+
+            minimumValue: 0
             maximumValue: 100
             stepSize: 0.01
             decimals: 2
             suffix: ' %'
             onValueChanged: updateFilter(phaseincrement, phaseincrementSlider.value / phaseincrementSlider.maximumValue, phaseKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: phaseincrementSlider.value = phaseincrementDefault * phaseincrementSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: phaseKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, phaseincrement, phaseincrementSlider.value / phaseincrementSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, phaseincrement, phaseincrementSlider.value / phaseincrementSlider.maximumValue);
             }
         }
 
@@ -114,43 +119,71 @@ Shotcut.KeyframableFilter {
             text: qsTr('Zoom')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: zoomrateSlider
-            minimumValue: 0.0
+
+            minimumValue: 0
             maximumValue: 100
             stepSize: 0.01
             decimals: 2
             suffix: ' %'
             onValueChanged: updateFilter(zoomrate, zoomrateSlider.value / zoomrateSlider.maximumValue, zoomKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: zoomrateSlider.value = zoomrateDefault * zoomrateSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: zoomKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, zoomrate, zoomrateSlider.value / zoomrateSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, zoomrate, zoomrateSlider.value / zoomrateSlider.maximumValue);
             }
         }
 
         Item {
             Layout.fillHeight: true
         }
+
     }
 
     Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
         target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateSimpleKeyframes() }
-        function onOutChanged() { updateSimpleKeyframes() }
-        function onAnimateInChanged() { updateSimpleKeyframes() }
-        function onAnimateOutChanged() { updateSimpleKeyframes() }
-        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
         target: producer
-        function onPositionChanged() { setControls() }
     }
+
 }

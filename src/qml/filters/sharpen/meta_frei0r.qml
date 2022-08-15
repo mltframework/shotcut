@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "frei0r.sharpness"
     qml: "ui_frei0r.qml"
     gpuAlt: "movit.sharpen"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -28,4 +29,5 @@ Metadata {
             }
         ]
     }
+
 }

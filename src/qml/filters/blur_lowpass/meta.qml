@@ -24,6 +24,7 @@ Metadata {
     objectName: 'blur_lowpass'
     mlt_service: "frei0r.IIRblur"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -38,4 +39,5 @@ Metadata {
             }
         ]
     }
+
 }

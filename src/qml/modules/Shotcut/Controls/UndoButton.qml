@@ -22,7 +22,11 @@ import Shotcut.Controls 1.0 as Shotcut
 Shotcut.Button {
     icon.name: 'edit-undo'
     icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-undo.png'
-    Shotcut.HoverTip { text: qsTr('Reset to default') }
     implicitWidth: 20
     implicitHeight: 20
+
+    Shotcut.HoverTip {
+        text: qsTr('Reset to default')
+    }
+
 }

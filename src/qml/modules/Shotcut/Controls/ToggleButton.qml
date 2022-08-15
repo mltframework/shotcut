@@ -24,9 +24,13 @@ ToolButton {
     checkable: true
     hoverEnabled: true
     display: AbstractButton.TextBesideIcon
-
-    SystemPalette { id: activePalette }
     palette.buttonText: activePalette.buttonText
+    Keys.onReturnPressed: clicked()
+    Keys.onEnterPressed: clicked()
+
+    SystemPalette {
+        id: activePalette
+    }
 
     background: Rectangle {
         radius: 3
@@ -35,6 +39,4 @@ ToolButton {
         border.width: parent.checked ? 0 : 1
     }
 
-    Keys.onReturnPressed: clicked()
-    Keys.onEnterPressed: clicked()
 }

@@ -9,7 +9,9 @@ Metadata {
     isClipOnly: true
     allowMultiple: false
     isGpuCompatible: false
+
     keyframes {
         allowTrim: false
     }
+
 }

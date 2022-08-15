@@ -24,38 +24,36 @@ Shotcut.KeyframableFilter {
     property string horizontal: '0'
     property double horizontalDefault: 0.2
 
+    function setControls() {
+        var position = getPosition();
+        blockUpdate = true;
+        horizontalSlider.value = filter.getDouble(horizontal, position) * horizontalSlider.maximumValue;
+        horizontalKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horizontal) > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
+    }
+
+    function enableControls(enabled) {
+        horizontalSlider.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        setControls();
+        updateFilter(horizontal, horizontalSlider.value / horizontalSlider.maximumValue, horizontalKeyframesButton, null);
+    }
+
     keyframableParameters: [horizontal]
     startValues: [0]
     middleValues: [horizontalDefault]
     endValues: [0]
-
     width: 350
     height: 100
-
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set(horizontal, horizontalDefault)
-            filter.savePreset(preset.parameters)
+            filter.set(horizontal, horizontalDefault);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        horizontalSlider.value = filter.getDouble(horizontal, position) * horizontalSlider.maximumValue
-        horizontalKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horizontal) > 0
-        blockUpdate = false
-        enableControls(isSimpleKeyframesActive())
-    }
-
-    function enableControls(enabled) {
-        horizontalSlider.enabled = enabled
-    }
-
-    function updateSimpleKeyframes() {
-        setControls()
-        updateFilter(horizontal, horizontalSlider.value / horizontalSlider.maximumValue, horizontalKeyframesButton, null)
+        setControls();
     }
 
     GridLayout {
@@ -67,16 +65,18 @@ Shotcut.KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: [horizontal]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                filter.resetProperty(horizontal)
+                filter.resetProperty(horizontal);
             }
             onPresetSelected: {
-                setControls()
-                initializeSimpleKeyframes()
+                setControls();
+                initializeSimpleKeyframes();
             }
         }
 
@@ -84,41 +84,71 @@ Shotcut.KeyframableFilter {
             text: qsTr('Offset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: horizontalSlider
-            minimumValue: 0.0
+
+            minimumValue: 0
             maximumValue: 100
             stepSize: 0.01
             decimals: 2
             suffix: ' %'
             onValueChanged: updateFilter(horizontal, horizontalSlider.value / horizontalSlider.maximumValue, horizontalKeyframesButton, getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: horizontalSlider.value = horizontalDefault * horizontalSlider.maximumValue
         }
+
         Shotcut.KeyframesButton {
             id: horizontalKeyframesButton
+
             onToggled: {
-                enableControls(true)
-                toggleKeyframes(checked, horizontal, horizontalSlider.value / horizontalSlider.maximumValue)
+                enableControls(true);
+                toggleKeyframes(checked, horizontal, horizontalSlider.value / horizontalSlider.maximumValue);
             }
         }
 
-        Item { Layout.fillHeight: true }
+        Item {
+            Layout.fillHeight: true
+        }
+
     }
 
     Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
         target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateSimpleKeyframes() }
-        function onOutChanged() { updateSimpleKeyframes() }
-        function onAnimateInChanged() { updateSimpleKeyframes() }
-        function onAnimateOutChanged() { updateSimpleKeyframes() }
-        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
         target: producer
-        function onPositionChanged() { setControls() }
     }
+
 }

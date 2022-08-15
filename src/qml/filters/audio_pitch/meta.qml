@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "rbpitch"
     qml: "ui.qml"
     isFavorite: false
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -17,9 +18,10 @@ Metadata {
                 name: qsTr('Pitch', 'audio pitch or tone')
                 property: 'octaveshift'
                 isCurve: true
-                minimum: -2.0
-                maximum: 2.0
+                minimum: -2
+                maximum: 2
             }
         ]
     }
+
 }

@@ -23,10 +23,13 @@ ToolButton {
     id: control
 
     icon.height: control.height - (verticalPadding * 2)
-    icon.width: control.height -  (horizontalPadding * 2)
+    icon.width: control.height - (horizontalPadding * 2)
     padding: 3
-    opacity: enabled ? 1.0 : 0.5
-
-    SystemPalette { id: activePalette }
+    opacity: enabled ? 1 : 0.5
     palette.button: checked ? activePalette.highlight : activePalette.button
+
+    SystemPalette {
+        id: activePalette
+    }
+
 }

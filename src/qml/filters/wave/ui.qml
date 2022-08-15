@@ -24,14 +24,13 @@ import Shotcut.Controls 1.0 as Shotcut
 Item {
     width: 350
     height: 150
-
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set('wave', 10)
-            filter.set('speed', 5)
-            filter.set('deformX', 1)
-            filter.set('deformY', 1)
-            filter.savePreset(preset.parameters)
+            filter.set('wave', 10);
+            filter.set('speed', 5);
+            filter.set('deformX', 1);
+            filter.set('deformY', 1);
+            filter.savePreset(preset.parameters);
         }
     }
 
@@ -44,15 +43,17 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             Layout.columnSpan: 2
             parameters: ['wave', 'speed', 'deformX', 'deformX']
             onPresetSelected: {
-                waveSlider.value = filter.getDouble('wave')
-                speedSlider.value = filter.getDouble('speed')
-                deformXCheckBox.checked = filter.get('deformX') === '1'
-                deformYCheckBox.checked = filter.get('deformY') === '1'
+                waveSlider.value = filter.getDouble('wave');
+                speedSlider.value = filter.getDouble('speed');
+                deformXCheckBox.checked = filter.get('deformX') === '1';
+                deformYCheckBox.checked = filter.get('deformY') === '1';
             }
         }
 
@@ -60,13 +61,16 @@ Item {
             text: qsTr('Amplitude')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: waveSlider
+
             minimumValue: 1
             maximumValue: 500
             value: filter.getDouble('wave')
             onValueChanged: filter.set('wave', value)
         }
+
         Shotcut.UndoButton {
             onClicked: waveSlider.value = 10
         }
@@ -75,47 +79,62 @@ Item {
             text: qsTr('Speed')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: speedSlider
+
             minimumValue: 0
             maximumValue: 1000
             value: filter.getDouble('speed')
             onValueChanged: filter.set('speed', value)
         }
+
         Shotcut.UndoButton {
             onClicked: speedSlider.value = 5
         }
 
-        Label {}
+        Label {
+        }
+
         CheckBox {
             id: deformXCheckBox
+
+            property bool isReady: false
+
             text: qsTr('Deform horizontally?')
             Layout.columnSpan: 2
             checked: filter.get('deformX') === '1'
-            property bool isReady: false
             Component.onCompleted: isReady = true
             onClicked: {
                 if (isReady)
-                    filter.set('deformX', checked)
+                    filter.set('deformX', checked);
+
             }
         }
 
-        Label {}
+        Label {
+        }
+
         CheckBox {
             id: deformYCheckBox
+
+            property bool isReady: false
+
             text: qsTr('Deform vertically?')
             Layout.columnSpan: 2
             checked: filter.get('deformY') === '1'
-            property bool isReady: false
             Component.onCompleted: isReady = true
             onClicked: {
                 if (isReady)
-                    filter.set('deformY', checked)
+                    filter.set('deformY', checked);
+
             }
         }
 
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

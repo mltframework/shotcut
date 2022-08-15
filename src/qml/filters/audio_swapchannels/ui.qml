@@ -21,33 +21,29 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
-    width: 100
-    height: 50
     property string fromParameter: 'from'
     property string toParameter: 'to'
+
+    width: 100
+    height: 50
     Component.onCompleted: {
         if (application.audioChannels() === 1) {
-            fromCombo.enabled = false
-            toCombo.enabled = false
+            fromCombo.enabled = false;
+            toCombo.enabled = false;
         } else if (application.audioChannels() === 6) {
-            fromCombo.model = [qsTr('Front left'),
-                           qsTr('Front right'),
-                           qsTr('Center'),
-                           qsTr('Low frequency'),
-                           qsTr('Left surround'),
-                           qsTr('Right surround')]
+            fromCombo.model = [qsTr('Front left'), qsTr('Front right'), qsTr('Center'), qsTr('Low frequency'), qsTr('Left surround'), qsTr('Right surround')];
         }
-        filter.set('swap', 1)
+        filter.set('swap', 1);
         if (filter.isNew) {
             // Set default parameter values
-            fromCombo.currentIndex = 0
-            filter.set(fromParameter, 0)
-            toCombo.currentIndex = (application.audioChannels() === 1) ? 0 : 1
-            filter.set(fromParameter, toCombo.currentIndex)
+            fromCombo.currentIndex = 0;
+            filter.set(fromParameter, 0);
+            toCombo.currentIndex = (application.audioChannels() === 1) ? 0 : 1;
+            filter.set(fromParameter, toCombo.currentIndex);
         } else {
             // Initialize parameter values
-            fromCombo.currentIndex = filter.get(fromParameter)
-            toCombo.currentIndex = filter.get(toParameter)
+            fromCombo.currentIndex = filter.get(fromParameter);
+            toCombo.currentIndex = filter.get(toParameter);
         }
     }
 
@@ -56,21 +52,34 @@ Item {
         anchors.margins: 8
 
         RowLayout {
-            Label { text: qsTr('Swap') }
+            Label {
+                text: qsTr('Swap')
+            }
+
             Shotcut.ComboBox {
                 id: fromCombo
+
                 model: [qsTr('Left'), qsTr('Right')]
                 onActivated: filter.set(fromParameter, currentIndex)
             }
-            Label { text: qsTr('with') }
+
+            Label {
+                text: qsTr('with')
+            }
+
             Shotcut.ComboBox {
                 id: toCombo
+
                 model: fromCombo.model
                 onActivated: filter.set(toParameter, currentIndex)
             }
+
         }
+
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
+
     }
+
 }

@@ -22,23 +22,23 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
+    function setControls() {
+        sliderDelay.value = filter.getDouble('0');
+        sliderFeedback.value = filter.getDouble('1');
+        sliderWetness.value = filter.getDouble('wetness') * sliderWetness.maximumValue;
+    }
+
     width: 350
     height: 125
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            filter.set('0', 1)
-            filter.set('1', -10)
-            filter.set('wetness', 1.0)
-            filter.savePreset(preset.parameters)
+            filter.set('0', 1);
+            filter.set('1', -10);
+            filter.set('wetness', 1);
+            filter.savePreset(preset.parameters);
         }
-        setControls()
-    }
-
-    function setControls() {
-        sliderDelay.value = filter.getDouble('0')
-        sliderFeedback.value = filter.getDouble('1')
-        sliderWetness.value = filter.getDouble('wetness') * sliderWetness.maximumValue
+        setControls();
     }
 
     GridLayout {
@@ -50,8 +50,10 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             parameters: ['0', '1', 'wetness']
             Layout.columnSpan: 2
             onPresetSelected: setControls()
@@ -60,19 +62,26 @@ Item {
         Label {
             text: qsTr('Delay')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {text: qsTr('The neutral delay time is 2 seconds.\nTimes above 2 seconds will have reduced quality.\nTimes below will have increased CPU usage.')}
+
+            Shotcut.HoverTip {
+                text: qsTr('The neutral delay time is 2 seconds.\nTimes above 2 seconds will have reduced quality.\nTimes below will have increased CPU usage.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
             id: sliderDelay
+
             minimumValue: 0
             maximumValue: 4
             suffix: ' s'
             decimals: 2
             value: filter.getDouble('0')
             onValueChanged: {
-                filter.set('0', value)
+                filter.set('0', value);
             }
         }
+
         Shotcut.UndoButton {
             onClicked: sliderDelay.value = 1
         }
@@ -81,17 +90,20 @@ Item {
             text: qsTr('Feedback')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: sliderFeedback
+
             minimumValue: -70
             maximumValue: 0
             suffix: ' dB'
             decimals: 1
             value: filter.getDouble('1')
             onValueChanged: {
-                filter.set('1', value)
+                filter.set('1', value);
             }
         }
+
         Shotcut.UndoButton {
             onClicked: sliderFeedback.value = -10
         }
@@ -100,8 +112,10 @@ Item {
             text: qsTr('Dry')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: sliderWetness
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
@@ -109,15 +123,18 @@ Item {
             suffix: ' %'
             value: filter.getDouble('wetness') * maximumValue
             onValueChanged: {
-                filter.set('wetness', value / maximumValue)
+                filter.set('wetness', value / maximumValue);
             }
         }
+
         Shotcut.UndoButton {
             onClicked: sliderWetness.value = sliderWetness.maximumValue
         }
 
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
+
     }
+
 }

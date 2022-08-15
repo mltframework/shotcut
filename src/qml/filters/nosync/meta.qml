@@ -7,6 +7,7 @@ Metadata {
     objectName: 'nosync'
     mlt_service: 'frei0r.nosync0r'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -21,4 +22,5 @@ Metadata {
             }
         ]
     }
+
 }

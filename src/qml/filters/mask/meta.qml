@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "frei0r.alphaspot"
     isHidden: true
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -42,4 +43,5 @@ Metadata {
             }
         ]
     }
+
 }

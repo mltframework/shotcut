@@ -19,13 +19,16 @@ import QtQuick 2.12
 
 Repeater {
     id: markerbar
-    property real timeScale: 1.0
+
+    property real timeScale: 1
     property var snapper
+
     signal editRequested(int index)
     signal deleteRequested(int index)
     signal exited()
     signal mouseStatusChanged(int mouseX, int mouseY, var text, int start, int end)
     signal seekRequested(int pos)
+
     Marker {
         timeScale: parent.timeScale
         snapper: markerbar.snapper
@@ -40,4 +43,5 @@ Repeater {
         onMouseStatusChanged: markerbar.mouseStatusChanged(mouseX, mouseY, text, start, end)
         onSeekRequested: markerbar.seekRequested(pos)
     }
+
 }

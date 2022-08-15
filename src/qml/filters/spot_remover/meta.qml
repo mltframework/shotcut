@@ -8,6 +8,7 @@ Metadata {
     mlt_service: 'spot_remover'
     qml: 'ui.qml'
     vui: 'vui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -20,4 +21,5 @@ Metadata {
             }
         ]
     }
+
 }

@@ -26,7 +26,8 @@ Item {
     height: 100
     Component.onCompleted: {
         if (filter.isNew)
-            filter.savePreset(preset.parameters)
+            filter.savePreset(preset.parameters);
+
     }
 
     GridLayout {
@@ -38,13 +39,15 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             Layout.columnSpan: 2
             parameters: ['u', 'v']
             onPresetSelected: {
-                sliderBlue.value = filter.getDouble('u')
-                sliderRed.value = filter.getDouble('v')
+                sliderBlue.value = filter.getDouble('u');
+                sliderRed.value = filter.getDouble('v');
             }
         }
 
@@ -52,13 +55,16 @@ Item {
             text: qsTr('Yellow-Blue')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: sliderBlue
+
             minimumValue: 0
             maximumValue: 255
             value: filter.getDouble('u')
-            onValueChanged:filter.set('u', value)
+            onValueChanged: filter.set('u', value)
         }
+
         Shotcut.UndoButton {
             onClicked: sliderBlue.value = 75
         }
@@ -67,13 +73,16 @@ Item {
             text: qsTr('Cyan-Red')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: sliderRed
+
             minimumValue: 0
             maximumValue: 255
             value: filter.getDouble('v')
             onValueChanged: filter.set('v', value)
         }
+
         Shotcut.UndoButton {
             onClicked: sliderRed.value = 150
         }
@@ -81,5 +90,7 @@ Item {
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

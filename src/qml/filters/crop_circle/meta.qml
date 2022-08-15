@@ -7,6 +7,7 @@ Metadata {
     name: qsTr('Crop: Circle')
     mlt_service: 'qtcrop'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -21,4 +22,5 @@ Metadata {
             }
         ]
     }
+
 }

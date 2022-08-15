@@ -23,6 +23,7 @@ Metadata {
     name: qsTr("Chroma Hold")
     mlt_service: 'avfilter.chromahold'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -37,4 +38,5 @@ Metadata {
             }
         ]
     }
+
 }

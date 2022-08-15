@@ -26,21 +26,22 @@ Item {
     property string distanceParam: 'filter.1'
     property double distanceDefault: 28.8
     property var defaultParameters: [colorParam, distanceParam]
+
     width: 350
     height: 50
     Component.onCompleted: {
-        presetItem.parameters = defaultParameters
-        filter.set('filter', 'frei0r.bluescreen0r')
-        filter.set('filter.2', 1)
-        filter.set('filter.threads', 0)
+        presetItem.parameters = defaultParameters;
+        filter.set('filter', 'frei0r.bluescreen0r');
+        filter.set('filter.2', 1);
+        filter.set('filter.threads', 0);
         if (filter.isNew) {
             // Set default parameter values
-            filter.set(colorParam, colorDefault)
-            filter.set(distanceParam, distanceDefault / 100)
-            filter.savePreset(defaultParameters)
+            filter.set(colorParam, colorDefault);
+            filter.set(distanceParam, distanceDefault / 100);
+            filter.savePreset(defaultParameters);
         }
-        colorPicker.value = filter.get(colorParam)
-        distanceSlider.value = filter.getDouble(distanceParam) * 100
+        colorPicker.value = filter.get(colorParam);
+        distanceSlider.value = filter.getDouble(distanceParam) * 100;
     }
 
     GridLayout {
@@ -52,12 +53,14 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: presetItem
+
             Layout.columnSpan: 2
             onPresetSelected: {
-                colorPicker.value = filter.get(colorParam)
-                distanceSlider.value = filter.getDouble(distanceParam) * 100
+                colorPicker.value = filter.get(colorParam);
+                distanceSlider.value = filter.getDouble(distanceParam) * 100;
             }
         }
 
@@ -66,15 +69,18 @@ Item {
             text: qsTr('Key color')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.ColorPicker {
             id: colorPicker
+
             onValueChanged: {
-                filter.set(colorParam, value)
-                filter.set('disable', 0)
+                filter.set(colorParam, value);
+                filter.set('disable', 0);
             }
             onPickStarted: filter.set('disable', 1)
             onPickCancelled: filter.set('disable', 0)
         }
+
         Shotcut.UndoButton {
             onClicked: colorPicker.value = colorDefault
         }
@@ -84,8 +90,10 @@ Item {
             text: qsTr('Distance')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: distanceSlider
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
@@ -93,6 +101,7 @@ Item {
             value: filter.getDouble(distanceParam) * 100
             onValueChanged: filter.set(distanceParam, value / 100)
         }
+
         Shotcut.UndoButton {
             onClicked: distanceSlider.value = distanceDefault
         }
@@ -107,5 +116,7 @@ Item {
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

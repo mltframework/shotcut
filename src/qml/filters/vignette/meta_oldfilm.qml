@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "vignette"
     qml: "ui_oldfilm.qml"
     gpuAlt: "movit.vignette"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -36,4 +37,5 @@ Metadata {
             }
         ]
     }
+
 }

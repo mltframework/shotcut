@@ -24,6 +24,7 @@ Metadata {
     objectName: 'vertigo'
     mlt_service: "frei0r.vertigo"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -45,4 +46,5 @@ Metadata {
             }
         ]
     }
+
 }

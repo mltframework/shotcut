@@ -7,6 +7,7 @@ Metadata {
     objectName: 'halftone'
     mlt_service: "frei0r.colorhalftone"
     qml: "ui.qml"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -25,14 +26,14 @@ Metadata {
                 isCurve: true
                 minimum: 0
                 maximum: 1
-             },
+            },
             Parameter {
                 name: qsTr('Magenta')
                 property: '2'
                 isCurve: true
                 minimum: 0
                 maximum: 1
-             },
+            },
             Parameter {
                 name: qsTr('Yellow')
                 property: '3'
@@ -42,4 +43,5 @@ Metadata {
             }
         ]
     }
+
 }

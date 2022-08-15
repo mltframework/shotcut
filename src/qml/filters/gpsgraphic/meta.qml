@@ -25,6 +25,7 @@ Metadata {
     qml: 'ui.qml'
     vui: 'vui.qml'
     allowMultiple: true
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -37,4 +38,5 @@ Metadata {
             }
         ]
     }
+
 }

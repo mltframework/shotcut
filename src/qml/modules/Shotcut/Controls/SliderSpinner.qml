@@ -21,11 +21,10 @@ import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0 as Shotcut
 
 RowLayout {
-    spacing: -3
     property real value
     property alias minimumValue: slider.from
     property alias maximumValue: slider.to
-    property real  ratio: 1.0
+    property real ratio: 1
     property alias label: label.text
     property int decimals: 0
     property alias stepSize: spinner.stepSize
@@ -33,26 +32,31 @@ RowLayout {
     property alias suffix: spinner.suffix
     property alias prefix: spinner.prefix
 
-    SystemPalette { id: activePalette }
-
+    spacing: -3
     onValueChanged: spinner.value = value / ratio
+
+    SystemPalette {
+        id: activePalette
+    }
 
     Slider {
         id: slider
-        stepSize: spinner.stepSize
 
+        property bool isReady: false
+
+        stepSize: spinner.stepSize
         Layout.fillWidth: true
         activeFocusOnTab: false
         wheelEnabled: true
-
-        property bool isReady: false
         Component.onCompleted: {
-            isReady = true
-            value = parent.value
+            isReady = true;
+            value = parent.value;
         }
-        onValueChanged: if (isReady) {
-            spinner.value = value / ratio
-            parent.value = value
+        onValueChanged: {
+            if (isReady) {
+                spinner.value = value / ratio;
+                parent.value = value;
+            }
         }
 
         background: Rectangle {
@@ -65,6 +69,9 @@ RowLayout {
             // Hide the right border.
             Rectangle {
                 visible: !label.visible
+                width: 3
+                color: parent.color
+
                 anchors {
                     top: parent.top
                     right: parent.right
@@ -72,29 +79,29 @@ RowLayout {
                     topMargin: 1
                     bottomMargin: 1
                 }
-                width: 3
-                color: parent.color
+
             }
 
             // Indicate percentage full.
             Rectangle {
+                radius: parent.radius
+                width: parent.width * (value - minimumValue) / (maximumValue - minimumValue) - parent.border.width - (label.visible ? parent.border.width : 3)
+                color: enabled ? activePalette.highlight : activePalette.midlight
+
                 anchors {
                     top: parent.top
                     left: parent.left
                     bottom: parent.bottom
                     margins: 1
                 }
-                radius: parent.radius
-                width: parent.width
-                       * (value - minimumValue) / (maximumValue - minimumValue)
-                       - parent.border.width
-                       - (label.visible? parent.border.width : 3)
-                color: enabled? activePalette.highlight : activePalette.midlight
+
             }
+
         }
 
         handle: Rectangle {
         }
+
     }
 
     // Optional label between slider and spinner
@@ -102,10 +109,13 @@ RowLayout {
         width: 4 - parent.spacing * 2
         visible: label.visible
     }
+
     Label {
         id: label
+
         visible: text.length
     }
+
     Rectangle {
         width: 4 - parent.spacing * 2
         visible: label.visible
@@ -113,6 +123,7 @@ RowLayout {
 
     Shotcut.DoubleSpinBox {
         id: spinner
+
         verticalPadding: 2
         Layout.minimumWidth: background.implicitWidth
         from: slider.from / ratio
@@ -132,6 +143,9 @@ RowLayout {
             // Hide the left border.
             Rectangle {
                 visible: !label.visible
+                width: 3
+                color: parent.color
+
                 anchors {
                     top: parent.top
                     left: parent.left
@@ -139,12 +153,17 @@ RowLayout {
                     topMargin: 1
                     bottomMargin: 1
                 }
-                width: 3
-                color: parent.color
+
             }
+
         }
 
-        up.indicator: Rectangle {}
-        down.indicator: Rectangle {}
+        up.indicator: Rectangle {
+        }
+
+        down.indicator: Rectangle {
+        }
+
     }
+
 }

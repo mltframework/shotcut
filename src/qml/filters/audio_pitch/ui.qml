@@ -21,95 +21,116 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
-    width: 200
-    height: 50
     property bool blockUpdate: true
-    property double startValue: 0.0
-    property double middleValue: 0.0
-    property double endValue: 0.0
-
-    Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('octaveshift', 0.0)
-            filter.savePreset(preset.parameters)
-        } else {
-            middleValue = filter.getDouble('octaveshift', filter.animateIn)
-            if (filter.animateIn > 0)
-                startValue = filter.getDouble('octaveshift', 0)
-            if (filter.animateOut > 0)
-                endValue = filter.getDouble('octaveshift', filter.duration - 1)
-        }
-        setControls()
-    }
-
-    Connections {
-        target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateFilter(null) }
-        function onOutChanged() { updateFilter(null) }
-        function onAnimateInChanged() { updateFilter(null) }
-        function onAnimateOutChanged() { updateFilter(null) }
-        function onPropertyChanged(name) { setControls() }
-    }
-
-    Connections {
-        target: producer
-        function onPositionChanged() {
-            if (filter.animateIn > 0 || filter.animateOut > 0) {
-                setControls()
-            } else {
-                blockUpdate = true
-                octaveSlider.value = filter.getDouble('octaveshift', getPosition())
-                blockUpdate = false
-                octaveSlider.enabled = true
-            }
-        }
-    }
+    property double startValue: 0
+    property double middleValue: 0
+    property double endValue: 0
 
     function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0)
+        return Math.max(producer.position - (filter.in - producer.in), 0);
     }
 
     function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        octaveSlider.value = filter.getDouble('octaveshift', position)
-        frequencySlider.value = 1.0 / Math.pow(2, filter.getDouble('octaveshift', position))
-        octaveKeyframesButton.checked = filter.keyframeCount('octaveshift') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
-        blockUpdate = false
-        octaveSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        var position = getPosition();
+        blockUpdate = true;
+        octaveSlider.value = filter.getDouble('octaveshift', position);
+        frequencySlider.value = 1 / Math.pow(2, filter.getDouble('octaveshift', position));
+        octaveKeyframesButton.checked = filter.keyframeCount('octaveshift') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        blockUpdate = false;
+        octaveSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
     function updateFilter(position) {
-        if (blockUpdate) return
+        if (blockUpdate)
+            return ;
 
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
-                startValue = octaveSlider.value
+                startValue = octaveSlider.value;
             else if (position >= filter.duration - 1 && filter.animateOut > 0)
-                endValue = octaveSlider.value
+                endValue = octaveSlider.value;
             else
-                middleValue = octaveSlider.value
+                middleValue = octaveSlider.value;
         }
-
         if (filter.animateIn > 0 || filter.animateOut > 0) {
-            filter.resetProperty('octaveshift')
-            octaveKeyframesButton.checked = false
+            filter.resetProperty('octaveshift');
+            octaveKeyframesButton.checked = false;
             if (filter.animateIn > 0) {
-                filter.set('octaveshift', startValue, 0)
-                filter.set('octaveshift', middleValue, filter.animateIn - 1)
+                filter.set('octaveshift', startValue, 0);
+                filter.set('octaveshift', middleValue, filter.animateIn - 1);
             }
             if (filter.animateOut > 0) {
-                filter.set('octaveshift', middleValue, filter.duration - filter.animateOut)
-                filter.set('octaveshift', endValue, filter.duration - 1)
+                filter.set('octaveshift', middleValue, filter.duration - filter.animateOut);
+                filter.set('octaveshift', endValue, filter.duration - 1);
             }
         } else if (!octaveKeyframesButton.checked) {
-            filter.resetProperty('octaveshift')
-            filter.set('octaveshift', middleValue)
+            filter.resetProperty('octaveshift');
+            filter.set('octaveshift', middleValue);
         } else if (position !== null) {
-            filter.set('octaveshift', octaveSlider.value, position)
+            filter.set('octaveshift', octaveSlider.value, position);
         }
+    }
+
+    width: 200
+    height: 50
+    Component.onCompleted: {
+        if (filter.isNew) {
+            // Set default parameter values
+            filter.set('octaveshift', 0);
+            filter.savePreset(preset.parameters);
+        } else {
+            middleValue = filter.getDouble('octaveshift', filter.animateIn);
+            if (filter.animateIn > 0)
+                startValue = filter.getDouble('octaveshift', 0);
+
+            if (filter.animateOut > 0)
+                endValue = filter.getDouble('octaveshift', filter.duration - 1);
+
+        }
+        setControls();
+    }
+
+    Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateFilter(null);
+        }
+
+        function onOutChanged() {
+            updateFilter(null);
+        }
+
+        function onAnimateInChanged() {
+            updateFilter(null);
+        }
+
+        function onAnimateOutChanged() {
+            updateFilter(null);
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
+        target: filter
+    }
+
+    Connections {
+        function onPositionChanged() {
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                setControls();
+            } else {
+                blockUpdate = true;
+                octaveSlider.value = filter.getDouble('octaveshift', getPosition());
+                blockUpdate = false;
+                octaveSlider.enabled = true;
+            }
+        }
+
+        target: producer
     }
 
     GridLayout {
@@ -121,56 +142,69 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             Layout.columnSpan: parent.columns - 1
             parameters: ['octaveshift']
             onBeforePresetLoaded: {
-                filter.resetProperty(parameters[0])
+                filter.resetProperty(parameters[0]);
             }
             onPresetSelected: {
-                setControls()
-                middleValue = filter.getDouble(parameters[0], filter.animateIn)
+                setControls();
+                middleValue = filter.getDouble(parameters[0], filter.animateIn);
                 if (filter.animateIn > 0)
-                    startValue = filter.getDouble(parameters[0], 0)
+                    startValue = filter.getDouble(parameters[0], 0);
+
                 if (filter.animateOut > 0)
-                    endValue = filter.getDouble(parameters[0], filter.duration - 1)
+                    endValue = filter.getDouble(parameters[0], filter.duration - 1);
+
             }
         }
 
         Label {
             text: qsTr('Octave Shift')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('Specify the pitch shift in octaves.\n-1 shifts down an octave.\n+1 shifts up an octave.\n0 is unchanged.') }
+
+            Shotcut.HoverTip {
+                text: qsTr('Specify the pitch shift in octaves.\n-1 shifts down an octave.\n+1 shifts up an octave.\n0 is unchanged.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
             id: octaveSlider
-            minimumValue: -2.0
-            maximumValue: 2.0
+
+            minimumValue: -2
+            maximumValue: 2
             decimals: 6
-            stepSize: 1.0/12.0 // 12 half steps in an octave
+            stepSize: 1 / 12 // 12 half steps in an octave
             spinnerWidth: 100
             onValueChanged: {
-                updateFilter(getPosition())
-                if (frequencySlider.noUpdate == false) {
-                    frequencySlider.value = 1.0 / Math.pow(2, value)
-                }
+                updateFilter(getPosition());
+                if (frequencySlider.noUpdate == false)
+                    frequencySlider.value = 1 / Math.pow(2, value);
+
             }
         }
+
         Shotcut.UndoButton {
-            onClicked: octaveSlider.value = 0.0
+            onClicked: octaveSlider.value = 0
         }
+
         Shotcut.KeyframesButton {
             id: octaveKeyframesButton
+
             onToggled: {
                 if (checked) {
-                    blockUpdate = true
-                    filter.clearSimpleAnimation('octaveshift')
-                    blockUpdate = false
-                    filter.set('octaveshift', octaveSlider.value, getPosition())
+                    blockUpdate = true;
+                    filter.clearSimpleAnimation('octaveshift');
+                    blockUpdate = false;
+                    filter.set('octaveshift', octaveSlider.value, getPosition());
                 } else {
-                    filter.resetProperty('octaveshift')
-                    filter.set('octaveshift', octaveSlider.value)
+                    filter.resetProperty('octaveshift');
+                    filter.set('octaveshift', octaveSlider.value);
                 }
             }
         }
@@ -178,23 +212,31 @@ Item {
         Label {
             text: qsTr('Speed Compensation')
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('Specify the speed change that should be compensated for.\n2x will halve the pitch to compensate for the speed being doubled.') }
+
+            Shotcut.HoverTip {
+                text: qsTr('Specify the speed change that should be compensated for.\n2x will halve the pitch to compensate for the speed being doubled.')
+            }
+
         }
+
         Shotcut.SliderSpinner {
-            property bool noUpdate: false
             id: frequencySlider
+
+            property bool noUpdate: false
+
             minimumValue: 0.25
-            maximumValue: 4.0
+            maximumValue: 4
             decimals: 6
             spinnerWidth: 100
             suffix: ' x'
             enabled: octaveSlider.enabled
             onValueChanged: {
-                noUpdate = true
-                octaveSlider.value = Math.log(1.0 / value) / Math.log(2)
-                noUpdate = false
+                noUpdate = true;
+                octaveSlider.value = Math.log(1 / value) / Math.log(2);
+                noUpdate = false;
             }
         }
+
         Item {
             Layout.columnSpan: 2
         }
@@ -202,5 +244,7 @@ Item {
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

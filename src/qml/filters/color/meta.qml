@@ -8,6 +8,7 @@ Metadata {
     qml: "ui.qml"
     isFavorite: true
     gpuAlt: "movit.lift_gamma_gain"
+
     keyframes {
         parameters: [
             Parameter {
@@ -27,4 +28,5 @@ Metadata {
             }
         ]
     }
+
 }

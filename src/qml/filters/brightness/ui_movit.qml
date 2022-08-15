@@ -21,96 +21,117 @@ import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
-    width: 200
-    height: 50
     property bool blockUpdate: true
-    property double startValue: 1.0
-    property double middleValue: 1.0
-    property double endValue: 1.0
-
-    Component.onCompleted: {
-        if (filter.isNew) {
-            // Set default parameter values
-            filter.set('alpha', 1.0)
-            filter.set('opacity', 1.0)
-            filter.savePreset(preset.parameters)
-        } else {
-            middleValue = filter.getDouble('opacity', filter.animateIn)
-            if (filter.animateIn > 0)
-                startValue = filter.getDouble('opacity', 0)
-            if (filter.animateOut > 0)
-                endValue = filter.getDouble('opacity', filter.duration - 1)
-        }
-        setControls()
-    }
-
-    Connections {
-        target: filter
-        function onChanged() { setControls() }
-        function onInChanged() { updateFilter(null) }
-        function onOutChanged() { updateFilter(null) }
-        function onAnimateInChanged() { updateFilter(null) }
-        function onAnimateOutChanged() { updateFilter(null) }
-        function onPropertyChanged(name) { setControls() }
-    }
-
-    Connections {
-        target: producer
-        function onPositionChanged() {
-            if (filter.animateIn > 0 || filter.animateOut > 0) {
-                setControls()
-            } else {
-                blockUpdate = true
-                brightnessSlider.value = filter.getDouble('opacity', getPosition()) * 100.0
-                blockUpdate = false
-                brightnessSlider.enabled = true
-            }
-        }
-    }
+    property double startValue: 1
+    property double middleValue: 1
+    property double endValue: 1
 
     function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0)
+        return Math.max(producer.position - (filter.in - producer.in), 0);
     }
 
     function setControls() {
-        var position = getPosition()
-        blockUpdate = true
-        brightnessSlider.value = filter.getDouble('opacity', position) * 100.0
-        brightnessKeyframesButton.checked = filter.keyframeCount('opacity') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
-        blockUpdate = false
-        brightnessSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        var position = getPosition();
+        blockUpdate = true;
+        brightnessSlider.value = filter.getDouble('opacity', position) * 100;
+        brightnessKeyframesButton.checked = filter.keyframeCount('opacity') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        blockUpdate = false;
+        brightnessSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
     function updateFilter(position) {
-        if (blockUpdate) return
-        var value = brightnessSlider.value / 100.0
+        if (blockUpdate)
+            return ;
 
+        var value = brightnessSlider.value / 100;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
-                startValue = value
+                startValue = value;
             else if (position >= filter.duration - 1 && filter.animateOut > 0)
-                endValue = value
+                endValue = value;
             else
-                middleValue = value
+                middleValue = value;
         }
-
         if (filter.animateIn > 0 || filter.animateOut > 0) {
-            filter.resetProperty('opacity')
-            brightnessKeyframesButton.checked = false
+            filter.resetProperty('opacity');
+            brightnessKeyframesButton.checked = false;
             if (filter.animateIn > 0) {
-                filter.set('opacity', startValue, 0)
-                filter.set('opacity', middleValue, filter.animateIn - 1)
+                filter.set('opacity', startValue, 0);
+                filter.set('opacity', middleValue, filter.animateIn - 1);
             }
             if (filter.animateOut > 0) {
-                filter.set('opacity', middleValue, filter.duration - filter.animateOut)
-                filter.set('opacity', endValue, filter.duration - 1)
+                filter.set('opacity', middleValue, filter.duration - filter.animateOut);
+                filter.set('opacity', endValue, filter.duration - 1);
             }
         } else if (!brightnessKeyframesButton.checked) {
-            filter.resetProperty('opacity')
-            filter.set('opacity', middleValue)
+            filter.resetProperty('opacity');
+            filter.set('opacity', middleValue);
         } else if (position !== null) {
-            filter.set('opacity', value, position)
+            filter.set('opacity', value, position);
         }
+    }
+
+    width: 200
+    height: 50
+    Component.onCompleted: {
+        if (filter.isNew) {
+            // Set default parameter values
+            filter.set('alpha', 1);
+            filter.set('opacity', 1);
+            filter.savePreset(preset.parameters);
+        } else {
+            middleValue = filter.getDouble('opacity', filter.animateIn);
+            if (filter.animateIn > 0)
+                startValue = filter.getDouble('opacity', 0);
+
+            if (filter.animateOut > 0)
+                endValue = filter.getDouble('opacity', filter.duration - 1);
+
+        }
+        setControls();
+    }
+
+    Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateFilter(null);
+        }
+
+        function onOutChanged() {
+            updateFilter(null);
+        }
+
+        function onAnimateInChanged() {
+            updateFilter(null);
+        }
+
+        function onAnimateOutChanged() {
+            updateFilter(null);
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
+        target: filter
+    }
+
+    Connections {
+        function onPositionChanged() {
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                setControls();
+            } else {
+                blockUpdate = true;
+                brightnessSlider.value = filter.getDouble('opacity', getPosition()) * 100;
+                blockUpdate = false;
+                brightnessSlider.enabled = true;
+            }
+        }
+
+        target: producer
     }
 
     GridLayout {
@@ -122,20 +143,24 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.Preset {
             id: preset
+
             Layout.columnSpan: parent.columns - 1
             parameters: ['opacity']
             onBeforePresetLoaded: {
-                filter.resetProperty(parameters[0])
+                filter.resetProperty(parameters[0]);
             }
             onPresetSelected: {
-                setControls()
-                middleValue = filter.getDouble(parameters[0], filter.animateIn)
+                setControls();
+                middleValue = filter.getDouble(parameters[0], filter.animateIn);
                 if (filter.animateIn > 0)
-                    startValue = filter.getDouble(parameters[0], 0)
+                    startValue = filter.getDouble(parameters[0], 0);
+
                 if (filter.animateOut > 0)
-                    endValue = filter.getDouble(parameters[0], filter.duration - 1)
+                    endValue = filter.getDouble(parameters[0], filter.duration - 1);
+
             }
         }
 
@@ -143,36 +168,42 @@ Item {
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
+
         Shotcut.SliderSpinner {
             id: brightnessSlider
-            minimumValue: 0.0
-            maximumValue: 200.0
+
+            minimumValue: 0
+            maximumValue: 200
             decimals: 1
             suffix: ' %'
             onValueChanged: updateFilter(getPosition())
         }
+
         Shotcut.UndoButton {
             onClicked: brightnessSlider.value = 100
         }
+
         Shotcut.KeyframesButton {
             id: brightnessKeyframesButton
+
             onToggled: {
-                var value = brightnessSlider.value / 100.0
+                var value = brightnessSlider.value / 100;
                 if (checked) {
-                    blockUpdate = true
-                    filter.clearSimpleAnimation('opacity')
-                    blockUpdate = false
-                    filter.set('opacity', value, getPosition())
+                    blockUpdate = true;
+                    filter.clearSimpleAnimation('opacity');
+                    blockUpdate = false;
+                    filter.set('opacity', value, getPosition());
                 } else {
-                    filter.resetProperty('opacity')
-                    filter.set('opacity', value)
+                    filter.resetProperty('opacity');
+                    filter.set('opacity', value);
                 }
             }
         }
 
-
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

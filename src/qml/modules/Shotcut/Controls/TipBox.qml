@@ -24,14 +24,18 @@ Rectangle {
     radius: 5
     height: Math.ceil(text.length / 80) * label.height + 2 * label.y
 
-    SystemPalette { id: activePalette }
+    SystemPalette {
+        id: activePalette
+    }
 
     Text {
         id: label
+
         x: 10
         y: 10
         width: parent.width - 2 * x
         wrapMode: Text.WordWrap
         color: activePalette.windowText
     }
+
 }

@@ -7,6 +7,7 @@ Metadata {
     name: qsTr("Low Pass")
     mlt_service: 'ladspa.1891'
     qml: 'ui.qml'
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -36,4 +37,5 @@ Metadata {
             }
         ]
     }
+
 }

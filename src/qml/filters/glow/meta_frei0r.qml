@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "frei0r.glow"
     qml: "ui_frei0r.qml"
     gpuAlt: "movit.glow"
+
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -21,4 +22,5 @@ Metadata {
             }
         ]
     }
+
 }
