@@ -153,7 +153,8 @@ private:
 
 PlaylistDock::PlaylistDock(QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::PlaylistDock)
+    ui(new Ui::PlaylistDock),
+    m_blockResizeColumnsToContents(false)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
@@ -1067,12 +1068,16 @@ void PlaylistDock::onPlaylistLoaded()
 
 void PlaylistDock::onPlaylistModified()
 {
-    ui->tableView->resizeColumnsToContents();
+    if (!m_blockResizeColumnsToContents) {
+        ui->tableView->resizeColumnsToContents();
+        m_blockResizeColumnsToContents = true;
+    }
 }
 
 void PlaylistDock::onPlaylistCleared()
 {
     enableUpdate(false);
+    m_blockResizeColumnsToContents = false;
 }
 
 void PlaylistDock::onDropped(const QMimeData *data, int row)
