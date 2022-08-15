@@ -116,6 +116,7 @@ private:
     QTimer m_inChangedTimer;
     QTimer m_outChangedTimer;
     QMenu *m_mainMenu;
+    bool m_blockResizeColumnsToContents;
 };
 
 #endif // PLAYLISTDOCK_H
