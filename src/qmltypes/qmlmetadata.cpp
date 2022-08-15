@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,6 +109,15 @@ QUrl QmlMetadata::vuiFilePath() const
     QUrl retVal = QUrl();
     if (!m_vuiFileName.isEmpty()) {
         retVal = QUrl::fromLocalFile(m_path.absoluteFilePath(m_vuiFileName));
+    }
+    return retVal;
+}
+
+QString QmlMetadata::iconFilePath() const
+{
+    QString retVal;
+    if (!m_icon.isEmpty()) {
+        retVal = m_path.absoluteFilePath(m_icon);
     }
     return retVal;
 }

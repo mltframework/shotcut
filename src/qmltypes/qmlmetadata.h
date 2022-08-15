@@ -183,6 +183,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool isDeprecated READ isDeprecated WRITE setIsDeprecated)
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
     Q_PROPERTY(QString keywords MEMBER m_keywords NOTIFY changed)
+    Q_PROPERTY(QString icon MEMBER m_icon READ iconFilePath NOTIFY changed)
 
 public:
     enum PluginType {
@@ -234,6 +235,7 @@ public:
     void setPath(const QDir &path);
     QUrl qmlFilePath() const;
     QUrl vuiFilePath() const;
+    QString iconFilePath() const;
     bool isAudio() const
     {
         return m_isAudio;
@@ -316,6 +318,7 @@ private:
     bool m_isDeprecated;
     QString m_minimumVersion;
     QString m_keywords;
+    QString m_icon;
 };
 
 #endif // QMLMETADATA_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -249,7 +249,7 @@ Rectangle {
 
         ScrollView {
             Layout.fillWidth: true
-            Layout.preferredHeight: filterWindow.height - toolBar.height - searchBar.height - parent.anchors.margins * 2
+            Layout.preferredHeight: filterWindow.height - toolBar.height - searchBar.Layout.preferredHeight - animation.height - parent.anchors.margins * 2
             clip: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
             ScrollBar.horizontal.height: 0
@@ -289,6 +289,43 @@ Rectangle {
                 }
 
                 delegate: FilterMenuDelegate {
+                }
+
+            }
+
+        }
+
+        RowLayout {
+            id: animation
+
+            Layout.preferredHeight: icon.visible ? 100 : 0
+
+            AnimatedImage {
+                id: icon
+
+                visible: menuListView.currentIndex > 0 && metadatamodel.get(menuListView.currentIndex).icon.length > 0
+                source: metadatamodel.get(menuListView.currentIndex).icon
+                asynchronous: true
+                Layout.preferredWidth: parent.Layout.preferredHeight
+                Layout.preferredHeight: parent.Layout.preferredHeight
+                fillMode: Image.PreserveAspectFit
+            }
+
+            ColumnLayout {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+                Layout.topMargin: 10
+
+                Label {
+                    text: metadatamodel.get(menuListView.currentIndex).name
+                    font.bold: true
+                }
+
+                Label {
+                    id: keywordsLabel
+
+                    visible: metadatamodel.get(menuListView.currentIndex).keywords.length > 0
+                    text: qsTr('keywords:') + ' ' + metadatamodel.get(menuListView.currentIndex).keywords
                 }
 
             }

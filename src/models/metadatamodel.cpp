@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -131,10 +131,10 @@ void MetadataModel::add(QmlMetadata *data)
 
 QmlMetadata *MetadataModel::get(int index) const
 {
-    if ( index < m_list.size() ) {
+    if (index >= 0 && index < m_list.size()) {
         return m_list[index];
     }
-    return 0;
+    return nullptr;
 }
 
 void MetadataModel::setFilter(MetadataFilter filter)
