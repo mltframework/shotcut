@@ -67,3 +67,8 @@ add_custom_target(astyle COMMAND
   astyle --project=.astylerc --ignore-exclude-errors --recursive "./*.cpp,*.h"
 )
 
+file(GLOB_RECURSE QML_SRC "src/qml/*.qml")
+add_custom_target(qmlformat COMMAND
+  ${CMAKE_PREFIX_PATH}/bin/qmlformat -i ${QML_SRC}
+)
+
