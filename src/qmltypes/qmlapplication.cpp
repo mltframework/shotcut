@@ -246,8 +246,12 @@ QColor QmlApplication::contrastingColor(QString color)
 QStringList QmlApplication::wipes()
 {
     QStringList result;
+    const auto transitions = QString::fromLatin1("transitions");
     QDir dir(Settings.appDataLocation());
-    if (dir.cd("wipes")) {
+    if (!dir.exists(transitions)) {
+        dir.mkdir(transitions);
+    }
+    if (dir.cd(transitions)) {
         for (auto &s : dir.entryList(QDir::Files | QDir::Readable)) {
             result << dir.filePath(s);
         }

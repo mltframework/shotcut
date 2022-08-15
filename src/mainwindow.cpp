@@ -4036,6 +4036,8 @@ void MainWindow::on_actionAppDataSet_triggered()
 
 void MainWindow::on_actionAppDataShow_triggered()
 {
+    // Make the transitions sub-folder if it does not exist
+    QmlApplication::wipes();
     Util::showInFolder(Settings.appDataLocation());
 }
 
