@@ -2074,7 +2074,7 @@ void TimelineDock::onRowsRemoved(const QModelIndex &parent, int first, int last)
 {
     Q_UNUSED(parent)
     // Adjust selected clips for changed indices.
-    if (-1 == m_selection.selectedTrack && parent.isValid()) {
+    if (-1 == m_selection.selectedTrack) {
         QList<QPoint> newSelection;
         int n = last - first + 1;
         if (parent.isValid()) {
