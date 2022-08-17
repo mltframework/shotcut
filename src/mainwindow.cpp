@@ -299,6 +299,27 @@ void MainWindow::setupAndConnectPlayerWidget()
     connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
     connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
     connect(MLT.videoWidget(), SIGNAL(toggleZoom(bool)), m_player, SLOT(toggleZoom(bool)));
+    ui->menuPlayer->addAction(Actions["playerPlayPauseAction"]);
+    ui->menuPlayer->addAction(Actions["playerFastForwardAction"]);
+    ui->menuPlayer->addAction(Actions["playerRewindAction"]);
+    ui->menuPlayer->addAction(Actions["playerSkipNextAction"]);
+    ui->menuPlayer->addAction(Actions["playerSkipPreviousAction"]);
+    ui->menuPlayer->addAction(Actions["playerSeekStartAction"]);
+    ui->menuPlayer->addAction(Actions["playerSeekEndAction"]);
+    ui->menuPlayer->addAction(Actions["playerNextFrameAction"]);
+    ui->menuPlayer->addAction(Actions["playerPreviousFrameAction"]);
+    ui->menuPlayer->addAction(Actions["playerForwardOneSecondAction"]);
+    ui->menuPlayer->addAction(Actions["playerBackwardOneSecondAction"]);
+    ui->menuPlayer->addAction(Actions["playerForwardTwoSecondsAction"]);
+    ui->menuPlayer->addAction(Actions["playerBackwardTwoAction"]);
+    ui->menuPlayer->addAction(Actions["playerForwardFiveSecondsAction"]);
+    ui->menuPlayer->addAction(Actions["playerBackwardFiveSecondsAction"]);
+    ui->menuPlayer->addAction(Actions["playerForwardTenSecondsAction"]);
+    ui->menuPlayer->addAction(Actions["playerBackwardTenSecondsAction"]);
+    ui->menuPlayer->addAction(Actions["playerSetInAction"]);
+    ui->menuPlayer->addAction(Actions["playerSetOutAction"]);
+    ui->menuPlayer->addAction(Actions["playerSetPositionAction"]);
+    ui->menuPlayer->addAction(Actions["playerSwitchSourceProgramAction"]);
 }
 
 void MainWindow::setupLayoutSwitcher()
@@ -655,10 +676,14 @@ void MainWindow::setupAndConnectLeapNetworkListener()
 {
     LeapNetworkListener *leap = new LeapNetworkListener(this);
     connect(leap, SIGNAL(shuttle(float)), SLOT(onShuttle(float)));
-    connect(leap, SIGNAL(jogRightFrame()), SLOT(stepRightOneFrame()));
-    connect(leap, SIGNAL(jogRightSecond()), SLOT(stepRightOneSecond()));
-    connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
-    connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
+    connect(leap, &LeapNetworkListener::jogRightFrame, Actions["playerNextFrameAction"],
+            &QAction::trigger);
+    connect(leap, &LeapNetworkListener::jogRightSecond, Actions["playerForwardOneSecondAction"],
+            &QAction::trigger);
+    connect(leap, &LeapNetworkListener::jogLeftFrame, Actions["playerPreviousFrameAction"],
+            &QAction::trigger);
+    connect(leap, &LeapNetworkListener::jogLeftSecond, Actions["playerBackwardOneSecondAction"],
+            &QAction::trigger);
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
@@ -1277,11 +1302,6 @@ bool MainWindow::checkAutoSave(QString &url)
     m_autosaveFile.reset(new AutoSaveFile(url));
 
     return false;
-}
-
-void MainWindow::stepLeftBySeconds(int sec)
-{
-    m_player->seek(m_player->position() + sec * qRound(MLT.profile().fps()));
 }
 
 void MainWindow::doAutosave()
@@ -1990,34 +2010,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     bool handled = true;
 
     switch (event->key()) {
-    case Qt::Key_Home:
-        m_player->seek(0);
-        break;
-    case Qt::Key_End:
-        if (MLT.producer())
-            m_player->seek(MLT.producer()->get_length());
-        break;
-    case Qt::Key_Left:
-        if (event->modifiers() == Qt::NoModifier) {
-            stepLeftOneFrame();
-        }
-        break;
-    case Qt::Key_Right:
-        if (event->modifiers() == Qt::NoModifier) {
-            stepRightOneFrame();
-        }
-        break;
-    case Qt::Key_PageUp:
-    case Qt::Key_PageDown: {
-        int directionMultiplier = event->key() == Qt::Key_PageUp ? -1 : 1;
-        int seconds = 1;
-        if (event->modifiers() & Qt::ControlModifier)
-            seconds *= 5;
-        if (event->modifiers() & Qt::ShiftModifier)
-            seconds *= 2;
-        stepLeftBySeconds(seconds * directionMultiplier);
-    }
-    break;
     case Qt::Key_F:
         if (event->modifiers() == Qt::NoModifier || event->modifiers() == Qt::ControlModifier) {
             m_filtersDock->show();
@@ -2053,32 +2045,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
                 m_player->seek(m_player->position() + 1);
             else
                 m_player->fastForward(false);
-        }
-        break;
-    case Qt::Key_I:
-        if (!(event->modifiers() & Qt::ControlModifier) && !(event->modifiers() & Qt::AltModifier)) {
-            setInToCurrent(event->modifiers() & Qt::ShiftModifier);
-        }
-        break;
-    case Qt::Key_O:
-        setOutToCurrent(event->modifiers() & Qt::ShiftModifier);
-        break;
-    case Qt::Key_T:
-        m_player->focusPositionSpinner();
-        break;
-    case Qt::Key_Escape: // Avid Toggle Active Monitor
-        if (MLT.isPlaylist()) {
-            if (isMultitrackValid())
-                m_player->onTabBarClicked(Player::ProjectTabIndex);
-            else if (MLT.savedProducer())
-                m_player->onTabBarClicked(Player::SourceTabIndex);
-        } else if (MLT.isMultitrack()) {
-            if (MLT.savedProducer())
-                m_player->onTabBarClicked(Player::SourceTabIndex);
-            // TODO else open clip under playhead of current track if available
-        } else {
-            if (isMultitrackValid() || (playlist() && playlist()->count() > 0))
-                m_player->onTabBarClicked(Player::ProjectTabIndex);
         }
         break;
     case Qt::Key_F2:
@@ -3138,48 +3104,6 @@ void MainWindow::onGpuNotSupported()
     LOG_WARNING() << "";
     QMessageBox::critical(this, qApp->applicationName(),
                           tr("GPU effects are not supported"));
-}
-
-void MainWindow::stepLeftOneFrame()
-{
-    m_player->seek(m_player->position() - 1);
-}
-
-void MainWindow::stepRightOneFrame()
-{
-    m_player->seek(m_player->position() + 1);
-}
-
-void MainWindow::stepLeftOneSecond()
-{
-    stepLeftBySeconds(-1);
-}
-
-void MainWindow::stepRightOneSecond()
-{
-    stepLeftBySeconds(1);
-}
-
-void MainWindow::setInToCurrent(bool ripple)
-{
-    if (m_player->tabIndex() == Player::ProjectTabIndex && isMultitrackValid()) {
-        m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimInPoint, ripple);
-    } else if (MLT.isSeekableClip()) {
-        m_player->setIn(m_player->position());
-        int delta = m_player->position() - MLT.producer()->get_in();
-        emit m_player->inChanged(delta);
-    }
-}
-
-void MainWindow::setOutToCurrent(bool ripple)
-{
-    if (m_player->tabIndex() == Player::ProjectTabIndex && isMultitrackValid()) {
-        m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimOutPoint, ripple);
-    } else if (MLT.isSeekableClip()) {
-        m_player->setOut(m_player->position());
-        int delta = m_player->position() - MLT.producer()->get_out();
-        emit m_player->outChanged(delta);
-    }
 }
 
 void MainWindow::onShuttle(float x)

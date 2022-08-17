@@ -28,6 +28,9 @@ class ShotcutActions : public QObject
     Q_OBJECT
 
 public:
+
+    static const char *hardKeyProperty;
+
     static ShotcutActions &singleton();
     explicit ShotcutActions() : QObject() {}
 

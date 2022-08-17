@@ -96,7 +96,6 @@ public slots:
     void play(double speed = 1.0);
     void pause();
     void stop();
-    void togglePlayPaused();
     void seek(int position);
     void reset();
     void onProducerOpened(bool play = true);
@@ -125,18 +124,9 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 private:
-    void setupActions(QWidget *widget);
-    void retranslateUi(QWidget *widget);
+    void setupActions();
     void adjustScrollBars(float horizontal, float vertical);
     double setVolume(int volume);
-
-    QAction *actionPlay;
-    QAction *actionPause;
-    QAction *actionSkipNext;
-    QAction *actionSkipPrevious;
-    QAction *actionRewind;
-    QAction *actionFastForward;
-    QAction *actionVolume;
 
     ScrubBar *m_scrubber;
     TimeSpinBox *m_positionSpinner;
@@ -149,7 +139,6 @@ private:
     QIcon m_pauseIcon;
     QFrame *m_volumePopup;
     QSlider *m_volumeSlider;
-    QWidget *m_volumeWidget;
     QPushButton *m_muteButton;
     int m_previousIn;
     int m_previousOut;
@@ -163,6 +152,7 @@ private:
     QToolButton *m_gridButton;
     QActionGroup *m_gridActionGroup;
     QAction *m_gridDefaultAction;
+    QToolButton *m_volumeButton;
     float m_zoomToggleFactor;
     QTabBar *m_tabs;
     bool m_pauseAfterOpen;
@@ -176,15 +166,14 @@ private:
     QPropertyAnimation *m_statusFadeOut;
     QTimer m_statusTimer;
     QMenu *m_zoomMenu;
+    QMenu *m_mainMenu;
     NewProjectFolder *m_projectWidget;
 
 private slots:
     void updateSelection();
     void onInChanged(int in);
     void onOutChanged(int out);
-    void on_actionSkipNext_triggered();
-    void on_actionSkipPrevious_triggered();
-    void on_actionVolume_triggered();
+    void onVolumeTriggered();
     void setZoom(float factor, const QIcon &icon);
     void onZoomTriggered();
     void toggleZoom(bool checked);

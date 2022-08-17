@@ -114,6 +114,10 @@ TimelineDock::TimelineDock(QWidget *parent) :
     editMenu->addAction(Actions["timelineOverwriteAction"]);
     editMenu->addAction(Actions["timelineSplitAction"]);
     editMenu->addAction(Actions["timelineRecordAudioAction"]);
+    editMenu->addAction(Actions["timelineTrimClipInAction"]);
+    editMenu->addAction(Actions["timelineTrimClipOutAction"]);
+    editMenu->addAction(Actions["timelineRippleTrimClipInAction"]);
+    editMenu->addAction(Actions["timelineRippleTrimClipOutAction"]);
     m_mainMenu->addMenu(editMenu);
     QMenu *viewMenu = new QMenu(tr("View"), this);
     viewMenu->addAction(Actions["timelineZoomOutAction"]);
@@ -1066,6 +1070,34 @@ void TimelineDock::setupActions()
         action->setEnabled(enabled);
     });
     Actions.add("timelineRebuildAudioWaveformAction", action);
+
+    action = new QAction(tr("Trim Clip In"), this);
+    action->setShortcut(QKeySequence(Qt::Key_I));
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        trimClipAtPlayhead(TimelineDock::TrimInPoint, false);
+    });
+    Actions.add("timelineTrimClipInAction", action);
+
+    action = new QAction(tr("Trim Clip Out"), this);
+    action->setShortcut(QKeySequence(Qt::Key_O));
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        trimClipAtPlayhead(TimelineDock::TrimOutPoint, false);
+    });
+    Actions.add("timelineTrimClipOutAction", action);
+
+    action = new QAction(tr("RippleTrim Clip In"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_I));
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        trimClipAtPlayhead(TimelineDock::TrimInPoint, true);
+    });
+    Actions.add("timelineRippleTrimClipInAction", action);
+
+    action = new QAction(tr("Ripple Trim Clip Out"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_O));
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        trimClipAtPlayhead(TimelineDock::TrimOutPoint, true);
+    });
+    Actions.add("timelineRippleTrimClipOutAction", action);
 }
 
 void TimelineDock::setPosition(int position)

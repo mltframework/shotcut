@@ -16,6 +16,8 @@
  */
 
 #include "player.h"
+
+#include "actions.h"
 #include "scrubbar.h"
 #include "mainwindow.h"
 #include "widgets/timespinbox.h"
@@ -24,6 +26,7 @@
 #include "util.h"
 #include "widgets/newprojectfolder.h"
 #include "proxymanager.h"
+#include "widgets/docktoolbar.h"
 #include <Logger.h>
 
 #include <QtWidgets>
@@ -51,9 +54,7 @@ Player::Player(QWidget *parent)
 {
     setObjectName("Player");
     Mlt::Controller::singleton();
-    setupActions(this);
-    m_playIcon = actionPlay->icon();
-    m_pauseIcon = actionPause->icon();
+    setupActions();
 
     // Create a layout.
     QVBoxLayout *vlayout = new QVBoxLayout(this);
@@ -174,7 +175,6 @@ Player::Player(QWidget *parent)
     m_muteButton->setToolTip(tr("Silence the audio"));
     m_muteButton->setCheckable(true);
     m_muteButton->setChecked(Settings.playerMuted());
-    onMuteButtonToggled(Settings.playerMuted());
     volumeLayoutH->addWidget(m_muteButton);
     connect(m_muteButton, SIGNAL(clicked(bool)), this, SLOT(onMuteButtonToggled(bool)));
 
@@ -186,7 +186,8 @@ Player::Player(QWidget *parent)
     vlayout->addWidget(m_scrubber);
 
     // Add toolbar for transport controls.
-    QToolBar *toolbar = new QToolBar(tr("Transport Controls"), this);
+    DockToolBar *toolbar = new DockToolBar(tr("Transport Controls"), this);
+    toolbar->setAreaHint(Qt::BottomToolBarArea);
     int s = style()->pixelMetric(QStyle::PM_SmallIconSize);
     toolbar->setIconSize(QSize(s, s));
     toolbar->setContentsMargins(0, 0, 0, 0);
@@ -211,11 +212,11 @@ Player::Player(QWidget *parent)
     toolbar->addWidget(m_positionSpinner);
     toolbar->addWidget(m_durationLabel);
     toolbar->addWidget(spacer);
-    toolbar->addAction(actionSkipPrevious);
-    toolbar->addAction(actionRewind);
-    toolbar->addAction(actionPlay);
-    toolbar->addAction(actionFastForward);
-    toolbar->addAction(actionSkipNext);
+    toolbar->addAction(Actions["playerSkipPreviousAction"]);
+    toolbar->addAction(Actions["playerRewindAction"]);
+    toolbar->addAction(Actions["playerPlayPauseAction"]);
+    toolbar->addAction(Actions["playerFastForwardAction"]);
+    toolbar->addAction(Actions["playerSkipNextAction"]);
 
     // Add zoom button to toolbar.
     m_zoomButton = new QToolButton;
@@ -313,8 +314,14 @@ Player::Player(QWidget *parent)
     toolbar->addWidget(m_gridButton);
 
     // Add volume control to toolbar.
-    toolbar->addAction(actionVolume);
-    m_volumeWidget = toolbar->widgetForAction(actionVolume);
+    m_volumeButton = new QToolButton;
+    m_volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
+    m_volumeButton->setIcon(QIcon::fromTheme("player-volume",
+                                             QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+    m_volumeButton->setText(tr("Volume"));
+    m_volumeButton->setToolTip(tr("Show the volume control"));
+    connect(m_volumeButton, SIGNAL(clicked()), this, SLOT(onVolumeTriggered()));
+    toolbar->addWidget(m_volumeButton);
 
     // Add in-point and selected duration labels to toolbar.
     spacer = new QWidget(this);
@@ -325,12 +332,10 @@ Player::Player(QWidget *parent)
     vlayout->addWidget(toolbar);
     vlayout->addLayout(tabLayout);
 
+    onMuteButtonToggled(Settings.playerMuted());
+
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
             SLOT(onFrameDisplayed(const SharedFrame &)));
-    connect(actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
-    connect(actionPause, SIGNAL(triggered()), this, SLOT(pause()));
-    connect(actionFastForward, SIGNAL(triggered()), this, SLOT(fastForward()));
-    connect(actionRewind, SIGNAL(triggered()), this, SLOT(rewind()));
     connect(m_scrubber, SIGNAL(seeked(int)), this, SLOT(seek(int)));
     connect(m_scrubber, SIGNAL(inChanged(int)), this, SLOT(onInChanged(int)));
     connect(m_scrubber, SIGNAL(outChanged(int)), this, SLOT(onOutChanged(int)));
@@ -361,80 +366,250 @@ void Player::connectTransport(const TransportControllable *receiver)
     connect(this, SIGNAL(nextSought(int)), receiver, SLOT(next(int)));
 }
 
-void Player::setupActions(QWidget *widget)
+void Player::setupActions()
 {
-    actionPlay = new QAction(widget);
-    actionPlay->setObjectName(QString::fromUtf8("actionPlay"));
-    actionPlay->setIcon(QIcon::fromTheme("media-playback-start",
-                                         QIcon(":/icons/oxygen/32x32/actions/media-playback-start.png")));
-    actionPlay->setDisabled(true);
-    actionPause = new QAction(widget);
-    actionPause->setObjectName(QString::fromUtf8("actionPause"));
-    actionPause->setIcon(QIcon::fromTheme("media-playback-pause",
-                                          QIcon(":/icons/oxygen/32x32/actions/media-playback-pause.png")));
-    actionPause->setDisabled(true);
-    actionSkipNext = new QAction(widget);
-    actionSkipNext->setObjectName(QString::fromUtf8("actionSkipNext"));
-    actionSkipNext->setIcon(QIcon::fromTheme("media-skip-forward",
-                                             QIcon(":/icons/oxygen/32x32/actions/media-skip-forward.png")));
-    actionSkipNext->setDisabled(true);
-    actionSkipPrevious = new QAction(widget);
-    actionSkipPrevious->setObjectName(QString::fromUtf8("actionSkipPrevious"));
-    actionSkipPrevious->setIcon(QIcon::fromTheme("media-skip-backward",
-                                                 QIcon(":/icons/oxygen/32x32/actions/media-skip-backward.png")));
-    actionSkipPrevious->setDisabled(true);
-    actionRewind = new QAction(widget);
-    actionRewind->setObjectName(QString::fromUtf8("actionRewind"));
-    actionRewind->setIcon(QIcon::fromTheme("media-seek-backward",
-                                           QIcon(":/icons/oxygen/32x32/actions/media-seek-backward.png")));
-    actionRewind->setDisabled(true);
-    actionFastForward = new QAction(widget);
-    actionFastForward->setObjectName(QString::fromUtf8("actionFastForward"));
-    actionFastForward->setIcon(QIcon::fromTheme("media-seek-forward",
-                                                QIcon(":/icons/oxygen/32x32/actions/media-seek-forward.png")));
-    actionFastForward->setDisabled(true);
-    actionVolume = new QAction(widget);
-    actionVolume->setObjectName(QString::fromUtf8("actionVolume"));
-    actionVolume->setIcon(QIcon::fromTheme("player-volume",
-                                           QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
-    retranslateUi(widget);
-    QMetaObject::connectSlotsByName(widget);
-}
+    QIcon icon;
+    QAction *action;
 
-void Player::retranslateUi(QWidget *widget)
-{
-    Q_UNUSED(widget)
-    actionPlay->setText(tr("Play"));
-#ifndef QT_NO_TOOLTIP
-    actionPlay->setToolTip(tr("Start playback (L)"));
-#endif // QT_NO_TOOLTIP
-    actionPlay->setShortcut(QString("Space"));
-    actionPause->setText(tr("Pause"));
-#ifndef QT_NO_TOOLTIP
-    actionPause->setToolTip(tr("Pause playback (K)"));
-#endif // QT_NO_TOOLTIP
-    actionSkipNext->setText(tr("Skip Next"));
-#ifndef QT_NO_TOOLTIP
-    actionSkipNext->setToolTip(tr("Skip to the next point (Alt+Right)"));
-#endif // QT_NO_TOOLTIP
-    actionSkipNext->setShortcut(QString("Alt+Right"));
-    actionSkipPrevious->setText(tr("Skip Previous"));
-#ifndef QT_NO_TOOLTIP
-    actionSkipPrevious->setToolTip(tr("Skip to the previous point (Alt+Left)"));
-#endif // QT_NO_TOOLTIP
-    actionSkipPrevious->setShortcut(QString("Alt+Left"));
-    actionRewind->setText(tr("Rewind"));
-#ifndef QT_NO_TOOLTIP
-    actionRewind->setToolTip(tr("Play quickly backwards (J)"));
-#endif // QT_NO_TOOLTIP
-    actionFastForward->setText(tr("Fast Forward"));
-#ifndef QT_NO_TOOLTIP
-    actionFastForward->setToolTip(tr("Play quickly forwards (L)"));
-#endif // QT_NO_TOOLTIP
-    actionVolume->setText(tr("Volume"));
-#ifndef QT_NO_TOOLTIP
-    actionVolume->setToolTip(tr("Show the volume control"));
-#endif
+    m_playIcon = QIcon::fromTheme("media-playback-start",
+                                  QIcon(":/icons/oxygen/32x32/actions/media-playback-start.png"));
+    m_pauseIcon = QIcon::fromTheme("media-playback-pause",
+                                   QIcon(":/icons/oxygen/32x32/actions/media-playback-pause.png"));
+
+    action = new QAction(tr("Play/Pause"), this);
+    action->setShortcut(QKeySequence(Qt::Key_Space));
+    action->setIcon(m_playIcon);
+    action->setDisabled(true);
+    action->setToolTip(tr("Toggle play or pause"));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (Actions["playerPlayPauseAction"]->icon().cacheKey() == m_playIcon.cacheKey())
+            play();
+        else if (m_isSeekable)
+            pause();
+        else
+            stop();
+    });
+    Actions.add("playerPlayPauseAction", action);
+
+    action = new QAction(tr("Skip Next"), this);
+    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Right));
+    icon = QIcon::fromTheme("media-skip-forward",
+                            QIcon(":/icons/oxygen/32x32/actions/media-skip-forward.png"));
+    action->setIcon(icon);
+    action->setDisabled(true);
+    action->setToolTip(tr("Skip to the next point"));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (m_scrubber->markers().size() > 0) {
+            foreach (int x, m_scrubber->markers()) {
+                if (x > m_position) {
+                    emit seeked(x);
+                    return;
+                }
+            }
+            emit seeked(m_duration - 1);
+        } else {
+            emit nextSought(m_position);
+            emit nextSought();
+        }
+    });
+    Actions.add("playerSkipNextAction", action);
+
+    action = new QAction(tr("Skip Previous"), this);
+    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Left));
+    icon = QIcon::fromTheme("media-skip-backward",
+                            QIcon(":/icons/oxygen/32x32/actions/media-skip-backward.png"));
+    action->setIcon(icon);
+    action->setDisabled(true);
+    action->setToolTip(tr("Skip to the previous point"));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (m_scrubber->markers().size() > 0) {
+            QList<int> markers = m_scrubber->markers();
+            int n = markers.count();
+            while (n--) {
+                if (markers[n] < m_position) {
+                    emit seeked(markers[n]);
+                    return;
+                }
+            }
+            emit seeked(0);
+        } else {
+            emit previousSought(m_position);
+            emit previousSought();
+        }
+    });
+    Actions.add("playerSkipPreviousAction", action);
+
+    action = new QAction(tr("Rewind"), this);
+    action->setProperty(Actions.hardKeyProperty, "J");
+    icon = QIcon::fromTheme("media-seek-backward",
+                            QIcon(":/icons/oxygen/32x32/actions/media-seek-backward.png"));
+    action->setIcon(icon);
+    action->setDisabled(true);
+    action->setToolTip(tr("Play quickly backwards"));
+    connect(action, &QAction::triggered, this, &Player::rewind);
+    Actions.add("playerRewindAction", action);
+
+    action = new QAction(tr("Fast Forward"), this);
+    action->setProperty(Actions.hardKeyProperty, "L");
+    icon = QIcon::fromTheme("media-seek-forward",
+                            QIcon(":/icons/oxygen/32x32/actions/media-seek-forward.png"));
+    action->setIcon(icon);
+    action->setDisabled(true);
+    action->setToolTip(tr("Play quickly forwards"));
+    connect(action, &QAction::triggered, this, &Player::fastForward);
+    Actions.add("playerFastForwardAction", action);
+
+    action = new QAction(tr("Seek Start"), this);
+    action->setShortcut(QKeySequence(Qt::Key_Home));
+    connect(action, &QAction::triggered, this, [&]() {
+        seek(0);
+    });
+    Actions.add("playerSeekStartAction", action);
+
+    action = new QAction(tr("Seek End"), this);
+    action->setShortcut(QKeySequence(Qt::Key_End));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(MLT.producer()->get_length());
+    });
+    Actions.add("playerSeekEndAction", action);
+
+    action = new QAction(tr("Next Frame"), this);
+    action->setProperty(Actions.hardKeyProperty, "K+L");
+    action->setShortcut(QKeySequence(Qt::Key_Right));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() + 1);
+    });
+    Actions.add("playerNextFrameAction", action);
+
+    action = new QAction(tr("Previous Frame"), this);
+    action->setProperty(Actions.hardKeyProperty, "K+J");
+    action->setShortcut(QKeySequence(Qt::Key_Left));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() - 1);
+    });
+    Actions.add("playerPreviousFrameAction", action);
+
+    action = new QAction(tr("Forward One Second"), this);
+    action->setShortcut(QKeySequence(Qt::Key_PageDown));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() + qRound(MLT.profile().fps()));
+    });
+    Actions.add("playerForwardOneSecondAction", action);
+
+    action = new QAction(tr("Backward One Second"), this);
+    action->setShortcut(QKeySequence(Qt::Key_PageUp));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() - qRound(MLT.profile().fps()));
+    });
+    Actions.add("playerBackwardOneSecondAction", action);
+
+    action = new QAction(tr("Forward Two Seconds"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageDown));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() + 2 * qRound(MLT.profile().fps()));
+    });
+    Actions.add("playerForwardTwoSecondsAction", action);
+
+    action = new QAction(tr("Backward Two Seconds"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageUp));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() - 2 * qRound(MLT.profile().fps()));
+    });
+    Actions.add("playerBackwardTwoAction", action);
+
+    action = new QAction(tr("Forward Five Seconds"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_PageDown));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() + 5 * qRound(MLT.profile().fps()));
+    });
+    Actions.add("playerForwardFiveSecondsAction", action);
+
+    action = new QAction(tr("Backward Five Seconds"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_PageUp));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() - 5 * qRound(MLT.profile().fps()));
+    });
+    Actions.add("playerBackwardFiveSecondsAction", action);
+
+    action = new QAction(tr("Forward Ten Seconds"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::CTRL + Qt::Key_PageDown));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() + 10 * qRound(MLT.profile().fps()));
+    });
+    Actions.add("playerForwardTenSecondsAction", action);
+
+    action = new QAction(tr("Backward Ten Seconds"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::CTRL + Qt::Key_PageUp));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() - 10 * qRound(MLT.profile().fps()));
+    });
+    Actions.add("playerBackwardTenSecondsAction", action);
+
+    action = new QAction(tr("Set In"), this);
+    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_I));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.isSeekableClip()) {
+            setIn(position());
+            int delta = position() - MLT.producer()->get_in();
+            emit inChanged(delta);
+        }
+    });
+    Actions.add("playerSetInAction", action);
+
+    action = new QAction(tr("Set Out"), this);
+    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_O));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.isSeekableClip()) {
+            setOut(position());
+            int delta = position() - MLT.producer()->get_out();
+            emit outChanged(delta);
+        }
+    });
+    Actions.add("playerSetOutAction", action);
+
+    action = new QAction(tr("Set Position"), this);
+    action->setShortcut(QKeySequence(Qt::Key_T));
+    connect(action, &QAction::triggered, this, [&]() {
+        m_positionSpinner->setFocus(Qt::ShortcutFocusReason);
+    });
+    Actions.add("playerSetPositionAction", action);
+
+    action = new QAction(tr("Switch Source/Program"), this);
+    action->setShortcut(QKeySequence(Qt::Key_Escape));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.isPlaylist()) {
+            if (MAIN.isMultitrackValid())
+                onTabBarClicked(Player::ProjectTabIndex);
+            else if (MLT.savedProducer())
+                onTabBarClicked(Player::SourceTabIndex);
+        } else if (MLT.isMultitrack()) {
+            if (MLT.savedProducer())
+                onTabBarClicked(Player::SourceTabIndex);
+            // TODO else open clip under playhead of current track if available
+        } else {
+            if (MAIN.isMultitrackValid() || (MAIN.playlist() && MAIN.playlist()->count() > 0))
+                onTabBarClicked(Player::ProjectTabIndex);
+        }
+    });
+    Actions.add("playerSwitchSourceProgramAction", action);
+
+    action = new QAction(tr("Pause"), this);
+    action->setProperty(Actions.hardKeyProperty, "K");
+    action->setIcon(m_pauseIcon);
+    action->setToolTip(tr("Pause playback"));
+    connect(action, &QAction::triggered, this, &Player::pause);
+    Actions.add("playerPauseAction", action);
 }
 
 void Player::setIn(int pos)
@@ -508,14 +683,10 @@ void Player::play(double speed)
     }
     emit played(speed);
     if (m_isSeekable) {
-        actionPlay->setIcon(m_pauseIcon);
-        actionPlay->setText(tr("Pause"));
-        actionPlay->setToolTip(tr("Pause playback (K)"));
+        Actions["playerPlayPauseAction"]->setIcon(m_pauseIcon);
     } else {
-        actionPlay->setIcon(QIcon::fromTheme("media-playback-stop",
-                                             QIcon(":/icons/oxygen/32x32/actions/media-playback-stop.png")));
-        actionPlay->setText(tr("Stop"));
-        actionPlay->setToolTip(tr("Stop playback (K)"));
+        Actions["playerPlayPauseAction"]->setIcon(QIcon::fromTheme("media-playback-stop",
+                                                                   QIcon(":/icons/oxygen/32x32/actions/media-playback-stop.png")));
     }
     m_playPosition = m_position;
 }
@@ -529,19 +700,7 @@ void Player::pause()
 void Player::stop()
 {
     emit stopped();
-    actionPlay->setIcon(m_playIcon);
-    actionPlay->setText(tr("Play"));
-    actionPlay->setToolTip(tr("Start playback (L)"));
-}
-
-void Player::togglePlayPaused()
-{
-    if (actionPlay->icon().cacheKey() == m_playIcon.cacheKey())
-        play();
-    else if (m_isSeekable)
-        pause();
-    else
-        stop();
+    Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
 }
 
 void Player::seek(int position)
@@ -552,9 +711,7 @@ void Player::seek(int position)
         }
     }
     // Seek implies pause.
-    actionPlay->setIcon(m_playIcon);
-    actionPlay->setText(tr("Play"));
-    actionPlay->setToolTip(tr("Start playback (L)"));
+    Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
     m_playPosition = std::numeric_limits<int>::max();
 }
 
@@ -568,11 +725,11 @@ void Player::reset()
     m_scrubber->setScale(1);
     m_positionSpinner->setValue(0);
     m_positionSpinner->setDisabled(true);
-    actionPlay->setDisabled(true);
-    actionSkipPrevious->setDisabled(true);
-    actionSkipNext->setDisabled(true);
-    actionRewind->setDisabled(true);
-    actionFastForward->setDisabled(true);
+    Actions["playerPlayPauseAction"]->setDisabled(true);
+    Actions["playerSkipPreviousAction"]->setDisabled(true);
+    Actions["playerSkipNextAction"]->setDisabled(true);
+    Actions["playerRewindAction"]->setDisabled(true);
+    Actions["playerFastForwardAction"]->setDisabled(true);
     m_videoWidget->hide();
     m_projectWidget->show();
     m_previousIn = m_previousOut = -1;
@@ -611,11 +768,11 @@ void Player::onProducerOpened(bool play)
     onMuteButtonToggled(Settings.playerMuted());
     toggleZoom(Settings.playerZoom() > 0.0f);
 
-    actionPlay->setEnabled(true);
-    actionSkipPrevious->setEnabled(m_isSeekable);
-    actionSkipNext->setEnabled(m_isSeekable);
-    actionRewind->setEnabled(m_isSeekable);
-    actionFastForward->setEnabled(m_isSeekable);
+    Actions["playerPlayPauseAction"]->setEnabled(true);
+    Actions["playerSkipPreviousAction"]->setEnabled(m_isSeekable);
+    Actions["playerSkipNextAction"]->setEnabled(m_isSeekable);
+    Actions["playerRewindAction"]->setEnabled(m_isSeekable);
+    Actions["playerFastForwardAction"]->setEnabled(m_isSeekable);
 
     connectTransport(MLT.transportControl());
 
@@ -670,11 +827,11 @@ void Player::onMeltedUnitOpened()
     setVolume(m_volumeSlider->value());
     m_savedVolume = MLT.volume();
     onMuteButtonToggled(Settings.playerMuted());
-    actionPlay->setEnabled(true);
-    actionSkipPrevious->setEnabled(m_isSeekable);
-    actionSkipNext->setEnabled(m_isSeekable);
-    actionRewind->setEnabled(m_isSeekable);
-    actionFastForward->setEnabled(m_isSeekable);
+    Actions["playerPlayPauseAction"]->setEnabled(true);
+    Actions["playerSkipPreviousAction"]->setEnabled(m_isSeekable);
+    Actions["playerSkipNextAction"]->setEnabled(m_isSeekable);
+    Actions["playerRewindAction"]->setEnabled(m_isSeekable);
+    Actions["playerFastForwardAction"]->setEnabled(m_isSeekable);
     setIn(-1);
     setOut(-1);
     setFocus();
@@ -753,40 +910,6 @@ void Player::onOutChanged(int out)
     updateSelection();
 }
 
-void Player::on_actionSkipNext_triggered()
-{
-    if (m_scrubber->markers().size() > 0) {
-        foreach (int x, m_scrubber->markers()) {
-            if (x > m_position) {
-                emit seeked(x);
-                return;
-            }
-        }
-        emit seeked(m_duration - 1);
-    } else {
-        emit nextSought(m_position);
-        emit nextSought();
-    }
-}
-
-void Player::on_actionSkipPrevious_triggered()
-{
-    if (m_scrubber->markers().size() > 0) {
-        QList<int> markers = m_scrubber->markers();
-        int n = markers.count();
-        while (n--) {
-            if (markers[n] < m_position) {
-                emit seeked(markers[n]);
-                return;
-            }
-        }
-        emit seeked(0);
-    } else {
-        emit previousSought(m_position);
-        emit previousSought();
-    }
-}
-
 void Player::rewind(bool forceChangeDirection)
 {
     if (m_isSeekable)
@@ -805,16 +928,12 @@ void Player::fastForward(bool forceChangeDirection)
 
 void Player::showPaused()
 {
-    actionPlay->setIcon(m_playIcon);
-    actionPlay->setText(tr("Play"));
-    actionPlay->setToolTip(tr("Start playback (L)"));
+    Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
 }
 
 void Player::showPlaying()
 {
-    actionPlay->setIcon(m_pauseIcon);
-    actionPlay->setText(tr("Pause"));
-    actionPlay->setToolTip(tr("Pause playback (K)"));
+    Actions["playerPlayPauseAction"]->setIcon(m_pauseIcon);
 }
 
 void Player::switchToTab(TabIndex index)
@@ -1044,8 +1163,8 @@ void Player::onVolumeChanged(int volume)
     Settings.setPlayerVolume(volume);
     Settings.setPlayerMuted(false);
     m_muteButton->setChecked(false);
-    actionVolume->setIcon(QIcon::fromTheme("player-volume",
-                                           QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+    m_volumeButton->setIcon(QIcon::fromTheme("player-volume",
+                                             QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
     m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted",
                                            QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
     m_muteButton->setToolTip(tr("Mute"));
@@ -1053,19 +1172,19 @@ void Player::onVolumeChanged(int volume)
 
 void Player::onCaptureStateChanged(bool active)
 {
-    actionPlay->setDisabled(active);
+    Actions["playerPlayPauseAction"]->setDisabled(active);
 }
 
-void Player::on_actionVolume_triggered()
+void Player::onVolumeTriggered()
 {
     // We must show first to realizes the volume popup geometry.
     m_volumePopup->show();
-    int x = (m_volumePopup->width() - m_volumeWidget->width()) / 2;
-    x = mapToParent(m_volumeWidget->geometry().bottomLeft()).x() - x;
+    int x = (m_volumePopup->width() - m_volumeButton->width()) / 2;
+    x = mapToParent(m_volumeButton->geometry().bottomLeft()).x() - x;
     int y = m_scrubber->geometry().height() - m_volumePopup->height();
     m_volumePopup->move(mapToGlobal(m_scrubber->geometry().bottomLeft()) + QPoint(x, y));
-    m_volumeWidget->hide();
-    m_volumeWidget->show();
+    m_volumeButton->hide();
+    m_volumeButton->show();
 }
 
 void Player::onMuteButtonToggled(bool checked)
@@ -1073,15 +1192,15 @@ void Player::onMuteButtonToggled(bool checked)
     if (checked) {
         m_savedVolume = MLT.volume();
         MLT.setVolume(0);
-        actionVolume->setIcon(QIcon::fromTheme("audio-volume-muted",
-                                               QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+        m_volumeButton->setIcon(QIcon::fromTheme("audio-volume-muted",
+                                                 QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
         m_muteButton->setIcon(QIcon::fromTheme("audio-volume-high",
                                                QIcon(":/icons/oxygen/32x32/status/audio-volume-high.png")));
         m_muteButton->setToolTip(tr("Unmute"));
     } else {
         MLT.setVolume(m_savedVolume);
-        actionVolume->setIcon(QIcon::fromTheme("player-volume",
-                                               QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+        m_volumeButton->setIcon(QIcon::fromTheme("player-volume",
+                                                 QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
         m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted",
                                                QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
         m_muteButton->setToolTip(tr("Mute"));

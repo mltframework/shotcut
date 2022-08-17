@@ -101,6 +101,11 @@
      <string>&amp;Edit</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuPlayer">
+    <property name="title">
+     <string>Player</string>
+    </property>
+   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>&amp;Help</string>
@@ -269,6 +274,7 @@
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
+   <addaction name="menuPlayer"/>
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>

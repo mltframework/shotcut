@@ -21,7 +21,8 @@
 
 #include <QAction>
 
-static const QString categoryProperty = "category";
+const char *ShotcutActions::hardKeyProperty = "hardkey";
+
 static QScopedPointer<ShotcutActions> instance;
 
 ShotcutActions &ShotcutActions::singleton()

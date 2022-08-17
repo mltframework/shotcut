@@ -75,6 +75,8 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
                 result = tr("Playlist");
             } else if (key.startsWith("keyframes")) {
                 result = tr("Keyframes");
+            } else if (key.startsWith("player")) {
+                result = tr("Player");
             } else {
                 result = tr("Other");
             }
@@ -89,9 +91,12 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
         }
         break;
         case COLUMN_SEQUENCE2: {
-            QList<QKeySequence> sequences = action->shortcuts();
-            if (sequences.size() > 1)
-                result = sequences[1].toString();
+            result = action->property(Actions.hardKeyProperty);
+            if (result.toString().isEmpty()) {
+                QList<QKeySequence> sequences = action->shortcuts();
+                if (sequences.size() > 1)
+                    result = sequences[1].toString();
+            }
         }
         break;
         default:

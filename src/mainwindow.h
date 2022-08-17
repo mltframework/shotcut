@@ -171,7 +171,6 @@ private:
     void changeDeinterlacer(bool checked, const char *method);
     void changeInterpolation(bool checked, const char *method);
     bool checkAutoSave(QString &url);
-    void stepLeftBySeconds(int sec);
     bool saveRepairedXmlFile(MltXmlChecker &checker, QString &fileName);
     void setAudioChannels(int channels);
     void showSaveError();
@@ -244,12 +243,6 @@ public slots:
     QWidget *loadProducerWidget(Mlt::Producer *producer);
     void onProducerOpened(bool withReopen = true);
     void onGpuNotSupported();
-    void stepLeftOneFrame();
-    void stepRightOneFrame();
-    void stepLeftOneSecond();
-    void stepRightOneSecond();
-    void setInToCurrent(bool ripple);
-    void setOutToCurrent(bool ripple);
     void onShuttle(float x);
     void onPropertiesDockTriggered(bool checked = true);
     bool on_actionSave_triggered();
