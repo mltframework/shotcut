@@ -53,6 +53,8 @@ private slots:
 
     void startPreview();
 
+    void on_previewCheckBox_clicked(bool checked);
+
 private:
     Ui::LumaMixTransition *ui;
     Mlt::Producer m_producer;

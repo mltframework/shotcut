@@ -93,6 +93,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         }
         ui->mixSlider->setValue(qRound(transition->get_double("start") * 100.0));
     }
+    ui->previewCheckBox->setChecked(Settings.timelinePreviewTransition());
     m_preview = new ProducerPreviewWidget(MLT.profile().dar());
     m_preview->setLooping(false);
     ui->horizontalLayout->addWidget(m_preview, 0, Qt::AlignCenter);
@@ -258,8 +259,17 @@ void LumaMixTransition::on_lumaCombo_currentRowChanged(int index)
 
 void LumaMixTransition::startPreview()
 {
-    if (m_producer.is_valid()) {
+    if (Settings.timelinePreviewTransition() && m_producer.is_valid()) {
         m_preview->stop();
         m_preview->start(m_producer);
     }
 }
+
+void LumaMixTransition::on_previewCheckBox_clicked(bool checked)
+{
+    Settings.setTimelinePreviewTransition(checked);
+    if (checked) {
+        startPreview();
+    }
+}
+

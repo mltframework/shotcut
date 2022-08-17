@@ -195,6 +195,8 @@ public:
     void setAudioReferenceTrack(int);
     double audioReferenceSpeedRange() const;
     void setAudioReferenceSpeedRange(double);
+    bool timelinePreviewTransition() const;
+    void setTimelinePreviewTransition(bool);
 
     // filter
     QString filterFavorite(const QString &filterName);
@@ -260,6 +262,7 @@ public:
     void setGlaxnimatePath(const QString &path);
     bool exportRangeMarkers() const;
     void setExportRangeMarkers(bool);
+    int undoLimit() const;
 
     // proxy
     bool proxyEnabled() const;
@@ -270,8 +273,6 @@ public:
     void setProxyUseProjectFolder(bool);
     bool proxyUseHardware() const;
     void setProxyUseHardware(bool);
-
-    int undoLimit() const;
 
 signals:
     void openPathChanged();

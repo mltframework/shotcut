@@ -680,6 +680,16 @@ void ShotcutSettings::setAudioReferenceSpeedRange(double range)
     settings.setValue("timeline/audioReferenceSpeedRange", range);
 }
 
+bool ShotcutSettings::timelinePreviewTransition() const
+{
+    return settings.value("timeline/previewTransition", true).toBool();
+}
+
+void ShotcutSettings::setTimelinePreviewTransition(bool b)
+{
+    settings.setValue("timeline/previewTransition", b);
+}
+
 QString ShotcutSettings::filterFavorite(const QString &filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();
