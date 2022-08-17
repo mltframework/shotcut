@@ -266,6 +266,7 @@ public:
 #if defined(Q_OS_MAC)
         dir.cdUp();
         dir.cd("Resources");
+        dir.cd("shotcut");
         dir.cd("translations");
 #elif defined(Q_OS_WIN)
         dir.cd("share");

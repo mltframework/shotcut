@@ -1617,18 +1617,18 @@ function deploy_mac
   BUILD_DIR="./Shotcut.app/Contents"
 
   # copy Qt translations
-  cmd mkdir "$BUILD_DIR/Resources/translations"
+  cmd mkdir -p "$BUILD_DIR/Resources/shotcut/translations"
   # try QTDIR first
   if [ -d "$QTDIR/translations" ]; then
-    cmd cp -p "$QTDIR"/translations/qt_*.qm "$BUILD_DIR/Resources/translations/"
-    cmd cp -p "$QTDIR"/translations/qtbase_*.qm "$BUILD_DIR/Resources/translations/"
+    cmd cp -p "$QTDIR"/translations/qt_*.qm "$BUILD_DIR/Resources/shotcut/translations/"
+    cmd cp -p "$QTDIR"/translations/qtbase_*.qm "$BUILD_DIR/Resources/shotcut/translations/"
   # try Qt Creator after that
   elif [ -d "/Applications/Qt Creator.app/Contents/Resources/translations" ]; then
-    cmd cp -p "/Applications/Qt Creator.app/Contents/Resources/translations/"qt_*.qm "$BUILD_DIR/Resources/translations/"
-    cmd cp -p "/Applications/Qt Creator.app/Contents/Resources/translations/"qtbase_*.qm "$BUILD_DIR/Resources/translations/"
+    cmd cp -p "/Applications/Qt Creator.app/Contents/Resources/translations/"qt_*.qm "$BUILD_DIR/Resources/shotcut/translations/"
+    cmd cp -p "/Applications/Qt Creator.app/Contents/Resources/translations/"qtbase_*.qm "$BUILD_DIR/Resources/shotcut/translations/"
   fi
   # copy Shotcut translations
-  cmd cp translations/*.qm "$BUILD_DIR/Resources/translations/"
+  cmd cp translations/*.qm "$BUILD_DIR/Resources/shotcut/translations/"
 
   # This little guy helps Qt 5 apps find the Qt plugins!
   printf "[Paths]\nPlugins=PlugIns/qt\nQml2Imports=Resources/qml\n" > "$BUILD_DIR/Resources/qt.conf"
