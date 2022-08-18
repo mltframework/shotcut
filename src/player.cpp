@@ -578,8 +578,8 @@ void Player::setupActions()
     });
     Actions.add("playerSetOutAction", action);
 
-    action = new QAction(tr("Set Position"), this);
-    action->setShortcut(QKeySequence(Qt::Key_T));
+    action = new QAction(tr("Set Time Position"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_T));
     connect(action, &QAction::triggered, this, [&]() {
         m_positionSpinner->setFocus(Qt::ShortcutFocusReason);
     });
