@@ -5,6 +5,7 @@ Metadata {
     type: Metadata.Filter
     isAudio: true
     name: qsTr("Equalizer: 15-Band")
+    keywords: qsTr('tone frequency', 'search keywords for the Equalizer: 15-Band audio filter') + ' equalizer: 15-band'
     mlt_service: 'ladspa.1197'
     objectName: '15BandEq'
     qml: 'ui.qml'

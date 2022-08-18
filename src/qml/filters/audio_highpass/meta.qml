@@ -5,6 +5,7 @@ Metadata {
     type: Metadata.Filter
     isAudio: true
     name: qsTr("High Pass")
+    keywords: qsTr('frequency', 'search keywords for the High Pass audio filter') + ' high pass'
     mlt_service: 'ladspa.1890'
     qml: 'ui.qml'
 

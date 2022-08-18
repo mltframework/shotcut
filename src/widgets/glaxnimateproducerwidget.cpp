@@ -356,7 +356,6 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
                                                        bool hideCurrentTrack)
 {
     m_producer = producer;
-    m_producer.dump();
     if (!m_producer.get(kMultitrackItemProperty) && !m_producer.get(kTrackIndexProperty))
         return;
     m_profile.reset(new Mlt::Profile(::mlt_profile_clone(MLT.profile().get_profile())));

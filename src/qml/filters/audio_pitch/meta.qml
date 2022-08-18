@@ -6,6 +6,7 @@ Metadata {
     isAudio: true
     name: qsTr("Pitch", 'audio pitch or tone')
     mlt_service: "rbpitch"
+    keywords: qsTr('frequency tone', 'search keywords for the Pitch audio filter') + ' pitch rubberband'
     qml: "ui.qml"
     isFavorite: false
 

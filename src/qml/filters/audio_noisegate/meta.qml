@@ -5,6 +5,7 @@ Metadata {
     type: Metadata.Filter
     isAudio: true
     name: qsTr("Noise Gate")
+    keywords: qsTr('hum hiss distortion clean', 'search keywords for the Noise Gate audio filter') + ' noise gate'
     mlt_service: 'ladspa.1410'
     qml: 'ui.qml'
 

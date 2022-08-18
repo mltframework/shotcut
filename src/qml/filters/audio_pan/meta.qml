@@ -5,6 +5,7 @@ Metadata {
     type: Metadata.Filter
     isAudio: true
     name: qsTr("Pan")
+    keywords: qsTr('stereo balance channel mixer', 'search keywords for the Pan audio filter') + ' pan'
     mlt_service: 'panner'
     objectName: 'audioPan'
     qml: 'ui.qml'

@@ -6,6 +6,7 @@ Metadata {
     isAudio: true
     name: qsTr("Reverb")
     mlt_service: 'ladspa.1216'
+    keywords: qsTr('delay time echo', 'search keywords for the Reverb audio filter') + ' reverb'
     qml: 'ui.qml'
 
     keyframes {

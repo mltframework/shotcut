@@ -22,6 +22,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Alpha Channel: View")
+    keywords: qsTr('transparency', 'search keywords for the Alpha Channel: View video filter') + ' alpha channel: view'
     mlt_service: 'frei0r.alpha0ps'
     objectName: 'alphaChannelView'
     qml: 'ui.qml'

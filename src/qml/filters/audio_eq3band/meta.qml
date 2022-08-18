@@ -5,6 +5,7 @@ Metadata {
     type: Metadata.Filter
     isAudio: true
     name: qsTr("Equalizer: 3-Band (Bass & Treble)")
+    keywords: qsTr('tone frequency', 'search keywords for the Equalizer: 3-Band audio filter') + ' equalizer: 3-band bass treble'
     mlt_service: 'ladspa.1204'
     objectName: '3BandEq'
     qml: 'ui.qml'

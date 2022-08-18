@@ -6,6 +6,7 @@ Metadata {
     isAudio: true
     objectName: 'fadeInVolume'
     name: qsTr("Fade In Audio")
+    keywords: qsTr('loudness', 'search keywords for the Fade In audio filter') + ' fade in audio'
     mlt_service: "volume"
     qml: "ui.qml"
     isFavorite: true
