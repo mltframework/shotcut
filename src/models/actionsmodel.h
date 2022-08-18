@@ -20,6 +20,8 @@
 
 #include <QAbstractItemModel>
 
+class QAction;
+
 class ActionsModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -33,6 +35,7 @@ public:
         COLUMN_COUNT
     };
     explicit ActionsModel(QObject *parent = 0);
+    QAction *action(const QModelIndex &index) const;
 
 protected:
     // Implement QAbstractItemModel
@@ -42,6 +45,7 @@ protected:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &index) const;
+    Qt::ItemFlags flags(const QModelIndex &index) const;
 
 private:
     QList<QString> m_keys;

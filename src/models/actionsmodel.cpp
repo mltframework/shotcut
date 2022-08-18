@@ -29,6 +29,14 @@ ActionsModel::ActionsModel(QObject *parent)
 {
 }
 
+QAction *ActionsModel::action(const QModelIndex &index) const
+{
+    if (index.row() < m_keys.size()) {
+        return Actions[m_keys[index.row()]];
+    }
+    return nullptr;
+}
+
 int ActionsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
@@ -146,4 +154,13 @@ QModelIndex ActionsModel::parent(const QModelIndex &index) const
 {
     Q_UNUSED(index)
     return QModelIndex();
+}
+
+Qt::ItemFlags ActionsModel::flags(const QModelIndex &index) const
+{
+    Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    if (index.column() == COLUMN_SEQUENCE1 || index.column() == COLUMN_SEQUENCE2) {
+//        flags |= Qt::ItemIsEditable;
+    }
+    return flags;
 }

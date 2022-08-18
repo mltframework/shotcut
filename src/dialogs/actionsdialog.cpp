@@ -25,11 +25,12 @@
 #include <QToolButton>
 #include <QTreeView>
 #include <QVBoxLayout>
+#include <QAction>
 
 ActionsDialog::ActionsDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(tr("Keyboard Shortcuts"));
+    setWindowTitle(tr("Actions and Shortcuts"));
     setSizeGripEnabled(true) ;
 
     QVBoxLayout *vlayout = new QVBoxLayout();
@@ -56,11 +57,12 @@ ActionsDialog::ActionsDialog(QWidget *parent)
 
     // List
     m_table = new QTreeView();
-    m_table->setSelectionMode(QAbstractItemView::NoSelection);
+    m_table->setSelectionMode(QAbstractItemView::SingleSelection);
     m_table->setItemsExpandable(false);
     m_table->setRootIsDecorated(false);
     m_table->setUniformRowHeights(true);
     m_table->setSortingEnabled(true);
+    m_table->setEditTriggers(QAbstractItemView::SelectedClicked | QAbstractItemView::EditKeyPressed);
 
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(&m_model);
@@ -80,4 +82,11 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     setLayout(vlayout);
 
     resize(m_table->width(), 600);
+    connect(m_table, &QAbstractItemView::activated, this, [&](const QModelIndex & index) {
+        auto action = m_model.action(m_proxyModel->mapToSource(index));
+        if (action) {
+            emit action->triggered();
+            accept();
+        }
+    });
 }

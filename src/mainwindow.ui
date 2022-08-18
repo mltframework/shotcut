@@ -970,7 +970,7 @@
   </action>
   <action name="actionKeyboardShortcuts">
    <property name="text">
-    <string>Keyboard Shortcuts...</string>
+    <string>Actions and Shortcuts...</string>
    </property>
    <property name="shortcut">
     <string notr="true">?</string>
