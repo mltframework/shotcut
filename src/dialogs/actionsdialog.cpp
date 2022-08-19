@@ -26,6 +26,7 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <QAction>
+#include <QPushButton>
 
 ActionsDialog::ActionsDialog(QWidget *parent)
     : QDialog(parent)
@@ -43,6 +44,10 @@ ActionsDialog::ActionsDialog(QWidget *parent)
         if (m_proxyModel) {
             m_proxyModel->setFilterRegExp(QRegExp(text, Qt::CaseInsensitive, QRegExp::FixedString));
         }
+    });
+    connect(searchField, &QLineEdit::returnPressed, this, [&] {
+        m_table->setFocus();
+        m_table->setCurrentIndex(m_proxyModel->index(0, 0));
     });
     searchLayout->addWidget(searchField);
     QToolButton *clearSearchButton = new QToolButton(this);
@@ -77,6 +82,7 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     vlayout->addWidget(m_table);
     // Button Box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
+    buttonBox->button(QDialogButtonBox::Close)->setAutoDefault(false);
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
     vlayout->addWidget(buttonBox);
     setLayout(vlayout);
@@ -86,7 +92,6 @@ ActionsDialog::ActionsDialog(QWidget *parent)
         auto action = m_model.action(m_proxyModel->mapToSource(index));
         if (action) {
             emit action->triggered();
-            accept();
         }
     });
 }
