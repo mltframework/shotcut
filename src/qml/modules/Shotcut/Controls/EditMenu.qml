@@ -77,7 +77,7 @@ Menu {
 
         action: Action {
             text: qsTr('Delete')
-            onTriggered: parent.control(control.selectionStart, control.selectionEnd)
+            onTriggered: control.remove(control.selectionStart, control.selectionEnd)
         }
 
     }
