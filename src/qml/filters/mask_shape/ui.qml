@@ -73,17 +73,19 @@ Item {
             }
             alphaRadioButton.enabled = false;
         } else {
-            for (i in application.wipes) {
+            resourceCombo.currentIndex = -1;
+            for (var i = 0; i < application.wipes.length; ++i) {
                 if (shapeFile.filePath === application.wipes[i]) {
                     resourceCombo.currentIndex = i + 23;
+                    console.log('resource.currentIndex = ' + i);
                     break;
                 }
             }
-            if (resourceCombo.currentIndex === -1)
+            if (resourceCombo.currentIndex === -1) {
                 resourceCombo.currentIndex = 1;
-
-            fileLabel.text = shapeFile.fileName;
-            fileLabelTip.text = shapeFile.filePath;
+                fileLabel.text = shapeFile.fileName;
+                fileLabelTip.text = shapeFile.filePath;
+            }
             alphaRadioButton.enabled = true;
         }
         previousResourceComboIndex = resourceCombo.currentIndex;
@@ -416,8 +418,20 @@ Item {
             width: 1
         }
 
+        Shotcut.Button {
+            id: favoriteButton
+
+            visible: fileLabel.text.length > 0
+            icon.name: 'bookmarks'
+            icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
+            onClicked: {
+                application.addWipe(shapeFile.filePath);
+            }
+        }
+
         Item {
             width: 1
+            visible: !favoriteButton.visible
         }
 
         Label {

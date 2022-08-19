@@ -258,3 +258,16 @@ QStringList QmlApplication::wipes()
     }
     return result;
 }
+
+bool QmlApplication::addWipe(const QString &filePath)
+{
+    const auto transitions = QString::fromLatin1("transitions");
+    QDir dir(Settings.appDataLocation());
+    if (!dir.exists(transitions)) {
+        dir.mkdir(transitions);
+    }
+    if (dir.cd(transitions)) {
+        return QFile::copy(filePath, dir.filePath(QFileInfo(filePath).fileName()));
+    }
+    return false;
+}

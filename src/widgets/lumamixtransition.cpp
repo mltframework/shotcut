@@ -69,8 +69,11 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
                     break;
                 }
             }
-            if (ui->lumaCombo->currentRow() < 0)
+            if (ui->lumaCombo->currentRow() < 0) {
+                ui->lumaCombo->blockSignals(true);
                 ui->lumaCombo->setCurrentRow(kLumaComboCustomIndex);
+                ui->lumaCombo->blockSignals(false);
+            }
         } else {
             ui->lumaCombo->setCurrentRow(kLumaComboDissolveIndex);
             ui->invertCheckBox->setDisabled(true);
@@ -184,15 +187,17 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
 
 void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)
 {
+    ui->customLumaLabel->hide();
+    ui->favoriteButton->hide();
+    ui->customLumaLabel->setToolTip(QString());
     QString resource = transition.get("resource");
     if (resource.isEmpty() || resource.indexOf("%luma") != -1 || resource.startsWith("color:")
             || ui->lumaCombo->currentRow() > m_maxStockIndex) {
-        ui->customLumaLabel->hide();
-        ui->customLumaLabel->setToolTip(QString());
     } else if (!resource.isEmpty() && !resource.startsWith("color:")) {
         ui->customLumaLabel->setText(QFileInfo(transition.get("resource")).fileName());
         ui->customLumaLabel->setToolTip(transition.get("resource"));
         ui->customLumaLabel->show();
+        ui->favoriteButton->show();
     }
 }
 
@@ -270,6 +275,17 @@ void LumaMixTransition::on_previewCheckBox_clicked(bool checked)
     Settings.setTimelinePreviewTransition(checked);
     if (checked) {
         startPreview();
+    }
+}
+
+
+void LumaMixTransition::on_favoriteButton_clicked()
+{
+    QmlApplication::addWipe(ui->customLumaLabel->toolTip());
+    const auto transitions = QString::fromLatin1("transitions");
+    QDir dir(Settings.appDataLocation());
+    if (!dir.exists(transitions)) {
+        dir.mkdir(transitions);
     }
 }
 

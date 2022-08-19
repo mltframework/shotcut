@@ -64,6 +64,7 @@ public:
     static QDir dataDir();
     Q_INVOKABLE static QColor contrastingColor(QString color);
     static QStringList wipes();
+    Q_INVOKABLE static bool addWipe(const QString &filePath);
 
 signals:
     void paletteChanged();

@@ -353,6 +353,17 @@ duration of the transition.</string>
        </property>
       </widget>
      </item>
+     <item row="1" column="0">
+      <widget class="QToolButton" name="favoriteButton">
+       <property name="toolTip">
+        <string>Save the custom transition as a favorite</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../icons/resources.qrc">
+         <normaloff>:/icons/oxygen/32x32/places/bookmarks.png</normaloff>:/icons/oxygen/32x32/places/bookmarks.png</iconset>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -372,6 +383,7 @@ duration of the transition.</string>
  </widget>
  <tabstops>
   <tabstop>lumaCombo</tabstop>
+  <tabstop>favoriteButton</tabstop>
   <tabstop>invertCheckBox</tabstop>
   <tabstop>previewCheckBox</tabstop>
   <tabstop>softnessSlider</tabstop>
@@ -380,7 +392,9 @@ duration of the transition.</string>
   <tabstop>mixSlider</tabstop>
   <tabstop>mixSpinner</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../icons/resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>softnessSlider</sender>
