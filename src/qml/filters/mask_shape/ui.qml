@@ -424,6 +424,8 @@ Item {
             visible: fileLabel.text.length > 0
             icon.name: 'bookmarks'
             icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
+            implicitWidth: 32
+            Layout.alignment: Qt.AlignRight
             onClicked: {
                 application.addWipe(shapeFile.filePath);
             }
