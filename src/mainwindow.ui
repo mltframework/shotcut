@@ -198,6 +198,20 @@
      <addaction name="actionJobPriorityLow"/>
      <addaction name="actionJobPriorityNormal"/>
     </widget>
+    <widget class="QMenu" name="menuPlayerSettings">
+     <property name="title">
+      <string>Player</string>
+     </property>
+     <addaction name="actionScrubAudio"/>
+     <addaction name="actionJack"/>
+     <addaction name="actionRealtime"/>
+     <addaction name="actionProgressive"/>
+     <addaction name="menuDeinterlacer"/>
+     <addaction name="menuInterpolation"/>
+     <addaction name="menuExternal"/>
+     <addaction name="menuGamma"/>
+     <addaction name="actionSync"/>
+    </widget>
     <widget class="QMenu" name="menuTimeline">
      <property name="title">
       <string>Timeline</string>
@@ -247,20 +261,10 @@
     <addaction name="menuProfile"/>
     <addaction name="menuAudioChannels"/>
     <addaction name="separator"/>
-    <addaction name="actionPlayer"/>
-    <addaction name="actionScrubAudio"/>
-    <addaction name="actionJack"/>
-    <addaction name="actionRealtime"/>
-    <addaction name="actionProgressive"/>
+    <addaction name="actionUser_Interface"/>
     <addaction name="menuPreviewScaling"/>
     <addaction name="menuProxy"/>
-    <addaction name="menuDeinterlacer"/>
-    <addaction name="menuInterpolation"/>
-    <addaction name="menuExternal"/>
-    <addaction name="menuGamma"/>
-    <addaction name="actionSync"/>
-    <addaction name="separator"/>
-    <addaction name="actionUser_Interface"/>
+    <addaction name="menuPlayerSettings"/>
     <addaction name="menuPlaylist"/>
     <addaction name="menuTimeline"/>
     <addaction name="menuLanguage"/>
@@ -863,17 +867,6 @@
    </property>
    <property name="text">
     <string>Project</string>
-   </property>
-   <property name="_placeholder" stdset="0">
-    <bool>true</bool>
-   </property>
-  </action>
-  <action name="actionPlayer">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Player</string>
    </property>
    <property name="_placeholder" stdset="0">
     <bool>true</bool>
