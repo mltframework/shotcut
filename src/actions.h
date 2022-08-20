@@ -31,7 +31,7 @@ class ShotcutActions : public QObject
 public:
 
     static const char *hardKeyProperty;
-    static const char *groupProperty;
+    static const char *displayProperty;
 
     static ShotcutActions &singleton();
     explicit ShotcutActions() : QObject() {}

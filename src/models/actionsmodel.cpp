@@ -25,14 +25,17 @@
 
 ActionsModel::ActionsModel(QObject *parent)
     : QAbstractItemModel(parent)
-    , m_keys(Actions.keys())
 {
+    const auto keys = Actions.keys();
+    for (const QString &key : keys) {
+        m_actions.append(Actions[key]);
+    }
 }
 
 QAction *ActionsModel::action(const QModelIndex &index) const
 {
-    if (index.row() < m_keys.size()) {
-        return Actions[m_keys[index.row()]];
+    if (index.row() < m_actions.size()) {
+        return m_actions[index.row()];
     }
     return nullptr;
 }
@@ -40,7 +43,7 @@ QAction *ActionsModel::action(const QModelIndex &index) const
 int ActionsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    return m_keys.size();
+    return m_actions.size();
 }
 
 int ActionsModel::columnCount(const QModelIndex &parent) const
@@ -66,18 +69,17 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
     }
 
     if (!index.isValid() || index.column() < 0 || index.column() >= COLUMN_COUNT || index.row() < 0
-            || index.row() >= m_keys.size()) {
+            || index.row() >= m_actions.size()) {
         LOG_ERROR() << "Invalid Index: " << index.row() << index.column() << role;
         return result;
     }
 
-    QString key = m_keys[index.row()];
-    QAction *action = Actions[key];
+    QAction *action = m_actions[index.row()];
     switch (role) {
     case Qt::DisplayRole:
         switch (index.column()) {
         case COLUMN_ACTION:
-            result = action->property(Actions.groupProperty).toString() + " > " + action->iconText();
+            result = action->property(Actions.displayProperty).toString();
             break;
         case COLUMN_SEQUENCE1: {
             QList<QKeySequence> sequences = action->shortcuts();
@@ -130,7 +132,7 @@ QVariant ActionsModel::headerData(int section, Qt::Orientation orientation, int 
 QModelIndex ActionsModel::index(int row, int column, const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
-    if (column < 0 || column >= COLUMN_COUNT || row < 0 || row >= m_keys.size())
+    if (column < 0 || column >= COLUMN_COUNT || row < 0 || row >= m_actions.size())
         return QModelIndex();
     return createIndex(row, column, (int)0);
 }

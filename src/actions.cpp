@@ -23,7 +23,7 @@
 #include <QMenu>
 
 const char *ShotcutActions::hardKeyProperty = "_hardkey";
-const char *ShotcutActions::groupProperty = "_group";
+const char *ShotcutActions::displayProperty = "_display";
 
 static QScopedPointer<ShotcutActions> instance;
 
@@ -46,7 +46,7 @@ void ShotcutActions::add(const QString &key, QAction *action, QString group)
     if (group.isEmpty()) {
         group = tr("Other");
     }
-    action->setProperty(groupProperty, group);
+    action->setProperty(displayProperty, group +  " > " + action->iconText());
 
     m_actions[key] = action;
 }
@@ -77,7 +77,7 @@ void ShotcutActions::loadFromMenu(QMenu *menu, QString group)
                 newObjectName = newObjectName.replace(" ", "");
                 action->setObjectName(newObjectName);
             }
-            action->setProperty(groupProperty, group);
+            action->setProperty(displayProperty, group +  " > " + action->iconText());
             m_actions[action->objectName()] = action;
         }
     }

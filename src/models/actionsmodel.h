@@ -48,7 +48,7 @@ protected:
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
 private:
-    QList<QString> m_keys;
+    QList<QAction *> m_actions;
 };
 
 #endif // ACTIONSMODEL_H
