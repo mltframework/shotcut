@@ -91,7 +91,7 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     connect(m_table, &QAbstractItemView::activated, this, [&](const QModelIndex & index) {
         auto action = m_model.action(m_proxyModel->mapToSource(index));
         if (action) {
-            emit action->triggered();
+            action->trigger();
         }
     });
 }
