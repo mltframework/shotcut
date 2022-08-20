@@ -211,6 +211,8 @@ MainWindow::MainWindow()
 
     readWindowSettings();
 
+    setupActions();
+
     setFocus();
     setCurrentFile("");
 
@@ -1897,6 +1899,16 @@ void MainWindow::readWindowSettings()
     }
 #endif
     LOG_DEBUG() << "end";
+}
+
+void MainWindow::setupActions()
+{
+    Actions.loadFromMenu(ui->menuFile);
+    Actions.loadFromMenu(ui->menuEdit);
+    Actions.loadFromMenu(ui->menuView);
+    Actions.loadFromMenu(ui->menuPlayer);
+    Actions.loadFromMenu(ui->menuSettings);
+    Actions.loadFromMenu(ui->menuHelp);
 }
 
 void MainWindow::writeSettings()

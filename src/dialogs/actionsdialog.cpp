@@ -71,14 +71,14 @@ ActionsDialog::ActionsDialog(QWidget *parent)
 
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(&m_model);
-    m_proxyModel->setFilterKeyColumn(1);
+    m_proxyModel->setFilterKeyColumn(0);
 
     m_table->setModel(m_proxyModel);
     m_table->setWordWrap(false);
     m_table->setSortingEnabled(true);
     m_table->header()->setStretchLastSection(false);
     m_table->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    m_table->sortByColumn(ActionsModel::COLUMN_GROUP, Qt::AscendingOrder);
+    m_table->sortByColumn(ActionsModel::COLUMN_ACTION, Qt::AscendingOrder);
     vlayout->addWidget(m_table);
     // Button Box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
@@ -87,7 +87,7 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     vlayout->addWidget(buttonBox);
     setLayout(vlayout);
 
-    resize(m_table->width(), 600);
+    resize(m_table->width() + 100, 600);
     connect(m_table, &QAbstractItemView::activated, this, [&](const QModelIndex & index) {
         auto action = m_model.action(m_proxyModel->mapToSource(index));
         if (action) {

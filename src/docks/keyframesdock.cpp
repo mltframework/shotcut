@@ -59,7 +59,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
 
     setupActions();
 
-    m_mainMenu = new QMenu(tr("Keyframes Main Menu"), this);
+    m_mainMenu = new QMenu(tr("Keyframes"), this);
     m_mainMenu->addAction(Actions["keyframesTrimInAction"]);
     m_mainMenu->addAction(Actions["keyframesTrimOutAction"]);
     m_mainMenu->addAction(Actions["keyframesAnimateInAction"]);
@@ -72,17 +72,20 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     viewMenu->addAction(Actions["keyframesZoomInAction"]);
     viewMenu->addAction(Actions["keyframesZoomFitAction"]);
     m_mainMenu->addMenu(viewMenu);
+    Actions.loadFromMenu(m_mainMenu);
 
-    m_keyMenu = new QMenu(tr("Keyframes Context Menu"), this);
+    m_keyMenu = new QMenu(tr("Keyframe"), this);
     QMenu *keyTypeMenu = new QMenu(tr("Keyframe Type"), this);
     keyTypeMenu->addAction(Actions["keyframesTypeHoldAction"]);
     keyTypeMenu->addAction(Actions["keyframesTypeLinearAction"]);
     keyTypeMenu->addAction(Actions["keyframesTypeSmoothAction"]);
     m_keyMenu->addMenu(keyTypeMenu);
     m_keyMenu->addAction(Actions["keyframesRemoveAction"]);
+    Actions.loadFromMenu(m_keyMenu);
 
-    m_clipMenu = new QMenu(tr("Keyframes Clip Menu"), this);
+    m_clipMenu = new QMenu(tr("Keyframes Clip"), this);
     m_clipMenu->addAction(Actions["keyframesRebuildAudioWaveformAction"]);
+    Actions.loadFromMenu(m_clipMenu);
 
     QVBoxLayout *vboxLayout = new QVBoxLayout();
     vboxLayout->setSpacing(0);

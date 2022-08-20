@@ -28,8 +28,8 @@ class ActionsModel : public QAbstractItemModel
 
 public:
     enum Columns {
-        COLUMN_GROUP = 0,
-        COLUMN_ACTION,
+
+        COLUMN_ACTION = 0,
         COLUMN_SEQUENCE1,
         COLUMN_SEQUENCE2,
         COLUMN_COUNT

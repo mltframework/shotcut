@@ -78,7 +78,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     toggleViewAction()->setIcon(windowIcon());
     setupActions();
 
-    m_mainMenu = new QMenu(this);
+    m_mainMenu = new QMenu(tr("Timeline"), this);
     QMenu *trackOperationsMenu = new QMenu(tr("Track Operations"), this);
     trackOperationsMenu->addAction(Actions["timelineAddAudioTrackAction"]);
     trackOperationsMenu->addAction(Actions["timelineAddVideoTrackAction"]);
@@ -132,8 +132,9 @@ TimelineDock::TimelineDock(QWidget *parent) :
     markerMenu->addAction(Actions["timelineDeleteMarkerAction"]);
     markerMenu->addAction(Actions["timelineMarkSelectedClipAction"]);
     m_mainMenu->addMenu(markerMenu);
+    Actions.loadFromMenu(m_mainMenu);
 
-    m_clipMenu = new QMenu(this);
+    m_clipMenu = new QMenu(tr("Timeline Clip"), this);
     m_clipMenu->addAction(Actions["timelineCutAction"]);
     m_clipMenu->addAction(Actions["timelineCopyAction"]);
     m_clipMenu->addAction(Actions["timelineDeleteAction"]);
@@ -145,6 +146,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_clipMenu->addAction(Actions["timelineUpdateThumbnailsAction"]);
     m_clipMenu->addAction(Actions["timelineRebuildAudioWaveformAction"]);
     m_clipMenu->addAction(Actions["timelinePropertiesAction"]);
+    Actions.loadFromMenu(m_clipMenu);
 
     QVBoxLayout *vboxLayout = new QVBoxLayout();
     vboxLayout->setSpacing(0);

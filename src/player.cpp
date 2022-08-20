@@ -609,7 +609,7 @@ void Player::setupActions()
     action->setIcon(m_pauseIcon);
     action->setToolTip(tr("Pause playback"));
     connect(action, &QAction::triggered, this, &Player::pause);
-    Actions.add("playerPauseAction", action);
+    Actions.add("playerPauseAction", action, tr("Player"));
 }
 
 void Player::setIn(int pos)

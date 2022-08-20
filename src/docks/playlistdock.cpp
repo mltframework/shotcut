@@ -166,7 +166,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
 
     setupActions();
 
-    m_mainMenu = new QMenu(tr("Playlist Main Menu"), this);
+    m_mainMenu = new QMenu(tr("Playlist"), this);
     m_mainMenu->addAction(Actions["playlistOpenAction"]);
     m_mainMenu->addAction(Actions["playlistOpenPreviousAction"]);
     m_mainMenu->addAction(Actions["playlistOpenNextAction"]);
@@ -179,6 +179,8 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     m_mainMenu->addAction(Actions["playlistMoveDownAction"]);
     m_mainMenu->addAction(Actions["playlistUpdateThumbnailsAction"]);
     m_mainMenu->addAction(Actions["playlistSetFileDateAction"]);
+    m_mainMenu->addAction(Actions["playlistAddFilesAction"]);
+    m_mainMenu->addAction(Actions["playlistAppendCutAction"]);
     m_mainMenu->addSeparator();
     QMenu *selectMenu = m_mainMenu->addMenu(tr("Select"));
     selectMenu->addAction(Actions["playlistSelectAllAction"]);
@@ -200,7 +202,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     QMenu *sortByMenu = m_mainMenu->addMenu(tr("Sort"));
     sortByMenu->addAction(Actions["playlistSortByNameAction"]);
     sortByMenu->addAction(Actions["playlistSortByDateAction"]);
-    m_mainMenu->addSeparator();
+    Actions.loadFromMenu(m_mainMenu);
 
     DockToolBar *toolbar = new DockToolBar(tr("Playlist Controls"));
     toolbar->setAreaHint(Qt::BottomToolBarArea);

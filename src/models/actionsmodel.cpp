@@ -76,21 +76,8 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case Qt::DisplayRole:
         switch (index.column()) {
-        case COLUMN_GROUP:
-            if (key.startsWith("timeline")) {
-                result = tr("Timeline");
-            } else if (key.startsWith("playlist")) {
-                result = tr("Playlist");
-            } else if (key.startsWith("keyframes")) {
-                result = tr("Keyframes");
-            } else if (key.startsWith("player")) {
-                result = tr("Player");
-            } else {
-                result = tr("Other");
-            }
-            break;
         case COLUMN_ACTION:
-            result = action->text();
+            result = action->property(Actions.groupProperty).toString() + " > " + action->iconText();
             break;
         case COLUMN_SEQUENCE1: {
             QList<QKeySequence> sequences = action->shortcuts();
@@ -126,8 +113,6 @@ QVariant ActionsModel::headerData(int section, Qt::Orientation orientation, int 
 {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
-        case COLUMN_GROUP:
-            return tr("View");
         case COLUMN_ACTION:
             return tr("Action");
         case COLUMN_SEQUENCE1:

@@ -160,6 +160,7 @@ private:
     void setupAndConnectLeapNetworkListener();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
+    void setupActions();
     QAction *addProfile(QActionGroup *actionGroup, const QString &desc, const QString &name);
     QAction *addLayout(QActionGroup *actionGroup, const QString &name);
     void readPlayerSettings();

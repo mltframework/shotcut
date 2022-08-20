@@ -22,6 +22,7 @@
 #include <QObject>
 
 class QAction;
+class QMenu;
 
 class ShotcutActions : public QObject
 {
@@ -30,11 +31,13 @@ class ShotcutActions : public QObject
 public:
 
     static const char *hardKeyProperty;
+    static const char *groupProperty;
 
     static ShotcutActions &singleton();
     explicit ShotcutActions() : QObject() {}
 
-    void add(const QString &name, QAction *action);
+    void add(const QString &name, QAction *action, QString group = "");
+    void loadFromMenu(QMenu *menu, const QString group = "");
     QAction *operator [](const QString &key);
     QList<QString> keys();
 
