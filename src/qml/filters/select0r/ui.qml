@@ -53,15 +53,14 @@ Item {
         deltaGSlider.value = filter.getDouble(deltaGParam) * 100;
         deltaBSlider.value = filter.getDouble(deltaBParam) * 100;
         var currentShape = filter.getDouble(shapeParam);
-        var i;
-        for (; i < shapeModel.count; ++i) {
+        for (var i = 0; i < shapeModel.count; ++i) {
             if (shapeModel.get(i).value === currentShape) {
                 shapeCombo.currentIndex = i;
                 break;
             }
         }
         var currentEdge = filter.getDouble(edgeParam);
-        for (; i < edgeModel.count; ++i) {
+        for (var i = 0; i < edgeModel.count; ++i) {
             if (edgeModel.get(i).value === currentEdge) {
                 edgeCombo.currentIndex = i;
                 break;
@@ -69,7 +68,7 @@ Item {
         }
         slopeSlider.value = filter.getDouble(slopeParam) * 100;
         var currentOp = filter.getDouble(operationParam);
-        for (; i < operationModel.count; ++i) {
+        for (var i = 0; i < operationModel.count; ++i) {
             if (operationModel.get(i).value === currentOp) {
                 operationCombo.currentIndex = i;
                 break;

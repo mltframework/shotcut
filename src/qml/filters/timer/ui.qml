@@ -39,7 +39,7 @@ Item {
         formatCombo.currentIndex = formatIndex;
         var directionIndex = 0;
         var direction = filter.get('direction');
-        for (; i < directionCombo.model.count; i++) {
+        for (var i = 0; i < directionCombo.model.count; i++) {
             if (directionCombo.model.get(i).direction === direction) {
                 directionIndex = i;
                 break;

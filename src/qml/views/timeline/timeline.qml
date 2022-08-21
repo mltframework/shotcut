@@ -892,7 +892,7 @@ Rectangle {
             if (!settings.timelineShowWaveforms) {
                 for (var i = 0; i < tracksRepeater.count; i++) tracksRepeater.itemAt(i).redrawWaveforms()
             } else {
-                for (; i < tracksRepeater.count; i++) tracksRepeater.itemAt(i).remakeWaveforms(false)
+                for (var i = 0; i < tracksRepeater.count; i++) tracksRepeater.itemAt(i).remakeWaveforms(false)
             }
         }
 
