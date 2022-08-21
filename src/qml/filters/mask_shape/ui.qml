@@ -97,6 +97,13 @@ Item {
         else
             alphaRadioButton.checked = true;
         softnessSlider.value = filter.getDouble('filter.softness') * 100;
+        var currentOp = filter.get('filter.alpha_operation');
+        for (var i = 0; i < operationModel.count; ++i) {
+            if (operationModel.get(i).value === currentOp) {
+                operationCombo.currentIndex = i;
+                break;
+            }
+        }
     }
 
     function updateFilter(parameter, value, position, button) {
@@ -166,6 +173,7 @@ Item {
             filter.set('filter.resource', '%luma01.pgm');
             filter.set('filter.use_mix', 1);
             filter.set('filter.audio_match', 0);
+            filter.set('filter.alpha_operation', 'overwrite');
             filter.savePreset(preset.parameters);
         } else {
             if (filter.get('filter.use_mix').length === 0)
@@ -220,7 +228,7 @@ Item {
             id: preset
 
             Layout.columnSpan: 3
-            parameters: ['filter.mix', 'filter.softness', 'filter.use_luminance', 'filter.invert', 'filter.resource', 'filter.use_mix', reverseProperty]
+            parameters: ['filter.mix', 'filter.softness', 'filter.use_luminance', 'filter.invert', 'filter.resource', 'filter.use_mix', reverseProperty, 'filter.alpha_operation']
             onBeforePresetLoaded: {
                 filter.resetProperty('filter.mix');
             }
@@ -532,10 +540,54 @@ Item {
                 onClicked: filter.set('filter.use_luminance', 0)
             }
 
+            Shotcut.ComboBox {
+                id: operationCombo
+
+                implicitWidth: 180
+                textRole: 'text'
+                visible: filter.isAtLeastVersion(4) && alphaRadioButton.checked && !thresholdCheckBox.checked
+                onActivated: filter.set('filter.alpha_operation', operationModel.get(currentIndex).value)
+
+                model: ListModel {
+                    id: operationModel
+
+                    ListElement {
+                        text: qsTr('Overwrite')
+                        value: 'overwrite'
+                    }
+
+                    ListElement {
+                        text: qsTr('Maximum')
+                        value: 'maximum'
+                    }
+
+                    ListElement {
+                        text: qsTr('Minimum')
+                        value: 'minimum'
+                    }
+
+                    ListElement {
+                        text: qsTr('Add')
+                        value: 'add'
+                    }
+
+                    ListElement {
+                        text: qsTr('Subtract')
+                        value: 'subtract'
+                    }
+
+                }
+
+            }
+
         }
 
         Shotcut.UndoButton {
-            onClicked: brightnessRadioButton.checked = true
+            onClicked: {
+                brightnessRadioButton.checked = true;
+                operationCombo.currentIndex = 0;
+                filter.set('filter.alpha_operation', "overwrite");
+            }
         }
 
         Item {
