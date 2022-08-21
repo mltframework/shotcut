@@ -189,7 +189,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     toolbar->setAreaHint(Qt::BottomToolBarArea);
     QToolButton *menuButton = new QToolButton(this);
     menuButton->setIcon(QIcon::fromTheme("show-menu",
-                                           QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
+                                         QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
     menuButton->setToolTip(tr("Markers Menu"));
     menuButton->setAutoRaise(true);
     menuButton->setMenu(mainMenu);
