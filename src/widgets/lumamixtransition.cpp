@@ -30,7 +30,7 @@
 
 static const int kLumaComboDissolveIndex = 0;
 static const int kLumaComboCutIndex = 1;
-static const int kLumaComboCustomIndex = 24;
+static const int kLumaComboCustomIndex = 2;
 
 LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     : QWidget(parent)
@@ -63,7 +63,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
             ui->softnessSlider->setValue(qRound(QColor(resource.mid(6)).redF() * 100.0));
             ui->invertCheckBox->setDisabled(true);
         } else if (!resource.isEmpty()) {
-            for (int i = kLumaComboCustomIndex; i < ui->lumaCombo->count(); ++i) {
+            for (int i = m_maxStockIndex + 1; i < ui->lumaCombo->count(); ++i) {
                 if (ui->lumaCombo->item(i)->data(Qt::UserRole).toString() == resource) {
                     ui->lumaCombo->setCurrentRow(i);
                     break;
@@ -243,7 +243,7 @@ void LumaMixTransition::on_lumaCombo_currentRowChanged(int index)
             Util::getHash(*transition);
         } else {
             ui->softnessLabel->setText(tr("Softness"));
-            transition->set("resource", QString("%luma%1.pgm").arg(index - 1, 2, 10,
+            transition->set("resource", QString("%luma%1.pgm").arg(index - 2, 2, 10,
                                                                    QChar('0')).toLatin1().constData());
         }
         if (qstrcmp(transition->get("resource"), "")) {

@@ -53,6 +53,11 @@
          </item>
          <item>
           <property name="text">
+           <string>Custom...</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>Bar Horizontal</string>
           </property>
          </item>
@@ -159,11 +164,6 @@
          <item>
           <property name="text">
            <string>Clock Top</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Custom...</string>
           </property>
          </item>
         </widget>
