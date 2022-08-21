@@ -1897,8 +1897,10 @@ void MainWindow::readWindowSettings()
 
 void MainWindow::setupActions()
 {
+    QAction *action;
+
     // Setup full screen action
-    QAction *action = ui->actionEnterFullScreen;
+    action = ui->actionEnterFullScreen;
     QList<QKeySequence> fullScreenShortcuts;
     fullScreenShortcuts << QKeySequence(Qt::Key_F11);
 #ifdef Q_OS_MAC
@@ -1910,6 +1912,33 @@ void MainWindow::setupActions()
     fullScreenShortcuts << QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
 #endif
     action->setShortcuts(fullScreenShortcuts);
+
+    action = new QAction(tr("Rename Clip"), this);
+    action->setShortcut(QKeySequence(Qt::Key_F2));
+    connect(action, &QAction::triggered, this, [&]() {
+        onPropertiesDockTriggered(true);
+        emit renameRequested();
+    });
+    addAction(action);
+    Actions.add("propertiesRenameClipAction", action, tr("Properties"));
+
+    action = new QAction(tr("Find"), this);
+    action->setShortcut(QKeySequence(Qt::Key_F3));
+    connect(action, &QAction::triggered, this, [&]() {
+        onRecentDockTriggered(true);
+        m_recentDock->find();
+    });
+    addAction(action);
+    Actions.add("recentFindAction", action, tr("Recent"));
+
+    action = new QAction(tr("Reload"), this);
+    action->setShortcut(QKeySequence(Qt::Key_F5));
+    connect(action, &QAction::triggered, this, [&]() {
+        m_timelineDock->model()->reload();
+        m_keyframesDock->model().reload();
+    });
+    addAction(action);
+    Actions.add("timelineReload", action, tr("Timeline"));
 
     Actions.loadFromMenu(ui->menuFile);
     Actions.loadFromMenu(ui->menuEdit);
@@ -2047,18 +2076,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             else
                 m_player->fastForward(false);
         }
-        break;
-    case Qt::Key_F2:
-        onPropertiesDockTriggered(true);
-        emit renameRequested();
-        break;
-    case Qt::Key_F3:
-        onRecentDockTriggered(true);
-        m_recentDock->find();
-        break;
-    case Qt::Key_F5:
-        m_timelineDock->model()->reload();
-        m_keyframesDock->model().reload();
         break;
     case Qt::Key_F12:
         LOG_DEBUG() << "event isAccepted:" << event->isAccepted();
