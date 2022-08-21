@@ -512,7 +512,10 @@ void TimelineDock::setupActions()
     Actions.add("timelineSelectClipBelowAction", action);
 
     action = new QAction(tr("Set Current Track Above"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::META + Qt::Key_Up));
+    action->setShortcut(QKeySequence(Qt::Key_Up));
+    // Limit this action to only work then the timeline has focus so that up works in other widgets.
+    addAction(action);
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         incrementCurrentTrack(-1);
@@ -520,7 +523,10 @@ void TimelineDock::setupActions()
     Actions.add("timelineCurrentTrackAboveAction", action);
 
     action = new QAction(tr("Set Current Track Below"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::META + Qt::Key_Down));
+    action->setShortcut(QKeySequence(Qt::Key_Down));
+    // Limit this action to only work then the timeline has focus so that down works in other widgets.
+    addAction(action);
+    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         incrementCurrentTrack(1);
