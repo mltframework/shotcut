@@ -17,9 +17,11 @@
 
 #include "markersdock.h"
 
+#include "actions.h"
 #include "mainwindow.h"
 #include "models/markersmodel.h"
 #include "settings.h"
+#include "widgets/docktoolbar.h"
 #include "widgets/editmarkerwidget.h"
 #include "util.h"
 #include <Logger.h>
@@ -154,91 +156,90 @@ MarkersDock::MarkersDock(QWidget *parent) :
             SLOT(onRowClicked(const QModelIndex &)));
     vboxLayout->addWidget(m_treeView, 1);
 
-    QHBoxLayout *buttonLayout = new QHBoxLayout();
-    vboxLayout->addLayout(buttonLayout);
-
-    m_moreButton = new QToolButton(this);
-    m_moreButton->setIcon(QIcon::fromTheme("show-menu",
-                                           QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
-    m_moreButton->setMaximumSize(22, 22);
-    m_moreButton->setToolTip(tr("Markers Menu"));
-    m_moreButton->setAutoRaise(true);
-    QMenu *moreMenu = new QMenu(this);
+    QMenu *mainMenu = new QMenu("Markers", this);
+    mainMenu->addAction(Actions["timelineMarkerAction"]);
+    mainMenu->addAction(Actions["timelinePrevMarkerAction"]);
+    mainMenu->addAction(Actions["timelineNextMarkerAction"]);
+    mainMenu->addAction(Actions["timelineDeleteMarkerAction"]);
+    mainMenu->addAction(Actions["timelineMarkSelectedClipAction"]);
+    mainMenu->addAction(tr("Remove All Markers"), this, SLOT(onRemoveAllRequested()));
     QAction *action;
-    moreMenu->addAction(tr("Remove All Markers"), this, SLOT(onRemoveAllRequested()));
-    action = moreMenu->addAction(tr("Add Marker Around Selected Clips"), this,
-                                 SIGNAL(addAroundSelectionRequested()));
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_M));
-    moreMenu->addSeparator();
-    action = moreMenu->addAction(tr("Columns"));
+    QMenu *columnsMenu = new QMenu(tr("Columns"), this);
+    action = columnsMenu->addAction(tr("Columns"));
     action->setEnabled(false);
-    action = moreMenu->addAction(tr("Color"), this, SLOT(onColorColumnToggled(bool)));
+    action = columnsMenu->addAction(tr("Color"), this, SLOT(onColorColumnToggled(bool)));
     action->setCheckable(true);
     action->setChecked(Settings.markersShowColumn("color"));
-    action = moreMenu->addAction(tr("Name"), this, SLOT(onTextColumnToggled(bool)));
+    action = columnsMenu->addAction(tr("Name"), this, SLOT(onTextColumnToggled(bool)));
     action->setCheckable(true);
     action->setChecked(Settings.markersShowColumn("text"));
-    action = moreMenu->addAction(tr("Start"), this, SLOT(onStartColumnToggled(bool)));
+    action = columnsMenu->addAction(tr("Start"), this, SLOT(onStartColumnToggled(bool)));
     action->setCheckable(true);
     action->setChecked(Settings.markersShowColumn("start"));
-    action = moreMenu->addAction(tr("End"), this, SLOT(onEndColumnToggled(bool)));
+    action = columnsMenu->addAction(tr("End"), this, SLOT(onEndColumnToggled(bool)));
     action->setCheckable(true);
     action->setChecked(Settings.markersShowColumn("end"));
-    action = moreMenu->addAction(tr("Duration"), this, SLOT(onDurationColumnToggled(bool)));
+    action = columnsMenu->addAction(tr("Duration"), this, SLOT(onDurationColumnToggled(bool)));
     action->setCheckable(true);
     action->setChecked(Settings.markersShowColumn("duration"));
-    m_moreButton->setMenu(moreMenu);
-    m_moreButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
-    buttonLayout->addWidget(m_moreButton);
+    mainMenu->addMenu(columnsMenu);
+    Actions.loadFromMenu(mainMenu);
+
+    DockToolBar *toolbar = new DockToolBar(tr("Markers Controls"));
+    toolbar->setAreaHint(Qt::BottomToolBarArea);
+    QToolButton *menuButton = new QToolButton(this);
+    menuButton->setIcon(QIcon::fromTheme("show-menu",
+                                           QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
+    menuButton->setToolTip(tr("Markers Menu"));
+    menuButton->setAutoRaise(true);
+    menuButton->setMenu(mainMenu);
+    menuButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
+    toolbar->addWidget(menuButton);
 
     m_addButton = new QToolButton(this);
     m_addButton->setIcon(QIcon::fromTheme("list-add",
                                           QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
-    m_addButton->setMaximumSize(22, 22);
     m_addButton->setToolTip(tr("Add a marker at the current time"));
     m_addButton->setAutoRaise(true);
     if (!connect(m_addButton, &QAbstractButton::clicked, this, &MarkersDock::onAddRequested))
         connect(m_addButton, SIGNAL(clicked()), SLOT(onAddRequested()));
-    buttonLayout->addWidget(m_addButton);
+    toolbar->addWidget(m_addButton);
 
     m_removeButton = new QToolButton(this);
     m_removeButton->setIcon(QIcon::fromTheme("list-remove",
                                              QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
-    m_removeButton->setMaximumSize(22, 22);
     m_removeButton->setToolTip(tr("Remove the selected marker"));
     m_removeButton->setAutoRaise(true);
     if (!connect(m_removeButton, &QAbstractButton::clicked, this, &MarkersDock::onRemoveRequested))
         connect(m_removeButton, SIGNAL(clicked()), SLOT(onRemoveRequested()));
-    buttonLayout->addWidget(m_removeButton);
+    toolbar->addWidget(m_removeButton);
 
     m_clearButton = new QToolButton(this);
     m_clearButton->setIcon(QIcon::fromTheme("window-close",
                                             QIcon(":/icons/oxygen/32x32/actions/window-close.png")));
-    m_clearButton->setMaximumSize(22, 22);
     m_clearButton->setToolTip(tr("Deselect the marker"));
     m_clearButton->setAutoRaise(true);
     if (!connect(m_clearButton, &QAbstractButton::clicked, this,
                  &MarkersDock::onClearSelectionRequested))
         connect(m_clearButton, SIGNAL(clicked()), SLOT(onClearSelectionRequested()));
-    buttonLayout->addWidget(m_clearButton);
+    toolbar->addWidget(m_clearButton);
 
     m_searchField = new QLineEdit(this);
     m_searchField->setPlaceholderText(tr("search"));
     if (!connect(m_searchField, &QLineEdit::textChanged, this, &MarkersDock::onSearchChanged))
         connect(m_searchField, SIGNAL(textChanged(const QString &)), SLOT(onSearchChanged()));
-    buttonLayout->addWidget(m_searchField);
+    toolbar->addWidget(m_searchField);
 
     m_clearSearchButton = new QToolButton(this);
     m_clearSearchButton->setIcon(QIcon::fromTheme("edit-clear",
                                                   QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
-    m_clearSearchButton->setMaximumSize(22, 22);
     m_clearSearchButton->setToolTip(tr("Clear search"));
     m_clearSearchButton->setAutoRaise(true);
     if (!connect(m_clearSearchButton, &QAbstractButton::clicked, m_searchField, &QLineEdit::clear))
         connect(m_clearSearchButton, SIGNAL(clicked()), m_searchField, SLOT(clear()));
-    buttonLayout->addWidget(m_clearSearchButton);
+    toolbar->addWidget(m_clearSearchButton);
 
-    buttonLayout->addStretch();
+    vboxLayout->addWidget(toolbar);
     enableButtons(false);
 
     m_editMarkerWidget = new EditMarkerWidget(this, "", "", 0, 0, 0);

@@ -74,7 +74,6 @@ private:
     QToolButton *m_addButton;
     QToolButton *m_removeButton;
     QToolButton *m_clearButton;
-    QToolButton *m_moreButton;
     QLineEdit *m_searchField;
     QToolButton *m_clearSearchButton;
     EditMarkerWidget *m_editMarkerWidget;
