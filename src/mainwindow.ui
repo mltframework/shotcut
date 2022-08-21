@@ -88,7 +88,7 @@
      <addaction name="actionRestoreLayout"/>
      <addaction name="actionLayoutAdd"/>
     </widget>
-    <addaction name="actionEnter_Full_Screen"/>
+    <addaction name="actionEnterFullScreen"/>
     <addaction name="menuLayout"/>
     <addaction name="actionShowTitleBars"/>
     <addaction name="actionShowToolbar"/>
@@ -463,7 +463,7 @@
     <string>FAQ...</string>
    </property>
   </action>
-  <action name="actionEnter_Full_Screen">
+  <action name="actionEnterFullScreen">
    <property name="icon">
     <iconset theme="view-fullscreen" resource="../icons/resources.qrc">
      <normaloff>:/icons/oxygen/32x32/actions/view-fullscreen.png</normaloff>:/icons/oxygen/32x32/actions/view-fullscreen.png</iconset>

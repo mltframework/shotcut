@@ -171,12 +171,6 @@ MainWindow::MainWindow()
 
     // Create the UI.
     ui->setupUi(this);
-#ifdef Q_OS_MAC
-    // Qt 5 on OS X supports the standard Full Screen window widget.
-    ui->actionEnter_Full_Screen->setVisible(false);
-    // OS X has a standard Full Screen shortcut we should use.
-    ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
-#endif
     setDockNestingEnabled(true);
     ui->statusBar->hide();
 
@@ -1330,7 +1324,7 @@ void MainWindow::setFullScreen(bool isFullScreen)
 #else
         showFullScreen();
 #endif
-        ui->actionEnter_Full_Screen->setVisible(false);
+        ui->actionEnterFullScreen->setVisible(false);
     }
 }
 
@@ -1893,9 +1887,9 @@ void MainWindow::readWindowSettings()
     }
 #ifdef Q_OS_WIN
     if (isMaximized()) {
-        ui->actionEnter_Full_Screen->setText(tr("Exit Full Screen"));
+        ui->actionEnterFullScreen->setText(tr("Exit Full Screen"));
     } else {
-        ui->actionEnter_Full_Screen->setText(tr("Enter Full Screen"));
+        ui->actionEnterFullScreen->setText(tr("Enter Full Screen"));
     }
 #endif
     LOG_DEBUG() << "end";
@@ -1903,6 +1897,20 @@ void MainWindow::readWindowSettings()
 
 void MainWindow::setupActions()
 {
+    // Setup full screen action
+    QAction *action = ui->actionEnterFullScreen;
+    QList<QKeySequence> fullScreenShortcuts;
+    fullScreenShortcuts << QKeySequence(Qt::Key_F11);
+#ifdef Q_OS_MAC
+    // Qt 5 on OS X supports the standard Full Screen window widget.
+    action->setVisible(false);
+    // OS X has a standard Full Screen shortcut we should use.
+    fullScreenShortcuts << QKeySequence(Qt::CTRL + Qt::META + Qt::Key_F);
+#else
+    fullScreenShortcuts << QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
+#endif
+    action->setShortcuts(fullScreenShortcuts);
+
     Actions.loadFromMenu(ui->menuFile);
     Actions.loadFromMenu(ui->menuEdit);
     Actions.loadFromMenu(ui->menuView);
@@ -2030,13 +2038,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             m_filtersDock->openFilterMenu();
         } else if (event->modifiers() == Qt::ShiftModifier) {
             filterController()->removeCurrent();
-#ifdef Q_OS_MAC
-        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::MetaModifier)) {
-            on_actionEnter_Full_Screen_triggered();
-#else
-        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
-            on_actionEnter_Full_Screen_triggered();
-#endif
         } else {
             handled = false;
         }
@@ -2070,9 +2071,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_F5:
         m_timelineDock->model()->reload();
         m_keyframesDock->model().reload();
-        break;
-    case Qt::Key_F11:
-        on_actionEnter_Full_Screen_triggered();
         break;
     case Qt::Key_F12:
         LOG_DEBUG() << "event isAccepted:" << event->isAccepted();
@@ -3086,7 +3084,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
     return w;
 }
 
-void MainWindow::on_actionEnter_Full_Screen_triggered()
+void MainWindow::on_actionEnterFullScreen_triggered()
 {
 #ifdef Q_OS_WIN
     bool isFull = isMaximized();
@@ -3095,14 +3093,14 @@ void MainWindow::on_actionEnter_Full_Screen_triggered()
 #endif
     if (isFull) {
         showNormal();
-        ui->actionEnter_Full_Screen->setText(tr("Enter Full Screen"));
+        ui->actionEnterFullScreen->setText(tr("Enter Full Screen"));
     } else {
 #ifdef Q_OS_WIN
         showMaximized();
 #else
         showFullScreen();
 #endif
-        ui->actionEnter_Full_Screen->setText(tr("Exit Full Screen"));
+        ui->actionEnterFullScreen->setText(tr("Exit Full Screen"));
     }
 }
 

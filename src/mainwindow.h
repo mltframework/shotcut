@@ -284,7 +284,7 @@ private slots:
     void on_actionRedo_triggered();
     void on_actionFAQ_triggered();
     void on_actionForum_triggered();
-    void on_actionEnter_Full_Screen_triggered();
+    void on_actionEnterFullScreen_triggered();
     void on_actionRealtime_triggered(bool checked);
     void on_actionProgressive_triggered(bool checked);
     void on_actionChannels1_triggered(bool checked);
