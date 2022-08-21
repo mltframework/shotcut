@@ -22,6 +22,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Chroma Key: Simple")
+    keywords: qsTr('green blue screen', 'search keywords for the Chroma Key: Simple video filter') + ' chroma key: simple'
     mlt_service: 'frei0r.bluescreen0r'
     qml: 'ui.qml'
     allowMultiple: false

@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Blur: Gaussian")
+    keywords: qsTr('soften obscure hide', 'search keywords for the Blur: Box video filter') + ' blur: gaussian'
     objectName: 'blur_gaussian_av'
     mlt_service: "avfilter.gblur"
     qml: "ui_av.qml"

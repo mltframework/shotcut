@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Blur: Low Pass")
+    keywords: qsTr('soften obscure hide', 'search keywords for the Blur: Low Pass video filter') + ' blur: low pass'
     objectName: 'blur_lowpass'
     mlt_service: "frei0r.IIRblur"
     qml: "ui.qml"

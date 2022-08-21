@@ -5,6 +5,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("360: Rectilinear to Equirectangular")
+    keywords: qsTr('spherical projection', 'search keywords for the 360: Rectilinear to Equirectangular video filter') + ' 360: rectilinear equirectangular bigsh0t'
     mlt_service: "frei0r.bigsh0t_rect_to_eq"
     objectName: "bigsh0t_rect_to_eq"
     qml: "ui.qml"

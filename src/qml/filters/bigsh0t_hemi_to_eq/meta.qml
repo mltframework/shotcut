@@ -6,6 +6,7 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("360: Hemispherical to Equirectangular")
     mlt_service: "frei0r.bigsh0t_hemi_to_eq"
+    keywords: qsTr('spherical projection dual fisheye', 'search keywords for the 360: Hemispherical to Equirectangular video filter') + ' 360: hemispherical to equirectangular bigsh0t'
     objectName: "bigsh0t_hemi_to_eq"
     qml: "ui.qml"
 

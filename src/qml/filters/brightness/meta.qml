@@ -5,6 +5,7 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("Brightness")
     mlt_service: "brightness"
+    keywords: qsTr('lightness value', 'search keywords for the Brightness video filter') + ' brightness'
     qml: "ui.qml"
     isFavorite: true
     gpuAlt: "movit.opacity"
