@@ -33,6 +33,15 @@ Item {
 
     function setControls() {
         shapeFile.url = filter.get('filter.resource');
+        invertCheckBox.checked = filter.getDouble('filter.invert') === 1;
+        reverseCheckBox.checked = filter.getDouble('filter.invert_mask') === 1;
+        var currentOp = filter.get('filter.alpha_operation');
+        for (var i = 0; i < operationModel.count; ++i) {
+            if (operationModel.get(i).value === currentOp) {
+                operationCombo.currentIndex = i;
+                break;
+            }
+        }
     }
 
     width: 350
@@ -44,13 +53,9 @@ Item {
             filter.set('filter.use_luminance', 0);
             filter.set('filter.use_mix', 0);
             filter.set('filter.audio_match', 0);
-        } else {
-            if (filter.get('filter.use_mix').length === 0)
-                filter.set('filter.use_mix', 1);
-
-            if (filter.get('filter.audio_match').length === 0)
-                filter.set('filter.audio_match', 1);
-
+            filter.set('filter.invert', 0);
+            filter.set('filter.invert_mask', 0);
+            filter.set('filter.alpha_operation', 'overwrite');
         }
         setControls();
     }
@@ -155,6 +160,8 @@ Item {
         }
 
         RowLayout {
+            Layout.columnSpan: parent.columns - 1
+
             Shotcut.Button {
                 text: qsTr('Edit...')
                 onClicked: producer.launchGlaxnimate(filter.get('filter.resource'))
@@ -171,6 +178,100 @@ Item {
 
         Item {
             width: 1
+        }
+
+        RowLayout {
+            Layout.columnSpan: parent.columns - 1
+
+            CheckBox {
+                id: invertCheckBox
+
+                text: qsTr('Invert')
+                onClicked: filter.set('filter.invert', checked)
+            }
+
+            Shotcut.UndoButton {
+                onClicked: {
+                    invertCheckBox.checked = false;
+                    filter.set('filter.invert', 0);
+                }
+            }
+
+            Item {
+                width: 1
+            }
+
+            CheckBox {
+                id: reverseCheckBox
+
+                text: qsTr('Reverse')
+                onClicked: filter.set('filter.invert_mask', checked)
+            }
+
+            Shotcut.UndoButton {
+                onClicked: {
+                    reverseCheckBox.checked = false;
+                    filter.set('filter.invert_mask', checked);
+                }
+            }
+
+        }
+
+        Label {
+            text: qsTr('Operation')
+            Layout.alignment: Qt.AlignRight
+        }
+
+        RowLayout {
+            Layout.columnSpan: parent.columns - 1
+
+            Shotcut.ComboBox {
+                id: operationCombo
+
+                implicitWidth: 180
+                textRole: 'text'
+                visible: filter.isAtLeastVersion(4)
+                onActivated: filter.set('filter.alpha_operation', operationModel.get(currentIndex).value)
+
+                model: ListModel {
+                    id: operationModel
+
+                    ListElement {
+                        text: qsTr('Overwrite')
+                        value: 'overwrite'
+                    }
+
+                    ListElement {
+                        text: qsTr('Maximum')
+                        value: 'maximum'
+                    }
+
+                    ListElement {
+                        text: qsTr('Minimum')
+                        value: 'minimum'
+                    }
+
+                    ListElement {
+                        text: qsTr('Add')
+                        value: 'add'
+                    }
+
+                    ListElement {
+                        text: qsTr('Subtract')
+                        value: 'subtract'
+                    }
+
+                }
+
+            }
+
+            Shotcut.UndoButton {
+                onClicked: {
+                    operationCombo.currentIndex = 0;
+                    filter.set('filter.alpha_operation', 'overwrite');
+                }
+            }
+
         }
 
         Shotcut.TipBox {
