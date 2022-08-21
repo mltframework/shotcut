@@ -65,6 +65,7 @@ private slots:
     void resetQview();
 
 private:
+    void setupActions();
     QQuickWidget m_qview;
     QmlProducer m_producer;
 };

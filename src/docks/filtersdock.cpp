@@ -26,6 +26,10 @@
 #include <QAction>
 #include <QIcon>
 #include <Logger.h>
+
+#include "actions.h"
+#include "mainwindow.h"
+#include "controllers/filtercontroller.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
@@ -44,6 +48,8 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
                                         QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
+    setupActions();
+
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
 #ifdef Q_OS_MAC
@@ -159,4 +165,37 @@ void FiltersDock::resetQview()
     QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
                      SIGNAL(currentFilterRequested(int)));
     emit currentFilterRequested(QmlFilter::NoCurrentFilter);
+}
+
+void FiltersDock::setupActions()
+{
+    QIcon icon;
+    QAction *action;
+
+    action = new QAction(tr("Add"), this);
+    action->setShortcut(QKeySequence(Qt::Key_F));
+    action->setToolTip(tr("Choose a filter to add"));
+    icon = QIcon::fromTheme("list-add",
+                            QIcon(":/icons/oxygen/32x32/actions/list-add.png"));
+    action->setIcon(icon);
+    connect(action, &QAction::triggered, this, [ = ]() {
+        show();
+        raise();
+        m_qview.setFocus();
+        openFilterMenu();
+    });
+    addAction(action);
+    Actions.add("filtersAddFilterAction", action, tr("Filters"));
+
+    action = new QAction(tr("Remove"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_F));
+    action->setToolTip(tr("Remove selected filter"));
+    icon = QIcon::fromTheme("list-remove",
+                            QIcon(":/icons/oxygen/32x32/actions/list-remove.png"));
+    action->setIcon(icon);
+    connect(action, &QAction::triggered, this, [ = ]() {
+        MAIN.filterController()->removeCurrent();
+    });
+    addAction(action);
+    Actions.add("filtersRemoveFilterAction", action, tr("Filters"));
 }
