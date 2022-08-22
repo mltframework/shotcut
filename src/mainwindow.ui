@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>1270</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -132,35 +132,11 @@
      <addaction name="actionChannels2"/>
      <addaction name="actionChannels6"/>
     </widget>
-    <widget class="QMenu" name="menuDeinterlacer">
-     <property name="title">
-      <string>Deinterlacer</string>
-     </property>
-     <addaction name="actionOneField"/>
-     <addaction name="actionLinearBlend"/>
-     <addaction name="actionYadifTemporal"/>
-     <addaction name="actionYadifSpatial"/>
-    </widget>
-    <widget class="QMenu" name="menuInterpolation">
-     <property name="title">
-      <string>Interpolation</string>
-     </property>
-     <addaction name="actionNearest"/>
-     <addaction name="actionBilinear"/>
-     <addaction name="actionBicubic"/>
-     <addaction name="actionHyper"/>
-    </widget>
     <widget class="QMenu" name="menuProfile">
      <property name="title">
       <string>Video Mode</string>
      </property>
      <addaction name="actionProfileAutomatic"/>
-    </widget>
-    <widget class="QMenu" name="menuExternal">
-     <property name="title">
-      <string>External Monitor</string>
-     </property>
-     <addaction name="actionExternalNone"/>
     </widget>
     <widget class="QMenu" name="menuLanguage">
      <property name="title">
@@ -174,13 +150,6 @@
      <addaction name="actionSystemTheme"/>
      <addaction name="actionFusionDark"/>
      <addaction name="actionFusionLight"/>
-    </widget>
-    <widget class="QMenu" name="menuGamma">
-     <property name="title">
-      <string>Gamma</string>
-     </property>
-     <addaction name="actionGammaSRGB"/>
-     <addaction name="actionGammaRec709"/>
     </widget>
     <widget class="QMenu" name="menuDrawingMethod">
      <property name="title">
@@ -242,25 +211,60 @@
      <addaction name="actionProxyUseHardware"/>
      <addaction name="actionProxyConfigureHardware"/>
     </widget>
+    <widget class="QMenu" name="menuPlayerSettings">
+     <property name="title">
+      <string>Player</string>
+     </property>
+     <widget class="QMenu" name="menuDeinterlacer">
+      <property name="title">
+       <string>Deinterlacer</string>
+      </property>
+      <addaction name="actionOneField"/>
+      <addaction name="actionLinearBlend"/>
+      <addaction name="actionYadifTemporal"/>
+      <addaction name="actionYadifSpatial"/>
+     </widget>
+     <widget class="QMenu" name="menuInterpolation">
+      <property name="title">
+       <string>Interpolation</string>
+      </property>
+      <addaction name="actionNearest"/>
+      <addaction name="actionBilinear"/>
+      <addaction name="actionBicubic"/>
+      <addaction name="actionHyper"/>
+     </widget>
+     <widget class="QMenu" name="menuExternal">
+      <property name="title">
+       <string>External Monitor</string>
+      </property>
+      <addaction name="actionExternalNone"/>
+     </widget>
+     <widget class="QMenu" name="menuGamma">
+      <property name="title">
+       <string>Gamma</string>
+      </property>
+      <addaction name="actionGammaSRGB"/>
+      <addaction name="actionGammaRec709"/>
+     </widget>
+     <addaction name="actionScrubAudio"/>
+     <addaction name="actionJack"/>
+     <addaction name="actionRealtime"/>
+     <addaction name="actionProgressive"/>
+     <addaction name="menuDeinterlacer"/>
+     <addaction name="menuInterpolation"/>
+     <addaction name="menuExternal"/>
+     <addaction name="menuGamma"/>
+     <addaction name="actionSync"/>
+    </widget>
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
     <addaction name="menuProfile"/>
     <addaction name="menuAudioChannels"/>
     <addaction name="separator"/>
-    <addaction name="actionPlayer"/>
-    <addaction name="actionScrubAudio"/>
-    <addaction name="actionJack"/>
-    <addaction name="actionRealtime"/>
-    <addaction name="actionProgressive"/>
+    <addaction name="actionUser_Interface"/>
     <addaction name="menuPreviewScaling"/>
     <addaction name="menuProxy"/>
-    <addaction name="menuDeinterlacer"/>
-    <addaction name="menuInterpolation"/>
-    <addaction name="menuExternal"/>
-    <addaction name="menuGamma"/>
-    <addaction name="actionSync"/>
-    <addaction name="separator"/>
-    <addaction name="actionUser_Interface"/>
+    <addaction name="menuPlayerSettings"/>
     <addaction name="menuPlaylist"/>
     <addaction name="menuTimeline"/>
     <addaction name="menuLanguage"/>
