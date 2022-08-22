@@ -278,14 +278,10 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
             else
                 ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
-        } else if (name == "vq" || name == "vglobal_quality") {
+        } else if (name == "vq" || name == "vglobal_quality" || name == "qmin" || name == "qscale") {
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize") ? RateControlConstrained :
                                                        RateControlQuality);
             videoQuality = preset.get_int(name.toUtf8().constData());
-        } else if (name == "qscale") {
-            ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize") ? RateControlConstrained :
-                                                       RateControlQuality);
-            videoQuality = preset.get_int("qscale");
         } else if (name == "crf") {
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize") ? RateControlConstrained
                                                        : ui->videoCodecCombo->currentText().endsWith("_ videotoolbox") ? RateControlAverage :
@@ -293,7 +289,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             videoQuality = preset.get_int("crf");
         } else if (name == "bufsize" || name == "vbufsize") {
             // traditionally "bufsize" means video only
-            if (preset.get("vq") || preset.get("qscale") || preset.get("crf"))
+            if (preset.get("vq") || preset.get("qmin") || preset.get("qscale") || preset.get("crf"))
                 ui->videoRateControlCombo->setCurrentIndex(RateControlConstrained);
             else
                 ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
