@@ -274,6 +274,8 @@
     <addaction name="menuData_Directory"/>
     <addaction name="actionAudioVideoDevice"/>
     <addaction name="actionClearRecentOnExit"/>
+    <addaction name="separator"/>
+    <addaction name="actionReset"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -1303,6 +1305,11 @@
   <action name="actionAudioVideoDevice">
    <property name="text">
     <string>Audio/Video Device...</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="text">
+    <string>Reset...</string>
    </property>
   </action>
  </widget>

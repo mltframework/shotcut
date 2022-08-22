@@ -274,6 +274,9 @@ public:
     bool proxyUseHardware() const;
     void setProxyUseHardware(bool);
 
+public slots:
+    void reset();
+
 signals:
     void openPathChanged();
     void savePathChanged();

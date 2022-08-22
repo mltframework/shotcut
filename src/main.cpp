@@ -418,7 +418,7 @@ int main(int argc, char **argv)
 
     int result = a.exec();
 
-    if (EXIT_RESTART == result) {
+    if (EXIT_RESTART == result || EXIT_RESET == result) {
         LOG_DEBUG() << "restarting app";
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
         ::qputenv("LIBGL_ALWAYS_SOFTWARE",

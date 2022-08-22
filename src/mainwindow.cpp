@@ -2331,7 +2331,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
     if (continueJobsRunning() && continueModified()) {
         LOG_DEBUG() << "begin";
         JOBS.cleanup();
-        writeSettings();
+        if (m_exitCode != EXIT_RESET) {
+            writeSettings();
+        }
         if (m_exitCode == EXIT_SUCCESS) {
             MLT.stop();
         } else {
@@ -4878,3 +4880,22 @@ void MainWindow::on_actionAudioVideoDevice_triggered()
         delete dynamic_cast<AbstractProducerWidget *>(widget)->newProducer(profile);
     }
 }
+
+void MainWindow::on_actionReset_triggered()
+{
+    QMessageBox dialog(QMessageBox::Question,
+                       qApp->applicationName(),
+                       tr("This will reset <b>all</b> settings, and Shotcut must restart afterwards.\n"
+                          "Do you want to reset and restart now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() == QMessageBox::Yes) {
+        Settings.reset();
+        m_exitCode = EXIT_RESET;
+        QApplication::closeAllWindows();
+    }
+}
+

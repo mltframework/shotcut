@@ -30,6 +30,7 @@
 #include "mltxmlchecker.h"
 
 #define EXIT_RESTART (42)
+#define EXIT_RESET (43)
 
 namespace Ui {
 class MainWindow;
@@ -385,6 +386,7 @@ private slots:
     void resetSourceUpdated();
     void on_actionExportChapters_triggered();
     void on_actionAudioVideoDevice_triggered();
+    void on_actionReset_triggered();
 };
 
 #define MAIN MainWindow::singleton()

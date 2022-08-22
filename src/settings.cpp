@@ -1064,6 +1064,13 @@ void ShotcutSettings::setProxyUseHardware(bool b)
     settings.setValue("proxy/useHardware", b);
 }
 
+void ShotcutSettings::reset()
+{
+    for (auto &key : settings.allKeys()) {
+        settings.remove(key);
+    }
+}
+
 int ShotcutSettings::undoLimit() const
 {
     return settings.value("undoLimit", 1000).toInt();
