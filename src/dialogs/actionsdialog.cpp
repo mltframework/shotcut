@@ -90,7 +90,7 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     resize(m_table->width() + 100, 600);
     connect(m_table, &QAbstractItemView::activated, this, [&](const QModelIndex & index) {
         auto action = m_model.action(m_proxyModel->mapToSource(index));
-        if (action) {
+        if (action && action->isEnabled()) {
             action->trigger();
         }
     });
