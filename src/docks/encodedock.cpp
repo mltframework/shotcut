@@ -349,7 +349,9 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             // aac: 0 (worst) - 500 (best)
             ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 500, audioQuality));
     }
-    if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
+    if ((ui->videoRateControlCombo->currentIndex() == RateControlQuality
+            || ui->videoRateControlCombo->currentIndex() == RateControlConstrained)
+            && videoQuality > -1) {
         const QString &vcodec = ui->videoCodecCombo->currentText();
         //val = min + (max - min) * paramval;
         if (vcodec.startsWith("libx264") || vcodec == "libx265" || vcodec.contains("nvenc")
