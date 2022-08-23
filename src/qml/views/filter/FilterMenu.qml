@@ -298,7 +298,7 @@ Rectangle {
         RowLayout {
             id: animation
 
-            Layout.preferredHeight: icon.visible ? 100 : 0
+            Layout.preferredHeight: icon.visible || keywordsLabel.visible ? 100 : 0
 
             AnimatedImage {
                 id: icon
@@ -314,18 +314,20 @@ Rectangle {
             ColumnLayout {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-                Layout.topMargin: 10
 
                 Label {
                     text: metadatamodel.get(menuListView.currentIndex).name
                     font.bold: true
+                    visible: keywordsLabel.visible
                 }
 
                 Label {
                     id: keywordsLabel
 
                     visible: metadatamodel.get(menuListView.currentIndex).keywords.length > 0
-                    text: qsTr('keywords:') + ' ' + metadatamodel.get(menuListView.currentIndex).keywords
+                    text: metadatamodel.get(menuListView.currentIndex).keywords
+                    wrapMode: Text.WordWrap
+                    Layout.preferredWidth: filterWindow.width - (icon.visible? 100 : 0) - 20
                 }
 
             }
