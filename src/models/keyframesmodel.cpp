@@ -749,7 +749,7 @@ void KeyframesModel::onFilterChanged(const QString &property)
         // Keyframe count is unchanged. A value must have changed.
         emit dataChanged(index(i), index(i), QVector<int>() << LowestValueRole << HighestValueRole);
         emit dataChanged(index(0, 0, index(i)), index(m_keyframeCounts[i] - 1, 0, index(i)),
-                         QVector<int>() << NumericValueRole);
+                         QVector<int>() << NumericValueRole << NameRole);
     }
 }
 
