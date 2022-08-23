@@ -31,6 +31,52 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout" columnstretch="0,4,5">
+     <item row="4" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="softnessLabel">
+         <property name="text">
+          <string>Softness</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="softnessSlider">
+         <property name="toolTip">
+          <string>Change the softness of the edge of the wipe</string>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>20</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="softnessSpinner">
+         <property name="suffix">
+          <string> %</string>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>20</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
      <item row="0" column="1" colspan="2">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -170,7 +216,54 @@
        </item>
       </layout>
      </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Audio</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QToolButton" name="favoriteButton">
+       <property name="toolTip">
+        <string>Save the custom transition as a favorite</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../icons/resources.qrc">
+         <normaloff>:/icons/oxygen/32x32/places/bookmarks.png</normaloff>:/icons/oxygen/32x32/places/bookmarks.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="QLabel" name="customLumaLabel">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
      <item row="6" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QRadioButton" name="crossfadeRadioButton">
+         <property name="toolTip">
+          <string>Automatically fade-out the audio of clip A
+and fade-in the audio of clip B over the
+duration of the transition.</string>
+         </property>
+         <property name="text">
+          <string>Cross-fade</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="7" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,1,0,0">
        <item>
         <widget class="QRadioButton" name="mixRadioButton">
@@ -224,72 +317,6 @@ audio (0%) or clip B's audio (100%).</string>
        </item>
       </layout>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Video</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Audio</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="softnessLabel">
-         <property name="text">
-          <string>Softness</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="softnessSlider">
-         <property name="toolTip">
-          <string>Change the softness of the edge of the wipe</string>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="value">
-          <number>20</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="softnessSpinner">
-         <property name="suffix">
-          <string> %</string>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="value">
-          <number>20</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
      <item row="4" column="2">
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -305,25 +332,6 @@ audio (0%) or clip B's audio (100%).</string>
         </size>
        </property>
       </spacer>
-     </item>
-     <item row="5" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QRadioButton" name="crossfadeRadioButton">
-         <property name="toolTip">
-          <string>Automatically fade-out the audio of clip A
-and fade-in the audio of clip B over the
-duration of the transition.</string>
-         </property>
-         <property name="text">
-          <string>Cross-fade</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">buttonGroup</string>
-         </attribute>
-        </widget>
-       </item>
-      </layout>
      </item>
      <item row="2" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -346,21 +354,23 @@ duration of the transition.</string>
        </item>
       </layout>
      </item>
-     <item row="1" column="1" colspan="2">
-      <widget class="QLabel" name="customLumaLabel">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>TextLabel</string>
+        <string>Video</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QToolButton" name="favoriteButton">
-       <property name="toolTip">
-        <string>Save the custom transition as a favorite</string>
+     <item row="5" column="1" colspan="2">
+      <widget class="QLabel" name="getCustomLabel">
+       <property name="text">
+        <string>Get custom transitions on our Web site.</string>
        </property>
-       <property name="icon">
-        <iconset resource="../../icons/resources.qrc">
-         <normaloff>:/icons/oxygen/32x32/places/bookmarks.png</normaloff>:/icons/oxygen/32x32/places/bookmarks.png</iconset>
+       <property name="openExternalLinks">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

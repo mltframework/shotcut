@@ -101,6 +101,9 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     m_preview->setLooping(false);
     ui->horizontalLayout->addWidget(m_preview, 0, Qt::AlignCenter);
     connect(this, SIGNAL(modified()), this, SLOT(startPreview()), Qt::QueuedConnection);
+    ui->getCustomLabel->setText(
+        QString::fromLatin1("<a href=\"https://shotcut.org/resources/#transitions\">%1</a>").arg(
+            ui->getCustomLabel->text()));
 }
 
 LumaMixTransition::~LumaMixTransition()
