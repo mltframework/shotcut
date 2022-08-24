@@ -249,7 +249,7 @@ Rectangle {
 
         ScrollView {
             Layout.fillWidth: true
-            Layout.preferredHeight: filterWindow.height - toolBar.height - searchBar.Layout.preferredHeight - animation.height - parent.anchors.margins * 2
+            Layout.preferredHeight: filterWindow.height - toolBar.height - searchBar.height - iconKeywordsRow.height - parent.spacing * (parent.children.length - 1)
             clip: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
             ScrollBar.horizontal.height: 0
@@ -296,40 +296,33 @@ Rectangle {
         }
 
         RowLayout {
-            id: animation
+            id: iconKeywordsRow
 
-            Layout.preferredHeight: icon.visible || keywordsLabel.visible ? 100 : 0
+            Layout.preferredHeight: 60
 
             AnimatedImage {
                 id: icon
 
-                visible: menuListView.currentIndex > 0 && metadatamodel.get(menuListView.currentIndex).icon.length > 0
-                source: metadatamodel.get(menuListView.currentIndex).icon
+                source: menuListView.currentIndex >= 0 ? metadatamodel.get(menuListView.currentIndex).icon : ''
                 asynchronous: true
                 Layout.preferredWidth: parent.Layout.preferredHeight
                 Layout.preferredHeight: parent.Layout.preferredHeight
                 fillMode: Image.PreserveAspectFit
+                onPlayingChanged: {
+                    if (!playing)
+                        playing = true;
+
+                }
             }
 
-            ColumnLayout {
+            Label {
+                id: keywordsLabel
+
+                text: menuListView.currentIndex >= 0 ? metadatamodel.get(menuListView.currentIndex).keywords : ''
+                wrapMode: Text.WordWrap
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-
-                Label {
-                    text: metadatamodel.get(menuListView.currentIndex).name
-                    font.bold: true
-                    visible: keywordsLabel.visible
-                }
-
-                Label {
-                    id: keywordsLabel
-
-                    visible: metadatamodel.get(menuListView.currentIndex).keywords.length > 0
-                    text: metadatamodel.get(menuListView.currentIndex).keywords
-                    wrapMode: Text.WordWrap
-                    Layout.preferredWidth: filterWindow.width - (icon.visible? 100 : 0) - 20
-                }
-
+                Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
+                Layout.preferredWidth: filterWindow.width - parent.Layout.preferredHeight - 20
             }
 
         }
