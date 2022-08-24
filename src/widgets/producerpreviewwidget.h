@@ -34,7 +34,7 @@ class ProducerPreviewWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ProducerPreviewWidget(double dar);
+    explicit ProducerPreviewWidget(double dar, int width = 320);
     virtual ~ProducerPreviewWidget();
 
     void start(const Mlt::Producer &producer);

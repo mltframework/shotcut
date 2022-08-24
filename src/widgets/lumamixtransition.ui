@@ -30,7 +30,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QGridLayout" name="gridLayout" columnstretch="0,4,5">
+    <layout class="QGridLayout" name="gridLayout" columnstretch="0,10,9">
      <item row="4" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>

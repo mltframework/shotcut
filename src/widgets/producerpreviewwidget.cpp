@@ -28,9 +28,9 @@
 #include <QProgressBar>
 #include <QVBoxLayout>
 
-ProducerPreviewWidget::ProducerPreviewWidget(double dar)
+ProducerPreviewWidget::ProducerPreviewWidget(double dar, int width)
     : QWidget()
-    , m_previewSize(320, 320)
+    , m_previewSize(width, width)
     , m_seekTo(-1)
     , m_timerId(0)
     , m_queue(10, DataQueue<QueueItem>::OverflowModeWait)
@@ -38,7 +38,7 @@ ProducerPreviewWidget::ProducerPreviewWidget(double dar)
     , m_isLooping(true)
 {
     LOG_DEBUG() << "begin";
-    int height = lrint((double)320 / dar);
+    int height = lrint((double)width / dar);
     height -= height % 2;
     m_previewSize.setHeight( height );
 

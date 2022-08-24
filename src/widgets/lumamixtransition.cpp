@@ -56,7 +56,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     if (transition && transition->is_valid()) {
         QString resource = transition->get("resource");
         if (!resource.isEmpty() && resource.indexOf("%luma") != -1) {
-            ui->lumaCombo->setCurrentRow(resource.midRef(resource.indexOf("%luma") + 5).left(2).toInt() + 1);
+            ui->lumaCombo->setCurrentRow(resource.midRef(resource.indexOf("%luma") + 5).left(2).toInt() + 2);
         } else if (!resource.isEmpty() && resource.startsWith("color:")) {
             ui->lumaCombo->setCurrentRow(kLumaComboCutIndex);
             ui->softnessLabel->setText(tr("Position"));
@@ -97,7 +97,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         ui->mixSlider->setValue(qRound(transition->get_double("start") * 100.0));
     }
     ui->previewCheckBox->setChecked(Settings.timelinePreviewTransition());
-    m_preview = new ProducerPreviewWidget(MLT.profile().dar());
+    m_preview = new ProducerPreviewWidget(MLT.profile().dar(), 180);
     m_preview->setLooping(false);
     ui->horizontalLayout->addWidget(m_preview, 0, Qt::AlignCenter);
     connect(this, SIGNAL(modified()), this, SLOT(startPreview()), Qt::QueuedConnection);
