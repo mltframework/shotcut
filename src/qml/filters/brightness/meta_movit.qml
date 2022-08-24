@@ -9,6 +9,7 @@ Metadata {
     mlt_service: "movit.opacity"
     needsGPU: true
     qml: "ui_movit.qml"
+    icon: 'icon.webp'
     isFavorite: true
 
     keyframes {

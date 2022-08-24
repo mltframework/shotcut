@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "brightness"
     keywords: qsTr('lightness value', 'search keywords for the Brightness video filter') + ' brightness'
     qml: "ui.qml"
+    icon: 'icon.webp'
     isFavorite: true
     gpuAlt: "movit.opacity"
 
