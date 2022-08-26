@@ -76,6 +76,9 @@ void DockToolBar::updateStyle()
            width:%1px;                          \
            height:%1px;                         \
          }                                      \
+         QToolButton[popupMode=\"1\"] {         \
+           padding-right: 12px;                 \
+         }                                      \
          QToolButton:checked {                  \
            color:palette(highlighted-text);     \
            background-color:palette(highlight); \
