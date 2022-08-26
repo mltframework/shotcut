@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Chroma Hold")
+    keywords: qsTr('color hue select choose pick', 'search keywords for the Chroma Hold video filter') + ' chroma hold'
     mlt_service: 'avfilter.chromahold'
     qml: 'ui.qml'
 

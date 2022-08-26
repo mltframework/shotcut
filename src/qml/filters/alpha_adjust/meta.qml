@@ -22,7 +22,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Alpha Channel: Adjust")
-    keywords: qsTr('transparency', 'search keywords for the Alpha Channel: Adjust video filter') + ' alpha channel: adjust'
+    keywords: qsTr('transparency shave shrink grow soft feather', 'search keywords for the Alpha Channel: Adjust video filter') + ' alpha channel: adjust'
     mlt_service: 'frei0r.alpha0ps'
     objectName: 'alphaChannelAdjust'
     qml: 'ui.qml'

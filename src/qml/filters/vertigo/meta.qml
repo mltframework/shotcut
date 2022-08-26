@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Vertigo")
+    keywords: qsTr('temporal mix dizzy psychedelic', 'search keywords for the Vertigo video filter') + ' vertigo'
     objectName: 'vertigo'
     mlt_service: "frei0r.vertigo"
     qml: "ui.qml"

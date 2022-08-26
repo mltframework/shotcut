@@ -4,6 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Stabilize")
+    keywords: qsTr('smooth deshake', 'search keywords for the Stabilize video filter') + ' vid.stab stabilize'
     mlt_service: "vidstab"
     qml: "ui.qml"
     isClipOnly: true

@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Noise: Keyframes")
+    keywords: qsTr('dirt grunge', 'search keywords for the Noise: Keyframes video filter') + ' noise: keyframes'
     objectName: 'noise_keyframes'
     mlt_service: "frei0r.rgbnoise"
     qml: "ui.qml"

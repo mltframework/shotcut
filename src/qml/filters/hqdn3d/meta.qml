@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Reduce Noise: HQDN3D")
+    keywords: qsTr('denoise artifact dirt smooth', 'search keywords for the Reduce Noise: HQDN3D video filter') + ' reduce noise: hqdn3d'
     mlt_service: "frei0r.hqdn3d"
     qml: "ui.qml"
 

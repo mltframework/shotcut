@@ -4,6 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Color Grading")
+    keywords: qsTr('correct shadows lift midtones gamma highlights gain hue lightness brightness value', 'search keywords for the Color Grading video filter') + ' color grading'
     mlt_service: "lift_gamma_gain"
     qml: "ui.qml"
     isFavorite: true

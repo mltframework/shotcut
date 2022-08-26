@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr('Corner Pin')
+    keywords: qsTr('stretch distort pinch twist deform', 'search keywords for the Corner Pin video filter') + ' corner pin'
     mlt_service: 'frei0r.c0rners'
     qml: 'ui.qml'
     vui: 'vui.qml'

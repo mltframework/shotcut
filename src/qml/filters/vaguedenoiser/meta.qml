@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2022 Meltytech, LLC
  * Written by Austin Brooks <ab.shotcut@outlook.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr('Reduce Noise: Wavelet')
+    keywords: qsTr('vague denoise artifact dirt', 'search keywords for the Reduce Noise: Wavelet video filter') + ' reduce noise: wavelet'
     objectName: 'vaguedenoiser'
     mlt_service: 'avfilter.vaguedenoiser'
     qml: 'ui.qml'

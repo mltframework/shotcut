@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Hue/Lightness/Saturation")
+    keywords: qsTr('color value desaturate grayscale', 'search keywords for the Hue/Lightness/Saturation video filter') + ' hue lightness saturation'
     mlt_service: 'avfilter.hue'
     qml: 'ui.qml'
 

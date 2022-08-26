@@ -4,6 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Glow")
+    keywords: qsTr('shine blur', 'search keywords for the Glow video filter') + ' glow'
     mlt_service: "frei0r.glow"
     qml: "ui_frei0r.qml"
     gpuAlt: "movit.glow"

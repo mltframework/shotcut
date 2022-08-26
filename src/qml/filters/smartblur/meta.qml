@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Reduce Noise: Smart Blur")
+    keywords: qsTr('denoise artifact clean', 'search keywords for the Reduce Noise: Smart Blur video filter') + ' reduce noise: smart blur'
     mlt_service: 'avfilter.smartblur'
     qml: 'ui.qml'
 }

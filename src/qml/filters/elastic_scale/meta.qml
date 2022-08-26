@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Elastic Scale")
+    keywords: qsTr('stretch nonlinear', 'search keywords for the Elastic Scale video filter') + ' elastic scale'
     mlt_service: "frei0r.elastic_scale"
     objectName: 'elastic_scale'
     qml: "ui.qml"

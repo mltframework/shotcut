@@ -4,6 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Sharpen")
+    keywords: qsTr('sharpness focus clear crisp', 'search keywords for the Sharpen video filter') + ' sharpen'
     mlt_service: "movit.sharpen"
     needsGPU: true
     qml: "ui_movit.qml"

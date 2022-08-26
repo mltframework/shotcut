@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("RGB Shift")
+    keywords: qsTr('glitch chroma analog split', 'search keywords for the RGB Shift video filter') + ' rgb shift'
     mlt_service: "frei0r.rgbsplit0r"
     qml: "ui.qml"
 

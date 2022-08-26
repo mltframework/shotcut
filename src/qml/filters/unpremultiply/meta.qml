@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr('Unpremultiply Alpha')
+    keywords: qsTr('disassociate associated straight', 'search keywords for the Unpremultiply Alpha video filter') + ' unpremultiply alpha'
     mlt_service: 'frei0r.premultiply'
     qml: 'ui.qml'
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Glitch")
+    keywords: qsTr('defect broken distort', 'search keywords for the Glitch video filter') + ' glitch'
     mlt_service: "frei0r.glitch0r"
     qml: "ui.qml"
 

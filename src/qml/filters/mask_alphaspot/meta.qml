@@ -4,6 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr('Mask: Simple Shape')
+    keywords: qsTr('matte stencil alpha rectangle ellipse circle triangle diamond', 'search keywords for the Mask: Simple Shape video filter') + ' mask: simple shape'
     mlt_service: 'mask_start'
     objectName: 'maskSimpleShape'
     qml: 'ui.qml'

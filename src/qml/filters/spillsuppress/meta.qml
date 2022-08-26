@@ -22,6 +22,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Key Spill: Simple")
+    keywords: qsTr('chroma alpha clean suppress', 'search keywords for the Key Spill: Simple video filter') + ' key spill: simple'
     mlt_service: 'frei0r.spillsupress'
     qml: 'ui.qml'
 }

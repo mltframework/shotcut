@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Fisheye")
+    keywords: qsTr('deform lens distort wide angle panoramic hemispherical', 'search keywords for the Fisheye video filter') + ' gopro fisheye'
     mlt_service: 'frei0r.defish0r'
     qml: 'ui.qml'
 }

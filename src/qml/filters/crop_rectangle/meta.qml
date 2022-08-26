@@ -5,6 +5,7 @@ Metadata {
     type: Metadata.Filter
     objectName: 'cropRectangle'
     name: qsTr('Crop: Rectangle')
+    keywords: qsTr('trim remove square', 'search keywords for the Crop: Rectangle video filter') + ' crop: rectangle'
     mlt_service: 'qtcrop'
     qml: 'ui.qml'
     vui: 'vui.qml'
