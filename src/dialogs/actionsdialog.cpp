@@ -53,6 +53,16 @@ public:
         seqEdit = new QKeySequenceEdit();
         layout->addWidget(seqEdit);
 
+        QToolButton *applyButton = new QToolButton();
+        applyButton->setIcon(QIcon::fromTheme("dialog-ok",
+                                              QIcon(":/icons/oxygen/32x32/actions/dialog-ok.png")));
+        applyButton->setText(tr("Apply"));
+        applyButton->setToolTip(tr("Apply"));
+        connect(applyButton, &QToolButton::clicked, this, [this]() {
+            emit applied();
+        });
+        layout->addWidget(applyButton);
+
         QToolButton *defaultButton = new QToolButton();
         defaultButton->setIcon(QIcon::fromTheme("edit-undo",
                                                 QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));
@@ -80,13 +90,16 @@ public:
 
     QKeySequenceEdit *seqEdit;
     QKeySequence defaultSeq;
+
+signals:
+    void applied();
 };
 
 class ShortcutItemDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    ShortcutItemDelegate(QWidget *parent = nullptr)
+    ShortcutItemDelegate(QObject *parent = nullptr)
         : QStyledItemDelegate(parent)
     {
     }
@@ -99,6 +112,10 @@ public:
                  && !index.data(ActionsModel::HardKeyRole).isValid() )) {
             // Hard key shortcuts are in column 2 and are not editable.
             m_currentEditor = new ShortcutEditor(parent);
+            connect(m_currentEditor, &ShortcutEditor::applied, this, [this]() {
+                auto dialog = static_cast<ActionsDialog *>(QObject::parent());
+                dialog->saveCurrentEditor();
+            });
             return m_currentEditor;
         }
         return nullptr;
@@ -123,6 +140,7 @@ public:
         QKeySequence newSeq = static_cast<ShortcutEditor *>(editor)->seqEdit->keySequence();
         model->setData(index, newSeq);
     }
+
     ShortcutEditor *currentEditor() const
     {
         return m_currentEditor;
@@ -284,20 +302,21 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     resize(tableWidth, 600);
 }
 
+void ActionsDialog::saveCurrentEditor()
+{
+    auto delegate = static_cast<ShortcutItemDelegate *>(m_table->itemDelegateForColumn(
+                                                            m_table->currentIndex().column()));
+    auto editor = delegate->currentEditor();
+    if (editor && editor->seqEdit) {
+        m_proxyModel->setData(m_table->currentIndex(), editor->seqEdit->keySequence());
+        emit delegate->closeEditor(editor);
+    }
+}
+
 void ActionsDialog::hideEvent(QHideEvent *event)
 {
     Q_UNUSED(event)
-    // Save and close any active editor.
-    for (int i = 1; i <= 2; ++i) {
-        auto delegate = static_cast<ShortcutItemDelegate *>(m_table->itemDelegateForColumn(i));
-        auto editor = delegate->currentEditor();
-        if (editor) {
-            if (editor->seqEdit) {
-                m_proxyModel->setData(m_table->currentIndex(), editor->seqEdit->keySequence());
-            }
-            emit delegate->closeEditor(editor);
-        }
-    }
+    saveCurrentEditor();
     // Reset the dialog when hidden since it is no longer destroyed.
     m_searchField->setFocus();
     m_searchField->clear();

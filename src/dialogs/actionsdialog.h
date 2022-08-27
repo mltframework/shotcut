@@ -26,12 +26,14 @@ class PrivateTreeView;
 class QLineEdit;
 class QSortFilterProxyModel;
 class StatusLabelWidget;
+class QKeySequenceEdit;
 
 class ActionsDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit ActionsDialog(QWidget *parent = 0);
+    void saveCurrentEditor();
 
 protected:
     void hideEvent(QHideEvent *event);
