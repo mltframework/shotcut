@@ -41,6 +41,9 @@ public:
     explicit ActionsModel(QObject *parent = 0);
     QAction *action(const QModelIndex &index) const;
 
+signals:
+    void editError(const QString &error);
+
 protected:
     // Implement QAbstractItemModel
     int rowCount(const QModelIndex &parent) const override;

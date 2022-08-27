@@ -22,9 +22,10 @@
 
 #include <QDialog>
 
-class QSortFilterProxyModel;
-class QTreeView;
+class PrivateTreeView;
 class QLineEdit;
+class QSortFilterProxyModel;
+class StatusLabelWidget;
 
 class ActionsDialog : public QDialog
 {
@@ -38,8 +39,9 @@ protected:
 private:
     QLineEdit *m_searchField;
     ActionsModel m_model;
-    QTreeView *m_table;
+    PrivateTreeView *m_table;
     QSortFilterProxyModel *m_proxyModel;
+    StatusLabelWidget *m_status;
 };
 
 #endif // ACTIONSDIALOG_H

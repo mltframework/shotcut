@@ -180,9 +180,18 @@ bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int 
             QList<QKeySequence> sequences = a->shortcuts();
             for (int i = 0; i < sequences.size(); i++) {
                 if (sequences[i] == ks) {
-                    qDebug() << "Key Sequence" << ks << "is used by" << a->property(Actions.displayProperty).toString();
+                    QString error = tr("Key sequence %1 is used by %2").arg(ks.toString()).arg(a->property(
+                                                                                                   Actions.displayProperty).toString());
+                    emit editError(error);
                     return false;
                 }
+            }
+            QString hardKey = a->property(Actions.hardKeyProperty).toString();
+            if (!hardKey.isEmpty() && hardKey == ks.toString()) {
+                QString error = tr("Key sequence %1 is reserved for use by %2").arg(ks.toString()).arg(a->property(
+                                                                                                           Actions.displayProperty).toString());
+                emit editError(error);
+                return false;
             }
         }
     }

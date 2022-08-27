@@ -18,6 +18,7 @@
 #include "actionsdialog.h"
 
 #include "actions.h"
+#include "widgets/statuslabelwidget.h"
 
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
@@ -139,6 +140,25 @@ protected:
     }
 };
 
+class PrivateTreeView : public QTreeView
+{
+    Q_OBJECT
+public:
+    PrivateTreeView(QWidget *parent = nullptr) : QTreeView(parent) {}
+
+    virtual bool edit(const QModelIndex &index, QAbstractItemView::EditTrigger trigger,
+                      QEvent *event) override
+    {
+        bool editInProgress = QTreeView::edit(index, trigger, event);
+        if (editInProgress)
+            emit editStarted();
+        return editInProgress;
+    }
+
+signals:
+    void editStarted();
+};
+
 // Include this so that ShortcutItemDelegate can be declared in the source file.
 #include "actionsdialog.moc"
 
@@ -179,7 +199,7 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     m_proxyModel->setFilterKeyColumn(-1);
 
     // List
-    m_table = new QTreeView();
+    m_table = new PrivateTreeView();
     m_table->setSelectionMode(QAbstractItemView::SingleSelection);
     m_table->setItemsExpandable(false);
     m_table->setRootIsDecorated(false);
@@ -199,13 +219,31 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     m_table->header()->resizeSection(2, editorWidth);
     m_table->sortByColumn(ActionsModel::COLUMN_ACTION, Qt::AscendingOrder);
     m_table->installEventFilter(new KeyPressFilter(this));
+    connect(m_table->selectionModel(), &QItemSelectionModel::selectionChanged,
+    this, [&](const QItemSelection & selected, const QItemSelection & deselected) {
+        m_status->showText(tr("Click on the selected shortcut to show the editor"), 5, nullptr,
+                           QPalette::AlternateBase);
+    });
+    connect(m_table, &PrivateTreeView::editStarted, this, [&]() {
+        m_status->showText(tr("Click on the shortcut editor to capture key presses"), 5, nullptr,
+                           QPalette::AlternateBase);
+    });
     vlayout->addWidget(m_table);
+
+    QHBoxLayout *hlayout = new QHBoxLayout();
+    m_status = new StatusLabelWidget();
+    connect(&m_model, &ActionsModel::editError, this, [&](const QString & message) {
+        m_status->showText(message, 5, nullptr);
+    });
+    hlayout->addWidget(m_status);
 
     // Button Box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     buttonBox->button(QDialogButtonBox::Close)->setAutoDefault(false);
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    vlayout->addWidget(buttonBox);
+    hlayout->addWidget(buttonBox);
+
+    vlayout->addLayout(hlayout);
     setLayout(vlayout);
 
     connect(m_table, &QAbstractItemView::activated, this, [&](const QModelIndex & index) {
