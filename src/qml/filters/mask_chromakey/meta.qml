@@ -25,5 +25,6 @@ Metadata {
     mlt_service: 'mask_start'
     objectName: 'maskChromaKey'
     qml: 'ui.qml'
+    icon: 'icon.webp'
     allowMultiple: false
 }

@@ -24,4 +24,5 @@ Metadata {
     keywords: qsTr('green blue screen', 'search keywords for the Chroma Key: Advanced video filter') + ' chroma key: advanced'
     mlt_service: 'frei0r.select0r'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 }

@@ -26,4 +26,5 @@ Metadata {
     mlt_service: 'frei0r.bluescreen0r'
     qml: 'ui.qml'
     allowMultiple: false
+    icon: 'icon.webp'
 }
