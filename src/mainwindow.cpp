@@ -3998,7 +3998,6 @@ void MainWindow::on_actionKeyboardShortcuts_triggered()
     if (!dialog) {
         dialog = new ActionsDialog(this);
         dialog->setObjectName(name);
-        dialog->setAttribute(Qt::WA_DeleteOnClose);
     }
     dialog->show();
     dialog->activateWindow();
