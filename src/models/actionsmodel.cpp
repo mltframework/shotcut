@@ -21,6 +21,7 @@
 #include <Logger.h>
 
 #include <QAction>
+#include <QGuiApplication>
 #include <QKeySequence>
 
 ActionsModel::ActionsModel(QObject *parent)
@@ -59,12 +60,10 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case Qt::StatusTipRole:
     case Qt::DecorationRole:
-    case Qt::FontRole:
     case Qt::TextAlignmentRole:
     case Qt::CheckStateRole:
     case Qt::SizeHintRole:
     case Qt::BackgroundRole:
-    case Qt::ForegroundRole:
         return result;
     }
 
@@ -76,6 +75,7 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
 
     QAction *action = m_actions[index.row()];
     switch (role) {
+    case Qt::EditRole:
     case Qt::DisplayRole:
         switch (index.column()) {
         case COLUMN_ACTION:
@@ -104,11 +104,108 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
     case Qt::ToolTipRole:
         result = action->toolTip();
         break;
+    case Qt::FontRole:
+        if (index.column() == COLUMN_SEQUENCE1) {
+            QFont font;
+            QList<QKeySequence> sequences = action->shortcuts();
+            if (sequences.size() > 0 && sequences[0] != action->property(Actions.defaultKey1Property)) {
+                font.setBold(true);
+            }
+            result = font;
+        } else if (index.column() == COLUMN_SEQUENCE2) {
+            QFont font;
+            QList<QKeySequence> sequences = action->shortcuts();
+            if (action->property(Actions.hardKeyProperty).isValid()) {
+                font.setItalic(true);
+            } else if (sequences.size() > 1 && sequences[1] != action->property(Actions.defaultKey2Property)) {
+                font.setBold(true);
+            }
+            result =  font;
+        }
+        break;
+    case Qt::ForegroundRole:
+        if (index.column() == COLUMN_SEQUENCE2 && action->property(Actions.hardKeyProperty).isValid()) {
+            result =  QGuiApplication::palette().color(QPalette::Disabled, QPalette::Text);
+        }
+        break;
+    case ActionsModel::HardKeyRole:
+        result = action->property(Actions.hardKeyProperty);
+        break;
+    case ActionsModel::DefaultKeyRole:
+        switch (index.column()) {
+        case COLUMN_SEQUENCE1:
+            result = action->property(Actions.defaultKey1Property);
+            break;
+        case COLUMN_SEQUENCE2:
+            result = action->property(Actions.defaultKey2Property);
+            break;
+        default:
+            break;
+        }
+        break;
     default:
         LOG_ERROR() << "Invalid Role" << index.row() << index.column() << roleNames()[role] << role;
         break;
     }
     return result;
+}
+
+bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if ( !index.isValid() )
+        return false;
+
+    if (role != Qt::EditRole)
+        return false;
+
+    if (index.column() != COLUMN_SEQUENCE1 && index.column() != COLUMN_SEQUENCE2)
+        return false;
+
+    if (index.row() < 0 || index.row() >= m_actions.size()) {
+        return false;
+    }
+
+    QKeySequence ks;
+    if (value.canConvert<QKeySequence>())
+        ks = value.value<QKeySequence>();
+    else if (value.canConvert<QString>())
+        ks = QKeySequence(value.toString());
+    else
+        return false;
+
+    QAction *action = m_actions[index.row()];
+
+    if (!ks.isEmpty()) {
+        for (const QAction *a : m_actions) {
+            QList<QKeySequence> sequences = a->shortcuts();
+            for (int i = 0; i < sequences.size(); i++) {
+                if (sequences[i] == ks) {
+                    qDebug() << "Key Sequence" << ks << "is used by" << a->property(Actions.displayProperty).toString();
+                    return false;
+                }
+            }
+        }
+    }
+
+    QList<QKeySequence> oldShortcuts = action->shortcuts();
+    QList<QKeySequence> newShortcuts;
+    if (index.column() == COLUMN_SEQUENCE1) {
+        newShortcuts << ks;
+        if (oldShortcuts.size() > 1 && oldShortcuts[1] != ks) {
+            newShortcuts << oldShortcuts[1];
+        }
+    } else if  (index.column() == COLUMN_SEQUENCE2) {
+        if (oldShortcuts.size() > 0 && oldShortcuts[0] != ks) {
+            newShortcuts << oldShortcuts[0];
+        }
+        newShortcuts << ks;
+    }
+
+    Actions.overrideShortcuts(action->objectName(), newShortcuts);
+
+    emit dataChanged(this->index(index.row(), COLUMN_SEQUENCE1), this->index(index.row(),
+                                                                             COLUMN_SEQUENCE2));
+    return true;
 }
 
 QVariant ActionsModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -147,7 +244,15 @@ Qt::ItemFlags ActionsModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags flags = Qt::ItemIsEnabled | Qt::ItemIsSelectable;
     if (index.column() == COLUMN_SEQUENCE1 || index.column() == COLUMN_SEQUENCE2) {
-//        flags |= Qt::ItemIsEditable;
+        flags |= Qt::ItemIsEditable;
     }
     return flags;
+}
+
+QHash<int, QByteArray> ActionsModel::roleNames() const
+{
+    QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
+    roles[HardKeyRole] = "hardKey";
+    roles[DefaultKeyRole] = "defaultKey";
+    return roles;
 }

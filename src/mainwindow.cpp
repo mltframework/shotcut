@@ -1948,6 +1948,8 @@ void MainWindow::setupActions()
     Actions.loadFromMenu(ui->menuPlayer);
     Actions.loadFromMenu(ui->menuSettings);
     Actions.loadFromMenu(ui->menuHelp);
+
+    Actions.loadSavedShortcuts();
 }
 
 void MainWindow::writeSettings()

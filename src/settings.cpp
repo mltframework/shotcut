@@ -1064,6 +1064,36 @@ void ShotcutSettings::setProxyUseHardware(bool b)
     settings.setValue("proxy/useHardware", b);
 }
 
+void ShotcutSettings::clearShortcuts(const QString &name)
+{
+    QString key = "shortcuts/" + name;
+    settings.remove(key);
+}
+
+void ShotcutSettings::setShortcuts(const QString &name, const QList<QKeySequence> &shortcuts)
+{
+    QString key = "shortcuts/" + name;
+    QString shortcutSetting;
+    if (shortcuts.size() > 0)
+        shortcutSetting += shortcuts[0].toString();
+    shortcutSetting += "||";
+    if (shortcuts.size() > 1)
+        shortcutSetting += shortcuts[1].toString();
+    settings.setValue(key, shortcutSetting);
+}
+
+QList<QKeySequence> ShotcutSettings::shortcuts(const QString &name)
+{
+    QString key = "shortcuts/" + name;
+    QList<QKeySequence> shortcuts;
+    QString shortcutSetting = settings.value(key, "").toString();
+    if (!shortcutSetting.isEmpty()) {
+        for (const QString &s : shortcutSetting.split("||"))
+            shortcuts << QKeySequence::fromString(s);
+    }
+    return shortcuts;
+}
+
 void ShotcutSettings::reset()
 {
     for (auto &key : settings.allKeys()) {

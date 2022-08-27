@@ -17,16 +17,108 @@
 
 #include "actionsdialog.h"
 
+#include "actions.h"
+
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QKeySequenceEdit>
 #include <QLineEdit>
 #include <QSortFilterProxyModel>
+#include <QStyledItemDelegate>
 #include <QToolButton>
 #include <QTreeView>
 #include <QVBoxLayout>
 #include <QAction>
 #include <QPushButton>
+
+static const unsigned int editorWidth = 180;
+
+class ShortcutEditor : public QWidget
+{
+    Q_OBJECT
+
+public:
+    ShortcutEditor(QWidget *parent = nullptr)
+        : QWidget(parent)
+    {
+        setMinimumWidth(editorWidth);
+        setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        QHBoxLayout *layout = new QHBoxLayout(this);
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->setSpacing(0);
+
+        seqEdit = new QKeySequenceEdit();
+        layout->addWidget(seqEdit);
+
+        QToolButton *defaultButton = new QToolButton();
+        defaultButton->setIcon(QIcon::fromTheme("edit-undo",
+                                                QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));
+        defaultButton->setText(tr("Set to default"));
+        defaultButton->setToolTip(tr("Set to default"));
+        connect(defaultButton, &QToolButton::clicked, this, [&]() {
+            seqEdit->setKeySequence(defaultSeq);
+        });
+        layout->addWidget(defaultButton);
+
+        QToolButton *clearButton = new QToolButton();
+        clearButton->setIcon(QIcon::fromTheme("edit-clear",
+                                              QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
+        clearButton->setText(tr("Clear shortcut"));
+        clearButton->setToolTip(tr("Clear shortcut"));
+        connect(clearButton, &QToolButton::clicked, this, [&]() {
+            seqEdit->clear();
+        });
+        layout->addWidget(clearButton);
+
+        setLayout(layout);
+    }
+
+    ~ShortcutEditor() = default;
+
+    QKeySequenceEdit *seqEdit;
+    QKeySequence defaultSeq;
+};
+
+class ShortcutItemDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+public:
+    ShortcutItemDelegate(QWidget *parent = nullptr)
+        : QStyledItemDelegate(parent)
+    {
+    }
+
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
+                          const QModelIndex &index) const
+    {
+        if (index.column() == ActionsModel::COLUMN_SEQUENCE1 ||
+                (index.column() == ActionsModel::COLUMN_SEQUENCE2
+                 && !index.data(ActionsModel::HardKeyRole).isValid() )) {
+            // Hard key shortcuts are in column 2 and are not editable.
+            return new ShortcutEditor(parent);
+        }
+        return nullptr;
+    }
+
+    void setEditorData(QWidget *editor, const QModelIndex &index) const
+    {
+        ShortcutEditor *widget = dynamic_cast<ShortcutEditor *>(editor);
+        if (widget) {
+            widget->seqEdit->setKeySequence(index.data(Qt::EditRole).value<QKeySequence>());
+            widget->defaultSeq = index.data(ActionsModel::DefaultKeyRole).value<QKeySequence>();
+        }
+    }
+
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+    {
+        QKeySequence newSeq = static_cast<ShortcutEditor *>(editor)->seqEdit->keySequence();
+        model->setData(index, newSeq);
+    }
+};
+
+// Include this so that ShortcutItemDelegate can be declared in the source file.
+#include "actionsdialog.moc"
 
 ActionsDialog::ActionsDialog(QWidget *parent)
     : QDialog(parent)
@@ -60,6 +152,10 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     searchLayout->addWidget(clearSearchButton);
     vlayout->addLayout(searchLayout);
 
+    m_proxyModel = new QSortFilterProxyModel(this);
+    m_proxyModel->setSourceModel(&m_model);
+    m_proxyModel->setFilterKeyColumn(0);
+
     // List
     m_table = new QTreeView();
     m_table->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -68,16 +164,17 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     m_table->setUniformRowHeights(true);
     m_table->setSortingEnabled(true);
     m_table->setEditTriggers(QAbstractItemView::SelectedClicked | QAbstractItemView::EditKeyPressed);
-
-    m_proxyModel = new QSortFilterProxyModel(this);
-    m_proxyModel->setSourceModel(&m_model);
-    m_proxyModel->setFilterKeyColumn(0);
-
+    m_table->setItemDelegateForColumn(1, new ShortcutItemDelegate(this));
+    m_table->setItemDelegateForColumn(2, new ShortcutItemDelegate(this));
     m_table->setModel(m_proxyModel);
     m_table->setWordWrap(false);
     m_table->setSortingEnabled(true);
     m_table->header()->setStretchLastSection(false);
-    m_table->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_table->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    m_table->header()->setSectionResizeMode(1, QHeaderView::QHeaderView::Fixed);
+    m_table->header()->setSectionResizeMode(2, QHeaderView::QHeaderView::Fixed);
+    m_table->header()->resizeSection(1, editorWidth);
+    m_table->header()->resizeSection(2, editorWidth);
     m_table->sortByColumn(ActionsModel::COLUMN_ACTION, Qt::AscendingOrder);
     vlayout->addWidget(m_table);
     // Button Box
@@ -87,11 +184,16 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     vlayout->addWidget(buttonBox);
     setLayout(vlayout);
 
-    resize(m_table->width() + 100, 600);
     connect(m_table, &QAbstractItemView::activated, this, [&](const QModelIndex & index) {
         auto action = m_model.action(m_proxyModel->mapToSource(index));
         if (action && action->isEnabled()) {
             action->trigger();
         }
     });
+
+    int tableWidth = 38;
+    for (int i = 0; i < m_table->model()->columnCount(); i++) {
+        tableWidth += m_table->columnWidth(i);
+    }
+    resize(tableWidth, 600);
 }

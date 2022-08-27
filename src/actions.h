@@ -32,6 +32,8 @@ public:
 
     static const char *hardKeyProperty;
     static const char *displayProperty;
+    static const char *defaultKey1Property;
+    static const char *defaultKey2Property;
 
     static ShotcutActions &singleton();
     explicit ShotcutActions() : QObject() {}
@@ -40,6 +42,8 @@ public:
     void loadFromMenu(QMenu *menu, const QString group = "");
     QAction *operator [](const QString &key);
     QList<QString> keys();
+    void overrideShortcuts(const QString &key, QList<QKeySequence> shortcuts);
+    void loadSavedShortcuts();
 
 private:
     QHash<QString, QAction *> m_actions;

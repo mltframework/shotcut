@@ -18,6 +18,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <QKeySequence>
 #include <QObject>
 #include <QSettings>
 #include <QStringList>
@@ -273,6 +274,11 @@ public:
     void setProxyUseProjectFolder(bool);
     bool proxyUseHardware() const;
     void setProxyUseHardware(bool);
+
+    // Shortcuts
+    void clearShortcuts(const QString &name);
+    void setShortcuts(const QString &name, const QList<QKeySequence> &shortcuts);
+    QList<QKeySequence> shortcuts(const QString &name);
 
 public slots:
     void reset();
