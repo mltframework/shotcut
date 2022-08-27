@@ -98,9 +98,15 @@ public:
                 (index.column() == ActionsModel::COLUMN_SEQUENCE2
                  && !index.data(ActionsModel::HardKeyRole).isValid() )) {
             // Hard key shortcuts are in column 2 and are not editable.
-            return new ShortcutEditor(parent);
+            m_currentEditor = new ShortcutEditor(parent);
+            return m_currentEditor;
         }
         return nullptr;
+    }
+    void destroyEditor(QWidget *editor, const QModelIndex &index) const
+    {
+        m_currentEditor = nullptr;
+        QStyledItemDelegate::destroyEditor(editor, index);
     }
 
     void setEditorData(QWidget *editor, const QModelIndex &index) const
@@ -117,6 +123,13 @@ public:
         QKeySequence newSeq = static_cast<ShortcutEditor *>(editor)->seqEdit->keySequence();
         model->setData(index, newSeq);
     }
+    ShortcutEditor *currentEditor() const
+    {
+        return m_currentEditor;
+    }
+
+private:
+    mutable ShortcutEditor *m_currentEditor = nullptr;
 };
 
 class KeyPressFilter : public QObject
@@ -263,6 +276,17 @@ ActionsDialog::ActionsDialog(QWidget *parent)
 void ActionsDialog::hideEvent(QHideEvent *event)
 {
     Q_UNUSED(event)
+    // Save and close any active editor.
+    for (int i = 1; i <= 2; ++i) {
+        auto delegate = static_cast<ShortcutItemDelegate *>(m_table->itemDelegateForColumn(i));
+        auto editor = delegate->currentEditor();
+        if (editor) {
+            if (editor->seqEdit) {
+                m_proxyModel->setData(m_table->currentIndex(), editor->seqEdit->keySequence());
+            }
+            emit delegate->closeEditor(editor);
+        }
+    }
     // Reset the dialog when hidden since it is no longer destroyed.
     m_searchField->setFocus();
     m_searchField->clear();
