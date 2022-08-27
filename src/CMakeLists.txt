@@ -174,6 +174,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/servicepresetwidget.cpp widgets/servicepresetwidget.h
   widgets/servicepresetwidget.ui
   widgets/slideshowgeneratorwidget.cpp widgets/slideshowgeneratorwidget.h
+  widgets/statuslabelwidget.cpp widgets/statuslabelwidget.h
   widgets/textproducerwidget.cpp widgets/textproducerwidget.h
   widgets/textproducerwidget.ui
   widgets/timelinepropertieswidget.cpp widgets/timelinepropertieswidget.h

@@ -21,7 +21,6 @@
 #include <QWidget>
 #include <QIcon>
 #include <QSize>
-#include <QTimer>
 #include "sharedframe.h"
 
 class ScrubBar;
@@ -39,10 +38,10 @@ class QHBoxLayout;
 class QPushButton;
 class TransportControllable;
 class QLabel;
-class QPropertyAnimation;
 class QPushButton;
 class QMenu;
 class NewProjectFolder;
+class StatusLabelWidget;
 
 class Player : public QWidget
 {
@@ -163,10 +162,7 @@ private:
     QHBoxLayout *m_videoLayout;
     QWidget *m_videoScrollWidget;
     const TransportControllable *m_currentTransport;
-    QPushButton *m_statusLabel;
-    QPropertyAnimation *m_statusFadeIn;
-    QPropertyAnimation *m_statusFadeOut;
-    QTimer m_statusTimer;
+    StatusLabelWidget *m_statusLabel;
     QMenu *m_zoomMenu;
     QMenu *m_mainMenu;
     NewProjectFolder *m_projectWidget;
@@ -181,7 +177,7 @@ private slots:
     void toggleZoom(bool checked);
     void onGridToggled();
     void toggleGrid(bool checked);
-    void onFadeOutFinished();
+    void onStatusFinished();
     void onOffsetChanged(const QPoint &offset);
 };
 

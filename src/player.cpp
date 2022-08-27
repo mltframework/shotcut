@@ -20,6 +20,7 @@
 #include "actions.h"
 #include "scrubbar.h"
 #include "mainwindow.h"
+#include "widgets/statuslabelwidget.h"
 #include "widgets/timespinbox.h"
 #include "widgets/audioscale.h"
 #include "settings.h"
@@ -35,8 +36,6 @@
 #define VOLUME_KNEE (88)
 #define SEEK_INACTIVE (-1)
 #define VOLUME_SLIDER_HEIGHT (300)
-
-static const int STATUS_ANIMATION_MS = 350;
 
 Player::Player(QWidget *parent)
     : QWidget(parent)
@@ -76,32 +75,10 @@ Player::Player(QWidget *parent)
     connect(m_tabs, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)));
 
     // Add status bar.
-    m_statusLabel = new QPushButton;
-    m_statusLabel->setFlat(true);
-    m_statusLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-    m_statusLabel->setAutoFillBackground(true);
+    m_statusLabel = new StatusLabelWidget();
+    connect(m_statusLabel, &StatusLabelWidget::statusCleared, this, &Player::onStatusFinished);
     tabLayout->addWidget(m_statusLabel);
     tabLayout->addStretch(1);
-    if (Settings.drawMethod() != Qt::AA_UseOpenGLES) {
-        QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
-        m_statusLabel->setGraphicsEffect(effect);
-        m_statusFadeIn = new QPropertyAnimation(effect, "opacity", this);
-        m_statusFadeIn->setDuration(STATUS_ANIMATION_MS);
-        m_statusFadeIn->setStartValue(0);
-        m_statusFadeIn->setEndValue(1);
-        m_statusFadeIn->setEasingCurve(QEasingCurve::InBack);
-        m_statusFadeOut = new QPropertyAnimation(effect, "opacity", this);
-        m_statusFadeOut->setDuration(STATUS_ANIMATION_MS);
-        m_statusFadeOut->setStartValue(0);
-        m_statusFadeOut->setEndValue(0);
-        m_statusFadeOut->setEasingCurve(QEasingCurve::OutBack);
-        m_statusTimer.setSingleShot(true);
-        connect(&m_statusTimer, SIGNAL(timeout()), m_statusFadeOut, SLOT(start()));
-        connect(m_statusFadeOut, SIGNAL(finished()), SLOT(onFadeOutFinished()));
-        m_statusFadeOut->start();
-    } else {
-        connect(&m_statusTimer, SIGNAL(timeout()), SLOT(onFadeOutFinished()));
-    }
 
     // Add the layouts for managing video view, scroll bars, and audio controls.
     m_videoLayout = new QHBoxLayout;
@@ -983,62 +960,11 @@ void Player::onTabBarClicked(int index)
 void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction *action,
                             QPalette::ColorRole role)
 {
-    QString s = QString("  %1  ").arg(
-                    m_statusLabel->fontMetrics().elidedText(text, Qt::ElideRight,
-                                                            m_scrubber->width() - m_tabs->width() - 30));
-    m_statusLabel->setText(s);
-    m_statusLabel->setToolTip(text);
-    auto palette = QApplication::palette();
-    if (role == QPalette::ToolTipBase) {
-        palette.setColor(QPalette::Button, palette.color(role));
-        palette.setColor(QPalette::ButtonText, palette.color(QPalette::ToolTipText));
-    } else {
-        palette.setColor(QPalette::Button, palette.color(role));
-        palette.setColor(QPalette::ButtonText, palette.color(QPalette::WindowText));
-    }
-    m_statusLabel->setPalette(palette);
-
-    if (action)
-        connect(m_statusLabel, SIGNAL(clicked(bool)), action, SIGNAL(triggered(bool)));
-    else
-        disconnect(m_statusLabel, SIGNAL(clicked(bool)));
-
-    if (Settings.drawMethod() != Qt::AA_UseOpenGLES) {
-        // Cancel the fade out.
-        if (m_statusFadeOut->state() == QAbstractAnimation::Running) {
-            m_statusFadeOut->stop();
-        }
-        if (text.isEmpty()) {
-            // Make it transparent.
-            m_statusTimer.stop();
-            m_statusFadeOut->setStartValue(0);
-            m_statusFadeOut->start();
-        } else {
-            // Reset the fade out animation.
-            m_statusFadeOut->setStartValue(1);
-
-            // Fade in.
-            if (m_statusFadeIn->state() != QAbstractAnimation::Running && !m_statusTimer.isActive()) {
-                m_statusFadeIn->start();
-                if (timeoutSeconds > 0)
-                    m_statusTimer.start(timeoutSeconds * 1000);
-            }
-        }
-    } else { // DirectX
-        if (text.isEmpty()) {
-            m_statusLabel->hide();
-        } else {
-            m_statusLabel->show();
-            if (timeoutSeconds > 0)
-                m_statusTimer.start(timeoutSeconds * 1000);
-        }
-    }
+    m_statusLabel->showText(text, timeoutSeconds, action, role);
 }
 
-void Player::onFadeOutFinished()
+void Player::onStatusFinished()
 {
-    m_statusLabel->disconnect(SIGNAL(clicked(bool)));
-    m_statusLabel->setToolTip(QString());
     showIdleStatus();
 }
 
