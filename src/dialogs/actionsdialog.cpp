@@ -154,7 +154,7 @@ ActionsDialog::ActionsDialog(QWidget *parent)
 
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(&m_model);
-    m_proxyModel->setFilterKeyColumn(0);
+    m_proxyModel->setFilterKeyColumn(-1);
 
     // List
     m_table = new QTreeView();
