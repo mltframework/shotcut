@@ -24,6 +24,7 @@
 
 class QSortFilterProxyModel;
 class QTreeView;
+class QLineEdit;
 
 class ActionsDialog : public QDialog
 {
@@ -31,7 +32,11 @@ class ActionsDialog : public QDialog
 public:
     explicit ActionsDialog(QWidget *parent = 0);
 
+protected:
+    void hideEvent(QHideEvent *event);
+
 private:
+    QLineEdit *m_searchField;
     ActionsModel m_model;
     QTreeView *m_table;
     QSortFilterProxyModel *m_proxyModel;

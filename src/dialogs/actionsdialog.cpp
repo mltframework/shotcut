@@ -31,6 +31,7 @@
 #include <QVBoxLayout>
 #include <QAction>
 #include <QPushButton>
+#include <QKeyEvent>
 
 static const unsigned int editorWidth = 180;
 
@@ -117,6 +118,27 @@ public:
     }
 };
 
+class KeyPressFilter : public QObject
+{
+    Q_OBJECT
+public:
+    KeyPressFilter(QObject *parent = 0) : QObject(parent) {}
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override
+    {
+        if (event->type() == QEvent::KeyPress) {
+            auto keyEvent = static_cast<QKeyEvent *>(event);
+            if (!keyEvent->modifiers() && (keyEvent->key() == Qt::Key_Return
+                                           || keyEvent->key() == Qt::Key_Enter)) {
+                auto window = static_cast<QWidget *>(parent());
+                window->close();
+            }
+        }
+        return QObject::eventFilter(obj, event);
+    }
+};
+
 // Include this so that ShortcutItemDelegate can be declared in the source file.
 #include "actionsdialog.moc"
 
@@ -130,25 +152,25 @@ ActionsDialog::ActionsDialog(QWidget *parent)
 
     // Search Bar
     QHBoxLayout *searchLayout = new QHBoxLayout();
-    QLineEdit *searchField = new QLineEdit(this);
-    searchField->setPlaceholderText(tr("search"));
-    connect(searchField, &QLineEdit::textChanged, this, [&](const QString & text) {
+    m_searchField = new QLineEdit(this);
+    m_searchField->setPlaceholderText(tr("search"));
+    connect(m_searchField, &QLineEdit::textChanged, this, [&](const QString & text) {
         if (m_proxyModel) {
             m_proxyModel->setFilterRegExp(QRegExp(text, Qt::CaseInsensitive, QRegExp::FixedString));
         }
     });
-    connect(searchField, &QLineEdit::returnPressed, this, [&] {
+    connect(m_searchField, &QLineEdit::returnPressed, this, [&] {
         m_table->setFocus();
         m_table->setCurrentIndex(m_proxyModel->index(0, 0));
     });
-    searchLayout->addWidget(searchField);
+    searchLayout->addWidget(m_searchField);
     QToolButton *clearSearchButton = new QToolButton(this);
     clearSearchButton->setIcon(QIcon::fromTheme("edit-clear",
                                                 QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
     clearSearchButton->setMaximumSize(22, 22);
     clearSearchButton->setToolTip(tr("Clear search"));
     clearSearchButton->setAutoRaise(true);
-    connect(clearSearchButton, &QAbstractButton::clicked, searchField, &QLineEdit::clear);
+    connect(clearSearchButton, &QAbstractButton::clicked, m_searchField, &QLineEdit::clear);
     searchLayout->addWidget(clearSearchButton);
     vlayout->addLayout(searchLayout);
 
@@ -176,7 +198,9 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     m_table->header()->resizeSection(1, editorWidth);
     m_table->header()->resizeSection(2, editorWidth);
     m_table->sortByColumn(ActionsModel::COLUMN_ACTION, Qt::AscendingOrder);
+    m_table->installEventFilter(new KeyPressFilter(this));
     vlayout->addWidget(m_table);
+
     // Button Box
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
     buttonBox->button(QDialogButtonBox::Close)->setAutoDefault(false);
@@ -196,4 +220,13 @@ ActionsDialog::ActionsDialog(QWidget *parent)
         tableWidth += m_table->columnWidth(i);
     }
     resize(tableWidth, 600);
+}
+
+void ActionsDialog::hideEvent(QHideEvent *event)
+{
+    Q_UNUSED(event)
+    // Reset the dialog when hidden since it is no longer destroyed.
+    m_searchField->setFocus();
+    m_searchField->clear();
+    m_table->clearSelection();
 }
