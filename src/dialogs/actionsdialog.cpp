@@ -163,13 +163,20 @@ public:
                       QEvent *event) override
     {
         bool editInProgress = QTreeView::edit(index, trigger, event);
-        if (editInProgress)
-            emit editStarted();
+        if (editInProgress && trigger == QAbstractItemView::AllEditTriggers &&
+                (index.column() == ActionsModel::COLUMN_SEQUENCE1
+                 || index.column() == ActionsModel::COLUMN_SEQUENCE2)) {
+            if (state() == QAbstractItemView::EditingState)
+                emit editStarted();
+            else
+                emit editRejected();
+        }
         return editInProgress;
     }
 
 signals:
     void editStarted();
+    void editRejected();
 };
 
 // Include this so that ShortcutItemDelegate can be declared in the source file.
@@ -239,6 +246,10 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     });
     connect(m_table, &PrivateTreeView::editStarted, this, [&]() {
         m_status->showText(tr("Click on the shortcut editor to capture key presses"), 5, nullptr,
+                           QPalette::AlternateBase);
+    });
+    connect(m_table, &PrivateTreeView::editRejected, this, [&]() {
+        m_status->showText(tr("Reserved shortcuts can not be edited"), 5, nullptr,
                            QPalette::AlternateBase);
     });
     vlayout->addWidget(m_table);
