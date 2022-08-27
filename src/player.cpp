@@ -556,24 +556,28 @@ void Player::setupActions()
     });
     Actions.add("playerBackwardTenSecondsAction", action);
 
-    action = new QAction(tr("Set In"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_I));
+    action = new QAction(tr("Trim Clip In"), this);
+    action->setShortcut(QKeySequence(Qt::Key_I));
     connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.isSeekableClip()) {
+        if (tabIndex() == Player::SourceTabIndex && MLT.isSeekableClip()) {
             setIn(position());
             int delta = position() - MLT.producer()->get_in();
             emit inChanged(delta);
+        } else if (tabIndex() == Player::ProjectTabIndex) {
+            emit trimIn();
         }
     });
     Actions.add("playerSetInAction", action);
 
-    action = new QAction(tr("Set Out"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_O));
+    action = new QAction(tr("Trim Clip Out"), this);
+    action->setShortcut(QKeySequence(Qt::Key_O));
     connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.isSeekableClip()) {
+        if (tabIndex() == Player::SourceTabIndex && MLT.isSeekableClip()) {
             setOut(position());
             int delta = position() - MLT.producer()->get_out();
             emit outChanged(delta);
+        } else if (tabIndex() == Player::ProjectTabIndex) {
+            emit trimOut();
         }
     });
     Actions.add("playerSetOutAction", action);

@@ -203,6 +203,8 @@ public slots:
     void seekNextMarker();
     void seekPrevMarker();
     void onFilterModelChanged();
+    void trimClipIn(bool ripple = false);
+    void trimClipOut(bool ripple = false);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

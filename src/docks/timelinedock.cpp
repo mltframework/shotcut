@@ -114,8 +114,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     editMenu->addAction(Actions["timelineOverwriteAction"]);
     editMenu->addAction(Actions["timelineSplitAction"]);
     editMenu->addAction(Actions["timelineRecordAudioAction"]);
-    editMenu->addAction(Actions["timelineTrimClipInAction"]);
-    editMenu->addAction(Actions["timelineTrimClipOutAction"]);
+    editMenu->addAction(Actions["playerSetInAction"]);
+    editMenu->addAction(Actions["playerSetOutAction"]);
     editMenu->addAction(Actions["timelineRippleTrimClipInAction"]);
     editMenu->addAction(Actions["timelineRippleTrimClipOutAction"]);
     m_mainMenu->addMenu(editMenu);
@@ -1079,21 +1079,7 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineRebuildAudioWaveformAction", action);
 
-    action = new QAction(tr("Trim Clip In"), this);
-    action->setShortcut(QKeySequence(Qt::Key_I));
-    connect(action, &QAction::triggered, this, [&](bool checked) {
-        trimClipAtPlayhead(TimelineDock::TrimInPoint, false);
-    });
-    Actions.add("timelineTrimClipInAction", action);
-
-    action = new QAction(tr("Trim Clip Out"), this);
-    action->setShortcut(QKeySequence(Qt::Key_O));
-    connect(action, &QAction::triggered, this, [&](bool checked) {
-        trimClipAtPlayhead(TimelineDock::TrimOutPoint, false);
-    });
-    Actions.add("timelineTrimClipOutAction", action);
-
-    action = new QAction(tr("RippleTrim Clip In"), this);
+    action = new QAction(tr("Ripple Trim Clip In"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_I));
     connect(action, &QAction::triggered, this, [&](bool checked) {
         trimClipAtPlayhead(TimelineDock::TrimInPoint, true);
@@ -2363,6 +2349,16 @@ void TimelineDock::onFilterModelChanged()
     if (m_updateCommand) {
         m_updateCommand->setPosition(-1, -1, -1);
     }
+}
+
+void TimelineDock::trimClipIn(bool ripple)
+{
+    trimClipAtPlayhead(TimelineDock::TrimInPoint, ripple);
+}
+
+void TimelineDock::trimClipOut(bool ripple)
+{
+    trimClipAtPlayhead(TimelineDock::TrimOutPoint, ripple);
 }
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)

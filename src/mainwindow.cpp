@@ -469,6 +469,8 @@ void MainWindow::setupAndConnectDocks()
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
     connect(m_timelineDock, SIGNAL(isRecordingChanged(bool)), m_player,
             SLOT(onMuteButtonToggled(bool)));
+    connect(m_player, SIGNAL(trimIn()), m_timelineDock, SLOT(trimClipIn()));
+    connect(m_player, SIGNAL(trimOut()), m_timelineDock, SLOT(trimClipOut()));
     ui->menuEdit->addAction(Actions["timelineCutAction"]);
     ui->menuEdit->addAction(Actions["timelineCopyAction"]);
     ui->menuEdit->addAction(Actions["timelinePasteAction"]);
