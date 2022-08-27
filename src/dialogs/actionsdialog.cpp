@@ -84,6 +84,7 @@ public:
         layout->addWidget(clearButton);
 
         setLayout(layout);
+        QMetaObject::invokeMethod(seqEdit, "setFocus", Qt::QueuedConnection);
     }
 
     ~ShortcutEditor() = default;
@@ -116,6 +117,7 @@ public:
                 auto dialog = static_cast<ActionsDialog *>(QObject::parent());
                 dialog->saveCurrentEditor();
             });
+            m_currentEditor->setFocus();
             return m_currentEditor;
         }
         return nullptr;
@@ -184,16 +186,13 @@ public:
         if (editInProgress && trigger == QAbstractItemView::AllEditTriggers &&
                 (index.column() == ActionsModel::COLUMN_SEQUENCE1
                  || index.column() == ActionsModel::COLUMN_SEQUENCE2)) {
-            if (state() == QAbstractItemView::EditingState)
-                emit editStarted();
-            else
+            if (state() != QAbstractItemView::EditingState)
                 emit editRejected();
         }
         return editInProgress;
     }
 
 signals:
-    void editStarted();
     void editRejected();
 };
 
@@ -219,7 +218,7 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     });
     connect(m_searchField, &QLineEdit::returnPressed, this, [&] {
         m_table->setFocus();
-        m_table->setCurrentIndex(m_proxyModel->index(0, 0));
+        m_table->setCurrentIndex(m_proxyModel->index(0, 1));
     });
     searchLayout->addWidget(m_searchField);
     QToolButton *clearSearchButton = new QToolButton(this);
@@ -262,13 +261,15 @@ ActionsDialog::ActionsDialog(QWidget *parent)
         m_status->showText(tr("Click on the selected shortcut to show the editor"), 5, nullptr,
                            QPalette::AlternateBase);
     });
-    connect(m_table, &PrivateTreeView::editStarted, this, [&]() {
-        m_status->showText(tr("Click on the shortcut editor to capture key presses"), 5, nullptr,
-                           QPalette::AlternateBase);
-    });
     connect(m_table, &PrivateTreeView::editRejected, this, [&]() {
         m_status->showText(tr("Reserved shortcuts can not be edited"), 5, nullptr,
                            QPalette::AlternateBase);
+    });
+    connect(m_table->selectionModel(), &QItemSelectionModel::currentChanged,
+    this, [&](const QModelIndex & current) {
+        if (current.column() == 0) {
+            m_table->setCurrentIndex(m_proxyModel->index(current.row(), 1));
+        }
     });
     vlayout->addWidget(m_table);
 
