@@ -307,10 +307,12 @@ void ActionsDialog::saveCurrentEditor()
 {
     auto delegate = static_cast<ShortcutItemDelegate *>(m_table->itemDelegateForColumn(
                                                             m_table->currentIndex().column()));
-    auto editor = delegate->currentEditor();
-    if (editor && editor->seqEdit) {
-        m_proxyModel->setData(m_table->currentIndex(), editor->seqEdit->keySequence());
-        emit delegate->closeEditor(editor);
+    if (delegate) {
+        auto editor = delegate->currentEditor();
+        if (editor && editor->seqEdit) {
+            m_proxyModel->setData(m_table->currentIndex(), editor->seqEdit->keySequence());
+            emit delegate->closeEditor(editor);
+        }
     }
 }
 
