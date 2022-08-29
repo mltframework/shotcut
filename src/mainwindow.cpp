@@ -2271,7 +2271,7 @@ bool MainWindow::eventFilter(QObject *target, QEvent *event)
             // Let Shift+Escape be a global hook to defocus a widget (assign global player focus).
             auto keyEvent = static_cast<QKeyEvent *>(event);
             if (Qt::Key_Escape == keyEvent->key() && Qt::ShiftModifier == keyEvent->modifiers()) {
-                m_player->setFocus();
+                Actions["playerFocus"]->trigger();
                 return true;
             }
         }

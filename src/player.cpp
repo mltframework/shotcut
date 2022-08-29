@@ -594,6 +594,13 @@ void Player::setupActions()
     action->setToolTip(tr("Pause playback"));
     connect(action, &QAction::triggered, this, &Player::pause);
     Actions.add("playerPauseAction", action, tr("Player"));
+
+    action = new QAction(tr("Focus Player"), this);
+    action->setProperty(Actions.hardKeyProperty, "Shift+Esc");
+    connect(action, &QAction::triggered, this, [&]() {
+        setFocus();
+    });
+    Actions.add("playerFocus", action, tr("Player"));
 }
 
 void Player::setIn(int pos)
