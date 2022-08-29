@@ -567,10 +567,8 @@ void Player::setupActions()
     Actions.add("playerSetPositionAction", action);
 
     action = new QAction(tr("Switch Source/Program"), this);
-    action->setShortcut(QKeySequence(Qt::Key_Escape));
-    // Limit this action to only work then the player has focus so that esc works in other widgets.
+    action->setShortcut(QKeySequence(Qt::Key_P));
     addAction(action);
-    action->setShortcutContext(Qt::WidgetWithChildrenShortcut);
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.isPlaylist()) {
             if (MAIN.isMultitrackValid())
