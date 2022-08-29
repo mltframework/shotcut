@@ -113,13 +113,9 @@ QUrl QmlMetadata::vuiFilePath() const
     return retVal;
 }
 
-QString QmlMetadata::iconFilePath() const
+void QmlMetadata::setIconFileName(const QUrl &fileName)
 {
-    QString retVal;
-    if (!m_icon.isEmpty()) {
-        retVal = m_path.absoluteFilePath(m_icon);
-    }
-    return retVal;
+    m_icon = QUrl::fromLocalFile(m_path.absoluteFilePath(fileName.toLocalFile()));
 }
 
 void QmlMetadata::setIsAudio(bool isAudio)
