@@ -10,6 +10,7 @@ Metadata {
     needsGPU: true
     qml: 'ui_movit.qml'
     vui: 'vui_movit.qml'
+    icon: 'icon.webp'
     allowMultiple: false
     isFavorite: true
 

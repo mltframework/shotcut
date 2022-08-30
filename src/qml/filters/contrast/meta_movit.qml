@@ -9,6 +9,7 @@ Metadata {
     mlt_service: "movit.lift_gamma_gain"
     needsGPU: true
     qml: "ui.qml"
+    icon: 'icon.webp'
     isFavorite: true
 
     keyframes {

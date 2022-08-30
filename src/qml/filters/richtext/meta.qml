@@ -9,6 +9,7 @@ Metadata {
     mlt_service: 'qtext'
     qml: "ui.qml"
     vui: 'vui.qml'
+    icon: 'icon.webp'
     isFavorite: true
     minimumVersion: '2'
 

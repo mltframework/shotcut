@@ -9,6 +9,7 @@ Metadata {
     mlt_service: 'affine'
     qml: 'ui_affine.qml'
     vui: 'vui_affine.qml'
+    icon: 'icon.webp'
     gpuAlt: 'movit.rect'
     isFavorite: true
 

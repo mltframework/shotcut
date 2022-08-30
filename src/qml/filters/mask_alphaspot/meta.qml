@@ -8,6 +8,7 @@ Metadata {
     mlt_service: 'mask_start'
     objectName: 'maskSimpleShape'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

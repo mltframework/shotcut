@@ -8,5 +8,6 @@ Metadata {
     mlt_service: "movit.white_balance"
     needsGPU: true
     qml: "ui.qml"
+    icon: 'icon.webp'
     isFavorite: true
 }

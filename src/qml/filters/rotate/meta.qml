@@ -7,7 +7,6 @@ Metadata {
     name: qsTr("Rotate and Scale")
     mlt_service: "affine"
     qml: "ui.qml"
-    isFavorite: true
     isHidden: true
 
     keyframes {

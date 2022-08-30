@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('correct shadows lift midtones gamma highlights gain hue lightness brightness value', 'search keywords for the Color Grading video filter') + ' color grading'
     mlt_service: "lift_gamma_gain"
     qml: "ui.qml"
+    icon: 'icon.webp'
     isFavorite: true
     gpuAlt: "movit.lift_gamma_gain"
 

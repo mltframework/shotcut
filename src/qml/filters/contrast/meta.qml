@@ -8,6 +8,7 @@ Metadata {
     objectName: "contrast"
     mlt_service: "lift_gamma_gain"
     qml: "ui.qml"
+    icon: 'icon.webp'
     isFavorite: true
     gpuAlt: "movit.lift_gamma_gain"
 
