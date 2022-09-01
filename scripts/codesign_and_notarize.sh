@@ -10,7 +10,7 @@ find ~/Desktop/Shotcut.app/Contents/Resources -type f -exec codesign --options=r
 xattr -cr ~/Desktop/Shotcut.app
 codesign --options=runtime -v -s "$SIGNER" \
   --entitlements ./notarization.entitlements \
-  ~/Desktop/Shotcut.app/Contents/MacOS/{melt,ffmpeg,ffplay,ffprobe,glaxnimate}
+  ~/Desktop/Shotcut.app/Contents/MacOS/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx}
 codesign --options=runtime -v -s "$SIGNER" \
   --entitlements ./notarization.entitlements \
   ~/Desktop/Shotcut.app
