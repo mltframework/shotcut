@@ -2934,6 +2934,7 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::LinkVisited, palette.color(QPalette::Highlight));
         palette.setColor(QPalette::Disabled, QPalette::Text, Qt::darkGray);
         palette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
+        palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
         QIcon::setThemeName("dark");
         QMetaObject::invokeMethod(&MAIN, "on_actionShowTextUnderIcons_toggled", Qt::QueuedConnection,
