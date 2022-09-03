@@ -4002,6 +4002,7 @@ void MainWindow::on_actionKeyboardShortcuts_triggered()
     }
     dialog->show();
     dialog->activateWindow();
+    dialog->raise();
 }
 
 void MainWindow::on_actionLayoutLogging_triggered()
