@@ -1901,6 +1901,10 @@ void MainWindow::setupActions()
 {
     QAction *action;
 
+    // Setup these actions as separators
+    ui->actionProject->setSeparator(true);
+    ui->actionUser_Interface->setSeparator(true);
+
     // Setup full screen action
     action = ui->actionEnterFullScreen;
     QList<QKeySequence> fullScreenShortcuts;

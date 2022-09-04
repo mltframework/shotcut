@@ -260,7 +260,6 @@
     <addaction name="actionGPU"/>
     <addaction name="menuProfile"/>
     <addaction name="menuAudioChannels"/>
-    <addaction name="separator"/>
     <addaction name="actionUser_Interface"/>
     <addaction name="menuPreviewScaling"/>
     <addaction name="menuProxy"/>
@@ -865,35 +864,18 @@
   </action>
   <action name="actionProject">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Project</string>
    </property>
-   <property name="_placeholder" stdset="0">
-    <bool>true</bool>
-   </property>
-  </action>
-  <action name="actionPlayer">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Player</string>
-   </property>
-   <property name="_placeholder" stdset="0">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionUser_Interface">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>User Interface</string>
-   </property>
-   <property name="_placeholder" stdset="0">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionClose">
@@ -1276,9 +1258,6 @@
    </property>
    <property name="visible">
     <bool>false</bool>
-   </property>
-   <property name="_placeholder" stdset="0">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionLayoutPlaylist">

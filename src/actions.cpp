@@ -71,7 +71,7 @@ void ShotcutActions::loadFromMenu(QMenu *menu, QString group)
     }
 
     for (QAction *action : menu->actions()) {
-        if (action->property("_placeholder").toBool() == true || action->isSeparator())
+        if (action->isSeparator() || action->objectName() == "dummyAction")
             continue;
 
         QMenu *submenu = action->menu();
