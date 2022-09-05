@@ -30,6 +30,7 @@
 #include "actions.h"
 #include "mainwindow.h"
 #include "controllers/filtercontroller.h"
+#include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
@@ -185,7 +186,7 @@ void FiltersDock::setupActions()
         openFilterMenu();
     });
     addAction(action);
-    Actions.add("filtersAddFilterAction", action, tr("Filters"));
+    Actions.add("filtersAddFilterAction", action, windowTitle());
 
     action = new QAction(tr("Remove"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_F));
@@ -197,5 +198,27 @@ void FiltersDock::setupActions()
         MAIN.filterController()->removeCurrent();
     });
     addAction(action);
-    Actions.add("filtersRemoveFilterAction", action, tr("Filters"));
+    Actions.add("filtersRemoveFilterAction", action, windowTitle());
+
+    action = new QAction(tr("Copy Filters"), this);
+    action->setToolTip(tr("Copy the filters to the clipboard"));
+    icon = QIcon::fromTheme("edit-copy",
+                            QIcon(":/icons/oxygen/32x32/actions/edit-copy.png"));
+    action->setIcon(icon);
+    connect(action, &QAction::triggered, this, [ = ]() {
+        QmlApplication::singleton().copyFilters();
+    });
+    addAction(action);
+    Actions.add("filtersCopyFiltersAction", action, windowTitle());
+
+    action = new QAction(tr("Paste Filters"), this);
+    action->setToolTip(tr("Paste the filters from the clipboard"));
+    icon = QIcon::fromTheme("edit-paste",
+                            QIcon(":/icons/oxygen/32x32/actions/edit-paste.png"));
+    action->setIcon(icon);
+    connect(action, &QAction::triggered, this, [ = ]() {
+        QmlApplication::singleton().pasteFilters();
+    });
+    addAction(action);
+    Actions.add("filtersPasteFiltersAction", action, windowTitle());
 }
