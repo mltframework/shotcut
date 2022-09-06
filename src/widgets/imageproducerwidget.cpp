@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,7 +114,9 @@ void ImageProducerWidget::setProducer(Mlt::Producer *p)
         ui->repeatSpinBox->setValue(m_producer->get_int("ttl"));
     ui->sequenceCheckBox->setChecked(m_producer->get_int(kShotcutSequenceProperty));
     ui->repeatSpinBox->setEnabled(m_producer->get_int(kShotcutSequenceProperty));
-    ui->durationSpinBox->setEnabled(!p->get(kMultitrackItemProperty));
+    ui->durationSpinBox->setEnabled(!p->get(kMultitrackItemProperty)
+                                    && !m_producer->get_int(kShotcutSequenceProperty));
+    ui->defaultDurationButton->setEnabled(ui->durationSpinBox->isEnabled());
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
 }
 
@@ -296,6 +298,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
             m_producer->set("length", m_producer->frames_to_time(imageCount * m_producer->get_int("ttl"),
                                                                  mlt_time_clock));
             ui->durationSpinBox->setValue(imageCount);
+            ui->durationSpinBox->setEnabled(false);
             MAIN.showStatusMessage(tr("Reloading image sequence..."));
             QCoreApplication::processEvents();
         }
@@ -306,7 +309,9 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
         m_producer->set("length", m_producer->frames_to_time(qRound(MLT.profile().fps() *
                                                                     Mlt::kMaxImageDurationSecs), mlt_time_clock));
         ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
+        ui->durationSpinBox->setEnabled(true);
     }
+    ui->defaultDurationButton->setEnabled(ui->durationSpinBox->isEnabled());
     recreateProducer();
 }
 
