@@ -1355,7 +1355,7 @@ MoveTrackCommand::MoveTrackCommand(MultitrackModel &model, int fromTrackIndex, i
     , m_fromTrackIndex(qBound(0, fromTrackIndex, qMax(model.rowCount() - 1, 0)))
     , m_toTrackIndex(qBound(0, toTrackIndex, qMax(model.rowCount() - 1, 0)))
 {
-    if (m_toTrackIndex < m_fromTrackIndex)
+    if (m_toTrackIndex > m_fromTrackIndex)
         setText(QObject::tr("Move track down"));
     else
         setText(QObject::tr("Move track up"));
