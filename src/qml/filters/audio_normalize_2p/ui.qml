@@ -52,6 +52,7 @@ Item {
         function onAnalyzeFinished() {
             setStatus(false);
             button.enabled = true;
+            programSlider.enabled = true;
         }
 
         target: filter
@@ -77,9 +78,10 @@ Item {
             spinnerWidth: 100
             value: filter ? filter.getDouble('program') : 0
             onValueChanged: {
-                if (filter)
+                if (filter) {
                     filter.set('program', value);
-
+                    setStatus(false);
+                }
             }
         }
 
@@ -97,6 +99,7 @@ Item {
             text: qsTr('Analyze')
             onClicked: {
                 button.enabled = false;
+                programSlider.enabled = false;
                 setStatus(true);
                 filter.analyze(true);
             }
