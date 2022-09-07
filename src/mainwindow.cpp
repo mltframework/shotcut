@@ -1953,7 +1953,7 @@ void MainWindow::setupActions()
     Actions.loadFromMenu(ui->menuSettings);
     Actions.loadFromMenu(ui->menuHelp);
 
-    Actions.loadSavedShortcuts();
+    Actions.initializeShortcuts();
 }
 
 void MainWindow::writeSettings()
