@@ -34,6 +34,7 @@ public:
     static const char *displayProperty;
     static const char *defaultKey1Property;
     static const char *defaultKey2Property;
+    static const char *defaultToolTipProperty;
 
     static ShotcutActions &singleton();
     explicit ShotcutActions() : QObject() {}
@@ -43,9 +44,10 @@ public:
     QAction *operator [](const QString &key);
     QList<QString> keys();
     void overrideShortcuts(const QString &key, QList<QKeySequence> shortcuts);
-    void loadSavedShortcuts();
+    void initializeShortcuts();
 
 private:
+    void addShortcutToToolTip(QAction *action);
     QHash<QString, QAction *> m_actions;
 };
 

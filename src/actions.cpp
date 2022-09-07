@@ -27,6 +27,7 @@ const char *ShotcutActions::hardKeyProperty = "_hardkey";
 const char *ShotcutActions::displayProperty = "_display";
 const char *ShotcutActions::defaultKey1Property = "_defaultKey1";
 const char *ShotcutActions::defaultKey2Property = "_defaultKey2";
+const char *ShotcutActions::defaultToolTipProperty = "_defaultToolTip";
 
 static QScopedPointer<ShotcutActions> instance;
 
@@ -57,6 +58,8 @@ void ShotcutActions::add(const QString &key, QAction *action, QString group)
         action->setProperty(defaultKey1Property, sequences[0].toString());
     if (sequences.size() > 1)
         action->setProperty(defaultKey2Property, sequences[1].toString());
+
+    action->setProperty(defaultToolTipProperty, action->toolTip());
 
     m_actions[key] = action;
 }
@@ -134,13 +137,33 @@ void ShotcutActions::overrideShortcuts(const QString &key, QList<QKeySequence> s
     }
 
     action->setShortcuts(shortcuts);
+    addShortcutToToolTip(action);
 }
 
-void ShotcutActions::loadSavedShortcuts()
+void ShotcutActions::initializeShortcuts()
 {
+    // Call this function exactly once after all the actions have been
+    // added to the ShotcutActions object.
     for (auto action : m_actions) {
         QList<QKeySequence> shortcutSettings = Settings.shortcuts(action->objectName());
         if (!shortcutSettings.isEmpty())
             action->setShortcuts(shortcutSettings);
+        addShortcutToToolTip(action);
     }
+}
+
+void ShotcutActions::addShortcutToToolTip(QAction *action)
+{
+    QString tooltip = action->property(defaultToolTipProperty).toString();
+    QString shortcut = action->shortcut().toString();
+
+    if (shortcut.isEmpty())
+        shortcut = action->property(hardKeyProperty).toString();
+
+    if (!shortcut.isEmpty()) {
+        if (!tooltip.isEmpty())
+            tooltip += " ";
+        tooltip = tooltip + "(" + shortcut + ")";
+    }
+    action->setToolTip(tooltip);
 }
