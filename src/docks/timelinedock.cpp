@@ -709,7 +709,7 @@ void TimelineDock::setupActions()
         }
     });
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(!blankIsSelected());
+        action->setEnabled(m_selection.selectedClips.length() > 0);
     });
     Actions.add("timelineReplaceAction", action);
 
