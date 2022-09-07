@@ -53,14 +53,14 @@ Rectangle {
             tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset;
 
         for (var i = 0; i < tracksRepeater.count; i++) tracksRepeater.itemAt(i).redrawWaveforms(false)
+        if (settings.timelineScrollZoom && !settings.timelineCenterPlayhead)
+            scrollZoomTimer.restart();
+
     }
 
     function adjustZoom(by, targetX) {
         var value = Math.pow(multitrack.scaleFactor - 0.01, 1 / 3);
         setZoom(value + by, targetX);
-        if (settings.timelineScrollZoom && !settings.timelineCenterPlayhead)
-            scrollZoomTimer.restart();
-
     }
 
     function pulseLockButtonOnTrack(index) {

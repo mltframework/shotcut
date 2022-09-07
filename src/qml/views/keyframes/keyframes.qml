@@ -57,14 +57,14 @@ Rectangle {
 
         timeScale = Math.pow(value, 3) + 0.01;
         tracksFlickable.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x);
+        if (settings.timelineScrollZoom && !settings.timelineCenterPlayhead)
+            scrollZoomTimer.restart();
+
     }
 
     function adjustZoom(by, targetX) {
         var value = Math.pow(timeScale - 0.01, 1 / 3);
         setZoom(value + by, targetX);
-        if (settings.timelineScrollZoom)
-            scrollZoomTimer.restart();
-
     }
 
     function zoomIn() {
