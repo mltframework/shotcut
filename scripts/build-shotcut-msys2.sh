@@ -407,7 +407,7 @@ function set_globals {
   REPOLOCS[11]="https://aomedia.googlesource.com/aom"
   REPOLOCS[12]="https://github.com/Netflix/vmaf.git"
   REPOLOCS[13]="https://gitlab.com/ddennedy/glaxnimate.git"
-  REPOLOCS[14]="https://github.com/NetworkAndSoftware/gopro2gpx"
+  REPOLOCS[14]="https://github.com/ddennedy/gopro2gpx.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
