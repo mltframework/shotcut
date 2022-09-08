@@ -113,6 +113,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     editMenu->addAction(Actions["timelineAppendAction"]);
     editMenu->addAction(Actions["timelineOverwriteAction"]);
     editMenu->addAction(Actions["timelineSplitAction"]);
+    editMenu->addAction(Actions["timelineReplaceAction"]);
     editMenu->addAction(Actions["timelineRecordAudioAction"]);
     editMenu->addAction(Actions["playerSetInAction"]);
     editMenu->addAction(Actions["playerSetOutAction"]);
