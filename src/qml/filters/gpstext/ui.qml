@@ -630,12 +630,13 @@ Item {
                 horizontalAlignment: TextInput.AlignRight
                 //TODO: regex to validate date yyyy-MM-dd hh:mm:ss
                 implicitWidth: 128
+                selectByMouse: true
+                persistentSelection: true
                 onEditingFinished: filter.set('gps_processing_start_time', gps_processing_start.text)
 
                 Shotcut.HoverTip {
                     text: qsTr('Insert date and time formatted exactly as: YYYY-MM-DD HH:MM:SS (GPS time).')
                 }
-
             }
 
             Shotcut.Button {
@@ -769,6 +770,7 @@ Item {
                     textFormat: TextEdit.PlainText
                     wrapMode: TextEdit.NoWrap
                     selectByMouse: true
+                    persistentSelection: true
                     padding: 0
                     text: '__empty__'
                     onTextChanged: {
@@ -789,8 +791,13 @@ Item {
                         anchors.fill: parent
                         color: textArea.palette.base
                     }
-                    // workaround initialization problem
 
+                    MouseArea {
+                        acceptedButtons: Qt.RightButton
+                        anchors.fill: parent
+                        onClicked: contextMenu.popup()
+                    }
+                    Shotcut.EditMenu { id: contextMenu }
                 }
 
                 ScrollBar.horizontal: ScrollBar {
@@ -812,7 +819,6 @@ Item {
                     anchors.left: scrollview.right
                     anchors.bottom: scrollview.bottom
                 }
-
             }
 
         }
