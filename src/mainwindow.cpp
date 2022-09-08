@@ -2062,7 +2062,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    if (event->isAccepted() && event->key() != Qt::Key_F12) return;
+    if (event->isAccepted()) return;
 
     bool handled = true;
 
@@ -2090,6 +2090,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         LOG_DEBUG() << "Current focusWidget:" << QApplication::focusWidget();
         LOG_DEBUG() << "Current focusObject:" << QApplication::focusObject();
         LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
+        handled = false;
         break;
     default:
         handled = false;
