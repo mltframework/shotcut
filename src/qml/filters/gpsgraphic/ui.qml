@@ -1811,11 +1811,17 @@ Item {
                 Layout.alignment: Qt.AlignLeft
                 implicitWidth: 300
                 selectByMouse: true
+                persistentSelection: true
                 onEditingFinished: {
                     if (bg_img_path.text[0] !== '!')
                         filter.set('bg_img_path', text);
-
                 }
+                MouseArea {
+                    acceptedButtons: Qt.RightButton
+                    anchors.fill: parent
+                    onClicked: contextMenu.popup()
+                }
+                Shotcut.EditMenu { id: contextMenu }
             }
 
             Button {
