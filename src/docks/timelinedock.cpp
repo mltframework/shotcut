@@ -841,6 +841,23 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineRippleMarkersAction", action);
 
+    action = new QAction(tr("Toggle Ripple And All Tracks"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_R));
+    connect(action, &QAction::triggered, this, [&]() {
+        Settings.setTimelineRippleAllTracks(!Settings.timelineRipple());
+        Settings.setTimelineRipple(!Settings.timelineRipple());
+    });
+    Actions.add("timelineToggleRippleAndAllTracksAction", action);
+
+    action = new QAction(tr("Toggle Ripple, All Tracks, And Markers"), this);
+    action->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_R));
+    connect(action, &QAction::triggered, this, [&]() {
+        Settings.setTimelineRippleAllTracks(!Settings.timelineRipple());
+        Settings.setTimelineRipple(!Settings.timelineRipple());
+        Settings.setTimelineRippleMarkers(!Settings.timelineRippleMarkers());
+    });
+    Actions.add("timelineToggleRippleAllTracksAndMarkersAction", action);
+
     action = new QAction(tr("Show Audio Waveforms"), this);
     action->setCheckable(true);
     action->setChecked(Settings.timelineShowWaveforms());

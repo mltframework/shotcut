@@ -480,6 +480,8 @@ void MainWindow::setupAndConnectDocks()
     ui->menuTimeline->addAction(Actions["timelineRippleAction"]);
     ui->menuTimeline->addAction(Actions["timelineRippleAllTracksAction"]);
     ui->menuTimeline->addAction(Actions["timelineRippleMarkersAction"]);
+    ui->menuTimeline->addAction(Actions["timelineToggleRippleAndAllTracksAction"]);
+    ui->menuTimeline->addAction(Actions["timelineToggleRippleAllTracksAndMarkersAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowWaveformsAction"]);
     ui->menuTimeline->addAction(Actions["timelinePerformanceWaveformsAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowThumbnailsAction"]);
