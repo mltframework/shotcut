@@ -77,6 +77,7 @@ Rectangle {
 
     function zoomToFit() {
         setZoom(Math.pow((tracksFlickable.width - 50) * timeScale / tracksContainer.width - 0.01, 1 / 3));
+        scrollZoomTimer.stop();
         tracksFlickable.contentX = 0;
     }
 
