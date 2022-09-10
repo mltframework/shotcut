@@ -637,6 +637,7 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Insert date and time formatted exactly as: YYYY-MM-DD HH:MM:SS (GPS time).')
                 }
+
             }
 
             Shotcut.Button {
@@ -787,17 +788,21 @@ Item {
                         filter.set('argument', text);
                     }
 
-                    background: Rectangle {
-                        anchors.fill: parent
-                        color: textArea.palette.base
-                    }
-
                     MouseArea {
                         acceptedButtons: Qt.RightButton
                         anchors.fill: parent
                         onClicked: contextMenu.popup()
                     }
-                    Shotcut.EditMenu { id: contextMenu }
+
+                    Shotcut.EditMenu {
+                        id: contextMenu
+                    }
+
+                    background: Rectangle {
+                        anchors.fill: parent
+                        color: textArea.palette.base
+                    }
+
                 }
 
                 ScrollBar.horizontal: ScrollBar {
@@ -819,6 +824,7 @@ Item {
                     anchors.left: scrollview.right
                     anchors.bottom: scrollview.bottom
                 }
+
             }
 
         }
