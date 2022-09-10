@@ -359,7 +359,7 @@ void KeyframesDock::setupActions()
     action->setEnabled(m_qmlProducer && m_filter);
     connect(action, &QAction::triggered, this, [&]() {
         if (m_qmlProducer && m_filter && currentParameter() >= 0) {
-            auto position = m_qmlProducer->position() - m_filter->in() - m_qmlProducer->in();
+            auto position = m_qmlProducer->position() - (m_filter->in() - m_qmlProducer->in());
             auto parameterIndex = currentParameter();
             if (m_model.isKeyframe(parameterIndex, position)) {
                 auto keyframeIndex = m_model.keyframeIndex(parameterIndex, position);
