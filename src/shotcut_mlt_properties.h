@@ -91,6 +91,10 @@
 #define kExportFromProperty "_shotcut:exportFromDefault"
 #define kIsProxyProperty "shotcut:proxy"
 #define kTrackIndexProperty "_shotcut:trackIndex"
+#define kClipIndexProperty "_shotcut:clipIndex"
+#define kShotcutInProperty "_shotcut:in"
+#define kShotcutOutProperty "_shotcut:out"
+#define kNewTrackIndexProperty "_shotcut:newTrackIndex"
 #define kShotcutFiltersClipboard "shotcut:filtersClipboard"
 
 #define kDefaultMltProfile "atsc_1080p_25"
