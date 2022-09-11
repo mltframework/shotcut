@@ -86,7 +86,7 @@ VMAF_HEAD=0
 VMAF_REVISION="v2.3.1"
 ENABLE_GLAXNIMATE=1
 GLAXNIMATE_HEAD=0
-GLAXNIMATE_REVISION="origin/shotcut"
+GLAXNIMATE_REVISION="0.5.1"
 ENABLE_GOPRO2GPX=1
 
 PYTHON_VERSION_DEFAULT=3.8
@@ -519,7 +519,7 @@ function set_globals {
   REPOLOCS[21]="https://github.com/videolan/dav1d"
   REPOLOCS[22]="https://aomedia.googlesource.com/aom"
   REPOLOCS[23]="https://github.com/Netflix/vmaf.git"
-  REPOLOCS[24]="https://gitlab.com/ddennedy/glaxnimate.git"
+  REPOLOCS[24]="https://gitlab.com/mattbas/glaxnimate.git"
   REPOLOCS[25]="https://github.com/ddennedy/gopro2gpx.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
