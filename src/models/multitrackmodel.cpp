@@ -3112,12 +3112,14 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
     for (auto i = audioTransitions.keyBegin(); i != audioTransitions.keyEnd(); i++) {
         int bTrack = *i;
         int aTrack = 0;
-        Mlt::Transition &aTransition = audioTransitions[bTrack];
-        if (aTransition.is_valid()) {
+        if (audioTransitions[bTrack].is_valid()) {
+            Mlt::Transition aTransition (MLT.profile(), audioTransitions[bTrack].get("mlt_service"));
+            aTransition.inherit(audioTransitions[bTrack]);
             m_tractor->plant_transition(aTransition, aTrack, bTrack);
         }
-        Mlt::Transition &vTransition = videoTransitions[bTrack];
-        if (vTransition.is_valid()) {
+        if (videoTransitions[bTrack].is_valid()) {
+            Mlt::Transition vTransition (MLT.profile(), videoTransitions[bTrack].get("mlt_service"));
+            vTransition.inherit(videoTransitions[bTrack]);
             if (bTrack == 1) {
                 vTransition.set("disable", 1);
             } else {
