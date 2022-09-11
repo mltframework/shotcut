@@ -451,7 +451,7 @@ void MoveClipCommand::redo()
 {
     LOG_DEBUG() << "track delta" << m_trackDelta;
     int trackIndex, clipIndex;
-    QMultiMap<int, Mlt::Producer> newSelection;
+    QList<Mlt::Producer> newSelection;
 
     if (!m_redo) {
         if (m_selection.size() > 1)
@@ -506,7 +506,7 @@ void MoveClipCommand::redo()
                 m_clipIndexList << clipIndex;
                 m_inList << info->frame_in;
                 m_outList << info->frame_out;
-                newSelection.insert(info->cut->get_int(kPlaylistStartProperty), info->producer);
+                newSelection << info->producer;
                 if (m_markerOldStart < 0 || m_markerOldStart > info->start) {
                     // Record the left most clip position being moved
                     m_markerOldStart = info->start;

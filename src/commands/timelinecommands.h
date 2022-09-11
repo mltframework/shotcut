@@ -211,7 +211,7 @@ public:
                     QUndoCommand *parent = 0);
     void redo();
     void undo();
-    QMultiMap<int, Mlt::Producer> &selection()
+    QList<Mlt::Producer> &selection()
     {
         return m_selection;
     }
@@ -225,7 +225,7 @@ private:
     bool m_rippleAllTracks;
     bool m_rippleMarkers;
     UndoHelper m_undoHelper;
-    QMultiMap<int, Mlt::Producer> m_selection; // ordered by position
+    QList<Mlt::Producer> m_selection; // ordered by whatever order the user has selected clips
     QList<int> m_newTrackIndexList;
     QList<int> m_playlistStartList;
     QList<int> m_trackIndexList;
