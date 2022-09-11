@@ -65,8 +65,8 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     m_mainMenu->addAction(Actions["keyframesAnimateInAction"]);
     m_mainMenu->addAction(Actions["keyframesAnimateOutAction"]);
     m_mainMenu->addAction(Actions["keyframesToggleKeyframeAction"]);
-    m_mainMenu->addAction(Actions["keyframesSeekPreviousSimpleAction"]);
-    m_mainMenu->addAction(Actions["keyframesSeekNextSimpleAction"]);
+    m_mainMenu->addAction(Actions["keyframesSeekPreviousAction"]);
+    m_mainMenu->addAction(Actions["keyframesSeekNextAction"]);
     QMenu *viewMenu = new QMenu(tr("View"), this);
     viewMenu->addAction(Actions["keyframesZoomOutAction"]);
     viewMenu->addAction(Actions["keyframesZoomInAction"]);
@@ -328,31 +328,37 @@ void KeyframesDock::setupActions()
     });
     Actions.add("keyframesRebuildAudioWaveformAction", action);
 
-    action = new QAction(tr("Seek Previous Simple Keyframe"), this);
+    action = new QAction(tr("Seek Previous Keyframe"), this);
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_BracketLeft));
     action->setEnabled(m_qmlProducer && m_filter);
     connect(action, &QAction::triggered, this, [&]() {
         if (m_qmlProducer && m_filter) {
-            seekPreviousSimple();
+            if (m_model.advancedKeyframesInUse())
+                seekPrevious();
+            else
+                seekPreviousSimple();
         }
     });
     connect(this, &KeyframesDock::newFilter, action, [ = ]() {
         action->setEnabled(m_qmlProducer && m_filter);
     });
-    Actions.add("keyframesSeekPreviousSimpleAction", action);
+    Actions.add("keyframesSeekPreviousAction", action);
 
-    action = new QAction(tr("Seek Next Simple Keyframe"), this);
+    action = new QAction(tr("Seek Next Keyframe"), this);
     action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_BracketRight));
     action->setEnabled(m_qmlProducer && m_filter);
     connect(action, &QAction::triggered, this, [&]() {
         if (m_qmlProducer && m_filter) {
-            seekNextSimple();
+            if (m_model.advancedKeyframesInUse())
+                seekNext();
+            else
+                seekNextSimple();
         }
     });
     connect(this, &KeyframesDock::newFilter, action, [ = ]() {
         action->setEnabled(m_qmlProducer && m_filter);
     });
-    Actions.add("keyframesSeekNextSimpleAction", action);
+    Actions.add("keyframesSeekNextAction", action);
 
     action = new QAction(tr("Toggle Keyframe At Playhead"), this);
     action->setShortcut(QKeySequence(Qt::Key_Semicolon));
