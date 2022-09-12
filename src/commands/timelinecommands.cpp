@@ -553,7 +553,7 @@ void MoveClipCommand::undo()
     if (m_rippleMarkers && m_markerOldStart >= 0) {
         m_markersModel.doReplace(m_markers);
     }
-    QTimer::singleShot(0, &MAIN, [=]() {
+    QTimer::singleShot(0, &MAIN, [ = ]() {
         MAIN.undoStack()->clear();
     });
 }
@@ -562,7 +562,8 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
 {
     const MoveClipCommand *that = static_cast<const MoveClipCommand *>(other);
     LOG_DEBUG() << "this clipIndex" << m_clipIndex << "that clipIndex" << that->m_clipIndex;
-    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_selection.size() != m_selection.size()
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex
+            || that->m_selection.size() != m_selection.size()
             || that->m_ripple != m_ripple || that->m_rippleAllTracks != m_rippleAllTracks
             || that->m_rippleMarkers != m_rippleMarkers)
         return false;
