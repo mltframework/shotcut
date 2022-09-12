@@ -39,7 +39,8 @@ enum {
     UndoIdTrimTransitionOut,
     UndoIdAddTransitionByTrimIn,
     UndoIdAddTransitionByTrimOut,
-    UndoIdUpdate
+    UndoIdUpdate,
+    UndoIdMoveClip
 };
 
 class AppendCommand : public QUndoCommand
@@ -215,7 +216,12 @@ public:
     {
         return m_selection;
     }
-
+protected:
+    int id() const
+    {
+        return UndoIdMoveClip;
+    }
+    bool mergeWith(const QUndoCommand *other);
 private:
     void redoMarkers();
     MultitrackModel &m_model;
