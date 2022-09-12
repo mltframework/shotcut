@@ -56,7 +56,7 @@ VMAF_HEAD=0
 VMAF_REVISION="v2.3.1"
 ENABLE_GLAXNIMATE=1
 GLAXNIMATE_HEAD=0
-GLAXNIMATE_REVISION="0.5.1"
+GLAXNIMATE_REVISION="v0.5.1"
 ENABLE_GOPRO2GPX=1
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
@@ -406,7 +406,7 @@ function set_globals {
   REPOLOCS[10]="https://code.videolan.org/videolan/dav1d.git"
   REPOLOCS[11]="https://aomedia.googlesource.com/aom"
   REPOLOCS[12]="https://github.com/Netflix/vmaf.git"
-  REPOLOCS[13]="https://gitlab.com/mattbas/glaxnimate.git"
+  REPOLOCS[13]="https://gitlab.com/ddennedy/glaxnimate.git"
   REPOLOCS[14]="https://github.com/ddennedy/gopro2gpx.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
