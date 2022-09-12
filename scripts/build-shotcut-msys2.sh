@@ -768,7 +768,7 @@ function get_subproject {
           feedback_status "Cloning git sources for $1"
           cmd git --no-pager clone --quiet --recurse-submodules $REPOLOC || die "Unable to git clone source for $1 from $REPOLOC"
           cmd cd $1 || die "Unable to change to directory $1"
-          cmd git checkout $REVISION || die "Unable to git checkout $REVISION"
+          cmd git checkout --recurse-submodules $REVISION || die "Unable to git checkout $REVISION"
       fi
   elif test "svn" = "$REPOTYPE" ; then
       # Create subdir if not exist
