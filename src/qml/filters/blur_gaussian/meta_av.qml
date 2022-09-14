@@ -25,6 +25,7 @@ Metadata {
     objectName: 'blur_gaussian_av'
     mlt_service: "avfilter.gblur"
     qml: "ui_av.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

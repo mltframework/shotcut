@@ -24,6 +24,7 @@ Metadata {
     keywords: qsTr('color hue select choose pick', 'search keywords for the Chroma Hold video filter') + ' chroma hold'
     mlt_service: 'avfilter.chromahold'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true
