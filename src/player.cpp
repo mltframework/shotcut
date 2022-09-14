@@ -965,6 +965,7 @@ void Player::onTabBarClicked(int index)
 void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction *action,
                             QPalette::ColorRole role)
 {
+    m_statusLabel->setWidth(m_scrubber->width() - m_tabs->width());
     m_statusLabel->showText(text, timeoutSeconds, action, role);
 }
 

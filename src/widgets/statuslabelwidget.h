@@ -32,6 +32,7 @@ class StatusLabelWidget : public QWidget
 public:
     StatusLabelWidget(QWidget *parent = nullptr);
     virtual ~StatusLabelWidget();
+    void setWidth(int width);
     void showText(const QString &text, int timeoutSeconds = -1, QAction *action = nullptr,
                   QPalette::ColorRole role = QPalette::ToolTipBase);
 
@@ -45,6 +46,7 @@ private:
     QPropertyAnimation *m_fadeIn;
     QPropertyAnimation *m_fadeOut;
     QTimer m_timer;
+    int m_width;
 };
 
 #endif // STATUSLABELWIDGET_H

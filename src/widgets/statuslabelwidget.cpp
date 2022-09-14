@@ -30,6 +30,7 @@ static const int STATUS_ANIMATION_MS = 350;
 
 StatusLabelWidget::StatusLabelWidget(QWidget *parent)
     : QWidget(parent)
+    , m_width(0)
 {
     m_layout = new QHBoxLayout;
     m_layout->setContentsMargins(0, 0, 0, 0);
@@ -67,11 +68,17 @@ StatusLabelWidget::~StatusLabelWidget()
 {
 }
 
+void StatusLabelWidget::setWidth(int width)
+{
+    m_width = width;
+}
+
 void StatusLabelWidget::showText(const QString &text, int timeoutSeconds, QAction *action,
                                  QPalette::ColorRole role)
 {
+    auto width = m_width ? m_width : m_layout->maximumSize().width();
     QString s = QString("  %1  ").arg(
-                    m_label->fontMetrics().elidedText(text, Qt::ElideRight, m_layout->maximumSize().width() - 30));
+                    m_label->fontMetrics().elidedText(text, Qt::ElideRight, width - 30));
     m_label->setText(s);
     m_label->setToolTip(text);
     auto palette = QApplication::palette();
