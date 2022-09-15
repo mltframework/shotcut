@@ -9,5 +9,6 @@ Metadata {
     mlt_service: 'audiolevelgraph'
     qml: 'ui.qml'
     vui: 'vui.qml'
+    icon: 'icon.webp'
     allowMultiple: true
 }

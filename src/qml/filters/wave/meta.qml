@@ -7,4 +7,5 @@ Metadata {
     keywords: qsTr('distort deform frequency water warp bend', 'search keywords for the Wave video filter') + ' wave'
     mlt_service: "wave"
     qml: "ui.qml"
+    icon: 'icon.webp'
 }

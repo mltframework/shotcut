@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "movit.mirror"
     needsGPU: true
     qml: "ui.qml"
+    icon: 'icon.webp'
 }

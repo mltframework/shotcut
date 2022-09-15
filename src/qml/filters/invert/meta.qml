@@ -7,4 +7,5 @@ Metadata {
     keywords: qsTr('reverse opposite negative', 'search keywords for the Invert Colors video filter') + ' invert colors'
     mlt_service: "invert"
     qml: "ui.qml"
+    icon: 'icon.qml'
 }

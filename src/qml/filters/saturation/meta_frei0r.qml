@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('color desaturate grayscale chroma', 'search keywords for the Saturation video filter') + ' saturation'
     mlt_service: "frei0r.saturat0r"
     qml: "ui_frei0r.qml"
+    icon: 'icon.qml'
     gpuAlt: "movit.saturation"
 
     keyframes {

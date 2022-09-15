@@ -8,4 +8,5 @@ Metadata {
     objectName: 'reflect'
     mlt_service: 'mirror'
     qml: "ui.qml"
+    icon: 'icon.webp'
 }

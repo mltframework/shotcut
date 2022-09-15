@@ -25,6 +25,7 @@ Metadata {
     mlt_service: "frei0r.elastic_scale"
     objectName: 'elastic_scale'
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

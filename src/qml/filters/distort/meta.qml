@@ -24,6 +24,7 @@ Metadata {
     keywords: qsTr('deform wiggle wave', 'search keywords for the Distort video filter') + ' distort'
     mlt_service: "frei0r.distort0r"
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

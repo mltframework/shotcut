@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "avfilter.hflip"
     gpuAlt: "movit.mirror"
     qml: "ui.qml"
+    icon: 'icon.webp'
 }

@@ -24,6 +24,7 @@ Metadata {
     keywords: qsTr('pixelize pixelate', 'search keywords for the Mosaic video filter') + ' mosaic'
     mlt_service: "frei0r.pixeliz0r"
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

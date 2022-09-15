@@ -8,5 +8,6 @@ Metadata {
     mlt_service: "movit.crop"
     needsGPU: true
     qml: "ui.qml"
+    icon: 'icon.webp'
     allowMultiple: false
 }

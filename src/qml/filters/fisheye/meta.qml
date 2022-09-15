@@ -24,4 +24,5 @@ Metadata {
     keywords: qsTr('deform lens distort wide angle panoramic hemispherical', 'search keywords for the Fisheye video filter') + ' gopro fisheye'
     mlt_service: 'frei0r.defish0r'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 }

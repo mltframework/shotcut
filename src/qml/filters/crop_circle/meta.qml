@@ -8,6 +8,7 @@ Metadata {
     keywords: qsTr('trim remove oval ellipse', 'search keywords for the Crop: Circle video filter') + ' crop: circle'
     mlt_service: 'qtcrop'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

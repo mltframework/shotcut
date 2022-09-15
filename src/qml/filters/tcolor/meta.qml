@@ -7,4 +7,5 @@ Metadata {
     keywords: qsTr('projector movie', 'search keywords for the Old Film: Technocolor video filter') + ' technicolor old film technocolor'
     mlt_service: "tcolor"
     qml: "ui.qml"
+    icon: 'icon.qml'
 }

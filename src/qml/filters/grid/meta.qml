@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('repeat', 'search keywords for the Grid video filter') + ' grid'
     mlt_service: "frei0r.cairoimagegrid"
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('trim remove edges', 'search keywords for the Crop: Source video filter') + ' crop: source'
     mlt_service: "crop"
     qml: "ui.qml"
+    icon: 'icon.webp'
     gpuAlt: "movit.crop"
     allowMultiple: false
     isClipOnly: true

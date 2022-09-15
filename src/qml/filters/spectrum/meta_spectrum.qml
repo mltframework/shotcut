@@ -9,5 +9,6 @@ Metadata {
     mlt_service: 'audiospectrum'
     qml: 'ui_spectrum.qml'
     vui: 'vui_spectrum.qml'
+    icon: 'icon.webp'
     allowMultiple: true
 }

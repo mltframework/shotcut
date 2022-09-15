@@ -9,5 +9,6 @@ Metadata {
     mlt_service: 'lightshow'
     qml: 'ui_lightshow.qml'
     vui: 'vui.qml'
+    icon: 'icon.webp'
     allowMultiple: true
 }

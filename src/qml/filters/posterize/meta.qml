@@ -8,6 +8,7 @@ Metadata {
     objectName: 'posterize'
     mlt_service: "frei0r.posterize"
     qml: "ui.qml"
+    icon: 'icon.qml'
 
     keyframes {
         allowAnimateIn: true

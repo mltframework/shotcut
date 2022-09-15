@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "movit.sharpen"
     needsGPU: true
     qml: "ui_movit.qml"
+    icon: 'icon.qml'
 
     keyframes {
         allowAnimateIn: true
