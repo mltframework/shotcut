@@ -144,7 +144,8 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
         }
         break;
     default:
-        LOG_ERROR() << "Invalid Role" << index.row() << index.column() << roleNames()[role] << role;
+        auto names = roleNames();
+        LOG_ERROR() << "Invalid Role" << index.row() << index.column() << names[role] << role;
         break;
     }
     return result;
@@ -176,13 +177,13 @@ bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int 
     QAction *action = m_actions[index.row()];
 
     if (!ks.isEmpty()) {
-        for (const QAction *a : m_actions) {
+        for (const auto a : qAsConst(m_actions)) {
             QList<QKeySequence> sequences = a->shortcuts();
             for (int i = 0; i < sequences.size(); i++) {
                 if (sequences[i] == ks) {
                     if (a != action) {
-                        QString error = tr("Key sequence %1 is used by %2").arg(ks.toString()).arg(a->property(
-                                                                                                       Actions.displayProperty).toString());
+                        QString error = tr("Shortcut %1 is used by %2").arg(ks.toString(), a->property(
+                                                                                Actions.displayProperty).toString());
                         emit editError(error);
                     }
                     return false;
@@ -190,8 +191,8 @@ bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int 
             }
             QString hardKey = a->property(Actions.hardKeyProperty).toString();
             if (!hardKey.isEmpty() && hardKey == ks.toString()) {
-                QString error = tr("Key sequence %1 is reserved for use by %2").arg(ks.toString()).arg(a->property(
-                                                                                                           Actions.displayProperty).toString());
+                QString error = tr("Shortcut %1 is reserved for use by %2").arg(ks.toString(), a->property(
+                                                                                    Actions.displayProperty).toString());
                 emit editError(error);
                 return false;
             }
@@ -230,7 +231,8 @@ QVariant ActionsModel::headerData(int section, Qt::Orientation orientation, int 
         case COLUMN_SEQUENCE2:
             return tr("Shortcut 2");
         default:
-            LOG_ERROR() << "Invalid section" << section << roleNames()[role] << role;
+            auto names = roleNames();
+            LOG_ERROR() << "Invalid section" << section << names[role] << role;
             break;
         }
     }

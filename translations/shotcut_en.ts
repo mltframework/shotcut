@@ -32,27 +32,27 @@
 <context>
     <name>ActionsModel</name>
     <message>
-        <location filename="../src/models/actionsmodel.cpp" line="184"/>
-        <source>Key sequence %1 is used by %2</source>
+        <location filename="../src/models/actionsmodel.cpp" line="185"/>
+        <source>Shortcut %1 is used by %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/actionsmodel.cpp" line="193"/>
-        <source>Key sequence %1 is reserved for use by %2</source>
+        <location filename="../src/models/actionsmodel.cpp" line="194"/>
+        <source>Shortcut %1 is reserved for use by %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/actionsmodel.cpp" line="227"/>
+        <location filename="../src/models/actionsmodel.cpp" line="228"/>
         <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/actionsmodel.cpp" line="229"/>
+        <location filename="../src/models/actionsmodel.cpp" line="230"/>
         <source>Shortcut 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/actionsmodel.cpp" line="231"/>
+        <location filename="../src/models/actionsmodel.cpp" line="232"/>
         <source>Shortcut 2</source>
         <translation type="unfinished"></translation>
     </message>
