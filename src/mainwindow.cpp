@@ -1955,6 +1955,10 @@ void MainWindow::setupActions()
     Actions.loadFromMenu(ui->menuSettings);
     Actions.loadFromMenu(ui->menuHelp);
 
+    auto shortcuts {ui->actionKeyboardShortcuts->shortcuts()};
+    shortcuts << QKeySequence(Qt::Key_Slash);
+    ui->actionKeyboardShortcuts->setShortcuts(shortcuts);
+
     Actions.initializeShortcuts();
 }
 
