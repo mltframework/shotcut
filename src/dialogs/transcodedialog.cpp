@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021 Meltytech, LLC
+ * Copyright (c) 2017-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -128,8 +128,8 @@ void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
         ui->formatLabel->setText(tr("Lossy: I-frame–only %1").arg("H.264/AC-3 MP4"));
         break;
     case 1:
-        ui->formatLabel->setText(tr("Intermediate: %1").arg(m_isProgressive ? "DNxHR/ALAC MOV" :
-                                                            "ProRes/ALAC MOV"));
+        ui->formatLabel->setText(tr("Intermediate: %1").arg(m_isProgressive ? "DNxHR/PCM MOV" :
+                                                            "ProRes/PCM MOV"));
         break;
     case 2:
         ui->formatLabel->setText(tr("Lossless: %1").arg("Ut Video/PCM MKV"));

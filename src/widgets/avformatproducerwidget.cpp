@@ -913,7 +913,7 @@ void AvformatProducerWidget::convert(TranscodeDialog &dialog)
             args << "-preset" << "medium" << "-g" << "1" << "-crf" << "15";
             break;
         case 1:
-            args << "-f" << "mov" << "-codec:a" << "alac";
+            args << "-f" << "mov" << "-codec:a" << "pcm_f32le";
             if (dialog.deinterlace() || ui->scanComboBox->currentIndex()) { // progressive
                 args << "-codec:v" << "dnxhd" << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
             } else { // interlaced
@@ -1116,7 +1116,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         if (m_producer->get_int("video_index") == -1)
             meltArgs << "vn=1" << "video_off=1";
 
-        ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac";
+        ffmpegArgs << "-f" << "mov" << "-codec:a" << "pcm_f32le";
 
         switch (dialog.format()) {
         case 0:
