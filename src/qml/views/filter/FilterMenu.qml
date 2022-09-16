@@ -303,7 +303,9 @@ Rectangle {
             AnimatedImage {
                 id: icon
 
-                source: menuListView.currentIndex >= 0 ? metadatamodel.get(menuListView.currentIndex).icon : ''
+                property var current: metadatamodel.get(menuListView.currentIndex)
+
+                source: current ? (current.icon.toString().length ? current.icon : current.isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : current.type === Shotcut.Metadata.Link ? 'qrc:///icons/oxygen/32x32/actions/chronometer.png' : '') : ''
                 asynchronous: true
                 Layout.preferredWidth: parent.Layout.preferredHeight
                 Layout.preferredHeight: parent.Layout.preferredHeight
