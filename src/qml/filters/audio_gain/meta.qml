@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "volume"
     keywords: qsTr('loudness', 'search keywords for the Gain/Volume audio filter') + ' gain volume'
     qml: "ui.qml"
+    icon: 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
     isFavorite: true
 
     keyframes {
