@@ -1479,7 +1479,7 @@ Item {
                 Layout.alignment: Qt.AlignRight
 
                 Shotcut.HoverTip {
-                    text: qsTr('Set the color of the inside of the now_dot (or needle).')
+                    text: qsTr('Set the color of the inside of the now dot (or needle).')
                 }
 
             }

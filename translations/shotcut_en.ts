@@ -9057,12 +9057,12 @@ Most users do not need to change this.</source>
 <context>
     <name>meta</name>
     <message>
-        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="24"/>
+        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="23"/>
         <source>Alpha Channel: Adjust</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="24"/>
         <source>transparency shave shrink grow soft feather</source>
         <comment>search keywords for the Alpha Channel: Adjust video filter</comment>
         <translation type="unfinished"></translation>
@@ -15049,7 +15049,7 @@ For speedometer type, this is the needle.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1482"/>
-        <source>Set the color of the inside of the now_dot (or needle).</source>
+        <source>Set the color of the inside of the now dot (or needle).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
