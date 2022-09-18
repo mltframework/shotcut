@@ -566,7 +566,7 @@ void Player::setupActions()
     });
     Actions.add("playerSetPositionAction", action);
 
-    action = new QAction(tr("Switch Source/Program"), this);
+    action = new QAction(tr("Switch Source/Project"), this);
     action->setShortcut(QKeySequence(Qt::Key_P));
     addAction(action);
     connect(action, &QAction::triggered, this, [&]() {
