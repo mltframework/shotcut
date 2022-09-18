@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,4 +25,5 @@ Metadata {
     mlt_service: 'frei0r.alpha0ps'
     objectName: 'alphaChannelAdjust'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 }
