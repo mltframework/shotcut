@@ -164,7 +164,7 @@ class QmlMetadata : public QObject
 {
     Q_OBJECT
     Q_ENUMS(PluginType)
-    Q_PROPERTY(PluginType type READ type WRITE setType)
+    Q_PROPERTY(PluginType type READ type WRITE setType NOTIFY changed)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY changed)
     Q_PROPERTY(QString mlt_service READ mlt_service WRITE set_mlt_service)
     Q_PROPERTY(bool needsGPU READ needsGPU WRITE setNeedsGPU NOTIFY changed)
