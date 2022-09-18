@@ -224,7 +224,7 @@ void KeyframesDock::setupActions()
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [&]() {
         if (m_qmlProducer && m_filter && m_filter->allowAnimateOut()) {
-            int i = m_qmlProducer->position() + m_qmlProducer->in() - m_filter->in();
+            int i = m_filter->out() - (m_qmlProducer->position() + m_qmlProducer->in());
             m_filter->setAnimateOut(i);
         }
     });
