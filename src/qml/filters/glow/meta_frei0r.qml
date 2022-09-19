@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('shine blur', 'search keywords for the Glow video filter') + ' glow'
     mlt_service: "frei0r.glow"
     qml: "ui_frei0r.qml"
+    icon: 'icon.webp'
     gpuAlt: "movit.glow"
 
     keyframes {

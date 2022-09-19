@@ -26,4 +26,5 @@ Metadata {
     objectName: 'deband'
     mlt_service: 'avfilter.deband'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 }

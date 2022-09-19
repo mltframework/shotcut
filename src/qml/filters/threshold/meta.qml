@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('black white luma', 'search keywords for the Threshold video filter') + ' threshold'
     mlt_service: "threshold"
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

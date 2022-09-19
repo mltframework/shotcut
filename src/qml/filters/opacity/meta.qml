@@ -8,6 +8,7 @@ Metadata {
     keywords: qsTr('alpha transparent translucent', 'search keywords for the Opacity video filter') + ' opacity'
     mlt_service: "brightness"
     qml: "ui.qml"
+    icon: 'icon.webp'
     gpuAlt: "movit.opacity"
 
     keyframes {

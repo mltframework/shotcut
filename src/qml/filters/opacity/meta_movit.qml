@@ -9,6 +9,7 @@ Metadata {
     mlt_service: "movit.opacity"
     needsGPU: true
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

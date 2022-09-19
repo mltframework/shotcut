@@ -24,4 +24,5 @@ Metadata {
     keywords: qsTr('disassociate associated straight', 'search keywords for the Unpremultiply Alpha video filter') + ' unpremultiply alpha'
     mlt_service: 'frei0r.premultiply'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 }

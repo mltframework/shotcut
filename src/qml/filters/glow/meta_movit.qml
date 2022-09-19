@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "movit.glow"
     needsGPU: true
     qml: "ui_movit.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

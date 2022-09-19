@@ -24,6 +24,7 @@ Metadata {
     keywords: qsTr('defect broken distort', 'search keywords for the Glitch video filter') + ' glitch'
     mlt_service: "frei0r.glitch0r"
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

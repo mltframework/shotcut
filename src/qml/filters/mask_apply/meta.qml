@@ -8,4 +8,5 @@ Metadata {
     mlt_service: "mask_apply"
     allowMultiple: false
     qml: 'ui.qml'
+    icon: 'icon.webp'
 }
