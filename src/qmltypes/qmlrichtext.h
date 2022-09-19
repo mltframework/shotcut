@@ -120,6 +120,7 @@ public slots:
     void indentLess();
     void indentMore();
     void pastePlain();
+    void reset();
 
 signals:
     void targetChanged();
@@ -139,7 +140,6 @@ signals:
     void sizeChanged();
 
 private:
-    void reset();
     QTextCursor textCursor() const;
     void mergeFormatOnWordOrSelection(const QTextCharFormat &format);
     QQuickItem *m_target;

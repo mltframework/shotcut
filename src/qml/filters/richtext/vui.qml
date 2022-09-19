@@ -122,6 +122,7 @@ Shotcut.VuiBase {
         textArea.text = filter.get('html');
         fontSizeSpinBox.value = document.fontSize;
         toolbar.expanded = filter.get('_shotcut:toolbarCollapsed') !== '1';
+        document.reset();
     }
 
     Flickable {
