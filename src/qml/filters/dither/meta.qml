@@ -8,6 +8,7 @@ Metadata {
     objectName: 'dither'
     mlt_service: "frei0r.dither"
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

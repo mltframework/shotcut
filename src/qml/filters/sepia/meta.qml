@@ -7,5 +7,5 @@ Metadata {
     keywords: qsTr('color old photograph print', 'search keywords for the Sepia Tone video filter') + ' sepia tone'
     mlt_service: "sepia"
     qml: 'ui.qml'
-    icon: 'icon.qml'
+    icon: 'icon.webp'
 }

@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('dark edges fade', 'search keywords for the Vignette video filter') + ' vignette'
     mlt_service: "vignette"
     qml: "ui_oldfilm.qml"
+    icon: 'icon.webp'
     gpuAlt: "movit.vignette"
 
     keyframes {

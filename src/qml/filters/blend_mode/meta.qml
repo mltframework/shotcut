@@ -8,5 +8,6 @@ Metadata {
     mlt_service: "cairoblend_mode"
     objectName: 'blendMode'
     qml: "ui.qml"
+    icon: 'icon.webp'
     isClipOnly: true
 }

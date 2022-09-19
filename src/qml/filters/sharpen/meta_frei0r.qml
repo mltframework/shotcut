@@ -7,7 +7,7 @@ Metadata {
     keywords: qsTr('sharpness focus clear crisp', 'search keywords for the Sharpen video filter') + ' sharpen'
     mlt_service: "frei0r.sharpness"
     qml: "ui_frei0r.qml"
-    icon: 'icon.qml'
+    icon: 'icon.webp'
     gpuAlt: "movit.sharpen"
 
     keyframes {

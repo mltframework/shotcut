@@ -9,6 +9,7 @@ Metadata {
     mlt_service: 'dynamictext'
     qml: "ui.qml"
     vui: 'vui.qml'
+    icon: 'icon.webp'
     isGpuCompatible: false
 
     keyframes {

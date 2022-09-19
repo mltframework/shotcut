@@ -24,5 +24,5 @@ Metadata {
     keywords: qsTr('lookup table color', 'search keywords for the LUT (3D) video filter') + ' 3dl cube dat m3d lut (3d)'
     mlt_service: 'avfilter.lut3d'
     qml: 'ui.qml'
-    icon: 'icon.qml'
+    icon: 'icon.webp'
 }

@@ -9,6 +9,7 @@ Metadata {
     mlt_service: 'timer'
     qml: "ui.qml"
     vui: 'vui.qml'
+    icon: 'icon.webp'
     isGpuCompatible: false
 
     keyframes {

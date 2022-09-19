@@ -8,7 +8,7 @@ Metadata {
     mlt_service: "movit.saturation"
     needsGPU: true
     qml: "ui_movit.qml"
-    icon: 'icon.qml'
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

@@ -8,6 +8,7 @@ Metadata {
     objectName: 'halftone'
     mlt_service: "frei0r.colorhalftone"
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true
