@@ -1314,7 +1314,6 @@ void Controller::adjustClipFilters(Mlt::Producer &producer, int in, int out, int
         QScopedPointer<Mlt::Filter> filter(producer.filter(j));
         adjustFilter(filter.data(), in, out, inDelta, outDelta);
     }
-    adjustFilters(producer);
 
     // Adjust link in/out
     if (producer.type() == mlt_service_chain_type) {
