@@ -7,4 +7,5 @@ Metadata {
     keywords: qsTr('random shake twitch glitch', 'search keywords for the Nervous video filter') + ' nervous'
     mlt_service: 'avfilter.random'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 }

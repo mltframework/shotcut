@@ -26,4 +26,5 @@ Metadata {
     objectName: 'vaguedenoiser'
     mlt_service: 'avfilter.vaguedenoiser'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 }

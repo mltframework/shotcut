@@ -9,6 +9,7 @@ Metadata {
     mlt_service: 'frei0r.cairogradient'
     qml: 'ui.qml'
     vui: 'vui.qml'
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

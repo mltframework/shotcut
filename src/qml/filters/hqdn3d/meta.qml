@@ -24,6 +24,7 @@ Metadata {
     keywords: qsTr('denoise artifact dirt smooth', 'search keywords for the Reduce Noise: HQDN3D video filter') + ' reduce noise: hqdn3d'
     mlt_service: "frei0r.hqdn3d"
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

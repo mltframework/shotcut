@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('smooth deshake', 'search keywords for the Stabilize video filter') + ' vid.stab stabilize'
     mlt_service: "vidstab"
     qml: "ui.qml"
+    icon: 'icon.webp'
     isClipOnly: true
     allowMultiple: false
     isGpuCompatible: false

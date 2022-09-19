@@ -25,4 +25,5 @@ Metadata {
     objectName: 'noise_fast'
     mlt_service: "avfilter.noise"
     qml: "ui.qml"
+    icon: 'icon.webp'
 }

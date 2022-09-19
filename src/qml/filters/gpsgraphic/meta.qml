@@ -25,6 +25,7 @@ Metadata {
     mlt_service: 'gpsgraphic'
     qml: 'ui.qml'
     vui: 'vui.qml'
+    icon: 'icon.webp'
     allowMultiple: true
 
     keyframes {

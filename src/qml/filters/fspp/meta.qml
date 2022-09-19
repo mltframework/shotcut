@@ -24,4 +24,5 @@ Metadata {
     keywords: qsTr('denoise artifact postprocess compress', 'search keywords for the Reduce Noise: Quantization video filter') + ' fspp reduce noise: quantization'
     mlt_service: "avfilter.fspp"
     qml: "ui.qml"
+    icon: 'icon.webp'
 }

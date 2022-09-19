@@ -8,6 +8,7 @@ Metadata {
     objectName: 'nosync'
     mlt_service: 'frei0r.nosync0r'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

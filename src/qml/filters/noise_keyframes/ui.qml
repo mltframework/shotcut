@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,9 +43,9 @@ Shotcut.KeyframableFilter {
     }
 
     keyframableParameters: [noise]
-    startValues: [0.5]
+    startValues: [0]
     middleValues: [noiseDefault]
-    endValues: [0.5]
+    endValues: [0]
     width: 350
     height: 100
     Component.onCompleted: {

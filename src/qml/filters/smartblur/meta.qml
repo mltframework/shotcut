@@ -24,4 +24,5 @@ Metadata {
     keywords: qsTr('denoise artifact clean', 'search keywords for the Reduce Noise: Smart Blur video filter') + ' reduce noise: smart blur'
     mlt_service: 'avfilter.smartblur'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 }

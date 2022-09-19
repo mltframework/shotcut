@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('gamma value black white', 'search keywords for the Levels video filter') + ' levels'
     mlt_service: 'frei0r.levels'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true
