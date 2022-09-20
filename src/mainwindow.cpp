@@ -3052,8 +3052,12 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
     else if (producer->parent().get(kShotcutTransitionProperty)) {
         w = new LumaMixTransition(producer->parent(), this);
         scrollArea->setWidget(w);
-        if (-1 != w->metaObject()->indexOfSignal("modified()"))
+        if (-1 != w->metaObject()->indexOfSignal("modified()")) {
             connect(w, SIGNAL(modified()), SLOT(onProducerModified()));
+        }
+        if (-1 != w->metaObject()->indexOfSlot("onPlaying()")) {
+            connect(MLT.videoWidget(), SIGNAL(playing()), w, SLOT(onPlaying()));
+        }
         return w;
     } else if (mlt_service_playlist_type == producer->type()) {
         int trackIndex = m_timelineDock->currentTrack();

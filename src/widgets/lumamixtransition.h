@@ -35,6 +35,9 @@ public:
     explicit LumaMixTransition(Mlt::Producer &transition, QWidget *parent = 0);
     ~LumaMixTransition();
 
+public slots:
+    void onPlaying();
+
 signals:
     void modified();
 

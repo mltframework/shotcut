@@ -112,6 +112,13 @@ LumaMixTransition::~LumaMixTransition()
     delete ui;
 }
 
+void LumaMixTransition::onPlaying()
+{
+    if (m_preview) {
+        m_preview->stop(false);
+    }
+}
+
 void LumaMixTransition::on_invertCheckBox_clicked(bool checked)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
@@ -267,7 +274,7 @@ void LumaMixTransition::on_lumaCombo_currentRowChanged(int index)
 
 void LumaMixTransition::startPreview()
 {
-    if (Settings.timelinePreviewTransition() && m_producer.is_valid()) {
+    if (Settings.timelinePreviewTransition() && m_producer.is_valid() && MLT.isPaused()) {
         m_preview->stop();
         m_preview->start(m_producer);
     }
