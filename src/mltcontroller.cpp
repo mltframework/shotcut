@@ -1253,6 +1253,28 @@ void Controller::adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta,
             }
             filter->set_in_and_out(in + inDelta, filter->get_out());
             emit MAIN.serviceInChanged(inDelta, filter);
+        } else if (filterName.startsWith("fadeOut")) {
+            if (!filter->get(kShotcutAnimOutProperty)) {
+                // Convert legacy fadeOut filters.
+                filter->set(kShotcutAnimOutProperty, filter->get_length());
+            }
+            filter->set_in_and_out(in + inDelta, filter->get_out());
+            if (filterName == "fadeOutBrightness") {
+                const char *key = filter->get_int("alpha") != 1 ? "alpha" : "level";
+                filter->clear(key);
+                filter->anim_set(key, 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                filter->anim_set(key, 0, filter->get_length() - 1);
+            } else if (filterName == "fadeOutMovit") {
+                filter->clear("opacity");
+                filter->anim_set("opacity", 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty), 0,
+                                 mlt_keyframe_smooth);
+                filter->anim_set("opacity", 0, filter->get_length() - 1);
+            } else if (filterName == "fadeOutVolume") {
+                filter->clear("level");
+                filter->anim_set("level", 0, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                filter->anim_set("level", -60, filter->get_length() - 1);
+            }
+            emit MAIN.serviceInChanged(inDelta, filter);
         } else if (!filter->get_int("_loader") && filter->get_in() <= in) {
             filter->set_in_and_out(in + inDelta, filter->get_out());
             emit MAIN.serviceInChanged(inDelta, filter);
