@@ -553,9 +553,6 @@ void MoveClipCommand::undo()
     if (m_rippleMarkers && m_markerOldStart >= 0) {
         m_markersModel.doReplace(m_markers);
     }
-    QTimer::singleShot(0, &MAIN, [ = ]() {
-        MAIN.undoStack()->clear();
-    });
 }
 
 bool MoveClipCommand::mergeWith(const QUndoCommand *other)
