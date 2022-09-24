@@ -102,7 +102,7 @@ public:
         centeredTextRect.moveCenter(option.rect.center());
 
         QRect textRect = centeredTextRect;
-        textRect.setLeft(thumb.width() + 10);
+        textRect.setLeft(thumb.width() + (("hidden" == setting) ? PlaylistModel::THUMBNAIL_HEIGHT : 10));
 
         QPoint textPoint = textRect.topLeft();
         textPoint.setY(textPoint.y() + lineHeight);
