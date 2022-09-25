@@ -167,6 +167,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             other.append("vtag=hvc1");
         }
     }
+    bool qmin_nvenc_amf = preset.get("qmin") && (vcodec.contains("nvenc") || vcodec.endsWith("_amf"));
 
     for (int i = 0; i < preset.count(); i++) {
         QString name(preset.get_name(i));
@@ -278,7 +279,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
             else
                 ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
-        } else if (name == "vq" || name == "vglobal_quality" || name == "qmin" || name == "qscale") {
+        } else if (name == "vq" || name == "vglobal_quality" || name == "qscale" || qmin_nvenc_amf) {
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize") ? RateControlConstrained :
                                                        RateControlQuality);
             videoQuality = preset.get_int(name.toUtf8().constData());
@@ -289,7 +290,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             videoQuality = preset.get_int("crf");
         } else if (name == "bufsize" || name == "vbufsize") {
             // traditionally "bufsize" means video only
-            if (preset.get("vq") || preset.get("qmin") || preset.get("qscale") || preset.get("crf"))
+            if (preset.get("vq") || preset.get("qscale") || preset.get("crf") || qmin_nvenc_amf)
                 ui->videoRateControlCombo->setCurrentIndex(RateControlConstrained);
             else
                 ui->videoRateControlCombo->setCurrentIndex(RateControlConstant);
