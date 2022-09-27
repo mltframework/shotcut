@@ -630,15 +630,11 @@ void TimelineDock::setupActions()
     icon = QIcon::fromTheme("list-remove",
                             QIcon(":/icons/oxygen/32x32/actions/list-remove.png"));
     action->setIcon(icon);
-    action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
         raise();
         removeSelection();
-    });
-    connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_selection.selectedClips.length() > 0);
     });
     Actions.add("timelineDeleteAction", action);
 
@@ -652,15 +648,11 @@ void TimelineDock::setupActions()
     icon = QIcon::fromTheme("lift",
                             QIcon(":/icons/oxygen/32x32/actions/lift.png"));
     action->setIcon(icon);
-    action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
         raise();
         liftSelection();
-    });
-    connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(clipsAreSelected());
     });
     Actions.add("timelineLiftAction", action);
 
