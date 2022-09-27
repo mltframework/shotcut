@@ -478,6 +478,8 @@ void TimelineDock::setupActions()
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
+        if (selection().isEmpty())
+            selectClipUnderPlayhead();
         int newClipIndex = -1;
         int trackIndex = currentTrack() - 1;
         if (!selection().isEmpty() && trackIndex > -1) {
@@ -497,6 +499,8 @@ void TimelineDock::setupActions()
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
+        if (selection().isEmpty())
+            selectClipUnderPlayhead();
         int newClipIndex = -1;
         int trackIndex = currentTrack() + 1;
         if (!selection().isEmpty() && trackIndex < model()->trackList().count()) {
