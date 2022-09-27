@@ -809,7 +809,9 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
             }
             if (includeProfile ||
                     ui->aspectNumSpinner->value() != MLT.profile().display_aspect_num() ||
-                    ui->aspectDenSpinner->value() != MLT.profile().display_aspect_den()) {
+                    ui->aspectDenSpinner->value() != MLT.profile().display_aspect_den() ||
+                    ui->widthSpinner->value() != MLT.profile().width() ||
+                    ui->heightSpinner->value() != MLT.profile().height()) {
                 setIfNotSet(p, "aspect", double(ui->aspectNumSpinner->value()) / double(
                                 ui->aspectDenSpinner->value()));
             }
