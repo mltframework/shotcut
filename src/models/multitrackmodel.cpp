@@ -1440,7 +1440,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                 } else if (filter) {
                     // Remove the video filter.
                     info->producer->detach(*filter);
-                    emit filterAddedOrRemoved(info->producer);
+                    filterAddedOrRemoved(info->producer);
                     filter->set(kShotcutAnimInProperty, duration);
                     isChanged = true;
                 }
@@ -1470,7 +1470,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                 } else if (filter) {
                     // Remove the audio filter.
                     info->producer->detach(*filter);
-                    emit filterAddedOrRemoved(info->producer);
+                    filterAddedOrRemoved(info->producer);
                     filter->set(kShotcutAnimInProperty, duration);
                     isChanged = true;
                 }
@@ -1553,7 +1553,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                 } else if (filter) {
                     // Remove the video filter.
                     info->producer->detach(*filter);
-                    emit filterAddedOrRemoved(info->producer);
+                    filterAddedOrRemoved(info->producer);
                     filter->set(kShotcutAnimOutProperty, duration);
                     isChanged = true;
                 }
@@ -1583,7 +1583,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                 } else if (filter) {
                     // Remove the audio filter.
                     info->producer->detach(*filter);
-                    emit filterAddedOrRemoved(info->producer);
+                    filterAddedOrRemoved(info->producer);
                     filter->set(kShotcutAnimOutProperty, duration);
                     isChanged = true;
                 }

@@ -848,7 +848,7 @@ void PlaylistDock::onAppendCutActionTriggered()
             MAIN.undoStack()->push(
                 new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
             setPlaylistIndex(&producer, m_model.playlist()->count() - 1);
-            enableUpdate(true);
+            emit enableUpdate(true);
         } else {
             DurationDialog dialog(this);
             dialog.setDuration(MLT.profile().fps() * 5);
@@ -858,7 +858,7 @@ void PlaylistDock::onAppendCutActionTriggered()
                     producer.set("mlt_service", "avformat-novalidate");
                 MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
                 setPlaylistIndex(&producer, m_model.playlist()->count() - 1);
-                enableUpdate(true);
+                emit enableUpdate(true);
             }
         }
     }
@@ -878,7 +878,7 @@ void PlaylistDock::onUpdateActionTriggered()
             ProxyManager::generateIfNotExists(producer);
             MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(&producer), index.row()));
             setPlaylistIndex(&producer, index.row());
-            enableUpdate(true);
+            emit enableUpdate(true);
         } else {
             // change the duration
             DurationDialog dialog(this);
@@ -889,12 +889,12 @@ void PlaylistDock::onUpdateActionTriggered()
                     producer.set("mlt_service", "avformat-novalidate");
                 MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
                 setPlaylistIndex(&producer, index.row());
-                enableUpdate(true);
+                emit enableUpdate(true);
             }
         }
     } else {
         emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
-        enableUpdate(false);
+        emit enableUpdate(false);
     }
 }
 
@@ -926,7 +926,7 @@ void PlaylistDock::onRemoveActionTriggered()
     if (rowsRemoved.contains(MLT.producer()->get_int(kPlaylistIndexProperty))) {
         // Remove the playlist index property on the producer.
         resetPlaylistIndex();
-        enableUpdate(false);
+        emit enableUpdate(false);
     }
 }
 
@@ -964,7 +964,7 @@ void PlaylistDock::onProducerOpened()
                                      QVector<int>() << PlaylistModel::COLUMN_THUMBNAIL);
         }
     }
-    producerOpened();
+    emit producerOpened();
 }
 
 void PlaylistDock::onInChanged()
@@ -1058,7 +1058,7 @@ void PlaylistDock::onRemoveAllActionTriggered()
 
 void PlaylistDock::onPlaylistCreated()
 {
-    enableUpdate(false);
+    emit enableUpdate(false);
     updateViewMode();
     ui->stackedWidget->setCurrentIndex(1);
 }
@@ -1078,7 +1078,7 @@ void PlaylistDock::onPlaylistModified()
 
 void PlaylistDock::onPlaylistCleared()
 {
-    enableUpdate(false);
+    emit enableUpdate(false);
     m_blockResizeColumnsToContents = false;
 }
 
@@ -1165,7 +1165,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(&p), row));
                     setPlaylistIndex(MLT.producer(), row);
                 }
-                enableUpdate(true);
+                emit enableUpdate(true);
             } else {
                 LongUiTask::cancel();
                 DurationDialog dialog(this);
@@ -1252,7 +1252,7 @@ void PlaylistDock::onProducerChanged(Mlt::Producer *producer)
             || index >= m_model.playlist()->count())
         return;
     MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(producer), index));
-    enableUpdate(false);
+    emit enableUpdate(false);
 }
 
 void PlaylistDock::updateViewMode()
@@ -1310,7 +1310,7 @@ void PlaylistDock::resetPlaylistIndex()
         Mlt::Producer clip(m_model.playlist()->get_clip(j));
         clip.parent().Mlt::Properties::clear(kPlaylistIndexProperty);
     }
-    enableUpdate(false);
+    emit enableUpdate(false);
 }
 
 void PlaylistDock::emitDataChanged(const QVector<int> &roles)
@@ -1348,7 +1348,7 @@ void PlaylistDock::onInTimerFired()
             && info->producer->get_producer() == MLT.producer()->get_producer()
             && info->frame_in != MLT.producer()->get_in()) {
         MAIN.undoStack()->push(new Playlist::TrimClipInCommand(m_model, index, MLT.producer()->get_in()));
-        enableUpdate(false);
+        emit enableUpdate(false);
     }
 }
 
@@ -1362,7 +1362,7 @@ void PlaylistDock::onOutTimerFired()
             && info->producer->get_producer() == MLT.producer()->get_producer()
             && info->frame_out != MLT.producer()->get_out()) {
         MAIN.undoStack()->push(new Playlist::TrimClipOutCommand(m_model, index, MLT.producer()->get_out()));
-        enableUpdate(false);
+        emit enableUpdate(false);
     }
 }
 
@@ -1424,7 +1424,7 @@ void PlaylistDock::onUpdateThumbnailsActionTriggered()
 void PlaylistDock::onProducerModified()
 {
     if (!m_model.playlist()) return;
-    enableUpdate(true);
+    emit enableUpdate(true);
 
     // The clip name may have changed.
     emitDataChanged(QVector<int>() << PlaylistModel::FIELD_RESOURCE);

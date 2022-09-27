@@ -18,7 +18,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "actions.h"
-#include "scrubbar.h"
 #include "openotherdialog.h"
 #include "player.h"
 #include "defaultlayouts.h"
@@ -33,7 +32,6 @@
 #include "widgets/jackproducerwidget.h"
 #include "widgets/toneproducerwidget.h"
 #include "widgets/lissajouswidget.h"
-#include "widgets/networkproducerwidget.h"
 #include "widgets/noisewidget.h"
 #include "widgets/plasmawidget.h"
 #include "widgets/pulseaudiowidget.h"
@@ -1151,7 +1149,7 @@ void MainWindow::open(Mlt::Producer *producer)
             emit profileChanged();
     }
     m_player->setFocus();
-    m_playlistDock->enableUpdate(false);
+    emit m_playlistDock->enableUpdate(false);
 
     // Needed on Windows. Upon first file open, window is deactivated, perhaps OpenGL-related.
     activateWindow();
@@ -2502,7 +2500,7 @@ void MainWindow::onProducerChanged()
     MLT.refreshConsumer();
     if (playlist() && MLT.producer() && MLT.producer()->is_valid()
             && MLT.producer()->get_int(kPlaylistIndexProperty)) {
-        m_playlistDock->enableUpdate(true);
+        emit m_playlistDock->enableUpdate(true);
     }
     sourceUpdated();
 }
@@ -2840,7 +2838,7 @@ void MainWindow::onCutModified()
         setWindowModified(true);
     }
     if (playlist()) {
-        m_playlistDock->enableUpdate(true);
+        emit m_playlistDock->enableUpdate(true);
     }
     sourceUpdated();
 }
@@ -2857,7 +2855,7 @@ void MainWindow::onFilterModelChanged()
     setWindowModified(true);
     sourceUpdated();
     if (playlist()) {
-        m_playlistDock->enableUpdate(true);
+        emit m_playlistDock->enableUpdate(true);
     }
 }
 

@@ -18,7 +18,6 @@
 #include "keyframesdock.h"
 
 #include "actions.h"
-#include "models/attachedfiltersmodel.h"
 #include "qmltypes/qmlproducer.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
@@ -117,7 +116,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     zoomSlider->setTracking(false);
     connect(zoomSlider, &QSlider::valueChanged, this, [&](int value) {
         if (!isVisible() || !m_qview.rootObject()) return;
-        setZoom(value / 100.0);
+        emit setZoom(value / 100.0);
     });
     connect(this, &KeyframesDock::timeScaleChanged, zoomSlider, [ = ]() {
         double value = 1.0;
@@ -243,7 +242,7 @@ void KeyframesDock::setupActions()
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible() || !m_qview.rootObject()) return;
-        zoomOut();
+        emit zoomOut();
     });
     Actions.add("keyframesZoomOutAction", action);
 
@@ -254,7 +253,7 @@ void KeyframesDock::setupActions()
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible() || !m_qview.rootObject()) return;
-        zoomIn();
+        emit zoomIn();
     });
     Actions.add("keyframesZoomInAction", action);
 
@@ -265,7 +264,7 @@ void KeyframesDock::setupActions()
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible() || !m_qview.rootObject()) return;
-        zoomToFit();
+        emit zoomToFit();
     });
     Actions.add("keyframesZoomFitAction", action);
 
@@ -336,7 +335,7 @@ void KeyframesDock::setupActions()
             if (m_model.advancedKeyframesInUse())
                 seekPrevious();
             else
-                seekPreviousSimple();
+                emit seekPreviousSimple();
         }
     });
     connect(this, &KeyframesDock::newFilter, action, [ = ]() {
@@ -352,7 +351,7 @@ void KeyframesDock::setupActions()
             if (m_model.advancedKeyframesInUse())
                 seekNext();
             else
-                seekNextSimple();
+                emit seekNextSimple();
         }
     });
     connect(this, &KeyframesDock::newFilter, action, [ = ]() {

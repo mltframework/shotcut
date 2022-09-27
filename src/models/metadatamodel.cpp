@@ -84,7 +84,7 @@ bool MetadataModel::setData(const QModelIndex &index, const QVariant &value, int
     case FavoriteRole: {
         QmlMetadata *meta = m_list.at(index.row());
         meta->setIsFavorite(value.value<bool>());
-        emit(dataChanged(index, index));
+        emit dataChanged(index, index);
         break;
     }
     }

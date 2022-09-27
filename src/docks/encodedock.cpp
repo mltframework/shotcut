@@ -1673,7 +1673,7 @@ void EncodeDock::on_streamButton_clicked()
         MLT.play();
         ui->streamButton->setText(tr("Stream"));
         emit captureStateChanged(false);
-        emit ui->encodeButton->setDisabled(false);
+        ui->encodeButton->setDisabled(false);
         return;
     }
     QInputDialog dialog(this);
@@ -1701,7 +1701,7 @@ void EncodeDock::on_streamButton_clicked()
             // Live streaming in foreground
             encode(url);
             emit captureStateChanged(true);
-            emit ui->encodeButton->setDisabled(true);
+            ui->encodeButton->setDisabled(true);
         }
         m_outputFilenames.clear();
     }

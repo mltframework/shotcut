@@ -193,7 +193,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     zoomSlider->setTracking(false);
     connect(zoomSlider, &QSlider::valueChanged, this, [&](int value) {
         if (!isVisible() || !m_quickView.rootObject()) return;
-        setZoom(value / 100.0);
+        emit setZoom(value / 100.0);
     });
     connect(&m_model, &MultitrackModel::scaleFactorChanged, zoomSlider, [ = ]() {
         double value = round(pow(m_model.scaleFactor() - 0.01, 1.0 / 3.0) * 100.0);
@@ -860,7 +860,7 @@ void TimelineDock::setupActions()
     connect(action, &QAction::triggered, this, [&](bool checked) {
         Settings.setTimelineShowWaveforms(checked);
         if (!isVisible() || !m_quickView.rootObject()) return;
-        refreshWaveforms();
+        emit refreshWaveforms();
     });
     connect(&Settings, &ShotcutSettings::timelineShowWaveformsChanged, action, [ = ]() {
         action->setChecked(Settings.timelineShowWaveforms());
@@ -924,7 +924,7 @@ void TimelineDock::setupActions()
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible() || !m_quickView.rootObject()) return;
-        zoomOut();
+        emit zoomOut();
     });
     Actions.add("timelineZoomOutAction", action);
 
@@ -935,7 +935,7 @@ void TimelineDock::setupActions()
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible() || !m_quickView.rootObject()) return;
-        zoomIn();
+        emit zoomIn();
     });
     Actions.add("timelineZoomInAction", action);
 
@@ -946,7 +946,7 @@ void TimelineDock::setupActions()
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible()) return;
-        zoomToFit();
+        emit zoomToFit();
     });
     Actions.add("timelineZoomFitAction", action);
 
@@ -2339,7 +2339,7 @@ void TimelineDock::seekNextMarker()
     int nextPos = m_markersModel.nextMarkerPosition(m_position);
     if (nextPos >= 0) {
         setPosition(nextPos);
-        markerSeeked(m_markersModel.markerIndexForPosition(nextPos));
+        emit markerSeeked(m_markersModel.markerIndexForPosition(nextPos));
     }
 }
 
@@ -2348,7 +2348,7 @@ void TimelineDock::seekPrevMarker()
     int prevPos = m_markersModel.prevMarkerPosition(m_position);
     if (prevPos >= 0) {
         setPosition(prevPos);
-        markerSeeked(m_markersModel.markerIndexForPosition(prevPos));
+        emit markerSeeked(m_markersModel.markerIndexForPosition(prevPos));
     }
 }
 
@@ -2762,7 +2762,7 @@ void TimelineDock::onMultitrackClosed()
     m_transitionDelta = 0;
     m_blockSetSelection = false;
     setSelection();
-    setZoom(1.0);
+    emit setZoom(1.0);
 }
 
 void TimelineDock::reloadTimelineMarkers()
