@@ -565,8 +565,9 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
             || that->m_rippleMarkers != m_rippleMarkers)
         return false;
     int i = 0;
+    auto thatValues = that->m_selection.values();
     for (auto &clip : m_selection) {
-        auto x = that->m_selection.values().at(i);
+        auto x = thatValues.at(i++);
         if (clip.get_producer() != x.get_producer())
             return false;
     }
