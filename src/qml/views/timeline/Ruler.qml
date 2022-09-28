@@ -79,12 +79,6 @@ Rectangle {
         anchors.right: parent.right
         timeScale: root.timeScale ? root.timescale : 1
         model: markers
-        onEditRequested: {
-            parent.editMarkerRequested(index);
-        }
-        onDeleteRequested: {
-            parent.deleteMarkerRequested(index);
-        }
         onExited: bubbleHelp.hide()
         onMouseStatusChanged: {
             var msg = "<center>" + text;

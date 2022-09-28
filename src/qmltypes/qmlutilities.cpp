@@ -23,6 +23,7 @@
 #include "qmltypes/qmlview.h"
 #include "qmltypes/qmlfile.h"
 #include "qmltypes/qmlfilter.h"
+#include "qmltypes/qmlmarkermenu.h"
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlrichtext.h"
 #include "qmltypes/timelineitems.h"
@@ -56,6 +57,7 @@ void QmlUtilities::registerCommonTypes()
                                               "You cannot create a MetadataModel from QML.");
     qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
     qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
+    qmlRegisterType<QmlMarkerMenu>("Shotcut.Controls", 1, 0, "MarkerMenu");
     registerTimelineItems();
 }
 

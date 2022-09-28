@@ -31,8 +31,6 @@ Item {
     property var text: ""
     property var index: 0
 
-    signal editRequested(int index)
-    signal deleteRequested(int index)
     signal exited()
     signal mouseStatusChanged(int mouseX, int mouseY, var text, int start, int end)
     signal seekRequested(int pos)
@@ -59,86 +57,11 @@ Item {
         id: activePalette
     }
 
-    ColorDialog {
-        id: colorDialog
-
-        title: qsTr("Marker Color")
-        showAlphaChannel: false
-        color: root.markerColor
-        onAccepted: {
-            markers.setColor(root.index, color);
-        }
-        modality: application.dialogModality
-    }
-
-    Menu {
+    Shotcut.MarkerMenu {
         id: menu
 
-        title: qsTr('Marker Operations')
-
-        MenuItem {
-            text: qsTr('Edit...')
-            onTriggered: {
-                menu.dismiss();
-                root.editRequested(root.index);
-            }
-        }
-
-        MenuItem {
-            text: qsTr('Delete')
-            onTriggered: root.deleteRequested(root.index)
-        }
-
-        MenuItem {
-            text: qsTr('Choose Color...')
-            onTriggered: {
-                colorDialog.color = root.markerColor;
-                colorDialog.open();
-            }
-        }
-
-        Menu {
-            id: colorMenu
-
-            width: 100
-            title: qsTr('Choose Recent Color')
-
-            Instantiator {
-                model: markers.recentColors
-                onObjectAdded: colorMenu.insertItem(index, object)
-                onObjectRemoved: colorMenu.removeItem(object)
-
-                MenuItem {
-                    id: menuItem
-
-                    onTriggered: markers.setColor(root.index, modelData)
-
-                    background: Rectangle {
-                        color: modelData
-                        border.width: 3
-                        border.color: menuItem.highlighted ? activePalette.highlight : modelData
-                    }
-
-                    contentItem: Text {
-                        text: modelData
-                        horizontalAlignment: Text.AlignHCenter
-                        color: application.contrastingColor(modelData)
-                    }
-
-                }
-
-            }
-
-        }
-
-        MenuSeparator {
-        }
-
-        MenuItem {
-            text: qsTr('Cancel')
-            onTriggered: menu.dismiss()
-        }
-
+        target: timeline
+        index: root.index
     }
 
     Shotcut.MarkerStart {
