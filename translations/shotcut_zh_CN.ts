@@ -6,27 +6,27 @@
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="205"/>
         <source>Actions and Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>快捷键</translation>
     </message>
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="213"/>
         <source>search</source>
-        <translation type="unfinished">搜索</translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="228"/>
         <source>Clear search</source>
-        <translation type="unfinished">清空搜索内容</translation>
+        <translation>清空搜索内容</translation>
     </message>
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="261"/>
         <source>Click on the selected shortcut to show the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>点击选择要显示在编辑器中的快捷键</translation>
     </message>
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="265"/>
         <source>Reserved shortcuts can not be edited</source>
-        <translation type="unfinished"></translation>
+        <translation>不能编辑保留的快捷键</translation>
     </message>
 </context>
 <context>
@@ -34,27 +34,27 @@
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="185"/>
         <source>Shortcut %1 is used by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>快捷键 %1 被用于 %2</translation>
     </message>
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="194"/>
         <source>Shortcut %1 is reserved for use by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>快捷键 %1 被保留用于 %2</translation>
     </message>
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="228"/>
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation>操作</translation>
     </message>
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="230"/>
         <source>Shortcut 1</source>
-        <translation type="unfinished"></translation>
+        <translation>快捷键 1</translation>
     </message>
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="232"/>
         <source>Shortcut 2</source>
-        <translation type="unfinished"></translation>
+        <translation>快捷键 2</translation>
     </message>
 </context>
 <context>
@@ -95,32 +95,32 @@
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="250"/>
         <source>Speed adjustment range</source>
-        <translation type="unfinished"></translation>
+        <translation>速度调节范围</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="253"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>无</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="254"/>
         <source>Narrow</source>
-        <translation type="unfinished"></translation>
+        <translation>窄</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="256"/>
         <source>Normal</source>
-        <translation type="unfinished">正常</translation>
+        <translation>正常</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="258"/>
         <source>Wide</source>
-        <translation type="unfinished"></translation>
+        <translation>宽</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="259"/>
         <source>Very wide</source>
-        <translation type="unfinished"></translation>
+        <translation>很宽</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="299"/>
@@ -3742,7 +3742,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1286"/>
         <source>Audio/Video Device...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">音频/视频设备...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="937"/>
@@ -3930,7 +3930,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1291"/>
         <source>Reset...</source>
-        <translation type="unfinished"></translation>
+        <translation>重置...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1039"/>
@@ -4066,7 +4066,7 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
     <message>
         <location filename="../src/mainwindow.cpp" line="1084"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>动画</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1087"/>
@@ -5006,7 +5006,7 @@ A folder will be created in this folder for each project.</source>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="308"/>
         <source>Automatic means the resolution and frame rate are based on the &lt;b&gt;first&lt;/b&gt; file you &lt;b&gt;add&lt;/b&gt; to your project. If the first file is not a video clip (for example, image or audio), then it will be 1920x1080p 25 fps.</source>
-        <translation>自动意味着分辨率和帧速取决于 &lt;b&gt;首个&lt;/b&gt; 文件您 &lt;b&gt;添加&lt;/b&gt; 到您项目中的。如果首个文件不是一个视频剪辑(比如，图像或者音频)，那么将是 1920x1080p 25 fps。</translation>
+        <translation>自动意味着分辨率和帧速取决于 &lt;b&gt;添加&lt;/b&gt; 到项目中的 &lt;b&gt;首个&lt;/b&gt; 文件。如果该文件不是一个视频剪辑(比如，图像或者音频)，那么将是 1920x1080p 25 fps。</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="59"/>
@@ -5430,7 +5430,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="356"/>
         <source>Play/Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>播放/暂停</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="360"/>
@@ -5450,72 +5450,72 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="425"/>
         <source>Play quickly backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>快退</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="435"/>
         <source>Play quickly forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>快进</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="439"/>
         <source>Seek Start</source>
-        <translation type="unfinished"></translation>
+        <translation>跳到开头</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="446"/>
         <source>Seek End</source>
-        <translation type="unfinished"></translation>
+        <translation>跳到结尾</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="454"/>
         <source>Next Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>下一帧</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="463"/>
         <source>Previous Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>上一帧</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="472"/>
         <source>Forward One Second</source>
-        <translation type="unfinished"></translation>
+        <translation>前进1秒</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="480"/>
         <source>Backward One Second</source>
-        <translation type="unfinished"></translation>
+        <translation>后退1秒</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="488"/>
         <source>Forward Two Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>快进2秒</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="496"/>
         <source>Backward Two Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>快退2秒</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="504"/>
         <source>Forward Five Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>快进5秒</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="512"/>
         <source>Backward Five Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>快退5秒</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="520"/>
         <source>Forward Ten Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>快进10秒</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="528"/>
         <source>Backward Ten Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>快退10秒</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="536"/>
@@ -5851,7 +5851,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="185"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>选择</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="207"/>
@@ -5881,7 +5881,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="403"/>
         <source>GoTo</source>
-        <translation type="unfinished"></translation>
+        <translation>前往</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="413"/>
@@ -5896,22 +5896,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="473"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>上移</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="485"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>下移</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="610"/>
         <source>Open Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>打开上一个</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="623"/>
         <source>Open Next</source>
-        <translation type="unfinished"></translation>
+        <translation>打开下一个</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="636"/>
