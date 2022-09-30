@@ -18,6 +18,7 @@
 #include "qmltypes/qmlapplication.h"
 #include "qmltypes/colorpickeritem.h"
 #include "qmltypes/colorwheelitem.h"
+#include "qmltypes/qmleditmenu.h"
 #include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
@@ -58,6 +59,7 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
     qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
     qmlRegisterType<QmlMarkerMenu>("Shotcut.Controls", 1, 0, "MarkerMenu");
+    qmlRegisterType<QmlEditMenu>("Shotcut.Controls", 1, 0, "EditContextMenu");
     registerTimelineItems();
 }
 

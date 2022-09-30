@@ -81,6 +81,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   qmltypes/colorpickeritem.cpp qmltypes/colorpickeritem.h
   qmltypes/colorwheelitem.cpp qmltypes/colorwheelitem.h
   qmltypes/qmlapplication.cpp qmltypes/qmlapplication.h
+  qmltypes/qmleditmenu.cpp qmltypes/qmleditmenu.h
   qmltypes/qmlfile.cpp qmltypes/qmlfile.h
   qmltypes/qmlfilter.cpp qmltypes/qmlfilter.h
   qmltypes/qmlmarkermenu.cpp qmltypes/qmlmarkermenu.h
