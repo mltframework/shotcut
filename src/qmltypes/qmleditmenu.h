@@ -25,12 +25,14 @@ class QmlEditMenu : public QObject
     Q_OBJECT
 
     Q_PROPERTY(bool showPastePlain MEMBER m_showPastePlain NOTIFY showPastePlainChanged)
+    Q_PROPERTY(bool readOnly MEMBER m_readOnly NOTIFY readOnlyChanged)
 
 public:
     explicit QmlEditMenu(QObject *parent = 0);
 
 signals:
     void showPastePlainChanged();
+    void readOnlyChanged();
     void undoTriggered();
     void redoTriggered();
     void cutTriggered();
@@ -46,6 +48,7 @@ public slots:
 
 private:
     bool m_showPastePlain;
+    bool m_readOnly;
 };
 
 #endif // QMLEDITMENU_H

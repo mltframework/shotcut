@@ -20,6 +20,7 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property var control: parent
+    property alias readOnly: contextMenu.readOnly
 
     function popup() {
         contextMenu.popup();

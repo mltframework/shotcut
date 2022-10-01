@@ -410,23 +410,10 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                     onClicked: contextMenu.popup()
                 }
 
-                Menu {
+                Shotcut.EditMenu {
                     id: contextMenu
 
-                    width: 150
-
-                    MenuItem {
-
-                        action: Action {
-                            text: qsTr('Copy')
-                            onTriggered: {
-                                sizeW.selectAll();
-                                sizeW.copy();
-                            }
-                        }
-
-                    }
-
+                    readOnly: true
                 }
 
             }
@@ -452,23 +439,10 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                     onClicked: contextMenu2.popup()
                 }
 
-                Menu {
+                Shotcut.EditMenu {
                     id: contextMenu2
 
-                    width: 150
-
-                    MenuItem {
-
-                        action: Action {
-                            text: qsTr('Copy')
-                            onTriggered: {
-                                sizeH.selectAll();
-                                sizeH.copy();
-                            }
-                        }
-
-                    }
-
+                    readOnly: true
                 }
 
             }
