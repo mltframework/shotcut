@@ -21,6 +21,7 @@
 
 QmlEditMenu::QmlEditMenu(QObject *parent)
     : QObject(parent)
+    , m_showPastePlain(false)
 {
 }
 
@@ -54,6 +55,12 @@ void QmlEditMenu::popup()
     pasteAction.setShortcut(QKeySequence::Paste);
     connect(&pasteAction, &QAction::triggered, this, &QmlEditMenu::pasteTriggered);
     menu.addAction(&pasteAction);
+
+    QAction pastePlainAction(tr("Paste Text Only"));
+    pastePlainAction.setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_V));
+    connect(&pastePlainAction, &QAction::triggered, this, &QmlEditMenu::pastePlainTriggered);
+    if (m_showPastePlain)
+        menu.addAction(&pastePlainAction);
 
     QAction deleteAction(tr("Delete"));
     deleteAction.setShortcut(QKeySequence::Delete);

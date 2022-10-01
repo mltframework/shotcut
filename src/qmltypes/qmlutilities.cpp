@@ -27,6 +27,7 @@
 #include "qmltypes/qmlmarkermenu.h"
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlrichtext.h"
+#include "qmltypes/qmlrichtextmenu.h"
 #include "qmltypes/timelineitems.h"
 #include "settings.h"
 #include "models/metadatamodel.h"
@@ -60,6 +61,7 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
     qmlRegisterType<QmlMarkerMenu>("Shotcut.Controls", 1, 0, "MarkerMenu");
     qmlRegisterType<QmlEditMenu>("Shotcut.Controls", 1, 0, "EditContextMenu");
+    qmlRegisterType<QmlRichTextMenu>("Shotcut.Controls", 1, 0, "RichTextMenu");
     registerTimelineItems();
 }
 
