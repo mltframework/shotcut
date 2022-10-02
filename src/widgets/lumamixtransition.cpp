@@ -41,7 +41,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     Util::setColorsToHighlight(ui->label_2);
     m_maxStockIndex = ui->lumaCombo->count() - 1;
 
-    // Load the wipes in AppDatDir/wipes
+    // Load the wipes in AppDataDir/wipes
     for (auto &s : QmlApplication::wipes()) {
         auto i = new QListWidgetItem(QFileInfo(s).fileName());
         i->setData(Qt::UserRole, s);
@@ -55,6 +55,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
         QString resource = transition->get("resource");
+        ui->lumaCombo->blockSignals(true);
         if (!resource.isEmpty() && resource.indexOf("%luma") != -1) {
             ui->lumaCombo->setCurrentRow(resource.midRef(resource.indexOf("%luma") + 5).left(2).toInt() + 2);
         } else if (!resource.isEmpty() && resource.startsWith("color:")) {
@@ -80,6 +81,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
             ui->softnessSlider->setDisabled(true);
             ui->softnessSpinner->setDisabled(true);
         }
+        ui->lumaCombo->blockSignals(false);
         ui->invertCheckBox->setChecked(transition->get_int("invert"));
         if (transition->get("softness") && !resource.startsWith("color:"))
             ui->softnessSlider->setValue(qRound(transition->get_double("softness") * 100.0));
