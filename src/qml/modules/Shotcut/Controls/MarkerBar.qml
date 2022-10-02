@@ -23,8 +23,6 @@ Repeater {
     property real timeScale: 1
     property var snapper
 
-    signal editRequested(int index)
-    signal deleteRequested(int index)
     signal exited()
     signal mouseStatusChanged(int mouseX, int mouseY, var text, int start, int end)
     signal seekRequested(int pos)
@@ -37,8 +35,6 @@ Repeater {
         markerColor: model.color
         text: model.text
         index: model.index
-        onEditRequested: markerbar.editRequested(index)
-        onDeleteRequested: markerbar.deleteRequested(index)
         onExited: markerbar.exited()
         onMouseStatusChanged: markerbar.mouseStatusChanged(mouseX, mouseY, text, start, end)
         onSeekRequested: markerbar.seekRequested(pos)

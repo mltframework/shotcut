@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2021 Meltytech, LLC
+ * Copyright (c) 2020-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -545,216 +545,75 @@ Shotcut.VuiBase {
 
     }
 
-    Menu {
+    Shotcut.EditContextMenu {
         id: contextMenu
 
-        width: 220
-
-        MenuItem {
-            action: undoAction
+        showPastePlain: true
+        onUndoTriggered: {
+            textArea.undo();
         }
-
-        MenuItem {
-            action: redoAction
+        onRedoTriggered: {
+            textArea.redo();
         }
-
-        MenuSeparator {
+        onCutTriggered: {
+            textArea.cut();
         }
-
-        MenuItem {
-            action: cutAction
+        onCopyTriggered: {
+            textArea.copy();
         }
-
-        MenuItem {
-            action: copyAction
+        onPasteTriggered: {
+            textArea.paste();
         }
-
-        MenuItem {
-            action: pasteAction
+        onPastePlainTriggered: {
+            document.pastePlain();
         }
-
-        MenuItem {
-            action: pastePlainAction
+        onDeleteTriggered: {
+            textArea.remove(control.selectionStart, control.selectionEnd);
         }
-
-        MenuItem {
-            action: deleteAction
+        onClearTriggered: {
+            textArea.selectAll();
+            textArea.remove(control.selectionStart, control.selectionEnd);
         }
-
-        MenuItem {
-            action: clearAction
+        onSelectAllTriggered: {
+            textArea.selectAll();
         }
-
-        MenuSeparator {
-        }
-
-        MenuItem {
-            action: selectAllAction
-        }
-
-        MenuItem {
-            text: qsTr('Cancel')
-            onTriggered: contextMenu.dismiss()
-        }
-
     }
 
-    Menu {
+    Shotcut.RichTextMenu {
         id: menu
 
-        Menu {
-            title: qsTr('File')
-
-            MenuItem {
-                action: fileOpenAction
-            }
-
-            MenuItem {
-                action: fileSaveAsAction
-            }
-
-        }
-
-        Menu {
-            width: 220
-            title: qsTr('Edit')
-
-            MenuItem {
-                action: undoAction
-            }
-
-            MenuItem {
-                action: redoAction
-            }
-
-            MenuSeparator {
-            }
-
-            MenuItem {
-                action: cutAction
-            }
-
-            MenuItem {
-                action: copyAction
-            }
-
-            MenuItem {
-                action: pasteAction
-            }
-
-            MenuItem {
-                action: pastePlainAction
-            }
-
-        }
-
-        MenuItem {
-            action: selectAllAction
-        }
-
-        MenuItem {
-            action: insertTableAction
-        }
-
-        MenuItem {
-            text: qsTr('Cancel')
-            onTriggered: menu.dismiss()
-        }
-
-    }
-
-    Action {
-        id: fileOpenAction
-
-        text: qsTr('Open...')
-        onTriggered: {
+        onOpenTriggered: {
             fileDialog.selectExisting = true;
             fileDialog.open();
         }
-    }
-
-    Action {
-        id: fileSaveAsAction
-
-        text: qsTr('Save As…')
-        onTriggered: {
+        onSaveAsTriggered: {
             fileDialog.selectExisting = false;
             fileDialog.open();
         }
-    }
-
-    Action {
-        id: menuAction
-
-        icon.name: 'show-menu'
-        icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
-        onTriggered: menu.popup()
-    }
-
-    Action {
-        id: undoAction
-
-        text: qsTr('Undo') + (application.OS === 'OS X' ? '    ⌘Z' : ' (Ctrl+Z)')
-        onTriggered: textArea.undo()
-    }
-
-    Action {
-        id: redoAction
-
-        text: qsTr('Redo') + (application.OS === 'Windows' ? ' (Ctrl+Y)' : application.OS === 'OS X' ? '    ⇧⌘Z' : ' (Ctrl+Shift+Z)')
-        onTriggered: textArea.redo()
-    }
-
-    Action {
-        id: cutAction
-
-        text: qsTr('Cut') + (application.OS === 'OS X' ? '    ⌘X' : ' (Ctrl+X)')
-        onTriggered: textArea.cut()
-    }
-
-    Action {
-        id: copyAction
-
-        text: qsTr('Copy') + (application.OS === 'OS X' ? '    ⌘C' : ' (Ctrl+C)')
-        onTriggered: textArea.copy()
-    }
-
-    Action {
-        id: pasteAction
-
-        text: qsTr('Paste') + (application.OS === 'OS X' ? '    ⌘V' : ' (Ctrl+V)')
-        onTriggered: textArea.paste()
-    }
-
-    Action {
-        id: pastePlainAction
-
-        text: qsTr('Paste Text Only') + (application.OS === 'OS X' ? '    ⇧⌘V' : ' (Ctrl+Shift+V)')
-        onTriggered: document.pastePlain()
-    }
-
-    Action {
-        id: deleteAction
-
-        text: qsTr('Delete')
-        onTriggered: textArea.remove(textArea.selectionStart, textArea.selectionEnd)
-    }
-
-    Action {
-        id: clearAction
-
-        text: qsTr('Clear')
-        onTriggered: {
-            textArea.selectAll();
-            textArea.remove(textArea.selectionStart, textArea.selectionEnd);
+        onUndoTriggered: {
+            textArea.undo();
         }
-    }
-
-    Action {
-        id: selectAllAction
-
-        text: qsTr('Select All') + (application.OS === 'OS X' ? '    ⌘A' : ' (Ctrl+A)')
-        onTriggered: textArea.selectAll()
+        onRedoTriggered: {
+            textArea.redo();
+        }
+        onCutTriggered: {
+            textArea.cut();
+        }
+        onCopyTriggered: {
+            textArea.copy();
+        }
+        onPasteTriggered: {
+            textArea.paste();
+        }
+        onPastePlainTriggered: {
+            document.pastePlain();
+        }
+        onSelectAllTriggered: {
+            textArea.selectAll();
+        }
+        onInsertTableTriggered: {
+            tableDialog.open();
+        }
     }
 
     Action {
@@ -845,13 +704,6 @@ Shotcut.VuiBase {
             fontDialog.font.pointSize = document.fontSize;
             fontDialog.open();
         }
-    }
-
-    Action {
-        id: insertTableAction
-
-        text: qsTr('Insert Table')
-        onTriggered: tableDialog.open()
     }
 
     Action {

@@ -15,18 +15,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+#ifndef QMLMARKERMENU_H
+#define QMLMARKERMENU_H
 
-Menu {
-    width: {
-        var result = 0;
-        var padding = 10;
-        for (var i = 0; i < count; ++i) {
-            var item = itemAt(i);
-            result = Math.max(item.contentItem.implicitWidth, result);
-            padding = Math.max(item.padding, padding);
-        }
-        return result + padding * 2;
-    }
-}
+#include <QObject>
+
+class TimelineDock;
+
+class QmlMarkerMenu : public QObject
+{
+    Q_OBJECT
+
+    Q_PROPERTY(QObject *target READ target WRITE setTarget NOTIFY targetChanged)
+    Q_PROPERTY(int index READ index WRITE setIndex NOTIFY indexChanged)
+
+public:
+    explicit QmlMarkerMenu(QObject *parent = 0);
+    QObject *target();
+    void setTarget(QObject *timeline);
+    int index();
+    void setIndex(int index);
+
+signals:
+    void targetChanged();
+    void indexChanged();
+
+public slots:
+    void popup();
+
+private:
+    TimelineDock *m_timeline;
+    int m_index;
+};
+
+#endif // QMLMARKERMENU_H
