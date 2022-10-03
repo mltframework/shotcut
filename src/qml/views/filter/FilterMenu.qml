@@ -307,7 +307,7 @@ Rectangle {
 
                 source: current ? (current.icon.toString().length ? current.icon : current.isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : current.type === Shotcut.Metadata.Link ? 'qrc:///icons/oxygen/32x32/actions/chronometer.png' : '') : ''
                 asynchronous: true
-                Layout.preferredWidth: parent.Layout.preferredHeight
+                Layout.preferredWidth: parent.Layout.preferredHeight * sourceSize.width / sourceSize.height
                 Layout.preferredHeight: parent.Layout.preferredHeight
                 fillMode: Image.PreserveAspectFit
                 onPlayingChanged: {

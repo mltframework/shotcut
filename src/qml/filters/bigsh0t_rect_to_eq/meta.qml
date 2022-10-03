@@ -9,6 +9,7 @@ Metadata {
     mlt_service: "frei0r.bigsh0t_rect_to_eq"
     objectName: "bigsh0t_rect_to_eq"
     qml: "ui.qml"
+    icon: "icon.webp"
 
     keyframes {
         allowAnimateIn: true

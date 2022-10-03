@@ -9,6 +9,7 @@ Metadata {
     keywords: qsTr('spherical matte stencil', 'search keywords for the 360: Equirectangular Mask video filter') + ' 360: equirectangular mask bigsh0t'
     objectName: "bigsh0t_eq_mask"
     qml: "ui.qml"
+    icon: "icon.webp"
 
     keyframes {
         allowAnimateIn: true

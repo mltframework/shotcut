@@ -10,6 +10,7 @@ Metadata {
     objectName: "bigsh0t_transform_360"
     qml: "ui.qml"
     vui: "vui.qml"
+    icon: "icon.webp"
 
     keyframes {
         allowAnimateIn: true

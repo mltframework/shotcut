@@ -9,6 +9,7 @@ Metadata {
     keywords: qsTr('spherical projection dual fisheye', 'search keywords for the 360: Hemispherical to Equirectangular video filter') + ' 360: hemispherical to equirectangular bigsh0t'
     objectName: "bigsh0t_hemi_to_eq"
     qml: "ui.qml"
+    icon: "icon.webp"
 
     keyframes {
         allowAnimateIn: true

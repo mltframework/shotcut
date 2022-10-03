@@ -10,6 +10,7 @@ Metadata {
     objectName: "bigsh0t_eq_to_stereo"
     qml: "ui.qml"
     vui: "vui.qml"
+    icon: "icon.webp"
 
     keyframes {
         allowAnimateIn: true

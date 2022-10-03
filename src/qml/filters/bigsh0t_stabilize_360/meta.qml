@@ -9,4 +9,5 @@ Metadata {
     mlt_service: "frei0r.bigsh0t_stabilize_360"
     objectName: "bigsh0t_stabilize_360"
     qml: "ui.qml"
+    icon: "icon.webp"
 }
