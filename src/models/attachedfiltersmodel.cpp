@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,7 +99,7 @@ QString AttachedFiltersModel::producerTitle() const
 
 bool AttachedFiltersModel::isProducerSelected() const
 {
-    return !m_producer.isNull() && m_producer->is_valid() && !m_producer->is_blank();
+    return !m_producer.isNull() && m_producer->is_valid() && !m_producer->is_blank() && MLT.isSeekable(m_producer.get());
 }
 
 bool AttachedFiltersModel::supportsLinks() const
