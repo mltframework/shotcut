@@ -99,7 +99,8 @@ QString AttachedFiltersModel::producerTitle() const
 
 bool AttachedFiltersModel::isProducerSelected() const
 {
-    return !m_producer.isNull() && m_producer->is_valid() && !m_producer->is_blank() && MLT.isSeekable(m_producer.get());
+    return !m_producer.isNull() && m_producer->is_valid() && !m_producer->is_blank()
+           && MLT.isSeekable(m_producer.get());
 }
 
 bool AttachedFiltersModel::supportsLinks() const
