@@ -331,7 +331,12 @@ void GlaxnimateProducerWidget::onFileChanged(const QString &path)
         m_title = caption;
         m_producer->set("refresh", 1);
         MLT.refreshConsumer();
-        ui->durationSpinBox->setValue(m_producer->get_length());
+        QTimer::singleShot(1000, [this]() {
+            if (ui->durationSpinBox->value() != m_producer->get_length()) {
+                ui->durationSpinBox->setValue(m_producer->get_length());
+                on_durationSpinBox_editingFinished();
+            }
+        });
     }
 }
 
@@ -340,7 +345,12 @@ void GlaxnimateProducerWidget::on_reloadButton_clicked()
     if (m_producer && m_producer->is_valid()) {
         m_producer->set("refresh", 1);
         MLT.refreshConsumer();
-        ui->durationSpinBox->setValue(m_producer->get_length());
+        QTimer::singleShot(1000, [this]() {
+            if (ui->durationSpinBox->value() != m_producer->get_length()) {
+                ui->durationSpinBox->setValue(m_producer->get_length());
+                on_durationSpinBox_editingFinished();
+            }
+        });
     }
 }
 
