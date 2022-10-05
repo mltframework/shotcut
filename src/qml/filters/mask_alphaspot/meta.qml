@@ -20,14 +20,14 @@ Metadata {
                 property: 'filter.1'
                 isCurve: true
                 minimum: -1
-                maximum: 1
+                maximum: 2
             },
             Parameter {
                 name: qsTr('Vertical')
                 property: 'filter.2'
                 isCurve: true
                 minimum: -1
-                maximum: 1
+                maximum: 2
             },
             Parameter {
                 name: qsTr('Width')

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021 Meltytech, LLC
+ * Copyright (c) 2017-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -230,7 +230,7 @@ Item {
             id: horizontalSlider
 
             minimumValue: -100
-            maximumValue: 100
+            maximumValue: 200
             decimals: 2
             suffix: ' %'
             onValueChanged: updateFilter(paramHorizontal, value / 100, getPosition(), horizontalKeyframesButton)
@@ -255,7 +255,7 @@ Item {
             id: verticalSlider
 
             minimumValue: -100
-            maximumValue: 100
+            maximumValue: 200
             decimals: 2
             suffix: ' %'
             onValueChanged: updateFilter(paramVertical, value / 100, getPosition(), verticalKeyframesButton)
