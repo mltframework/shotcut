@@ -1849,8 +1849,16 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
         playlist.resize_clip(clipIndex, info.frame_in, info.frame_out - delta);
 
         // Adjust filters.
+        playlist.clip_info(clipIndex, &info);
+        MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, -delta);
+
+        // Notify filters that the in changed.
         playlist.clip_info(clipIndex + 2, &info);
-        MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, -(out + 1), 0);
+        Mlt::Producer clip = Mlt::Producer(info.producer);
+        for (int j = 0; j < info.producer->filter_count(); j++) {
+            QScopedPointer<Mlt::Filter> filter(info.producer->filter(j));
+            emit MAIN.serviceInChanged(delta, filter.data());
+        }
 
         QVector<int> roles;
         roles << OutPointRole;
@@ -1930,8 +1938,8 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         playlist.resize_clip(clipIndex, info.frame_in + delta, info.frame_out);
 
         // Adjust filters.
-        playlist.clip_info(clipIndex - 2, &info);
-        MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, -(out + 1));
+        playlist.clip_info(clipIndex + 1, &info);
+        MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0);
 
         QVector<int> roles;
         roles << OutPointRole;
@@ -1992,11 +2000,6 @@ int MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int de
 
         // Create transition if it does not yet exist.
         if (!isTransition(playlist, clipIndex - 1)) {
-            // Adjust filters.
-            Mlt::ClipInfo info;
-            playlist.clip_info(clipIndex, &info);
-            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0);
-
             // Insert the mix clip.
             beginInsertRows(index(trackIndex), clipIndex, clipIndex);
             playlist.mix_out(clipIndex - 1, -delta);
@@ -2010,6 +2013,15 @@ int MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int de
             if (!Settings.playerGPU()) dissolve.set("alpha_over", 1);
             playlist.mix_add(clipIndex, &dissolve);
             playlist.mix_add(clipIndex, &crossFade);
+
+            // Notify filters that the in changed.
+            Mlt::ClipInfo info;
+            playlist.clip_info(clipIndex + 1, &info);
+            Mlt::Producer clip = Mlt::Producer(info.producer);
+            for (int j = 0; j < info.producer->filter_count(); j++) {
+                QScopedPointer<Mlt::Filter> filter(info.producer->filter(j));
+                emit MAIN.serviceInChanged(delta, filter.data());
+            }
 
             // Notify clip A changed.
             QModelIndex modelIndex = createIndex(clipIndex - 1, 0, trackIndex);
