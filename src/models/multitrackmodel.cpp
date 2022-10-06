@@ -434,7 +434,7 @@ bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta, 
 
         if (!info || (info->frame_in + delta) < 0 || (info->frame_in + delta) > info->frame_out)
             result = false;
-        else if (delta < 0 && clipIndex <= 0)
+        else if (!ripple && delta < 0 && clipIndex <= 0)
             result = false;
         else if (!ripple && delta < 0 && clipIndex > 0 && !playlist.is_blank(clipIndex - 1))
             result = false;
@@ -494,7 +494,8 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         if (info->frame_in + delta < 0)
             // clamp to clip start
             delta = -info->frame_in;
-        if (playlist.is_blank(clipIndex - 1) && -delta > playlist.clip_length(clipIndex - 1))
+        if (clipIndex > 0 && playlist.is_blank(clipIndex - 1)
+                && -delta > playlist.clip_length(clipIndex - 1))
             // clamp to duration of blank space
             delta = -playlist.clip_length(clipIndex - 1);
 //        LOG_DEBUG() << "delta" << delta;
