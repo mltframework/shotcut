@@ -454,7 +454,6 @@ void MainWindow::setupAndConnectDocks()
     connect(m_timelineDock->model(), SIGNAL(durationChanged()), SLOT(onMultitrackDurationChanged()));
     connect(m_timelineDock, SIGNAL(clipOpened(Mlt::Producer *)), SLOT(openCut(Mlt::Producer *)));
     connect(m_timelineDock->model(), &MultitrackModel::seeked, this, &MainWindow::seekTimeline);
-    connect(m_timelineDock->model(), SIGNAL(scaleFactorChanged()), m_player, SLOT(pause()));
     connect(m_timelineDock->markersModel(), SIGNAL(modified()), SLOT(onMultitrackModified()));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer *)),
             SLOT(loadProducerWidget(Mlt::Producer *)));
