@@ -775,7 +775,7 @@ void Controller::setIn(int in)
         if (!delta) {
             return;
         }
-        adjustClipFilters(*m_producer, m_producer->get_in(), m_producer->get_out(), delta, 0);
+        adjustClipFilters(*m_producer, m_producer->get_in(), m_producer->get_out(), delta, 0, delta);
         m_producer->set("in", in);
         Controller::refreshConsumer();
     }
@@ -788,7 +788,7 @@ void Controller::setOut(int out)
         if (!delta) {
             return;
         }
-        adjustClipFilters(*m_producer, m_producer->get_in(), m_producer->get_out(), 0, -delta);
+        adjustClipFilters(*m_producer, m_producer->get_in(), m_producer->get_out(), 0, -delta, 0);
         m_producer->set("out", out);
         Controller::refreshConsumer();
     }
@@ -1225,7 +1225,8 @@ static void shiftKeyframes(Mlt::Service *service, QmlMetadata *meta, int delta)
     }
 }
 
-void Controller::adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta, int outDelta)
+void Controller::adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta, int outDelta,
+                              int keyframeDelta)
 {
     if (!filter || !filter->is_valid()) {
         return;
@@ -1242,9 +1243,10 @@ void Controller::adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta,
         if (in + inDelta < 0) {
             inDelta = -in;
         }
-        if (filter->get_int(kShotcutAnimInProperty) == filter->get_int(kShotcutAnimOutProperty)) {
+        if (keyframeDelta
+                && filter->get_int(kShotcutAnimInProperty) == filter->get_int(kShotcutAnimOutProperty)) {
             // Shift all keyframes proportional to the in delta if they are not simple keyframes
-            shiftKeyframes(filter,  meta, inDelta);
+            shiftKeyframes(filter,  meta, keyframeDelta);
         }
         if (filterName.startsWith("fadeIn")) {
             if (!filter->get(kShotcutAnimInProperty)) {
@@ -1330,11 +1332,11 @@ void Controller::adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta,
 }
 
 void Controller::adjustClipFilters(Mlt::Producer &producer, int in, int out, int inDelta,
-                                   int outDelta)
+                                   int outDelta, int keyframeDelta)
 {
     for (int j = 0; j < producer.filter_count(); j++) {
         QScopedPointer<Mlt::Filter> filter(producer.filter(j));
-        adjustFilter(filter.data(), in, out, inDelta, outDelta);
+        adjustFilter(filter.data(), in, out, inDelta, outDelta, keyframeDelta);
     }
 
     // Adjust link in/out
@@ -1345,8 +1347,8 @@ void Controller::adjustClipFilters(Mlt::Producer &producer, int in, int out, int
             QScopedPointer<Mlt::Link> link(chain.link(j));
             QmlMetadata *meta = MAIN.filterController()->metadataForService(link.data());
             if (link && link->is_valid()) {
-                if (inDelta) {
-                    shiftKeyframes(link.data(),  meta, inDelta);
+                if (keyframeDelta) {
+                    shiftKeyframes(link.data(),  meta, keyframeDelta);
                 }
                 if (link->get_out() >= out) {
                     link->set_in_and_out(link->get_in(), out - outDelta);

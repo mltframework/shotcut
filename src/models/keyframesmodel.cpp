@@ -764,7 +764,8 @@ void KeyframesModel::trimFilterIn(int in)
     Mlt::Service &service = m_filter->service();
     if (service.is_valid() && service.type() == mlt_service_filter_type) {
         Mlt::Filter filter = service;
-        MLT.adjustFilter(&filter, filter.get_in(), filter.get_out(), in - filter.get_in(), 0);
+        MLT.adjustFilter(&filter, filter.get_in(), filter.get_out(), in - filter.get_in(), 0,
+                         in - filter.get_in());
     }
 }
 
@@ -773,7 +774,7 @@ void KeyframesModel::trimFilterOut(int out)
     Mlt::Service &service = m_filter->service();
     if (service.is_valid() && service.type() == mlt_service_filter_type) {
         Mlt::Filter filter = service;
-        MLT.adjustFilter(&filter, filter.get_in(), filter.get_out(), 0, filter.get_out() - out);
+        MLT.adjustFilter(&filter, filter.get_in(), filter.get_out(), 0, filter.get_out() - out, 0);
     }
 }
 

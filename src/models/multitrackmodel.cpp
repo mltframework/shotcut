@@ -485,6 +485,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
             LOG_DEBUG() << "Invalid clip info";
             continue;
         }
+        // These are used to adjust filters but must be retrieved before changing clip length.
         int filterIn = MLT.filterIn(playlist, clipIndex);
         int filterOut = MLT.filterOut(playlist, clipIndex);
 
@@ -503,7 +504,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         playlist.resize_clip(clipIndex, info->frame_in + delta, info->frame_out);
 
         // Adjust filters.
-        MLT.adjustClipFilters(*info->producer, filterIn, filterOut, delta, 0);
+        MLT.adjustClipFilters(*info->producer, filterIn, filterOut, delta, 0, delta);
 
         QModelIndex modelIndex = createIndex(clipIndex, 0, i);
         QVector<int> roles;
@@ -629,6 +630,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
 
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        // These are used to adjust filters but must be retrieved before changing clip length.
         int filterIn = MLT.filterIn(playlist, clipIndex);
         int filterOut = MLT.filterOut(playlist, clipIndex);
 
@@ -687,7 +689,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         playlist.resize_clip(clipIndex, info->frame_in, info->frame_out - delta);
 
         // Adjust filters.
-        MLT.adjustClipFilters(*info->producer, filterIn, filterOut, 0, delta);
+        MLT.adjustClipFilters(*info->producer, filterIn, filterOut, 0, delta, 0);
 
         QModelIndex index = createIndex(clipIndex, 0, i);
         QVector<int> roles;
@@ -1294,7 +1296,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
             endInsertRows();
             QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
             AudioLevelsTask::start(producer.parent(), this, modelIndex);
-            MLT.adjustClipFilters(producer, filterIn, out, 0, delta);
+            MLT.adjustClipFilters(producer, filterIn, out, 0, delta, 0);
         }
 
         playlist.resize_clip(clipIndex + 1, in + duration, out);
@@ -1307,7 +1309,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
 
         if (!playlist.is_blank(clipIndex + 1)) {
             AudioLevelsTask::start(*info->producer, this, modelIndex);
-            MLT.adjustClipFilters(*info->producer, in, filterOut, duration, 0);
+            MLT.adjustClipFilters(*info->producer, in, filterOut, duration, 0, duration);
         }
 
         emit modified();
@@ -1354,7 +1356,7 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         playlist.remove(clipIndex + 1);
         endRemoveRows();
 
-        MLT.adjustClipFilters(clip->parent(), in, out, 0, delta);
+        MLT.adjustClipFilters(clip->parent(), in, out, 0, delta, 0);
 
         emit modified();
     }
@@ -1851,7 +1853,7 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
 
         // Adjust filters.
         playlist.clip_info(clipIndex + 2, &info);
-        MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, -(out + 1), 0);
+        MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, -(out + 1), 0, -delta);
 
         QVector<int> roles;
         roles << OutPointRole;
@@ -1932,7 +1934,7 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
 
         // Adjust filters.
         playlist.clip_info(clipIndex - 2, &info);
-        MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, -(out + 1));
+        MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, -(out + 1), 0);
 
         QVector<int> roles;
         roles << OutPointRole;
@@ -1996,7 +1998,7 @@ int MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int de
             // Adjust filters.
             Mlt::ClipInfo info;
             playlist.clip_info(clipIndex, &info);
-            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0);
+            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0, delta);
 
             // Insert the mix clip.
             beginInsertRows(index(trackIndex), clipIndex, clipIndex);
@@ -2080,7 +2082,7 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
             // Adjust filters.
             Mlt::ClipInfo info;
             playlist.clip_info(clipIndex, &info);
-            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, delta);
+            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, delta, 0);
 
             // Insert the mix clip.
             beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
