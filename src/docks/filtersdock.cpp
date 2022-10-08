@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -137,6 +137,14 @@ void FiltersDock::onShowFrame(const SharedFrame &frame)
 void FiltersDock::openFilterMenu() const
 {
     QMetaObject::invokeMethod(m_qview.rootObject(), "openFilterMenu");
+}
+
+void FiltersDock::onServiceInChanged(int delta, Mlt::Service *service)
+{
+    if (delta && service && m_producer.producer().is_valid()
+            && service->get_service() == m_producer.producer().get_service()) {
+        emit producerInChanged(delta);
+    }
 }
 
 void FiltersDock::resetQview()

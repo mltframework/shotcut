@@ -1431,6 +1431,7 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
                 && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex,
                                          m_updateCommand->position() + m_position - info->start);
+        emit MAIN.serviceInChanged(m_position - info->start, info->producer);
     } else {
         MAIN.undoStack()->push(
             new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex,

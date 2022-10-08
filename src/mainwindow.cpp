@@ -523,6 +523,8 @@ void MainWindow::setupAndConnectDocks()
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), m_filtersDock,
             SLOT(onShowFrame(const SharedFrame &)));
     connect(m_player, SIGNAL(inChanged(int)), m_filtersDock, SIGNAL(producerInChanged(int)));
+    connect(this, SIGNAL(serviceInChanged(int, Mlt::Service *)), m_filtersDock,
+            SLOT(onServiceInChanged(int, Mlt::Service *)));
     connect(m_player, SIGNAL(outChanged(int)), m_filtersDock, SIGNAL(producerOutChanged(int)));
     connect(m_player, SIGNAL(inChanged(int)), m_filterController, SLOT(onServiceInChanged(int)));
     connect(m_player, SIGNAL(outChanged(int)), m_filterController, SLOT(onServiceOutChanged(int)));
