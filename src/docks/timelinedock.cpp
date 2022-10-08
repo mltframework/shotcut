@@ -1113,27 +1113,12 @@ void TimelineDock::setPosition(int position)
     }
 }
 
-Mlt::ClipInfo *TimelineDock::getClipInfo(int trackIndex, int clipIndex)
-{
-    Mlt::ClipInfo *result = nullptr;
-    if (clipIndex >= 0 && trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
-        int i = m_model.trackList().at(trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
-        if (track) {
-            Mlt::Playlist playlist(*track);
-            result = playlist.clip_info(clipIndex);
-        }
-    }
-    return result;
-}
-
 Mlt::Producer TimelineDock::producerForClip(int trackIndex, int clipIndex)
 {
     Mlt::Producer result;
-    Mlt::ClipInfo *info = getClipInfo(trackIndex, clipIndex);
+    auto info = m_model.getClipInfo(trackIndex, clipIndex);
     if (info) {
         result = Mlt::Producer(info->producer);
-        delete info;
     }
     return result;
 }
@@ -1332,7 +1317,7 @@ const QVector<QUuid> TimelineDock::selectionUuids()
 {
     QVector<QUuid> result;
     for (const auto &clip : selection()) {
-        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+        auto info = m_model.getClipInfo(clip.y(), clip.x());
         if (info && info->cut && info->cut->is_valid())
             result << MLT.ensureHasUuid(*info->cut);
     }
@@ -1357,7 +1342,7 @@ void TimelineDock::restoreSelection()
     m_selection.isMultitrackSelected = m_savedIsMultitrackSelected;
     for (const auto &uuid : m_savedSelectionUuids) {
         int trackIndex, clipIndex;
-        QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(uuid, trackIndex, clipIndex));
+        auto info = m_model.findClipByUuid(uuid, trackIndex, clipIndex);
         if (info) {
             m_selection.selectedClips << QPoint(clipIndex, trackIndex);
         }
@@ -1391,7 +1376,7 @@ void TimelineDock::selectClipUnderPlayhead()
 
 int TimelineDock::centerOfClip(int trackIndex, int clipIndex)
 {
-    QScopedPointer<Mlt::ClipInfo> clip(getClipInfo(trackIndex, clipIndex));
+    auto clip = m_model.getClipInfo(trackIndex, clipIndex);
     return clip ? clip->start + clip->frame_count / 2 : -1;
 }
 
@@ -1417,7 +1402,7 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
     if (!track)
         return;
 
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    auto info = m_model.getClipInfo(trackIndex, clipIndex);
     if (!info)
         return;
 
@@ -1867,7 +1852,7 @@ void TimelineDock::removeSelection(bool withCopy)
     }
     int trackIndex, clipIndex;
     for (const auto &uuid : selectionUuids()) {
-        delete m_model.findClipByUuid(uuid, trackIndex, clipIndex);
+        m_model.findClipByUuid(uuid, trackIndex, clipIndex);
         remove(trackIndex, clipIndex);
     }
     if (n > 1)
@@ -1889,7 +1874,7 @@ void TimelineDock::liftSelection()
         MAIN.undoStack()->beginMacro(tr("Lift %1 from timeline").arg(n));
     int trackIndex, clipIndex;
     for (const auto &uuid : selectionUuids()) {
-        delete m_model.findClipByUuid(uuid, trackIndex, clipIndex);
+        m_model.findClipByUuid(uuid, trackIndex, clipIndex);
         lift(trackIndex, clipIndex);
     }
     if (n > 1)
@@ -1943,7 +1928,7 @@ void TimelineDock::copy(int trackIndex, int clipIndex)
         if (clipIndex < 0)
             clipIndex = clipIndexAtPlayhead(trackIndex);
         Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+        auto info = m_model.getClipInfo(trackIndex, clipIndex);
         if (info) {
             QString xml = MLT.XML(info->producer);
             Mlt::Producer p(MLT.profile(), "xml-string", xml.toUtf8().constData());
@@ -1962,9 +1947,8 @@ void TimelineDock::copy(int trackIndex, int clipIndex)
         for (auto &a : selected) {
             minY = std::min(minY, a.y());
             maxY = std::max(maxY, a.y());
-            auto info = getClipInfo(a.y(), a.x());
+            auto info = m_model.getClipInfo(a.y(), a.x());
             if (info) minStart = std::min(minStart, info->start);
-            delete info;
         }
         // Create the tracks
         Mlt::Tractor tractor(MLT.profile());
@@ -2021,13 +2005,13 @@ void TimelineDock::emitSelectedFromSelection()
 
     int trackIndex = selection().isEmpty() ? currentTrack() : selection().first().y();
     int clipIndex  = selection().isEmpty() ? 0              : selection().first().x();
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    auto info = m_model.getClipInfo(trackIndex, clipIndex);
     if (info && info->producer && info->producer->is_valid()) {
         m_updateCommand.reset(new Timeline::UpdateCommand(*this, trackIndex, clipIndex, info->start));
         // We need to set these special properties so time-based filters
         // can get information about the cut while still applying filters
         // to the cut parent.
-        QScopedPointer<Mlt::ClipInfo> info2(getClipInfo(trackIndex, clipIndex - 1));
+        auto info2 = m_model.getClipInfo(trackIndex, clipIndex - 1);
         if (info2 && info2->producer && info2->producer->is_valid()
                 && info2->producer->get(kShotcutTransitionProperty)) {
             // Factor in a transition left of the clip.
@@ -2037,7 +2021,7 @@ void TimelineDock::emitSelectedFromSelection()
             info->producer->set(kFilterInProperty, info->frame_in);
             info->producer->set(kPlaylistStartProperty, info->start);
         }
-        info2.reset(getClipInfo(trackIndex, clipIndex + 1));
+        info2 = m_model.getClipInfo(trackIndex, clipIndex + 1);
         if (info2 && info2->producer && info2->producer->is_valid()
                 && info2->producer->get(kShotcutTransitionProperty)) {
             // Factor in a transition right of the clip.
@@ -2058,8 +2042,9 @@ void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex, bool force)
 {
     if (Settings.timelineShowWaveforms()) {
         QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
-        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-        AudioLevelsTask::start(*info->producer, &m_model, modelIndex, force);
+        auto info = m_model.getClipInfo(trackIndex, clipIndex);
+        if (info)
+            AudioLevelsTask::start(*info->producer, &m_model, modelIndex, force);
     }
 }
 
@@ -2157,7 +2142,7 @@ void TimelineDock::detachAudio(int trackIndex, int clipIndex)
     if (!m_model.trackList().count())
         return;
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    auto info = m_model.getClipInfo(trackIndex, clipIndex);
     if (info && info->producer && info->producer->is_valid() && !info->producer->is_blank()
             && info->producer->get("audio_index") && info->producer->get_int("audio_index") >= 0) {
         if (!info->producer->property_exists(kDefaultAudioIndexProperty)) {
@@ -2263,7 +2248,7 @@ void TimelineDock::createOrEditSelectionMarker()
     int start = std::numeric_limits<int>::max();
     int end = std::numeric_limits<int>::min();
     for (const auto &clip : selected) {
-        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+        auto info = m_model.getClipInfo(clip.y(), clip.x());
         if (info) {
             if (info->start < start) {
                 start = info->start;
@@ -2456,7 +2441,7 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
         // determine the position delta
         for (const auto &clip : selection()) {
             if (clip.y() == fromTrack && clip.x() == clipIndex) {
-                QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+                auto info = m_model.getClipInfo(clip.y(), clip.x());
                 if (info) {
                     position -= info->start;
                     break;
@@ -2467,7 +2452,7 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
 
         // Copy selected
         for (const auto &clip : selection()) {
-            QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+            auto info = m_model.getClipInfo(clip.y(), clip.x());
             if (info && info->cut) {
                 LOG_DEBUG() << "moving clip at" << clip << "start" << info->start << "+" << position << "=" <<
                             info->start + position;
@@ -2536,7 +2521,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
     } else return false;
 
     // Update duration in properties
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    auto info = m_model.getClipInfo(trackIndex, clipIndex);
     if (info && !info->producer->get_int(kShotcutSequenceProperty))
         emit durationChanged();
 
@@ -2592,7 +2577,7 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
     } else return false;
 
     // Update duration in properties
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    auto info = m_model.getClipInfo(trackIndex, clipIndex);
     if (info && !info->producer->get_int(kShotcutSequenceProperty))
         emit durationChanged();
 
@@ -2906,7 +2891,7 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
         if (track) {
             Mlt::Playlist playlist(*track);
             if (!m_model.isTransition(playlist, clipIndex)) {
-                QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+                auto info = m_model.getClipInfo(trackIndex, clipIndex);
                 if (info && m_position > info->start && m_position < info->start + info->frame_count) {
                     setSelection(); // Avoid filter views becoming out of sync
                     MAIN.undoStack()->push(
@@ -3210,8 +3195,7 @@ void TimelineDock::replaceClipsWithHash(const QString &hash, Mlt::Producer &prod
         int trackIndex = -1;
         int clipIndex = -1;
         // lookup the current track and clip index by UUID
-        QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(clip.get(kUuidProperty), trackIndex,
-                                                                       clipIndex));
+        auto info = m_model.findClipByUuid(clip.get(kUuidProperty), trackIndex, clipIndex);
 
         if (info && info->producer->is_valid() && trackIndex >= 0 && clipIndex >= 0
                 && info->producer->type() != mlt_service_tractor_type) {
@@ -3228,13 +3212,13 @@ void TimelineDock::replaceClipsWithHash(const QString &hash, Mlt::Producer &prod
                 int out = clip.get_out();
 
                 // Factor in a transition left of the clip.
-                QScopedPointer<Mlt::ClipInfo> info2(getClipInfo(trackIndex, clipIndex - 1));
+                auto info2 = m_model.getClipInfo(trackIndex, clipIndex - 1);
                 if (info2 && info2->producer && info2->producer->is_valid()
                         && info2->producer->get(kShotcutTransitionProperty)) {
                     in -= info2->frame_count;
                 }
                 // Factor in a transition right of the clip.
-                info2.reset(getClipInfo(trackIndex, clipIndex + 1));
+                info2 = m_model.getClipInfo(trackIndex, clipIndex + 1);
                 if (info2 && info2->producer && info2->producer->is_valid()
                         && info2->producer->get(kShotcutTransitionProperty)) {
                     out += info2->frame_count;
@@ -3335,7 +3319,7 @@ void TimelineDock::onRecordStarted()
 void TimelineDock::updateRecording()
 {
     int out = qRound(MLT.profile().fps() * m_recordingTime.secsTo(QDateTime::currentDateTime()));
-    std::unique_ptr<Mlt::ClipInfo> info(getClipInfo(m_recordingTrackIndex, m_recordingClipIndex));
+    auto info = m_model.getClipInfo(m_recordingTrackIndex, m_recordingClipIndex);
     if (info) {
         auto delta = info->frame_out - out;
         if (delta < 0) {
@@ -3383,7 +3367,7 @@ void TimelineDock::stopRecording()
         }
 
         // Replace color clip.
-        std::unique_ptr<Mlt::ClipInfo> info(getClipInfo(m_recordingTrackIndex, m_recordingClipIndex));
+        auto info = m_model.getClipInfo(m_recordingTrackIndex, m_recordingClipIndex);
         if (info && info->producer && info->producer->is_valid()) {
             Mlt::Producer clip(MLT.profile(), info->producer->get(kShotcutDetailProperty));
             lift(m_recordingTrackIndex, m_recordingClipIndex);

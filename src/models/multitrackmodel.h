@@ -23,6 +23,7 @@
 #include <QString>
 #include <MltTractor.h>
 #include <MltPlaylist.h>
+#include <memory>
 
 typedef enum {
     PlaylistTrackType = 0,
@@ -119,7 +120,8 @@ public:
     void moveTrack(int fromTrackIndex, int toTrackIndex);
     void insertOrAdjustBlankAt(QList<int> tracks, int position, int length);
     bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
-    Mlt::ClipInfo *findClipByUuid(const QUuid &uuid, int &trackIndex, int &clipIndex);
+    std::unique_ptr<Mlt::ClipInfo> findClipByUuid(const QUuid &uuid, int &trackIndex, int &clipIndex);
+    std::unique_ptr<Mlt::ClipInfo> getClipInfo(int trackIndex, int clipIndex);
     QString getTrackName(int trackIndex);
     int bottomVideoTrackIndex() const;
     int mltIndexForTrack(int trackIndex) const;

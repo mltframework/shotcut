@@ -331,7 +331,7 @@ void AlignAudioDialog::rebuildClipList()
 
     for (const auto &uuid : m_uuids) {
         int trackIndex, clipIndex;
-        QScopedPointer<Mlt::ClipInfo> info(m_model->findClipByUuid(uuid, trackIndex, clipIndex));
+        auto info = m_model->findClipByUuid(uuid, trackIndex, clipIndex);
         if (info && info->cut && info->cut->is_valid()) {
             QString error;
             QString clipName = info->producer->get(kShotcutCaptionProperty);
@@ -371,7 +371,7 @@ void AlignAudioDialog::process()
     QList<ClipAudioReader *> m_clipReaders;
     for (const auto &uuid : m_uuids) {
         int trackIndex, clipIndex;
-        QScopedPointer<Mlt::ClipInfo> info(m_model->findClipByUuid(uuid, trackIndex, clipIndex));
+        auto info = m_model->findClipByUuid(uuid, trackIndex, clipIndex);
         if (!info || !info->cut || !info->cut->is_valid()) {
             continue;
         }
@@ -432,7 +432,7 @@ void AlignAudioDialog::apply()
     int modelIndex = 0;
     for (const auto &uuid : m_uuids) {
         int trackIndex, clipIndex;
-        QScopedPointer<Mlt::ClipInfo> info(m_model->findClipByUuid(uuid, trackIndex, clipIndex));
+        auto info = m_model->findClipByUuid(uuid, trackIndex, clipIndex);
         if (!info || !info->cut || !info->cut->is_valid()) {
             continue;
         }

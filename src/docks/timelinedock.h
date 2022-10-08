@@ -66,7 +66,6 @@ public:
         return m_position;
     }
     void setPosition(int position);
-    Mlt::ClipInfo *getClipInfo(int trackIndex, int clipIndex);
     Mlt::Producer producerForClip(int trackIndex, int clipIndex);
     int clipIndexAtPlayhead(int trackIndex = -1);
     int clipIndexAtPosition(int trackIndex, int position);

@@ -461,8 +461,7 @@ void MoveClipCommand::redo()
     }
     if (m_ripple && !m_trackDelta && m_selection.size() == 1) {
         if (m_start == -1) {
-            QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(MLT.uuid(m_selection.first()), trackIndex,
-                                                                      clipIndex));
+            auto info = m_model.findClipByUuid(MLT.uuid(m_selection.first()), trackIndex, clipIndex);
             if (info && info->cut) {
                 auto newStart = info->cut->get_int(kPlaylistStartProperty);
                 auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
@@ -495,7 +494,7 @@ void MoveClipCommand::redo()
     for (auto &clip : m_selection) {
         if (!m_redo) {
             // On the initial pass, remove clips while recording info about them.
-            QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(MLT.uuid(clip), trackIndex, clipIndex));
+            auto info = m_model.findClipByUuid(MLT.uuid(clip), trackIndex, clipIndex);
             if (info && info->producer && info->producer->is_valid() && info->cut) {
                 info->producer->set(kNewTrackIndexProperty, qBound(0, trackIndex + m_trackDelta,
                                                                    m_model.trackList().size() - 1));
@@ -1652,7 +1651,7 @@ void AlignClipsCommand::redo()
     // Remove all the clips and remember them.
     for (auto &alignment : m_alignments) {
         int trackIndex, clipIndex;
-        QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(alignment.uuid, trackIndex, clipIndex));
+        auto info = m_model.findClipByUuid(alignment.uuid, trackIndex, clipIndex);
         if (!info || !info->cut || !info->cut->is_valid()) {
             continue;
         }

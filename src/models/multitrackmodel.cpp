@@ -2586,7 +2586,8 @@ void MultitrackModel::adjustTrackFilters()
 }
 
 
-Mlt::ClipInfo *MultitrackModel::findClipByUuid(const QUuid &uuid, int &trackIndex, int &clipIndex)
+std::unique_ptr<Mlt::ClipInfo> MultitrackModel::findClipByUuid(const QUuid &uuid, int &trackIndex,
+                                                               int &clipIndex)
 {
     for (trackIndex = 0; trackIndex < trackList().size(); trackIndex++) {
         int i = trackList().at(trackIndex).mlt_index;
@@ -2597,12 +2598,26 @@ Mlt::ClipInfo *MultitrackModel::findClipByUuid(const QUuid &uuid, int &trackInde
                 Mlt::ClipInfo *info;
                 if ((info = playlist.clip_info(clipIndex))) {
                     if (MLT.uuid(*info->cut) == uuid)
-                        return info;
+                        return std::unique_ptr<Mlt::ClipInfo>(info);
                 }
             }
         }
     }
     return nullptr;
+}
+
+std::unique_ptr<Mlt::ClipInfo> MultitrackModel::getClipInfo(int trackIndex, int clipIndex)
+{
+    Mlt::ClipInfo *result = nullptr;
+    if (clipIndex >= 0 && trackIndex >= 0 && trackIndex < trackList().size()) {
+        int i = trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            result = playlist.clip_info(clipIndex);
+        }
+    }
+    return std::unique_ptr<Mlt::ClipInfo>(result);
 }
 
 QString MultitrackModel::getTrackName(int trackIndex)

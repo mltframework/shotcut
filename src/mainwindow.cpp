@@ -2787,10 +2787,10 @@ void MainWindow::onMultitrackModified()
     if (!m_timelineDock->selection().isEmpty()) {
         int trackIndex = m_timelineDock->selection().first().y();
         int clipIndex = m_timelineDock->selection().first().x();
-        QScopedPointer<Mlt::ClipInfo> info(m_timelineDock->getClipInfo(trackIndex, clipIndex));
+        auto info = m_timelineDock->model()->getClipInfo(trackIndex, clipIndex);
         if (info && info->producer && info->producer->is_valid()) {
             int expected = info->frame_in;
-            QScopedPointer<Mlt::ClipInfo> info2(m_timelineDock->getClipInfo(trackIndex, clipIndex - 1));
+            auto info2 = m_timelineDock->model()->getClipInfo(trackIndex, clipIndex - 1);
             if (info2 && info2->producer && info2->producer->is_valid()
                     && info2->producer->get(kShotcutTransitionProperty)) {
                 // Factor in a transition left of the clip.
@@ -2805,7 +2805,7 @@ void MainWindow::onMultitrackModified()
                 emit m_filtersDock->producerInChanged(delta);
             }
             expected = info->frame_out;
-            info2.reset(m_timelineDock->getClipInfo(trackIndex, clipIndex + 1));
+            info2 = m_timelineDock->model()->getClipInfo(trackIndex, clipIndex + 1);
             if (info2 && info2->producer && info2->producer->is_valid()
                     && info2->producer->get(kShotcutTransitionProperty)) {
                 // Factor in a transition right of the clip.
@@ -4442,7 +4442,7 @@ void MainWindow::on_actionPreview720_triggered(bool checked)
 
 QUuid MainWindow::timelineClipUuid(int trackIndex, int clipIndex)
 {
-    QScopedPointer<Mlt::ClipInfo> info(m_timelineDock->getClipInfo(trackIndex, clipIndex));
+    auto info = m_timelineDock->model()->getClipInfo(trackIndex, clipIndex);
     if (info && info->cut && info->cut->is_valid())
         return MLT.ensureHasUuid(*info->cut);
     return QUuid();
@@ -4453,19 +4453,13 @@ void MainWindow::replaceInTimeline(const QUuid &uuid, Mlt::Producer &producer)
     int trackIndex = -1;
     int clipIndex = -1;
     // lookup the current track and clip index by UUID
-    QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(uuid, trackIndex, clipIndex));
+    auto info = m_timelineDock->model()->findClipByUuid(uuid, trackIndex, clipIndex);
 
-    if (trackIndex >= 0 && clipIndex >= 0) {
+    if (info && trackIndex >= 0 && clipIndex >= 0) {
         Util::getHash(producer);
         Util::applyCustomProperties(producer, *info->producer, producer.get_in(), producer.get_out());
         m_timelineDock->replace(trackIndex, clipIndex, MLT.XML(&producer));
     }
-}
-
-Mlt::ClipInfo *MainWindow::timelineClipInfoByUuid(const QUuid &uuid, int &trackIndex,
-                                                  int &clipIndex)
-{
-    return m_timelineDock->model()->findClipByUuid(uuid, trackIndex, clipIndex);
 }
 
 void MainWindow::replaceAllByHash(const QString &hash, Mlt::Producer &producer, bool isProxy)
