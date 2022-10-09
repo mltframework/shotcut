@@ -63,7 +63,7 @@ Rectangle {
         onExited: bubbleHelp.hide()
         onPositionChanged: {
             var text = application.timecode(mouse.x / timeScale);
-            bubbleHelp.show(mouse.x + bubbleHelp.width - 8, mouse.y + 65, text);
+            bubbleHelp.show(text);
         }
     }
 

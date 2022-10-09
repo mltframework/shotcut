@@ -325,7 +325,7 @@ Rectangle {
                     filter.animateIn = duration;
                     // Show fade duration as time in a "bubble" help.
                     var s = application.timecode(Math.max(duration, 0));
-                    bubbleHelp.show(clipRoot.x, trackRoot.y + clipRoot.height, s.substring(6));
+                    bubbleHelp.show(s.substring(6));
                 }
             }
             onDoubleClicked: filter.animateIn = (filter.animateIn > 0) ? 0 : Math.round(profile.fps)
@@ -433,7 +433,7 @@ Rectangle {
                     filter.animateOut = duration;
                     // Show fade duration as time in a "bubble" help.
                     var s = application.timecode(duration, 0);
-                    bubbleHelp.show(clipRoot.x + clipRoot.width, trackRoot.y + clipRoot.height, s.substring(6));
+                    bubbleHelp.show(s.substring(6));
                 }
             }
             onDoubleClicked: filter.animateOut = (filter.animateOut > 0) ? 0 : Math.round(profile.fps)
