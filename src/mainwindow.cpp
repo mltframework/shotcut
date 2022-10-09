@@ -310,6 +310,9 @@ void MainWindow::setupAndConnectPlayerWidget()
     ui->menuPlayer->addAction(Actions["playerBackwardFiveSecondsAction"]);
     ui->menuPlayer->addAction(Actions["playerForwardTenSecondsAction"]);
     ui->menuPlayer->addAction(Actions["playerBackwardTenSecondsAction"]);
+    ui->menuPlayer->addAction(Actions["playerForwardJumpAction"]);
+    ui->menuPlayer->addAction(Actions["playerBackwardJumpAction"]);
+    ui->menuPlayer->addAction(Actions["playerSetJumpAction"]);
     ui->menuPlayer->addAction(Actions["playerSetInAction"]);
     ui->menuPlayer->addAction(Actions["playerSetOutAction"]);
     ui->menuPlayer->addAction(Actions["playerSetPositionAction"]);

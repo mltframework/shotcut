@@ -521,6 +521,16 @@ void ShotcutSettings::setPlayerVideoDelayMs(int i)
     settings.setValue("player/videoDelayMs", i);
 }
 
+double ShotcutSettings::playerJumpSeconds() const
+{
+    return settings.value("player/jumpSeconds", 60.0).toDouble();
+}
+
+void ShotcutSettings::setPlayerJumpSeconds(double i)
+{
+    settings.setValue("player/jumpSeconds", i);
+}
+
 QString ShotcutSettings::playlistThumbnails() const
 {
     return settings.value("playlist/thumbnails", "small").toString();

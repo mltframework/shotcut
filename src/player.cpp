@@ -20,6 +20,7 @@
 #include "actions.h"
 #include "scrubbar.h"
 #include "mainwindow.h"
+#include "dialogs/durationdialog.h"
 #include "widgets/statuslabelwidget.h"
 #include "widgets/timespinbox.h"
 #include "widgets/audioscale.h"
@@ -532,6 +533,33 @@ void Player::setupActions()
             seek(position() - 10 * qRound(MLT.profile().fps()));
     });
     Actions.add("playerBackwardTenSecondsAction", action);
+
+    action = new QAction(tr("Forward Jump"), this);
+    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_PageDown));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() + qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));
+    });
+    Actions.add("playerForwardJumpAction", action);
+
+    action = new QAction(tr("Backward Jump"), this);
+    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_PageUp));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (MLT.producer())
+            seek(position() - qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));
+    });
+    Actions.add("playerBackwardJumpAction", action);
+
+    action = new QAction(tr("Set Jump Time"), this);
+    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_J));
+    connect(action, &QAction::triggered, this, [&]() {
+        DurationDialog dialog(this);
+        dialog.setDuration(qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));
+        if (dialog.exec() == QDialog::Accepted) {
+            Settings.setPlayerJumpSeconds((double)dialog.duration() / MLT.profile().fps());
+        }
+    });
+    Actions.add("playerSetJumpAction", action);
 
     action = new QAction(tr("Trim Clip In"), this);
     action->setShortcut(QKeySequence(Qt::Key_I));
