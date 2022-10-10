@@ -393,7 +393,7 @@ Rectangle {
                                                 // Show amount trimmed as a time in a "bubble" help.
                                                 var s = application.timecode(Math.abs(clip.originalX));
                                                 s = '%1%2 = %3'.arg((clip.originalX < 0) ? '-' : (clip.originalX > 0) ? '+' : '').arg(s.substring(3)).arg(application.timecode(n));
-                                                bubbleHelp.show(clip.x, trackRoot.y + trackRoot.height, s);
+                                                bubbleHelp.show(s);
                                             } else {
                                                 clip.originalX -= delta;
                                             }
@@ -406,7 +406,7 @@ Rectangle {
                                                 // Show amount trimmed as a time in a "bubble" help.
                                                 var s = application.timecode(Math.abs(clip.originalX));
                                                 s = '%1%2 = %3'.arg((clip.originalX < 0) ? '+' : (clip.originalX > 0) ? '-' : '').arg(s.substring(3)).arg(application.timecode(n));
-                                                bubbleHelp.show(clip.x + clip.width, trackRoot.y + trackRoot.height, s);
+                                                bubbleHelp.show(s);
                                             } else {
                                                 clip.originalX -= delta;
                                             }
@@ -513,9 +513,11 @@ Rectangle {
 
         property alias text: bubbleHelpLabel.text
 
-        function show(x, y, text) {
-            bubbleHelp.x = x + tracksArea.x - tracksFlickable.contentX - bubbleHelpLabel.width;
-            bubbleHelp.y = Math.max(0, y + tracksArea.y - tracksFlickable.contentY - bubbleHelpLabel.height);
+        function show(text) {
+            var point = application.mousePos;
+            point = parent.mapFromGlobal(point.x, point.y);
+            bubbleHelp.x = point.x + 20;
+            bubbleHelp.y = Math.max(point.y - 20, 0);
             bubbleHelp.text = text;
             if (bubbleHelp.state !== 'visible')
                 bubbleHelp.state = 'visible';

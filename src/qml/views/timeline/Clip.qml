@@ -341,7 +341,7 @@ Rectangle {
 
                     }
                     text += '<br>' + application.timecode(clipDuration);
-                    bubbleHelp.show(clipRoot.x + clipNameHover.mouseX, trackRoot.y + clipRoot.height, text);
+                    bubbleHelp.show(text);
                 }
             }
         }
@@ -499,7 +499,7 @@ Rectangle {
                     timeline.fadeIn(trackIndex, index, duration);
                     // Show fade duration as time in a "bubble" help.
                     var s = application.timecode(duration);
-                    bubbleHelp.show(clipRoot.x, trackRoot.y + clipRoot.height, s.substring(6));
+                    bubbleHelp.show(s.substring(6));
                 }
             }
             onDoubleClicked: timeline.fadeIn(trackIndex, index, (fadeIn > 0) ? 0 : Math.round(profile.fps))
@@ -596,7 +596,7 @@ Rectangle {
                     timeline.fadeOut(trackIndex, index, duration);
                     // Show fade duration as time in a "bubble" help.
                     var s = application.timecode(duration);
-                    bubbleHelp.show(clipRoot.x + clipRoot.width, trackRoot.y + clipRoot.height, s.substring(6));
+                    bubbleHelp.show(s.substring(6));
                 }
             }
             onDoubleClicked: timeline.fadeOut(trackIndex, index, (fadeOut > 0) ? 0 : Math.round(profile.fps))

@@ -152,7 +152,7 @@ Rectangle {
                     s = s.substring(3);
 
                 s = ((delta < 0) ? '-' : (delta > 0) ? '+' : '') + s;
-                bubbleHelp.show(mapped.x, trackRoot.y + trackRoot.height, s);
+                bubbleHelp.show(s);
             }
             onTrimmingIn: {
                 var originalDelta = delta;
@@ -164,7 +164,7 @@ Rectangle {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = application.timecode(Math.abs(clip.originalX));
                         s = '%1%2 = %3'.arg((clip.originalX < 0) ? '-' : (clip.originalX > 0) ? '+' : '').arg(s.substring(3)).arg(application.timecode(clipDuration));
-                        bubbleHelp.show(clip.x, trackRoot.y + trackRoot.height, s);
+                        bubbleHelp.show(s);
                     } else {
                         clip.originalX -= originalDelta;
                     }
@@ -191,7 +191,7 @@ Rectangle {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = application.timecode(Math.abs(clip.originalX));
                         s = '%1%2 = %3'.arg((clip.originalX < 0) ? '+' : (clip.originalX > 0) ? '-' : '').arg(s.substring(3)).arg(application.timecode(clipDuration));
-                        bubbleHelp.show(clip.x + clip.width, trackRoot.y + trackRoot.height, s);
+                        bubbleHelp.show(s);
                     } else {
                         clip.originalX -= originalDelta;
                     }

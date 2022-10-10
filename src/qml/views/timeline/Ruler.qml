@@ -69,7 +69,7 @@ Rectangle {
         onExited: bubbleHelp.hide()
         onPositionChanged: {
             var text = application.timecode(mouse.x / timeScale);
-            bubbleHelp.show(mouse.x + bubbleHelp.width - 8, mouse.y + 65, text);
+            bubbleHelp.show(text);
         }
     }
 
@@ -89,7 +89,7 @@ Rectangle {
                 msg += "<br>" + application.timecode(end - start + 1);
             }
             msg += "</center>";
-            bubbleHelp.show(mouseX + bubbleHelp.width - 8, mouseY + 87, msg);
+            bubbleHelp.show(msg);
         }
         onSeekRequested: timeline.position = pos
 
