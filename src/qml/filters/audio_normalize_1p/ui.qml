@@ -27,6 +27,7 @@ Item {
         maxgainSlider.value = filter.getDouble('max_gain');
         mingainSlider.value = filter.getDouble('min_gain');
         maxrateSlider.value = filter.getDouble('max_rate');
+        discResetCheckbox.checked = parseInt(filter.get('discontinuity_reset'));
     }
 
     width: 480
@@ -39,6 +40,7 @@ Item {
             filter.set('max_gain', 15);
             filter.set('min_gain', -15);
             filter.set('max_rate', 3);
+            filter.set('discontinuity_reset', 1);
             filter.savePreset(preset.parameters);
         }
         setControls();
@@ -224,6 +226,25 @@ Item {
 
         Shotcut.UndoButton {
             onClicked: maxrateSlider.value = 3
+        }
+
+        Label {
+        }
+
+        CheckBox {
+            id: discResetCheckbox
+
+            text: qsTr('Reset on discontinuity')
+            onCheckedChanged: filter.set('discontinuity_reset', checked)
+
+            Shotcut.HoverTip {
+                text: qsTr('Reset the measurement if a discontinuity is detected - such as seeking or clip change.')
+            }
+        }
+
+        Shotcut.UndoButton {
+            id: discResetUndo
+            onClicked: discResetCheckbox.checked = true
         }
 
         Rectangle {
