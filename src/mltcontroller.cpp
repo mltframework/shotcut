@@ -116,12 +116,17 @@ int Controller::open(const QString &url, const QString &urlToSave)
 
     close();
 
+    auto myUrl = url;
+    if (url.endsWith(".mlt")) {
+        // MLT xml producer does URL encoding; so if the URL contains % it must be encoded.
+        myUrl = QUrl::toPercentEncoding(url).constData();
+    }
     if (Settings.playerGPU() && !profile().is_explicit())
         // Prevent loading normalizing filters, which might be Movit ones that
         // may not have a proper OpenGL context when requesting a sample frame.
-        newProducer = new Mlt::Producer(profile(), "abnormal", url.toUtf8().constData());
+        newProducer = new Mlt::Producer(profile(), "abnormal", myUrl.toUtf8().constData());
     else
-        newProducer = new Mlt::Producer(profile(), url.toUtf8().constData());
+        newProducer = new Mlt::Producer(profile(), myUrl.toUtf8().constData());
     if (newProducer && newProducer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
@@ -148,7 +153,7 @@ int Controller::open(const QString &url, const QString &urlToSave)
         if (isFpsDifferent(profile().fps(), fps) || (Settings.playerGPU() && !profile().is_explicit())) {
             // Reload with correct FPS or with Movit normalizing filters attached.
             delete newProducer;
-            newProducer = new Mlt::Producer(profile(), url.toUtf8().constData());
+            newProducer = new Mlt::Producer(profile(), myUrl.toUtf8().constData());
         }
         if (m_url.isEmpty() && QString(newProducer->get("xml")) == "was here") {
             if (newProducer->get_int("_original_type") != mlt_service_tractor_type ||
@@ -172,7 +177,12 @@ bool Controller::openXML(const QString &filename)
 {
     bool error = true;
     close();
-    Producer *producer = new Mlt::Producer(profile(), nullptr, filename.toUtf8().constData());
+    auto myFilename = filename;
+    if (myFilename.endsWith(".mlt")) {
+        // MLT xml producer does URL encoding; so if the URL contains % it must be encoded.
+        myFilename = QUrl::toPercentEncoding(filename).constData();
+    }
+    Producer *producer = new Mlt::Producer(profile(), myFilename.toUtf8().constData());
     if (producer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
@@ -185,10 +195,10 @@ bool Controller::openXML(const QString &filename)
         if (isFpsDifferent(profile().fps(), fps)) {
             // reopen with the correct fps
             delete producer;
-            producer = new Mlt::Producer(profile(), nullptr, filename.toUtf8().constData());
+            producer = new Mlt::Producer(profile(), nullptr, myFilename.toUtf8().constData());
         }
         producer->set(kShotcutVirtualClip, 1);
-        producer->set("resource", filename.toUtf8().constData());
+        producer->set("resource", myFilename.toUtf8().constData());
         setProducer(new Producer(producer));
         error = false;
     }

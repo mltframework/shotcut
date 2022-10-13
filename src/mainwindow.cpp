@@ -1626,6 +1626,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
     return true;
 }
 
+// This one is invoked from the command line.
 void MainWindow::openMultiple(const QStringList &paths)
 {
     if (paths.size() > 1) {
@@ -1638,6 +1639,7 @@ void MainWindow::openMultiple(const QStringList &paths)
     }
 }
 
+// This one is invoked from above (command line) or drag-n-drop.
 void MainWindow::openMultiple(const QList<QUrl> &urls)
 {
     if (urls.size() > 1) {
@@ -1650,6 +1652,7 @@ void MainWindow::openMultiple(const QList<QUrl> &urls)
     }
 }
 
+// This is one is invoked from the action.
 void MainWindow::openVideo()
 {
     QString path = Settings.openPath();
