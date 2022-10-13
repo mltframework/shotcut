@@ -41,6 +41,7 @@
 #include <QGuiApplication>
 #include <QClipboard>
 #include <QStringBuilder>
+#include <QStringConverter>
 
 QmlRichText::QmlRichText()
     : m_target(0)
@@ -79,10 +80,10 @@ void QmlRichText::setFileUrl(const QUrl &arg)
             if (file.open(QFile::ReadOnly)) {
                 QByteArray data = file.readAll();
                 if (Qt::mightBeRichText(data)) {
-                    QTextCodec *codec = QTextCodec::codecForHtml(data,  QTextCodec::codecForName("UTF-8"));
-                    setText(codec->toUnicode(data));
+                    auto decoder = QStringDecoder(QStringConverter::encodingForHtml(data).value());
+                    setText(decoder(data));
                 } else {
-                    QTextCodec *codec = QTextCodec::codecForUtfText(data);
+                    auto decoder = QStringDecoder(QStringConverter::encodingForData(data).value());
                     setText(QStringLiteral("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
                                            "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
                                            "p, li { white-space: pre-wrap; }"
@@ -92,7 +93,7 @@ void QmlRichText::setFileUrl(const QUrl &arg)
                                            "body { font-family:sans-serif; font-size:72pt; font-weight:600; font-style:normal; color:#ffffff; }"
 #endif
                                            "</style></head><body>")
-                            % codec->toUnicode(data)
+                            % QString(decoder(data))
                             % QStringLiteral("</body></html>"));
                 }
                 if (m_doc)

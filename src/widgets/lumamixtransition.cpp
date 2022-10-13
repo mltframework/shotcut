@@ -57,7 +57,7 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         QString resource = transition->get("resource");
         ui->lumaCombo->blockSignals(true);
         if (!resource.isEmpty() && resource.indexOf("%luma") != -1) {
-            ui->lumaCombo->setCurrentRow(resource.midRef(resource.indexOf("%luma") + 5).left(2).toInt() + 2);
+            ui->lumaCombo->setCurrentRow(resource.mid(resource.indexOf("%luma") + 5).left(2).toInt() + 2);
         } else if (!resource.isEmpty() && resource.startsWith("color:")) {
             ui->lumaCombo->setCurrentRow(kLumaComboCutIndex);
             ui->softnessLabel->setText(tr("Position"));

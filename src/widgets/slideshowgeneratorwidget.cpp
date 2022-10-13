@@ -451,7 +451,7 @@ void SlideshowGeneratorWidget::on_parameterChanged()
     m_config.transitionSoftness = m_softnessSpinner->value();
     if (m_future.isFinished() || m_future.isCanceled()) {
         // Generate the preview producer in another thread because it can take some time
-        m_future = QtConcurrent::run(this, &SlideshowGeneratorWidget::generatePreviewSlideshow);
+        m_future = QtConcurrent::run(&SlideshowGeneratorWidget::generatePreviewSlideshow, this);
     }
     m_mutex.unlock();
 }

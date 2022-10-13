@@ -213,7 +213,8 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     m_searchField->setPlaceholderText(tr("search"));
     connect(m_searchField, &QLineEdit::textChanged, this, [&](const QString & text) {
         if (m_proxyModel) {
-            m_proxyModel->setFilterRegExp(QRegExp(text, Qt::CaseInsensitive, QRegExp::FixedString));
+            m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+            m_proxyModel->setFilterFixedString(text);
         }
     });
     connect(m_searchField, &QLineEdit::returnPressed, this, [&] {

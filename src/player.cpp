@@ -24,7 +24,6 @@
 #include "widgets/timespinbox.h"
 #include "widgets/audioscale.h"
 #include "settings.h"
-#include "util.h"
 #include "widgets/newprojectfolder.h"
 #include "proxymanager.h"
 #include "widgets/docktoolbar.h"
@@ -369,7 +368,7 @@ void Player::setupActions()
     Actions.add("playerPlayPauseAction", action);
 
     action = new QAction(tr("Skip Next"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Right));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Right));
     icon = QIcon::fromTheme("media-skip-forward",
                             QIcon(":/icons/oxygen/32x32/actions/media-skip-forward.png"));
     action->setIcon(icon);
@@ -392,7 +391,7 @@ void Player::setupActions()
     Actions.add("playerSkipNextAction", action);
 
     action = new QAction(tr("Skip Previous"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Left));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Left));
     icon = QIcon::fromTheme("media-skip-backward",
                             QIcon(":/icons/oxygen/32x32/actions/media-skip-backward.png"));
     action->setIcon(icon);
@@ -486,7 +485,7 @@ void Player::setupActions()
     Actions.add("playerBackwardOneSecondAction", action);
 
     action = new QAction(tr("Forward Two Seconds"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageDown));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_PageDown));
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.producer())
             seek(position() + 2 * qRound(MLT.profile().fps()));
@@ -494,7 +493,7 @@ void Player::setupActions()
     Actions.add("playerForwardTwoSecondsAction", action);
 
     action = new QAction(tr("Backward Two Seconds"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_PageUp));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_PageUp));
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.producer())
             seek(position() - 2 * qRound(MLT.profile().fps()));
@@ -502,7 +501,7 @@ void Player::setupActions()
     Actions.add("playerBackwardTwoAction", action);
 
     action = new QAction(tr("Forward Five Seconds"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_PageDown));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageDown));
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.producer())
             seek(position() + 5 * qRound(MLT.profile().fps()));
@@ -510,7 +509,7 @@ void Player::setupActions()
     Actions.add("playerForwardFiveSecondsAction", action);
 
     action = new QAction(tr("Backward Five Seconds"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_PageUp));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageUp));
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.producer())
             seek(position() - 5 * qRound(MLT.profile().fps()));
@@ -518,7 +517,7 @@ void Player::setupActions()
     Actions.add("playerBackwardFiveSecondsAction", action);
 
     action = new QAction(tr("Forward Ten Seconds"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::CTRL + Qt::Key_PageDown));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::CTRL | Qt::Key_PageDown));
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.producer())
             seek(position() + 10 * qRound(MLT.profile().fps()));
@@ -526,7 +525,7 @@ void Player::setupActions()
     Actions.add("playerForwardTenSecondsAction", action);
 
     action = new QAction(tr("Backward Ten Seconds"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::CTRL + Qt::Key_PageUp));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::CTRL | Qt::Key_PageUp));
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.producer())
             seek(position() - 10 * qRound(MLT.profile().fps()));
@@ -560,7 +559,7 @@ void Player::setupActions()
     Actions.add("playerSetOutAction", action);
 
     action = new QAction(tr("Set Time Position"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_T));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_T));
     connect(action, &QAction::triggered, this, [&]() {
         m_positionSpinner->setFocus(Qt::ShortcutFocusReason);
     });
@@ -1050,7 +1049,7 @@ void Player::moveVideoToScreen(int screen)
     } else if (QGuiApplication::screens().size() > 1) {
         // -1 = find first screen the app is not using
         for (int i = 0; screen == -1 && i < QGuiApplication::screens().size(); i++) {
-            if (i != QApplication::desktop()->screenNumber(this))
+            if (QGuiApplication::screens().at(i) != this->screen())
                 screen = i;
         }
         m_videoScrollWidget->showNormal();

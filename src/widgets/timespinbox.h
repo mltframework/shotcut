@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #include <QSpinBox>
 #include <QLineEdit>
 
-class QRegExpValidator;
+class QRegularExpressionValidator;
 
 class TimeSpinBox : public QSpinBox
 {
@@ -37,7 +37,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private:
-    QRegExpValidator *m_validator;
+    QRegularExpressionValidator *m_validator;
 };
 
 class TimeSpinBoxLineEdit : public QLineEdit

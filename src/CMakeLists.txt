@@ -59,7 +59,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   jobs/postjobaction.cpp jobs/postjobaction.h
   jobs/qimagejob.cpp jobs/qimagejob.h
   jobs/videoqualityjob.cpp jobs/videoqualityjob.h
-  leapnetworklistener.cpp leapnetworklistener.h
   main.cpp
   mainwindow.cpp mainwindow.h
   mainwindow.ui
@@ -135,7 +134,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/gdigrabwidget.ui
   widgets/glaxnimateproducerwidget.cpp widgets/glaxnimateproducerwidget.h
   widgets/glaxnimateproducerwidget.ui
-  widgets/gltestwidget.cpp widgets/gltestwidget.h
   widgets/imageproducerwidget.cpp widgets/imageproducerwidget.h
   widgets/imageproducerwidget.ui
   widgets/isingwidget.cpp widgets/isingwidget.h
@@ -232,15 +230,15 @@ target_link_libraries(shotcut
   CuteLogger
   PkgConfig::mlt++
   PkgConfig::FFTW
-  Qt5::Multimedia
-  Qt5::Network
-  Qt5::OpenGL
-  Qt5::QuickControls2
-  Qt5::QuickWidgets
-  Qt5::Sql
-  Qt5::WebSockets
-  Qt5::Widgets
-  Qt5::Xml
+  Qt6::Multimedia
+  Qt6::Network
+  Qt6::OpenGL
+  Qt6::OpenGLWidgets
+  Qt6::QuickControls2
+  Qt6::QuickWidgets
+  Qt6::Sql
+  Qt6::Widgets
+  Qt6::Xml
 )
 
 file(GLOB_RECURSE QML_SRC "qml/*")
@@ -256,9 +254,9 @@ if(WIN32)
   target_sources(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
 
   # Windows integration features
-  find_package(Qt5 5.15 REQUIRED COMPONENTS WinExtras)
+  find_package(Qt 6.2 REQUIRED COMPONENTS WinExtras)
   target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
-  target_link_libraries(shotcut PRIVATE Qt5::WinExtras)
+  target_link_libraries(shotcut PRIVATE Qt6::WinExtras)
 
   # Runtime exception handler for debug only
   target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)

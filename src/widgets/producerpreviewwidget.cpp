@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ void ProducerPreviewWidget::start(const Mlt::Producer &producer)
         // Set up the producer frame generator
         m_seekTo = 0;
         m_generateFrames = true;
-        m_future = QtConcurrent::run(this, &ProducerPreviewWidget::frameGeneratorThread);
+        m_future = QtConcurrent::run(&ProducerPreviewWidget::frameGeneratorThread, this);
     }
 }
 

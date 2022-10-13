@@ -28,6 +28,7 @@
 #include <framework/mlt_log.h>
 #include <QFile>
 #include <QQuickStyle>
+#include <QQuickWindow>
 
 #ifdef Q_OS_MAC
 #include "macos.h"
@@ -139,9 +140,7 @@ public:
 #endif
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
-        setAttribute(Qt::AA_UseHighDpiPixmaps);
         setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
-        setAttribute(Qt::AA_DisableWindowContextHelpButton);
 #if defined(Q_OS_MAC)
         setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
@@ -237,6 +236,7 @@ public:
         LOG_INFO() << "install dir =" << appPath;
         Settings.log();
 
+        QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
 #if defined(Q_OS_WIN)
         dir.setPath(appPath);
         if (!Settings.playerGPU() && Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL) {

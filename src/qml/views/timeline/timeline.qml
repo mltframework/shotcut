@@ -15,11 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtGraphicalEffects 1.12
 import QtQml.Models 2.12
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 import Shotcut.Controls 1.0 as Shotcut
@@ -394,14 +393,14 @@ Rectangle {
                 // This provides skimming and continuous scrubbing at the left/right edges.
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: {
+                onClicked: (mouse)=> {
                     timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor;
                     bubbleHelp.hide();
                 }
                 onWheel: Logic.onMouseWheel(wheel)
                 onReleased: skim = false
                 onExited: skim = false
-                onPositionChanged: {
+                onPositionChanged: (mouse)=> {
                     if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
                         timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor;
                         bubbleHelp.hide();
@@ -732,18 +731,6 @@ Rectangle {
 
     }
 
-    DropShadow {
-        source: bubbleHelp
-        anchors.fill: bubbleHelp
-        opacity: bubbleHelp.opacity
-        horizontalOffset: 3
-        verticalOffset: 3
-        radius: 8
-        color: '#80000000'
-        transparentBorder: true
-        fast: true
-    }
-
     DelegateModel {
         id: trackDelegateModel
 
@@ -761,7 +748,7 @@ Rectangle {
             isMute: mute
             isCurrentTrack: timeline.currentTrack === index
             timeScale: multitrack.scaleFactor
-            onClipClicked: {
+            onClipClicked: (track)=> {
                 var trackIndex = track.DelegateModel.itemsIndex;
                 var clipIndex = clip.DelegateModel.itemsIndex;
                 timeline.currentTrack = trackIndex;
@@ -779,7 +766,7 @@ Rectangle {
                 root.clipClicked();
             }
             onClipRightClicked: root.clipRightClicked()
-            onClipDragged: {
+            onClipDragged: (clip, x, y)=> {
                 // This provides continuous scrolling at the left/right edges.
                 if (x > tracksFlickable.contentX + tracksFlickable.width - 50) {
                     scrollTimer.item = clip;
@@ -809,7 +796,7 @@ Rectangle {
                 clip.reparent(track);
                 clip.trackIndex = track.DelegateModel.itemsIndex;
             }
-            onCheckSnap: {
+            onCheckSnap: (clip)=> {
                 for (var i = 0; i < tracksRepeater.count; i++) tracksRepeater.itemAt(i).snapClip(clip)
             }
 

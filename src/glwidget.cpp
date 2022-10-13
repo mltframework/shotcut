@@ -19,6 +19,7 @@
  */
 
 #include <QtWidgets>
+#include <QOpenGLVersionFunctionsFactory>
 #include <QOpenGLFunctions_1_1>
 #include <QOpenGLFunctions_3_2_Core>
 #include <QUrl>
@@ -73,11 +74,10 @@ GLWidget::GLWidget(QObject *parent)
 {
     LOG_DEBUG() << "begin";
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
-    quickWindow()->setPersistentOpenGLContext(true);
     quickWindow()->setPersistentSceneGraph(true);
     setAttribute(Qt::WA_AcceptTouchEvents);
-    quickWindow()->setClearBeforeRendering(false);
     setResizeMode(QQuickWidget::SizeRootObjectToView);
+    setClearColor(palette().window().color());
     QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
     engine()->addImportPath(importPath.path());
@@ -92,13 +92,10 @@ GLWidget::GLWidget(QObject *parent)
         delete m_glslManager;
         m_glslManager = 0;
     }
-
-    connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
-    connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()),
+    connect(quickWindow(), &QQuickWindow::visibilityChanged, this, &GLWidget::setBlankScene,
             Qt::QueuedConnection);
-    connect(quickWindow(), SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
-    connect(&m_refreshTimer, SIGNAL(timeout()), SLOT(onRefreshTimeout()));
-    connect(this, SIGNAL(rectChanged()), SIGNAL(zoomChanged()));
+    connect(&m_refreshTimer, &QTimer::timeout, this, &GLWidget::onRefreshTimeout);
+    connect(this, &GLWidget::rectChanged, this, &GLWidget::zoomChanged);
     LOG_DEBUG() << "end";
 }
 
@@ -125,9 +122,11 @@ GLWidget::~GLWidget()
 void GLWidget::initializeGL()
 {
     LOG_DEBUG() << "begin";
+    auto context = static_cast<QOpenGLContext *>(quickWindow()->rendererInterface()->getResource(
+                                                     quickWindow(), QSGRendererInterface::OpenGLContextResource));
 
     if (!m_offscreenSurface.isValid()) {
-        m_offscreenSurface.setFormat(quickWindow()->openglContext()->format());
+        m_offscreenSurface.setFormat(context->format());
         m_offscreenSurface.create();
     }
     Q_ASSERT(m_offscreenSurface.isValid());
@@ -135,15 +134,15 @@ void GLWidget::initializeGL()
     initializeOpenGLFunctions();
     LOG_INFO() << "OpenGL vendor" << QString::fromUtf8((const char *) glGetString(GL_VENDOR));
     LOG_INFO() << "OpenGL renderer" << QString::fromUtf8((const char *) glGetString(GL_RENDERER));
-    LOG_INFO() << "OpenGL threaded?" << quickWindow()->openglContext()->supportsThreadedOpenGL();
-    LOG_INFO() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
+    LOG_INFO() << "OpenGL threaded?" << context->supportsThreadedOpenGL();
+    LOG_INFO() << "OpenGL ES?" << context->isOpenGLES();
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
     LOG_INFO() << "OpenGL maximum texture size =" << m_maxTextureSize;
     GLint dims[2];
     glGetIntegerv(GL_MAX_VIEWPORT_DIMS, &dims[0]);
     LOG_INFO() << "OpenGL maximum viewport size =" << dims[0] << "x" << dims[1];
 
-    if (m_glslManager && quickWindow()->openglContext()->isOpenGLES()) {
+    if (m_glslManager && context->isOpenGLES()) {
         delete m_glslManager;
         m_glslManager = 0;
         // Need to destroy MLT global reference to prevent filters from trying to use GPU.
@@ -156,9 +155,9 @@ void GLWidget::initializeGL()
 #if defined(USE_GL_SYNC) && !defined(Q_OS_WIN)
     // getProcAddress is not working for me on Windows.
     if (Settings.playerGPU()) {
-        if (m_glslManager && quickWindow()->openglContext()->hasExtension("GL_ARB_sync")) {
+        if (m_glslManager && context->hasExtension("GL_ARB_sync")) {
             ClientWaitSync = (ClientWaitSync_fp)
-                             quickWindow()->openglContext()->getProcAddress("glClientWaitSync");
+                             context->getProcAddress("glClientWaitSync");
         }
         if (!ClientWaitSync) {
             emit gpuNotSupported();
@@ -168,19 +167,19 @@ void GLWidget::initializeGL()
     }
 #endif
 
-    quickWindow()->openglContext()->doneCurrent();
+    context->doneCurrent();
     if (m_glslManager) {
         // Create a context sharing with this context for the RenderThread context.
         // This is needed because openglContext() is active in another thread
         // at the time that RenderThread is created.
         // See this Qt bug for more info: https://bugreports.qt.io/browse/QTBUG-44677
         m_shareContext = new QOpenGLContext;
-        m_shareContext->setFormat(quickWindow()->openglContext()->format());
-        m_shareContext->setShareContext(quickWindow()->openglContext());
+        m_shareContext->setFormat(context->format());
+        m_shareContext->setShareContext(context);
         m_shareContext->create();
     }
-    m_frameRenderer = new FrameRenderer(quickWindow()->openglContext(), &m_offscreenSurface);
-    quickWindow()->openglContext()->makeCurrent(quickWindow());
+    m_frameRenderer = new FrameRenderer(context, &m_offscreenSurface);
+    context->makeCurrent(quickWindow());
 
     connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame &)),
             SLOT(onFrameDisplayed(const SharedFrame &)), Qt::QueuedConnection);
@@ -197,12 +196,14 @@ void GLWidget::initializeGL()
 
 void GLWidget::setBlankScene()
 {
+    quickWindow()->setColor(palette().window().color());
     setSource(QmlUtilities::blankVui());
     m_savedQmlSource.clear();
 }
 
 void GLWidget::resizeGL(int width, int height)
 {
+    LOG_DEBUG() << width << "x" << height;
     double x, y, w, h;
     double this_aspect = (double) width / height;
     double video_aspect = profile().dar();
@@ -353,8 +354,10 @@ static void uploadTextures(QOpenGLContext *context, SharedFrame &frame, GLuint t
 
 void GLWidget::paintGL()
 {
+    auto context = static_cast<QOpenGLContext *>(quickWindow()->rendererInterface()->getResource(
+                                                     quickWindow(), QSGRendererInterface::OpenGLContextResource));
 #ifndef QT_NO_DEBUG
-    QOpenGLFunctions *f = quickWindow()->openglContext()->functions();
+    QOpenGLFunctions *f = context->functions();
 #endif
     float width = this->width() * devicePixelRatioF();
     float height = this->height() * devicePixelRatioF();
@@ -369,13 +372,13 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT);
     check_error(f);
 
-    if (!(Settings.playerGPU() || quickWindow()->openglContext()->supportsThreadedOpenGL())) {
+    if (!(Settings.playerGPU() || context->supportsThreadedOpenGL())) {
         m_mutex.lock();
         if (!m_sharedFrame.is_valid()) {
             m_mutex.unlock();
             return;
         }
-        uploadTextures(quickWindow()->openglContext(), m_sharedFrame, m_texture);
+        uploadTextures(context, m_sharedFrame, m_texture);
         m_mutex.unlock();
     } else if (m_glslManager) {
         m_mutex.lock();
@@ -389,6 +392,8 @@ void GLWidget::paintGL()
             m_mutex.unlock();
         return;
     }
+
+    quickWindow()->beginExternalCommands();
 
     // Bind textures.
     for (int i = 0; i < 3; ++i) {
@@ -475,6 +480,7 @@ void GLWidget::paintGL()
         check_error(f);
         m_mutex.unlock();
     }
+    quickWindow()->endExternalCommands();
 }
 
 void GLWidget::onRefreshTimeout()
@@ -505,7 +511,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
         return;
     }
     if (event->modifiers() == (Qt::ShiftModifier | Qt::AltModifier) && m_producer) {
-        emit seekTo(m_producer->get_length() * event->x() / width());
+        emit seekTo(m_producer->get_length() * event->position().x() / width());
         return;
     }
     if (!(event->buttons() & Qt::LeftButton))
@@ -961,7 +967,7 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
 #ifdef Q_OS_WIN
                 // On Windows, use QOpenGLFunctions_3_2_Core instead of getProcAddress.
                 if (!m_gl32) {
-                    m_gl32 = m_context->versionFunctions<QOpenGLFunctions_3_2_Core>();
+                    m_gl32 = QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_3_2_Core>(m_context);
                     if (m_gl32)
                         m_gl32->initializeOpenGLFunctions();
                 }
@@ -984,7 +990,7 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
                 m_imageRequested = false;
                 int imageSizeBytes = width * height * 4;
                 uchar *image = (uchar *) mlt_pool_alloc(imageSizeBytes);
-                QOpenGLFunctions_1_1 *f = m_context->versionFunctions<QOpenGLFunctions_1_1>();
+                auto *f = QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_1_1>(m_context);
 
                 f->glBindTexture(GL_TEXTURE_2D, *textureId);
                 check_error(f);

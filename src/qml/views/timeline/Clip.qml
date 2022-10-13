@@ -369,7 +369,7 @@ Rectangle {
         acceptedButtons: Qt.LeftButton
         drag.target: parent
         drag.axis: Drag.XAxis
-        onPressed: {
+        onPressed: (mouse)=> {
             if (!doubleClickTimer.running) {
                 doubleClickTimer.restart();
                 doubleClickTimer.isFirstRelease = true;
@@ -382,14 +382,14 @@ Rectangle {
             clipRoot.forceActiveFocus();
             clipRoot.clicked(clipRoot, mouse);
         }
-        onPositionChanged: {
+        onPositionChanged: (mouse)=> {
             if (mouse.y < 0 && trackIndex > 0)
                 parent.draggedToTrack(clipRoot, -1);
             else if (mouse.y > height && (trackIndex + 1) < root.trackCount)
                 parent.draggedToTrack(clipRoot, 1);
             parent.dragged(clipRoot, mouse);
         }
-        onReleased: {
+        onReleased: (mouse)=> {
             root.stopScrolling = false;
             if (!doubleClickTimer.isFirstRelease && doubleClickTimer.running) {
                 // double click
@@ -423,7 +423,7 @@ Rectangle {
             acceptedButtons: Qt.RightButton
             propagateComposedEvents: true
             cursorShape: (trimInMouseArea.drag.active || trimOutMouseArea.drag.active) ? Qt.SizeHorCursor : (fadeInMouseArea.drag.active || fadeOutMouseArea.drag.active) ? Qt.PointingHandCursor : mouseArea.drag.active ? Qt.ClosedHandCursor : isBlank ? Qt.ArrowCursor : Qt.OpenHandCursor
-            onClicked: {
+            onClicked: (mouse)=> {
                 timeline.position = timeline.position; // pause
                 clipRoot.forceActiveFocus();
                 clipRoot.clicked(clipRoot, mouse);
@@ -492,7 +492,7 @@ Rectangle {
                 parent.anchors.left = fadeInTriangle.right;
                 bubbleHelp.hide();
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale);
                     var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration);
@@ -589,7 +589,7 @@ Rectangle {
                 parent.anchors.right = fadeOutTriangle.left;
                 bubbleHelp.hide();
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((startX - parent.x) / timeScale);
                     var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration);
@@ -660,7 +660,7 @@ Rectangle {
                 clipRoot.trimmedIn(clipRoot);
                 parent.opacity = 0;
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newX = mapToItem(null, x, y).x;
                     var delta = Math.round((newX - startX) / timeScale);
@@ -711,7 +711,7 @@ Rectangle {
                 parent.anchors.right = clipRoot.right;
                 clipRoot.trimmedOut(clipRoot);
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale);
                     var delta = duration - newDuration;

@@ -16,7 +16,6 @@
  */
 
 import "Keyframes.js" as Logic
-import QtGraphicalEffects 1.12
 import QtQml.Models 2.12
 import QtQuick 2.12
 import QtQuick.Controls 2.12
@@ -227,7 +226,7 @@ Rectangle {
                 }
                 onReleased: skim = false
                 onExited: skim = false
-                onPositionChanged: {
+                onPositionChanged: (mouse)=> {
                     if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
                         producer.position = (tracksFlickable.contentX + mouse.x) / timeScale;
                         bubbleHelp.hide();
@@ -244,7 +243,7 @@ Rectangle {
                 interval: 25
                 repeat: true
                 running: parent.skim && parent.containsMouse && (parent.mouseX < 50 || parent.mouseX > parent.width - 50) && (producer.position * timeScale >= 50)
-                onTriggered: {
+                onTriggered: (mouse)=> {
                     if (parent.mouseX < 50)
                         producer.position -= 10;
                     else
@@ -586,18 +585,6 @@ Rectangle {
             anchors.centerIn: parent
         }
 
-    }
-
-    DropShadow {
-        source: bubbleHelp
-        anchors.fill: bubbleHelp
-        opacity: bubbleHelp.opacity
-        horizontalOffset: 3
-        verticalOffset: 3
-        radius: 8
-        color: '#80000000'
-        transparentBorder: true
-        fast: true
     }
 
     DelegateModel {

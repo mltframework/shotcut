@@ -272,19 +272,19 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         }
         case FIELD_IN:
             if (info->producer && info->producer->is_valid()) {
-                return info->producer->frames_to_time(info->frame_in);
+                return QString::fromLatin1(info->producer->frames_to_time(info->frame_in));
             } else {
                 return "";
             }
         case FIELD_DURATION:
             if (info->producer && info->producer->is_valid()) {
-                return info->producer->frames_to_time(info->frame_count);
+                return QString::fromLatin1(info->producer->frames_to_time(info->frame_count));
             } else {
                 return "";
             }
         case FIELD_START:
             if (info->producer && info->producer->is_valid()) {
-                return info->producer->frames_to_time(info->start);
+                return QString::fromLatin1(info->producer->frames_to_time(info->start));
             } else {
                 return "";
             }

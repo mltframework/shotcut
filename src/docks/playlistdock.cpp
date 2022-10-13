@@ -46,6 +46,7 @@
 #include <QDir>
 #include <QGuiApplication>
 #include <QClipboard>
+#include <QActionGroup>
 
 static const int kInOutChangedTimeoutMs = 100;
 
@@ -303,7 +304,7 @@ void PlaylistDock::setupActions()
     QAction *action;
 
     action = new QAction(tr("Append"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_A));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_A));
     action->setToolTip(tr("Add the Source to the playlist"));
     icon = QIcon::fromTheme("list-add",
                             QIcon(":/icons/oxygen/32x32/actions/list-add.png"));
@@ -317,8 +318,8 @@ void PlaylistDock::setupActions()
 
     action = new QAction(tr("Remove"), this);
     QList<QKeySequence> removeShortcuts;
-    removeShortcuts << QKeySequence(Qt::SHIFT + Qt::Key_X);
-    removeShortcuts << QKeySequence(Qt::SHIFT + Qt::Key_Z);
+    removeShortcuts << QKeySequence(Qt::SHIFT | Qt::Key_X);
+    removeShortcuts << QKeySequence(Qt::SHIFT | Qt::Key_Z);
     action->setShortcuts(removeShortcuts);
     action->setToolTip(tr("Remove cut"));
     icon = QIcon::fromTheme("list-remove",
@@ -340,7 +341,7 @@ void PlaylistDock::setupActions()
     Actions.add("playlistAddFilesAction", action);
 
     action = new QAction(tr("Update"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_B));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_B));
     icon = QIcon::fromTheme("dialog-ok",
                             QIcon(":/icons/oxygen/32x32/actions/dialog-ok.png"));
     action->setIcon(icon);
@@ -392,7 +393,7 @@ void PlaylistDock::setupActions()
 
     action = new QAction(tr("Open"), this);
     action->setToolTip(tr("Open the clip in the Source player"));
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Return));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onOpenActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
@@ -402,7 +403,7 @@ void PlaylistDock::setupActions()
 
     action = new QAction(tr("GoTo"), this);
     action->setToolTip(tr("Go to the start of this clip in the Project player"));
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Return));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Return));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onGotoActionTriggered);
     connect(this, &PlaylistDock::producerOpened, action, [ = ]() {
@@ -412,7 +413,7 @@ void PlaylistDock::setupActions()
 
     action = new QAction(tr("Copy"), this);
     action->setToolTip(tr("Open a copy of the clip in the Source player"));
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_C));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_C));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onCopyActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
@@ -422,7 +423,7 @@ void PlaylistDock::setupActions()
 
     action = new QAction(tr("Insert"), this);
     action->setToolTip(tr("Insert"));
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_V));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_V));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onInsertCutActionTriggered);
     connect(this, &PlaylistDock::producerOpened, action, [ = ]() {
@@ -455,7 +456,7 @@ void PlaylistDock::setupActions()
     Actions.add("playlistRemoveAllAction", action);
 
     action = new QAction(tr("Select All"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_A));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_A));
     connect(action, &QAction::triggered, this, &PlaylistDock::onSelectAllActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_model.rowCount() > 0);
@@ -463,7 +464,7 @@ void PlaylistDock::setupActions()
     Actions.add("playlistSelectAllAction", action);
 
     action = new QAction(tr("Select None"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_D));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D));
     connect(action, &QAction::triggered, m_selectionModel, &QItemSelectionModel::clearSelection);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_selectionModel->selection().size() > 0);
@@ -471,7 +472,7 @@ void PlaylistDock::setupActions()
     Actions.add("playlistSelectNoneAction", action);
 
     action = new QAction(tr("Move Up"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_Up));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Up));
     connect(action, &QAction::triggered, m_selectionModel, [ = ]() {
         raise();
         moveClipUp();
@@ -483,7 +484,7 @@ void PlaylistDock::setupActions()
     Actions.add("playlistMoveUpAction", action);
 
     action = new QAction(tr("Move Down"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_Down));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Down));
     connect(action, &QAction::triggered, m_selectionModel, [ = ]() {
         raise();
         moveClipDown();
@@ -608,7 +609,7 @@ void PlaylistDock::setupActions()
     Actions.add("playlistPlayAfterOpenAction", action);
 
     action = new QAction(tr("Open Previous"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Up));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Up));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
         raise();
@@ -621,7 +622,7 @@ void PlaylistDock::setupActions()
     Actions.add("playlistOpenPreviousAction", action);
 
     action = new QAction(tr("Open Next"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Down));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Down));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
         raise();
@@ -1090,7 +1091,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
         int insertNextAt = row;
         bool first = true;
         QStringList fileNames = Util::sortedFileList(Util::expandDirectories(data->urls()));
-        auto i = 0, count = fileNames.size();
+        qsizetype i = 0, count = fileNames.size();
         for (auto &path : fileNames) {
             if (MAIN.isSourceClipMyProject(path)) continue;
             longTask.reportProgress(Util::baseName(path), i++, count);
@@ -1232,8 +1233,8 @@ void PlaylistDock::onAddToSlideshowActionTriggered()
     dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted ) {
         LongUiTask longTask(QObject::tr("Generate Slideshow"));
-        Mlt::Playlist *slideshow = longTask.runAsync<Mlt::Playlist *>(tr("Generating"), &dialog,
-                                                                      &SlideshowGeneratorDialog::getSlideshow);
+        Mlt::Playlist *slideshow = longTask.runAsync<Mlt::Playlist *>(tr("Generating"),
+                                                                      &SlideshowGeneratorDialog::getSlideshow, &dialog);
         if (slideshow) {
             if ( slideshow->count() > 0 ) {
                 emit addAllTimeline(slideshow, /* skipProxy */ true);

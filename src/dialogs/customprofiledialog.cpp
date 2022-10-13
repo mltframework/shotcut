@@ -127,7 +127,7 @@ void CustomProfileDialog::on_fpsComboBox_activated(const QString &arg1)
 void CustomProfileDialog::on_resolutionComboBox_activated(const QString &arg1)
 {
     if (arg1.isEmpty()) return;
-    auto parts = arg1.splitRef(' ');
+    auto parts = arg1.split(' ');
     ui->widthSpinner->setValue(parts[0].toInt());
     ui->heightSpinner->setValue(parts[2].toInt());
 }
@@ -135,7 +135,7 @@ void CustomProfileDialog::on_resolutionComboBox_activated(const QString &arg1)
 void CustomProfileDialog::on_aspectRatioComboBox_activated(const QString &arg1)
 {
     if (arg1.isEmpty()) return;
-    auto parts = arg1.splitRef(' ')[0].split(':');
+    auto parts = arg1.split(' ')[0].split(':');
     ui->aspectNumSpinner->setValue(parts[0].toInt());
     ui->aspectDenSpinner->setValue(parts[1].toInt());
 }

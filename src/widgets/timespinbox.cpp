@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 
 #include "timespinbox.h"
 #include "mltcontroller.h"
-#include <QRegExpValidator>
+#include <QRegularExpressionValidator>
 #include <QKeyEvent>
 #include <QFontDatabase>
 #include <QGuiApplication>
@@ -29,7 +29,8 @@ TimeSpinBox::TimeSpinBox(QWidget *parent)
     setRange(0, INT_MAX);
     setFixedWidth(this->fontMetrics().boundingRect("_HHH:MM:SS;MMM_").width());
     setAlignment(Qt::AlignRight);
-    m_validator = new QRegExpValidator(QRegExp("^\\s*(\\d*:){0,2}(\\d*[.;:])?\\d*\\s*$"), this);
+    m_validator = new QRegularExpressionValidator(
+        QRegularExpression("^\\s*(\\d*:){0,2}(\\d*[.;:])?\\d*\\s*$"), this);
     setValue(0);
 #ifdef Q_OS_MAC
     QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);

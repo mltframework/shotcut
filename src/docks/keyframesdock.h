@@ -73,7 +73,6 @@ protected:
     void keyReleaseEvent(QKeyEvent *event);
 
 private slots:
-    void onVisibilityChanged(bool visible);
     void onDockRightClicked();
     void onKeyframeRightClicked();
     void onClipRightClicked();

@@ -171,7 +171,7 @@ Rectangle {
             Layout.columnSpan: parent.columns
             Layout.fillWidth: true
             Layout.fillHeight: true
-            onFilterClicked: {
+            onFilterClicked: (index)=> {
                 root.currentFilterRequested(index);
             }
 
@@ -401,7 +401,7 @@ Rectangle {
         id: filterMenu
 
         z: 1
-        onFilterSelected: {
+        onFilterSelected: (index)=> {
             attachedfiltersmodel.add(metadatamodel.get(index));
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021 Meltytech, LLC
+ * Copyright (c) 2016-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -120,16 +120,16 @@ void CountProducerWidget::loadPreset(Mlt::Properties &p)
     if (!p.get("direction") || !p.get("style")) return;
     int index = -1;
 
-    index = ui->directionCombo->findData(QVariant(p.get("direction")));
+    index = ui->directionCombo->findData(QVariant(QString::fromLatin1(p.get("direction"))));
     ui->directionCombo->setCurrentIndex(index);
 
-    index = ui->styleCombo->findData(QVariant(p.get("style")));
+    index = ui->styleCombo->findData(QVariant(QString::fromLatin1(p.get("style"))));
     ui->styleCombo->setCurrentIndex(index);
 
-    index = ui->soundCombo->findData(QVariant(p.get("sound")));
+    index = ui->soundCombo->findData(QVariant(QString::fromLatin1(p.get("sound"))));
     ui->soundCombo->setCurrentIndex(index);
 
-    index = ui->backgroundCombo->findData(QVariant(p.get("background")));
+    index = ui->backgroundCombo->findData(QVariant(QString::fromLatin1(p.get("background"))));
     ui->backgroundCombo->setCurrentIndex(index);
 
     ui->dropCheckBox->setChecked(p.get("drop"));

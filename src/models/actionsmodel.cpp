@@ -23,6 +23,8 @@
 #include <QAction>
 #include <QGuiApplication>
 #include <QKeySequence>
+#include <QPalette>
+#include <QFont>
 
 ActionsModel::ActionsModel(QObject *parent)
     : QAbstractItemModel(parent)

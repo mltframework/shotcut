@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ const qreal IRE100 = 235;
 VideoHistogramScopeWidget::VideoHistogramScopeWidget()
     : ScopeWidget("VideoHistogram")
     , m_frame()
-    , m_mutex(QMutex::NonRecursive)
+    , m_mutex()
     , m_yBins()
     , m_rBins()
     , m_gBins()

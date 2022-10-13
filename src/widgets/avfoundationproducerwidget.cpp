@@ -20,11 +20,11 @@
 #include "mltcontroller.h"
 #include "util.h"
 #include "settings.h"
-#include <QCameraInfo>
+#include <QMediaDevices>
+#include <QCameraDevice>
 #include <QCamera>
 #include <QString>
-#include <QAudioDeviceInfo>
-#include <QDesktopWidget>
+#include <QAudioDevice>
 #include "shotcut_mlt_properties.h"
 #include <Logger.h>
 
@@ -39,22 +39,22 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
 
 #ifdef Q_OS_MAC
     auto currentVideo = 1;
-    for (const auto &cameraInfo : QCameraInfo::availableCameras()) {
+    for (const auto &cameraInfo : QMediaDevices::videoInputs()) {
         if (Settings.videoInput() == cameraInfo.description()) {
             currentVideo = ui->videoCombo->count();
         }
-        ui->videoCombo->addItem(cameraInfo.description(), cameraInfo.deviceName().toLocal8Bit());
+        ui->videoCombo->addItem(cameraInfo.description(), cameraInfo.id());
     }
 #if ENABLE_SCREEN_CAPTURE
-    for (int i = 0; i < QApplication::desktop()->screenCount(); i++)
+    for (int i = 0; i < QGuiApplication::screens().size(); i++)
         ui->videoCombo->addItem(QString("Capture screen %1").arg(i));
 #endif
     auto currentAudio = 1;
-    for (const auto &deviceInfo : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
-        if (Settings.audioInput() == deviceInfo.deviceName()) {
+    for (const auto &deviceInfo : QMediaDevices::audioInputs()) {
+        if (Settings.audioInput() == deviceInfo.description()) {
             currentAudio = ui->audioCombo->count();
         }
-        ui->audioCombo->addItem(deviceInfo.deviceName());
+        ui->audioCombo->addItem(deviceInfo.id());
     }
     if (ui->videoCombo->count() > 1)
         ui->videoCombo->setCurrentIndex(currentVideo);

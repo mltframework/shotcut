@@ -57,7 +57,7 @@ AudioWaveformScopeWidget::AudioWaveformScopeWidget()
     , m_graphTopPadding(0)
     , m_channels(0)
     , m_cursorPos(-1)
-    , m_mutex(QMutex::NonRecursive)
+    , m_mutex()
     , m_displayWave()
     , m_displayGrid()
 {
@@ -266,8 +266,8 @@ void AudioWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
         qreal scaledValue = (qreal) * q / MAX_AMPLITUDE;
         qreal dbValue = 20 * log(fabs(scaledValue));
         if (dbValue < 0.01 && dbValue > -0.01) dbValue = 0.0;
-        text += tr("Ch: %1: %2 (%3 dBFS)").arg(QString::number(c + 1)).arg(QString::number(scaledValue, 'f',
-                                                                                           2)).arg(QString::number(dbValue, 'f', 2));
+        text += tr("Ch: %1: %2 (%3 dBFS)").arg(QString::number(c + 1), QString::number(scaledValue, 'f', 2),
+                                               QString::number(dbValue, 'f', 2));
         if ( c != channels - 1 ) {
             text += "\n";
         }
@@ -276,7 +276,7 @@ void AudioWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
     locker.unlock();
 
     m_cursorPos = event->pos().x();
-    QToolTip::showText(event->globalPos(), text);
+    QToolTip::showText(event->globalPosition().toPoint(), text);
     update();
 }
 

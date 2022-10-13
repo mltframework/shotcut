@@ -198,7 +198,7 @@ void FiltersDock::setupActions()
     Actions.add("filtersAddFilterAction", action, windowTitle());
 
     action = new QAction(tr("Remove"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_F));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F));
     action->setToolTip(tr("Remove selected filter"));
     icon = QIcon::fromTheme("list-remove",
                             QIcon(":/icons/oxygen/32x32/actions/list-remove.png"));

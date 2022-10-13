@@ -1018,7 +1018,7 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target
     const auto &from = ui->fromCombo->currentData().toString();
     if (MAIN.isMultitrackValid() && from.startsWith("marker:")) {
         bool ok = false;
-        int index = from.midRef(7).toInt(&ok);
+        int index = from.mid(7).toInt(&ok);
         if (ok) {
             MarkersModel markersModel;
             markersModel.load(MAIN.multitrack());
@@ -1919,8 +1919,8 @@ bool PresetsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sour
     for (int i = 0; i < sourceModel()->rowCount(index); i++)
         if (filterAcceptsRow(i, index)) return true;
 
-    return sourceModel()->data(index).toString().contains(filterRegExp()) ||
-           sourceModel()->data(index, Qt::ToolTipRole).toString().contains(filterRegExp());
+    return sourceModel()->data(index).toString().contains(filterRegularExpression()) ||
+           sourceModel()->data(index, Qt::ToolTipRole).toString().contains(filterRegularExpression());
 }
 
 void EncodeDock::on_resetButton_clicked()
@@ -2082,10 +2082,10 @@ void EncodeDock::on_fpsSpinner_editingFinished()
     }
 }
 
-void EncodeDock::on_fpsComboBox_activated(const QString &arg1)
+void EncodeDock::on_fpsComboBox_activated(int arg1)
 {
-    if (!arg1.isEmpty())
-        ui->fpsSpinner->setValue(arg1.toDouble());
+    if (!ui->fpsComboBox->itemText(arg1).isEmpty())
+        ui->fpsSpinner->setValue(ui->fpsComboBox->itemText(arg1).toDouble());
 }
 
 void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
@@ -2259,10 +2259,10 @@ bool EncodeDock::checkForMissingFiles()
     return false;
 }
 
-void EncodeDock::on_resolutionComboBox_activated(const QString &arg1)
+void EncodeDock::on_resolutionComboBox_activated(int arg1)
 {
-    if (arg1.isEmpty()) return;
-    auto parts = arg1.splitRef(' ');
+    if (ui->resolutionComboBox->itemText(arg1).isEmpty()) return;
+    auto parts = ui->resolutionComboBox->itemText(arg1).split(' ');
     ui->widthSpinner->setValue(parts[0].toInt());
     ui->heightSpinner->setValue(parts[2].toInt());
 }

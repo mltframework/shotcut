@@ -509,7 +509,7 @@ bool Controller::saveXML(const QString &filename, Service *service, bool withRel
         if (!proxy && ProxyManager::filterXML(xml, root)) { // also verifies
             if (tempFile) {
                 QTextStream stream(tempFile);
-                stream.setCodec("UTF-8");
+                stream.setEncoding(QStringConverter::Utf8);
                 stream << xml;
                 if (tempFile->error() != QFileDevice::NoError) {
                     LOG_ERROR() << "error while writing MLT XML file" << tempFile->fileName() << ":" <<
@@ -524,7 +524,7 @@ bool Controller::saveXML(const QString &filename, Service *service, bool withRel
                     return false;
                 }
                 QTextStream stream(&file);
-                stream.setCodec("UTF-8");
+                stream.setEncoding(QStringConverter::Utf8);
                 stream << xml;
                 if (file.error() != QFileDevice::NoError) {
                     LOG_ERROR() << "error while writing MLT XML file" << filename << ":" << file.errorString();
@@ -986,7 +986,7 @@ Producer *Controller::setupNewProducer(Producer *newProducer) const
 
 QUuid Controller::uuid(Mlt::Properties &properties) const
 {
-    return {properties.get(kUuidProperty)};
+    return QUuid(properties.get(kUuidProperty));
 }
 
 void Controller::setUuid(Mlt::Properties &properties, QUuid uid) const

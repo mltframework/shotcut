@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  * Inspiration: KDENLIVE colorpickerwidget.cpp by Till Theato (root@ttill.de)
  * Inspiration: QColorDialog.cpp
  *
@@ -19,10 +19,7 @@
 
 #include "colorpickeritem.h"
 
-#include "mainwindow.h"
-
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QGuiApplication>
 #include <QImage>
 #include <QScreen>
@@ -47,11 +44,9 @@ void ColorPickerItem::screenSelected(const QRect &rect)
 
 void ColorPickerItem::grabColor()
 {
-    QDesktopWidget *desktop = QApplication::desktop();
-
     QScreen *screen = QGuiApplication::screenAt(m_selectedRect.topLeft());
-    QPixmap screenGrab = screen->grabWindow(desktop->winId(),
-                                            m_selectedRect.x(), m_selectedRect.y(), m_selectedRect.width(), m_selectedRect.height());
+    QPixmap screenGrab = screen->grabWindow(0, m_selectedRect.x(), m_selectedRect.y(),
+                                            m_selectedRect.width(), m_selectedRect.height());
     QImage image = screenGrab.toImage();
     int numPixel = image.width() * image.height();
     int sumR = 0;

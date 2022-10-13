@@ -22,7 +22,8 @@
 #include <QStandardPaths>
 #include <QFile>
 #include <QDir>
-#include <QAudioDeviceInfo>
+#include <QMediaDevices>
+#include <QAudioDevice>
 #include <Logger.h>
 
 static const QString APP_DATA_DIR_KEY("appdatadir");
@@ -975,8 +976,8 @@ QString ShotcutSettings::audioInput() const
 {
     QString defaultValue  = "default";
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
-    for (const auto &deviceInfo : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
-        defaultValue = deviceInfo.deviceName();
+    for (const auto &deviceInfo : QMediaDevices::audioInputs()) {
+        defaultValue = deviceInfo.description();
     }
 #endif
     return settings.value("audioInput", defaultValue).toString();

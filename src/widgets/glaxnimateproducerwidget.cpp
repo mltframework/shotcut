@@ -119,8 +119,8 @@ static void modifyJsonValue(QJsonValue &destValue, const QString &path, const QJ
     const int indexOfSquareBracketOpen = path.indexOf('[');
     const int indexOfSquareBracketClose = path.indexOf(']');
 
-    const int arrayIndex = path.midRef(indexOfSquareBracketOpen + 1,
-                                       indexOfSquareBracketClose - indexOfSquareBracketOpen - 1).toInt();
+    const int arrayIndex = path.mid(indexOfSquareBracketOpen + 1,
+                                    indexOfSquareBracketClose - indexOfSquareBracketOpen - 1).toInt();
 
     const QString squareBracketPropertyName = path.left(indexOfSquareBracketOpen);
     const QString squareBracketSubPath = indexOfSquareBracketClose > 0 ? (path.mid(
@@ -377,7 +377,7 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
         // hide this clip's video track and upper ones
         int trackIndex = m_producer.get_int(kTrackIndexProperty);
         QString s = QString::fromLatin1(m_producer.get(kMultitrackItemProperty));
-        QVector<QStringRef> parts = s.splitRef(':');
+        auto parts = s.split(':');
         if (parts.length() == 2) {
             trackIndex = parts[1].toInt();
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import QtGraphicalEffects 1.0
+
 import QtQuick 2.1
 import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.2
+import QtQuick.Dialogs
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0 as Shotcut
 
@@ -168,17 +168,15 @@ RowLayout {
             radius: 4
         }
 
-        LinearGradient {
+        Gradient {
             anchors.fill: gradientRect
             anchors.margins: gradientRect.border.width
             source: gradientRect
             start: Qt.point(0, 0)
             end: Qt.point(width, 0)
-
             gradient: Gradient {
                 id: gradientView
             }
-
         }
 
         MouseArea {

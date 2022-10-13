@@ -1227,8 +1227,6 @@ function deploy
     cmd rm lib/qml/QtCharts/qtchartsqml2d.dll
     cmd rm lib/qml/QtDataVisualization/datavisualizationqml2d.dll
     cmd rm lib/qml/QtGamepad/declarative_gamepadd.dll
-    cmd rm lib/qml/QtGraphicalEffects/private/qtgraphicaleffectsprivated.dll
-    cmd rm lib/qml/QtGraphicalEffects/qtgraphicaleffectsplugind.dll
     cmd rm lib/qml/QtPurchasing/declarative_purchasingd.dll
     cmd rm lib/qml/QtQml/RemoteObjects/qtqmlremoteobjectsd.dll
     cmd rm lib/qml/QtQuick/Controls.2/Material/qtquickcontrols2materialstyleplugind.dll

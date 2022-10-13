@@ -32,7 +32,9 @@
 #include <QApplication>
 #include <QCryptographicHash>
 #include <QtGlobal>
-#include <QCameraInfo>
+#include <QMediaDevices>
+#include <QCamera>
+#include <QCameraDevice>
 
 #include <MltChain.h>
 #include <MltProducer.h>
@@ -58,7 +60,7 @@ QString Util::baseName(const QString &filePath, bool trimQuery)
 {
     QString s = filePath;
     // Only if absolute path and not a URI.
-    if (s.startsWith('/') || s.midRef(1, 2) == ":/" || s.midRef(1, 2) == ":\\")
+    if (s.startsWith('/') || s.mid(1, 2) == ":/" || s.mid(1, 2) == ":\\")
         s = QFileInfo(s).fileName();
     if (trimQuery) {
         return removeQueryString(s);
@@ -268,7 +270,7 @@ bool Util::isDecimalPoint(QChar ch)
 bool Util::isNumeric(QString &str)
 {
     for (int i = 0; i < str.size(); ++i) {
-        QCharRef ch = str[i];
+        auto ch = str[i];
         if (ch != '+' && ch != '-' && ch.toLower() != 'e'
                 && !isDecimalPoint(ch) && !ch.isDigit())
             return false;
@@ -282,7 +284,7 @@ bool Util::convertNumericString(QString &str, QChar decimalPoint)
     bool result = false;
     if (isNumeric(str)) {
         for (int i = 0; i < str.size(); ++i) {
-            QCharRef ch = str[i];
+            auto ch = str[i];
             if (ch != decimalPoint && isDecimalPoint(ch)) {
                 ch = decimalPoint;
                 result = true;
@@ -298,7 +300,7 @@ bool Util::convertDecimalPoints(QString &str, QChar decimalPoint)
     bool result = false;
     if (!str.contains(decimalPoint)) {
         for (int i = 0; i < str.size(); ++i) {
-            QCharRef ch = str[i];
+            auto ch = str[i];
             // Space is used as a delimiter for rect fields and possibly elsewhere.
             if (ch != decimalPoint && ch != ' ' && isDecimalPoint(ch)) {
                 ch = decimalPoint;
@@ -337,13 +339,13 @@ QTemporaryFile *Util::writableTemporaryFile(const QString &filePath, const QStri
 
     // First, try the system temp dir.
     QString templateFilePath = QDir(QDir::tempPath()).filePath(templateFileName);
-    QScopedPointer<QTemporaryFile> tmp(new QTemporaryFile(templateFilePath));
+    std::unique_ptr<QTemporaryFile> tmp(new QTemporaryFile(templateFilePath));
 
     if (!tmp->open() || tmp->write("") < 0) {
         // Otherwise, use the directory provided.
         return new QTemporaryFile(info.dir().filePath(templateFileName));
     } else {
-        return tmp.take();
+        return tmp.release();
     }
 }
 
@@ -450,7 +452,7 @@ QString Util::getHash(Mlt::Properties &properties)
 
 bool Util::hasDriveLetter(const QString &path)
 {
-    auto driveSeparators = path.midRef(1, 2);
+    auto driveSeparators = path.mid(1, 2);
     return driveSeparators == ":/" || driveSeparators == ":\\";
 }
 
@@ -587,39 +589,35 @@ QString Util::textColor(const QColor &color)
 
 void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal &frameRate, QSize &size)
 {
-    std::unique_ptr<QCamera> camera(new QCamera(deviceName));
+    std::unique_ptr<QCamera> camera;
+    for (const QCameraDevice &cameraDevice : QMediaDevices::videoInputs()) {
+        if (cameraDevice.description() == deviceName) {
+            camera.reset(new QCamera(cameraDevice));
+            break;
+        }
+    }
     if (camera) {
-        camera->load();
-        QCameraViewfinderSettings viewfinderSettings;
-        auto resolutions = camera->supportedViewfinderResolutions(viewfinderSettings);
+        auto currentFormat = camera->cameraDevice().videoFormats().first();
+        QList<QSize> resolutions;
+        for (const auto &format : camera->cameraDevice().videoFormats()) {
+            resolutions << format.resolution();
+        }
         if (resolutions.size() > 0) {
             LOG_INFO() << "resolutions:" << resolutions;
             // Get the highest resolution
-            viewfinderSettings.setResolution(resolutions.first());
-            for (auto &resolution : resolutions) {
-                if (resolution.width() > viewfinderSettings.resolution().width()
-                        && resolution.height() > viewfinderSettings.resolution().height()) {
-                    viewfinderSettings.setResolution(resolution);
-                }
-            }
-            auto frameRates = camera->supportedViewfinderFrameRateRanges(viewfinderSettings);
-            if (frameRates.size() > 0) {
-                // Get the highest frame rate for the chosen resolution
-                viewfinderSettings.setMaximumFrameRate(frameRates.first().maximumFrameRate);
-                for (auto &frameRate : frameRates) {
-                    LOG_INFO() << "frame rate:" << frameRate.maximumFrameRate;
-                    if (frameRate.maximumFrameRate > viewfinderSettings.maximumFrameRate()) {
-                        viewfinderSettings.setMaximumFrameRate(frameRate.maximumFrameRate);
-                    }
+            camera->setCameraFormat(currentFormat);
+            for (const auto &format : camera->cameraDevice().videoFormats()) {
+                if (format.resolution().width() > currentFormat.resolution().width()
+                        && format.resolution().height() > currentFormat.resolution().height()) {
+                    camera->setCameraFormat(format);
                 }
             }
         }
-        camera->unload();
-        if (viewfinderSettings.maximumFrameRate() > 0) {
-            frameRate = viewfinderSettings.maximumFrameRate();
+        if (currentFormat.maxFrameRate() > 0) {
+            frameRate = currentFormat.maxFrameRate();
         }
-        if (viewfinderSettings.resolution().width() > 0) {
-            size = viewfinderSettings.resolution();
+        if (currentFormat.resolution().width() > 0) {
+            size = currentFormat.resolution();
         }
     }
 }

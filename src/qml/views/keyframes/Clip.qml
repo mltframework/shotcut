@@ -17,7 +17,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs
 import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
@@ -254,11 +254,10 @@ Rectangle {
 
         visible: false
         modality: application.dialogModality
-        icon: StandardIcon.Question
         title: qsTr("Confirm Removing Advanced Keyframes")
         text: qsTr('This will remove all advanced keyframes to enable simple keyframes.<p>Do you still want to do this?')
-        standardButtons: StandardButton.Yes | StandardButton.No
-        onYes: {
+        buttons: MessageDialog.Yes | MessageDialog.No
+        onAccepted: {
             parameters.removeAdvancedKeyframes();
         }
     }
@@ -318,7 +317,7 @@ Rectangle {
                     bubbleHelp.hide();
                 }
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (!dragBlocked && mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale);
                     var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration);
@@ -426,7 +425,7 @@ Rectangle {
                     bubbleHelp.hide();
                 }
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (!dragBlocked && mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((startX - parent.x) / timeScale);
                     var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration);
@@ -497,7 +496,7 @@ Rectangle {
                 parent.anchors.left = clipRoot.left;
                 clipRoot.trimmedIn(clipRoot);
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newX = mapToItem(null, x, y).x;
                     var delta = Math.round((newX - startX) / timeScale);
@@ -547,7 +546,7 @@ Rectangle {
                 parent.anchors.right = clipRoot.right;
                 clipRoot.trimmedOut(clipRoot);
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale);
                     var delta = duration - newDuration;

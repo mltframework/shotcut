@@ -98,9 +98,11 @@ Rectangle {
             audioIndex: typeof model.audioindex !== 'undefined' ? model.audioIndex : 0
             selected: Logic.selectionContains(timeline.selection, trackIndex, index)
             isTrackMute: trackRoot.isMute
-            onClicked: trackRoot.clipClicked(clip, trackRoot, mouse)
-            onClipRightClicked: trackRoot.clipRightClicked(clip, trackRoot, mouse)
-            onMoved: {
+            onClicked: (clip, mouse)=> {
+                trackRoot.clipClicked(clip, trackRoot, mouse)
+            }
+            onClipRightClicked: (clip, mouse)=> trackRoot.clipRightClicked(clip, trackRoot, mouse)
+            onMoved: (clip)=> {
                 var fromTrack = clip.originalTrackIndex;
                 var toTrack = clip.trackIndex;
                 var clipIndex = clip.originalClipIndex;
@@ -131,7 +133,7 @@ Rectangle {
                     clip.trackIndex = clip.originalTrackIndex;
                 }
             }
-            onDragged: {
+            onDragged: (mouse)=> {
                 if (settings.timelineDragScrub) {
                     root.stopScrolling = false;
                     timeline.position = Math.round(clip.x / timeScale);
@@ -154,7 +156,7 @@ Rectangle {
                 s = ((delta < 0) ? '-' : (delta > 0) ? '+' : '') + s;
                 bubbleHelp.show(s);
             }
-            onTrimmingIn: {
+            onTrimmingIn: (clip, delta, mouse)=> {
                 var originalDelta = delta;
                 if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple)
                     delta = Logic.snapTrimIn(clip, delta, root, trackRoot.DelegateModel.itemsIndex);
@@ -172,7 +174,7 @@ Rectangle {
                     clip.originalX -= originalDelta;
                 }
             }
-            onTrimmedIn: {
+            onTrimmedIn: (clip)=> {
                 multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex);
                 // Notify out point of clip A changed when trimming to add a transition.
                 if (clip.DelegateModel.itemsIndex > 1 && repeater.itemAt(clip.DelegateModel.itemsIndex - 1).isTransition)
@@ -181,7 +183,7 @@ Rectangle {
                 bubbleHelp.hide();
                 timeline.commitTrimCommand();
             }
-            onTrimmingOut: {
+            onTrimmingOut: (clip, delta, mouse)=> {
                 var originalDelta = delta;
                 if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple)
                     delta = Logic.snapTrimOut(clip, delta, root, trackRoot.DelegateModel.itemsIndex);
@@ -199,7 +201,7 @@ Rectangle {
                     clip.originalX -= originalDelta;
                 }
             }
-            onTrimmedOut: {
+            onTrimmedOut: (clip)=> {
                 multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex);
                 // Notify in point of clip B changed when trimming to add a transition.
                 if (clip.DelegateModel.itemsIndex + 2 < repeater.count && repeater.itemAt(clip.DelegateModel.itemsIndex + 1).isTransition)
@@ -208,7 +210,7 @@ Rectangle {
                 bubbleHelp.hide();
                 timeline.commitTrimCommand();
             }
-            onDraggedToTrack: {
+            onDraggedToTrack: (clip, direction)=> {
                 if (!placeHolderAdded) {
                     placeHolderAdded = true;
                     trackModel.items.insert(clip.DelegateModel.itemsIndex, {

@@ -22,7 +22,6 @@
 #include <QSemaphore>
 #include <QDateTime>
 #include <QIODevice>
-#include <QTextCodec>
 
 #if defined(Q_OS_ANDROID)
 #  include <android/log.h>

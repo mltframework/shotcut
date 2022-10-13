@@ -132,6 +132,8 @@ public slots:
     void setBlankScene();
     void setCurrentFilter(QmlFilter *filter, QmlMetadata *meta);
     void setSnapToGrid(bool snap);
+    void initializeGL();
+    void paintGL();
 
 signals:
     void frameDisplayed(const SharedFrame &frame);
@@ -186,10 +188,8 @@ private:
     static void on_frame_show(mlt_consumer, GLWidget *widget, mlt_event_data);
 
 private slots:
-    void initializeGL();
     void resizeGL(int width, int height);
     void updateTexture(GLuint yName, GLuint uName, GLuint vName);
-    void paintGL();
     void onRefreshTimeout();
 
 protected:

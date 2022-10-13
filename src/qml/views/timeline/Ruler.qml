@@ -67,7 +67,7 @@ Rectangle {
         hoverEnabled: true
         acceptedButtons: Qt.NoButton
         onExited: bubbleHelp.hide()
-        onPositionChanged: {
+        onPositionChanged: (mouse)=> {
             var text = application.timecode(mouse.x / timeScale);
             bubbleHelp.show(text);
         }

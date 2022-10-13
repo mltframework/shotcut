@@ -54,9 +54,7 @@
 #include "dialogs/customprofiledialog.h"
 #include "dialogs/saveimagedialog.h"
 #include "settings.h"
-#include "leapnetworklistener.h"
 #include "database.h"
-#include "widgets/gltestwidget.h"
 #include "docks/timelinedock.h"
 #include "widgets/lumamixtransition.h"
 #include "qmltypes/qmlutilities.h"
@@ -158,9 +156,6 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "begin";
     LOG_INFO() << "device pixel ratio =" << devicePixelRatioF();
-#ifndef Q_OS_WIN
-    new GLTestWidget(this);
-#endif
     connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(onAutosaveTimeout()));
     m_autosaveTimer.start(AUTOSAVE_TIMEOUT_MS);
 
@@ -207,8 +202,6 @@ MainWindow::MainWindow()
 
     setFocus();
     setCurrentFile("");
-
-    setupAndConnectLeapNetworkListener();
 
     connect(&m_network, SIGNAL(finished(QNetworkReply *)),
             SLOT(onUpgradeCheckFinished(QNetworkReply *)));
@@ -367,7 +360,7 @@ void MainWindow::setupAndConnectDocks()
     m_scopeController = new ScopeController(this, ui->menuView);
     QDockWidget *audioMeterDock = findChild<QDockWidget *>("AudioPeakMeterDock");
     if (audioMeterDock) {
-        audioMeterDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_1));
+        audioMeterDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_1));
         connect(ui->actionAudioMeter, SIGNAL(triggered()), audioMeterDock->toggleViewAction(),
                 SLOT(trigger()));
     }
@@ -376,7 +369,7 @@ void MainWindow::setupAndConnectDocks()
     m_propertiesDock->hide();
     m_propertiesDock->setObjectName("propertiesDock");
     m_propertiesDock->setWindowIcon(ui->actionProperties->icon());
-    m_propertiesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_2));
+    m_propertiesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_2));
     m_propertiesDock->toggleViewAction()->setIcon(ui->actionProperties->icon());
     m_propertiesDock->setMinimumWidth(300);
     QScrollArea *scroll = new QScrollArea;
@@ -389,7 +382,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_recentDock = new RecentDock(this);
     m_recentDock->hide();
-    m_recentDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
+    m_recentDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_3));
     ui->menuView->addAction(m_recentDock->toggleViewAction());
     connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
     connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
@@ -401,7 +394,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_playlistDock = new PlaylistDock(this);
     m_playlistDock->hide();
-    m_playlistDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_4));
+    m_playlistDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_4));
     ui->menuView->addAction(m_playlistDock->toggleViewAction());
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onPlaylistDockTriggered(bool)));
@@ -437,7 +430,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
-    m_timelineDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_5));
+    m_timelineDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_5));
     ui->menuView->addAction(m_timelineDock->toggleViewAction());
     connect(m_timelineDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onTimelineDockTriggered(bool)));
@@ -490,7 +483,7 @@ void MainWindow::setupAndConnectDocks()
                                     m_filterController->attachedModel(), this);
     m_filtersDock->setMinimumSize(400, 300);
     m_filtersDock->hide();
-    m_filtersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_6));
+    m_filtersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_6));
     ui->menuView->addAction(m_filtersDock->toggleViewAction());
     connect(m_filtersDock, SIGNAL(currentFilterRequested(int)), m_filterController,
             SLOT(setCurrentFilter(int)), Qt::QueuedConnection);
@@ -535,7 +528,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_markersDock = new MarkersDock(this);
     m_markersDock->hide();
-    m_markersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_6));
+    m_markersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_6));
     m_markersDock->setModel(m_timelineDock->markersModel());
     ui->menuView->addAction(m_markersDock->toggleViewAction());
     connect(m_markersDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
@@ -550,7 +543,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_keyframesDock = new KeyframesDock(m_filtersDock->qmlProducer(), this);
     m_keyframesDock->hide();
-    m_keyframesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_7));
+    m_keyframesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_7));
     ui->menuView->addAction(m_keyframesDock->toggleViewAction());
     connect(m_keyframesDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onKeyframesDockTriggered(bool)));
@@ -565,7 +558,7 @@ void MainWindow::setupAndConnectDocks()
     m_historyDock->setObjectName("historyDock");
     m_historyDock->setWindowIcon(ui->actionHistory->icon());
     m_historyDock->toggleViewAction()->setIcon(ui->actionHistory->icon());
-    m_historyDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_8));
+    m_historyDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_8));
     m_historyDock->setMinimumWidth(150);
     ui->menuView->addAction(m_historyDock->toggleViewAction());
     connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
@@ -581,7 +574,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
-    m_encodeDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_9));
+    m_encodeDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_9));
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
     connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
@@ -611,7 +604,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();
-    m_jobsDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_0));
+    m_jobsDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(onJobAdded()));
     connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
@@ -620,7 +613,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_notesDock = new NotesDock(this);
     m_notesDock->hide();
-    m_notesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_3));
+    m_notesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_3));
     ui->menuView->insertAction(m_playlistDock->toggleViewAction(), m_notesDock->toggleViewAction());
     connect(m_notesDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onNotesDockTriggered(bool)));
@@ -659,30 +652,20 @@ void MainWindow::setupMenuView()
 
 void MainWindow::connectVideoWidgetSignals()
 {
-    Mlt::GLWidget *videoWidget = (Mlt::GLWidget *) & (MLT);
-    connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
-    connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
-    connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
-    connect(videoWidget->quickWindow(), SIGNAL(sceneGraphInitialized()),
-            SLOT(onSceneGraphInitialized()), Qt::QueuedConnection);
-    connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame &)), m_scopeController,
-            SIGNAL(newFrame(const SharedFrame &)));
-    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter *, QmlMetadata *, int)),
-            videoWidget, SLOT(setCurrentFilter(QmlFilter *, QmlMetadata *)));
-}
-
-void MainWindow::setupAndConnectLeapNetworkListener()
-{
-    LeapNetworkListener *leap = new LeapNetworkListener(this);
-    connect(leap, SIGNAL(shuttle(float)), SLOT(onShuttle(float)));
-    connect(leap, &LeapNetworkListener::jogRightFrame, Actions["playerNextFrameAction"],
-            &QAction::trigger);
-    connect(leap, &LeapNetworkListener::jogRightSecond, Actions["playerForwardOneSecondAction"],
-            &QAction::trigger);
-    connect(leap, &LeapNetworkListener::jogLeftFrame, Actions["playerPreviousFrameAction"],
-            &QAction::trigger);
-    connect(leap, &LeapNetworkListener::jogLeftSecond, Actions["playerBackwardOneSecondAction"],
-            &QAction::trigger);
+    auto videoWidget = static_cast<Mlt::GLWidget *>(&MLT);
+    connect(videoWidget, &Mlt::GLWidget::dragStarted, m_playlistDock,
+            &PlaylistDock::onPlayerDragStarted);
+    connect(videoWidget, &Mlt::GLWidget::seekTo, m_player, &Player::seek);
+    connect(videoWidget, &Mlt::GLWidget::gpuNotSupported, this, &MainWindow::onGpuNotSupported);
+    connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, videoWidget,
+            &Mlt::GLWidget::initializeGL, Qt::DirectConnection);
+    connect(videoWidget->quickWindow(), &QQuickWindow::beforeRenderPassRecording, videoWidget,
+            &Mlt::GLWidget::paintGL, Qt::DirectConnection);
+    connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, this,
+            &MainWindow::onSceneGraphInitialized, Qt::QueuedConnection);
+    connect(videoWidget, &Mlt::GLWidget::frameDisplayed, m_scopeController, &ScopeController::newFrame);
+    connect(m_filterController, &FilterController::currentFilterChanged, videoWidget,
+            &Mlt::GLWidget::setCurrentFilter);
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
@@ -1140,8 +1123,10 @@ void MainWindow::open(Mlt::Producer *producer)
 
     bool ok = false;
     int screen = Settings.playerExternal().toInt(&ok);
-    if (ok && screen != QApplication::desktop()->screenNumber(this))
+    if (ok && screen < QGuiApplication::screens().count()
+            && QGuiApplication::screens().at(screen) != this->screen()) {
         m_player->moveVideoToScreen(screen);
+    }
 
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer)) {
@@ -1917,9 +1902,9 @@ void MainWindow::setupActions()
     // Qt 5 on OS X supports the standard Full Screen window widget.
     action->setVisible(false);
     // OS X has a standard Full Screen shortcut we should use.
-    fullScreenShortcuts << QKeySequence(Qt::CTRL + Qt::META + Qt::Key_F);
+    fullScreenShortcuts << QKeySequence(Qt::CTRL | Qt::META | Qt::Key_F);
 #else
-    fullScreenShortcuts << QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
+    fullScreenShortcuts << QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F);
 #endif
     action->setShortcuts(fullScreenShortcuts);
 
@@ -3617,8 +3602,8 @@ void MainWindow::on_menuExternal_aboutToShow()
     foreach (QAction *action, m_externalGroup->actions()) {
         bool ok = false;
         int i = action->data().toInt(&ok);
-        if (ok) {
-            if (i == QApplication::desktop()->screenNumber(this)) {
+        if (ok && i < QGuiApplication::screens().count()) {
+            if (QGuiApplication::screens().at(i) == screen()) {
                 if (action->isChecked()) {
                     m_externalGroup->actions().first()->setChecked(true);
                     Settings.setPlayerExternal(QString());
@@ -3872,7 +3857,7 @@ void MainWindow::on_actionExportEDL_triggered()
         if (scriptFile.open(QIODevice::ReadOnly)) {
             // Read JavaScript into a string.
             QTextStream stream(&scriptFile);
-            stream.setCodec("UTF-8");
+            stream.setEncoding(QStringConverter::Utf8);
             stream.setAutoDetectUnicode(true);
             QString contents = stream.readAll();
             scriptFile.close();
@@ -4377,6 +4362,8 @@ void MainWindow::onSceneGraphInitialized()
     } else if (Settings.playerGPU()) {
         ui->actionGPU->setVisible(true);
     }
+    auto videoWidget = (Mlt::GLWidget *) & (MLT);
+    videoWidget->setBlankScene();
 }
 
 void MainWindow::on_actionShowTextUnderIcons_toggled(bool b)
@@ -4824,7 +4811,7 @@ void MainWindow::on_actionExportChapters_triggered()
         if (scriptFile.open(QIODevice::ReadOnly)) {
             // Read JavaScript into a string.
             QTextStream stream(&scriptFile);
-            stream.setCodec("UTF-8");
+            stream.setEncoding(QStringConverter::Utf8);
             stream.setAutoDetectUnicode(true);
             QString contents = stream.readAll();
             scriptFile.close();

@@ -157,7 +157,6 @@ private:
     void setupAndConnectDocks();
     void setupMenuView();
     void connectVideoWidgetSignals();
-    void setupAndConnectLeapNetworkListener();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
     void setupActions();
@@ -219,10 +218,6 @@ private:
     QDateTime m_sourceUpdatedAt;
     MarkersDock *m_markersDock;
     NotesDock *m_notesDock;
-
-#ifdef WITH_LIBLEAP
-    LeapListener m_leapListener;
-#endif
 
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker &checker);

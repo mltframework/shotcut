@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ QWidget *getSeparator()
     separator->setGeometry(0, 0, 300, 300);
     separator->setMinimumSize(1, 1);
     QPalette pal = separator->palette();
-    pal.setColor(QPalette::Background, pal.color(QPalette::WindowText));
+//    pal.setColor(QPalette::Background, pal.color(QPalette::WindowText));
     separator->setAutoFillBackground(true);
     separator->setPalette(pal);
     return separator;

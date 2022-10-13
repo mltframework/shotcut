@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 Meltytech, LLC
+ * Copyright (c) 2018-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.2
+import QtQuick.Dialogs
 import Shotcut.Controls 1.0 as Shotcut
 
 ToolButton {
@@ -64,16 +64,15 @@ ToolButton {
 
         visible: false
         modality: application.dialogModality
-        icon: StandardIcon.Question
         title: qsTr("Confirm Removing Keyframes")
         text: qsTr('This will remove all keyframes for this parameter.<p>Do you still want to do this?')
-        standardButtons: StandardButton.Yes | StandardButton.No
-        onYes: {
+        buttons: MessageDialog.Yes | MessageDialog.No
+        onAccepted: {
             checkbox.checked = false;
             checkbox.toggled();
             parameters.reload();
         }
-        onNo: {
+        onRejected: {
             checkbox.checked = true;
         }
     }
@@ -83,16 +82,15 @@ ToolButton {
 
         visible: false
         modality: application.dialogModality
-        icon: StandardIcon.Question
         title: qsTr("Confirm Removing Simple Keyframes")
         text: qsTr('This will remove all simple keyframes for all parameters.<p>Simple keyframes will be converted to advanced keyframes.<p>Do you still want to do this?')
-        standardButtons: StandardButton.Yes | StandardButton.No
-        onYes: {
+        buttons: MessageDialog.Yes | MessageDialog.No
+        onAccepted: {
             checkbox.checked = true;
             parameters.removeSimpleKeyframes();
             parameters.reload();
         }
-        onNo: {
+        onRejected: {
             checkbox.checked = false;
         }
     }

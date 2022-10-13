@@ -38,6 +38,7 @@
 #include <QQuickView>
 #include <QSlider>
 #include <QToolButton>
+#include <QActionGroup>
 
 #include <cmath>
 
@@ -143,8 +144,14 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     m_qview.rootContext()->setContextProperty("keyframes", this);
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
     m_qview.rootContext()->setContextProperty("parameters", &m_model);
+    m_qview.setResizeMode(QQuickWidget::SizeRootObjectToView);
+    m_qview.setClearColor(palette().window().color());
+    m_qview.quickWindow()->setPersistentSceneGraph(false);
+#ifndef Q_OS_MAC
+    m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
+#endif
     setCurrentFilter(0, 0);
-    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(load()));
+    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load()));
 
     vboxLayout->addWidget(&m_qview);
     QWidget *dockContentsWidget = new QWidget();
@@ -236,7 +243,7 @@ void KeyframesDock::setupActions()
     Actions.add("keyframesAnimateOutAction", action);
 
     action = new QAction(tr("Zoom Keyframes Out"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Minus));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Minus));
     icon = QIcon::fromTheme("zoom-out",
                             QIcon(":/icons/oxygen/32x32/actions/zoom-out.png"));
     action->setIcon(icon);
@@ -247,7 +254,7 @@ void KeyframesDock::setupActions()
     Actions.add("keyframesZoomOutAction", action);
 
     action = new QAction(tr("Zoom Keyframes In"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Plus));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Plus));
     icon = QIcon::fromTheme("zoom-in",
                             QIcon(":/icons/oxygen/32x32/actions/zoom-in.png"));
     action->setIcon(icon);
@@ -258,7 +265,7 @@ void KeyframesDock::setupActions()
     Actions.add("keyframesZoomInAction", action);
 
     action = new QAction(tr("Zoom Keyframes To Fit"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_0));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_0));
     icon = QIcon::fromTheme("zoom-fit-best",
                             QIcon(":/icons/oxygen/32x32/actions/zoom-fit-best.png"));
     action->setIcon(icon);
@@ -328,7 +335,7 @@ void KeyframesDock::setupActions()
     Actions.add("keyframesRebuildAudioWaveformAction", action);
 
     action = new QAction(tr("Seek Previous Keyframe"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_BracketLeft));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_BracketLeft));
     action->setEnabled(m_qmlProducer && m_filter);
     connect(action, &QAction::triggered, this, [&]() {
         if (m_qmlProducer && m_filter) {
@@ -344,7 +351,7 @@ void KeyframesDock::setupActions()
     Actions.add("keyframesSeekPreviousAction", action);
 
     action = new QAction(tr("Seek Next Keyframe"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_BracketRight));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_BracketRight));
     action->setEnabled(m_qmlProducer && m_filter);
     connect(action, &QAction::triggered, this, [&]() {
         if (m_qmlProducer && m_filter) {
@@ -448,12 +455,6 @@ void KeyframesDock::keyReleaseEvent(QKeyEvent *event)
     QDockWidget::keyReleaseEvent(event);
     if (!event->isAccepted())
         MAIN.keyReleaseEvent(event);
-}
-
-void KeyframesDock::onVisibilityChanged(bool visible)
-{
-    if (visible)
-        load();
 }
 
 int KeyframesDock::currentParameter() const

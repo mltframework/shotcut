@@ -20,7 +20,7 @@
 #include <QReadLocker>
 #include <QWriteLocker>
 #include <QDateTime>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QCoreApplication>
 #include <QThread>
 
@@ -155,12 +155,12 @@ QByteArray AbstractStringAppender::qCleanupFuncinfo(const char* name)
   }
 
   bool hasLambda = false;
-  QRegExp lambdaRegex("::<lambda\\(.*\\)>");
-  int lambdaIndex = lambdaRegex.indexIn(QString::fromLatin1(info));
-  if (lambdaIndex != -1)
+  QRegularExpression lambdaRegex("::<lambda\\(.*\\)>");
+  auto match = lambdaRegex.match(QString::fromLatin1(info));
+  if (match.hasMatch())
   {
     hasLambda = true;
-    info.remove(lambdaIndex, lambdaRegex.matchedLength());
+    info.remove(match.capturedStart(), match.capturedLength());
   }
 
   // operator names with '(', ')', '<', '>' in it

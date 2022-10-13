@@ -29,17 +29,17 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt5 5.15 REQUIRED
+find_package(Qt6 6.2 REQUIRED
   COMPONENTS
-  Widgets
+  Multimedia
   Network
+  OpenGL
+  OpenGLWidgets
   QuickControls2
   QuickWidgets
-  Xml
-  WebSockets
-  OpenGL
   Sql
-  Multimedia
+  Widgets
+  Xml
 )
 
 find_package(PkgConfig REQUIRED)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 Meltytech, LLC
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ VideoWaveformScopeWidget::VideoWaveformScopeWidget()
     : ScopeWidget("VideoWaveform")
     , m_frame()
     , m_renderImg()
-    , m_mutex(QMutex::NonRecursive)
+    , m_mutex()
     , m_displayImg()
 {
     LOG_DEBUG() << "begin";

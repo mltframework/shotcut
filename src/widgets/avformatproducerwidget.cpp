@@ -961,13 +961,13 @@ void AvformatProducerWidget::convert(TranscodeDialog &dialog)
             if (dialog.isSubClip()) {
                 if (m_producer->get(kMultitrackItemProperty)) {
                     QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
-                    QVector<QStringRef> parts = s.splitRef(':');
+                    auto parts = s.split(':');
                     if (parts.length() == 2) {
                         int clipIndex = parts[0].toInt();
                         int trackIndex = parts[1].toInt();
                         QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
                         if (!uuid.isNull()) {
-                            job->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, QString(), uuid.toByteArray(),
+                            job->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, QString(), uuid,
                                                                               in));
                             JOBS.add(job);
                         }
@@ -991,7 +991,7 @@ bool AvformatProducerWidget::revertToOriginalResource()
         m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
         if (m_producer->get(kMultitrackItemProperty)) {
             QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
-            QVector<QStringRef> parts = s.splitRef(':');
+            auto parts = s.split(':');
             if (parts.length() == 2) {
                 int clipIndex = parts[0].toInt();
                 int trackIndex = parts[1].toInt();
@@ -1201,14 +1201,14 @@ void AvformatProducerWidget::on_reverseButton_clicked()
 
             if (m_producer->get(kMultitrackItemProperty)) {
                 QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
-                QVector<QStringRef> parts = s.splitRef(':');
+                auto parts = s.split(':');
                 if (parts.length() == 2) {
                     int clipIndex = parts[0].toInt();
                     int trackIndex = parts[1].toInt();
                     QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
                     if (!uuid.isNull()) {
                         meltJob->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, tmpFileName,
-                                                                              uuid.toByteArray(), in));
+                                                                              uuid, in));
                         JOBS.add(meltJob);
                         return;
                     }

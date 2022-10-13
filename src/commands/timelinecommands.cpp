@@ -55,8 +55,9 @@ void AppendCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex;
     LongUiTask longTask(QObject::tr("Append to Timeline"));
     m_undoHelper.recordBeforeState();
-    Mlt::Producer *producer = longTask.runAsync<Mlt::Producer *>(QObject::tr("Preparing"),
-                                                                 deserializeProducer, m_xml);
+    Mlt::Producer *producer = longTask.runAsync<Mlt::Producer *>(QObject::tr("Preparing"), [ = ]() {
+        return deserializeProducer(m_xml);
+    });
     if (producer->type() == mlt_service_playlist_type) {
         Mlt::Playlist playlist(*producer);
         int count = playlist.count();
@@ -497,7 +498,7 @@ void MoveClipCommand::redo()
             auto info = m_model.findClipByUuid(MLT.uuid(clip), trackIndex, clipIndex);
             if (info && info->producer && info->producer->is_valid() && info->cut) {
                 info->producer->set(kNewTrackIndexProperty, qBound(0, trackIndex + m_trackDelta,
-                                                                   m_model.trackList().size() - 1));
+                                                                   int(m_model.trackList().size()) - 1));
                 info->producer->pass_property(*info->cut, kPlaylistStartProperty);
                 info->producer->set(kTrackIndexProperty, trackIndex);
                 info->producer->set(kClipIndexProperty, clipIndex);

@@ -41,10 +41,10 @@ public:
         return future.result();
     }
 
-    template <class Ret, class Func, class Arg>
-    Ret runAsync(QString text, Func &&f, Arg &&arg)
+    template <class Ret, class Func, class ...Args>
+    Ret runAsync(QString text, Func &&f, Args &&...args)
     {
-        QFuture<Ret> future = QtConcurrent::run(f, arg);
+        QFuture<Ret> future = QtConcurrent::run(f, std::forward<Args>(args)...);
         return wait<Ret>(text, future);
     }
 

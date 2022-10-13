@@ -27,7 +27,6 @@
 #include <MltProperties.h>
 
 class QTreeWidgetItem;
-class QStringList;
 namespace Ui {
 class EncodeDock;
 }
@@ -119,7 +118,7 @@ private slots:
 
     void on_fpsSpinner_editingFinished();
 
-    void on_fpsComboBox_activated(const QString &arg1);
+    void on_fpsComboBox_activated(int arg1);
 
     void on_videoQualitySpinner_valueChanged(int vq);
 
@@ -127,7 +126,7 @@ private slots:
 
     void on_parallelCheckbox_clicked(bool checked);
 
-    void on_resolutionComboBox_activated(const QString &arg1);
+    void on_resolutionComboBox_activated(int arg1);
 
 private:
     enum {

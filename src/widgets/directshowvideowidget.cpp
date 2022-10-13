@@ -169,7 +169,7 @@ void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
     ui->videoCombo->setCurrentIndex(0);
     ui->audioCombo->setCurrentIndex(0);
     if (resource.startsWith(videoDevice)) {
-        QStringRef name = resource.midRef(qstrlen(videoDevice));
+        auto name = resource.mid(qstrlen(videoDevice));
         for (int i = 1; i < ui->videoCombo->count(); i++) {
             if (ui->videoCombo->itemData(i).toString() == name) {
                 ui->videoCombo->setCurrentIndex(i);
@@ -177,7 +177,7 @@ void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
             }
         }
     } else if (resource.startsWith(audioDevice)) {
-        QStringRef name = resource.midRef(qstrlen(audioDevice));
+        auto name = resource.mid(qstrlen(audioDevice));
         for (int i = 1; i < ui->audioCombo->count(); i++) {
             if (ui->audioCombo->itemData(i).toString() == name) {
                 ui->audioCombo->setCurrentIndex(i);
@@ -186,7 +186,7 @@ void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
         }
     }
     if (resource2.startsWith(audioDevice)) {
-        QStringRef name = resource2.midRef(qstrlen(audioDevice));
+        auto name = resource2.mid(qstrlen(audioDevice));
         for (int i = 1; i < ui->audioCombo->count(); i++) {
             if (ui->audioCombo->itemData(i).toString() == name) {
                 ui->audioCombo->setCurrentIndex(i);

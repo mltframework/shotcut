@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ VideoZoomWidget::VideoZoomWidget()
     , m_imageOffset(0, 0)
     , m_mouseGrabPixel(0, 0)
     , m_selectedPixel(-1, -1)
-    , m_mutex(QMutex::NonRecursive)
+    , m_mutex()
     , m_frame()
 {
     LOG_DEBUG() << "begin";
