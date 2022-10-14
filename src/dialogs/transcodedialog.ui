@@ -144,11 +144,55 @@
     <widget class="QWidget" name="advancedWidget" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
+       <layout class="QGridLayout" name="gridLayout" columnstretch="0,0">
         <item row="4" column="1">
          <widget class="FrameRateWidget" name="fpsWidget" native="true">
           <property name="toolTip">
            <string>Override the frame rate to a specific value.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QCheckBox" name="convert709CheckBox">
+          <property name="toolTip">
+           <string>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</string>
+          </property>
+          <property name="text">
+           <string>Convert to BT.709 colorspace</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QCheckBox" name="subclipCheckBox">
+          <property name="toolTip">
+           <string>This option converts only the trimmed portion of the source
+clip plus a little instead of the entire clip. When this option is
+used not all of the matching source clips are replaced, instead
+only the currently selected one.</string>
+          </property>
+          <property name="text">
+           <string>Use sub-clip</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QCheckBox" name="advancedCheckBox">
+          <property name="toolTip">
+           <string>Enable this to keep the Advanced section open for the next time this dialog appears.</string>
+          </property>
+          <property name="text">
+           <string>Keep Advanced open</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QComboBox" name="frcComboBox">
+          <property name="toolTip">
+           <string>Frame rate conversion method
+
+Duplicate: Duplicate frames.
+Blend: Blend frames.
+Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</string>
           </property>
          </widget>
         </item>
@@ -169,44 +213,13 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="1">
-         <widget class="QCheckBox" name="convert709CheckBox">
-          <property name="toolTip">
-           <string>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</string>
+        <item row="7" column="0">
+         <widget class="QLabel" name="sampleRateLabel">
+          <property name="enabled">
+           <bool>true</bool>
           </property>
           <property name="text">
-           <string>Convert to BT.709 colorspace</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="frcLabel">
-          <property name="text">
-           <string>Frame rate conversion</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QComboBox" name="frcComboBox">
-          <property name="toolTip">
-           <string>Frame rate conversion method
-
-Duplicate: Duplicate frames.
-Blend: Blend frames.
-Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QCheckBox" name="subclipCheckBox">
-          <property name="toolTip">
-           <string>This option converts only the trimmed portion of the source
-clip plus a little instead of the entire clip. When this option is
-used not all of the matching source clips are replaced, instead
-only the currently selected one.</string>
-          </property>
-          <property name="text">
-           <string>Use sub-clip</string>
+           <string>Sample rate</string>
           </property>
          </widget>
         </item>
@@ -227,14 +240,36 @@ only the currently selected one.</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="1">
-         <widget class="QCheckBox" name="advancedCheckBox">
-          <property name="toolTip">
-           <string>Enable this to keep the Advanced section open for the next time this dialog appears.</string>
-          </property>
+        <item row="5" column="0">
+         <widget class="QLabel" name="frcLabel">
           <property name="text">
-           <string>Keep Advanced open</string>
+           <string>Frame rate conversion</string>
           </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QComboBox" name="sampleRateComboBox">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="currentText">
+           <string>Same as original</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Same as original</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>44100</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>48000</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
