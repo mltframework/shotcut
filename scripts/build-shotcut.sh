@@ -1023,7 +1023,7 @@ function get_subproject {
   feedback_status Getting or updating source for $1 - this could take some time
   cmd pushd .
 
-  # Check for repository setyp
+  # Check for repository setup
   REPOTYPE=`lookup REPOTYPES $1`
   REPOLOC=`lookup REPOLOCS $1`
   REVISION=`lookup REVISIONS $1`
