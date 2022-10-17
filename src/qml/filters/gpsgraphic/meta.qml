@@ -21,7 +21,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("GPS Graphic")
-    keywords: qsTr('gpx sticker decal guage map graph speedometer', 'search keywords for the GPS Graphic video filter') + ' gps graphic'
+    keywords: qsTr('gpx sticker decal gauge map graph speedometer', 'search keywords for the GPS Graphic video filter') + ' gps graphic'
     mlt_service: 'gpsgraphic'
     qml: 'ui.qml'
     vui: 'vui.qml'
