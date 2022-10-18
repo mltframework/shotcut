@@ -442,7 +442,7 @@ private:
 class AddTransitionByTrimInCommand : public TrimCommand
 {
 public:
-    AddTransitionByTrimInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration,
+    AddTransitionByTrimInCommand(TimelineDock &timeline, int trackIndex, int clipIndex, int duration,
                                  int trimDelta, bool redo = true, QUndoCommand *parent = 0);
     void redo();
     void undo();
@@ -453,7 +453,7 @@ protected:
     }
     bool mergeWith(const QUndoCommand *other);
 private:
-    MultitrackModel &m_model;
+    TimelineDock &m_timeline;
     int m_trackIndex;
     int m_clipIndex;
     int m_duration;

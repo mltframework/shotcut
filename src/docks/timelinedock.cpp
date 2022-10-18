@@ -2472,7 +2472,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
     if (!ripple && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
         clipIndex = m_model.addTransitionByTrimIn(trackIndex, clipIndex, delta);
         m_transitionDelta += delta;
-        m_trimCommand.reset(new Timeline::AddTransitionByTrimInCommand(m_model, trackIndex, clipIndex - 1,
+        m_trimCommand.reset(new Timeline::AddTransitionByTrimInCommand(*this, trackIndex, clipIndex - 1,
                                                                        m_transitionDelta, m_trimDelta, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
                 && m_updateCommand->clipIndex() == clipIndex)

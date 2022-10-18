@@ -1080,11 +1080,11 @@ bool TrimTransitionOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(MultitrackModel &model, int trackIndex,
+AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(TimelineDock &timeline, int trackIndex,
                                                            int clipIndex, int duration, int trimDelta, bool redo, QUndoCommand *parent)
     : TrimCommand(parent)
-    , m_model(model)
-    , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
+    , m_timeline(timeline)
+    , m_trackIndex(qBound(0, trackIndex, qMax(timeline.model()->rowCount() - 1, 0)))
     , m_clipIndex(clipIndex)
     , m_duration(duration)
     , m_trimDelta(trimDelta)
@@ -1100,10 +1100,13 @@ void AddTransitionByTrimInCommand::redo()
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta
                     << "duration" << m_duration;
         if (m_trimDelta)
-            m_model.trimClipIn(m_trackIndex, m_clipIndex + 1, m_trimDelta, false, false);
-        m_model.addTransitionByTrimIn(m_trackIndex, m_clipIndex, m_duration);
+            m_timeline.model()->trimClipIn(m_trackIndex, m_clipIndex + 1, m_trimDelta, false, false);
+        m_timeline.model()->addTransitionByTrimIn(m_trackIndex, m_clipIndex, m_duration);
         if (m_notify && m_clipIndex > 0)
-            m_model.notifyClipOut(m_trackIndex, m_clipIndex - 1);
+            m_timeline.model()->notifyClipOut(m_trackIndex, m_clipIndex - 1);
+        m_timeline.blockSelection(false);
+        m_timeline.setSelection();
+        m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex + 1, m_trackIndex));
     } else {
         m_redo = true;
     }
@@ -1113,8 +1116,11 @@ void AddTransitionByTrimInCommand::undo()
 {
     if (m_clipIndex > 0) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta;
-        m_model.removeTransitionByTrimIn(m_trackIndex, m_clipIndex, -m_trimDelta);
+        m_timeline.model()->removeTransitionByTrimIn(m_trackIndex, m_clipIndex, -m_trimDelta);
         m_notify = true;
+        m_timeline.blockSelection(false);
+        m_timeline.setSelection();
+        m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
     } else LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 

@@ -1998,7 +1998,7 @@ int MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int de
             // Adjust filters.
             Mlt::ClipInfo info;
             playlist.clip_info(clipIndex, &info);
-            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0, delta);
+            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0, 0);
 
             // Insert the mix clip.
             beginInsertRows(index(trackIndex), clipIndex, clipIndex);
