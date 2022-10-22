@@ -179,7 +179,6 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
         if (!m_mltService) return;
         filter = new QmlFilter(*m_mltService, meta);
         filter->setIsNew(isNew);
-        connect(filter, SIGNAL(changed()), SLOT(onQmlFilterChanged()));
         connect(filter, SIGNAL(changed(QString)), SLOT(onQmlFilterChanged(const QString &)));
     }
 
@@ -250,17 +249,13 @@ void FilterController::handleAttachDuplicateFailed(int index)
     setCurrentFilter(index);
 }
 
-void FilterController::onQmlFilterChanged()
-{
-    emit filterChanged(m_mltService);
-}
-
 void FilterController::onQmlFilterChanged(const QString &name)
 {
     if (name == "disable") {
         QModelIndex index = m_attachedModel.index(m_currentFilterIndex);
         emit m_attachedModel.dataChanged(index, index, QVector<int>() << Qt::CheckStateRole);
     }
+    emit filterChanged(m_mltService);
 }
 
 void FilterController::removeCurrent()
