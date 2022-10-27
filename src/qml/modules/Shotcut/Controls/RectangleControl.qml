@@ -83,7 +83,7 @@ Item {
         return v * polarity;
     }
 
-    function snapX(x) {
+    function snapX(x, y) {
         if (!video.snapToGrid || video.grid === 0)
             return x;
 
@@ -99,7 +99,9 @@ Item {
             if (deltas) {
                 for (var i = 0; i < deltas.length; i++) {
                     var delta = x - deltas[i] * parent.width;
-                    if (Math.abs(delta) < snapMargin)
+                    var min = i < deltas.length / 2 ? deltas[i] * parent.height : deltas[deltas.length - i - 1] * parent.height;
+                    var max = i < deltas.length / 2 ? deltas[deltas.length - i - 1] * parent.height : deltas[i] * parent.height;
+                    if (Math.abs(delta) < snapMargin && min - snapMargin <= y && y <= max + snapMargin)
                         return x - delta;
 
                 }
@@ -108,7 +110,7 @@ Item {
         return x;
     }
 
-    function snapY(y) {
+    function snapY(x, y) {
         if (!video.snapToGrid || video.grid === 0)
             return y;
 
@@ -124,7 +126,9 @@ Item {
             if (deltas) {
                 for (var i = 0; i < deltas.length; i++) {
                     var delta = y - deltas[i] * parent.height;
-                    if (Math.abs(delta) < snapMargin)
+                    var min = i < deltas.length / 2 ? deltas[i] * parent.width : deltas[deltas.length - i - 1] * parent.width;
+                    var max = i < deltas.length / 2 ? deltas[deltas.length - i - 1] * parent.width : deltas[i] * parent.width;
+                    if (Math.abs(delta) < snapMargin && min - snapMargin <= x && x <= max + snapMargin)
                         return y - delta;
 
                 }
@@ -247,8 +251,8 @@ Item {
                 rightHandle.anchors.right = rectangle.right;
             }
             onPositionChanged: {
-                rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2;
-                rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2;
+                rectangle.x = snapX(rectangle.x + rectangle.width / 2, rectangle.y + rectangle.height / 2) - rectangle.width / 2;
+                rectangle.y = snapY(rectangle.x + rectangle.width / 2, rectangle.y + rectangle.height / 2) - rectangle.height / 2;
                 rectChanged(rectangle);
             }
             onReleased: {
@@ -376,8 +380,8 @@ Item {
                 rightHandle.anchors.right = rectangle.right;
             }
             onPositionChanged: {
-                topLeftHandle.x = snapX(topLeftHandle.x);
-                topLeftHandle.y = snapY(topLeftHandle.y);
+                topLeftHandle.x = snapX(topLeftHandle.x, topLeftHandle.y);
+                topLeftHandle.y = snapY(topLeftHandle.x, topLeftHandle.y);
                 if (aspectRatio !== 0)
                     parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio;
 
@@ -424,7 +428,7 @@ Item {
             }
             onPositionChanged: {
                 topHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2);
-                topHandle.y = snapY(topHandle.y);
+                topHandle.y = snapY(topHandle.x + (handleSize / 2), topHandle.y);
                 parent.x = Math.min(parent.x, bottomHandle.x);
                 parent.y = Math.min(parent.y, bottomHandle.y);
                 rectChanged(rectangle);
@@ -462,7 +466,7 @@ Item {
             }
             onPositionChanged: {
                 bottomHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2);
-                bottomHandle.y = snapY(bottomHandle.y + handleSize) - handleSize;
+                bottomHandle.y = snapY(bottomHandle.x + (handleSize / 2), bottomHandle.y + handleSize) - handleSize;
                 parent.x = Math.max(parent.x, topHandle.x);
                 parent.y = Math.max(parent.y, topHandle.y);
                 rectChanged(rectangle);
@@ -499,7 +503,7 @@ Item {
                 bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter;
             }
             onPositionChanged: {
-                leftHandle.x = snapX(leftHandle.x);
+                leftHandle.x = snapX(leftHandle.x, leftHandle.y + (handleSize / 2));
                 leftHandle.y = topLeftHandle.y + rectangle.height / 2 - (handleSize / 2);
                 parent.x = Math.min(parent.x, rightHandle.x);
                 parent.y = Math.min(parent.y, rightHandle.y);
@@ -537,7 +541,7 @@ Item {
                 bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter;
             }
             onPositionChanged: {
-                rightHandle.x = snapX(rightHandle.x + handleSize) - handleSize;
+                rightHandle.x = snapX(rightHandle.x + handleSize, rightHandle.y + (handleSize / 2)) - handleSize;
                 rightHandle.y = topLeftHandle.y + rectangle.height / 2 - (handleSize / 2);
                 parent.x = Math.max(parent.x, leftHandle.x);
                 parent.y = Math.max(parent.y, leftHandle.y);
@@ -584,8 +588,8 @@ Item {
                 rightHandle.anchors.right = rectangle.right;
             }
             onPositionChanged: {
-                topRightHandle.x = snapX(topRightHandle.x + handleSize) - handleSize;
-                topRightHandle.y = snapY(topRightHandle.y);
+                topRightHandle.x = snapX(topRightHandle.x + handleSize, topRightHandle.y) - handleSize;
+                topRightHandle.y = snapY(topRightHandle.x + handleSize, topRightHandle.y);
                 if (aspectRatio !== 0)
                     parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize;
 
@@ -640,8 +644,8 @@ Item {
                 rightHandle.anchors.right = rectangle.right;
             }
             onPositionChanged: {
-                bottomLeftHandle.x = snapX(bottomLeftHandle.x);
-                bottomLeftHandle.y = snapY(bottomLeftHandle.y + handleSize) - handleSize;
+                bottomLeftHandle.x = snapX(bottomLeftHandle.x, bottomLeftHandle.y + handleSize);
+                bottomLeftHandle.y = snapY(bottomLeftHandle.x, bottomLeftHandle.y + handleSize) - handleSize;
                 if (aspectRatio !== 0)
                     parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio;
 
@@ -694,8 +698,8 @@ Item {
                 rightHandle.anchors.right = rectangle.right;
             }
             onPositionChanged: {
-                bottomRightHandle.x = snapX(bottomRightHandle.x + handleSize) - handleSize;
-                bottomRightHandle.y = snapY(bottomRightHandle.y + handleSize) - handleSize;
+                bottomRightHandle.x = snapX(bottomRightHandle.x + handleSize, bottomRightHandle.y + handleSize) - handleSize;
+                bottomRightHandle.y = snapY(bottomRightHandle.x + handleSize, bottomRightHandle.y + handleSize) - handleSize;
                 if (aspectRatio !== 0)
                     parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize;
 

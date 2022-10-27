@@ -158,7 +158,7 @@ Shotcut.VuiBase {
         return v * polarity;
     }
 
-    function snapX(x) {
+    function snapX(x, y) {
         if (!video.snapToGrid || video.grid === 0)
             return x;
 
@@ -174,7 +174,9 @@ Shotcut.VuiBase {
             if (deltas) {
                 for (var i = 0; i < deltas.length; i++) {
                     var delta = x - deltas[i] * cornersControl.width;
-                    if (Math.abs(delta) < snapMargin)
+                    var min = i < deltas.length / 2 ? deltas[i] * cornersControl.height : deltas[deltas.length - i - 1] * cornersControl.height;
+                    var max = i < deltas.length / 2 ? deltas[deltas.length - i - 1] * cornersControl.height : deltas[i] * cornersControl.height;
+                    if (Math.abs(delta) < snapMargin && min - snapMargin <= y && y <= max + snapMargin)
                         return x - delta;
 
                 }
@@ -183,7 +185,7 @@ Shotcut.VuiBase {
         return x;
     }
 
-    function snapY(y) {
+    function snapY(x, y) {
         if (!video.snapToGrid || video.grid === 0)
             return y;
 
@@ -199,7 +201,9 @@ Shotcut.VuiBase {
             if (deltas) {
                 for (var i = 0; i < deltas.length; i++) {
                     var delta = y - deltas[i] * cornersControl.height;
-                    if (Math.abs(delta) < snapMargin)
+                    var min = i < deltas.length / 2 ? deltas[i] * cornersControl.width : deltas[deltas.length - i - 1] * cornersControl.width;
+                    var max = i < deltas.length / 2 ? deltas[deltas.length - i - 1] * cornersControl.width : deltas[i] * cornersControl.width;
+                    if (Math.abs(delta) < snapMargin && min - snapMargin <= x && x <= max + snapMargin)
                         return y - delta;
 
                 }
@@ -251,8 +255,8 @@ Shotcut.VuiBase {
                         cursorShape: Qt.SizeFDiagCursor
                         drag.target: parent
                         onPositionChanged: {
-                            corner1Handle.x = snapX(corner1Handle.x + handleOffset) - handleOffset;
-                            corner1Handle.y = snapY(corner1Handle.y + handleOffset) - handleOffset;
+                            corner1Handle.x = snapX(corner1Handle.x + handleOffset, corner1Handle.y + handleOffset) - handleOffset;
+                            corner1Handle.y = snapY(corner1Handle.x + handleOffset, corner1Handle.y + handleOffset) - handleOffset;
                             updateFilterCorners(getPosition());
                         }
                     }
@@ -280,8 +284,8 @@ Shotcut.VuiBase {
                         cursorShape: Qt.SizeBDiagCursor
                         drag.target: parent
                         onPositionChanged: {
-                            corner2Handle.x = snapX(corner2Handle.x + handleOffset) - handleOffset;
-                            corner2Handle.y = snapY(corner2Handle.y + handleOffset) - handleOffset;
+                            corner2Handle.x = snapX(corner2Handle.x + handleOffset, corner2Handle.y + handleOffset) - handleOffset;
+                            corner2Handle.y = snapY(corner2Handle.x + handleOffset, corner2Handle.y + handleOffset) - handleOffset;
                             updateFilterCorners(getPosition());
                         }
                     }
@@ -309,8 +313,8 @@ Shotcut.VuiBase {
                         cursorShape: Qt.SizeFDiagCursor
                         drag.target: parent
                         onPositionChanged: {
-                            corner3Handle.x = snapX(corner3Handle.x + handleOffset) - handleOffset;
-                            corner3Handle.y = snapY(corner3Handle.y + handleOffset) - handleOffset;
+                            corner3Handle.x = snapX(corner3Handle.x + handleOffset, corner3Handle.y + handleOffset) - handleOffset;
+                            corner3Handle.y = snapY(corner3Handle.x + handleOffset, corner3Handle.y + handleOffset) - handleOffset;
                             updateFilterCorners(getPosition());
                         }
                     }
@@ -338,8 +342,8 @@ Shotcut.VuiBase {
                         cursorShape: Qt.SizeBDiagCursor
                         drag.target: parent
                         onPositionChanged: {
-                            corner4Handle.x = snapX(corner4Handle.x + handleOffset) - handleOffset;
-                            corner4Handle.y = snapY(corner4Handle.y + handleOffset) - handleOffset;
+                            corner4Handle.x = snapX(corner4Handle.x + handleOffset, corner4Handle.y + handleOffset) - handleOffset;
+                            corner4Handle.y = snapY(corner4Handle.x + handleOffset, corner4Handle.y + handleOffset) - handleOffset;
                             updateFilterCorners(getPosition());
                         }
                     }
