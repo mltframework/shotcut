@@ -2123,7 +2123,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 
 void MainWindow::hideSetDataDirectory()
 {
-    delete ui->actionAppDataSet;
+    ui->actionAppDataSet->setVisible(false);
 }
 
 QAction *MainWindow::actionAddCustomProfile() const
