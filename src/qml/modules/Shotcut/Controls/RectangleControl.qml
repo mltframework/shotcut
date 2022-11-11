@@ -247,7 +247,7 @@ Item {
                 rightHandle.anchors.right = rectangle.right;
             }
             onPositionChanged: {
-                if(!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier)) {
                     rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2;
                     rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2;
                 }
@@ -378,7 +378,7 @@ Item {
                 rightHandle.anchors.right = rectangle.right;
             }
             onPositionChanged: {
-                if(!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier)) {
                     topLeftHandle.x = snapX(topLeftHandle.x);
                     topLeftHandle.y = snapY(topLeftHandle.y);
                 }
@@ -428,7 +428,7 @@ Item {
             }
             onPositionChanged: {
                 topHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2);
-                if(!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier)) {
                     topHandle.y = snapY(topHandle.y);
                 }
                 parent.x = Math.min(parent.x, bottomHandle.x);
@@ -468,7 +468,7 @@ Item {
             }
             onPositionChanged: {
                 bottomHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2);
-                if(!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier)) {
                     bottomHandle.y = snapY(bottomHandle.y + handleSize) - handleSize;
                 }
                 parent.x = Math.max(parent.x, topHandle.x);
@@ -507,7 +507,7 @@ Item {
                 bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter;
             }
             onPositionChanged: {
-                if(!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier)) {
                     leftHandle.x = snapX(leftHandle.x);
                 }
                 leftHandle.y = topLeftHandle.y + rectangle.height / 2 - (handleSize / 2);
@@ -547,7 +547,7 @@ Item {
                 bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter;
             }
             onPositionChanged: {
-                if(!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier)) {
                     rightHandle.x = snapX(rightHandle.x + handleSize) - handleSize;
                 }
                 rightHandle.y = topLeftHandle.y + rectangle.height / 2 - (handleSize / 2);
@@ -596,7 +596,7 @@ Item {
                 rightHandle.anchors.right = rectangle.right;
             }
             onPositionChanged: {
-                if(!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier)) {
                     topRightHandle.x = snapX(topRightHandle.x + handleSize) - handleSize;
                     topRightHandle.y = snapY(topRightHandle.y);
                 }
@@ -654,7 +654,7 @@ Item {
                 rightHandle.anchors.right = rectangle.right;
             }
             onPositionChanged: {
-                if(!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier)) {
                     bottomLeftHandle.x = snapX(bottomLeftHandle.x);
                     bottomLeftHandle.y = snapY(bottomLeftHandle.y + handleSize) - handleSize;
                 }
@@ -710,7 +710,7 @@ Item {
                 rightHandle.anchors.right = rectangle.right;
             }
             onPositionChanged: {
-                if(!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier)) {
                     bottomRightHandle.x = snapX(bottomRightHandle.x + handleSize) - handleSize;
                     bottomRightHandle.y = snapY(bottomRightHandle.y + handleSize) - handleSize;
                 }
