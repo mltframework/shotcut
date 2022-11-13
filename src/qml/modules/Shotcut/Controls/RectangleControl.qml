@@ -428,9 +428,9 @@ Item {
             }
             onPositionChanged: {
                 topHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2);
-                if (!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier))
                     topHandle.y = snapY(topHandle.y);
-                }
+
                 parent.x = Math.min(parent.x, bottomHandle.x);
                 parent.y = Math.min(parent.y, bottomHandle.y);
                 rectChanged(rectangle);
@@ -468,9 +468,9 @@ Item {
             }
             onPositionChanged: {
                 bottomHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2);
-                if (!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier))
                     bottomHandle.y = snapY(bottomHandle.y + handleSize) - handleSize;
-                }
+
                 parent.x = Math.max(parent.x, topHandle.x);
                 parent.y = Math.max(parent.y, topHandle.y);
                 rectChanged(rectangle);
@@ -507,9 +507,9 @@ Item {
                 bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter;
             }
             onPositionChanged: {
-                if (!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier))
                     leftHandle.x = snapX(leftHandle.x);
-                }
+
                 leftHandle.y = topLeftHandle.y + rectangle.height / 2 - (handleSize / 2);
                 parent.x = Math.min(parent.x, rightHandle.x);
                 parent.y = Math.min(parent.y, rightHandle.y);
@@ -547,9 +547,9 @@ Item {
                 bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter;
             }
             onPositionChanged: {
-                if (!(mouse.modifiers & Qt.AltModifier)) {
+                if (!(mouse.modifiers & Qt.AltModifier))
                     rightHandle.x = snapX(rightHandle.x + handleSize) - handleSize;
-                }
+
                 rightHandle.y = topLeftHandle.y + rectangle.height / 2 - (handleSize / 2);
                 parent.x = Math.max(parent.x, leftHandle.x);
                 parent.y = Math.max(parent.y, leftHandle.y);

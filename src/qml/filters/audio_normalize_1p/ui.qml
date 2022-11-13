@@ -240,10 +240,12 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Reset the measurement if a discontinuity is detected - such as seeking or clip change.')
             }
+
         }
 
         Shotcut.UndoButton {
             id: discResetUndo
+
             onClicked: discResetCheckbox.checked = true
         }
 
