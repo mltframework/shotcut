@@ -69,7 +69,6 @@ private slots:
     void handleAttachedRowsRemoved(const QModelIndex &parent, int first, int last);
     void handleAttachedRowsInserted(const QModelIndex &parent, int first, int last);
     void handleAttachDuplicateFailed(int index);
-    void onQmlFilterChanged();
     void onQmlFilterChanged(const QString &name);
 
 private:

@@ -419,7 +419,7 @@ void KeyframesDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta)
     }
     m_model.load(m_filter, m_metadata);
     disconnect(this, SIGNAL(changed()));
-    connect(m_filter, SIGNAL(changed()), SIGNAL(changed()));
+    connect(m_filter, SIGNAL(changed(QString)), SIGNAL(changed()));
     connect(m_filter, SIGNAL(changed(QString)), &m_model, SLOT(onFilterChanged(QString)));
     connect(m_filter, SIGNAL(animateInChanged()), &m_model, SLOT(reload()));
     connect(m_filter, SIGNAL(animateOutChanged()), &m_model, SLOT(reload()));
