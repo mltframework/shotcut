@@ -539,9 +539,9 @@ Rectangle {
 
                                 Rectangle {
                                     property var clip: trackAt(modelData.y).clipAt(modelData.x)
-                                    property var track: typeof clip === 'undefined' ? trackAt(clip.trackIndex + dragDelta.y) : 0
+                                    property var track: typeof clip !== 'undefined' && typeof dragDelta !== 'undefined' ? trackAt(clip.trackIndex + dragDelta.y) : 0
 
-                                    x: typeof clip === 'undefined' ? clip.x + dragDelta.x : 0
+                                    x: clip && typeof dragDelta !== 'undefined' ? clip.x + dragDelta.x : 0
                                     y: track ? track.y : 0
                                     width: clip.width
                                     height: track ? track.height : 0
