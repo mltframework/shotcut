@@ -118,7 +118,7 @@ int Controller::open(const QString &url, const QString &urlToSave)
 
     auto myUrl = url;
     if (url.endsWith(".mlt")) {
-        // MLT xml producer does URL encoding; so if the URL contains % it must be encoded.
+        // MLT xml producer does URL decoding; so if the URL contains % it must be encoded.
         myUrl = QUrl::toPercentEncoding(url).constData();
     }
     if (Settings.playerGPU() && !profile().is_explicit())
@@ -177,12 +177,7 @@ bool Controller::openXML(const QString &filename)
 {
     bool error = true;
     close();
-    auto myFilename = filename;
-    if (myFilename.endsWith(".mlt")) {
-        // MLT xml producer does URL encoding; so if the URL contains % it must be encoded.
-        myFilename = QUrl::toPercentEncoding(filename).constData();
-    }
-    Producer *producer = new Mlt::Producer(profile(), myFilename.toUtf8().constData());
+    Producer *producer = new Mlt::Producer(profile(), filename.toUtf8().constData());
     if (producer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
@@ -195,10 +190,10 @@ bool Controller::openXML(const QString &filename)
         if (isFpsDifferent(profile().fps(), fps)) {
             // reopen with the correct fps
             delete producer;
-            producer = new Mlt::Producer(profile(), nullptr, myFilename.toUtf8().constData());
+            producer = new Mlt::Producer(profile(), filename.toUtf8().constData());
         }
         producer->set(kShotcutVirtualClip, 1);
-        producer->set("resource", myFilename.toUtf8().constData());
+        producer->set("resource", filename.toUtf8().constData());
         setProducer(new Producer(producer));
         error = false;
     }
