@@ -86,7 +86,7 @@ void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int ind
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
     if (filter)
-        connect(filter, SIGNAL(changed()), SIGNAL(changed()));
+        connect(filter, SIGNAL(changed(QString)), SIGNAL(changed()));
     else
         disconnect(this, SIGNAL(changed()));
     QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant,

@@ -286,7 +286,7 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                 }
                 emit dataChanged(index(parameterIndex), index(parameterIndex),
                                  QVector<int>() << LowestValueRole << HighestValueRole);
-                emit m_filter->changed();
+                emit m_filter->changed(name.toUtf8().constData());
             }
         }
     }
@@ -368,7 +368,7 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
                 QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << KeyframeTypeRole << NameRole);
                 error = false;
-                emit m_filter->changed();
+                emit m_filter->changed(name.toUtf8().constData());
                 emit m_filter->propertyChanged(name.toUtf8().constData());
             }
         }
@@ -428,7 +428,7 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
     QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << FrameNumberRole << NameRole);
     updateNeighborsMinMax(parameterIndex, keyframeIndex);
-    emit m_filter->changed();
+    emit m_filter->changed(name.toUtf8().constData());
     emit m_filter->propertyChanged(name.toUtf8().constData());
 }
 
@@ -525,7 +525,7 @@ void KeyframesModel::setKeyframeValue(int parameterIndex, int keyframeIndex, dou
                  m_metadataIndex[parameterIndex])->gangedProperties())
         m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(),
                                      type);
-    emit m_filter->changed();
+    emit m_filter->changed(name.toUtf8().constData());
     emit m_filter->propertyChanged(name.toUtf8().constData());
     QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << NumericValueRole << NameRole);
@@ -587,7 +587,7 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIn
                  m_metadataIndex[parameterIndex])->gangedProperties())
         m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(),
                                      type);
-    emit m_filter->changed();
+    emit m_filter->changed(name.toUtf8().constData());
     emit m_filter->propertyChanged(name.toUtf8().constData());
     roles << NumericValueRole << NameRole;
     QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));

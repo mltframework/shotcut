@@ -145,8 +145,7 @@ public slots:
 signals:
     void presetsChanged();
     void analyzeFinished(bool isSuccess);
-    void changed(); /// Use to let UI and VUI QML signal updates to each other.
-    void changed(QString name);
+    void changed(QString name = QString());
     void inChanged(int delta);
     void outChanged(int delta);
     void animateInChanged();

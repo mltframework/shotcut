@@ -60,8 +60,6 @@ QmlFilter::QmlFilter(Mlt::Service &mltService, const QmlMetadata *metadata, QObj
         // Every attached link has a chain property that points to the chain to which it is attached.
         m_producer = Mlt::Producer(mlt_producer(m_service.is_valid() ? m_service.get_data("chain") : 0));
     }
-
-    connect(this, SIGNAL(changed(QString)), SIGNAL(changed()));
 }
 
 QmlFilter::~QmlFilter()
@@ -279,7 +277,7 @@ void QmlFilter::setGradient(QString name, const QStringList &gradient)
             m_service.clear(qUtf8Printable(colorName));
         }
     }
-    emit changed();
+    emit changed(name.toUtf8().constData());
 }
 
 void QmlFilter::set(QString name, const QRectF &rect, int position, mlt_keyframe_type keyframeType)
@@ -629,7 +627,7 @@ int QmlFilter::keyframeCount(const QString &name)
 void QmlFilter::resetProperty(const QString &name)
 {
     m_service.clear(qUtf8Printable(name));
-    emit changed();
+    emit changed(name.toUtf8().constData());
 }
 
 void QmlFilter::clearSimpleAnimation(const QString &name)
