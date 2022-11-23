@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 2.12
+import QtQuick
+import QtQuick.Controls
 import QtQuick.Dialogs
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 RowLayout {
     property var colors: []
@@ -123,20 +123,20 @@ RowLayout {
                 id: colorDialog
 
                 title: qsTr("Color #%1").arg(stopIndex + 1)
-                showAlphaChannel: true
-                color: handelRect.color
+                options: ColorDialog.ShowAlphaChannel
+                selectedColor: handelRect.color
                 onAccepted: {
                     // Make a copy of the current value.
                     var myColor = Qt.darker(handelRect.color, 1);
                     // Ignore alpha when comparing.
-                    myColor.a = currentColor.a;
+                    myColor.a = selectedColor.a;
                     // If the user changed color but left alpha at 0,
                     // they probably want to reset alpha to opaque.
-                    console.log('currentColor.a=' + currentColor.a + ' currentColor=' + currentColor + ' myColor=' + myColor);
-                    if (currentColor.a === 0 && (!Qt.colorEqual(currentColor, myColor) || (Qt.colorEqual(currentColor, 'transparent') && Qt.colorEqual(myColor, 'transparent'))))
-                        currentColor.a = 1;
+                    console.log('selectedColor.a=' + selectedColor.a + ' selectedColor=' + selectedColor + ' myColor=' + myColor);
+                    if (selectedColor.a === 0 && (!Qt.colorEqual(selectedColor, myColor) || (Qt.colorEqual(selectedColor, 'transparent') && Qt.colorEqual(myColor, 'transparent'))))
+                        selectedColor.a = 1;
 
-                    parent.parent._setStopColor(handelRect.stopIndex, String(currentColor));
+                    parent.parent._setStopColor(handelRect.stopIndex, String(selectedColor));
                 }
                 modality: application.dialogModality
             }
@@ -169,8 +169,6 @@ RowLayout {
         }
 
         Gradient {
-            anchors.fill: gradientRect
-            anchors.margins: gradientRect.border.width
             source: gradientRect
             start: Qt.point(0, 0)
             end: Qt.point(width, 0)

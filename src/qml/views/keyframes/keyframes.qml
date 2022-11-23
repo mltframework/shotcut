@@ -16,10 +16,10 @@
  */
 
 import "Keyframes.js" as Logic
-import QtQml.Models 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQml.Models
+import QtQuick
+import QtQuick.Controls
+import Shotcut.Controls as Shotcut
 
 Rectangle {
     id: root
@@ -188,12 +188,12 @@ Rectangle {
                 // This provides skimming and continuous scrubbing at the left/right edges.
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: {
+                onClicked: (mouse) => {
                     producer.position = (tracksFlickable.contentX + mouse.x) / timeScale;
                     bubbleHelp.hide();
                 }
-                onWheel: Logic.onMouseWheel(wheel)
-                onDoubleClicked: {
+                onWheel: (wheel)=> Logic.onMouseWheel(wheel)
+                onDoubleClicked: (mouse)=> {
                     // Figure out which parameter row that is in.
                     for (var i = 0; i < parametersRepeater.count; i++) {
                         var parameter = parametersRepeater.itemAt(i);
@@ -261,11 +261,11 @@ Rectangle {
                 cursorShape: drag.active ? Qt.ClosedHandCursor : Qt.ArrowCursor
                 drag.axis: Drag.XAndYAxis
                 drag.filterChildren: true
-                onPressed: {
+                onPressed: (mouse)=> {
                     startX = mouse.x;
                     startY = mouse.y;
                 }
-                onPositionChanged: {
+                onPositionChanged: (mouse)=> {
                     var n = mouse.x - startX;
                     startX = mouse.x;
                     tracksFlickable.contentX = Logic.clamp(tracksFlickable.contentX - n, 0, Logic.scrollMax().x);
@@ -385,7 +385,7 @@ Rectangle {
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
-                                        onTrimmingIn: {
+                                        onTrimmingIn: (clip, delta, mouse)=> {
                                             var n = filter.in + delta;
                                             if (delta != 0 && n >= producer.in && n <= filter.out) {
                                                 parameters.trimFilterIn(n);
@@ -398,7 +398,7 @@ Rectangle {
                                             }
                                         }
                                         onTrimmedIn: bubbleHelp.hide()
-                                        onTrimmingOut: {
+                                        onTrimmingOut: (clip, delta, mouse)=> {
                                             var n = filter.out - delta;
                                             if (delta != 0 && n >= filter.in && n <= producer.out) {
                                                 parameters.trimFilterOut(n);
@@ -599,7 +599,7 @@ Rectangle {
             minimum: model.minimum
             maximum: model.maximum
             height: Logic.trackHeight(model.isCurve)
-            onClicked: {
+            onClicked: (keyframe, parameter)=> {
                 currentTrack = parameter.DelegateModel.itemsIndex;
                 root.selection = [keyframe.DelegateModel.itemsIndex];
             }

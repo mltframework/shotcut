@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
-import org.shotcut.qml 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Rectangle {
     id: filterWindow
@@ -85,11 +85,11 @@ Rectangle {
                         parent.savedFilter.checked = true;
                     }
                 }
-                Keys.onReturnPressed: {
+                Keys.onReturnPressed: (event)=> {
                     menuListView.itemSelected(menuListView.currentIndex);
                     event.accepted = true;
                 }
-                Keys.onEnterPressed: Keys.onReturnPressed(event)
+                Keys.onEnterPressed: (event)=> Keys.onReturnPressed(event)
                 Keys.onEscapePressed: {
                     if (text !== '')
                         text = '';

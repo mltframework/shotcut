@@ -16,9 +16,9 @@
  */
 
 import "Keyframes.js" as Logic
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import org.shotcut.qml 1.0
+import QtQuick
+import QtQuick.Controls
+import org.shotcut.qml
 
 Rectangle {
     id: keyframeRoot
@@ -122,7 +122,7 @@ Rectangle {
                 parent.anchors.verticalCenter = parameterRoot.verticalCenter;
 
         }
-        onPositionChanged: {
+        onPositionChanged: (mouse)=> {
             if (isCurve) {
                 if (mouse.modifiers & Qt.ControlModifier)
                     drag.axis = Drag.YAxis;

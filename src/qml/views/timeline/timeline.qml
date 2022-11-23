@@ -15,13 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQml.Models 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQml.Models
+import QtQuick
+import QtQuick.Controls
 import QtQuick.Dialogs
-import QtQuick.Layouts 1.12
-import QtQuick.Window 2.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick.Layouts
+import QtQuick.Window
+import Shotcut.Controls as Shotcut
 import "Timeline.js" as Logic
 
 Rectangle {
@@ -106,18 +106,18 @@ Rectangle {
 
     DropArea {
         anchors.fill: parent
-        onEntered: {
+        onEntered: (drag)=> {
             if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0 || drag.hasUrls)
                 drag.acceptProposedAction();
 
         }
         onExited: Logic.dropped()
-        onPositionChanged: {
+        onPositionChanged: (drag)=> {
             if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0 || drag.hasUrls)
                 Logic.dragging(drag, drag.hasUrls ? 0 : parseInt(drag.text));
 
         }
-        onDropped: {
+        onDropped: (drop)=> {
             if (drop.formats.indexOf('application/vnd.mlt+xml') >= 0) {
                 if (timeline.currentTrack >= 0) {
                     Logic.acceptDrop(drop.getDataAsString('application/vnd.mlt+xml'));
@@ -748,11 +748,11 @@ Rectangle {
             isMute: mute
             isCurrentTrack: timeline.currentTrack === index
             timeScale: multitrack.scaleFactor
-            onClipClicked: (track)=> {
+            onClipClicked: (clip, track, mouse)=> {
                 var trackIndex = track.DelegateModel.itemsIndex;
                 var clipIndex = clip.DelegateModel.itemsIndex;
                 timeline.currentTrack = trackIndex;
-                if (timeline.selection.length == 1 && tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x).isBlank)
+                if (timeline.selection.length === 1 && tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x).isBlank)
                     timeline.selection = [];
 
                 if (tracksRepeater.itemAt(trackIndex).clipAt(clipIndex).isBlank)
@@ -790,7 +790,7 @@ Rectangle {
                 bubbleHelp.hide();
                 selectionContainer.visible = false;
             }
-            onClipDraggedToTrack: {
+            onClipDraggedToTrack: (clip, direction)=> {
                 var i = clip.trackIndex + direction;
                 var track = trackAt(i);
                 clip.reparent(track);

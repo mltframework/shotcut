@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick
+import QtQuick.Controls
 
 Rectangle {
     id: rulerTop
@@ -61,7 +61,7 @@ Rectangle {
         hoverEnabled: true
         acceptedButtons: Qt.NoButton
         onExited: bubbleHelp.hide()
-        onPositionChanged: {
+        onPositionChanged: (mouse)=> {
             var text = application.timecode(mouse.x / timeScale);
             bubbleHelp.show(text);
         }

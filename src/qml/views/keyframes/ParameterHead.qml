@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021 Meltytech, LLC
+ * Copyright (c) 2017-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
  */
 
 import "Keyframes.js" as Logic
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Rectangle {
     id: paramHeadRoot

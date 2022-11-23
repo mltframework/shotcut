@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import Shotcut.Controls as Shotcut
 
 Rectangle {
     id: rulerTop
@@ -80,7 +80,7 @@ Rectangle {
         timeScale: root.timeScale ? root.timescale : 1
         model: markers
         onExited: bubbleHelp.hide()
-        onMouseStatusChanged: {
+        onMouseStatusChanged: (mouseX, mouseY, text, start, end)=> {
             var msg = "<center>" + text;
             if (start === end) {
                 msg += "<br>" + application.timecode(start);
@@ -91,7 +91,7 @@ Rectangle {
             msg += "</center>";
             bubbleHelp.show(msg);
         }
-        onSeekRequested: timeline.position = pos
+        onSeekRequested: (pos)=> timeline.position = pos
 
         snapper: QtObject {
             function getSnapPosition(position) {

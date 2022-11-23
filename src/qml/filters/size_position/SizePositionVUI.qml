@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.7
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import Shotcut.Controls as Shotcut
 
 Shotcut.VuiBase {
     property string rectProperty
@@ -206,7 +206,7 @@ Shotcut.VuiBase {
             anchors.fill: parent
             acceptedButtons: Qt.NoButton
             scrollGestureEnabled: true
-            onWheel: {
+            onWheel: (wheel)=> {
                 if (rotationProperty && (wheel.modifiers & Qt.ControlModifier)) {
                     var degrees = rectangle.rotation - wheel.angleDelta.y / 120 * 5;
                     if (!(wheel.modifiers & Qt.AltModifier))
@@ -255,7 +255,7 @@ Shotcut.VuiBase {
                 onWidthScaleChanged: setHandles(filterRect)
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: setFilter(getPosition())
-                onRotated: {
+                onRotated: (mouse)=> {
                     if (!(mouse.modifiers & Qt.AltModifier))
                         degrees = snapRotation(degrees, 4) % 360;
 

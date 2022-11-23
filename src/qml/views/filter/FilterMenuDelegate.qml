@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,9 @@
  */
 
 import "FilterMenu.js" as Logic
-import QtQuick 2.2
-import QtQuick.Controls 2.12
-import org.shotcut.qml 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import org.shotcut.qml as Shotcut
 
 Rectangle {
     id: wrapper

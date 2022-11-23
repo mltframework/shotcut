@@ -203,7 +203,6 @@ void GLWidget::setBlankScene()
 
 void GLWidget::resizeGL(int width, int height)
 {
-    LOG_DEBUG() << width << "x" << height;
     double x, y, w, h;
     double this_aspect = (double) width / height;
     double video_aspect = profile().dar();

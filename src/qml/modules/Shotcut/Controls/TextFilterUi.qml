@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 2.12
+import QtQuick
+import QtQuick.Controls
 import QtQuick.Dialogs
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 GridLayout {
     property string rectProperty: 'geometry'
@@ -70,7 +70,7 @@ GridLayout {
     function getPointSize() {
         var pointSize = parseInt(filter.get(pointSizeProperty));
         if (!pointSize) {
-            var ratio = fontDialog.font.pointSize / fontDialog.font.pixelSize;
+            var ratio = fontDialog.selectedFont.pointSize / fontDialog.selectedFont.pixelSize;
             pointSize = filter.get('size') * ratio;
         }
         return pointSize;
@@ -111,7 +111,7 @@ GridLayout {
             middleRadioButton.checked = true;
         else if (align === 'bottom')
             bottomRadioButton.checked = true;
-        fontDialog.font = Qt.font({
+        fontDialog.selectedFont = Qt.font({
             "family": filter.get('family'),
             "pointSize": getPointSize(),
             "italic": filter.get('style') === 'italic',
@@ -172,9 +172,9 @@ GridLayout {
 
             onClicked: {
                 if (fontSizeCheckBox.checked)
-                    fontDialog.font.pointSize = getPointSize();
+                    fontDialog.selectedFont.pointSize = getPointSize();
                 else
-                    fontDialog.font.pointSize = 48;
+                    fontDialog.selectedFont.pointSize = 48;
                 fontDialog.open();
             }
 
@@ -185,17 +185,17 @@ GridLayout {
 
                 title: "Please choose a font"
                 modality: application.dialogModality
-                onFontChanged: {
-                    filter.set('family', font.family);
-                    filter.set('weight', 10 * font.weight);
-                    filter.set('style', font.italic ? 'italic' : 'normal');
+                onSelectedFontChanged: {
+                    filter.set('family', selectedFont.family);
+                    filter.set('weight', 10 * selectedFont.weight);
+                    filter.set('style', selectedFont.italic ? 'italic' : 'normal');
                     if (parseInt(filter.get(useFontSizeProperty))) {
-                        filter.set('size', font.pixelSize);
-                        filter.set(pointSizeProperty, font.pointSize);
+                        filter.set('size', selectedFont.pixelSize);
+                        filter.set(pointSizeProperty, selectedFont.pointSize);
                     }
                     refreshFontButton();
                 }
-                onAccepted: fontFamily = font.family
+                onAccepted: fontFamily = selectedFont.family
                 onRejected: {
                     filter.set('family', fontFamily);
                     refreshFontButton();
@@ -211,8 +211,8 @@ GridLayout {
             onCheckedChanged: {
                 filter.set(useFontSizeProperty, checked);
                 if (checked) {
-                    filter.set('size', fontDialog.font.pixelSize);
-                    filter.set(pointSizeProperty, fontDialog.font.pointSize);
+                    filter.set('size', fontDialog.selectedFont.pixelSize);
+                    filter.set(pointSizeProperty, fontDialog.selectedFont.pointSize);
                 } else {
                     filter.set('size', profile.height / text.split('\n').length);
                 }

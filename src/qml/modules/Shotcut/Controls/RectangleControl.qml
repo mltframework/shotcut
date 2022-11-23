@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
+import QtQuick
 
 Item {
     // 80/90% Safe Areas
@@ -155,12 +155,12 @@ Item {
         anchors.right: bottomRightHandle.right
         anchors.bottom: bottomRightHandle.bottom
         focus: true
-        Keys.onPressed: {
+        Keys.onPressed: (event)=> {
             if (event.key === Qt.Key_Shift)
                 _positionDragEnabled = true;
 
         }
-        Keys.onReleased: {
+        Keys.onReleased: (event)=> {
             if (event.key === Qt.Key_Shift)
                 _positionDragEnabled = false;
 
@@ -246,7 +246,7 @@ Item {
                 rightHandle.anchors.verticalCenter = rectangle.verticalCenter;
                 rightHandle.anchors.right = rectangle.right;
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (!(mouse.modifiers & Qt.AltModifier)) {
                     rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2;
                     rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2;
@@ -318,7 +318,7 @@ Item {
                     parent.anchors.centerIn = undefined;
                     startRotation = rotationGroup.rotation;
                 }
-                onPositionChanged: {
+                onPositionChanged: (mouse)=> {
                     var degrees = getRotationDegrees();
                     rotated(startRotation + degrees, mouse);
                     rotationLine.rotation = degrees;
@@ -377,7 +377,7 @@ Item {
                 rightHandle.anchors.verticalCenter = rectangle.verticalCenter;
                 rightHandle.anchors.right = rectangle.right;
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (!(mouse.modifiers & Qt.AltModifier)) {
                     topLeftHandle.x = snapX(topLeftHandle.x);
                     topLeftHandle.y = snapY(topLeftHandle.y);
@@ -426,7 +426,7 @@ Item {
                 leftHandle.anchors.verticalCenter = rectangle.verticalCenter;
                 rightHandle.anchors.verticalCenter = rectangle.verticalCenter;
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 topHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2);
                 if (!(mouse.modifiers & Qt.AltModifier))
                     topHandle.y = snapY(topHandle.y);
@@ -466,7 +466,7 @@ Item {
                 leftHandle.anchors.verticalCenter = rectangle.verticalCenter;
                 rightHandle.anchors.verticalCenter = rectangle.verticalCenter;
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 bottomHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2);
                 if (!(mouse.modifiers & Qt.AltModifier))
                     bottomHandle.y = snapY(bottomHandle.y + handleSize) - handleSize;
@@ -506,7 +506,7 @@ Item {
                 topHandle.anchors.horizontalCenter = rectangle.horizontalCenter;
                 bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter;
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (!(mouse.modifiers & Qt.AltModifier))
                     leftHandle.x = snapX(leftHandle.x);
 
@@ -546,7 +546,7 @@ Item {
                 topHandle.anchors.horizontalCenter = rectangle.horizontalCenter;
                 bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter;
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (!(mouse.modifiers & Qt.AltModifier))
                     rightHandle.x = snapX(rightHandle.x + handleSize) - handleSize;
 
@@ -595,7 +595,7 @@ Item {
                 rightHandle.anchors.verticalCenter = rectangle.verticalCenter;
                 rightHandle.anchors.right = rectangle.right;
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (!(mouse.modifiers & Qt.AltModifier)) {
                     topRightHandle.x = snapX(topRightHandle.x + handleSize) - handleSize;
                     topRightHandle.y = snapY(topRightHandle.y);
@@ -653,7 +653,7 @@ Item {
                 rightHandle.anchors.verticalCenter = rectangle.verticalCenter;
                 rightHandle.anchors.right = rectangle.right;
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (!(mouse.modifiers & Qt.AltModifier)) {
                     bottomLeftHandle.x = snapX(bottomLeftHandle.x);
                     bottomLeftHandle.y = snapY(bottomLeftHandle.y + handleSize) - handleSize;
@@ -709,7 +709,7 @@ Item {
                 rightHandle.anchors.verticalCenter = rectangle.verticalCenter;
                 rightHandle.anchors.right = rectangle.right;
             }
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if (!(mouse.modifiers & Qt.AltModifier)) {
                     bottomRightHandle.x = snapX(bottomRightHandle.x + handleSize) - handleSize;
                     bottomRightHandle.y = snapY(bottomRightHandle.y + handleSize) - handleSize;

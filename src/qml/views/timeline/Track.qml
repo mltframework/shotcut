@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQml.Models 2.12
-import QtQuick 2.12
+import QtQml.Models
+import QtQuick
 import "Track.js" as Logic
 
 Rectangle {
@@ -133,7 +133,7 @@ Rectangle {
                     clip.trackIndex = clip.originalTrackIndex;
                 }
             }
-            onDragged: (mouse)=> {
+            onDragged: (clip, mouse)=> {
                 if (settings.timelineDragScrub) {
                     root.stopScrolling = false;
                     timeline.position = Math.round(clip.x / timeScale);
@@ -230,7 +230,7 @@ Rectangle {
                     });
                 }
             }
-            onDropped: {
+            onDropped: (clip)=> {
                 if (placeHolderAdded) {
                     timeline.selection = [];
                     multitrack.reload(true);
