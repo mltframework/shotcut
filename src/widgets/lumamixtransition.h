@@ -65,6 +65,7 @@ private:
     Mlt::Producer m_producer;
     int m_maxStockIndex;
     ProducerPreviewWidget *m_preview;
+    Mlt::Producer m_previewProducer;
 
     Mlt::Transition *getTransition(const QString &name);
     void updateCustomLumaLabel(Mlt::Transition &transition);

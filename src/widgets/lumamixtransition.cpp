@@ -278,7 +278,9 @@ void LumaMixTransition::startPreview()
 {
     if (Settings.timelinePreviewTransition() && m_producer.is_valid() && MLT.isPaused()) {
         m_preview->stop();
-        m_preview->start(m_producer);
+        m_previewProducer = new Mlt::Producer(MLT.profile(), "xml-string",
+                                              MLT.XML(&m_producer).toUtf8().constData());
+        m_preview->start(m_previewProducer);
     }
 }
 
