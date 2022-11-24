@@ -1053,7 +1053,8 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
         count = fromChain.link_count();
         for (int i = 0; i < count; i++) {
             QScopedPointer<Mlt::Link> fromLink(fromChain.link(i));
-            if (fromLink && fromLink->is_valid() && fromLink->get("mlt_service")) {
+            if (fromLink && fromLink->is_valid() && fromLink->get("mlt_service")
+                    && !fromLink->get_int("_loader")) {
                 Mlt::Link toLink(fromLink->get("mlt_service"));
                 if (toLink.is_valid()) {
                     toLink.inherit(*fromLink);

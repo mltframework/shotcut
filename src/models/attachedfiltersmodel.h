@@ -85,6 +85,7 @@ private:
     int m_dropRow;
     int m_removeRow;
     int m_normFilterCount;
+    int m_normLinkCount;
     QScopedPointer<Mlt::Producer> m_producer;
     QScopedPointer<Mlt::Event> m_event;
     typedef QList<QmlMetadata *> MetadataList;
