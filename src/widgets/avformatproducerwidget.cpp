@@ -861,6 +861,11 @@ void AvformatProducerWidget::convert(TranscodeDialog &dialog)
         }
         args << "-map_metadata" << "0" << "-ignore_unknown";
 
+        // Set Sample rate if different than source
+        if ( !dialog.sampleRate().isEmpty() ) {
+            args << "-ar" << dialog.sampleRate();
+        }
+
         // Set video filters
         args << "-vf";
         QString filterString;
