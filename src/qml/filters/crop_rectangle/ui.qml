@@ -276,7 +276,9 @@ Item {
                     filter.blockSignals = false;
                     filter.set(rectProperty, filterRect, getPosition());
                 } else {
+                    filter.blockSignals = true;
                     filter.resetProperty(rectProperty);
+                    filter.blockSignals = false;
                     filter.set(rectProperty, filterRect);
                 }
                 checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;

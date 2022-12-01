@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 Meltytech, LLC
+ * Copyright (c) 2018-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -208,10 +208,14 @@ Item {
             Layout.rowSpan: 2
             onToggled: {
                 if (checked) {
+                    filter.blockSignals = true;
                     filter.clearSimpleAnimation(rectProperty);
+                    filter.blockSignals = false;
                     filter.set(rectProperty, filterRect, getPosition());
                 } else {
+                    filter.blockSignals = true;
                     filter.resetProperty(rectProperty);
+                    filter.blockSignals = false;
                     filter.set(rectProperty, filterRect);
                 }
                 checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
