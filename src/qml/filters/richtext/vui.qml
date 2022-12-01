@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick
+import QtQuick.Controls
 import QtQuick.Dialogs
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0 as Shotcut
-import org.shotcut.qml 1.0
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
+import org.shotcut.qml
 
 Shotcut.VuiBase {
     id: vui
@@ -180,13 +179,12 @@ Shotcut.VuiBase {
                     Component.onCompleted: forceActiveFocus()
                     onTextChanged: {
                         if (text.indexOf('__empty__') > -1)
-                            return ;
-
+                            return;
                         filter.set('html', text);
                     }
                     onContentWidthChanged: updateTextSize()
                     onContentHeightChanged: updateTextSize()
-                    Keys.onPressed: {
+                    Keys.onPressed: event => {
                         if (event.key === Qt.Key_V && (event.modifiers & Qt.ShiftModifier) && (event.modifiers & Qt.ControlModifier || event.modifiers & Qt.MetaModifier)) {
                             event.accepted = true;
                             document.pastePlain();
@@ -346,12 +344,11 @@ Shotcut.VuiBase {
                             icon.name: 'font'
                             icon.source: 'qrc:///icons/oxygen/32x32/actions/font.png'
                             onTriggered: {
-                                fontDialog.font.family = document.fontFamily;
-                                fontDialog.font.pointSize = document.fontSize;
+                                fontDialog.currentFont.family = document.fontFamily;
+                                fontDialog.currentFont.pointSize = document.fontSize;
                                 fontDialog.open();
                             }
                         }
-
                     }
 
                     Shotcut.DoubleSpinBox {
@@ -390,7 +387,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
                         onClicked: {
-                            colorDialog.color = document.textColor;
+                            colorDialog.selectedColor = document.textColor;
                             colorDialog.open();
                         }
 
@@ -520,7 +517,7 @@ Shotcut.VuiBase {
 
                 }
 
-                Behavior on width {
+                Behavior on width  {
                     NumberAnimation {
                         duration: 100
                     }
@@ -583,11 +580,11 @@ Shotcut.VuiBase {
         id: menu
 
         onOpenTriggered: {
-            fileDialog.selectExisting = true;
+            fileDialog.fileMode = FileDialog.OpenFile;
             fileDialog.open();
         }
         onSaveAsTriggered: {
-            fileDialog.selectExisting = false;
+            fileDialog.fileMode = FileDialog.SaveFile;
             fileDialog.open();
         }
         onUndoTriggered: {
@@ -700,8 +697,8 @@ Shotcut.VuiBase {
         icon.name: 'font'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/font.png'
         onTriggered: {
-            fontDialog.font.family = document.fontFamily;
-            fontDialog.font.pointSize = document.fontSize;
+            fontDialog.currentFont.family = document.fontFamily;
+            fontDialog.currentFont.pointSize = document.fontSize;
             fontDialog.open();
         }
     }
@@ -728,13 +725,13 @@ Shotcut.VuiBase {
         id: fileDialog
 
         modality: application.dialogModality
-        folder: settingsSavePath
+        currentFolder: settingsSavePath
         nameFilters: ["HTML files (*.html *.htm)", "Text files (*.txt)", "All files (*)"]
         onAccepted: {
-            if (fileDialog.selectExisting)
-                document.fileUrl = fileUrl;
+            if (fileMode === FileDialog.OpenFile)
+                document.fileUrl = selectedFile;
             else
-                document.saveAs(fileUrl, selectedNameFilter);
+                document.saveAs(selectedFile, selectedNameFilter.extensions);
         }
     }
 
@@ -743,16 +740,16 @@ Shotcut.VuiBase {
 
         modality: application.dialogModality
         onAccepted: {
-            document.fontFamily = font.family;
-            document.fontSize = font.pointSize;
+            document.fontFamily = currentFont.family;
+            document.fontSize = currentFont.pointSize;
         }
     }
 
     ColorDialog {
         id: colorDialog
 
-        color: 'black'
-        showAlphaChannel: true
+        selectedColor: 'black'
+        options: ColorDialog.ShowAlphaChannel
         modality: application.dialogModality
     }
 
@@ -766,8 +763,7 @@ Shotcut.VuiBase {
         id: tableDialog
 
         title: qsTr('Insert Table')
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
-        modality: application.dialogModality
+        standardButtons: Dialog.Ok | Dialog.Cancel
         onAccepted: {
             document.insertTable(rowsSpinner.value, columnsSpinner.value, borderSpinner.value);
         }
@@ -843,7 +839,7 @@ Shotcut.VuiBase {
         cursorPosition: textArea.cursorPosition
         selectionStart: textArea.selectionStart
         selectionEnd: textArea.selectionEnd
-        textColor: colorDialog.color
+        textColor: colorDialog.selectedColor
         onTextChanged: textArea.text = text
         onFontSizeChanged: {
             if (!fontSizeSpinBox.blockValue) {

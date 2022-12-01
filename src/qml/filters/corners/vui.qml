@@ -312,7 +312,7 @@ Shotcut.VuiBase {
                         acceptedButtons: Qt.LeftButton
                         cursorShape: Qt.SizeFDiagCursor
                         drag.target: parent
-                        onPositionChanged: {
+                        onPositionChanged: (mouse)=> {
                             if (!(mouse.modifiers & Qt.AltModifier)) {
                                 corner3Handle.x = snapX(corner3Handle.x + handleOffset) - handleOffset;
                                 corner3Handle.y = snapY(corner3Handle.y + handleOffset) - handleOffset;

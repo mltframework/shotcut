@@ -472,8 +472,8 @@ Rectangle {
             property int startFadeIn
 
             anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: parent.enabled
+            cursorShape: enabled? Qt.PointingHandCursor : Qt.ArrowCursor
             drag.target: parent
             drag.axis: Drag.XAxis
             drag.minimumX: 0
@@ -569,8 +569,8 @@ Rectangle {
             property int startFadeOut
 
             anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
+            hoverEnabled: parent.enabled
+            cursorShape: enabled? Qt.PointingHandCursor : Qt.ArrowCursor
             drag.target: parent
             drag.axis: Drag.XAxis
             drag.minimumX: -width - 1
@@ -643,8 +643,8 @@ Rectangle {
             property double startX
 
             anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.SizeHorCursor
+            hoverEnabled: parent.enabled
+            cursorShape: enabled? Qt.SizeHorCursor : Qt.ArrowCursor
             drag.target: parent
             drag.axis: Drag.XAxis
             onPressed: {
@@ -696,8 +696,8 @@ Rectangle {
             property int duration
 
             anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.SizeHorCursor
+            hoverEnabled: parent.enabled
+            cursorShape: enabled? Qt.SizeHorCursor : Qt.ArrowCursor
             drag.target: parent
             drag.axis: Drag.XAxis
             onPressed: {

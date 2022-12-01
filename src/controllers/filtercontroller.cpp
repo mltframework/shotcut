@@ -233,13 +233,13 @@ void FilterController::handleAttachedModelAboutToReset()
 void FilterController::handleAttachedRowsRemoved(const QModelIndex &, int first, int)
 {
     m_currentFilterIndex = QmlFilter::DeselectCurrentFilter; // Force update
-    setCurrentFilter(qBound(0, first, m_attachedModel.rowCount() - 1));
+    setCurrentFilter(qBound(0, first, qMax(m_attachedModel.rowCount() - 1, 0)));
 }
 
 void FilterController::handleAttachedRowsInserted(const QModelIndex &, int first, int)
 {
     m_currentFilterIndex = QmlFilter::DeselectCurrentFilter; // Force update
-    setCurrentFilter(qBound(0, first, m_attachedModel.rowCount() - 1), true);
+    setCurrentFilter(qBound(0, first, qMax(m_attachedModel.rowCount() - 1, 0)), true);
 }
 
 void FilterController::handleAttachDuplicateFailed(int index)

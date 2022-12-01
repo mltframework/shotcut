@@ -498,7 +498,7 @@ void MoveClipCommand::redo()
             auto info = m_model.findClipByUuid(MLT.uuid(clip), trackIndex, clipIndex);
             if (info && info->producer && info->producer->is_valid() && info->cut) {
                 info->producer->set(kNewTrackIndexProperty, qBound(0, trackIndex + m_trackDelta,
-                                                                   int(m_model.trackList().size()) - 1));
+                                                                   qMax(int(m_model.trackList().size()) - 1, 0)));
                 info->producer->pass_property(*info->cut, kPlaylistStartProperty);
                 info->producer->set(kTrackIndexProperty, trackIndex);
                 info->producer->set(kClipIndexProperty, clipIndex);
