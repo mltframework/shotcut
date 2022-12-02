@@ -162,6 +162,8 @@ public:
     void setPlayerPreviewScale(int);
     int playerVideoDelayMs() const;
     void setPlayerVideoDelayMs(int);
+    double playerJumpSeconds() const;
+    void setPlayerJumpSeconds(double);
 
     // playlist
     QString playlistThumbnails() const;

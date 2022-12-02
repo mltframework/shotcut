@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,9 @@ protected:
     int valueFromText(const QString &text) const;
     QString textFromValue(int val) const;
     void keyPressEvent(QKeyEvent *event);
+
+signals:
+    void accepted();
 
 private:
     QRegExpValidator *m_validator;
