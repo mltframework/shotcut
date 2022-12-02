@@ -135,6 +135,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     QIcon filterIcon = QIcon::fromTheme("marker", QIcon(":/icons/oxygen/32x32/actions/marker.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
+    setupActions();
 
     QScrollArea *scrollArea = new QScrollArea();
     scrollArea->setFrameShape(QFrame::NoFrame);
@@ -162,6 +163,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     mainMenu->addAction(Actions["timelineNextMarkerAction"]);
     mainMenu->addAction(Actions["timelineDeleteMarkerAction"]);
     mainMenu->addAction(Actions["timelineMarkSelectedClipAction"]);
+    mainMenu->addAction(Actions["markerCycleColorAction"]);
     mainMenu->addAction(tr("Remove All Markers"), this, SLOT(onRemoveAllRequested()));
     QAction *action;
     QMenu *columnsMenu = new QMenu(tr("Columns"), this);
@@ -254,6 +256,37 @@ MarkersDock::MarkersDock(QWidget *parent) :
 
 MarkersDock::~MarkersDock()
 {
+}
+
+void MarkersDock::setupActions()
+{
+    QIcon icon;
+    QAction *action;
+
+    action = new QAction(tr("Cycle Color On Selected Marker"), this);
+    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_C));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (m_model && m_proxyModel) {
+            QModelIndexList indices = m_treeView->selectedIndexes();
+            if (indices.size() > 0) {
+                QModelIndex realIndex = m_proxyModel->mapToSource(indices[0]);
+                if (realIndex.isValid()) {
+                    show();
+                    raise();
+                    auto marker = m_model->getMarker(realIndex.row());
+                    auto allColors = m_model->allColors();
+                    int colorIndex = allColors.indexOf(marker.color);
+                    if (colorIndex >= 0) {
+                        show();
+                        raise();
+                        colorIndex = (colorIndex + 1) % allColors.size();
+                        m_model->setColor(realIndex.row(), allColors[colorIndex]);
+                    }
+                }
+            }
+        }
+    });
+    Actions.add("markerCycleColorAction", action);
 }
 
 void MarkersDock::setModel(MarkersModel *model)
