@@ -260,11 +260,10 @@ MarkersDock::~MarkersDock()
 
 void MarkersDock::setupActions()
 {
-    QIcon icon;
     QAction *action;
 
     action = new QAction(tr("Cycle Color On Selected Marker"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_C));
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_M));
     connect(action, &QAction::triggered, this, [&]() {
         if (m_model && m_proxyModel) {
             QModelIndexList indices = m_treeView->selectedIndexes();
