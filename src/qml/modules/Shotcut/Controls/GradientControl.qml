@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,8 +132,8 @@ RowLayout {
                     myColor.a = currentColor.a;
                     // If the user changed color but left alpha at 0,
                     // they probably want to reset alpha to opaque.
-                    console.log('currentColor.a=' + currentColor.a + ' currentColor=' + currentColor + ' myColor=' + myColor);
-                    if (currentColor.a === 0 && (!Qt.colorEqual(currentColor, myColor) || (Qt.colorEqual(currentColor, 'transparent') && Qt.colorEqual(myColor, 'transparent'))))
+                    console.log('currentColor.a=' + currentColor.a + ' currentColor=' + currentColor + ' handelRect.color=' + color);
+                    if (currentColor.a === 0 && (!Qt.colorEqual(currentColor, myColor) || (Qt.colorEqual(currentColor, 'transparent') && Qt.colorEqual(handelRect.color, 'transparent'))))
                         currentColor.a = 1;
 
                     parent.parent._setStopColor(handelRect.stopIndex, String(currentColor));
