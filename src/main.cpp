@@ -47,11 +47,6 @@ extern "C"
 #endif
 
 static const int kMaxCacheCount = 5000;
-#ifdef Q_OS_WIN
-static const char *kDefaultScaleRoundPolicy = "PassThrough";
-#else
-static const char *kDefaultScaleRoundPolicy = "Round";
-#endif
 
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
 {
@@ -87,7 +82,7 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
         if (!resource || resource[0] != '<' || resource[strlen(resource) - 1] != '>')
             mlt_type = mlt_properties_get(properties, "mlt_type" );
         if (service_name)
-            message = QString("[%1 %2] ").arg(mlt_type).arg(service_name);
+            message = QString("[%1 %2] ").arg(mlt_type, service_name);
         else
             message = QString::asprintf("[%s %p] ", mlt_type, service);
         if (resource)
@@ -128,7 +123,7 @@ public:
         dir.cd("qt");
 #else
         dir.cd("lib");
-        dir.cd("qt5");
+        dir.cd("qt6");
 #endif
         addLibraryPath(dir.absolutePath());
         setOrganizationName("Meltytech");
@@ -179,7 +174,7 @@ public:
         QCommandLineOption scalePolicyOption("QT_SCALE_FACTOR_ROUNDING_POLICY",
                                              QCoreApplication::translate("main", "How to handle a fractional display scale: %1")
                                              .arg("Round, Ceil, Floor, RoundPreferFloor, PassThrough"),
-                                             QCoreApplication::translate("main", "string"), kDefaultScaleRoundPolicy);
+                                             QCoreApplication::translate("main", "string"), "PassThrough");
         parser.addOption(scalePolicyOption);
 #endif
         parser.addPositionalArgument("[FILE]...",
@@ -224,19 +219,18 @@ public:
 
         // Log some basic info.
         LOG_INFO() << "Starting Shotcut version" << SHOTCUT_VERSION;
-#if defined (Q_OS_WIN)
-        LOG_INFO() << "Windows version" << QSysInfo::windowsVersion();
+#if defined(Q_OS_WIN)
+        LOG_INFO() << "Windows version" << QSysInfo::productVersion();
 #elif defined(Q_OS_MAC)
-        LOG_INFO() << "macOS version" << QSysInfo::macVersion();
+        LOG_INFO() << "macOS version" << QSysInfo::productVersion();
 #else
-        LOG_INFO() << "Linux version";
+        LOG_INFO() << "Linux version" << QSysInfo::productVersion();;
 #endif
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
         LOG_INFO() << "install dir =" << appPath;
         Settings.log();
 
-        QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
 #if defined(Q_OS_WIN)
         dir.setPath(appPath);
         if (!Settings.playerGPU() && Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL) {
@@ -282,12 +276,12 @@ public:
             locale = "pt";
         else if (locale.startsWith("en_"))
             locale = "en";
-        if (qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+        if (qtTranslator.load("qt_" + locale, QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
             installTranslator(&qtTranslator);
         else if (qtTranslator.load("qt_" + locale, dir.absolutePath()))
             installTranslator(&qtTranslator);
         if (qtBaseTranslator.load("qtbase_" + locale,
-                                  QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+                                  QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
             installTranslator(&qtBaseTranslator);
         else if (qtBaseTranslator.load("qtbase_" + locale, dir.absolutePath()))
             installTranslator(&qtBaseTranslator);
@@ -320,8 +314,6 @@ int main(int argc, char **argv)
 #ifndef QT_DEBUG
     ::qputenv("QT_LOGGING_RULES", "*.warning=false");
 #endif
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     for (int i = 1; i + 1 < argc; i++) {
         if (!::qstrcmp("--QT_SCALE_FACTOR", argv[i]) || !::qstrcmp("--QT_SCREEN_SCALE_FACTORS", argv[i])) {
             QByteArray value(argv[i + 1]);
@@ -330,19 +322,14 @@ int main(int argc, char **argv)
             break;
         }
     }
-#endif
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
-    QByteArray value(kDefaultScaleRoundPolicy);
-    for (int i = 1; i + 1 < argc; i++) {
-        if (!::qstrcmp("--QT_SCALE_FACTOR_ROUNDING_POLICY", argv[i])) {
-            value = argv[i + 1];
-            break;
+    if (!::qEnvironmentVariableIsSet("QT_SCALE_FACTOR_ROUNDING_POLICY")) {
+        for (int i = 1; i + 1 < argc; i++) {
+            if (!::qstrcmp("--QT_SCALE_FACTOR_ROUNDING_POLICY", argv[i])) {
+                ::qputenv("QT_SCALE_FACTOR_ROUNDING_POLICY", argv[i + 1]);
+                break;
+            }
         }
     }
-    if (!::qEnvironmentVariableIsSet("QT_SCALE_FACTOR_ROUNDING_POLICY")) {
-        ::qputenv("QT_SCALE_FACTOR_ROUNDING_POLICY", value);
-    }
-#endif
 #ifdef Q_OS_MAC
 #if (QT_VERSION < QT_VERSION_CHECK(5, 13, 0))
     // Fix launch on Big Sur macOS 11.0
@@ -367,6 +354,9 @@ int main(int argc, char **argv)
     }
     removeMacosTabBar();
 #endif
+
+    QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
+    QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
 
     Application a(argc, argv);
     QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));

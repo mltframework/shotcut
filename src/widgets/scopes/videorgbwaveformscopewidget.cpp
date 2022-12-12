@@ -159,7 +159,7 @@ void VideoRgbWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
     } else {
         text =  QString(tr("Value: %1")).arg(QString::number(value));
     }
-    QToolTip::showText(event->globalPos(), text);
+    QToolTip::showText(event->globalPosition().toPoint(), text);
 }
 
 QString VideoRgbWaveformScopeWidget::getTitle()

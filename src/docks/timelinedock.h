@@ -231,7 +231,7 @@ private:
     MultitrackModel m_model;
     MarkersModel m_markersModel;
     int m_position;
-    QScopedPointer<Timeline::UpdateCommand> m_updateCommand;
+    std::unique_ptr<Timeline::UpdateCommand> m_updateCommand;
     bool m_ignoreNextPositionChange;
     struct Selection {
         QList<QPoint> selectedClips; // x is the clip index, y is the track index
@@ -242,13 +242,13 @@ private:
     int m_savedSelectedTrack;
     bool m_savedIsMultitrackSelected;
     QVector<QUuid> m_savedSelectionUuids;
-    QScopedPointer<Timeline::TrimCommand> m_trimCommand;
-    QScopedPointer<UndoHelper> m_undoHelper;
+    std::unique_ptr<Timeline::TrimCommand> m_trimCommand;
+    std::unique_ptr<UndoHelper> m_undoHelper;
     int m_trimDelta;
     int m_transitionDelta;
     bool m_blockSetSelection;
     bool m_isRecording {false};
-    QScopedPointer<AbstractJob> m_recordJob;
+    std::unique_ptr<AbstractJob> m_recordJob;
     QTimer m_recordingTimer;
     QDateTime m_recordingTime;
     int m_recordingTrackIndex;

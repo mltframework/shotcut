@@ -1652,7 +1652,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
     QString xmlAfter = MLT.XML(after);
     m_updateCommand->setXmlAfter(xmlAfter);
     setSelection(); // clearing selection prevents a crash
-    MAIN.undoStack()->push(m_updateCommand.take());
+    MAIN.undoStack()->push(m_updateCommand.release());
 }
 
 void TimelineDock::addAudioTrack()
@@ -2051,8 +2051,8 @@ void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex, bool force)
 void TimelineDock::commitTrimCommand()
 {
     if (m_trimCommand && (m_trimDelta || m_transitionDelta)) {
-        if (m_undoHelper) m_trimCommand->setUndoHelper(m_undoHelper.take());
-        MAIN.undoStack()->push(m_trimCommand.take());
+        if (m_undoHelper) m_trimCommand->setUndoHelper(m_undoHelper.release());
+        MAIN.undoStack()->push(m_trimCommand.release());
     }
     m_trimDelta = 0;
     m_transitionDelta = 0;
@@ -2999,7 +2999,7 @@ void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 
 void TimelineDock::dragMoveEvent(QDragMoveEvent *event)
 {
-    emit dragging(event->posF(), event->mimeData()->text().toInt());
+    emit dragging(event->position(), event->mimeData()->text().toInt());
 }
 
 void TimelineDock::dragLeaveEvent(QDragLeaveEvent *event)
@@ -3297,8 +3297,8 @@ void TimelineDock::recordAudio()
 #endif
     args << "-flush_packets" << "1" << "-y" << filename;
     m_recordJob.reset(new FfmpegJob("vo", args, false, priority));
-    connect(m_recordJob.data(), SIGNAL(started()), SLOT(onRecordStarted()));
-    connect(m_recordJob.data(), SIGNAL(finished(AbstractJob *, bool)),
+    connect(m_recordJob.get(), SIGNAL(started()), SLOT(onRecordStarted()));
+    connect(m_recordJob.get(), SIGNAL(finished(AbstractJob *, bool)),
             SLOT(onRecordFinished(AbstractJob *, bool)));
     m_recordJob->start();
     m_isRecording = true;

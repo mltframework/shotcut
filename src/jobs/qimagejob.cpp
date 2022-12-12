@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ QImageJob::~QImageJob()
 void QImageJob::start()
 {
     AbstractJob::start();
-    QtConcurrent::run([ = ]() {
+    auto result = QtConcurrent::run([ = ]() {
         appendToLog(QString("Reading source image \"%1\"\n").arg(m_srcFilePath));
         QImageReader reader;
         reader.setAutoTransform(true);

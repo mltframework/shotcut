@@ -201,7 +201,7 @@ void VideoHistogramScopeWidget::mouseMoveEvent(QMouseEvent *event)
         text = QString(tr("Value: %1")).arg(QString::number(value));
     }
 
-    QToolTip::showText(event->globalPos(), text);
+    QToolTip::showText(event->globalPosition().toPoint(), text);
 }
 
 QString VideoHistogramScopeWidget::getTitle()

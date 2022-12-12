@@ -174,7 +174,7 @@ void VideoRgbParadeScopeWidget::mouseMoveEvent(QMouseEvent *event)
     } else {
         text =  QString(tr("Channel: %1\nValue: %2")).arg(channelLabel).arg(QString::number(value));
     }
-    QToolTip::showText(event->globalPos(), text);
+    QToolTip::showText(event->globalPosition().toPoint(), text);
 }
 
 QString VideoRgbParadeScopeWidget::getTitle()

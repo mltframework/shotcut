@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 
 #include "database.h"
-#include "models/playlistmodel.h"
-#include "mainwindow.h"
 #include "settings.h"
 #include "dialogs/longuitask.h"
 #include <QtSql>
@@ -115,7 +113,7 @@ QImage Database::getThumbnail(const QString &hash)
 
 void Database::deleteOldThumbnails()
 {
-    QtConcurrent::run([ = ]() {
+    auto result = QtConcurrent::run([ = ]() {
         QDir dir = thumbnailsDir();
         auto ls = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable, QDir::Time);
         if (ls.size() - kMaxThumbnailCount > 0)

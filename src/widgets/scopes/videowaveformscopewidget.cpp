@@ -144,7 +144,7 @@ void VideoWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
     } else {
         text =  QString(tr("IRE: %1")).arg(QString::number(ire));
     }
-    QToolTip::showText(event->globalPos(), text);
+    QToolTip::showText(event->globalPosition().toPoint(), text);
 }
 
 QString VideoWaveformScopeWidget::getTitle()

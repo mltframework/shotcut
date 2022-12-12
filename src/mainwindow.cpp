@@ -80,7 +80,7 @@
 #include "dialogs/longuitask.h"
 #include "dialogs/systemsyncdialog.h"
 #include "proxymanager.h"
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
 #include "windowstools.h"
 #endif
 
@@ -1471,7 +1471,7 @@ static void autosaveTask(MainWindow *p)
 void MainWindow::onAutosaveTimeout()
 {
     if (isWindowModified()) {
-        QtConcurrent::run(autosaveTask, this);
+        auto result = QtConcurrent::run(autosaveTask, this);
     }
     if (Util::isMemoryLow()) {
         MLT.pause();
@@ -2384,7 +2384,7 @@ void MainWindow::showEvent(QShowEvent *event)
         QTimer::singleShot(0, this, SLOT(showUpgradePrompt()));
 #endif
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     WindowsTaskbarButton::getInstance().setParentWindow(this);
 #endif
     onAutosaveTimeout();

@@ -199,7 +199,7 @@ void RollingFileAppender::computeRollOverTime()
     break;
     default:
       Q_ASSERT_X(false, "DailyRollingFileAppender::computeInterval()", "Invalid datePattern constant");
-//XXXQT6      m_rollOverTime = QDateTime::fromTime_t(0);
+      m_rollOverTime = QDateTime::fromSecsSinceEpoch(0);
   }
 
   m_rollOverSuffix = start.toString(m_datePatternString);

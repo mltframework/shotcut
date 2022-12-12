@@ -108,7 +108,7 @@ void ScrubBar::setMarkers(const QList<int> &list)
 
 void ScrubBar::mousePressEvent(QMouseEvent *event)
 {
-    int x = event->x() - m_margin;
+    int x = event->position().x() - m_margin;
     int in = m_in * m_scale;
     int out = m_out * m_scale;
     int head = m_head * m_scale;
@@ -144,7 +144,7 @@ void ScrubBar::mouseReleaseEvent(QMouseEvent *event)
 
 void ScrubBar::mouseMoveEvent(QMouseEvent *event)
 {
-    int x = event->x() - m_margin;
+    int x = event->position().x() - m_margin;
     int pos = CLAMP(x / m_scale, 0, m_max);
 
     if (event->buttons() & Qt::LeftButton) {
@@ -163,7 +163,7 @@ void ScrubBar::mouseMoveEvent(QMouseEvent *event)
         emit seeked(pos);
     } else if (event->buttons() == Qt::NoButton && MLT.producer()) {
         QString text = QString::fromLatin1(MLT.producer()->frames_to_time(pos));
-        QToolTip::showText(event->globalPos(), text);
+        QToolTip::showText(event->globalPosition().toPoint(), text);
     }
 }
 

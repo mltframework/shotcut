@@ -243,7 +243,7 @@ void VideoVectorScopeWidget::mouseMoveEvent(QMouseEvent *event)
     qreal v = (squareRect.height() - realY) * 255.0 / squareRect.height();
     QString text =  QString(tr("U: %1\nV: %2")).arg(QString::number(qRound(u)),
                                                     QString::number(qRound(v)));
-    QToolTip::showText(event->globalPos(), text);
+    QToolTip::showText(event->globalPosition().toPoint(), text);
 }
 
 QRect VideoVectorScopeWidget::getCenteredSquare()

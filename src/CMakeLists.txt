@@ -254,9 +254,10 @@ if(WIN32)
   target_sources(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
 
   # Windows integration features
-  find_package(Qt 6.2 REQUIRED COMPONENTS WinExtras)
-  target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
-  target_link_libraries(shotcut PRIVATE Qt6::WinExtras)
+  # These are not yet available in Qt 6. They plan to make a cross-platform API planned but not yet implemented.
+#  find_package(Qt 6.2 REQUIRED COMPONENTS WinExtras)
+#  target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
+#  target_link_libraries(shotcut PRIVATE Qt6::WinExtras)
 
   # Runtime exception handler for debug only
   target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)

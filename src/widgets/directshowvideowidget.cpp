@@ -64,7 +64,7 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
                 auto j = line.indexOf("\" (");
                 if (j > -1) {
                     description = line.mid(i + 3, j - i - 3);
-                    isVideo = line.midRef(j + 3).startsWith("video");
+                    isVideo = line.mid(j + 3).startsWith("video");
                 }
             } else {
                 QString s("]   Alternative name \"");

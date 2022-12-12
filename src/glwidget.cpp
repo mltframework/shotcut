@@ -366,10 +366,6 @@ void GLWidget::paintGL()
     glDepthMask(GL_FALSE);
     glViewport(0, 0, width, height);
     check_error(f);
-    QColor color = QPalette().color(QPalette::Window);
-    glClearColor(color.redF(), color.greenF(), color.blueF(), color.alphaF());
-    glClear(GL_COLOR_BUFFER_BIT);
-    check_error(f);
 
     if (!(Settings.playerGPU() || context->supportsThreadedOpenGL())) {
         m_mutex.lock();

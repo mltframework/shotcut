@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
-** Copyright (c) 2020-2021 Meltytech, LLC
+** Copyright (c) 2020-2022 Meltytech, LLC
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions are
@@ -391,12 +391,7 @@ void QmlRichText::setFontFamily(const QString &arg)
     if (cursor.isNull())
         return;
     QTextCharFormat format;
-    format.setFontFamily(arg);
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 13, 0))
-    // Below is needed for Qt 5.15.1 on Windows.
-    // See https://bugreports.qt.io/browse/QTBUG-80475
     format.setFontFamilies({arg});
-#endif
     mergeFormatOnWordOrSelection(format);
     emit fontFamilyChanged();
 }
