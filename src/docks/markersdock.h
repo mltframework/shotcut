@@ -67,7 +67,6 @@ private slots:
 
 private:
     void enableButtons(bool enable);
-    void setupActions();
 
     MarkersModel *m_model;
     QSortFilterProxyModel *m_proxyModel;
