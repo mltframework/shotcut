@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="205"/>
         <source>Actions and Shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Дії та гарячі клавіші</translation>
     </message>
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="213"/>
@@ -16,17 +16,17 @@
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="228"/>
         <source>Clear search</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистити пошук</translation>
     </message>
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="261"/>
         <source>Click on the selected shortcut to show the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Натисніть на вибрану гарячу клавішу, щоб відкрити редактор</translation>
     </message>
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="265"/>
         <source>Reserved shortcuts can not be edited</source>
-        <translation type="unfinished"></translation>
+        <translation>Зарезервовані гарячі клавіши не можна редагувати</translation>
     </message>
 </context>
 <context>
@@ -34,27 +34,27 @@
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="185"/>
         <source>Shortcut %1 is used by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Така гаряча клавіша %1 використовується %2</translation>
     </message>
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="194"/>
         <source>Shortcut %1 is reserved for use by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Така гаряча клавіша %1 зарезервована для використання %2</translation>
     </message>
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="228"/>
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Дія</translation>
     </message>
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="230"/>
         <source>Shortcut 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ярлик 1</translation>
     </message>
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="232"/>
         <source>Shortcut 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ярлик 2</translation>
     </message>
 </context>
 <context>
@@ -90,22 +90,22 @@
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="235"/>
         <source>Reference audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>Референсна звукова доріжка</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="250"/>
         <source>Speed adjustment range</source>
-        <translation type="unfinished"></translation>
+        <translation>Діапазон регулювання швидкості</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="253"/>
         <source>None</source>
-        <translation>Ніц</translation>
+        <translation>Жодного</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="254"/>
         <source>Narrow</source>
-        <translation type="unfinished"></translation>
+        <translation>Вузький</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="256"/>
@@ -115,17 +115,17 @@
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="258"/>
         <source>Wide</source>
-        <translation type="unfinished"></translation>
+        <translation>Широкий</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="259"/>
         <source>Very wide</source>
-        <translation type="unfinished"></translation>
+        <translation>Дуже широкий</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="299"/>
         <source>Process</source>
-        <translation type="unfinished"></translation>
+        <translation>Процес</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="302"/>
@@ -135,37 +135,37 @@
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="305"/>
         <source>Process + Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Обробити + Застосувати</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="343"/>
         <source>This clip will be skipped because it is on the reference track.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей кліп буде пропущено, оскільки він міститься на контрольній доріжці.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="349"/>
         <source>This item can not be aligned.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей елемент неможливо вирівняти.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="359"/>
         <source>Align Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирівняти аудіо</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="466"/>
         <source>Analyze Reference Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Проаналізуйте референсну доріжку</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="474"/>
         <source>Analyze Clips</source>
-        <translation type="unfinished"></translation>
+        <translation>Аналізуйте кліпи</translation>
     </message>
     <message>
         <location filename="../src/dialogs/alignaudiodialog.cpp" line="483"/>
         <source>Alignment not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирівнювання не знайдено.</translation>
     </message>
 </context>
 <context>
@@ -178,7 +178,7 @@
     <message>
         <location filename="../src/models/alignclipsmodel.cpp" line="202"/>
         <source>Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Зсув</translation>
     </message>
     <message>
         <location filename="../src/models/alignclipsmodel.cpp" line="204"/>
@@ -211,7 +211,7 @@
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="71"/>
         <source>default</source>
-        <translation>запасні</translation>
+        <translation>за замовчуванням</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="78"/>
@@ -252,22 +252,22 @@
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="82"/>
         <source>Momentary Loudness</source>
-        <translation>Моментальна Гучність</translation>
+        <translation>Моментальна гучність</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="85"/>
         <source>Short Term Loudness</source>
-        <translation>Короткострокова Гучність</translation>
+        <translation>Короткострокова гучність</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="88"/>
         <source>Integrated Loudness</source>
-        <translation>Інтегрована Гучність</translation>
+        <translation>Інтегрована гучність</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="91"/>
         <source>Loudness Range</source>
-        <translation>Діапазон Гучності</translation>
+        <translation>Діапазон гучності</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="94"/>
@@ -277,12 +277,12 @@
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="97"/>
         <source>True Peak</source>
-        <translation>Реальний Пік</translation>
+        <translation>Реальний пік</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="103"/>
         <source>Configure Graphs</source>
-        <translation>Конфігурації Чартів</translation>
+        <translation>Конфігурації чартів</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="111"/>
@@ -292,17 +292,17 @@
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="112"/>
         <source>Reset the measurement.</source>
-        <translation>Скинути Замір</translation>
+        <translation>Скинути замір</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="119"/>
         <source>Time Since Reset</source>
-        <translation>Час після Скиду</translation>
+        <translation>Час після скиду</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="171"/>
         <source>Audio Loudness</source>
-        <translation>Звукова Гучність</translation>
+        <translation>Звукова гучність</translation>
     </message>
 </context>
 <context>
@@ -310,7 +310,7 @@
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="82"/>
         <source>Audio Peak Meter</source>
-        <translation>Вимірник Піків Аудіо</translation>
+        <translation>Вимірник піків аудіо</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="99"/>
@@ -322,7 +322,7 @@
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="99"/>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="101"/>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="101"/>
@@ -332,17 +332,17 @@
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="101"/>
         <source>LF</source>
-        <translation type="unfinished"></translation>
+        <translation>LF</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="101"/>
         <source>Ls</source>
-        <translation type="unfinished"></translation>
+        <translation>Ls</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="101"/>
         <source>Rs</source>
-        <translation type="unfinished"></translation>
+        <translation>Rs</translation>
     </message>
 </context>
 <context>
@@ -350,7 +350,7 @@
     <message>
         <location filename="../src/widgets/scopes/audiospectrumscopewidget.cpp" line="211"/>
         <source>Audio Spectrum</source>
-        <translation>Спектр Аудіо</translation>
+        <translation>Аудіо спектр</translation>
     </message>
 </context>
 <context>
@@ -363,7 +363,7 @@
     <message>
         <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="181"/>
         <source>-inf</source>
-        <translation>-inf</translation>
+        <translation>-неск</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="262"/>
@@ -380,7 +380,7 @@
     <message>
         <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="292"/>
         <source>Audio Waveform</source>
-        <translation>Хвилеформа Аудіо</translation>
+        <translation>Аудіо Хвильова Форма</translation>
     </message>
 </context>
 <context>
@@ -413,7 +413,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="511"/>
         <source>Broadcast Limited (MPEG)</source>
-        <translation type="unfinished"></translation>
+        <translation>Лімітований діапазон (MPEG)</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="516"/>
@@ -462,7 +462,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="184"/>
         <source>Timeline</source>
-        <translation>Часова-Лінія</translation>
+        <translation>Шкала часу</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="193"/>
@@ -537,12 +537,12 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="556"/>
         <source>Bottom Field First</source>
-        <translation>Нижнє Поле Перше</translation>
+        <translation>Нижнє поле перше</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="561"/>
         <source>Top Field First</source>
-        <translation>Верхнє Поле Перше</translation>
+        <translation>Верхнє поле перше</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="587"/>
@@ -630,7 +630,7 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1050"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1053"/>
         <source>Export GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт GPX</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="942"/>
@@ -640,7 +640,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="247"/>
         <source>Color range</source>
-        <translation type="unfinished"></translation>
+        <translation>Кольоровий діапазон</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="945"/>
@@ -650,12 +650,12 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="974"/>
         <source>Show in Folder</source>
-        <translation>Показ у Теці</translation>
+        <translation>Показати у папці</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="979"/>
         <source>Copy Full File Path</source>
-        <translation>Копіювати Повний Шлях до Файлу</translation>
+        <translation>Копіювати повний шлях до файлу</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="984"/>
@@ -665,12 +665,12 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="989"/>
         <source>Start Integrity Check Job</source>
-        <translation>Почати Перевірку Стабільності</translation>
+        <translation>Почати перевірку стабільності</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="994"/>
         <source>Convert to Edit-friendly...</source>
-        <translation>Конвертувати для Редагування</translation>
+        <translation>Конвертувати для редагування</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1004"/>
@@ -680,17 +680,17 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1012"/>
         <source>Disable Proxy</source>
-        <translation>Відключити Проксі</translation>
+        <translation>Відключити проксі</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1017"/>
         <source>Make Proxy</source>
-        <translation>Створити Проксі</translation>
+        <translation>Створити проксі</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1022"/>
         <source>Delete Proxy</source>
-        <translation>Видалити Проксі</translation>
+        <translation>Видалити проксі</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1027"/>
@@ -699,13 +699,13 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="935"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1040"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1045"/>
         <source>Reverse...</source>
         <translation>Зворотній...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="999"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1232"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1237"/>
         <source>Extract Sub-clip...</source>
         <translation>Видобути субкліп...</translation>
     </message>
@@ -775,83 +775,83 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="589"/>
         <source>This file format (HDV) is not reliable for editing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей формат файлу (HDV) ненадійний для редагування.</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="784"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1036"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1041"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Виберіть формат для редагування - нижче, а потім кликніть ОК, щоб вибрати ім&apos;я файлу. Після вибору імені файлу починається робочий процес. Коли цей процес закінчиться, двічі кликніть його, щоб відкрити
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="911"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1124"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="916"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1129"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="923"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1145"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="928"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1150"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="929"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1155"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="934"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1160"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="936"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="941"/>
         <source>Converted</source>
         <translation>Перетворено</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="960"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1192"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="965"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1197"/>
         <source>Convert %1</source>
         <translation>Перетворити %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1159"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1164"/>
         <source>Reversed</source>
         <translation>Зворотній</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1200"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1205"/>
         <source>Reverse %1</source>
         <translation>Зворотно %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1447"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1452"/>
         <source>Choose the Other Video</source>
         <translation>Виберіть інше відео</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1494"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1499"/>
         <source>Measure %1</source>
         <translation>Вимір %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="936"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1231"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="941"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1236"/>
         <source>Sub-clip</source>
         <translation>Субкліп</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1233"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1238"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1277"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1282"/>
         <source>Extract sub-clip %1</source>
         <translation>Видобути субкліп %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1384"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1389"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -859,17 +859,17 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1428"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1433"/>
         <source>Set Equirectangular Projection</source>
         <translation>Задати Рівнопрямокутню Проекцію</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1438"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1443"/>
         <source>Successfully wrote %1</source>
         <translation>Успішно записано %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1440"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1445"/>
         <source>An error occurred saving the projection.</source>
         <translation>Під час збереження проекції сталася помилка.</translation>
     </message>
@@ -1570,7 +1570,7 @@ with parallel processing enabled.</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="515"/>
         <source>Color range</source>
-        <translation type="unfinished"></translation>
+        <translation>Діапазон кольору</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="533"/>
@@ -1580,7 +1580,7 @@ with parallel processing enabled.</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="556"/>
         <source>Broadcast Limited (MPEG)</source>
-        <translation type="unfinished"></translation>
+        <translation>Лімітований діапазон (MPEG)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="561"/>
@@ -1756,7 +1756,7 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1465"/>
         <source>6 (5.1)</source>
-        <translation type="unfinished">6 (5.1)</translation>
+        <translation>6 (5.1)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1540"/>
@@ -1905,12 +1905,12 @@ Do you want to run the analysis jobs now?</source>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1513"/>
         <source>Export Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт файлів</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1514"/>
         <source>Export Each Playlist Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати кожен елемент списку відтворення</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1523"/>
@@ -1920,7 +1920,7 @@ Do you want to run the analysis jobs now?</source>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1525"/>
         <source>Determined by Export (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Визначається експортом (*)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1552"/>
@@ -1979,22 +1979,22 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="2049"/>
         <source>Detect</source>
-        <translation type="unfinished"></translation>
+        <translation>Виявити</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="2140"/>
         <source>Detecting hardware encoders...</source>
-        <translation type="unfinished"></translation>
+        <translation>Виявлення апаратних кодерів...</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="2174"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Нічого не знайдено</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="2176"/>
         <source>Found %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Знайдено %1</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="2247"/>
@@ -2002,17 +2002,20 @@ Do you still want to continue?</source>
 
 Save your project, close it, and reopen it.
 Shotcut will attempt to repair your project.</source>
-        <translation type="unfinished"></translation>
+        <translation>У вашому проекті відсутні деякі файли.
+
+Збережіть проект, закрийте його та знову відкрийте.
+Shotcut спробує відновити ваш проект.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="2047"/>
         <source>Configure Hardware Encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштувати апаратне кодування</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="2071"/>
         <source>Export Frames/sec</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт кадрів/сек</translation>
     </message>
 </context>
 <context>
@@ -2051,7 +2054,7 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="66"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстові документи (*.txt);;Усі файли (*)</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="121"/>
@@ -2071,7 +2074,7 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="161"/>
         <source>Export job failed; trying again without Parallel processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка завдання експорту; Спробуйте ще раз, але відключить паралельку обробку.</translation>
     </message>
 </context>
 <context>
@@ -2105,37 +2108,37 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="43"/>
         <source>%1 File Date</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Дата файлу</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="99"/>
         <source>Current Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Поточне значення</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="103"/>
         <source>Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Зараз</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="109"/>
         <source>System - Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Система - змінена</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="110"/>
         <source>System - Created</source>
-        <translation type="unfinished"></translation>
+        <translation>Система - створена</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="120"/>
         <source>Metadata - Creation Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Метадані - час створення</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="126"/>
         <source>Metadata - QuickTime date</source>
-        <translation type="unfinished"></translation>
+        <translation>Метадані - дата QuickTime</translation>
     </message>
 </context>
 <context>
@@ -2143,10 +2146,10 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/controllers/filtercontroller.cpp" line="103"/>
         <source>(DEPRECATED)</source>
-        <translation type="unfinished"></translation>
+        <translation>(ЗАСТАРІЛО)</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="249"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="248"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>Лише один %1 фільтр дозволено.</translation>
     </message>
@@ -2161,7 +2164,7 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="115"/>
         <source>Clear search</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистити пошук</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="149"/>
@@ -2186,7 +2189,7 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="216"/>
         <source>Show time filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Show time filters</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="239"/>
@@ -2196,7 +2199,7 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="138"/>
         <source>Favorite</source>
-        <translation type="unfinished"></translation>
+        <translation>Улюблені</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/FilterMenu.qml" line="160"/>
@@ -2224,7 +2227,7 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="187"/>
         <source>Choose a filter to add</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрати фільтр, який потрібно додати</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="200"/>
@@ -2239,22 +2242,22 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="212"/>
         <source>Copy Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати фільтри</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="213"/>
         <source>Copy the filters to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Скопіюйте фільтри в буфер обміну</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="223"/>
         <source>Paste Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити фільтри</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="224"/>
         <source>Paste the filters from the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставте фільтри з буфера обміну</translation>
     </message>
 </context>
 <context>
@@ -2262,7 +2265,7 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/widgets/frameratewidget.cpp" line="72"/>
         <source>Convert Frames/sec</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетворення кадрів/сек</translation>
     </message>
 </context>
 <context>
@@ -2371,7 +2374,7 @@ with the framebuffer object extension.</source>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="578"/>
         <source>Preparing Glaxnimate preview....</source>
-        <translation type="unfinished"></translation>
+        <translation>Підготовка попереднього перегляду Glaxnimate....</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="630"/>
@@ -2379,12 +2382,15 @@ with the framebuffer object extension.</source>
 
 Click OK to open a file dialog to choose its location.
 Click Cancel if you do not have Glaxnimate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Програма Glaxnimate не знайдена.
+
+Натисніть OK, щоб відкрити діалогове вікно файлу, щоб вибрати його розташування.
+Натисніть «Скасувати», якщо у вас немає Glaxnimate.</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="639"/>
         <source>Find Glaxnimate</source>
-        <translation type="unfinished"></translation>
+        <translation>Знайдіть Glaxnimate</translation>
     </message>
 </context>
 <context>
@@ -2397,7 +2403,7 @@ Click Cancel if you do not have Glaxnimate.</source>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="20"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Анімація</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="30"/>
@@ -2407,7 +2413,7 @@ Click Cancel if you do not have Glaxnimate.</source>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="61"/>
         <source>Background color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір фону...</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="76"/>
@@ -2442,17 +2448,17 @@ Click Cancel if you do not have Glaxnimate.</source>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="197"/>
         <source>animation</source>
-        <translation type="unfinished"></translation>
+        <translation>анімація</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="198"/>
         <source>Glaxnimate (*.rawr);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Glaxnimate (*.rawr);;Усі файли (*)</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="199"/>
         <source>New Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Нова анімація</translation>
     </message>
 </context>
 <context>
@@ -2460,7 +2466,7 @@ Click Cancel if you do not have Glaxnimate.</source>
     <message>
         <location filename="../src/jobs/gopro2gpxjob.cpp" line="33"/>
         <source>Export GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт GPX</translation>
     </message>
 </context>
 <context>
@@ -2468,19 +2474,20 @@ Click Cancel if you do not have Glaxnimate.</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="125"/>
         <source>Color #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір #%1</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="145"/>
         <source>Color: %1
 Click to change</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір: %1
+Натисніть, щоб змінити</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="209"/>
         <source>colors</source>
         <comment>gradient control</comment>
-        <translation type="unfinished"></translation>
+        <translation>кольори</translation>
     </message>
 </context>
 <context>
@@ -2733,12 +2740,12 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/jobsdock.ui" line="104"/>
         <source>Jobs Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Меню завдань</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="156"/>
         <source>Stop This Job</source>
-        <translation>Зупинити Це Завдання</translation>
+        <translation>Зупинити це завдання</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="159"/>
@@ -2748,7 +2755,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/jobsdock.ui" line="164"/>
         <source>View Log</source>
-        <translation>Перегляд Журналу</translation>
+        <translation>Перегляд журналу</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="167"/>
@@ -2774,12 +2781,12 @@ the list. This does not stop a currently running job. Right-
         <location filename="../src/docks/jobsdock.ui" line="185"/>
         <location filename="../src/docks/jobsdock.ui" line="188"/>
         <source>Remove Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити готові</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.cpp" line="143"/>
         <source>Job Log</source>
-        <translation>Журнал Завдань</translation>
+        <translation>Журнал завдань</translation>
     </message>
 </context>
 <context>
@@ -2787,32 +2794,32 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="59"/>
         <source>Use Keyframes for this parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Використати ключові кадри для цього параметра </translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="46"/>
         <source>Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only</source>
-        <translation type="unfinished"></translation>
+        <translation>Утримуйте %1, щоб перетягнути ключовий кадр лише вертикально, або %2, щоб перетягнути лише горизонтально</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="68"/>
         <source>Confirm Removing Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Підтвердьте видалення ключових кадрів</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="69"/>
         <source>This will remove all keyframes for this parameter.&lt;p&gt;Do you still want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>Це призведе до видалення всіх ключових кадрів для цього параметра. Ви все ще хочете це зробити?</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="87"/>
         <source>Confirm Removing Simple Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Підтвердьте видалення простих ключових кадрів</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="88"/>
         <source>This will remove all simple keyframes for all parameters.&lt;p&gt;Simple keyframes will be converted to advanced keyframes.&lt;p&gt;Do you still want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>Це видалить усі прості ключові кадри для всіх параметрів. Прості ключові кадри буде перетворено на розширені ключові кадри. Ви все ще хочете це зробити?</translation>
     </message>
 </context>
 <context>
@@ -2821,87 +2828,87 @@ the list. This does not stop a currently running job. Right-
         <location filename="../src/docks/keyframesdock.cpp" line="48"/>
         <location filename="../src/docks/keyframesdock.cpp" line="61"/>
         <source>Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключові кадри</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="69"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Переглянути</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="76"/>
         <source>Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключовий кадр</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="77"/>
         <source>Keyframe Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип ключового кадру</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="85"/>
         <source>Keyframes Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключові кадри Кліп</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="93"/>
         <source>Keyframes Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Керування ключовими кадрами</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="97"/>
         <source>Keyframes Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Меню ключових кадрів</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="162"/>
         <source>Set Filter Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити початок фільтра</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="181"/>
         <source>Set Filter End</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити кінець фільтра</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="200"/>
         <source>Set First Simple Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити перший простий ключовий кадр</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="219"/>
         <source>Set Second Simple Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити останній простий ключовий кадр</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="238"/>
         <source>Zoom Keyframes Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Зменьшити масштаб ключових кадрів</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="249"/>
         <source>Zoom Keyframes In</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільшити масштаб ключових кадрів</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="260"/>
         <source>Zoom Keyframes To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Вписати масштаб ключових кадрів по ширині таймлайну</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="274"/>
         <source>Hold</source>
-        <translation type="unfinished"></translation>
+        <translation>Утриманий</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="286"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінійний</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="297"/>
         <source>Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Плавний</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="308"/>
@@ -2916,17 +2923,17 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="330"/>
         <source>Seek Previous Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до попереднього ключового кадру</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="346"/>
         <source>Seek Next Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до наступного ключового кадру</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="362"/>
         <source>Toggle Keyframe At Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемкнути ключовий кадр під час відтворення</translation>
     </message>
 </context>
 <context>
@@ -2934,17 +2941,17 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="74"/>
         <source>Hold</source>
-        <translation type="unfinished"></translation>
+        <translation>Утриманий</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="77"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінійний</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="80"/>
         <source>Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Плавний</translation>
     </message>
 </context>
 <context>
@@ -2993,7 +3000,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="351"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Переглянути</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="360"/>
@@ -3013,12 +3020,12 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="107"/>
         <source>Bar Horizontal</source>
-        <translation>Горизонтальна Смуга</translation>
+        <translation>Горизонтальна смуга</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="112"/>
         <source>Bar Vertical</source>
-        <translation>Вертикальна Смуга</translation>
+        <translation>Вертикальна смуга</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="117"/>
@@ -3123,7 +3130,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="370"/>
         <source>Get custom transitions on our Web site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Отримати додаткові переходи на веб-сайті.</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="102"/>
@@ -3173,7 +3180,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="232"/>
         <source>Save the custom transition as a favorite</source>
-        <translation type="unfinished"></translation>
+        <translation>Збережіть спеціальний перехід як улюблений</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="252"/>
@@ -3248,7 +3255,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="76"/>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Макет</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="101"/>
@@ -3261,14 +3268,9 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>&amp;Довідка</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="125"/>
-        <source>Settings</source>
-        <translation>Параметри</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="129"/>
         <source>Audio Channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість аудіо каналів</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="220"/>
@@ -3318,7 +3320,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="189"/>
         <source>Preview Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштаб зони попереднього просмотру</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="198"/>
@@ -3328,7 +3330,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="202"/>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Місце Зберігання</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="288"/>
@@ -3401,7 +3403,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="165"/>
         <source>Job Priority</source>
-        <translation type="unfinished"></translation>
+        <translation>Приоритет виконання</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="445"/>
@@ -3421,12 +3423,12 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="464"/>
         <source>FAQ...</source>
-        <translation>ЧАПИ...</translation>
+        <translation>FAQ...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="473"/>
-        <location filename="../src/mainwindow.cpp" line="1898"/>
-        <location filename="../src/mainwindow.cpp" line="3125"/>
+        <location filename="../src/mainwindow.cpp" line="1899"/>
+        <location filename="../src/mainwindow.cpp" line="3126"/>
         <source>Enter Full Screen</source>
         <translation>Перейти на Повний Екран</translation>
     </message>
@@ -3437,14 +3439,14 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="497"/>
-        <location filename="../src/mainwindow.cpp" line="375"/>
-        <location filename="../src/mainwindow.cpp" line="1933"/>
+        <location filename="../src/mainwindow.cpp" line="378"/>
+        <location filename="../src/mainwindow.cpp" line="1934"/>
         <source>Properties</source>
         <translation>Властивості</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="506"/>
-        <location filename="../src/mainwindow.cpp" line="1942"/>
+        <location filename="../src/mainwindow.cpp" line="1943"/>
         <source>Recent</source>
         <translation>Останнє</translation>
     </message>
@@ -3456,7 +3458,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="524"/>
-        <location filename="../src/mainwindow.cpp" line="563"/>
+        <location filename="../src/mainwindow.cpp" line="566"/>
         <source>History</source>
         <translation>Історія</translation>
     </message>
@@ -3473,12 +3475,12 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="554"/>
         <source>GPU Effects (unstable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ефекти GPU (нестабільні)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="557"/>
         <source>Use GPU filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати фільтри GPU</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="568"/>
@@ -3493,7 +3495,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="584"/>
         <source>6 (5.1)</source>
-        <translation type="unfinished">6 (5.1)</translation>
+        <translation>6 (5.1)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="595"/>
@@ -3587,7 +3589,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="172"/>
         <location filename="../src/mainwindow.ui" line="742"/>
-        <location filename="../src/mainwindow.cpp" line="1951"/>
+        <location filename="../src/mainwindow.cpp" line="1952"/>
         <source>Timeline</source>
         <translation>Шкала часу</translation>
     </message>
@@ -3595,17 +3597,17 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="747"/>
         <location filename="../src/mainwindow.ui" line="750"/>
         <source>Restore Default Layout</source>
-        <translation>Відновити Стандартну Розстановку</translation>
+        <translation>Відновити стандартну розстановку</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="758"/>
         <source>Show Title Bars</source>
-        <translation>Показати Смуги Заголовків</translation>
+        <translation>Показати смуги заголовків</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="766"/>
         <source>Show Toolbar</source>
-        <translation>Показати Панель інструментів</translation>
+        <translation>Показати панель інструментів</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="771"/>
@@ -3635,18 +3637,18 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="806"/>
         <source>Scrub Audio</source>
-        <translation>Прокрутка Аудіо</translation>
+        <translation>Прокрутка аудіо</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="841"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
-        <translation>Програма (Mesa)</translation>
+        <translation>Програмне (Mesa)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="849"/>
         <source>Low</source>
-        <translation type="unfinished"></translation>
+        <translation>Низький</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="857"/>
@@ -3656,7 +3658,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="862"/>
         <source>Application Log...</source>
-        <translation>Журнал Програми...</translation>
+        <translation>Журнал програми...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="870"/>
@@ -3664,7 +3666,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Проект</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="106"/>
         <location filename="../src/mainwindow.ui" line="216"/>
         <location filename="../src/mainwindow.ui" line="1246"/>
         <source>Player</source>
@@ -3673,7 +3674,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="878"/>
         <source>User Interface</source>
-        <translation>Інтерфейс Користувача</translation>
+        <translation>Інтерфейс користувача</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="887"/>
@@ -3683,24 +3684,24 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1110"/>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Нотатки</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1275"/>
         <source>Markers as Chapters...</source>
-        <translation type="unfinished"></translation>
+        <translation>Маркери як розділи...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1278"/>
         <location filename="../src/mainwindow.ui" line="1281"/>
-        <location filename="../src/mainwindow.cpp" line="4808"/>
+        <location filename="../src/mainwindow.cpp" line="4809"/>
         <source>Export Chapters</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт розділів</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1286"/>
         <source>Audio/Video Device...</source>
-        <translation type="unfinished"></translation>
+        <translation>Аудіо/Відео пристрої...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="937"/>
@@ -3709,14 +3710,24 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Підготовити...</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="106"/>
+        <source>&amp;Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="125"/>
+        <source>&amp;Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.ui" line="348"/>
         <source>Open a video, audio, image, or project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрийте відео, аудіо, зображення або файл проекту</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="488"/>
         <source>Audio Peak Meter</source>
-        <translation>Вимірник Піків Аудіо</translation>
+        <translation>Вимірник піків аудіо</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="942"/>
@@ -3733,7 +3744,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="954"/>
         <location filename="../src/mainwindow.ui" line="957"/>
         <source>Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключові кадри</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="962"/>
@@ -3748,204 +3759,204 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="984"/>
         <source>Switch to the audio layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключитися на розкладку аудіо</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="987"/>
         <source>Alt+5</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+5</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="995"/>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Складання</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="998"/>
         <source>Switch to the logging layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до складання</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1001"/>
         <source>Alt+1</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1009"/>
         <source>Editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагування</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1012"/>
         <source>Switch to the editing layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до редагування</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1015"/>
         <source>Alt+2</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+2</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1023"/>
         <source>FX</source>
-        <translation type="unfinished"></translation>
+        <translation>Ефекти</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1026"/>
         <source>Switch to the effects layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейдіть до макету ефектів</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1029"/>
         <source>Alt+3</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+3</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1101"/>
         <source>Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Маркери</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1159"/>
         <source>Topics</source>
-        <translation type="unfinished"></translation>
+        <translation>Теми</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1167"/>
         <source>Synchronization...</source>
-        <translation type="unfinished"></translation>
+        <translation>Синхронізація...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1170"/>
         <source>Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Синхронізація</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1178"/>
         <source>Use Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Увімкнути проксі</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1189"/>
         <source>Set the proxy storage folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановіть папку зберігання проксі</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1197"/>
         <source>Show the proxy storage folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати папку зберігання проксі</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1208"/>
         <source>Use Project Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати папку проекту</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1211"/>
         <source>Store proxies in the project folder if defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберігайте проксі у папці проекту, якщо визначено</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1219"/>
         <source>Use Hardware Encoder</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати апаратний кодувальник</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1224"/>
         <source>Configure Hardware Encoder...</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування апаратний кодувальник</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1235"/>
         <source>Switch to the color layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключитись на коррекцію кольорів</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1238"/>
         <source>Alt+4</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+4</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1249"/>
         <source>Switch to the player only layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключитись на програвач</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1252"/>
         <source>Alt+6</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+6</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1265"/>
         <source>Playlist Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Список відтворення проєкта</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1270"/>
         <source>Clip-only Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Лише-Кліпи проєкт</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1291"/>
         <source>Reset...</source>
-        <translation type="unfinished"></translation>
+        <translation>Скидання налаштувань...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1039"/>
         <location filename="../src/mainwindow.ui" line="1044"/>
         <source>Remove...</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалення...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="476"/>
         <source>F11</source>
-        <translation type="unfinished"></translation>
+        <translation>F11</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="898"/>
         <source>EDL...</source>
-        <translation type="unfinished"></translation>
+        <translation>EDL...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="909"/>
         <source>Frame...</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадр...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="923"/>
         <source>Video...</source>
-        <translation type="unfinished"></translation>
+        <translation>Відео...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="926"/>
         <location filename="../src/mainwindow.ui" line="929"/>
         <source>Export Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт відео</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="970"/>
         <source>Actions and Shortcuts...</source>
-        <translation type="unfinished"></translation>
+        <translation>Дії та ярлики...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1053"/>
         <source>Open Other</source>
-        <translation>Відкрити Інше</translation>
+        <translation>Відкрити інше</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1067"/>
         <source>Clear Recent on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Очищати список раніше відкритих проєктів після виходу</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1075"/>
         <source>Show Text Under Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Показувати текст під значками</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1083"/>
         <source>Show Small Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Маленькі значки</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1092"/>
@@ -3955,17 +3966,17 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1118"/>
         <source>540p</source>
-        <translation type="unfinished">540p</translation>
+        <translation>540p</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1129"/>
         <source>720p</source>
-        <translation type="unfinished">720p</translation>
+        <translation>720p</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1151"/>
         <source>360p</source>
-        <translation type="unfinished">360p</translation>
+        <translation>360p</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="140"/>
@@ -3986,152 +3997,153 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 Будь-ласка, інсталюйте її за допомогою менеджера пакетів. Можливо вона називається libsdl2-2.0-0, SDL2 або подібне.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="786"/>
+        <location filename="../src/mainwindow.cpp" line="789"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Екран %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="810"/>
+        <location filename="../src/mainwindow.cpp" line="813"/>
         <source>Off</source>
         <translation>Вимк</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="813"/>
+        <location filename="../src/mainwindow.cpp" line="816"/>
         <source>Internal</source>
         <translation>Внутрішньо</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="816"/>
+        <location filename="../src/mainwindow.cpp" line="819"/>
         <source>External</source>
         <translation>Зовнішньо</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="830"/>
+        <location filename="../src/mainwindow.cpp" line="833"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Ключувач</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1232"/>
-        <location filename="../src/mainwindow.cpp" line="1078"/>
+        <location filename="../src/mainwindow.cpp" line="1081"/>
         <source>Color</source>
         <translation>Колір</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1080"/>
+        <location filename="../src/mainwindow.cpp" line="1083"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1083"/>
+        <location filename="../src/mainwindow.cpp" line="1086"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Анімація</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1086"/>
+        <location filename="../src/mainwindow.cpp" line="1089"/>
         <source>Noise</source>
         <translation>Шум</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1088"/>
+        <location filename="../src/mainwindow.cpp" line="1091"/>
         <source>Ising</source>
         <translation>Ізінг</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1090"/>
+        <location filename="../src/mainwindow.cpp" line="1093"/>
         <source>Lissajous</source>
         <translation>Лісажу</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1093"/>
+        <location filename="../src/mainwindow.cpp" line="1096"/>
         <source>Plasma</source>
         <translation>Плазма</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1095"/>
+        <location filename="../src/mainwindow.cpp" line="1098"/>
         <source>Color Bars</source>
-        <translation>Смуги Кольорів</translation>
+        <translation>Смуги кольорів</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1098"/>
+        <location filename="../src/mainwindow.cpp" line="1101"/>
         <source>Audio Tone</source>
         <translation>Тон Аудіо</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1100"/>
+        <location filename="../src/mainwindow.cpp" line="1103"/>
         <source>Count</source>
         <translation>Рахунок</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1102"/>
+        <location filename="../src/mainwindow.cpp" line="1105"/>
         <source>Blip Flash</source>
-        <translation>Проблисковий Спалах</translation>
+        <translation>Проблисковий спалах</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1106"/>
+        <location filename="../src/mainwindow.cpp" line="1109"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1107"/>
+        <location filename="../src/mainwindow.cpp" line="1110"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1108"/>
+        <location filename="../src/mainwindow.cpp" line="1111"/>
         <source>JACK Audio</source>
         <translation>JACK Аудіо</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1109"/>
+        <location filename="../src/mainwindow.cpp" line="1112"/>
         <source>ALSA Audio</source>
         <translation>ALSA Аудіо</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1111"/>
+        <location filename="../src/mainwindow.cpp" line="1114"/>
         <source>Audio/Video Device</source>
-        <translation>Аудіо/Відео Пристрій</translation>
+        <translation>Аудіо/Відео пристрій</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1115"/>
+        <location filename="../src/mainwindow.cpp" line="1118"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1137"/>
-        <location filename="../src/mainwindow.cpp" line="1139"/>
-        <location filename="../src/mainwindow.cpp" line="1538"/>
-        <location filename="../src/mainwindow.cpp" line="1546"/>
-        <location filename="../src/mainwindow.cpp" line="1567"/>
-        <location filename="../src/mainwindow.cpp" line="1622"/>
-        <location filename="../src/mainwindow.cpp" line="3692"/>
-        <location filename="../src/mainwindow.cpp" line="3705"/>
-        <location filename="../src/mainwindow.cpp" line="4589"/>
+        <location filename="../src/mainwindow.cpp" line="1140"/>
+        <location filename="../src/mainwindow.cpp" line="1142"/>
+        <location filename="../src/mainwindow.cpp" line="1541"/>
+        <location filename="../src/mainwindow.cpp" line="1549"/>
+        <location filename="../src/mainwindow.cpp" line="1570"/>
+        <location filename="../src/mainwindow.cpp" line="1625"/>
+        <location filename="../src/mainwindow.cpp" line="3693"/>
+        <location filename="../src/mainwindow.cpp" line="3706"/>
+        <location filename="../src/mainwindow.cpp" line="4590"/>
         <source>Failed to open </source>
         <translation>Збій при відкритті</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1178"/>
+        <location filename="../src/mainwindow.cpp" line="1181"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкритий файл використовує ефекти процесора, які несумісні з ефектами графічного процесора, але ефекти графічного процесора ввімкнено.
+Бажаєте вимкнути ефекти GPU та перезавантажити?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1201"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>Repaired</source>
         <translation>Виправлено</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1202"/>
+        <location filename="../src/mainwindow.cpp" line="1205"/>
         <source>Save Repaired XML</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти виправлений XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1235"/>
+        <location filename="../src/mainwindow.cpp" line="1238"/>
         <source>Repairing the project failed.</source>
         <translation>Збій виправлення проекту.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1248"/>
+        <location filename="../src/mainwindow.cpp" line="1251"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -4143,431 +4155,453 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 з суфіксом &quot;- Repaired&quot; в імені файлу та відкриє його.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1283"/>
+        <location filename="../src/mainwindow.cpp" line="1286"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Існують авто-збережені файли. Бажаєте їх замістити?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1357"/>
+        <location filename="../src/mainwindow.cpp" line="1360"/>
         <source>You cannot add a project to itself!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви не можете додати проект до самого себе!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1393"/>
+        <location filename="../src/mainwindow.cpp" line="1396"/>
         <source>There was an error saving. Please try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Під час збереження сталася помилка. Будь ласка спробуйте ще раз.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1470"/>
+        <location filename="../src/mainwindow.cpp" line="1473"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
-        <translation type="unfinished"></translation>
+        <translation>Для цього файлу проекту потрібна новіша версія!
+
+Він був зроблений на версії</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1495"/>
+        <location filename="../src/mainwindow.cpp" line="1498"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
 Or save and restart Shotcut.</source>
-        <translation type="unfinished"></translation>
+        <translation>У вас мало вільної пам&apos;яті!
+
+Закрийте інші програми або вкладки веб-браузера та повторіть спробу.
+Або збережіть і перезапустіть Shotcut. Але краще перезавантажити свій комп&apos;ютер.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1532"/>
+        <location filename="../src/mainwindow.cpp" line="1535"/>
         <source>Opening %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкриття %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1663"/>
-        <location filename="../src/mainwindow.cpp" line="3662"/>
+        <location filename="../src/mainwindow.cpp" line="1666"/>
+        <location filename="../src/mainwindow.cpp" line="3663"/>
         <source>Open File</source>
-        <translation>Відкрити Файл</translation>
+        <translation>Відкрити файл</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1664"/>
+        <location filename="../src/mainwindow.cpp" line="1667"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Всі файли (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1926"/>
+        <location filename="../src/mainwindow.cpp" line="1927"/>
         <source>Rename Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейменувати кліп</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1935"/>
+        <location filename="../src/mainwindow.cpp" line="1936"/>
         <source>Find</source>
-        <translation type="unfinished"></translation>
+        <translation>Знайти</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1944"/>
+        <location filename="../src/mainwindow.cpp" line="1945"/>
         <source>Reload</source>
         <translation>Перезавантажити</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2023"/>
+        <location filename="../src/mainwindow.cpp" line="2024"/>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Без назви</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2044"/>
+        <location filename="../src/mainwindow.cpp" line="2045"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Про %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2165"/>
+        <location filename="../src/mainwindow.cpp" line="2166"/>
         <source>Non-Broadcast</source>
-        <translation>Не-Передавальне</translation>
+        <translation>Не-передавальне</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2170"/>
+        <location filename="../src/mainwindow.cpp" line="2171"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Широкоекранний NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2171"/>
+        <location filename="../src/mainwindow.cpp" line="2172"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Широкоекранний PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2182"/>
-        <source>Square 1080p 30 fps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="2183"/>
-        <source>Square 1080p 60 fps</source>
-        <translation type="unfinished"></translation>
+        <source>Square 1080p 30 fps</source>
+        <translation>Квадрат 1080p 30 fps</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2184"/>
-        <source>Vertical HD 30 fps</source>
-        <translation type="unfinished"></translation>
+        <source>Square 1080p 60 fps</source>
+        <translation>Квадрат 1080p 60 fps</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2185"/>
-        <source>Vertical HD 60 fps</source>
-        <translation type="unfinished"></translation>
+        <source>Vertical HD 30 fps</source>
+        <translation>Вертикальний HD 30 fps</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2186"/>
+        <source>Vertical HD 60 fps</source>
+        <translation>Вертикальний HD 60 fps</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2187"/>
         <source>Custom</source>
         <translation>Власне</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2217"/>
-        <location filename="../src/mainwindow.cpp" line="2526"/>
+        <location filename="../src/mainwindow.cpp" line="2218"/>
+        <location filename="../src/mainwindow.cpp" line="2527"/>
         <source>Saved %1</source>
         <translation>Збережено %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2518"/>
-        <location filename="../src/mainwindow.cpp" line="2540"/>
+        <location filename="../src/mainwindow.cpp" line="2519"/>
+        <location filename="../src/mainwindow.cpp" line="2541"/>
         <source>Save XML</source>
         <translation>Зберегти XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4784"/>
+        <location filename="../src/mainwindow.cpp" line="4785"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
-        <translation type="unfinished"></translation>
+        <translation>Включити діапазони (тривалість &gt; 1 кадр)?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4795"/>
+        <location filename="../src/mainwindow.cpp" line="4796"/>
         <source>Choose Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть маркери</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4810"/>
+        <location filename="../src/mainwindow.cpp" line="4811"/>
         <source>Text (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Текст (*.txt);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4864"/>
+        <location filename="../src/mainwindow.cpp" line="4865"/>
         <source>Failed to open export-chapters.js</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося відкрити файл export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4904"/>
+        <location filename="../src/mainwindow.cpp" line="4905"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Це сброс &lt;b&gt;ВСІХ&lt;/b&gt; налаштувань, після чого Shotcut треба буде перезавантажити.
+Ви хочете скинути та перезапустити зараз?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1204"/>
-        <location filename="../src/mainwindow.cpp" line="2542"/>
+        <location filename="../src/mainwindow.cpp" line="1207"/>
+        <location filename="../src/mainwindow.cpp" line="2543"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2561"/>
+        <location filename="../src/mainwindow.cpp" line="2562"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Цей проект було модифіковано.
 Бажаєте зберегти ваші зміни?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2590"/>
+        <location filename="../src/mainwindow.cpp" line="2591"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Наявні незавершені завдання.
 Все таки бажаєте вийти?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2603"/>
+        <location filename="../src/mainwindow.cpp" line="2604"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>Експортування в процесі.
 Чи Ви хочете вийти і закрити програму?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1896"/>
-        <location filename="../src/mainwindow.cpp" line="3132"/>
+        <location filename="../src/mainwindow.cpp" line="1897"/>
+        <location filename="../src/mainwindow.cpp" line="3133"/>
         <source>Exit Full Screen</source>
-        <translation>Вийти з Повного Екрану</translation>
+        <translation>Вийти з повного екрану</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4553"/>
+        <location filename="../src/mainwindow.cpp" line="4554"/>
         <source>Turn Proxy On</source>
-        <translation type="unfinished"></translation>
+        <translation>Увімкнути проксі</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4553"/>
+        <location filename="../src/mainwindow.cpp" line="4554"/>
         <source>Turn Proxy Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Вимкнути проксі</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4557"/>
+        <location filename="../src/mainwindow.cpp" line="4558"/>
         <source>Converting</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетворення</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4571"/>
+        <location filename="../src/mainwindow.cpp" line="4572"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви хочете створити відсутні проксі для кожного файлу в цьому проекті?
+
+Вам потрібно буде перезапустити проєкт звнову, коли створятся всі проксі файли.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4606"/>
+        <location filename="../src/mainwindow.cpp" line="4607"/>
         <source>Proxy Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Папка з проксі</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4622"/>
+        <location filename="../src/mainwindow.cpp" line="4623"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
-        <translation type="unfinished"></translation>
+        <translation>Бажаєте перемістити всі файли зі старої папки до нової?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4629"/>
+        <location filename="../src/mainwindow.cpp" line="4630"/>
         <source>Moving Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Переміщення файлів</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3145"/>
+        <location filename="../src/mainwindow.cpp" line="3146"/>
         <source>GPU effects are not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Ефекти GPU не підтримуються</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="426"/>
+        <location filename="../src/mainwindow.cpp" line="429"/>
         <source>View mode</source>
-        <translation>Режим Перегляду</translation>
+        <translation>Режим перегляду</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="430"/>
+        <location filename="../src/mainwindow.cpp" line="433"/>
         <source>Thumbnails</source>
         <translation>Піктограми</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1165"/>
+        <location filename="../src/mainwindow.cpp" line="1168"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл, який ви відкрили, використовує ефекти GPU, але ефекти GPU не ввімкнено.
+
+Ефекти GPU є ЕКСПЕРИМЕНТАЛЬНИМИ, НЕСТАБІЛЬНИМИ та НЕ ПІДТРИМУЮТЬСЯ! Будь ласка, не повідомляйте про нестабільну роботу не підтримуваних єфектів.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2045"/>
+        <location filename="../src/mainwindow.cpp" line="2046"/>
         <source>&lt;h1&gt;Shotcut version %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Licensed under the %5&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://glaxnimate.mattbas.org/&quot;&gt;Glaxnimate&lt;/a&gt; vector animation program&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h1&gt;Shotcut версія %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; це безкоштовний, з відкритим кодом, крос-платформний редактор відео.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Ліцензія згідно з %5&lt;/p&gt;&lt;p&gt;Ця програма з гордістю використовує такі проекти:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; програма та інтерфейс користувача&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; фреймворк створення мультимедіа&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; мультимедійні формати та бібліотеки кодеків&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 кодувальник&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 та VP9 кодери&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 кодери&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; відео додатки&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; аудіо додатки&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;Значок за замовчуванням&lt;/a&gt; Колекція ікон &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; колекція ікон &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://glaxnimate.mattbas.org/&quot;&gt;Glaxnimate&lt;/a&gt; програма векторної анімації&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Код, використаний для створення цієї програми, можна завантажити з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;Ця програма розповсюджується в надії, що вона буде корисною, але БЕЗ ЖОДНИХ ГАРАНТІЙ; навіть без неявної гарантії ПРИДАТНОСТІ ДЛЯ ПРОДАЖУ чи ВІДПОВІДНОСТІ ДЛЯ КОНКРЕТНОЇ МЕТИ.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3165"/>
+        <location filename="../src/mainwindow.cpp" line="3166"/>
         <source>Click here to check for a new version of Shotcut.</source>
-        <translation>Кликніть тут щоб перевірити чи є нова версія ШотКат програми.</translation>
+        <translation>Кликніть тут щоб перевірити чи є нова версія Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3270"/>
+        <location filename="../src/mainwindow.cpp" line="3271"/>
         <source>Open Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрийте файли</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3304"/>
+        <location filename="../src/mainwindow.cpp" line="3305"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Ви повинні перезапустити Shotcut для перемикання
 на нову мову. Бажаєте перезапустити зараз?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3345"/>
+        <location filename="../src/mainwindow.cpp" line="3346"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Збій з&apos;єднання з JACK.
 Перевірте роботу JACK.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3354"/>
+        <location filename="../src/mainwindow.cpp" line="3355"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ефекти GPU є експериментальними та можуть спричинити нестабільність у деяких системах. Деякі ефекти центрального процесора несумісні з ефектами графічного процесора, тому їх буде вимкнено. Проект, створений за допомогою ефектів графічного процесора, не можна пізніше перетворити на проект, що використовує лише центральний процесор.
+
+Бажаєте ввімкнути ефекти GPU та перезапустити Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3373"/>
+        <location filename="../src/mainwindow.cpp" line="3374"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
-        <translation type="unfinished"></translation>
+        <translation>Shotcut потрібно перезапустити, щоб вимкнути ефекти GPU.
+
+Вимкнути ефекти GPU та перезапустити?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3508"/>
+        <location filename="../src/mainwindow.cpp" line="3509"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Потрібно перезапустити %1 щоб перейти до нової теми.
+Ви хочете перезапустити зараз?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3639"/>
+        <location filename="../src/mainwindow.cpp" line="3640"/>
         <source>Do you want to automatically check for updates in the future?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви хочете, щоб Shotcut автоматично перевіряв наявність оновлень у майбутньому?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3646"/>
+        <location filename="../src/mainwindow.cpp" line="3647"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Це більше не показувати.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3663"/>
+        <location filename="../src/mainwindow.cpp" line="3664"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Усі Файли (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3680"/>
+        <location filename="../src/mainwindow.cpp" line="3681"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
 Do you want to continue to open this MLT XML file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Десятна крапка XML-файлу MLT
+який ви хочете відкрити, несумісний.
+
+Ви бажаєте продовжити відкривати цей XML-файл MLT?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3746"/>
+        <location filename="../src/mainwindow.cpp" line="3747"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Ви повинні перезапустити Shotcut для зміни
 методу показу. Бажаєте перезапустити зараз?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3768"/>
+        <location filename="../src/mainwindow.cpp" line="3769"/>
         <source>Application Log</source>
         <translation>Журнал Програми</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3818"/>
+        <location filename="../src/mainwindow.cpp" line="3819"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Можна скачати нову версію %1! Кликніть тут.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3825"/>
+        <location filename="../src/mainwindow.cpp" line="3826"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>У Вас вже є найновіша версія програми ШотКат.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3836"/>
+        <location filename="../src/mainwindow.cpp" line="3837"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Не вдалося прочитати номер версії .json під час перевірки. Кликніть тут щоб перейти на Інтернет Сторінку.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="901"/>
         <location filename="../src/mainwindow.ui" line="904"/>
-        <location filename="../src/mainwindow.cpp" line="3856"/>
+        <location filename="../src/mainwindow.cpp" line="3857"/>
         <source>Export EDL</source>
         <translation>Експортувати EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3858"/>
+        <location filename="../src/mainwindow.cpp" line="3859"/>
         <source>EDL (*.edl);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>EDL (*.edl);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3904"/>
-        <location filename="../src/mainwindow.cpp" line="4861"/>
+        <location filename="../src/mainwindow.cpp" line="3905"/>
+        <location filename="../src/mainwindow.cpp" line="4862"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>При Експорті JavaScript мав помилку.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3907"/>
+        <location filename="../src/mainwindow.cpp" line="3908"/>
         <source>Failed to open export-edl.js</source>
         <translation>Помилка при відкритті export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3936"/>
+        <location filename="../src/mainwindow.cpp" line="3937"/>
         <source>Export frame from proxy?</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати кадр із проксі?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3937"/>
+        <location filename="../src/mainwindow.cpp" line="3938"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей кадр може бути з проксі-сервера з нижчою роздільною здатністю замість вихідного джерела.
+
+Ви бажаєте продовжити?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="912"/>
         <location filename="../src/mainwindow.ui" line="915"/>
-        <location filename="../src/mainwindow.cpp" line="3949"/>
+        <location filename="../src/mainwindow.cpp" line="3950"/>
         <source>Export Frame</source>
         <translation>Експортувати Кадр</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3955"/>
+        <location filename="../src/mainwindow.cpp" line="3956"/>
         <source>Unable to export frame.</source>
         <translation>Експорт Кадра неможливо.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3963"/>
+        <location filename="../src/mainwindow.cpp" line="3964"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Треба перегрузити ШотКат щоби змінити папку даних.
 Ви хочете перегрузити програму?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3972"/>
+        <location filename="../src/mainwindow.cpp" line="3973"/>
         <source>Data Directory</source>
         <translation>Папка Даних </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4168"/>
+        <location filename="../src/mainwindow.cpp" line="4169"/>
         <source>Add Custom Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати спеціальний макет</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4169"/>
+        <location filename="../src/mainwindow.cpp" line="4170"/>
         <source>Name</source>
         <translation>Ім&apos;я</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4207"/>
+        <location filename="../src/mainwindow.cpp" line="4208"/>
         <source>Remove Video Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити режим відео</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4221"/>
+        <location filename="../src/mainwindow.cpp" line="4222"/>
         <source>Remove Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити макет</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4363"/>
+        <location filename="../src/mainwindow.cpp" line="4364"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ефекти GPU є ЕКСПЕРИМЕНТАЛЬНИМИ, НЕСТАБІЛЬНИМИ та НЕ ПІДТРИМУЮТЬСЯ! Будь ласка, не повідомляйте про нестабільну роботу не підтримуваних єфектів.
+
+Ви бажаєте вимкнути ефекти GPU та перезапустити Shotcut?</translation>
     </message>
 </context>
 <context>
@@ -4575,78 +4609,78 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="134"/>
         <source>Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Маркери</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="202"/>
+        <location filename="../src/docks/markersdock.cpp" line="203"/>
         <source>Add a marker at the current time</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати маркер на поточний час</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="211"/>
+        <location filename="../src/docks/markersdock.cpp" line="212"/>
         <source>Remove the selected marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити вибраний маркер</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="220"/>
+        <location filename="../src/docks/markersdock.cpp" line="221"/>
         <source>Deselect the marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Зняти вибір з маркера</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="193"/>
+        <location filename="../src/docks/markersdock.cpp" line="194"/>
         <source>Markers Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Меню маркерів</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="165"/>
+        <location filename="../src/docks/markersdock.cpp" line="166"/>
         <source>Remove All Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити всі маркери</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="167"/>
         <location filename="../src/docks/markersdock.cpp" line="168"/>
+        <location filename="../src/docks/markersdock.cpp" line="169"/>
         <source>Columns</source>
         <translation>Стовпці</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="170"/>
+        <location filename="../src/docks/markersdock.cpp" line="171"/>
         <source>Color</source>
         <translation>Колір</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="173"/>
+        <location filename="../src/docks/markersdock.cpp" line="174"/>
         <source>Name</source>
         <translation>Ім&apos;я</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="176"/>
+        <location filename="../src/docks/markersdock.cpp" line="177"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="179"/>
+        <location filename="../src/docks/markersdock.cpp" line="180"/>
         <source>End</source>
         <translation>Кінець</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="182"/>
+        <location filename="../src/docks/markersdock.cpp" line="183"/>
         <source>Duration</source>
         <translation>Тривалість</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="188"/>
+        <location filename="../src/docks/markersdock.cpp" line="189"/>
         <source>Markers Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Керування маркерами</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="228"/>
+        <location filename="../src/docks/markersdock.cpp" line="229"/>
         <source>search</source>
         <translation>пошук</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="236"/>
+        <location filename="../src/docks/markersdock.cpp" line="237"/>
         <source>Clear search</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистити пошук</translation>
     </message>
 </context>
 <context>
@@ -4716,12 +4750,12 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/glwidget.cpp" line="523"/>
         <source>You cannot drag from Project.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви не можете перетягувати з Проекту.</translation>
     </message>
     <message>
         <location filename="../src/glwidget.cpp" line="526"/>
         <source>You cannot drag a non-seekable source</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви не можете перетягнути джерело, яке не підтримує пошук</translation>
     </message>
 </context>
 <context>
@@ -4729,37 +4763,37 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="60"/>
         <source>Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Директорія</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="73"/>
         <source>Prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Префікс</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="74"/>
         <source>export</source>
-        <translation type="unfinished"></translation>
+        <translation>експорт</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="79"/>
         <source>Field 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле 1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="87"/>
         <source>Field 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле 2</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="95"/>
         <source>Field 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле 3</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="104"/>
         <source>Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Розширення</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="197"/>
@@ -4774,47 +4808,47 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="199"/>
         <source>Index</source>
-        <translation type="unfinished"></translation>
+        <translation>Індекс</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="200"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="201"/>
         <source>Hash</source>
-        <translation type="unfinished"></translation>
+        <translation>Хеш</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="224"/>
         <source>Empty File Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Порожнє ім&apos;я файла</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="226"/>
         <source>Directory does not exist: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Каталог не існує: %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="233"/>
         <source>File Exists: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл існує: %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="238"/>
         <source>Duplicate File Name: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Повторюване ім&apos;я файлу: %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="264"/>
         <source>Fix file name errors before export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виправте помилки імені файлу перед експортом.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/multifileexportdialog.cpp" line="270"/>
         <source>Export Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати каталог</translation>
     </message>
 </context>
 <context>
@@ -4829,7 +4863,9 @@ Do you want to disable GPU effects and restart Shotcut?</source>
         <source>Error: Shotcut could not find the %1 plugin on your system.
 
 Please install the %2 plugins.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка: програмі Shotcut не вдалося знайти плагін %1 у вашій системі.
+
+Установіть плагін з назвою %2.</translation>
     </message>
 </context>
 <context>
@@ -4866,7 +4902,7 @@ Please install the %2 plugins.</source>
         <location filename="../src/widgets/newprojectfolder.ui" line="181"/>
         <location filename="../src/widgets/newprojectfolder.ui" line="198"/>
         <source>PushButton</source>
-        <translation type="unfinished"></translation>
+        <translation>PushButton</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="224"/>
@@ -4877,43 +4913,44 @@ Please install the %2 plugins.</source>
         <location filename="../src/widgets/newprojectfolder.ui" line="211"/>
         <source>A folder with this name will be created containing
 a project file with the same name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Буде створено папку, назва якої буде співпадати з назвою проекту.</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="152"/>
         <source>Projects folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Папка з проектами</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="256"/>
         <source>Project name</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва проекту</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="246"/>
         <source>Video mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим відео</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="194"/>
         <source>This is the folder to contain Shotcut project folders.
 A folder will be created in this folder for each project.</source>
-        <translation type="unfinished"></translation>
+        <translation>Це папка для зберігання проектів Shotcut.
+Для кожного проекту в цій папці буде створено окрему папку.</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="308"/>
         <source>Automatic means the resolution and frame rate are based on the &lt;b&gt;first&lt;/b&gt; file you &lt;b&gt;add&lt;/b&gt; to your project. If the first file is not a video clip (for example, image or audio), then it will be 1920x1080p 25 fps.</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично означае, що роздільна здатність проєкту буде залежить від &lt;b&gt;першого&lt;/b&gt; файлу, який ви&lt;b&gt;додали&lt;/b&gt; до вашого проекту. Як що ваш перший файл не містив відео (наприклад це було зображення або звук чи музика) роздільна здатність автоматично встановится в режим 1920x1080p 25 fps.</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="59"/>
         <source>Recent Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередні проекти</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="136"/>
         <source>New Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Новий проект</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="350"/>
@@ -4928,12 +4965,12 @@ A folder will be created in this folder for each project.</source>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="360"/>
         <source>Remove...</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалення...</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="124"/>
         <source>Projects Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Папка проектів</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="156"/>
@@ -4943,25 +4980,28 @@ A folder will be created in this folder for each project.</source>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="173"/>
         <source>Remove Video Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити режим відео</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="196"/>
         <source>The project name cannot include a slash.</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва проекту не може містити символ слеш.</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="211"/>
         <source>There is already a project with that name.
 Try again with a different name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Проект з такою назвою вже є.
+Дайте проекту іншу назву.</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="219"/>
         <source>Unable to create folder %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося створити папку %1
+Можливо, у вас немає дозволу.
+Повторіть спробу в іншій папці.</translation>
     </message>
 </context>
 <context>
@@ -4982,7 +5022,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/docks/notesdock.cpp" line="28"/>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Нотатки</translation>
     </message>
 </context>
 <context>
@@ -5072,7 +5112,7 @@ Try again with a different folder.</source>
         <location filename="../src/openotherdialog.cpp" line="83"/>
         <location filename="../src/openotherdialog.cpp" line="161"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Анімація</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="87"/>
@@ -5128,32 +5168,32 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="158"/>
         <source>Seek to previous keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до попереднього ключового кадру</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="158"/>
         <source>Seek backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати назад</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="179"/>
         <source>Add a keyframe at play head</source>
-        <translation type="unfinished"></translation>
+        <translation>Додайте ключовий кадр у голові відтворення</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="208"/>
         <source>Delete the selected keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити вибраний ключовий кадр</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="238"/>
         <source>Seek to next keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до наступного ключового кадру</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="238"/>
         <source>Seek forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати вперед</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="256"/>
@@ -5168,7 +5208,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="268"/>
         <source>Zoom keyframe values</source>
-        <translation type="unfinished"></translation>
+        <translation>Значення масштабу ключових кадрів</translation>
     </message>
 </context>
 <context>
@@ -5217,351 +5257,366 @@ Try again with a different folder.</source>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="68"/>
+        <location filename="../src/player.cpp" line="69"/>
         <source>Source</source>
         <translation>Джерело</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="69"/>
+        <location filename="../src/player.cpp" line="70"/>
         <source>Project</source>
         <translation>Проект</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="131"/>
+        <location filename="../src/player.cpp" line="132"/>
         <source>Adjust the audio volume</source>
         <translation>Коригувати гучність аудіо</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="152"/>
+        <location filename="../src/player.cpp" line="153"/>
         <source>Silence the audio</source>
         <translation>Зтишити аудіо</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="166"/>
+        <location filename="../src/player.cpp" line="167"/>
         <source>Transport Controls</source>
         <translation>Контролери передавання</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="174"/>
+        <location filename="../src/player.cpp" line="175"/>
         <source>Current position</source>
         <translation>Поточна позиція</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="178"/>
+        <location filename="../src/player.cpp" line="179"/>
         <source>Total Duration</source>
-        <translation>Загальна Тривалість</translation>
+        <translation>Загальна тривалість</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="183"/>
+        <location filename="../src/player.cpp" line="184"/>
         <source>In Point</source>
-        <translation>У Точці</translation>
+        <translation>У точці</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="187"/>
+        <location filename="../src/player.cpp" line="188"/>
         <source>Selected Duration</source>
         <translation>Вибрана Тривалість</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="203"/>
+        <location filename="../src/player.cpp" line="204"/>
         <source>Zoom Fit</source>
-        <translation>Підгонка</translation>
+        <translation>Підгонка масштабу</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="206"/>
+        <location filename="../src/player.cpp" line="207"/>
         <source>Zoom 10%</source>
-        <translation type="unfinished">Наближення 200% {10%?}</translation>
+        <translation>Масштаб 10%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="209"/>
+        <location filename="../src/player.cpp" line="210"/>
         <source>Zoom 25%</source>
-        <translation>Зменшити 25%</translation>
+        <translation>Масштаб 25%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="212"/>
+        <location filename="../src/player.cpp" line="213"/>
         <source>Zoom 50%</source>
-        <translation>Віддалення 50%</translation>
+        <translation>Масштаб 50%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="215"/>
+        <location filename="../src/player.cpp" line="216"/>
         <source>Zoom 100%</source>
         <translation>Оригінал 100%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="218"/>
+        <location filename="../src/player.cpp" line="219"/>
         <source>Zoom 200%</source>
         <translation>Наближення 200%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="238"/>
+        <location filename="../src/player.cpp" line="239"/>
         <source>Toggle zoom</source>
         <translation>Перемкнути наближення/віддалення</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="246"/>
+        <location filename="../src/player.cpp" line="247"/>
         <source>2x2 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>2x2 сітка</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="251"/>
+        <location filename="../src/player.cpp" line="252"/>
         <source>3x3 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>3x3 сітка</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="255"/>
+        <location filename="../src/player.cpp" line="256"/>
         <source>4x4 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>4x4 сітка</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="259"/>
+        <location filename="../src/player.cpp" line="260"/>
         <source>16x16 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>16x16 сітка</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="267"/>
+        <location filename="../src/player.cpp" line="268"/>
         <source>10 Pixel Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>10 пікселів сітка</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="356"/>
+        <location filename="../src/player.cpp" line="357"/>
         <source>Play/Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтворення/Пауза</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="360"/>
+        <location filename="../src/player.cpp" line="361"/>
         <source>Toggle play or pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемикання відтворення або пауза</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="377"/>
+        <location filename="../src/player.cpp" line="378"/>
         <source>Skip to the next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до наступного пункту</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="400"/>
+        <location filename="../src/player.cpp" line="401"/>
         <source>Skip to the previous point</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до попереднього пункту</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="425"/>
+        <location filename="../src/player.cpp" line="426"/>
         <source>Play quickly backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтворити швидко назад</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="435"/>
+        <location filename="../src/player.cpp" line="436"/>
         <source>Play quickly forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтворити швидко вперед</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="439"/>
+        <location filename="../src/player.cpp" line="440"/>
         <source>Seek Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати початок</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="446"/>
+        <location filename="../src/player.cpp" line="447"/>
         <source>Seek End</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати кінець</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="454"/>
+        <location filename="../src/player.cpp" line="455"/>
         <source>Next Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Наступний кадр</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="463"/>
+        <location filename="../src/player.cpp" line="464"/>
         <source>Previous Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередній кадр</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="472"/>
+        <location filename="../src/player.cpp" line="473"/>
         <source>Forward One Second</source>
-        <translation type="unfinished"></translation>
+        <translation>Вперед на одну секунду</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="480"/>
+        <location filename="../src/player.cpp" line="481"/>
         <source>Backward One Second</source>
-        <translation type="unfinished"></translation>
+        <translation>Назад на одну секунду</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="488"/>
+        <location filename="../src/player.cpp" line="489"/>
         <source>Forward Two Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Вперед на дві секунди</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="496"/>
+        <location filename="../src/player.cpp" line="497"/>
         <source>Backward Two Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Назад на дві секунди</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="504"/>
+        <location filename="../src/player.cpp" line="505"/>
         <source>Forward Five Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Вперед на п&apos;ять секунд</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="512"/>
+        <location filename="../src/player.cpp" line="513"/>
         <source>Backward Five Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Назад на п&apos;ять секунд</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="520"/>
+        <location filename="../src/player.cpp" line="521"/>
         <source>Forward Ten Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Вперед на десять секунд</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="528"/>
+        <location filename="../src/player.cpp" line="529"/>
         <source>Backward Ten Seconds</source>
+        <translation>Назад на десять секунд</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="537"/>
+        <source>Forward Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="536"/>
+        <location filename="../src/player.cpp" line="545"/>
+        <source>Backward Jump</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="553"/>
+        <source>Set Jump Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="564"/>
         <source>Trim Clip In</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрізання кліпу - початок</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="549"/>
+        <location filename="../src/player.cpp" line="577"/>
         <source>Trim Clip Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрізання кліпу - кінець</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="562"/>
+        <location filename="../src/player.cpp" line="590"/>
         <source>Set Time Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити позицію часу</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="592"/>
+        <location filename="../src/player.cpp" line="620"/>
         <source>Pause playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Призупинити відтворення</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="594"/>
-        <location filename="../src/player.cpp" line="601"/>
+        <location filename="../src/player.cpp" line="622"/>
+        <location filename="../src/player.cpp" line="629"/>
         <source>Player</source>
         <translation>Відтворник</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="596"/>
+        <location filename="../src/player.cpp" line="624"/>
         <source>Focus Player</source>
-        <translation type="unfinished"></translation>
+        <translation>Фокусування на плеері</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="749"/>
+        <location filename="../src/player.cpp" line="777"/>
         <source>Not Seekable</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук не підтримуется</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="263"/>
+        <location filename="../src/player.cpp" line="264"/>
         <source>20 Pixel Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>20 піксельна сітка</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="221"/>
+        <location filename="../src/player.cpp" line="222"/>
         <source>Zoom 300%</source>
-        <translation type="unfinished">Наближення 200% {300%?}</translation>
+        <translation>Наближення 300%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="224"/>
+        <location filename="../src/player.cpp" line="225"/>
         <source>Zoom 400%</source>
-        <translation type="unfinished">Наближення 200% {400%?}</translation>
+        <translation>Наближення 400%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="227"/>
+        <location filename="../src/player.cpp" line="228"/>
         <source>Zoom 500%</source>
-        <translation type="unfinished">Наближення 200% {500%?}</translation>
+        <translation>Наближення 500%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="230"/>
+        <location filename="../src/player.cpp" line="231"/>
         <source>Zoom 750%</source>
-        <translation type="unfinished">Наближення 200% {750%?}</translation>
+        <translation>Наближення 750%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="233"/>
+        <location filename="../src/player.cpp" line="234"/>
         <source>Zoom 1000%</source>
-        <translation type="unfinished">Наближення 200% {1000%?}</translation>
+        <translation>Наближення 1000%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="271"/>
+        <location filename="../src/player.cpp" line="272"/>
         <source>80/90% Safe Areas</source>
-        <translation type="unfinished"></translation>
+        <translation>80/90% Безпечні зони</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="275"/>
+        <location filename="../src/player.cpp" line="276"/>
         <source>EBU R95 Safe Areas</source>
-        <translation type="unfinished"></translation>
+        <translation>EBU R95 Безпечні зони</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="280"/>
+        <location filename="../src/player.cpp" line="281"/>
         <source>Snapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Прив&apos;язка</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="290"/>
+        <location filename="../src/player.cpp" line="291"/>
         <source>Toggle grid display on the player</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемкнути відображення сітки на плеєрі</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="569"/>
+        <location filename="../src/player.cpp" line="597"/>
         <source>Switch Source/Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключити джерело/проект</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="589"/>
+        <location filename="../src/player.cpp" line="617"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="371"/>
+        <location filename="../src/player.cpp" line="372"/>
         <source>Skip Next</source>
         <translation>Пропустити Наступне</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="394"/>
+        <location filename="../src/player.cpp" line="395"/>
         <source>Skip Previous</source>
         <translation>Пропустити Попереднє</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="419"/>
+        <location filename="../src/player.cpp" line="420"/>
         <source>Rewind</source>
         <translation>Перемотка</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="429"/>
+        <location filename="../src/player.cpp" line="430"/>
         <source>Fast Forward</source>
-        <translation>Швидко Вперед</translation>
-    </message>
-    <message>
-        <location filename="../src/player.cpp" line="298"/>
-        <source>Volume</source>
-        <translation>Гучність</translation>
+        <translation>Швидко вперед</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="299"/>
+        <source>Volume</source>
+        <translation>Дозволяє керувати гучністю</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="300"/>
         <source>Show the volume control</source>
         <translation>Показати контролер гучності</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1024"/>
+        <location filename="../src/player.cpp" line="1052"/>
         <source>Proxy and preview scaling are ON at %1p</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштабування проксі та попереднього перегляду УВІМКНЕНО на %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1027"/>
+        <location filename="../src/player.cpp" line="1055"/>
         <source>Proxy is ON at %1p</source>
-        <translation type="unfinished"></translation>
+        <translation>Проксі увімкнено на %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1030"/>
+        <location filename="../src/player.cpp" line="1058"/>
         <source>Preview scaling is ON at %1p</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштабування попереднього перегляду УВІМКНЕНО на %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1138"/>
+        <location filename="../src/player.cpp" line="1166"/>
         <source>Unmute</source>
-        <translation>Включити Звук</translation>
+        <translation>Включити звук</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1109"/>
-        <location filename="../src/player.cpp" line="1145"/>
+        <location filename="../src/player.cpp" line="1137"/>
+        <location filename="../src/player.cpp" line="1173"/>
         <source>Mute</source>
-        <translation>Виключити Звук</translation>
+        <translation>Виключити звук</translation>
     </message>
 </context>
 <context>
@@ -5614,17 +5669,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="355"/>
         <source>View as tiles</source>
-        <translation>Перегляд як ПЛИТКИ</translation>
+        <translation>Перегляд у вигляді плиток</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="368"/>
         <source>View as icons</source>
-        <translation>Перегляд як Ікони</translation>
+        <translation>Перегляд у вигляді значків</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="381"/>
         <source>View as details</source>
-        <translation>Перегляд в Подробицях </translation>
+        <translation>Перегляд в подробицях </translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="318"/>
@@ -5645,27 +5700,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="212"/>
         <source>Playlist Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Меню списку відтворення</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="305"/>
         <source>Append</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="394"/>
         <source>Open the clip in the Source player</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити цей кліп у програвачі Source</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="404"/>
         <source>Go to the start of this clip in the Project player</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейдіть до початку цього кліпу в програвачі проекту</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="449"/>
         <source>Remove All</source>
-        <translation>Вилучити Все</translation>
+        <translation>Вилучити все</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="450"/>
@@ -5700,42 +5755,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="497"/>
         <source>Add Selected to Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати вибране на шкалу часу</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="504"/>
         <source>Add Selected to Slideshow</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати вибране до слайд-шоу</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="602"/>
         <source>Play After Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтворити після відкриття</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="457"/>
         <source>Select All</source>
-        <translation>Виділіти Все</translation>
+        <translation>Виділіти все</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="465"/>
         <source>Select None</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати Немає</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="433"/>
         <source>Update Thumbnails</source>
-        <translation>Оновити Ескізи</translation>
+        <translation>Оновити ескізи</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="511"/>
         <source>Sort By Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортувати по імені</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="519"/>
         <source>Sort By Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортувати по даті створення</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="380"/>
@@ -5745,17 +5800,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="185"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="207"/>
         <source>Playlist Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Елементи керування списком відтворення</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="335"/>
         <source>Add files to playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати файли до списку відтворення</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="354"/>
@@ -5765,7 +5820,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="367"/>
         <source>Icons</source>
-        <translation>Ікони</translation>
+        <translation>Значки</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="393"/>
@@ -5775,7 +5830,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="403"/>
         <source>GoTo</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="413"/>
@@ -5785,86 +5840,86 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="414"/>
         <source>Open a copy of the clip in the Source player</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити копію кліпу в джерелі</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="473"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Рухати вгору</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="485"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Рухати вниз</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="610"/>
         <source>Open Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити попередній</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="623"/>
         <source>Open Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити наступне</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="636"/>
         <source>Select Clip 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп 1</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="649"/>
         <source>Select Clip 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп 2</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="661"/>
         <source>Select Clip 3</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп 3</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="673"/>
         <source>Select Clip 4</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп 4</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="685"/>
         <source>Select Clip 5</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп 5</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="697"/>
         <source>Select Clip 6</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп 6</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="709"/>
         <source>Select Clip 7</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп 7</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="721"/>
         <source>Select Clip 8</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп 8</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="733"/>
         <source>Select Clip 9</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп 9</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/docks/playlistdock.cpp" line="770"/>
         <source>Replace %n playlist items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Замінити %n елемент списку відтворення</numerusform>
+            <numerusform>Замінити %n елементів списку відтворення</numerusform>
+            <numerusform>Замінити %n елементів списку відтворення</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="202"/>
         <source>Sort</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортувати</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="896"/>
@@ -5875,17 +5930,17 @@ p, li { white-space: pre-wrap; }
     <message numerus="yes">
         <location filename="../src/docks/playlistdock.cpp" line="909"/>
         <source>Remove %n playlist items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Видалити %n елемент списку відтворення</numerusform>
+            <numerusform>Видалити %n елементів списку відтворення</numerusform>
+            <numerusform>Видалити %n елементів списку відтворення</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="334"/>
         <location filename="../src/docks/playlistdock.cpp" line="1089"/>
         <source>Add Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати файли</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="1098"/>
@@ -5895,17 +5950,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="1235"/>
         <source>Generating</source>
-        <translation type="unfinished"></translation>
+        <translation>Генерація</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="1443"/>
         <source>Open File</source>
-        <translation>Відкрити Файл</translation>
+        <translation>Відкрити файл</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="1444"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Всі файли (*);;MLT XML (*.mlt)</translation>
     </message>
 </context>
 <context>
@@ -5914,7 +5969,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/widgets/playlisticonview.cpp" line="158"/>
         <source>P</source>
         <comment>The first letter or symbol of &quot;proxy&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
 </context>
 <context>
@@ -5957,7 +6012,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="398"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата</translation>
     </message>
 </context>
 <context>
@@ -6031,7 +6086,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/jobs/qimagejob.cpp" line="32"/>
         <source>Make proxy for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити проксі для %1</translation>
     </message>
 </context>
 <context>
@@ -6069,22 +6124,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="193"/>
         <source>Sort playlist by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортувати список відтворення за %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="227"/>
         <source>Trim playlist item %1 in</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрізати елемент списку відтворення %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="265"/>
         <source>Trim playlist item %1 out</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирізати елемент списку відтворення %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="302"/>
         <source>Replace playlist item %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Замінити елементи списку відтворення %1</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="50"/>
@@ -6094,22 +6149,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="56"/>
         <source>Append to Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати до шкали часу</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="58"/>
         <source>Preparing</source>
-        <translation type="unfinished"></translation>
+        <translation>Підготовка</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="64"/>
         <source>Appending</source>
-        <translation type="unfinished"></translation>
+        <translation>Додавання</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="75"/>
         <source>Finishing</source>
-        <translation type="unfinished"></translation>
+        <translation>Завершення</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="100"/>
@@ -6120,7 +6175,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/commands/timelinecommands.cpp" line="111"/>
         <location filename="../src/commands/timelinecommands.cpp" line="166"/>
         <source>Add Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати файли</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="156"/>
@@ -6170,16 +6225,16 @@ p, li { white-space: pre-wrap; }
     <message numerus="yes">
         <location filename="../src/commands/timelinecommands.cpp" line="458"/>
         <source>Move %n timeline clips</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Перемістити %n кліп шкали часу</numerusform>
+            <numerusform>Перемістити %n кліпи шкали часу</numerusform>
+            <numerusform>Перемістити %n кліпи шкали часу</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="460"/>
         <source>Move timeline clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити кліп часової шкали</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="620"/>
@@ -6227,7 +6282,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/commands/timelinecommands.cpp" line="1145"/>
         <location filename="../src/commands/timelinecommands.cpp" line="1180"/>
         <source>Remove transition</source>
-        <translation>Удалити Перехід</translation>
+        <translation>Удалити перехід</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1259"/>
@@ -6240,64 +6295,64 @@ p, li { white-space: pre-wrap; }
         <translation>Додати аудіодоріжку</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1290"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1291"/>
         <source>Insert audio track</source>
         <translation>Вставити аудіодоріжку</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1292"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1293"/>
         <source>Insert video track</source>
         <translation>Вставити відеодоріжку</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1317"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1318"/>
         <source>Remove audio track</source>
         <translation>Вилучити аудіодоріжку</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1319"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1320"/>
         <source>Remove video track</source>
         <translation>Вилучити відеодоріжку</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1378"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1379"/>
         <source>Move track down</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити трек вниз</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1380"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1381"/>
         <source>Move track up</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити трек вгору</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1402"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1403"/>
         <source>Change track blend mode</source>
         <translation>Змінити режим суміші треків</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1443"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1444"/>
         <source>Change clip properties</source>
         <translation>Змінити властивості кліпів</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1502"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1503"/>
         <source>Detach Audio</source>
         <translation>Відкріпити звук</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1606"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1607"/>
         <source>Replace timeline clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Замінити кліп шкали часу</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1635"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1636"/>
         <source>Align clips to reference track</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирівняйте кліпи за контрольною доріжкою</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3280"/>
+        <location filename="../src/mainwindow.cpp" line="3281"/>
         <source>You cannot add a project to itself!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви не можете додати проект до самого себе!</translation>
     </message>
     <message>
         <location filename="../src/mltxmlchecker.cpp" line="139"/>
@@ -6306,9 +6361,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/util.cpp" line="135"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="946"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1168"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1240"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="951"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1173"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1245"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -6329,7 +6384,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/util.cpp" line="155"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихід</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="317"/>
@@ -6337,7 +6392,10 @@ Try again with a different folder.</source>
 more standard %1 = %2/1001.
 
 Do you want to use %1 = %2/1001 instead?</source>
-        <translation type="unfinished"></translation>
+        <translation>Введене вами значення дуже схоже на звичайне,
+більш стандартний %1 = %2/1001.
+
+Бажаєте замість цього використовувати %1 = %2/1001?</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.cpp" line="28"/>
@@ -6347,64 +6405,64 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>прозорий</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2590"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2607"/>
         <source>Drop Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетягнути файли</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2606"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2623"/>
         <source>Failed to open </source>
         <translation>Збій при відкритті</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2622"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2639"/>
         <source>Not adding non-seekable file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Недодавання файлу без можливості пошуку:</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="1234"/>
         <source>Generate Slideshow</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити слайд-шоу</translation>
     </message>
     <message>
         <location filename="../src/proxymanager.cpp" line="218"/>
         <source>Make proxy for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити проксі для %1</translation>
     </message>
     <message>
         <location filename="../src/database.cpp" line="66"/>
         <source>Converting Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетворення ескізів</translation>
     </message>
     <message>
         <location filename="../src/database.cpp" line="85"/>
         <source>Please wait for this one-time update to the thumbnail cache...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зачекайте на це одноразове оновлення кешу мініатюр...</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="29"/>
         <source>Delete marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити маркер: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="48"/>
         <source>Add marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати маркер: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="71"/>
         <source>Move marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити маркер: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="73"/>
         <source>Edit marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувати маркер: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="113"/>
         <source>Clear markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистити маркери</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="40"/>
@@ -6415,7 +6473,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="573"/>
         <source>Edit With Glaxnimate</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувати за допомогою Glaxnimate</translation>
     </message>
 </context>
 <context>
@@ -6423,7 +6481,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qmltypes/qmlapplication.cpp" line="209"/>
         <source>&lt;p&gt;Do you really want to add filters to &lt;b&gt;Output&lt;/b&gt;?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Timeline &gt; Output&lt;/b&gt; is currently selected. Adding filters to &lt;b&gt;Output&lt;/b&gt; affects ALL clips in the timeline including new ones that will be added.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Ви справді хочете додати фільтри до &lt;b&gt;виходу&lt;/b&gt;?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Шкала часу &gt; Вихід&lt;/b&gt; наразі вибрано. Додавання фільтрів до&lt;b&gt;виходу&lt;/b&gt; впливає на ВСІ кліпи на часовій шкалі, включаючи нові, які будуть додані.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlapplication.cpp" line="217"/>
@@ -6477,18 +6535,18 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qmltypes/qmleditmenu.cpp" line="85"/>
         <source>Select All</source>
-        <translation>Виділіти Все</translation>
+        <translation>Виділити все</translation>
     </message>
 </context>
 <context>
     <name>QmlFilter</name>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="329"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="327"/>
         <source>(defaults)</source>
         <translation>(стандарт)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="430"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="428"/>
         <source>Analyze %1</source>
         <translation>Аналіз %1</translation>
     </message>
@@ -6508,12 +6566,12 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="77"/>
         <source>Choose Color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть колір...</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="88"/>
         <source>Choose Recent Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть останній колір</translation>
     </message>
 </context>
 <context>
@@ -6521,17 +6579,17 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qmltypes/qmlrichtext.cpp" line="130"/>
         <source>Cannot save: </source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо зберегти:</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlrichtext.cpp" line="160"/>
         <source>Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Рядок</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlrichtext.cpp" line="162"/>
         <source>Column</source>
-        <translation type="unfinished"></translation>
+        <translation>Колонка</translation>
     </message>
 </context>
 <context>
@@ -6549,7 +6607,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qmltypes/qmlrichtextmenu.cpp" line="37"/>
         <source>Save As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти як...</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlrichtextmenu.cpp" line="41"/>
@@ -6634,7 +6692,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/dialogs/saveimagedialog.cpp" line="48"/>
         <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</translation>
     </message>
 </context>
 <context>
@@ -6685,7 +6743,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="173"/>
         <source>Delete Preset</source>
-        <translation>Видалити Передустановку</translation>
+        <translation>Видалити передустановку</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="174"/>
@@ -6705,13 +6763,13 @@ Do you want to use %1 = %2/1001 instead?</source>
         <location filename="../src/dialogs/actionsdialog.cpp" line="69"/>
         <location filename="../src/dialogs/actionsdialog.cpp" line="70"/>
         <source>Set to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити за умовчанням</translation>
     </message>
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="79"/>
         <location filename="../src/dialogs/actionsdialog.cpp" line="80"/>
         <source>Clear shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистити ярлик</translation>
     </message>
 </context>
 <context>
@@ -6727,7 +6785,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/SimplePropertyUI.qml" line="15"/>
         <source>Custom Properties</source>
-        <translation>Власні Властивості</translation>
+        <translation>Власні властивості</translation>
     </message>
 </context>
 <context>
@@ -6735,192 +6793,192 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="291"/>
         <source>Bottom Left</source>
-        <translation>Знизу Зліва</translation>
+        <translation>Знизу зліва</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="295"/>
         <source>Bottom Right</source>
-        <translation>Знизу Справа</translation>
+        <translation>Знизу справа</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="299"/>
         <source>Top Left</source>
-        <translation>Зверху Зліва</translation>
+        <translation>Зверху зліва</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="303"/>
         <source>Top Right</source>
-        <translation>Зверху Справа</translation>
+        <translation>Зверху справа</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="309"/>
         <source>Slide In From Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Посунути зліва</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="311"/>
         <source>Slide In From Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Посунути справа </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="313"/>
         <source>Slide In From Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Посунути зверху</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="315"/>
         <source>Slide In From Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити знизу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="319"/>
         <source>Slide Out Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Виїзд вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="321"/>
         <source>Slide Out Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Виїзд вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="323"/>
         <source>Slide Out Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Виїзд до верху</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="325"/>
         <source>Slide Out Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Виъзд до низу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="330"/>
         <source>Slow Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="332"/>
         <source>Slow Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменьшення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="334"/>
         <source>Slow Pan Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне панорамування вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="335"/>
         <source>Slow Move Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільний рух вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="337"/>
         <source>Slow Pan Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне панорамування вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="338"/>
         <source>Slow Move Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільний рух вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="340"/>
         <source>Slow Pan Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне панорамування вгору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="341"/>
         <source>Slow Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільний рух вгору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="343"/>
         <source>Slow Pan Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне панорамування вниз</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="344"/>
         <source>Slow Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільний рух вниз</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="346"/>
         <source>Slow Zoom In, Pan Up Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, панорамування вгору та вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="347"/>
         <source>Slow Zoom In, Move Up Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, рух вгору вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="349"/>
         <source>Slow Zoom In, Pan Down Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, панорамування вниз та вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="350"/>
         <source>Slow Zoom In, Move Down Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, рух вниз праворуч</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="352"/>
         <source>Slow Zoom Out, Pan Up Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, панорамування вгору та вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="353"/>
         <source>Slow Zoom Out, Move Up Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, рух нагору вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="355"/>
         <source>Slow Zoom Out, Pan Down Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, панорамування вниз та вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="356"/>
         <source>Slow Zoom Out, Move Down Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, рух вниз вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="358"/>
         <source>Slow Zoom In, Hold Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, утримуючи внизу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="360"/>
         <source>Slow Zoom In, Hold Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, утримуючи вгорі</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="362"/>
         <source>Slow Zoom In, Hold Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, утримуючи ліворуч</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="364"/>
         <source>Slow Zoom In, Hold Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, утримуючи праворуч</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="366"/>
         <source>Slow Zoom Out, Hold Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, утримуючи внизу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="368"/>
         <source>Slow Zoom Out, Hold Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, утримуючи вгорі</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="370"/>
         <source>Slow Zoom Out, Hold Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, утримуючи ліворуч</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="372"/>
         <source>Slow Zoom Out, Hold Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, утримуючи праворуч</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="446"/>
@@ -6933,103 +6991,103 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>Позиція</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="583"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="587"/>
         <source>Size</source>
         <translation>Розмір</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="652"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="656"/>
         <source>Zoom</source>
-        <translation>Близь-даль</translation>
+        <translation>Наближення</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="697"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="701"/>
         <source>Size mode</source>
         <translation>Режим розміру</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="704"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="708"/>
         <source>Fit</source>
         <translation>Підгонка</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="716"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="720"/>
         <source>Fill</source>
         <translation>Заповнення</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="734"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="738"/>
         <source>Distort</source>
         <translation>Спотворення</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="757"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="761"/>
         <source>Horizontal fit</source>
         <translation>Горизонтальна підгонка</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="764"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="768"/>
         <source>Left</source>
         <translation>Зліва</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="772"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="776"/>
         <source>Center</source>
         <translation>Центр</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="780"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="784"/>
         <source>Right</source>
         <translation>Справа</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="797"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="801"/>
         <source>Vertical fit</source>
         <translation>Вертикальна підгонка</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="804"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="808"/>
         <source>Top</source>
         <translation>Зверху</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="812"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="816"/>
         <source>Middle</source>
         <comment>Size and Position video filter</comment>
         <translation>Середина</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="820"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="824"/>
         <source>Bottom</source>
         <translation>Знизу</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="837"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="841"/>
         <source>Rotation</source>
         <translation>Обертання</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="850"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="854"/>
         <source> °</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation> °</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="870"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="874"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір фону</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="378"/>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="383"/>
         <source>Shake 1 Second - Scaled</source>
-        <translation type="unfinished"></translation>
+        <translation>Тряска 1 секунду - з масштабуванням</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="380"/>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="385"/>
         <source>Shake 1 Second - Unscaled</source>
-        <translation type="unfinished"></translation>
+        <translation>Тряска 1 секунду - ,без масштабування</translation>
     </message>
 </context>
 <context>
@@ -7037,7 +7095,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionVUI.qml" line="160"/>
         <source>Click in rectangle + hold Shift to drag, Wheel to zoom, or %1+Wheel to rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клацніть у прямокутнику + утримуйте Shift, щоб перетягнути, коліщатко, щоб масштабувати, або %1+коліщатко, щоб повернути</translation>
     </message>
 </context>
 <context>
@@ -7045,10 +7103,10 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message numerus="yes">
         <location filename="../src/dialogs/slideshowgeneratordialog.cpp" line="33"/>
         <source>Slideshow Generator - %n Clips</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Генератор слайд-шоу - %n кліп</numerusform>
+            <numerusform>Генератор слайд-шоу - %n кліпів</numerusform>
+            <numerusform>Генератор слайд-шоу - %n кліпів</numerusform>
         </translation>
     </message>
 </context>
@@ -7057,75 +7115,78 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="54"/>
         <source>Clip duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Тривалість кліпу</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="56"/>
         <source>Set the duration of each clip in the slideshow.</source>
-        <translation type="unfinished"></translation>
+        <translation>Установіть тривалість кожного кліпу в слайд-шоу.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="65"/>
         <source>Aspect ratio conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетворення співвідношення сторін</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="67"/>
         <source>Pad Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Чорна підкладка</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="68"/>
         <source>Crop Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадрування по центру</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="69"/>
         <source>Crop and Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадрування та панорамування</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="73"/>
         <source>Pad Blur</source>
-        <translation type="unfinished"></translation>
+        <translation>Нечітка підкладка</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="76"/>
         <source>Choose an aspect ratio conversion method.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати метод перетворення співвідношення сторін.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="82"/>
         <source>Zoom effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Ефект масштабування</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="85"/>
         <source>Set the percentage of the zoom-in effect.
 0% will result in no zoom effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Установіть відсоток ефекту збільшення.
+0% призведе до відсутності ефекту масштабування.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="93"/>
         <source>Transition duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Тривалість переходу</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="96"/>
         <source>Set the duration of the transition.
 May not be longer than half the duration of the clip.
 If the duration is 0, no transition will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановіть тривалість переходу.
+Не може тривати більше половини тривалості кліпу.
+Якщо тривалість дорівнює 0, перехід не буде створено.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="106"/>
         <source>Transition type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип переходу</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="109"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Випадковий</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="110"/>
@@ -7135,52 +7196,52 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="111"/>
         <source>Bar Horizontal</source>
-        <translation>Горизонтальна Смуга</translation>
+        <translation>Горизонтальна смуга</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="112"/>
         <source>Bar Vertical</source>
-        <translation>Вертикальна Смуга</translation>
+        <translation>Вертикальна смуга</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="113"/>
         <source>Barn Door Horizontal</source>
-        <translation>Горизонтальні Шторки</translation>
+        <translation>Горизонтальні шторки</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="114"/>
         <source>Barn Door Vertical</source>
-        <translation>Вертикальні Шторки</translation>
+        <translation>Вертикальні шторки</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="115"/>
         <source>Barn Door Diagonal SW-NE</source>
-        <translation>Діагональні Шторки SW-NE</translation>
+        <translation>Діагональні шторки SW-NE</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="116"/>
         <source>Barn Door Diagonal NW-SE</source>
-        <translation>Діагональні Шторки NW-SE</translation>
+        <translation>Діагональні шторки NW-SE</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="117"/>
         <source>Diagonal Top Left</source>
-        <translation>Діагонально Зверху Зліва</translation>
+        <translation>Діагонально зверху зліва</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="118"/>
         <source>Diagonal Top Right</source>
-        <translation>Діагонально Зверху Справа</translation>
+        <translation>Діагонально зверху справа</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="119"/>
         <source>Matrix Waterfall Horizontal</source>
-        <translation>Горизонтальна Матриця Водопадом</translation>
+        <translation>Горизонтальна матриця водопадом</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="120"/>
         <source>Matrix Waterfall Vertical</source>
-        <translation>Вертикальна Матриця Водопадом</translation>
+        <translation>Вертикальна матриця водопадом</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="121"/>
@@ -7245,22 +7306,22 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="136"/>
         <source>Choose a transition effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть ефект переходу.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="142"/>
         <source>Transition softness</source>
-        <translation type="unfinished"></translation>
+        <translation>М&apos;якість переходу</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="144"/>
         <source>Change the softness of the edge of the wipe.</source>
-        <translation type="unfinished"></translation>
+        <translation>Змініть м&apos;якість краю серветки.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="443"/>
         <source>Generating Preview...</source>
-        <translation type="unfinished"></translation>
+        <translation>Створення попереднього перегляду...</translation>
     </message>
 </context>
 <context>
@@ -7268,22 +7329,22 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="14"/>
         <source>Player Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Синхронізація плеєра</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="20"/>
         <source>Adjust your playback audio/video synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштуйте синхронізацію аудіо/відео відтворення</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="48"/>
         <source>Reset to default value 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Відновити значення 0 за замовчуванням</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="65"/>
         <source>Video offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Зсув відео</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="75"/>
@@ -7344,48 +7405,48 @@ If the duration is 0, no transition will be created.</source>
         <translation>Позиція</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="356"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="360"/>
         <source>Size</source>
         <translation>Розмір</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="416"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="420"/>
         <source>Horizontal fit</source>
         <translation>Горизонтальна підгонка</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="423"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="427"/>
         <source>Left</source>
         <translation>Зліва</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="431"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="435"/>
         <source>Center</source>
         <translation>Центр</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="439"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="443"/>
         <source>Right</source>
         <translation>Справа</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="456"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="460"/>
         <source>Vertical fit</source>
         <translation>Вертикальна підгонка</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="463"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="467"/>
         <source>Top</source>
         <translation>Зверху</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="471"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="475"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
         <translation>Середина</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="479"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="483"/>
         <source>Bottom</source>
         <translation>Знизу</translation>
     </message>
@@ -7413,12 +7474,12 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="39"/>
         <source>Type or paste the text here</source>
-        <translation type="unfinished"></translation>
+        <translation>Введіть або вставте текст тут</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="48"/>
         <source>Background color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір фону...</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="61"/>
@@ -7428,7 +7489,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="86"/>
         <source>Text attributes are available in the &lt;b&gt;Filters&lt;/b&gt; panel after clicking &lt;b&gt;OK&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстові атрибути доступні в &lt;b&gt;фільтраї&lt;/b&gt; панель після клацання &lt;b&gt;OK&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.cpp" line="57"/>
@@ -7443,7 +7504,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/textproducerwidget.cpp" line="111"/>
         <source>Edit your text using the Filters panel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Відредагуйте текст за допомогою панелі фільтрів.</translation>
     </message>
 </context>
 <context>
@@ -7456,12 +7517,12 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/dialogs/textviewerdialog.cpp" line="45"/>
         <source>Save Text</source>
-        <translation>Зберегти Текст</translation>
+        <translation>Зберегти текст</translation>
     </message>
     <message>
         <location filename="../src/dialogs/textviewerdialog.cpp" line="46"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстові документи (*.txt);;Усі файли (*)</translation>
     </message>
 </context>
 <context>
@@ -7504,66 +7565,66 @@ If the duration is 0, no transition will be created.</source>
         <translation>Шкала часу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1177"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1194"/>
         <source>This track is locked</source>
         <translation>Ця доріжка заблокована</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1182"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1199"/>
         <source>You cannot add a non-seekable source.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви не можете додати джерело без можливості пошуку.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1527"/>
-        <location filename="../src/docks/timelinedock.cpp" line="1560"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1544"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1577"/>
         <source>Track %1 was not moved</source>
-        <translation type="unfinished"></translation>
+        <translation>Доріжку %1 не було переміщено</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1532"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1549"/>
         <source>Can not move audio track above video track</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо перемістити звукову доріжку над відеодоріжкою</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1548"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1565"/>
         <source>Can not move video track below audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо перемістити відеодоріжку під звукову доріжку</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1637"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1654"/>
         <source>Change clip properties</source>
         <translation>Змінити властивості кліпів</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1022"/>
-        <location filename="../src/docks/timelinedock.cpp" line="1678"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1039"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1695"/>
         <source>Align To Reference Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирівняти за опорною доріжкою</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="82"/>
         <source>Track Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Операції з треком</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="94"/>
         <source>Track Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Висота трека</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="99"/>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділення</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="111"/>
         <source>Edit</source>
-        <translation>Правка</translation>
+        <translation>Змінити</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="123"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Переглянути</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="129"/>
@@ -7571,420 +7632,425 @@ If the duration is 0, no transition will be created.</source>
         <translation>Маркер</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="138"/>
+        <location filename="../src/docks/timelinedock.cpp" line="139"/>
         <source>Timeline Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Кліп часової шкали</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="156"/>
+        <location filename="../src/docks/timelinedock.cpp" line="157"/>
         <source>Timeline Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Елементи керування шкалою часу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="160"/>
+        <location filename="../src/docks/timelinedock.cpp" line="161"/>
         <source>Timeline Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Меню шкали часу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="274"/>
+        <location filename="../src/docks/timelinedock.cpp" line="275"/>
         <source>Add Audio Track</source>
-        <translation>Додати Аудіо Доріжку</translation>
+        <translation>Додати аудіодоріжку</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="283"/>
+        <location filename="../src/docks/timelinedock.cpp" line="284"/>
         <source>Add Video Track</source>
-        <translation>Додати Відео Доріжку</translation>
+        <translation>Додати відеодоріжку</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="292"/>
+        <location filename="../src/docks/timelinedock.cpp" line="293"/>
         <source>Insert Track</source>
-        <translation>Вставити Доріжку</translation>
+        <translation>Вставити доріжку</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="301"/>
+        <location filename="../src/docks/timelinedock.cpp" line="302"/>
         <source>Remove Track</source>
-        <translation>Вилучити Доріжку</translation>
+        <translation>Вилучити доріжку</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="311"/>
+        <location filename="../src/docks/timelinedock.cpp" line="312"/>
         <source>Move Track Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити доріжку вгору</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="321"/>
+        <location filename="../src/docks/timelinedock.cpp" line="322"/>
         <source>Move Track Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити трек вниз</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="331"/>
+        <location filename="../src/docks/timelinedock.cpp" line="332"/>
         <source>Show/Hide Selected Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати/сховати вибрану доріжку</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="346"/>
+        <location filename="../src/docks/timelinedock.cpp" line="347"/>
         <source>Lock/Unlock Selected Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Заблокувати/розблокувати вибраний трек</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="364"/>
+        <location filename="../src/docks/timelinedock.cpp" line="365"/>
         <source>Mute/Unmute Selected Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Вимкнути/увімкнути вибрану доріжку</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="379"/>
+        <location filename="../src/docks/timelinedock.cpp" line="380"/>
         <source>Blend/Unblend Selected Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Змішування/розмикання вибраного треку</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="394"/>
+        <location filename="../src/docks/timelinedock.cpp" line="395"/>
         <source>Make Tracks Shorter</source>
-        <translation>Зробити Доріжки Коротше</translation>
+        <translation>Зробити доріжки коротше</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="402"/>
+        <location filename="../src/docks/timelinedock.cpp" line="403"/>
         <source>Make Tracks Taller</source>
-        <translation>Зробити Доріжки Довше</translation>
+        <translation>Зробити доріжки довше</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="410"/>
+        <location filename="../src/docks/timelinedock.cpp" line="411"/>
         <source>Reset Track Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Скинути висоту доріжки</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="418"/>
+        <location filename="../src/docks/timelinedock.cpp" line="419"/>
         <source>Select All</source>
-        <translation>Виділіти Все</translation>
+        <translation>Виділити все</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="428"/>
+        <location filename="../src/docks/timelinedock.cpp" line="429"/>
         <source>Select All On Current Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати усе на поточному треку.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="438"/>
+        <location filename="../src/docks/timelinedock.cpp" line="439"/>
         <source>Select None</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати Немає</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="449"/>
+        <location filename="../src/docks/timelinedock.cpp" line="450"/>
         <source>Select Next Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати наступний кліп</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="463"/>
+        <location filename="../src/docks/timelinedock.cpp" line="464"/>
         <source>Select Previous Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати попередній кліп</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="477"/>
+        <location filename="../src/docks/timelinedock.cpp" line="478"/>
         <source>Select Clip Above</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп вище</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="498"/>
+        <location filename="../src/docks/timelinedock.cpp" line="499"/>
         <source>Select Clip Below</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати кліп нижче</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="519"/>
+        <location filename="../src/docks/timelinedock.cpp" line="520"/>
         <source>Set Current Track Above</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити поточний трек вище</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="527"/>
+        <location filename="../src/docks/timelinedock.cpp" line="528"/>
         <source>Set Current Track Below</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановіть поточний трек нище</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="535"/>
+        <location filename="../src/docks/timelinedock.cpp" line="536"/>
         <source>Select Clip Under Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть «Кліп під указкою відтворення».</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="549"/>
+        <location filename="../src/docks/timelinedock.cpp" line="550"/>
         <source>Cu&amp;t</source>
         <translation>Cu&amp;t</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="571"/>
+        <location filename="../src/docks/timelinedock.cpp" line="572"/>
         <source>&amp;Copy</source>
         <translation>&amp;Скопіювати</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="601"/>
+        <location filename="../src/docks/timelinedock.cpp" line="602"/>
         <source>&amp;Paste</source>
         <translation>&amp;Вставити</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="616"/>
+        <location filename="../src/docks/timelinedock.cpp" line="617"/>
         <source>Append</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="628"/>
+        <location filename="../src/docks/timelinedock.cpp" line="629"/>
         <source>Ripple Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити та зсхлопнути пустоту</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="645"/>
+        <location filename="../src/docks/timelinedock.cpp" line="646"/>
         <source>Lift</source>
         <translation>Підйом</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="663"/>
+        <location filename="../src/docks/timelinedock.cpp" line="664"/>
         <source>Overwrite</source>
         <translation>Перезапис</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="676"/>
+        <location filename="../src/docks/timelinedock.cpp" line="677"/>
         <source>Split At Playhead</source>
         <translation>Розділити в Позиції відтворення</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="689"/>
+        <location filename="../src/docks/timelinedock.cpp" line="690"/>
         <source>Replace</source>
         <translation>Замінити</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="707"/>
+        <location filename="../src/docks/timelinedock.cpp" line="708"/>
         <source>Create/Edit Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити/редагувати маркер</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="720"/>
+        <location filename="../src/docks/timelinedock.cpp" line="721"/>
         <source>Previous Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередній маркер</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="733"/>
+        <location filename="../src/docks/timelinedock.cpp" line="734"/>
         <source>Next Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Наступний маркер</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="746"/>
+        <location filename="../src/docks/timelinedock.cpp" line="747"/>
         <source>Delete Marker</source>
+        <translation>Видалити маркер</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="757"/>
+        <source>Cycle Marker Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="756"/>
+        <location filename="../src/docks/timelinedock.cpp" line="773"/>
         <source>Create Marker Around Selected Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити маркер навколо вибраного кліпу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="766"/>
+        <location filename="../src/docks/timelinedock.cpp" line="783"/>
         <source>Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Прив&apos;язка</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="781"/>
+        <location filename="../src/docks/timelinedock.cpp" line="798"/>
         <source>Scrub While Dragging</source>
-        <translation type="unfinished"></translation>
+        <translation>Скраб під час перетягування</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="795"/>
+        <location filename="../src/docks/timelinedock.cpp" line="812"/>
         <source>Ripple</source>
         <translation>Зібгання</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="810"/>
+        <location filename="../src/docks/timelinedock.cpp" line="827"/>
         <source>Ripple All Tracks</source>
         <translation>Зібгати Всі Доріжки</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="825"/>
+        <location filename="../src/docks/timelinedock.cpp" line="842"/>
         <source>Ripple Markers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/timelinedock.cpp" line="840"/>
-        <source>Toggle Ripple And All Tracks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/timelinedock.cpp" line="848"/>
-        <source>Toggle Ripple, All Tracks, And Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Маркери хвилі</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="857"/>
+        <source>Toggle Ripple And All Tracks</source>
+        <translation>Перемкнути пульсацію та всі треки</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="865"/>
+        <source>Toggle Ripple, All Tracks, And Markers</source>
+        <translation>Перемикання пульсацій, усіх доріжок і маркерів</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="874"/>
         <source>Show Audio Waveforms</source>
         <translation>Показати Хвилеформи Аудіо</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="870"/>
+        <location filename="../src/docks/timelinedock.cpp" line="887"/>
         <source>Use Higher Performance Waveforms</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовуйте високопродуктивні сигнали</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="885"/>
+        <location filename="../src/docks/timelinedock.cpp" line="902"/>
         <source>Show Video Thumbnails</source>
         <translation>Показати ескізи відео</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="896"/>
+        <location filename="../src/docks/timelinedock.cpp" line="913"/>
         <source>Center the Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>Відцентруйте головку відтворення</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="908"/>
+        <location filename="../src/docks/timelinedock.cpp" line="925"/>
         <source>Scroll to Playhead on Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутіть до головку відтворення на приближення</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="920"/>
+        <location filename="../src/docks/timelinedock.cpp" line="937"/>
         <source>Zoom Timeline Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Зменшити шкалу часу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="931"/>
+        <location filename="../src/docks/timelinedock.cpp" line="948"/>
         <source>Zoom Timeline In</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільшити часову шкалу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="942"/>
+        <location filename="../src/docks/timelinedock.cpp" line="959"/>
         <source>Zoom Timeline To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільшити часову шкалу відповідно до розміру</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="970"/>
+        <location filename="../src/docks/timelinedock.cpp" line="987"/>
         <source>Properties</source>
         <translation>Властивості</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="979"/>
+        <location filename="../src/docks/timelinedock.cpp" line="996"/>
         <source>Rejoin With Next Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Приєднати до наступного кліпу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="995"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1012"/>
         <source>Detach Audio</source>
         <translation>Відкріпити звук</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1042"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1059"/>
         <source>Update Thumbnails</source>
         <translation>Оновити Ескізи</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1066"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1083"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Відбудувати Форму Звукової Хвилі</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1090"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1107"/>
         <source>Ripple Trim Clip In</source>
-        <translation type="unfinished"></translation>
+        <translation>Пульсація обрізати початок</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1097"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1114"/>
         <source>Ripple Trim Clip Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Пульсація обрізати кінець</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1745"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1762"/>
         <source>Append multiple to timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати декілька до шкали часу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1849"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1866"/>
         <source>Cut %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирізати %1 із шкали часу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1851"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1868"/>
         <source>Remove %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити %1 із шкали часу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1874"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1891"/>
         <source>Lift %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Підняти %1 на шкалі часу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2198"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2215"/>
         <source>There is nothing in the Source player.</source>
-        <translation type="unfinished"></translation>
+        <translation>У вихідному програвачі нічого немає.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2213"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2230"/>
         <source>You cannot replace a transition.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви не можете замінити перехід.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2243"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2260"/>
         <source>Select a clip in the timeline to create a marker around it</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть кліп на часовій шкалі, щоб створити маркер навколо нього</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2274"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2291"/>
         <source>Added marker: &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Додано маркер: &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2294"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2311"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
-        <translation type="unfinished"></translation>
+        <translation>Додано маркер: &quot;%1&quot;. Утримуйте %2 і перетягніть, щоб створити діапазон</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2694"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2711"/>
         <source>Insert multiple into timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити декілька на шкалу часу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2813"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2830"/>
         <source>Overwrite multiple onto timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Перезаписати декілька на шкалу часу</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2901"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2918"/>
         <source>You cannot split a transition.</source>
         <translation>Ви не можете розділяти перехід.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="3193"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3210"/>
         <source>Replace %n timeline clips</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Замінити %n кліп шкали часу</numerusform>
+            <numerusform>Замінити %n кліпи шкали часу</numerusform>
+            <numerusform>Замінити %n кліпи шкали часу</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3243"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3260"/>
         <source>voiceover</source>
-        <translation type="unfinished"></translation>
+        <translation>голос за кадром</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3244"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3261"/>
         <source>Opus (*.opus);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Opus (*.opus);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="953"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3245"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3360"/>
+        <location filename="../src/docks/timelinedock.cpp" line="970"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3262"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3377"/>
         <source>Record Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Запис звуку</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3256"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3273"/>
         <source>Record Audio: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Запис звуку: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3337"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3354"/>
         <source>Record Audio error: check PulseAudio settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка запису звуку: перевірте налаштування PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3339"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3356"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка запису звуку: виберіть Файл &gt; Відкрити інше &gt; Аудіо/відеопристрій</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3366"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3383"/>
         <source>Saving audio recording...</source>
-        <translation type="unfinished"></translation>
+        <translation>Збереження аудіозапису...</translation>
     </message>
 </context>
 <context>
@@ -8102,7 +8168,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/views/timeline/TrackHead.qml" line="233"/>
         <source>Mute</source>
-        <translation>Глушіння</translation>
+        <translation>Вимкнути звук</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TrackHead.qml" line="251"/>
@@ -8243,122 +8309,143 @@ If the duration is 0, no transition will be created.</source>
 <context>
     <name>TranscodeDialog</name>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="17"/>
-        <source>Dialog</source>
-        <translation>Діалог</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="41"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="38"/>
         <source>good</source>
         <translation>добре</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="51"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="48"/>
         <source>better</source>
         <translation>краще</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="61"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="58"/>
         <source>best</source>
         <translation>найкраще</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="97"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="94"/>
         <source>medium</source>
         <translation>середній</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="107"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="104"/>
         <source>large</source>
         <translation>великий</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="117"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="114"/>
         <source>biggest</source>
         <translation>найбільший</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="139"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="136"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
         <translation>Це більше не показувати.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="165"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="206"/>
         <source>Change the frame rate from its source.</source>
+        <translation>Змініть частоту кадрів з джерела.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="262"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="266"/>
+        <source>Same as original</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="175"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="271"/>
+        <source>44100</source>
+        <translation>44100</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="276"/>
+        <source>48000</source>
+        <translation>48000</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="155"/>
         <source>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</source>
-        <translation type="unfinished"></translation>
+        <translation>Це корисно, коли вихідне відео є HDR (розширений динамічний діапазон), що вимагає відображення тонів у старому стандартному діапазоні.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="185"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="249"/>
         <source>Frame rate conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетворення частоти кадрів</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="203"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="165"/>
         <source>This option converts only the trimmed portion of the source
 clip plus a little instead of the entire clip. When this option is
 used not all of the matching source clips are replaced, instead
 only the currently selected one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей параметр перетворює лише обрізану частину джерела
+кліп плюс трохи замість усього кліпу. Коли цей варіант є
+використовується не всі відповідні вихідні кліпи замінені, натомість
+лише поточний вибраний.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="171"/>
         <source>Use sub-clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати суб-кліп </translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="223"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="219"/>
+        <source>Sample rate</source>
+        <translation>Частота вибірок</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="239"/>
         <source>If the source is interlaced, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Якщо джерело є черезрядковим, кожне черезрядкове поле буде перетворено на прогресивний кадр, що призведе до подвоєння частоти кадрів.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="226"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="242"/>
         <source>Deinterlace</source>
-        <translation type="unfinished"></translation>
+        <translation>Деінтерлейс</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="233"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="178"/>
         <source>Enable this to keep the Advanced section open for the next time this dialog appears.</source>
-        <translation type="unfinished"></translation>
+        <translation>Увімкніть це, щоб розділ Додатково залишався відкритим під час наступного відкриття цього діалогового вікна.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="236"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="181"/>
         <source>Keep Advanced open</source>
-        <translation type="unfinished"></translation>
+        <translation>Залишити Розширений відкритим</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="151"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="148"/>
         <source>Override the frame rate to a specific value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Заміна частоти кадрів на певне значення.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="192"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="188"/>
         <source>Frame rate conversion method
 
 Duplicate: Duplicate frames.
 Blend: Blend frames.
 Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Дублікат: повторювані кадри.
+Blend: змішування кадрів.
+Компенсація руху: інтерполяція нових кадрів за допомогою компенсації руху. Цей метод дуже повільний і може призвести до артефактів.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="168"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
         <source>Override frame rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевизначення частоти кадрів</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="216"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="229"/>
         <source>Frames/sec</source>
         <translation>Кадри/сек</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="178"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="158"/>
         <source>Convert to BT.709 colorspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетворити в колірний простір BT.709</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="33"/>
@@ -8368,17 +8455,17 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="50"/>
         <source>Duplicate (fast)</source>
-        <translation type="unfinished"></translation>
+        <translation>Дублювати (швидко)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="51"/>
         <source>Blend</source>
-        <translation type="unfinished"></translation>
+        <translation>Змішати</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="52"/>
         <source>Motion Compensation (slow)</source>
-        <translation type="unfinished"></translation>
+        <translation>Компенсація руху (повільно)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="55"/>
@@ -8386,19 +8473,19 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
         <translation>Розширений</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="128"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="139"/>
         <source>Lossy: I-frame–only %1</source>
-        <translation type="unfinished"></translation>
+        <translation>З втратами: I-кадр–лише %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="131"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="142"/>
         <source>Intermediate: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Середній: %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="135"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="146"/>
         <source>Lossless: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Без втрат: %1</translation>
     </message>
 </context>
 <context>
@@ -8424,12 +8511,12 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="78"/>
         <source>This looks at every file in a folder to see if it matches any of the missing files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перегляд кожного файла у папці, щоб перевірити, чи збігається він з будь-яким із відсутніх файлів.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="81"/>
         <source>Search in Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук у папці...</translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="42"/>
@@ -8585,12 +8672,12 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="101"/>
         <source>Luma</source>
-        <translation type="unfinished"></translation>
+        <translation>Яскравість</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="106"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Червоний</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="111"/>
@@ -8606,17 +8693,18 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="199"/>
         <source>Value: %1
 IRE: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Значення: %1
+IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="201"/>
         <source>Value: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Значення: %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="209"/>
         <source>Video Histogram</source>
-        <translation type="unfinished"></translation>
+        <translation>Відео гістограма</translation>
     </message>
 </context>
 <context>
@@ -8634,12 +8722,12 @@ IRE: %2</source>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="41"/>
         <source>View Report</source>
-        <translation>Перегляд Звіту</translation>
+        <translation>Перегляд звіту</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="45"/>
         <source>Show In Folder</source>
-        <translation>Показ У Теці</translation>
+        <translation>Показати у папці</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="49"/>
@@ -8657,22 +8745,22 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="131"/>
         <source>255</source>
-        <translation type="unfinished">255</translation>
+        <translation>255</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="135"/>
         <source>191</source>
-        <translation type="unfinished">191</translation>
+        <translation>191</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="139"/>
         <source>127</source>
-        <translation type="unfinished">127</translation>
+        <translation>127</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="143"/>
         <source>64</source>
-        <translation type="unfinished">64</translation>
+        <translation>64</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="147"/>
@@ -8682,7 +8770,7 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="157"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Червоний</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="159"/>
@@ -8699,18 +8787,21 @@ IRE: %2</source>
         <source>Channel: %1
 Pixel: %2
 Value: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Канал: %1
+Піксель: %2
+Значення: %3</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="175"/>
         <source>Channel: %1
 Value: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Канал: %1
+Значення: %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="182"/>
         <source>Video RGB Parade</source>
-        <translation type="unfinished"></translation>
+        <translation>Відео RGB парад</translation>
     </message>
 </context>
 <context>
@@ -8718,22 +8809,22 @@ Value: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="127"/>
         <source>255</source>
-        <translation type="unfinished">255</translation>
+        <translation>255</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="131"/>
         <source>191</source>
-        <translation type="unfinished">191</translation>
+        <translation>191</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="135"/>
         <source>127</source>
-        <translation type="unfinished">127</translation>
+        <translation>127</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="139"/>
         <source>64</source>
-        <translation type="unfinished">64</translation>
+        <translation>64</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="143"/>
@@ -8744,17 +8835,18 @@ Value: %2</source>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="158"/>
         <source>Pixel: %1
 Value: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Піксель: %1
+Значення: %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="160"/>
         <source>Value: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Значення: %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="167"/>
         <source>Video RGB Waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>Відео RGB Хвильова форма</translation>
     </message>
 </context>
 <context>
@@ -8762,13 +8854,14 @@ Value: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="53"/>
         <source>Video Vector</source>
-        <translation type="unfinished"></translation>
+        <translation>Векторне відео</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="244"/>
         <source>U: %1
 V: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>U: %1
+V: %2</translation>
     </message>
 </context>
 <context>
@@ -8776,7 +8869,7 @@ V: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="119"/>
         <source>100</source>
-        <translation type="unfinished">100</translation>
+        <translation>100</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="123"/>
@@ -8788,12 +8881,13 @@ V: %2</source>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="143"/>
         <source>Pixel: %1
 IRE: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Піксель: %1
+IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="145"/>
         <source>IRE: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>IRE: %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="152"/>
@@ -8811,17 +8905,17 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="121"/>
         <source>y</source>
-        <translation type="unfinished"></translation>
+        <translation>y</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="124"/>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="126"/>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="128"/>
@@ -8836,32 +8930,32 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="133"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="135"/>
         <source>V</source>
-        <translation type="unfinished"></translation>
+        <translation>V</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="149"/>
         <source>Pick a pixel from the source player</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть піксель із вихідного програвача</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="156"/>
         <source>Lock/Unlock the selected pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>Заблокувати/розблокувати вибраний піксель</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="256"/>
         <source>%1x</source>
-        <translation type="unfinished"></translation>
+        <translation>%1x</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="304"/>
         <source>Video Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільшити відео</translation>
     </message>
 </context>
 <context>
@@ -9058,27 +9152,27 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="243"/>
         <source>Copy the filters</source>
-        <translation>Скопіювати Фільтри</translation>
+        <translation>Скопіювати фільтри</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="259"/>
         <source>Paste filters</source>
-        <translation>Вставити Фільтри</translation>
+        <translation>Вставити фільтри</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="282"/>
         <source>Move filter up</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити фільтр вгору</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="298"/>
         <source>Move filter down</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити фільтр вниз</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="326"/>
         <source>Deselect the filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Зняти вибір фільтра</translation>
     </message>
 </context>
 <context>
@@ -9101,7 +9195,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/main.cpp" line="165"/>
         <source>Clear Recent on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Очищати список раніше відкритих проєктів після виходу</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="168"/>
@@ -9116,37 +9210,37 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/main.cpp" line="172"/>
         <source>The scale factor for a high-DPI screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштабний коефіцієнт для екрана з високою роздільною здатністю</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="173"/>
         <source>number</source>
-        <translation type="unfinished"></translation>
+        <translation>номер</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="176"/>
         <source>A semicolon-separated list of scale factors for each screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Відокремлений крапкою з комою список коефіцієнтів масштабування для кожного екрана</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="177"/>
         <source>list</source>
-        <translation type="unfinished"></translation>
+        <translation>список</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="181"/>
         <source>How to handle a fractional display scale: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Як обробляти дробовий масштаб відображення: %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="183"/>
         <source>string</source>
-        <translation type="unfinished"></translation>
+        <translation>рядок</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="187"/>
         <source>Zero or more files or folders to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Нуль або більше файлів або папок для відкриття</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="396"/>
@@ -9156,7 +9250,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/main.cpp" line="375"/>
         <source>Expiring cache...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ліміт кеша...</translation>
     </message>
 </context>
 <context>
@@ -9170,7 +9264,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="24"/>
         <source>transparency shave shrink grow soft feather</source>
         <comment>search keywords for the Alpha Channel: Adjust video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>прозорість голитися зменшуватися рости м&apos;яким пером</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/meta.qml" line="23"/>
@@ -9181,7 +9275,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/alpha_view/meta.qml" line="24"/>
         <source>transparency</source>
         <comment>search keywords for the Alpha Channel: View video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>прозорість</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="7"/>
@@ -9192,7 +9286,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="8"/>
         <source>pan channel mixer</source>
         <comment>search keywords for the Balance audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Балансування гучності між каналами</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="19"/>
@@ -9203,13 +9297,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="7"/>
         <source>Band Pass</source>
-        <translation>Смуга Частот</translation>
+        <translation>Смуга частот</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="8"/>
         <source>frequency</source>
         <comment>search keywords for the Band Pass audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>частота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/meta.qml" line="8"/>
@@ -9219,13 +9313,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/meta.qml" line="7"/>
         <source>Copy Channel</source>
-        <translation>Копіювання Каналу</translation>
+        <translation>Копіювання каналу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/meta.qml" line="8"/>
         <source>duplicate</source>
         <comment>search keywords for the Copy Channel audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє зробити копію одного канала в іншому</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/meta.qml" line="7"/>
@@ -9236,62 +9330,62 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_compressor/meta.qml" line="8"/>
         <source>loudness dynamics range</source>
         <comment>search keywords for the Compressor audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє зменьшини динамічний діапазон. Рекомендовано застосовувати на каналах з голосом.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/meta.qml" line="7"/>
         <source>Delay</source>
-        <translation>Затримка</translation>
+        <translation>Ехо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/meta.qml" line="8"/>
         <source>time echo</source>
         <comment>search keywords for the Delay audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ехо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/meta.qml" line="7"/>
         <source>Expander</source>
-        <translation>Розширник</translation>
+        <translation>Еспандер розширювач</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/meta.qml" line="8"/>
         <source>dynamics range</source>
         <comment>search keywords for the Expander audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє значно разширити динамічний діапазоном гучності.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadein/meta.qml" line="8"/>
         <source>Fade In Audio</source>
-        <translation>Наростання Аудіо</translation>
+        <translation>Наростання аудіо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadein/meta.qml" line="9"/>
         <source>loudness</source>
         <comment>search keywords for the Fade In audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Плавне наростання звуку</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadeout/meta.qml" line="8"/>
         <source>Fade Out Audio</source>
-        <translation>Затухання Аудіо</translation>
+        <translation>Затухання аудіо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadeout/meta.qml" line="9"/>
         <source>loudness</source>
         <comment>search keywords for the Fade Out audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Плавне затухання звуку</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="7"/>
         <source>Gain / Volume</source>
-        <translation>Підсил / Гучність</translation>
+        <translation>Гучність</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="9"/>
         <source>loudness</source>
         <comment>search keywords for the Gain/Volume audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Гучність</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="20"/>
@@ -9306,19 +9400,19 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="7"/>
         <source>High Pass</source>
-        <translation>Високі Частоти</translation>
+        <translation>Високі частоти</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="8"/>
         <source>frequency</source>
         <comment>search keywords for the High Pass audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>частота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="18"/>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="18"/>
         <source>Cutoff</source>
-        <translation type="unfinished"></translation>
+        <translation>Відрізати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="26"/>
@@ -9330,40 +9424,40 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="33"/>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="33"/>
         <source>Wetness</source>
-        <translation type="unfinished"></translation>
+        <translation>Вологість</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="7"/>
         <source>Limiter</source>
-        <translation>Обмежник</translation>
+        <translation>Обмежувач</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="8"/>
         <source>dynamics range loudness</source>
         <comment>search keywords for the Limiter audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє обмежити максимальну гучність у заданих межах. Гарно працює як максимайзер.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="7"/>
         <source>Low Pass</source>
-        <translation>Низькі Частоти</translation>
+        <translation>Низькі частоти</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="8"/>
         <source>frequency</source>
         <comment>search keywords for the Low Pass audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>частота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_mono/meta.qml" line="7"/>
         <source>Downmix</source>
-        <translation>Зведення</translation>
+        <translation>Моно</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_mono/meta.qml" line="8"/>
         <source>stereo mixdown channel</source>
         <comment>search keywords for the Downmix audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зробити МОНО зі СТЕРЕО</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_mute/meta.qml" line="8"/>
@@ -9374,40 +9468,40 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_mute/meta.qml" line="9"/>
         <source>silent silence volume</source>
         <comment>search keywords for the Mute audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Повністю вимкнути звук</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/meta.qml" line="7"/>
         <source>Normalize: One Pass</source>
-        <translation>Нормалізація: один пас</translation>
+        <translation>Нормалізація: один прохід</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/meta.qml" line="8"/>
         <source>volume loudness gain dynamics</source>
         <comment>search keywords for the Normalize: One Pass audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>динаміка підвищення гучності</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/meta.qml" line="7"/>
         <source>Normalize: Two Pass</source>
-        <translation>Нормалізація: два паси</translation>
+        <translation>Нормалізація: два проходи</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/meta.qml" line="9"/>
         <source>volume loudness gain dynamics</source>
         <comment>search keywords for the Normalize: Two Pass audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>динаміка підвищення гучності</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="7"/>
         <source>Notch</source>
-        <translation>Зарубка</translation>
+        <translation>Виїмка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="8"/>
         <source>frequency pass</source>
         <comment>search keywords for the Notch audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє вирізати певний спектр частот</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/meta.qml" line="7"/>
@@ -9418,7 +9512,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/meta.qml" line="8"/>
         <source>stereo balance channel mixer</source>
         <comment>search keywords for the Pan audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>мікшер каналів балансу стерео</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="7"/>
@@ -9429,7 +9523,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="9"/>
         <source>delay time echo</source>
         <comment>search keywords for the Reverb audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє зробити ефект кімнати, залу чи будь-якого простору.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="18"/>
@@ -9469,13 +9563,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/meta.qml" line="7"/>
         <source>Swap Channels</source>
-        <translation>Обмін Каналів</translation>
+        <translation>Обмін каналів</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/meta.qml" line="9"/>
         <source>switch stereo</source>
         <comment>search keywords for the Swap Channels audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>перемкнути стерео</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/meta.qml" line="24"/>
@@ -9486,7 +9580,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/bluescreen0r/meta.qml" line="25"/>
         <source>green blue screen</source>
         <comment>search keywords for the Chroma Key: Simple video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>зелений синій екран</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/brightness/meta.qml" line="6"/>
@@ -9497,7 +9591,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/brightness/meta.qml" line="8"/>
         <source>lightness value exposure</source>
         <comment>search keywords for the Brightness video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>світлота значення експозиції</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="6"/>
@@ -9508,7 +9602,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/color/meta.qml" line="7"/>
         <source>correct shadows lift midtones gamma highlights gain hue lightness brightness value</source>
         <comment>search keywords for the Color Grading video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>виправити тіні підняти півтони гамма висвітлити отримати відтінок освітленість значення яскравості</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="17"/>
@@ -9534,7 +9628,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/contrast/meta.qml" line="7"/>
         <source>variation value</source>
         <comment>search keywords for the Contrast video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>значення варіації</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/meta.qml" line="6"/>
@@ -9545,18 +9639,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/dust/meta.qml" line="7"/>
         <source>noise dirt hair fiber</source>
         <comment>search keywords for the Old Film: Dust video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>шум бруд волосся волокна</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="7"/>
         <source>Text: Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Текст: простий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="8"/>
         <source>type font timecode timestamp date filename</source>
         <comment>search keywords for the Text: Simple video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>тип шрифту часовий код мітка часу дата назва файлу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="20"/>
@@ -9568,7 +9662,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="20"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="21"/>
         <source>Position / Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Позиція/Розмір</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/meta.qml" line="7"/>
@@ -9581,7 +9675,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/fadein_movit/meta.qml" line="8"/>
         <source>brightness lightness opacity alpha</source>
         <comment>search keywords for the Fade In video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>яскравість легкість непрозорість альфа</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadeout_brightness/meta.qml" line="7"/>
@@ -9594,7 +9688,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/fadeout_movit/meta.qml" line="8"/>
         <source>brightness lightness opacity alpha</source>
         <comment>search keywords for the Fade Out video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>яскравість легкість непрозорість альфа</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/meta.qml" line="6"/>
@@ -9605,23 +9699,23 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/grain/meta.qml" line="7"/>
         <source>dots particles noise dirt</source>
         <comment>search keywords for the Old Film: Grain video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>точки частинки шум бруд</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="23"/>
         <source>Hue/Lightness/Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтінок/Яскравість/Насиченість</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="24"/>
         <source>color value desaturate grayscale</source>
         <comment>search keywords for the Hue/Lightness/Saturation video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>значення кольору знебарвлення відтінків сірого</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="35"/>
         <source>Hue</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтінок</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="42"/>
@@ -9642,7 +9736,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/invert/meta.qml" line="7"/>
         <source>reverse opposite negative</source>
         <comment>search keywords for the Invert Colors video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>зворотний протилежний негатив</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/meta.qml" line="23"/>
@@ -9653,7 +9747,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/keyspillm0pup/meta.qml" line="24"/>
         <source>chroma alpha clean suppress</source>
         <comment>search keywords for the Key Spill: Advanced video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>кольоровість альфа чисте придушення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="23"/>
@@ -9689,7 +9783,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/lines/meta.qml" line="7"/>
         <source>noise projector lines defect</source>
         <comment>search keywords for the Old Film: Scratches video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>дефект ліній проектора</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/meta.qml" line="23"/>
@@ -9700,7 +9794,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/lut3d/meta.qml" line="24"/>
         <source>lookup table color</source>
         <comment>search keywords for the LUT (3D) video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>колір таблиці пошуку</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="6"/>
@@ -9710,13 +9804,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="7"/>
         <source>360: Rectilinear to Equirectangular</source>
-        <translation type="unfinished"></translation>
+        <translation>360: від Прямолінійного до Рівнопрямокутного</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="8"/>
         <source>spherical projection</source>
         <comment>search keywords for the 360: Rectilinear to Equirectangular video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>сферична проекція</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="20"/>
@@ -9757,18 +9851,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/mirror/meta.qml" line="7"/>
         <source>horizontal flip transpose flop</source>
         <comment>search keywords for the Mirror video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>горизонтальний фліп транспонувати флоп</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mosaic/meta.qml" line="23"/>
         <source>Mosaic</source>
-        <translation type="unfinished"></translation>
+        <translation>Мозаїка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mosaic/meta.qml" line="24"/>
         <source>pixelize pixelate</source>
         <comment>search keywords for the Mosaic video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>пикселизировать пікселізувати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/meta.qml" line="6"/>
@@ -9779,7 +9873,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/movit_diffusion/meta.qml" line="7"/>
         <source>blur smooth clean beauty</source>
         <comment>search keywords for the Diffusion video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>розмиття гладка чиста краса</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/meta.qml" line="6"/>
@@ -9790,7 +9884,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/oldfilm/meta.qml" line="7"/>
         <source>glitch flashing brightness vertical slip</source>
         <comment>search keywords for the Old Film: Projector video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>збій блимає яскравість вертикальне ковзання</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
@@ -9801,18 +9895,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/opacity/meta.qml" line="8"/>
         <source>alpha transparent translucent</source>
         <comment>search keywords for the Opacity video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>альфа прозорий напівпрозорий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="7"/>
         <source>Rotate and Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Обертання та масштабування</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="7"/>
         <source>matte stencil alpha rectangle ellipse circle triangle diamond</source>
         <comment>search keywords for the Mask: Simple Shape video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>матовий трафарет альфа-прямокутник еліпс коло трикутник ромб</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="47"/>
@@ -9844,7 +9938,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/select0r/meta.qml" line="24"/>
         <source>green blue screen</source>
         <comment>search keywords for the Chroma Key: Advanced video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>зелений синій екран</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/meta.qml" line="6"/>
@@ -9855,7 +9949,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/sepia/meta.qml" line="7"/>
         <source>color old photograph print</source>
         <comment>search keywords for the Sepia Tone video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>кольоровий друк старої фотографії</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/meta.qml" line="6"/>
@@ -9866,7 +9960,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/sketch/meta.qml" line="7"/>
         <source>drawing painting cartoon</source>
         <comment>search keywords for the Sketch video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>малюнок живопис мультфільм</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spillsuppress/meta.qml" line="24"/>
@@ -9877,7 +9971,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/spillsuppress/meta.qml" line="25"/>
         <source>chroma alpha clean suppress</source>
         <comment>search keywords for the Key Spill: Simple video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>кольоровість альфа чисте придушення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/meta.qml" line="6"/>
@@ -9888,7 +9982,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/stabilize/meta.qml" line="7"/>
         <source>smooth deshake</source>
         <comment>search keywords for the Stabilize video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>плавне збовтування</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/meta.qml" line="6"/>
@@ -9899,18 +9993,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/tcolor/meta.qml" line="7"/>
         <source>projector movie</source>
         <comment>search keywords for the Old Film: Technocolor video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>кінопроектор</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/unpremultiply/meta.qml" line="23"/>
         <source>Unpremultiply Alpha</source>
-        <translation type="unfinished"></translation>
+        <translation>Альфа без попереднього множення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/unpremultiply/meta.qml" line="24"/>
         <source>disassociate associated straight</source>
         <comment>search keywords for the Unpremultiply Alpha video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>роз&apos;єднати асоційований прямий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/meta.qml" line="6"/>
@@ -9921,34 +10015,34 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/wave/meta.qml" line="7"/>
         <source>distort deform frequency water warp bend</source>
         <comment>search keywords for the Wave video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>спотворити деформувати частоту води викривити вигнути</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_circle/meta.qml" line="7"/>
         <source>Crop: Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадрування: Коло</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_circle/meta.qml" line="8"/>
         <source>trim remove oval ellipse</source>
         <comment>search keywords for the Crop: Circle video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>обрізати видалити овальний еліпс</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="6"/>
         <source>Halftone</source>
-        <translation type="unfinished"></translation>
+        <translation>Півтони</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="7"/>
         <source>360: Hemispherical to Equirectangular</source>
-        <translation type="unfinished"></translation>
+        <translation>360: від Напівсферичного до Рівнопрямокутного</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="9"/>
         <source>spherical projection dual fisheye</source>
         <comment>search keywords for the 360: Hemispherical to Equirectangular video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>сферична проекція подвійного риб&apos;ячого ока</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="48"/>
@@ -9960,58 +10054,58 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="55"/>
         <source>Front X</source>
-        <translation type="unfinished"></translation>
+        <translation>Передній Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="62"/>
         <source>Front Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Передній Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="69"/>
         <source>Front Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Спереду вгору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="76"/>
         <source>Back X</source>
-        <translation type="unfinished"></translation>
+        <translation>Задній X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="83"/>
         <source>Back Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Задній Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="90"/>
         <source>Back Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Тил верх</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
         <source>Nadir Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус надира</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="104"/>
         <source>Nadir Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Надір Старт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="7"/>
         <source>noise dots newsprint</source>
         <comment>search keywords for the Halftone video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>шум точки газетний папір</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="26"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Блакитний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="33"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Маджента</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="40"/>
@@ -10021,46 +10115,46 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="7"/>
         <source>Spot Remover</source>
-        <translation type="unfinished"></translation>
+        <translation>Засіб для видалення плям</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="8"/>
         <source>delogo dirt clean watermark</source>
         <comment>search keywords for the Spot Remover video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Прибрати лого бруд чистий водяний знак</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/meta.qml" line="7"/>
         <source>Timer</source>
-        <translation type="unfinished"></translation>
+        <translation>Таймер</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/meta.qml" line="8"/>
         <source>text seconds timestamp</source>
         <comment>search keywords for the Timer video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>текстова позначка часу в секундах</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="6"/>
         <source>Levels</source>
         <comment>Levels video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Рівні</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="7"/>
         <source>gamma value black white</source>
         <comment>search keywords for the Levels video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>значення гамми чорний білий </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="18"/>
         <source>Input Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Вхідний Чорний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="25"/>
         <source>Input White</source>
-        <translation type="unfinished"></translation>
+        <translation>Вхідний Білий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="32"/>
@@ -10070,50 +10164,50 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="6"/>
         <source>Mask: Simple Shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Маска: Проста форма</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_apply/meta.qml" line="6"/>
         <source>Mask: Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Маска: Застосувати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_apply/meta.qml" line="7"/>
         <source>matte stencil alpha confine composite bounce</source>
         <comment>search keywords for the Mask: Apply video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>матовий трафарет альфа-конфайн композитний відскок</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/meta.qml" line="6"/>
         <source>Mask: From File</source>
-        <translation type="unfinished"></translation>
+        <translation>Маска: З файлу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/meta.qml" line="7"/>
         <source>matte stencil alpha luma wipe custom</source>
         <comment>search keywords for the Mask: From File video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>матовий трафарет альфа світло стерти звичай</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="7"/>
         <source>Noise Gate</source>
-        <translation type="unfinished"></translation>
+        <translation>Поріг шуму</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="8"/>
         <source>hum hiss distortion clean</source>
         <comment>search keywords for the Noise Gate audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>гул шипіння спотворення чистий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="18"/>
         <source>Key Filter: Low Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Основний фільтр: низька частота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="25"/>
         <source>Key Filter: High Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключовий фільтр: висока частота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="32"/>
@@ -10130,39 +10224,39 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="46"/>
         <source>Hold</source>
-        <translation type="unfinished"></translation>
+        <translation>Утримати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="53"/>
         <source>Decay</source>
-        <translation type="unfinished"></translation>
+        <translation>Розпад</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="60"/>
         <source>Range</source>
-        <translation type="unfinished"></translation>
+        <translation>Діапазон</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/meta.qml" line="7"/>
         <source>Audio Waveform Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Візуалізація хвильової форми аудіо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/meta.qml" line="8"/>
         <source>music visualizer reactive</source>
         <comment>search keywords for the Audio Waveform Visualization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>музичний візуалізатор реактивний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/chromahold/meta.qml" line="23"/>
         <source>Chroma Hold</source>
-        <translation type="unfinished"></translation>
+        <translation>Утримання кольору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/chromahold/meta.qml" line="24"/>
         <source>color hue select choose pick</source>
         <comment>search keywords for the Chroma Hold video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати відтінок кольору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/chromahold/meta.qml" line="35"/>
@@ -10172,13 +10266,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="6"/>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Сітка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="7"/>
         <source>repeat</source>
         <comment>search keywords for the Grid video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>повторити</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="18"/>
@@ -10199,7 +10293,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/distort/meta.qml" line="24"/>
         <source>deform wiggle wave</source>
         <comment>search keywords for the Distort video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>деформувати хвилю ворушіння</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="35"/>
@@ -10215,66 +10309,66 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="49"/>
         <source>Velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>Швидкість</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="23"/>
         <source>Glitch</source>
-        <translation type="unfinished"></translation>
+        <translation>Глюк</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="24"/>
         <source>defect broken distort</source>
         <comment>search keywords for the Glitch video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>дефект зламаний спотворити</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="42"/>
         <source>Block height</source>
-        <translation type="unfinished"></translation>
+        <translation>Висота блоку</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="49"/>
         <source>Shift intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Інтенсивність зміни</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="56"/>
         <source>Color intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Інтенсивність кольору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="23"/>
         <source>RGB Shift</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB Зсув</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="24"/>
         <source>glitch chroma analog split</source>
         <comment>search keywords for the RGB Shift video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>глюк кольоровість аналоговий спліт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_exponential/meta.qml" line="23"/>
         <source>Blur: Exponential</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмиття: експоненціальне</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_exponential/meta.qml" line="24"/>
         <source>soften obscure hide</source>
         <comment>search keywords for the Blur: Exponential video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>пом&apos;якшити незрозумілу шкуру</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="7"/>
         <source>360: Equirectangular to Stereographic</source>
-        <translation type="unfinished"></translation>
+        <translation>360: від Рівнопрямокутного до Стереографічного</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="8"/>
         <source>spherical projection tiny small planet</source>
         <comment>search keywords for the 360: Equirectangular to Stereographic video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>сферична проекція крихітної малої планети</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="49"/>
@@ -10288,143 +10382,143 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/meta.qml" line="23"/>
         <source>Blur: Gaussian</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмиття: Гаусово</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="23"/>
         <source>Blur: Low Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмиття: Низький прохід</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="24"/>
         <source>soften obscure hide</source>
         <comment>search keywords for the Blur: Low Pass video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>пом&apos;якшити незрозумілу шкуру</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop: Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадрування: Джерело</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="7"/>
         <source>trim remove edges</source>
         <comment>search keywords for the Crop: Source video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>обрізати, видалити краї</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/flip/meta.qml" line="6"/>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевернути</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/flip/meta.qml" line="7"/>
         <source>vertical flop transpose rotate</source>
         <comment>search keywords for the Flip video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>вертикальний флоп транспонувати обертати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="23"/>
         <source>Reduce Noise: HQDN3D</source>
-        <translation type="unfinished"></translation>
+        <translation>Зменшення шуму: HQDN3D</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="24"/>
         <source>denoise artifact dirt smooth</source>
         <comment>search keywords for the Reduce Noise: HQDN3D video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>зменшення шуму артефакт бруд гладкий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="35"/>
         <source>Spatial</source>
-        <translation type="unfinished"></translation>
+        <translation>Просторова</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="42"/>
         <source>Temporal</source>
-        <translation type="unfinished"></translation>
+        <translation>Тимчасовий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/noise_fast/meta.qml" line="23"/>
         <source>Noise: Fast</source>
-        <translation type="unfinished"></translation>
+        <translation>Шум: Швидкий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/noise_fast/meta.qml" line="24"/>
         <source>dirt grunge</source>
         <comment>search keywords for the Noise: Fast video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>грязний гранж</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="23"/>
         <source>Noise: Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Шум: Ключові кадри</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="24"/>
         <source>dirt grunge</source>
         <comment>search keywords for the Noise: Keyframes video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>грязний гранж</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/meta.qml" line="23"/>
         <source>Reduce Noise: Smart Blur</source>
-        <translation type="unfinished"></translation>
+        <translation>Зменшення шуму: Розумне Размиття</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/meta.qml" line="24"/>
         <source>denoise artifact clean</source>
         <comment>search keywords for the Reduce Noise: Smart Blur video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>очищення артефакту від шуму</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="7"/>
         <source>Crop: Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадрування: Прямокутник</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="8"/>
         <source>trim remove square</source>
         <comment>search keywords for the Crop: Rectangle video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>обрізати видалити квадрат</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="25"/>
         <source>Corner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус кута</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/meta.qml" line="6"/>
         <source>Blend Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим змішування</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/meta.qml" line="7"/>
         <source>blending composite porter duff</source>
         <comment>search keywords for the Blend Mode video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>змішування композиту портер дафф</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/meta.qml" line="6"/>
         <source>Dither</source>
-        <translation type="unfinished"></translation>
+        <translation>Згладжування</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/meta.qml" line="7"/>
         <source>noise dots</source>
         <comment>search keywords for the Dither video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>шумові точки</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="23"/>
         <source>Elastic Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Гнучке масштабування</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="24"/>
         <source>stretch nonlinear</source>
         <comment>search keywords for the Elastic Scale video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>розтягнення нелінійне</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="36"/>
@@ -10434,83 +10528,83 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="43"/>
         <source>Linear width</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінійна ширина</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="50"/>
         <source>Linear scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінійний масштабний коефіцієнт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="57"/>
         <source>Non-Linear scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Нелінійний масштабний коефіцієнт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/posterize/meta.qml" line="6"/>
         <source>Posterize</source>
-        <translation type="unfinished"></translation>
+        <translation>Постеризація</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/posterize/meta.qml" line="7"/>
         <source>reduce colors banding cartoon</source>
         <comment>search keywords for the Posterize video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>зменшити кольорові смуги мультфільму</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/posterize/meta.qml" line="19"/>
         <source>Levels</source>
         <comment>Posterize filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Рівні</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nervous/meta.qml" line="6"/>
         <source>Nervous</source>
-        <translation type="unfinished"></translation>
+        <translation>Нервовий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nervous/meta.qml" line="7"/>
         <source>random shake twitch glitch</source>
         <comment>search keywords for the Nervous video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Випадкове тремтіння посмикування глюк</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nosync/meta.qml" line="6"/>
         <source>No Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Немає синхронізації</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nosync/meta.qml" line="7"/>
         <source>vertical synchronization slip analog</source>
         <comment>search keywords for the No Sync video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>аналог ковзання вертикальної синхронізації</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nosync/meta.qml" line="19"/>
         <source>Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Зсув</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/trails/meta.qml" line="6"/>
         <source>Trails</source>
-        <translation type="unfinished"></translation>
+        <translation>Полоси</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/trails/meta.qml" line="7"/>
         <source>temporal mix psychedelic motion blur</source>
         <comment>search keywords for the Trails video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>часовий мікс, психоделічний моушн-розмиття</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="23"/>
         <source>Vertigo</source>
-        <translation type="unfinished"></translation>
+        <translation>Запаморочення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="24"/>
         <source>temporal mix dizzy psychedelic</source>
         <comment>search keywords for the Vertigo video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>часовий мікс запаморочлива психоделіка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="36"/>
@@ -10520,18 +10614,18 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="43"/>
         <source>Zoom</source>
-        <translation>Близь-даль</translation>
+        <translation>Наближення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/choppy/meta.qml" line="6"/>
         <source>Choppy</source>
-        <translation type="unfinished"></translation>
+        <translation>Поривчастий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/choppy/meta.qml" line="7"/>
         <source>fps framerate</source>
         <comment>search keywords for the Choppy video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>частота кадрів в секунду</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/choppy/meta.qml" line="18"/>
@@ -10541,66 +10635,66 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/gradient/meta.qml" line="7"/>
         <source>Gradient</source>
-        <translation type="unfinished"></translation>
+        <translation>Градієнт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/meta.qml" line="8"/>
         <source>graduated color spectrum</source>
         <comment>search keywords for the Gradient video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>градуйований колірний спектр</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/scanlines/meta.qml" line="6"/>
         <source>Scan Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Сканування рядків</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/scanlines/meta.qml" line="7"/>
         <source>analog horizontal television</source>
         <comment>search keywords for the Scan Lines video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>аналогове горизонтальне телебачення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="7"/>
         <source>360: Equirectangular Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Рівнопрямокутна маска</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="9"/>
         <source>spherical matte stencil</source>
         <comment>search keywords for the 360: Equirectangular Mask video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>сферичний матовий трафарет</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="20"/>
         <source>Horizontal Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальний старт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="27"/>
         <source>Horizontal End</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальний кінець</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="34"/>
         <source>Vertical Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикальний старт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="41"/>
         <source>Vertical End</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикальний кінець</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="7"/>
         <source>360: Equirectangular to Rectilinear</source>
-        <translation type="unfinished"></translation>
+        <translation>360: від Рівнопрямокутного до Прямолінійного</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="9"/>
         <source>spherical projection</source>
         <comment>search keywords for the 360: Equirectangular to Rectilinear video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>сферична проекція</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="21"/>
@@ -10608,7 +10702,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="20"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="21"/>
         <source>Yaw</source>
-        <translation type="unfinished"></translation>
+        <translation>Поворот</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="28"/>
@@ -10617,7 +10711,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="28"/>
         <source>Pitch</source>
         <comment>rotation around the side-to-side axis (roll, pitch, yaw)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Висота тону</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="35"/>
@@ -10625,46 +10719,46 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="34"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="35"/>
         <source>Roll</source>
-        <translation type="unfinished"></translation>
+        <translation>Рулет</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="42"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="42"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
         <source>FOV</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле Зору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="49"/>
         <location filename="../src/qml/filters/fisheye/meta.qml" line="23"/>
         <source>Fisheye</source>
-        <translation type="unfinished"></translation>
+        <translation>Риб&apos;яче око</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="23"/>
         <source>Corner Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>Деформація</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="24"/>
         <source>stretch distort pinch twist deform</source>
         <comment>search keywords for the Corner Pin video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>розтягнути спотворити щипнути скручувати деформувати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="36"/>
         <source>Corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Кути</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="41"/>
         <source>Stretch X</source>
-        <translation type="unfinished"></translation>
+        <translation>Розтягнути X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="48"/>
         <source>Stretch Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Розтягнути Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="55"/>
@@ -10674,90 +10768,90 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="7"/>
         <source>360: Stabilize</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Стабілізація</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="8"/>
         <source>spherical smooth deshake</source>
         <comment>search keywords for the 360: Stabilize video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>сферичний гладкий дешейк</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="7"/>
         <source>360: Transform</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Перетворення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="9"/>
         <source>spherical yaw pitch roll</source>
         <comment>search keywords for the 360: Transform video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>сферичний поворот крок рулет</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="24"/>
         <source>Reduce Noise: Wavelet</source>
-        <translation type="unfinished"></translation>
+        <translation>Зменшення шуму: Вельвет</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="25"/>
         <source>vague denoise artifact dirt</source>
         <comment>search keywords for the Reduce Noise: Wavelet video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>розпливчасте усунення шуму артефакт бруд</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="7"/>
         <source>Text: Rich</source>
-        <translation type="unfinished"></translation>
+        <translation>Текст: Розширений</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="8"/>
         <source>type font format overlay</source>
         <comment>search keywords for the Text: Rich video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>тип шрифту формат накладання</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/pillar_echo/meta.qml" line="7"/>
         <source>Blur: Pad</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмиття: Підкладка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/pillar_echo/meta.qml" line="8"/>
         <source>pillar echo fill</source>
         <comment>search keywords for the Blur: Pad video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ехо-заповнення стовпа</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_invert/meta.qml" line="7"/>
         <source>Invert</source>
-        <translation>Вивернути</translation>
+        <translation>Вивернути Фазу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_invert/meta.qml" line="8"/>
         <source>phase</source>
         <comment>search keywords for the Invert audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Перевернути фазу звукового сигналу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fspp/meta.qml" line="23"/>
         <source>Reduce Noise: Quantization</source>
-        <translation type="unfinished"></translation>
+        <translation>Зменшення шуму: Квантування</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fspp/meta.qml" line="24"/>
         <source>denoise artifact postprocess compress</source>
         <comment>search keywords for the Reduce Noise: Quantization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>стиснення після обробки артефакту зменшення шуму</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/meta.qml" line="7"/>
         <source>Time Remap</source>
-        <translation type="unfinished"></translation>
+        <translation>Викривлення часу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/meta.qml" line="8"/>
         <source>temporal speed ramp reverse fast slow motion</source>
         <comment>search keywords for the Time: Remap filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>тимчасова швидкість рампа назад швидкий повільний рух</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/meta.qml" line="21"/>
@@ -10767,155 +10861,155 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/deband/meta.qml" line="24"/>
         <source>Deband</source>
-        <translation type="unfinished"></translation>
+        <translation>Дебанд</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/meta.qml" line="25"/>
         <source>mean average median contour</source>
         <comment>search keywords for the Deband video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>серединний контур</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="23"/>
         <source>GPS Text</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS текст</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="24"/>
         <source>gpx</source>
         <comment>search keywords for the GPS Text video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>gpx</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reflect/meta.qml" line="6"/>
         <source>Reflect</source>
-        <translation type="unfinished"></translation>
+        <translation>Віддзеркалювати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reflect/meta.qml" line="7"/>
         <source>mirror repeat</source>
         <comment>search keywords for the Reflect video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>дзеркальний повтор</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="23"/>
         <source>Mask: Chroma Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Маска: Хромакей - зелений фон</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="24"/>
         <source>matte stencil alpha color</source>
         <comment>search keywords for the Mask: Chroma Key video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>матовий трафарет альфа кольору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="7"/>
         <source>Equalizer: 15-Band</source>
-        <translation type="unfinished"></translation>
+        <translation>Еквалайзер: 15-смуговий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="8"/>
         <source>tone frequency</source>
         <comment>search keywords for the Equalizer: 15-Band audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>frequency tone</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="19"/>
         <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="19"/>
         <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="19"/>
         <source>Equalizer</source>
-        <translation type="unfinished"></translation>
+        <translation>Еквалайзер</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="7"/>
         <source>Equalizer: Parametric</source>
-        <translation type="unfinished"></translation>
+        <translation>Еквалайзер: параметричний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="8"/>
         <source>tone frequency</source>
         <comment>search keywords for the Equalizer: Parametric audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>frequency tone</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/meta.qml" line="7"/>
         <source>Audio Level Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень візуалізації звуку</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/meta.qml" line="8"/>
         <source>music visualizer reactive</source>
         <comment>search keywords for the Audio Level Visualization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>музичний візуалізатор реактивний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="7"/>
         <source>Equalizer: 3-Band (Bass &amp; Treble)</source>
-        <translation type="unfinished"></translation>
+        <translation>Еквалайзер: 3-смуговий (низькі та високі частоти)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="8"/>
         <source>tone frequency</source>
         <comment>search keywords for the Equalizer: 3-Band audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зручний трисмуговий еквалайзер</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="7"/>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="19"/>
         <source>Pitch</source>
         <comment>audio pitch or tone</comment>
-        <translation type="unfinished"></translation>
+        <translation>Пітч</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="9"/>
         <source>frequency tone</source>
         <comment>search keywords for the Pitch audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Частота тону</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/meta.qml" line="7"/>
         <source>Stereo Enhancer</source>
-        <translation type="unfinished"></translation>
+        <translation>Стерео розширювач</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/meta.qml" line="9"/>
         <source>channel spatial delay</source>
         <comment>search keywords for the Stereo Enhancer audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє досягти стерео розширення за рахунок додавання затримки між каналами</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/meta.qml" line="6"/>
         <source>Mask: Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Маска: Намалювати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/meta.qml" line="7"/>
         <source>rotoscope matte stencil alpha</source>
         <comment>search keywords for the Mask: Draw video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ротоскоп матовий трафарет альфа</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/meta.qml" line="24"/>
         <source>deform lens distort wide angle panoramic hemispherical</source>
         <comment>search keywords for the Fisheye video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>деформувати об&apos;єктив спотворювати ширококутну панорамну напівсферичну</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/meta.qml" line="23"/>
         <source>GPS Graphic</source>
-        <translation type="unfinished"></translation>
+        <translation>Графіка GPS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/meta.qml" line="24"/>
         <source>gpx sticker decal gauge map graph speedometer</source>
         <comment>search keywords for the GPS Graphic video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>gpx наклейка наклейка калібр карта графік спідометр</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/threshold/meta.qml" line="7"/>
         <source>black white luma</source>
         <comment>search keywords for the Threshold video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>чорний білий лума</translation>
     </message>
 </context>
 <context>
@@ -10923,18 +11017,18 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="7"/>
         <source>Size, Position &amp; Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір, положення та поворот</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="8"/>
         <source>transform zoom rotation distort fill move</source>
         <comment>search keywords for the Size, Position &amp; Rotate video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>перетворення збільшення обертання викривлення заповнення переміщення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="22"/>
         <source>Size &amp; Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір і положення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="27"/>
@@ -10947,13 +11041,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="23"/>
         <source>Blur: Gaussian</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмиття: Гаусово</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="24"/>
         <source>soften obscure hide</source>
         <comment>search keywords for the Blur: Box video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>пом&apos;якшити незрозумілу шкуру</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="36"/>
@@ -10966,13 +11060,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="6"/>
         <source>Blur: Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмиття: Коробка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="7"/>
         <source>soften obscure hide directional</source>
         <comment>search keywords for the Blur: Box video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>пом&apos;якшити неясний приховати спрямований</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="19"/>
@@ -10990,7 +11084,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
         <source>Blur: Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмиття: Коробка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="19"/>
@@ -11008,13 +11102,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/dance/meta_dance.qml" line="7"/>
         <source>Audio Dance Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Аудіо Танцювальна Візуалізація</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/meta_dance.qml" line="8"/>
         <source>music visualizer reactive transform move size position rotate rotation</source>
         <comment>search keywords for the Audio Dance Visualization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>музичний візуалізатор реактивне перетворення переміщення розмір положення обертання обертання</translation>
     </message>
 </context>
 <context>
@@ -11028,7 +11122,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="7"/>
         <source>shine blur</source>
         <comment>search keywords for the Glow video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>блиск розмиття</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="19"/>
@@ -11044,7 +11138,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="7"/>
         <source>color desaturate grayscale chroma</source>
         <comment>search keywords for the Saturation video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>колір знебарвлення відтінків сірого кольоровість</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="19"/>
@@ -11060,7 +11154,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="7"/>
         <source>sharpness focus clear crisp</source>
         <comment>search keywords for the Sharpen video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>різкість фокус чіткий чіткий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="19"/>
@@ -11081,7 +11175,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="7"/>
         <source>color correct light temperature neutral</source>
         <comment>search keywords for the White Balance video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>правильний колір світло температура нейтральна</translation>
     </message>
 </context>
 <context>
@@ -11097,13 +11191,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/lightshow/meta_lightshow.qml" line="7"/>
         <source>Audio Light Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Візуалізація звукового світла</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/meta_lightshow.qml" line="8"/>
         <source>music visualizer reactive color</source>
         <comment>search keywords for the Audio Light Visualization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>музичний візуалізатор реактивний колір</translation>
     </message>
 </context>
 <context>
@@ -11117,7 +11211,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="7"/>
         <source>soften obscure hide</source>
         <comment>search keywords for the Blur video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>пом&apos;якшити незрозумілу шкуру</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="19"/>
@@ -11134,7 +11228,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/brightness/meta_movit.qml" line="7"/>
         <source>lightness value</source>
         <comment>search keywords for the Brightness video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>значення легкості</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/brightness/meta_movit.qml" line="21"/>
@@ -11147,13 +11241,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="6"/>
         <source>Color Grading</source>
-        <translation>Градуювання Кольорів</translation>
+        <translation>Градуювання кольорів</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="7"/>
         <source>correct shadows lift midtones gamma highlights gain hue lightness brightness value</source>
         <comment>search keywords for the Color Grading video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>виправити тіні підняти півтони гамма висвітлити отримати відтінок освітленість значення яскравості</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="17"/>
@@ -11179,7 +11273,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/contrast/meta_movit.qml" line="7"/>
         <source>variation value</source>
         <comment>search keywords for the Contrast video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>значення варіації</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="6"/>
@@ -11190,7 +11284,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="7"/>
         <source>shne blur</source>
         <comment>search keywords for the Glow video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Шейн розмиття</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="26"/>
@@ -11211,7 +11305,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/mirror/meta_movit.qml" line="7"/>
         <source>horizontal flip transpose flop</source>
         <comment>search keywords for the Mirror video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>горизонтальний фліп транспонувати флоп</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/opacity/meta_movit.qml" line="7"/>
@@ -11222,7 +11316,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/opacity/meta_movit.qml" line="8"/>
         <source>alpha transparent translucent</source>
         <comment>search keywords for the Opacity video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>альфа прозорий напівпрозорий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/meta_movit.qml" line="6"/>
@@ -11233,7 +11327,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/saturation/meta_movit.qml" line="7"/>
         <source>color desaturate grayscale chroma</source>
         <comment>search keywords for the Saturation video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>колір знебарвлення відтінків сірого кольоровість</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
@@ -11244,7 +11338,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="7"/>
         <source>sharpness focus clear crisp</source>
         <comment>search keywords for the Sharpen video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>різкість фокус чіткий чіткий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="19"/>
@@ -11269,18 +11363,18 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="7"/>
         <source>Size and Position</source>
-        <translation>Розмір і Позиція</translation>
+        <translation>Розмір і позиція</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="8"/>
         <source>transform zoom rotation distort fill move</source>
         <comment>search keywords for the Size, Position &amp; Rotate video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>перетворення збільшення обертання викривлення заповнення переміщення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="24"/>
         <source>Position / Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Позиція/Розмір</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="6"/>
@@ -11291,7 +11385,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="7"/>
         <source>dark edges fade</source>
         <comment>search keywords for the Vignette video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>темні краї зникають</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="19"/>
@@ -11306,35 +11400,35 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
         <source>White Balance</source>
-        <translation>Баланс Білого</translation>
+        <translation>Баланс білого</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="7"/>
         <source>color correct light temperature neutral</source>
         <comment>search keywords for the White Balance video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>правильний колір світло температура нейтральна</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/flip/meta_movit.qml" line="6"/>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевернути</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/flip/meta_movit.qml" line="7"/>
         <source>vertical flop transpose rotate</source>
         <comment>search keywords for the Flip video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>вертикальний флоп транспонувати обертати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta_movit.qml" line="6"/>
         <source>Crop: Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадрування: Джерело</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta_movit.qml" line="7"/>
         <source>trim remove edges</source>
         <comment>search keywords for the Crop: Source video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>обрізати, видалити краї</translation>
     </message>
 </context>
 <context>
@@ -11348,7 +11442,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="7"/>
         <source>dark edges fade</source>
         <comment>search keywords for the Vignette video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>темні краї зникають</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="20"/>
@@ -11377,7 +11471,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/spectrum/meta_spectrum.qml" line="8"/>
         <source>music visualizer reactive frequency</source>
         <comment>search keywords for the Audio Spectrum Visualization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>музичний візуалізатор реактивної частоти</translation>
     </message>
 </context>
 <context>
@@ -11385,7 +11479,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="155"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихід</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="185"/>
@@ -11395,22 +11489,22 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="295"/>
         <source>Move %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити %1</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="342"/>
         <source>Can not move audio track above video track</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо перемістити звукову доріжку над відеодоріжкою</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="344"/>
         <source>Can not move video track below audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо перемістити відеодоріжку під звукову доріжку</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="346"/>
         <source>Track %1 was not moved</source>
-        <translation type="unfinished"></translation>
+        <translation>Доріжку %1 не було переміщено</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="645"/>
@@ -11425,7 +11519,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="958"/>
         <source>Do you want to insert an audio or video track?</source>
-        <translation type="unfinished"></translation>
+        <translation>Бажаєте вставити аудіо чи відео доріжку?</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="968"/>
@@ -11450,7 +11544,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="72"/>
         <source>No Change</source>
-        <translation>Без Змін</translation>
+        <translation>Без змін</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="77"/>
@@ -11490,7 +11584,7 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="107"/>
-        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="291"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="295"/>
         <source>Blur</source>
         <translation>Розмити</translation>
     </message>
@@ -11538,22 +11632,22 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="77"/>
         <source>Checkered Background</source>
-        <translation>Шаховий Фон</translation>
+        <translation>Шаховий фон</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="82"/>
         <source>Black Background</source>
-        <translation>Чорний Фон</translation>
+        <translation>Чорний фон</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="87"/>
         <source>Gray Background</source>
-        <translation>Сірий Фон</translation>
+        <translation>Сірий фон</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="92"/>
         <source>White Background</source>
-        <translation>Білий Фон</translation>
+        <translation>Білий фон</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="129"/>
@@ -11594,7 +11688,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="61"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="75"/>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="86"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="88"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="51"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="107"/>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="142"/>
@@ -11734,13 +11828,13 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
         <source>Front left</source>
-        <translation type="unfinished"></translation>
+        <translation>Передній лівий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
         <source>Front right</source>
-        <translation type="unfinished"></translation>
+        <translation>Передній правий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
@@ -11754,19 +11848,19 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
         <source>Low frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Низька частота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
         <source>Left surround</source>
-        <translation type="unfinished"></translation>
+        <translation>Лівий отвір</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
         <source>Right surround</source>
-        <translation type="unfinished"></translation>
+        <translation>Правий отвір</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="55"/>
@@ -11776,7 +11870,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="66"/>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>до</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="82"/>
@@ -11877,7 +11971,9 @@ Most users do not need to change this.</source>
         <source>The neutral delay time is 2 seconds.
 Times above 2 seconds will have reduced quality.
 Times below will have increased CPU usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>Час нейтральної затримки становить 2 секунди.
+Час понад 2 секунди призведе до зниження якості.
+У вказані нижче часи використання ЦП збільшиться.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="90"/>
@@ -11889,7 +11985,9 @@ Times below will have increased CPU usage.</source>
         <source>The balance between the RMS and peak envelope followers.
 RMS is generally better for subtle, musical compression.
 Peak is better for heavier, fast compression and percussion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Баланс між середньоквадратичним значенням і послідовниками пікової огинаючої.
+RMS, як правило, кращий для тонкого музичного стиснення.
+Пік краще підходить для більш важкого, швидкого стиснення та перкусії.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="220"/>
@@ -11900,7 +11998,8 @@ Peak is better for heavier, fast compression and percussion.</source>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="224"/>
         <source>The gain of the output signal.
 Used to correct for excessive amplitude caused by the extra dynamic range.</source>
-        <translation type="unfinished"></translation>
+        <translation>Коефіцієнт посилення вихідного сигналу.
+Використовується для корекції надмірної амплітуди, спричиненої додатковим динамічним діапазоном.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadein/ui.qml" line="56"/>
@@ -11951,86 +12050,96 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="132"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
-        <translation>Час витрачений на затухання обмежника для повернення у 0 дБ.</translation>
+        <translation>Час витрачений на затухання обмежувача для повернення у 0 дБ.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="68"/>
         <source>Target Loudness</source>
-        <translation>Цільова Гучність</translation>
+        <translation>Цільова гучність</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="105"/>
         <source>The target loudness of the output in LUFS.</source>
         <translation>Цільова гучність на виході LUFS.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="127"/>
         <source>Analysis Window</source>
-        <translation>Вікно Аналізу</translation>
+        <translation>Вікно аналізу</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="129"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="131"/>
         <source>The amount of history to use to calculate the input loudness.</source>
         <translation>Кількість історії, яку потрібно використати для обчислення вхідної гучності.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="151"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="153"/>
         <source>Maximum Gain</source>
-        <translation>Максимальне Посилення</translation>
+        <translation>Максимальне посилення</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="157"/>
         <source>The maximum that the gain can be increased.</source>
         <translation>Потолок Посилення що може бути піднятий</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="177"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="179"/>
         <source>Minimum Gain</source>
-        <translation>Мінімальне Посилення</translation>
+        <translation>Мінімальне посилення</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="181"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="183"/>
         <source>The maximum that the gain can be decreased.</source>
-        <translation>Потолок Посилення що може бути зменшено</translation>
+        <translation>Потолок посилення що може бути зменшено</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="203"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="205"/>
         <source>Maximum Rate</source>
-        <translation>Максимальна Темп</translation>
+        <translation>Максимальний темп</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="207"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="209"/>
         <source>The maximum rate that the gain can be changed.</source>
         <translation>Максимальний темп що Посилення може бути змінено.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="246"/>
-        <source>Input Loudness</source>
-        <translation>Вхідна Гічність</translation>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="237"/>
+        <source>Reset on discontinuity</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="250"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="241"/>
+        <source>Reset the measurement if a discontinuity is detected - such as seeking or clip change.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="269"/>
+        <source>Input Loudness</source>
+        <translation>Вхідна гучність</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="273"/>
         <source>Status indicator showing the loudness measured on the input.</source>
         <translation>Показник статусу, що показує вхідну гучність.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="270"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="293"/>
         <source>Output Gain</source>
-        <translation>Вихідне Посилення</translation>
+        <translation>Вихідне посилення</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="297"/>
         <source>Status indicator showing the gain being applied.</source>
         <translation>Показник статусу застосованого посилення</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="292"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="315"/>
         <source>Reset</source>
         <translation>Скинути</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="296"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="319"/>
         <source>Status indicator showing when the loudness measurement is reset.</source>
         <translation>Показник статусу коли замір гучності є анульований.</translation>
     </message>
@@ -12049,12 +12158,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="34"/>
         <source>%1 LUFS</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 LUFS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="37"/>
         <source>%1 dB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 дБ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="39"/>
@@ -12071,22 +12180,22 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="131"/>
         <source>Detected Loudness:</source>
-        <translation type="unfinished"></translation>
+        <translation>Виявлена ​​гучність:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="135"/>
         <source>The loudness calculated by the analysis.</source>
-        <translation type="unfinished"></translation>
+        <translation>Гучність, розрахована аналізом.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="147"/>
         <source>Normalization Gain:</source>
-        <translation type="unfinished"></translation>
+        <translation>Підсилення нормалізації</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="151"/>
         <source>The gain applied to normalize to the Target Loudness.</source>
-        <translation type="unfinished"></translation>
+        <translation>Посилення, застосоване для нормалізації цільової гучності.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="133"/>
@@ -12188,12 +12297,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="56"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Обмін</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="67"/>
         <source>with</source>
-        <translation type="unfinished"></translation>
+        <translation>з</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="67"/>
@@ -12244,12 +12353,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="245"/>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="287"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="289"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="61"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1716"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="383"/>
-        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="234"/>
-        <location filename="../src/qml/filters/spot_remover/ui.qml" line="222"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="238"/>
+        <location filename="../src/qml/filters/spot_remover/ui.qml" line="226"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="190"/>
         <source>Size</source>
         <translation>Розмір</translation>
@@ -12290,141 +12399,141 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="76"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="170"/>
         <source>Slide In From Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Посунути зліва</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="78"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="172"/>
         <source>Slide In From Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Посунути справа </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="80"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="174"/>
         <source>Slide In From Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Посунути зверху</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="82"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="176"/>
         <source>Slide In From Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити знизу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="86"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="180"/>
         <source>Slide Out Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Виїзд вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="88"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="182"/>
         <source>Slide Out Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Виїзд вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="90"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="184"/>
         <source>Slide Out Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Виъзд зверху</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="92"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="186"/>
         <source>Slide Out Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Виъзд до низу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="96"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="190"/>
         <source>Slow Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="98"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="192"/>
         <source>Slow Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменьшення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="100"/>
         <source>Slow Pan Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне панорамування вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="101"/>
         <source>Slow Move Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільний рух вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="103"/>
         <source>Slow Pan Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне панорамування вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
         <source>Slow Move Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільний рух вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="106"/>
         <source>Slow Pan Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне панорамування вгору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="107"/>
         <source>Slow Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільний рух вгору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="109"/>
         <source>Slow Pan Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне панорамування вниз</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
         <source>Slow Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільний рух вниз</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="112"/>
         <source>Slow Zoom In, Pan Up Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, панорамування вгору та вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="113"/>
         <source>Slow Zoom In, Move Up Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, рух вгору вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="115"/>
         <source>Slow Zoom In, Pan Down Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, панорамування вниз та вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="116"/>
         <source>Slow Zoom In, Move Down Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне збільшення, рух вниз праворуч</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="118"/>
         <source>Slow Zoom Out, Pan Up Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, панорамування вгору та вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="119"/>
         <source>Slow Zoom Out, Move Up Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, рух нагору вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="121"/>
         <source>Slow Zoom Out, Pan Down Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, панорамування вниз та вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="122"/>
         <source>Slow Zoom Out, Move Down Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Повільне зменшення, рух вниз вліво</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="178"/>
@@ -12445,7 +12554,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="286"/>
         <source>Timecode</source>
-        <translation>Часкод</translation>
+        <translation>Часовий код</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="291"/>
@@ -12471,12 +12580,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="131"/>
         <source>Segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Сегмент</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="139"/>
         <source>Graph Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Кольори графіка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="170"/>
@@ -12500,12 +12609,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="302"/>
         <source>Mirror the levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>Віддзеркалити рівні.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="314"/>
         <source>Reverse the levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевернути рівні.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="324"/>
@@ -12515,12 +12624,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="348"/>
         <source>Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Сегменти</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="372"/>
         <source>Segment Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Розрив сегментів</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="92"/>
@@ -12544,14 +12653,14 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="93"/>
         <source>Hue</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтінок</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1545"/>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="102"/>
         <source> °</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation> °</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="120"/>
@@ -12602,7 +12711,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="131"/>
         <source>&lt;b&gt;Low Shelf&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Нижній відступ&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="208"/>
@@ -12625,7 +12734,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="255"/>
         <source>&lt;b&gt;Band 1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Полоса 1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="309"/>
@@ -12640,27 +12749,27 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="398"/>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="476"/>
         <source> octaves</source>
-        <translation type="unfinished"></translation>
+        <translation>октави</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="333"/>
         <source>&lt;b&gt;Band 2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Полоса 2&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="411"/>
         <source>&lt;b&gt;Band 3&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Полоса 3&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="489"/>
         <source>&lt;b&gt;High Shelf&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Верхній відступ&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="224"/>
         <source>Hue gate</source>
-        <translation>Відтінний Просів</translation>
+        <translation>Відтінний просів</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="244"/>
@@ -12676,7 +12785,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="51"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="441"/>
         <source>Blend mode</source>
-        <translation>Режим Змішування</translation>
+        <translation>Режим змішування</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="66"/>
@@ -12900,7 +13009,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="560"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="292"/>
         <source>Yaw</source>
-        <translation type="unfinished"></translation>
+        <translation>Поворот</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="442"/>
@@ -12910,7 +13019,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="336"/>
         <source>Pitch</source>
         <comment>rotation around the side-to-side axis (roll, pitch, yaw)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Крок</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="486"/>
@@ -12919,20 +13028,20 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="710"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="380"/>
         <source>Roll</source>
-        <translation type="unfinished"></translation>
+        <translation>Рулет</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="530"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="532"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1063"/>
         <source>FOV</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле Зору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="574"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="463"/>
         <source>Fisheye</source>
-        <translation type="unfinished"></translation>
+        <translation>Риб&apos;яче око</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="136"/>
@@ -12961,70 +13070,70 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="266"/>
         <source>Corner 1 X</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут 1 X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="362"/>
         <source>Corner 2 X</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут 2 X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="414"/>
         <source>Corner 3 X</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут 3 X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="466"/>
         <source>Corner 4 X</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут 4 X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="518"/>
         <source>Stretch X</source>
-        <translation type="unfinished"></translation>
+        <translation>Розтягнути X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="576"/>
         <source>Interpolator</source>
-        <translation type="unfinished"></translation>
+        <translation>Інтерполятор</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="584"/>
         <source>Nearest Neighbor</source>
-        <translation type="unfinished"></translation>
+        <translation>Найближчий сусід</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="584"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="579"/>
         <source>Bilinear</source>
-        <translation type="unfinished"></translation>
+        <translation>Білінійний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="584"/>
         <source>Bicubic Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Бікубічний Плавний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="584"/>
         <source>Bicubic Sharp</source>
-        <translation type="unfinished"></translation>
+        <translation>Бікубічний Гострий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="584"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="594"/>
         <source>Spline 4x4</source>
-        <translation type="unfinished"></translation>
+        <translation>Шліц 4х4</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="584"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="599"/>
         <source>Spline 6x6</source>
-        <translation type="unfinished"></translation>
+        <translation>Шліц 6х6</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="598"/>
         <source>Alpha Operation</source>
-        <translation type="unfinished"></translation>
+        <translation>Операція Альфа</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="606"/>
@@ -13049,7 +13158,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="606"/>
         <source>Opaque</source>
-        <translation type="unfinished"></translation>
+        <translation>Непрозорий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="606"/>
@@ -13153,17 +13262,17 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="239"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінійний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="250"/>
         <source>Radial</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіальний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="287"/>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Кольори</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="392"/>
@@ -13199,18 +13308,18 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="895"/>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирівнювання</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1034"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="621"/>
         <source>Lens</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінза</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1040"/>
         <source>Projection</source>
-        <translation type="unfinished"></translation>
+        <translation>Проекція</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1107"/>
@@ -13224,7 +13333,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1150"/>
         <source>Front</source>
-        <translation type="unfinished"></translation>
+        <translation>Спереду</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1156"/>
@@ -13247,22 +13356,22 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1287"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1424"/>
         <source>Nadir</source>
-        <translation type="unfinished"></translation>
+        <translation>Надір</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/ui.qml" line="134"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Блакитний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/ui.qml" line="163"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Маджента</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="55"/>
@@ -13320,7 +13429,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="467"/>
         <source>Add or remove fisheye effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати або видалити ефект «риб’яче око».</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="480"/>
@@ -13330,12 +13439,12 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="520"/>
         <source>Focal ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Фокусне співвідношення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="525"/>
         <source>The amount of lens distortion</source>
-        <translation type="unfinished"></translation>
+        <translation>Величина спотворення лінзи</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="552"/>
@@ -13345,63 +13454,64 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="556"/>
         <source>Resample quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Якість повторної вибірки</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="574"/>
         <source>Nearest neighbor</source>
-        <translation type="unfinished"></translation>
+        <translation>Найближчий сусід</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="584"/>
         <source>Bicubic smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Бікубічний плавний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="589"/>
         <source>Bicubic sharp</source>
-        <translation type="unfinished"></translation>
+        <translation>Бікубічний гострий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="604"/>
         <source>Lanczos 16x16</source>
-        <translation type="unfinished"></translation>
+        <translation>Ланцос 16x16</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="625"/>
         <source>Select a lens distortion pattern that best matches your camera</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть шаблон спотворення об’єктива, який найкраще відповідає вашій камері</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="644"/>
         <source>Equidistant</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівновіддалений</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="649"/>
         <source>Ortographic</source>
-        <translation type="unfinished"></translation>
+        <translation>Ортографічний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="654"/>
         <source>Equiarea</source>
-        <translation type="unfinished"></translation>
+        <translation>Екватерия</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="659"/>
         <source>Stereographic</source>
-        <translation type="unfinished"></translation>
+        <translation>Стереографічний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="670"/>
         <source>Non-Linear scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Нелінійний масштаб</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="685"/>
         <source>The image will be stretched/squished to fix camera scaling between 4:3 and 16:9
 Like used in GoPro&apos;s superview</source>
-        <translation type="unfinished"></translation>
+        <translation>Зображення буде розтягнуто/здавлено, щоб виправити масштаб камери між 4:3 і 16:9
+Як використовується в GoPro superview</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="703"/>
@@ -13415,39 +13525,42 @@ Like used in GoPro&apos;s superview</source>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="707"/>
         <source>Use negative values for up-scaled videos
 Use positive values for down-scaled videos</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовуйте від’ємні значення для масштабованих відео
+Використовуйте позитивні значення для зменшених відео</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="757"/>
         <source>Preset scale methods
 Lock pixels at specific locations</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередньо встановлені методи масштабування
+Зафіксувати пікселі в певних місцях</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="778"/>
         <source>Scale to Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Вписати до повного заповнення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="783"/>
         <source>Keep Center Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберігати центральний масштаб</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="788"/>
         <source>Scale to Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Вписати в екран</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="793"/>
         <source>Manual Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Ручний масштаб</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="819"/>
         <source>Scale Y separately
 This changes video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштаб Y окремо
+Це змінює співвідношення сторін відео</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="827"/>
@@ -13457,70 +13570,72 @@ This changes video aspect ratio</source>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="840"/>
         <source>Remove distorted edges</source>
-        <translation type="unfinished"></translation>
+        <translation>Видаліть спотворені краї</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="861"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1012"/>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Інструкція</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="866"/>
         <source>User set zoom/scale
 Sides of image are not fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>Користувач встановлює наближення/масштаб
+Сторони зображення не фіксуються</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="895"/>
         <source>Y ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Коефіцієнт Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="900"/>
         <source>Seperate Y scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Окрема шкала Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="932"/>
         <source>Aspect</source>
-        <translation type="unfinished"></translation>
+        <translation>Аспект</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="950"/>
         <source>Preset pixel aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередньо встановлене співвідношення сторін пікселів</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="991"/>
         <source>Manual Aspect</source>
-        <translation type="unfinished"></translation>
+        <translation>Ручне Співвідношення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1017"/>
         <source>User set pixel aspect ratios
 Change top/side distortion bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Співвідношення сторін пікселів встановлює користувач
+Змінити зміщення викривлення зверху/збоку</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1050"/>
         <source>Cameras</source>
-        <translation type="unfinished"></translation>
+        <translation>Камери</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1065"/>
         <source>Camera</source>
-        <translation type="unfinished"></translation>
+        <translation>Камера</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1086"/>
         <source>Record mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим запису</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1108"/>
         <source>Result</source>
-        <translation type="unfinished"></translation>
+        <translation>Результат</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1129"/>
@@ -13545,61 +13660,61 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="160"/>
         <source>Scroll Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутити вниз</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="162"/>
         <source>Scroll Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутити вгору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="164"/>
         <source>Scroll Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутити вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="166"/>
         <source>Scroll Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутити ліворуч</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="255"/>
         <source>Click in the rectangle atop the video to edit the text.</source>
-        <translation type="unfinished"></translation>
+        <translation>Клацніть по прямокутнику зверху відео, щоб змінити текст.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="333"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="337"/>
         <source>Background size</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір фону</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="391"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="395"/>
         <source>Text size</source>
         <translation>Розмір тексту</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="458"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="462"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="314"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір фону</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="480"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="484"/>
         <source>Overflow</source>
-        <translation type="unfinished"></translation>
+        <translation>Вилив</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="494"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="498"/>
         <source>Automatic</source>
         <translation>Автоматично</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="505"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="509"/>
         <source>Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Видимий</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="513"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="517"/>
         <source>Hidden</source>
         <translation>Сховане</translation>
     </message>
@@ -13760,7 +13875,7 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="186"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Червоний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="186"/>
@@ -13770,17 +13885,17 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="202"/>
         <source>Histogram</source>
-        <translation type="unfinished"></translation>
+        <translation>Гістограма</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="232"/>
         <source>Input Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Вхідний Чорний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="256"/>
         <source>Input White</source>
-        <translation type="unfinished"></translation>
+        <translation>Вхідний Білий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="280"/>
@@ -13790,12 +13905,12 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="304"/>
         <source>Output Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихідний Чорний</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="325"/>
         <source>Output White</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихідний Білий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="28"/>
@@ -13831,17 +13946,17 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="205"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="119"/>
         <source>Zoom</source>
-        <translation>Близь-даль</translation>
+        <translation>Наближення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="265"/>
         <source>Stabilization file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл стабілізації:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="269"/>
         <source>The stabilization file generated by the analysis.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл стабілізації, створений в результаті аналізу.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="189"/>
@@ -13851,47 +13966,47 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="411"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Огляд...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="417"/>
         <source>Start Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Почати Зсув</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="429"/>
         <source>seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>секунди</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="460"/>
         <source>Analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>Аналіз</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="471"/>
         <source>Apply transform</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати трансформацію</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="477"/>
         <source>Sample Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус вибірки</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="500"/>
         <source>Search Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус пошуку</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="546"/>
         <source>Track Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Крапки трека</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="553"/>
         <source>Use backwards-facing track points</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовуйте точки треку, спрямовані назад</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="589"/>
@@ -13906,7 +14021,7 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="687"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="762"/>
         <source>Time Bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Зміщення часу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="71"/>
@@ -13939,54 +14054,55 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/distort/ui.qml" line="155"/>
         <source>Velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>Швидкість</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="71"/>
         <source>Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only</source>
-        <translation type="unfinished"></translation>
+        <translation>Утримуйте %1, щоб перетягнути ключовий кадр лише вертикально, або %2, щоб перетягнути лише горизонтально</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="53"/>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Вперед</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="55"/>
         <source>Freeze</source>
-        <translation type="unfinished"></translation>
+        <translation>Заморозити</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="56"/>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="57"/>
         <source>%L1s</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1s</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="117"/>
         <source>Set Speed After</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити Швидкість Після</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="117"/>
         <source>Set Speed Before</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити Швидкість Перед</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="240"/>
         <source>Modify current mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити поточне відображення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="245"/>
         <source>Lock current mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Заблокувати поточне відображення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="257"/>
         <source>&quot;Modify current mapping&quot; will modify the input time at the current position.
 &quot;Lock current mapping&quot; will lock the input time at the current position and modify the value of an adjacent keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>«Змінити поточне відображення» змінить введений час у поточній позиції.
+«Заблокувати поточне відображення» зафіксує час введення в поточній позиції та змінить значення суміжного ключового кадру</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="289"/>
@@ -13996,52 +14112,52 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="293"/>
         <source>Map the specified input time to the current time. Use keyframes to vary the time mappings over time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Зіставте вказаний час введення з поточним часом. Використовуйте ключові кадри, щоб змінювати відображення часу з часом.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="327"/>
         <source>Set the input time to achieve a desired speed before the current frame.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановіть час введення для досягнення бажаної швидкості перед поточним кадром.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="344"/>
         <source>Set the input time to achieve a desired speed after the current frame.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановіть час введення для досягнення бажаної швидкості після поточного кадру.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="364"/>
         <source>Image mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим зображення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="368"/>
         <source>Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовуйте вказаний режим вибору зображення. Nearest виведе зображення, яке є найближчим до відображеного часу. Blend змішає всі зображення, які з’являться протягом відображеного часу.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="395"/>
         <source>Blend</source>
-        <translation type="unfinished"></translation>
+        <translation>Змішати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="414"/>
         <source>Enable pitch compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Увімкнути компенсацію висоти тона</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="444"/>
         <source>Speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Швидкість:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="476"/>
         <source>Input Time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Час Введення:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="492"/>
         <source>Output Time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Час Виведення:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="976"/>
@@ -14054,27 +14170,27 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="448"/>
         <source>The instantaneous speed of the last frame that was processed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Миттєва швидкість останнього обробленого кадру.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="460"/>
         <source>Direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Напрямок:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="464"/>
         <source>The instantaneous direction of the last frame that was processed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Миттєвий напрямок останнього обробленого кадру.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="480"/>
         <source>The original clip time of the frame.</source>
-        <translation type="unfinished"></translation>
+        <translation>Оригінальний час кліпу кадру.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="496"/>
         <source>The mapped output time for the input frame.</source>
-        <translation type="unfinished"></translation>
+        <translation>Відображає час виведення для вхідного кадру.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="104"/>
@@ -14099,7 +14215,7 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="182"/>
         <source>degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>градуси</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="139"/>
@@ -14109,154 +14225,160 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="153"/>
         <source>HH:MM:SS</source>
-        <translation type="unfinished"></translation>
+        <translation>ГГ:ММ:СС</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="158"/>
         <source>HH:MM:SS.S</source>
-        <translation type="unfinished"></translation>
+        <translation>ГГ:ММ:СС.С</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="163"/>
         <source>MM:SS</source>
-        <translation type="unfinished"></translation>
+        <translation>ММ:СС</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="168"/>
         <source>MM:SS.SS</source>
-        <translation type="unfinished"></translation>
+        <translation>ММ:СС.СС</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="173"/>
         <source>MM:SS.SSS</source>
-        <translation type="unfinished"></translation>
+        <translation>ММ:СС.ССС</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="178"/>
         <source>SS</source>
-        <translation type="unfinished"></translation>
+        <translation>СС</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="183"/>
         <source>SS.S</source>
-        <translation type="unfinished"></translation>
+        <translation>СС.С</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="188"/>
         <source>SS.SS</source>
-        <translation type="unfinished"></translation>
+        <translation>СС.СС</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="193"/>
         <source>SS.SSS</source>
-        <translation type="unfinished"></translation>
+        <translation>СС.ССС</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="289"/>
         <source>A value of 0 will run the timer to the end of the filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Значення 0 запускатиме таймер до кінця фільтра</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="335"/>
         <source>When the direction is Down, the timer will count down to Offset.
 When the direction is Up, the timer will count up starting from Offset.</source>
-        <translation type="unfinished"></translation>
+        <translation>Коли напрямок Вниз, таймер буде вести зворотний відлік до зміщення. Якщо напрямок Вгору, таймер відраховуватиме, починаючи зі зміщення.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="364"/>
         <source>Timer seconds per playback second. Scales Duration but does not affect Start Delay or Offset.</source>
-        <translation type="unfinished"></translation>
+        <translation>Таймер секунд на секунду відтворення. Масштабує тривалість, але не впливає на затримку початку чи зсув.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="123"/>
         <source>Minimal strength</source>
-        <translation type="unfinished"></translation>
+        <translation>Мінімальна міцність</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="134"/>
         <source>Average strength</source>
-        <translation type="unfinished"></translation>
+        <translation>Середня міцність</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="145"/>
         <source>Blue sky</source>
-        <translation type="unfinished"></translation>
+        <translation>Блакитне небо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="156"/>
         <source>Red sky</source>
-        <translation type="unfinished"></translation>
+        <translation>Червоне небо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="167"/>
         <source>Full range to limited range</source>
-        <translation type="unfinished"></translation>
+        <translation>Повний діапазон до обмеженого діапазону</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="211"/>
         <source>Contrast threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Поріг контрасту</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="215"/>
         <source>Banding similarity within first component
 Y (luma) in YCbCr mode
 Red in RGB mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Подібність смуг у першому компоненті
+Y (яскравість) у режимі YCbCr
+Червоний в режимі RGB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="235"/>
         <source>Blue threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Синій поріг</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="239"/>
         <source>Banding similarity within second component
 Cb (blue) in YCbCr mode
 Green in RGB mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Подібність смуг у другому компоненті
+Cb (синій) у режимі YCbCr
+Зелений у режимі RGB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="259"/>
         <source>Red threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Червоний поріг</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="263"/>
         <source>Banding similarity within third component
 Cr (red) in YCbCr mode
 Blue in RGB mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Подібність смуг у третьому компоненті
+Cr (червоний) у режимі YCbCr
+Синій у режимі RGB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="283"/>
         <source>Alpha threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>Поріг альфа</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="287"/>
         <source>Banding similarity within fourth component</source>
-        <translation type="unfinished"></translation>
+        <translation>Подібність смуг у четвертому компоненті</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="313"/>
         <source>Link thresholds</source>
-        <translation type="unfinished"></translation>
+        <translation>Пороги посилань</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="322"/>
         <source>Pixel range</source>
-        <translation type="unfinished"></translation>
+        <translation>Діапазон пікселів</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="326"/>
         <source>The size of bands being targeted</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір орієнтованих груп</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="354"/>
         <source>Randomize pixel range between zero and value</source>
-        <translation type="unfinished"></translation>
+        <translation>Рандомізувати діапазон пікселів між нулем і значенням</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="363"/>
@@ -14271,32 +14393,36 @@ Down = 90°
 Left = 180°
 Right = 0° or 360°
 All = 360° + Randomize</source>
-        <translation type="unfinished"></translation>
+        <translation>Вгору = 270°
+Вниз = 90°
+Ліворуч = 180°
+Вправо = 0° або 360°
+Усі = 360° + Рандомізація</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="395"/>
         <source>Randomize direction between zero degrees and value</source>
-        <translation type="unfinished"></translation>
+        <translation>Рандомізація напряму між нулем градусів та значенням</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="410"/>
         <source>Measure similarity using average of neighbors</source>
-        <translation type="unfinished"></translation>
+        <translation>Вимірювання подібності, використовуючи середнє значення сусідніх значень</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="414"/>
         <source>Compare to thresholds using average versus exact neighbor values</source>
-        <translation type="unfinished"></translation>
+        <translation>Порівняйте з пороговими значеннями, використовуючи середні та точні сусідні значення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="433"/>
         <source>All components required to trigger deband</source>
-        <translation type="unfinished"></translation>
+        <translation>Усі компоненти, необхідні для запуску дебанду</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="437"/>
         <source>Deband only if all pixel components (including alpha) are within thresholds</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати заборону, лише якщо всі піксельні компоненти (включно з альфа-версією) знаходяться в межах порогових значень</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1242"/>
@@ -14313,27 +14439,27 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="230"/>
         <source>Start Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Почати Затримку</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="249"/>
         <source>The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Таймер буде заморожено від початку фільтра до закінчення часу затримки запуску.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="262"/>
         <source>Set start to begin at the current position</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити початок для початку з поточної позиції</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="289"/>
         <source>The timer will be frozen after the Duration has elapsed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Таймер буде заморожено після закінчення тривалості.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="308"/>
         <source>Set duration to end at the current position</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити тривалість для завершення в поточній позиції</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="523"/>
@@ -14341,7 +14467,7 @@ All = 360° + Randomize</source>
         <location filename="../src/qml/filters/nosync/ui.qml" line="84"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="316"/>
         <source>Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Зсув</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="388"/>
@@ -14357,12 +14483,12 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="300"/>
         <source>Bar Horizontal</source>
-        <translation>Горизонтальна Смуга</translation>
+        <translation>Горизонтальна смуга</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="310"/>
         <source>Bar Vertical</source>
-        <translation>Вертикальна Смуга</translation>
+        <translation>Вертикальна смуга</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="315"/>
@@ -14467,12 +14593,12 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="282"/>
         <source>Set a mask from another file&apos;s brightness or alpha.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити маску яскравості або альфа-версії іншого файлу.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="258"/>
         <source>Open Mask File</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити файл маски</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="207"/>
@@ -14484,12 +14610,12 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="538"/>
         <source>Alpha</source>
-        <translation type="unfinished"></translation>
+        <translation>Альфа</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/ui.qml" line="97"/>
         <source>Waveform Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір хвилі</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="156"/>
@@ -14500,17 +14626,17 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/waveform/ui.qml" line="239"/>
         <source>Fill the area under the waveform.</source>
-        <translation type="unfinished"></translation>
+        <translation>Заповніть область під форму звукового сигналу.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/ui.qml" line="251"/>
         <source>Combine all channels into one waveform.</source>
-        <translation type="unfinished"></translation>
+        <translation>Об’єднайте всі канали в одну форму звукового сигналу.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/ui.qml" line="256"/>
         <source>Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Вікно</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/ui.qml" line="169"/>
@@ -14525,138 +14651,138 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/glitch/ui.qml" line="131"/>
         <source>Block height</source>
-        <translation type="unfinished"></translation>
+        <translation>Висота блоку</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/ui.qml" line="160"/>
         <source>Shift intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Інтенсивність зсуву</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/ui.qml" line="189"/>
         <source>Color intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Інтенсивність кольору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/ui.qml" line="90"/>
         <source>Spatial</source>
-        <translation type="unfinished"></translation>
+        <translation>Просторова</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/ui.qml" line="119"/>
         <source>Temporal</source>
-        <translation type="unfinished"></translation>
+        <translation>Тимчасовий</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="345"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="347"/>
         <source>Corner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус кута</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="380"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="382"/>
         <source>Padding color</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір заповнення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="87"/>
         <source>Levels</source>
         <comment>Dither video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Рівні</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="116"/>
         <source>Matrix</source>
-        <translation type="unfinished"></translation>
+        <translation>Матриця</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="124"/>
         <source>2x2 Magic Square</source>
-        <translation type="unfinished"></translation>
+        <translation>2x2 Магічний квадрат</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="124"/>
         <source>4x4 Magic Square</source>
-        <translation type="unfinished"></translation>
+        <translation>4х4 Магічний квадрат</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="124"/>
         <source>4x4 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>4x4 Квадратна</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="124"/>
         <source>4x4 Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінії 4х4</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="124"/>
         <source>6x6 90 Degree Halftone</source>
-        <translation type="unfinished"></translation>
+        <translation>6x6 90 градусів півтони</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="124"/>
         <source>6x6 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>6х6 Квадратна</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="124"/>
         <source>8x8 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>8х8 Квадратна</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="124"/>
         <source>Order-3 Clustered</source>
-        <translation type="unfinished"></translation>
+        <translation>Симетрична-3 упорядкована</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="124"/>
         <source>Order-4 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>Симетрична-4 упорядкована</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="124"/>
         <source>Order-8 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>Симетрична-8 упорядкована</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="107"/>
         <source>Horizontal center position of the linear area.</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальне центральне положення лінійної області.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="137"/>
         <source>Linear width</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінійна ширина</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="141"/>
         <source>Width of the linear area.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина лінійної ділянки.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="171"/>
         <source>Linear scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінійний масштабний коефіцієнт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="175"/>
         <source>Amount the linear area is scaled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Величина лінійної площі масштабується.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="205"/>
         <source>Non-Linear scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Нелінійний масштабний коефіцієнт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="209"/>
         <source>Amount the outer left and outer right areas are scaled non linearly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Величина зовнішньої лівої та зовнішньої правої областей масштабується нелінійно.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/threshold/ui.qml" line="143"/>
         <source>Compare with alpha channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Порівняйте з альфа-каналом</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/choppy/ui.qml" line="92"/>
@@ -14673,37 +14799,37 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="122"/>
         <source>Key Filter: Low Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Основний фільтр: низька частота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="151"/>
         <source>Key Filter: High Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключовий фільтр: висока частота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="186"/>
         <source>Output key only</source>
-        <translation type="unfinished"></translation>
+        <translation>Тільки вихідний ключ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="248"/>
         <source>Hold</source>
-        <translation type="unfinished"></translation>
+        <translation>Утримати</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="276"/>
         <source>Decay</source>
-        <translation type="unfinished"></translation>
+        <translation>Розпад</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="304"/>
         <source>Range</source>
-        <translation type="unfinished"></translation>
+        <translation>Діапазон</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="167"/>
         <source>Octave Shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Октавний зсув</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="171"/>
@@ -14711,18 +14837,22 @@ All = 360° + Randomize</source>
 -1 shifts down an octave.
 +1 shifts up an octave.
 0 is unchanged.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть зсув висоти в октавах.
+-1 зсув на октаву вниз.
++1 зсуває на октаву вгору.
+0 не змінюється.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="212"/>
         <source>Specify the speed change that should be compensated for.
 2x will halve the pitch to compensate for the speed being doubled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть зміну швидкості, яку потрібно компенсувати.
+2x зменшить крок вдвічі, щоб компенсувати подвоєння швидкості.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="208"/>
         <source>Speed Compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Компенсація швидкості</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="70"/>
@@ -14732,27 +14862,27 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="76"/>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Середній</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="82"/>
         <source>Heavy</source>
-        <translation type="unfinished"></translation>
+        <translation>Важкий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="122"/>
         <source>Method</source>
-        <translation type="unfinished"></translation>
+        <translation>Метод</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="130"/>
         <source>Soft</source>
-        <translation type="unfinished"></translation>
+        <translation>М&apos;який</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="130"/>
         <source>Garrote</source>
-        <translation type="unfinished"></translation>
+        <translation>Гаррота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="130"/>
@@ -14763,192 +14893,200 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="142"/>
         <source>Decompose</source>
-        <translation type="unfinished"></translation>
+        <translation>Розкласти</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="176"/>
         <source>Percent</source>
-        <translation type="unfinished"></translation>
+        <translation>Відсоток</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="194"/>
         <source>Max decompositions for the current video mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Максимальне розкладання для поточного режиму відео</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="200"/>
         <source>More information</source>
-        <translation type="unfinished"></translation>
+        <translation>Більше інформації</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/posterize/ui.qml" line="85"/>
         <source>Levels</source>
         <comment>Posterize filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Рівні</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_circle/ui.qml" line="162"/>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="405"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="407"/>
         <source>Transparent</source>
-        <translation type="unfinished"></translation>
+        <translation>Прозорість</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="433"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати сітку</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fspp/ui.qml" line="66"/>
         <source>Quantization</source>
-        <translation type="unfinished"></translation>
+        <translation>Квантування</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fspp/ui.qml" line="84"/>
         <source>Strength</source>
-        <translation type="unfinished"></translation>
+        <translation>Сила</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="109"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="42"/>
         <source>No File Loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл не завантажено.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="111"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="44"/>
         <source>No GPS file loaded.
 Click &quot;Open&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл GPS не завантажено.
+Натисніть «Відкрити», щоб завантажити файл.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="499"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="222"/>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити файл</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="226"/>
         <source>Open GPS File</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити GPS Файл</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="540"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="244"/>
         <source>&lt;b&gt;GPS options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Опції GPS&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="547"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="251"/>
         <source>GPS offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Зсув GPS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="551"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="255"/>
         <source>This is added to video time to sync with gps time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Це додається до часу відео для синхронізації з часом GPS.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="572"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="273"/>
         <source>+ : Adds time to video (use if GPS is ahead).
  - : Subtracts time from video (use if video is ahead).</source>
-        <translation type="unfinished"></translation>
+        <translation>+ : додає час до відео (використовуйте, якщо GPS попереду).
+- : віднімає час із відео (використовуйте, якщо відео попереду).</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="617"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="318"/>
         <source>Number of days to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість днів, яку потрібно додати/відняти до часу відео для їх синхронізації.
+Порада: для зміни значень можна використовувати коліщатко миші.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="659"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="360"/>
         <source>Number of hours to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість годин, яку потрібно додати/відняти до часу відео для їх синхронізації.
+Порада: для зміни значень можна використовувати коліщатко миші.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="701"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="402"/>
         <source>Number of minutes to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість хвилин, яку потрібно додати/відняти до часу відео для їх синхронізації.
+Порада: для зміни значень можна використовувати коліщатко миші.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="743"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="444"/>
         <source>Number of seconds to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість секунд для додавання/віднімання часу відео для їх синхронізації.
+Порада: для зміни значень можна використовувати коліщатко миші.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="763"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="464"/>
         <source>Sync start of GPS to start of video file.
 Tip: use this if you started GPS and video recording at the same time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Синхронізувати початок GPS із початком відеофайлу.
+Порада: скористайтеся цією функцією, якщо ви запустили GPS і запис відео одночасно.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="805"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="506"/>
         <source>Sync start of GPS to current video time.
 Tip: use this if you recorded the moment of the first GPS fix.</source>
-        <translation type="unfinished"></translation>
+        <translation>Синхронізувати початок GPS із поточним часом відео.
+Порада: скористайтеся цим, якщо ви записали момент першого визначення GPS.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="817"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="518"/>
         <source>GPS smoothing</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS згладжування</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="821"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="522"/>
         <source>Average nearby GPS points to smooth out errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Усередніть точки GPS поблизу, щоб згладити помилки.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="957"/>
         <source>&lt;b&gt;Graph data&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Дані графіка&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="962"/>
         <source>Data source</source>
-        <translation type="unfinished"></translation>
+        <translation>Джерело даних</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="966"/>
         <source>Choose which data type is used for graph drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть, який тип даних використовуватиметься для малювання графіка.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="976"/>
         <source>Location (2D map)</source>
-        <translation type="unfinished"></translation>
+        <translation>Розташування (2D карта)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="976"/>
         <source>Altitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Висота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="976"/>
         <source>Heart rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Пульс</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="990"/>
         <source>Graph type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип графіка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="994"/>
         <source>Graph types can add advanced interactions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Типи графіків можуть додавати розширені взаємодії.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1004"/>
@@ -14958,231 +15096,242 @@ Tip: use this if you recorded the moment of the first GPS fix.</source>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1004"/>
         <source>Follow dot (cropped)</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотримуйтесь точки (кадровано)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1004"/>
         <source>Speedometer</source>
-        <translation type="unfinished"></translation>
+        <translation>Спідометр</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1014"/>
         <source>Standard = just a static map.
 Follow dot = centers on the current location.
 Speedometer = draws a simple speedometer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт = просто статична карта.
+Крапка = центрує поточне розташування.
+Спідометр = малює простий спідометр.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1022"/>
         <source>Trim time</source>
-        <translation type="unfinished"></translation>
+        <translation>Час обрізки</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1026"/>
         <source>Hides part of the graph at beginning or end.
 This does not recompute min/max for any field.</source>
-        <translation type="unfinished"></translation>
+        <translation>Приховує частину графіка на початку або в кінці.
+Це не перераховує min/max для жодного поля.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1055"/>
         <source>Hides part of the beginning of the graph.</source>
-        <translation type="unfinished"></translation>
+        <translation>Приховує частину початку графіка.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1103"/>
         <source>Hides part of the end of the graph.</source>
-        <translation type="unfinished"></translation>
+        <translation>Приховує частину кінця графіка.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1124"/>
         <source>Crop horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадрувати горизонтально</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1128"/>
         <source>Zooms in on the graph on the horizontal axis (longitude if map, time if simple graph).
 The number is either a percentage or a numeric value interpreted as the legend type.
 This field is not applicable for Speedometer type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільшує графік на горизонтальній осі (довгота на карті, час на простому графіку).
+Число – це відсоток або числове значення, яке інтерпретується як тип легенди.
+Це поле не застосовується для типу спідометра.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1152"/>
         <source>Crops the graph from the left side.</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадрує графік з лівого боку.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1199"/>
         <source>Crops the graph from the right side. This value is ignored if mode is Follow dot.</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадрує графік з правого боку. Це значення ігнорується, якщо в режимі вибрано «Слідувати крапці».</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1208"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1328"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1208"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1328"/>
         <source>value</source>
-        <translation type="unfinished"></translation>
+        <translation>значення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1219"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1339"/>
         <source>The crop values are interpreted as a percentage of total or as an absolute value (in legend unit).</source>
-        <translation type="unfinished"></translation>
+        <translation>Значення кадрування інтерпретуються як відсоток від загального або як абсолютне значення (в одиницях легенди).</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1223"/>
         <source>Input for horizontal crops can be a percentage or an absolute value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Введення для горизонтальних культур може бути відсотковим або абсолютним значенням.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1243"/>
         <source>Crop vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадрування вертикально</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1247"/>
         <source>Zooms in on the graph on the vertical axis (latitude if map, value if simple graph).
 The number is either a percentage or a numeric value interpreted as the legend type.
 This field affects min/max values on the Speedometer type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільшує графік на вертикальній осі (широта на карті, значення на простому графіку).
+Число – це відсоток або числове значення, яке інтерпретується як тип легенди.
+Це поле впливає на мінімальні/максимальні значення для типу спідометра.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1272"/>
         <source>Crops the graph from the bottom side.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрізає графік знизу.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1319"/>
         <source>Crops the graph from the top side. This value is ignored if mode is Follow dot.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрізає графік зверху. Це значення ігнорується, якщо в режимі вибрано «Слідувати крапці».</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1343"/>
         <source>Input for vertical crops can be a percentage or an absolute value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Введення для вертикальних культур може бути відсотковим або абсолютним значенням.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1364"/>
         <source>&lt;b&gt;Graph design&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Графічний дизайн&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1369"/>
         <source>Color style</source>
-        <translation type="unfinished"></translation>
+        <translation>Стиль кольору</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1373"/>
         <source>Choose how you want to color the graph line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть колір лінії графіка.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1396"/>
         <source>One color</source>
-        <translation type="unfinished"></translation>
+        <translation>Один колір</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1396"/>
         <source>Two colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Два кольори</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1396"/>
         <source>Solid past, thin future</source>
-        <translation type="unfinished"></translation>
+        <translation>Тверде минуле, тонке майбутнє</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1396"/>
         <source>Solid future, thin past</source>
-        <translation type="unfinished"></translation>
+        <translation>Тверде майбутнє, тонке минуле</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1396"/>
         <source>Vertical gradient</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикальний градієнт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1396"/>
         <source>Horizontal gradient</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальний градієнт</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1396"/>
         <source>Color by duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір за тривалістю</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1396"/>
         <source>Color by altitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Розфарбуй за висотою</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1396"/>
         <source>Color by heart rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Розфарбуй за пульсом</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1396"/>
         <source>Color by speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Розфарбуй за швидкістю</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1415"/>
         <source>Color by Altitude/HR only work if there are recorded values in the gps file.
 For speedometer type, only first 2 colors are used.</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір за висотою/HR працює, лише якщо у файлі GPS є записані значення.
+Для типу спідометра використовуються лише перші 2 кольори.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1459"/>
         <source>Now dot</source>
-        <translation type="unfinished"></translation>
+        <translation>Зараз точка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1463"/>
         <source>Draw a dot showing current position on the graph.
 For speedometer type, this is the needle.</source>
-        <translation type="unfinished"></translation>
+        <translation>Намалюйте точку, що вказує на поточну позицію на графіку.
+Для спідометра це стрілка.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1482"/>
         <source>Set the color of the inside of the now dot (or needle).</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановіть колір внутрішньої сторони точки (або голки).</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1508"/>
         <source>Now text</source>
-        <translation type="unfinished"></translation>
+        <translation>Зараз текст</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1513"/>
         <source>Draw a large white text showing the current value.
 The legend unit (if present) will be appended at the end.</source>
-        <translation type="unfinished"></translation>
+        <translation>Намалюйте великий білий текст, що показує поточне значення.
+Блок легенди (якщо є) буде додано в кінці.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1533"/>
         <source>Rotate the entire graph. Speedometer also rotates internal text.</source>
-        <translation type="unfinished"></translation>
+        <translation>Поверніть весь графік. Спідометр також обертає внутрішній текст.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1571"/>
         <source>Set the thickness of the graph line. Does not affect speedometer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити товщину лінії графіка. Не впливає на спідометр.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1605"/>
         <source>Draw legend</source>
-        <translation type="unfinished"></translation>
+        <translation>Намалювати легенду</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1609"/>
         <source>Draw 5 horizontal white lines with individual values for graph readability. 2D map also draws vertical (longitude) lines.
 For speedometer this draws text for divisions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Намалюйте 5 горизонтальних білих ліній з окремими значеннями для зручності читання графіка. 2Д карта також малює вертикальні (довгота) лінії.
+Для спідометра малює текст для поділок.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1623"/>
@@ -15192,86 +15341,90 @@ For speedometer this draws text for divisions.</source>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1627"/>
         <source>This will be used in legend text if active and in absolute value math.</source>
-        <translation type="unfinished"></translation>
+        <translation>Це буде використано в тексті легенди, якщо він активний, і в математиці абсолютного значення.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1640"/>
         <source>Defaults are km/h (speed) and meters (altitude).
  Available options: km/h, mi/h, nm/h (kn), m/s, ft/s.</source>
-        <translation type="unfinished"></translation>
+        <translation>За замовчуванням є км/год (швидкість) і метри (висота).
+Доступні варіанти: км/год, миль/год, нм/год (кн), м/с, фут/с.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1784"/>
         <source>Sets the height to the correct map aspect ratio or 1:1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановлює для висоти правильне співвідношення сторін карти або 1:1.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1793"/>
         <source>&lt;b&gt;Background options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Налаштування фону&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1798"/>
         <source>Image path</source>
-        <translation type="unfinished"></translation>
+        <translation>Шлях зображення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1802"/>
         <source>Choose an image to overlay behind the graph. Tip: you can use an actual map image to make the GPS track more interesting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть зображення, яке буде накладено на графік. Порада: ви можете використати фактичне зображення карти, щоб зробити маршрут GPS більш цікавим.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1837"/>
         <source>GPS file center is: </source>
-        <translation type="unfinished"></translation>
+        <translation>Файловий центр GPS - це:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1840"/>
         <source>Get the center coordinate of GPS map. This does not change with trim or crop.
 TIP:OpenStreetMap website can save the current standard map centered on searched location (but only at screen resolution).
 Google Earth for desktop can center on a coordinate and save a 4K image of it. Disable the Terrain layer for best results.</source>
-        <translation type="unfinished"></translation>
+        <translation>Отримайте координати центру GPS-карти. Це не змінюється при обрізанні чи обрізанні.
+ПОРАДА: Веб-сайт OpenStreetMap може зберігати поточну стандартну карту з центром на місці пошуку (але лише з роздільною здатністю екрана).
+Google Планета Земля для комп’ютера може центрувати координату та зберігати її зображення 4K. Щоб отримати найкращі результати, вимкніть шар Terrain.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1852"/>
         <source>Browse for an image file to be assigned as graph background.</source>
-        <translation type="unfinished"></translation>
+        <translation>Знайдіть файл зображення, який буде призначено фоном графіка.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1871"/>
         <source>Increase or decrease the size of the background image.
 Values smaller than 1 will zoom into image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільште або зменшіть розмір фонового зображення.
+Значення, менші за 1, збільшать зображення.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="615"/>
         <source>Processing start</source>
-        <translation type="unfinished"></translation>
+        <translation>Початок обробки</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="620"/>
         <source>Distances are calculated since the start of the gps file, use this field to reset them (GPS time).</source>
-        <translation type="unfinished"></translation>
+        <translation>Відстані обчислюються з початку файлу gps, використовуйте це поле, щоб скинути їх (час GPS).</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="638"/>
         <source>Insert date and time formatted exactly as: YYYY-MM-DD HH:MM:SS (GPS time).</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставте дату й час у такому форматі: РРРР-ММ-ДД ГГ:ХХ:СС (час GPS).</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="654"/>
         <source>Set start of GPS processing to current video time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити початок обробки GPS на поточний час відео.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="712"/>
         <source>&lt;b&gt;Text options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Опції тексту&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="833"/>
         <source>Insert GPS field</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставте поле GPS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="927"/>
@@ -15280,156 +15433,161 @@ Distance units: m [km|ft|mi].
 Speed units: km/h [mi/h|m/s|ft/s].
 Time default: %Y-%m-%d %H:%M:%S, extra offset can be added as +/-seconds (+3600).
 Extra keyword: RAW (prints only values from file).</source>
-        <translation type="unfinished"></translation>
+        <translation>До ключових слів можна додавати додаткові аргументи:
+Одиниці вимірювання відстані: м [км|фут|миль].
+Одиниці вимірювання швидкості: км/год [милі/год|м/с|фут/с].
+Час за замовчуванням: %Y-%m-%d %H:%M:%S, додаткове зміщення можна додати як +/- секунд (+3600).
+Додаткове ключове слово: RAW (друкує лише значення з файлу).</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>GPS latitude</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS Широта</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>GPS longitude</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS довгота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Elevation (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>Висота (м)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Speed (km/h)</source>
-        <translation type="unfinished"></translation>
+        <translation>Швидкість (км/год)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Distance (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>Дистанція (м)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>GPS date-time</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата-час GPS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Video file date-time</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата-час відеофайлу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Heart-rate (bpm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Частота серцевих скорочень (ударів на хвилину)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Bearing (degrees)</source>
-        <translation type="unfinished"></translation>
+        <translation>Пеленг (градуси)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Bearing (compass)</source>
-        <translation type="unfinished"></translation>
+        <translation>Пеленг (компас)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Elevation gain (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>Підвищення висоти (м)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Elevation loss (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>Втрата висоти (м)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Distance uphill (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>Відстань в гору (м)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Distance downhill (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>Відстань під гору (м)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="858"/>
         <source>Distance flat (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>Відстань до площі (м)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="943"/>
         <source>&lt;b&gt;Advanced options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Розширені опції&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="912"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="669"/>
         <source>Video speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Швидкість відео</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="916"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="674"/>
         <source>If the current video is sped up (timelapse) or slowed down use this field to set the speed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Якщо поточне відео прискорено (проміжок часу) або сповільнено, використовуйте це поле, щоб установити швидкість.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="941"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="696"/>
         <source>Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).</source>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяється також дрібний час (0,25 = 4x сповільнена зйомка, 5 = 5x сповільнена зйомка).</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="948"/>
         <source>Update speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Швидкість оновлення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="953"/>
         <source>Set how many text updates to show per second.
 Set to 0 to only print real points (no interpolation).</source>
-        <translation type="unfinished"></translation>
+        <translation>Установіть, скільки текстових оновлень відображати в секунду.
+Встановіть значення 0, щоб друкувати лише реальні точки (без інтерполяції).</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="973"/>
         <source>Fractional times are also allowed (0.25 = update every 4 seconds, 5 = 5 updates per second).</source>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяється також дрібний час (0,25 = оновлення кожні 4 секунди, 5 = 5 оновлень на секунду).</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="984"/>
         <source> per second</source>
-        <translation type="unfinished"></translation>
+        <translation> в секунду</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1918"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="1013"/>
         <source>Video start time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Час початку відео:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1923"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="1018"/>
         <source>Detected date-time for the video file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виявлено дату й час для відеофайлу.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1943"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="1038"/>
         <source>GPS start time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Час початку GPS:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1948"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="1043"/>
         <source>Detected date-time for the GPS file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виявлено дату й час для файлу GPS.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1960"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="1055"/>
         <source>This time will be used for synchronization.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей час буде використано для синхронізації.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="384"/>
@@ -15437,97 +15595,97 @@ Set to 0 to only print real points (no interpolation).</source>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="281"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="652"/>
         <source>Tip: Mask other video filters by adding filters after this one followed by &lt;b&gt;Mask: Apply&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Порада: маскуйте інші відеофільтри, додавши фільтри після цього, а потім &lt;b&gt;Маска: Застосувати&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="131"/>
         <source>50 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="202"/>
         <source>100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="226"/>
         <source>156 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>156 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="250"/>
         <source>220 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>220 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="274"/>
         <source>311 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>311 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="298"/>
         <source>440 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>440 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="322"/>
         <source>622 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>622 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="346"/>
         <source>880 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>880 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="370"/>
         <source>1250 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>1250 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="394"/>
         <source>1750 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>1750 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="418"/>
         <source>2500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>2500 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="442"/>
         <source>3500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>3500 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="466"/>
         <source>5000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>5000 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="490"/>
         <source>10000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>10000 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="514"/>
         <source>20000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>20000 Гц</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="133"/>
         <source>Low</source>
-        <translation type="unfinished"></translation>
+        <translation>Низький</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="192"/>
         <source>Mid</source>
-        <translation type="unfinished"></translation>
+        <translation>Середина</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="216"/>
         <source>High</source>
-        <translation type="unfinished"></translation>
+        <translation>Високий</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="89"/>
@@ -15537,37 +15695,37 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="110"/>
         <source>Middle (L+R)</source>
-        <translation type="unfinished"></translation>
+        <translation>Середній (L+R)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="110"/>
         <source>Side (L-R)</source>
-        <translation type="unfinished"></translation>
+        <translation>Бічні (L-R)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="119"/>
         <source>Left delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Ліва затримка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="146"/>
         <source>Left delay gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Посилення лівої затримки</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="173"/>
         <source>Right delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Права затримка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="200"/>
         <source>Right delay gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Підсилення правої затримки</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="227"/>
         <source>Output gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихідне посилення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="118"/>
@@ -15577,17 +15735,17 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="129"/>
         <source>New Animation File</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл Нової Анімації</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="139"/>
         <source>Open Animation File</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити Файл Анімації</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="150"/>
         <source>Click &lt;b&gt;New...&lt;/b&gt; or &lt;b&gt;Open...&lt;/b&gt; to use this filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Натисніть &lt;b&gt;Новий...&lt;/b&gt; або&lt;b&gt;Відкрити...&lt;/b&gt; щоб використати цей фільтр</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="166"/>
@@ -15659,32 +15817,32 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="85"/>
         <source>Initial Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Початкове масштабування</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="89"/>
         <source>The amount to zoom the image before any motion occurs.</source>
-        <translation type="unfinished"></translation>
+        <translation>Величина масштабу зображення до появи будь-якого руху.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="110"/>
         <source>Oscillation</source>
-        <translation type="unfinished"></translation>
+        <translation>Коливання</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="114"/>
         <source>Oscillation can be useful to make the image move back and forth during long periods of sound.</source>
-        <translation type="unfinished"></translation>
+        <translation>Коливання може бути корисним, щоб змусити зображення рухатися вперед і назад під час тривалих періодів звуку.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="135"/>
         <source>Zoom</source>
-        <translation>Близь-даль</translation>
+        <translation>Наближення</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="139"/>
         <source>The amount that the audio affects the zoom of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вівень впливу звука на масштабування зображення.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="160"/>
@@ -15694,7 +15852,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="164"/>
         <source>The amount that the audio affects the upward offset of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень впливу звука на зміщення зображення вгору.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="185"/>
@@ -15704,7 +15862,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="189"/>
         <source>The amount that the audio affects the downward offset of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень впливу звука на зміщення зображення вниз.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="210"/>
@@ -15714,7 +15872,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="214"/>
         <source>The amount that the audio affects the left offset of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень впливу звука на зсув ліворуч зображення.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="235"/>
@@ -15724,17 +15882,17 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="239"/>
         <source>The amount that the audio affects the right offset of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень впливу звука на правий зсув зображення.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="260"/>
         <source>Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>За годинниковою стрілкою</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="264"/>
         <source>The amount that the audio affects the clockwise rotation of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень впливу звука на обертання зображення за годинниковою стрілкою.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="276"/>
@@ -15745,32 +15903,32 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="285"/>
         <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Проти годинникової стрілки</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="289"/>
         <source>The amount that the audio affects the counterclockwise rotation of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень впливу звука на обертання зображення проти годинникової стрілки.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="310"/>
         <source>Low Frequency</source>
-        <translation>Низька Частота</translation>
+        <translation>Низька частота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="314"/>
         <source>The low end of the frequency range to be used to influence the image motion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нижній кінець діапазону частот, який буде використовуватися для впливу на рух зображення.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="340"/>
         <source>High Frequency</source>
-        <translation>Висока Частота</translation>
+        <translation>Висока частота</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="344"/>
         <source>The high end of the frequency range to be used to influence the image motion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Верхній кінець діапазону частот, який використовуватиметься для впливу на рух зображення.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="370"/>
@@ -15780,7 +15938,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="374"/>
         <source>The minimum amplitude of sound that must occur within the frequency range to cause the image to move.</source>
-        <translation type="unfinished"></translation>
+        <translation>Мінімальна амплітуда звуку, який має виникати в діапазоні частот, щоб спричинити рух зображення.</translation>
     </message>
 </context>
 <context>
@@ -15801,7 +15959,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="83"/>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтінки сірого</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="129"/>
@@ -15853,7 +16011,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="97"/>
         <source>Waveform Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір Хвилі</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="114"/>
@@ -15868,12 +16026,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="198"/>
         <source>Oscillation</source>
-        <translation type="unfinished"></translation>
+        <translation>Коливання</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="202"/>
         <source>Oscillation can be useful to make the light blink during long periods of sound.</source>
-        <translation type="unfinished"></translation>
+        <translation>Коливання може бути корисним, щоб змусити світло блимати під час тривалих періодів звуку.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="223"/>
@@ -15883,7 +16041,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="227"/>
         <source>The low end of the frequency range to be used to influence the light.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нижній кінець діапазону частот, що використовується для впливу на світло.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="253"/>
@@ -15893,7 +16051,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="257"/>
         <source>The high end of the frequency range to be used to influence the light.</source>
-        <translation type="unfinished"></translation>
+        <translation>Верхній кінець діапазону частот, що використовується для впливу на світло.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="283"/>
@@ -15903,7 +16061,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="287"/>
         <source>The minimum amplitude of sound that must occur within the frequency range to cause the light to change.</source>
-        <translation type="unfinished"></translation>
+        <translation>Мінімальна амплітуда звуку, яка має виникати в діапазоні частот, щоб викликати зміну світла.</translation>
     </message>
 </context>
 <context>
@@ -15943,7 +16101,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="81"/>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>Відтінки сірого</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="157"/>
@@ -16029,7 +16187,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="142"/>
         <source>Segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Сегмент</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="150"/>
@@ -16079,12 +16237,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="356"/>
         <source>Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Сегменти</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="380"/>
         <source>Segment Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Розрив сегментів</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="404"/>
@@ -16099,7 +16257,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="427"/>
         <source>The low end of the frequency range of the spectrum.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нижній кінець частотного діапазону спектра.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="453"/>
@@ -16109,7 +16267,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="457"/>
         <source>The high end of the frequency range of the spectrum.</source>
-        <translation type="unfinished"></translation>
+        <translation>Верхній кінець частотного діапазону спектра.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="483"/>
@@ -16120,24 +16278,24 @@ Set to 0 to only print real points (no interpolation).</source>
 <context>
     <name>vui</name>
     <message>
-        <location filename="../src/qml/filters/corners/vui.qml" line="261"/>
+        <location filename="../src/qml/filters/corners/vui.qml" line="263"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/vui.qml" line="290"/>
+        <location filename="../src/qml/filters/corners/vui.qml" line="294"/>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation>2</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/vui.qml" line="319"/>
+        <location filename="../src/qml/filters/corners/vui.qml" line="325"/>
         <source>3</source>
-        <translation type="unfinished">3</translation>
+        <translation>3</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/vui.qml" line="348"/>
+        <location filename="../src/qml/filters/corners/vui.qml" line="356"/>
         <source>4</source>
-        <translation type="unfinished">4</translation>
+        <translation>4</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="378"/>
