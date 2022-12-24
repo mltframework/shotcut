@@ -53,6 +53,7 @@ AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_dropRow(-1)
     , m_normFilterCount(0)
+    , m_normLinkCount(0)
 {
 }
 
@@ -311,8 +312,8 @@ void AttachedFiltersModel::add(QmlMetadata *meta)
         }
     }
 
+    int mltIndex = -1;
     if (meta->type() == QmlMetadata::Filter) {
-        int mltIndex = -1;
         Mlt::Filter *filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
         if (filter->is_valid()) {
             if (!meta->objectName().isEmpty())
@@ -369,7 +370,15 @@ void AttachedFiltersModel::add(QmlMetadata *meta)
                 MLT.pause();
             m_event->block();
             Mlt::Chain chain(*(m_producer.data()));
+            if (m_metaList.count() == 0) {
+                mltIndex = chain.link_count();
+            } else if (insertRow == 0) {
+                mltIndex = m_normLinkCount;
+            } else {
+                mltIndex = mltLinkIndex(insertRow - 1) + 1;
+            }
             chain.attach(*link);
+            chain.move_link(chain.link_count() - 1, mltIndex);
             m_event->unblock();
             m_metaList.insert(insertRow, meta);
             endInsertRows();
@@ -440,6 +449,7 @@ void AttachedFiltersModel::reset(Mlt::Producer *producer)
         m_producer.reset();
     m_metaList.clear();
     m_normFilterCount = 0;
+    m_normLinkCount = 0;
 
     if (m_producer && m_producer->is_valid()) {
         Mlt::Event *event = m_producer->listen("service-changed", this,
@@ -452,8 +462,12 @@ void AttachedFiltersModel::reset(Mlt::Producer *producer)
             for (int i = 0; i < count; i++) {
                 Mlt::Link *link = chain.link(i);
                 if (link && link->is_valid()) {
-                    QmlMetadata *newMeta = MAIN.filterController()->metadataForService(link);
-                    m_metaList.append(newMeta);
+                    if (link->get_int("_loader")) {
+                        m_normLinkCount++;
+                    } else {
+                        QmlMetadata *newMeta = MAIN.filterController()->metadataForService(link);
+                        m_metaList.append(newMeta);
+                    }
                 }
                 delete link;
             }
@@ -485,7 +499,7 @@ int AttachedFiltersModel::mltFilterIndex(int row) const
         int linkCount = 0;
         if (m_producer->type() == mlt_service_chain_type) {
             Mlt::Chain chain(*m_producer);
-            linkCount = chain.link_count();
+            linkCount = chain.link_count() - m_normLinkCount;
             if (row < linkCount) {
                 // This row refers to an MLT link, not a filter
                 return -1;
@@ -504,8 +518,9 @@ int AttachedFiltersModel::mltLinkIndex(int row) const
     if (row >= 0 && m_producer && m_producer->is_valid()
             && m_producer->type() == mlt_service_chain_type) {
         Mlt::Chain chain(*m_producer);
-        if (row < chain.link_count()) {
-            return row;
+        int linkCount = chain.link_count() - m_normLinkCount;
+        if (row < linkCount) {
+            return m_normLinkCount + row;
         }
     }
     return -1;
