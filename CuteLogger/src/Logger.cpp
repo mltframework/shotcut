@@ -85,7 +85,7 @@
  *       destruction of the QCoreApplication (or QApplication) instance. It needs a QCoreApplication instance to be
  *       created before any of the Logger's functions are called.
  *
- * \sa logger
+ * \sa cuteLogger
  * \sa LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR, LOG_FATAL
  * \sa LOG_CTRACE, LOG_CDEBUG, LOG_CINFO, LOG_CWARNING, LOG_CERROR, LOG_CFATAL
  * \sa LOG_ASSERT
@@ -95,7 +95,7 @@
 
 
 /**
- * \def logger
+ * \def cuteLogger
  *
  * \brief Macro returning the current instance of Logger object
  *
@@ -316,6 +316,19 @@
  * }
  * \endcode
  *
+ * If used compiler supports C++11 standard, LOG_CATEGORY and LOG_GLOBAL_CATEGORY macros would also work when added
+ * inside of any scope. It could be useful, for example, to log every single run of a method to a different file.
+ *
+ * \code
+ * void foo()
+ * {
+ *   QString categoryName = QDateTime::currentDateTime().toString("yyyy-MM-ddThh-mm-ss-zzz");
+ *   LOG_CATEGORY(categoryName);
+ *   cuteLogger->registerAppender(new FileAppender(categoryName + ".log"));
+ *   ...
+ * }
+ * \endcode
+ *
  * \sa Logger::write()
  * \sa LOG_TRACE
  * \sa Logger::registerCategoryAppender()
@@ -441,57 +454,9 @@
  * \note Qt 4 qDebug set of macro doesn't support capturing source function name, file name or line number so we
  *       recommend to use LOG_DEBUG() and other Logger macros instead.
  *
- * \sa logger
+ * \sa cuteLogger
  * \sa [CuteLogger Documentation](index.html)
  */
-
-class LogDevice : public QIODevice
-{
-  public:
-    LogDevice(Logger* l)
-      : m_logger(l),
-        m_semaphore(1)
-    {}
-
-    void lock(Logger::LogLevel logLevel, const char* file, int line, const char* function, const char* category)
-    {
-      m_semaphore.acquire();
-
-      if (!isOpen())
-        open(QIODevice::WriteOnly);
-
-      m_logLevel = logLevel;
-      m_file = file;
-      m_line = line;
-      m_function = function;
-      m_category = category;
-    }
-
-  protected:
-    qint64 readData(char*, qint64)
-    {
-      return 0;
-    }
-
-    qint64 writeData(const char* data, qint64 maxSize)
-    {
-      if (maxSize > 0)
-        m_logger->write(m_logLevel, m_file, m_line, m_function, m_category, QString::fromLocal8Bit(QByteArray(data, maxSize)));
-
-      m_semaphore.release();
-      return maxSize;
-    }
-
-  private:
-    Logger* m_logger;
-    QSemaphore m_semaphore;
-    Logger::LogLevel m_logLevel;
-    const char* m_file;
-    int m_line;
-    const char* m_function;
-    const char* m_category;
-};
-
 
 // Forward declarations
 static void cleanupLoggerGlobalInstance();
@@ -519,14 +484,14 @@ class LoggerPrivate
 
     QMap<QString, bool> categories;
     QMultiMap<QString, AbstractAppender*> categoryAppenders;
+    QStringList noAppendersCategories; //<! Categories without appenders that was already warned about
     QString defaultCategory;
-
-    LogDevice* logDevice;
+    bool writeDefaultCategoryToGlobalInstance;
 };
 
 
 // Static fields initialization
-Logger* LoggerPrivate::globalInstance = 0;
+Logger* LoggerPrivate::globalInstance = nullptr;
 QReadWriteLock LoggerPrivate::globalInstanceLock;
 
 
@@ -535,14 +500,14 @@ static void cleanupLoggerGlobalInstance()
   QWriteLocker locker(&LoggerPrivate::globalInstanceLock);
 
   delete LoggerPrivate::globalInstance;
-  LoggerPrivate::globalInstance = 0;
+  LoggerPrivate::globalInstance = nullptr;
 }
 
 
 #if QT_VERSION >= 0x050000
 static void qtLoggerMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-  Logger::LogLevel level = Logger::Error;
+  Logger::LogLevel level = Logger::Debug;
   switch (type)
   {
     case QtDebugMsg:
@@ -565,7 +530,7 @@ static void qtLoggerMessageHandler(QtMsgType type, const QMessageLogContext& con
   }
 
   bool isDefaultCategory = QString::fromLatin1(context.category) == "default";
-  Logger::globalInstance()->write(level, context.file, context.line, context.function, isDefaultCategory ? 0 : context.category, msg);
+  Logger::globalInstance()->write(level, context.file, context.line, context.function, isDefaultCategory ? nullptr : context.category, msg);
 }
 
 #else
@@ -594,31 +559,30 @@ static void qtLoggerMessageHandler(QtMsgType type, const char* msg)
 //! Construct the instance of Logger
 /**
  * If you're only using one global instance of logger you wouldn't probably need to use this constructor manually.
- * Consider using [logger](@ref logger) macro instead to access the logger instance
+ * Consider using [cuteLogger](@ref cuteLogger) macro instead to access the logger instance
  */
 Logger::Logger()
   : d_ptr(new LoggerPrivate)
 {
   Q_D(Logger);
-
-  d->logDevice = new LogDevice(this);
+  d->writeDefaultCategoryToGlobalInstance = false;
 }
 
 
 //! Construct the instance of Logger and set logger default category
 /**
  * If you're only using one global instance of logger you wouldn't probably need to use this constructor manually.
- * Consider using [logger](@ref logger) macro instead to access the logger instance and call
+ * Consider using [cuteLogger](@ref cuteLogger) macro instead to access the logger instance and call
  * [setDefaultCategory](@ref setDefaultCategory) method.
  *
  * \sa Logger()
  * \sa setDefaultCategory()
  */
-Logger::Logger(const QString& defaultCategory)
+Logger::Logger(const QString& defaultCategory, bool writeToGlobalInstance)
   : d_ptr(new LoggerPrivate)
 {
   Q_D(Logger);
-  d->logDevice = new LogDevice(this);
+  d->writeDefaultCategoryToGlobalInstance = writeToGlobalInstance;
 
   setDefaultCategory(defaultCategory);
 }
@@ -635,12 +599,16 @@ Logger::~Logger()
 
   // Cleanup appenders
   QMutexLocker appendersLocker(&d->loggerMutex);
-  QSet<AbstractAppender*> deleteList(QSet<AbstractAppender*>(d->appenders.begin(), d->appenders.end()));
-  deleteList.unite(QSet<AbstractAppender*>(d->categoryAppenders.values().begin(), d->categoryAppenders.values().end()));
+#if QT_VERSION >= 0x050e00
+  QSet<AbstractAppender*> deleteList(d->appenders.begin(), d->appenders.end());
+  auto cal = d->categoryAppenders.values();
+  deleteList.unite(QSet<AbstractAppender*>(cal.begin(), cal.end()));
+#else
+  QSet<AbstractAppender*> deleteList(QSet<AbstractAppender*>::fromList(d->appenders));
+  deleteList.unite(QSet<AbstractAppender*>::fromList(d->categoryAppenders.values()));
+#endif
   qDeleteAll(deleteList);
 
-  // Cleanup device
-  delete d->logDevice;
   appendersLocker.unlock();
 
   delete d_ptr;
@@ -711,13 +679,13 @@ Logger::LogLevel Logger::levelFromString(const QString& s)
 
 //! Returns the global instance of Logger
 /**
- * In a most cases you shouldn't use this function directly. Consider using [logger](@ref logger) macro instead.
+ * In a most cases you shouldn't use this function directly. Consider using [cuteLogger](@ref cuteLogger) macro instead.
  *
- * \sa logger
+ * \sa cuteLogger
  */
 Logger* Logger::globalInstance()
 {
-  Logger* result = 0;
+  Logger* result = nullptr;
   {
     QReadLocker locker(&LoggerPrivate::globalInstanceLock);
     result = LoggerPrivate::globalInstance;
@@ -920,8 +888,11 @@ void Logger::write(const QDateTime& timeStamp, LogLevel logLevel, const char* fi
     QList<AbstractAppender*> appenders = d->categoryAppenders.values(logCategory);
     if (appenders.length() == 0)
     {
-      if (logCategory != d->defaultCategory && !linkedToGlobal && !fromLocalInstance)
+      if (logCategory != d->defaultCategory && !linkedToGlobal && !fromLocalInstance && !d->noAppendersCategories.contains(logCategory))
+      {
         std::cerr << "No appenders associated with category " << qPrintable(logCategory) << std::endl;
+        d->noAppendersCategories.append(logCategory);
+      }
     }
     else
     {
@@ -957,8 +928,20 @@ void Logger::write(const QDateTime& timeStamp, LogLevel logLevel, const char* fi
   }
 
   // local logger instances send category messages to the global instance
-  if (!logCategory.isNull() && !isGlobalInstance)
-    globalInstance()->write(timeStamp, logLevel, file, line, function, logCategory.toLatin1(), message, true);
+  if (!isGlobalInstance)
+  {
+    if (!logCategory.isNull())
+    {
+      globalInstance()->write(timeStamp, logLevel, file, line, function, logCategory.toLatin1(), message, true);
+      wasWritten = true;
+    }
+
+    if (d->writeDefaultCategoryToGlobalInstance && logCategory == d->defaultCategory)
+    {
+      globalInstance()->write(timeStamp, logLevel, file, line, function, nullptr, message, true);
+      wasWritten = true;
+    }
+  }
 
   if (!wasWritten && !fromLocalInstance)
   {
@@ -1021,36 +1004,6 @@ void Logger::write(LogLevel logLevel, const char* file, int line, const char* fu
 }
 
 
-/**
- * This is the overloaded function provided for the convinience. It behaves similar to the above function.
- *
- * This function doesn't accept any log message as argument. It returns the \c QDebug object that can be written
- * using the stream functions. For example, you may like to write:
- * \code
- * LOG_DEBUG() << "This is the size" << size << "of the element" << elementName;
- * \endcode
- * instead of writing
- * \code
- * LOG_DEBUG(QString(QLatin1String("This is the size %1x%2 of the element %3"))
- *           .arg(size.x()).arg(size.y()).arg(elementName));
- * \endcode
- *
- * Please consider reading the Qt Reference Documentation for the description of the QDebug class usage syntax.
- *
- * \note This overload is definitely more pleasant to use than the first write() overload, but it behaves definitely
- *       slower than all the above overloads.
- *
- * \sa write()
- */
-QDebug Logger::write(LogLevel logLevel, const char* file, int line, const char* function, const char* category)
-{
-  Q_D(Logger);
-
-  d->logDevice->lock(logLevel, file, line, function, category);
-  return QDebug(d->logDevice);
-}
-
-
 //! Writes the assertion
 /**
  * This function writes the assertion record using the write() function.
@@ -1069,7 +1022,7 @@ QDebug Logger::write(LogLevel logLevel, const char* file, int line, const char* 
  */
 void Logger::writeAssert(const char* file, int line, const char* function, const char* condition)
 {
-  write(Logger::Fatal, file, line, function, 0, QString("ASSERT: \"%1\"").arg(condition));
+  write(Logger::Fatal, file, line, function, nullptr, QString("ASSERT: \"%1\"").arg(condition));
 }
 
 
@@ -1084,7 +1037,11 @@ void LoggerTimingHelper::start(const char* msg, ...)
 {
   va_list va;
   va_start(va, msg);
+#if QT_VERSION >= 0x050500
   m_block = QString().vasprintf(msg, va);
+#else
+  m_block = QString().vsprintf(msg, va);
+#endif
   va_end(va);
 
   m_time.start();
@@ -1114,32 +1071,38 @@ LoggerTimingHelper::~LoggerTimingHelper()
   else
     message = QString(QLatin1String("\"%1\" finished in ")).arg(m_block);
 
-  int elapsed = m_time.elapsed();
+  qint64 elapsed = m_time.elapsed();
   if (elapsed >= 10000 && m_timingMode == Logger::TimingAuto)
     message += QString(QLatin1String("%1 s.")).arg(elapsed / 1000);
   else
     message += QString(QLatin1String("%1 ms.")).arg(elapsed);
 
-  m_logger->write(m_logLevel, m_file, m_line, m_function, 0, message);
+  m_logger->write(m_logLevel, m_file, m_line, m_function, nullptr, message);
 }
 
 
-void CuteMessageLogger::write(const char* msg, ...) const
+CuteMessageLogger::~CuteMessageLogger()
+{
+  m_l->write(m_level, m_file, m_line, m_function, m_category, m_message);
+}
+
+void CuteMessageLogger::write(const char* msg, ...)
 {
   va_list va;
   va_start(va, msg);
-  m_l->write(m_level, m_file, m_line, m_function, m_category, QString().vasprintf(msg, va));
+  m_message = QString::vasprintf(msg, va);
   va_end(va);
 }
 
 
-void CuteMessageLogger::write(const QString& msg) const
+void CuteMessageLogger::write(const QString& msg)
 {
-  m_l->write(m_level, m_file, m_line, m_function, m_category, msg);
+  m_message = msg;
 }
 
 
-QDebug CuteMessageLogger::write() const
+QDebug CuteMessageLogger::write()
 {
-  return m_l->write(m_level, m_file, m_line, m_function, m_category);
+  QDebug d(&m_message);
+  return d;
 }

@@ -51,8 +51,24 @@ CUTELOGGERSHARED_EXPORT Logger* cuteLoggerInstance();
 #define LOG_ASSERT(cond)        ((!(cond)) ? cuteLoggerInstance()->writeAssert(__FILE__, __LINE__, Q_FUNC_INFO, #cond) : qt_noop())
 #define LOG_ASSERT_X(cond, msg) ((!(cond)) ? cuteLoggerInstance()->writeAssert(__FILE__, __LINE__, Q_FUNC_INFO, msg) : qt_noop())
 
+#if (__cplusplus >= 201103L)
+#include <functional>
+
 #define LOG_CATEGORY(category) \
-  private:\
+  Logger customCuteLoggerInstance{category};\
+  std::function<Logger*()> cuteLoggerInstance = [&customCuteLoggerInstance]() {\
+    return &customCuteLoggerInstance;\
+  };\
+
+#define LOG_GLOBAL_CATEGORY(category) \
+  Logger customCuteLoggerInstance{category, true};\
+  std::function<Logger*()> cuteLoggerInstance = [&customCuteLoggerInstance]() {\
+    return &customCuteLoggerInstance;\
+  };\
+
+#else
+
+#define LOG_CATEGORY(category) \
     Logger* cuteLoggerInstance()\
     {\
       static Logger customCuteLoggerInstance(category);\
@@ -60,13 +76,14 @@ CUTELOGGERSHARED_EXPORT Logger* cuteLoggerInstance();
     }\
 
 #define LOG_GLOBAL_CATEGORY(category) \
-  private:\
     Logger* cuteLoggerInstance()\
     {\
       static Logger customCuteLoggerInstance(category);\
       customCuteLoggerInstance.logToGlobalInstance(category, true);\
       return &customCuteLoggerInstance;\
     }\
+
+#endif
 
 
 class LoggerPrivate;
@@ -76,7 +93,7 @@ class CUTELOGGERSHARED_EXPORT Logger
 
   public:
     Logger();
-    Logger(const QString& defaultCategory);
+    Logger(const QString& defaultCategory, bool writeToGlobalInstance = false);
     ~Logger();
 
     //! Describes the possible severity levels of the log records
@@ -115,7 +132,6 @@ class CUTELOGGERSHARED_EXPORT Logger
     void write(const QDateTime& timeStamp, LogLevel logLevel, const char* file, int line, const char* function, const char* category,
                const QString& message);
     void write(LogLevel logLevel, const char* file, int line, const char* function, const char* category, const QString& message);
-    QDebug write(LogLevel logLevel, const char* file, int line, const char* function, const char* category);
 
     void writeAssert(const char* file, int line, const char* function, const char* condition);
 
@@ -132,16 +148,16 @@ class CUTELOGGERSHARED_EXPORT CuteMessageLogger
   Q_DISABLE_COPY(CuteMessageLogger)
 
   public:
-    Q_DECL_CONSTEXPR CuteMessageLogger(Logger* l, Logger::LogLevel level, const char* file, int line, const char* function)
+    CuteMessageLogger(Logger* l, Logger::LogLevel level, const char* file, int line, const char* function)
         : m_l(l),
           m_level(level),
           m_file(file),
           m_line(line),
           m_function(function),
-          m_category(0)
+          m_category(nullptr)
     {}
 
-    Q_DECL_CONSTEXPR CuteMessageLogger(Logger* l, Logger::LogLevel level, const char* file, int line, const char* function, const char* category)
+    CuteMessageLogger(Logger* l, Logger::LogLevel level, const char* file, int line, const char* function, const char* category)
         : m_l(l),
           m_level(level),
           m_file(file),
@@ -150,7 +166,9 @@ class CUTELOGGERSHARED_EXPORT CuteMessageLogger
           m_category(category)
     {}
 
-    void write(const char* msg, ...) const
+    ~CuteMessageLogger();
+
+    void write(const char* msg, ...)
 #if defined(Q_CC_GNU) && !defined(__INSURE__)
 #  if defined(Q_CC_MINGW) && !defined(Q_CC_CLANG)
     __attribute__ ((format (gnu_printf, 2, 3)))
@@ -160,9 +178,9 @@ class CUTELOGGERSHARED_EXPORT CuteMessageLogger
 #endif
     ;
 
-    void write(const QString& msg) const;
+    void write(const QString& msg);
 
-    QDebug write() const;
+    QDebug write();
 
   private:
     Logger* m_l;
@@ -171,6 +189,7 @@ class CUTELOGGERSHARED_EXPORT CuteMessageLogger
     int m_line;
     const char* m_function;
     const char* m_category;
+    QString m_message;
 };
 
 

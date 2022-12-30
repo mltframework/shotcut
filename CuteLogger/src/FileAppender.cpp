@@ -26,6 +26,7 @@
 
 //! Constructs the new file appender assigned to file with the given name.
 FileAppender::FileAppender(const QString& fileName)
+  : m_flushOnWrite(false)
 {
   setFileName(fileName);
 }
@@ -54,6 +55,9 @@ QString FileAppender::fileName() const
  */
 void FileAppender::setFileName(const QString& s)
 {
+  if (s.isEmpty())
+    std::cerr << "<FileAppender::FileAppender> File name is empty. The appender will do nothing" << std::endl;
+
   QMutexLocker locker(&m_logFileMutex);
   if (m_logFile.isOpen())
     m_logFile.close();
@@ -62,8 +66,49 @@ void FileAppender::setFileName(const QString& s)
 }
 
 
+bool FileAppender::flushOnWrite() const
+{
+  return m_flushOnWrite;
+}
+
+
+//! Allows FileAppender to flush file immediately after writing a log record.
+/**
+ * Default value is false. This could result in substantial app slowdown when writing massive amount of log records
+ * with FileAppender on a rather slow file system due to FileAppender blocking until the data would be phisically
+ * written.
+ *
+ * Leaving this as is may result in some log data not being written if the application crashes.
+ */
+void FileAppender::setFlushOnWrite(bool flush)
+{
+  m_flushOnWrite = flush;
+}
+
+
+//! Force-flush any remaining buffers to file system. Returns true if successful, otherwise returns false.
+bool FileAppender::flush()
+{
+  QMutexLocker locker(&m_logFileMutex);
+  if (m_logFile.isOpen())
+    return m_logFile.flush();
+  else
+    return true;
+}
+
+
+bool FileAppender::reopenFile()
+{
+  closeFile();
+  return openFile();
+}
+
+
 bool FileAppender::openFile()
 {
+  if (m_logFile.fileName().isEmpty())
+    return false;
+
   bool isOpen = m_logFile.isOpen();
   if (!isOpen)
   {
@@ -91,7 +136,8 @@ void FileAppender::append(const QDateTime& timeStamp, Logger::LogLevel logLevel,
   {
     m_logStream << formattedString(timeStamp, logLevel, file, line, function, category, message);
     m_logStream.flush();
-    m_logFile.flush();
+    if (m_flushOnWrite)
+      m_logFile.flush();
   }
 }
 

@@ -6,8 +6,9 @@
 
 
 RollingFileAppender::RollingFileAppender(const QString& fileName)
-  : FileAppender(fileName),
-    m_logFilesLimit(0)
+  : FileAppender(fileName)
+  , m_frequency(DailyRollover)
+  , m_logFilesLimit(0)
 {}
 
 
@@ -199,7 +200,11 @@ void RollingFileAppender::computeRollOverTime()
     break;
     default:
       Q_ASSERT_X(false, "DailyRollingFileAppender::computeInterval()", "Invalid datePattern constant");
+#if QT_VERSION >= 0x050800
       m_rollOverTime = QDateTime::fromSecsSinceEpoch(0);
+#else
+      m_rollOverTime = QDateTime::fromTime_t(0);
+#endif
   }
 
   m_rollOverSuffix = start.toString(m_datePatternString);
