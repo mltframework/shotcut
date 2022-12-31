@@ -745,7 +745,7 @@ function set_globals {
 
   ####
   # frei0r
-  CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1 $CMAKE_DEBUG_FLAG"
+  CONFIG[2]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1 $CMAKE_DEBUG_FLAG"
   CFLAGS_[2]=$CFLAGS
   LDFLAGS_[2]=$LDFLAGS
 
@@ -1365,7 +1365,7 @@ EOF
       cmd install -p -c *.so "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
     elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
       cmd meson install -C builddir || die "Unable to install $1"
-    elif test "aom" = "$1" -o "mlt" = "$1" -o "x265" = "$1" ; then
+    elif test "aom" = "$1" -o "mlt" = "$1" -o "x265" = "$1" -o "frei0r" = "$1" ; then
       cmd ninja install || die "Unable to install $1"
     elif test "vmaf" = "$1" ; then
       cmd ninja install -C libvmaf/build || die "Unable to install $1"
