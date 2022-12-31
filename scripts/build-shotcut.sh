@@ -1232,15 +1232,6 @@ function configure_compile_install_subproject {
 
   feedback_status Configuring $1
 
-  # Special hack for frei0r
-  if test "frei0r" = "$1" -a ! -e configure ; then
-    debug "Need to create configure for $1"
-    cmd ./autogen.sh || die "Unable to create configure file for $1"
-    if test ! -e configure ; then
-      die "Unable to confirm presence of configure file for $1"
-    fi
-  fi
-
   # Special hack for mlt
   if test "mlt" = "$1"; then
     export CXXFLAGS="$CFLAGS -std=c++11"
@@ -1320,7 +1311,7 @@ function configure_compile_install_subproject {
     cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.la || die "Unable to build $1"
   elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
-  elif test "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1"  -o "glaxnimate" = "$1" -o "gopro2gpx" = "$1"; then
+  elif test "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1"  -o "glaxnimate" = "$1" -o "gopro2gpx" = "$1" -o "frei0r" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "x265" = "$1" ; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
