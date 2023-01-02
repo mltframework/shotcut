@@ -183,6 +183,8 @@ Rectangle {
             focus: true
 
             MouseArea {
+                id: tracksAreaMouse
+
                 property bool skim: false
 
                 // This provides skimming and continuous scrubbing at the left/right edges.
@@ -242,7 +244,7 @@ Rectangle {
 
                 interval: 25
                 repeat: true
-                running: parent.skim && parent.containsMouse && (parent.mouseX < 50 || parent.mouseX > parent.width - 50) && (producer.position * timeScale >= 50)
+                running: tracksAreaMouse.skim // && tracksAreaMouse.containsMouse && (tracksAreaMouse.mouseX < 50 || tracksAreaMouse.mouseX > parent.width - 50) && (producer.position * timeScale >= 50)
                 onTriggered: (mouse)=> {
                     if (parent.mouseX < 50)
                         producer.position -= 10;
@@ -353,7 +355,7 @@ Rectangle {
                                 Row {
                                     id: clipRow
 
-                                    Clip {
+                                    KeyframeClip {
                                         id: beforeClip
 
                                         visible: metadata !== null && filter !== null && filter.out > 0 && filter.in > 0
@@ -370,7 +372,7 @@ Rectangle {
                                         onRightClicked: root.clipRightClicked()
                                     }
 
-                                    Clip {
+                                    KeyframeClip {
                                         id: activeClip
 
                                         visible: metadata !== null && filter !== null && filter.out > 0
@@ -414,7 +416,7 @@ Rectangle {
                                         onRightClicked: root.clipRightClicked()
                                     }
 
-                                    Clip {
+                                    KeyframeClip {
                                         id: afterClip
 
                                         visible: metadata !== null && filter !== null && filter.out > 0
@@ -592,7 +594,7 @@ Rectangle {
 
         model: parameters
 
-        Parameter {
+        KeyframeParameter {
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
             isCurve: model.isCurve

@@ -158,11 +158,11 @@ Item {
         model: parameters
 
         Keyframe {
-            property int frame: model.frame
+            property int frame: model.frame ? model.frame : 0
 
-            interpolation: model.interpolation
-            name: model.name
-            value: model.value
+            interpolation: model.interpolation ? model.interpolation : 0
+            name: model.name ? model.name : ""
+            value: model.value ? model.value : 0
             minDragX: (filter.in - producer.in + model.minimumFrame) * timeScale - width / 2
             maxDragX: (filter.in - producer.in + model.maximumFrame) * timeScale - width / 2
             isSelected: root.currentTrack === parameterRoot.DelegateModel.itemsIndex && root.selection.indexOf(index) !== -1
