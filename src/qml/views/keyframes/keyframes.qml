@@ -244,7 +244,7 @@ Rectangle {
 
                 interval: 25
                 repeat: true
-                running: tracksAreaMouse.skim // && tracksAreaMouse.containsMouse && (tracksAreaMouse.mouseX < 50 || tracksAreaMouse.mouseX > parent.width - 50) && (producer.position * timeScale >= 50)
+                running: tracksAreaMouse.skim && tracksAreaMouse.containsMouse && (tracksAreaMouse.mouseX < 50 || tracksAreaMouse.mouseX > parent.width - 50) && (producer.position * timeScale >= 50)
                 onTriggered: (mouse)=> {
                     if (parent.mouseX < 50)
                         producer.position -= 10;
