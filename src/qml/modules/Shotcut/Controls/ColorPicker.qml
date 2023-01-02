@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
@@ -26,8 +25,8 @@ RowLayout {
     property bool alpha: false
     property alias eyedropper: pickerButton.visible
 
-    signal pickStarted()
-    signal pickCancelled()
+    signal pickStarted
+    signal pickCancelled
 
     SystemPalette {
         id: activePalette
@@ -38,7 +37,7 @@ RowLayout {
     Shotcut.ColorPickerItem {
         id: pickerItem
 
-        onColorPicked: (color)=> {
+        onColorPicked: color => {
             value = color;
             pickerButton.checked = false;
         }
@@ -62,7 +61,6 @@ RowLayout {
             radius: pickerButton.background.radius
             color: value
         }
-
     }
 
     ColorDialog {
@@ -104,7 +102,5 @@ RowLayout {
         Shotcut.HoverTip {
             text: '<p>' + qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>'
         }
-
     }
-
 }

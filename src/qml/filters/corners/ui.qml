@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -71,7 +70,8 @@ Shotcut.KeyframableFilter {
         interpolatorCombo.currentIndex = Math.round(filter.getDouble(interpolatorProperty) * 6);
         alphaoperationCombo.currentIndex = filter.get(transparentProperty) === '1' ? Math.round(filter.getDouble(alphaOpProperty) * 4) + 1 : 0;
         featheralphaSlider.value = filter.getDouble(featherProperty, position) * featheralphaSlider.maximumValue;
-        for (var i in corners) corners[i] = filter.getRect(cornerProperties[i], position)
+        for (var i in corners)
+            corners[i] = filter.getRect(cornerProperties[i], position);
         setSliderValue(corner1xSlider, corners[0].x);
         setSliderValue(corner1ySlider, corners[0].y);
         setSliderValue(corner2xSlider, corners[1].x);
@@ -117,11 +117,13 @@ Shotcut.KeyframableFilter {
         filter.resetProperty(corner3yProperty);
         filter.resetProperty(corner4xProperty);
         filter.resetProperty(corner4yProperty);
-        for (var i in cornerProperties) filter.resetProperty(cornerProperties[i])
+        for (var i in cornerProperties)
+            filter.resetProperty(cornerProperties[i]);
     }
 
     function setFilterCorners(corners, position) {
-        for (var i in cornerProperties) filter.set(cornerProperties[i], corners[i], position)
+        for (var i in cornerProperties)
+            filter.set(cornerProperties[i], corners[i], position);
         filter.set(corner1xProperty, corners[0].x, position);
         filter.set(corner1yProperty, corners[0].y, position);
         filter.set(corner2xProperty, corners[1].x, position);
@@ -134,16 +136,18 @@ Shotcut.KeyframableFilter {
 
     function updateFilterCorners(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         if (position !== null) {
             filter.blockSignals = true;
             if (position <= 0 && filter.animateIn > 0) {
-                for (var i in cornerStartValues) filter.set(cornerStartValues[i], corners[i])
+                for (var i in cornerStartValues)
+                    filter.set(cornerStartValues[i], corners[i]);
             } else if (position >= filter.duration - 1 && filter.animateOut > 0) {
-                for (i in cornerEndValues) filter.set(cornerEndValues[i], corners[i])
+                for (i in cornerEndValues)
+                    filter.set(cornerEndValues[i], corners[i]);
             } else {
-                for (i in cornerMiddleValues) filter.set(cornerMiddleValues[i], corners[i])
+                for (i in cornerMiddleValues)
+                    filter.set(cornerMiddleValues[i], corners[i]);
             }
             filter.blockSignals = false;
         }
@@ -175,9 +179,12 @@ Shotcut.KeyframableFilter {
     Component.onCompleted: {
         filter.blockSignals = true;
         var cornersString = JSON.stringify(corners);
-        for (var i in cornerStartValues) filter.set(cornerStartValues[i], corners[i])
-        for (i in cornerMiddleValues) filter.set(cornerMiddleValues[i], corners[i])
-        for (i in cornerEndValues) filter.set(cornerEndValues[i], corners[i])
+        for (var i in cornerStartValues)
+            filter.set(cornerStartValues[i], corners[i]);
+        for (i in cornerMiddleValues)
+            filter.set(cornerMiddleValues[i], corners[i]);
+        for (i in cornerEndValues)
+            filter.set(cornerEndValues[i], corners[i]);
         if (filter.isNew) {
             filter.set(corner1xProperty, corner1xDefault);
             filter.set(corner1yProperty, corner1yDefault);
@@ -194,14 +201,16 @@ Shotcut.KeyframableFilter {
             filter.set(transparentProperty, 1);
             filter.set(alphaOpProperty, alphaoperationDefault);
             filter.set(featherProperty, featheralphaDefault);
-            for (i in corners) filter.set(cornerProperties[i], '' + corners[i].x + ' ' + corners[i].y)
+            for (i in corners)
+                filter.set(cornerProperties[i], '' + corners[i].x + ' ' + corners[i].y);
             filter.savePreset(preset.parameters);
         } else {
             initializeSimpleKeyframes();
             var position = getPosition();
             cornersString = filter.get(cornerProperties[0]);
             if (cornersString) {
-                for (i in corners) corners[i] = filter.getRect(cornerProperties[i], position)
+                for (i in corners)
+                    corners[i] = filter.getRect(cornerProperties[i], position);
             } else {
                 corners[0].x = filter.getDouble(corner1xProperty, position);
                 corners[0].y = filter.getDouble(corner1yProperty, position);
@@ -211,21 +220,24 @@ Shotcut.KeyframableFilter {
                 corners[2].y = filter.getDouble(corner3yProperty, position);
                 corners[3].x = filter.getDouble(corner4xProperty, position);
                 corners[3].y = filter.getDouble(corner4yProperty, position);
-                for (i in cornerProperties) filter.set(cornerProperties[i], corners[i])
+                for (i in cornerProperties)
+                    filter.set(cornerProperties[i], corners[i]);
             }
-            for (i in cornerMiddleValues) filter.set(cornerMiddleValues[i], filter.getRect(cornerProperties[i], filter.animateIn + 1))
+            for (i in cornerMiddleValues)
+                filter.set(cornerMiddleValues[i], filter.getRect(cornerProperties[i], filter.animateIn + 1));
             if (filter.animateIn > 0) {
-                for (i in cornerStartValues) filter.set(cornerStartValues[i], filter.getRect(cornerProperties[i], 0))
+                for (i in cornerStartValues)
+                    filter.set(cornerStartValues[i], filter.getRect(cornerProperties[i], 0));
             }
             if (filter.animateOut > 0) {
-                for (i in cornerEndValues) filter.set(cornerEndValues[i], filter.getRect(cornerProperties[i], filter.duration - 1))
+                for (i in cornerEndValues)
+                    filter.set(cornerEndValues[i], filter.getRect(cornerProperties[i], filter.duration - 1));
             }
         }
         filter.blockSignals = false;
         setControls();
         if (filter.isNew)
             filter.set(cornerProperties[0], filter.getRect(cornerProperties[0]));
-
     }
 
     GridLayout {
@@ -251,12 +263,15 @@ Shotcut.KeyframableFilter {
                 initializeSimpleKeyframes();
                 corner1KeyframesButton.checked = filter.keyframeCount(corner1xProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
                 filter.blockSignals = true;
-                for (var i in cornerMiddleValues) filter.set(cornerMiddleValues[i], filter.getRect(cornerProperties[i], filter.animateIn + 1))
+                for (var i in cornerMiddleValues)
+                    filter.set(cornerMiddleValues[i], filter.getRect(cornerProperties[i], filter.animateIn + 1));
                 if (filter.animateIn > 0) {
-                    for (i in cornerStartValues) filter.set(cornerStartValues[i], filter.getRect(cornerProperties[i], 0))
+                    for (i in cornerStartValues)
+                        filter.set(cornerStartValues[i], filter.getRect(cornerProperties[i], 0));
                 }
                 if (filter.animateOut > 0) {
-                    for (i in cornerEndValues) filter.set(cornerEndValues[i], filter.getRect(cornerProperties[i], filter.duration - 1))
+                    for (i in cornerEndValues)
+                        filter.set(cornerEndValues[i], filter.getRect(cornerProperties[i], filter.duration - 1));
                 }
                 filter.blockSignals = false;
             }
@@ -329,7 +344,6 @@ Shotcut.KeyframableFilter {
                 height: parent.height / 2
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
-
         }
 
         Label {
@@ -654,7 +668,6 @@ Shotcut.KeyframableFilter {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -697,10 +710,8 @@ Shotcut.KeyframableFilter {
         function onKeyframeAdded(parameter, position) {
             if (parameter == cornerProperties[0])
                 updateFilterCorners(getPosition());
-
         }
 
         target: parameters
     }
-
 }

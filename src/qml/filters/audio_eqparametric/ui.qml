@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -26,8 +25,7 @@ Shotcut.KeyframableFilter {
 
     function setControls() {
         if (blockControls)
-            return ;
-
+            return;
         var position = getPosition();
         blockUpdate = true;
         slider0.value = filter.getDouble('0', position);
@@ -56,8 +54,7 @@ Shotcut.KeyframableFilter {
 
     function updateSimpleKeyframes(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         updateFilter('0', slider0.value, keyframesButton, position);
         updateFilter('1', slider1.value, keyframesButton, position);
         updateFilter('2', slider2.value, keyframesButton, position);
@@ -177,7 +174,6 @@ Shotcut.KeyframableFilter {
                 height: parent.height / 2
                 Layout.alignment: Qt.AlignHCenter
             }
-
         }
 
         Label {
@@ -565,7 +561,6 @@ Shotcut.KeyframableFilter {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -603,5 +598,4 @@ Shotcut.KeyframableFilter {
 
         target: producer
     }
-
 }

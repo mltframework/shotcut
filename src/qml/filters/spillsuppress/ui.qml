@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -30,7 +29,6 @@ Item {
         filter.set('threads', 0);
         if (filter.isNew)
             filter.set(typeParam, typeDefault);
-
         if (filter.getDouble(typeParam) === 0)
             greenRadioButton.checked = true;
         else
@@ -61,13 +59,10 @@ Item {
                 ButtonGroup.group: typeGroup
                 onClicked: filter.set(typeParam, 1)
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

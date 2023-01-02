@@ -15,12 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.1
 
 Item {
-    // Set default parameter values
 
+    // Set default parameter values
     property string gainParameter: 'gain'
 
     width: 350
@@ -28,6 +27,5 @@ Item {
     Component.onCompleted: {
         if (filter.isNew)
             filter.set(gainParameter, 0);
-
     }
 }

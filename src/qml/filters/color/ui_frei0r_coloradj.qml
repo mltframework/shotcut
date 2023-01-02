@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -36,7 +35,6 @@ Item {
     Component.onCompleted: {
         if (filter.isNew)
             filter.savePreset(defaultParameters);
-
         modeCombo.currentIndex = Math.round(filter.getDouble(paramAction) * 2);
         loadWheels();
     }
@@ -65,7 +63,6 @@ Item {
                 model: [qsTr('Shadows (Lift)'), qsTr('Midtones (Gamma)'), qsTr('Highlights (Gain)')]
                 onActivated: filter.set(paramAction, currentIndex / 2)
             }
-
         }
 
         Shotcut.ColorWheelItem {
@@ -87,7 +84,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

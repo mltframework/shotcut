@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQml.Models 2.12
 import QtQuick 2.12
 import QtQuick.Controls 2.12
@@ -62,9 +61,8 @@ Item {
         var offset = Number(filter.get("time_offset"));
         if (offset < 0)
             val *= -1;
-
         if (offset == 0 && val < 0)
-            return ;
+            return;
 
         //fix unnatural behaviour when subtracting at offset 0
         set_sec_offset_to_textfields(offset + val);
@@ -73,8 +71,7 @@ Item {
     //splits (and fills) seconds into days/hours/mins/secs textfields
     function set_sec_offset_to_textfields(secs) {
         if (secs === '')
-            return ;
-
+            return;
         if (secs < 0) {
             combo_majoroffset_sign.currentIndex = 1;
             filter.set('majoroffset_sign', -1);
@@ -97,7 +94,6 @@ Item {
         var resource = filter.get('resource');
         if (!resource)
             resource = filter.get('gps.file');
-
         gpsFile.url = resource;
         filter.blockSignals = true;
         filter.set(textFilterUi.middleValue, Qt.rect(0, 0, profile.width, profile.height));
@@ -108,10 +104,8 @@ Item {
             var index = presetParams.indexOf('argument');
             if (index > -1)
                 presetParams.splice(index, 1);
-
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana');
-
             filter.set('fgcolour', '#ffffffff');
             filter.set('bgcolour', '#00000000');
             filter.set('olcolour', '#aa000000');
@@ -130,10 +124,8 @@ Item {
             filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(textFilterUi.startValue, filter.getRect(textFilterUi.rectProperty, 0));
-
             if (filter.animateOut > 0)
                 filter.set(textFilterUi.endValue, filter.getRect(textFilterUi.rectProperty, filter.duration - 1));
-
         }
         //gps properties
         if (filter.isNew) {
@@ -147,7 +139,6 @@ Item {
         } else {
             if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
                 filter.set('gps_processing_start_time', filter.get('gps_start_text'));
-
         }
         filter.blockSignals = false;
         //get current timezone
@@ -236,7 +227,6 @@ Item {
             Shotcut.HoverTip {
                 id: fileLabelTip
             }
-
         }
 
         Label {
@@ -254,7 +244,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('This is added to video time to sync with gps time.')
             }
-
         }
 
         RowLayout {
@@ -285,9 +274,7 @@ Item {
                         text: '-'
                         value: -1
                     }
-
                 }
-
             }
 
             TextField {
@@ -299,12 +286,10 @@ Item {
                 onFocusChanged: {
                     if (focus)
                         selectAll();
-
                 }
                 onTextChanged: {
                     if (!acceptableInput)
                         offset_days.undo();
-
                 }
                 onEditingFinished: recompute_time_offset()
 
@@ -322,7 +307,6 @@ Item {
                     bottom: 0
                     top: 36600
                 }
-
             }
 
             Label {
@@ -339,12 +323,10 @@ Item {
                 onFocusChanged: {
                     if (focus)
                         selectAll();
-
                 }
                 onTextChanged: {
                     if (!acceptableInput)
                         offset_hours.undo();
-
                 }
                 onEditingFinished: recompute_time_offset()
 
@@ -364,7 +346,6 @@ Item {
                     bottom: 0
                     top: 23
                 }
-
             }
 
             Label {
@@ -381,12 +362,10 @@ Item {
                 onFocusChanged: {
                     if (focus)
                         selectAll();
-
                 }
                 onTextChanged: {
                     if (!acceptableInput)
                         offset_mins.undo();
-
                 }
                 onEditingFinished: recompute_time_offset()
 
@@ -406,7 +385,6 @@ Item {
                     bottom: 0
                     top: 59
                 }
-
             }
 
             Label {
@@ -423,12 +401,10 @@ Item {
                 onFocusChanged: {
                     if (focus)
                         selectAll();
-
                 }
                 onTextChanged: {
                     if (!acceptableInput)
                         offset_secs.undo();
-
                 }
                 onEditingFinished: recompute_time_offset()
 
@@ -448,7 +424,6 @@ Item {
                     bottom: 0
                     top: 59
                 }
-
             }
 
             //buttons:
@@ -463,7 +438,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Sync start of GPS to start of video file.\nTip: use this if you started GPS and video recording at the same time.')
                 }
-
             }
 
             Shotcut.Button {
@@ -477,7 +451,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Remove timezone (%1 seconds) time from video file (convert to UTC).\nTip: use this if your video camera doesn\'t have timezone settings as it will set local time as UTC.'.arg(js_tz_offset))
                 }
-
             }
 
             Shotcut.Button {
@@ -491,7 +464,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Fix video start time: if file time is actually end time, press this button to subtract file length (%1 seconds) from GPS offset.'.arg(parseInt(producer.length / profile.fps)))
                 }
-
             }
 
             Shotcut.Button {
@@ -505,13 +477,11 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Sync start of GPS to current video time.\nTip: use this if you recorded the moment of the first GPS fix.')
                 }
-
             }
 
             Shotcut.UndoButton {
                 onClicked: set_sec_offset_to_textfields(0)
             }
-
         }
 
         Label {
@@ -521,7 +491,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Average nearby GPS points to smooth out errors.')
             }
-
         }
 
         RowLayout {
@@ -532,7 +501,6 @@ Item {
                     for (var i = 0; i < smooth_val_list.count; i++) {
                         if (smooth_val_list.get(i).value == val)
                             return i;
-
                     }
                     console.log("get_smooth_index_from_val: no match for smooth val= " + val);
                     return 3; //default
@@ -597,9 +565,7 @@ Item {
                         text: '127 points'
                         value: 127
                     }
-
                 }
-
             }
 
             Shotcut.UndoButton {
@@ -608,7 +574,6 @@ Item {
                     filter.set('smoothing_value', 5);
                 }
             }
-
         }
 
         Label {
@@ -619,7 +584,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Distances are calculated since the start of the gps file, use this field to reset them (GPS time).')
             }
-
         }
 
         RowLayout {
@@ -637,7 +601,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Insert date and time formatted exactly as: YYYY-MM-DD HH:MM:SS (GPS time).')
                 }
-
             }
 
             Shotcut.Button {
@@ -653,7 +616,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Set start of GPS processing to current video time.')
                 }
-
             }
 
             Shotcut.UndoButton {
@@ -662,7 +624,6 @@ Item {
                     filter.set('gps_processing_start_time', filter.get('gps_start_text'));
                 }
             }
-
         }
 
         Label {
@@ -673,7 +634,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('If the current video is sped up (timelapse) or slowed down use this field to set the speed.')
             }
-
         }
 
         RowLayout {
@@ -695,7 +655,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).')
                 }
-
             }
 
             Shotcut.UndoButton {
@@ -704,7 +663,6 @@ Item {
                     speed_multiplier.value = 1;
                 }
             }
-
         }
 
         Label {
@@ -731,10 +689,8 @@ Item {
                 filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)
                     filter.set(textFilterUi.startValue, filter.getRect(textFilterUi.rectProperty, 0));
-
                 if (filter.animateOut > 0)
                     filter.set(textFilterUi.endValue, filter.getRect(textFilterUi.rectProperty, filter.duration - 1));
-
                 filter.blockSignals = false;
             }
         }
@@ -776,15 +732,13 @@ Item {
                     text: '__empty__'
                     onTextChanged: {
                         if (text === '__empty__')
-                            return ;
-
+                            return;
                         if (length > maxLength) {
                             text = text.substring(0, maxLength);
                             cursorPosition = maxLength;
                         }
                         if (!parseInt(filter.get(textFilterUi.useFontSizeProperty), 10))
                             filter.set('size', profile.height / text.split('\n').length);
-
                         filter.set('argument', text);
                     }
 
@@ -802,7 +756,6 @@ Item {
                         anchors.fill: parent
                         color: textArea.palette.base
                     }
-
                 }
 
                 ScrollBar.horizontal: ScrollBar {
@@ -824,9 +777,7 @@ Item {
                     anchors.left: scrollview.right
                     anchors.bottom: scrollview.bottom
                 }
-
             }
-
         }
 
         Label {
@@ -838,6 +789,7 @@ Item {
             Layout.bottomMargin: 5
 
             Shotcut.ComboBox {
+
                 //0
                 //1
                 //2
@@ -853,70 +805,54 @@ Item {
                 //12
                 //13
                 //14
-
                 implicitWidth: 300
                 model: [qsTr('GPS latitude'), qsTr('GPS longitude'), qsTr('Elevation (m)'), qsTr('Speed (km/h)'), qsTr('Distance (m)'), qsTr('GPS date-time'), qsTr('Video file date-time'), qsTr('Heart-rate (bpm)'), qsTr('Bearing (degrees)'), qsTr('Bearing (compass)'), qsTr('Elevation gain (m)'), qsTr('Elevation loss (m)'), qsTr('Distance uphill (m)'), qsTr('Distance downhill (m)'), qsTr('Distance flat (m)')]
                 onActivated: {
                     switch (currentIndex) {
                     case 0:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_lat#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_lat#');
                         break;
                     case 1:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_lon#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_lon#');
                         break;
                     case 2:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_elev m#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_elev m#');
                         break;
                     case 3:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_speed kmh#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_speed kmh#');
                         break;
                     case 4:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_dist m#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist m#');
                         break;
                     case 5:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_datetime_now#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_datetime_now#');
                         break;
                     case 6:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#file_datetime_now#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#file_datetime_now#');
                         break;
                     case 7:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_hr#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_hr#');
                         break;
                     case 8:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_bearing#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_bearing#');
                         break;
                     case 9:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_compass#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_compass#');
                         break;
                     case 10:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_vdist_up#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_vdist_up#');
                         break;
                     case 11:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_vdist_down#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_vdist_down#');
                         break;
                     case 12:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_dist_uphill#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist_uphill#');
                         break;
                     case 13:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_dist_downhill#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist_downhill#');
                         break;
                     case 14:
-                        onClicked:
-                        textArea.insert(textArea.cursorPosition, '#gps_dist_flat#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist_flat#');
                         break;
                     default:
                         console.log('gps_combobox: current index not supported: ' + currentIndex);
@@ -926,9 +862,7 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Extra arguments can be added inside keywords:\nDistance units: m [km|ft|mi].\nSpeed units: km/h [mi/h|m/s|ft/s].\nTime default: %Y-%m-%d %H:%M:%S, extra offset can be added as +/-seconds (+3600).\nExtra keyword: RAW (prints only values from file).')
                 }
-
             }
-
         }
 
         Shotcut.TextFilterUi {
@@ -952,7 +886,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Set how many text updates to show per second.\nSet to 0 to only print real points (no interpolation).')
             }
-
         }
 
         RowLayout {
@@ -965,7 +898,6 @@ Item {
                 onFocusChanged: {
                     if (focus)
                         selectAll();
-
                 }
                 onEditingFinished: filter.set('updates_per_second', updates_per_second.text)
 
@@ -977,7 +909,6 @@ Item {
                     bottom: 0
                     top: 1000
                 }
-
             }
 
             Label {
@@ -990,7 +921,6 @@ Item {
                     updates_per_second.text = '1';
                 }
             }
-
         }
 
         Rectangle {
@@ -1006,7 +936,6 @@ Item {
                 radius: 2
                 color: activePalette.text
             }
-
         }
 
         Label {
@@ -1017,7 +946,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Detected date-time for the video file.')
             }
-
         }
 
         Label {
@@ -1029,7 +957,6 @@ Item {
             Shotcut.HoverTip {
                 text: "This time will be used for synchronization."
             }
-
         }
 
         Label {
@@ -1042,7 +969,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Detected date-time for the GPS file.')
             }
-
         }
 
         Label {
@@ -1054,13 +980,10 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('This time will be used for synchronization.')
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

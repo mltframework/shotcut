@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import "Keyframes.js" as Logic
 import QtQuick
 import QtQuick.Controls
@@ -32,8 +31,8 @@ Rectangle {
     property bool zoomHeight: false
     property int delegateIndex: -1
 
-    signal clicked()
-    signal rightClicked()
+    signal clicked
+    signal rightClicked
 
     color: selected ? selectedTrackColor : (delegateIndex % 2) ? activePalette.alternateBase : activePalette.base
     border.color: selected ? 'red' : 'transparent'
@@ -49,7 +48,6 @@ Rectangle {
                 target: paramHeadRoot
                 color: root.shotcutBlue
             }
-
         },
         State {
             name: 'current'
@@ -59,7 +57,6 @@ Rectangle {
                 target: paramHeadRoot
                 color: Qt.rgba(selectedTrackColor.r * selectedTrackColor.a + activePalette.window.r * (1 - selectedTrackColor.a), selectedTrackColor.g * selectedTrackColor.a + activePalette.window.g * (1 - selectedTrackColor.a), selectedTrackColor.b * selectedTrackColor.a + activePalette.window.b * (1 - selectedTrackColor.a), 1)
             }
-
         },
         State {
             name: 'normal'
@@ -69,7 +66,6 @@ Rectangle {
                 target: paramHeadRoot
                 color: (delegateIndex % 2) ? activePalette.alternateBase : activePalette.base
             }
-
         }
     ]
     transitions: [
@@ -80,7 +76,6 @@ Rectangle {
                 target: paramHeadRoot
                 duration: 100
             }
-
         }
     ]
 
@@ -95,7 +90,6 @@ Rectangle {
             parent.clicked();
             if (mouse.button == Qt.RightButton)
                 parent.rightClicked();
-
         }
     }
 
@@ -128,7 +122,6 @@ Rectangle {
                 topPadding: 3
                 width: control.width
             }
-
         }
 
         RowLayout {
@@ -157,7 +150,6 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: (delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards')
                 }
-
             }
 
             ToolButton {
@@ -178,7 +170,6 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: qsTr('Add a keyframe at play head')
                 }
-
             }
 
             Item {
@@ -207,7 +198,6 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: qsTr('Delete the selected keyframe')
                 }
-
             }
 
             Item {
@@ -237,7 +227,6 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: (delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')
                 }
-
             }
 
             ToolButton {
@@ -255,7 +244,6 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: isLocked ? qsTr('Unlock track') : qsTr('Lock track')
                 }
-
             }
 
             Shotcut.ToolButton {
@@ -278,11 +266,7 @@ Rectangle {
                         root.paramRepeater.itemAt(delegateIndex).setMinMax(zoomHeight);
                     }
                 }
-
             }
-
         }
-
     }
-
 }

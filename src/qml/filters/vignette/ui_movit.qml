@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -31,10 +30,8 @@ Item {
         middleValues = [filter.getDouble(defaultParameters[0], filter.animateIn), filter.getDouble(defaultParameters[1], filter.animateIn)];
         if (filter.animateIn > 0)
             startValues = [filter.getDouble(defaultParameters[0], 0), filter.getDouble(defaultParameters[1], 0)];
-
         if (filter.animateOut > 0)
             endValues = [filter.getDouble(defaultParameters[0], filter.duration - 1), filter.getDouble(defaultParameters[1], filter.duration - 1)];
-
     }
 
     function getPosition() {
@@ -54,8 +51,7 @@ Item {
 
     function updateFilter(parameter, value, position, button) {
         if (blockUpdate)
-            return ;
-
+            return;
         var index = defaultParameters.indexOf(parameter);
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -89,7 +85,8 @@ Item {
             blockUpdate = true;
             radiusSlider.enabled = innerSlider.enabled = true;
             if (filter.animateIn > 0 || filter.animateOut > 0) {
-                for (var i = 0; i < defaultParameters.length; i++) filter.resetProperty(defaultParameters[i])
+                for (var i = 0; i < defaultParameters.length; i++)
+                    filter.resetProperty(defaultParameters[i]);
                 filter.animateIn = filter.animateOut = 0;
             } else {
                 filter.clearSimpleAnimation(parameter);
@@ -112,7 +109,8 @@ Item {
     height: 100
     Component.onCompleted: {
         if (filter.isNew) {
-            for (var i = 0; i < defaultParameters.length; i++) filter.set(defaultParameters[i], middleValues[i])
+            for (var i = 0; i < defaultParameters.length; i++)
+                filter.set(defaultParameters[i], middleValues[i]);
             filter.savePreset(defaultParameters);
         } else {
             initSimpleAnimation();
@@ -136,7 +134,8 @@ Item {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: {
-                for (var i = 0; i < defaultParameters.length; i++) filter.resetProperty(defaultParameters[i])
+                for (var i = 0; i < defaultParameters.length; i++)
+                    filter.resetProperty(defaultParameters[i]);
             }
             onPresetSelected: {
                 setControls();
@@ -195,7 +194,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -233,5 +231,4 @@ Item {
 
         target: producer
     }
-
 }

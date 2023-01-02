@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import "FilterMenu.js" as Logic
 import QtQuick
 import QtQuick.Controls
@@ -53,7 +52,6 @@ Rectangle {
                 icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
                 onClicked: favorite = !favorite
             }
-
         }
 
         Rectangle {
@@ -101,9 +99,6 @@ Rectangle {
                     wrapper.ListView.view.currentIndex = index;
                 }
             }
-
         }
-
     }
-
 }

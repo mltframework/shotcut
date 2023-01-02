@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -25,8 +24,8 @@ RowLayout {
     property var parameters: []
 
     // Tell the parent QML page to update its controls.
-    signal beforePresetLoaded()
-    signal presetSelected()
+    signal beforePresetLoaded
+    signal presetSelected
 
     Component.onCompleted: {
         filter.loadPresets();
@@ -71,7 +70,6 @@ RowLayout {
         Shotcut.HoverTip {
             text: qsTr('Save')
         }
-
     }
 
     Shotcut.Button {
@@ -86,7 +84,6 @@ RowLayout {
         Shotcut.HoverTip {
             text: qsTr('Delete')
         }
-
     }
 
     SystemPalette {
@@ -128,7 +125,7 @@ RowLayout {
                 Layout.fillWidth: true
                 selectByMouse: true
                 onAccepted: nameDialog.acceptName()
-                Keys.onPressed: (event)=> {
+                Keys.onPressed: event => {
                     if (event.key === Qt.Key_Escape) {
                         nameDialog.close();
                         event.accepted = true;
@@ -153,11 +150,8 @@ RowLayout {
                     text: qsTr('Cancel')
                     onClicked: nameDialog.close()
                 }
-
             }
-
         }
-
     }
 
     Window {
@@ -201,11 +195,7 @@ RowLayout {
                     text: qsTr('Cancel')
                     onClicked: confirmDialog.close()
                 }
-
             }
-
         }
-
     }
-
 }

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -27,7 +26,8 @@ Item {
     function updateFilter(value) {
         filter.set(amount, value);
         var weights = [];
-        for (var i = 1; i <= value; i++) weights.push(i)
+        for (var i = 1; i <= value; i++)
+            weights.push(i);
         filter.set('av.weights', weights.join(' '));
     }
 
@@ -82,7 +82,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

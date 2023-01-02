@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Dialogs
@@ -108,7 +107,6 @@ Item {
             Shotcut.HoverTip {
                 id: fileLabelTip
             }
-
         }
 
         Label {
@@ -123,12 +121,12 @@ Item {
 
             function valueToIndex() {
                 var w = filter.get('av.interp');
-                for (var i = 0; i < values.length; ++i) if (values[i] === w) {
-                    break;
-                }
+                for (var i = 0; i < values.length; ++i)
+                    if (values[i] === w) {
+                        break;
+                    }
                 if (i === values.length)
                     i = 1;
-
                 return i;
             }
 
@@ -148,7 +146,5 @@ Item {
             Layout.fillHeight: true
             Layout.columnSpan: 3
         }
-
     }
-
 }

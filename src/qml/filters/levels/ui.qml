@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -38,10 +37,8 @@ Item {
         middleValues = [filter.getDouble(inputBlackParam, filter.animateIn), filter.getDouble(inputWhiteParam, filter.animateIn), filter.getDouble(gammaParam, filter.animateIn)];
         if (filter.animateIn > 0)
             startValues = [filter.getDouble(inputBlackParam, 0), filter.getDouble(inputWhiteParam, 0), filter.getDouble(gammaParam, 0)];
-
         if (filter.animateOut > 0)
             endValues = [filter.getDouble(inputBlackParam, filter.duration - 1), filter.getDouble(inputWhiteParam, filter.duration - 1), filter.getDouble(gammaParam, filter.duration - 1)];
-
     }
 
     function getPosition() {
@@ -71,8 +68,7 @@ Item {
 
     function updateFilter(parameter, value, position, button) {
         if (blockUpdate)
-            return ;
-
+            return;
         var index = preset.parameters.indexOf(parameter) - 1;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -212,7 +208,6 @@ Item {
                 filter.set('threads', filter.getDouble(showHistogramParam) === 1);
                 if (currentIndex < 4)
                     filter.set(histogramPositionParam, currentIndex / 10);
-
             }
         }
 
@@ -345,7 +340,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -383,5 +377,4 @@ Item {
 
         target: producer
     }
-
 }

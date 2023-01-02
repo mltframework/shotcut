@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -77,7 +76,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -104,7 +102,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -131,7 +128,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The time taken for the limiter\'s attenuation to return to 0 dB\'s.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -164,7 +160,6 @@ Item {
                 radius: 2
                 color: activePalette.text
             }
-
         }
 
         Label {
@@ -174,7 +169,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Status indicator showing the gain reduction applied by the compressor.')
             }
-
         }
 
         Shotcut.Gauge {
@@ -192,7 +186,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

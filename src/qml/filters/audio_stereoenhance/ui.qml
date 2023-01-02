@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -33,8 +32,7 @@ Item {
 
     function setControls() {
         if (blockControls)
-            return ;
-
+            return;
         sliderLeftDelay.value = filter.getDouble('av.left_delay');
         sliderLeftLevel.value = toDb(filter.getDouble('av.left_gain'));
         sliderRightDelay.value = filter.getDouble('av.right_delay');
@@ -97,12 +95,12 @@ Item {
 
             function valueToIndex() {
                 var w = filter.get('av.middle_source');
-                for (var i = 0; i < values.length; ++i) if (values[i] === w) {
-                    break;
-                }
+                for (var i = 0; i < values.length; ++i)
+                    if (values[i] === w) {
+                        break;
+                    }
                 if (i === values.length)
                     i = 0;
-
                 return i;
             }
 
@@ -130,8 +128,7 @@ Item {
             suffix: ' ms'
             onValueChanged: {
                 if (blockControls)
-                    return ;
-
+                    return;
                 blockControls = true;
                 filter.set('av.left_delay', value);
                 blockControls = false;
@@ -157,8 +154,7 @@ Item {
             stepSize: 0.1
             onValueChanged: {
                 if (blockControls)
-                    return ;
-
+                    return;
                 blockControls = true;
                 filter.set('av.left_gain', fromDb(value));
                 blockControls = false;
@@ -184,8 +180,7 @@ Item {
             suffix: ' ms'
             onValueChanged: {
                 if (blockControls)
-                    return ;
-
+                    return;
                 blockControls = true;
                 filter.set('av.right_delay', value);
                 blockControls = false;
@@ -211,8 +206,7 @@ Item {
             stepSize: 0.1
             onValueChanged: {
                 if (blockControls)
-                    return ;
-
+                    return;
                 blockControls = true;
                 filter.set('av.right_gain', fromDb(value));
                 blockControls = false;
@@ -238,8 +232,7 @@ Item {
             stepSize: 0.1
             onValueChanged: {
                 if (blockControls)
-                    return ;
-
+                    return;
                 blockControls = true;
                 filter.set('av.level_out', fromDb(value));
                 blockControls = false;
@@ -253,7 +246,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -275,5 +267,4 @@ Item {
 
         target: filter
     }
-
 }

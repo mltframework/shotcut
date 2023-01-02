@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -72,7 +71,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The radius of the gaussian blur.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -98,7 +96,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The strength of the gaussian blur.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -124,7 +121,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('If the difference between the original pixel and the blurred pixel is less than threshold, the pixel will be replaced with the blurred pixel.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -146,7 +142,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

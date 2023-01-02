@@ -22,13 +22,10 @@ Item {
             // When enabling simple keyframes, initialize the keyframes with the current value
             if (filter.keyframeCount("yaw") <= 0)
                 yawStart = yawMiddle = yawEnd = filter.getDouble("yaw");
-
             if (filter.keyframeCount("pitch") <= 0)
                 pitchStart = pitchMiddle = pitchEnd = filter.getDouble("pitch");
-
             if (filter.keyframeCount("roll") <= 0)
                 rollStart = rollMiddle = rollEnd = filter.getDouble("roll");
-
         }
         setControls();
         updateProperty_yaw(null);
@@ -53,8 +50,7 @@ Item {
 
     function updateProperty_yaw(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = yawSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -85,8 +81,7 @@ Item {
 
     function updateProperty_pitch(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = pitchSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -117,8 +112,7 @@ Item {
 
     function updateProperty_roll(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = rollSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -149,16 +143,14 @@ Item {
 
     function updateProperty_interpolation() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = interpolationComboBox.currentIndex;
         filter.set("interpolation", value);
     }
 
     function updateProperty_grid() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = gridCheckBox.checked;
         filter.set("grid", value);
     }
@@ -176,10 +168,8 @@ Item {
             yawMiddle = filter.getDouble("yaw", filter.animateIn);
             if (filter.animateIn > 0)
                 yawStart = filter.getDouble("yaw", 0);
-
             if (filter.animateOut > 0)
                 yawEnd = filter.getDouble("yaw", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("pitch", 0);
@@ -187,10 +177,8 @@ Item {
             pitchMiddle = filter.getDouble("pitch", filter.animateIn);
             if (filter.animateIn > 0)
                 pitchStart = filter.getDouble("pitch", 0);
-
             if (filter.animateOut > 0)
                 pitchEnd = filter.getDouble("pitch", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("roll", 0);
@@ -198,10 +186,8 @@ Item {
             rollMiddle = filter.getDouble("roll", filter.animateIn);
             if (filter.animateIn > 0)
                 rollStart = filter.getDouble("roll", 0);
-
             if (filter.animateOut > 0)
                 rollEnd = filter.getDouble("roll", filter.duration - 1);
-
         }
         if (filter.isNew)
             filter.set("interpolation", 1);
@@ -213,7 +199,6 @@ Item {
             gridValue = filter.get("grid") == '1';
         if (filter.isNew)
             filter.savePreset(preset.parameters);
-
         setControls();
     }
 
@@ -242,24 +227,18 @@ Item {
                 yawMiddle = filter.getDouble("yaw", filter.animateIn);
                 if (filter.animateIn > 0)
                     yawStart = filter.getDouble("yaw", 0);
-
                 if (filter.animateOut > 0)
                     yawEnd = filter.getDouble("yaw", filter.duration - 1);
-
                 pitchMiddle = filter.getDouble("pitch", filter.animateIn);
                 if (filter.animateIn > 0)
                     pitchStart = filter.getDouble("pitch", 0);
-
                 if (filter.animateOut > 0)
                     pitchEnd = filter.getDouble("pitch", filter.duration - 1);
-
                 rollMiddle = filter.getDouble("roll", filter.animateIn);
                 if (filter.animateIn > 0)
                     rollStart = filter.getDouble("roll", 0);
-
                 if (filter.animateOut > 0)
                     rollEnd = filter.getDouble("roll", filter.duration - 1);
-
                 interpolationValue = filter.get("interpolation");
                 setControls(null);
             }
@@ -435,7 +414,6 @@ Item {
             Layout.columnSpan: 3
             onCheckedChanged: updateProperty_grid()
         }
-
     }
 
     Connections {
@@ -473,5 +451,4 @@ Item {
 
         target: producer
     }
-
 }

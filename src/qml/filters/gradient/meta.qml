@@ -16,5 +16,4 @@ Metadata {
         allowAnimateOut: true
         simpleProperties: ['shotcut:rect']
     }
-
 }

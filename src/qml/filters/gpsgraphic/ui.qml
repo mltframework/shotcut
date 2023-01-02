@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQml.Models 2.12
 import QtQuick 2.12
 import QtQuick.Controls 2.12
@@ -26,7 +25,6 @@ import org.shotcut.qml 1.0 as Shotcut
 
 Item {
     //keep in UI order for sanity!
-
     id: gpsGraphRoot
 
     property string rectProperty: "rect"
@@ -54,9 +52,8 @@ Item {
         var offset = Number(filter.get("time_offset"));
         if (offset < 0)
             val *= -1;
-
         if (offset === 0 && val < 0)
-            return ;
+            return;
 
         //fix unnatural behaviour when subtracting at offset 0
         set_sec_offset_to_textfields(offset + val);
@@ -65,8 +62,7 @@ Item {
     //splits (and fills) seconds into days/hours/mins/secs textfields
     function set_sec_offset_to_textfields(secs) {
         if (secs === '')
-            return ;
-
+            return;
         if (secs < 0) {
             combo_majoroffset_sign.currentIndex = 1;
             filter.set('majoroffset_sign', -1);
@@ -177,13 +173,10 @@ Item {
         var used_params = [];
         if (offset !== undefined)
             used_params.push(filterset_getparams('time_offset', offset));
-
         if (smooth !== undefined)
             used_params.push(filterset_getparams('smoothing_value', smooth));
-
         if (speed !== undefined)
             used_params.push(filterset_getparams('speed_multiplier', speed));
-
         return used_params;
     }
 
@@ -191,34 +184,24 @@ Item {
         var used_params = [];
         if (src !== undefined)
             used_params.push(filterset_getparams('graph_data_source', src));
-
         if (type !== undefined)
             used_params.push(filterset_getparams('graph_type', type));
-
         if (startp !== undefined)
             used_params.push(filterset_getparams('trim_start_p', startp));
-
         if (endp !== undefined)
             used_params.push(filterset_getparams('trim_end_p', endp));
-
         if (modeh !== undefined)
             used_params.push(filterset_getparams('crop_mode_h', modeh));
-
         if (leftp !== undefined)
             used_params.push(filterset_getparams('crop_left_p', leftp));
-
         if (rightp !== undefined)
             used_params.push(filterset_getparams('crop_right_p', rightp));
-
         if (modev !== undefined)
             used_params.push(filterset_getparams('crop_mode_v', modev));
-
         if (botp !== undefined)
             used_params.push(filterset_getparams('crop_bot_p', botp));
-
         if (topp !== undefined)
             used_params.push(filterset_getparams('crop_top_p', topp));
-
         return used_params;
     }
 
@@ -226,16 +209,12 @@ Item {
         var used_params = [];
         if (style !== undefined)
             used_params.push(filterset_getparams('color_style', style));
-
         if (nowdot !== undefined)
             used_params.push(filterset_getparams('show_now_dot', nowdot));
-
         if (nowtext !== undefined)
             used_params.push(filterset_getparams('show_now_text', nowtext));
-
         if (angle !== undefined)
             used_params.push(filterset_getparams('angle', angle));
-
         if (thick !== undefined)
             used_params.push(filterset_getparams('thickness', thick));
 
@@ -243,13 +222,10 @@ Item {
         //if (rect !== undefined) used_params.push(filterset_getparams(rectProperty, rect))
         if (grid !== undefined)
             used_params.push(filterset_getparams('show_grid', grid));
-
         if (legendunit !== undefined)
             used_params.push(filterset_getparams('legend_unit', legendunit));
-
         if (drawdots !== undefined)
             used_params.push(filterset_getparams('draw_individual_dots', drawdots));
-
         return used_params;
     }
 
@@ -257,37 +233,26 @@ Item {
         var used_params = [];
         if (cdot !== undefined)
             used_params.push(filterset_getparams('now_dot_color', cdot));
-
         if (c1 !== undefined)
             used_params.push(filterset_getparams('color.1', c1));
-
         if (c2 !== undefined)
             used_params.push(filterset_getparams('color.2', c2));
-
         if (c3 !== undefined)
             used_params.push(filterset_getparams('color.3', c3));
-
         if (c4 !== undefined)
             used_params.push(filterset_getparams('color.4', c4));
-
         if (c5 !== undefined)
             used_params.push(filterset_getparams('color.5', c5));
-
         if (c6 !== undefined)
             used_params.push(filterset_getparams('color.6', c6));
-
         if (c7 !== undefined)
             used_params.push(filterset_getparams('color.7', c7));
-
         if (c8 !== undefined)
             used_params.push(filterset_getparams('color.8', c8));
-
         if (c9 !== undefined)
             used_params.push(filterset_getparams('color.9', c9));
-
         if (c10 !== undefined)
             used_params.push(filterset_getparams('color.10', c10));
-
         return used_params;
     }
 
@@ -295,10 +260,8 @@ Item {
         var used_params = [];
         if (bgpath !== undefined)
             used_params.push(filterset_getparams('bg_img_path', bgpath));
-
         if (scalew !== undefined)
             used_params.push(filterset_getparams('bg_scale_w', scalew));
-
         return used_params;
     }
 
@@ -511,7 +474,6 @@ Item {
             Shotcut.HoverTip {
                 id: fileLabelTip
             }
-
         }
 
         Label {
@@ -550,7 +512,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('This is added to video time to sync with gps time.')
             }
-
         }
 
         RowLayout {
@@ -562,8 +523,7 @@ Item {
                 textRole: 'text'
                 onActivated: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('majoroffset_sign', sign_val.get(currentIndex).value);
                     recompute_time_offset();
                 }
@@ -584,9 +544,7 @@ Item {
                         text: '-'
                         value: -1
                     }
-
                 }
-
             }
 
             TextField {
@@ -598,12 +556,10 @@ Item {
                 onFocusChanged: {
                     if (focus)
                         selectAll();
-
                 }
                 onTextChanged: {
                     if (!acceptableInput)
                         offset_days.undo();
-
                 }
                 onEditingFinished: recompute_time_offset()
 
@@ -621,7 +577,6 @@ Item {
                     bottom: 0
                     top: 36600
                 }
-
             }
 
             Label {
@@ -638,12 +593,10 @@ Item {
                 onFocusChanged: {
                     if (focus)
                         selectAll();
-
                 }
                 onTextChanged: {
                     if (!acceptableInput)
                         offset_hours.undo();
-
                 }
                 onEditingFinished: recompute_time_offset()
 
@@ -663,7 +616,6 @@ Item {
                     bottom: 0
                     top: 23
                 }
-
             }
 
             Label {
@@ -680,12 +632,10 @@ Item {
                 onFocusChanged: {
                     if (focus)
                         selectAll();
-
                 }
                 onTextChanged: {
                     if (!acceptableInput)
                         offset_mins.undo();
-
                 }
                 onEditingFinished: recompute_time_offset()
 
@@ -705,7 +655,6 @@ Item {
                     bottom: 0
                     top: 59
                 }
-
             }
 
             Label {
@@ -722,12 +671,10 @@ Item {
                 onFocusChanged: {
                     if (focus)
                         selectAll();
-
                 }
                 onTextChanged: {
                     if (!acceptableInput)
                         offset_secs.undo();
-
                 }
                 onEditingFinished: recompute_time_offset()
 
@@ -747,7 +694,6 @@ Item {
                     bottom: 0
                     top: 59
                 }
-
             }
 
             //buttons:
@@ -762,7 +708,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Sync start of GPS to start of video file.\nTip: use this if you started GPS and video recording at the same time.')
                 }
-
             }
 
             Shotcut.Button {
@@ -776,7 +721,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Remove timezone (%1 seconds) time from video file (convert to UTC).\nTip: use this if your video camera doesn\'t have timezone settings as it will set local time as UTC.'.arg(js_tz_offset))
                 }
-
             }
 
             Shotcut.Button {
@@ -790,7 +734,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Fix video start time: if file time is actually end time, press this button to subtract file length (%1 seconds) from GPS offset.'.arg(parseInt(producer.length / profile.fps)))
                 }
-
             }
 
             Shotcut.Button {
@@ -804,13 +747,11 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Sync start of GPS to current video time.\nTip: use this if you recorded the moment of the first GPS fix.')
                 }
-
             }
 
             Shotcut.UndoButton {
                 onClicked: set_sec_offset_to_textfields(0)
             }
-
         }
 
         Label {
@@ -820,7 +761,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Average nearby GPS points to smooth out errors.')
             }
-
         }
 
         RowLayout {
@@ -831,7 +771,6 @@ Item {
                     for (var i = 0; i < smooth_val_list.count; i++) {
                         if (smooth_val_list.get(i).value == val)
                             return i;
-
                     }
                     console.log("get_smooth_index_from_val: no match for smooth val= " + val);
                     return 2; //default
@@ -842,8 +781,7 @@ Item {
                 currentIndex: 2
                 onActivated: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('smoothing_value', smooth_val_list.get(currentIndex).value);
                 }
 
@@ -894,9 +832,7 @@ Item {
                         text: '127 points'
                         value: 127
                     }
-
                 }
-
             }
 
             Shotcut.UndoButton {
@@ -905,7 +841,6 @@ Item {
                     filter.set('smoothing_value', 5);
                 }
             }
-
         }
 
         Label {
@@ -915,7 +850,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('If the current video is sped up (timelapse) or slowed down use this field to set the speed.')
             }
-
         }
 
         RowLayout {
@@ -932,15 +866,13 @@ Item {
                 suffix: 'x'
                 onValueChanged: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('speed_multiplier', speed_multiplier.value);
                 }
 
                 Shotcut.HoverTip {
                     text: qsTr('Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).')
                 }
-
             }
 
             Shotcut.UndoButton {
@@ -949,7 +881,6 @@ Item {
                     speed_multiplier.value = 1;
                 }
             }
-
         }
 
         Label {
@@ -965,7 +896,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Choose which data type is used for graph drawing.')
             }
-
         }
 
         RowLayout {
@@ -976,14 +906,12 @@ Item {
                 model: [qsTr('Location (2D map)'), qsTr('Altitude'), qsTr('Heart rate'), qsTr('Speed')]
                 onActivated: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('graph_data_source', currentIndex);
                     reset_legend_unit();
                     setControls();
                 }
             }
-
         }
 
         Label {
@@ -993,7 +921,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Graph types can add advanced interactions.')
             }
-
         }
 
         RowLayout {
@@ -1004,8 +931,7 @@ Item {
                 model: [qsTr('Standard'), qsTr('Follow dot (cropped)'), qsTr('Speedometer')]
                 onActivated: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('graph_type', currentIndex);
                     setControls();
                 }
@@ -1013,9 +939,7 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Standard = just a static map.\nFollow dot = centers on the current location.\nSpeedometer = draws a simple speedometer.')
                 }
-
             }
-
         }
 
         Label {
@@ -1025,7 +949,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Hides part of the graph at beginning or end.\nThis does not recompute min/max for any field.')
             }
-
         }
 
         GridLayout {
@@ -1045,8 +968,7 @@ Item {
                     suffix: '%'
                     onValueChanged: {
                         if (_disableUpdate)
-                            return ;
-
+                            return;
                         filter.set("trim_start_p", value);
                         setControls();
                     }
@@ -1054,7 +976,6 @@ Item {
                     Shotcut.HoverTip {
                         text: qsTr('Hides part of the beginning of the graph.')
                     }
-
                 }
 
                 RangeSlider {
@@ -1066,15 +987,13 @@ Item {
                     second.value: 100
                     first.onMoved: {
                         if (_disableUpdate)
-                            return ;
-
+                            return;
                         filter.set("trim_start_p", first.value);
                         setControls();
                     }
                     second.onMoved: {
                         if (_disableUpdate)
-                            return ;
-
+                            return;
                         filter.set("trim_end_p", second.value);
                         setControls();
                     }
@@ -1093,8 +1012,7 @@ Item {
                     suffix: '%'
                     onValueChanged: {
                         if (_disableUpdate)
-                            return ;
-
+                            return;
                         filter.set("trim_end_p", value);
                         setControls();
                     }
@@ -1102,22 +1020,18 @@ Item {
                     Shotcut.HoverTip {
                         text: qsTr('Hides part of the end of the graph.')
                     }
-
                 }
-
             }
 
             Shotcut.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("trim_start_p", 0);
                     filter.set("trim_end_p", 100);
                     setControls();
                 }
             }
-
         }
 
         Label {
@@ -1127,7 +1041,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Zooms in on the graph on the horizontal axis (longitude if map, time if simple graph).\nThe number is either a percentage or a numeric value interpreted as the legend type.\nThis field is not applicable for Speedometer type.')
             }
-
         }
 
         RowLayout {
@@ -1142,8 +1055,7 @@ Item {
                 stepSize: 1 / Math.pow(10, decimals)
                 onValueChanged: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("crop_left_p", value);
                     setControls();
                 }
@@ -1151,7 +1063,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Crops the graph from the left side.')
                 }
-
             }
 
             RangeSlider {
@@ -1163,15 +1074,13 @@ Item {
                 second.value: 100
                 first.onMoved: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("crop_left_p", first.value);
                     setControls();
                 }
                 second.onMoved: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("crop_right_p", second.value);
                     setControls();
                 }
@@ -1189,8 +1098,7 @@ Item {
                 stepSize: 1 / Math.pow(10, decimals)
                 onValueChanged: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("crop_right_p", value);
                     setControls();
                 }
@@ -1198,7 +1106,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Crops the graph from the right side. This value is ignored if mode is Follow dot.')
                 }
-
             }
 
             Shotcut.ComboBox {
@@ -1209,8 +1116,7 @@ Item {
                 currentIndex: 0
                 onActivated: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('crop_mode_h', currentIndex);
                     setControls();
                 }
@@ -1222,21 +1128,18 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Input for horizontal crops can be a percentage or an absolute value.')
                 }
-
             }
 
             Shotcut.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("crop_left_p", 0);
                     filter.set("crop_right_p", 100);
                     filter.set('crop_mode_h', 0);
                     setControls();
                 }
             }
-
         }
 
         Label {
@@ -1246,7 +1149,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Zooms in on the graph on the vertical axis (latitude if map, value if simple graph).\nThe number is either a percentage or a numeric value interpreted as the legend type.\nThis field affects min/max values on the Speedometer type.')
             }
-
         }
 
         RowLayout {
@@ -1262,8 +1164,7 @@ Item {
                 stepSize: 1 / Math.pow(10, decimals)
                 onValueChanged: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("crop_bot_p", value);
                     setControls();
                 }
@@ -1271,7 +1172,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Crops the graph from the bottom side.')
                 }
-
             }
 
             RangeSlider {
@@ -1283,15 +1183,13 @@ Item {
                 second.value: 100
                 first.onMoved: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("crop_bot_p", first.value);
                     setControls();
                 }
                 second.onMoved: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("crop_top_p", second.value);
                     setControls();
                 }
@@ -1309,8 +1207,7 @@ Item {
                 stepSize: 1 / Math.pow(10, decimals)
                 onValueChanged: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("crop_top_p", value);
                     setControls();
                 }
@@ -1318,7 +1215,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Crops the graph from the top side. This value is ignored if mode is Follow dot.')
                 }
-
             }
 
             Shotcut.ComboBox {
@@ -1329,8 +1225,7 @@ Item {
                 currentIndex: 0
                 onActivated: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('crop_mode_v', currentIndex);
                     setControls();
                 }
@@ -1342,21 +1237,18 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Input for vertical crops can be a percentage or an absolute value.')
                 }
-
             }
 
             Shotcut.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("crop_bot_p", 0);
                     filter.set("crop_top_p", 100);
                     filter.set('crop_mode_v', 0);
                     setControls();
                 }
             }
-
         }
 
         Label {
@@ -1372,7 +1264,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Choose how you want to color the graph line.')
             }
-
         }
 
         RowLayout {
@@ -1380,7 +1271,6 @@ Item {
                 //0
                 //4
                 //6
-
                 id: combo_color_style
 
                 function get_combo_gradient_nr_colors() {
@@ -1397,14 +1287,12 @@ Item {
                 currentIndex: 1
                 onActivated: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('color_style', currentIndex);
                     colGradient.set_defcolors_in_gradient_control();
                     setControls();
                 }
             }
-
         }
 
         Label {
@@ -1414,7 +1302,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Color by Altitude/HR only work if there are recorded values in the gps file.\nFor speedometer type, only first 2 colors are used.')
             }
-
         }
 
         RowLayout {
@@ -1436,23 +1323,19 @@ Item {
 
                 onGradientChanged: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.setGradient('color', colors);
                 }
 
                 Shotcut.UndoButton {
                     onClicked: {
                         if (_disableUpdate)
-                            return ;
-
+                            return;
                         colGradient.set_defcolors_in_gradient_control();
                         setControls();
                     }
                 }
-
             }
-
         }
 
         Label {
@@ -1462,7 +1345,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Draw a dot showing current position on the graph.\nFor speedometer type, this is the needle.')
             }
-
         }
 
         RowLayout {
@@ -1481,7 +1363,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Set the color of the inside of the now dot (or needle).')
                 }
-
             }
 
             Shotcut.ColorPicker {
@@ -1491,8 +1372,7 @@ Item {
                 alpha: true
                 onValueChanged: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('now_dot_color', value);
                 }
             }
@@ -1512,7 +1392,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Draw a large white text showing the current value.\nThe legend unit (if present) will be appended at the end.')
                 }
-
             }
 
             CheckBox {
@@ -1522,7 +1401,6 @@ Item {
                 checked: true
                 onClicked: filter.set('show_now_text', checked ? 1 : 0)
             }
-
         }
 
         Label {
@@ -1532,7 +1410,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Rotate the entire graph. Speedometer also rotates internal text.')
             }
-
         }
 
         RowLayout {
@@ -1545,8 +1422,7 @@ Item {
                 suffix: qsTr(' °', 'degrees')
                 onValueChanged: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('angle', graph_rotation.value);
                 }
             }
@@ -1554,13 +1430,11 @@ Item {
             Shotcut.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     graph_rotation.value = 0;
                     filter.set('angle', 0);
                 }
             }
-
         }
 
         Label {
@@ -1570,7 +1444,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Set the thickness of the graph line. Does not affect speedometer.')
             }
-
         }
 
         RowLayout {
@@ -1583,8 +1456,7 @@ Item {
                 suffix: ' px'
                 onValueChanged: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set("thickness", value);
                 }
             }
@@ -1592,13 +1464,11 @@ Item {
             Shotcut.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     thicknessSlider.value = 5;
                     filter.set("thickness", 5);
                 }
             }
-
         }
 
         Label {
@@ -1608,7 +1478,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Draw 5 horizontal white lines with individual values for graph readability. 2D map also draws vertical (longitude) lines.\nFor speedometer this draws text for divisions.')
             }
-
         }
 
         RowLayout {
@@ -1626,7 +1495,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('This will be used in legend text if active and in absolute value math.')
                 }
-
             }
 
             TextField {
@@ -1639,19 +1507,16 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Defaults are km/h (speed) and meters (altitude).\n Available options: km/h, mi/h, nm/h (kn), m/s, ft/s.')
                 }
-
             }
 
             Shotcut.UndoButton {
                 onClicked: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     reset_legend_unit();
                     filter.set('legend_unit', legend_unit.text);
                 }
             }
-
         }
 
         Label {
@@ -1672,8 +1537,7 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     setFilter();
                 }
             }
@@ -1696,8 +1560,7 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     setFilter();
                 }
             }
@@ -1709,7 +1572,6 @@ Item {
                     setFilter();
                 }
             }
-
         }
 
         Label {
@@ -1730,8 +1592,7 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     setFilter();
                 }
             }
@@ -1754,8 +1615,7 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     setFilter();
                 }
             }
@@ -1773,19 +1633,15 @@ Item {
                     //if it's outside viewport just make it inside, ignore map or crops
                     if (rectW.value + rectX.value > profile.width)
                         rectW.value = profile.width - rectX.value;
-
                     if (rectH.value + rectY.value > profile.height)
                         rectH.value = profile.height - rectY.value;
-
                     setFilter();
                 }
 
                 Shotcut.HoverTip {
                     text: qsTr('Sets the height to the correct map aspect ratio or 1:1.')
                 }
-
             }
-
         }
 
         Label {
@@ -1801,7 +1657,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Choose an image to overlay behind the graph. Tip: you can use an actual map image to make the GPS track more interesting.')
             }
-
         }
 
         RowLayout {
@@ -1815,7 +1670,6 @@ Item {
                 onEditingFinished: {
                     if (bg_img_path.text[0] !== '!')
                         filter.set('bg_img_path', text);
-
                 }
 
                 MouseArea {
@@ -1827,7 +1681,6 @@ Item {
                 Shotcut.EditMenu {
                     id: contextMenu
                 }
-
             }
 
             Button {
@@ -1839,7 +1692,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Get the center coordinate of GPS map. This does not change with trim or crop.\nTIP:OpenStreetMap website can save the current standard map centered on searched location (but only at screen resolution).\nGoogle Earth for desktop can center on a coordinate and save a 4K image of it. Disable the Terrain layer for best results.')
                 }
-
             }
 
             Button {
@@ -1851,7 +1703,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Browse for an image file to be assigned as graph background.')
                 }
-
             }
 
             Shotcut.UndoButton {
@@ -1860,7 +1711,6 @@ Item {
                     filter.set("bg_img_path", "");
                 }
             }
-
         }
 
         Label {
@@ -1870,7 +1720,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Increase or decrease the size of the background image.\nValues smaller than 1 will zoom into image.')
             }
-
         }
 
         RowLayout {
@@ -1883,8 +1732,7 @@ Item {
                 stepSize: 1 / Math.pow(10, decimals)
                 onValueChanged: {
                     if (_disableUpdate)
-                        return ;
-
+                        return;
                     filter.set('bg_scale_w', value);
                 }
             }
@@ -1895,7 +1743,6 @@ Item {
                     filter.set('bg_scale_w', 1);
                 }
             }
-
         }
 
         Rectangle {
@@ -1911,7 +1758,6 @@ Item {
                 radius: 2
                 color: activePalette.text
             }
-
         }
 
         Label {
@@ -1922,7 +1768,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Detected date-time for the video file.')
             }
-
         }
 
         Label {
@@ -1934,7 +1779,6 @@ Item {
             Shotcut.HoverTip {
                 text: "This time will be used for synchronization."
             }
-
         }
 
         Label {
@@ -1947,7 +1791,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Detected date-time for the GPS file.')
             }
-
         }
 
         Label {
@@ -1959,13 +1802,11 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('This time will be used for synchronization.')
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -1978,5 +1819,4 @@ Item {
             }
         }
     }
-
 }

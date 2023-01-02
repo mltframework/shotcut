@@ -52,43 +52,30 @@ Item {
             // When enabling simple keyframes, initialize the keyframes with the current value
             if (filter.keyframeCount("yaw") <= 0)
                 yawStart = yawMiddle = yawEnd = filter.getDouble("yaw");
-
             if (filter.keyframeCount("pitch") <= 0)
                 pitchStart = pitchMiddle = pitchEnd = filter.getDouble("pitch");
-
             if (filter.keyframeCount("roll") <= 0)
                 rollStart = rollMiddle = rollEnd = filter.getDouble("roll");
-
             if (filter.keyframeCount("frontX") <= 0)
                 frontXStart = frontXMiddle = frontXEnd = filter.getDouble("frontX");
-
             if (filter.keyframeCount("frontY") <= 0)
                 frontYStart = frontYMiddle = frontYEnd = filter.getDouble("frontY");
-
             if (filter.keyframeCount("frontUp") <= 0)
                 frontUpStart = frontUpMiddle = frontUpEnd = filter.getDouble("frontUp");
-
             if (filter.keyframeCount("backX") <= 0)
                 backXStart = backXMiddle = backXEnd = filter.getDouble("backX");
-
             if (filter.keyframeCount("backY") <= 0)
                 backYStart = backYMiddle = backYEnd = filter.getDouble("backY");
-
             if (filter.keyframeCount("backUp") <= 0)
                 backUpStart = backUpMiddle = backUpEnd = filter.getDouble("backUp");
-
             if (filter.keyframeCount("fov") <= 0)
                 fovStart = fovMiddle = fovEnd = filter.getDouble("fov");
-
             if (filter.keyframeCount("radius") <= 0)
                 radiusStart = radiusMiddle = radiusEnd = filter.getDouble("radius");
-
             if (filter.keyframeCount("nadirRadius") <= 0)
                 nadirRadiusStart = nadirRadiusMiddle = nadirRadiusEnd = filter.getDouble("nadirRadius");
-
             if (filter.keyframeCount("nadirCorrectionStart") <= 0)
                 nadirCorrectionStartStart = nadirCorrectionStartMiddle = nadirCorrectionStartEnd = filter.getDouble("nadirCorrectionStart");
-
         }
         setControls();
         updateProperty_yaw(null);
@@ -144,8 +131,7 @@ Item {
 
     function updateProperty_yaw(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = yawSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -176,8 +162,7 @@ Item {
 
     function updateProperty_pitch(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = pitchSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -208,8 +193,7 @@ Item {
 
     function updateProperty_roll(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = rollSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -240,8 +224,7 @@ Item {
 
     function updateProperty_frontX(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = frontXSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -272,8 +255,7 @@ Item {
 
     function updateProperty_frontY(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = frontYSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -304,8 +286,7 @@ Item {
 
     function updateProperty_frontUp(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = frontUpSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -336,8 +317,7 @@ Item {
 
     function updateProperty_backX(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = backXSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -368,8 +348,7 @@ Item {
 
     function updateProperty_backY(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = backYSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -400,8 +379,7 @@ Item {
 
     function updateProperty_backUp(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = backUpSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -432,8 +410,7 @@ Item {
 
     function updateProperty_fov(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = fovSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -464,8 +441,7 @@ Item {
 
     function updateProperty_radius(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = radiusSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -496,8 +472,7 @@ Item {
 
     function updateProperty_nadirRadius(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = nadirRadiusSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -528,8 +503,7 @@ Item {
 
     function updateProperty_nadirCorrectionStart(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = nadirCorrectionStartSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -560,16 +534,14 @@ Item {
 
     function updateProperty_interpolation() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = interpolationComboBox.currentIndex;
         filter.set("interpolation", value);
     }
 
     function updateProperty_projection() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = projectionComboBox.currentIndex;
         filter.set("projection", value);
     }
@@ -587,10 +559,8 @@ Item {
             yawMiddle = filter.getDouble("yaw", filter.animateIn);
             if (filter.animateIn > 0)
                 yawStart = filter.getDouble("yaw", 0);
-
             if (filter.animateOut > 0)
                 yawEnd = filter.getDouble("yaw", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("pitch", 0);
@@ -598,10 +568,8 @@ Item {
             pitchMiddle = filter.getDouble("pitch", filter.animateIn);
             if (filter.animateIn > 0)
                 pitchStart = filter.getDouble("pitch", 0);
-
             if (filter.animateOut > 0)
                 pitchEnd = filter.getDouble("pitch", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("roll", 0);
@@ -609,10 +577,8 @@ Item {
             rollMiddle = filter.getDouble("roll", filter.animateIn);
             if (filter.animateIn > 0)
                 rollStart = filter.getDouble("roll", 0);
-
             if (filter.animateOut > 0)
                 rollEnd = filter.getDouble("roll", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("frontX", 0.75);
@@ -620,10 +586,8 @@ Item {
             frontXMiddle = filter.getDouble("frontX", filter.animateIn);
             if (filter.animateIn > 0)
                 frontXStart = filter.getDouble("frontX", 0);
-
             if (filter.animateOut > 0)
                 frontXEnd = filter.getDouble("frontX", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("frontY", 0.5);
@@ -631,10 +595,8 @@ Item {
             frontYMiddle = filter.getDouble("frontY", filter.animateIn);
             if (filter.animateIn > 0)
                 frontYStart = filter.getDouble("frontY", 0);
-
             if (filter.animateOut > 0)
                 frontYEnd = filter.getDouble("frontY", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("frontUp", 90);
@@ -642,10 +604,8 @@ Item {
             frontUpMiddle = filter.getDouble("frontUp", filter.animateIn);
             if (filter.animateIn > 0)
                 frontUpStart = filter.getDouble("frontUp", 0);
-
             if (filter.animateOut > 0)
                 frontUpEnd = filter.getDouble("frontUp", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("backX", 0.25);
@@ -653,10 +613,8 @@ Item {
             backXMiddle = filter.getDouble("backX", filter.animateIn);
             if (filter.animateIn > 0)
                 backXStart = filter.getDouble("backX", 0);
-
             if (filter.animateOut > 0)
                 backXEnd = filter.getDouble("backX", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("backY", 0.5);
@@ -664,10 +622,8 @@ Item {
             backYMiddle = filter.getDouble("backY", filter.animateIn);
             if (filter.animateIn > 0)
                 backYStart = filter.getDouble("backY", 0);
-
             if (filter.animateOut > 0)
                 backYEnd = filter.getDouble("backY", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("backUp", 270);
@@ -675,10 +631,8 @@ Item {
             backUpMiddle = filter.getDouble("backUp", filter.animateIn);
             if (filter.animateIn > 0)
                 backUpStart = filter.getDouble("backUp", 0);
-
             if (filter.animateOut > 0)
                 backUpEnd = filter.getDouble("backUp", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("fov", 180);
@@ -686,10 +640,8 @@ Item {
             fovMiddle = filter.getDouble("fov", filter.animateIn);
             if (filter.animateIn > 0)
                 fovStart = filter.getDouble("fov", 0);
-
             if (filter.animateOut > 0)
                 fovEnd = filter.getDouble("fov", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("radius", 0.25);
@@ -697,10 +649,8 @@ Item {
             radiusMiddle = filter.getDouble("radius", filter.animateIn);
             if (filter.animateIn > 0)
                 radiusStart = filter.getDouble("radius", 0);
-
             if (filter.animateOut > 0)
                 radiusEnd = filter.getDouble("radius", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("nadirRadius", 0.2229);
@@ -708,10 +658,8 @@ Item {
             nadirRadiusMiddle = filter.getDouble("nadirRadius", filter.animateIn);
             if (filter.animateIn > 0)
                 nadirRadiusStart = filter.getDouble("nadirRadius", 0);
-
             if (filter.animateOut > 0)
                 nadirRadiusEnd = filter.getDouble("nadirRadius", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("nadirCorrectionStart", 0.8);
@@ -719,10 +667,8 @@ Item {
             nadirCorrectionStartMiddle = filter.getDouble("nadirCorrectionStart", filter.animateIn);
             if (filter.animateIn > 0)
                 nadirCorrectionStartStart = filter.getDouble("nadirCorrectionStart", 0);
-
             if (filter.animateOut > 0)
                 nadirCorrectionStartEnd = filter.getDouble("nadirCorrectionStart", filter.duration - 1);
-
         }
         if (filter.isNew)
             filter.set("interpolation", 1);
@@ -734,7 +680,6 @@ Item {
             projectionValue = filter.get("projection");
         if (filter.isNew)
             filter.savePreset(preset.parameters);
-
         setControls();
     }
 
@@ -774,94 +719,68 @@ Item {
                 yawMiddle = filter.getDouble("yaw", filter.animateIn);
                 if (filter.animateIn > 0)
                     yawStart = filter.getDouble("yaw", 0);
-
                 if (filter.animateOut > 0)
                     yawEnd = filter.getDouble("yaw", filter.duration - 1);
-
                 pitchMiddle = filter.getDouble("pitch", filter.animateIn);
                 if (filter.animateIn > 0)
                     pitchStart = filter.getDouble("pitch", 0);
-
                 if (filter.animateOut > 0)
                     pitchEnd = filter.getDouble("pitch", filter.duration - 1);
-
                 rollMiddle = filter.getDouble("roll", filter.animateIn);
                 if (filter.animateIn > 0)
                     rollStart = filter.getDouble("roll", 0);
-
                 if (filter.animateOut > 0)
                     rollEnd = filter.getDouble("roll", filter.duration - 1);
-
                 frontXMiddle = filter.getDouble("frontX", filter.animateIn);
                 if (filter.animateIn > 0)
                     frontXStart = filter.getDouble("frontX", 0);
-
                 if (filter.animateOut > 0)
                     frontXEnd = filter.getDouble("frontX", filter.duration - 1);
-
                 frontYMiddle = filter.getDouble("frontY", filter.animateIn);
                 if (filter.animateIn > 0)
                     frontYStart = filter.getDouble("frontY", 0);
-
                 if (filter.animateOut > 0)
                     frontYEnd = filter.getDouble("frontY", filter.duration - 1);
-
                 frontUpMiddle = filter.getDouble("frontUp", filter.animateIn);
                 if (filter.animateIn > 0)
                     frontUpStart = filter.getDouble("frontUp", 0);
-
                 if (filter.animateOut > 0)
                     frontUpEnd = filter.getDouble("frontUp", filter.duration - 1);
-
                 backXMiddle = filter.getDouble("backX", filter.animateIn);
                 if (filter.animateIn > 0)
                     backXStart = filter.getDouble("backX", 0);
-
                 if (filter.animateOut > 0)
                     backXEnd = filter.getDouble("backX", filter.duration - 1);
-
                 backYMiddle = filter.getDouble("backY", filter.animateIn);
                 if (filter.animateIn > 0)
                     backYStart = filter.getDouble("backY", 0);
-
                 if (filter.animateOut > 0)
                     backYEnd = filter.getDouble("backY", filter.duration - 1);
-
                 backUpMiddle = filter.getDouble("backUp", filter.animateIn);
                 if (filter.animateIn > 0)
                     backUpStart = filter.getDouble("backUp", 0);
-
                 if (filter.animateOut > 0)
                     backUpEnd = filter.getDouble("backUp", filter.duration - 1);
-
                 fovMiddle = filter.getDouble("fov", filter.animateIn);
                 if (filter.animateIn > 0)
                     fovStart = filter.getDouble("fov", 0);
-
                 if (filter.animateOut > 0)
                     fovEnd = filter.getDouble("fov", filter.duration - 1);
-
                 radiusMiddle = filter.getDouble("radius", filter.animateIn);
                 if (filter.animateIn > 0)
                     radiusStart = filter.getDouble("radius", 0);
-
                 if (filter.animateOut > 0)
                     radiusEnd = filter.getDouble("radius", filter.duration - 1);
-
                 nadirRadiusMiddle = filter.getDouble("nadirRadius", filter.animateIn);
                 if (filter.animateIn > 0)
                     nadirRadiusStart = filter.getDouble("nadirRadius", 0);
-
                 if (filter.animateOut > 0)
                     nadirRadiusEnd = filter.getDouble("nadirRadius", filter.duration - 1);
-
                 nadirCorrectionStartMiddle = filter.getDouble("nadirCorrectionStart", filter.animateIn);
                 if (filter.animateIn > 0)
                     nadirCorrectionStartStart = filter.getDouble("nadirCorrectionStart", 0);
-
                 if (filter.animateOut > 0)
                     nadirCorrectionStartEnd = filter.getDouble("nadirCorrectionStart", filter.duration - 1);
-
                 interpolationValue = filter.get("interpolation");
                 projectionValue = filter.get("projection");
                 setControls(null);
@@ -1515,7 +1434,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -1553,5 +1471,4 @@ Item {
 
         target: producer
     }
-
 }

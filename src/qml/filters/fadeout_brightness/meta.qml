@@ -17,5 +17,4 @@ Metadata {
         allowTrim: false
         allowAnimateOut: true
     }
-
 }

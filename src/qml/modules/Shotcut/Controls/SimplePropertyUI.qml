@@ -31,7 +31,6 @@ Column {
                 anchors {
                     verticalCenter: propField.verticalCenter
                 }
-
             }
 
             TextField {
@@ -42,9 +41,6 @@ Column {
                 text: filter.get(modelData)
                 onTextChanged: filter.set(modelData, text)
             }
-
         }
-
     }
-
 }

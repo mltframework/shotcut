@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -29,8 +28,8 @@ RowLayout {
     property alias undoButtonVisible: undoButton.visible
     property alias saveButtonVisible: saveButton.visible
 
-    signal setDefaultClicked()
-    signal saveDefaultClicked()
+    signal setDefaultClicked
+    signal saveDefaultClicked
 
     function clamp(x, min, max) {
         return Math.max(min, Math.min(max, x));
@@ -50,13 +49,11 @@ RowLayout {
         onFocusChanged: {
             if (focus)
                 selectAll();
-
         }
 
         validator: RegularExpressionValidator {
             regularExpression: /^\s*(\d*:){0,2}(\d*[.;:])?\d*\s*$/
         }
-
     }
 
     Shotcut.Button {
@@ -86,7 +83,6 @@ RowLayout {
             triggeredOnStart: true
             onTriggered: decrementAction.trigger()
         }
-
     }
 
     Shotcut.Button {
@@ -116,7 +112,6 @@ RowLayout {
             triggeredOnStart: true
             onTriggered: incrementAction.trigger()
         }
-
     }
 
     Shotcut.UndoButton {
@@ -142,5 +137,4 @@ RowLayout {
 
         onTriggered: value = Math.min(value + 1, maximumValue)
     }
-
 }

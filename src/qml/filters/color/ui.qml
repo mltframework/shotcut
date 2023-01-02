@@ -14,16 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
+
     // For a = 0, the function is linear
     // The solution to the quadratic formula reduces to:
-
     property var defaultParameters: ['lift_r', 'lift_g', 'lift_b', 'gamma_r', 'gamma_g', 'gamma_b', 'gain_r', 'gain_g', 'gain_b']
     property double gammaFactor: 2
     property double gainFactor: 4
@@ -264,13 +263,10 @@ Item {
             onColorChanged: {
                 if (liftRedSpinner.value != wheelToSpinner(liftwheel.redF))
                     liftRedSpinner.value = wheelToSpinner(liftwheel.redF);
-
                 if (liftGreenSpinner.value != wheelToSpinner(liftwheel.greenF))
                     liftGreenSpinner.value = wheelToSpinner(liftwheel.greenF);
-
                 if (liftBlueSpinner.value != wheelToSpinner(liftwheel.blueF))
                     liftBlueSpinner.value = wheelToSpinner(liftwheel.blueF);
-
                 if (!blockUpdate) {
                     if (!liftKeyframesButton.checked) {
                         filter.resetProperty('lift_r');
@@ -302,13 +298,10 @@ Item {
             onColorChanged: {
                 if (gammaRedSpinner.value != wheelToSpinner(gammawheel.redF))
                     gammaRedSpinner.value = wheelToSpinner(gammawheel.redF);
-
                 if (gammaGreenSpinner.value != wheelToSpinner(gammawheel.greenF))
                     gammaGreenSpinner.value = wheelToSpinner(gammawheel.greenF);
-
                 if (gammaBlueSpinner.value != wheelToSpinner(gammawheel.blueF))
                     gammaBlueSpinner.value = wheelToSpinner(gammawheel.blueF);
-
                 if (!blockUpdate) {
                     if (!gammaKeyframesButton.checked) {
                         filter.resetProperty('gamma_r');
@@ -340,13 +333,10 @@ Item {
             onColorChanged: {
                 if (gainRedSpinner.value != wheelToSpinner(gainwheel.redF))
                     gainRedSpinner.value = wheelToSpinner(gainwheel.redF);
-
                 if (gainGreenSpinner.value != wheelToSpinner(gainwheel.greenF))
                     gainGreenSpinner.value = wheelToSpinner(gainwheel.greenF);
-
                 if (gainBlueSpinner.value != wheelToSpinner(gainwheel.blueF))
                     gainBlueSpinner.value = wheelToSpinner(gainwheel.blueF);
-
                 if (!blockUpdate) {
                     if (!gainKeyframesButton.checked) {
                         filter.resetProperty('gain_r');
@@ -387,10 +377,8 @@ Item {
                 onValueChanged: {
                     if (liftwheel.redF != spinnerToWheel(value))
                         liftwheel.redF = spinnerToWheel(value);
-
                 }
             }
-
         }
 
         RowLayout {
@@ -414,10 +402,8 @@ Item {
                 onValueChanged: {
                     if (gammawheel.redF != spinnerToWheel(value))
                         gammawheel.redF = spinnerToWheel(value);
-
                 }
             }
-
         }
 
         RowLayout {
@@ -441,10 +427,8 @@ Item {
                 onValueChanged: {
                     if (gainwheel.redF != spinnerToWheel(value))
                         gainwheel.redF = spinnerToWheel(value);
-
                 }
             }
-
         }
 
         // Row 5
@@ -469,10 +453,8 @@ Item {
                 onValueChanged: {
                     if (liftwheel.greenF != spinnerToWheel(value))
                         liftwheel.greenF = spinnerToWheel(value);
-
                 }
             }
-
         }
 
         RowLayout {
@@ -496,10 +478,8 @@ Item {
                 onValueChanged: {
                     if (gammawheel.greenF != spinnerToWheel(value))
                         gammawheel.greenF = spinnerToWheel(value);
-
                 }
             }
-
         }
 
         RowLayout {
@@ -523,10 +503,8 @@ Item {
                 onValueChanged: {
                     if (gainwheel.greenF != spinnerToWheel(value))
                         gainwheel.greenF = spinnerToWheel(value);
-
                 }
             }
-
         }
 
         // Row 6
@@ -551,10 +529,8 @@ Item {
                 onValueChanged: {
                     if (liftwheel.blueF != spinnerToWheel(value))
                         liftwheel.blueF = spinnerToWheel(value);
-
                 }
             }
-
         }
 
         RowLayout {
@@ -578,10 +554,8 @@ Item {
                 onValueChanged: {
                     if (gammawheel.blueF != spinnerToWheel(value))
                         gammawheel.blueF = spinnerToWheel(value);
-
                 }
             }
-
         }
 
         RowLayout {
@@ -605,16 +579,13 @@ Item {
                 onValueChanged: {
                     if (gainwheel.blueF != spinnerToWheel(value))
                         gainwheel.blueF = spinnerToWheel(value);
-
                 }
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -648,5 +619,4 @@ Item {
 
         target: parameters
     }
-
 }

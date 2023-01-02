@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Dialogs
@@ -30,8 +29,7 @@ Item {
 
     function setControls() {
         if (blockUpdate)
-            return ;
-
+            return;
         var outPosition = getPosition();
         var inSeconds = filter.getDouble('map', outPosition);
         var inPosition = Math.round(inSeconds * profile.fps);
@@ -148,7 +146,6 @@ Item {
                 var nextPosition = filter.getNextKeyframePosition("map", currPosition);
                 if (nextPosition == -1 || nextPosition > maxPosition)
                     nextPosition = maxPosition;
-
                 if (nextPosition > currPosition) {
                     var deltaTime = ((nextPosition - currPosition) / profile.fps) * speedSlider.value;
                     newValue = currValue + deltaTime;
@@ -173,7 +170,6 @@ Item {
                 var prevPosition = filter.getPrevKeyframePosition("map", currPosition);
                 if (prevPosition < 0 || prevPosition == currPosition)
                     prevPosition = 0;
-
                 if (prevPosition < currPosition && prevPosition >= 0) {
                     var deltaTime = ((currPosition - prevPosition) / profile.fps) * speedSlider.value;
                     newValue = currValue - deltaTime;
@@ -194,16 +190,12 @@ Item {
             }
             if (newValue < 0)
                 newValue = 0;
-
             if (newValue > maxValue)
                 newValue = maxValue;
-
             if (newPosition < 0)
                 newPosition = 0;
-
             if (newPosition > maxPosition)
                 newPosition = maxPosition;
-
             filter.set('map', newValue, newPosition);
             timer.restart();
         }
@@ -245,9 +237,7 @@ Item {
                         text: qsTr('Lock current mapping')
                         value: 'in'
                     }
-
                 }
-
             }
 
             Label {
@@ -256,9 +246,7 @@ Item {
                 wrapMode: Text.WordWrap
                 text: qsTr('"Modify current mapping" will modify the input time at the current position.\n' + '"Lock current mapping" will lock the input time at the current position and modify the value of an adjacent keyframe')
             }
-
         }
-
     }
 
     GridLayout {
@@ -292,7 +280,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Map the specified input time to the current time. Use keyframes to vary the time mappings over time.')
             }
-
         }
 
         Row {
@@ -305,8 +292,7 @@ Item {
                 undoButtonVisible: false
                 onValueChanged: {
                     if (blockUpdate)
-                        return ;
-
+                        return;
                     filter.set('map', mapSpinner.value / profile.fps, getPosition());
                     timer.restart();
                 }
@@ -326,7 +312,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Set the input time to achieve a desired speed before the current frame.')
                 }
-
             }
 
             Shotcut.Button {
@@ -343,9 +328,7 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Set the input time to achieve a desired speed after the current frame.')
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -367,7 +350,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.')
             }
-
         }
 
         Shotcut.ComboBox {
@@ -378,8 +360,7 @@ Item {
             textRole: "text"
             onCurrentIndexChanged: {
                 if (blockUpdate)
-                    return ;
-
+                    return;
                 filter.set('image_mode', imageModeModel.get(currentIndex).value);
             }
 
@@ -395,9 +376,7 @@ Item {
                     text: qsTr('Blend')
                     value: 'blend'
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -414,8 +393,7 @@ Item {
             text: qsTr('Enable pitch compensation')
             onCheckedChanged: {
                 if (blockUpdate)
-                    return ;
-
+                    return;
                 filter.set('pitch', checked);
             }
         }
@@ -437,7 +415,6 @@ Item {
                 radius: 2
                 color: activePalette.text
             }
-
         }
 
         Label {
@@ -447,7 +424,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The instantaneous speed of the last frame that was processed.')
             }
-
         }
 
         Label {
@@ -463,7 +439,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The instantaneous direction of the last frame that was processed.')
             }
-
         }
 
         Label {
@@ -479,7 +454,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The original clip time of the frame.')
             }
-
         }
 
         Label {
@@ -495,7 +469,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The mapped output time for the input frame.')
             }
-
         }
 
         Label {
@@ -507,7 +480,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

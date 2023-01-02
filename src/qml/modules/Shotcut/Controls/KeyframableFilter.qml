@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.5
 
 Item {
@@ -36,7 +35,8 @@ Item {
 
     // This function should be called in your Preset.beforePresetSelected handler.
     function resetSimpleKeyframes() {
-        for (var i in keyframableParameters) filter.resetProperty(keyframableParameters[i])
+        for (var i in keyframableParameters)
+            filter.resetProperty(keyframableParameters[i]);
     }
 
     // This function should be called in your Preset.presetSelected handler.
@@ -46,10 +46,8 @@ Item {
             middleValues[i] = filter.getDouble(parameter, filter.animateIn);
             if (filter.animateIn > 0)
                 startValues[i] = filter.getDouble(parameter, 0);
-
             if (filter.animateOut > 0)
                 endValues[i] = filter.getDouble(parameter, filter.duration - 1);
-
         }
     }
 
@@ -69,12 +67,11 @@ Item {
     // This function should be called in your controls' valueChanged handler.
     function updateFilter(parameter, value, button, position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var index = keyframableParameters.indexOf(parameter);
         if (index < 0) {
             console.log("ERROR: Parameter not found in keyframableParameters:", parameter);
-            return ;
+            return;
         }
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -129,6 +126,5 @@ Item {
     Component.onCompleted: {
         if (!filter.isNew)
             initializeSimpleKeyframes();
-
     }
 }

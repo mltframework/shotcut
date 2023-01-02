@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
@@ -80,13 +79,10 @@ GridLayout {
         var s = filter.get('family');
         if (filter.getDouble('weight') > 10 * Font.Medium)
             s += ' ' + qsTr('Bold');
-
         if (filter.get('style') === 'italic')
             s += ' ' + qsTr('Italic');
-
         if (parseInt(filter.get(useFontSizeProperty)))
             s += ' ' + getPointSize();
-
         fontButton.text = s;
     }
 
@@ -112,11 +108,11 @@ GridLayout {
         else if (align === 'bottom')
             bottomRadioButton.checked = true;
         fontDialog.selectedFont = Qt.font({
-            "family": filter.get('family'),
-            "pointSize": getPointSize(),
-            "italic": filter.get('style') === 'italic',
-            "weight": filter.getDouble('weight') / 10
-        });
+                "family": filter.get('family'),
+                "pointSize": getPointSize(),
+                "italic": filter.get('style') === 'italic',
+                "weight": filter.getDouble('weight') / 10
+            });
         fontDialog.fontFamily = filter.get('family');
         fontSizeCheckBox.checked = parseInt(filter.get(useFontSizeProperty));
         refreshFontButton();
@@ -201,7 +197,6 @@ GridLayout {
                     refreshFontButton();
                 }
             }
-
         }
 
         CheckBox {
@@ -219,7 +214,6 @@ GridLayout {
                 refreshFontButton();
             }
         }
-
     }
 
     Label {
@@ -325,7 +319,6 @@ GridLayout {
                 }
             }
         }
-
     }
 
     Shotcut.UndoButton {
@@ -399,7 +392,6 @@ GridLayout {
                 }
             }
         }
-
     }
 
     Shotcut.UndoButton {
@@ -523,5 +515,4 @@ GridLayout {
 
         target: producer
     }
-
 }

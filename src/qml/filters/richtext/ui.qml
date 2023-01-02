@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -82,7 +81,6 @@ Item {
         var document = filter.getRect(sizeProperty);
         if (bgColor.value.substring(0, 3) !== '#00')
             document.height = Math.max(document.height, filterRect.height);
-
         return document;
     }
 
@@ -199,17 +197,14 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(startValue, filter.getRect(rectProperty, 0));
-
             if (filter.animateOut > 0)
                 filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1));
-
         }
         filter.blockSignals = false;
         setControls();
         setKeyframedControls();
         if (filter.isNew)
             filter.set(rectProperty, filter.getRect(rectProperty));
-
     }
 
     GridLayout {
@@ -240,10 +235,8 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)
                     filter.set(startValue, filter.getRect(rectProperty, 0));
-
                 if (filter.animateOut > 0)
                     filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1));
-
                 filter.blockSignals = false;
             }
         }
@@ -302,7 +295,6 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                     }
                 }
             }
-
         }
 
         Shotcut.UndoButton {
@@ -376,7 +368,6 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                     }
                 }
             }
-
         }
 
         Shotcut.UndoButton {
@@ -415,7 +406,6 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
                     readOnly: true
                 }
-
             }
 
             Label {
@@ -444,9 +434,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
                     readOnly: true
                 }
-
             }
-
         }
 
         Item {
@@ -514,7 +502,6 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 ButtonGroup.group: overflowGroup
                 onClicked: filter.set('overflow-y', 0)
             }
-
         }
 
         Shotcut.UndoButton {
@@ -531,7 +518,6 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -565,5 +551,4 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
         target: producer
     }
-
 }

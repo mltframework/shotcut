@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.1
 import Shotcut.Controls 1.0 as Shotcut
 
@@ -33,8 +32,7 @@ Shotcut.VuiBase {
 
     function setRectangleControl() {
         if (blockUpdate)
-            return ;
-
+            return;
         var position = getPosition();
         var newValue = filter.getRect(rectProperty, position);
         if (filterRect !== newValue) {
@@ -116,9 +114,7 @@ Shotcut.VuiBase {
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: setFilter(getPosition())
             }
-
         }
-
     }
 
     Connections {
@@ -137,5 +133,4 @@ Shotcut.VuiBase {
 
         target: producer
     }
-
 }

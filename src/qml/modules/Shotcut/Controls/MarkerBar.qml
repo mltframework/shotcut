@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 
 Repeater {
@@ -23,7 +22,7 @@ Repeater {
     property real timeScale: 1
     property var snapper
 
-    signal exited()
+    signal exited
     signal mouseStatusChanged(int mouseX, int mouseY, var text, int start, int end)
     signal seekRequested(int pos)
 
@@ -36,8 +35,7 @@ Repeater {
         text: model.text
         index: model.index
         onExited: markerbar.exited()
-        onMouseStatusChanged: (mouseX, mouseY, text, start, end)=> markerbar.mouseStatusChanged(mouseX, mouseY, text, start, end)
-        onSeekRequested: (pos)=> markerbar.seekRequested(pos)
+        onMouseStatusChanged: (mouseX, mouseY, text, start, end) => markerbar.mouseStatusChanged(mouseX, mouseY, text, start, end)
+        onSeekRequested: pos => markerbar.seekRequested(pos)
     }
-
 }

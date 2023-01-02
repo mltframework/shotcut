@@ -45,8 +45,7 @@ Shotcut.VuiBase {
 
     function setRectangleControl() {
         if (blockUpdate)
-            return ;
-
+            return;
         var position = getPosition();
         var newValue = filter.getRect(rectProperty, position);
         if (filterRect !== newValue) {
@@ -231,13 +230,9 @@ Shotcut.VuiBase {
                             PauseAnimation {
                                 duration: 400
                             }
-
                         }
-
                     }
-
                 }
-
             }
 
             ToolBar {
@@ -262,7 +257,6 @@ Shotcut.VuiBase {
                         action: Action {
                             icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
                         }
-
                     }
 
                     ToolButton {
@@ -280,7 +274,6 @@ Shotcut.VuiBase {
                             icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
                             onTriggered: menu.popup()
                         }
-
                     }
 
                     ToolButton {
@@ -293,7 +286,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -306,7 +298,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -319,10 +310,9 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
-                    // separator
 
+                    // separator
                     Button {
                         enabled: false
                         implicitWidth: 2
@@ -374,7 +364,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: qsTr('Text size')
                         }
-
                     }
 
                     ToolButton {
@@ -404,10 +393,9 @@ Shotcut.VuiBase {
                             border.width: 1
                             border.color: Qt.darker(colorRect.color, 2)
                         }
-
                     }
-                    // separator
 
+                    // separator
                     Button {
                         enabled: false
                         implicitWidth: 2
@@ -425,7 +413,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -438,7 +425,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -451,7 +437,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -464,7 +449,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -477,7 +461,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -490,7 +473,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -512,18 +494,14 @@ Shotcut.VuiBase {
                                 filter.set('_shotcut:toolbarCollapsed', !toolbar.expanded);
                             }
                         }
-
                     }
-
                 }
 
                 Behavior on width  {
                     NumberAnimation {
                         duration: 100
                     }
-
                 }
-
             }
 
             Shotcut.RectangleControl {
@@ -537,9 +515,7 @@ Shotcut.VuiBase {
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: updateFilter(getPosition())
             }
-
         }
-
     }
 
     Shotcut.EditContextMenu {
@@ -827,9 +803,7 @@ Shotcut.VuiBase {
                 Layout.fillHeight: true
                 height: columnsSpinner.height
             }
-
         }
-
     }
 
     RichText {
@@ -872,5 +846,4 @@ Shotcut.VuiBase {
 
         target: producer
     }
-
 }

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQml.Models
 import QtQuick
 import QtQuick.Controls
@@ -86,7 +85,6 @@ Rectangle {
                             model.checkState = !model.checkState;
                         }
                     }
-
                 }
 
                 Label {
@@ -106,13 +104,9 @@ Rectangle {
                         }
                         onClicked: filterClicked(model.index)
                     }
-
                 }
-
             }
-
         }
-
     }
 
     Component {
@@ -137,9 +131,7 @@ Rectangle {
                 color: activePalette.windowText
                 font.bold: true
             }
-
         }
-
     }
 
     ScrollView {
@@ -223,26 +215,23 @@ Rectangle {
                 propagateComposedEvents: true
                 anchors.fill: attachedFiltersView.contentItem
                 z: 1
-                onClicked: (mouse)=> {
+                onClicked: mouse => {
                     filterClicked(attachedFiltersView.indexAt(mouseX, mouseY));
                     mouse.accepted = false;
                 }
                 onPressAndHold: {
                     if (oldIndex === -1)
                         beginDrag();
-
                 }
-                onReleased: (mouse)=> {
+                onReleased: mouse => {
                     if (oldIndex !== -1 && attachedFiltersView.dragTarget !== -1 && oldIndex !== attachedFiltersView.dragTarget)
                         attachedfiltersmodel.move(oldIndex, attachedFiltersView.dragTarget);
-
                     endDrag();
                     mouse.accepted = true;
                 }
                 onPositionChanged: {
                     if (oldIndex === -1)
                         beginDrag();
-
                     updateDragTarget();
                 }
                 onCanceled: endDrag()
@@ -267,7 +256,6 @@ Rectangle {
                         }
                     }
                 }
-
             }
 
             Loader {
@@ -287,9 +275,6 @@ Rectangle {
                 color: activePalette.highlight
                 width: parent ? parent.width : undefined
             }
-
         }
-
     }
-
 }

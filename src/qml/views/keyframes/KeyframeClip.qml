@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
@@ -49,7 +48,7 @@ Rectangle {
     signal trimmedIn(var clip)
     signal trimmingOut(var clip, real delta, var mouse)
     signal trimmedOut(var clip)
-    signal rightClicked()
+    signal rightClicked
 
     function getColor() {
         return isAudio ? 'darkseagreen' : root.shotcutBlue;
@@ -59,7 +58,8 @@ Rectangle {
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
         waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth);
-        for (var i = 0; i < waveformRepeater.count; i++) waveformRepeater.itemAt(0).update()
+        for (var i = 0; i < waveformRepeater.count; i++)
+            waveformRepeater.itemAt(0).update();
     }
 
     function imagePath(time) {
@@ -81,7 +81,6 @@ Rectangle {
                 target: clipRoot
                 z: 0
             }
-
         },
         State {
             name: 'selectedBlank'
@@ -96,7 +95,6 @@ Rectangle {
                 target: gradientStop
                 color: Qt.darker(selectedTrackColor)
             }
-
         },
         State {
             name: 'selected'
@@ -111,7 +109,6 @@ Rectangle {
                 target: gradientStop
                 color: Qt.darker(getColor())
             }
-
         }
     ]
 
@@ -167,10 +164,10 @@ Rectangle {
             model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
 
             Shotcut.TimelineWaveform {
+
                 // right edge
                 // left edge
                 // bottom edge
-
                 property int channels: 2
 
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
@@ -181,9 +178,7 @@ Rectangle {
                 levels: audioLevels
                 active: ((clipRoot.x + x + width) > tracksFlickable.contentX) && ((clipRoot.x + x) < tracksFlickable.contentX + tracksFlickable.width) && ((trackRoot.y + y + height) > tracksFlickable.contentY) && ((trackRoot.y + y) < tracksFlickable.contentY + tracksFlickable.height) // top edge
             }
-
         }
-
     }
 
     Rectangle {
@@ -226,7 +221,6 @@ Rectangle {
             topMargin: parent.border.width + 1
             leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width) + 1
         }
-
     }
 
     MouseArea {
@@ -317,7 +311,7 @@ Rectangle {
                     bubbleHelp.hide();
                 }
             }
-            onPositionChanged: (mouse)=> {
+            onPositionChanged: mouse => {
                 if (!dragBlocked && mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale);
                     var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration);
@@ -331,7 +325,7 @@ Rectangle {
             onExited: animateInControl.scale = 1
         }
 
-        SequentialAnimation on scale {
+        SequentialAnimation on scale  {
             loops: Animation.Infinite
             running: animateInMouseArea.containsMouse
 
@@ -348,9 +342,7 @@ Rectangle {
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
-
         }
-
     }
 
     Shotcut.TimelineTriangle {
@@ -368,7 +360,6 @@ Rectangle {
             xScale: -1
             origin.x: animateOutTriangle.width / 2
         }
-
     }
 
     Rectangle {
@@ -425,7 +416,7 @@ Rectangle {
                     bubbleHelp.hide();
                 }
             }
-            onPositionChanged: (mouse)=> {
+            onPositionChanged: mouse => {
                 if (!dragBlocked && mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((startX - parent.x) / timeScale);
                     var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration);
@@ -439,7 +430,7 @@ Rectangle {
             onExited: animateOutControl.scale = 1
         }
 
-        SequentialAnimation on scale {
+        SequentialAnimation on scale  {
             loops: Animation.Infinite
             running: animateOutMouseArea.containsMouse
 
@@ -456,9 +447,7 @@ Rectangle {
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
-
         }
-
     }
 
     Rectangle {
@@ -496,7 +485,7 @@ Rectangle {
                 parent.anchors.left = clipRoot.left;
                 clipRoot.trimmedIn(clipRoot);
             }
-            onPositionChanged: (mouse)=> {
+            onPositionChanged: mouse => {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newX = mapToItem(null, x, y).x;
                     var delta = Math.round((newX - startX) / timeScale);
@@ -508,7 +497,6 @@ Rectangle {
                 }
             }
         }
-
     }
 
     Rectangle {
@@ -546,7 +534,7 @@ Rectangle {
                 parent.anchors.right = clipRoot.right;
                 clipRoot.trimmedOut(clipRoot);
             }
-            onPositionChanged: (mouse)=> {
+            onPositionChanged: mouse => {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale);
                     var delta = duration - newDuration;
@@ -558,7 +546,6 @@ Rectangle {
                 }
             }
         }
-
     }
 
     gradient: Gradient {
@@ -575,7 +562,5 @@ Rectangle {
             position: 1
             color: getColor()
         }
-
     }
-
 }

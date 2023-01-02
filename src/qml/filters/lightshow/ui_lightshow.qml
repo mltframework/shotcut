@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -104,8 +103,7 @@ Item {
             Layout.columnSpan: 4
             onGradientChanged: {
                 if (_disableUpdate)
-                    return ;
-
+                    return;
                 filter.setGradient('color', colors);
             }
         }
@@ -149,7 +147,6 @@ Item {
                 to: 1e+09
                 onValueModified: setFilter()
             }
-
         }
 
         Label {
@@ -191,7 +188,6 @@ Item {
                 to: 1e+09
                 onValueModified: setFilter()
             }
-
         }
 
         Label {
@@ -201,7 +197,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Oscillation can be useful to make the light blink during long periods of sound.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -226,7 +221,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The low end of the frequency range to be used to influence the light.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -241,7 +235,6 @@ Item {
                 filter.set("frequency_low", value);
                 if (!_disableUpdate && (value + _minFreqDelta) > freqHighSlider.value)
                     freqHighSlider.value = value + _minFreqDelta;
-
             }
         }
 
@@ -256,7 +249,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The high end of the frequency range to be used to influence the light.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -271,7 +263,6 @@ Item {
                 filter.set("frequency_high", value);
                 if (!_disableUpdate && (value - _minFreqDelta) < freqLowSlider.value)
                     freqLowSlider.value = value - _minFreqDelta;
-
             }
         }
 
@@ -286,7 +277,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the light to change.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -307,7 +297,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -321,5 +310,4 @@ Item {
 
         target: filter
     }
-
 }

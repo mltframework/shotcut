@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.1
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.1
@@ -79,7 +78,6 @@ RowLayout {
                     topMargin: 1
                     bottomMargin: 1
                 }
-
             }
 
             // Indicate percentage full.
@@ -94,14 +92,11 @@ RowLayout {
                     bottom: parent.bottom
                     margins: 1
                 }
-
             }
-
         }
 
         handle: Rectangle {
         }
-
     }
 
     // Optional label between slider and spinner
@@ -153,9 +148,7 @@ RowLayout {
                     topMargin: 1
                     bottomMargin: 1
                 }
-
             }
-
         }
 
         up.indicator: Rectangle {
@@ -163,7 +156,5 @@ RowLayout {
 
         down.indicator: Rectangle {
         }
-
     }
-
 }

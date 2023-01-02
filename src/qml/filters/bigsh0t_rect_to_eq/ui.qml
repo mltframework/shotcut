@@ -18,10 +18,8 @@ Item {
             // When enabling simple keyframes, initialize the keyframes with the current value
             if (filter.keyframeCount("hfov") <= 0)
                 hfovStart = hfovMiddle = hfovEnd = filter.getDouble("hfov");
-
             if (filter.keyframeCount("vfov") <= 0)
                 vfovStart = vfovMiddle = vfovEnd = filter.getDouble("vfov");
-
         }
         setControls();
         updateProperty_hfov(null);
@@ -42,8 +40,7 @@ Item {
 
     function updateProperty_hfov(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = hfovSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -74,8 +71,7 @@ Item {
 
     function updateProperty_vfov(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = vfovSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -106,8 +102,7 @@ Item {
 
     function updateProperty_interpolation() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = interpolationComboBox.currentIndex;
         filter.set("interpolation", value);
     }
@@ -125,10 +120,8 @@ Item {
             hfovMiddle = filter.getDouble("hfov", filter.animateIn);
             if (filter.animateIn > 0)
                 hfovStart = filter.getDouble("hfov", 0);
-
             if (filter.animateOut > 0)
                 hfovEnd = filter.getDouble("hfov", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("vfov", 60);
@@ -136,10 +129,8 @@ Item {
             vfovMiddle = filter.getDouble("vfov", filter.animateIn);
             if (filter.animateIn > 0)
                 vfovStart = filter.getDouble("vfov", 0);
-
             if (filter.animateOut > 0)
                 vfovEnd = filter.getDouble("vfov", filter.duration - 1);
-
         }
         if (filter.isNew)
             filter.set("interpolation", 1);
@@ -147,7 +138,6 @@ Item {
             interpolationValue = filter.get("interpolation");
         if (filter.isNew)
             filter.savePreset(preset.parameters);
-
         setControls();
     }
 
@@ -175,17 +165,13 @@ Item {
                 hfovMiddle = filter.getDouble("hfov", filter.animateIn);
                 if (filter.animateIn > 0)
                     hfovStart = filter.getDouble("hfov", 0);
-
                 if (filter.animateOut > 0)
                     hfovEnd = filter.getDouble("hfov", filter.duration - 1);
-
                 vfovMiddle = filter.getDouble("vfov", filter.animateIn);
                 if (filter.animateIn > 0)
                     vfovStart = filter.getDouble("vfov", 0);
-
                 if (filter.animateOut > 0)
                     vfovEnd = filter.getDouble("vfov", filter.duration - 1);
-
                 interpolationValue = filter.get("interpolation");
                 setControls(null);
             }
@@ -305,7 +291,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -343,5 +328,4 @@ Item {
 
         target: producer
     }
-
 }

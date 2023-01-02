@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -38,7 +37,6 @@ Item {
         for (var i = 0; i < values.length; ++i) {
             if (values[i] === value)
                 return i;
-
         }
         return -1;
     }
@@ -53,7 +51,8 @@ Item {
     function getMaxSteps() {
         var min = Math.min(profile.width, profile.height);
         var i = 1;
-        while (Math.pow(2, i) <= min)++i
+        while (Math.pow(2, i) <= min)
+            ++i;
         return i - 1;
     }
 
@@ -92,6 +91,7 @@ Item {
     }
 
     GridLayout {
+
         // Row split
         // Row split
         // Row split
@@ -100,7 +100,6 @@ Item {
         // Row split
         // Row split
         // Filler
-
         columns: 3
         anchors.fill: parent
         anchors.margins: 8
@@ -207,14 +206,11 @@ Item {
                 acceptedButtons: Qt.NoButton
                 cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
             }
-
         }
 
         Item {
             Layout.columnSpan: 3
             Layout.fillHeight: true
         }
-
     }
-
 }

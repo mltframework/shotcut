@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 
@@ -34,8 +33,8 @@ Rectangle {
         model: parent.width / (intervalSeconds * profile.fps * timeScale)
 
         Rectangle {
-            // right edge
 
+            // right edge
             anchors.bottom: rulerTop.bottom
             height: 18
             width: 1
@@ -51,9 +50,7 @@ Rectangle {
                 color: activePalette.windowText
                 text: application.timecode(index * intervalSeconds * profile.fps + 2).substr(0, 8)
             }
-
         }
-
     }
 
     MouseArea {
@@ -61,10 +58,9 @@ Rectangle {
         hoverEnabled: true
         acceptedButtons: Qt.NoButton
         onExited: bubbleHelp.hide()
-        onPositionChanged: (mouse)=> {
+        onPositionChanged: mouse => {
             var text = application.timecode(mouse.x / timeScale);
             bubbleHelp.show(text);
         }
     }
-
 }

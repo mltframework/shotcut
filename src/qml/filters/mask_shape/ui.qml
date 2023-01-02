@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Dialogs
@@ -41,10 +40,8 @@ Item {
         middleValue = filter.getDouble('filter.mix', filter.animateIn);
         if (filter.animateIn > 0)
             startValue = filter.getDouble('filter.mix', 0);
-
         if (filter.animateOut > 0)
             endValue = filter.getDouble('filter.mix', filter.duration - 1);
-
     }
 
     function getPosition() {
@@ -108,8 +105,7 @@ Item {
 
     function updateFilter(parameter, value, position, button) {
         if (blockUpdate)
-            return ;
-
+            return;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
                 startValue = value;
@@ -178,10 +174,8 @@ Item {
         } else {
             if (filter.get('filter.use_mix').length === 0)
                 filter.set('filter.use_mix', 1);
-
             if (filter.get('filter.audio_match').length === 0)
                 filter.set('filter.audio_match', 1);
-
             initSimpleAnimation();
         }
         setControls();
@@ -287,13 +281,13 @@ Item {
                 id: listModel
 
                 Component.onCompleted: {
-                    application.wipes.forEach(function(el) {
-                        wipeFile.url = el;
-                        append({
-                            "text": wipeFile.fileName,
-                            "value": el
+                    application.wipes.forEach(function (el) {
+                            wipeFile.url = el;
+                            append({
+                                    "text": wipeFile.fileName,
+                                    "value": el
+                                });
                         });
-                    });
                 }
 
                 ListElement {
@@ -410,9 +404,7 @@ Item {
                     text: qsTr('Clock Top')
                     value: '%luma22.pgm'
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -452,7 +444,6 @@ Item {
             Shotcut.HoverTip {
                 id: fileLabelTip
             }
-
         }
 
         Item {
@@ -482,7 +473,6 @@ Item {
 
             CheckBox {
                 // reset the old reverse
-
                 id: reverseCheckBox
 
                 text: qsTr('Reverse')
@@ -491,27 +481,24 @@ Item {
                     filter.set(reverseProperty, checked);
                     if (filter.isAtLeastVersion(3))
                         filter.set('filter.reverse', 0);
-
                 }
             }
 
             Shotcut.UndoButton {
-                // reset the old reverse
 
+                // reset the old reverse
                 visible: reverseCheckBox.visible
                 onClicked: {
                     reverseCheckBox.checked = false;
                     filter.set(reverseProperty, checked);
                     if (filter.isAtLeastVersion(3))
                         filter.set('filter.reverse', 0);
-
                 }
             }
 
             Item {
                 width: 1
             }
-
         }
 
         Label {
@@ -575,11 +562,8 @@ Item {
                         text: qsTr('Subtract')
                         value: 'subtract'
                     }
-
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -655,7 +639,6 @@ Item {
         Label {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -693,5 +676,4 @@ Item {
 
         target: producer
     }
-
 }

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -44,8 +43,7 @@ Item {
 
     function updateFilter(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = contrastSlider.value / 100;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -130,10 +128,8 @@ Item {
             middleValue = filter.getDouble('gain_r', filter.animateIn) / gainFactor;
             if (filter.animateIn > 0)
                 startValue = filter.getDouble('gain_r', 0) / gainFactor;
-
             if (filter.animateOut > 0)
                 endValue = filter.getDouble('gain_r', filter.duration - 1) / gainFactor;
-
         }
         setControls();
     }
@@ -221,7 +217,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -274,5 +269,4 @@ Item {
 
         target: parameters
     }
-
 }

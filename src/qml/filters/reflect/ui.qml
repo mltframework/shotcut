@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQml.Models 2.12
 import QtQuick 2.12
 import QtQuick.Controls 2.12
@@ -79,9 +78,7 @@ Item {
                         text: qsTr('Top')
                         value: 'vertical'
                     }
-
                 }
-
             }
 
             Shotcut.UndoButton {
@@ -91,13 +88,10 @@ Item {
                     modeCombo.currentIndex = 0;
                 }
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

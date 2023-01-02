@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -38,10 +37,8 @@ Item {
             var index = presetParams.indexOf('argument');
             if (index > -1)
                 presetParams.splice(index, 1);
-
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana');
-
             filter.set('fgcolour', '#ffffffff');
             filter.set('bgcolour', '#00000000');
             filter.set('olcolour', '#aa000000');
@@ -129,16 +126,13 @@ Item {
             filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(textFilterUi.startValue, filter.getRect(textFilterUi.rectProperty, 0));
-
             if (filter.animateOut > 0)
                 filter.set(textFilterUi.endValue, filter.getRect(textFilterUi.rectProperty, filter.duration - 1));
-
         }
         filter.blockSignals = false;
         setControls();
         if (filter.isNew)
             filter.set(textFilterUi.rectProperty, filter.getRect(textFilterUi.rectProperty));
-
     }
 
     GridLayout {
@@ -166,10 +160,8 @@ Item {
                 filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)
                     filter.set(textFilterUi.startValue, filter.getRect(textFilterUi.rectProperty, 0));
-
                 if (filter.animateOut > 0)
                     filter.set(textFilterUi.endValue, filter.getRect(textFilterUi.rectProperty, filter.duration - 1));
-
                 filter.blockSignals = false;
             }
         }
@@ -211,15 +203,13 @@ Item {
                     text: '__empty__'
                     onTextChanged: {
                         if (text === '__empty__')
-                            return ;
-
+                            return;
                         if (length > maxLength) {
                             text = text.substring(0, maxLength);
                             cursorPosition = maxLength;
                         }
                         if (!parseInt(filter.get(textFilterUi.useFontSizeProperty)))
                             filter.set('size', profile.height / text.split('\n').length);
-
                         filter.set('argument', text);
                     }
                     Keys.onPressed: {
@@ -244,7 +234,6 @@ Item {
                         color: textArea.palette.base
                     }
                     // workaround initialization problem
-
                 }
 
                 ScrollBar.horizontal: ScrollBar {
@@ -266,9 +255,7 @@ Item {
                     anchors.left: scrollview.right
                     anchors.bottom: scrollview.bottom
                 }
-
             }
-
         }
 
         Label {
@@ -301,7 +288,6 @@ Item {
                 text: qsTr('File name')
                 onClicked: textArea.insert(textArea.cursorPosition, '#resource#')
             }
-
         }
 
         Shotcut.TextFilterUi {
@@ -313,7 +299,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

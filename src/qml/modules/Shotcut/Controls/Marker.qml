@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
@@ -31,7 +30,7 @@ Item {
     property var text: ""
     property var index: 0
 
-    signal exited()
+    signal exited
     signal mouseStatusChanged(int mouseX, int mouseY, var text, int start, int end)
     signal seekRequested(int pos)
 
@@ -83,7 +82,7 @@ Item {
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             hoverEnabled: true
             cursorShape: pressed ? Qt.SizeHorCursor : Qt.PointingHandCursor
-            onPressed: (mouse)=> {
+            onPressed: mouse => {
                 if (mouse.button === Qt.LeftButton) {
                     dragInProgress = true;
                     dragStartX = markerStart.x;
@@ -93,13 +92,12 @@ Item {
                         lockWidth = markerEnd.x - markerStart.x;
                 }
             }
-            onPositionChanged: (mouse)=> {
+            onPositionChanged: mouse => {
                 var newStart = root.start;
                 var newEnd = root.end;
                 if (dragInProgress) {
                     if (typeof snapper !== 'undefined')
                         markerStart.x = snapper.getSnapPosition(markerStart.x + width) - width;
-
                     newStart = Math.round((markerStart.x + 7) / timeScale);
                     if (lockWidth != -1) {
                         markerEnd.x = markerStart.x + lockWidth;
@@ -108,18 +106,17 @@ Item {
                 }
                 mouseStatusChanged(mouse.x + markerStart.x, mouse.y, text, newStart, newEnd);
             }
-            onReleased: (mouse)=> {
+            onReleased: mouse => {
                 dragInProgress = false;
                 if (mouse.button == Qt.LeftButton && markerStart.x != dragStartX) {
                     var newStart = Math.round((markerStart.x + 7) / timeScale);
                     var newEnd = root.end;
                     if (lockWidth != -1)
                         newEnd += newStart - root.start;
-
                     markers.move(index, newStart, newEnd);
                 }
             }
-            onClicked: (mouse)=> {
+            onClicked: mouse => {
                 if (mouse.button === Qt.RightButton)
                     menu.popup();
                 else
@@ -134,9 +131,7 @@ Item {
                 minimumX: -7
                 maximumX: startMouseArea.lockWidth == -1 ? markerEnd.x - 7 : root.width
             }
-
         }
-
     }
 
     Shotcut.MarkerEnd {
@@ -158,7 +153,7 @@ Item {
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             hoverEnabled: true
             cursorShape: pressed ? Qt.SizeHorCursor : Qt.PointingHandCursor
-            onPressed: (mouse)=> {
+            onPressed: mouse => {
                 if (mouse.button === Qt.LeftButton) {
                     dragInProgress = true;
                     dragStartX = markerEnd.x;
@@ -168,13 +163,12 @@ Item {
                         lockWidth = markerEnd.x - markerStart.x;
                 }
             }
-            onPositionChanged: (mouse)=> {
+            onPositionChanged: mouse => {
                 var newStart = root.start;
                 var newEnd = root.end;
                 if (dragInProgress) {
                     if (typeof snapper !== 'undefined')
                         markerEnd.x = snapper.getSnapPosition(markerEnd.x);
-
                     newEnd = Math.round(markerEnd.x / timeScale);
                     if (lockWidth != -1) {
                         markerStart.x = markerEnd.x - lockWidth;
@@ -183,18 +177,17 @@ Item {
                 }
                 mouseStatusChanged(mouse.x + markerEnd.x, mouse.y, text, newStart, newEnd);
             }
-            onReleased: (mouse)=> {
+            onReleased: mouse => {
                 dragInProgress = false;
                 if (mouse.button == Qt.LeftButton && markerEnd.x != dragStartX) {
                     var newEnd = Math.round(markerEnd.x / timeScale);
                     var newStart = root.start;
                     if (lockWidth != -1)
                         newStart += newEnd - root.end;
-
                     markers.move(index, newStart, newEnd);
                 }
             }
-            onClicked: (mouse)=> {
+            onClicked: mouse => {
                 if (mouse.button === Qt.RightButton)
                     menu.popup();
                 else
@@ -209,9 +202,7 @@ Item {
                 minimumX: endMouseArea.lockWidth == -1 ? markerStart.x + 7 : endMouseArea.lockWidth - 7
                 maximumX: root.width
             }
-
         }
-
     }
 
     Rectangle {
@@ -234,7 +225,7 @@ Item {
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             hoverEnabled: true
             cursorShape: pressed ? Qt.SizeHorCursor : Qt.PointingHandCursor
-            onPressed: (mouse)=> {
+            onPressed: mouse => {
                 if (mouse.button === Qt.LeftButton) {
                     dragInProgress = true;
                     markerLink.anchors.left = undefined;
@@ -244,7 +235,7 @@ Item {
                     endDragStartX = markerEnd.x;
                 }
             }
-            onPositionChanged: (mouse)=> {
+            onPositionChanged: mouse => {
                 var newStart = root.start;
                 var newEnd = root.end;
                 if (dragInProgress) {
@@ -253,7 +244,6 @@ Item {
                         var snapDelta = startDragStartX - (snapper.getSnapPosition(startDragStartX + 7 - delta) - 7);
                         if (snapDelta == delta)
                             snapDelta = endDragStartX - snapper.getSnapPosition(endDragStartX - delta);
-
                         delta = snapDelta;
                     }
                     markerStart.x = startDragStartX - delta;
@@ -264,7 +254,7 @@ Item {
                 }
                 mouseStatusChanged(mouse.x + markerLink.x, mouse.y, text, newStart, newEnd);
             }
-            onReleased: (mouse)=> {
+            onReleased: mouse => {
                 dragInProgress = false;
                 if (mouse.button === Qt.LeftButton) {
                     markerLink.anchors.left = markerStart.right;
@@ -275,7 +265,7 @@ Item {
                     }
                 }
             }
-            onClicked: (mouse)=> {
+            onClicked: mouse => {
                 if (mouse.button === Qt.RightButton)
                     menu.popup();
                 else
@@ -290,9 +280,6 @@ Item {
                 minimumX: 0
                 maximumX: root.width
             }
-
         }
-
     }
-
 }

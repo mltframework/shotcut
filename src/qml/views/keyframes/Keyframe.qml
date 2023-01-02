@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import "Keyframes.js" as Logic
 import QtQuick
 import QtQuick.Controls
@@ -89,7 +88,6 @@ Rectangle {
             delay: mouseAreaLeft.pressed ? 0 : 1000
             timeout: mouseAreaLeft.pressed ? -1 : 5000
         }
-
     }
 
     MouseArea {
@@ -115,14 +113,12 @@ Rectangle {
         onEntered: {
             if (isCurve)
                 parent.anchors.verticalCenter = undefined;
-
         }
         onReleased: {
             if (isCurve)
                 parent.anchors.verticalCenter = parameterRoot.verticalCenter;
-
         }
-        onPositionChanged: (mouse)=> {
+        onPositionChanged: mouse => {
             if (isCurve) {
                 if (mouse.modifiers & Qt.ControlModifier)
                     drag.axis = Drag.YAxis;
@@ -160,7 +156,5 @@ Rectangle {
             minimumY: minDragY
             maximumY: maxDragY
         }
-
     }
-
 }

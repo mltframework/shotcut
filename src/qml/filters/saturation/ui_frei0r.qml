@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -43,8 +42,7 @@ Item {
 
     function updateFilter(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = slider.value / frei0rMaximum;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -87,10 +85,8 @@ Item {
             middleValue = filter.getDouble(saturationParameter, filter.animateIn);
             if (filter.animateIn > 0)
                 startValue = filter.getDouble(saturationParameter, 0);
-
             if (filter.animateOut > 0)
                 endValue = filter.getDouble(saturationParameter, filter.duration - 1);
-
         }
         setControls();
     }
@@ -118,10 +114,8 @@ Item {
                 middleValue = filter.getDouble(saturationParameter, filter.animateIn);
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(saturationParameter, 0);
-
                 if (filter.animateOut > 0)
                     endValue = filter.getDouble(saturationParameter, filter.duration - 1);
-
             }
         }
 
@@ -163,7 +157,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -212,5 +205,4 @@ Item {
 
         target: producer
     }
-
 }

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -39,10 +38,8 @@ Item {
         middleValues = [filter.getDouble(paramHorizontal, filter.animateIn), filter.getDouble(paramVertical, filter.animateIn), filter.getDouble(paramWidth, filter.animateIn), filter.getDouble(paramHeight, filter.animateIn)];
         if (filter.animateIn > 0)
             startValues = [filter.getDouble(paramHorizontal, 0), filter.getDouble(paramVertical, 0), filter.getDouble(paramWidth, 0), filter.getDouble(paramHeight, 0)];
-
         if (filter.animateOut > 0)
             endValues = [filter.getDouble(paramHorizontal, filter.duration - 1), filter.getDouble(paramVertical, filter.duration - 1), filter.getDouble(paramWidth, filter.duration - 1), filter.getDouble(paramHeight, filter.duration - 1)];
-
     }
 
     function getPosition() {
@@ -70,8 +67,7 @@ Item {
 
     function updateFilter(parameter, value, position, button) {
         if (blockUpdate)
-            return ;
-
+            return;
         var index = parseInt(parameter - 1);
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -360,7 +356,6 @@ Item {
             Layout.columnSpan: 2
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -408,5 +403,4 @@ Item {
 
         target: producer
     }
-
 }

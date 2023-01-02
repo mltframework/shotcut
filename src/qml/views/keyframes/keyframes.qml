@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import "Keyframes.js" as Logic
 import QtQml.Models
 import QtQuick
@@ -34,9 +33,9 @@ Rectangle {
     property var selection: []
     property alias paramRepeater: parametersRepeater
 
-    signal rightClicked()
-    signal keyframeRightClicked()
-    signal clipRightClicked()
+    signal rightClicked
+    signal keyframeRightClicked
+    signal clipRightClicked
 
     function redrawWaveforms() {
         Logic.scrollIfNeeded();
@@ -48,17 +47,14 @@ Rectangle {
     function setZoom(value, targetX) {
         if (!targetX)
             targetX = tracksFlickable.contentX + tracksFlickable.width / 2;
-
         var offset = targetX - tracksFlickable.contentX;
         var before = timeScale;
         if (isNaN(value))
             value = 0;
-
         timeScale = Math.pow(value, 3) + 0.01;
         tracksFlickable.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x);
         if (settings.timelineScrollZoom && !settings.timelineCenterPlayhead)
             scrollZoomTimer.restart();
-
     }
 
     function adjustZoom(by, targetX) {
@@ -156,9 +152,7 @@ Rectangle {
                             onClicked: currentTrack = index
                             onRightClicked: root.rightClicked()
                         }
-
                     }
-
                 }
 
                 Rectangle {
@@ -170,9 +164,7 @@ Rectangle {
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
                 }
-
             }
-
         }
 
         Item {
@@ -190,12 +182,12 @@ Rectangle {
                 // This provides skimming and continuous scrubbing at the left/right edges.
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: (mouse) => {
+                onClicked: mouse => {
                     producer.position = (tracksFlickable.contentX + mouse.x) / timeScale;
                     bubbleHelp.hide();
                 }
-                onWheel: (wheel)=> Logic.onMouseWheel(wheel)
-                onDoubleClicked: (mouse)=> {
+                onWheel: wheel => Logic.onMouseWheel(wheel)
+                onDoubleClicked: mouse => {
                     // Figure out which parameter row that is in.
                     for (var i = 0; i < parametersRepeater.count; i++) {
                         var parameter = parametersRepeater.itemAt(i);
@@ -228,7 +220,7 @@ Rectangle {
                 }
                 onReleased: skim = false
                 onExited: skim = false
-                onPositionChanged: (mouse)=> {
+                onPositionChanged: mouse => {
                     if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
                         producer.position = (tracksFlickable.contentX + mouse.x) / timeScale;
                         bubbleHelp.hide();
@@ -245,7 +237,7 @@ Rectangle {
                 interval: 25
                 repeat: true
                 running: tracksAreaMouse.skim && tracksAreaMouse.containsMouse && (tracksAreaMouse.mouseX < 50 || tracksAreaMouse.mouseX > parent.width - 50) && (producer.position * timeScale >= 50)
-                onTriggered: (mouse)=> {
+                onTriggered: mouse => {
                     if (parent.mouseX < 50)
                         producer.position -= 10;
                     else
@@ -263,11 +255,11 @@ Rectangle {
                 cursorShape: drag.active ? Qt.ClosedHandCursor : Qt.ArrowCursor
                 drag.axis: Drag.XAndYAxis
                 drag.filterChildren: true
-                onPressed: (mouse)=> {
+                onPressed: mouse => {
                     startX = mouse.x;
                     startY = mouse.y;
                 }
-                onPositionChanged: (mouse)=> {
+                onPositionChanged: mouse => {
                     var n = mouse.x - startX;
                     startX = mouse.x;
                     tracksFlickable.contentX = Logic.clamp(tracksFlickable.contentX - n, 0, Logic.scrollMax().x);
@@ -290,7 +282,6 @@ Rectangle {
                     onContentXChanged: {
                         if (contentX === 0)
                             contentX = tracksFlickable.contentX;
-
                     }
 
                     Ruler {
@@ -298,7 +289,6 @@ Rectangle {
 
                         width: producer.duration * timeScale
                     }
-
                 }
 
                 Flickable {
@@ -337,9 +327,7 @@ Rectangle {
                                     color: (index === currentTrack) ? selectedTrackColor : (index % 2) ? activePalette.alternateBase : activePalette.base
                                     height: Logic.trackHeight(model.isCurve)
                                 }
-
                             }
-
                         }
 
                         Column {
@@ -387,7 +375,7 @@ Rectangle {
                                         height: trackRoot.height
                                         hash: producer.hash
                                         speed: producer.speed
-                                        onTrimmingIn: (clip, delta, mouse)=> {
+                                        onTrimmingIn: (clip, delta, mouse) => {
                                             var n = filter.in + delta;
                                             if (delta != 0 && n >= producer.in && n <= filter.out) {
                                                 parameters.trimFilterIn(n);
@@ -400,7 +388,7 @@ Rectangle {
                                             }
                                         }
                                         onTrimmedIn: bubbleHelp.hide()
-                                        onTrimmingOut: (clip, delta, mouse)=> {
+                                        onTrimmingOut: (clip, delta, mouse) => {
                                             var n = filter.out - delta;
                                             if (delta != 0 && n >= filter.in && n <= producer.out) {
                                                 parameters.trimFilterOut(n);
@@ -432,9 +420,7 @@ Rectangle {
                                         inThumbnailVisible: false
                                         onRightClicked: root.clipRightClicked()
                                     }
-
                                 }
-
                             }
 
                             Repeater {
@@ -442,9 +428,7 @@ Rectangle {
 
                                 model: parameterDelegateModel
                             }
-
                         }
-
                     }
 
                     ScrollBar.horizontal: ScrollBar {
@@ -461,7 +445,6 @@ Rectangle {
                         background: Rectangle {
                             color: parent.palette.alternateBase
                         }
-
                     }
 
                     ScrollBar.vertical: ScrollBar {
@@ -477,11 +460,8 @@ Rectangle {
                         background: Rectangle {
                             color: parent.palette.alternateBase
                         }
-
                     }
-
                 }
-
             }
 
             Rectangle {
@@ -504,9 +484,7 @@ Rectangle {
                 width: 16
                 height: 8
             }
-
         }
-
     }
 
     Rectangle {
@@ -522,7 +500,6 @@ Rectangle {
             bubbleHelp.text = text;
             if (bubbleHelp.state !== 'visible')
                 bubbleHelp.state = 'visible';
-
         }
 
         function hide() {
@@ -543,7 +520,6 @@ Rectangle {
                     target: bubbleHelp
                     opacity: 0
                 }
-
             },
             State {
                 name: 'visible'
@@ -552,7 +528,6 @@ Rectangle {
                     target: bubbleHelp
                     opacity: 1
                 }
-
             }
         ]
         transitions: [
@@ -565,7 +540,6 @@ Rectangle {
                     duration: 200
                     easing.type: Easing.InOutQuad
                 }
-
             },
             Transition {
                 from: 'visible'
@@ -576,7 +550,6 @@ Rectangle {
                     duration: 200
                     easing.type: Easing.InOutQuad
                 }
-
             }
         ]
 
@@ -586,7 +559,6 @@ Rectangle {
             color: application.toolTipTextColor
             anchors.centerIn: parent
         }
-
     }
 
     DelegateModel {
@@ -601,20 +573,18 @@ Rectangle {
             minimum: model.minimum
             maximum: model.maximum
             height: Logic.trackHeight(model.isCurve)
-            onClicked: (keyframe, parameter)=> {
+            onClicked: (keyframe, parameter) => {
                 currentTrack = parameter.DelegateModel.itemsIndex;
                 root.selection = [keyframe.DelegateModel.itemsIndex];
             }
             onRightClicked: root.keyframeRightClicked()
         }
-
     }
 
     Connections {
         function onPositionChanged() {
             if (!stopScrolling)
                 Logic.scrollIfNeeded();
-
         }
 
         target: producer
@@ -628,7 +598,6 @@ Rectangle {
                 var keyframeIndex = parameters.keyframeIndex(parameterIndex, producer.position + producer.in);
                 if (keyframeIndex > -1)
                     selection = [keyframeIndex];
-
             }
         }
 
@@ -681,12 +650,9 @@ Rectangle {
             var delta = backwards ? -10 : 10;
             if (item)
                 item.x += delta;
-
             tracksFlickable.contentX += delta;
             if (tracksFlickable.contentX <= 0)
                 stop();
-
         }
     }
-
 }

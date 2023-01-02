@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -111,17 +110,14 @@ Item {
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(startValue, filter.getRect(rectProperty, 0));
-
             if (filter.animateOut > 0)
                 filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1));
-
         }
         filter.blockSignals = false;
         setControls();
         setKeyframedControls();
         if (filter.isNew)
             filter.set(rectProperty, filter.getRect(rectProperty));
-
     }
 
     GridLayout {
@@ -150,10 +146,8 @@ Item {
                 filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)
                     filter.set(startValue, filter.getRect(rectProperty, 0));
-
                 if (filter.animateOut > 0)
                     filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1));
-
                 filter.blockSignals = false;
             }
         }
@@ -203,7 +197,6 @@ Item {
                     }
                 }
             }
-
         }
 
         Shotcut.UndoButton {
@@ -275,7 +268,6 @@ Item {
                     }
                 }
             }
-
         }
 
         Shotcut.UndoButton {
@@ -314,7 +306,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -348,5 +339,4 @@ Item {
 
         target: producer
     }
-
 }

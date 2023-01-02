@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.15
 import Shotcut.Controls 1.0 as Shotcut
 
@@ -66,5 +65,4 @@ Item {
 
         target: contextMenu
     }
-
 }

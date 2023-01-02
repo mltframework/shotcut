@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -28,7 +27,7 @@ Item {
     property double maximumValue: 1000
     property alias timeStr: timeField.text
 
-    signal setDefaultClicked()
+    signal setDefaultClicked
 
     function setValueSeconds(seconds) {
         timeStr = secondsToTime(seconds);
@@ -42,13 +41,10 @@ Item {
         var fields = time.split(":");
         if (typeof fields[1] === 'undefined')
             fields[1] = 0;
-
         if (typeof fields[0] === 'undefined')
             fields[0] = 0;
-
         if (typeof fields[2] === 'undefined')
             fields[2] = 0;
-
         var hSeconds = fields[0] * 60 * 60;
         var mSeconds = fields[1] * 60;
         var sSeconds = fields[2] * 1;
@@ -71,15 +67,16 @@ Item {
         var a = x.toFixed(fractionLen) + "";
         var b = a.split(".");
         // Add leading zeros to the integer part (before decimal)
-        while (b[0].length < integerLen)b[0] = "0" + b[0]
+        while (b[0].length < integerLen)
+            b[0] = "0" + b[0];
         if (fractionLen == 0)
             return b[0];
 
         // Add trailing zeros to the fraction part (after decimal)
         if (typeof b[1] === 'undefined')
             b[1] = "";
-
-        while (b[1].length < fractionLen)b[1] = b[1] + "0"
+        while (b[1].length < fractionLen)
+            b[1] = b[1] + "0";
         return b[0] + "." + b[1];
     }
 
@@ -105,13 +102,11 @@ Item {
             onFocusChanged: {
                 if (focus)
                     selectAll();
-
             }
 
             validator: RegularExpressionValidator {
                 regularExpression: /^\s*(\d*:){0,2}(\d*[.])?\d*\s*$/
             }
-
         }
 
         Shotcut.Button {
@@ -141,7 +136,6 @@ Item {
                 triggeredOnStart: true
                 onTriggered: decrementAction.trigger()
             }
-
         }
 
         Shotcut.Button {
@@ -171,7 +165,6 @@ Item {
                 triggeredOnStart: true
                 onTriggered: incrementAction.trigger()
             }
-
         }
 
         Shotcut.UndoButton {
@@ -187,7 +180,6 @@ Item {
                 var frames = filter.framesFromTime(timeStr) - 1;
                 if (frames < 0)
                     frames = 0;
-
                 var newTime = filter.timeFromFrames(frames, Filter.TIME_CLOCK);
                 var seconds = clamp(timeToSeconds(newTime), minimumValue, maximumValue);
                 timeField.text = secondsToTime(seconds);
@@ -204,7 +196,5 @@ Item {
                 timeField.text = secondsToTime(seconds);
             }
         }
-
     }
-
 }

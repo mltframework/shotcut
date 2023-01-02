@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.1
 
 Item {
-    // Movit filter
 
+    // Movit filter
     width: 350
     height: 10
     Component.onCompleted: {

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 
@@ -48,7 +47,6 @@ Grid {
                 target: slider
                 orientation: Qt.Horizontal
             }
-
         },
         State {
             name: "vertical"
@@ -64,7 +62,6 @@ Grid {
                 target: slider
                 orientation: Qt.Vertical
             }
-
         }
     ]
 
@@ -102,14 +99,11 @@ Grid {
                     right: orientation == Qt.Horizontal ? undefined : parent.right
                     margins: 1
                 }
-
             }
-
         }
 
         handle: Rectangle {
         }
-
     }
 
     Item {
@@ -130,9 +124,7 @@ Grid {
                 height: orientation == Qt.Horizontal ? lineSize : 1
                 color: 'gray'
             }
-
         }
-
     }
 
     Item {
@@ -141,7 +133,6 @@ Grid {
             for (var i = 0; i < children.length; i++) {
                 if (children[i].implicitWidth > widest)
                     widest = children[i].implicitWidth;
-
             }
             return widest;
         }
@@ -174,7 +165,5 @@ Grid {
             horizontalAlignment: Text.AlignRight
             verticalAlignment: orientation == Qt.Horizontal ? Text.AlignVCenter : Text.AlignTop
         }
-
     }
-
 }

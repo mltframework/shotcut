@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -23,11 +22,11 @@ import QtQuick.Window 2.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
+
     // Constants
     // Parameters
     // Conversion functions between filter and UI units
     // UI management functions
-
     property double thresholdMin: 3e-05
     property double thresholdMax: 0.5
     property double directionMax: 6.28319
@@ -176,6 +175,7 @@ Item {
     height: 360
 
     GridLayout {
+
         // Row split
         // Row split
         // Row split
@@ -189,7 +189,6 @@ Item {
         // Row split
         // Row split
         // Filler
-
         columns: 3
         anchors.fill: parent
         anchors.margins: 8
@@ -214,7 +213,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Banding similarity within first component\nY (luma) in YCbCr mode\nRed in RGB mode')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -238,7 +236,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Banding similarity within second component\nCb (blue) in YCbCr mode\nGreen in RGB mode')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -262,7 +259,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Banding similarity within third component\nCr (red) in YCbCr mode\nBlue in RGB mode')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -286,7 +282,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Banding similarity within fourth component')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -325,7 +320,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The size of bands being targeted')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -366,7 +360,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Up = 270°\nDown = 90°\nLeft = 180°\nRight = 0° or 360°\nAll = 360° + Randomize')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -413,7 +406,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Compare to thresholds using average versus exact neighbor values')
             }
-
         }
 
         Shotcut.UndoButton {
@@ -436,7 +428,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Deband only if all pixel components (including alpha) are within thresholds')
             }
-
         }
 
         Shotcut.UndoButton {
@@ -450,7 +441,5 @@ Item {
             Layout.columnSpan: 3
             Layout.fillHeight: true
         }
-
     }
-
 }

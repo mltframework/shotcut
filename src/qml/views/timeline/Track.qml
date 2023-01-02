@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQml.Models
 import QtQuick
 import "Track.js" as Logic
@@ -40,17 +39,18 @@ Rectangle {
     signal checkSnap(var clip)
 
     function redrawWaveforms(force) {
-        for (var i = 0; i < repeater.count; i++) repeater.itemAt(i).generateWaveform(force)
+        for (var i = 0; i < repeater.count; i++)
+            repeater.itemAt(i).generateWaveform(force);
     }
 
     function remakeWaveforms(force) {
-        for (var i = 0; i < repeater.count; i++) timeline.remakeAudioLevels(trackRoot.DelegateModel.itemsIndex, i, force)
+        for (var i = 0; i < repeater.count; i++)
+            timeline.remakeAudioLevels(trackRoot.DelegateModel.itemsIndex, i, force);
     }
 
     function updateThumbnails(clipIndex) {
         if (clipIndex >= 0 && clipIndex < repeater.count)
             repeater.itemAt(clipIndex).updateThumbnails();
-
     }
 
     function snapClip(clip) {
@@ -70,7 +70,6 @@ Rectangle {
     onIsMuteChanged: {
         if (!isMute)
             redrawWaveforms(true);
-
     }
 
     DelegateModel {
@@ -98,11 +97,11 @@ Rectangle {
             audioIndex: typeof model.audioindex !== 'undefined' ? model.audioIndex : 0
             selected: Logic.selectionContains(timeline.selection, trackIndex, index)
             isTrackMute: trackRoot.isMute
-            onClicked: (clip, mouse)=> {
-                trackRoot.clipClicked(clip, trackRoot, mouse)
+            onClicked: (clip, mouse) => {
+                trackRoot.clipClicked(clip, trackRoot, mouse);
             }
-            onClipRightClicked: (clip, mouse)=> trackRoot.clipRightClicked(clip, trackRoot, mouse)
-            onMoved: (clip)=> {
+            onClipRightClicked: (clip, mouse) => trackRoot.clipRightClicked(clip, trackRoot, mouse)
+            onMoved: clip => {
                 var fromTrack = clip.originalTrackIndex;
                 var toTrack = clip.trackIndex;
                 var clipIndex = clip.originalClipIndex;
@@ -120,7 +119,6 @@ Rectangle {
                     }
                     if (clipIndexChanged)
                         frame = Math.round((clipAt(clipIndex).x + clip.x - clip.originalX) / timeScale);
-
                 }
                 // Remove the placeholder inserted in onDraggedToTrack
                 if (placeHolderAdded) {
@@ -133,7 +131,7 @@ Rectangle {
                     clip.trackIndex = clip.originalTrackIndex;
                 }
             }
-            onDragged: (clip, mouse)=> {
+            onDragged: (clip, mouse) => {
                 if (settings.timelineDragScrub) {
                     root.stopScrolling = false;
                     timeline.position = Math.round(clip.x / timeScale);
@@ -152,15 +150,13 @@ Rectangle {
                 // remove leading zeroes
                 if (s.substring(0, 3) === '00:')
                     s = s.substring(3);
-
                 s = ((delta < 0) ? '-' : (delta > 0) ? '+' : '') + s;
                 bubbleHelp.show(s);
             }
-            onTrimmingIn: (clip, delta, mouse)=> {
+            onTrimmingIn: (clip, delta, mouse) => {
                 var originalDelta = delta;
                 if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple)
                     delta = Logic.snapTrimIn(clip, delta, root, trackRoot.DelegateModel.itemsIndex);
-
                 if (delta != 0) {
                     if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, clip.originalClipIndex, delta, settings.timelineRipple)) {
                         // Show amount trimmed as a time in a "bubble" help.
@@ -174,20 +170,18 @@ Rectangle {
                     clip.originalX -= originalDelta;
                 }
             }
-            onTrimmedIn: (clip)=> {
+            onTrimmedIn: clip => {
                 multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex);
                 // Notify out point of clip A changed when trimming to add a transition.
                 if (clip.DelegateModel.itemsIndex > 1 && repeater.itemAt(clip.DelegateModel.itemsIndex - 1).isTransition)
                     multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex - 2);
-
                 bubbleHelp.hide();
                 timeline.commitTrimCommand();
             }
-            onTrimmingOut: (clip, delta, mouse)=> {
+            onTrimmingOut: (clip, delta, mouse) => {
                 var originalDelta = delta;
                 if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple)
                     delta = Logic.snapTrimOut(clip, delta, root, trackRoot.DelegateModel.itemsIndex);
-
                 if (delta != 0) {
                     if (timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta, settings.timelineRipple)) {
                         // Show amount trimmed as a time in a "bubble" help.
@@ -201,36 +195,35 @@ Rectangle {
                     clip.originalX -= originalDelta;
                 }
             }
-            onTrimmedOut: (clip)=> {
+            onTrimmedOut: clip => {
                 multitrack.notifyClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex);
                 // Notify in point of clip B changed when trimming to add a transition.
                 if (clip.DelegateModel.itemsIndex + 2 < repeater.count && repeater.itemAt(clip.DelegateModel.itemsIndex + 1).isTransition)
                     multitrack.notifyClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex + 2);
-
                 bubbleHelp.hide();
                 timeline.commitTrimCommand();
             }
-            onDraggedToTrack: (clip, direction)=> {
+            onDraggedToTrack: (clip, direction) => {
                 if (!placeHolderAdded) {
                     placeHolderAdded = true;
                     trackModel.items.insert(clip.DelegateModel.itemsIndex, {
-                        "name": '',
-                        "resource": '',
-                        "duration": clip.clipDuration,
-                        "mlt_service": '<producer',
-                        "in": 0,
-                        "out": clip.clipDuration - 1,
-                        "blank": true,
-                        "audio": false,
-                        "isTransition": false,
-                        "fadeIn": 0,
-                        "fadeOut": 0,
-                        "hash": '',
-                        "speed": 1
-                    });
+                            "name": '',
+                            "resource": '',
+                            "duration": clip.clipDuration,
+                            "mlt_service": '<producer',
+                            "in": 0,
+                            "out": clip.clipDuration - 1,
+                            "blank": true,
+                            "audio": false,
+                            "isTransition": false,
+                            "fadeIn": 0,
+                            "fadeOut": 0,
+                            "hash": '',
+                            "speed": 1
+                        });
                 }
             }
-            onDropped: (clip)=> {
+            onDropped: clip => {
                 if (placeHolderAdded) {
                     timeline.selection = [];
                     multitrack.reload(true);
@@ -243,7 +236,6 @@ Rectangle {
                 draggedToTrack.connect(trackRoot.clipDraggedToTrack);
             }
         }
-
     }
 
     Row {
@@ -254,7 +246,5 @@ Rectangle {
 
             model: trackModel
         }
-
     }
-
 }

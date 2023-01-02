@@ -14,15 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
-    //        console.log('level: ' + filter.get('level'))
 
+    //        console.log('level: ' + filter.get('level'))
     property bool blockUpdate: true
     property double startValue: 1
     property double middleValue: 1
@@ -43,8 +42,7 @@ Item {
 
     function updateFilter(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = brightnessSlider.value / 100;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -84,10 +82,8 @@ Item {
             middleValue = filter.getDouble('level', filter.animateIn);
             if (filter.animateIn > 0)
                 startValue = filter.getDouble('level', 0);
-
             if (filter.animateOut > 0)
                 endValue = filter.getDouble('level', filter.duration - 1);
-
         }
         setControls();
     }
@@ -158,10 +154,8 @@ Item {
                 middleValue = filter.getDouble(parameters[0], filter.animateIn);
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(parameters[0], 0);
-
                 if (filter.animateOut > 0)
                     endValue = filter.getDouble(parameters[0], filter.duration - 1);
-
             }
         }
 
@@ -204,7 +198,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQml
 import QtQuick
 import QtQuick.Controls
@@ -99,7 +98,6 @@ Rectangle {
                 Layout.fillHeight: true
                 Layout.fillWidth: false
             }
-
         },
         State {
             name: "portrait"
@@ -157,7 +155,6 @@ Rectangle {
                 Layout.fillHeight: false
                 Layout.fillWidth: true
             }
-
         }
     ]
 
@@ -188,7 +185,6 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('Momentary Loudness.')
             }
-
         }
 
         Label {
@@ -232,7 +228,6 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('Short-term Loudness.')
             }
-
         }
 
         Label {
@@ -276,7 +271,6 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('Integrated Loudness.')
             }
-
         }
 
         Label {
@@ -320,7 +314,6 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('Loudness Range.')
             }
-
         }
 
         Label {
@@ -364,7 +357,6 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('Peak.')
             }
-
         }
 
         Label {
@@ -408,7 +400,6 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('True Peak.')
             }
-
         }
 
         Label {
@@ -446,7 +437,5 @@ Rectangle {
         Item {
             id: filler
         }
-
     }
-
 }

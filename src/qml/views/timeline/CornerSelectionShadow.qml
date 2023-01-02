@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 
 Item {
@@ -49,16 +48,12 @@ Item {
                 position: 1
                 color: "white"
             }
-
         }
-
     }
 
-    Behavior on opacity {
+    Behavior on opacity  {
         NumberAnimation {
             duration: 100
         }
-
     }
-
 }

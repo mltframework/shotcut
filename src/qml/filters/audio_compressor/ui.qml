@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -85,7 +84,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -155,7 +153,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The point at which the compressor will start to kick in.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -182,7 +179,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The gain reduction ratio used when the signal level exceeds the threshold.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -208,7 +204,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The distance from the threshold where the knee curve starts.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -235,7 +230,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The gain of the makeup input signal.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -268,7 +262,6 @@ Item {
                 radius: 2
                 color: activePalette.text
             }
-
         }
 
         Label {
@@ -280,7 +273,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Status indicator showing the gain reduction applied by the compressor.')
             }
-
         }
 
         Shotcut.Gauge {
@@ -306,13 +298,10 @@ Item {
                 anchors.fill: parent
                 onClicked: Qt.openUrlExternally('https://en.wikipedia.org/wiki/Dynamic_range_compression')
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

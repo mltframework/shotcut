@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
@@ -26,7 +25,7 @@ RowLayout {
     property alias spinnerVisible: gradientSpinner.visible
     property var _stopHandles: []
 
-    signal gradientChanged()
+    signal gradientChanged
 
     function _updateColorDisplay() {
         if (colors.length < 1) {
@@ -35,15 +34,15 @@ RowLayout {
                 _stopHandles[idx].destroy();
             }
             _stopHandles = [];
-            return ;
+            return;
         }
         var newStops = [];
         var stepSize = (colors.length > 1) ? 1 / (colors.length - 1) : 0;
         for (var idx = 0; idx < colors.length; idx++) {
             newStops.push(stopComponent.createObject(gradientView, {
-                "position": stepSize * idx,
-                "color": colors[idx]
-            }));
+                        "position": stepSize * idx,
+                        "color": colors[idx]
+                    }));
         }
         gradientView.stops = newStops;
         for (var idx = 0; idx < _stopHandles.length; idx++) {
@@ -52,9 +51,9 @@ RowLayout {
         var newHandles = [];
         for (var idx = 0; idx < colors.length; idx++) {
             newHandles.push(stopHandle.createObject(gradientFrame, {
-                "stopIndex": idx,
-                "colorList": colors
-            }));
+                        "stopIndex": idx,
+                        "colorList": colors
+                    }));
         }
         _stopHandles = newHandles;
     }
@@ -93,7 +92,6 @@ RowLayout {
 
         GradientStop {
         }
-
     }
 
     Component {
@@ -135,7 +133,6 @@ RowLayout {
                     console.log('selectedColor.a=' + selectedColor.a + ' selectedColor=' + selectedColor + ' myColor=' + myColor);
                     if (selectedColor.a === 0 && (!Qt.colorEqual(selectedColor, myColor) || (Qt.colorEqual(selectedColor, 'transparent') && Qt.colorEqual(myColor, 'transparent'))))
                         selectedColor.a = 1;
-
                     parent.parent._setStopColor(handelRect.stopIndex, String(selectedColor));
                 }
                 modality: application.dialogModality
@@ -144,9 +141,7 @@ RowLayout {
             Shotcut.HoverTip {
                 text: qsTr('Color: %1\nClick to change').arg(color)
             }
-
         }
-
     }
 
     Rectangle {
@@ -181,16 +176,13 @@ RowLayout {
             anchors.fill: parent
             onClicked: {
                 if (_stopHandles.length == 0)
-                    return ;
-
+                    return;
                 var nearestStop = Math.floor(mouseX / (parent.width / _stopHandles.length));
                 if (nearestStop >= _stopHandles.length)
                     nearestStop = _stopHandles.length - 1;
-
                 _stopHandles[nearestStop].chooseColor();
             }
         }
-
     }
 
     Shotcut.DoubleSpinBox {
@@ -206,8 +198,6 @@ RowLayout {
         onValueChanged: {
             if (value != colors.length)
                 _setStopCount(value);
-
         }
     }
-
 }

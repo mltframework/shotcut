@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -106,7 +105,6 @@ Shotcut.KeyframableFilter {
             Shotcut.HoverTip {
                 text: qsTr('Horizontal center position of the linear area.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -140,7 +138,6 @@ Shotcut.KeyframableFilter {
             Shotcut.HoverTip {
                 text: qsTr('Width of the linear area.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -174,7 +171,6 @@ Shotcut.KeyframableFilter {
             Shotcut.HoverTip {
                 text: qsTr('Amount the linear area is scaled.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -208,7 +204,6 @@ Shotcut.KeyframableFilter {
             Shotcut.HoverTip {
                 text: qsTr('Amount the outer left and outer right areas are scaled non linearly.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -238,7 +233,6 @@ Shotcut.KeyframableFilter {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -276,5 +270,4 @@ Shotcut.KeyframableFilter {
 
         target: producer
     }
-
 }

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Dialogs
@@ -102,7 +101,6 @@ Item {
             shapeRoot.fileOpened(shapeFile.path);
             if (!fileDialog.selectExisting)
                 producer.launchGlaxnimate(shapeFile.url);
-
         }
     }
 
@@ -140,7 +138,6 @@ Item {
                     fileDialog.open();
                 }
             }
-
         }
 
         Label {
@@ -152,7 +149,6 @@ Item {
             Shotcut.HoverTip {
                 id: fileLabelTip
             }
-
         }
 
         Item {
@@ -173,7 +169,6 @@ Item {
                     filter.set('filter.producer.refresh', 1);
                 }
             }
-
         }
 
         Item {
@@ -214,7 +209,6 @@ Item {
                     filter.set('filter.invert_mask', checked);
                 }
             }
-
         }
 
         Label {
@@ -260,9 +254,7 @@ Item {
                         text: qsTr('Subtract')
                         value: 'subtract'
                     }
-
                 }
-
             }
 
             Shotcut.UndoButton {
@@ -271,7 +263,6 @@ Item {
                     filter.set('filter.alpha_operation', 'overwrite');
                 }
             }
-
         }
 
         Shotcut.TipBox {
@@ -284,7 +275,5 @@ Item {
         Label {
             Layout.fillHeight: true
         }
-
     }
-
 }

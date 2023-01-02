@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -118,12 +117,12 @@ Item {
 
             function valueToIndex() {
                 var w = filter.get('type');
-                for (var i = 0; i < values.length; ++i) if (values[i] === w) {
-                    break;
-                }
+                for (var i = 0; i < values.length; ++i)
+                    if (values[i] === w) {
+                        break;
+                    }
                 if (i === values.length)
                     i = 0;
-
                 return i;
             }
 
@@ -146,8 +145,7 @@ Item {
             Layout.columnSpan: 4
             onGradientChanged: {
                 if (_disableUpdate)
-                    return ;
-
+                    return;
                 filter.setGradient('color', colors);
             }
         }
@@ -184,7 +182,6 @@ Item {
             Shotcut.HoverTip {
                 text: 'Set the thickness of the bars (in pixels)'
             }
-
         }
 
         Shotcut.UndoButton {
@@ -212,7 +209,6 @@ Item {
                 onValueModified: {
                     if (filterRect.x !== value)
                         setFilter();
-
                 }
             }
 
@@ -235,10 +231,8 @@ Item {
                 onValueModified: {
                     if (filterRect.y !== value)
                         setFilter();
-
                 }
             }
-
         }
 
         Label {
@@ -262,7 +256,6 @@ Item {
                 onValueModified: {
                     if (filterRect.width !== value)
                         setFilter();
-
                 }
             }
 
@@ -285,10 +278,8 @@ Item {
                 onValueModified: {
                     if (filterRect.height !== value)
                         setFilter();
-
                 }
             }
-
         }
 
         Label {
@@ -317,7 +308,6 @@ Item {
             Shotcut.HoverTip {
                 text: 'Reverse the order of channels.'
             }
-
         }
 
         Label {
@@ -337,7 +327,6 @@ Item {
             Shotcut.HoverTip {
                 text: 'The number of audio channels to show.'
             }
-
         }
 
         Shotcut.UndoButton {
@@ -361,7 +350,6 @@ Item {
             Shotcut.HoverTip {
                 text: 'The number of segments in the segment graph'
             }
-
         }
 
         Shotcut.UndoButton {
@@ -385,7 +373,6 @@ Item {
             Shotcut.HoverTip {
                 text: 'Space between segments in the segment graph (in pixels)'
             }
-
         }
 
         Shotcut.UndoButton {
@@ -395,7 +382,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -409,5 +395,4 @@ Item {
 
         target: filter
     }
-
 }

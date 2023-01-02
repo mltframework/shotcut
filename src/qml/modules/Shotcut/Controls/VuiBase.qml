@@ -100,5 +100,4 @@ DropArea {
 
         target: video
     }
-
 }

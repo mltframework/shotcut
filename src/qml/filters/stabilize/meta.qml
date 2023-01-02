@@ -15,5 +15,4 @@ Metadata {
     keyframes {
         allowTrim: false
     }
-
 }

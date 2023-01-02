@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
@@ -104,7 +103,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The target loudness of the output in LUFS.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -130,7 +128,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The amount of history to use to calculate the input loudness.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -156,7 +153,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The maximum that the gain can be increased.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -182,7 +178,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The maximum that the gain can be decreased.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -208,7 +203,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The maximum rate that the gain can be changed.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -240,7 +234,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Reset the measurement if a discontinuity is detected - such as seeking or clip change.')
             }
-
         }
 
         Shotcut.UndoButton {
@@ -262,7 +255,6 @@ Item {
                 radius: 2
                 color: activePalette.text
             }
-
         }
 
         Label {
@@ -272,7 +264,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Status indicator showing the loudness measured on the input.')
             }
-
         }
 
         Shotcut.Gauge {
@@ -296,7 +287,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Status indicator showing the gain being applied.')
             }
-
         }
 
         Shotcut.Gauge {
@@ -318,7 +308,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Status indicator showing when the loudness measurement is reset.')
             }
-
         }
 
         Rectangle {
@@ -340,13 +329,10 @@ Item {
                 radius: 7
                 color: parent.active ? activePalette.highlight : activePalette.base
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

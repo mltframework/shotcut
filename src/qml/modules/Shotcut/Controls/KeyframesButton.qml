@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick 2.2
 import QtQuick.Controls 2.12
 import QtQuick.Dialogs
@@ -23,7 +22,7 @@ import Shotcut.Controls 1.0 as Shotcut
 ToolButton {
     id: checkbox
 
-    signal toggled()
+    signal toggled
 
     enabled: metadata !== null && metadata.keyframes.enabled
     opacity: enabled ? 1 : 0
@@ -103,5 +102,4 @@ ToolButton {
         border.color: activePalette.shadow
         border.width: 1
     }
-
 }
