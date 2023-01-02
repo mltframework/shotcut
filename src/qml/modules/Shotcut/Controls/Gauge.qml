@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,9 +24,8 @@ Grid {
     property alias from: slider.from
     property alias value: slider.value
     property alias to: slider.to
-    property alias orientation: slider.orientation
     property int decimals: 1
-    property int orientation: Qt.Horizontal
+    property int orientation: Qt.Vertical
 
     padding: 0
     spacing: 0
