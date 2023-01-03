@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import QtQuick 2.5
+import QtQuick
 
 Item {
     // NOTE: This item only works for numeric parameters.

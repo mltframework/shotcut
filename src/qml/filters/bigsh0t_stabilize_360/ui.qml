@@ -1,8 +1,8 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick
+import QtQuick.Controls
 import QtQuick.Dialogs
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     property bool blockUpdate: true
