@@ -161,14 +161,9 @@ RowLayout {
             border.color: "gray"
             border.width: 1
             radius: 4
-        }
-
-        Gradient {
-            source: gradientRect
-            start: Qt.point(0, 0)
-            end: Qt.point(width, 0)
             gradient: Gradient {
                 id: gradientView
+                orientation: Gradient.Horizontal
             }
         }
 
