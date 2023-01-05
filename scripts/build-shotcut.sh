@@ -805,13 +805,8 @@ function set_globals {
   # vid.stab
   CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_INSTALL_LIBDIR=lib $CMAKE_DEBUG_FLAG"
   if test "$TARGET_OS" = "Darwin" ; then
-    if [ "$TARGET_ARCH" = "arm64" ] ; then
-      CONFIG[10]="${CONFIG[10]} -DOpenMP_C_FLAGS=-I/opt/local/include/libomp -DOpenMP_C_LIB_NAMES=libomp -DOpenMP_libomp_LIBRARY=omp"
-      LDFLAGS_[10]="$LDFLAGS -L/opt/local/lib/libomp"
-    else
-      CONFIG[10]="${CONFIG[10]} -DCMAKE_C_COMPILER=gcc-mp-5 -DCMAKE_CXX_COMPILER=g++-mp-5"
-      LDFLAGS_[10]=$LDFLAGS
-    fi
+    CONFIG[10]="${CONFIG[10]} -DOpenMP_C_FLAGS=-I/opt/local/include/libomp -DOpenMP_C_LIB_NAMES=libomp -DOpenMP_libomp_LIBRARY=omp"
+    LDFLAGS_[10]="$LDFLAGS -L/opt/local/lib/libomp"
   fi
   CFLAGS_[10]=$CFLAGS
 
@@ -854,9 +849,6 @@ function set_globals {
   #########
   # bigsh0t
   CONFIG[19]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
-  if test "$TARGET_OS" = "Darwin" ; then
-    [ "$TARGET_ARCH" != "arm64" ] && CONFIG[19]="${CONFIG[19]} -DCMAKE_C_COMPILER=gcc-mp-5 -DCMAKE_CXX_COMPILER=g++-mp-5"
-  fi
   CFLAGS_[19]=$CFLAGS
   LDFLAGS_[19]=$LDFLAGS
 
