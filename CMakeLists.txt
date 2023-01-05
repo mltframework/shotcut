@@ -29,7 +29,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt6 6.2 REQUIRED
+find_package(Qt6 6.4 REQUIRED
   COMPONENTS
   Multimedia
   Network
@@ -71,4 +71,3 @@ file(GLOB_RECURSE QML_SRC "src/qml/*.qml")
 add_custom_target(qmlformat COMMAND
   ${CMAKE_PREFIX_PATH}/bin/qmlformat -i ${QML_SRC}
 )
-
