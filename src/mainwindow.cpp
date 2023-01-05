@@ -3816,6 +3816,9 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply *reply)
         }
     } else {
         LOG_WARNING() << reply->errorString();
+        if (reply->error() == QNetworkReply::UnknownNetworkError) {
+            m_network.get(QNetworkRequest(QUrl("http://check.shotcut.org/version.json")));
+        }
     }
     QAction *action = new QAction(
         tr("Failed to read version.json when checking. Click here to go to the Web site."), 0);
