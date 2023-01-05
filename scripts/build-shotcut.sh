@@ -1335,7 +1335,7 @@ EOF
         cmd install -p -c "$QTDIR"/lib/libQt6{Core,DBus,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickControls2Impl,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,WebSockets,Widgets,Xml,X11Extras,XcbQpa}.so.6 "$FINAL_INSTALL_DIR"/lib
         cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -d "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
-        cmd cp -a "$QTDIR"/plugins/{egldeviceintegrations,generic,iconengines,imageformats,platforminputcontexts,platforms,platformthemes,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt6
+        cmd cp -a "$QTDIR"/plugins/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt6
         cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
         cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
 #        cmd curl -o "$FINAL_INSTALL_DIR"/lib/qml/QtQuick/Controls.2/Fusion/ComboBox.qml "https://s3.amazonaws.com/misc.meltymedia/shotcut-build/ComboBox.qml"
@@ -1407,7 +1407,7 @@ function configure_compile_install_all {
 
   if [ "$ACTION_ARCHIVE" = "1" ] && [ "$TARGET_OS" = "Linux" ]; then
     log Copying some libs from system
-    for lib in "$FINAL_INSTALL_DIR"/lib/qt6/{audio,generic,iconengines,imageformats,mediaservice,platforms,platforminputcontexts,platformthemes,xcbglintegrations}/*.so; do
+    for lib in "$FINAL_INSTALL_DIR"/lib/qt6/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations}/*.so; do
       bundle_libs "$lib"
     done
     for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa,lib/va}/*.so*; do
