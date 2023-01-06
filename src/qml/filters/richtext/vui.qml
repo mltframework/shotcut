@@ -242,7 +242,7 @@ Shotcut.VuiBase {
                 property real maxWidth: 500
 
                 x: Math.min((parent.width + parent.x - width), Math.max((-parent.x * scale), scrollView.x + rectangle.handleSize))
-                y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), (scrollView.mapToItem(vui, 0, 0).y > height) ? (scrollView.y - height * scale) : (scrollView.y + rectangle.handleSize)))
+                y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), scrollView.y - height))
                 anchors.margins: 0
                 opacity: 0.7
                 transformOrigin: Item.TopLeft
