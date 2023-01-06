@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,14 +96,12 @@ Item {
 
         title: qsTr('Select a file to store analysis results.')
         modality: application.dialogModality
-        selectExisting: false
-        selectMultiple: false
-        selectFolder: false
-        folder: settingsSavePath
+        fileMode: FileDialog.SaveFile
+        currentFolder: settingsSavePath
         nameFilters: ["Stabilize Results (*.stab)"]
-        selectedNameFilter: "Stabilize Results (*.stab)"
+        selectedNameFilter.index: 0
         onAccepted: {
-            var filename = fileDialog.fileUrl.toString();
+            var filename = selectedFile.toString();
             // Remove resource prefix ("file://")
             filename = filename.substring(7);
             if (filename.substring(2, 4) == ':/')
