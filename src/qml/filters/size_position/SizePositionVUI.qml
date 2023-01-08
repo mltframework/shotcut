@@ -249,7 +249,7 @@ Shotcut.VuiBase {
                 onWidthScaleChanged: setHandles(filterRect)
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: setFilter(getPosition())
-                onRotated: mouse => {
+                onRotated: (degrees, mouse) => {
                     if (!(mouse.modifiers & Qt.AltModifier))
                         degrees = snapRotation(degrees, 4) % 360;
                     blockUpdate = true;
