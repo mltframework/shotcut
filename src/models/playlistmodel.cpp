@@ -206,7 +206,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
     if (role < Qt::UserRole) {
         if (role == Qt::DisplayRole) {
-            if (m_mode == Detailed)
+            if (m_mode == Detailed || index.column() > 0)
                 field = FIELD_INDEX + index.column();
             else
                 field = FIELD_RESOURCE;
