@@ -938,7 +938,6 @@ function set_globals {
 
   #####
   # aom
-  PRECONFIG[22]="mkdir -p ../build-aom 2>/dev/null && cd ../build-aom"
   CONFIG[22]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -DBUILD_SHARED_LIBS=1 -DENABLE_DOCS=0 -DENABLE_EXAMPLES=0 -DENABLE_TESTDATA=0 -DENABLE_TESTS=0 -DENABLE_TOOLS=0 ../aom"
   [ "$TARGET_OS" = "Darwin" -a "$TARGET_ARCH" = "arm64" ] && CONFIG[22]="${CONFIG[22]} -DCONFIG_RUNTIME_CPU_DETECT=0"
   CFLAGS_[22]=$CFLAGS
@@ -1423,6 +1422,12 @@ function configure_compile_install_subproject {
   if test "$MYPRECONFIG" != ""; then
     cmd $MYPRECONFIG || die "Unable to pre-configure $1"
     feedback_status Done pre-configuring $1
+  fi
+
+  # Special hack for aom
+  if test "aom" = "$1"; then
+   cmd mkdir -p ../build-aom
+   cmd cd ../build-aom || die "Unable to change to directory aom/builddir"
   fi
 
   if [ "$MYCONFIG" != "" ]; then
