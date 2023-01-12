@@ -955,7 +955,7 @@ void MainWindow::setupSettingsMenu()
     else
         ui->actionSystemTheme->setChecked(true);
 
-#if defined(Q_OS_WIN) || (defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM))
+#if defined(Q_OS_WIN)
     // On Windows, if there is no JACK or it is not running
     // then Shotcut crashes inside MLT's call to jack_client_open().
     // Therefore, the JACK option for Shotcut is banned on Windows.
