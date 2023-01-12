@@ -174,11 +174,7 @@ Item {
             decimals: 6
             stepSize: 1 / 12 // 12 half steps in an octave
             spinnerWidth: 100
-            onValueChanged: {
-                updateFilter(getPosition());
-                if (frequencySlider.noUpdate == false)
-                    frequencySlider.value = 1 / Math.pow(2, value);
-            }
+            onValueChanged: updateFilter(getPosition())
         }
 
         Shotcut.UndoButton {
@@ -213,19 +209,13 @@ Item {
         Shotcut.SliderSpinner {
             id: frequencySlider
 
-            property bool noUpdate: false
-
             minimumValue: 0.25
             maximumValue: 4
             decimals: 6
             spinnerWidth: 100
             suffix: ' x'
             enabled: octaveSlider.enabled
-            onValueChanged: {
-                noUpdate = true;
-                octaveSlider.value = Math.log(1 / value) / Math.log(2);
-                noUpdate = false;
-            }
+            onValueChanged: octaveSlider.value = Math.log(1 / value) / Math.log(2)
         }
 
         Item {

@@ -103,7 +103,7 @@
    </widget>
    <widget class="QMenu" name="menuPlayer">
     <property name="title">
-     <string>Player</string>
+     <string>&amp;Player</string>
     </property>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -122,7 +122,7 @@
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
-     <string>Settings</string>
+     <string>&amp;Settings</string>
     </property>
     <widget class="QMenu" name="menuAudioChannels">
      <property name="title">

@@ -106,6 +106,17 @@ void TranscodeDialog::set709Convert(bool enable)
     ui->convert709CheckBox->setChecked(enable);
 }
 
+QString TranscodeDialog::sampleRate() const
+{
+    QString sampleRate;
+    if ( ui->sampleRateComboBox->currentIndex() == 1 ) {
+        sampleRate = "44100";
+    } else if ( ui->sampleRateComboBox->currentIndex() == 2 ) {
+        sampleRate = "48000";
+    }
+    return sampleRate;
+}
+
 void TranscodeDialog::showSubClipCheckBox()
 {
     ui->subclipCheckBox->show();

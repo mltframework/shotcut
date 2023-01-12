@@ -36,6 +36,9 @@ protected:
     QString textFromValue(int val) const;
     void keyPressEvent(QKeyEvent *event);
 
+signals:
+    void accepted();
+
 private:
     QRegularExpressionValidator *m_validator;
 };

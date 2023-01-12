@@ -181,10 +181,11 @@ void ProducerPreviewWidget::generateFrame()
     int width = m_previewSize.width();
     int height = m_previewSize.height();
     mlt_image_format format = mlt_image_rgb;
-    Mlt::Frame frame(*m_producer.get_frame());
-    frame.set( "rescale.interp", "bilinear" );
-    uint8_t *mltImage = frame.get_image( format, width, height, 0 );
+    std::unique_ptr<Mlt::Frame> frame(m_producer.get_frame());
+    frame->set( "rescale.interp", "bilinear" );
+    uint8_t *mltImage = frame->get_image( format, width, height, 0 );
     QImage image( mltImage, width, height, QImage::Format_RGB888 );
+
 
     // Send the image and status in the queue
     QueueItem item;

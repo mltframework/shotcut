@@ -130,8 +130,8 @@ RowLayout {
                     myColor.a = selectedColor.a;
                     // If the user changed color but left alpha at 0,
                     // they probably want to reset alpha to opaque.
-                    console.log('selectedColor.a=' + selectedColor.a + ' selectedColor=' + selectedColor + ' myColor=' + myColor);
-                    if (selectedColor.a === 0 && (!Qt.colorEqual(selectedColor, myColor) || (Qt.colorEqual(selectedColor, 'transparent') && Qt.colorEqual(myColor, 'transparent'))))
+                    console.log('selectedColor.a=' + selectedColor.a + ' selectedColor=' + selectedColor + ' handelRect.color=' + myColor);
+                    if (selectedColor.a === 0 && (!Qt.colorEqual(selectedColor, myColor) || (Qt.colorEqual(selectedColor, 'transparent') && Qt.colorEqual(handelRect.color, 'transparent'))))
                         selectedColor.a = 1;
                     parent.parent._setStopColor(handelRect.stopIndex, String(selectedColor));
                 }

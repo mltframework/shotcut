@@ -132,6 +132,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     markerMenu->addAction(Actions["timelineNextMarkerAction"]);
     markerMenu->addAction(Actions["timelineDeleteMarkerAction"]);
     markerMenu->addAction(Actions["timelineMarkSelectedClipAction"]);
+    markerMenu->addAction(Actions["timelineCycleMarkerColorAction"]);
     m_mainMenu->addMenu(markerMenu);
     Actions.loadFromMenu(m_mainMenu);
 
@@ -752,6 +753,22 @@ void TimelineDock::setupActions()
         deleteMarker();
     });
     Actions.add("timelineDeleteMarkerAction", action);
+
+    action = new QAction(tr("Cycle Marker Color"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_M));
+    connect(action, &QAction::triggered, this, [&]() {
+        int markerIndex = m_markersModel.markerIndexForPosition(m_position);
+        if (markerIndex >= 0) {
+            auto marker = m_markersModel.getMarker(markerIndex);
+            auto allColors = m_markersModel.allColors();
+            int colorIndex = allColors.indexOf(marker.color);
+            if (colorIndex >= 0) {
+                colorIndex = (colorIndex + 1) % allColors.size();
+                m_markersModel.setColor(markerIndex, allColors[colorIndex]);
+            }
+        }
+    });
+    Actions.add("timelineCycleMarkerColorAction", action);
 
     action = new QAction(tr("Create Marker Around Selected Clip"), this);
     action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_M));

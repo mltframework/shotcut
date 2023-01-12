@@ -46,6 +46,7 @@ public:
     QString frc() const;
     bool get709Convert();
     void set709Convert(bool enable);
+    QString sampleRate() const;
     void showSubClipCheckBox();
     bool isSubClip() const;
     void setSubClipChecked(bool checked);

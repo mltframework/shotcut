@@ -162,6 +162,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     mainMenu->addAction(Actions["timelineNextMarkerAction"]);
     mainMenu->addAction(Actions["timelineDeleteMarkerAction"]);
     mainMenu->addAction(Actions["timelineMarkSelectedClipAction"]);
+    mainMenu->addAction(Actions["timelineCycleMarkerColorAction"]);
     mainMenu->addAction(tr("Remove All Markers"), this, SLOT(onRemoveAllRequested()));
     QAction *action;
     QMenu *columnsMenu = new QMenu(tr("Columns"), this);

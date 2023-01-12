@@ -311,10 +311,14 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             Layout.rowSpan: 2
             onToggled: {
                 if (checked) {
+                    filter.blockSignals = true;
                     filter.clearSimpleAnimation(rectProperty);
+                    filter.blockSignals = false;
                     filter.set(rectProperty, filterRect, getPosition());
                 } else {
+                    filter.blockSignals = true;
                     filter.resetProperty(rectProperty);
+                    filter.blockSignals = false;
                     filter.set(rectProperty, filterRect);
                 }
                 checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;

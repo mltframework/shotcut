@@ -13,9 +13,6 @@
     <height>427</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Dialog</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
@@ -152,6 +149,50 @@
           </property>
          </widget>
         </item>
+        <item row="6" column="1">
+         <widget class="QCheckBox" name="convert709CheckBox">
+          <property name="toolTip">
+           <string>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</string>
+          </property>
+          <property name="text">
+           <string>Convert to BT.709 colorspace</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QCheckBox" name="subclipCheckBox">
+          <property name="toolTip">
+           <string>This option converts only the trimmed portion of the source
+clip plus a little instead of the entire clip. When this option is
+used not all of the matching source clips are replaced, instead
+only the currently selected one.</string>
+          </property>
+          <property name="text">
+           <string>Use sub-clip</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QCheckBox" name="advancedCheckBox">
+          <property name="toolTip">
+           <string>Enable this to keep the Advanced section open for the next time this dialog appears.</string>
+          </property>
+          <property name="text">
+           <string>Keep Advanced open</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QComboBox" name="frcComboBox">
+          <property name="toolTip">
+           <string>Frame rate conversion method
+
+Duplicate: Duplicate frames.
+Blend: Blend frames.
+Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0" colspan="2">
          <widget class="Line" name="line">
           <property name="orientation">
@@ -169,44 +210,16 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="1">
-         <widget class="QCheckBox" name="convert709CheckBox">
-          <property name="toolTip">
-           <string>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</string>
+        <item row="7" column="0">
+         <widget class="QLabel" name="sampleRateLabel">
+          <property name="enabled">
+           <bool>true</bool>
           </property>
           <property name="text">
-           <string>Convert to BT.709 colorspace</string>
+           <string>Sample rate</string>
           </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="frcLabel">
-          <property name="text">
-           <string>Frame rate conversion</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QComboBox" name="frcComboBox">
-          <property name="toolTip">
-           <string>Frame rate conversion method
-
-Duplicate: Duplicate frames.
-Blend: Blend frames.
-Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QCheckBox" name="subclipCheckBox">
-          <property name="toolTip">
-           <string>This option converts only the trimmed portion of the source
-clip plus a little instead of the entire clip. When this option is
-used not all of the matching source clips are replaced, instead
-only the currently selected one.</string>
-          </property>
-          <property name="text">
-           <string>Use sub-clip</string>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
@@ -214,6 +227,9 @@ only the currently selected one.</string>
          <widget class="QLabel" name="fpsLabel">
           <property name="text">
            <string>Frames/sec</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
@@ -227,14 +243,39 @@ only the currently selected one.</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="1">
-         <widget class="QCheckBox" name="advancedCheckBox">
-          <property name="toolTip">
-           <string>Enable this to keep the Advanced section open for the next time this dialog appears.</string>
-          </property>
+        <item row="5" column="0">
+         <widget class="QLabel" name="frcLabel">
           <property name="text">
-           <string>Keep Advanced open</string>
+           <string>Frame rate conversion</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QComboBox" name="sampleRateComboBox">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="currentText">
+           <string>Same as original</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Same as original</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>44100</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>48000</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>

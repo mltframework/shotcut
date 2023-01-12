@@ -74,6 +74,7 @@ void TimeSpinBox::keyPressEvent(QKeyEvent *event)
     QSpinBox::keyPressEvent(event);
     if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
         event->accept();
+        emit accepted();
     }
 }
 

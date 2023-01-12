@@ -699,13 +699,13 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="935"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1040"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1045"/>
         <source>Reverse...</source>
         <translation>उल्टो हुदै...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="999"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1232"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1237"/>
         <source>Extract Sub-clip...</source>
         <translation>एक्सट्रयाक उप-क्लिप...</translation>
     </message>
@@ -776,96 +776,96 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="784"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1036"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1041"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>तल edit-friendly format चयन गर्नुहोस र त्यसपछि फाइलको नाम चयन गर्न OK क्लिक गर्नुहोस । फाइलको नाम चयन गरेपछि काम सुरू हुन्छ । जब यो सकिन्छ, यो खोल्नलाइ काममा दुइ पटक क्लिक गर्नुहोस ।
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="911"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1124"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="916"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1129"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="923"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1145"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="928"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1150"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="929"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1155"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="934"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1160"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="936"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="941"/>
         <source>Converted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="960"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1192"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="965"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1197"/>
         <source>Convert %1</source>
         <translation>परिवर्तन %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1159"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1164"/>
         <source>Reversed</source>
         <translation>उल्टो भयो</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1200"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1205"/>
         <source>Reverse %1</source>
         <translation>उल्टो %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1447"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1452"/>
         <source>Choose the Other Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1494"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1499"/>
         <source>Measure %1</source>
         <translation>नाप %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="936"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1231"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="941"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1236"/>
         <source>Sub-clip</source>
         <translation>सब-क्लिप</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1233"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1238"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1277"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1282"/>
         <source>Extract sub-clip %1</source>
         <translation>एक्सट्रयाक उप-क्लिप %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1384"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1389"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1428"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1433"/>
         <source>Set Equirectangular Projection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1438"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1443"/>
         <source>Successfully wrote %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1440"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1445"/>
         <source>An error occurred saving the projection.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2133,7 +2133,7 @@ Shotcut will attempt to repair your project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="249"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="248"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>एक मात्र %1 फिल्टर अनुमति छ</translation>
     </message>
@@ -3244,11 +3244,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>&amp;मद्दत</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="125"/>
-        <source>Settings</source>
-        <translation>सेटिङ्हरू</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="129"/>
         <source>Audio Channels</source>
         <translation>अडियो च्यानलहरु</translation>
@@ -3408,8 +3403,8 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="473"/>
-        <location filename="../src/mainwindow.cpp" line="1898"/>
-        <location filename="../src/mainwindow.cpp" line="3125"/>
+        <location filename="../src/mainwindow.cpp" line="1899"/>
+        <location filename="../src/mainwindow.cpp" line="3126"/>
         <source>Enter Full Screen</source>
         <translation>पूर्ण स्क्रिनमा खोल्नुहोस</translation>
     </message>
@@ -3420,14 +3415,14 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="497"/>
-        <location filename="../src/mainwindow.cpp" line="375"/>
-        <location filename="../src/mainwindow.cpp" line="1933"/>
+        <location filename="../src/mainwindow.cpp" line="378"/>
+        <location filename="../src/mainwindow.cpp" line="1934"/>
         <source>Properties</source>
         <translation>गुणहरू</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="506"/>
-        <location filename="../src/mainwindow.cpp" line="1942"/>
+        <location filename="../src/mainwindow.cpp" line="1943"/>
         <source>Recent</source>
         <translation>भर्खरै</translation>
     </message>
@@ -3439,7 +3434,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="524"/>
-        <location filename="../src/mainwindow.cpp" line="563"/>
+        <location filename="../src/mainwindow.cpp" line="566"/>
         <source>History</source>
         <translation>इतिहास</translation>
     </message>
@@ -3570,7 +3565,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="172"/>
         <location filename="../src/mainwindow.ui" line="742"/>
-        <location filename="../src/mainwindow.cpp" line="1951"/>
+        <location filename="../src/mainwindow.cpp" line="1952"/>
         <source>Timeline</source>
         <translation>टाइमलाइन</translation>
     </message>
@@ -3647,7 +3642,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>प्रोजेक्ट</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="106"/>
         <location filename="../src/mainwindow.ui" line="216"/>
         <location filename="../src/mainwindow.ui" line="1246"/>
         <source>Player</source>
@@ -3676,7 +3670,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1278"/>
         <location filename="../src/mainwindow.ui" line="1281"/>
-        <location filename="../src/mainwindow.cpp" line="4808"/>
+        <location filename="../src/mainwindow.cpp" line="4809"/>
         <source>Export Chapters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3690,6 +3684,16 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="1186"/>
         <source>Set...</source>
         <translation>सेट गर्नुहोस...</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="106"/>
+        <source>&amp;Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="125"/>
+        <source>&amp;Settings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="348"/>
@@ -3969,153 +3973,153 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 कृपया तपाइको प्याकेज म्यानेजर प्रयोग गरी यसलाइ इन्सटल गर्नुहोस । यसका नामहरू libsdl2-2.0-0, SDL2, वा यस्तै हुन सक्छन ।</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="786"/>
+        <location filename="../src/mainwindow.cpp" line="789"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="810"/>
+        <location filename="../src/mainwindow.cpp" line="813"/>
         <source>Off</source>
         <translation>बन्द</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="813"/>
+        <location filename="../src/mainwindow.cpp" line="816"/>
         <source>Internal</source>
         <translation>भित्रि</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="816"/>
+        <location filename="../src/mainwindow.cpp" line="819"/>
         <source>External</source>
         <translation>बाहिरी</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="830"/>
+        <location filename="../src/mainwindow.cpp" line="833"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1232"/>
-        <location filename="../src/mainwindow.cpp" line="1078"/>
+        <location filename="../src/mainwindow.cpp" line="1081"/>
         <source>Color</source>
         <translation>रङ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1080"/>
+        <location filename="../src/mainwindow.cpp" line="1083"/>
         <source>Text</source>
         <translation>टेक्स</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1083"/>
+        <location filename="../src/mainwindow.cpp" line="1086"/>
         <source>Animation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1086"/>
+        <location filename="../src/mainwindow.cpp" line="1089"/>
         <source>Noise</source>
         <translation>नोइज</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1088"/>
+        <location filename="../src/mainwindow.cpp" line="1091"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1090"/>
+        <location filename="../src/mainwindow.cpp" line="1093"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1093"/>
+        <location filename="../src/mainwindow.cpp" line="1096"/>
         <source>Plasma</source>
         <translation>प्लाज्मा</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1095"/>
+        <location filename="../src/mainwindow.cpp" line="1098"/>
         <source>Color Bars</source>
         <translation>रङ बारहरू</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1098"/>
+        <location filename="../src/mainwindow.cpp" line="1101"/>
         <source>Audio Tone</source>
         <translation>अडियो टोन</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1100"/>
+        <location filename="../src/mainwindow.cpp" line="1103"/>
         <source>Count</source>
         <translation>गन्ति</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1102"/>
+        <location filename="../src/mainwindow.cpp" line="1105"/>
         <source>Blip Flash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1106"/>
+        <location filename="../src/mainwindow.cpp" line="1109"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1107"/>
+        <location filename="../src/mainwindow.cpp" line="1110"/>
         <source>PulseAudio</source>
         <translation>पल्स अडियो</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1108"/>
+        <location filename="../src/mainwindow.cpp" line="1111"/>
         <source>JACK Audio</source>
         <translation>ज्याक अडियो</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1109"/>
+        <location filename="../src/mainwindow.cpp" line="1112"/>
         <source>ALSA Audio</source>
         <translation>ALSA अडियो</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1111"/>
+        <location filename="../src/mainwindow.cpp" line="1114"/>
         <source>Audio/Video Device</source>
         <translation>अडियो/भिडियो डिभाइस</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1115"/>
+        <location filename="../src/mainwindow.cpp" line="1118"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1137"/>
-        <location filename="../src/mainwindow.cpp" line="1139"/>
-        <location filename="../src/mainwindow.cpp" line="1538"/>
-        <location filename="../src/mainwindow.cpp" line="1546"/>
-        <location filename="../src/mainwindow.cpp" line="1567"/>
-        <location filename="../src/mainwindow.cpp" line="1622"/>
-        <location filename="../src/mainwindow.cpp" line="3692"/>
-        <location filename="../src/mainwindow.cpp" line="3705"/>
-        <location filename="../src/mainwindow.cpp" line="4589"/>
+        <location filename="../src/mainwindow.cpp" line="1140"/>
+        <location filename="../src/mainwindow.cpp" line="1142"/>
+        <location filename="../src/mainwindow.cpp" line="1541"/>
+        <location filename="../src/mainwindow.cpp" line="1549"/>
+        <location filename="../src/mainwindow.cpp" line="1570"/>
+        <location filename="../src/mainwindow.cpp" line="1625"/>
+        <location filename="../src/mainwindow.cpp" line="3693"/>
+        <location filename="../src/mainwindow.cpp" line="3706"/>
+        <location filename="../src/mainwindow.cpp" line="4590"/>
         <source>Failed to open </source>
         <translation>खोल्न असफल भयो</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1178"/>
+        <location filename="../src/mainwindow.cpp" line="1181"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>तपार्इले खोल्नुभएको फाइलले CPU इफेक्ट प्रयोग गर्छ जुन GPU इफेक्टांग कमप्याटेबल छैन तर GPU इफेक्ट सक्षम बनाइएको छ। 
 के तपाई GPU इफेक्टलार्इ सक्षम बनाएर सटकट रि: स्टार्ट गर्न चाहानुहुन्छ ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1201"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>Repaired</source>
         <translation>मर्मत गरियो</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1202"/>
+        <location filename="../src/mainwindow.cpp" line="1205"/>
         <source>Save Repaired XML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1235"/>
+        <location filename="../src/mainwindow.cpp" line="1238"/>
         <source>Repairing the project failed.</source>
         <translation>परियोजनाको मर्म्मत असफल भयो।</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1248"/>
+        <location filename="../src/mainwindow.cpp" line="1251"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -4128,29 +4132,29 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 मर्मत फाइल नाममा र खोल्नुहोस </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1283"/>
+        <location filename="../src/mainwindow.cpp" line="1286"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>स्वत: सुरक्षित फाइलहरू अवस्थित छन्। के तपाइँ तिनीहरूलाई अहिले पुनःप्राप्त गर्न चाहनुहुन्छ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1357"/>
+        <location filename="../src/mainwindow.cpp" line="1360"/>
         <source>You cannot add a project to itself!</source>
         <translation>तपाइले यसैमा प्रोजेक्ट थप्न सक्नुहुन्न !</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1393"/>
+        <location filename="../src/mainwindow.cpp" line="1396"/>
         <source>There was an error saving. Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1470"/>
+        <location filename="../src/mainwindow.cpp" line="1473"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1495"/>
+        <location filename="../src/mainwindow.cpp" line="1498"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -4158,247 +4162,247 @@ Or save and restart Shotcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1532"/>
+        <location filename="../src/mainwindow.cpp" line="1535"/>
         <source>Opening %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1663"/>
-        <location filename="../src/mainwindow.cpp" line="3662"/>
+        <location filename="../src/mainwindow.cpp" line="1666"/>
+        <location filename="../src/mainwindow.cpp" line="3663"/>
         <source>Open File</source>
         <translation>फाइल खोल्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1664"/>
+        <location filename="../src/mainwindow.cpp" line="1667"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1926"/>
+        <location filename="../src/mainwindow.cpp" line="1927"/>
         <source>Rename Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1935"/>
+        <location filename="../src/mainwindow.cpp" line="1936"/>
         <source>Find</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1944"/>
+        <location filename="../src/mainwindow.cpp" line="1945"/>
         <source>Reload</source>
         <translation>पुनःलोड गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2023"/>
+        <location filename="../src/mainwindow.cpp" line="2024"/>
         <source>Untitled</source>
         <translation>शिर्षक विहिन</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2044"/>
+        <location filename="../src/mainwindow.cpp" line="2045"/>
         <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2165"/>
+        <location filename="../src/mainwindow.cpp" line="2166"/>
         <source>Non-Broadcast</source>
         <translation>नन्-ब्रोडकास्ट</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2170"/>
+        <location filename="../src/mainwindow.cpp" line="2171"/>
         <source>DVD Widescreen NTSC</source>
         <translation>डिभिडि Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2171"/>
+        <location filename="../src/mainwindow.cpp" line="2172"/>
         <source>DVD Widescreen PAL</source>
         <translation>डिभिडि Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2182"/>
+        <location filename="../src/mainwindow.cpp" line="2183"/>
         <source>Square 1080p 30 fps</source>
         <translation>वर्गकार 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2183"/>
+        <location filename="../src/mainwindow.cpp" line="2184"/>
         <source>Square 1080p 60 fps</source>
         <translation>वर्गकार 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2184"/>
+        <location filename="../src/mainwindow.cpp" line="2185"/>
         <source>Vertical HD 30 fps</source>
         <translation>ठाडो एचडी 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2185"/>
+        <location filename="../src/mainwindow.cpp" line="2186"/>
         <source>Vertical HD 60 fps</source>
         <translation>ठाडो एचडी 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2186"/>
+        <location filename="../src/mainwindow.cpp" line="2187"/>
         <source>Custom</source>
         <translation>कस्टम</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2217"/>
-        <location filename="../src/mainwindow.cpp" line="2526"/>
+        <location filename="../src/mainwindow.cpp" line="2218"/>
+        <location filename="../src/mainwindow.cpp" line="2527"/>
         <source>Saved %1</source>
         <translation>बचत %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2518"/>
-        <location filename="../src/mainwindow.cpp" line="2540"/>
+        <location filename="../src/mainwindow.cpp" line="2519"/>
+        <location filename="../src/mainwindow.cpp" line="2541"/>
         <source>Save XML</source>
         <translation>XML बचत गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4784"/>
+        <location filename="../src/mainwindow.cpp" line="4785"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4795"/>
+        <location filename="../src/mainwindow.cpp" line="4796"/>
         <source>Choose Markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4810"/>
+        <location filename="../src/mainwindow.cpp" line="4811"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4864"/>
+        <location filename="../src/mainwindow.cpp" line="4865"/>
         <source>Failed to open export-chapters.js</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4904"/>
+        <location filename="../src/mainwindow.cpp" line="4905"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1204"/>
-        <location filename="../src/mainwindow.cpp" line="2542"/>
+        <location filename="../src/mainwindow.cpp" line="1207"/>
+        <location filename="../src/mainwindow.cpp" line="2543"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2561"/>
+        <location filename="../src/mainwindow.cpp" line="2562"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>परियोजना परिमार्जन गरिएको छ।
 के तपाईं आफ्नो परिवर्तनहरू बचत गर्न चाहनुहुन्छ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2590"/>
+        <location filename="../src/mainwindow.cpp" line="2591"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>त्यहाँ अपूर्ण कार्यहरू छन्।
 के तपाईँ अझै पनि बाहिर निस्कन चाहानुहुन्छ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2603"/>
+        <location filename="../src/mainwindow.cpp" line="2604"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>निर्यात प्रगतिमा छ।
 के तपाईँ अझै पनि बाहिर निस्कन चाहानुहुन्छ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1896"/>
-        <location filename="../src/mainwindow.cpp" line="3132"/>
+        <location filename="../src/mainwindow.cpp" line="1897"/>
+        <location filename="../src/mainwindow.cpp" line="3133"/>
         <source>Exit Full Screen</source>
         <translation>पूर्ण स्क्रीनबाट निस्कनुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4553"/>
+        <location filename="../src/mainwindow.cpp" line="4554"/>
         <source>Turn Proxy On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4553"/>
+        <location filename="../src/mainwindow.cpp" line="4554"/>
         <source>Turn Proxy Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4557"/>
+        <location filename="../src/mainwindow.cpp" line="4558"/>
         <source>Converting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4571"/>
+        <location filename="../src/mainwindow.cpp" line="4572"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4606"/>
+        <location filename="../src/mainwindow.cpp" line="4607"/>
         <source>Proxy Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4622"/>
+        <location filename="../src/mainwindow.cpp" line="4623"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4629"/>
+        <location filename="../src/mainwindow.cpp" line="4630"/>
         <source>Moving Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3145"/>
+        <location filename="../src/mainwindow.cpp" line="3146"/>
         <source>GPU effects are not supported</source>
         <translation>GPU इफेक्टहरु सपोर्ट गर्दैन</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="426"/>
+        <location filename="../src/mainwindow.cpp" line="429"/>
         <source>View mode</source>
         <translation>मोड हेर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="430"/>
+        <location filename="../src/mainwindow.cpp" line="433"/>
         <source>Thumbnails</source>
         <translation>थमनेल</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1165"/>
+        <location filename="../src/mainwindow.cpp" line="1168"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2045"/>
+        <location filename="../src/mainwindow.cpp" line="2046"/>
         <source>&lt;h1&gt;Shotcut version %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Licensed under the %5&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://glaxnimate.mattbas.org/&quot;&gt;Glaxnimate&lt;/a&gt; vector animation program&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3165"/>
+        <location filename="../src/mainwindow.cpp" line="3166"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>सटकटको नयाँ संस्करण जाँच गर्न यहाँ क्लिक गर्नुहोस्।</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3270"/>
+        <location filename="../src/mainwindow.cpp" line="3271"/>
         <source>Open Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3304"/>
+        <location filename="../src/mainwindow.cpp" line="3305"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>नयाँ भाषामा स्विच गर्न तपाईले सटकट पुन: सुरु गर्नुपर्दछ।
 के तपाई अहिले पुन: सुरू गर्न चाहनुहुन्छ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3345"/>
+        <location filename="../src/mainwindow.cpp" line="3346"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>ज्याकमा जोड्न असफल भयो।
 कृपया ज्याक स्थापित र चलिरहेको छ छैन पुष्टि गर्नुहोस </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3354"/>
+        <location filename="../src/mainwindow.cpp" line="3355"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -4407,7 +4411,7 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 के तपाई GPU इफेक्टलार्इ सक्षम बनाएर सटकट रि: स्टार्ट गर्न चाहानुहुन्छ ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3373"/>
+        <location filename="../src/mainwindow.cpp" line="3374"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -4416,29 +4420,29 @@ Disable GPU effects and restart?</source>
 GPU इफेक्ट असक्षम र पुुन: सुचारु ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3508"/>
+        <location filename="../src/mainwindow.cpp" line="3509"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3639"/>
+        <location filename="../src/mainwindow.cpp" line="3640"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>के तपाइ भविष्यमा स्वचालित रूपले अपडेट जाँच गर्न चाहानुहुन्छ ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3646"/>
+        <location filename="../src/mainwindow.cpp" line="3647"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>अबदेखि यो नदेखाउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3663"/>
+        <location filename="../src/mainwindow.cpp" line="3664"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;सबै फाइलहरू (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3680"/>
+        <location filename="../src/mainwindow.cpp" line="3681"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
@@ -4446,62 +4450,62 @@ Do you want to continue to open this MLT XML file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3746"/>
+        <location filename="../src/mainwindow.cpp" line="3747"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>डिस्पे मेथड परिवर्तन गर्न तपाईंले सटकट पुन: सुरु गर्नुपर्दछ।
 के तपाईँ अहिले पुन: सुरू गर्न चाहनुहुन्छ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3768"/>
+        <location filename="../src/mainwindow.cpp" line="3769"/>
         <source>Application Log</source>
         <translation>एप्लिकेशन लग</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3818"/>
+        <location filename="../src/mainwindow.cpp" line="3819"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>सटकट भर्जन %1 उपलब्ध छ । यो पाउन यहाँ क्लिक गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3825"/>
+        <location filename="../src/mainwindow.cpp" line="3826"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>तपाईले सटकटको अन्तिम संस्करण चलाइरहनुभएको छ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3836"/>
+        <location filename="../src/mainwindow.cpp" line="3837"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>जाँच गर्दा संस्करण.json पढ्न असफल भयो। वेब साइटमा जानको लागि यहाँ क्लिक गर्नुहोस्।</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="901"/>
         <location filename="../src/mainwindow.ui" line="904"/>
-        <location filename="../src/mainwindow.cpp" line="3856"/>
+        <location filename="../src/mainwindow.cpp" line="3857"/>
         <source>Export EDL</source>
         <translation>EDL निर्यात गर्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3858"/>
+        <location filename="../src/mainwindow.cpp" line="3859"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;सम्पुर्ण फाईलहरु (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3904"/>
-        <location filename="../src/mainwindow.cpp" line="4861"/>
+        <location filename="../src/mainwindow.cpp" line="3905"/>
+        <location filename="../src/mainwindow.cpp" line="4862"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>निर्यातको बेला जाभास्क्रिप्ट त्रुटि देखा पर्यो।</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3907"/>
+        <location filename="../src/mainwindow.cpp" line="3908"/>
         <source>Failed to open export-edl.js</source>
         <translation>निर्यात-edl.js खोल्न असफल भयो</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3936"/>
+        <location filename="../src/mainwindow.cpp" line="3937"/>
         <source>Export frame from proxy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3937"/>
+        <location filename="../src/mainwindow.cpp" line="3938"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -4510,49 +4514,49 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/mainwindow.ui" line="912"/>
         <location filename="../src/mainwindow.ui" line="915"/>
-        <location filename="../src/mainwindow.cpp" line="3949"/>
+        <location filename="../src/mainwindow.cpp" line="3950"/>
         <source>Export Frame</source>
         <translation>फ्रेम निर्यात गर्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3955"/>
+        <location filename="../src/mainwindow.cpp" line="3956"/>
         <source>Unable to export frame.</source>
         <translation>फ्रेम निर्यात गर्न असमर्थ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3963"/>
+        <location filename="../src/mainwindow.cpp" line="3964"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>डेटा डाइरेक्टरी परिवर्तन गर्न तपाईले सटकट पुन: सुरु गर्नुपर्दछ।
 के तपाई जारी राख्न चाहानुहुन्छ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3972"/>
+        <location filename="../src/mainwindow.cpp" line="3973"/>
         <source>Data Directory</source>
         <translation>डाटा डाइरेक्टोरी</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4168"/>
+        <location filename="../src/mainwindow.cpp" line="4169"/>
         <source>Add Custom Layout</source>
         <translation>कस्टम लेआउट थप्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4169"/>
+        <location filename="../src/mainwindow.cpp" line="4170"/>
         <source>Name</source>
         <translation>नाम</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4207"/>
+        <location filename="../src/mainwindow.cpp" line="4208"/>
         <source>Remove Video Mode</source>
         <translation>भिडियो मुड हटाउनुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4221"/>
+        <location filename="../src/mainwindow.cpp" line="4222"/>
         <source>Remove Layout</source>
         <translation>लेआउट हटाउनुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4363"/>
+        <location filename="../src/mainwindow.cpp" line="4364"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4567,73 +4571,73 @@ Do you want to disable GPU effects and restart Shotcut?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="202"/>
+        <location filename="../src/docks/markersdock.cpp" line="203"/>
         <source>Add a marker at the current time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="211"/>
+        <location filename="../src/docks/markersdock.cpp" line="212"/>
         <source>Remove the selected marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="220"/>
+        <location filename="../src/docks/markersdock.cpp" line="221"/>
         <source>Deselect the marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="193"/>
+        <location filename="../src/docks/markersdock.cpp" line="194"/>
         <source>Markers Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="165"/>
+        <location filename="../src/docks/markersdock.cpp" line="166"/>
         <source>Remove All Markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="167"/>
         <location filename="../src/docks/markersdock.cpp" line="168"/>
+        <location filename="../src/docks/markersdock.cpp" line="169"/>
         <source>Columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="170"/>
+        <location filename="../src/docks/markersdock.cpp" line="171"/>
         <source>Color</source>
         <translation>रङ</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="173"/>
+        <location filename="../src/docks/markersdock.cpp" line="174"/>
         <source>Name</source>
         <translation>नाम</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="176"/>
+        <location filename="../src/docks/markersdock.cpp" line="177"/>
         <source>Start</source>
         <translation>सुरू गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="179"/>
+        <location filename="../src/docks/markersdock.cpp" line="180"/>
         <source>End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="182"/>
+        <location filename="../src/docks/markersdock.cpp" line="183"/>
         <source>Duration</source>
         <translation>अबधि</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="188"/>
+        <location filename="../src/docks/markersdock.cpp" line="189"/>
         <source>Markers Controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="228"/>
+        <location filename="../src/docks/markersdock.cpp" line="229"/>
         <source>search</source>
         <translation>खोज्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="236"/>
+        <location filename="../src/docks/markersdock.cpp" line="237"/>
         <source>Clear search</source>
         <translation>सर्च क्लियर गर्नुहोस</translation>
     </message>
@@ -5211,349 +5215,364 @@ Try again with a different folder.</source>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="68"/>
+        <location filename="../src/player.cpp" line="69"/>
         <source>Source</source>
         <translation>स्रोत</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="69"/>
+        <location filename="../src/player.cpp" line="70"/>
         <source>Project</source>
         <translation>प्रोजेक्ट</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="131"/>
+        <location filename="../src/player.cpp" line="132"/>
         <source>Adjust the audio volume</source>
         <translation>अडियो भोलुम मिलाउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="152"/>
+        <location filename="../src/player.cpp" line="153"/>
         <source>Silence the audio</source>
         <translation>अडियो बन्द गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="166"/>
+        <location filename="../src/player.cpp" line="167"/>
         <source>Transport Controls</source>
         <translation>आयातनिर्यात नियन्त्रण</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="174"/>
+        <location filename="../src/player.cpp" line="175"/>
         <source>Current position</source>
         <translation>हालको पोजीसन</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="178"/>
+        <location filename="../src/player.cpp" line="179"/>
         <source>Total Duration</source>
         <translation>जम्मा अबधी</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="183"/>
+        <location filename="../src/player.cpp" line="184"/>
         <source>In Point</source>
         <translation>इन पोइन्ट</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="187"/>
+        <location filename="../src/player.cpp" line="188"/>
         <source>Selected Duration</source>
         <translation>छनोट गरिएको अबधी</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="203"/>
+        <location filename="../src/player.cpp" line="204"/>
         <source>Zoom Fit</source>
         <translation>जुम फिट</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="206"/>
+        <location filename="../src/player.cpp" line="207"/>
         <source>Zoom 10%</source>
         <translation>जुम 10%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="209"/>
+        <location filename="../src/player.cpp" line="210"/>
         <source>Zoom 25%</source>
         <translation>जुम २५%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="212"/>
+        <location filename="../src/player.cpp" line="213"/>
         <source>Zoom 50%</source>
         <translation>जुम ५०%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="215"/>
+        <location filename="../src/player.cpp" line="216"/>
         <source>Zoom 100%</source>
         <translation>जुम १००%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="218"/>
+        <location filename="../src/player.cpp" line="219"/>
         <source>Zoom 200%</source>
         <translation>जुम २००%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="238"/>
+        <location filename="../src/player.cpp" line="239"/>
         <source>Toggle zoom</source>
         <translation>टगल जुम</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="246"/>
+        <location filename="../src/player.cpp" line="247"/>
         <source>2x2 Grid</source>
         <translation>2x2 Grid</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="251"/>
+        <location filename="../src/player.cpp" line="252"/>
         <source>3x3 Grid</source>
         <translation>3x3 Grid</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="255"/>
+        <location filename="../src/player.cpp" line="256"/>
         <source>4x4 Grid</source>
         <translation>4x4 Grid</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="259"/>
+        <location filename="../src/player.cpp" line="260"/>
         <source>16x16 Grid</source>
         <translation>16x16 Grid</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="267"/>
+        <location filename="../src/player.cpp" line="268"/>
         <source>10 Pixel Grid</source>
         <translation>10 पिक्सेल ग्रिड</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="356"/>
+        <location filename="../src/player.cpp" line="357"/>
         <source>Play/Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="360"/>
+        <location filename="../src/player.cpp" line="361"/>
         <source>Toggle play or pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="377"/>
+        <location filename="../src/player.cpp" line="378"/>
         <source>Skip to the next point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="400"/>
+        <location filename="../src/player.cpp" line="401"/>
         <source>Skip to the previous point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="425"/>
+        <location filename="../src/player.cpp" line="426"/>
         <source>Play quickly backwards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="435"/>
+        <location filename="../src/player.cpp" line="436"/>
         <source>Play quickly forwards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="439"/>
+        <location filename="../src/player.cpp" line="440"/>
         <source>Seek Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="446"/>
+        <location filename="../src/player.cpp" line="447"/>
         <source>Seek End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="454"/>
+        <location filename="../src/player.cpp" line="455"/>
         <source>Next Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="463"/>
+        <location filename="../src/player.cpp" line="464"/>
         <source>Previous Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="472"/>
+        <location filename="../src/player.cpp" line="473"/>
         <source>Forward One Second</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="480"/>
+        <location filename="../src/player.cpp" line="481"/>
         <source>Backward One Second</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="488"/>
+        <location filename="../src/player.cpp" line="489"/>
         <source>Forward Two Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="496"/>
+        <location filename="../src/player.cpp" line="497"/>
         <source>Backward Two Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="504"/>
+        <location filename="../src/player.cpp" line="505"/>
         <source>Forward Five Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="512"/>
+        <location filename="../src/player.cpp" line="513"/>
         <source>Backward Five Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="520"/>
+        <location filename="../src/player.cpp" line="521"/>
         <source>Forward Ten Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="528"/>
+        <location filename="../src/player.cpp" line="529"/>
         <source>Backward Ten Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="536"/>
+        <location filename="../src/player.cpp" line="537"/>
+        <source>Forward Jump</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="545"/>
+        <source>Backward Jump</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="553"/>
+        <source>Set Jump Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="564"/>
         <source>Trim Clip In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="549"/>
+        <location filename="../src/player.cpp" line="577"/>
         <source>Trim Clip Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="562"/>
+        <location filename="../src/player.cpp" line="590"/>
         <source>Set Time Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="592"/>
+        <location filename="../src/player.cpp" line="620"/>
         <source>Pause playback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="594"/>
-        <location filename="../src/player.cpp" line="601"/>
+        <location filename="../src/player.cpp" line="622"/>
+        <location filename="../src/player.cpp" line="629"/>
         <source>Player</source>
         <translation>प्लेयर</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="596"/>
+        <location filename="../src/player.cpp" line="624"/>
         <source>Focus Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="749"/>
+        <location filename="../src/player.cpp" line="777"/>
         <source>Not Seekable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="263"/>
+        <location filename="../src/player.cpp" line="264"/>
         <source>20 Pixel Grid</source>
         <translation>20 पिक्सेल ग्रिड</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="221"/>
+        <location filename="../src/player.cpp" line="222"/>
         <source>Zoom 300%</source>
         <translation>जुम 300%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="224"/>
+        <location filename="../src/player.cpp" line="225"/>
         <source>Zoom 400%</source>
         <translation>जुम 400%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="227"/>
+        <location filename="../src/player.cpp" line="228"/>
         <source>Zoom 500%</source>
         <translation>जुम 500%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="230"/>
+        <location filename="../src/player.cpp" line="231"/>
         <source>Zoom 750%</source>
         <translation>जुम 750%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="233"/>
+        <location filename="../src/player.cpp" line="234"/>
         <source>Zoom 1000%</source>
         <translation>जुम 1000%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="271"/>
+        <location filename="../src/player.cpp" line="272"/>
         <source>80/90% Safe Areas</source>
         <translation>80/90% सुरक्षित भाग</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="275"/>
+        <location filename="../src/player.cpp" line="276"/>
         <source>EBU R95 Safe Areas</source>
         <translation>EBU R95 सुरक्षित क्षेत्र</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="280"/>
+        <location filename="../src/player.cpp" line="281"/>
         <source>Snapping</source>
         <translation>स्न्यापिङ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="290"/>
+        <location filename="../src/player.cpp" line="291"/>
         <source>Toggle grid display on the player</source>
         <translation>प्लेयरमा ग्रिड डिस्प्ले टगल गर्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="569"/>
+        <location filename="../src/player.cpp" line="597"/>
         <source>Switch Source/Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="589"/>
+        <location filename="../src/player.cpp" line="617"/>
         <source>Pause</source>
         <translation>रोक्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="371"/>
+        <location filename="../src/player.cpp" line="372"/>
         <source>Skip Next</source>
         <translation>अर्को छोड्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="394"/>
+        <location filename="../src/player.cpp" line="395"/>
         <source>Skip Previous</source>
         <translation>अघिल्लो छोड्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="419"/>
+        <location filename="../src/player.cpp" line="420"/>
         <source>Rewind</source>
         <translation>रिवाइन्ड</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="429"/>
+        <location filename="../src/player.cpp" line="430"/>
         <source>Fast Forward</source>
         <translation>छिटो रिवाइन्ड</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="298"/>
+        <location filename="../src/player.cpp" line="299"/>
         <source>Volume</source>
         <translation>भोलुम</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="299"/>
+        <location filename="../src/player.cpp" line="300"/>
         <source>Show the volume control</source>
         <translation>भोलुम कन्ट्रोल देखाउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1024"/>
+        <location filename="../src/player.cpp" line="1052"/>
         <source>Proxy and preview scaling are ON at %1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1027"/>
+        <location filename="../src/player.cpp" line="1055"/>
         <source>Proxy is ON at %1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1030"/>
+        <location filename="../src/player.cpp" line="1058"/>
         <source>Preview scaling is ON at %1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1138"/>
+        <location filename="../src/player.cpp" line="1166"/>
         <source>Unmute</source>
         <translation>अनमिउट</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1109"/>
-        <location filename="../src/player.cpp" line="1145"/>
+        <location filename="../src/player.cpp" line="1137"/>
+        <location filename="../src/player.cpp" line="1173"/>
         <source>Mute</source>
         <translation>म्यूट</translation>
     </message>
@@ -6231,62 +6250,62 @@ p, li { white-space: pre-wrap; }
         <translation>अडियो ट्राक थप्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1290"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1291"/>
         <source>Insert audio track</source>
         <translation>अडियो ट्राक भित्राउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1292"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1293"/>
         <source>Insert video track</source>
         <translation>भिडियो ट्राक भित्राउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1317"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1318"/>
         <source>Remove audio track</source>
         <translation>अडियो ट्राक हटाउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1319"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1320"/>
         <source>Remove video track</source>
         <translation>भिडियो ट्राक हटाउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1378"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1379"/>
         <source>Move track down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1380"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1381"/>
         <source>Move track up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1402"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1403"/>
         <source>Change track blend mode</source>
         <translation>ट्राक ब्लेन्ड मोड परिवर्तन गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1443"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1444"/>
         <source>Change clip properties</source>
         <translation>क्लिपको बिशेषताहरू परिवर्तन गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1502"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1503"/>
         <source>Detach Audio</source>
         <translation>अडियो छुट्याउनुहोस् । </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1606"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1607"/>
         <source>Replace timeline clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1635"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1636"/>
         <source>Align clips to reference track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3280"/>
+        <location filename="../src/mainwindow.cpp" line="3281"/>
         <source>You cannot add a project to itself!</source>
         <translation>तपाइले यसैमा प्रोजेक्ट थप्न सक्नुहुन्न !</translation>
     </message>
@@ -6297,9 +6316,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/util.cpp" line="135"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="946"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1168"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1240"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="951"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1173"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1245"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -6338,17 +6357,17 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>पारदर्शी</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2590"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2607"/>
         <source>Drop Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2606"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2623"/>
         <source>Failed to open </source>
         <translation>खोल्न असफल भयो</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2622"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2639"/>
         <source>Not adding non-seekable file: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6474,12 +6493,12 @@ Do you want to use %1 = %2/1001 instead?</source>
 <context>
     <name>QmlFilter</name>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="329"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="327"/>
         <source>(defaults)</source>
         <translation>(डिफल्ट)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="430"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="428"/>
         <source>Analyze %1</source>
         <translation>विश्लेषण %1</translation>
     </message>
@@ -6924,89 +6943,89 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>पोजिसन</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="583"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="587"/>
         <source>Size</source>
         <translation>साइज</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="652"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="656"/>
         <source>Zoom</source>
         <translation>जुम</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="697"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="701"/>
         <source>Size mode</source>
         <translation>साइज मोड</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="704"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="708"/>
         <source>Fit</source>
         <translation>फिट</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="716"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="720"/>
         <source>Fill</source>
         <translation>भर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="734"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="738"/>
         <source>Distort</source>
         <translation>डिसर्ट</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="757"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="761"/>
         <source>Horizontal fit</source>
         <translation>तेर्सो फिट</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="764"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="768"/>
         <source>Left</source>
         <translation>बायाँ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="772"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="776"/>
         <source>Center</source>
         <translation>केन्द्र</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="780"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="784"/>
         <source>Right</source>
         <translation>दाँया</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="797"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="801"/>
         <source>Vertical fit</source>
         <translation>ठाडो फिट</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="804"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="808"/>
         <source>Top</source>
         <translation>माथि</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="812"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="816"/>
         <source>Middle</source>
         <comment>Size and Position video filter</comment>
         <translation>मध्य</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="820"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="824"/>
         <source>Bottom</source>
         <translation>मुनि</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="837"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="841"/>
         <source>Rotation</source>
         <translation>परिक्रमा</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="850"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="854"/>
         <source> °</source>
         <comment>degrees</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="870"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="874"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7334,48 +7353,48 @@ If the duration is 0, no transition will be created.</source>
         <translation>पोजिसन</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="356"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="360"/>
         <source>Size</source>
         <translation>साइज</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="416"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="420"/>
         <source>Horizontal fit</source>
         <translation>तेर्सो फिट</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="423"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="427"/>
         <source>Left</source>
         <translation>बाँया</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="431"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="435"/>
         <source>Center</source>
         <translation>केन्द्र</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="439"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="443"/>
         <source>Right</source>
         <translation>दाँया</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="456"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="460"/>
         <source>Vertical fit</source>
         <translation>ठाडो फिट</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="463"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="467"/>
         <source>Top</source>
         <translation>माथि</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="471"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="475"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
         <translation>मध्य</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="479"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="483"/>
         <source>Bottom</source>
         <translation>तल</translation>
     </message>
@@ -7494,39 +7513,39 @@ If the duration is 0, no transition will be created.</source>
         <translation>टाइमलाइन</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1177"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1194"/>
         <source>This track is locked</source>
         <translation>यो ट्राक बन्द गरिएको छ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1182"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1199"/>
         <source>You cannot add a non-seekable source.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1527"/>
-        <location filename="../src/docks/timelinedock.cpp" line="1560"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1544"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1577"/>
         <source>Track %1 was not moved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1532"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1549"/>
         <source>Can not move audio track above video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1548"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1565"/>
         <source>Can not move video track below audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1637"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1654"/>
         <source>Change clip properties</source>
         <translation>क्लिपको बिशेषताहरू परिवर्तन गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1022"/>
-        <location filename="../src/docks/timelinedock.cpp" line="1678"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1039"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1695"/>
         <source>Align To Reference Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7561,377 +7580,382 @@ If the duration is 0, no transition will be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="138"/>
+        <location filename="../src/docks/timelinedock.cpp" line="139"/>
         <source>Timeline Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="156"/>
+        <location filename="../src/docks/timelinedock.cpp" line="157"/>
         <source>Timeline Controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="160"/>
+        <location filename="../src/docks/timelinedock.cpp" line="161"/>
         <source>Timeline Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="274"/>
+        <location filename="../src/docks/timelinedock.cpp" line="275"/>
         <source>Add Audio Track</source>
         <translation>अडियो ट्राक थप्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="283"/>
+        <location filename="../src/docks/timelinedock.cpp" line="284"/>
         <source>Add Video Track</source>
         <translation>भिडियो ट्राक थप्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="292"/>
+        <location filename="../src/docks/timelinedock.cpp" line="293"/>
         <source>Insert Track</source>
         <translation>ट्राक इन्सर्ट गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="301"/>
+        <location filename="../src/docks/timelinedock.cpp" line="302"/>
         <source>Remove Track</source>
         <translation>ट्राक हटाउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="311"/>
+        <location filename="../src/docks/timelinedock.cpp" line="312"/>
         <source>Move Track Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="321"/>
+        <location filename="../src/docks/timelinedock.cpp" line="322"/>
         <source>Move Track Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="331"/>
+        <location filename="../src/docks/timelinedock.cpp" line="332"/>
         <source>Show/Hide Selected Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="346"/>
+        <location filename="../src/docks/timelinedock.cpp" line="347"/>
         <source>Lock/Unlock Selected Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="364"/>
+        <location filename="../src/docks/timelinedock.cpp" line="365"/>
         <source>Mute/Unmute Selected Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="379"/>
+        <location filename="../src/docks/timelinedock.cpp" line="380"/>
         <source>Blend/Unblend Selected Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="394"/>
+        <location filename="../src/docks/timelinedock.cpp" line="395"/>
         <source>Make Tracks Shorter</source>
         <translation>ट्राक छोटो पार्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="402"/>
+        <location filename="../src/docks/timelinedock.cpp" line="403"/>
         <source>Make Tracks Taller</source>
         <translation>ट्राक ठूलो पार्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="410"/>
+        <location filename="../src/docks/timelinedock.cpp" line="411"/>
         <source>Reset Track Height</source>
         <translation>ट्रयाकको उचाइ पुन:सेट गर्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="418"/>
+        <location filename="../src/docks/timelinedock.cpp" line="419"/>
         <source>Select All</source>
         <translation>सबै चयन गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="428"/>
+        <location filename="../src/docks/timelinedock.cpp" line="429"/>
         <source>Select All On Current Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="438"/>
+        <location filename="../src/docks/timelinedock.cpp" line="439"/>
         <source>Select None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="449"/>
+        <location filename="../src/docks/timelinedock.cpp" line="450"/>
         <source>Select Next Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="463"/>
+        <location filename="../src/docks/timelinedock.cpp" line="464"/>
         <source>Select Previous Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="477"/>
+        <location filename="../src/docks/timelinedock.cpp" line="478"/>
         <source>Select Clip Above</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="498"/>
+        <location filename="../src/docks/timelinedock.cpp" line="499"/>
         <source>Select Clip Below</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="519"/>
+        <location filename="../src/docks/timelinedock.cpp" line="520"/>
         <source>Set Current Track Above</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="527"/>
+        <location filename="../src/docks/timelinedock.cpp" line="528"/>
         <source>Set Current Track Below</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="535"/>
+        <location filename="../src/docks/timelinedock.cpp" line="536"/>
         <source>Select Clip Under Playhead</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="549"/>
+        <location filename="../src/docks/timelinedock.cpp" line="550"/>
         <source>Cu&amp;t</source>
         <translation>Cu&amp;t</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="571"/>
+        <location filename="../src/docks/timelinedock.cpp" line="572"/>
         <source>&amp;Copy</source>
         <translation>&amp;कपि गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="601"/>
+        <location filename="../src/docks/timelinedock.cpp" line="602"/>
         <source>&amp;Paste</source>
         <translation>पेस्ट गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="616"/>
+        <location filename="../src/docks/timelinedock.cpp" line="617"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="628"/>
+        <location filename="../src/docks/timelinedock.cpp" line="629"/>
         <source>Ripple Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="645"/>
+        <location filename="../src/docks/timelinedock.cpp" line="646"/>
         <source>Lift</source>
         <translation>लिफ्ट</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="663"/>
+        <location filename="../src/docks/timelinedock.cpp" line="664"/>
         <source>Overwrite</source>
         <translation>अधिलेखन गर्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="676"/>
+        <location filename="../src/docks/timelinedock.cpp" line="677"/>
         <source>Split At Playhead</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="689"/>
+        <location filename="../src/docks/timelinedock.cpp" line="690"/>
         <source>Replace</source>
         <translation>बदल्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="707"/>
+        <location filename="../src/docks/timelinedock.cpp" line="708"/>
         <source>Create/Edit Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="720"/>
+        <location filename="../src/docks/timelinedock.cpp" line="721"/>
         <source>Previous Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="733"/>
+        <location filename="../src/docks/timelinedock.cpp" line="734"/>
         <source>Next Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="746"/>
+        <location filename="../src/docks/timelinedock.cpp" line="747"/>
         <source>Delete Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="756"/>
+        <location filename="../src/docks/timelinedock.cpp" line="757"/>
+        <source>Cycle Marker Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="773"/>
         <source>Create Marker Around Selected Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="766"/>
+        <location filename="../src/docks/timelinedock.cpp" line="783"/>
         <source>Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="781"/>
+        <location filename="../src/docks/timelinedock.cpp" line="798"/>
         <source>Scrub While Dragging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="795"/>
+        <location filename="../src/docks/timelinedock.cpp" line="812"/>
         <source>Ripple</source>
         <translation>रिपल</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="810"/>
+        <location filename="../src/docks/timelinedock.cpp" line="827"/>
         <source>Ripple All Tracks</source>
         <translation>सबै ट्राकहरू रिपल गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="825"/>
+        <location filename="../src/docks/timelinedock.cpp" line="842"/>
         <source>Ripple Markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="840"/>
+        <location filename="../src/docks/timelinedock.cpp" line="857"/>
         <source>Toggle Ripple And All Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="848"/>
+        <location filename="../src/docks/timelinedock.cpp" line="865"/>
         <source>Toggle Ripple, All Tracks, And Markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="857"/>
+        <location filename="../src/docks/timelinedock.cpp" line="874"/>
         <source>Show Audio Waveforms</source>
         <translation>अडियो तरङ्ग देखाउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="870"/>
+        <location filename="../src/docks/timelinedock.cpp" line="887"/>
         <source>Use Higher Performance Waveforms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="885"/>
+        <location filename="../src/docks/timelinedock.cpp" line="902"/>
         <source>Show Video Thumbnails</source>
         <translation>भिडियो थमनेल देखाउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="896"/>
+        <location filename="../src/docks/timelinedock.cpp" line="913"/>
         <source>Center the Playhead</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="908"/>
+        <location filename="../src/docks/timelinedock.cpp" line="925"/>
         <source>Scroll to Playhead on Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="920"/>
+        <location filename="../src/docks/timelinedock.cpp" line="937"/>
         <source>Zoom Timeline Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="931"/>
+        <location filename="../src/docks/timelinedock.cpp" line="948"/>
         <source>Zoom Timeline In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="942"/>
+        <location filename="../src/docks/timelinedock.cpp" line="959"/>
         <source>Zoom Timeline To Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="970"/>
+        <location filename="../src/docks/timelinedock.cpp" line="987"/>
         <source>Properties</source>
         <translation>गुणहरू</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="979"/>
+        <location filename="../src/docks/timelinedock.cpp" line="996"/>
         <source>Rejoin With Next Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="995"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1012"/>
         <source>Detach Audio</source>
         <translation>अडियो छुट्याउनुहोस् । </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1042"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1059"/>
         <source>Update Thumbnails</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1066"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1083"/>
         <source>Rebuild Audio Waveform</source>
         <translation>अडियो तरङ्ग पुनर्निर्माण गर्नुहोस्</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1090"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1107"/>
         <source>Ripple Trim Clip In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1097"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1114"/>
         <source>Ripple Trim Clip Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1745"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1762"/>
         <source>Append multiple to timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1849"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1866"/>
         <source>Cut %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1851"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1868"/>
         <source>Remove %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1874"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1891"/>
         <source>Lift %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2198"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2215"/>
         <source>There is nothing in the Source player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2213"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2230"/>
         <source>You cannot replace a transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2243"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2260"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2274"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2291"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2294"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2311"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2694"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2711"/>
         <source>Insert multiple into timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2813"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2830"/>
         <source>Overwrite multiple onto timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2901"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2918"/>
         <source>You cannot split a transition.</source>
         <translation>तपाइ ट्रान्जिसनलाइ टुक्रउन सक्नुहुन्न</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="3193"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3210"/>
         <source>Replace %n timeline clips</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -7939,39 +7963,39 @@ If the duration is 0, no transition will be created.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3243"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3260"/>
         <source>voiceover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3244"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3261"/>
         <source>Opus (*.opus);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="953"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3245"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3360"/>
+        <location filename="../src/docks/timelinedock.cpp" line="970"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3262"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3377"/>
         <source>Record Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3256"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3273"/>
         <source>Record Audio: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3337"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3354"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3339"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3356"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3366"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3383"/>
         <source>Saving audio recording...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8232,63 +8256,74 @@ If the duration is 0, no transition will be created.</source>
 <context>
     <name>TranscodeDialog</name>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="17"/>
-        <source>Dialog</source>
-        <translation>डाइलग</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="41"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="38"/>
         <source>good</source>
         <translation>राम्रो</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="51"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="48"/>
         <source>better</source>
         <translation>धेरै राम्रो</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="61"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="58"/>
         <source>best</source>
         <translation>सबैभन्दा राम्रो</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="97"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="94"/>
         <source>medium</source>
         <translation>मध्यम</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="107"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="104"/>
         <source>large</source>
         <translation>ठूलो</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="117"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="114"/>
         <source>biggest</source>
         <translation>सबैभन्दा ठूलो</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="139"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="136"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
         <translation>अबदेखि यो नदेखाउनुहोस</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="165"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="206"/>
         <source>Change the frame rate from its source.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="175"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="262"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="266"/>
+        <source>Same as original</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="271"/>
+        <source>44100</source>
+        <translation>४४१००</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="276"/>
+        <source>48000</source>
+        <translation>४८०००</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="155"/>
         <source>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="185"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="249"/>
         <source>Frame rate conversion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="203"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="165"/>
         <source>This option converts only the trimmed portion of the source
 clip plus a little instead of the entire clip. When this option is
 used not all of the matching source clips are replaced, instead
@@ -8296,37 +8331,42 @@ only the currently selected one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="171"/>
         <source>Use sub-clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="223"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="219"/>
+        <source>Sample rate</source>
+        <translation>नमूना दर</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="239"/>
         <source>If the source is interlaced, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="226"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="242"/>
         <source>Deinterlace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="233"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="178"/>
         <source>Enable this to keep the Advanced section open for the next time this dialog appears.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="236"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="181"/>
         <source>Keep Advanced open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="151"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="148"/>
         <source>Override the frame rate to a specific value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="192"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="188"/>
         <source>Frame rate conversion method
 
 Duplicate: Duplicate frames.
@@ -8335,17 +8375,17 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="168"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
         <source>Override frame rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="216"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="229"/>
         <source>Frames/sec</source>
         <translation>फ्रेम/सेकेन्ड</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="178"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="158"/>
         <source>Convert to BT.709 colorspace</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8375,17 +8415,17 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
         <translation>एडभान्स</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="128"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="139"/>
         <source>Lossy: I-frame–only %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="131"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="142"/>
         <source>Intermediate: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="135"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="146"/>
         <source>Lossless: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11480,7 +11520,7 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="107"/>
-        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="291"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="295"/>
         <source>Blur</source>
         <translation>धमिलो</translation>
     </message>
@@ -11584,7 +11624,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="61"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="75"/>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="86"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="88"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="51"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="107"/>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="142"/>
@@ -11944,83 +11984,93 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation>लिमिटरले लिएको समय 0 dB फर्कियो</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="68"/>
         <source>Target Loudness</source>
         <translation>लक्षित लाउडनेस</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="105"/>
         <source>The target loudness of the output in LUFS.</source>
         <translation>LUFSमा आउटपुटको लक्षित लाउडनेस</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="127"/>
         <source>Analysis Window</source>
         <translation>विश्लेषण उइन्डो</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="129"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="131"/>
         <source>The amount of history to use to calculate the input loudness.</source>
         <translation>इतिहासको मात्रा इनपुट आवाज गणना गर्न प्रयोग गर्न।</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="151"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="153"/>
         <source>Maximum Gain</source>
         <translation>अधिकतम गेन्</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="157"/>
         <source>The maximum that the gain can be increased.</source>
         <translation>अधिकतम वृद्धि बढाउन सकिन्छ।</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="177"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="179"/>
         <source>Minimum Gain</source>
         <translation>अधिकतम वृद्धि</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="181"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="183"/>
         <source>The maximum that the gain can be decreased.</source>
         <translation>अधिकतम वृद्धि घटाउन सकिन्छ।</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="203"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="205"/>
         <source>Maximum Rate</source>
         <translation>अधिकतम दर</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="207"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="209"/>
         <source>The maximum rate that the gain can be changed.</source>
         <translation>अधिकतम दर वृद्धि परिवर्तन गर्न सकिन्छ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="246"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="237"/>
+        <source>Reset on discontinuity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="241"/>
+        <source>Reset the measurement if a discontinuity is detected - such as seeking or clip change.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="269"/>
         <source>Input Loudness</source>
         <translation>इनपुट लाउडनेस</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="250"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="273"/>
         <source>Status indicator showing the loudness measured on the input.</source>
         <translation>इनपुटमा नापिएको लाउडनेस स्टाटस इन्डिकेटरले देखाइरहेको छ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="270"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="293"/>
         <source>Output Gain</source>
         <translation>आउटपुट गेन्</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="297"/>
         <source>Status indicator showing the gain being applied.</source>
         <translation>स्टाटस इन्डिकेटरले गेन् प्रयोगमा ल्याइएको देखाइरहेको छ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="292"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="315"/>
         <source>Reset</source>
         <translation>पुनःसेट गर्नुहोस</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="296"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="319"/>
         <source>Status indicator showing when the loudness measurement is reset.</source>
         <translation>स्टाटस इन्डिकेटरले कहिले लाउडनेस नाप पुनःसेट हुन्छ देखाइरहेको छ</translation>
     </message>
@@ -12234,12 +12284,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="245"/>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="287"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="289"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="61"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1716"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="383"/>
-        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="234"/>
-        <location filename="../src/qml/filters/spot_remover/ui.qml" line="222"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="238"/>
+        <location filename="../src/qml/filters/spot_remover/ui.qml" line="226"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="190"/>
         <source>Size</source>
         <translation>साइज</translation>
@@ -13557,38 +13607,38 @@ Change top/side distortion bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="333"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="337"/>
         <source>Background size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="391"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="395"/>
         <source>Text size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="458"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="462"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="314"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="480"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="484"/>
         <source>Overflow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="494"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="498"/>
         <source>Automatic</source>
         <translation>स्वचालित</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="505"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="509"/>
         <source>Visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="513"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="517"/>
         <source>Hidden</source>
         <translation>लुकेको</translation>
     </message>
@@ -14537,12 +14587,12 @@ All = 360° + Randomize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="345"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="347"/>
         <source>Corner radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="380"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="382"/>
         <source>Padding color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14703,13 +14753,13 @@ All = 360° + Randomize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="212"/>
         <source>Specify the speed change that should be compensated for.
 2x will halve the pitch to compensate for the speed being doubled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="208"/>
         <source>Speed Compensation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14777,7 +14827,7 @@ All = 360° + Randomize</source>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_circle/ui.qml" line="162"/>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="405"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="407"/>
         <source>Transparent</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16109,22 +16159,22 @@ Set to 0 to only print real points (no interpolation).</source>
 <context>
     <name>vui</name>
     <message>
-        <location filename="../src/qml/filters/corners/vui.qml" line="261"/>
+        <location filename="../src/qml/filters/corners/vui.qml" line="263"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/vui.qml" line="290"/>
+        <location filename="../src/qml/filters/corners/vui.qml" line="294"/>
         <source>2</source>
         <translation type="unfinished">2</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/vui.qml" line="319"/>
+        <location filename="../src/qml/filters/corners/vui.qml" line="325"/>
         <source>3</source>
         <translation type="unfinished">3</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/vui.qml" line="348"/>
+        <location filename="../src/qml/filters/corners/vui.qml" line="356"/>
         <source>4</source>
         <translation type="unfinished">4</translation>
     </message>
