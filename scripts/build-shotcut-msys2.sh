@@ -1112,10 +1112,10 @@ function deploy
 
   log Copying some libs from Qt
   if [ "$DEBUG_BUILD" != "1" -o "$SDK" = "1" ]; then
-    cmd cp -p "$QTDIR"/bin/Qt5{Core,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickTemplates2,QuickWidgets,Sql,Svg,WebSockets,Widgets,WinExtras,Xml}.dll .
+    cmd cp -p "$QTDIR"/bin/Qt6{Core,Core5Compat,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickControls2Impl,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,Widgets,Xml}.dll .
   fi
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
-    cmd cp -p "$QTDIR"/bin/Qt5{Core,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickTemplates2,QuickWidgets,Sql,Svg,WebSockets,Widgets,WinExtras,Xml}d.dll .
+    cmd cp -p "$QTDIR"/bin/Qt6{Core,Core5Compat,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickControls2Impl,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,Widgets,Xml}d.dll .
   fi
 
   if [ "ENABLE_SWH_PLUGINS" != "1" ]; then
@@ -1154,39 +1154,37 @@ function deploy
   fi
 
   log Copying some plugins, qml, and translations from Qt
-  cmd mkdir -p lib/qt5/sqldrivers
-  cmd cp -pr "$QTDIR"/plugins/{audio,generic,iconengines,imageformats,mediaservice,platforms,sqldrivers,styles} lib/qt5
+  cmd mkdir -p lib/qt6/sqldrivers
+  cmd cp -pr "$QTDIR"/plugins/{audio,generic,iconengines,imageformats,multimedia,platforms,sqldrivers,styles,tls} lib/qt6
   cmd cp -pr "$QTDIR"/qml lib
-  sed -i "s/onClicked()/onClicked(mouse)/" lib/qml/QtQuick/Controls/Private/EditMenu_base.qml
-  cmd rm lib/qml/QtQuick/Controls/Private/EditMenu_base.qmlc
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
 
   log Removing things not needed
-  cmd rm lib/qt5/sqldrivers/{qsqlodbc,qsqlodbcd,qsqlpsql,qsqlpsqld}.dll
+  cmd rm lib/qt6/sqldrivers/{qsqlodbc,qsqlodbcd,qsqlpsql,qsqlpsqld}.dll
   # colortap is not used by Shotcut and no plans to include it, but
   # Kaspersky antivirus is flagging it and scaring people.
   cmd rm lib/frei0r-1/colortap.dll
   if [ "$DEBUG_BUILD" != "1" -a "$SDK" != "1" ]; then
-    cmd rm lib/qt5/audio/qtaudio_windowsd.dll
-    cmd rm lib/qt5/generic/qtuiotouchplugind.dll
-    cmd rm lib/qt5/iconengines/qsvgicond.dll
-    cmd rm lib/qt5/imageformats/qddsd.dll
-    cmd rm lib/qt5/imageformats/qgifd.dll
-    cmd rm lib/qt5/imageformats/qicod.dll
-    cmd rm lib/qt5/imageformats/qicnsd.dll
-    cmd rm lib/qt5/imageformats/qjpegd.dll
-    cmd rm lib/qt5/imageformats/qsvgd.dll
-    cmd rm lib/qt5/imageformats/qtgad.dll
-    cmd rm lib/qt5/imageformats/qtiffd.dll
-    cmd rm lib/qt5/imageformats/qwbmpd.dll
-    cmd rm lib/qt5/imageformats/qwebpd.dll
-    cmd rm lib/qt5/mediaservice/dsengined.dll
-    cmd rm lib/qt5/mediaservice/qtmedia_audioengined.dll
-    cmd rm lib/qt5/platforms/qminimald.dll
-    cmd rm lib/qt5/platforms/qoffscreend.dll
-    cmd rm lib/qt5/platforms/qwindowsd.dll
-    cmd rm lib/qt5/sqldrivers/qsqlited.dll
+    cmd rm lib/qt6/audio/qtaudio_windowsd.dll
+    cmd rm lib/qt6/generic/qtuiotouchplugind.dll
+    cmd rm lib/qt6/iconengines/qsvgicond.dll
+    cmd rm lib/qt6/imageformats/qddsd.dll
+    cmd rm lib/qt6/imageformats/qgifd.dll
+    cmd rm lib/qt6/imageformats/qicod.dll
+    cmd rm lib/qt6/imageformats/qicnsd.dll
+    cmd rm lib/qt6/imageformats/qjpegd.dll
+    cmd rm lib/qt6/imageformats/qsvgd.dll
+    cmd rm lib/qt6/imageformats/qtgad.dll
+    cmd rm lib/qt6/imageformats/qtiffd.dll
+    cmd rm lib/qt6/imageformats/qwbmpd.dll
+    cmd rm lib/qt6/imageformats/qwebpd.dll
+    cmd rm lib/qt6/mediaservice/dsengined.dll
+    cmd rm lib/qt6/mediaservice/qtmedia_audioengined.dll
+    cmd rm lib/qt6/platforms/qminimald.dll
+    cmd rm lib/qt6/platforms/qoffscreend.dll
+    cmd rm lib/qt6/platforms/qwindowsd.dll
+    cmd rm lib/qt6/sqldrivers/qsqlited.dll
 
     cmd rm lib/qml/QtLocation/declarative_locationd.dll
     cmd rm lib/qml/QtQml/StateMachine/qtqmlstatemachined.dll
@@ -1238,7 +1236,7 @@ function deploy
     cmd rm lib/qml/QtQuick/VirtualKeyboard/Styles/qtvirtualkeyboardstylesplugind.dll
     cmd rm lib/qml/QtScxml/declarative_scxmld.dll
   fi
-  printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
+  printf "[Paths]\nPlugins=lib/qt6\nQml2Imports=lib/qml\n" > qt.conf
 
   if [ "$SDK" = "1" ]; then
     # Prepare src for archiving
