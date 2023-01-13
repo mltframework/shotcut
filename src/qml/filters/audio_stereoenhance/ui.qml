@@ -108,7 +108,7 @@ Item {
             model: [qsTr('Left'), qsTr('Right'), qsTr('Middle (L+R)'), qsTr('Side (L-R)')]
             onActivated: {
                 blockControls = true;
-                filter.set('av.middle_source', values[index]);
+                filter.set('av.middle_source', values[currentIndex]);
                 blockControls = false;
             }
         }

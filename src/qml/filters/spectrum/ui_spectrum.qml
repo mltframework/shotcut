@@ -140,8 +140,8 @@ Item {
             Layout.columnSpan: 4
             model: [qsTr('Line'), qsTr('Bar'), qsTr('Segment')]
             onActivated: {
-                filter.set('type', values[index]);
-                segmentsSlider.enabled = segmentGapSlider.enabled = (typeCombo.currentIndex == 2);
+                filter.set('type', values[currentIndex]);
+                segmentsSlider.enabled = segmentGapSlider.enabled = (currentIndex == 2);
             }
         }
 

@@ -123,7 +123,7 @@ Shotcut.KeyframableFilter {
             model: [qsTr('2x2 Magic Square'), qsTr('4x4 Magic Square'), qsTr('4x4 Ordered'), qsTr('4x4 Lines'), qsTr('6x6 90 Degree Halftone'), qsTr('6x6 Ordered'), qsTr('8x8 Ordered'), qsTr('Order-3 Clustered'), qsTr('Order-4 Ordered'), qsTr('Order-8 Ordered')]
             onActivated: {
                 enabled = false;
-                filter.set(matrixid, index / 9);
+                filter.set(matrixid, currentIndex / 9);
                 enabled = true;
             }
         }

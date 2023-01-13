@@ -598,7 +598,7 @@ Shotcut.KeyframableFilter {
             model: [qsTr('Nearest Neighbor'), qsTr('Bilinear'), qsTr('Bicubic Smooth'), qsTr('Bicubic Sharp'), qsTr('Spline 4x4'), qsTr('Spline 6x6'), 'Lanczos']
             onActivated: {
                 enabled = false;
-                filter.set(interpolatorProperty, index / 6);
+                filter.set(interpolatorProperty, currentIndex / 6);
                 enabled = true;
             }
         }
@@ -620,8 +620,8 @@ Shotcut.KeyframableFilter {
             model: [qsTr('Opaque'), qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
             onActivated: {
                 enabled = false;
-                filter.set(transparentProperty, index > 0);
-                filter.set(alphaOpProperty, (index - 1) / 4);
+                filter.set(transparentProperty, currentIndex > 0);
+                filter.set(alphaOpProperty, (currentIndex - 1) / 4);
                 enabled = true;
             }
         }

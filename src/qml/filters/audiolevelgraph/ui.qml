@@ -129,7 +129,7 @@ Item {
             Layout.columnSpan: 4
             model: [qsTr('Bar'), qsTr('Segment')]
             onActivated: {
-                filter.set('type', values[index]);
+                filter.set('type', values[currentIndex]);
                 segmentsSlider.enabled = segmentGapSlider.enabled = (typeCombo.currentIndex == 1);
             }
         }
