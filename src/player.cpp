@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -534,7 +534,7 @@ void Player::setupActions()
     Actions.add("playerBackwardTenSecondsAction", action);
 
     action = new QAction(tr("Forward Jump"), this);
-	action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_PageDown));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_PageDown));
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.producer())
             seek(position() + qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));
@@ -542,7 +542,7 @@ void Player::setupActions()
     Actions.add("playerForwardJumpAction", action);
 
     action = new QAction(tr("Backward Jump"), this);
-	action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_PageUp));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_PageUp));
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.producer())
             seek(position() - qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));
@@ -550,7 +550,7 @@ void Player::setupActions()
     Actions.add("playerBackwardJumpAction", action);
 
     action = new QAction(tr("Set Jump Time"), this);
-	action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_J));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_J));
     connect(action, &QAction::triggered, this, [&]() {
         DurationDialog dialog(this);
         dialog.setDuration(qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));

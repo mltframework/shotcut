@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -755,7 +755,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineDeleteMarkerAction", action);
 
     action = new QAction(tr("Cycle Marker Color"), this);
-	action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_M));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_M));
     connect(action, &QAction::triggered, this, [&]() {
         int markerIndex = m_markersModel.markerIndexForPosition(m_position);
         if (markerIndex >= 0) {
