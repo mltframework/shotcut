@@ -76,15 +76,17 @@ jobs:
           mkdir Qt
           cd Qt
           echo Downloading Qt
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-5.15.2-x64-mingw810.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.4.2-x64-mingw810.txz
           echo Extracting Qt
-          tar -xJf qt-5.15.2-x64-mingw810.txz
+          tar -xJf qt-6.4.2-x64-mingw810.txz
           CHECKOUT_DIR=$(popd)
           popd
           echo Running the build script
           echo INSTALL_DIR=\"$CHECKOUT_DIR/build\"
           echo INSTALL_DIR=\"$CHECKOUT_DIR/build\" > build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
+          echo SHOTCUT_HEAD=0 >> build-shotcut.conf
+          echo SHOTCUT_REVISION=origin/qt6 >> build-shotcut.conf
           bash scripts/build-shotcut-msys2.sh
           pushd build
           echo Installing awscli
