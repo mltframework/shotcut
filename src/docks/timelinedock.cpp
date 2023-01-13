@@ -755,7 +755,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineDeleteMarkerAction", action);
 
     action = new QAction(tr("Cycle Marker Color"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_M));
+	action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_M));
     connect(action, &QAction::triggered, this, [&]() {
         int markerIndex = m_markersModel.markerIndexForPosition(m_position);
         if (markerIndex >= 0) {
