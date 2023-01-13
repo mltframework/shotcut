@@ -828,15 +828,11 @@ function set_globals {
   # ladspa
   PRECONFIG[8]="autoreconf -i"
   CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR"
-  [ "$TARGET_ARCH" != "arm64" ] && CONFIG[8]="${CONFIG[8]} --enable-sse"
-  BUILD[8]="make -j$MAKEJ"
-  if [ "$TARGET_OS" = "Darwin" ]; then
-    CONFIG[8]="${CONFIG[8]} --enable-darwin"
-    if [ "$TARGET_ARCH" = "arm64" ]; then
-      BUILD[8]="build_ladspa_darwin"
-    else
-      CFLAGS_[8]="-march=nocona $CFLAGS"
-    fi
+  if [ "$TARGET_OS" = "Darwin" -a "$TARGET_ARCH" = "arm64" ]; then
+    BUILD[8]="build_ladspa_darwin"
+  else
+    CONFIG[8]="${CONFIG[8]} --enable-sse"
+    BUILD[8]="make -j$MAKEJ"
   fi
   LDFLAGS_[8]=$LDFLAGS
   INSTALL[8]="install_ladspa"
@@ -1024,7 +1020,7 @@ function install_ffmpeg_darwin {
 }
 
 function build_ladspa_darwin {
-  cmd make -j $MAKEJ CC="clang -arch arm64 -arch x86_64" CXX="clang++ -arch arm64 -arch x86_64"
+  cmd make -j $MAKEJ CC="clang -arch arm64 -arch x86_64"
 }
 
 function install_ladspa {
