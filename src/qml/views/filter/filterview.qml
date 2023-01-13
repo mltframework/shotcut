@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -355,7 +355,7 @@ Rectangle {
             anchors.right: filterConfigScrollView.right
 
             background: Rectangle {
-                color: parent.palette.alternateBase
+                color: Qt.ligher(parent.palette.alternateBase)
             }
         }
 
@@ -369,7 +369,7 @@ Rectangle {
             anchors.bottom: filterConfigScrollView.bottom
 
             background: Rectangle {
-                color: parent.palette.alternateBase
+                color: Qt.lighter(parent.palette.alternateBase)
             }
         }
     }
