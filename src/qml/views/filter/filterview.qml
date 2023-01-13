@@ -355,7 +355,7 @@ Rectangle {
             anchors.right: filterConfigScrollView.right
 
             background: Rectangle {
-                color: Qt.ligher(parent.palette.alternateBase)
+                color: Qt.lighter(parent.palette.alternateBase)
             }
         }
 

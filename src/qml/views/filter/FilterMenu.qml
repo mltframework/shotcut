@@ -246,6 +246,9 @@ Rectangle {
             ScrollBar.vertical.policy: ScrollBar.AlwaysOn
             ScrollBar.vertical.visible: contentHeight > height
             ScrollBar.vertical.width: 16
+            ScrollBar.vertical.background: Rectangle {
+                color: Qt.lighter(parent.palette.alternateBase)
+            }
 
             ListView {
                 id: menuListView
