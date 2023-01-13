@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -591,7 +591,7 @@ void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal &frameRate, Q
 {
     std::unique_ptr<QCamera> camera;
     for (const QCameraDevice &cameraDevice : QMediaDevices::videoInputs()) {
-        if (cameraDevice.description() == deviceName) {
+        if (cameraDevice.id() == deviceName) {
             camera.reset(new QCamera(cameraDevice));
             break;
         }
@@ -610,6 +610,7 @@ void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal &frameRate, Q
                 if (format.resolution().width() > currentFormat.resolution().width()
                         && format.resolution().height() > currentFormat.resolution().height()) {
                     camera->setCameraFormat(format);
+                    currentFormat = format;
                 }
             }
         }

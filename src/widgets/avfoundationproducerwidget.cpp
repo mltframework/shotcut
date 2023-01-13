@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
         if (Settings.audioInput() == deviceInfo.description()) {
             currentAudio = ui->audioCombo->count();
         }
-        ui->audioCombo->addItem(deviceInfo.id());
+        ui->audioCombo->addItem(deviceInfo.description());
     }
     if (ui->videoCombo->count() > 1)
         ui->videoCombo->setCurrentIndex(currentVideo);
