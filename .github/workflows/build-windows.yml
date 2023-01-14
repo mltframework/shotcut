@@ -55,7 +55,7 @@ jobs:
             mingw-w64-x86_64-libimagequant
             mingw-w64-x86_64-python3.10
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Build
         shell: msys2 {0}
