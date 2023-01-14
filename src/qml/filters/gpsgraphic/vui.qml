@@ -54,7 +54,7 @@ Shotcut.VuiBase {
                 borderSize: Math.max(Math.round(1.33 / zoom), 1)
                 onWidthScaleChanged: setHandles(filter.getRect(rectProperty))
                 onHeightScaleChanged: setHandles(filter.getRect(rectProperty))
-                onRectChanged: {
+                onRectChanged: rect => {
                     filterRect.x = Math.round(rect.x / rectangle.widthScale);
                     filterRect.y = Math.round(rect.y / rectangle.heightScale);
                     filterRect.width = Math.round(rect.width / rectangle.widthScale);
@@ -67,7 +67,7 @@ Shotcut.VuiBase {
 
     Connections {
         target: filter
-        onChanged: {
+        function onChanged() {
             var newRect = filter.getRect(rectProperty);
             if (filterRect !== newRect) {
                 filterRect = newRect;

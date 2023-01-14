@@ -132,8 +132,8 @@ Item {
         thicknessSlider.value = filter.getDouble('thickness');
         checkbox_grid.checked = (filter.get("show_grid") == 1);
         legend_unit.text = filter.get("legend_unit");
-        video_start.text = filter.get('video_start_text');
-        gps_start.text = filter.get('gps_start_text');
+        video_start.text = filter.get('video_start_text')
+        gps_start.text = filter.get('gps_start_text')
         rectX.value = filterRect.x;
         rectY.value = filterRect.y;
         rectW.value = filterRect.width;
@@ -270,7 +270,7 @@ Item {
     width: 350
     height: 850
     onFileOpened: path => {
-        settings.openPath = path;
+        settings.openPath = path
     }
     Component.onCompleted: {
         filter.blockSignals = true;
