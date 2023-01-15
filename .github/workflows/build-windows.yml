@@ -115,7 +115,7 @@ jobs:
           echo Done
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: windows-portable
           path: ./build/shotcut-win64-*.zip

@@ -37,7 +37,7 @@ jobs:
           mv src.txz shotcut-src-$FILENAME_VERSION.txz
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: linux-portable
           path: |
