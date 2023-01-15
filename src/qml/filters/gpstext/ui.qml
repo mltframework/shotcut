@@ -89,7 +89,9 @@ Item {
 
     width: 300
     height: 800
-    onFileOpened: settings.openPath = path
+    onFileOpened: path => {
+        settings.openPath = path;
+    }
     Component.onCompleted: {
         var resource = filter.get('resource');
         if (!resource)
@@ -155,12 +157,10 @@ Item {
         id: fileDialog
 
         modality: application.dialogModality
-        selectMultiple: false
-        selectFolder: false
-        folder: settingsOpenPath
+        currentFolder: settingsOpenPath
         nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
         onAccepted: {
-            gpsFile.url = fileDialog.fileUrl;
+            gpsFile.url = fileDialog.selectedFile;
             gpsTextRoot.fileOpened(gpsFile.path);
             fileLabel.text = gpsFile.fileName;
             fileLabel.color = activePalette.text;
@@ -213,7 +213,6 @@ Item {
             text: qsTr('Open file')
             Layout.alignment: Qt.AlignRight
             onClicked: {
-                fileDialog.selectExisting = true;
                 fileDialog.title = qsTr("Open GPS File");
                 fileDialog.open();
             }
