@@ -1038,7 +1038,7 @@ function install_shotcut_linux {
   cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
   cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
   cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-  cmd install -p -c "$QTDIR"/lib/libQt6{Core,DBus,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickControls2Impl,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,UiTools,Widgets,Xml,X11Extras,XcbQpa}.so.6 "$FINAL_INSTALL_DIR"/lib
+  cmd install -p -c "$QTDIR"/lib/libQt6{Core,Core5Compat,DBus,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickControls2Impl,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,Widgets,Xml,X11Extras,XcbQpa}.so.6 "$FINAL_INSTALL_DIR"/lib
   cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
   cmd install -d "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
   cmd cp -a "$QTDIR"/plugins/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt6
@@ -1699,7 +1699,7 @@ function deploy_mac
   # copy Shotcut translations
   cmd cp translations/*.qm "$BUILD_DIR/Resources/shotcut/translations/"
 
-  # This little guy helps Qt 5 apps find the Qt plugins!
+  # This little guy helps Qt apps find the Qt plugins!
   printf "[Paths]\nPlugins=PlugIns/qt\nQml2Imports=Resources/qml\n" > "$BUILD_DIR/Resources/qt.conf"
 
   cmd cd "$BUILD_DIR" || die "Unable to change directory to $BUILD_DIR"
