@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -149,6 +149,9 @@ void FiltersDock::onServiceInChanged(int delta, Mlt::Service *service)
 
 void FiltersDock::resetQview()
 {
+    if (!m_qview.quickWindow()->isSceneGraphInitialized())
+        return;
+
     LOG_DEBUG() << "begin";
     if (m_qview.status() != QQuickWidget::Null) {
         QObject *root = m_qview.rootObject();

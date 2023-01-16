@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2022 Meltytech, LLC
+ * Copyright (c) 2011-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,13 +112,15 @@ public:
         : QApplication(argc, argv)
     {
         auto appPath = applicationDirPath();
+        QDir dir(appPath);
+
 #ifdef Q_OS_WIN
 #include <winbase.h>
         SetDllDirectoryA(appPath.toLocal8Bit());
-#endif
-        QDir dir(appPath);
-#ifdef Q_OS_MAC
+#else
         dir.cdUp();
+#endif
+#ifdef Q_OS_MAC
         dir.cd("PlugIns");
         dir.cd("qt");
 #else
@@ -135,10 +137,6 @@ public:
 #endif
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
-        setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
-#if defined(Q_OS_MAC)
-        setAttribute(Qt::AA_DontShowIconsInMenus);
-#endif
 
         // Process command line options.
         QCommandLineParser parser;
@@ -357,6 +355,10 @@ int main(int argc, char **argv)
 
     QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
     QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
+    QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
+#if defined(Q_OS_MAC)
+    QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
+#endif
 
     Application a(argc, argv);
     QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));

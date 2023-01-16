@@ -1043,7 +1043,8 @@ function install_shotcut_linux {
   cmd install -d "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
   cmd cp -a "$QTDIR"/plugins/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt6
   cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
-  cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
+  cmd install -d "$FINAL_INSTALL_DIR"/lib/qml
+  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} "$FINAL_INSTALL_DIR"/lib/qml
   cmd install -d "$FINAL_INSTALL_DIR"/lib/va
   cmd install -p -c /usr/lib/x86_64-linux-gnu/dri/*_drv_video.so "$FINAL_INSTALL_DIR"/lib/va
 }
@@ -1621,7 +1622,11 @@ function bundle_libs
          ($3 !~ /\/libpango-1.0\./) &&
          ($3 !~ /\/libjack\./) &&
          ($3 !~ /nvidia/) &&
-         ($3 !~ /\/libcairo\./) \
+         ($3 !~ /\/libcairo\./) &&
+         ($3 !~ /\/libedit\./) &&
+         ($3 !~ /\/libgio-2.0\./) &&
+         ($3 !~ /\/libgmodule-2.0\./) &&
+         ($3 !~ /\/libwayland/) \
          {print $3}')
   for lib in $libs; do
     basename_lib=$(basename "$lib")

@@ -1153,7 +1153,8 @@ function deploy
   log Copying some plugins, qml, and translations from Qt
   cmd mkdir -p lib/qt6/sqldrivers
   cmd cp -pr "$QTDIR"/plugins/{audio,generic,iconengines,imageformats,multimedia,platforms,sqldrivers,styles,tls} lib/qt6
-  cmd cp -pr "$QTDIR"/qml lib
+  cmd mkdir -p lib/qml
+  cmd cp -pr "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} lib/qml
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
 
