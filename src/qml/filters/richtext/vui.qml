@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Meltytech, LLC
+ * Copyright (c) 2020-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -200,8 +200,10 @@ Shotcut.VuiBase {
                         id: cursor
 
                         visible: textArea.cursorVisible
-                        width: 2.5 / scale
+                        width: 2 / scale
                         color: 'white'
+                        border.color: 'black'
+                        border.size: 1
 
                         SequentialAnimation {
                             running: cursor.visible
@@ -735,14 +737,25 @@ Shotcut.VuiBase {
         modality: application.dialogModality
     }
 
-    Dialog {
+    SystemPalette {
+        id: dialogPalette
+
+        colorGroup: SystemPalette.Active
+    }
+
+    Window {
         id: tableDialog
 
-        title: qsTr('Insert Table')
-        standardButtons: Dialog.Ok | Dialog.Cancel
-        onAccepted: {
+        function accept() {
             document.insertTable(rowsSpinner.value, columnsSpinner.value, borderSpinner.value);
         }
+
+        flags: Qt.Dialog
+        color: dialogPalette.window
+        title: qsTr('Insert Table')
+        modality: Qt.ApplicationModal
+        width: 420
+        height: 190
 
         GridLayout {
             rows: 4
@@ -799,9 +812,26 @@ Shotcut.VuiBase {
                 decimals: 0
             }
 
+            RowLayout {
+                Layout.alignment: Qt.AlignRight
+                focus: true
+
+                Shotcut.Button {
+                    text: qsTr('OK')
+                    onClicked: {
+                        tableDialog.accept();
+                        tableDialog.close();
+                    }
+                }
+
+                Shotcut.Button {
+                    text: qsTr('Cancel')
+                    onClicked: speedDialog.close()
+                }
+            }
+
             Item {
                 Layout.fillHeight: true
-                height: columnsSpinner.height
             }
         }
     }

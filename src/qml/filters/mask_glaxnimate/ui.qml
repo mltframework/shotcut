@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,9 +80,8 @@ Item {
         id: fileDialog
 
         modality: application.dialogModality
-        selectMultiple: false
-        selectFolder: false
-        folder: settingsOpenPath
+        fileMode: FileDialog.OpenFile
+        currentFolder: settingsOpenPath
         onAccepted: {
             shapeFile.url = fileDialog.fileUrl;
             if (!fileDialog.selectExisting) {
@@ -123,7 +122,7 @@ Item {
                         shapeRoot.fileOpened(shapeFile.path);
                         producer.launchGlaxnimate(shapeFile.url);
                     } else {
-                        fileDialog.selectExisting = false;
+                        fileDialog.fileMode = FileDialog.SaveFile;
                         fileDialog.title = qsTr('New Animation File');
                         fileDialog.open();
                     }
@@ -133,7 +132,7 @@ Item {
             Shotcut.Button {
                 text: qsTr('Open...')
                 onClicked: {
-                    fileDialog.selectExisting = true;
+                    fileDialog.fileMode = FileDialog.OpenFile;
                     fileDialog.title = qsTr('Open Animation File');
                     fileDialog.open();
                 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -193,9 +193,8 @@ Item {
         id: fileDialog
 
         modality: application.dialogModality
-        selectMultiple: false
-        selectFolder: false
-        folder: settingsOpenPath
+        fileMode: FileDialog.OpenFile
+        currentFolder: settingsOpenPath
         onAccepted: {
             shapeFile.url = fileDialog.fileUrl;
             filter.set('filter.resource', shapeFile.url);
@@ -248,7 +247,6 @@ Item {
                 fileLabel.text = '';
                 fileLabelTip.text = '';
                 if (index === 1) {
-                    fileDialog.selectExisting = true;
                     fileDialog.title = qsTr('Open Mask File');
                     fileDialog.open();
                 } else {
@@ -268,7 +266,7 @@ Item {
                 // toggling focus works around a weird bug involving sticky
                 // input event focus on the ComboBox
                 enabled = false;
-                updateResource(index);
+                updateResource(currentIndex);
                 enabled = true;
             }
 

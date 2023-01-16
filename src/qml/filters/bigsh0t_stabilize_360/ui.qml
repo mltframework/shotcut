@@ -284,11 +284,9 @@ Item {
         id: selectAnalysisFile
 
         title: "File for motion analysis"
-        folder: shortcuts.home
+        fileMode: FileDialog.SaveFile
+        currentFolder: settingsOpenPath
         modality: application.dialogModality
-        selectMultiple: false
-        selectExisting: false
-        selectFolder: false
         nameFilters: ['Motion Analysis Files (*.bigsh0t360motion)', 'All Files (*)']
         onAccepted: {
             var urlString = selectAnalysisFile.fileUrl.toString();

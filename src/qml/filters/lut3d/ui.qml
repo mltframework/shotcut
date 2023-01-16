@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,9 +67,8 @@ Item {
         id: fileDialog
 
         modality: application.dialogModality
-        selectMultiple: false
-        selectFolder: false
-        folder: settingsOpenPath
+        fileMode: FileDialog.OpenFile
+        currentFolder: settingsOpenPath
         nameFilters: ['3D-LUT Files (*.3dl *.cube *.dat *.m3d)', 'AfterEffects (*.3dl)', 'Iridas (*.cube)', 'DaVinci (*.dat)', 'Pandora (*.m3d)', 'All Files (*)']
         onAccepted: {
             lutFile.url = fileDialog.fileUrl;
@@ -92,7 +91,6 @@ Item {
             text: qsTr('Open...')
             Layout.alignment: Qt.AlignRight
             onClicked: {
-                fileDialog.selectExisting = true;
                 fileDialog.title = qsTr("Open 3D LUT File");
                 fileDialog.open();
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Meltytech, LLC
+ * Copyright (c) 2020-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Dialogs
 import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 
@@ -107,17 +106,18 @@ Item {
         target: producer
     }
 
-    Dialog {
+    SystemPalette {
+        id: dialogPalette
+
+        colorGroup: SystemPalette.Active
+    }
+
+    Window {
         id: speedDialog
 
-        property var direction: 'after'
+        property string direction: 'after'
 
-        title: direction == 'after' ? qsTr('Set Speed After') : qsTr('Set Speed Before')
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
-        modality: application.dialogModality
-        width: 400
-        height: 95
-        onAccepted: {
+        function accept() {
             var currPosition = getPosition();
             var maxPosition = producer.out - producer.in;
             var currValue = filter.getDouble("map", currPosition);
@@ -125,21 +125,21 @@ Item {
             var newValue = currValue;
             var newPosition = currPosition;
             var lock = lockCombo.getLock();
-            if (direction == 'after' && lock == 'out') {
+            if (direction === 'after' && lock === 'out') {
                 var nextPosition = filter.getNextKeyframePosition("map", currPosition);
                 if (nextPosition > currPosition) {
                     var deltaTime = ((nextPosition - currPosition) / profile.fps) * speedSlider.value;
                     var nextValue = filter.getDouble("map", nextPosition);
                     newValue = nextValue - deltaTime;
                 }
-            } else if (direction == 'before' && lock == 'out') {
+            } else if (direction === 'before' && lock === 'out') {
                 var prevPosition = filter.getPrevKeyframePosition("map", currPosition);
                 if (prevPosition < currPosition && prevPosition >= 0) {
                     var deltaTime = ((currPosition - prevPosition) / profile.fps) * speedSlider.value;
                     var prevValue = filter.getDouble("map", prevPosition);
                     newValue = prevValue + deltaTime;
                 }
-            } else if (direction == 'after' && lock == 'in') {
+            } else if (direction === 'after' && lock === 'in') {
                 // Lock the input value
                 filter.set('map', currValue, currPosition);
                 // Calculate the value of the next keyframe
@@ -163,7 +163,7 @@ Item {
                     var deltaTime = ((newPosition - currPosition) / profile.fps) * speedSlider.value;
                     newValue = currValue + deltaTime;
                 }
-            } else if (direction == 'before' && lock == 'in') {
+            } else if (direction === 'before' && lock === 'in') {
                 // Lock the input value
                 filter.set('map', currValue, currPosition);
                 // Calculate the value of the next keyframe
@@ -200,7 +200,17 @@ Item {
             timer.restart();
         }
 
+        flags: Qt.Dialog
+        color: dialogPalette.window
+        title: direction === 'after' ? qsTr('Set Speed After') : qsTr('Set Speed Before')
+        modality: Qt.ApplicationModal
+        width: 420
+        height: 190
+
         ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 8
+
             Shotcut.SliderSpinner {
                 id: speedSlider
 
@@ -245,6 +255,28 @@ Item {
                 Layout.preferredWidth: 400
                 wrapMode: Text.WordWrap
                 text: qsTr('"Modify current mapping" will modify the input time at the current position.\n' + '"Lock current mapping" will lock the input time at the current position and modify the value of an adjacent keyframe')
+            }
+
+            RowLayout {
+                Layout.alignment: Qt.AlignRight
+                focus: true
+
+                Shotcut.Button {
+                    text: qsTr('OK')
+                    onClicked: {
+                        speedDialog.close();
+                        speedDialog.accept();
+                    }
+                }
+
+                Shotcut.Button {
+                    text: qsTr('Cancel')
+                    onClicked: speedDialog.close()
+                }
+            }
+
+            Item {
+                Layout.fillHeight: true
             }
         }
     }
@@ -306,7 +338,7 @@ Item {
                 implicitHeight: 20
                 onClicked: {
                     speedDialog.direction = 'before';
-                    speedDialog.open();
+                    speedDialog.show();
                 }
 
                 Shotcut.HoverTip {
@@ -322,7 +354,7 @@ Item {
                 implicitHeight: 20
                 onClicked: {
                     speedDialog.direction = 'after';
-                    speedDialog.open();
+                    speedDialog.show();
                 }
 
                 Shotcut.HoverTip {
