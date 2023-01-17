@@ -1754,13 +1754,8 @@ function deploy_mac
 
   # Qt QML modules
   log Copying Qt QML modules
-  # try QTDIR first
-  if [ -d "$QTDIR/qml" ]; then
-    cmd cp -a "$QTDIR/qml" Resources
-  # try Qt Creator next
-  elif [ -d "/Applications/Qt Creator.app/Contents/Imports/qtquick2" ]; then
-    cmd cp -a "/Applications/Qt Creator.app/Contents/Imports/qtquick2" Resources/qml
-  fi
+  cmd mkdir -p Resources/qml 2>/dev/null
+  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} Resources/qml
   for lib in $(find Resources -name '*.dylib'); do
     fixlibs "$lib"
   done
