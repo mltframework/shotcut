@@ -93,17 +93,17 @@ jobs:
           export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_KEY }}
           export AWS_DEFAULT_REGION=us-east-1
           echo Downloading code-signing certificates
-          aws s3 cp s3://misc.meltymedia/shotcut-build/CodeSignCertificates.p12 ./ --no-progress
+          aws s3 cp s3://misc.meltymedia/shotcut-build/CodeSignCertificates.p12.new ./ --no-progress
           aws s3 cp s3://misc.meltymedia/shotcut-build/CodeSignCertificates.pass ./ --no-progress
           echo Signing shotcut.exe
-          osslsigncode sign -pkcs12 CodeSignCertificates.p12 -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in Shotcut/shotcut.exe -out Shotcut/shotcut-signed.exe
+          osslsigncode sign -pkcs12 CodeSignCertificates.p12.new -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in Shotcut/shotcut.exe -out Shotcut/shotcut-signed.exe
           mv Shotcut/shotcut-signed.exe Shotcut/shotcut.exe
           echo Packaging the portable zip
           zip -gr shotcut-win64-$FILENAME_VERSION.zip Shotcut
           echo Packaging the installer
           makensis shotcut.nsi
           echo Signing the installer
-          osslsigncode sign -pkcs12 CodeSignCertificates.p12 -readpass CodeSignCertificates.pass -n "Shotcut Installer" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in shotcut-setup.exe -out shotcut-setup-signed.exe
+          osslsigncode sign -pkcs12 CodeSignCertificates.p12.new -readpass CodeSignCertificates.pass -n "Shotcut Installer" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in shotcut-setup.exe -out shotcut-setup-signed.exe
           mv shotcut-setup-signed.exe shotcut-win64-$FILENAME_VERSION.exe
           rm shotcut-setup.exe
           popd
