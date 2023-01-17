@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Item {
     property bool blockUpdate: true
@@ -24,6 +25,7 @@ Item {
     property double timeBiasPitchValue: 0
     property double timeBiasRollValue: 0
     property double clipOffsetValue: 0
+    property url settingsOpenPath: 'file:///' + settings.openPath
 
     function setControls() {
         var position = getPosition();
@@ -280,6 +282,10 @@ Item {
         setControls();
     }
 
+    Shotcut.File {
+        id: analysisFile
+    }
+
     FileDialog {
         id: selectAnalysisFile
 
@@ -289,9 +295,10 @@ Item {
         modality: application.dialogModality
         nameFilters: ['Motion Analysis Files (*.bigsh0t360motion)', 'All Files (*)']
         onAccepted: {
-            var urlString = selectAnalysisFile.fileUrl.toString();
-            analysisFileTextField.text = urlString;
+            analysisFile.url = selectAnalysisFile.selectedFile;
+            analysisFileTextField.text = analysisFile.filePath;
             updateProperty_analysisFile();
+            settings.openPath = analysisFile.path;
         }
         onRejected: {
         }

@@ -83,7 +83,7 @@ Item {
         fileMode: FileDialog.OpenFile
         currentFolder: settingsOpenPath
         onAccepted: {
-            shapeFile.url = fileDialog.fileUrl;
+            shapeFile.url = fileDialog.currentFile;
             if (!fileDialog.selectExisting) {
                 // Force file extension to ".rawr"
                 var filename = shapeFile.url;

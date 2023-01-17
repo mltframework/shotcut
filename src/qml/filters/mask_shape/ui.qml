@@ -196,7 +196,7 @@ Item {
         fileMode: FileDialog.OpenFile
         currentFolder: settingsOpenPath
         onAccepted: {
-            shapeFile.url = fileDialog.fileUrl;
+            shapeFile.url = fileDialog.currentFile;
             filter.set('filter.resource', shapeFile.url);
             fileLabel.text = shapeFile.fileName;
             fileLabelTip.text = shapeFile.filePath;

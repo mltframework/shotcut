@@ -33,7 +33,9 @@ Item {
 
     width: 350
     height: 100
-    onFileOpened: settings.openPath = path
+    onFileOpened: path => {
+        settings.openPath = path;
+    }
     Component.onCompleted: {
         var resource = filter.get('av.file');
         lutFile.url = resource;
@@ -71,7 +73,7 @@ Item {
         currentFolder: settingsOpenPath
         nameFilters: ['3D-LUT Files (*.3dl *.cube *.dat *.m3d)', 'AfterEffects (*.3dl)', 'Iridas (*.cube)', 'DaVinci (*.dat)', 'Pandora (*.m3d)', 'All Files (*)']
         onAccepted: {
-            lutFile.url = fileDialog.fileUrl;
+            lutFile.url = fileDialog.currentFile;
             lut3dRoot.fileOpened(lutFile.path);
             fileLabel.text = lutFile.fileName;
             fileLabel.color = activePalette.text;
