@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2019-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,29 +41,29 @@ QWidget *getSeparator()
     return separator;
 }
 
-QRect getPlayerBoundingRect(Mlt::GLWidget *glw)
+QRect getPlayerBoundingRect(Mlt::VideoWidget *videoWidget)
 {
     // Get the global rectangle of the player that contains image.
     // This function assumes that the player is zoomed to best fit the image
     // so that all of the image is available and it fills the widget in one
     // direction.
     QRect rect;
-    double widgetAr = (double)glw->width() / (double)glw->height();
+    double widgetAr = (double)videoWidget->width() / (double)videoWidget->height();
     double vidAr = MLT.profile().dar();
     if (widgetAr > vidAr) {
-        double width = (double)glw->height() * vidAr;
-        rect.setX((round((double)glw->width() - width) / 2));
+        double width = (double)videoWidget->height() * vidAr;
+        rect.setX((round((double)videoWidget->width() - width) / 2));
         rect.setY(0);
         rect.setWidth(round(width));
-        rect.setHeight(glw->height());
+        rect.setHeight(videoWidget->height());
     } else {
-        double height = glw->width() / vidAr;
+        double height = videoWidget->width() / vidAr;
         rect.setX(0);
-        rect.setY((round((double)glw->height() - height) / 2));
-        rect.setWidth(glw->width());
+        rect.setY((round((double)videoWidget->height() - height) / 2));
+        rect.setWidth(videoWidget->width());
         rect.setHeight(round(height));
     }
-    return QRect(glw->mapToGlobal(rect.topLeft()), rect.size());
+    return QRect(videoWidget->mapToGlobal(rect.topLeft()), rect.size());
 }
 
 QPoint pixelToPlayerPos(const QRect &playerRect, const QPoint &pixel)
@@ -188,13 +188,13 @@ void VideoZoomScopeWidget::onScreenSelectStarted()
         return;
     }
 
-    Mlt::GLWidget *glw = qobject_cast<Mlt::GLWidget *>(MLT.videoWidget());
+    auto *videoWidget = qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget());
     // Toggle the zoom off on the player so that the entire image is displayed
     // in the player. The user can toggle it back on if they want.
-    glw->toggleZoom(false);
+    videoWidget->toggleZoom(false);
 
     // Get the global rectangle in the player that has the image in it.
-    QRect boundingRect = getPlayerBoundingRect(glw);
+    QRect boundingRect = getPlayerBoundingRect(videoWidget);
     m_selector.setBoundingRect(boundingRect);
 
     // Calculate the size of the zoom window to show over the image.
@@ -231,16 +231,16 @@ void VideoZoomScopeWidget::onLockToggled(bool enabled)
 
 void VideoZoomScopeWidget::onScreenRectSelected(const QRect &rect)
 {
-    Mlt::GLWidget *glw = qobject_cast<Mlt::GLWidget *>(MLT.videoWidget());
-    QRect boundingRect = getPlayerBoundingRect(glw);
+    auto *videoWidget = qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget());
+    QRect boundingRect = getPlayerBoundingRect(videoWidget);
     QPoint pixel = playerPosToPixel(boundingRect, rect.topLeft());
     m_zoomWidget->setOffset(pixel);
 }
 
 void VideoZoomScopeWidget::onScreenPointSelected(const QPoint &point)
 {
-    Mlt::GLWidget *glw = qobject_cast<Mlt::GLWidget *>(MLT.videoWidget());
-    QRect boundingRect = getPlayerBoundingRect(glw);
+    auto *videoWidget = qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget());
+    QRect boundingRect = getPlayerBoundingRect(videoWidget);
     QPoint pixel = playerPosToPixel(boundingRect, point);
     m_zoomWidget->setSelectedPixel(pixel);
 }

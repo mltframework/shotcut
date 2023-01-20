@@ -655,20 +655,21 @@ void MainWindow::setupMenuView()
 
 void MainWindow::connectVideoWidgetSignals()
 {
-    auto videoWidget = static_cast<Mlt::GLWidget *>(&MLT);
-    connect(videoWidget, &Mlt::GLWidget::dragStarted, m_playlistDock,
+    auto videoWidget = static_cast<Mlt::VideoWidget *>(&MLT);
+    connect(videoWidget, &Mlt::VideoWidget::dragStarted, m_playlistDock,
             &PlaylistDock::onPlayerDragStarted);
-    connect(videoWidget, &Mlt::GLWidget::seekTo, m_player, &Player::seek);
-    connect(videoWidget, &Mlt::GLWidget::gpuNotSupported, this, &MainWindow::onGpuNotSupported);
+    connect(videoWidget, &Mlt::VideoWidget::seekTo, m_player, &Player::seek);
+    connect(videoWidget, &Mlt::VideoWidget::gpuNotSupported, this, &MainWindow::onGpuNotSupported);
     connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, videoWidget,
-            &Mlt::GLWidget::initializeGL, Qt::DirectConnection);
+            &Mlt::VideoWidget::initialize, Qt::DirectConnection);
     connect(videoWidget->quickWindow(), &QQuickWindow::beforeRenderPassRecording, videoWidget,
-            &Mlt::GLWidget::paintGL, Qt::DirectConnection);
+            &Mlt::VideoWidget::renderVideo, Qt::DirectConnection);
     connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, this,
             &MainWindow::onSceneGraphInitialized, Qt::QueuedConnection);
-    connect(videoWidget, &Mlt::GLWidget::frameDisplayed, m_scopeController, &ScopeController::newFrame);
+    connect(videoWidget, &Mlt::VideoWidget::frameDisplayed, m_scopeController,
+            &ScopeController::newFrame);
     connect(m_filterController, &FilterController::currentFilterChanged, videoWidget,
-            &Mlt::GLWidget::setCurrentFilter);
+            &Mlt::VideoWidget::setCurrentFilter);
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
@@ -1779,10 +1780,8 @@ void MainWindow::readPlayerSettings()
     ui->actionScrubAudio->setChecked(Settings.playerScrubAudio());
     if (ui->actionJack)
         ui->actionJack->setChecked(Settings.playerJACK());
-    if (ui->actionGPU) {
-        MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
+    if (ui->actionGPU)
         ui->actionGPU->setChecked(Settings.playerGPU());
-    }
 
     QString external = Settings.playerExternal();
     bool ok = false;
@@ -2297,7 +2296,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
     // Simulate the player firing a dragStarted even to make the playlist close
     // its help text view. This lets one drop a clip directly into the playlist
     // from a fresh start.
-    Mlt::GLWidget *videoWidget = (Mlt::GLWidget *) &Mlt::Controller::singleton();
+    auto *videoWidget = (Mlt::VideoWidget *) &Mlt::Controller::singleton();
     emit videoWidget->dragStarted();
 
     event->acceptProposedAction();
@@ -3902,23 +3901,23 @@ void MainWindow::on_actionExportFrame_triggered()
 {
     if (!MLT.producer() || !MLT.producer()->is_valid()) return;
     filterController()->setCurrentFilter(QmlFilter::DeselectCurrentFilter);
-    Mlt::GLWidget *glw = qobject_cast<Mlt::GLWidget *>(MLT.videoWidget());
-    connect(glw, SIGNAL(imageReady()), SLOT(onGLWidgetImageReady()));
+    auto *videoWidget = qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget());
+    connect(videoWidget, &Mlt::VideoWidget::imageReady, this, &MainWindow::onVideoWidgetImageReady);
     MLT.setPreviewScale(0);
-    glw->requestImage();
+    videoWidget->requestImage();
     MLT.refreshConsumer();
 }
 
-void MainWindow::onGLWidgetImageReady()
+void MainWindow::onVideoWidgetImageReady()
 {
-    Mlt::GLWidget *glw = qobject_cast<Mlt::GLWidget *>(MLT.videoWidget());
-    QImage image = glw->image();
-    disconnect(glw, SIGNAL(imageReady()), this, nullptr);
+    auto *videoWidget = qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget());
+    QImage image = videoWidget->image();
+    disconnect(videoWidget, SIGNAL(imageReady()), this, nullptr);
     if (Settings.playerGPU() || Settings.playerPreviewScale()) {
         MLT.setPreviewScale(Settings.playerPreviewScale());
     }
     if (!image.isNull() &&
-            (glw->imageIsProxy() || (MLT.isMultitrack() && Settings.proxyEnabled()))
+            (videoWidget->imageIsProxy() || (MLT.isMultitrack() && Settings.proxyEnabled()))
 
        ) {
         QMessageBox dialog(QMessageBox::Question,
@@ -4366,7 +4365,7 @@ void MainWindow::onSceneGraphInitialized()
     } else if (Settings.playerGPU()) {
         ui->actionGPU->setVisible(true);
     }
-    auto videoWidget = (Mlt::GLWidget *) & (MLT);
+    auto videoWidget = (Mlt::VideoWidget *) & (MLT);
     videoWidget->setBlankScene();
 }
 

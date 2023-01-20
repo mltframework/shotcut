@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2021 Meltytech, LLC
+ * Copyright (c) 2011-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -335,7 +335,7 @@ private slots:
     void onClipCopied();
     void on_actionExportEDL_triggered();
     void on_actionExportFrame_triggered();
-    void onGLWidgetImageReady();
+    void onVideoWidgetImageReady();
     void on_actionAppDataSet_triggered();
     void on_actionAppDataShow_triggered();
     void on_actionNew_triggered();

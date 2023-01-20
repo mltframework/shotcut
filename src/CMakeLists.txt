@@ -151,6 +151,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/newprojectfolder.ui
   widgets/noisewidget.cpp widgets/noisewidget.h
   widgets/noisewidget.ui
+  widgets/openglvideowidget.h widgets/openglvideowidget.cpp
   widgets/plasmawidget.cpp widgets/plasmawidget.h
   widgets/plasmawidget.ui
   widgets/playlisticonview.cpp widgets/playlisticonview.h

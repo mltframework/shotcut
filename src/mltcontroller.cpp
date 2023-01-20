@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2022 Meltytech, LLC
+ * Copyright (c) 2011-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@
 #include "qmltypes/qmlmetadata.h"
 #include "util.h"
 #include "proxymanager.h"
+#include "widgets/openglvideowidget.h"
 
 namespace Mlt {
 
@@ -66,7 +67,7 @@ Controller &Controller::singleton(QObject *parent)
     if (!instance) {
         qRegisterMetaType<Mlt::Frame>("Mlt::Frame");
         qRegisterMetaType<SharedFrame>("SharedFrame");
-        instance = new GLWidget(parent);
+        instance = new OpenGLVideoWidget(parent);
     }
     return *instance;
 }
