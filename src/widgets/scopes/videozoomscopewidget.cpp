@@ -17,7 +17,7 @@
 
 #include "videozoomscopewidget.h"
 
-#include "glwidget.h"
+#include "videowidget.h"
 #include "videozoomwidget.h"
 
 #include <QLabel>

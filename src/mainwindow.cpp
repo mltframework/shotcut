@@ -46,7 +46,7 @@
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
 #include "docks/playlistdock.h"
-#include "glwidget.h"
+#include "videowidget.h"
 #include "controllers/filtercontroller.h"
 #include "controllers/scopecontroller.h"
 #include "docks/filtersdock.h"

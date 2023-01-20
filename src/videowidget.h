@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GLWIDGET_H
-#define GLWIDGET_H
+#ifndef VIDEOWIDGET_H
+#define VIDEOWIDGET_H
 
 #include <QSemaphore>
 #include <QQuickWidget>

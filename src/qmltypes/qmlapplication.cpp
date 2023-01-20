@@ -20,7 +20,7 @@
 #include "mltcontroller.h"
 #include "controllers/filtercontroller.h"
 #include "models/attachedfiltersmodel.h"
-#include "glwidget.h"
+#include "videowidget.h"
 #include "settings.h"
 #include "util.h"
 #include <QApplication>

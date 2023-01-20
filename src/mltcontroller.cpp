@@ -32,7 +32,7 @@
 #include <clocale>
 #include <unistd.h>
 
-#include "glwidget.h"
+#include "videowidget.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "mainwindow.h"

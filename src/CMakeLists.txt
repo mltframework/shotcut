@@ -48,7 +48,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/recentdock.ui
   docks/scopedock.cpp docks/scopedock.h
   docks/timelinedock.cpp docks/timelinedock.h
-  glwidget.cpp glwidget.h
   jobqueue.cpp jobqueue.h
   jobs/abstractjob.cpp jobs/abstractjob.h
   jobs/encodejob.cpp jobs/encodejob.h
@@ -105,6 +104,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   spatialmedia/spatialmedia.cpp spatialmedia/spatialmedia.h
   transportcontrol.h
   util.cpp util.h
+  videowidget.cpp videowidget.h
   widgets/alsawidget.cpp widgets/alsawidget.h
   widgets/alsawidget.ui
   widgets/audiometerwidget.cpp widgets/audiometerwidget.h

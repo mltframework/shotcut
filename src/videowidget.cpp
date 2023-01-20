@@ -22,7 +22,7 @@
 #include <QQuickItem>
 #include <Mlt.h>
 #include <Logger.h>
-#include "glwidget.h"
+#include "videowidget.h"
 #include "settings.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlfilter.h"

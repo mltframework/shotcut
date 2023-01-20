@@ -18,7 +18,7 @@
 #ifndef OPENGLVIDEOWIDGET_H
 #define OPENGLVIDEOWIDGET_H
 
-#include "glwidget.h"
+#include "videowidget.h"
 
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
