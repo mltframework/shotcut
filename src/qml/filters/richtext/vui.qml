@@ -203,7 +203,7 @@ Shotcut.VuiBase {
                         width: 2 / scale
                         color: 'white'
                         border.color: 'black'
-                        border.size: 1
+                        border.width: 1
 
                         SequentialAnimation {
                             running: cursor.visible
@@ -587,7 +587,7 @@ Shotcut.VuiBase {
             textArea.selectAll();
         }
         onInsertTableTriggered: {
-            tableDialog.open();
+            tableDialog.show();
         }
     }
 
@@ -754,8 +754,8 @@ Shotcut.VuiBase {
         color: dialogPalette.window
         title: qsTr('Insert Table')
         modality: Qt.ApplicationModal
-        width: 420
-        height: 190
+        width: 320
+        height: 140
 
         GridLayout {
             rows: 4
@@ -814,6 +814,7 @@ Shotcut.VuiBase {
 
             RowLayout {
                 Layout.alignment: Qt.AlignRight
+                Layout.columnSpan: 2
                 focus: true
 
                 Shotcut.Button {
