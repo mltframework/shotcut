@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2022 Meltytech, LLC
+ * Copyright (c) 2021-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,28 +77,33 @@ Grid {
         implicitHeight: orientation == Qt.Horizontal ? 18 : parent.height
         implicitWidth: orientation == Qt.Horizontal ? parent.width : 20
 
+        onVisualPositionChanged: {
+            if (orientation == Qt.Horizontal) {
+                indicatorRect.x = (bgRect.width - 5) * slider.visualPosition;
+                indicatorRect.y = 0;
+                indicatorRect.width = 4;
+                indicatorRect.height = bgRect.height;
+            } else {
+                indicatorRect.x = 0;
+                indicatorRect.y = (bgRect.height - 5) * slider.visualPosition;
+                indicatorRect.width = bgRect.width;
+                indicatorRect.height = 4;
+            }
+        }
+
         background: Rectangle {
+            id: bgRect
             radius: 3
             color: activePalette.alternateBase
             border.color: 'gray'
             border.width: 1
             height: parent.height
+            width: parent.width
 
             Rectangle {
+                id: indicatorRect
                 radius: parent.radius
-                width: orientation == Qt.Horizontal ? 4 : parent.width
-                height: orientation == Qt.Horizontal ? parent.height : 4
-                x: orientation == Qt.Horizontal ? (parent.width - 5) * slider.visualPosition : 0
-                y: orientation == Qt.Horizontal ? 0 : (parent.height - 5) * slider.visualPosition
                 color: activePalette.highlight
-
-                anchors {
-                    top: orientation == Qt.Horizontal ? parent.top : undefined
-                    bottom: orientation == Qt.Horizontal ? parent.bottom : undefined
-                    left: orientation == Qt.Horizontal ? undefined : parent.left
-                    right: orientation == Qt.Horizontal ? undefined : parent.right
-                    margins: 1
-                }
             }
         }
 

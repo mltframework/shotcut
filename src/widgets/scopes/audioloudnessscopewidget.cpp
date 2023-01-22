@@ -126,6 +126,8 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
 
     QTimer::singleShot(100, this, &AudioLoudnessScopeWidget::resetQview);
 
+    connect(this, &ScopeWidget::moved, this, &AudioLoudnessScopeWidget::resetQview);
+
     LOG_DEBUG() << "end";
 }
 
@@ -191,7 +193,7 @@ void AudioLoudnessScopeWidget::setOrientation(Qt::Orientation orientation, bool 
             if (Settings.loudnessScopeShowMeter("truepeak")) x += meterWidth;
             x = std::max(x, 200);
             setMinimumSize(x, 250);
-            setMaximumSize(x, 500);
+            setMaximumSize(x, 600);
         } else {
             // Calculate the minimum height
             int y = 32;
@@ -204,13 +206,11 @@ void AudioLoudnessScopeWidget::setOrientation(Qt::Orientation orientation, bool 
             if (Settings.loudnessScopeShowMeter("truepeak")) y += meterHeight;
             y = std::max(y, 80);
             setMinimumSize(250, y);
-            setMaximumSize(500, y);
+            setMaximumSize(600, y);
         }
         updateGeometry();
         m_orientation = orientation;
-        if (m_qview->status() != QQuickWidget::Null) {
-            m_qview->rootObject()->setProperty("orientation", m_orientation);
-        }
+        resetQview();
     }
 }
 
@@ -320,6 +320,7 @@ void AudioLoudnessScopeWidget::resetQview()
     QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("audioloudnessscope.qml"));
     m_qview->setSource(source);
 
+    m_qview->rootObject()->setProperty("orientation", m_orientation);
     m_qview->rootObject()->setProperty("enableIntegrated",
                                        Settings.loudnessScopeShowMeter("integrated"));
     m_qview->rootObject()->setProperty("enableShortterm", Settings.loudnessScopeShowMeter("shortterm"));
@@ -327,5 +328,4 @@ void AudioLoudnessScopeWidget::resetQview()
     m_qview->rootObject()->setProperty("enableRange", Settings.loudnessScopeShowMeter("range"));
     m_qview->rootObject()->setProperty("enablePeak", Settings.loudnessScopeShowMeter("peak"));
     m_qview->rootObject()->setProperty("enableTruePeak", Settings.loudnessScopeShowMeter("truepeak"));
-    m_qview->rootObject()->setProperty("orientation", m_orientation);
 }
