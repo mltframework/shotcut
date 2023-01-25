@@ -32,7 +32,6 @@
 #include <clocale>
 #include <unistd.h>
 
-#include "videowidget.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "mainwindow.h"
@@ -40,7 +39,11 @@
 #include "qmltypes/qmlmetadata.h"
 #include "util.h"
 #include "proxymanager.h"
+#if defined(Q_OS_WIN)
+#include "widgets/d3dvideowidget.h"
+#else
 #include "widgets/openglvideowidget.h"
+#endif
 
 namespace Mlt {
 
@@ -67,7 +70,11 @@ Controller &Controller::singleton(QObject *parent)
     if (!instance) {
         qRegisterMetaType<Mlt::Frame>("Mlt::Frame");
         qRegisterMetaType<SharedFrame>("SharedFrame");
+#if defined(Q_OS_WIN)
+        instance = new D3DVideoWidget(parent);
+#else
         instance = new OpenGLVideoWidget(parent);
+#endif
     }
     return *instance;
 }

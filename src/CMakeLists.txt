@@ -151,7 +151,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/newprojectfolder.ui
   widgets/noisewidget.cpp widgets/noisewidget.h
   widgets/noisewidget.ui
-  widgets/openglvideowidget.h widgets/openglvideowidget.cpp
   widgets/plasmawidget.cpp widgets/plasmawidget.h
   widgets/plasmawidget.ui
   widgets/playlisticonview.cpp widgets/playlisticonview.h
@@ -259,6 +258,8 @@ if(WIN32)
 #  find_package(Qt 6.2 REQUIRED COMPONENTS WinExtras)
 #  target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
 #  target_link_libraries(shotcut PRIVATE Qt6::WinExtras)
+  target_sources(shotcut PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
+  target_link_libraries(shotcut PRIVATE d3d11 d3dcompiler)
 
   # Runtime exception handler for debug only
   target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)
@@ -273,6 +274,8 @@ if(WIN32)
   endif()
 
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
+else()
+    target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
 endif()
 
 if(APPLE)

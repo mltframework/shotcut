@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2022 Meltytech, LLC
+ * Copyright (c) 2011-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -966,19 +966,12 @@ void MainWindow::setupSettingsMenu()
     delete ui->actionJack;
     ui->actionJack = 0;
 #endif
-#if !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     // Setup the display method actions.
     if (!Settings.playerGPU()) {
         group = new QActionGroup(this);
-#if defined(Q_OS_WIN)
-        ui->actionDrawingAutomatic->setData(0);
-        group->addAction(ui->actionDrawingAutomatic);
-        ui->actionDrawingDirectX->setData(Qt::AA_UseOpenGLES);
-        group->addAction(ui->actionDrawingDirectX);
-#else
         delete ui->actionDrawingAutomatic;
         delete ui->actionDrawingDirectX;
-#endif
         ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
         group->addAction(ui->actionDrawingOpenGL);
         ui->actionDrawingSoftware->setData(Qt::AA_UseSoftwareOpenGL);
@@ -988,30 +981,19 @@ void MainWindow::setupSettingsMenu()
         case Qt::AA_UseDesktopOpenGL:
             ui->actionDrawingOpenGL->setChecked(true);
             break;
-#if defined(Q_OS_WIN)
-        case Qt::AA_UseOpenGLES:
-            ui->actionDrawingDirectX->setChecked(true);
-            break;
-#endif
         case Qt::AA_UseSoftwareOpenGL:
             ui->actionDrawingSoftware->setChecked(true);
             break;
-#if defined(Q_OS_WIN)
-        default:
-            ui->actionDrawingAutomatic->setChecked(true);
-            break;
-#else
         default:
             ui->actionDrawingOpenGL->setChecked(true);
             break;
-#endif
         }
     } else {
         // GPU mode only works with OpenGL.
         delete ui->menuDrawingMethod;
         ui->menuDrawingMethod = 0;
     }
-#else  // Q_OS_MAC
+#else
     delete ui->menuDrawingMethod;
     ui->menuDrawingMethod = 0;
 #endif
@@ -2391,18 +2373,12 @@ void MainWindow::showEvent(QShowEvent *event)
 
     QTimer::singleShot(100, this, [ = ]() {
         Database::singleton(this);
-#ifdef Q_OS_WIN
-        this->setProperty("windowOpacity", 1.0);
-#endif
     });
 }
 
 void MainWindow::hideEvent(QHideEvent *event)
 {
     Q_UNUSED(event)
-#ifdef Q_OS_WIN
-    setProperty("windowOpacity", 0.0);
-#endif
 }
 
 void MainWindow::on_actionOpenOther_triggered()

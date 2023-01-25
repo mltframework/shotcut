@@ -231,23 +231,6 @@ public:
 
 #if defined(Q_OS_WIN)
         dir.setPath(appPath);
-        if (!Settings.playerGPU() && Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL) {
-            if (QFile::exists(dir.filePath("opengl32sw.dll"))) {
-                if (!QFile::copy(dir.filePath("opengl32sw.dll"), dir.filePath("opengl32.dll"))) {
-                    LOG_WARNING() << "Failed to copy opengl32sw.dll as opengl32.dll";
-                }
-            }
-        } else if (QFile::exists(dir.filePath("opengl32.dll"))) {
-            if (!QFile::remove(dir.filePath("opengl32.dll"))) {
-                LOG_ERROR() << "Failed to remove opengl32.dll";
-            }
-        }
-        if (Settings.playerGPU()) {
-            QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
-        } else if (Settings.drawMethod() >= Qt::AA_UseDesktopOpenGL &&
-                   Settings.drawMethod() <= Qt::AA_UseSoftwareOpenGL) {
-            QCoreApplication::setAttribute(Qt::ApplicationAttribute(Settings.drawMethod()));
-        }
 #elif !defined(Q_OS_MAC)
         if (Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()) {
             ::qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
@@ -353,9 +336,13 @@ int main(int argc, char **argv)
     removeMacosTabBar();
 #endif
 
+#if defined(Q_OS_WIN)
+    QQuickWindow::setGraphicsApi(QSGRendererInterface::Direct3D11);
+#else
     QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
     QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
     QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
+#endif
 #if defined(Q_OS_MAC)
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
@@ -396,9 +383,6 @@ int main(int argc, char **argv)
     a.mainWindow = &MAIN;
     if (!a.appDirArg.isEmpty())
         a.mainWindow->hideSetDataDirectory();
-#ifdef Q_OS_WIN
-    a.mainWindow->setProperty("windowOpacity", 0.0);
-#endif
     a.mainWindow->show();
     a.processEvents();
     a.mainWindow->setFullScreen(a.isFullScreen);

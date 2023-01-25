@@ -297,6 +297,7 @@ void OpenGLVideoWidget::renderVideo()
     check_error(f);
 
     quickWindow()->endExternalCommands();
+    Mlt::VideoWidget::renderVideo();
 }
 
 void OpenGLVideoWidget::onFrameDisplayed(const SharedFrame &frame)
