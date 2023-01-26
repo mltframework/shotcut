@@ -156,7 +156,7 @@ Item {
     FileDialog {
         id: fileDialog
 
-        modality: application.dialogModality
+        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
         currentFolder: settingsOpenPath
         nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
         onAccepted: {

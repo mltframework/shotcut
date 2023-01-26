@@ -292,7 +292,7 @@ Item {
         title: "File for motion analysis"
         fileMode: FileDialog.SaveFile
         currentFolder: settingsOpenPath
-        modality: application.dialogModality
+        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
         nameFilters: ['Motion Analysis Files (*.bigsh0t360motion)', 'All Files (*)']
         onAccepted: {
             analysisFile.url = selectAnalysisFile.selectedFile;

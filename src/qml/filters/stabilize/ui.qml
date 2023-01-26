@@ -95,7 +95,7 @@ Item {
         id: fileDialog
 
         title: qsTr('Select a file to store analysis results.')
-        modality: application.dialogModality
+        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
         fileMode: FileDialog.SaveFile
         currentFolder: settingsSavePath
         nameFilters: ["Stabilize Results (*.stab)"]

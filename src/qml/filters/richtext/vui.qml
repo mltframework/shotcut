@@ -702,7 +702,7 @@ Shotcut.VuiBase {
     FileDialog {
         id: fileDialog
 
-        modality: application.dialogModality
+        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
         currentFolder: settingsSavePath
         nameFilters: ["HTML files (*.html *.htm)", "Text files (*.txt)", "All files (*)"]
         onAccepted: {

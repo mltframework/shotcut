@@ -79,7 +79,7 @@ Item {
     FileDialog {
         id: fileDialog
 
-        modality: application.dialogModality
+        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
         fileMode: FileDialog.OpenFile
         currentFolder: settingsOpenPath
         onAccepted: {
