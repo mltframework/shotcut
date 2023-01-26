@@ -41,6 +41,8 @@
 #include "proxymanager.h"
 #if defined(Q_OS_WIN)
 #include "widgets/d3dvideowidget.h"
+#elif defined(Q_OS_MAC)
+#include "widgets/metalvideowidget.h"
 #else
 #include "widgets/openglvideowidget.h"
 #endif
@@ -72,6 +74,8 @@ Controller &Controller::singleton(QObject *parent)
         qRegisterMetaType<SharedFrame>("SharedFrame");
 #if defined(Q_OS_WIN)
         instance = new D3DVideoWidget(parent);
+#elif defined(Q_OS_MAC)
+        instance = new MetalVideoWidget(parent);
 #else
         instance = new OpenGLVideoWidget(parent);
 #endif

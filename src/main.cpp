@@ -338,13 +338,13 @@ int main(int argc, char **argv)
 
 #if defined(Q_OS_WIN)
     QQuickWindow::setGraphicsApi(QSGRendererInterface::Direct3D11);
+#elif defined(Q_OS_MAC)
+    QQuickWindow::setGraphicsApi(QSGRendererInterface::Metal);
+    QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #else
     QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
     QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
     QCoreApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
-#endif
-#if defined(Q_OS_MAC)
-    QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
 
     Application a(argc, argv);
