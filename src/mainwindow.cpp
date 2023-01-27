@@ -948,6 +948,9 @@ void MainWindow::setupSettingsMenu()
     connect(m_languagesGroup, SIGNAL(triggered(QAction *)), this, SLOT(onLanguageTriggered(QAction *)));
 
     // Setup the themes actions
+#if defined(Q_OS_MAC)
+    delete ui->menuTheme;
+#else
     group = new QActionGroup(this);
     group->addAction(ui->actionSystemTheme);
     group->addAction(ui->actionFusionDark);
@@ -958,6 +961,7 @@ void MainWindow::setupSettingsMenu()
         ui->actionFusionLight->setChecked(true);
     else
         ui->actionSystemTheme->setChecked(true);
+#endif
 
 #if defined(Q_OS_WIN)
     // On Windows, if there is no JACK or it is not running
@@ -1852,9 +1856,6 @@ void MainWindow::readWindowSettings()
     if (!Settings.windowGeometry().isEmpty()) {
         restoreGeometry(Settings.windowGeometry());
         restoreState(Settings.windowState());
-#ifdef Q_OS_MAC
-        m_filtersDock->setFloating(false);
-#endif
     } else {
         restoreState(kLayoutEditingDefault);
     }
@@ -2889,7 +2890,14 @@ bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
 void MainWindow::changeTheme(const QString &theme)
 {
     LOG_DEBUG() << "begin";
-    if (theme == "dark") {
+    auto mytheme = theme;
+#if defined(Q_OS_MAC)
+    std::unique_ptr<QStyle> style {QStyleFactory::create(qApp->property("system-style").toString())};
+    auto brightness = style->standardPalette().color(QPalette::Text).lightnessF();
+    LOG_DEBUG() << brightness;
+    mytheme = brightness < 0.5f ? "light" : "dark";
+#endif
+    if (mytheme == "dark") {
         QApplication::setStyle("Fusion");
         QPalette palette;
         palette.setColor(QPalette::Window, QColor(50, 50, 50));
@@ -2913,7 +2921,7 @@ void MainWindow::changeTheme(const QString &theme)
         QIcon::setThemeName("dark");
         QMetaObject::invokeMethod(&MAIN, "on_actionShowTextUnderIcons_toggled", Qt::QueuedConnection,
                                   Q_ARG(bool, Settings.textUnderIcons()));
-    } else if (theme == "light") {
+    } else if (mytheme == "light") {
         QStyle *style = QStyleFactory::create("Fusion");
         QApplication::setStyle(style);
         QApplication::setPalette(style->standardPalette());
