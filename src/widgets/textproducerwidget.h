@@ -47,6 +47,7 @@ private slots:
     void on_preset_saveClicked();
 
 private:
+    Mlt::Filter *createFilter(Mlt::Profile &, Mlt::Producer *);
     Ui::TextProducerWidget *ui;
 };
 
