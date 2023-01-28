@@ -1142,7 +1142,7 @@ function deploy
       share/glaxnimate/glaxnimate/pythonhome/lib/python
 
   cmd cp -p "$HOME"/bin/*.dll .
-  cmd cp -p "$QTDIR"/bin/{libEGL,libGLESv2,d3dcompiler_47}.dll .
+  cmd cp -p "$QTDIR"/bin/d3dcompiler_47.dll .
 
   log Copying some libs from msys2
   cmd cp -p /mingw64/bin/{libcrypto-1_1-x64,libssl-1_1-x64}.dll .
@@ -1151,8 +1151,13 @@ function deploy
   fi
 
   log Copying some plugins, qml, and translations from Qt
-  cmd mkdir -p lib/qt6/sqldrivers
-  cmd cp -pr "$QTDIR"/plugins/{audio,generic,iconengines,imageformats,multimedia,platforms,sqldrivers,styles,tls} lib/qt6
+  cmd mkdir -p lib/qt6/audio
+  for plugin in audio generic iconengines imageformats multimedia platforms sqldrivers styles tls; do
+    cmd cp -pr "$QTDIR"/plugins/${plugin} lib/qt6
+    for lib in lib/qt6/${plugin}/*.dll; do
+      bundle_dlls "$lib"
+    done
+  done
   cmd mkdir -p lib/qml
   cmd cp -pr "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} lib/qml
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations

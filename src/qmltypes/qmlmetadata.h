@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -237,7 +237,8 @@ public:
     QUrl vuiFilePath() const;
     QString iconFilePath() const
     {
-        return (m_icon.isEmpty() || m_icon.startsWith("qrc:")) ? m_icon : m_path.absoluteFilePath(m_icon);
+        return (m_icon.isEmpty() || m_icon.startsWith("qrc:")) ? m_icon :
+               QUrl::fromLocalFile(m_path.absoluteFilePath(m_icon)).toString();
     }
     void setIconFileName(const QString &);
     bool isAudio() const
