@@ -1130,7 +1130,6 @@ function deploy
     bundle_dlls "$lib"
   done
   bundle_dlls glaxnimate.exe
-  cmd rm *.bundled
 
   log Copying some DLLs and python libraries for Glaxnimate
   cmd cp -p /mingw64/bin/libpython3.10.dll python310.dll
@@ -1164,81 +1163,11 @@ function deploy
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
 
   log Removing things not needed
-  cmd rm lib/qt6/sqldrivers/{qsqlodbc,qsqlodbcd,qsqlpsql,qsqlpsqld}.dll
+  cmd rm *.bundled
+  cmd rm lib/qt6/sqldrivers/{qsqlodbc,qsqlpsql}.dll
   # colortap is not used by Shotcut and no plans to include it, but
   # Kaspersky antivirus is flagging it and scaring people.
   cmd rm lib/frei0r-1/colortap.dll
-  if [ "$DEBUG_BUILD" != "1" -a "$SDK" != "1" ]; then
-    cmd rm lib/qt6/audio/qtaudio_windowsd.dll
-    cmd rm lib/qt6/generic/qtuiotouchplugind.dll
-    cmd rm lib/qt6/iconengines/qsvgicond.dll
-    cmd rm lib/qt6/imageformats/qddsd.dll
-    cmd rm lib/qt6/imageformats/qgifd.dll
-    cmd rm lib/qt6/imageformats/qicod.dll
-    cmd rm lib/qt6/imageformats/qicnsd.dll
-    cmd rm lib/qt6/imageformats/qjpegd.dll
-    cmd rm lib/qt6/imageformats/qsvgd.dll
-    cmd rm lib/qt6/imageformats/qtgad.dll
-    cmd rm lib/qt6/imageformats/qtiffd.dll
-    cmd rm lib/qt6/imageformats/qwbmpd.dll
-    cmd rm lib/qt6/imageformats/qwebpd.dll
-    cmd rm lib/qt6/mediaservice/dsengined.dll
-    cmd rm lib/qt6/mediaservice/qtmedia_audioengined.dll
-    cmd rm lib/qt6/platforms/qminimald.dll
-    cmd rm lib/qt6/platforms/qoffscreend.dll
-    cmd rm lib/qt6/platforms/qwindowsd.dll
-    cmd rm lib/qt6/sqldrivers/qsqlited.dll
-
-    cmd rm lib/qml/QtLocation/declarative_locationd.dll
-    cmd rm lib/qml/QtQml/StateMachine/qtqmlstatemachined.dll
-    cmd rm lib/qml/QtQml/Models.2/modelsplugind.dll
-    cmd rm lib/qml/QtCanvas3D/qtcanvas3dd.dll
-    cmd rm lib/qml/QtPositioning/declarative_positioningd.dll
-    cmd rm lib/qml/QtWinExtras/qml_winextrasd.dll
-    cmd rm lib/qml/QtQuick.2/qtquick2plugind.dll
-    cmd rm lib/qml/Qt/labs/settings/qmlsettingsplugind.dll
-    cmd rm lib/qml/Qt/labs/folderlistmodel/qmlfolderlistmodelplugind.dll
-    cmd rm lib/qml/QtWebSockets/declarative_qmlwebsocketsd.dll
-    cmd rm lib/qml/QtBluetooth/declarative_bluetoothd.dll
-    cmd rm lib/qml/QtTest/qmltestplugind.dll
-    cmd rm lib/qml/QtQuick/LocalStorage/qmllocalstorageplugind.dll
-    cmd rm lib/qml/QtQuick/Window.2/windowplugind.dll
-    cmd rm lib/qml/QtQuick/Dialogs/dialogplugind.dll
-    cmd rm lib/qml/QtQuick/Dialogs/Private/dialogsprivateplugind.dll
-    cmd rm lib/qml/QtQuick/PrivateWidgets/widgetsplugind.dll
-    cmd rm lib/qml/QtQuick/Layouts/qquicklayoutsplugind.dll
-    cmd rm lib/qml/QtQuick/Controls/qtquickcontrolsplugind.dll
-    cmd rm lib/qml/QtQuick/Controls/Styles/Flat/qtquickextrasflatplugind.dll
-    cmd rm lib/qml/QtQuick/Particles.2/particlesplugind.dll
-    cmd rm lib/qml/QtQuick/Extras/qtquickextrasplugind.dll
-    cmd rm lib/qml/QtQuick/XmlListModel/qmlxmllistmodelplugind.dll
-    cmd rm lib/qml/QtSensors/declarative_sensorsd.dll
-    cmd rm lib/qml/QtMultimedia/declarative_multimediad.dll
-    cmd rm lib/qml/QtNfc/declarative_nfcd.dll
-    cmd rm lib/qml/QtWebChannel/declarative_webchanneld.dll
-    cmd rm lib/qml/Qt/labs/calendar/qtlabscalendarplugind.dll
-    cmd rm lib/qml/Qt/labs/platform/qtlabsplatformplugind.dll
-    cmd rm lib/qml/Qt/labs/sharedimage/sharedimageplugind.dll
-    cmd rm lib/qml/Qt3D/Animation/quick3danimationplugind.dll
-    cmd rm lib/qml/Qt3D/Core/quick3dcoreplugind.dll
-    cmd rm lib/qml/Qt3D/Extras/quick3dextrasplugind.dll
-    cmd rm lib/qml/Qt3D/Input/quick3dinputplugind.dll
-    cmd rm lib/qml/Qt3D/Logic/quick3dlogicplugind.dll
-    cmd rm lib/qml/Qt3D/Render/quick3drenderplugind.dll
-    cmd rm lib/qml/QtCharts/qtchartsqml2d.dll
-    cmd rm lib/qml/QtDataVisualization/datavisualizationqml2d.dll
-    cmd rm lib/qml/QtGamepad/declarative_gamepadd.dll
-    cmd rm lib/qml/QtPurchasing/declarative_purchasingd.dll
-    cmd rm lib/qml/QtQml/RemoteObjects/qtqmlremoteobjectsd.dll
-    cmd rm lib/qml/QtQuick/Controls.2/Material/qtquickcontrols2materialstyleplugind.dll
-    cmd rm lib/qml/QtQuick/Controls.2/qtquickcontrols2plugind.dll
-    cmd rm lib/qml/QtQuick/Controls.2/Universal/qtquickcontrols2universalstyleplugind.dll
-    cmd rm lib/qml/QtQuick/Scene2D/qtquickscene2dplugind.dll
-    cmd rm lib/qml/QtQuick/Scene3D/qtquickscene3dplugind.dll
-    cmd rm lib/qml/QtQuick/Templates.2/qtquicktemplates2plugind.dll
-    cmd rm lib/qml/QtQuick/VirtualKeyboard/Styles/qtvirtualkeyboardstylesplugind.dll
-    cmd rm lib/qml/QtScxml/declarative_scxmld.dll
-  fi
   printf "[Paths]\nPlugins=lib/qt6\nQml2Imports=lib/qml\n" > qt.conf
 
   if [ "$SDK" = "1" ]; then
