@@ -948,7 +948,7 @@ void MainWindow::setupSettingsMenu()
     connect(m_languagesGroup, SIGNAL(triggered(QAction *)), this, SLOT(onLanguageTriggered(QAction *)));
 
     // Setup the themes actions
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
     delete ui->menuTheme;
 #else
     group = new QActionGroup(this);
@@ -2891,8 +2891,8 @@ void MainWindow::changeTheme(const QString &theme)
 {
     LOG_DEBUG() << "begin";
     auto mytheme = theme;
-#if defined(Q_OS_MAC)
-    std::unique_ptr<QStyle> style {QStyleFactory::create(qApp->property("system-style").toString())};
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+    std::unique_ptr<QStyle> style {QStyleFactory::create("fusion")};
     auto brightness = style->standardPalette().color(QPalette::Text).lightnessF();
     LOG_DEBUG() << brightness;
     mytheme = brightness < 0.5f ? "light" : "dark";
@@ -2919,20 +2919,15 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
         QIcon::setThemeName("dark");
-        QMetaObject::invokeMethod(&MAIN, "on_actionShowTextUnderIcons_toggled", Qt::QueuedConnection,
-                                  Q_ARG(bool, Settings.textUnderIcons()));
     } else if (mytheme == "light") {
         QStyle *style = QStyleFactory::create("Fusion");
         QApplication::setStyle(style);
         QApplication::setPalette(style->standardPalette());
         QIcon::setThemeName("light");
-        QMetaObject::invokeMethod(&MAIN, "on_actionShowTextUnderIcons_toggled", Qt::QueuedConnection,
-                                  Q_ARG(bool, Settings.textUnderIcons()));
     } else {
         QApplication::setStyle(qApp->property("system-style").toString());
         QIcon::setThemeName("oxygen");
     }
-    emit QmlApplication::singleton().paletteChanged();
     LOG_DEBUG() << "end";
 }
 
