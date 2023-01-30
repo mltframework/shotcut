@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,13 +151,14 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
     int videoQuality = -1;
     QStringList other;
     QChar decimalPoint = MLT.decimalPoint();
+    QString acodec = QString::fromLatin1(preset.get("acodec"));
+    QString vcodec = QString::fromLatin1(preset.get("vcodec"));
 
     ui->disableAudioCheckbox->setChecked(preset.get_int("an"));
     ui->disableVideoCheckbox->setChecked(preset.get_int("vn"));
     m_extension.clear();
 
     // Default the HEVC crf to 28 per libx265 default.
-    QString vcodec = QString::fromLatin1(preset.get("vcodec"));
     if (vcodec == "libx265" || vcodec.contains("hevc")) {
         ui->videoQualitySpinner->setValue(45);
 
@@ -270,6 +271,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         } else if (name == "compression_level") {
             ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
             audioQuality = preset.get_int("compression_level");
+        } else if (preset.get_int("abr") || acodec == "vorbis" || acodec == "libvorbis") {
+            ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
         } else if (name == "vbr") {
             // libopus rate mode
             QString value(preset.get("vbr"));
@@ -560,16 +563,17 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
             if (ui->audioRateControlCombo->currentIndex() == RateControlAverage
                     || ui->audioRateControlCombo->currentIndex() == RateControlConstant) {
                 setIfNotSet(p, "ab", ui->audioBitrateCombo->currentText().toLatin1().constData());
-                if (acodec == "libopus") {
-                    if (RateControlConstant == ui->audioRateControlCombo->currentIndex())
-                        setIfNotSet(p, "vbr", "off");
-                    else
-                        setIfNotSet(p, "vbr", "constrained");
-                }
+                if (RateControlConstant == ui->audioRateControlCombo->currentIndex())
+                    setIfNotSet(p, "vbr", "off");
+                else
+                    setIfNotSet(p, "vbr", "constrained");
+                if (acodec == "libmp3lame" && ui->audioRateControlCombo->currentIndex() == RateControlAverage)
+                    setIfNotSet(p, "abr", "1");
             } else if (acodec == "libopus") {
                 setIfNotSet(p, "vbr", "on");
                 setIfNotSet(p, "compression_level", TO_ABSOLUTE(0, 10, ui->audioQualitySpinner->value()));
             } else {
+                setIfNotSet(p, "vbr", "on");
                 int aq = ui->audioQualitySpinner->value();
                 if (acodec == "libmp3lame")
                     aq = TO_ABSOLUTE(9, 0, aq);
@@ -1300,7 +1304,7 @@ void EncodeDock::resetOptions()
 
     setAudioChannels(MLT.audioChannels());
     ui->sampleRateCombo->lineEdit()->setText("48000");
-    ui->audioRateControlCombo->setCurrentIndex(0);
+    ui->audioRateControlCombo->setCurrentIndex(1);
     ui->audioBitrateCombo->lineEdit()->setText("384k");
     ui->audioQualitySpinner->setValue(50);
     ui->disableAudioCheckbox->setChecked(false);
