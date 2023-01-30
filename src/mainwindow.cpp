@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2022 Meltytech, LLC
+ * Copyright (c) 2011-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1491,7 +1491,7 @@ void MainWindow::onAutosaveTimeout()
     if (isWindowModified()) {
         QtConcurrent::run(autosaveTask, this);
     }
-    if (Util::isMemoryLow()) {
+    if (Settings.warnLowMemory() && Util::isMemoryLow()) {
         MLT.pause();
         QMessageBox dialog(QMessageBox::Critical,
                            qApp->applicationName(),
