@@ -1463,7 +1463,7 @@ void MainWindow::onAutosaveTimeout()
     if (isWindowModified()) {
         auto result = QtConcurrent::run(autosaveTask, this);
     }
-    if (Util::isMemoryLow()) {
+    if (Settings.warnLowMemory() && Util::isMemoryLow()) {
         MLT.pause();
         QMessageBox dialog(QMessageBox::Critical,
                            qApp->applicationName(),

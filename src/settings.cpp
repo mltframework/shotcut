@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1115,4 +1115,9 @@ void ShotcutSettings::reset()
 int ShotcutSettings::undoLimit() const
 {
     return settings.value("undoLimit", 1000).toInt();
+}
+
+bool ShotcutSettings::warnLowMemory() const
+{
+    return settings.value("warnLowMemory", true).toBool();
 }

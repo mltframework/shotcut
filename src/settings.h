@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -266,6 +266,7 @@ public:
     bool exportRangeMarkers() const;
     void setExportRangeMarkers(bool);
     int undoLimit() const;
+    bool warnLowMemory() const;
 
     // proxy
     bool proxyEnabled() const;
