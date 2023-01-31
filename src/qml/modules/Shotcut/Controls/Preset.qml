@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ RowLayout {
 
         flags: Qt.Dialog
         color: dialogPalette.window
-        modality: application.dialogModality
+        modality: Qt.ApplicationModal
         title: qsTr('Save Preset')
         width: 200
         height: 100
@@ -159,7 +159,7 @@ RowLayout {
 
         flags: Qt.Dialog
         color: dialogPalette.window
-        modality: application.dialogModality
+        modality: Qt.ApplicationModal
         title: qsTr('Delete Preset')
         width: 300
         height: 90

@@ -886,7 +886,7 @@ Rectangle {
         height: 80
         flags: Qt.Dialog
         color: activePalette.window
-        modality: application.dialogModality
+        modality: Qt.ApplicationModal
 
         GridLayout {
             columns: 4
