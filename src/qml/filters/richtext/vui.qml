@@ -727,10 +727,8 @@ Shotcut.VuiBase {
         selectedColor: 'black'
     }
 
-    MessageDialog {
+    Shotcut.MessageDialog {
         id: errorDialog
-
-        modality: application.dialogModality
     }
 
     SystemPalette {
@@ -851,7 +849,7 @@ Shotcut.VuiBase {
         }
         onError: {
             errorDialog.text = message;
-            errorDialog.visible = true;
+            errorDialog.open();
         }
     }
 

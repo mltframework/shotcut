@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -243,11 +243,9 @@ Rectangle {
         opacity: 0.5
     }
 
-    MessageDialog {
+    Shotcut.MessageDialog {
         id: confirmRemoveAdvancedDialog
 
-        visible: false
-        modality: application.dialogModality
         title: qsTr("Confirm Removing Advanced Keyframes")
         text: qsTr('This will remove all advanced keyframes to enable simple keyframes.<p>Do you still want to do this?')
         buttons: MessageDialog.Yes | MessageDialog.No

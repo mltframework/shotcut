@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,11 +35,11 @@ ToolButton {
     onClicked: {
         if (!checked) {
             checked = true;
-            confirmRemoveAdvancedDialog.visible = true;
+            confirmRemoveAdvancedDialog.open();
         } else {
             if (parameters.simpleKeyframesInUse()) {
                 checked = false;
-                confirmRemoveSimpleDialog.visible = true;
+                confirmRemoveSimpleDialog.open();
             }
             if (checked) {
                 application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only').arg(application.OS === 'OS X' ? '⌘' : 'Ctrl').arg(application.OS === 'OS X' ? '⌥' : 'Alt'));
@@ -58,14 +58,12 @@ ToolButton {
         text: qsTr('Use Keyframes for this parameter')
     }
 
-    MessageDialog {
+    Shotcut.MessageDialog {
         id: confirmRemoveAdvancedDialog
 
-        visible: false
-        modality: application.dialogModality
         title: qsTr("Confirm Removing Keyframes")
         text: qsTr('This will remove all keyframes for this parameter.<p>Do you still want to do this?')
-        buttons: MessageDialog.Yes | MessageDialog.No
+        buttons: Shotcut.MessageDialog.Yes | Shotcut.MessageDialog.No
         onAccepted: {
             checkbox.checked = false;
             checkbox.toggled();
@@ -76,14 +74,12 @@ ToolButton {
         }
     }
 
-    MessageDialog {
+    Shotcut.MessageDialog {
         id: confirmRemoveSimpleDialog
 
-        visible: false
-        modality: application.dialogModality
         title: qsTr("Confirm Removing Simple Keyframes")
         text: qsTr('This will remove all simple keyframes for all parameters.<p>Simple keyframes will be converted to advanced keyframes.<p>Do you still want to do this?')
-        buttons: MessageDialog.Yes | MessageDialog.No
+        buttons: Shotcut.MessageDialog.Yes | Shotcut.MessageDialog.No
         onAccepted: {
             checkbox.checked = true;
             parameters.removeSimpleKeyframes();
