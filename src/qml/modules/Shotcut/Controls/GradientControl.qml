@@ -104,7 +104,7 @@ RowLayout {
             property var colorList: []
 
             function chooseColor() {
-                colorDialog.visible = true;
+                colorDialog.open();
             }
 
             x: colorList.length == 1 ? (parent.width / 2) - (width / 2) : stopIndex == 0 ? 0 : stopIndex == colorList.length - 1 ? parent.width - width : stopIndex * (parent.width / (colorList.length - 1)) - (width / 2)
@@ -117,25 +117,12 @@ RowLayout {
             radius: 2
             visible: colorList.length > 1
 
-            ColorDialog {
+            Shotcut.ColorDialog {
                 id: colorDialog
 
                 title: qsTr("Color #%1").arg(stopIndex + 1)
-                options: ColorDialog.ShowAlphaChannel
                 selectedColor: handelRect.color
-                onAccepted: {
-                    // Make a copy of the current value.
-                    var myColor = Qt.darker(handelRect.color, 1);
-                    // Ignore alpha when comparing.
-                    myColor.a = selectedColor.a;
-                    // If the user changed color but left alpha at 0,
-                    // they probably want to reset alpha to opaque.
-                    console.log('selectedColor.a=' + selectedColor.a + ' selectedColor=' + selectedColor + ' handelRect.color=' + myColor);
-                    if (selectedColor.a === 0 && (!Qt.colorEqual(selectedColor, myColor) || (Qt.colorEqual(selectedColor, 'transparent') && Qt.colorEqual(handelRect.color, 'transparent'))))
-                        selectedColor.a = 1;
-                    parent.parent._setStopColor(handelRect.stopIndex, String(selectedColor));
-                }
-                modality: application.dialogModality
+                onAccepted: parent.parent._setStopColor(handelRect.stopIndex, String(selectedColor))
             }
 
             Shotcut.HoverTip {

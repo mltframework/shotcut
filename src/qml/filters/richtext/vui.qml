@@ -723,12 +723,9 @@ Shotcut.VuiBase {
         }
     }
 
-    ColorDialog {
+    Shotcut.ColorDialog {
         id: colorDialog
-
         selectedColor: 'black'
-        options: ColorDialog.ShowAlphaChannel
-        modality: application.dialogModality
     }
 
     MessageDialog {

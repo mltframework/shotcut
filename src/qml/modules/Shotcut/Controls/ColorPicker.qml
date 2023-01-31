@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Dialogs
 import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 
@@ -49,7 +48,7 @@ RowLayout {
 
         implicitWidth: 20
         implicitHeight: 20
-        onClicked: colorDialog.visible = true
+        onClicked: colorDialog.open()
 
         Shotcut.HoverTip {
             text: qsTr('Click to open color dialog')
@@ -63,27 +62,10 @@ RowLayout {
         }
     }
 
-    ColorDialog {
+    Shotcut.ColorDialog {
         id: colorDialog
-
-        title: qsTr("Please choose a color")
-        options: ColorDialog.ShowAlphaChannel
         selectedColor: value
-        onAccepted: {
-            // Make a copy of the current value.
-            var myColor = Qt.darker(value, 1);
-            // Ignore alpha when comparing.
-            myColor.a = selectedColor.a;
-            // If the user changed color but left alpha at 0,
-            // they probably want to reset alpha to opaque.
-            if (selectedColor.a === 0 && (!Qt.colorEqual(selectedColor, myColor) || (Qt.colorEqual(selectedColor, 'transparent') && Qt.colorEqual(value, 'transparent'))))
-                selectedColor.a = 1;
-
-            // Assign the new color value. Unlike docs say, using selectedColor
-            // is actually more cross-platform compatible.
-            value = selectedColor;
-        }
-        modality: application.dialogModality
+        onAccepted: value = selectedColor
     }
 
     Shotcut.Button {
