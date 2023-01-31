@@ -1299,11 +1299,7 @@ void MainWindow::doAutosave()
 void MainWindow::setFullScreen(bool isFullScreen)
 {
     if (isFullScreen) {
-#ifdef Q_OS_WIN
-        showMaximized();
-#else
         showFullScreen();
-#endif
         ui->actionEnterFullScreen->setVisible(false);
     }
 }
@@ -1861,13 +1857,6 @@ void MainWindow::readWindowSettings()
     } else {
         restoreState(kLayoutEditingDefault);
     }
-#ifdef Q_OS_WIN
-    if (isMaximized()) {
-        ui->actionEnterFullScreen->setText(tr("Exit Full Screen"));
-    } else {
-        ui->actionEnterFullScreen->setText(tr("Enter Full Screen"));
-    }
-#endif
     LOG_DEBUG() << "end";
 }
 
@@ -3081,20 +3070,12 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
 
 void MainWindow::on_actionEnterFullScreen_triggered()
 {
-#ifdef Q_OS_WIN
-    bool isFull = isMaximized();
-#else
     bool isFull = isFullScreen();
-#endif
     if (isFull) {
         showNormal();
         ui->actionEnterFullScreen->setText(tr("Enter Full Screen"));
     } else {
-#ifdef Q_OS_WIN
-        showMaximized();
-#else
         showFullScreen();
-#endif
         ui->actionEnterFullScreen->setText(tr("Exit Full Screen"));
     }
 }
