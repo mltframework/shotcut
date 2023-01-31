@@ -116,6 +116,7 @@ public slots:
     void setCurrentFilter(QmlFilter *filter, QmlMetadata *meta);
     void setSnapToGrid(bool snap);
     virtual void initialize();
+    virtual void beforeRendering() {};
     virtual void renderVideo();
     virtual void onFrameDisplayed(const SharedFrame &frame);
 

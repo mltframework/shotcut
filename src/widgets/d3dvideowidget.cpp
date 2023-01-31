@@ -124,9 +124,10 @@ void D3DVideoWidget::initialize()
     Mlt::VideoWidget::initialize();
 }
 
-void D3DVideoWidget::renderVideo()
+void D3DVideoWidget::beforeRendering()
 {
     quickWindow()->beginExternalCommands();
+    m_context->ClearState();
 
     // Provide vertices of triangle strip
     float width = rect().width() * devicePixelRatioF() / 2.0f;
@@ -159,33 +160,12 @@ void D3DVideoWidget::renderVideo()
     }
     m_context->UpdateSubresource(m_vbuf, 0, nullptr, vertexData, 0, 0);
 
-    // Update the constants
-    D3D11_MAPPED_SUBRESOURCE mp;
-    // will copy the entire constant buffer every time -> pass WRITE_DISCARD -> prevent pipeline stalls
-    HRESULT hr = m_context->Map(m_cbuf, 0, D3D11_MAP_WRITE_DISCARD, 0, &mp);
-    if (SUCCEEDED(hr)) {
-        m_constants.colorspace = MLT.profile().colorspace();
-        ::memcpy(mp.pData, &m_constants, sizeof(m_constants));
-        m_context->Unmap(m_cbuf, 0);
-    } else {
-        quickWindow()->endExternalCommands();
-        qFatal("Failed to map constant buffer: 0x%x", uint(hr));
-    }
-
-    D3D11_VIEWPORT v;
-    v.TopLeftX = 0.f;
-    v.TopLeftY = 0.f;
-    v.Width = width;
-    v.Height = height;
-    v.MinDepth = 0.f;
-    v.MaxDepth = 1.f;
-
     // (Re)create the textures
     m_mutex.lock();
     if (!m_sharedFrame.is_valid()) {
         m_mutex.unlock();
         quickWindow()->endExternalCommands();
-        Mlt::VideoWidget::renderVideo();
+        Mlt::VideoWidget::beforeRendering();
         return;
     }
     int iwidth = m_sharedFrame.get_image_width();
@@ -200,16 +180,40 @@ void D3DVideoWidget::renderVideo()
     m_texture[2] = initTexture(image + iwidth * iheight + iwidth / 2 * iheight / 2, iwidth / 2,
                                iheight / 2);
     m_mutex.unlock();
-    if (!m_texture[0]) {
+
+    // Update the constants
+    D3D11_MAPPED_SUBRESOURCE mp;
+    // will copy the entire constant buffer every time -> pass WRITE_DISCARD -> prevent pipeline stalls
+    HRESULT hr = m_context->Map(m_cbuf, 0, D3D11_MAP_WRITE_DISCARD, 0, &mp);
+    if (SUCCEEDED(hr)) {
+        m_constants.colorspace = MLT.profile().colorspace();
+        ::memcpy(mp.pData, &m_constants, sizeof(m_constants));
+        m_context->Unmap(m_cbuf, 0);
+    } else {
         quickWindow()->endExternalCommands();
-        Mlt::VideoWidget::renderVideo();
+        qFatal("Failed to map constant buffer: 0x%x", uint(hr));
         return;
     }
 
-    // Set the textures
-    for (int i = 0; i < 3; i++) {
-        m_context->PSSetShaderResources(i, 1, &m_texture[i]);
+    quickWindow()->endExternalCommands();
+    Mlt::VideoWidget::beforeRendering();
+}
+
+void D3DVideoWidget::renderVideo()
+{
+    if (!m_texture[0]) {
+        Mlt::VideoWidget::renderVideo();
+        return;
     }
+    quickWindow()->beginExternalCommands();
+
+    D3D11_VIEWPORT v;
+    v.TopLeftX = 0.f;
+    v.TopLeftY = 0.f;
+    v.Width = this->width() * devicePixelRatioF();
+    v.Height = this->height() * devicePixelRatioF();
+    v.MinDepth = 0.f;
+    v.MaxDepth = 1.f;
 
     m_context->RSSetViewports(1, &v);
     m_context->VSSetShader(m_vs, nullptr, 0);
@@ -218,12 +222,11 @@ void D3DVideoWidget::renderVideo()
     m_context->IASetInputLayout(m_inputLayout);
     m_context->OMSetDepthStencilState(m_dsState, 0);
     m_context->RSSetState(m_rastState);
-
     const UINT stride = sizeof(float) * 4;
     const UINT offset = 0;
     m_context->IASetVertexBuffers(0, 1, &m_vbuf, &stride, &offset);
     m_context->PSSetConstantBuffers(0, 1, &m_cbuf);
-
+    m_context->PSSetShaderResources(0, 3, m_texture);
     m_context->Draw(4, 0);
 
     quickWindow()->endExternalCommands();

@@ -32,6 +32,7 @@ public:
 
 public slots:
     virtual void initialize();
+    virtual void beforeRendering();
     virtual void renderVideo();
 
 private:

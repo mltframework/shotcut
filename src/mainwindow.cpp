@@ -662,6 +662,8 @@ void MainWindow::connectVideoWidgetSignals()
     connect(videoWidget, &Mlt::VideoWidget::gpuNotSupported, this, &MainWindow::onGpuNotSupported);
     connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, videoWidget,
             &Mlt::VideoWidget::initialize, Qt::DirectConnection);
+    connect(videoWidget->quickWindow(), &QQuickWindow::beforeRendering, videoWidget,
+            &Mlt::VideoWidget::beforeRendering, Qt::DirectConnection);
     connect(videoWidget->quickWindow(), &QQuickWindow::beforeRenderPassRecording, videoWidget,
             &Mlt::VideoWidget::renderVideo, Qt::DirectConnection);
     connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, this,
