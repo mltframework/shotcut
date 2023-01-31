@@ -823,7 +823,7 @@ Shotcut.VuiBase {
 
                 Shotcut.Button {
                     text: qsTr('Cancel')
-                    onClicked: speedDialog.close()
+                    onClicked: tableDialog.close()
                 }
             }
 
