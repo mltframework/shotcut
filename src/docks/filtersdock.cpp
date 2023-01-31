@@ -49,13 +49,12 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
                                         QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
+    setMinimumSize(200, 200);
     setupActions();
 
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
-#ifdef Q_OS_MAC
-    setFeatures(DockWidgetClosable | DockWidgetMovable);
-#else
+#ifndef Q_OS_MAC
     m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
 #endif
     setWidget(&m_qview);
@@ -69,7 +68,7 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
     connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
     connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
     setCurrentFilter(0, 0, QmlFilter::NoCurrentFilter);
-    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
+    connect(this, SIGNAL(visibilityChanged(bool)), SLOT(resetQview()));
 
     LOG_DEBUG() << "end";
 }
