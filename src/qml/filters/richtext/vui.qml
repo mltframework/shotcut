@@ -336,8 +336,8 @@ Shotcut.VuiBase {
                             icon.name: 'font'
                             icon.source: 'qrc:///icons/oxygen/32x32/actions/font.png'
                             onTriggered: {
-                                fontDialog.currentFont.family = document.fontFamily;
-                                fontDialog.currentFont.pointSize = document.fontSize;
+                                fontDialog.selectedFont.family = document.fontFamily;
+                                fontDialog.selectedFont.pointSize = document.fontSize;
                                 fontDialog.open();
                             }
                         }
@@ -675,8 +675,8 @@ Shotcut.VuiBase {
         icon.name: 'font'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/font.png'
         onTriggered: {
-            fontDialog.currentFont.family = document.fontFamily;
-            fontDialog.currentFont.pointSize = document.fontSize;
+            fontDialog.selectedFont.family = document.fontFamily;
+            fontDialog.seelctedFont.pointSize = document.fontSize;
             fontDialog.open();
         }
     }
@@ -713,13 +713,12 @@ Shotcut.VuiBase {
         }
     }
 
-    FontDialog {
+    Shotcut.FontDialog {
         id: fontDialog
 
-        modality: application.dialogModality
         onAccepted: {
-            document.fontFamily = currentFont.family;
-            document.fontSize = currentFont.pointSize;
+            document.fontFamily = selectedFont.family;
+            document.fontSize = selectedFont.pointSize;
         }
     }
 

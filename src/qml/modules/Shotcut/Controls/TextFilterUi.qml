@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Dialogs
 import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 
@@ -113,7 +112,6 @@ GridLayout {
                 "italic": filter.get('style') === 'italic',
                 "weight": filter.getDouble('weight') / 10
             });
-        fontDialog.fontFamily = filter.get('family');
         fontSizeCheckBox.checked = parseInt(filter.get(useFontSizeProperty));
         refreshFontButton();
         setKeyframedControls();
@@ -174,13 +172,11 @@ GridLayout {
                 fontDialog.open();
             }
 
-            FontDialog {
+            Shotcut.FontDialog {
                 id: fontDialog
 
                 property string fontFamily: ''
 
-                title: "Please choose a font"
-                modality: application.dialogModality
                 onSelectedFontChanged: {
                     filter.set('family', selectedFont.family);
                     filter.set('weight', 10 * selectedFont.weight);
@@ -240,7 +236,7 @@ GridLayout {
         Layout.minimumWidth: 50
         Layout.columnSpan: 3
         from: 0
-        to: 30
+        to: 200
         onValueModified: filter.set('outline', value)
     }
 
