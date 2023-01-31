@@ -139,7 +139,6 @@ signals:
 private:
     QRectF m_rect;
     int m_grid;
-    unsigned int m_texture[3];
     QPoint m_dragStart;
     QSemaphore m_initSem;
     bool m_isInitialized;
@@ -157,7 +156,6 @@ private:
 
 private slots:
     void resizeVideo(int width, int height);
-    void updateTexture(unsigned int yName, unsigned int uName, unsigned int vName);
     void onRefreshTimeout();
 
 protected:
@@ -192,7 +190,6 @@ public:
     }
 
 signals:
-    void textureReady(unsigned int yName, unsigned int uName = 0, unsigned int vName = 0);
     void frameDisplayed(const SharedFrame &frame);
     void imageReady();
 

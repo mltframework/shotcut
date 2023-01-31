@@ -44,8 +44,6 @@ VideoWidget::VideoWidget(QObject *parent)
     , m_maxTextureSize(4096)
 {
     LOG_DEBUG() << "begin";
-    m_texture[0] = m_texture[1] = m_texture[2] = 0;
-    quickWindow()->setPersistentSceneGraph(true);
     setAttribute(Qt::WA_AcceptTouchEvents);
     setResizeMode(QQuickWidget::SizeRootObjectToView);
     setClearColor(palette().window().color());
@@ -69,7 +67,6 @@ VideoWidget::~VideoWidget()
     LOG_DEBUG() << "begin";
     stop();
     if (m_frameRenderer && m_frameRenderer->isRunning()) {
-        QMetaObject::invokeMethod(m_frameRenderer, "cleanup");
         m_frameRenderer->quit();
         m_frameRenderer->wait();
         m_frameRenderer->deleteLater();
@@ -85,8 +82,6 @@ void VideoWidget::initialize()
             &VideoWidget::onFrameDisplayed, Qt::QueuedConnection);
     connect(m_frameRenderer, &FrameRenderer::frameDisplayed, this,
             &VideoWidget::frameDisplayed, Qt::QueuedConnection);
-    connect(m_frameRenderer, &FrameRenderer::textureReady, this,
-            &VideoWidget::updateTexture, Qt::DirectConnection);
     connect(m_frameRenderer, SIGNAL(imageReady()), SIGNAL(imageReady()));
     m_initSem.release();
     m_isInitialized = true;
@@ -409,13 +404,6 @@ void VideoWidget::setSnapToGrid(bool snap)
 {
     m_snapToGrid = snap;
     emit snapToGridChanged();
-}
-
-void VideoWidget::updateTexture(unsigned int yName, unsigned int uName, unsigned int vName)
-{
-    m_texture[0] = yName;
-    m_texture[1] = uName;
-    m_texture[2] = vName;
 }
 
 // MLT consumer-frame-show event handler
