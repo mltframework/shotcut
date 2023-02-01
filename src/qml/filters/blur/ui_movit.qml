@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,6 @@ Item {
     function updateFilter(position) {
         if (blockUpdate)
             return;
-        setControls();
         var value = slider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)

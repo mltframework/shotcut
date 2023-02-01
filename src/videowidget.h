@@ -29,9 +29,13 @@
 
 class QmlFilter;
 class QmlMetadata;
+class QOpenGLContext;
+class QOffscreenSurface;
 
 namespace Mlt {
 
+class Filter;
+class RenderThread;
 class FrameRenderer;
 
 typedef void *( *thread_function_t )( void * );
@@ -50,6 +54,9 @@ public:
     virtual ~VideoWidget();
 
     int setProducer(Mlt::Producer *, bool isMulti = false);
+    void createThread(RenderThread **thread, thread_function_t function, void *data);
+    void startGlsl();
+    void stopGlsl();
     int reconfigure(bool isMulti);
 
     void play(double speed = 1.0)
@@ -142,6 +149,11 @@ private:
     QPoint m_dragStart;
     QSemaphore m_initSem;
     bool m_isInitialized;
+    std::unique_ptr<Filter> m_glslManager;
+    std::unique_ptr<Event> m_threadStartEvent;
+    std::unique_ptr<Event> m_threadStopEvent;
+    std::unique_ptr<Event> m_threadCreateEvent;
+    std::unique_ptr<Event> m_threadJoinEvent;
     FrameRenderer *m_frameRenderer;
     float m_zoom;
     QPoint m_offset;
@@ -169,6 +181,23 @@ protected:
     int m_maxTextureSize;
     SharedFrame m_sharedFrame;
     QMutex m_mutex;
+};
+
+class RenderThread : public QThread
+{
+    Q_OBJECT
+public:
+    RenderThread(thread_function_t function, void *data);
+    ~RenderThread();
+
+protected:
+    void run();
+
+private:
+    thread_function_t m_function;
+    void *m_data;
+    std::unique_ptr<QOpenGLContext> m_context;
+    std::unique_ptr<QOffscreenSurface> m_surface;
 };
 
 class FrameRenderer : public QThread

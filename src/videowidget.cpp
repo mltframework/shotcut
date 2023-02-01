@@ -18,6 +18,7 @@
 #include <QtWidgets>
 #include <QUrl>
 #include <QOffscreenSurface>
+#include <QOpenGLContext>
 #include <QtQml>
 #include <QQuickItem>
 #include <Mlt.h>
@@ -36,7 +37,7 @@ VideoWidget::VideoWidget(QObject *parent)
     , m_grid(0)
     , m_initSem(0)
     , m_isInitialized(false)
-    , m_frameRenderer(0)
+    , m_frameRenderer(nullptr)
     , m_zoom(0.0f)
     , m_offset(QPoint(0, 0))
     , m_snapToGrid(true)
@@ -54,6 +55,12 @@ VideoWidget::VideoWidget(QObject *parent)
     rootContext()->setContextProperty("video", this);
     m_refreshTimer.setInterval(10);
     m_refreshTimer.setSingleShot(true);
+
+    if (Settings.playerGPU())
+        m_glslManager.reset(new Filter(profile(), "glsl.manager"));
+    if ((m_glslManager && !m_glslManager->is_valid())) {
+        m_glslManager.reset();
+    }
 
     connect(quickWindow(), &QQuickWindow::visibilityChanged, this, &VideoWidget::setBlankScene,
             Qt::QueuedConnection);
@@ -224,6 +231,82 @@ int VideoWidget::setProducer(Mlt::Producer *producer, bool isMulti)
     return error;
 }
 
+void VideoWidget::createThread(RenderThread **thread, thread_function_t function, void *data)
+{
+#ifdef Q_OS_WIN
+    // On Windows, MLT event consumer-thread-create is fired from the Qt main thread.
+    while (!m_isInitialized)
+        QCoreApplication::processEvents();
+#else
+    if (!m_isInitialized) {
+        m_initSem.acquire();
+    }
+#endif
+    (*thread) = new RenderThread(function, data);
+    (*thread)->start();
+}
+
+static void onThreadCreate(mlt_properties owner, VideoWidget *self, mlt_event_data data)
+{
+    Q_UNUSED(owner)
+    auto threadData = (mlt_event_data_thread *) Mlt::EventData(data).to_object();
+    if (threadData) {
+        auto renderThread = (RenderThread *) threadData->thread;
+        self->createThread(&renderThread, threadData->function, threadData->data);
+    }
+}
+
+static void onThreadJoin(mlt_properties owner, VideoWidget *self, mlt_event_data data)
+{
+    Q_UNUSED(owner)
+    Q_UNUSED(self)
+    auto threadData = (mlt_event_data_thread *) Mlt::EventData(data).to_object();
+    if (threadData) {
+        auto renderThread = (RenderThread *) threadData->thread;
+        if (renderThread) {
+            renderThread->quit();
+            renderThread->wait();
+            delete renderThread;
+        }
+    }
+}
+
+void VideoWidget::startGlsl()
+{
+    if (m_glslManager) {
+        m_glslManager->fire_event("init glsl");
+        if (!m_glslManager->get_int("glsl_supported")) {
+            m_glslManager.reset();
+            // Need to destroy MLT global reference to prevent filters from trying to use GPU.
+            mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
+            emit gpuNotSupported();
+        } else {
+            emit started();
+        }
+    }
+}
+
+static void onThreadStarted(mlt_properties owner, VideoWidget *self)
+{
+    Q_UNUSED(owner)
+    self->startGlsl();
+}
+
+void VideoWidget::stopGlsl()
+{
+    //TODO This is commented out for now because it is causing crashes.
+    //Technically, this should be the correct thing to do, but it appears
+    //some changes in the 15.01 and 15.03 releases have created regression
+    //with respect to restarting the consumer in GPU mode.
+//    m_glslManager->fire_event("close glsl");
+}
+
+static void onThreadStopped(mlt_properties owner, VideoWidget *self)
+{
+    Q_UNUSED(owner)
+    self->stopGlsl();
+}
+
 int VideoWidget::reconfigure(bool isMulti)
 {
     int error = 0;
@@ -243,6 +326,11 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer.reset(new Mlt::FilteredConsumer(previewProfile(), "multi"));
         else
             m_consumer.reset(new Mlt::FilteredConsumer(previewProfile(), serviceName.toLatin1().constData()));
+
+        m_threadStartEvent.reset();
+        m_threadStopEvent.reset();
+        m_threadCreateEvent.reset();
+        m_threadJoinEvent.reset();
     }
     if (m_consumer->is_valid()) {
         // Connect the producer to the consumer - tell it to "run" later
@@ -281,7 +369,22 @@ int VideoWidget::reconfigure(bool isMulti)
                 m_consumer->set("keyer", property("keyer").toInt());
             m_consumer->set("video_delay", Settings.playerVideoDelayMs());
         }
-        emit started();
+        if (m_glslManager) {
+            if (!m_threadCreateEvent)
+                m_threadCreateEvent.reset(m_consumer->listen("consumer-thread-create", this,
+                                                             (mlt_listener) onThreadCreate));
+            if (!m_threadJoinEvent)
+                m_threadJoinEvent.reset(m_consumer->listen("consumer-thread-join", this,
+                                                           (mlt_listener) onThreadJoin));
+            if (!m_threadStartEvent)
+                m_threadStartEvent.reset(m_consumer->listen("consumer-thread-started", this,
+                                                            (mlt_listener) onThreadStarted));
+            if (!m_threadStopEvent)
+                m_threadStopEvent.reset(m_consumer->listen("consumer-thread-stopped", this,
+                                                           (mlt_listener) onThreadStopped));
+        } else {
+            emit started();
+        }
     } else {
         // Cleanup on error
         error = 2;
@@ -416,13 +519,38 @@ void VideoWidget::on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_dat
             QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection,
                                       Q_ARG(Mlt::Frame, frame));
         } else if (!Settings.playerRealtime()) {
-            LOG_WARNING() << "GLWidget dropped frame" << frame.get_position();
+            LOG_WARNING() << "VideoWidget dropped frame" << frame.get_position();
         }
     }
 }
 
+RenderThread::RenderThread(thread_function_t function, void *data)
+    : QThread{nullptr}
+    , m_function{function}
+    , m_data{data}
+    , m_context{new QOpenGLContext}
+, m_surface{new QOffscreenSurface}
+{
+    m_context->create();
+    m_context->moveToThread(this);
+    m_surface->create();
+}
+
+RenderThread::~RenderThread()
+{
+    m_surface->destroy();
+}
+
+void RenderThread::run()
+{
+    Q_ASSERT(m_context->isValid());
+    m_context->makeCurrent(m_surface.get());
+    m_function(m_data);
+    m_context->doneCurrent();
+}
+
 FrameRenderer::FrameRenderer()
-    : QThread(0)
+    : QThread(nullptr)
     , m_semaphore(3)
     , m_imageRequested(false)
 {
@@ -437,6 +565,14 @@ FrameRenderer::~FrameRenderer()
 
 void FrameRenderer::showFrame(Mlt::Frame frame)
 {
+    if (Settings.playerGPU()) {
+        // pre-convert the image to yuv420p because SharedFrame loses info movit needs
+        mlt_image_format format = mlt_image_yuv420p;
+        int width = frame.get_int("width");
+        int height = frame.get_int("height");
+        frame.get_image(format, width, height);
+    }
+
     m_displayFrame = SharedFrame(frame);
     emit frameDisplayed(m_displayFrame);
 
