@@ -1871,13 +1871,11 @@ void MainWindow::setupActions()
     // Setup full screen action
     action = ui->actionEnterFullScreen;
     QList<QKeySequence> fullScreenShortcuts;
-    fullScreenShortcuts << QKeySequence(Qt::Key_F11);
 #ifdef Q_OS_MAC
-    // Qt 5 on OS X supports the standard Full Screen window widget.
-    action->setVisible(false);
-    // OS X has a standard Full Screen shortcut we should use.
     fullScreenShortcuts << QKeySequence(Qt::CTRL | Qt::META | Qt::Key_F);
+    fullScreenShortcuts << QKeySequence(Qt::Key_F11);
 #else
+    fullScreenShortcuts << QKeySequence(Qt::Key_F11);
     fullScreenShortcuts << QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F);
 #endif
     action->setShortcuts(fullScreenShortcuts);
