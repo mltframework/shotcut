@@ -950,9 +950,7 @@ void MainWindow::setupSettingsMenu()
     connect(m_languagesGroup, SIGNAL(triggered(QAction *)), this, SLOT(onLanguageTriggered(QAction *)));
 
     // Setup the themes actions
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
-    delete ui->menuTheme;
-#else
+#if defined(SHOTCUT_THEME)
     group = new QActionGroup(this);
     group->addAction(ui->actionSystemTheme);
     group->addAction(ui->actionFusionDark);
@@ -963,6 +961,8 @@ void MainWindow::setupSettingsMenu()
         ui->actionFusionLight->setChecked(true);
     else
         ui->actionSystemTheme->setChecked(true);
+#else
+    delete ui->menuTheme;
 #endif
 
 #if defined(Q_OS_WIN)
@@ -2880,12 +2880,15 @@ void MainWindow::changeTheme(const QString &theme)
 {
     LOG_DEBUG() << "begin";
     auto mytheme = theme;
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+
+#if !defined(SHOTCUT_THEME)
+    // Workaround Quick Controls not using our custom palette - temporarily?
     std::unique_ptr<QStyle> style {QStyleFactory::create("fusion")};
     auto brightness = style->standardPalette().color(QPalette::Text).lightnessF();
     LOG_DEBUG() << brightness;
     mytheme = brightness < 0.5f ? "light" : "dark";
 #endif
+
     if (mytheme == "dark") {
         QApplication::setStyle("Fusion");
         QPalette palette;
