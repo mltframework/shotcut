@@ -2887,8 +2887,16 @@ void MainWindow::changeTheme(const QString &theme)
     auto brightness = style->standardPalette().color(QPalette::Text).lightnessF();
     LOG_DEBUG() << brightness;
     mytheme = brightness < 0.5f ? "light" : "dark";
-#endif
-
+    QApplication::setStyle("Fusion");
+    QIcon::setThemeName(mytheme);
+# if defined(Q_OS_MAC)
+    if (mytheme == "dark") {
+        auto palette = QGuiApplication::palette();
+        palette.setColor(QPalette::AlternateBase, palette.color(QPalette::Base).lighter());
+        QGuiApplication::setPalette(palette);
+    }
+# endif
+#else
     if (mytheme == "dark") {
         QApplication::setStyle("Fusion");
         QPalette palette;
@@ -2920,6 +2928,7 @@ void MainWindow::changeTheme(const QString &theme)
         QApplication::setStyle(qApp->property("system-style").toString());
         QIcon::setThemeName("oxygen");
     }
+#endif
     LOG_DEBUG() << "end";
 }
 
