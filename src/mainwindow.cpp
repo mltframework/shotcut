@@ -2895,6 +2895,8 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::AlternateBase, palette.color(QPalette::Base).lighter());
         QGuiApplication::setPalette(palette);
     }
+# elif defined(Q_OS_WIN)
+    QGuiApplication::setPalette(style->standardPalette());
 # endif
 #else
     if (mytheme == "dark") {
