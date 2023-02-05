@@ -40,7 +40,7 @@ class FrameRenderer;
 
 typedef void *( *thread_function_t )( void * );
 
-class VideoWidget : public QQuickWidget, public Controller/*, protected QOpenGLFunctions*/
+class VideoWidget : public QQuickWidget, public Controller
 {
     Q_OBJECT
     Q_PROPERTY(QRectF rect READ rect NOTIFY rectChanged)

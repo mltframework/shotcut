@@ -278,7 +278,7 @@ void VideoWidget::startGlsl()
         if (!m_glslManager->get_int("glsl_supported")) {
             m_glslManager.reset();
             // Need to destroy MLT global reference to prevent filters from trying to use GPU.
-            mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
+            mlt_properties_clear(mlt_global_properties(), "glslManager");
             emit gpuNotSupported();
         } else {
             emit started();
@@ -531,8 +531,16 @@ RenderThread::RenderThread(thread_function_t function, void *data)
     , m_context{new QOpenGLContext}
 , m_surface{new QOffscreenSurface}
 {
+    QSurfaceFormat format;
+    format.setProfile(QSurfaceFormat::CoreProfile);
+    format.setMajorVersion(3);
+    format.setMinorVersion(2);
+    format.setDepthBufferSize(0);
+    format.setStencilBufferSize(0);
+    m_context->setFormat(format);
     m_context->create();
     m_context->moveToThread(this);
+    m_surface->setFormat(format);
     m_surface->create();
 }
 
