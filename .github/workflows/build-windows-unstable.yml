@@ -2,9 +2,9 @@ name: build-shotcut-windows-unstable
 
 on:
   workflow_dispatch:
-#  schedule:
+  schedule:
     # nightly
-#    - cron: '0 8 * * *'
+    - cron: '0 8 * * *'
 
 jobs:
   build:
@@ -50,6 +50,10 @@ jobs:
             mingw-w64-x86_64-vid.stab
             mingw-w64-x86_64-x264
             mingw-w64-x86_64-x265
+            mingw-w64-x86_64-libarchive
+            mingw-w64-x86_64-potrace
+            mingw-w64-x86_64-libimagequant
+            mingw-w64-x86_64-python3.10
 
       - uses: actions/checkout@v2
 
@@ -58,33 +62,32 @@ jobs:
         run: |
           pacman --noconfirm -Rdd mingw-w64-x86_64-aom
           echo Preparing version
-          echo $(date +"UNSTABLE-%y.%m.%d") > VERSION
+          echo $(date +"%y.%m.%d") > VERSION
           VERSION=$(cat VERSION)
           echo VERSION=$VERSION
           FILENAME_VERSION=$(echo $VERSION | tr -d .)
           pushd "$HOME"
+          echo Downloading Qt
+          mkdir Qt
+          cd Qt
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.4.2-x64-mingw810.txz
+          echo Extracting Qt
+          tar -xJf qt-6.4.2-x64-mingw810.txz
+          cd ..
           echo Downloading prebuilt SWH LADSPA plugins
           curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
           echo Downloading a few other prebuilt dependencies
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v4.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v5.txz
           echo Extracting prebuilt dependencies
-          tar -xJf mlt-prebuilt-mingw64-v4.txz
-          mkdir Qt
-          cd Qt
-          echo Downloading Qt
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-5.15.2-x64-mingw810.txz
-          echo Extracting Qt
-          tar -xJf qt-5.15.2-x64-mingw810.txz
+          tar -xJf mlt-prebuilt-mingw64-v5.txz
           CHECKOUT_DIR=$(popd)
           popd
           echo Running the build script
           echo INSTALL_DIR=\"$CHECKOUT_DIR/build\"
           echo INSTALL_DIR=\"$CHECKOUT_DIR/build\" > build-shotcut.conf
-          echo MLT_HEAD=0 >> build-shotcut.conf
-          echo MLT_REVISION=v7 >> build-shotcut.conf
-          echo SHOTCUT_HEAD=0 >> build-shotcut.conf
-          echo SHOTCUT_REVISION=MLTv7 >> build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
+          echo SHOTCUT_HEAD=0 >> build-shotcut.conf
+          echo SHOTCUT_REVISION=origin/qt6 >> build-shotcut.conf
           bash scripts/build-shotcut-msys2.sh
           pushd build
           echo Installing awscli
@@ -98,6 +101,9 @@ jobs:
           echo Signing shotcut.exe
           osslsigncode sign -pkcs12 CodeSignCertificates.p12.new -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in Shotcut/shotcut.exe -out Shotcut/shotcut-signed.exe
           mv Shotcut/shotcut-signed.exe Shotcut/shotcut.exe
+          echo Signing glaxnimate.exe
+          osslsigncode sign -pkcs12 CodeSignCertificates.p12.new -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in Shotcut/glaxnimate.exe -out Shotcut/glaxnimate-signed.exe
+          mv Shotcut/glaxnimate-signed.exe Shotcut/glaxnimate.exe
           echo Packaging the portable zip
           zip -gr shotcut-win64-$FILENAME_VERSION.zip Shotcut
           echo Packaging the installer

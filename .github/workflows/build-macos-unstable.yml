@@ -2,9 +2,9 @@ name: build-shotcut-macos-unstable
 
 on:
   workflow_dispatch:
-#  schedule:
+  schedule:
     # nightly
-#    - cron: '0 12 * * *'
+    - cron: '0 12 * * *'
 
 jobs:
   build:
