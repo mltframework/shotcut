@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
+ * Copyright (c) 2015-2023 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,6 @@
 #include "widgets/scopes/videowaveformscopewidget.h"
 #include "widgets/scopes/videozoomscopewidget.h"
 #include "docks/scopedock.h"
-#include "settings.h"
 #include <Logger.h>
 #include <QMainWindow>
 #include <QMenu>
@@ -41,14 +40,12 @@ ScopeController::ScopeController(QMainWindow *mainWindow, QMenu *menu)
     createScopeDock<AudioPeakMeterScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioSpectrumScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioWaveformScopeWidget>(mainWindow, scopeMenu);
-    if (!Settings.playerGPU()) {
-        createScopeDock<VideoHistogramScopeWidget>(mainWindow, scopeMenu);
-        createScopeDock<VideoRgbParadeScopeWidget>(mainWindow, scopeMenu);
-        createScopeDock<VideoRgbWaveformScopeWidget>(mainWindow, scopeMenu);
-        createScopeDock<VideoVectorScopeWidget>(mainWindow, scopeMenu);
-        createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
-        createScopeDock<VideoZoomScopeWidget>(mainWindow, scopeMenu);
-    }
+    createScopeDock<VideoHistogramScopeWidget>(mainWindow, scopeMenu);
+    createScopeDock<VideoRgbParadeScopeWidget>(mainWindow, scopeMenu);
+    createScopeDock<VideoRgbWaveformScopeWidget>(mainWindow, scopeMenu);
+    createScopeDock<VideoVectorScopeWidget>(mainWindow, scopeMenu);
+    createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
+    createScopeDock<VideoZoomScopeWidget>(mainWindow, scopeMenu);
     LOG_DEBUG() << "end";
 }
 
