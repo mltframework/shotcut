@@ -338,7 +338,7 @@ int VideoWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
-        m_consumer->set("mlt_image_format", "yuv422");
+        m_consumer->set("mlt_image_format", m_glslManager ? "rgba" : "yuv422");
         m_consumer->set("color_trc", Settings.playerGamma().toLatin1().constData());
         m_consumer->set("channels", property("audio_channels").toInt());
 
@@ -573,14 +573,6 @@ FrameRenderer::~FrameRenderer()
 
 void FrameRenderer::showFrame(Mlt::Frame frame)
 {
-    if (Settings.playerGPU()) {
-        // pre-convert the image to yuv420p because SharedFrame loses info movit needs
-        mlt_image_format format = mlt_image_yuv420p;
-        int width = frame.get_int("width");
-        int height = frame.get_int("height");
-        frame.get_image(format, width, height);
-    }
-
     m_displayFrame = SharedFrame(frame);
     emit frameDisplayed(m_displayFrame);
 
