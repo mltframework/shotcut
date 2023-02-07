@@ -10,7 +10,6 @@ Metadata {
     qml: "ui.qml"
     vui: 'vui.qml'
     icon: 'icon.webp'
-    isGpuCompatible: false
 
     keyframes {
         allowAnimateIn: true
