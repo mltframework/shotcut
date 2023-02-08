@@ -919,11 +919,21 @@ function configure_compile_install_subproject {
   export LDFLAGS=`lookup LDFLAGS_ $1`
   log LDFLAGS=$LDFLAGS
 
+  MYPRECONFIG=`lookup PRECONFIG $1`
+  MYCONFIG=`lookup CONFIG $1`
+  MYBUILD=`lookup BUILD $1`
+  MYINSTALL=`lookup INSTALL $1`
+
   # Configure
   if [ "$ACTION_CONFIGURE" = "1" ]; then
 
   # Configure
   feedback_status Configuring $1
+
+  if test "$MYPRECONFIG" != ""; then
+    cmd $MYPRECONFIG || die "Unable to pre-configure $1"
+    feedback_status Done pre-configuring $1
+  fi
 
   # Special hack for mlt
   if test "mlt" = "$1"; then
@@ -958,7 +968,6 @@ function configure_compile_install_subproject {
     cmd cd ../build-aom || die "Unable to change to directory aom/builddir"
   fi
 
-  MYCONFIG=`lookup CONFIG $1`
   if test "$MYCONFIG" != ""; then
     cmd $MYCONFIG || die "Unable to configure $1"
     feedback_status Done configuring $1
@@ -976,6 +985,8 @@ function configure_compile_install_subproject {
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
   elif test "vmaf" = "$1"; then
     cmd ninja -C libvmaf/build -j $MAKEJ || die "Unable to build $1"
+  elif test "$MYBUILD" != ""; then
+    cmd $MYBUILD || die "Unable to build $1"
   elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
@@ -1007,6 +1018,8 @@ function configure_compile_install_subproject {
     cmd ninja install || die "Unable to install $1"
   elif test "gopro2gpx" = "$1" ; then
     cmd install -p -c gopro2gpx "$FINAL_INSTALL_DIR" || die "Unable to install $1"
+  elif test "$MYINSTALL" != "" ; then
+    cmd $MYINSTALL || die "Unable to install $1"
   elif test "$MYCONFIG" != "" ; then
     cmd make install || die "Unable to install $1"
   fi
