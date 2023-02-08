@@ -35,8 +35,7 @@ Box::Box ( )
 
 Box::~Box ( )
 {
-  if ( m_pContents )
-    delete m_pContents;
+  delete m_pContents;
   m_pContents = NULL;
   m_iContentSize = m_iHeaderSize = m_iPosition = 0;
 }
