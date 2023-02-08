@@ -436,7 +436,7 @@ Rectangle {
 
                         height: 16
                         policy: ScrollBar.AlwaysOn
-                        visible: tracksFlickable.contentWidth > tracksFlickable.width
+                        visible: tracksContainer.width > tracksFlickable.width
                         parent: tracksFlickable.parent
                         anchors.top: tracksFlickable.bottom
                         anchors.left: tracksFlickable.left

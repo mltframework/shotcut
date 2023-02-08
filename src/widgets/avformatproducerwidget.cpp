@@ -231,11 +231,11 @@ void AvformatProducerWidget::reopen(Mlt::Producer *p)
             position = p->get_out();
         p->set("in", m_producer->get_in());
     }
+    MLT.stop();
     if (MLT.setProducer(p)) {
         AbstractProducerWidget::setProducer(0);
         return;
     }
-    MLT.stop();
     emit producerReopened(false);
     emit producerChanged(p);
     MLT.seek(position);

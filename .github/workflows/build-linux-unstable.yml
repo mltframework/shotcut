@@ -2,12 +2,12 @@ name: build-shotcut-linux-unstable
 
 on:
   workflow_dispatch:
-#  schedule:
+  schedule:
     # nightly
-#    - cron: '0 8 * * *'
+    - cron: '0 8 * * *'
 
 env:
-  IMAGE_NAME: mltframework/shotcut-build:qt5.15.2-ubuntu18.04
+  IMAGE_NAME: mltframework/shotcut-build:qt6.4.2-ubuntu20.04
 
 jobs:
   build:
@@ -15,22 +15,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: qt6
 
       - name: Build
         run: |
           echo Preparing version
-          echo $(date +"UNSTABLE-%y.%m.%d") > VERSION
+          echo $(date +"%y.%m.%d") > VERSION
           VERSION=$(cat VERSION)
           echo VERSION=$VERSION
-          FILENAME_VERSION=$(echo $VERSION | tr -d .)
+          FILENAME_VERSION=UNSTABLE-$(echo $VERSION | tr -d .)
           cd scripts
           echo Making build script config file
           echo CLEANUP=0 > build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
-          echo MLT_HEAD=0 >> build-shotcut.conf
-          echo MLT_REVISION=v7 >> build-shotcut.conf
           echo SHOTCUT_HEAD=0 >> build-shotcut.conf
-          echo SHOTCUT_REVISION=MLTv7 >> build-shotcut.conf
+          echo SHOTCUT_REVISION=origin/qt6 >> build-shotcut.conf
           docker run -v $PWD:/root/shotcut $IMAGE_NAME
           echo Renaming build artifacts
           mv shotcut.txz shotcut-linux-x86_64-$FILENAME_VERSION.txz
@@ -62,7 +62,7 @@ jobs:
           cd packaging/linux
           wget https://raw.githubusercontent.com/probonopd/AppImages/master/pkg2appimage
           bash -ex pkg2appimage appimage/appimage.yml
-          FILENAME_VERSION=$(cat Shotcut/VERSION | tr -d .)
+          FILENAME_VERSION=UNSTABLE-$(cat Shotcut/VERSION | tr -d .)
           mv out/*.AppImage out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
           chmod +x out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
 
@@ -81,9 +81,11 @@ jobs:
         if: ${{ github.repository_owner == 'mltframework' }}
         uses: samuelmeuli/action-snapcraft@v1.2.0
         with:
-          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
           use_lxd: true
       - name: Package snap
+        if: ${{ github.repository_owner == 'mltframework' }}
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
         run: |
           VERSION=$(cat VERSION)
           mv scripts/shotcut-linux-x86_64-*.txz packaging/linux
