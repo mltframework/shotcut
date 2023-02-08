@@ -89,6 +89,9 @@ ENABLE_GLAXNIMATE=1
 GLAXNIMATE_HEAD=0
 GLAXNIMATE_REVISION="v0.5.1"
 ENABLE_GOPRO2GPX=1
+ENABLE_OPENCV=1
+OPENCV_HEAD=0
+OPENCV_REVISION="4.7.0"
 
 PYTHON_VERSION_DEFAULT=3.8
 PYTHON_VERSION_DARWIN=3.10
@@ -240,6 +243,12 @@ function to_key {
     ;;
     gopro2gpx)
       echo 25
+    ;;
+    opencv)
+      echo 26
+    ;;
+    opencv_contrib)
+      echo 27
     ;;
     *)
       echo UNKNOWN
@@ -475,6 +484,9 @@ function set_globals {
     if test "$ENABLE_GOPRO2GPX" = 1 ; then
         SUBDIRS="$SUBDIRS gopro2gpx"
     fi
+    if test "$ENABLE_OPENCV" = 1 ; then
+        SUBDIRS="opencv opencv_contrib $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -522,6 +534,8 @@ function set_globals {
   REPOLOCS[23]="https://github.com/Netflix/vmaf.git"
   REPOLOCS[24]="https://gitlab.com/ddennedy/glaxnimate.git"
   REPOLOCS[25]="https://github.com/ddennedy/gopro2gpx.git"
+  REPOLOCS[26]="https://github.com/opencv/opencv.git"
+  REPOLOCS[27]="https://github.com/opencv/opencv_contrib.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -547,6 +561,8 @@ function set_globals {
   REPOTYPES[23]="git"
   REPOTYPES[24]="git"
   REPOTYPES[25]="git"
+  REPOTYPES[26]="git"
+  REPOTYPES[27]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -627,6 +643,14 @@ function set_globals {
     REVISIONS[24]="$GLAXNIMATE_REVISION"
   fi
   REVISIONS[25]=""
+  REVISIONS[26]=""
+  if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
+    REVISIONS[26]="$OPENCV_REVISION"
+  fi
+  REVISIONS[27]=""
+  if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
+    REVISIONS[27]="$OPENCV_REVISION"
+  fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
@@ -741,9 +765,8 @@ function set_globals {
   # mlt
   CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_QT=OFF -DMOD_QT6=ON -DMOD_GLAXNIMATE_QT6=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF $CMAKE_DEBUG_FLAG"
   # Remember, if adding more of these, to update the post-configure check.
-  if test "1" = "$MLT_DISABLE_SOX" ; then
-    CONFIG[1]="${CONFIG[1]} -DMOD_SOX=OFF"
-  fi
+  [ "$ENABLE_OPENCV" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_OPENCV=ON"
+  [ "$MLT_DISABLE_SOX" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_SOX=OFF"
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[1]="${CONFIG[1]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
@@ -979,6 +1002,15 @@ function set_globals {
   LDFLAGS_[25]="$LDFLAGS"
   BUILD[25]="ninja -j $MAKEJ"
   INSTALL[25]="install -p -c gopro2gpx $FINAL_INSTALL_DIR/bin"
+
+  #####
+  # opencv
+  CONFIG[26]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules $CMAKE_DEBUG_FLAG"
+  [ "$TARGET_OS" = "Darwin" ] && CONFIG[26]="${CONFIG[26]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
+  CFLAGS_[26]="$CFLAGS"
+  LDFLAGS_[26]="$LDFLAGS"
+  BUILD[26]="ninja -C build -j $MAKEJ"
+  INSTALL[26]="ninja -C build install"
 }
 
 function build_ffmpeg_darwin {

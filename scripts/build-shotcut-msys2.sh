@@ -58,6 +58,9 @@ ENABLE_GLAXNIMATE=1
 GLAXNIMATE_HEAD=0
 GLAXNIMATE_REVISION="v0.5.1"
 ENABLE_GOPRO2GPX=1
+ENABLE_OPENCV=1
+OPENCV_HEAD=0
+OPENCV_REVISION="4.7.0"
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -176,6 +179,12 @@ function to_key {
     ;;
     gopro2gpx)
       echo 14
+    ;;
+    opencv)
+      echo 15
+    ;;
+    opencv_contrib)
+      echo 16
     ;;
     *)
       echo UNKNOWN
@@ -368,6 +377,9 @@ function set_globals {
     if test "$ENABLE_GOPRO2GPX" = 1 ; then
         SUBDIRS="$SUBDIRS gopro2gpx"
     fi
+    if test "$ENABLE_OPENCV" = 1 ; then
+        SUBDIRS="opencv opencv_contrib $SUBDIRS"
+    fi
     SUBDIRS="$SUBDIRS mlt shotcut"
   fi
 
@@ -425,6 +437,8 @@ function set_globals {
   REPOTYPES[12]="git"
   REPOTYPES[13]="git"
   REPOTYPES[14]="git"
+  REPOTYPES[15]="git"
+  REPOTYPES[16]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -475,6 +489,14 @@ function set_globals {
     REVISIONS[13]="$GLAXNIMATE_REVISION"
   fi
   REVISIONS[14]=""
+  REVISIONS[15]=""
+  if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
+    REVISIONS[15]="$OPENCV_REVISION"
+  fi
+  REVISIONS[16]=""
+  if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
+    REVISIONS[16]="$OPENCV_REVISION"
+  fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
   CPUS=$(nproc)
@@ -523,6 +545,7 @@ function set_globals {
   #####
   # mlt
   CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_GDK=OFF -DMOD_GLAXNIMATE_QT6=ON -DMOD_QT=OFF -DMOD_QT6=ON -DMOD_SDL1=OFF $CMAKE_DEBUG_FLAG"
+  [ "$ENABLE_OPENCV" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_OPENCV=ON"
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[1]="-L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
 
@@ -617,6 +640,14 @@ function set_globals {
   CONFIG[14]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
   CFLAGS_[14]="$CFLAGS"
   LDFLAGS_[14]="$LDFLAGS"
+
+  #####
+  # opencv
+  CONFIG[15]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules $CMAKE_DEBUG_FLAG"
+  CFLAGS_[15]="$CFLAGS"
+  LDFLAGS_[15]="$LDFLAGS"
+  BUILD[15]="ninja -C build -j $MAKEJ"
+  INSTALL[15]="ninja -C build install"
 }
 
 ######################################################################
