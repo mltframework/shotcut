@@ -549,13 +549,18 @@ function set_globals {
   CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_GDK=OFF -DMOD_GLAXNIMATE_QT6=ON -DMOD_QT=OFF -DMOD_QT6=ON -DMOD_SDL1=OFF $CMAKE_DEBUG_FLAG"
   [ "$ENABLE_OPENCV" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_OPENCV=ON"
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
+  CXXFLAGS_[1="${CFLAGS_[1]} -std=c++11 -D_XOPEN_SOURCE=700"
   LDFLAGS_[1]="-L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
+  BUILD[1]="ninja -j $MAKEJ"
+  INSTALL[1]="ninja install"
 
   #####
   # frei0r
   CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1 -GNinja $CMAKE_DEBUG_FLAG"
   CFLAGS_[2]="$CFLAGS"
   LDFLAGS_[2]=$LDFLAGS
+  BUILD[2]="ninja -j $MAKEJ"
+  INSTALL[2]="ninja install"
 
   #####
   # movit
@@ -563,13 +568,17 @@ function set_globals {
   # MinGW does not provide ffs(), but there is a gcc intrinsic for it.
   CFLAGS_[3]="$CFLAGS -Dffs=__builtin_ffs"
   CFLAGS_[3]="${CFLAGS_[3]} -fpermissive"
+  CXXFLAGS_[3]=$CFLAGS[3]
   LDFLAGS_[3]=$LDFLAGS
+  BUILD[3]="make -j$MAKEJ libmovit.la"
 
   #####
   # shotcut
   CONFIG[4]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -D SHOTCUT_VERSION=$SHOTCUT_VERSION $CMAKE_DEBUG_FLAG"
   CFLAGS_[4]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[4]="$ASAN_LDFLAGS $LDFLAGS"
+  BUILD[4]="ninja -j $MAKEJ"
+  INSTALL[4]="install_shotcut"
 
   #####
   # swh-plugins
@@ -584,15 +593,19 @@ function set_globals {
   #######
   # AMF - no build required
   CONFIG[7]=""
+  [ ! -d "$FINAL_INSTALL_DIR/include/AMF" ] && INSTALL[7]="install_amf"
 
   #########
   # bigsh0t
   CONFIG[8]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -GNinja $CMAKE_DEBUG_FLAG"
   CFLAGS_[8]=$CFLAGS
   LDFLAGS_[8]=$LDFLAGS
+  BUILD[8]="ninja -j $MAKEJ"
+  INSTALL[8]="install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1"
 
   #####
   # zimg
+  [ ! -e "$SOURCE_DIR"/zimg/configure ] && PRECONFIG[9]="./autogen.sh"
   CONFIG[9]="./configure --prefix=$FINAL_INSTALL_DIR"
   CFLAGS_[9]=$CFLAGS
   LDFLAGS_[9]=$LDFLAGS
@@ -607,6 +620,8 @@ function set_globals {
   fi
   CFLAGS_[10]=$CFLAGS
   LDFLAGS_[10]=$LDFLAGS
+  BUILD[10]="ninja -C builddir -j $MAKEJ"
+  INSTALL[10]="meson install -C builddir"
 
   #####
   # aom
@@ -614,6 +629,8 @@ function set_globals {
   CONFIG[11]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -DBUILD_SHARED_LIBS=1 -DCONFIG_AV1_DECODER=0 -DENABLE_EXAMPLES=0 -DENABLE_TESTS=0 ../aom"
   CFLAGS_[11]=$CFLAGS
   LDFLAGS_[11]=$LDFLAGS
+  BUILD[11]="ninja -j $MAKEJ"
+  INSTALL[1]="ninja install"
 
   #####
   # vmaf
@@ -625,6 +642,8 @@ function set_globals {
   fi
   CFLAGS_[12]=$CFLAGS
   LDFLAGS_[12]=$LDFLAGS
+  BUILD[12]="ninja -C libvmaf/build -j $MAKEJ"
+  INSTALL[12]="install_vmaf"
 
   #####
   # glaxnimate
@@ -636,12 +655,16 @@ function set_globals {
   fi
   CFLAGS_[13]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[13]="$ASAN_LDFLAGS $LDFLAGS"
+  BUILD[13]="ninja -j $MAKEJ"
+  INSTALL[13]="ninja translations install"
 
   #####
   # gopro2gpx
   CONFIG[14]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
   CFLAGS_[14]="$CFLAGS"
   LDFLAGS_[14]="$LDFLAGS"
+  BUILD[14]="ninja -j $MAKEJ"
+  INSTALL[14]="install -p -c gopro2gpx $FINAL_INSTALL_DIR"
 
   #####
   # opencv
@@ -650,6 +673,27 @@ function set_globals {
   LDFLAGS_[15]="$LDFLAGS"
   BUILD[15]="ninja -C build -j $MAKEJ"
   INSTALL[15]="ninja -C build install"
+}
+
+function install_amf {
+  cmd rm -rf Thirdparty
+  cmd mkdir -p "$FINAL_INSTALL_DIR/include/AMF"
+  cmd cp -av "amf/public/include/." "$FINAL_INSTALL_DIR/include/AMF"
+}
+
+function install_shotcut {
+  cmd ninja install
+  cmd install -c COPYING "$FINAL_INSTALL_DIR"
+  cmd install -c packaging/windows/shotcut.nsi "$FINAL_INSTALL_DIR"/..
+  cmd sed -i "s/YY.MM.DD/$SHOTCUT_VERSION/" "$FINAL_INSTALL_DIR"/../shotcut.nsi
+  cmd install -d "$FINAL_INSTALL_DIR"/share/translations
+  cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
+}
+
+function install_vmaf {
+  cmd ninja install -C libvmaf/build || die "Unable to install $1"
+  cmd install -d "$FINAL_INSTALL_DIR"/share/vmaf
+  cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf || die "Unable to install $1"
 }
 
 ######################################################################
@@ -916,6 +960,8 @@ function configure_compile_install_subproject {
   log PKG_CONFIG_PATH=$PKG_CONFIG_PATH
   export CFLAGS=`lookup CFLAGS_ $1`
   log CFLAGS=$CFLAGS
+  export CXXFLAGS=`lookup CXXFLAGS_ $1`
+  log CXXFLAGS=$CFLAGS
   export LDFLAGS=`lookup LDFLAGS_ $1`
   log LDFLAGS=$LDFLAGS
 
@@ -935,33 +981,6 @@ function configure_compile_install_subproject {
     feedback_status Done pre-configuring $1
   fi
 
-  # Special hack for mlt
-  if test "mlt" = "$1"; then
-    export CXXFLAGS="$CFLAGS -std=c++11 -D_XOPEN_SOURCE=700"
-  fi
-
-  # Special hack for movit
-  if test "movit" = "$1"; then
-#    export PATH="$HOME/mingw810_64/bin:$PATH"
-    export CXXFLAGS="$CFLAGS"
-  fi
-
-  # Special hack for AMF
-  if test "AMF" = "$1" -a ! -d "$FINAL_INSTALL_DIR/include/AMF"; then
-    cmd rm -rf Thirdparty
-    cmd mkdir -p "$FINAL_INSTALL_DIR/include/AMF"
-    cmd cp -av "amf/public/include/." "$FINAL_INSTALL_DIR/include/AMF"
-  fi
-
-  # Special hack for zimg
-  if test "zimg" = "$1" -a ! -e configure ; then
-    debug "Need to create configure for $1"
-    cmd ./autogen.sh || die "Unable to create configure file for $1"
-    if test ! -e configure ; then
-      die "Unable to confirm presence of configure file for $1"
-    fi
-  fi
-
   # Special hack for aom
   if test "aom" = "$1"; then
     cmd mkdir -p ../build-aom
@@ -977,15 +996,7 @@ function configure_compile_install_subproject {
 
   # Compile
   feedback_status Building $1 - this could take some time
-  if test "movit" = "$1" ; then
-    cmd make -j$MAKEJ libmovit.la || die "Unable to build $1"
-  elif test "frei0r" = "$1" -o "bigsh0t" = "$1" -o "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1" -o "glaxnimate" = "$1" -o "gopro2gpx" = "$1"; then
-    cmd ninja -j $MAKEJ || die "Unable to build $1"
-  elif test "dav1d" = "$1"; then
-    cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
-  elif test "vmaf" = "$1"; then
-    cmd ninja -C libvmaf/build -j $MAKEJ || die "Unable to build $1"
-  elif test "$MYBUILD" != ""; then
+  if test "$MYBUILD" != ""; then
     cmd $MYBUILD || die "Unable to build $1"
   elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
@@ -996,29 +1007,7 @@ function configure_compile_install_subproject {
   feedback_status Installing $1
   export LD_LIBRARY_PATH=`lookup LD_LIBRARY_PATH_ $1`
   log "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
-  if test "shotcut" = "$1" ; then
-    cmd ninja install
-    cmd install -c COPYING "$FINAL_INSTALL_DIR"
-    cmd install -c packaging/windows/shotcut.nsi "$FINAL_INSTALL_DIR"/..
-    cmd sed -i "s/YY.MM.DD/$SHOTCUT_VERSION/" "$FINAL_INSTALL_DIR"/../shotcut.nsi
-    cmd install -d "$FINAL_INSTALL_DIR"/share/translations
-    cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
-  elif test "frei0r" = "$1" -o "aom" = "$1" -o "mlt" = "$1"; then
-    cmd ninja install || die "Unable to install $1"
-  elif test "bigsh0t" = "$1" ; then
-    cmd install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
-  elif test "dav1d" = "$1"; then
-    cmd meson install -C builddir || die "Unable to install $1"
-  elif test "vmaf" = "$1"; then
-    cmd ninja install -C libvmaf/build || die "Unable to install $1"
-    cmd install -d "$FINAL_INSTALL_DIR"/share/vmaf
-    cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf || die "Unable to install $1"
-  elif test "glaxnimate" = "$1"; then
-    cmd ninja translations || die "Unable to build translations for $1"
-    cmd ninja install || die "Unable to install $1"
-  elif test "gopro2gpx" = "$1" ; then
-    cmd install -p -c gopro2gpx "$FINAL_INSTALL_DIR" || die "Unable to install $1"
-  elif test "$MYINSTALL" != "" ; then
+  if test "$MYINSTALL" != "" ; then
     cmd $MYINSTALL || die "Unable to install $1"
   elif test "$MYCONFIG" != "" ; then
     cmd make install || die "Unable to install $1"

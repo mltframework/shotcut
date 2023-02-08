@@ -773,7 +773,7 @@ function set_globals {
     CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include"
     LDFLAGS_[1]="${LDFLAGS_[1]} -L/opt/local/lib/libomp"
   fi
-  CXXFLAGS_[1]="$CFLAGS[1] -std=c++11"
+  CXXFLAGS_[1]="${CFLAGS[1]} -std=c++11"
   LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
   BUILD[1]="ninja -j $MAKEJ"
   INSTALL[1]="ninja install"
