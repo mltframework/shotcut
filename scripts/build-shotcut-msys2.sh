@@ -630,7 +630,7 @@ function set_globals {
   CFLAGS_[11]=$CFLAGS
   LDFLAGS_[11]=$LDFLAGS
   BUILD[11]="ninja -j $MAKEJ"
-  INSTALL[1]="ninja install"
+  INSTALL[11]="ninja install"
 
   #####
   # vmaf
