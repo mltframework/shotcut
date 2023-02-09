@@ -566,9 +566,8 @@ function set_globals {
   # movit
   CONFIG[3]="./autogen.sh --prefix=$FINAL_INSTALL_DIR"
   # MinGW does not provide ffs(), but there is a gcc intrinsic for it.
-  CFLAGS_[3]="$CFLAGS -Dffs=__builtin_ffs"
-  CFLAGS_[3]="${CFLAGS_[3]} -fpermissive"
-  CXXFLAGS_[3]=$CFLAGS[3]
+  CFLAGS_[3]="$CFLAGS -Dffs=__builtin_ffs -fpermissive"
+  CXXFLAGS_[3]="${CFLAGS[3]}"
   LDFLAGS_[3]=$LDFLAGS
   BUILD[3]="make -j$MAKEJ libmovit.la"
 

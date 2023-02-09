@@ -820,7 +820,7 @@ function set_globals {
   else
     CFLAGS_[5]="$CFLAGS"
   fi
-  CXXFLAGS_[5]=$CFLAGS[5]
+  CXXFLAGS_[5]="${CFLAGS[5]}"
   LDFLAGS_[5]=$LDFLAGS
   if [ "$TARGET_OS" = "Darwin" ]; then
     BUILD[5]="build_movit_darwin"
