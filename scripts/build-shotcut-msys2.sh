@@ -567,7 +567,7 @@ function set_globals {
   CONFIG[3]="./autogen.sh --prefix=$FINAL_INSTALL_DIR"
   # MinGW does not provide ffs(), but there is a gcc intrinsic for it.
   CFLAGS_[3]="$CFLAGS -Dffs=__builtin_ffs -fpermissive"
-  CXXFLAGS_[3]="${CFLAGS[3]}"
+  CXXFLAGS_[3]="${CFLAGS_[3]}"
   LDFLAGS_[3]=$LDFLAGS
   BUILD[3]="make -j$MAKEJ libmovit.la"
 
@@ -619,7 +619,7 @@ function set_globals {
   fi
   CFLAGS_[10]=$CFLAGS
   LDFLAGS_[10]=$LDFLAGS
-  BUILD[10]="ninja -C builddir -j $MAKEJ"
+  BUILD[10]="build_dav1d"
   INSTALL[10]="meson install -C builddir"
 
   #####
@@ -672,6 +672,11 @@ function set_globals {
   LDFLAGS_[15]="$LDFLAGS"
   BUILD[15]="ninja -C build -j $MAKEJ"
   INSTALL[15]="ninja -C build install"
+}
+
+function build_dav1d {
+  # dav1d frequently fails on Windows on generate symbol file
+  cmd ninja -C builddir -j $MAKEJ || cmd ninja -C builddir -j $MAKEJ
 }
 
 function install_amf {
