@@ -1137,6 +1137,8 @@ function deploy
   cmd mv lib/libCuteLogger.dll .
   if [ "$SDK" = "1" ]; then
     cmd mv bin/*.exe .
+    # OpenCV installs binaries to a weird place
+    cmd cp x64/mingw/bin/*.dll .
   else
     cmd mv bin/ffmpeg.exe .
     cmd mv bin/ffplay.exe .
@@ -1146,6 +1148,11 @@ function deploy
     cmd rm lib/*
     cmd rm -rf lib/cmake lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0
     cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
+    # OpenCV installs binaries to a weird place
+    cmd mv x64/mingw/bin/*.dll .
+    cmd rm -rf x64
+    cmd rm OpenCVConfig*
+    cmd rm setup_vars_opencv4.cmd
   fi
   cmd mv COPYING COPYING.txt
 
