@@ -1166,9 +1166,6 @@ function deploy
     cmd tar -xJf "$HOME/swh-plugins-win64-0.4.15.tar.xz"
   fi
 
-  log Copying some libs from mlt-prebuilt
-  cmd cp -p /mingw64/bin/.dll
-
   for lib in *.dll; do
     bundle_dlls "$lib"
   done
@@ -1186,8 +1183,9 @@ function deploy
             /mingw64/lib/python3.10/{json,collections,encodings,logging,urllib} \
       share/glaxnimate/glaxnimate/pythonhome/lib/python
 
+  log Copying some libs from mlt-prebuilt
   cmd cp -p "$HOME"/bin/*.dll .
-  cmd cp -p "$QTDIR"/bin/{libEGL,libGLESv2,d3dcompiler_47}.dll .
+  cmd cp -p "$QTDIR"/bin/d3dcompiler_47.dll .
 
   log Copying some libs from msys2
   cmd cp -p /mingw64/bin/{libcrypto-1_1-x64,libssl-1_1-x64}.dll .
