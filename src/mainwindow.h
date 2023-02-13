@@ -316,8 +316,6 @@ private slots:
     void on_actionUpgrade_triggered();
     void on_actionOpenXML_triggered();
     void onAutosaveTimeout();
-    void on_actionGammaSRGB_triggered(bool checked);
-    void on_actionGammaRec709_triggered(bool checked);
     void onFocusChanged(QWidget *old, QWidget *now) const;
     void onFocusObjectChanged(QObject *obj) const;
     void onFocusWindowChanged(QWindow *window) const;

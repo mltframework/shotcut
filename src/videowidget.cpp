@@ -339,7 +339,6 @@ int VideoWidget::reconfigure(bool isMulti)
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
         m_consumer->set("mlt_image_format", m_glslManager ? "rgba" : "yuv422");
-        m_consumer->set("color_trc", Settings.playerGamma().toLatin1().constData());
         m_consumer->set("channels", property("audio_channels").toInt());
 
         if (isMulti) {

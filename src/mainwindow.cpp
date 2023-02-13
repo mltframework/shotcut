@@ -751,13 +751,6 @@ void MainWindow::setupSettingsMenu()
     group->addAction(ui->actionBilinear);
     group->addAction(ui->actionBicubic);
     group->addAction(ui->actionHyper);
-    if (Settings.playerGPU()) {
-        group = new QActionGroup(this);
-        group->addAction(ui->actionGammaRec709);
-        group->addAction(ui->actionGammaSRGB);
-    } else {
-        delete ui->menuGamma;
-    }
     m_profileGroup = new QActionGroup(this);
     m_profileGroup->addAction(ui->actionProfileAutomatic);
     ui->actionProfileAutomatic->setData(QString());
@@ -1835,12 +1828,6 @@ void MainWindow::readPlayerSettings()
             break;
         }
     }
-
-    QString gamma = Settings.playerGamma();
-    if (gamma == "bt709")
-        ui->actionGammaRec709->setChecked(true);
-    else
-        ui->actionGammaSRGB->setChecked(true);
 
     LOG_DEBUG() << "end";
 }
@@ -3665,22 +3652,6 @@ void MainWindow::on_actionOpenXML_triggered()
             emit openFailed(url);
         }
     }
-}
-
-void MainWindow::on_actionGammaSRGB_triggered(bool checked)
-{
-    Q_UNUSED(checked)
-    Settings.setPlayerGamma("iec61966_2_1");
-    MLT.restart();
-    MLT.refreshConsumer();
-}
-
-void MainWindow::on_actionGammaRec709_triggered(bool checked)
-{
-    Q_UNUSED(checked)
-    Settings.setPlayerGamma("bt709");
-    MLT.restart();
-    MLT.refreshConsumer();
 }
 
 void MainWindow::onFocusChanged(QWidget *, QWidget * ) const

@@ -239,13 +239,6 @@
       </property>
       <addaction name="actionExternalNone"/>
      </widget>
-     <widget class="QMenu" name="menuGamma">
-      <property name="title">
-       <string>Gamma</string>
-      </property>
-      <addaction name="actionGammaSRGB"/>
-      <addaction name="actionGammaRec709"/>
-     </widget>
      <addaction name="actionScrubAudio"/>
      <addaction name="actionJack"/>
      <addaction name="actionRealtime"/>
@@ -253,7 +246,6 @@
      <addaction name="menuDeinterlacer"/>
      <addaction name="menuInterpolation"/>
      <addaction name="menuExternal"/>
-     <addaction name="menuGamma"/>
      <addaction name="actionSync"/>
     </widget>
     <addaction name="actionProject"/>
@@ -777,25 +769,6 @@
    </property>
    <property name="toolTip">
     <string>Open a MLT XML project file as a virtual clip</string>
-   </property>
-  </action>
-  <action name="actionGammaSRGB">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>sRGB (computer)</string>
-   </property>
-  </action>
-  <action name="actionGammaRec709">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Rec. 709 (TV)</string>
    </property>
   </action>
   <action name="actionScrubAudio">
