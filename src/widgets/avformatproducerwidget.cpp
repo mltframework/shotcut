@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -581,7 +581,8 @@ void AvformatProducerWidget::onFrameDecoded()
         } else if (isVariableFrameRate) {
             LOG_INFO() << resource << "is variable frame rate";
             offerConvert(tr("This file is variable frame rate, which is not reliable for editing."));
-        } else if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
+        } else if (QFile::exists(resource) && (!MLT.isSeekable(m_producer.data())
+                                               || resource.endsWith(".flac"))) {
             LOG_INFO() << resource << "is not seekable";
             offerConvert(tr("This file does not support seeking and cannot be used for editing."));
         } else if (QFile::exists(resource) && resource.endsWith(".m2t")) {
