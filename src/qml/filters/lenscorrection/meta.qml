@@ -23,6 +23,7 @@ Metadata {
     keywords: qsTr('deform lens distort wide angle panoramic hemispherical fisheye', 'search keywords for the Lens Correction video filter') + ' lens correction'
     mlt_service: 'frei0r.lenscorrection'
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true
