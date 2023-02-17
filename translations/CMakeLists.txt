@@ -20,6 +20,7 @@ set(LANGUAGES
     fr
     gd
     gl
+    he_IL
     hu
     it
     ko
