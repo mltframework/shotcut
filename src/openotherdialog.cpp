@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 #include "openotherdialog.h"
 #include "ui_openotherdialog.h"
 #include "mltcontroller.h"
-#include "settings.h"
 #include <Mlt.h>
 #include <QtWidgets>
 
@@ -73,8 +72,7 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     if (mltProducers->get_data("color")) {
         QTreeWidgetItem *item = new QTreeWidgetItem(group, QStringList(tr("Color")));
         item->setData(0, Qt::UserRole, ui->colorTab->objectName());
-        if (!Settings.playerGPU() && mltProducers->get_data("qtext")
-                && mltFilters->get_data("dynamictext")) {
+        if (mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext")) {
             QTreeWidgetItem *item = new QTreeWidgetItem(group, QStringList(tr("Text")));
             item->setData(0, Qt::UserRole, ui->textTab->objectName());
         }

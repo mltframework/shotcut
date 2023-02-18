@@ -1047,7 +1047,7 @@ void MainWindow::setupOpenOtherMenu()
     // populate the generators
     if (mltProducers->get_data("color")) {
         otherMenu->addAction(tr("Color"), this, SLOT(onOpenOtherTriggered()))->setObjectName("color");
-        if (!Settings.playerGPU() && mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext"))
+        if (mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext"))
             otherMenu->addAction(tr("Text"), this, SLOT(onOpenOtherTriggered()))->setObjectName("text");
     }
     if (mltProducers->get_data("glaxnimate"))
@@ -4211,7 +4211,7 @@ void MainWindow::onOpenOtherTriggered(QWidget *widget)
     QString name = widget->objectName();
     if (name == "NoiseWidget" || dialog.exec() == QDialog::Accepted) {
         auto isDevice = AbstractProducerWidget::isDevice(widget);
-        if (isDevice)
+        if (isDevice && !Settings.playerGPU())
             closeProducer();
         auto &profile = MLT.profile();
         auto producer = dynamic_cast<AbstractProducerWidget *>(widget)->newProducer(profile);
@@ -4219,8 +4219,6 @@ void MainWindow::onOpenOtherTriggered(QWidget *widget)
             delete producer;
             return;
         }
-        if (!isDevice)
-            closeProducer();
 
         if (!profile.is_explicit()) {
             profile.from_producer(*producer);
