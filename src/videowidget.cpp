@@ -251,8 +251,7 @@ static void onThreadCreate(mlt_properties owner, VideoWidget *self, mlt_event_da
     Q_UNUSED(owner)
     auto threadData = (mlt_event_data_thread *) Mlt::EventData(data).to_object();
     if (threadData) {
-        auto renderThread = (RenderThread *) threadData->thread;
-        self->createThread(&renderThread, threadData->function, threadData->data);
+        self->createThread((RenderThread **) threadData->thread, threadData->function, threadData->data);
     }
 }
 
@@ -261,8 +260,8 @@ static void onThreadJoin(mlt_properties owner, VideoWidget *self, mlt_event_data
     Q_UNUSED(owner)
     Q_UNUSED(self)
     auto threadData = (mlt_event_data_thread *) Mlt::EventData(data).to_object();
-    if (threadData) {
-        auto renderThread = (RenderThread *) threadData->thread;
+    if (threadData && threadData->thread) {
+        auto renderThread = (RenderThread *) *threadData->thread;
         if (renderThread) {
             renderThread->quit();
             renderThread->wait();
