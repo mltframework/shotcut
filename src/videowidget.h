@@ -162,7 +162,7 @@ private:
     QTimer m_refreshTimer;
     bool m_scrubAudio;
     QPoint m_mousePosition;
-
+    std::unique_ptr<RenderThread> m_renderThread;
 
     static void on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_data);
 

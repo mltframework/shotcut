@@ -242,8 +242,13 @@ void VideoWidget::createThread(RenderThread **thread, thread_function_t function
         m_initSem.acquire();
     }
 #endif
-    (*thread) = new RenderThread(function, data);
-    (*thread)->start();
+    if (!m_renderThread) {
+        m_renderThread.reset(new RenderThread(function, data));
+        (*thread) = m_renderThread.get();
+        (*thread)->start();
+    } else {
+        m_renderThread->start();
+    }
 }
 
 static void onThreadCreate(mlt_properties owner, VideoWidget *self, mlt_event_data data)
@@ -265,7 +270,6 @@ static void onThreadJoin(mlt_properties owner, VideoWidget *self, mlt_event_data
         if (renderThread) {
             renderThread->quit();
             renderThread->wait();
-            delete renderThread;
         }
     }
 }
