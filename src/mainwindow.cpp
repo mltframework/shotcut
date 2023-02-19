@@ -4308,7 +4308,7 @@ void MainWindow::onSceneGraphInitialized()
         } else {
             ui->actionGPU->setVisible(true);
         }
-    } else if (Settings.playerGPU()) {
+    } else {
         ui->actionGPU->setVisible(true);
     }
     auto videoWidget = (Mlt::VideoWidget *) & (MLT);
