@@ -39,23 +39,6 @@
 
 static const auto kHandleSeconds = 15.0;
 
-DecodeTask::DecodeTask(AvformatProducerWidget *widget)
-    : QObject(0)
-    , QRunnable()
-    , m_frame(widget->producer()->get_frame())
-{
-    connect(this, SIGNAL(frameDecoded()), widget, SLOT(onFrameDecoded()));
-}
-
-void DecodeTask::run()
-{
-    mlt_image_format format = mlt_image_none;
-    int w = MLT.profile().width();
-    int h = MLT.profile().height();
-    m_frame->get_image(format, w, h);
-    emit frameDecoded();
-}
-
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AvformatProducerWidget)
@@ -67,11 +50,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     ui->filenameLabel->setFrame(true);
     Util::setColorsToHighlight(ui->filenameLabel, QPalette::Base);
     connect(ui->applySpeedButton, SIGNAL(clicked()), SLOT(on_speedSpinBox_editingFinished()));
-    if (Settings.playerGPU())
-        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
-                SLOT(onFrameDisplayed(const SharedFrame &)));
-    else
-        connect(this, SIGNAL(producerChanged(Mlt::Producer *)), SLOT(onProducerChanged(Mlt::Producer *)));
+    connect(this, SIGNAL(producerChanged(Mlt::Producer *)), SLOT(onProducerChanged(Mlt::Producer *)));
 }
 
 AvformatProducerWidget::~AvformatProducerWidget()
@@ -168,23 +147,10 @@ void AvformatProducerWidget::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void AvformatProducerWidget::onFrameDisplayed(const SharedFrame &)
-{
-    // This forces avformat-novalidate or unloaded avformat to load and get
-    // media information.
-    delete m_producer->get_frame();
-    onFrameDecoded();
-    // We can stop listening to this signal if this is audio-only or if we have
-    // received the video resolution.
-    if (m_producer->get_int("audio_index") == -1 || m_producer->get_int("meta.media.width")
-            || m_producer->get_int("meta.media.height"))
-        disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this, 0);
-}
-
 void AvformatProducerWidget::onProducerChanged(Mlt::Producer *producer)
 {
     if ( producer->get_producer() == m_producer->get_producer() ) {
-        QThreadPool::globalInstance()->start(new DecodeTask(this), 10);
+        reloadProducerValues();
     }
 }
 
@@ -268,8 +234,9 @@ void AvformatProducerWidget::recreateProducer()
     }
 }
 
-void AvformatProducerWidget::onFrameDecoded()
+void AvformatProducerWidget::reloadProducerValues()
 {
+    m_producer->probe();
     int tabIndex = ui->tabWidget->currentIndex();
     ui->tabWidget->setTabEnabled(0, false);
     ui->tabWidget->setTabEnabled(1, false);
@@ -623,9 +590,6 @@ void AvformatProducerWidget::on_scanComboBox_activated(int index)
             // by setting them NULL.
             m_producer->set("force_progressive", QString::number(index).toLatin1().constData());
         emit producerChanged(producer());
-        if (Settings.playerGPU())
-            connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
-                    SLOT(onFrameDisplayed(const SharedFrame &)));
     }
 }
 
@@ -636,9 +600,6 @@ void AvformatProducerWidget::on_fieldOrderComboBox_activated(int index)
         if (m_producer->get("force_tff") || tff != index)
             m_producer->set("force_tff", QString::number(index).toLatin1().constData());
         emit producerChanged(producer());
-        if (Settings.playerGPU())
-            connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
-                    SLOT(onFrameDisplayed(const SharedFrame &)));
     }
 }
 
@@ -656,9 +617,6 @@ void AvformatProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
         emit producerChanged(producer());
-        if (Settings.playerGPU())
-            connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
-                    SLOT(onFrameDisplayed(const SharedFrame &)));
     }
 }
 

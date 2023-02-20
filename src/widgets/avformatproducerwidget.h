@@ -54,11 +54,8 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private slots:
-    void onFrameDisplayed(const SharedFrame &);
 
     void onProducerChanged(Mlt::Producer *);
-
-    void onFrameDecoded();
 
     void on_videoTrackComboBox_activated(int index);
 
@@ -137,22 +134,7 @@ private:
     void convert(TranscodeDialog &dialog);
     bool revertToOriginalResource();
     void setSyncVisibility();
-};
-
-
-class DecodeTask : public QObject, public QRunnable
-{
-    Q_OBJECT
-
-public:
-    explicit DecodeTask(AvformatProducerWidget *widget);
-    void run();
-
-signals:
-    void frameDecoded();
-
-private:
-    QScopedPointer<Mlt::Frame> m_frame;
+    void reloadProducerValues();
 };
 
 #endif // AVFORMATPRODUCERWIDGET_H
