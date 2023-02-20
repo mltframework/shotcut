@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,7 +96,11 @@ Rectangle {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
         onClicked: producer.position = position
-        onDoubleClicked: removeMenuItem.triggered()
+        onDoubleClicked: {
+            parameters.remove(parameterIndex, index)
+            root.selection = []
+        }
+
         onPressed: {
             parent.clicked(keyframeRoot);
             if (isCurve) {
