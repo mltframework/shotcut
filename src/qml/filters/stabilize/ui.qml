@@ -103,9 +103,10 @@ Item {
         onAccepted: {
             var filename = selectedFile.toString();
             // Remove resource prefix ("file://")
-            filename = filename.substring(7);
-            if (filename.substring(2, 4) == ':/')
-                filename = filename.substring(1);
+            if (filename.substring(0, 8) == 'file:///')
+                filename = filename.substring(7);
+            else if (filename.substring(0, 7) == 'file://')
+                filename = filename.substring(6);
 
             // Force file extension to ".stab"
             var extension = ".stab";
