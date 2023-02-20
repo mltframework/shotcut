@@ -10,7 +10,6 @@ Metadata {
     icon: 'icon.webp'
     isClipOnly: true
     allowMultiple: false
-    isGpuCompatible: false
 
     keyframes {
         allowTrim: false

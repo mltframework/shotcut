@@ -10,4 +10,6 @@ Metadata {
     qml: "ui.qml"
     icon: 'icon.webp'
     isClipOnly: true
+    allowMultiple: false
+    isGpuCompatible: false
 }
