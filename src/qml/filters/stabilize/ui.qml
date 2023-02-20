@@ -26,10 +26,6 @@ Item {
     property url settingsSavePath: 'file:///' + settings.savePath
     property string _analysisRequiredMessage: qsTr('Click Analyze to use this filter.')
 
-    // This signal is used to workaround context properties not available in
-    // the FileDialog onAccepted signal handler on Qt 5.5.
-    signal fileSaved(string filename)
-
     function hasAnalysisCompleted() {
         return (filter.get("results").length > 0 && filter.get("filename").indexOf(filter.get("results")) !== -1);
     }
@@ -52,7 +48,9 @@ Item {
     }
 
     function startAnalyzeJob(filename) {
-        stabilizeRoot.fileSaved(filename);
+        var lastPathSeparator = filename.lastIndexOf('/');
+        if (lastPathSeparator !== -1)
+            settings.savePath = filename.substring(0, lastPathSeparator);
         filter.set('filename', filename);
         filter.getHash();
         setStatus(true);
@@ -66,11 +64,6 @@ Item {
         shakinessSlider.value = filter.getDouble('shakiness');
         accuracySlider.value = filter.getDouble('accuracy');
         setStatus(false);
-    }
-    onFileSaved: {
-        var lastPathSeparator = filename.lastIndexOf('/');
-        if (lastPathSeparator !== -1)
-            settings.savePath = filename.substring(0, lastPathSeparator);
     }
 
     Connections {
@@ -177,7 +170,6 @@ Item {
             onClicked: {
                 var filename = application.getNextProjectFile('stab');
                 if (filename) {
-                    stabilizeRoot.fileSaved(filename);
                     startAnalyzeJob(filename);
                 } else {
                     fileDialog.open();

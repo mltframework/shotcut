@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -435,8 +435,9 @@ void QmlFilter::analyze(bool isAudio)
             file.open(QFile::WriteOnly);
             file.write("");
         }
-
-        JOBS.add(job);
+        QTimer::singleShot(0, [ = ]() {
+            JOBS.add(job);
+        });
     }
 }
 
