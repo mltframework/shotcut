@@ -8,7 +8,6 @@ Metadata {
     mlt_service: "vignette"
     qml: "ui_oldfilm.qml"
     icon: 'icon.webp'
-    gpuAlt: "movit.vignette"
 
     keyframes {
         allowAnimateIn: true

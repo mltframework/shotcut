@@ -8,7 +8,6 @@ Metadata {
     mlt_service: "box_blur"
     qml: "ui_box_blur.qml"
     icon: 'icon.webp'
-    gpuAlt: "movit.blur"
 
     keyframes {
         allowAnimateIn: true
