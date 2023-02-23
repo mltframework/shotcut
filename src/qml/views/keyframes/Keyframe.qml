@@ -97,8 +97,8 @@ Rectangle {
         acceptedButtons: Qt.LeftButton
         onClicked: producer.position = position
         onDoubleClicked: {
-            parameters.remove(parameterIndex, index)
-            root.selection = []
+            parameters.remove(parameterIndex, index);
+            root.selection = [];
         }
 
         onPressed: {
