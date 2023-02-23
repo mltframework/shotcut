@@ -1440,7 +1440,7 @@ void AvformatProducerWidget::on_actionSetEquirectangular_triggered()
     QString filePath = QFileDialog::getSaveFileName(&MAIN, caption, directory, QString(),
                                                     nullptr, Util::getFileDialogOptions());
     if (!filePath.isEmpty()) {
-        if (SpatialMedia::injectSpherical(objectName().toStdString(), filePath.toStdString())) {
+        if (SpatialMedia::injectSpherical(info.filePath().toStdString(), filePath.toStdString())) {
             MAIN.showStatusMessage(tr("Successfully wrote %1").arg(QFileInfo(filePath).fileName()));
         } else {
             MAIN.showStatusMessage(tr("An error occurred saving the projection."));
