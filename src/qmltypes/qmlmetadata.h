@@ -184,6 +184,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
     Q_PROPERTY(QString keywords MEMBER m_keywords NOTIFY changed)
     Q_PROPERTY(QString icon READ iconFilePath WRITE setIconFileName NOTIFY changed)
+    Q_PROPERTY(bool seekReverse MEMBER m_seekReverse NOTIFY changed)
 
 public:
     enum PluginType {
@@ -300,6 +301,10 @@ public:
     {
         return m_keywords;
     }
+    bool seekReverse() const
+    {
+        return m_seekReverse;
+    }
 
 signals:
     void changed();
@@ -324,6 +329,7 @@ private:
     QString m_minimumVersion;
     QString m_keywords;
     QString m_icon;
+    bool m_seekReverse;
 };
 
 #endif // QMLMETADATA_H

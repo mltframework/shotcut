@@ -10,6 +10,7 @@ Metadata {
     qml: "ui.qml"
     isFavorite: false
     allowMultiple: false
+    seekReverse: true
 
     keyframes {
         allowTrim: false
