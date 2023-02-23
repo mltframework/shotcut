@@ -43,6 +43,7 @@ Rectangle {
     property double speed: 1
     property string audioIndex: ''
     property bool isTrackMute: false
+    property bool elided: (width < 15) || (x + width < tracksFlickable.contentX) || (x > tracksFlickable.contentX + tracksFlickable.width) || (y + height < 0) || (y > tracksFlickable.contentY + tracksFlickable.contentHeight)
 
     signal clicked(var clip, var mouse)
     signal clipRightClicked(var clip, var mouse)
@@ -151,7 +152,7 @@ Rectangle {
     Image {
         id: outThumbnail
 
-        visible: !isBlank && settings.timelineShowThumbnails && parent.height > 20 && x > inThumbnail.width
+        visible: !elided && !isBlank && settings.timelineShowThumbnails && parent.height > 20 && x > inThumbnail.width
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -166,7 +167,7 @@ Rectangle {
     Image {
         id: inThumbnail
 
-        visible: !isBlank && settings.timelineShowThumbnails && parent.height > 20
+        visible: !elided && !isBlank && settings.timelineShowThumbnails && parent.height > 20
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -181,7 +182,7 @@ Rectangle {
     Shotcut.TimelineTransition {
         property var color: isAudio ? 'darkseagreen' : root.shotcutBlue
 
-        visible: isTransition
+        visible: !elided && isTransition
         anchors.fill: parent
         colorA: color
         colorB: clipRoot.selected ? Qt.darker(color) : Qt.lighter(color)
@@ -193,7 +194,7 @@ Rectangle {
         property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
         property int innerWidth: clipRoot.width - clipRoot.border.width * 2
 
-        visible: !isBlank && settings.timelineShowWaveforms && (parseInt(audioIndex) > -1 || audioIndex === 'all')
+        visible: !elided && !isBlank && settings.timelineShowWaveforms && (parseInt(audioIndex) > -1 || audioIndex === 'all')
         height: (isAudio || parent.height <= 20) ? parent.height : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
@@ -239,7 +240,7 @@ Rectangle {
     Rectangle {
         // text background
         color: 'lightgray'
-        visible: !isBlank && !isTransition
+        visible: !elided && !isBlank && !isTransition
         opacity: 0.7
         anchors.top: parent.top
         anchors.left: parent.left
@@ -253,7 +254,7 @@ Rectangle {
         id: label
 
         text: clipName
-        visible: !isBlank && !isTransition
+        visible: !elided && !isBlank && !isTransition
         font.pointSize: 8
         color: 'black'
 
@@ -282,7 +283,7 @@ Rectangle {
         id: labelRight
 
         text: clipName
-        visible: !isBlank && !isTransition && parent.width > ((settings.timelineShowThumbnails ? 2 * outThumbnail.width : 0) + 3 * label.width)
+        visible: !elided && !isBlank && !isTransition && parent.width > ((settings.timelineShowThumbnails ? 2 * outThumbnail.width : 0) + 3 * label.width)
         font.pointSize: 8
         color: 'black'
 
@@ -426,7 +427,7 @@ Rectangle {
     Shotcut.TimelineTriangle {
         id: fadeInTriangle
 
-        visible: !isBlank && !isTransition
+        visible: !elided && !isBlank && !isTransition
         width: parent.fadeIn * timeScale
         height: parent.height - parent.border.width * 2
         anchors.left: parent.left
@@ -438,7 +439,7 @@ Rectangle {
     Rectangle {
         id: fadeInControl
 
-        enabled: !isBlank && !isTransition
+        enabled: !elided && !isBlank && !isTransition
         anchors.left: fadeInTriangle.right
         anchors.top: fadeInTriangle.top
         anchors.leftMargin: Math.min(clipRoot.width - fadeInTriangle.width - width, 0)
@@ -517,7 +518,7 @@ Rectangle {
     Shotcut.TimelineTriangle {
         id: fadeOutTriangle
 
-        visible: !isBlank && !isTransition
+        visible: !elided && !isBlank && !isTransition
         width: parent.fadeOut * timeScale
         height: parent.height - parent.border.width * 2
         anchors.right: parent.right
@@ -534,7 +535,7 @@ Rectangle {
     Rectangle {
         id: fadeOutControl
 
-        enabled: !isBlank && !isTransition
+        enabled: !elided && !isBlank && !isTransition
         anchors.right: fadeOutTriangle.left
         anchors.top: fadeOutTriangle.top
         anchors.rightMargin: Math.min(clipRoot.width - fadeOutTriangle.width - width, 0)
@@ -611,7 +612,7 @@ Rectangle {
     Rectangle {
         id: trimIn
 
-        enabled: !isBlank && !isTransition
+        enabled: !elided && !isBlank && !isTransition
         anchors.left: parent.left
         anchors.leftMargin: 0
         height: parent.height
@@ -663,7 +664,7 @@ Rectangle {
     Rectangle {
         id: trimOut
 
-        enabled: !isBlank && !isTransition
+        enabled: !elided && !isBlank && !isTransition
         anchors.right: parent.right
         anchors.rightMargin: 0
         height: parent.height
