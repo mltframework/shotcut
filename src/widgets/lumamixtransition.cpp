@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 #include "ui_lumamixtransition.h"
 #include "settings.h"
 #include "mltcontroller.h"
-#include "mainwindow.h"
 #include "util.h"
 #include "widgets/producerpreviewwidget.h"
 #include "qmltypes/qmlapplication.h"
@@ -101,6 +100,8 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     ui->previewCheckBox->setChecked(Settings.timelinePreviewTransition());
     m_preview = new ProducerPreviewWidget(MLT.profile().dar(), 180);
     m_preview->setLooping(false);
+    if (Settings.playerGPU())
+        m_preview->showText(tr("Preview Not Available"));
     ui->horizontalLayout->addWidget(m_preview, 0, Qt::AlignCenter);
     connect(this, SIGNAL(modified()), this, SLOT(startPreview()), Qt::QueuedConnection);
     ui->getCustomLabel->setText(
