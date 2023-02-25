@@ -2626,7 +2626,7 @@ static QString convertUrlsToXML(const QString &xml)
             longTask.reportProgress(Util::baseName(path), i++, count);
             Mlt::Producer p;
             if (path.endsWith(".mlt") || path.endsWith(".xml")) {
-                p = Mlt::Producer(MLT.profile(), "xml", path.toUtf8().constData());
+                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
                 if (p.is_valid()) {
                     p.set(kShotcutVirtualClip, 1);
                     p.set("resource", path.toUtf8().constData());

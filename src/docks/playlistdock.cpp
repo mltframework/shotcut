@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1101,7 +1101,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             }
             Mlt::Producer p;
             if (path.endsWith(".mlt") || path.endsWith(".xml")) {
-                p = Mlt::Producer(MLT.profile(), "xml", path.toUtf8().constData());
+                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
                 if (p.is_valid()) {
                     // Convert MLT XML to a virtual clip.
                     p.set(kShotcutVirtualClip, 1);
