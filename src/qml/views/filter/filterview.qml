@@ -228,7 +228,7 @@ Rectangle {
             onClicked: application.copyFilters()
 
             Shotcut.HoverTip {
-                text: qsTr('Copy the filters')
+                text: qsTr('Copy checked filters')
             }
         }
 

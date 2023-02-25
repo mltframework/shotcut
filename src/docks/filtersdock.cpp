@@ -212,7 +212,7 @@ void FiltersDock::setupActions()
     Actions.add("filtersRemoveFilterAction", action, windowTitle());
 
     action = new QAction(tr("Copy Filters"), this);
-    action->setToolTip(tr("Copy the filters to the clipboard"));
+    action->setToolTip(tr("Copy checked filters to the clipboard"));
     icon = QIcon::fromTheme("edit-copy",
                             QIcon(":/icons/oxygen/32x32/actions/edit-copy.png"));
     action->setIcon(icon);
