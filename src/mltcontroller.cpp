@@ -648,7 +648,7 @@ bool Controller::isSeekable(Producer *p) const
         } else {
             seekable = producer->get_int("seekable");
             if (!seekable && producer->get("mlt_type")) {
-                // XXX what was this for?
+                // MLT xml producer or tractor
                 seekable = !strcmp(producer->get("mlt_type"), "mlt_producer");
             }
             if (!seekable) {
@@ -656,7 +656,7 @@ bool Controller::isSeekable(Producer *p) const
                 // TODO: Currently, these max out at 15000 frames, which is arbitrary.
                 QString service(producer->get("mlt_service"));
                 seekable = (service == "color") || service.startsWith("frei0r.") || (service == "tone")
-                           || (service == "count") || (service == "noise");
+                           || (service == "count") || (service == "noise") || (service == "consumer");
             }
         }
     }
