@@ -581,7 +581,7 @@ void MainWindow::setupAndConnectDocks()
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
     connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
-    connect(ui->actionExportVideo, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
+    connect(ui->actionExportVideo, SIGNAL(triggered()), m_encodeDock, SLOT(on_encodeButton_clicked()));
     connect(m_encodeDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onEncodeTriggered(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player,
