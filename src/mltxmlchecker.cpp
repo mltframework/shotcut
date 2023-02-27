@@ -447,8 +447,9 @@ void MltXmlChecker::checkGpuEffects(const QString &mlt_service)
 
 void MltXmlChecker::checkCpuEffects(const QString &mlt_service)
 {
-    if (mlt_service.startsWith("dynamictext") || mlt_service.startsWith("vidstab"))
-        m_needsCPU = true;
+    // For example, if needed again:
+    // if (mlt_service.startsWith("dynamictext") || mlt_service.startsWith("vidstab"))
+    //     m_needsCPU = true;
 }
 
 void MltXmlChecker::checkUnlinkedFile(const QString &mlt_service)
