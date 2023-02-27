@@ -1135,8 +1135,7 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker)
         LOG_INFO() << "file uses GPU but GPU not enabled";
         QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
-                           tr("The file you opened uses GPU effects, but GPU effects are not enabled.\n\n"
-                              "GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it."),
+                           tr("The file you opened uses GPU effects, but GPU effects are not enabled."),
                            QMessageBox::Ok,
                            this);
         dialog.setWindowModality(QmlApplication::dialogModality());
@@ -3300,9 +3299,8 @@ void MainWindow::on_actionGPU_triggered(bool checked)
     if (checked) {
         QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
-                           tr("GPU effects are experimental and may cause instability on some systems. "
-                              "Some CPU effects are incompatible with GPU effects and will be disabled. "
-                              "A project created with GPU effects can not be converted to a CPU only project later."
+                           tr("GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.\n"
+                              "At this time, a project created with GPU effects cannot be converted to a CPU-only project later."
                               "\n\n"
                               "Do you want to enable GPU effects and restart Shotcut?"),
                            QMessageBox::No | QMessageBox::Yes,
