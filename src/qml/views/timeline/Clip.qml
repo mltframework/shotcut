@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ Rectangle {
     property double speed: 1
     property string audioIndex: ''
     property bool isTrackMute: false
-    property bool elided: (width < 15) || (x + width < tracksFlickable.contentX) || (y + height < 0)
+    property bool elided: (width < 15) || (x + width < tracksFlickable.contentX) || (x > tracksFlickable.contentX + tracksFlickable.width) || (y + height < 0) || (y > tracksFlickable.contentY + tracksFlickable.contentHeight)
 
     signal clicked(var clip, var mouse)
     signal clipRightClicked(var clip, var mouse)
@@ -98,7 +98,6 @@ Rectangle {
             return 'image://thumbnail/' + hash + '/' + mltService + '/' + clipResource + '#' + time;
     }
 
-    visible: (x < tracksFlickable.contentX + tracksFlickable.width) && (y < tracksFlickable.contentY + tracksFlickable.contentHeight)
     border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? 'red' : 'black'
     border.width: isBlank && !selected ? 0 : 1
     clip: true
