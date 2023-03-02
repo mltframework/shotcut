@@ -1944,7 +1944,8 @@ void EncodeDock::on_formatCombo_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
     m_extension.clear();
-    defaultFormatExtension();
+    if (index > 0)
+        defaultFormatExtension();
 }
 
 void EncodeDock::on_videoBufferDurationChanged()
