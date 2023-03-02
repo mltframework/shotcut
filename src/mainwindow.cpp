@@ -1613,7 +1613,7 @@ void MainWindow::openMultiple(const QList<QUrl> &urls)
     if (urls.size() > 1) {
         m_multipleFiles = Util::sortedFileList(Util::expandDirectories(urls));
         open(m_multipleFiles.first());
-    } else {
+    } else if (urls.size() > 0) {
         QUrl url = urls.first();
         if (!open(Util::removeFileScheme(url)))
             open(Util::removeFileScheme(url, false));
