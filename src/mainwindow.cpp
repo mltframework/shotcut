@@ -2353,11 +2353,18 @@ void MainWindow::showEvent(QShowEvent *event)
     QTimer::singleShot(100, this, [ = ]() {
         Database::singleton(this);
     });
+
+#ifdef Q_OS_WIN
+    this->setProperty("windowOpacity", 1.0);
+#endif
 }
 
 void MainWindow::hideEvent(QHideEvent *event)
 {
     Q_UNUSED(event)
+#ifdef Q_OS_WIN
+    setProperty("windowOpacity", 0.0);
+#endif
 }
 
 void MainWindow::on_actionOpenOther_triggered()

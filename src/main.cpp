@@ -383,6 +383,9 @@ int main(int argc, char **argv)
     a.mainWindow = &MAIN;
     if (!a.appDirArg.isEmpty())
         a.mainWindow->hideSetDataDirectory();
+#ifdef Q_OS_WIN
+    a.mainWindow->setProperty("windowOpacity", 0.0);
+#endif
     a.mainWindow->show();
     a.processEvents();
     a.mainWindow->setFullScreen(a.isFullScreen);
