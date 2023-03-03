@@ -57,7 +57,7 @@ Item {
         return Math.ceil(Math.max(profile.width, profile.height) / 640);
     }
 
-    width: 450
+    width: 410
     height: 200
     Component.onCompleted: {
         if (filter.isNew) {
@@ -65,7 +65,7 @@ Item {
             filter.set(rectProperty, '45%/45%:10%x10%');
             filter.set('algo', 'KCF');
             filter.savePreset(preset.parameters);
-            filter.set('shape_width', visibleShapeWidth);
+            filter.set('shape_width', visibleShapeWidth());
             filter.set('shape_color', '#00ff00');
             filter.set('modelsfolder', settings.appDataLocation + '/opencvmodels');
         }
@@ -111,6 +111,11 @@ Item {
             onPresetSelected: {
                 setControls();
             }
+        }
+
+        Label {
+            text: qsTr('Region To Track')
+            Layout.columnSpan: 3
         }
 
         Label {
@@ -254,7 +259,7 @@ Item {
                 previousIndex = index;
             }
 
-            implicitWidth: 400
+            implicitWidth: 325
             textRole: 'text'
             valueRole: 'value'
             currentIndex: 0
@@ -315,7 +320,7 @@ Item {
                 }
 
                 ListElement {
-                    text: 'CSRT: Discriminative Correlation Filter with Channel and Spatial Reliability'
+                    text: 'CSRT: Channel and Spatial Reliability'
                     value: 'CSRT'
                 }
             }
@@ -342,38 +347,23 @@ Item {
         Label {
         }
 
-        Shotcut.Button {
-            id: button
-
-            text: qsTr('Analyze')
+        RowLayout {
             Layout.columnSpan: 2
-            onClicked: {
-                button.enabled = false;
-                setStatus(true);
-                filter.set('_reset', 1);
-                filter.analyze();
+
+            Shotcut.Button {
+                id: button
+
+                text: qsTr('Analyze')
+                onClicked: {
+                    button.enabled = false;
+                    setStatus(true);
+                    filter.set('_reset', 1);
+                    filter.analyze();
+                }
             }
-        }
-
-        Rectangle {
-            Layout.columnSpan: 3
-            Layout.fillWidth: true
-            Layout.minimumHeight: 12
-            color: 'transparent'
-
-            Rectangle {
-                anchors.verticalCenter: parent.verticalCenter
-                width: parent.width
-                height: 2
-                radius: 2
-                color: activePalette.text
+            Label {
+                id: status
             }
-        }
-
-        Label {
-            id: status
-
-            Layout.columnSpan: 3
         }
 
         Item {
