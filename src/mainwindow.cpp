@@ -2350,13 +2350,12 @@ void MainWindow::showEvent(QShowEvent *event)
 #endif
     onAutosaveTimeout();
 
-    QTimer::singleShot(100, this, [ = ]() {
+    QTimer::singleShot(200, this, [ = ]() {
         Database::singleton(this);
-    });
-
 #ifdef Q_OS_WIN
-    this->setProperty("windowOpacity", 1.0);
+        this->setProperty("windowOpacity", 1.0);
 #endif
+    });
 }
 
 void MainWindow::hideEvent(QHideEvent *event)
