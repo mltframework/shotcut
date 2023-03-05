@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3048,6 +3048,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
 void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
 {
     LOG_DEBUG() << "From: " << fromTrackIndex << "To: " << toTrackIndex;
+    MLT.pause();
     if (fromTrackIndex >= m_trackList.count() || fromTrackIndex < 0
             || toTrackIndex >= m_trackList.count() || toTrackIndex < 0) {
         LOG_DEBUG() << "Invalid track index" << fromTrackIndex << toTrackIndex;
