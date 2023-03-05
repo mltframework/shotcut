@@ -378,7 +378,7 @@ void ShotcutSettings::setPlayerExternal(const QString &s)
 
 void ShotcutSettings::setPlayerGPU(bool b)
 {
-    settings.setValue("player/gpu", b);
+    settings.setValue("player/gpu2", b);
     emit playerGpuChanged();
 }
 
