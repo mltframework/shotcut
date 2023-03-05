@@ -972,6 +972,7 @@ Producer *Controller::setupNewProducer(Producer *newProducer) const
             Mlt::Chain *chain = new Mlt::Chain(MLT.profile());
             chain->set_source(*newProducer);
             chain->get_length_time(mlt_time_clock);
+            chain->attach_normalizers();
 
             // Move all non-loader filters to the chain in case this was a clip-only project.
             int i = 0;
