@@ -399,7 +399,7 @@ void ShotcutSettings::setPlayerInterpolation(const QString &s)
 
 bool ShotcutSettings::playerGPU() const
 {
-    return settings.value("player/gpu", false).toBool();
+    return settings.value("player/gpu2", false).toBool();
 }
 
 bool ShotcutSettings::playerWarnGPU() const
