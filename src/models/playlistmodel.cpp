@@ -79,8 +79,12 @@ public:
                 service = "avformat";
             else if (service.startsWith("xml"))
                 service = "xml-nogl";
-            m_tempProducer = new Mlt::Producer(m_profile, service.toUtf8().constData(),
-                                               m_producer.get("resource"));
+            if (service == "count") {
+                m_tempProducer = new Mlt::Producer(m_profile, service.toUtf8().constData(), "loader-nogl");
+            } else {
+                m_tempProducer = new Mlt::Producer(m_profile, service.toUtf8().constData(),
+                                                   m_producer.get("resource"));
+            }
             if (m_tempProducer->is_valid()) {
                 Mlt::Filter scaler(m_profile, "swscale");
                 Mlt::Filter padder(m_profile, "resize");

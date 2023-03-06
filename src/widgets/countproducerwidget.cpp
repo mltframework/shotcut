@@ -91,7 +91,7 @@ QString CountProducerWidget::currentBackground() const
 
 Mlt::Producer *CountProducerWidget::newProducer(Mlt::Profile &profile)
 {
-    Mlt::Producer *p = new Mlt::Producer(profile, "count:");
+    Mlt::Producer *p = new Mlt::Producer(profile, "count");
     p->set("direction", currentDirection().toLatin1().constData());
     p->set("style", currentStyle().toLatin1().constData());
     p->set("sound", currentSound().toLatin1().constData());
