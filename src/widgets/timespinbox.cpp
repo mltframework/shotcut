@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ int TimeSpinBox::valueFromText(const QString &text) const
     if (MLT.producer() && MLT.producer()->is_valid()) {
         return MLT.producer()->time_to_frames(text.toLatin1().constData());
     } else {
-        return Mlt::Producer(MLT.profile(), "colour").time_to_frames(text.toLatin1().constData());
+        return Mlt::Producer(MLT.profile(), "color", "").time_to_frames(text.toLatin1().constData());
     }
     return 0;
 }
@@ -59,7 +59,7 @@ QString TimeSpinBox::textFromValue(int val) const
     if (MLT.producer() && MLT.producer()->is_valid()) {
         return MLT.producer()->frames_to_time(val);
     } else {
-        return Mlt::Producer(MLT.profile(), "colour").frames_to_time(val);
+        return Mlt::Producer(MLT.profile(), "color", "").frames_to_time(val);
     }
     return QString();
 }
