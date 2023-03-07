@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include <QLocalServer>
 #include <QDataStream>
 #include <QSharedMemory>
+#include "sharedframe.h"
 
 #include "abstractproducerwidget.h"
 
@@ -60,10 +61,12 @@ private slots:
     void onConnect();
     void onReadyRead();
     void onSocketError(QLocalSocket::LocalSocketError socketError);
+    void onFrameDisplayed(const SharedFrame &frame);
 
 private:
     int toMltFps(float frame) const;
     bool copyToShared(const QImage &image);
+    SharedFrame m_sharedFrame;
 };
 
 namespace Ui {

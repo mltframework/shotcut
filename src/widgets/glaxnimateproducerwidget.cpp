@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
 #include "dialogs/longuitask.h"
+#include "videowidget.h"
 #include <Logger.h>
 #include <QProcess>
 #include <QFile>
@@ -370,8 +371,6 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
         return;
     m_profile.reset(new Mlt::Profile(::mlt_profile_clone(MLT.profile().get_profile())));
     m_profile->set_progressive(Settings.playerProgressive());
-    if (Settings.playerGPU())
-        return;
     m_glaxnimateProducer.reset(new Mlt::Producer(*m_profile, "xml-string",
                                                  MLT.XML().toUtf8().constData()));
     if (m_glaxnimateProducer && m_glaxnimateProducer->is_valid()) {
@@ -469,16 +468,19 @@ void GlaxnimateIpcServer::onReadyRead()
         for (int i = 0; i < 1000 && !m_stream->atEnd(); i++) {
             *m_stream >> time;
         }
-        if (!parent || !parent->m_glaxnimateProducer
-                || !parent->m_glaxnimateProducer->is_valid()
-                || time < 0.0)
-            return;
 
         // Only if the frame number is different
         int frameNum = parent->m_producer.get_int(kPlaylistStartProperty) + toMltFps(
                            time) - parent->m_producer.get_int("first_frame");
         if (frameNum != parent->m_frameNum) {
             LOG_DEBUG() << "glaxnimate time =" << time << "=> Shotcut frameNum =" << frameNum;
+
+            if (!parent || !parent->m_glaxnimateProducer
+                    || !parent->m_glaxnimateProducer->is_valid()
+                    || time < 0.0) {
+                MLT.seek(frameNum);
+                return;
+            }
 
             // Get the image from MLT
             parent->m_glaxnimateProducer->seek(frameNum);
@@ -529,6 +531,22 @@ void GlaxnimateIpcServer::onSocketError(QLocalSocket::LocalSocketError socketErr
     }
 }
 
+void GlaxnimateIpcServer::onFrameDisplayed(const SharedFrame &frame)
+{
+    auto image  = frame.get_image(mlt_image_rgb);
+    if (image) {
+        auto width = frame.get_image_width();
+        auto height = frame.get_image_height();
+        QImage temp(width, height, QImage::Format_RGB888);
+        for (int i = 0; i < height; i++) {
+            ::memcpy(temp.scanLine(i), &image[i * 3 * width], temp.bytesPerLine());
+        }
+        if (copyToShared(temp)) {
+            parent->m_frameNum = frame.get_position();
+        }
+    }
+}
+
 GlaxnimateIpcServer &GlaxnimateIpcServer::instance()
 {
     static GlaxnimateIpcServer instance;
@@ -572,12 +590,18 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
 {
     parent.reset(new ParentResources);
 
-    LongUiTask longTask(QObject::tr("Edit With Glaxnimate"));
-    auto future = QtConcurrent::run([this, &producer, &hideCurrentTrack]() {
-        parent->setProducer(producer, hideCurrentTrack);
-        return true;
-    });
-    longTask.wait<bool>(tr("Preparing Glaxnimate preview...."), future);
+    if (Settings.playerGPU()) {
+        parent->m_producer = producer;
+        connect(qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget()), &Mlt::VideoWidget::frameDisplayed,
+                this, &GlaxnimateIpcServer::onFrameDisplayed);
+    } else {
+        LongUiTask longTask(QObject::tr("Edit With Glaxnimate"));
+        auto future = QtConcurrent::run([this, &producer, &hideCurrentTrack]() {
+            parent->setProducer(producer, hideCurrentTrack);
+            return true;
+        });
+        longTask.wait<bool>(tr("Preparing Glaxnimate preview...."), future);
+    }
 
     if (filename.isEmpty()) {
         filename = QString::fromUtf8(parent->m_producer.get("resource"));
