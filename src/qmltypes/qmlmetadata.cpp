@@ -35,6 +35,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_isClipOnly(false)
     , m_isGpuCompatible(true)
     , m_isDeprecated(false)
+    , m_seekReverse(false)
 {
 }
 
