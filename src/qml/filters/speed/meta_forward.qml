@@ -5,12 +5,13 @@ Metadata {
     type: Metadata.Link
     objectName: 'speedForward'
     isAudio: false
-    name: qsTr("Speed (Forward)")
+    name: qsTr("Speed: Forward Only")
     keywords: qsTr('temporal speed ramp fast slow motion', 'search keywords for the Speed filter') + ' speed'
     mlt_service: "timeremap"
     qml: "ui_forward.qml"
     isFavorite: false
     allowMultiple: false
+    minimumVersion: '2'
 
     keyframes {
         allowTrim: false

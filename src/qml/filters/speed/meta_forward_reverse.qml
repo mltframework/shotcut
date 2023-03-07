@@ -5,13 +5,14 @@ Metadata {
     type: Metadata.Link
     objectName: 'speedForwardReverse'
     isAudio: false
-    name: qsTr("Speed (Forward/Reverse)")
+    name: qsTr("Speed: Forward & Reverse")
     keywords: qsTr('temporal speed ramp fast slow motion reverse', 'search keywords for the Speed filter') + ' speed'
     mlt_service: "timeremap"
     qml: "ui_forward_reverse.qml"
     isFavorite: false
     allowMultiple: false
     seekReverse: true
+    minimumVersion: '2'
 
     keyframes {
         allowTrim: false
