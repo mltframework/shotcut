@@ -370,6 +370,8 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
         return;
     m_profile.reset(new Mlt::Profile(::mlt_profile_clone(MLT.profile().get_profile())));
     m_profile->set_progressive(Settings.playerProgressive());
+    if (Settings.playerGPU())
+        return;
     m_glaxnimateProducer.reset(new Mlt::Producer(*m_profile, "xml-string",
                                                  MLT.XML().toUtf8().constData()));
     if (m_glaxnimateProducer && m_glaxnimateProducer->is_valid()) {
