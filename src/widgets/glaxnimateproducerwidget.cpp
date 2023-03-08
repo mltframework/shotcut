@@ -541,7 +541,7 @@ void GlaxnimateIpcServer::onFrameDisplayed(const SharedFrame &frame)
         for (int i = 0; i < height; i++) {
             ::memcpy(temp.scanLine(i), &image[i * 3 * width], temp.bytesPerLine());
         }
-        if (copyToShared(temp)) {
+        if (copyToShared(temp) && parent) {
             parent->m_frameNum = frame.get_position();
         }
     }
