@@ -1155,6 +1155,7 @@ void Player::onVolumeTriggered()
 
 void Player::onMuteButtonToggled(bool checked)
 {
+    m_muteButton->setChecked(checked);
     if (checked) {
         m_savedVolume = MLT.volume();
         MLT.setVolume(0);
