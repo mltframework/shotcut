@@ -135,6 +135,10 @@ function onMouseWheel(wheel) {
         if ((wheel.pixelDelta.x || wheel.pixelDelta.y) && wheel.modifiers === Qt.NoModifier) {
             var x = wheel.pixelDelta.x
             var y = wheel.pixelDelta.y
+            if (application.OS === 'Linux' && !x && y) {
+                x = y;
+                y = 0;
+            }
             // Track pads provide both horizontal and vertical.
             if (!y || Math.abs(x) > 2)
                 tracksFlickable.contentX = clamp(tracksFlickable.contentX - x, 0, scrollMax().x)
