@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -33,7 +32,6 @@ Item {
     function setControls() {
         if (blockUpdate)
             return;
-
         var outPosition = getPosition();
         blockUpdate = true;
         speedSpinner.value = filter.getDouble('speed_map', outPosition);
@@ -130,7 +128,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Map the specified speed to the current time. Use keyframes to vary the speed mappings over time.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -141,7 +138,7 @@ Item {
             suffix: ' x'
             onValueChanged: {
                 if (blockUpdate)
-                    return ;
+                    return;
                 filter.set('speed_map', speedSpinner.value, getPosition());
                 timer.restart();
             }
@@ -166,7 +163,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.')
             }
-
         }
 
         Shotcut.ComboBox {
@@ -176,7 +172,7 @@ Item {
             textRole: "text"
             onCurrentIndexChanged: {
                 if (blockUpdate)
-                    return ;
+                    return;
                 filter.set('image_mode', imageModeModel.get(currentIndex).value);
             }
 
@@ -208,7 +204,7 @@ Item {
             text: qsTr('Enable pitch compensation')
             onCheckedChanged: {
                 if (blockUpdate)
-                    return ;
+                    return;
                 filter.set('pitch', checked);
             }
         }
@@ -220,7 +216,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }
