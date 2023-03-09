@@ -34,6 +34,7 @@
 OpenGLVideoWidget::OpenGLVideoWidget(QObject *parent)
     : VideoWidget{parent}
     , m_quickContext(nullptr)
+    , m_isThreadedOpenGL(false)
 {
     m_renderTexture[0] = m_renderTexture[1] = m_renderTexture[2] = 0;
     m_displayTexture[0] = m_displayTexture[1] = m_displayTexture[2] = 0;
@@ -204,7 +205,7 @@ void OpenGLVideoWidget::renderVideo()
     glViewport(0, 0, width, height);
     check_error(f);
 
-    if (!context->supportsThreadedOpenGL()) {
+    if (!m_isThreadedOpenGL) {
         m_mutex.lock();
         if (!m_sharedFrame.is_valid()) {
             m_mutex.unlock();
@@ -302,9 +303,9 @@ void OpenGLVideoWidget::renderVideo()
 
 void OpenGLVideoWidget::onFrameDisplayed(const SharedFrame &frame)
 {
-    if (!m_context) {
+    if (m_isThreadedOpenGL && !m_context) {
         m_context.reset(new QOpenGLContext);
-        if (m_quickContext->supportsThreadedOpenGL()) {
+        if (m_context) {
             m_context->setFormat(m_quickContext->format());
             m_context->setShareContext(m_quickContext);
             m_context->create();
@@ -319,10 +320,12 @@ void OpenGLVideoWidget::onFrameDisplayed(const SharedFrame &frame)
         check_error(f);
         f->glFinish();
         m_context->doneCurrent();
-    }
 
-    for (int i = 0; i < 3; ++i)
-        std::swap(m_renderTexture[i], m_displayTexture[i]);
+        m_mutex.lock();
+        for (int i = 0; i < 3; ++i)
+            std::swap(m_renderTexture[i], m_displayTexture[i]);
+        m_mutex.unlock();
+    }
     Mlt::VideoWidget::onFrameDisplayed(frame);
 }
 

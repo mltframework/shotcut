@@ -54,6 +54,7 @@ private:
     std::unique_ptr<QOpenGLContext> m_context;
     GLuint m_renderTexture[3];
     GLuint m_displayTexture[3];
+    bool m_isThreadedOpenGL;
 };
 
 #endif // OPENGLVIDEOWIDGET_H
