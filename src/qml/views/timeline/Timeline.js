@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -135,7 +135,7 @@ function onMouseWheel(wheel) {
         if ((wheel.pixelDelta.x || wheel.pixelDelta.y) && wheel.modifiers === Qt.NoModifier) {
             var x = wheel.pixelDelta.x
             var y = wheel.pixelDelta.y
-            if (application.OS === 'Linux' && !x && y) {
+            if (application.OS !== 'Windows' && !x && y) {
                 x = y;
                 y = 0;
             }
