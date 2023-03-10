@@ -80,6 +80,7 @@
 #include "dialogs/longuitask.h"
 #include "dialogs/systemsyncdialog.h"
 #include "proxymanager.h"
+#include "models/motiontrackermodel.h"
 #if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
 #include "windowstools.h"
 #endif
@@ -483,7 +484,8 @@ void MainWindow::setupAndConnectDocks()
 
     m_filterController = new FilterController(this);
     m_filtersDock = new FiltersDock(m_filterController->metadataModel(),
-                                    m_filterController->attachedModel(), this);
+                                    m_filterController->attachedModel(),
+                                    m_filterController->motionTrackerModel(), this);
     m_filtersDock->setMinimumSize(400, 300);
     m_filtersDock->hide();
     m_filtersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_6));
@@ -528,6 +530,10 @@ void MainWindow::setupAndConnectDocks()
             SLOT(onServiceInChanged(int, Mlt::Service *)));
     connect(this, SIGNAL(serviceOutChanged(int, Mlt::Service *)), m_filterController,
             SLOT(onServiceOutChanged(int, Mlt::Service *)));
+    connect(m_playlistDock->model(), &PlaylistModel::removing,
+            m_filterController->motionTrackerModel(), &MotionTrackerModel::removeFromService);
+    connect(m_timelineDock->model(), &MultitrackModel::removing,
+            m_filterController->motionTrackerModel(), &MotionTrackerModel::removeFromService);
 
     m_markersDock = new MarkersDock(this);
     m_markersDock->hide();
@@ -2413,6 +2419,7 @@ void MainWindow::onProducerOpened(bool withReopen)
     } else if (MLT.isPlaylist()) {
         m_playlistDock->model()->load();
         if (playlist()) {
+            m_filterController->motionTrackerModel()->load();
             m_isPlaylistLoaded = true;
             m_player->setIn(-1);
             m_player->setOut(-1);
@@ -2426,6 +2433,7 @@ void MainWindow::onProducerOpened(bool withReopen)
         m_timelineDock->model()->load();
         m_timelineDock->blockSelection(false);
         if (isMultitrackValid()) {
+            m_filterController->motionTrackerModel()->load();
             m_player->setIn(-1);
             m_player->setOut(-1);
             m_timelineDock->setVisible(true);
@@ -2437,6 +2445,8 @@ void MainWindow::onProducerOpened(bool withReopen)
                 m_timelineDock->setSelection();
             });
         }
+    } else {
+        m_filterController->motionTrackerModel()->load();
     }
     if (MLT.isClip()) {
         m_player->enableTab(Player::SourceTabIndex);

@@ -49,8 +49,8 @@ Item {
             rectH.value = filterRect.height.toFixed();
         }
         algorithmCombo.currentIndex = algorithmCombo.indexOfValue(filter.get('algo'));
-        algorithmCombo.previousIndex = algorithmCombo.currentIndex;
         previewCheckBox.checked = parseInt(filter.get('shape_width')) !== 0;
+        name.text = filter.get('shotcut:name');
     }
 
     function visibleShapeWidth() {
@@ -58,7 +58,7 @@ Item {
     }
 
     width: 410
-    height: 200
+    height: 230
     Component.onCompleted: {
         if (filter.isNew) {
             // Add default preset.
@@ -68,6 +68,13 @@ Item {
             filter.set('shape_width', visibleShapeWidth());
             filter.set('shape_color', '#00ff00');
             filter.set('modelsfolder', settings.appDataLocation + '/opencvmodels');
+        }
+        // Reset the filter if clip was pasted or split
+        if (filter.get('results').length > 0 && filter.get('_shotcut:uuid').length === 0) {
+            filter.resetProperty('results');
+            const name = motionTrackerModel.nextName();
+            filter.set('shotcut:name', name);
+            motionTrackerModel.setName(filter, name);
         }
         setStatus(false);
         setControls();
@@ -110,6 +117,21 @@ Item {
             Layout.columnSpan: 2
             onPresetSelected: {
                 setControls();
+            }
+        }
+
+        Label {
+            text: qsTr('Name')
+            Layout.alignment: Qt.AlignRight
+        }
+        TextField {
+            id: name
+
+            Layout.columnSpan: 2
+            implicitWidth: preset.width
+            onEditingFinished: {
+                filter.set('shotcut:name', text);
+                motionTrackerModel.setName(filter, text);
             }
         }
 
@@ -252,11 +274,8 @@ Item {
         Shotcut.ComboBox {
             id: algorithmCombo
 
-            property int previousIndex: -1
-
             function updateFilter(index) {
                 filter.set('algo', model.get(index).value);
-                previousIndex = index;
             }
 
             implicitWidth: 325

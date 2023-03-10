@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,8 @@ FilterController::FilterController(QObject *parent) : QObject(parent),
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
     connect(&m_attachedModel, SIGNAL(modelAboutToBeReset()), this,
             SLOT(handleAttachedModelAboutToReset()));
+    connect(&m_attachedModel, SIGNAL(rowsAboutToBeRemoved(const QModelIndex &, int, int)), this,
+            SLOT(handleAttachedRowsAboutToBeRemoved(const QModelIndex &, int, int)));
     connect(&m_attachedModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this,
             SLOT(handleAttachedRowsRemoved(const QModelIndex &, int, int)));
     connect(&m_attachedModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this,
@@ -180,6 +182,7 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
         filter = new QmlFilter(*m_mltService, meta);
         filter->setIsNew(isNew);
         connect(filter, SIGNAL(changed(QString)), SLOT(onQmlFilterChanged(const QString &)));
+        connect(filter, &QmlFilter::analyzeFinished, this, &FilterController::onAnalyzeFinished);
     }
 
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
@@ -258,6 +261,27 @@ void FilterController::onQmlFilterChanged(const QString &name)
     emit filterChanged(m_mltService);
 }
 
+void FilterController::onAnalyzeFinished(bool isSuccess)
+{
+    if (isSuccess && m_currentFilter && "opencv.tracker" == m_currentFilter->get("mlt_service")) {
+        auto results = m_currentFilter->get("results");
+        auto name = m_currentFilter->get(kTrackNameProperty);
+        if (name.isEmpty()) {
+            name = m_motionTrackerModel.nextName();
+            m_currentFilter->set(kTrackNameProperty, name);
+        }
+        auto key = m_motionTrackerModel.keyForFilter(&m_currentFilter->service());
+        if (key.isEmpty()) {
+            key = m_motionTrackerModel.add(name, results);
+            if (!key.isEmpty()) {
+                m_currentFilter->set(kUuidProperty, key);
+            }
+        } else {
+            m_motionTrackerModel.updateData(key, results);
+        }
+    }
+}
+
 void FilterController::removeCurrent()
 {
     if (m_currentFilterIndex > QmlFilter::NoCurrentFilter)
@@ -272,4 +296,11 @@ void FilterController::onProducerChanged()
 void FilterController::addMetadata(QmlMetadata *meta)
 {
     m_metadataModel.add(meta);
+}
+
+void FilterController::handleAttachedRowsAboutToBeRemoved(const QModelIndex &parent, int first,
+                                                          int last)
+{
+    auto filter = m_attachedModel.getService(first);
+    m_motionTrackerModel.remove(m_motionTrackerModel.keyForFilter(filter));
 }

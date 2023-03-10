@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ SizePositionUI {
     halignProperty: 'transition.halign'
     backgroundProperty: 'background'
     rotationProperty: 'transition.fix_rotate_x'
+    trackingProperty: 'transition.rect'
     Component.onCompleted: {
         if (filter.isNew)
             filter.set('transition.threads', 0);

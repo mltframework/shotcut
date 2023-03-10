@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #include <QAbstractTableModel>
 #include <qmimedata.h>
 #include <QStringList>
-#include "mltcontroller.h"
 #include "MltPlaylist.h"
 
 
@@ -104,6 +103,7 @@ signals:
     void moveClip(int from, int to);
     void inChanged(int in);
     void outChanged(int out);
+    void removing(Mlt::Service *service);
 
 public slots:
     void clear();
@@ -123,6 +123,9 @@ private:
     int m_dropRow;
     ViewMode m_mode;
     QList<int> m_rowsRemoved;
+
+private slots:
+    void onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
 };
 
 #endif // PLAYLISTMODEL_H

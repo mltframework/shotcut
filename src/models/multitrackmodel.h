@@ -141,6 +141,7 @@ signals:
     void appended(int trackIndex, int clipIndex);
     void inserted(int trackIndex, int clipIndex);
     void overWritten(int trackIndex, int clipIndex);
+    void removing(Mlt::Service *service);
 
 public slots:
     void refreshTrackList();

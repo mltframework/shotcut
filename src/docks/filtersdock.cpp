@@ -35,11 +35,12 @@
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
 #include "models/metadatamodel.h"
+#include "models/motiontrackermodel.h"
 #include "models/attachedfiltersmodel.h"
 #include "mltcontroller.h"
 
 FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *attachedModel,
-                         QWidget *parent) :
+                         MotionTrackerModel *motionTrackerModel, QWidget *parent) :
     QDockWidget(tr("Filters"), parent),
     m_qview(QmlUtilities::sharedEngine(), this)
 {
@@ -62,6 +63,7 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
     QmlUtilities::setCommonProperties(m_qview.rootContext());
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
     m_qview.rootContext()->setContextProperty("metadatamodel", metadataModel);
+    m_qview.rootContext()->setContextProperty("motionTrackerModel", motionTrackerModel);
     m_qview.rootContext()->setContextProperty("attachedfiltersmodel", attachedModel);
     m_qview.rootContext()->setContextProperty("producer", &m_producer);
     connect(&m_producer, SIGNAL(seeked(int)), SIGNAL(seeked(int)));

@@ -779,6 +779,7 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex,
 
                     // Remove clip
                     clearMixReferences(fromTrack, clipIndex);
+                    emit removing(playlist.get_clip(clipIndex));
                     beginRemoveRows(index(fromTrack), clipIndex, clipIndex);
                     playlist.remove(clipIndex);
                     endRemoveRows();
@@ -806,6 +807,7 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex,
                 }
             } else {
                 // Lift clip
+                emit removing(playlist.get_clip(clipIndex));
                 delete playlist.replace_with_blank(clipIndex);
 
                 QModelIndex index = createIndex(clipIndex, 0, fromTrack);
@@ -1179,6 +1181,7 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex, bool rippleAllTr
                 clipStart = playlist.clip_start(clipIndex);
             }
 
+            emit removing(playlist.get_clip(clipIndex));
             beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
             playlist.remove(clipIndex);
             endRemoveRows();
@@ -1220,6 +1223,7 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
             // transition (MLT mix clip). So, we null mlt_mix to prevent it.
             clearMixReferences(trackIndex, clipIndex);
 
+            emit removing(playlist.get_clip(clipIndex));
             delete playlist.replace_with_blank(clipIndex);
 
             QModelIndex index = createIndex(clipIndex, 0, trackIndex);
@@ -1352,6 +1356,7 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         AudioLevelsTask::start(clip->parent(), this, modelIndex);
 
         clearMixReferences(trackIndex, clipIndex + 1);
+        emit removing(playlist.get_clip(clipIndex + 1));
         beginRemoveRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
         playlist.remove(clipIndex + 1);
         endRemoveRows();
@@ -1737,6 +1742,7 @@ void MultitrackModel::removeTransition(int trackIndex, int clipIndex)
     if (track) {
         Mlt::Playlist playlist(*track);
         clearMixReferences(trackIndex, clipIndex);
+        emit removing(playlist.get_clip(clipIndex));
         beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
         playlist.remove(clipIndex);
         endRemoveRows();
@@ -2585,7 +2591,6 @@ void MultitrackModel::adjustTrackFilters()
     }
 }
 
-
 std::unique_ptr<Mlt::ClipInfo> MultitrackModel::findClipByUuid(const QUuid &uuid, int &trackIndex,
                                                                int &clipIndex)
 {
@@ -2866,6 +2871,7 @@ void MultitrackModel::removeRegion(int trackIndex, int position, int length)
                     // Shotcut does not like the behavior of remove() on a
                     // transition (MLT mix clip). So, we null mlt_mix to prevent it.
                     clearMixReferences(trackIndex, clipIndex);
+                    emit removing(playlist.get_clip(clipIndex));
                     beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
                     playlist.remove(clipIndex);
                     endRemoveRows();
@@ -3366,6 +3372,7 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer &clip
             Mlt::Controller::copyFilters(parent, clip);
             Mlt::Controller::adjustFilters(clip);
         }
+        emit removing(playlist.get_clip(clipIndex));
         beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
         playlist.remove(clipIndex);
         endRemoveRows();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include <QScopedPointer>
 #include <QFuture>
 #include "models/metadatamodel.h"
+#include "models/motiontrackermodel.h"
 #include "models/attachedfiltersmodel.h"
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlfilter.h"
@@ -36,6 +37,10 @@ class FilterController : public QObject
 public:
     explicit FilterController(QObject *parent = 0);
     MetadataModel *metadataModel();
+    MotionTrackerModel *motionTrackerModel()
+    {
+        return &m_motionTrackerModel;
+    }
     AttachedFiltersModel *attachedModel();
 
     QmlMetadata *metadataForService(Mlt::Service *service);
@@ -66,10 +71,12 @@ private slots:
     void handleAttachedModelChange();
     void handleAttachedModelAboutToReset();
     void addMetadata(QmlMetadata *);
+    void handleAttachedRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
     void handleAttachedRowsRemoved(const QModelIndex &parent, int first, int last);
     void handleAttachedRowsInserted(const QModelIndex &parent, int first, int last);
     void handleAttachDuplicateFailed(int index);
     void onQmlFilterChanged(const QString &name);
+    void onAnalyzeFinished(bool isSuccess);
 
 private:
     void loadFilterMetadata();
@@ -78,6 +85,7 @@ private:
     QScopedPointer<QmlFilter> m_currentFilter;
     Mlt::Service *m_mltService;
     MetadataModel m_metadataModel;
+    MotionTrackerModel m_motionTrackerModel;
     AttachedFiltersModel m_attachedModel;
     int m_currentFilterIndex;
 };

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ class QmlFilter;
 class QmlMetadata;
 class MetadataModel;
 class AttachedFiltersModel;
+class MotionTrackerModel;
 
 class FiltersDock : public QDockWidget
 {
@@ -37,7 +38,7 @@ class FiltersDock : public QDockWidget
 
 public:
     explicit FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *attachedModel,
-                         QWidget *parent = 0);
+                         MotionTrackerModel *motionTrackerModel, QWidget *parent = 0);
 
     QmlProducer *qmlProducer()
     {

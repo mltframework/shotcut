@@ -70,6 +70,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   models/keyframesmodel.cpp models/keyframesmodel.h
   models/markersmodel.cpp models/markersmodel.h
   models/metadatamodel.cpp models/metadatamodel.h
+  models/motiontrackermodel.h models/motiontrackermodel.cpp
   models/multitrackmodel.cpp models/multitrackmodel.h
   models/playlistmodel.cpp models/playlistmodel.h
   openotherdialog.cpp openotherdialog.h

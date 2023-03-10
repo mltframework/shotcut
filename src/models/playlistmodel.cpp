@@ -175,6 +175,8 @@ PlaylistModel::PlaylistModel(QObject *parent)
     , m_mode(Invalid)
 {
     qRegisterMetaType<QVector<int> >("QVector<int>");
+    connect(this, &QAbstractItemModel::rowsAboutToBeRemoved, this,
+            &PlaylistModel::onRowsAboutToBeRemoved);
 }
 
 PlaylistModel::~PlaylistModel()
@@ -744,6 +746,15 @@ void PlaylistModel::move(int from, int to)
     emit dataChanged(createIndex(from, 0), createIndex(from, columnCount()));
     emit dataChanged(createIndex(to, 0), createIndex(to, columnCount()));
     emit modified();
+}
+
+void PlaylistModel::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
+{
+    if (m_playlist) {
+        for (int i = first; i <= last; ++i) {
+            emit removing(m_playlist->get_clip(i));
+        }
+    }
 }
 
 void PlaylistModel::createIfNeeded()

@@ -367,7 +367,7 @@ void QmlFilter::analyze(bool isAudio)
     QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(filename));
     tmp->open();
 
-    mltFilter.set("results", nullptr, 0);
+    mltFilter.clear("results");
     int disable = mltFilter.get_int("disable");
     mltFilter.set("disable", 0);
     if (!isAudio) mltFilter.set("analyze", 1);
