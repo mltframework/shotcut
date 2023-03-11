@@ -580,9 +580,6 @@ with parallel processing enabled.</string>
                  </item>
                  <item row="4" column="1">
                   <layout class="QHBoxLayout" name="horizontalLayout_9">
-                   <property name="spacing">
-                    <number>2</number>
-                   </property>
                    <item>
                     <widget class="QComboBox" name="scanModeCombo">
                      <property name="currentIndex">
@@ -630,9 +627,6 @@ with parallel processing enabled.</string>
                  </item>
                  <item row="0" column="1">
                   <layout class="QHBoxLayout" name="horizontalLayout_7">
-                   <property name="spacing">
-                    <number>2</number>
-                   </property>
                    <item>
                     <widget class="QSpinBox" name="widthSpinner">
                      <property name="minimum">
@@ -824,9 +818,6 @@ with parallel processing enabled.</string>
                  </item>
                  <item row="1" column="1">
                   <layout class="QHBoxLayout" name="horizontalLayout_8">
-                   <property name="spacing">
-                    <number>2</number>
-                   </property>
                    <item>
                     <widget class="QSpinBox" name="aspectNumSpinner">
                      <property name="minimum">

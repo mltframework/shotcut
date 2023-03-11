@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #include <QWidget>
 #include <QRunnable>
 #include "abstractproducerwidget.h"
-#include "sharedframe.h"
 #include "dialogs/transcodedialog.h"
 
 namespace Ui {
@@ -122,6 +121,8 @@ private slots:
     void on_rotationComboBox_activated(int index);
 
     void on_actionExportGPX_triggered();
+
+    void on_speedComboBox_textActivated(const QString &arg1);
 
 private:
     Ui::AvformatProducerWidget *ui;

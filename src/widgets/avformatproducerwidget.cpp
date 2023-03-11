@@ -1478,3 +1478,9 @@ void AvformatProducerWidget::on_actionExportGPX_triggered()
     JOBS.add(new GoPro2GpxJob(resource, args));
 }
 
+void AvformatProducerWidget::on_speedComboBox_textActivated(const QString &arg1)
+{
+    if (arg1.isEmpty()) return;
+    ui->speedSpinBox->setValue(arg1.toDouble());
+    on_speedSpinBox_editingFinished();
+}

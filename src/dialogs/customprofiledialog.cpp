@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -118,13 +118,13 @@ void CustomProfileDialog::on_fpsSpinner_editingFinished()
     }
 }
 
-void CustomProfileDialog::on_fpsComboBox_activated(const QString &arg1)
+void CustomProfileDialog::on_fpsComboBox_textActivated(const QString &arg1)
 {
     if (arg1.isEmpty()) return;
     ui->fpsSpinner->setValue(arg1.toDouble());
 }
 
-void CustomProfileDialog::on_resolutionComboBox_activated(const QString &arg1)
+void CustomProfileDialog::on_resolutionComboBox_textActivated(const QString &arg1)
 {
     if (arg1.isEmpty()) return;
     auto parts = arg1.split(' ');
@@ -132,7 +132,7 @@ void CustomProfileDialog::on_resolutionComboBox_activated(const QString &arg1)
     ui->heightSpinner->setValue(parts[2].toInt());
 }
 
-void CustomProfileDialog::on_aspectRatioComboBox_activated(const QString &arg1)
+void CustomProfileDialog::on_aspectRatioComboBox_textActivated(const QString &arg1)
 {
     if (arg1.isEmpty()) return;
     auto parts = arg1.split(' ')[0].split(':');
