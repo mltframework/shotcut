@@ -350,8 +350,8 @@ int VideoWidget::reconfigure(bool isMulti)
             if (!profile().progressive())
                 m_consumer->set("0.progressive", property("progressive").toBool());
             m_consumer->set("0.rescale", property("rescale").toString().toLatin1().constData());
-            m_consumer->set("0.deinterlace_method",
-                            property("deinterlace_method").toString().toLatin1().constData());
+            m_consumer->set("0.deinterlacer",
+                            property("deinterlacer").toString().toLatin1().constData());
             m_consumer->set("0.buffer", qMax(25, qRound(profile().fps())));
             m_consumer->set("0.prefill", qMax(1, qRound(profile().fps() / 25.0)));
             m_consumer->set("0.drop_max", qRound(profile().fps() / 4.0));
@@ -362,8 +362,8 @@ int VideoWidget::reconfigure(bool isMulti)
             if (!profile().progressive())
                 m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toLatin1().constData());
-            m_consumer->set("deinterlace_method",
-                            property("deinterlace_method").toString().toLatin1().constData());
+            m_consumer->set("deinterlacer",
+                            property("deinterlacer").toString().toLatin1().constData());
             m_consumer->set("buffer", qMax(25, qRound(profile().fps())));
             m_consumer->set("prefill", qMax(1, qRound(profile().fps() / 25.0)));
             m_consumer->set("drop_max", qRound(profile().fps() / 4.0));

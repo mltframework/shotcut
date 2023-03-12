@@ -306,8 +306,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->videoCodecThreadsSpinner->setValue(1);
         } else if (name == "meta.preset.extension") {
             m_extension = preset.get("meta.preset.extension");
-        } else if (name == "deinterlace_method") {
-            name = preset.get("deinterlace_method");
+        } else if (name == "deinterlace_method" || name == "deinterlacer") {
+            name = preset.get("deinterlacer") ? preset.get("deinterlacer") : preset.get("deinterlace_method");
             if (name == "onefield")
                 ui->deinterlacerCombo->setCurrentIndex(0);
             else if (name == "linearblend")
@@ -825,16 +825,16 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
             setIfNotSet(p, "top_field_first", ui->fieldOrderCombo->currentIndex());
             switch (ui->deinterlacerCombo->currentIndex()) {
             case 0:
-                setIfNotSet(p, "deinterlace_method", "onefield");
+                setIfNotSet(p, "deinterlacer", "onefield");
                 break;
             case 1:
-                setIfNotSet(p, "deinterlace_method", "linearblend");
+                setIfNotSet(p, "deinterlacer", "linearblend");
                 break;
             case 2:
-                setIfNotSet(p, "deinterlace_method", "yadif-nospatial");
+                setIfNotSet(p, "deinterlacer", "yadif-nospatial");
                 break;
             default:
-                setIfNotSet(p, "deinterlace_method", "yadif");
+                setIfNotSet(p, "deinterlacer", "yadif");
                 break;
             }
             switch (ui->interpolationCombo->currentIndex()) {

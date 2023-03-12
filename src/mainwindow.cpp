@@ -1944,13 +1944,13 @@ void MainWindow::configureVideoWidget()
     else
         setAudioChannels(6);
     if (ui->actionOneField->isChecked())
-        MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
+        MLT.videoWidget()->setProperty("deinterlacer", "onefield");
     else if (ui->actionLinearBlend->isChecked())
-        MLT.videoWidget()->setProperty("deinterlace_method", "linearblend");
+        MLT.videoWidget()->setProperty("deinterlacer", "linearblend");
     else if (ui->actionYadifTemporal->isChecked())
-        MLT.videoWidget()->setProperty("deinterlace_method", "yadif-nospatial");
+        MLT.videoWidget()->setProperty("deinterlacer", "yadif-nospatial");
     else
-        MLT.videoWidget()->setProperty("deinterlace_method", "yadif");
+        MLT.videoWidget()->setProperty("deinterlacer", "yadif");
     if (ui->actionNearest->isChecked())
         MLT.videoWidget()->setProperty("rescale", "nearest");
     else if (ui->actionBilinear->isChecked())
@@ -3172,9 +3172,9 @@ void MainWindow::on_actionChannels6_triggered(bool checked)
 void MainWindow::changeDeinterlacer(bool checked, const char *method)
 {
     if (checked) {
-        MLT.videoWidget()->setProperty("deinterlace_method", method);
+        MLT.videoWidget()->setProperty("deinterlacer", method);
         if (MLT.consumer()) {
-            MLT.consumer()->set("deinterlace_method", method);
+            MLT.consumer()->set("deinterlacer", method);
             MLT.refreshConsumer();
         }
     }
