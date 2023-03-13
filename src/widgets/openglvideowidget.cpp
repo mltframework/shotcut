@@ -191,7 +191,6 @@ static void uploadTextures(QOpenGLContext *context, const SharedFrame &frame, GL
 
 void OpenGLVideoWidget::renderVideo()
 {
-    LOG_DEBUG() << "begin";
     auto context = static_cast<QOpenGLContext *>(quickWindow()->rendererInterface()->getResource(
                                                      quickWindow(), QSGRendererInterface::OpenGLContextResource));
     if (!m_quickContext) {
