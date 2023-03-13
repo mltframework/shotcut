@@ -30,13 +30,13 @@ jobs:
             mingw-w64-x86_64-lame
             mingw-w64-x86_64-libepoxy
             mingw-w64-x86_64-libexif
-            mingw-w64-x86_64-libmfx
             mingw-w64-x86_64-libsamplerate
             mingw-w64-x86_64-libtheora
             mingw-w64-x86_64-libvorbis
             mingw-w64-x86_64-libvpx
             mingw-w64-x86_64-libwebp
             mingw-w64-x86_64-libxml2
+            mingw-w64-x86_64-onevpl
             mingw-w64-x86_64-openssl
             mingw-w64-x86_64-opus
             mingw-w64-x86_64-rubberband
