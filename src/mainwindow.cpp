@@ -733,18 +733,15 @@ void MainWindow::setupSettingsMenu()
     group = new QActionGroup(this);
     group->addAction(ui->actionOneField);
     group->addAction(ui->actionLinearBlend);
+    group->addAction(ui->actionYadifTemporal);
+    group->addAction(ui->actionYadifSpatial);
+    group->addAction(ui->actionBwdif);
 
     m_previewScaleGroup = new QActionGroup(this);
     m_previewScaleGroup->addAction(ui->actionPreviewNone);
     m_previewScaleGroup->addAction(ui->actionPreview360);
     m_previewScaleGroup->addAction(ui->actionPreview540);
     m_previewScaleGroup->addAction(ui->actionPreview720);
-
-    //XXX workaround yadif crashing with mlt_transition
-//    group->addAction(ui->actionYadifTemporal);
-//    group->addAction(ui->actionYadifSpatial);
-    ui->actionYadifTemporal->setVisible(false);
-    ui->actionYadifSpatial->setVisible(false);
 
     group = new QActionGroup(this);
     group->addAction(ui->actionNearest);
@@ -1786,8 +1783,10 @@ void MainWindow::readPlayerSettings()
         ui->actionLinearBlend->setChecked(true);
     else if (deinterlacer == "yadif-nospatial")
         ui->actionYadifTemporal->setChecked(true);
-    else
+    else if (deinterlacer == "yadif")
         ui->actionYadifSpatial->setChecked(true);
+    else
+        ui->actionBwdif->setChecked(true);
 
     if (interpolation == "nearest")
         ui->actionNearest->setChecked(true);
@@ -1949,8 +1948,10 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("deinterlacer", "linearblend");
     else if (ui->actionYadifTemporal->isChecked())
         MLT.videoWidget()->setProperty("deinterlacer", "yadif-nospatial");
-    else
+    else if (ui->actionYadifSpatial->isChecked())
         MLT.videoWidget()->setProperty("deinterlacer", "yadif");
+    else
+        MLT.videoWidget()->setProperty("deinterlacer", "bwdif");
     if (ui->actionNearest->isChecked())
         MLT.videoWidget()->setProperty("rescale", "nearest");
     else if (ui->actionBilinear->isChecked())
@@ -3199,6 +3200,11 @@ void MainWindow::on_actionYadifTemporal_triggered(bool checked)
 void MainWindow::on_actionYadifSpatial_triggered(bool checked)
 {
     changeDeinterlacer(checked, "yadif");
+}
+
+void MainWindow::on_actionBwdif_triggered(bool checked)
+{
+    changeDeinterlacer(checked, "bwdif");
 }
 
 void MainWindow::changeInterpolation(bool checked, const char *method)

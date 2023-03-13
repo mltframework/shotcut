@@ -289,6 +289,7 @@ private slots:
     void on_actionLinearBlend_triggered(bool checked);
     void on_actionYadifTemporal_triggered(bool checked);
     void on_actionYadifSpatial_triggered(bool checked);
+    void on_actionBwdif_triggered(bool checked);
     void on_actionNearest_triggered(bool checked);
     void on_actionBilinear_triggered(bool checked);
     void on_actionBicubic_triggered(bool checked);

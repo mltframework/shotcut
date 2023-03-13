@@ -316,6 +316,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->deinterlacerCombo->setCurrentIndex(2);
             else if (name == "yadif")
                 ui->deinterlacerCombo->setCurrentIndex(3);
+            else if (name == "bwdif")
+                ui->deinterlacerCombo->setCurrentIndex(4);
         } else if (name == "rescale") {
             name = preset.get("rescale");
             if (name == "nearest" || name == "neighbor")
@@ -833,8 +835,11 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
             case 2:
                 setIfNotSet(p, "deinterlacer", "yadif-nospatial");
                 break;
-            default:
+            case 3:
                 setIfNotSet(p, "deinterlacer", "yadif");
+                break;
+            default:
+                setIfNotSet(p, "deinterlacer", "bwdif");
                 break;
             }
             switch (ui->interpolationCombo->currentIndex()) {
@@ -1286,7 +1291,7 @@ void EncodeDock::resetOptions()
 
     ui->scanModeCombo->setCurrentIndex(1);
     on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
-    ui->deinterlacerCombo->setCurrentIndex(3);
+    ui->deinterlacerCombo->setCurrentIndex(4);
     ui->interpolationCombo->setCurrentIndex(1);
     ui->rangeComboBox->setCurrentIndex(0);
 

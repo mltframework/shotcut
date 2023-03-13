@@ -777,7 +777,7 @@ with parallel processing enabled.</string>
                    <item>
                     <widget class="QComboBox" name="deinterlacerCombo">
                      <property name="currentIndex">
-                      <number>3</number>
+                      <number>4</number>
                      </property>
                      <item>
                       <property name="text">
@@ -796,7 +796,12 @@ with parallel processing enabled.</string>
                      </item>
                      <item>
                       <property name="text">
-                       <string>YADIF - temporal + spatial (best)</string>
+                       <string>YADIF - temporal + spatial (better)</string>
+                      </property>
+                     </item>
+                    <item>
+                      <property name="text">
+                       <string>BWDIF (best)</string>
                       </property>
                      </item>
                     </widget>

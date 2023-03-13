@@ -223,6 +223,7 @@
       <addaction name="actionLinearBlend"/>
       <addaction name="actionYadifTemporal"/>
       <addaction name="actionYadifSpatial"/>
+      <addaction name="actionBwdif"/>
      </widget>
      <widget class="QMenu" name="menuInterpolation">
       <property name="title">
@@ -608,7 +609,15 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>YADIF - temporal + spatial (best)</string>
+    <string>YADIF - temporal + spatial (better)</string>
+   </property>
+  </action>
+  <action name="actionBwdif">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>BWDIF (best)</string>
    </property>
   </action>
   <action name="actionNearest">
