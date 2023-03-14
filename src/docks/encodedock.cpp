@@ -193,8 +193,10 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         } else if (name == "vcodec") {
             if (ui->hwencodeCheckBox->isChecked()) {
                 foreach (const QString &hw, Settings.encodeHardware()) {
-                    if ((vcodec == "libx264" && hw.startsWith("h264")) ||
-                            (vcodec == "libx265" && hw.startsWith("hevc"))) {
+                    if ((vcodec == "libx264" && hw.startsWith("h264"))
+                            || (vcodec == "libx265" && hw.startsWith("hevc"))
+                            || (vcodec == "libvpx-vp9" && hw.startsWith("vp9"))
+                            || (vcodec == "libaom-av1" && hw.startsWith("av1"))) {
                         vcodec = hw;
                         break;
                     }
@@ -1402,6 +1404,8 @@ void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset)
     } else if (vcodec.endsWith("_qsv")) {
         if (vcodec.startsWith("hevc_") && !ui->advancedTextEdit->toPlainText().contains("load_plugin="))
             ui->advancedTextEdit->appendPlainText("\nload_plugin=hevc_hw\n");
+        if (vcodec.startsWith("av1_"))
+            ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
     } else if (vcodec.endsWith("_videotoolbox")) {
@@ -2028,6 +2032,8 @@ static QStringList codecs()
     codecs << "hevc_amf";
     codecs << "h264_qsv";
     codecs << "hevc_qsv";
+    codecs << "vp9_qsv";
+    codecs << "av1_qsv";
 #elif defined(Q_OS_MAC)
     codecs << "h264_videotoolbox";
     codecs << "hevc_videotoolbox";
