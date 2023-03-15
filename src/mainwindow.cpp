@@ -759,6 +759,7 @@ void MainWindow::setupSettingsMenu()
     ui->actionExternalNone->setData(QString());
     m_externalGroup->addAction(ui->actionExternalNone);
 
+#ifdef USE_SCREENS_FOR_EXTERNAL_MONITORING
     QList<QScreen *> screens = QGuiApplication::screens();
     int n = screens.size();
     for (int i = 0; n > 1 && i < n; i++) {
@@ -770,6 +771,7 @@ void MainWindow::setupSettingsMenu()
         action->setData(i);
         m_externalGroup->addAction(action);
     }
+#endif
 
     Mlt::Profile profile;
     Mlt::Consumer decklink(profile, "decklink:");
@@ -1798,12 +1800,15 @@ void MainWindow::readPlayerSettings()
         ui->actionHyper->setChecked(true);
 
     foreach (QAction *a, m_externalGroup->actions()) {
-        if (a->data() == external) {
-            a->setChecked(true);
-            if (a->data().toString().startsWith("decklink") && m_keyerMenu)
-                m_keyerMenu->setEnabled(true);
-            break;
-        }
+#ifndef USE_SCREENS_FOR_EXTERNAL_MONITORING
+        if (isExternalPeripheral)
+#endif
+            if (a->data() == external) {
+                a->setChecked(true);
+                if (a->data().toString().startsWith("decklink") && m_keyerMenu)
+                    m_keyerMenu->setEnabled(true);
+                break;
+            }
     }
 
     if (m_keyerGroup) {
@@ -3574,6 +3579,7 @@ void MainWindow::onToolbarVisibilityChanged(bool visible)
 
 void MainWindow::on_menuExternal_aboutToShow()
 {
+#ifdef USE_SCREENS_FOR_EXTERNAL_MONITORING
     foreach (QAction *action, m_externalGroup->actions()) {
         bool ok = false;
         int i = action->data().toInt(&ok);
@@ -3589,6 +3595,7 @@ void MainWindow::on_menuExternal_aboutToShow()
             }
         }
     }
+#endif
 }
 
 void MainWindow::on_actionUpgrade_triggered()
