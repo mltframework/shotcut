@@ -99,7 +99,7 @@ DataQueue<T>::DataQueue(int maxSize, OverflowMode mode)
     : m_queue()
     , m_maxSize(maxSize)
     , m_mode(mode)
-    , m_mutex(QMutex::NonRecursive)
+    , m_mutex()
     , m_notEmptyCondition()
     , m_notFullCondition()
 {

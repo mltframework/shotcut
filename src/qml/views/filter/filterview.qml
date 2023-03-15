@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
-import org.shotcut.qml 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Rectangle {
     id: root
@@ -46,7 +45,6 @@ Rectangle {
     function openFilterMenu() {
         if (attachedfiltersmodel.isProducerSelected)
             filterMenu.open();
-
     }
 
     function _setLayout() {
@@ -73,7 +71,6 @@ Rectangle {
                     left: attachedContainer.right
                     right: root.right
                 }
-
             }
 
             PropertyChanges {
@@ -81,7 +78,6 @@ Rectangle {
                 width: attachedFilters.minimumWidth
                 height: root.height - titleBackground.height - titleBackground.anchors.topMargin - titleBackground.anchors.bottomMargin - attachedContainer.anchors.topMargin - attachedContainer.anchors.bottomMargin
             }
-
         },
         State {
             name: "portrait"
@@ -95,7 +91,6 @@ Rectangle {
                     left: root.left
                     right: root.right
                 }
-
             }
 
             PropertyChanges {
@@ -103,7 +98,6 @@ Rectangle {
                 width: titleBackground.width
                 height: 165
             }
-
         }
     ]
 
@@ -126,7 +120,6 @@ Rectangle {
             leftMargin: 10
             rightMargin: 10
         }
-
     }
 
     Label {
@@ -146,7 +139,6 @@ Rectangle {
             leftMargin: 10
             rightMargin: 10
         }
-
     }
 
     GridLayout {
@@ -171,7 +163,7 @@ Rectangle {
             Layout.columnSpan: parent.columns
             Layout.fillWidth: true
             Layout.fillHeight: true
-            onFilterClicked: {
+            onFilterClicked: index => {
                 root.currentFilterRequested(index);
             }
 
@@ -181,7 +173,6 @@ Rectangle {
                 color: activePalette.text
                 visible: !attachedfiltersmodel.isProducerSelected
             }
-
         }
 
         Shotcut.Button {
@@ -195,13 +186,11 @@ Rectangle {
             onClicked: {
                 if (application.confirmOutputFilter())
                     filterMenu.open();
-
             }
 
             Shotcut.HoverTip {
                 text: qsTr('Add a filter')
             }
-
         }
 
         Shotcut.Button {
@@ -219,10 +208,9 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('Remove selected filter')
             }
-
         }
-        // separator
 
+        // separator
         Shotcut.Button {
             enabled: false
             implicitWidth: 1
@@ -240,9 +228,8 @@ Rectangle {
             onClicked: application.copyFilters()
 
             Shotcut.HoverTip {
-                text: qsTr('Copy the filters')
+                text: qsTr('Copy checked filters')
             }
-
         }
 
         Shotcut.Button {
@@ -258,10 +245,9 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('Paste filters')
             }
-
         }
-        // separator
 
+        // separator
         Shotcut.Button {
             enabled: false
             implicitWidth: 1
@@ -281,7 +267,6 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('Move filter up')
             }
-
         }
 
         Shotcut.Button {
@@ -297,10 +282,9 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('Move filter down')
             }
-
         }
-        // separator
 
+        // separator
         Shotcut.Button {
             enabled: false
             implicitWidth: 1
@@ -325,24 +309,20 @@ Rectangle {
             Shotcut.HoverTip {
                 text: qsTr('Deselect the filter')
             }
-
         }
 
         Item {
             Layout.fillWidth: true
         }
-
     }
 
     Flickable {
         // scroll bar
-
         id: filterConfigScrollView
 
         function expandWidth() {
             if (filterConfig.item)
                 filterConfig.item.width = Math.max(filterConfig.minimumWidth, filterConfigScrollView.width - 20);
-
         }
 
         clip: true
@@ -375,9 +355,8 @@ Rectangle {
             anchors.right: filterConfigScrollView.right
 
             background: Rectangle {
-                color: parent.palette.alternateBase
+                color: Qt.lighter(parent.palette.alternateBase)
             }
-
         }
 
         ScrollBar.vertical: ScrollBar {
@@ -390,18 +369,16 @@ Rectangle {
             anchors.bottom: filterConfigScrollView.bottom
 
             background: Rectangle {
-                color: parent.palette.alternateBase
+                color: Qt.lighter(parent.palette.alternateBase)
             }
-
         }
-
     }
 
     FilterMenu {
         id: filterMenu
 
         z: 1
-        onFilterSelected: {
+        onFilterSelected: index => {
             attachedfiltersmodel.add(metadatamodel.get(index));
         }
 
@@ -412,7 +389,6 @@ Rectangle {
             bottom: parent.bottom
             topMargin: attachedContainer.anchors.topMargin
         }
-
     }
 
     Connections {
@@ -422,5 +398,4 @@ Rectangle {
 
         target: attachedfiltersmodel
     }
-
 }

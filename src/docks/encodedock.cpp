@@ -193,8 +193,10 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         } else if (name == "vcodec") {
             if (ui->hwencodeCheckBox->isChecked()) {
                 foreach (const QString &hw, Settings.encodeHardware()) {
-                    if ((vcodec == "libx264" && hw.startsWith("h264")) ||
-                            (vcodec == "libx265" && hw.startsWith("hevc"))) {
+                    if ((vcodec == "libx264" && hw.startsWith("h264"))
+                            || (vcodec == "libx265" && hw.startsWith("hevc"))
+                            || (vcodec == "libvpx-vp9" && hw.startsWith("vp9"))
+                            || (vcodec == "libaom-av1" && hw.startsWith("av1"))) {
                         vcodec = hw;
                         break;
                     }
@@ -306,8 +308,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->videoCodecThreadsSpinner->setValue(1);
         } else if (name == "meta.preset.extension") {
             m_extension = preset.get("meta.preset.extension");
-        } else if (name == "deinterlace_method") {
-            name = preset.get("deinterlace_method");
+        } else if (name == "deinterlace_method" || name == "deinterlacer") {
+            name = preset.get("deinterlacer") ? preset.get("deinterlacer") : preset.get("deinterlace_method");
             if (name == "onefield")
                 ui->deinterlacerCombo->setCurrentIndex(0);
             else if (name == "linearblend")
@@ -316,6 +318,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->deinterlacerCombo->setCurrentIndex(2);
             else if (name == "yadif")
                 ui->deinterlacerCombo->setCurrentIndex(3);
+            else if (name == "bwdif")
+                ui->deinterlacerCombo->setCurrentIndex(4);
         } else if (name == "rescale") {
             name = preset.get("rescale");
             if (name == "nearest" || name == "neighbor")
@@ -825,16 +829,19 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
             setIfNotSet(p, "top_field_first", ui->fieldOrderCombo->currentIndex());
             switch (ui->deinterlacerCombo->currentIndex()) {
             case 0:
-                setIfNotSet(p, "deinterlace_method", "onefield");
+                setIfNotSet(p, "deinterlacer", "onefield");
                 break;
             case 1:
-                setIfNotSet(p, "deinterlace_method", "linearblend");
+                setIfNotSet(p, "deinterlacer", "linearblend");
                 break;
             case 2:
-                setIfNotSet(p, "deinterlace_method", "yadif-nospatial");
+                setIfNotSet(p, "deinterlacer", "yadif-nospatial");
+                break;
+            case 3:
+                setIfNotSet(p, "deinterlacer", "yadif");
                 break;
             default:
-                setIfNotSet(p, "deinterlace_method", "yadif");
+                setIfNotSet(p, "deinterlacer", "bwdif");
                 break;
             }
             switch (ui->interpolationCombo->currentIndex()) {
@@ -1022,7 +1029,7 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target
     const auto &from = ui->fromCombo->currentData().toString();
     if (MAIN.isMultitrackValid() && from.startsWith("marker:")) {
         bool ok = false;
-        int index = from.midRef(7).toInt(&ok);
+        int index = from.mid(7).toInt(&ok);
         if (ok) {
             MarkersModel markersModel;
             markersModel.load(MAIN.multitrack());
@@ -1286,7 +1293,7 @@ void EncodeDock::resetOptions()
 
     ui->scanModeCombo->setCurrentIndex(1);
     on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
-    ui->deinterlacerCombo->setCurrentIndex(3);
+    ui->deinterlacerCombo->setCurrentIndex(4);
     ui->interpolationCombo->setCurrentIndex(1);
     ui->rangeComboBox->setCurrentIndex(0);
 
@@ -1397,6 +1404,8 @@ void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset)
     } else if (vcodec.endsWith("_qsv")) {
         if (vcodec.startsWith("hevc_") && !ui->advancedTextEdit->toPlainText().contains("load_plugin="))
             ui->advancedTextEdit->appendPlainText("\nload_plugin=hevc_hw\n");
+        if (vcodec.startsWith("av1_"))
+            ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
     } else if (vcodec.endsWith("_videotoolbox")) {
@@ -1923,8 +1932,8 @@ bool PresetsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sour
     for (int i = 0; i < sourceModel()->rowCount(index); i++)
         if (filterAcceptsRow(i, index)) return true;
 
-    return sourceModel()->data(index).toString().contains(filterRegExp()) ||
-           sourceModel()->data(index, Qt::ToolTipRole).toString().contains(filterRegExp());
+    return sourceModel()->data(index).toString().contains(filterRegularExpression()) ||
+           sourceModel()->data(index, Qt::ToolTipRole).toString().contains(filterRegularExpression());
 }
 
 void EncodeDock::on_resetButton_clicked()
@@ -1944,7 +1953,8 @@ void EncodeDock::on_formatCombo_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
     m_extension.clear();
-    defaultFormatExtension();
+    if (index > 0)
+        defaultFormatExtension();
 }
 
 void EncodeDock::on_videoBufferDurationChanged()
@@ -2022,6 +2032,8 @@ static QStringList codecs()
     codecs << "hevc_amf";
     codecs << "h264_qsv";
     codecs << "hevc_qsv";
+    codecs << "vp9_qsv";
+    codecs << "av1_qsv";
 #elif defined(Q_OS_MAC)
     codecs << "h264_videotoolbox";
     codecs << "hevc_videotoolbox";
@@ -2086,10 +2098,10 @@ void EncodeDock::on_fpsSpinner_editingFinished()
     }
 }
 
-void EncodeDock::on_fpsComboBox_activated(const QString &arg1)
+void EncodeDock::on_fpsComboBox_activated(int arg1)
 {
-    if (!arg1.isEmpty())
-        ui->fpsSpinner->setValue(arg1.toDouble());
+    if (!ui->fpsComboBox->itemText(arg1).isEmpty())
+        ui->fpsSpinner->setValue(ui->fpsComboBox->itemText(arg1).toDouble());
 }
 
 void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
@@ -2263,10 +2275,10 @@ bool EncodeDock::checkForMissingFiles()
     return false;
 }
 
-void EncodeDock::on_resolutionComboBox_activated(const QString &arg1)
+void EncodeDock::on_resolutionComboBox_activated(int arg1)
 {
-    if (arg1.isEmpty()) return;
-    auto parts = arg1.splitRef(' ');
+    if (ui->resolutionComboBox->itemText(arg1).isEmpty()) return;
+    auto parts = ui->resolutionComboBox->itemText(arg1).split(' ');
     ui->widthSpinner->setValue(parts[0].toInt());
     ui->heightSpinner->setValue(parts[2].toInt());
 }

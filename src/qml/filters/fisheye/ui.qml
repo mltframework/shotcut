@@ -14,12 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Styles 1.1
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     //Action
@@ -37,7 +35,6 @@ Item {
     //match result
     //append unique results
     //append unique modes
-
     id: mainItemLayout
 
     //plugin input index values
@@ -230,7 +227,6 @@ Item {
             if (v_ret !== '') {
                 if (a_list.indexOf(v_ret) === -1)
                     a_list.push(v_ret);
-
             } else {
                 v_more = false;
             }
@@ -248,8 +244,7 @@ Item {
         var i = 0;
         var v_cam = cameraCombo.currentText;
         if (v_cam === '')
-            return ;
-
+            return;
         do {
             v_ret = getPresetName(i, iDX_CAMERA);
             if (v_ret !== '') {
@@ -257,7 +252,6 @@ Item {
                     v_ret = getPresetName(i, iDX_WIDE);
                     if (a_list.indexOf(v_ret) === -1)
                         a_list.push(v_ret);
-
                 }
             } else {
                 v_more = false;
@@ -281,7 +275,6 @@ Item {
             if (v_ret !== '') {
                 if (v_cam === v_ret && v_mode === getPresetName(i, iDX_WIDE))
                     a_list.push(getPresetName(i, iDX_RESULT));
-
             } else {
                 v_more = false;
             }
@@ -363,10 +356,8 @@ Item {
     function floatFromIndex(idx, max) {
         if (idx < 1)
             idx = 1;
-
         if (idx > max)
             idx = max;
-
         return ((1 / (max - 1)) * (idx - 1)).toPrecision(6);
     }
 
@@ -377,7 +368,6 @@ Item {
         for (var i = 1; i < max; i++) {
             if (v_plug < (v_rng * i))
                 return i;
-
         }
         return max;
     }
@@ -388,7 +378,6 @@ Item {
         for (var i = 1; i < max; i++) {
             if (value < (v_rng * i))
                 return i;
-
         }
         return max;
     }
@@ -415,7 +404,6 @@ Item {
     Component.onCompleted: {
         if (filter.getDouble(scaleYParam) > 0)
             pluginShowNew = true;
-
         filter.blockSignals = true;
         if (filter.isNew) {
             setPresetData();
@@ -426,7 +414,6 @@ Item {
         filter.blockSignals = false;
         if (cameraShowNew)
             fillCameraCombo();
-
         setControlData();
         blockUpdate = false;
     }
@@ -452,8 +439,8 @@ Item {
             parameters: defaultParameters
             onPresetSelected: setControlData()
         }
-        //blank
 
+        //blank
         Row {
             width: 6
         }
@@ -466,7 +453,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Add or remove fisheye effect')
             }
-
         }
 
         RowLayout {
@@ -482,11 +468,9 @@ Item {
                 checked: deFishDefault
                 onCheckedChanged: {
                     if (blockUpdate)
-                        return ;
-
+                        return;
                     if (checked)
                         filter.set(deFishParam, true);
-
                 }
             }
 
@@ -498,14 +482,11 @@ Item {
                 checked: !deFishDefault
                 onCheckedChanged: {
                     if (blockUpdate)
-                        return ;
-
+                        return;
                     if (checked)
                         filter.set(deFishParam, false);
-
                 }
             }
-
         }
 
         Shotcut.UndoButton {
@@ -524,7 +505,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The amount of lens distortion')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -537,8 +517,7 @@ Item {
             value: focalRatioDefault
             onValueChanged: {
                 if (blockUpdate)
-                    return ;
-
+                    return;
                 filter.set(focalRatioParam, value);
             }
         }
@@ -555,7 +534,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Resample quality')
             }
-
         }
 
         Shotcut.ComboBox {
@@ -604,9 +582,7 @@ Item {
                     text: qsTr('Lanczos 16x16')
                     value: 1
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -624,7 +600,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Select a lens distortion pattern that best matches your camera')
             }
-
         }
 
         RowLayout {
@@ -659,9 +634,7 @@ Item {
                         text: qsTr('Stereographic')
                         value: 1
                     }
-
                 }
-
             }
 
             CheckBox {
@@ -674,8 +647,7 @@ Item {
                 checked: superViewDefault
                 onCheckedChanged: {
                     if (blockUpdate)
-                        return ;
-
+                        return;
                     stretchShowSlider = checked;
                     filter.set(stretchParam, checked ? stretchSlider.value + 0.5 : 0.5);
                     setScollbarHeight();
@@ -684,9 +656,7 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('The image will be stretched/squished to fix camera scaling between 4:3 and 16:9\n' + 'Like used in GoPro\'s superview')
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -706,7 +676,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Use negative values for up-scaled videos\n' + 'Use positive values for down-scaled videos')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -720,8 +689,7 @@ Item {
             value: 0
             onValueChanged: {
                 if (blockUpdate)
-                    return ;
-
+                    return;
                 filter.set(stretchParam, value + 0.5);
             }
         }
@@ -745,7 +713,6 @@ Item {
                 color: activePalette.text
                 opacity: 0.3
             }
-
         }
 
         // Row 7: Scale (Preset)
@@ -756,7 +723,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Preset scale methods\n' + 'Lock pixels at specific locations')
             }
-
         }
 
         RowLayout {
@@ -793,9 +759,7 @@ Item {
                         text: qsTr('Manual Scale')
                         value: 1
                     }
-
                 }
-
             }
 
             CheckBox {
@@ -808,8 +772,7 @@ Item {
                 checked: false
                 onCheckedChanged: {
                     if (blockUpdate)
-                        return ;
-
+                        return;
                     filter.set(scaleYParam, checked ? scaleYSlider.value + 0.5 : 0.5);
                     scaleYShowSlider = checked;
                     setScollbarHeight();
@@ -818,7 +781,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Scale Y separately\nThis changes video aspect ratio')
                 }
-
             }
 
             CheckBox {
@@ -831,17 +793,14 @@ Item {
                 visible: (pluginShowNew && fisheyeRemoveButton.checked)
                 onCheckedChanged: {
                     if (blockUpdate)
-                        return ;
-
+                        return;
                     filter.set(cropParam, checked);
                 }
 
                 Shotcut.HoverTip {
                     text: qsTr('Remove distorted edges')
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -865,7 +824,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('User set zoom/scale\nSides of image are not fixed')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -879,8 +837,7 @@ Item {
             value: 0
             onValueChanged: {
                 if (blockUpdate)
-                    return ;
-
+                    return;
                 filter.set(scaleManualParam, value + 0.5);
             }
         }
@@ -899,7 +856,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Seperate Y scale')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -913,8 +869,7 @@ Item {
             suffix: ''
             onValueChanged: {
                 if (blockUpdate)
-                    return ;
-
+                    return;
                 filter.set(scaleYParam, value + 0.5);
             }
         }
@@ -938,7 +893,6 @@ Item {
                 color: activePalette.text
                 opacity: 0.3
             }
-
         }
 
         // Row 10: A/R (Preset)
@@ -949,7 +903,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Preset pixel aspect ratio')
             }
-
         }
 
         RowLayout {
@@ -991,11 +944,8 @@ Item {
                         text: qsTr('Manual Aspect')
                         value: 1
                     }
-
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -1016,7 +966,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('User set pixel aspect ratios\n' + 'Change top/side distortion bias')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -1030,8 +979,7 @@ Item {
             value: 0
             onValueChanged: {
                 if (blockUpdate)
-                    return ;
-
+                    return;
                 filter.set(aspectManualParam, value + 0.5);
             }
         }
@@ -1056,7 +1004,6 @@ Item {
                 color: activePalette.text
                 opacity: 0.3
             }
-
         }
 
         //row 12 combo cameras
@@ -1077,10 +1024,9 @@ Item {
             model: ListModel {
                 id: tempList1
             }
-
         }
-        //row 13 combo camera mode
 
+        //row 13 combo camera mode
         Label {
             visible: cameraShowNew
             text: qsTr('Record mode')
@@ -1099,10 +1045,9 @@ Item {
             model: ListModel {
                 id: tempList2
             }
-
         }
-        //row 14 combo results
 
+        //row 14 combo results
         Label {
             visible: cameraShowNew
             text: qsTr('Result')
@@ -1121,7 +1066,6 @@ Item {
                 model: ListModel {
                     id: tempList3
                 }
-
             }
 
             Shotcut.Button {
@@ -1130,13 +1074,10 @@ Item {
                 implicitWidth: 80
                 onClicked: setCameraData()
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

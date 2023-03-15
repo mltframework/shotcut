@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +39,7 @@ ScopeDock::ScopeDock(ScopeController *scopeController, ScopeWidget *scopeWidget)
     QDockWidget::setWindowTitle(m_scopeWidget->getTitle());
 
     connect(toggleViewAction(), SIGNAL(toggled(bool)), this, SLOT(onActionToggled(bool)));
+    connect(this, &QDockWidget::dockLocationChanged, m_scopeWidget, &ScopeWidget::moved);
     LOG_DEBUG() << "end";
 }
 

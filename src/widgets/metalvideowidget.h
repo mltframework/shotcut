@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,23 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GLTESTWIDGET_H
-#define GLTESTWIDGET_H
+#ifndef METALVIDEOWIDGET_H
+#define METALVIDEOWIDGET_H
 
-#include <QGLWidget>
-#include <QOpenGLFunctions>
+#include "videowidget.h"
 
-class GLTestWidget : public QGLWidget, protected QOpenGLFunctions
+class MetalVideoRenderer;
+
+class MetalVideoWidget : public Mlt::VideoWidget
 {
     Q_OBJECT
 public:
-    explicit GLTestWidget(QWidget *parent = 0);
+    explicit MetalVideoWidget(QObject *parent);
+    virtual ~MetalVideoWidget();
 
-protected:
-    void initializeGL();
+public slots:
+    virtual void initialize();
+    virtual void renderVideo();
 
 private:
-    bool m_isInitialized;
+    std::unique_ptr<MetalVideoRenderer> m_renderer;
 };
 
-#endif // GLTESTWIDGET_H
+#endif // METALVIDEOWIDGET_H

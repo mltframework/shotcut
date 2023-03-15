@@ -46,7 +46,7 @@
 #include "docks/jobsdock.h"
 #include "jobqueue.h"
 #include "docks/playlistdock.h"
-#include "glwidget.h"
+#include "videowidget.h"
 #include "controllers/filtercontroller.h"
 #include "controllers/scopecontroller.h"
 #include "docks/filtersdock.h"
@@ -54,9 +54,7 @@
 #include "dialogs/customprofiledialog.h"
 #include "dialogs/saveimagedialog.h"
 #include "settings.h"
-#include "leapnetworklistener.h"
 #include "database.h"
-#include "widgets/gltestwidget.h"
 #include "docks/timelinedock.h"
 #include "widgets/lumamixtransition.h"
 #include "qmltypes/qmlutilities.h"
@@ -82,7 +80,7 @@
 #include "dialogs/longuitask.h"
 #include "dialogs/systemsyncdialog.h"
 #include "proxymanager.h"
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
 #include "windowstools.h"
 #endif
 
@@ -158,9 +156,6 @@ MainWindow::MainWindow()
 
     LOG_DEBUG() << "begin";
     LOG_INFO() << "device pixel ratio =" << devicePixelRatioF();
-#ifndef Q_OS_WIN
-    new GLTestWidget(this);
-#endif
     connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(onAutosaveTimeout()));
     m_autosaveTimer.start(AUTOSAVE_TIMEOUT_MS);
 
@@ -207,8 +202,6 @@ MainWindow::MainWindow()
 
     setFocus();
     setCurrentFile("");
-
-    setupAndConnectLeapNetworkListener();
 
     connect(&m_network, SIGNAL(finished(QNetworkReply *)),
             SLOT(onUpgradeCheckFinished(QNetworkReply *)));
@@ -370,7 +363,7 @@ void MainWindow::setupAndConnectDocks()
     m_scopeController = new ScopeController(this, ui->menuView);
     QDockWidget *audioMeterDock = findChild<QDockWidget *>("AudioPeakMeterDock");
     if (audioMeterDock) {
-        audioMeterDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_1));
+        audioMeterDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_1));
         connect(ui->actionAudioMeter, SIGNAL(triggered()), audioMeterDock->toggleViewAction(),
                 SLOT(trigger()));
     }
@@ -379,7 +372,7 @@ void MainWindow::setupAndConnectDocks()
     m_propertiesDock->hide();
     m_propertiesDock->setObjectName("propertiesDock");
     m_propertiesDock->setWindowIcon(ui->actionProperties->icon());
-    m_propertiesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_2));
+    m_propertiesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_2));
     m_propertiesDock->toggleViewAction()->setIcon(ui->actionProperties->icon());
     m_propertiesDock->setMinimumWidth(300);
     QScrollArea *scroll = new QScrollArea;
@@ -392,7 +385,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_recentDock = new RecentDock(this);
     m_recentDock->hide();
-    m_recentDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
+    m_recentDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_3));
     ui->menuView->addAction(m_recentDock->toggleViewAction());
     connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
     connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
@@ -404,7 +397,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_playlistDock = new PlaylistDock(this);
     m_playlistDock->hide();
-    m_playlistDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_4));
+    m_playlistDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_4));
     ui->menuView->addAction(m_playlistDock->toggleViewAction());
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onPlaylistDockTriggered(bool)));
@@ -440,7 +433,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
-    m_timelineDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_5));
+    m_timelineDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_5));
     ui->menuView->addAction(m_timelineDock->toggleViewAction());
     connect(m_timelineDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onTimelineDockTriggered(bool)));
@@ -493,7 +486,7 @@ void MainWindow::setupAndConnectDocks()
                                     m_filterController->attachedModel(), this);
     m_filtersDock->setMinimumSize(400, 300);
     m_filtersDock->hide();
-    m_filtersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_6));
+    m_filtersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_6));
     ui->menuView->addAction(m_filtersDock->toggleViewAction());
     connect(m_filtersDock, SIGNAL(currentFilterRequested(int)), m_filterController,
             SLOT(setCurrentFilter(int)), Qt::QueuedConnection);
@@ -538,7 +531,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_markersDock = new MarkersDock(this);
     m_markersDock->hide();
-    m_markersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_6));
+    m_markersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_6));
     m_markersDock->setModel(m_timelineDock->markersModel());
     ui->menuView->addAction(m_markersDock->toggleViewAction());
     connect(m_markersDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
@@ -553,7 +546,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_keyframesDock = new KeyframesDock(m_filtersDock->qmlProducer(), this);
     m_keyframesDock->hide();
-    m_keyframesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_7));
+    m_keyframesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_7));
     ui->menuView->addAction(m_keyframesDock->toggleViewAction());
     connect(m_keyframesDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onKeyframesDockTriggered(bool)));
@@ -568,7 +561,7 @@ void MainWindow::setupAndConnectDocks()
     m_historyDock->setObjectName("historyDock");
     m_historyDock->setWindowIcon(ui->actionHistory->icon());
     m_historyDock->toggleViewAction()->setIcon(ui->actionHistory->icon());
-    m_historyDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_8));
+    m_historyDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_8));
     m_historyDock->setMinimumWidth(150);
     ui->menuView->addAction(m_historyDock->toggleViewAction());
     connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
@@ -584,11 +577,11 @@ void MainWindow::setupAndConnectDocks()
 
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
-    m_encodeDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_9));
+    m_encodeDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_9));
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
     connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
-    connect(ui->actionExportVideo, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
+    connect(ui->actionExportVideo, SIGNAL(triggered()), m_encodeDock, SLOT(on_encodeButton_clicked()));
     connect(m_encodeDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onEncodeTriggered(bool)));
     connect(m_encodeDock, SIGNAL(captureStateChanged(bool)), m_player,
@@ -614,7 +607,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();
-    m_jobsDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_0));
+    m_jobsDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_0));
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(onJobAdded()));
     connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
@@ -623,7 +616,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_notesDock = new NotesDock(this);
     m_notesDock->hide();
-    m_notesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_3));
+    m_notesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_3));
     ui->menuView->insertAction(m_playlistDock->toggleViewAction(), m_notesDock->toggleViewAction());
     connect(m_notesDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onNotesDockTriggered(bool)));
@@ -662,30 +655,23 @@ void MainWindow::setupMenuView()
 
 void MainWindow::connectVideoWidgetSignals()
 {
-    Mlt::GLWidget *videoWidget = (Mlt::GLWidget *) & (MLT);
-    connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
-    connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
-    connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
-    connect(videoWidget->quickWindow(), SIGNAL(sceneGraphInitialized()),
-            SLOT(onSceneGraphInitialized()), Qt::QueuedConnection);
-    connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame &)), m_scopeController,
-            SIGNAL(newFrame(const SharedFrame &)));
-    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter *, QmlMetadata *, int)),
-            videoWidget, SLOT(setCurrentFilter(QmlFilter *, QmlMetadata *)));
-}
-
-void MainWindow::setupAndConnectLeapNetworkListener()
-{
-    LeapNetworkListener *leap = new LeapNetworkListener(this);
-    connect(leap, SIGNAL(shuttle(float)), SLOT(onShuttle(float)));
-    connect(leap, &LeapNetworkListener::jogRightFrame, Actions["playerNextFrameAction"],
-            &QAction::trigger);
-    connect(leap, &LeapNetworkListener::jogRightSecond, Actions["playerForwardOneSecondAction"],
-            &QAction::trigger);
-    connect(leap, &LeapNetworkListener::jogLeftFrame, Actions["playerPreviousFrameAction"],
-            &QAction::trigger);
-    connect(leap, &LeapNetworkListener::jogLeftSecond, Actions["playerBackwardOneSecondAction"],
-            &QAction::trigger);
+    auto videoWidget = static_cast<Mlt::VideoWidget *>(&MLT);
+    connect(videoWidget, &Mlt::VideoWidget::dragStarted, m_playlistDock,
+            &PlaylistDock::onPlayerDragStarted);
+    connect(videoWidget, &Mlt::VideoWidget::seekTo, m_player, &Player::seek);
+    connect(videoWidget, &Mlt::VideoWidget::gpuNotSupported, this, &MainWindow::onGpuNotSupported);
+    connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, videoWidget,
+            &Mlt::VideoWidget::initialize, Qt::DirectConnection);
+    connect(videoWidget->quickWindow(), &QQuickWindow::beforeRendering, videoWidget,
+            &Mlt::VideoWidget::beforeRendering, Qt::DirectConnection);
+    connect(videoWidget->quickWindow(), &QQuickWindow::beforeRenderPassRecording, videoWidget,
+            &Mlt::VideoWidget::renderVideo, Qt::DirectConnection);
+    connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, this,
+            &MainWindow::onSceneGraphInitialized, Qt::QueuedConnection);
+    connect(videoWidget, &Mlt::VideoWidget::frameDisplayed, m_scopeController,
+            &ScopeController::newFrame);
+    connect(m_filterController, &FilterController::currentFilterChanged, videoWidget,
+            &Mlt::VideoWidget::setCurrentFilter);
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
@@ -747,6 +733,9 @@ void MainWindow::setupSettingsMenu()
     group = new QActionGroup(this);
     group->addAction(ui->actionOneField);
     group->addAction(ui->actionLinearBlend);
+    group->addAction(ui->actionYadifTemporal);
+    group->addAction(ui->actionYadifSpatial);
+    group->addAction(ui->actionBwdif);
 
     m_previewScaleGroup = new QActionGroup(this);
     m_previewScaleGroup->addAction(ui->actionPreviewNone);
@@ -754,24 +743,11 @@ void MainWindow::setupSettingsMenu()
     m_previewScaleGroup->addAction(ui->actionPreview540);
     m_previewScaleGroup->addAction(ui->actionPreview720);
 
-    //XXX workaround yadif crashing with mlt_transition
-//    group->addAction(ui->actionYadifTemporal);
-//    group->addAction(ui->actionYadifSpatial);
-    ui->actionYadifTemporal->setVisible(false);
-    ui->actionYadifSpatial->setVisible(false);
-
     group = new QActionGroup(this);
     group->addAction(ui->actionNearest);
     group->addAction(ui->actionBilinear);
     group->addAction(ui->actionBicubic);
     group->addAction(ui->actionHyper);
-    if (Settings.playerGPU()) {
-        group = new QActionGroup(this);
-        group->addAction(ui->actionGammaRec709);
-        group->addAction(ui->actionGammaSRGB);
-    } else {
-        delete ui->menuGamma;
-    }
     m_profileGroup = new QActionGroup(this);
     m_profileGroup->addAction(ui->actionProfileAutomatic);
     ui->actionProfileAutomatic->setData(QString());
@@ -783,6 +759,7 @@ void MainWindow::setupSettingsMenu()
     ui->actionExternalNone->setData(QString());
     m_externalGroup->addAction(ui->actionExternalNone);
 
+#ifdef USE_SCREENS_FOR_EXTERNAL_MONITORING
     QList<QScreen *> screens = QGuiApplication::screens();
     int n = screens.size();
     for (int i = 0; n > 1 && i < n; i++) {
@@ -794,6 +771,7 @@ void MainWindow::setupSettingsMenu()
         action->setData(i);
         m_externalGroup->addAction(action);
     }
+#endif
 
     Mlt::Profile profile;
     Mlt::Consumer decklink(profile, "decklink:");
@@ -891,6 +869,9 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::Greek), m_languagesGroup);
     a->setCheckable(true);
     a->setData("el");
+    a = new QAction(QLocale::languageToString(QLocale::Hebrew), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("he_IL");
     a = new QAction(QLocale::languageToString(QLocale::Hungarian), m_languagesGroup);
     a->setCheckable(true);
     a->setData("hu");
@@ -964,6 +945,7 @@ void MainWindow::setupSettingsMenu()
     connect(m_languagesGroup, SIGNAL(triggered(QAction *)), this, SLOT(onLanguageTriggered(QAction *)));
 
     // Setup the themes actions
+#if defined(SHOTCUT_THEME)
     group = new QActionGroup(this);
     group->addAction(ui->actionSystemTheme);
     group->addAction(ui->actionFusionDark);
@@ -974,27 +956,23 @@ void MainWindow::setupSettingsMenu()
         ui->actionFusionLight->setChecked(true);
     else
         ui->actionSystemTheme->setChecked(true);
+#else
+    delete ui->menuTheme;
+#endif
 
-#if defined(Q_OS_WIN) || (defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM))
+#if defined(Q_OS_WIN)
     // On Windows, if there is no JACK or it is not running
     // then Shotcut crashes inside MLT's call to jack_client_open().
     // Therefore, the JACK option for Shotcut is banned on Windows.
     delete ui->actionJack;
     ui->actionJack = 0;
 #endif
-#if !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     // Setup the display method actions.
     if (!Settings.playerGPU()) {
         group = new QActionGroup(this);
-#if defined(Q_OS_WIN)
-        ui->actionDrawingAutomatic->setData(0);
-        group->addAction(ui->actionDrawingAutomatic);
-        ui->actionDrawingDirectX->setData(Qt::AA_UseOpenGLES);
-        group->addAction(ui->actionDrawingDirectX);
-#else
         delete ui->actionDrawingAutomatic;
         delete ui->actionDrawingDirectX;
-#endif
         ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
         group->addAction(ui->actionDrawingOpenGL);
         ui->actionDrawingSoftware->setData(Qt::AA_UseSoftwareOpenGL);
@@ -1004,30 +982,19 @@ void MainWindow::setupSettingsMenu()
         case Qt::AA_UseDesktopOpenGL:
             ui->actionDrawingOpenGL->setChecked(true);
             break;
-#if defined(Q_OS_WIN)
-        case Qt::AA_UseOpenGLES:
-            ui->actionDrawingDirectX->setChecked(true);
-            break;
-#endif
         case Qt::AA_UseSoftwareOpenGL:
             ui->actionDrawingSoftware->setChecked(true);
             break;
-#if defined(Q_OS_WIN)
-        default:
-            ui->actionDrawingAutomatic->setChecked(true);
-            break;
-#else
         default:
             ui->actionDrawingOpenGL->setChecked(true);
             break;
-#endif
         }
     } else {
         // GPU mode only works with OpenGL.
         delete ui->menuDrawingMethod;
         ui->menuDrawingMethod = 0;
     }
-#else  // Q_OS_MAC
+#else
     delete ui->menuDrawingMethod;
     ui->menuDrawingMethod = 0;
 #endif
@@ -1079,7 +1046,7 @@ void MainWindow::setupOpenOtherMenu()
     // populate the generators
     if (mltProducers->get_data("color")) {
         otherMenu->addAction(tr("Color"), this, SLOT(onOpenOtherTriggered()))->setObjectName("color");
-        if (!Settings.playerGPU() && mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext"))
+        if (mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext"))
             otherMenu->addAction(tr("Text"), this, SLOT(onOpenOtherTriggered()))->setObjectName("text");
     }
     if (mltProducers->get_data("glaxnimate"))
@@ -1143,8 +1110,10 @@ void MainWindow::open(Mlt::Producer *producer)
 
     bool ok = false;
     int screen = Settings.playerExternal().toInt(&ok);
-    if (ok && screen != QApplication::desktop()->screenNumber(this))
+    if (ok && screen < QGuiApplication::screens().count()
+            && QGuiApplication::screens().at(screen) != this->screen()) {
         m_player->moveVideoToScreen(screen);
+    }
 
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer)) {
@@ -1165,8 +1134,7 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker)
         LOG_INFO() << "file uses GPU but GPU not enabled";
         QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
-                           tr("The file you opened uses GPU effects, but GPU effects are not enabled.\n\n"
-                              "GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it."),
+                           tr("The file you opened uses GPU effects, but GPU effects are not enabled."),
                            QMessageBox::Ok,
                            this);
         dialog.setWindowModality(QmlApplication::dialogModality());
@@ -1325,11 +1293,7 @@ void MainWindow::doAutosave()
 void MainWindow::setFullScreen(bool isFullScreen)
 {
     if (isFullScreen) {
-#ifdef Q_OS_WIN
-        showMaximized();
-#else
         showFullScreen();
-#endif
         ui->actionEnterFullScreen->setVisible(false);
     }
 }
@@ -1489,7 +1453,7 @@ static void autosaveTask(MainWindow *p)
 void MainWindow::onAutosaveTimeout()
 {
     if (isWindowModified()) {
-        QtConcurrent::run(autosaveTask, this);
+        auto result = QtConcurrent::run(autosaveTask, this);
     }
     if (Settings.warnLowMemory() && Util::isMemoryLow()) {
         MLT.pause();
@@ -1648,7 +1612,7 @@ void MainWindow::openMultiple(const QList<QUrl> &urls)
     if (urls.size() > 1) {
         m_multipleFiles = Util::sortedFileList(Util::expandDirectories(urls));
         open(m_multipleFiles.first());
-    } else {
+    } else if (urls.size() > 0) {
         QUrl url = urls.first();
         if (!open(Util::removeFileScheme(url)))
             open(Util::removeFileScheme(url, false));
@@ -1794,10 +1758,8 @@ void MainWindow::readPlayerSettings()
     ui->actionScrubAudio->setChecked(Settings.playerScrubAudio());
     if (ui->actionJack)
         ui->actionJack->setChecked(Settings.playerJACK());
-    if (ui->actionGPU) {
-        MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
+    if (ui->actionGPU)
         ui->actionGPU->setChecked(Settings.playerGPU());
-    }
 
     QString external = Settings.playerExternal();
     bool ok = false;
@@ -1823,8 +1785,10 @@ void MainWindow::readPlayerSettings()
         ui->actionLinearBlend->setChecked(true);
     else if (deinterlacer == "yadif-nospatial")
         ui->actionYadifTemporal->setChecked(true);
-    else
+    else if (deinterlacer == "yadif")
         ui->actionYadifSpatial->setChecked(true);
+    else
+        ui->actionBwdif->setChecked(true);
 
     if (interpolation == "nearest")
         ui->actionNearest->setChecked(true);
@@ -1836,12 +1800,15 @@ void MainWindow::readPlayerSettings()
         ui->actionHyper->setChecked(true);
 
     foreach (QAction *a, m_externalGroup->actions()) {
-        if (a->data() == external) {
-            a->setChecked(true);
-            if (a->data().toString().startsWith("decklink") && m_keyerMenu)
-                m_keyerMenu->setEnabled(true);
-            break;
-        }
+#ifndef USE_SCREENS_FOR_EXTERNAL_MONITORING
+        if (isExternalPeripheral)
+#endif
+            if (a->data() == external) {
+                a->setChecked(true);
+                if (a->data().toString().startsWith("decklink") && m_keyerMenu)
+                    m_keyerMenu->setEnabled(true);
+                break;
+            }
     }
 
     if (m_keyerGroup) {
@@ -1868,12 +1835,6 @@ void MainWindow::readPlayerSettings()
         }
     }
 
-    QString gamma = Settings.playerGamma();
-    if (gamma == "bt709")
-        ui->actionGammaRec709->setChecked(true);
-    else
-        ui->actionGammaSRGB->setChecked(true);
-
     LOG_DEBUG() << "end";
 }
 
@@ -1886,19 +1847,9 @@ void MainWindow::readWindowSettings()
     if (!Settings.windowGeometry().isEmpty()) {
         restoreGeometry(Settings.windowGeometry());
         restoreState(Settings.windowState());
-#ifdef Q_OS_MAC
-        m_filtersDock->setFloating(false);
-#endif
     } else {
         restoreState(kLayoutEditingDefault);
     }
-#ifdef Q_OS_WIN
-    if (isMaximized()) {
-        ui->actionEnterFullScreen->setText(tr("Exit Full Screen"));
-    } else {
-        ui->actionEnterFullScreen->setText(tr("Enter Full Screen"));
-    }
-#endif
     LOG_DEBUG() << "end";
 }
 
@@ -1913,14 +1864,12 @@ void MainWindow::setupActions()
     // Setup full screen action
     action = ui->actionEnterFullScreen;
     QList<QKeySequence> fullScreenShortcuts;
-    fullScreenShortcuts << QKeySequence(Qt::Key_F11);
 #ifdef Q_OS_MAC
-    // Qt 5 on OS X supports the standard Full Screen window widget.
-    action->setVisible(false);
-    // OS X has a standard Full Screen shortcut we should use.
-    fullScreenShortcuts << QKeySequence(Qt::CTRL + Qt::META + Qt::Key_F);
+    fullScreenShortcuts << QKeySequence(Qt::CTRL | Qt::META | Qt::Key_F);
+    fullScreenShortcuts << QKeySequence(Qt::Key_F11);
 #else
-    fullScreenShortcuts << QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
+    fullScreenShortcuts << QKeySequence(Qt::Key_F11);
+    fullScreenShortcuts << QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F);
 #endif
     action->setShortcuts(fullScreenShortcuts);
 
@@ -1988,6 +1937,7 @@ void MainWindow::configureVideoWidget()
     if (!ui->menuExternal || m_externalGroup->checkedAction()->data().toString().isEmpty() || ok) {
         MLT.videoWidget()->setProperty("progressive", ui->actionProgressive->isChecked());
     } else {
+        // DeckLink external monitor must strictly follow video mode
         MLT.videoWidget()->setProperty("mlt_service", m_externalGroup->checkedAction()->data());
         MLT.videoWidget()->setProperty("progressive", MLT.profile().progressive());
         ui->actionProgressive->setEnabled(false);
@@ -1999,13 +1949,15 @@ void MainWindow::configureVideoWidget()
     else
         setAudioChannels(6);
     if (ui->actionOneField->isChecked())
-        MLT.videoWidget()->setProperty("deinterlace_method", "onefield");
+        MLT.videoWidget()->setProperty("deinterlacer", "onefield");
     else if (ui->actionLinearBlend->isChecked())
-        MLT.videoWidget()->setProperty("deinterlace_method", "linearblend");
+        MLT.videoWidget()->setProperty("deinterlacer", "linearblend");
     else if (ui->actionYadifTemporal->isChecked())
-        MLT.videoWidget()->setProperty("deinterlace_method", "yadif-nospatial");
+        MLT.videoWidget()->setProperty("deinterlacer", "yadif-nospatial");
+    else if (ui->actionYadifSpatial->isChecked())
+        MLT.videoWidget()->setProperty("deinterlacer", "yadif");
     else
-        MLT.videoWidget()->setProperty("deinterlace_method", "yadif");
+        MLT.videoWidget()->setProperty("deinterlacer", "bwdif");
     if (ui->actionNearest->isChecked())
         MLT.videoWidget()->setProperty("rescale", "nearest");
     else if (ui->actionBilinear->isChecked())
@@ -2038,7 +1990,7 @@ void MainWindow::setCurrentFile(const QString &filename)
 void MainWindow::on_actionAbout_Shotcut_triggered()
 {
     const auto copyright =
-        QStringLiteral("Copyright &copy; 2011-2022 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC");
+        QStringLiteral("Copyright &copy; 2011-2023 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC");
     const auto license =
         QStringLiteral("<a href=\"https://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a>");
     const auto url = QStringLiteral("https://www.shotcut.org/");
@@ -2312,7 +2264,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
     // Simulate the player firing a dragStarted even to make the playlist close
     // its help text view. This lets one drop a clip directly into the playlist
     // from a fresh start.
-    Mlt::GLWidget *videoWidget = (Mlt::GLWidget *) &Mlt::Controller::singleton();
+    auto *videoWidget = (Mlt::VideoWidget *) &Mlt::Controller::singleton();
     emit videoWidget->dragStarted();
 
     event->acceptProposedAction();
@@ -2400,12 +2352,12 @@ void MainWindow::showEvent(QShowEvent *event)
         QTimer::singleShot(0, this, SLOT(showUpgradePrompt()));
 #endif
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     WindowsTaskbarButton::getInstance().setParentWindow(this);
 #endif
     onAutosaveTimeout();
 
-    QTimer::singleShot(100, this, [ = ]() {
+    QTimer::singleShot(200, this, [ = ]() {
         Database::singleton(this);
 #ifdef Q_OS_WIN
         this->setProperty("windowOpacity", 1.0);
@@ -2929,7 +2881,27 @@ bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
 void MainWindow::changeTheme(const QString &theme)
 {
     LOG_DEBUG() << "begin";
-    if (theme == "dark") {
+    auto mytheme = theme;
+
+#if !defined(SHOTCUT_THEME)
+    // Workaround Quick Controls not using our custom palette - temporarily?
+    std::unique_ptr<QStyle> style {QStyleFactory::create("fusion")};
+    auto brightness = style->standardPalette().color(QPalette::Text).lightnessF();
+    LOG_DEBUG() << brightness;
+    mytheme = brightness < 0.5f ? "light" : "dark";
+    QApplication::setStyle("Fusion");
+    QIcon::setThemeName(mytheme);
+# if defined(Q_OS_MAC)
+    if (mytheme == "dark") {
+        auto palette = QGuiApplication::palette();
+        palette.setColor(QPalette::AlternateBase, palette.color(QPalette::Base).lighter());
+        QGuiApplication::setPalette(palette);
+    }
+# elif defined(Q_OS_WIN)
+    QGuiApplication::setPalette(style->standardPalette());
+# endif
+#else
+    if (mytheme == "dark") {
         QApplication::setStyle("Fusion");
         QPalette palette;
         palette.setColor(QPalette::Window, QColor(50, 50, 50));
@@ -2951,20 +2923,16 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
         QIcon::setThemeName("dark");
-        QMetaObject::invokeMethod(&MAIN, "on_actionShowTextUnderIcons_toggled", Qt::QueuedConnection,
-                                  Q_ARG(bool, Settings.textUnderIcons()));
-    } else if (theme == "light") {
+    } else if (mytheme == "light") {
         QStyle *style = QStyleFactory::create("Fusion");
         QApplication::setStyle(style);
         QApplication::setPalette(style->standardPalette());
         QIcon::setThemeName("light");
-        QMetaObject::invokeMethod(&MAIN, "on_actionShowTextUnderIcons_toggled", Qt::QueuedConnection,
-                                  Q_ARG(bool, Settings.textUnderIcons()));
     } else {
         QApplication::setStyle(qApp->property("system-style").toString());
         QIcon::setThemeName("oxygen");
     }
-    emit QmlApplication::singleton().paletteChanged();
+#endif
     LOG_DEBUG() << "end";
 }
 
@@ -3116,20 +3084,12 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
 
 void MainWindow::on_actionEnterFullScreen_triggered()
 {
-#ifdef Q_OS_WIN
-    bool isFull = isMaximized();
-#else
     bool isFull = isFullScreen();
-#endif
     if (isFull) {
         showNormal();
         ui->actionEnterFullScreen->setText(tr("Enter Full Screen"));
     } else {
-#ifdef Q_OS_WIN
-        showMaximized();
-#else
         showFullScreen();
-#endif
         ui->actionEnterFullScreen->setText(tr("Exit Full Screen"));
     }
 }
@@ -3219,9 +3179,9 @@ void MainWindow::on_actionChannels6_triggered(bool checked)
 void MainWindow::changeDeinterlacer(bool checked, const char *method)
 {
     if (checked) {
-        MLT.videoWidget()->setProperty("deinterlace_method", method);
+        MLT.videoWidget()->setProperty("deinterlacer", method);
         if (MLT.consumer()) {
-            MLT.consumer()->set("deinterlace_method", method);
+            MLT.consumer()->set("deinterlacer", method);
             MLT.refreshConsumer();
         }
     }
@@ -3246,6 +3206,11 @@ void MainWindow::on_actionYadifTemporal_triggered(bool checked)
 void MainWindow::on_actionYadifSpatial_triggered(bool checked)
 {
     changeDeinterlacer(checked, "yadif");
+}
+
+void MainWindow::on_actionBwdif_triggered(bool checked)
+{
+    changeDeinterlacer(checked, "bwdif");
 }
 
 void MainWindow::changeInterpolation(bool checked, const char *method)
@@ -3352,9 +3317,8 @@ void MainWindow::on_actionGPU_triggered(bool checked)
     if (checked) {
         QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
-                           tr("GPU effects are experimental and may cause instability on some systems. "
-                              "Some CPU effects are incompatible with GPU effects and will be disabled. "
-                              "A project created with GPU effects can not be converted to a CPU only project later."
+                           tr("GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.\n"
+                              "At this time, a project created with GPU effects cannot be converted to a CPU-only project later."
                               "\n\n"
                               "Do you want to enable GPU effects and restart Shotcut?"),
                            QMessageBox::No | QMessageBox::Yes,
@@ -3615,11 +3579,12 @@ void MainWindow::onToolbarVisibilityChanged(bool visible)
 
 void MainWindow::on_menuExternal_aboutToShow()
 {
+#ifdef USE_SCREENS_FOR_EXTERNAL_MONITORING
     foreach (QAction *action, m_externalGroup->actions()) {
         bool ok = false;
         int i = action->data().toInt(&ok);
-        if (ok) {
-            if (i == QApplication::desktop()->screenNumber(this)) {
+        if (ok && i < QGuiApplication::screens().count()) {
+            if (QGuiApplication::screens().at(i) == screen()) {
                 if (action->isChecked()) {
                     m_externalGroup->actions().first()->setChecked(true);
                     Settings.setPlayerExternal(QString());
@@ -3630,6 +3595,7 @@ void MainWindow::on_menuExternal_aboutToShow()
             }
         }
     }
+#endif
 }
 
 void MainWindow::on_actionUpgrade_triggered()
@@ -3707,22 +3673,6 @@ void MainWindow::on_actionOpenXML_triggered()
             emit openFailed(url);
         }
     }
-}
-
-void MainWindow::on_actionGammaSRGB_triggered(bool checked)
-{
-    Q_UNUSED(checked)
-    Settings.setPlayerGamma("iec61966_2_1");
-    MLT.restart();
-    MLT.refreshConsumer();
-}
-
-void MainWindow::on_actionGammaRec709_triggered(bool checked)
-{
-    Q_UNUSED(checked)
-    Settings.setPlayerGamma("bt709");
-    MLT.restart();
-    MLT.refreshConsumer();
 }
 
 void MainWindow::onFocusChanged(QWidget *, QWidget * ) const
@@ -3832,6 +3782,9 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply *reply)
         }
     } else {
         LOG_WARNING() << reply->errorString();
+        if (reply->error() == QNetworkReply::UnknownNetworkError) {
+            m_network.get(QNetworkRequest(QUrl("http://check.shotcut.org/version.json")));
+        }
     }
     QAction *action = new QAction(
         tr("Failed to read version.json when checking. Click here to go to the Web site."), 0);
@@ -3873,7 +3826,7 @@ void MainWindow::on_actionExportEDL_triggered()
         if (scriptFile.open(QIODevice::ReadOnly)) {
             // Read JavaScript into a string.
             QTextStream stream(&scriptFile);
-            stream.setCodec("UTF-8");
+            stream.setEncoding(QStringConverter::Utf8);
             stream.setAutoDetectUnicode(true);
             QString contents = stream.readAll();
             scriptFile.close();
@@ -3914,23 +3867,23 @@ void MainWindow::on_actionExportFrame_triggered()
 {
     if (!MLT.producer() || !MLT.producer()->is_valid()) return;
     filterController()->setCurrentFilter(QmlFilter::DeselectCurrentFilter);
-    Mlt::GLWidget *glw = qobject_cast<Mlt::GLWidget *>(MLT.videoWidget());
-    connect(glw, SIGNAL(imageReady()), SLOT(onGLWidgetImageReady()));
+    auto *videoWidget = qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget());
+    connect(videoWidget, &Mlt::VideoWidget::imageReady, this, &MainWindow::onVideoWidgetImageReady);
     MLT.setPreviewScale(0);
-    glw->requestImage();
+    videoWidget->requestImage();
     MLT.refreshConsumer();
 }
 
-void MainWindow::onGLWidgetImageReady()
+void MainWindow::onVideoWidgetImageReady()
 {
-    Mlt::GLWidget *glw = qobject_cast<Mlt::GLWidget *>(MLT.videoWidget());
-    QImage image = glw->image();
-    disconnect(glw, SIGNAL(imageReady()), this, nullptr);
+    auto *videoWidget = qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget());
+    QImage image = videoWidget->image();
+    disconnect(videoWidget, SIGNAL(imageReady()), this, nullptr);
     if (Settings.playerGPU() || Settings.playerPreviewScale()) {
         MLT.setPreviewScale(Settings.playerPreviewScale());
     }
     if (!image.isNull() &&
-            (glw->imageIsProxy() || (MLT.isMultitrack() && Settings.proxyEnabled()))
+            (videoWidget->imageIsProxy() || (MLT.isMultitrack() && Settings.proxyEnabled()))
 
        ) {
         QMessageBox dialog(QMessageBox::Question,
@@ -4276,7 +4229,7 @@ void MainWindow::onOpenOtherTriggered(QWidget *widget)
     QString name = widget->objectName();
     if (name == "NoiseWidget" || dialog.exec() == QDialog::Accepted) {
         auto isDevice = AbstractProducerWidget::isDevice(widget);
-        if (isDevice)
+        if (isDevice && !Settings.playerGPU())
             closeProducer();
         auto &profile = MLT.profile();
         auto producer = dynamic_cast<AbstractProducerWidget *>(widget)->newProducer(profile);
@@ -4284,8 +4237,6 @@ void MainWindow::onOpenOtherTriggered(QWidget *widget)
             delete producer;
             return;
         }
-        if (!isDevice)
-            closeProducer();
 
         if (!profile.is_explicit()) {
             profile.from_producer(*producer);
@@ -4375,9 +4326,11 @@ void MainWindow::onSceneGraphInitialized()
         } else {
             ui->actionGPU->setVisible(true);
         }
-    } else if (Settings.playerGPU()) {
+    } else {
         ui->actionGPU->setVisible(true);
     }
+    auto videoWidget = (Mlt::VideoWidget *) & (MLT);
+    videoWidget->setBlankScene();
 }
 
 void MainWindow::on_actionShowTextUnderIcons_toggled(bool b)
@@ -4825,7 +4778,7 @@ void MainWindow::on_actionExportChapters_triggered()
         if (scriptFile.open(QIODevice::ReadOnly)) {
             // Read JavaScript into a string.
             QTextStream stream(&scriptFile);
-            stream.setCodec("UTF-8");
+            stream.setEncoding(QStringConverter::Utf8);
             stream.setAutoDetectUnicode(true);
             QString contents = stream.readAll();
             scriptFile.close();

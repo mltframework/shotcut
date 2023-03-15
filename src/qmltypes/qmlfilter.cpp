@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -359,6 +359,8 @@ void QmlFilter::analyze(bool isAudio)
 
     Mlt::Filter mltFilter(m_service);
     Mlt::Service service(mlt_service(mltFilter.get_data("service")));
+    auto in = service.get_int("in");
+    auto out = service.get_int("out");
 
     // get temp file for input xml
     QString filename(mltFilter.get("filename"));
@@ -383,10 +385,19 @@ void QmlFilter::analyze(bool isAudio)
                     filter.set_in_and_out(filter.get_in() - producerIn, filter.get_out() - producerIn);
             }
         }
+    } else {
+        service.set("in", mltFilter.get_in());
+        service.set("out", mltFilter.get_out());
     }
 
+    // Write the job XML
     MLT.saveXML(tmp->fileName(), &service, false /* without relative paths */, tmp.data());
     tmp->close();
+
+    if (!MLT.isSeekableClip()) {
+        service.set("in", in);
+        service.set("out", out);
+    }
 
     if (!isAudio) mltFilter.set("analyze", 0);
     mltFilter.set("disable", disable);
@@ -435,8 +446,9 @@ void QmlFilter::analyze(bool isAudio)
             file.open(QFile::WriteOnly);
             file.write("");
         }
-
-        JOBS.add(job);
+        QTimer::singleShot(0, [ = ]() {
+            JOBS.add(job);
+        });
     }
 }
 

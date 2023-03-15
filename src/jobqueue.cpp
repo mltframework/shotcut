@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,7 @@
 #include "jobqueue.h"
 #include <QtWidgets>
 #include <Logger.h>
-#include "settings.h"
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
 #include "windowstools.h"
 #endif
 
@@ -91,7 +90,7 @@ void JobQueue::onProgressUpdated(QStandardItem *standardItem, int percent)
             standardItem->setText(QString("%1% (%2)").arg(percent).arg(remaining));
         }
     }
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     WindowsTaskbarButton::getInstance().setProgress(percent);
 #endif
 }
@@ -124,7 +123,7 @@ void JobQueue::onFinished(AbstractJob *job, bool isSuccess, QString time)
         if (item)
             item->setIcon(icon);
     }
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     WindowsTaskbarButton::getInstance().resetProgress();
 #endif
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.3
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     function setStatus(inProgress) {
@@ -118,7 +117,6 @@ Item {
                 radius: 2
                 color: activePalette.text
             }
-
         }
 
         Label {
@@ -134,7 +132,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The loudness calculated by the analysis.')
             }
-
         }
 
         Label {
@@ -150,7 +147,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The gain applied to normalize to the Target Loudness.')
             }
-
         }
 
         Label {
@@ -162,7 +158,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

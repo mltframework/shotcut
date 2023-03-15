@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -198,7 +198,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 case IsFilteredRole:
                     return isFiltered(info->producer);
                 case AudioIndexRole:
-                    return info->producer->get("audio_index");
+                    return QString::fromLatin1(info->producer->get("audio_index"));
                 default:
                     break;
                 }
@@ -212,7 +212,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             switch (role) {
             case NameRole:
             case Qt::DisplayRole:
-                return track->get(kTrackNameProperty);
+                return QString::fromUtf8(track->get(kTrackNameProperty));
             case DurationRole:
                 return playlist.get_playtime();
             case IsMuteRole:
@@ -2169,7 +2169,7 @@ void MultitrackModel::filterAddedOrRemoved(Mlt::Producer *producer)
     else if (producer->get(kMultitrackItemProperty)) {
         // Check if it was a clip.
         QString s = QString::fromLatin1(producer->get(kMultitrackItemProperty));
-        QVector<QStringRef> parts = s.splitRef(':');
+        auto parts = s.split(':');
         if (parts.length() == 2) {
             QModelIndex modelIndex = createIndex(parts[0].toInt(), 0, parts[1].toInt());
             QVector<int> roles;
@@ -2196,7 +2196,7 @@ void MultitrackModel::onFilterChanged(Mlt::Service *filter)
         Mlt::Service service(mlt_service(filter->get_data("service")));
         if (service.is_valid() && service.get(kMultitrackItemProperty)) {
             QString s = QString::fromLatin1(service.get(kMultitrackItemProperty));
-            QVector<QStringRef> parts = s.splitRef(':');
+            auto parts = s.split(':');
             if (parts.length() == 2) {
                 QModelIndex modelIndex = createIndex(parts[0].toInt(), 0, parts[1].toInt());
                 QVector<int> roles;
@@ -3048,6 +3048,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
 void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
 {
     LOG_DEBUG() << "From: " << fromTrackIndex << "To: " << toTrackIndex;
+    MLT.pause();
     if (fromTrackIndex >= m_trackList.count() || fromTrackIndex < 0
             || toTrackIndex >= m_trackList.count() || toTrackIndex < 0) {
         LOG_DEBUG() << "Invalid track index" << fromTrackIndex << toTrackIndex;

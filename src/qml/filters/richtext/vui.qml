@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Meltytech, LLC
+ * Copyright (c) 2020-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0 as Shotcut
-import org.shotcut.qml 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
+import org.shotcut.qml
 
 Shotcut.VuiBase {
     id: vui
@@ -46,8 +45,7 @@ Shotcut.VuiBase {
 
     function setRectangleControl() {
         if (blockUpdate)
-            return ;
-
+            return;
         var position = getPosition();
         var newValue = filter.getRect(rectProperty, position);
         if (filterRect !== newValue) {
@@ -180,13 +178,12 @@ Shotcut.VuiBase {
                     Component.onCompleted: forceActiveFocus()
                     onTextChanged: {
                         if (text.indexOf('__empty__') > -1)
-                            return ;
-
+                            return;
                         filter.set('html', text);
                     }
                     onContentWidthChanged: updateTextSize()
                     onContentHeightChanged: updateTextSize()
-                    Keys.onPressed: {
+                    Keys.onPressed: event => {
                         if (event.key === Qt.Key_V && (event.modifiers & Qt.ShiftModifier) && (event.modifiers & Qt.ControlModifier || event.modifiers & Qt.MetaModifier)) {
                             event.accepted = true;
                             document.pastePlain();
@@ -203,8 +200,10 @@ Shotcut.VuiBase {
                         id: cursor
 
                         visible: textArea.cursorVisible
-                        width: 2.5 / scale
+                        width: 2 / scale
                         color: 'white'
+                        border.color: 'black'
+                        border.width: 1
 
                         SequentialAnimation {
                             running: cursor.visible
@@ -233,13 +232,9 @@ Shotcut.VuiBase {
                             PauseAnimation {
                                 duration: 400
                             }
-
                         }
-
                     }
-
                 }
-
             }
 
             ToolBar {
@@ -249,7 +244,7 @@ Shotcut.VuiBase {
                 property real maxWidth: 500
 
                 x: Math.min((parent.width + parent.x - width), Math.max((-parent.x * scale), scrollView.x + rectangle.handleSize))
-                y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), (scrollView.mapToItem(vui, 0, 0).y > height) ? (scrollView.y - height * scale) : (scrollView.y + rectangle.handleSize)))
+                y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), scrollView.y - height))
                 anchors.margins: 0
                 opacity: 0.7
                 transformOrigin: Item.TopLeft
@@ -264,7 +259,6 @@ Shotcut.VuiBase {
                         action: Action {
                             icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
                         }
-
                     }
 
                     ToolButton {
@@ -282,7 +276,6 @@ Shotcut.VuiBase {
                             icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
                             onTriggered: menu.popup()
                         }
-
                     }
 
                     ToolButton {
@@ -295,7 +288,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -308,7 +300,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -321,10 +312,9 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
-                    // separator
 
+                    // separator
                     Button {
                         enabled: false
                         implicitWidth: 2
@@ -346,12 +336,11 @@ Shotcut.VuiBase {
                             icon.name: 'font'
                             icon.source: 'qrc:///icons/oxygen/32x32/actions/font.png'
                             onTriggered: {
-                                fontDialog.font.family = document.fontFamily;
-                                fontDialog.font.pointSize = document.fontSize;
+                                fontDialog.selectedFont.family = document.fontFamily;
+                                fontDialog.selectedFont.pointSize = document.fontSize;
                                 fontDialog.open();
                             }
                         }
-
                     }
 
                     Shotcut.DoubleSpinBox {
@@ -377,7 +366,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: qsTr('Text size')
                         }
-
                     }
 
                     ToolButton {
@@ -390,7 +378,7 @@ Shotcut.VuiBase {
                         visible: toolbar.expanded
                         focusPolicy: Qt.NoFocus
                         onClicked: {
-                            colorDialog.color = document.textColor;
+                            colorDialog.selectedColor = document.textColor;
                             colorDialog.open();
                         }
 
@@ -407,10 +395,9 @@ Shotcut.VuiBase {
                             border.width: 1
                             border.color: Qt.darker(colorRect.color, 2)
                         }
-
                     }
-                    // separator
 
+                    // separator
                     Button {
                         enabled: false
                         implicitWidth: 2
@@ -428,7 +415,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -441,7 +427,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -454,7 +439,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -467,7 +451,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -480,7 +463,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -493,7 +475,6 @@ Shotcut.VuiBase {
                         Shotcut.HoverTip {
                             text: parent.action.text
                         }
-
                     }
 
                     ToolButton {
@@ -515,18 +496,14 @@ Shotcut.VuiBase {
                                 filter.set('_shotcut:toolbarCollapsed', !toolbar.expanded);
                             }
                         }
-
                     }
-
                 }
 
-                Behavior on width {
+                Behavior on width  {
                     NumberAnimation {
                         duration: 100
                     }
-
                 }
-
             }
 
             Shotcut.RectangleControl {
@@ -540,9 +517,7 @@ Shotcut.VuiBase {
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: updateFilter(getPosition())
             }
-
         }
-
     }
 
     Shotcut.EditContextMenu {
@@ -583,11 +558,11 @@ Shotcut.VuiBase {
         id: menu
 
         onOpenTriggered: {
-            fileDialog.selectExisting = true;
+            fileDialog.fileMode = FileDialog.OpenFile;
             fileDialog.open();
         }
         onSaveAsTriggered: {
-            fileDialog.selectExisting = false;
+            fileDialog.fileMode = FileDialog.SaveFile;
             fileDialog.open();
         }
         onUndoTriggered: {
@@ -612,7 +587,7 @@ Shotcut.VuiBase {
             textArea.selectAll();
         }
         onInsertTableTriggered: {
-            tableDialog.open();
+            tableDialog.show();
         }
     }
 
@@ -700,8 +675,8 @@ Shotcut.VuiBase {
         icon.name: 'font'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/font.png'
         onTriggered: {
-            fontDialog.font.family = document.fontFamily;
-            fontDialog.font.pointSize = document.fontSize;
+            fontDialog.selectedFont.family = document.fontFamily;
+            fontDialog.seelctedFont.pointSize = document.fontSize;
             fontDialog.open();
         }
     }
@@ -727,50 +702,54 @@ Shotcut.VuiBase {
     FileDialog {
         id: fileDialog
 
-        modality: application.dialogModality
-        folder: settingsSavePath
+        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
+        currentFolder: settingsSavePath
         nameFilters: ["HTML files (*.html *.htm)", "Text files (*.txt)", "All files (*)"]
         onAccepted: {
-            if (fileDialog.selectExisting)
-                document.fileUrl = fileUrl;
+            if (fileMode === FileDialog.OpenFile)
+                document.fileUrl = selectedFile;
             else
-                document.saveAs(fileUrl, selectedNameFilter);
+                document.saveAs(selectedFile, selectedNameFilter.extensions);
         }
     }
 
-    FontDialog {
+    Shotcut.FontDialog {
         id: fontDialog
 
-        modality: application.dialogModality
         onAccepted: {
-            document.fontFamily = font.family;
-            document.fontSize = font.pointSize;
+            document.fontFamily = selectedFont.family;
+            document.fontSize = selectedFont.pointSize;
         }
     }
 
-    ColorDialog {
+    Shotcut.ColorDialog {
         id: colorDialog
-
-        color: 'black'
-        showAlphaChannel: true
-        modality: application.dialogModality
+        selectedColor: 'black'
     }
 
-    MessageDialog {
+    Shotcut.MessageDialog {
         id: errorDialog
-
-        modality: application.dialogModality
     }
 
-    Dialog {
+    SystemPalette {
+        id: dialogPalette
+
+        colorGroup: SystemPalette.Active
+    }
+
+    Window {
         id: tableDialog
 
-        title: qsTr('Insert Table')
-        standardButtons: StandardButton.Ok | StandardButton.Cancel
-        modality: application.dialogModality
-        onAccepted: {
+        function accept() {
             document.insertTable(rowsSpinner.value, columnsSpinner.value, borderSpinner.value);
         }
+
+        flags: Qt.Dialog
+        color: dialogPalette.window
+        title: qsTr('Insert Table')
+        modality: Qt.ApplicationModal
+        width: 320
+        height: 140
 
         GridLayout {
             rows: 4
@@ -827,13 +806,29 @@ Shotcut.VuiBase {
                 decimals: 0
             }
 
-            Item {
-                Layout.fillHeight: true
-                height: columnsSpinner.height
+            RowLayout {
+                Layout.alignment: Qt.AlignRight
+                Layout.columnSpan: 2
+                focus: true
+
+                Shotcut.Button {
+                    text: qsTr('OK')
+                    onClicked: {
+                        tableDialog.accept();
+                        tableDialog.close();
+                    }
+                }
+
+                Shotcut.Button {
+                    text: qsTr('Cancel')
+                    onClicked: tableDialog.close()
+                }
             }
 
+            Item {
+                Layout.fillHeight: true
+            }
         }
-
     }
 
     RichText {
@@ -843,7 +838,7 @@ Shotcut.VuiBase {
         cursorPosition: textArea.cursorPosition
         selectionStart: textArea.selectionStart
         selectionEnd: textArea.selectionEnd
-        textColor: colorDialog.color
+        textColor: colorDialog.selectedColor
         onTextChanged: textArea.text = text
         onFontSizeChanged: {
             if (!fontSizeSpinBox.blockValue) {
@@ -854,7 +849,7 @@ Shotcut.VuiBase {
         }
         onError: {
             errorDialog.text = message;
-            errorDialog.visible = true;
+            errorDialog.open();
         }
     }
 
@@ -876,5 +871,4 @@ Shotcut.VuiBase {
 
         target: producer
     }
-
 }

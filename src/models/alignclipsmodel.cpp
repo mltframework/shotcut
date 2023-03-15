@@ -151,7 +151,7 @@ QVariant AlignClipsModel::data(const QModelIndex &index, int role) const
             if (clip.progress != 0 && clip.offset != INVALID_OFFSET && MLT.producer()
                     && MLT.producer()->is_valid()) {
                 if (clip.offset >= 0) {
-                    result = MLT.producer()->frames_to_time(clip.offset, mlt_time_smpte_df);
+                    result = QString::fromLatin1(MLT.producer()->frames_to_time(clip.offset, mlt_time_smpte_df));
                 } else {
                     result = QString("-") + MLT.producer()->frames_to_time(-clip.offset, mlt_time_smpte_df);
                 }

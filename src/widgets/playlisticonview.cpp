@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021 Meltytech, LLC
+ * Copyright (c) 2016-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -256,7 +256,7 @@ void PlaylistIconView::mouseReleaseEvent(QMouseEvent *event)
 
 void PlaylistIconView::dragMoveEvent(QDragMoveEvent *e)
 {
-    m_draggingOverPos = e->pos();
+    m_draggingOverPos = e->position().toPoint();
     QAbstractItemView::dragMoveEvent(e);
 }
 
@@ -270,11 +270,11 @@ void PlaylistIconView::dropEvent(QDropEvent *event)
 {
     m_draggingOverPos = QPoint();
 
-    QModelIndex index = indexAt(event->pos());
+    QModelIndex index = indexAt(event->position().toPoint());
     QRect rectAtDropPoint = visualRect(index);
 
     QAbstractItemView::DropIndicatorPosition dropPos =
-        position(event->pos(), rectAtDropPoint, index);
+        position(event->position().toPoint(), rectAtDropPoint, index);
     if (dropPos == QAbstractItemView::BelowItem)
         index = index.sibling(index.row() + 1, index.column());
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Shotcut.KeyframableFilter {
     property string levels: '0'
@@ -124,7 +123,7 @@ Shotcut.KeyframableFilter {
             model: [qsTr('2x2 Magic Square'), qsTr('4x4 Magic Square'), qsTr('4x4 Ordered'), qsTr('4x4 Lines'), qsTr('6x6 90 Degree Halftone'), qsTr('6x6 Ordered'), qsTr('8x8 Ordered'), qsTr('Order-3 Clustered'), qsTr('Order-4 Ordered'), qsTr('Order-8 Ordered')]
             onActivated: {
                 enabled = false;
-                filter.set(matrixid, index / 9);
+                filter.set(matrixid, currentIndex / 9);
                 enabled = true;
             }
         }
@@ -137,7 +136,6 @@ Shotcut.KeyframableFilter {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -175,5 +173,4 @@ Shotcut.KeyframableFilter {
 
         target: producer
     }
-
 }

@@ -1,5 +1,5 @@
 #!/bin/bash
-tx pull --all --force --parallel
+tx pull --all --force
 pushd translations
 
 mv shotcut_cs_CZ.ts shotcut_cs.ts

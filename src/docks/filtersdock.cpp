@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,13 +49,12 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
                                         QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
+    setMinimumSize(200, 200);
     setupActions();
 
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
-#ifdef Q_OS_MAC
-    setFeatures(DockWidgetClosable | DockWidgetMovable);
-#else
+#ifndef Q_OS_MAC
     m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
 #endif
     setWidget(&m_qview);
@@ -69,7 +68,7 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
     connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
     connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
     setCurrentFilter(0, 0, QmlFilter::NoCurrentFilter);
-    connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
+    connect(this, SIGNAL(visibilityChanged(bool)), SLOT(resetQview()));
 
     LOG_DEBUG() << "end";
 }
@@ -149,6 +148,9 @@ void FiltersDock::onServiceInChanged(int delta, Mlt::Service *service)
 
 void FiltersDock::resetQview()
 {
+    if (!m_qview.quickWindow()->isSceneGraphInitialized())
+        return;
+
     LOG_DEBUG() << "begin";
     if (m_qview.status() != QQuickWidget::Null) {
         QObject *root = m_qview.rootObject();
@@ -198,7 +200,7 @@ void FiltersDock::setupActions()
     Actions.add("filtersAddFilterAction", action, windowTitle());
 
     action = new QAction(tr("Remove"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_F));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F));
     action->setToolTip(tr("Remove selected filter"));
     icon = QIcon::fromTheme("list-remove",
                             QIcon(":/icons/oxygen/32x32/actions/list-remove.png"));
@@ -210,7 +212,7 @@ void FiltersDock::setupActions()
     Actions.add("filtersRemoveFilterAction", action, windowTitle());
 
     action = new QAction(tr("Copy Filters"), this);
-    action->setToolTip(tr("Copy the filters to the clipboard"));
+    action->setToolTip(tr("Copy checked filters to the clipboard"));
     icon = QIcon::fromTheme("edit-copy",
                             QIcon(":/icons/oxygen/32x32/actions/edit-copy.png"));
     action->setIcon(icon);

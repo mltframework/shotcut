@@ -22,7 +22,8 @@
 #include <QStandardPaths>
 #include <QFile>
 #include <QDir>
-#include <QAudioDeviceInfo>
+#include <QMediaDevices>
+#include <QAudioDevice>
 #include <Logger.h>
 
 static const QString APP_DATA_DIR_KEY("appdatadir");
@@ -375,19 +376,9 @@ void ShotcutSettings::setPlayerExternal(const QString &s)
     settings.setValue("player/external", s);
 }
 
-QString ShotcutSettings::playerGamma() const
-{
-    return settings.value("player/gamma", "bt709").toString();
-}
-
-void ShotcutSettings::setPlayerGamma(const QString &s)
-{
-    settings.setValue("player/gamma", s);
-}
-
 void ShotcutSettings::setPlayerGPU(bool b)
 {
-    settings.setValue("player/gpu", b);
+    settings.setValue("player/gpu2", b);
     emit playerGpuChanged();
 }
 
@@ -408,12 +399,12 @@ void ShotcutSettings::setPlayerInterpolation(const QString &s)
 
 bool ShotcutSettings::playerGPU() const
 {
-    return settings.value("player/gpu", false).toBool();
+    return settings.value("player/gpu2", false).toBool();
 }
 
 bool ShotcutSettings::playerWarnGPU() const
 {
-    return settings.value("player/warnGPU", false).toBool();
+    return false; //settings.value("player/warnGPU", false).toBool();
 }
 
 void ShotcutSettings::setPlayerJACK(bool b)
@@ -985,8 +976,8 @@ QString ShotcutSettings::audioInput() const
 {
     QString defaultValue  = "default";
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
-    for (const auto &deviceInfo : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
-        defaultValue = deviceInfo.deviceName();
+    for (const auto &deviceInfo : QMediaDevices::audioInputs()) {
+        defaultValue = deviceInfo.description();
     }
 #endif
     return settings.value("audioInput", defaultValue).toString();

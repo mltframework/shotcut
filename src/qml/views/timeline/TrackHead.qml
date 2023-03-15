@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Rectangle {
     id: trackHeadRoot
@@ -37,7 +36,7 @@ Rectangle {
     property bool selected: false
     property bool current: false
 
-    signal clicked()
+    signal clicked
 
     function pulseLockButton() {
         lockButtonAnim.restart();
@@ -57,7 +56,6 @@ Rectangle {
                 target: trackHeadRoot
                 color: isVideo ? root.shotcutBlue : 'darkseagreen'
             }
-
         },
         State {
             name: 'current'
@@ -67,7 +65,6 @@ Rectangle {
                 target: trackHeadRoot
                 color: Qt.rgba(selectedTrackColor.r * selectedTrackColor.a + activePalette.window.r * (1 - selectedTrackColor.a), selectedTrackColor.g * selectedTrackColor.a + activePalette.window.g * (1 - selectedTrackColor.a), selectedTrackColor.b * selectedTrackColor.a + activePalette.window.b * (1 - selectedTrackColor.a), 1)
             }
-
         },
         State {
             when: !trackHeadRoot.selected && !trackHeadRoot.current
@@ -77,7 +74,6 @@ Rectangle {
                 target: trackHeadRoot
                 color: (index % 2) ? activePalette.alternateBase : activePalette.base
             }
-
         }
     ]
     transitions: [
@@ -88,7 +84,6 @@ Rectangle {
                 target: trackHeadRoot
                 duration: 100
             }
-
         }
     ]
 
@@ -104,7 +99,6 @@ Rectangle {
             nameEdit.focus = false;
             if (mouse.button == Qt.RightButton)
                 root.timelineRightClicked();
-
         }
     }
 
@@ -157,7 +151,6 @@ Rectangle {
                     topPadding: 3
                     width: nameEdit.width
                 }
-
             }
 
             TextField {
@@ -173,7 +166,6 @@ Rectangle {
                 }
                 Keys.onTabPressed: editingFinished()
             }
-
         }
 
         RowLayout {
@@ -213,9 +205,7 @@ Rectangle {
                         to: 1
                         duration: 200
                     }
-
                 }
-
             }
 
             ToolButton {
@@ -232,7 +222,6 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: isMute ? qsTr('Unmute') : qsTr('Mute')
                 }
-
             }
 
             ToolButton {
@@ -250,7 +239,6 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: isHidden ? qsTr('Show') : qsTr('Hide')
                 }
-
             }
 
             ToolButton {
@@ -270,11 +258,7 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: qsTr('Filters')
                 }
-
             }
-
         }
-
     }
-
 }

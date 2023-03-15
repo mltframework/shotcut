@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2021 Meltytech, LLC
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     id: background
@@ -61,7 +60,6 @@ Item {
             top: gridLayout.top
             topMargin: presetLayout.height + gridLayout.anchors.margins
         }
-
     }
 
     Label {
@@ -73,7 +71,6 @@ Item {
             rightMargin: 8
             verticalCenter: topLine.verticalCenter
         }
-
     }
 
     Rectangle {
@@ -88,7 +85,6 @@ Item {
             top: topLine.top
             topMargin: sliderLow.height * 0.25 + 1
         }
-
     }
 
     Rectangle {
@@ -105,7 +101,6 @@ Item {
             top: topLine.top
             topMargin: sliderLow.height * 0.5 - 4
         }
-
     }
 
     Label {
@@ -117,7 +112,6 @@ Item {
             rightMargin: 8
             verticalCenter: zeroLine.verticalCenter
         }
-
     }
 
     Rectangle {
@@ -132,7 +126,6 @@ Item {
             top: topLine.top
             topMargin: sliderLow.height * 0.75 - 8
         }
-
     }
 
     Rectangle {
@@ -149,7 +142,6 @@ Item {
             bottom: gridLayout.bottom
             bottomMargin: bassLabel.height + gridLayout.anchors.margins
         }
-
     }
 
     Label {
@@ -161,7 +153,6 @@ Item {
             rightMargin: 8
             verticalCenter: bottomLine.verticalCenter
         }
-
     }
 
     GridLayout {
@@ -190,7 +181,6 @@ Item {
                 parameters: ['0', '1', '2']
                 onPresetSelected: setControls()
             }
-
         }
 
         Item {
@@ -217,7 +207,6 @@ Item {
                 Shotcut.HoverTip {
                     text: '%1 dB'.arg(Math.round(parent.value * 10) / 10)
                 }
-
             }
 
             Label {
@@ -229,9 +218,7 @@ Item {
                 Shotcut.HoverTip {
                     text: '100 Hz'
                 }
-
             }
-
         }
 
         ColumnLayout {
@@ -252,7 +239,6 @@ Item {
                 Shotcut.HoverTip {
                     text: '%1 dB'.arg(Math.round(parent.value * 10) / 10)
                 }
-
             }
 
             Label {
@@ -262,9 +248,7 @@ Item {
                 Shotcut.HoverTip {
                     text: '1000 Hz'
                 }
-
             }
-
         }
 
         ColumnLayout {
@@ -285,7 +269,6 @@ Item {
                 Shotcut.HoverTip {
                     text: '%1 dB'.arg(Math.round(parent.value * 10) / 10)
                 }
-
             }
 
             Label {
@@ -295,15 +278,11 @@ Item {
                 Shotcut.HoverTip {
                     text: '10000 Hz'
                 }
-
             }
-
         }
 
         Item {
             Layout.fillWidth: true
         }
-
     }
-
 }

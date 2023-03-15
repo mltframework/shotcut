@@ -14,24 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Shotcut.KeyframableFilter {
+
     // The three band EQ is implemented by using a 3 band parametric
     // EQ with shelves. Many of the parametric EQ parameters are fixed
     // and the user only has control over three gain parameters for
     // Low, Mid and High tone adjustment
-
     property bool blockControls: false
 
     function setControls() {
         if (blockControls)
-            return ;
-
+            return;
         var position = getPosition();
         blockUpdate = true;
         lowSlider.value = filter.getDouble('0', position);
@@ -48,8 +46,7 @@ Shotcut.KeyframableFilter {
 
     function updateSimpleKeyframes(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         setControls();
         updateFilter('0', lowSlider.value, keyframesButton, position);
         updateFilter('6', midSlider.value, keyframesButton, position);
@@ -185,7 +182,6 @@ Shotcut.KeyframableFilter {
                 height: keyframesButton.height
                 Layout.alignment: Qt.AlignHCenter
             }
-
         }
 
         Label {
@@ -239,7 +235,6 @@ Shotcut.KeyframableFilter {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -277,5 +272,4 @@ Shotcut.KeyframableFilter {
 
         target: producer
     }
-
 }

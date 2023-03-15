@@ -63,7 +63,7 @@ void QmlEditMenu::popup()
         menu.addAction(&pasteAction);
 
     QAction pastePlainAction(tr("Paste Text Only"));
-    pastePlainAction.setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_V));
+    pastePlainAction.setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_V));
     connect(&pastePlainAction, &QAction::triggered, this, &QmlEditMenu::pastePlainTriggered);
     if (m_showPastePlain && !m_readOnly)
         menu.addAction(&pastePlainAction);

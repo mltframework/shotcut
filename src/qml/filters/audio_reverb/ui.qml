@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2021 Meltytech, LLC
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Shotcut.KeyframableFilter {
     property string roomProperty: '0'
@@ -160,7 +159,6 @@ Shotcut.KeyframableFilter {
             Shotcut.HoverTip {
                 text: qsTr('The size of the room, in meters. Excessively large, and excessively small values will make it sound a bit unrealistic. Values of around 30 sound good.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -220,7 +218,6 @@ Shotcut.KeyframableFilter {
             Shotcut.HoverTip {
                 text: qsTr('This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -253,7 +250,6 @@ Shotcut.KeyframableFilter {
             Shotcut.HoverTip {
                 text: qsTr('This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -286,7 +282,6 @@ Shotcut.KeyframableFilter {
             Shotcut.HoverTip {
                 text: qsTr('The amount of dry signal to be mixed with the reverberated signal.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -319,7 +314,6 @@ Shotcut.KeyframableFilter {
             Shotcut.HoverTip {
                 text: qsTr('The distance from the threshold where the knee curve starts.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -351,7 +345,6 @@ Shotcut.KeyframableFilter {
             Shotcut.HoverTip {
                 text: qsTr('The quantity of early reflections (scatter reflections directly from the source).')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -386,13 +379,11 @@ Shotcut.KeyframableFilter {
                 anchors.fill: parent
                 onClicked: Qt.openUrlExternally('https://wiki.audacityteam.org/wiki/GVerb')
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -430,5 +421,4 @@ Shotcut.KeyframableFilter {
 
         target: producer
     }
-
 }

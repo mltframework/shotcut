@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.2
-import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.2
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import Shotcut.Controls as Shotcut
 
 ToolButton {
     id: checkbox
 
-    signal toggled()
+    signal toggled
 
     enabled: metadata !== null && metadata.keyframes.enabled
     opacity: enabled ? 1 : 0
@@ -36,11 +35,11 @@ ToolButton {
     onClicked: {
         if (!checked) {
             checked = true;
-            confirmRemoveAdvancedDialog.visible = true;
+            confirmRemoveAdvancedDialog.open();
         } else {
             if (parameters.simpleKeyframesInUse()) {
                 checked = false;
-                confirmRemoveSimpleDialog.visible = true;
+                confirmRemoveSimpleDialog.open();
             }
             if (checked) {
                 application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only').arg(application.OS === 'OS X' ? '⌘' : 'Ctrl').arg(application.OS === 'OS X' ? '⌥' : 'Alt'));
@@ -59,40 +58,34 @@ ToolButton {
         text: qsTr('Use Keyframes for this parameter')
     }
 
-    MessageDialog {
+    Shotcut.MessageDialog {
         id: confirmRemoveAdvancedDialog
 
-        visible: false
-        modality: application.dialogModality
-        icon: StandardIcon.Question
         title: qsTr("Confirm Removing Keyframes")
         text: qsTr('This will remove all keyframes for this parameter.<p>Do you still want to do this?')
-        standardButtons: StandardButton.Yes | StandardButton.No
-        onYes: {
+        buttons: Shotcut.MessageDialog.Yes | Shotcut.MessageDialog.No
+        onAccepted: {
             checkbox.checked = false;
             checkbox.toggled();
             parameters.reload();
         }
-        onNo: {
+        onRejected: {
             checkbox.checked = true;
         }
     }
 
-    MessageDialog {
+    Shotcut.MessageDialog {
         id: confirmRemoveSimpleDialog
 
-        visible: false
-        modality: application.dialogModality
-        icon: StandardIcon.Question
         title: qsTr("Confirm Removing Simple Keyframes")
         text: qsTr('This will remove all simple keyframes for all parameters.<p>Simple keyframes will be converted to advanced keyframes.<p>Do you still want to do this?')
-        standardButtons: StandardButton.Yes | StandardButton.No
-        onYes: {
+        buttons: Shotcut.MessageDialog.Yes | Shotcut.MessageDialog.No
+        onAccepted: {
             checkbox.checked = true;
             parameters.removeSimpleKeyframes();
             parameters.reload();
         }
-        onNo: {
+        onRejected: {
             checkbox.checked = false;
         }
     }
@@ -105,5 +98,4 @@ ToolButton {
         border.color: activePalette.shadow
         border.width: 1
     }
-
 }

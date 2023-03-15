@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
-import org.shotcut.qml 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Item {
     id: shapeRoot
@@ -80,12 +79,11 @@ Item {
     FileDialog {
         id: fileDialog
 
-        modality: application.dialogModality
-        selectMultiple: false
-        selectFolder: false
-        folder: settingsOpenPath
+        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
+        fileMode: FileDialog.OpenFile
+        currentFolder: settingsOpenPath
         onAccepted: {
-            shapeFile.url = fileDialog.fileUrl;
+            shapeFile.url = fileDialog.currentFile;
             if (!fileDialog.selectExisting) {
                 // Force file extension to ".rawr"
                 var filename = shapeFile.url;
@@ -102,7 +100,6 @@ Item {
             shapeRoot.fileOpened(shapeFile.path);
             if (!fileDialog.selectExisting)
                 producer.launchGlaxnimate(shapeFile.url);
-
         }
     }
 
@@ -125,7 +122,7 @@ Item {
                         shapeRoot.fileOpened(shapeFile.path);
                         producer.launchGlaxnimate(shapeFile.url);
                     } else {
-                        fileDialog.selectExisting = false;
+                        fileDialog.fileMode = FileDialog.SaveFile;
                         fileDialog.title = qsTr('New Animation File');
                         fileDialog.open();
                     }
@@ -135,12 +132,11 @@ Item {
             Shotcut.Button {
                 text: qsTr('Open...')
                 onClicked: {
-                    fileDialog.selectExisting = true;
+                    fileDialog.fileMode = FileDialog.OpenFile;
                     fileDialog.title = qsTr('Open Animation File');
                     fileDialog.open();
                 }
             }
-
         }
 
         Label {
@@ -152,7 +148,6 @@ Item {
             Shotcut.HoverTip {
                 id: fileLabelTip
             }
-
         }
 
         Item {
@@ -173,7 +168,6 @@ Item {
                     filter.set('filter.producer.refresh', 1);
                 }
             }
-
         }
 
         Item {
@@ -214,7 +208,6 @@ Item {
                     filter.set('filter.invert_mask', checked);
                 }
             }
-
         }
 
         Label {
@@ -260,9 +253,7 @@ Item {
                         text: qsTr('Subtract')
                         value: 'subtract'
                     }
-
                 }
-
             }
 
             Shotcut.UndoButton {
@@ -271,7 +262,6 @@ Item {
                     filter.set('filter.alpha_operation', 'overwrite');
                 }
             }
-
         }
 
         Shotcut.TipBox {
@@ -284,7 +274,5 @@ Item {
         Label {
             Layout.fillHeight: true
         }
-
     }
-
 }

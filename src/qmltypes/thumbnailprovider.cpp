@@ -65,7 +65,12 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
                 service = "avformat";
             else if (service.startsWith("xml"))
                 service = "xml-nogl";
-            Mlt::Producer producer(m_profile, service.toUtf8().constData(), resource.toUtf8().constData());
+            Mlt::Producer producer;
+            if (service == "count") {
+                producer = Mlt::Producer(m_profile, service.toUtf8().constData(), "loader-nogl");
+            } else {
+                producer = Mlt::Producer(m_profile, service.toUtf8().constData(), resource.toUtf8().constData());
+            }
             if (producer.is_valid()) {
                 result = makeThumbnail(producer, frameNumber, requestedSize);
                 DB.putThumbnail(key, result);

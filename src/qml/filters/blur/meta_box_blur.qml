@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import org.shotcut.qml 1.0
+import QtQuick
+import org.shotcut.qml
 
 Metadata {
     type: Metadata.Filter
@@ -8,7 +8,6 @@ Metadata {
     mlt_service: "box_blur"
     qml: "ui_box_blur.qml"
     icon: 'icon.webp'
-    gpuAlt: "movit.blur"
 
     keyframes {
         allowAnimateIn: true
@@ -31,5 +30,4 @@ Metadata {
             }
         ]
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.2
-import QtQuick.Controls 2.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import Shotcut.Controls as Shotcut
 
 ToolButton {
     padding: 2
@@ -38,5 +37,4 @@ ToolButton {
         border.color: activePalette.shadow
         border.width: parent.checked ? 0 : 1
     }
-
 }

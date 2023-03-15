@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     property string paramShape: 'filter.0'
@@ -39,10 +38,8 @@ Item {
         middleValues = [filter.getDouble(paramHorizontal, filter.animateIn), filter.getDouble(paramVertical, filter.animateIn), filter.getDouble(paramWidth, filter.animateIn), filter.getDouble(paramHeight, filter.animateIn), 0, filter.getDouble(paramRotation, filter.animateIn)];
         if (filter.animateIn > 0)
             startValues = [filter.getDouble(paramHorizontal, 0), filter.getDouble(paramVertical, 0), filter.getDouble(paramWidth, 0), filter.getDouble(paramHeight, 0), 0, filter.getDouble(paramRotation, 0)];
-
         if (filter.animateOut > 0)
             endValues = [filter.getDouble(paramHorizontal, filter.duration - 1), filter.getDouble(paramVertical, filter.duration - 1), filter.getDouble(paramWidth, filter.duration - 1), filter.getDouble(paramHeight, filter.duration - 1), 0, filter.getDouble(paramRotation, filter.duration - 1)];
-
     }
 
     function getPosition() {
@@ -71,8 +68,7 @@ Item {
 
     function updateFilter(parameter, value, position, button) {
         if (blockUpdate)
-            return ;
-
+            return;
         var index = defaultParameters.indexOf(parameter);
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -387,7 +383,6 @@ Item {
         Label {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -436,5 +431,4 @@ Item {
 
         target: producer
     }
-
 }

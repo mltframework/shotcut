@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,14 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.12
-import QtQuick.Window 2.1
-import Shotcut.Controls 1.0 as Shotcut
-import org.shotcut.qml 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import QtQuick.Window
+import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Item {
     id: lut3dRoot
@@ -34,7 +33,9 @@ Item {
 
     width: 350
     height: 100
-    onFileOpened: settings.openPath = path
+    onFileOpened: path => {
+        settings.openPath = path;
+    }
     Component.onCompleted: {
         var resource = filter.get('av.file');
         lutFile.url = resource;
@@ -67,13 +68,12 @@ Item {
     FileDialog {
         id: fileDialog
 
-        modality: application.dialogModality
-        selectMultiple: false
-        selectFolder: false
-        folder: settingsOpenPath
+        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
+        fileMode: FileDialog.OpenFile
+        currentFolder: settingsOpenPath
         nameFilters: ['3D-LUT Files (*.3dl *.cube *.dat *.m3d)', 'AfterEffects (*.3dl)', 'Iridas (*.cube)', 'DaVinci (*.dat)', 'Pandora (*.m3d)', 'All Files (*)']
         onAccepted: {
-            lutFile.url = fileDialog.fileUrl;
+            lutFile.url = fileDialog.currentFile;
             lut3dRoot.fileOpened(lutFile.path);
             fileLabel.text = lutFile.fileName;
             fileLabel.color = activePalette.text;
@@ -93,7 +93,6 @@ Item {
             text: qsTr('Open...')
             Layout.alignment: Qt.AlignRight
             onClicked: {
-                fileDialog.selectExisting = true;
                 fileDialog.title = qsTr("Open 3D LUT File");
                 fileDialog.open();
             }
@@ -108,7 +107,6 @@ Item {
             Shotcut.HoverTip {
                 id: fileLabelTip
             }
-
         }
 
         Label {
@@ -123,12 +121,12 @@ Item {
 
             function valueToIndex() {
                 var w = filter.get('av.interp');
-                for (var i = 0; i < values.length; ++i) if (values[i] === w) {
-                    break;
-                }
+                for (var i = 0; i < values.length; ++i)
+                    if (values[i] === w) {
+                        break;
+                    }
                 if (i === values.length)
                     i = 1;
-
                 return i;
             }
 
@@ -148,7 +146,5 @@ Item {
             Layout.fillHeight: true
             Layout.columnSpan: 3
         }
-
     }
-
 }

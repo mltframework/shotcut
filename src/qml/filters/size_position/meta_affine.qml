@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import org.shotcut.qml 1.0
+import QtQuick
+import org.shotcut.qml
 
 Metadata {
     type: Metadata.Filter
@@ -10,7 +10,6 @@ Metadata {
     qml: 'ui_affine.qml'
     vui: 'vui_affine.qml'
     icon: 'icon.webp'
-    gpuAlt: 'movit.rect'
     isFavorite: true
 
     keyframes {
@@ -32,5 +31,4 @@ Metadata {
             }
         ]
     }
-
 }

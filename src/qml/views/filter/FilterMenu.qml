@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
-import org.shotcut.qml 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Rectangle {
     id: filterWindow
@@ -77,7 +76,6 @@ Rectangle {
                 onTextChanged: {
                     if (length !== 1 && text !== metadatamodel.search)
                         metadatamodel.search = text;
-
                     if (length > 0) {
                         parent.savedFilter = typeGroup.checkedButton;
                         favButton.checked = vidButton.checked = audButton.checked = false;
@@ -85,11 +83,11 @@ Rectangle {
                         parent.savedFilter.checked = true;
                     }
                 }
-                Keys.onReturnPressed: {
+                Keys.onReturnPressed: event => {
                     menuListView.itemSelected(menuListView.currentIndex);
                     event.accepted = true;
                 }
-                Keys.onEnterPressed: Keys.onReturnPressed(event)
+                Keys.onEnterPressed: event => Keys.onReturnPressed(event)
                 Keys.onEscapePressed: {
                     if (text !== '')
                         text = '';
@@ -114,9 +112,7 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: qsTr('Clear search')
                 }
-
             }
-
         }
 
         RowLayout {
@@ -148,7 +144,6 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: qsTr('Show favorite filters')
                 }
-
             }
 
             Shotcut.ToggleButton {
@@ -170,7 +165,6 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: qsTr('Show video filters')
                 }
-
             }
 
             Shotcut.ToggleButton {
@@ -192,7 +186,6 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: qsTr('Show audio filters')
                 }
-
             }
 
             Shotcut.ToggleButton {
@@ -215,10 +208,9 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: qsTr('Show time filters')
                 }
-
             }
-            // separator
 
+            // separator
             Button {
                 enabled: false
                 implicitWidth: 1
@@ -238,13 +230,11 @@ Rectangle {
                 Shotcut.HoverTip {
                     text: qsTr('Close menu')
                 }
-
             }
 
             Item {
                 Layout.fillWidth: true
             }
-
         }
 
         ScrollView {
@@ -256,6 +246,9 @@ Rectangle {
             ScrollBar.vertical.policy: ScrollBar.AlwaysOn
             ScrollBar.vertical.visible: contentHeight > height
             ScrollBar.vertical.width: 16
+            ScrollBar.vertical.background: Rectangle {
+                color: Qt.lighter(parent.palette.alternateBase)
+            }
 
             ListView {
                 id: menuListView
@@ -290,9 +283,7 @@ Rectangle {
 
                 delegate: FilterMenuDelegate {
                 }
-
             }
-
         }
 
         RowLayout {
@@ -313,7 +304,6 @@ Rectangle {
                 onPlayingChanged: {
                     if (!playing)
                         playing = true;
-
                 }
             }
 
@@ -326,9 +316,6 @@ Rectangle {
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
                 Layout.preferredWidth: filterWindow.width - parent.Layout.preferredHeight - 20
             }
-
         }
-
     }
-
 }

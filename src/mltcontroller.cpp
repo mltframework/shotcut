@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2022 Meltytech, LLC
+ * Copyright (c) 2011-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,6 @@
 #include <clocale>
 #include <unistd.h>
 
-#include "glwidget.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "mainwindow.h"
@@ -40,6 +39,13 @@
 #include "qmltypes/qmlmetadata.h"
 #include "util.h"
 #include "proxymanager.h"
+#if defined(Q_OS_WIN)
+#include "widgets/d3dvideowidget.h"
+#elif defined(Q_OS_MAC)
+#include "widgets/metalvideowidget.h"
+#else
+#include "widgets/openglvideowidget.h"
+#endif
 
 namespace Mlt {
 
@@ -66,7 +72,13 @@ Controller &Controller::singleton(QObject *parent)
     if (!instance) {
         qRegisterMetaType<Mlt::Frame>("Mlt::Frame");
         qRegisterMetaType<SharedFrame>("SharedFrame");
-        instance = new GLWidget(parent);
+#if defined(Q_OS_WIN)
+        instance = new D3DVideoWidget(parent);
+#elif defined(Q_OS_MAC)
+        instance = new MetalVideoWidget(parent);
+#else
+        instance = new OpenGLVideoWidget(parent);
+#endif
     }
     return *instance;
 }
@@ -504,7 +516,7 @@ bool Controller::saveXML(const QString &filename, Service *service, bool withRel
         if (!proxy && ProxyManager::filterXML(xml, root)) { // also verifies
             if (tempFile) {
                 QTextStream stream(tempFile);
-                stream.setCodec("UTF-8");
+                stream.setEncoding(QStringConverter::Utf8);
                 stream << xml;
                 if (tempFile->error() != QFileDevice::NoError) {
                     LOG_ERROR() << "error while writing MLT XML file" << tempFile->fileName() << ":" <<
@@ -519,7 +531,7 @@ bool Controller::saveXML(const QString &filename, Service *service, bool withRel
                     return false;
                 }
                 QTextStream stream(&file);
-                stream.setCodec("UTF-8");
+                stream.setEncoding(QStringConverter::Utf8);
                 stream << xml;
                 if (file.error() != QFileDevice::NoError) {
                     LOG_ERROR() << "error while writing MLT XML file" << filename << ":" << file.errorString();
@@ -636,7 +648,7 @@ bool Controller::isSeekable(Producer *p) const
         } else {
             seekable = producer->get_int("seekable");
             if (!seekable && producer->get("mlt_type")) {
-                // XXX what was this for?
+                // MLT xml producer or tractor
                 seekable = !strcmp(producer->get("mlt_type"), "mlt_producer");
             }
             if (!seekable) {
@@ -644,7 +656,7 @@ bool Controller::isSeekable(Producer *p) const
                 // TODO: Currently, these max out at 15000 frames, which is arbitrary.
                 QString service(producer->get("mlt_service"));
                 seekable = (service == "color") || service.startsWith("frei0r.") || (service == "tone")
-                           || (service == "count") || (service == "noise");
+                           || (service == "count") || (service == "noise") || (service == "consumer");
             }
         }
     }
@@ -960,6 +972,7 @@ Producer *Controller::setupNewProducer(Producer *newProducer) const
             Mlt::Chain *chain = new Mlt::Chain(MLT.profile());
             chain->set_source(*newProducer);
             chain->get_length_time(mlt_time_clock);
+            chain->attach_normalizers();
 
             // Move all non-loader filters to the chain in case this was a clip-only project.
             int i = 0;
@@ -981,7 +994,7 @@ Producer *Controller::setupNewProducer(Producer *newProducer) const
 
 QUuid Controller::uuid(Mlt::Properties &properties) const
 {
-    return {properties.get(kUuidProperty)};
+    return QUuid(properties.get(kUuidProperty));
 }
 
 void Controller::setUuid(Mlt::Properties &properties, QUuid uid) const

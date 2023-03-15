@@ -1,11 +1,11 @@
-import QtQuick 2.0
-import org.shotcut.qml 1.0
+import QtQuick
+import org.shotcut.qml
 
 Metadata {
     type: Metadata.Filter
     objectName: 'movitSizePosition'
     name: qsTr('Size and Position')
-    keywords: qsTr('transform zoom rotation distort fill move', 'search keywords for the Size, Position & Rotate video filter') + ' size position rotate'
+    keywords: qsTr('transform zoom distort fill move', 'search keywords for the Size and Position filter') + ' size position gpu'
     mlt_service: 'movit.rect'
     needsGPU: true
     qml: 'ui_movit.qml'
@@ -27,5 +27,4 @@ Metadata {
             }
         ]
     }
-
 }

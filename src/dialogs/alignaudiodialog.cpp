@@ -127,7 +127,7 @@ public:
 
     void start()
     {
-        m_future = QtConcurrent::run(this, &ClipAudioReader::process);
+        m_future = QtConcurrent::run(&ClipAudioReader::process, this);
     }
 
     bool isFinished()

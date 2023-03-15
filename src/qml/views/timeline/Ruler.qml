@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import Shotcut.Controls as Shotcut
 
 Rectangle {
     id: rulerTop
@@ -40,8 +39,8 @@ Rectangle {
         model: parent.width / (intervalSeconds * profile.fps * timeScale)
 
         Rectangle {
-            // right edge
 
+            // right edge
             anchors.bottom: rulerTop.bottom
             height: 18
             width: 1
@@ -57,9 +56,7 @@ Rectangle {
                 color: activePalette.windowText
                 text: application.timecode(index * intervalSeconds * profile.fps + 2).substr(0, 8)
             }
-
         }
-
     }
 
     MouseArea {
@@ -67,7 +64,7 @@ Rectangle {
         hoverEnabled: true
         acceptedButtons: Qt.NoButton
         onExited: bubbleHelp.hide()
-        onPositionChanged: {
+        onPositionChanged: mouse => {
             var text = application.timecode(mouse.x / timeScale);
             bubbleHelp.show(text);
         }
@@ -80,7 +77,7 @@ Rectangle {
         timeScale: root.timeScale ? root.timescale : 1
         model: markers
         onExited: bubbleHelp.hide()
-        onMouseStatusChanged: {
+        onMouseStatusChanged: (mouseX, mouseY, text, start, end) => {
             var msg = "<center>" + text;
             if (start === end) {
                 msg += "<br>" + application.timecode(start);
@@ -91,13 +88,12 @@ Rectangle {
             msg += "</center>";
             bubbleHelp.show(msg);
         }
-        onSeekRequested: timeline.position = pos
+        onSeekRequested: pos => timeline.position = pos
 
         snapper: QtObject {
             function getSnapPosition(position) {
                 if (!settings.timelineSnap)
                     return position;
-
                 var SNAP = 10;
                 // Snap to clips on tracks.
                 var timeline = root;
@@ -107,7 +103,6 @@ Rectangle {
                         var item = track.clipAt(i);
                         if (item.isBlank)
                             continue;
-
                         var itemLeft = item.x;
                         var itemRight = itemLeft + item.width;
                         if (position > itemLeft - SNAP && position < itemLeft + SNAP)
@@ -122,12 +117,9 @@ Rectangle {
                 var cursorX = tracksFlickable.contentX + cursor.x;
                 if (position > cursorX - SNAP && position < cursorX + SNAP)
                     return cursorX;
-
                 return position;
             }
-
         }
-
     }
 
     Connections {
@@ -139,5 +131,4 @@ Rectangle {
 
         target: profile
     }
-
 }

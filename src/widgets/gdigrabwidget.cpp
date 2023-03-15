@@ -22,7 +22,8 @@
 #include "util.h"
 #include "settings.h"
 #include <QtWidgets>
-#include <QAudioDeviceInfo>
+#include <QMediaDevices>
+#include <QAudioDevice>
 
 GDIgrabWidget::GDIgrabWidget(QWidget *parent) :
     QWidget(parent),
@@ -31,16 +32,15 @@ GDIgrabWidget::GDIgrabWidget(QWidget *parent) :
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_9);
     ui->applyButton->hide();
-    const QRect &r = QGuiApplication::screens().at(QApplication::desktop()->screenNumber(
-                                                       this))->geometry();
+    const QRect &r = QGuiApplication::primaryScreen()->geometry();
     ui->widthSpinBox->setValue(r.size().width());
     ui->heightSpinBox->setValue(r.size().height());
     ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 
-    if (QAudioDeviceInfo::availableDevices(QAudio::AudioInput).count() > 0) {
-        foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
-            ui->audioComboBox->addItem(deviceInfo.deviceName());
+    if (QMediaDevices::audioInputs().count() > 0) {
+        for (const auto &deviceInfo : QMediaDevices::audioInputs())
+            ui->audioComboBox->addItem(deviceInfo.description());
     } else {
         ui->audioLabel->hide();
         ui->audioComboBox->hide();

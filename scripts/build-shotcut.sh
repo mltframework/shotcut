@@ -32,7 +32,7 @@ FREI0R_REVISION=
 ENABLE_MOVIT=1
 SUBDIRS=
 MOVIT_HEAD=0
-MOVIT_REVISION="origin/shotcut"
+MOVIT_REVISION="origin/shotcut-opengl3"
 X264_HEAD=0
 X264_REVISION="origin/stable"
 X265_HEAD=0
@@ -43,9 +43,10 @@ LIBOPUS_HEAD=0
 LIBOPUS_REVISION="v1.3.1"
 ENABLE_SWH_PLUGINS=1
 FFMPEG_HEAD=0
-FFMPEG_REVISION="origin/release/5.1"
+FFMPEG_REVISION="origin/release/6.0"
 FFMPEG_SUPPORT_H264=1
 FFMPEG_SUPPORT_H265=1
+FFMPEG_SUPPORT_JACK=1
 FFMPEG_SUPPORT_LIBVPX=1
 FFMPEG_SUPPORT_THEORA=1
 FFMPEG_SUPPORT_MP3=1
@@ -86,14 +87,17 @@ VMAF_HEAD=0
 VMAF_REVISION="v2.3.1"
 ENABLE_GLAXNIMATE=1
 GLAXNIMATE_HEAD=0
-GLAXNIMATE_REVISION="v0.5.2"
+GLAXNIMATE_REVISION="0.5.3"
 ENABLE_GOPRO2GPX=1
+ENABLE_OPENCV=1
+OPENCV_HEAD=0
+OPENCV_REVISION="4.7.0"
 
 PYTHON_VERSION_DEFAULT=3.8
 PYTHON_VERSION_DARWIN=3.10
 
-QT_VERSION_DEFAULT=5.15.3
-QT_VERSION_DARWIN=5.15.2
+QT_VERSION_DEFAULT=6.4.2
+QT_VERSION_DARWIN=6.4.2
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -239,6 +243,12 @@ function to_key {
     ;;
     gopro2gpx)
       echo 25
+    ;;
+    opencv)
+      echo 26
+    ;;
+    opencv_contrib)
+      echo 27
     ;;
     *)
       echo UNKNOWN
@@ -474,6 +484,9 @@ function set_globals {
     if test "$ENABLE_GOPRO2GPX" = 1 ; then
         SUBDIRS="$SUBDIRS gopro2gpx"
     fi
+    if test "$ENABLE_OPENCV" = 1 ; then
+        SUBDIRS="opencv opencv_contrib $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -521,6 +534,8 @@ function set_globals {
   REPOLOCS[23]="https://github.com/Netflix/vmaf.git"
   REPOLOCS[24]="https://gitlab.com/ddennedy/glaxnimate.git"
   REPOLOCS[25]="https://github.com/ddennedy/gopro2gpx.git"
+  REPOLOCS[26]="https://github.com/opencv/opencv.git"
+  REPOLOCS[27]="https://github.com/opencv/opencv_contrib.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -546,6 +561,8 @@ function set_globals {
   REPOTYPES[23]="git"
   REPOTYPES[24]="git"
   REPOTYPES[25]="git"
+  REPOTYPES[26]="git"
+  REPOTYPES[27]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -626,6 +643,14 @@ function set_globals {
     REVISIONS[24]="$GLAXNIMATE_REVISION"
   fi
   REVISIONS[25]=""
+  REVISIONS[26]=""
+  if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
+    REVISIONS[26]="$OPENCV_REVISION"
+  fi
+  REVISIONS[27]=""
+  if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
+    REVISIONS[27]="$OPENCV_REVISION"
+  fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
@@ -653,7 +678,7 @@ function set_globals {
 
   # set global environment for all jobs
   if test "$TARGET_OS" = "Darwin"; then
-    [ "$QTDIR" = "" ] && export QTDIR="$HOME/Qt/$QT_VERSION_DARWIN/clang_64"
+    [ "$QTDIR" = "" ] && export QTDIR="$HOME/Qt/$QT_VERSION_DARWIN/macos"
     export RANLIB=ranlib
   else
     if test -z "$QTDIR" ; then
@@ -669,13 +694,16 @@ function set_globals {
   export LD_RUN_PATH="$FINAL_INSTALL_DIR/lib"
   export PKG_CONFIG_PATH="$FINAL_INSTALL_DIR/lib/pkgconfig:$PKG_CONFIG_PATH"
 
-  # CONFIG Array holds the ./configure (or equiv) command for each project
+  # PRECONFIG Array holds a command to run before configure for each project
+  # CONFIG Array holds the ./configure (or equivalent) command for each project
   # CFLAGS_ Array holds additional CFLAGS for the configure/make step of a given project
   # LDFLAGS_ Array holds additional LDFLAGS for the configure/make step of a given project
+  # BUILD Array holds the compile and link command for each project, e.g. make or ninja
+  # INSTALL Array holds the install command for each project, e.g. make install
 
   #####
   # ffmpeg
-  CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
+  CONFIG[0]="./configure --disable-static --disable-doc --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
   if test 1 = "$FFMPEG_SUPPORT_THEORA" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis"
   fi
@@ -715,41 +743,51 @@ function set_globals {
   if test 1 = "$FFMPEG_SUPPORT_VMAF" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libvmaf"
   fi
+  if test 1 = "$FFMPEG_SUPPORT_JACK" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-libjack"
+  fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
   CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
-  if test "$TARGET_OS" != "Darwin" -o "$TARGET_ARCH" != "arm64"; then
-    CONFIG[0]="${CONFIG[0]} --enable-libjack"
-    LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
-  fi
+  LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
   if test "$TARGET_OS" = "Darwin"; then
     CFLAGS_[0]="${CFLAGS_[0]} -I/opt/local/include"
     LDFLAGS_[0]="${LDFLAGS_[0]} -L/opt/local/lib"
+    BUILD[0]="build_ffmpeg_darwin"
+    INSTALL[0]="install_ffmpeg_darwin"
   elif test "$TARGET_OS" = "Linux" ; then
-    CONFIG[0]="${CONFIG[0]} --enable-libxcb --enable-libpulse"
+    CONFIG[0]="${CONFIG[0]} --enable-libxcb --enable-libpulse --prefix=$FINAL_INSTALL_DIR"
+    BUILD[0]="make -j$MAKEJ"
+    INSTALL[0]="make install"
   fi
 
   #####
   # mlt
-  CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DGPL=ON -DGPL3=ON -DMOD_GLAXNIMATE=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF $CMAKE_DEBUG_FLAG"
+  CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_QT=OFF -DMOD_QT6=ON -DMOD_GLAXNIMATE_QT6=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF $CMAKE_DEBUG_FLAG"
   # Remember, if adding more of these, to update the post-configure check.
-  if test "1" = "$MLT_DISABLE_SOX" ; then
-    CONFIG[1]="${CONFIG[1]} -DMOD_SOX=OFF"
-  fi
+  [ "$ENABLE_OPENCV" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_OPENCV=ON"
+  [ "$MLT_DISABLE_SOX" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_SOX=OFF"
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   if [ "$TARGET_OS" = "Darwin" ]; then
+    CONFIG[1]="${CONFIG[1]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
     CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include"
     LDFLAGS_[1]="${LDFLAGS_[1]} -L/opt/local/lib/libomp"
   fi
+  CXXFLAGS_[1]="${CFLAGS_[1]} -std=c++11"
   LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
+  BUILD[1]="ninja -j $MAKEJ"
+  INSTALL[1]="ninja install"
 
-  ####
+  #####
   # frei0r
   CONFIG[2]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1 $CMAKE_DEBUG_FLAG"
+  [ "$TARGET_OS" = "Darwin" ] && CONFIG[2]="${CONFIG[2]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
   CFLAGS_[2]=$CFLAGS
   LDFLAGS_[2]=$LDFLAGS
+  BUILD[2]="ninja -j $MAKEJ"
+  INSTALL[2]="ninja install"
 
-  ####
+  #####
   # x264
   CONFIG[3]="./configure --prefix=$FINAL_INSTALL_DIR --disable-lavf --disable-ffms --disable-gpac --disable-swscale --enable-shared --disable-cli $CONFIGURE_DEBUG_FLAG"
   CFLAGS_[3]=$CFLAGS
@@ -757,8 +795,10 @@ function set_globals {
     CFLAGS_[3]="-I. -fno-common -read_only_relocs suppress ${CFLAGS_[3]}"
   fi
   LDFLAGS_[3]=$LDFLAGS
+  BUILD[3]="make -j$MAKEJ"
+  INSTALL[3]="make install"
 
-  ####
+  #####
   # libvpx
   CONFIG[4]="./configure --prefix=$FINAL_INSTALL_DIR --enable-vp8 --enable-postproc --enable-multithread --disable-install-docs --disable-debug-libs --disable-examples --disable-unit-tests --extra-cflags=-std=c99 $CONFIGURE_DEBUG_FLAG"
   [ "$TARGET_ARCH" != "arm64" ] && CONFIG[4]="${CONFIG[4]} --enable-runtime-cpu-detect"
@@ -769,6 +809,8 @@ function set_globals {
   fi
   CFLAGS_[4]=$CFLAGS
   LDFLAGS_[4]=$LDFLAGS
+  BUILD[4]="make -j$MAKEJ"
+  INSTALL[4]="make install"
 
   #####
   # movit
@@ -778,40 +820,61 @@ function set_globals {
   else
     CFLAGS_[5]="$CFLAGS"
   fi
+  CXXFLAGS_[5]="${CFLAGS_[5]}"
   LDFLAGS_[5]=$LDFLAGS
+  if [ "$TARGET_OS" = "Darwin" ]; then
+    BUILD[5]="build_movit_darwin"
+  else
+    BUILD[5]="make -j$MAKEJ RANLIB="$RANLIB" libmovit.la"
+  fi
+  INSTALL[5]="make install"
 
   #####
   # shotcut
-  CONFIG[7]="cmake -G Ninja -DCMAKE_PREFIX_PATH=$QTDIR -D SHOTCUT_VERSION=$SHOTCUT_VERSION $CMAKE_DEBUG_FLAG"
+  CONFIG[7]="cmake -G Ninja -D CMAKE_PREFIX_PATH=$QTDIR -D SHOTCUT_VERSION=$SHOTCUT_VERSION $CMAKE_DEBUG_FLAG"
   if test "$TARGET_OS" = "Darwin" ; then
     CONFIG[7]="${CONFIG[7]} -D CMAKE_INSTALL_PREFIX=."
+    CONFIG[7]="${CONFIG[7]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
   else
     CONFIG[7]="${CONFIG[7]} -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR"
   fi
   CFLAGS_[7]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[7]="$ASAN_LDFLAGS $LDFLAGS"
+  BUILD[7]="ninja -j $MAKEJ"
+  if [ "$TARGET_OS" = "Darwin" ]; then
+    INSTALL[7]="ninja install"
+  else
+    INSTALL[7]="install_shotcut_linux"
+  fi
 
   #####
-  # swh-plugins
+  # ladspa
+  PRECONFIG[8]="autoreconf -i"
   CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR"
-  [ "$TARGET_ARCH" != "arm64" ] && CONFIG[8]="${CONFIG[8]} --enable-sse"
-  if [ "$TARGET_OS" = "Darwin" ]; then
-    CONFIG[8]="${CONFIG[8]} --enable-darwin"
-	[ "$TARGET_ARCH" != "arm64" ] && CFLAGS_[8]="-march=nocona $CFLAGS"
+  if [ "$TARGET_OS" = "Darwin" -a "$TARGET_ARCH" = "arm64" ]; then
+    BUILD[8]="build_ladspa_darwin"
+  else
+    CONFIG[8]="${CONFIG[8]} --enable-sse"
+    BUILD[8]="make -j$MAKEJ"
   fi
   LDFLAGS_[8]=$LDFLAGS
+  INSTALL[8]="install_ladspa"
 
   #####
   # vid.stab
-  CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_INSTALL_LIBDIR=lib $CMAKE_DEBUG_FLAG"
+  CONFIG[10]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_INSTALL_LIBDIR=lib $CMAKE_DEBUG_FLAG"
   if test "$TARGET_OS" = "Darwin" ; then
+    CONFIG[10]="${CONFIG[10]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
     CONFIG[10]="${CONFIG[10]} -DOpenMP_C_FLAGS=-I/opt/local/include/libomp -DOpenMP_C_LIB_NAMES=libomp -DOpenMP_libomp_LIBRARY=omp"
     LDFLAGS_[10]="$LDFLAGS -L/opt/local/lib/libomp"
   fi
   CFLAGS_[10]=$CFLAGS
+  BUILD[10]="ninja -j $MAKEJ"
+  INSTALL[10]="ninja install"
 
   #####
-  # libopus
+  # opus
+  [ ! -e "$SOURCE_DIR"/opus/configure ] && PRECONFIG[12]="./autogen.sh"
   CONFIG[12]="./configure --prefix=$FINAL_INSTALL_DIR"
   if test "$TARGET_OS" = "Darwin"; then
     CFLAGS_[12]="$CFLAGS -I/opt/local/include"
@@ -819,41 +882,56 @@ function set_globals {
     CFLAGS_[12]="$CFLAGS"
   fi
   LDFLAGS_[12]=$LDFLAGS
+  BUILD[12]="make -j$MAKEJ"
+  INSTALL[12]="make install"
 
-  ######
+  #####
   # x265
-  CFLAGS_[13]=$CFLAGS
+  PRECONFIG[13]="preconfig_x265"
   CONFIG[13]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DENABLE_CLI=OFF -D ENABLE_SHARED=ON -D EXTRA_LIB='x265_main10.a' -D LINKED_10BIT=ON -D EXTRA_LINK_FLAGS='-L.' $CMAKE_DEBUG_FLAG"
+  CFLAGS_[13]=$CFLAGS
   LDFLAGS_[13]=$LDFLAGS
+  BUILD[13]="ninja -j $MAKEJ"
+  INSTALL[13]="install_x265"
 
-  #######
+  #####
   # nv-codec-headers
   CONFIG[15]="sed -i s,/usr/local,$FINAL_INSTALL_DIR, Makefile"
+  BUILD[15]="make -j$MAKEJ"
+  INSTALL[15]="make install"
 
-  #######
+  #####
   # AMF - no build required
   CONFIG[16]=""
 
-  #######
+  #####
   # QSV mfx_dispatch
   CONFIG[17]="./configure --prefix=$FINAL_INSTALL_DIR"
   CFLAGS_[17]="$CFLAGS"
   LDFLAGS_[17]=$LDFLAGS
+  BUILD[17]="make -j$MAKEJ"
+  INSTALL[17]="make install"
 
   #####
   # rubberband
   CONFIG[18]="meson setup builddir --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
   CFLAGS_[18]=$CFLAGS
   LDFLAGS_[18]=$LDFLAGS
+  BUILD[18]="ninja -C builddir -j $MAKEJ"
+  INSTALL[18]="meson install -C builddir"
 
-  #########
+  #####
   # bigsh0t
-  CONFIG[19]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  CONFIG[19]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  [ "$TARGET_OS" = "Darwin" ] && CONFIG[19]="${CONFIG[19]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
   CFLAGS_[19]=$CFLAGS
   LDFLAGS_[19]=$LDFLAGS
+  BUILD[19]="ninja -j $MAKEJ"
+  INSTALL[19]="install -p -c *.so $FINAL_INSTALL_DIR/lib/frei0r-1"
 
   #####
   # zimg
+  [ ! -e "$SOURCE_DIR"/zimg/configure ] && PRECONFIG[20]="./autogen.sh"
   CONFIG[20]="./configure --prefix=$FINAL_INSTALL_DIR"
   if test "$TARGET_OS" = "Darwin"; then
     CFLAGS_[20]="$CFLAGS -I/opt/local/include"
@@ -861,6 +939,8 @@ function set_globals {
     CFLAGS_[20]="$CFLAGS"
   fi
   LDFLAGS_[20]=$LDFLAGS
+  BUILD[20]="make -j$MAKEJ"
+  INSTALL[20]="make install"
 
   #####
   # dav1d
@@ -872,6 +952,8 @@ function set_globals {
   fi
   CFLAGS_[21]=$CFLAGS
   LDFLAGS_[21]=$LDFLAGS
+  BUILD[21]="ninja -C builddir -j $MAKEJ"
+  INSTALL[21]="meson install -C builddir"
 
   #####
   # aom
@@ -879,10 +961,18 @@ function set_globals {
   [ "$TARGET_OS" = "Darwin" -a "$TARGET_ARCH" = "arm64" ] && CONFIG[22]="${CONFIG[22]} -DCONFIG_RUNTIME_CPU_DETECT=0"
   CFLAGS_[22]=$CFLAGS
   LDFLAGS_[22]=$LDFLAGS
+  BUILD[22]="ninja -j $MAKEJ"
+  INSTALL[22]="ninja install"
 
   #####
   # vmaf
-  CONFIG[23]="meson setup libvmaf/build libvmaf --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
+  if [ "$TARGET_OS" = "Darwin" ]; then
+    CONFIG[23]="meson setup libvmaf/build-arm64 libvmaf --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib --cross-file=arm64-darwin -Denable_tests=false -Denable_docs=false -Dbuilt_in_models=false"
+    BUILD[23]="build_vmaf_darwin"
+  else
+    CONFIG[23]="meson setup libvmaf/build libvmaf --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
+    BUILD[23]="ninja -C libvmaf/build -j $MAKEJ"
+  fi
   if [ "$DEBUG_BUILD" = "1" ]; then
     CONFIG[23]="${CONFIG[23]} --buildtype=debug"
   else
@@ -890,18 +980,146 @@ function set_globals {
   fi
   CFLAGS_[23]=$CFLAGS
   LDFLAGS_[23]=$LDFLAGS
+  INSTALL[23]="install_vmaf"
 
   #####
   # glaxnimate
   CONFIG[24]="cmake -G Ninja -DCMAKE_PREFIX_PATH=$QTDIR -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  if [ "$TARGET_OS" = "Darwin" ]; then
+    CONFIG[24]="${CONFIG[24]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
+    CONFIG[24]="${CONFIG[24]} -DPython3_EXECUTABLE=/opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/bin/python${PYTHON_VERSION_DARWIN} -D PYTHON_EXECUTABLE=/opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/bin/python${PYTHON_VERSION_DARWIN}"
+  fi
   CFLAGS_[24]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[24]="$ASAN_LDFLAGS $LDFLAGS"
+  BUILD[24]="ninja -j $MAKEJ"
+  INSTALL[24]="ninja translations install"
 
   #####
   # gopro2gpx
   CONFIG[25]="cmake -G Ninja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  [ "$TARGET_OS" = "Darwin" ] && CONFIG[25]="${CONFIG[25]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
   CFLAGS_[25]="$CFLAGS"
   LDFLAGS_[25]="$LDFLAGS"
+  BUILD[25]="ninja -j $MAKEJ"
+  INSTALL[25]="install -p -c gopro2gpx $FINAL_INSTALL_DIR/bin"
+
+  #####
+  # opencv
+  CONFIG[26]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules $CMAKE_DEBUG_FLAG"
+  [ "$TARGET_OS" = "Darwin" ] && CONFIG[26]="${CONFIG[26]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
+  CFLAGS_[26]="$CFLAGS"
+  LDFLAGS_[26]="$LDFLAGS"
+  BUILD[26]="ninja -C build -j $MAKEJ"
+  INSTALL[26]="ninja -C build install"
+}
+
+function build_ffmpeg_darwin {
+  make distclean || true
+  MYCONFIG=`lookup CONFIG ffmpeg`
+  cmd $MYCONFIG --prefix=build-arm64
+  cmd make -j $MAKEJ
+  cmd make install
+  cmd make distclean
+  ASFLAGS="-arch x86_64"
+  cmd $MYCONFIG --prefix=build-x86_64 --enable-cross-compile --arch=x86_64 --enable-x86asm --cc='clang -arch x86_64'
+  cmd make -j $MAKEJ
+  cmd make install
+}
+
+function install_ffmpeg_darwin {
+  for file in ffmpeg ffplay ffprobe; do
+    cmd lipo -create build-arm64/bin/$file build-x86_64/bin/$file -output "$FINAL_INSTALL_DIR"/bin/$file
+    libs=$(otool -L "$FINAL_INSTALL_DIR"/bin/$file | awk '/^\tbuild-arm64\// || /^\tbuild-x86_64\// {print $1}')
+    for lib in $libs; do
+      basename_lib=$(basename "$lib")
+      cmd install_name_tool -change "$lib" "$FINAL_INSTALL_DIR"/lib/$basename_lib "$FINAL_INSTALL_DIR"/bin/$file
+    done
+  done
+  for lib in libavcodec libavdevice libavfilter libavformat libavutil libpostproc libswresample libswscale; do
+    file=$(find build-arm64 -type l -name $lib'.*.dylib' -exec basename {} \;)
+    cmd ln -sf $file "$FINAL_INSTALL_DIR"/lib/$lib.dylib
+    cmd lipo -create build-arm64/lib/$file build-x86_64/lib/$file -output "$FINAL_INSTALL_DIR"/lib/$file
+    cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$file "$FINAL_INSTALL_DIR"/lib/$file
+    libs=$(otool -L "$FINAL_INSTALL_DIR"/lib/$file | awk '/^\tbuild-arm64\// || /^\tbuild-x86_64\// {print $1}')
+    for lib in $libs; do
+      basename_lib=$(basename "$lib")
+      cmd install_name_tool -change "$lib" "$FINAL_INSTALL_DIR"/lib/$basename_lib "$FINAL_INSTALL_DIR"/lib/$file
+    done
+  done
+  cmd sed -e "s,=build-arm64,=${FINAL_INSTALL_DIR},g" -i .bak build-arm64/lib/pkgconfig/*.pc
+  cmd cp -a build-arm64/lib/pkgconfig/*.pc "$FINAL_INSTALL_DIR"/lib/pkgconfig/
+  cmd cp -a build-arm64/include/ "$FINAL_INSTALL_DIR"/include/
+}
+
+function build_ladspa_darwin {
+  cmd make -j $MAKEJ CC="clang -arch arm64 -arch x86_64"
+}
+
+function install_ladspa {
+  cmd make install
+  cmd install -d "$FINAL_INSTALL_DIR"/include
+  cmd install -p -c ladspa.h "$FINAL_INSTALL_DIR"/include
+}
+
+function build_movit_darwin {
+  cmd make -j $MAKEJ RANLIB="$RANLIB" CC="clang -arch arm64 -arch x86_64" CXX="clang++ -arch arm64 -arch x86_64" libmovit.la
+}
+
+function install_shotcut_linux {
+  cmd ninja install
+  cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
+  cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
+  cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
+  cmd install -p -c "$QTDIR"/lib/libQt6{Core,Core5Compat,DBus,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickControls2Impl,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,Widgets,Xml,X11Extras,XcbQpa}.so.6 "$FINAL_INSTALL_DIR"/lib
+  cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
+  cmd install -d "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
+  cmd cp -a "$QTDIR"/plugins/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt6
+  cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
+  cmd install -d "$FINAL_INSTALL_DIR"/lib/qml
+  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} "$FINAL_INSTALL_DIR"/lib/qml
+  cmd install -d "$FINAL_INSTALL_DIR"/lib/va
+  cmd install -p -c /usr/lib/x86_64-linux-gnu/dri/*_drv_video.so "$FINAL_INSTALL_DIR"/lib/va
+}
+
+function build_vmaf_darwin {
+  cmd ninja -C libvmaf/build-arm64 -j $MAKEJ
+  export CFLAGS="$CFLAGS -arch x86_64" CXXFLAGS="$CXXFLAGS -arch x86_64"
+  cmd meson setup libvmaf/build-x86_64 libvmaf --cross-file=x86_64-darwin -Denable_tests=false -Denable_docs=false -Dbuilt_in_models=false
+  cmd ninja -C libvmaf/build-x86_64 -j $MAKEJ
+}
+
+function install_vmaf {
+  if [ "$TARGET_OS" = "Darwin" ]; then
+    cmd ninja install -C libvmaf/build-arm64
+    cmd rm "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib
+    cmd lipo -create libvmaf/build-arm64/src/libvmaf.1.dylib libvmaf/build-x86_64/src/libvmaf.1.dylib -output "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib
+    cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib
+  else
+    cmd ninja -C libvmaf/build install
+  fi
+  cmd install -d "$FINAL_INSTALL_DIR"/share/vmaf
+  cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf
+}
+
+function preconfig_x265 {
+  [ ! -d "10bit" ] && mkdir 10bit
+  cd 10bit
+  cmd cmake -G Ninja -D ENABLE_CLI=OFF -D ENABLE_SHARED=OFF -D EXPORT_C_API=OFF -D HIGH_BIT_DEPTH=ON $CMAKE_DEBUG_FLAG ../source
+  cmd ninja -j$MAKEJ
+  cd ../source
+  cmd ln -s ../10bit/libx265.a libx265_main10.a
+}
+
+function install_x265 {
+  cmd mv libx265.a libx265_main.a
+  ar -M <<EOF
+CREATE libx265.a
+ADDLIB libx265_main.a
+ADDLIB libx265_main10.a
+SAVE
+END
+EOF
+  cmd ninja install
 }
 
 ######################################################################
@@ -1214,170 +1432,77 @@ function configure_compile_install_subproject {
   log PKG_CONFIG_PATH=$PKG_CONFIG_PATH
   export CFLAGS=`lookup CFLAGS_ $1`
   log CFLAGS=$CFLAGS
+  export CXXFLAGS=`lookup CXXFLAGS_ $1`
+  log CXXFLAGS=$CFLAGS
   export LDFLAGS=`lookup LDFLAGS_ $1`
   log LDFLAGS=$LDFLAGS
 
+  MYPRECONFIG=`lookup PRECONFIG $1`
   MYCONFIG=`lookup CONFIG $1`
+  MYBUILD=`lookup BUILD $1`
+  MYINSTALL=`lookup INSTALL $1`
 
+  #####
   # Configure
   if [ "$ACTION_CONFIGURE" = "1" ]; then
 
   feedback_status Configuring $1
 
-  # Special hack for mlt
-  if test "mlt" = "$1"; then
-    export CXXFLAGS="$CFLAGS -std=c++11"
-  fi
-
-  # Special hack for movit
-  if test "movit" = "$1"; then
-    export CXXFLAGS="$CFLAGS"
-  fi
-
-  # Special hack for libopus
-  if test "opus" = "$1" -a ! -e configure ; then
-    debug "Need to create configure for $1"
-    cmd ./autogen.sh || die "Unable to create configure file for $1"
-    if test ! -e configure ; then
-      die "Unable to confirm presence of configure file for $1"
-    fi
-  fi
-
-  # Special hack for x265
-  if test "x265" = "$1"; then
-    [ ! -d "10bit" ] && mkdir 10bit
-    cd 10bit
-    cmd cmake -G Ninja -D ENABLE_CLI=OFF -D ENABLE_SHARED=OFF -D EXPORT_C_API=OFF -D HIGH_BIT_DEPTH=ON $CMAKE_DEBUG_FLAG ../source
-    cmd ninja
-    cd ../source
-    cmd ln -s ../10bit/libx265.a libx265_main10.a
-  fi
-
-  # Special hack for AMF
-  if test "AMF" = "$1" -a ! -d "$FINAL_INSTALL_DIR/include/AMF"; then
-    cmd rm -rf Thirdparty
-    cmd mkdir -p "$FINAL_INSTALL_DIR/include/AMF"
-    cmd cp -av "amf/public/include/." "$FINAL_INSTALL_DIR/include/AMF"
-  fi
-
-  # Special hack for mfx_dispatch
-  if test "mfx_dispatch" = "$1" -a ! -e configure ; then
-    debug "Need to create configure for $1"
-    cmd autoreconf -fiv || die "Unable to create configure file for $1"
-    cmd automake --add-missing || die "Unable to create makefile for $1"
-    if test ! -e configure ; then
-      die "Unable to confirm presence of configure file for $1"
-    fi
-  fi
-
-  # Special hack for zimg
-  if test "zimg" = "$1" -a ! -e configure ; then
-    debug "Need to create configure for $1"
-    cmd ./autogen.sh || die "Unable to create configure file for $1"
-    if test ! -e configure ; then
-      die "Unable to confirm presence of configure file for $1"
-    fi
+  if test "$MYPRECONFIG" != ""; then
+    cmd $MYPRECONFIG || die "Unable to pre-configure $1"
+    feedback_status Done pre-configuring $1
   fi
 
   # Special hack for aom
   if test "aom" = "$1"; then
-    cmd mkdir -p ../build-aom
-    cmd cd ../build-aom || die "Unable to change to directory aom/builddir"
+   cmd mkdir -p ../build-aom
+   cmd cd ../build-aom || die "Unable to change to directory aom/builddir"
   fi
 
-  # Special hack for swh-plugins
-  if test "ladspa" = "$1"; then
-    cmd autoreconf -i
-  fi
-
-  if test "$MYCONFIG" != ""; then
+  if [ "$MYCONFIG" != "" ]; then
     cmd $MYCONFIG || die "Unable to configure $1"
     feedback_status Done configuring $1
   fi
 
   fi # if [ "$ACTION_CONFIGURE" = "1" ]
 
+  #####
   # Compile
   feedback_status Building $1 - this could take some time
-  if test "movit" = "$1" ; then
-    cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.la || die "Unable to build $1"
-  elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
-    cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
-  elif test "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1"  -o "glaxnimate" = "$1" -o "gopro2gpx" = "$1" -o "frei0r" = "$1"; then
-    cmd ninja -j $MAKEJ || die "Unable to build $1"
-  elif test "x265" = "$1" ; then
-    cmd ninja -j $MAKEJ || die "Unable to build $1"
-    cmd mv libx265.a libx265_main.a
-    ar -M <<EOF
-CREATE libx265.a
-ADDLIB libx265_main.a
-ADDLIB libx265_main10.a
-SAVE
-END
-EOF
-  elif test "vmaf" = "$1" ; then
-    cmd ninja -C libvmaf/build -j $MAKEJ || die "Unable to build $1"
-  elif test "$MYCONFIG" != ""; then
-    cmd make -j$MAKEJ || die "Unable to build $1"
+  if [ "$MYBUILD" != "" ]; then
+    cmd $MYBUILD || die "Unable to build $1"
   fi
+
   feedback_status Done building $1
 
+  #####
   # Install
   feedback_status Installing $1
-  export LD_LIBRARY_PATH=`lookup LD_LIBRARY_PATH_ $1`
-  log "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
-    if test "shotcut" = "$1" ; then
-      if test "$TARGET_OS" != "Darwin"; then
-        cmd ninja install
-        cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
-        cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-        cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-        cmd install -p -c "$QTDIR"/lib/libQt5{Core,DBus,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickTemplates2,QuickWidgets,Sql,Svg,WebSockets,Widgets,Xml,X11Extras,XcbQpa}.so.5 "$FINAL_INSTALL_DIR"/lib
-        cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
-        cmd install -d "$FINAL_INSTALL_DIR"/lib/qt5/sqldrivers
-        cmd cp -a "$QTDIR"/plugins/{audio,egldeviceintegrations,generic,iconengines,imageformats,mediaservice,platforminputcontexts,platforms,platformthemes,wayland-decoration-client,wayland-graphics-integration-client,wayland-graphics-integration-server,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt5
-        cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt5/sqldrivers
-        cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
-#        cmd curl -o "$FINAL_INSTALL_DIR"/lib/qml/QtQuick/Controls.2/Fusion/ComboBox.qml "https://s3.amazonaws.com/misc.meltymedia/shotcut-build/ComboBox.qml"
-        cmd install -d "$FINAL_INSTALL_DIR"/lib/va
-        cmd install -p -c /usr/lib/x86_64-linux-gnu/dri/*_drv_video.so "$FINAL_INSTALL_DIR"/lib/va
-      else
-        cmd ninja install
-      fi
-    elif test "bigsh0t" = "$1" ; then
-      cmd install -p -c *.so "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
-    elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
-      cmd meson install -C builddir || die "Unable to install $1"
-    elif test "aom" = "$1" -o "mlt" = "$1" -o "x265" = "$1" -o "frei0r" = "$1" ; then
-      cmd ninja install || die "Unable to install $1"
-    elif test "vmaf" = "$1" ; then
-      cmd ninja install -C libvmaf/build || die "Unable to install $1"
-      cmd install -d "$FINAL_INSTALL_DIR"/share/vmaf
-      cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf || die "Unable to install $1"
-    elif test "ladspa" = "$1" ; then
-      cmd make install || die "Unable to install $1"
-      cmd install -p -c ladspa.h "$FINAL_INSTALL_DIR"/include || die "Unable to install ladspa.h"
-    elif test "glaxnimate" = "$1" ; then
-      cmd ninja translations || die "Unable to build translations for $1"
-      cmd ninja install || die "Unable to install $1"
-    elif test "gopro2gpx" = "$1" ; then
-      cmd install -p -c gopro2gpx "$FINAL_INSTALL_DIR"/bin || die "Unable to install $1"
-    elif test "$MYCONFIG" != "" ; then
-      cmd make install || die "Unable to install $1"
+  if [ "$MYINSTALL" != "" ]; then
+    cmd $MYINSTALL || die "Unable to install $1"
+  fi
+
+  # Special hack for macOS
+  if [ "Darwin" = "$TARGET_OS" ]; then
+    # CMake identifies the dylibs with an @rpath that breaks our recursive bundling process.
+    # These names need to changed immediately after each lib is installed so that dependants
+    # link using the full name, and the bundling process can locate the dependency.
+    if [ "aom" = "$1" -o "x265" = "$1" ]; then
+      replace_rpath $1
+    elif [ "mlt" = "$1" ]; then
+      replace_rpath mlt-7
+      replace_rpath mlt++-7
+    elif [ "opencv" = "$1" ]; then
+      replace_rpath opencv_core
+      replace_rpath opencv_imgproc
+      replace_rpath opencv_plot
+      replace_rpath opencv_tracking
+      replace_rpath opencv_video
+    elif [ "vid.stab" = "$1" ]; then
+      cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
     fi
-    if [ "Darwin" = "$TARGET_OS" ]; then
-      # CMake identifies the dylibs with an @rpath that breaks our recursive bundling process.
-      # These names need to changed immediately after each lib is installed so that dependants
-      # link using the full name, and the bundling process can locate the dependency.
-      if [ "aom" = "$1" -o "x265" = "$1" ]; then
-        replace_rpath $1
-      elif [ "mlt" = "$1" ]; then
-        replace_rpath mlt-7
-        replace_rpath mlt++-7
-      elif [ "vid.stab" = "$1" ]; then
-        cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
-      fi
-    fi
+  fi
+
   feedback_status Done installing $1
 
   # Reestablish
@@ -1407,7 +1532,7 @@ function configure_compile_install_all {
 
   if [ "$ACTION_ARCHIVE" = "1" ] && [ "$TARGET_OS" = "Linux" ]; then
     log Copying some libs from system
-    for lib in "$FINAL_INSTALL_DIR"/lib/qt5/{audio,generic,iconengines,imageformats,mediaservice,platforms,platforminputcontexts,platformthemes,xcbglintegrations}/*.so; do
+    for lib in "$FINAL_INSTALL_DIR"/lib/qt6/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations}/*.so; do
       bundle_libs "$lib"
     done
     for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa,lib/va}/*.so*; do
@@ -1535,7 +1660,11 @@ function bundle_libs
          ($3 !~ /\/libpango-1.0\./) &&
          ($3 !~ /\/libjack\./) &&
          ($3 !~ /nvidia/) &&
-         ($3 !~ /\/libcairo\./) \
+         ($3 !~ /\/libcairo\./) &&
+         ($3 !~ /\/libedit\./) &&
+         ($3 !~ /\/libgio-2.0\./) &&
+         ($3 !~ /\/libgmodule-2.0\./) &&
+         ($3 !~ /\/libwayland/) \
          {print $3}')
   for lib in $libs; do
     basename_lib=$(basename "$lib")
@@ -1613,7 +1742,7 @@ function deploy_mac
   # copy Shotcut translations
   cmd cp translations/*.qm "$BUILD_DIR/Resources/shotcut/translations/"
 
-  # This little guy helps Qt 5 apps find the Qt plugins!
+  # This little guy helps Qt apps find the Qt plugins!
   printf "[Paths]\nPlugins=PlugIns/qt\nQml2Imports=Resources/qml\n" > "$BUILD_DIR/Resources/qt.conf"
 
   cmd cd "$BUILD_DIR" || die "Unable to change directory to $BUILD_DIR"
@@ -1649,11 +1778,11 @@ function deploy_mac
   cmd mkdir -p PlugIns/qt/sqldrivers 2>/dev/null
   # try QTDIR first
   if [ -d "$QTDIR/plugins" ]; then
-    cmd cp -a "$QTDIR/plugins"/{audio,generic,iconengines,imageformats,mediaservice,platforms,styles} PlugIns/qt
+    cmd cp -a "$QTDIR/plugins"/{generic,iconengines,imageformats,mediaservice,multimedia,platforms,styles,tls} PlugIns/qt
     cmd cp -p "$QTDIR/plugins/sqldrivers/libqsqlite.dylib" PlugIns/qt/sqldrivers
   # try Qt Creator next
   elif [ -d "/Applications/Qt Creator.app/Contents/PlugIns" ]; then
-    cmd cp -a "/Applications/Qt Creator.app/Contents/PlugIns"/{audio,generic,iconengines,imageformats,mediaservice,platforms,styles} PlugIns/qt
+    cmd cp -a "/Applications/Qt Creator.app/Contents/PlugIns"/{generic,iconengines,imageformats,mediaservice,multimedia,platforms,styles,tls} PlugIns/qt
   fi
   for dir in PlugIns/qt/*; do
     for lib in $dir/*; do
@@ -1663,13 +1792,8 @@ function deploy_mac
 
   # Qt QML modules
   log Copying Qt QML modules
-  # try QTDIR first
-  if [ -d "$QTDIR/qml" ]; then
-    cmd cp -a "$QTDIR/qml" Resources
-  # try Qt Creator next
-  elif [ -d "/Applications/Qt Creator.app/Contents/Imports/qtquick2" ]; then
-    cmd cp -a "/Applications/Qt Creator.app/Contents/Imports/qtquick2" Resources/qml
-  fi
+  cmd mkdir -p Resources/qml 2>/dev/null
+  cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} Resources/qml
   for lib in $(find Resources -name '*.dylib'); do
     fixlibs "$lib"
   done
@@ -1809,7 +1933,7 @@ export LADSPA_PATH="\$INSTALL_DIR/lib/ladspa"
 export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
 export MANPATH=\$MANPATH:"\$INSTALL_DIR/share/man"
 export PKG_CONFIG_PATH="\$INSTALL_DIR/lib/pkgconfig":\$PKG_CONFIG_PATH
-export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
+export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt6"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 End-of-environment-setup-template
   if test 0 != $? ; then
@@ -1835,7 +1959,7 @@ export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
 export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
 export PYTHONHOME="\$INSTALL_DIR"
-export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
+export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt6"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 "\$INSTALL_DIR/bin/$exe" "\$@"
 End-of-exe-wrapper
@@ -1866,7 +1990,7 @@ export LADSPA_PATH="\$INSTALL_DIR/lib/ladspa"
 export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
 export PYTHONHOME="\$INSTALL_DIR"
 cd "\$INSTALL_DIR"
-export QT_PLUGIN_PATH="lib/qt5"
+export QT_PLUGIN_PATH="lib/qt6"
 export QML2_IMPORT_PATH="lib/qml"
 bin/shotcut "\$@"
 End-of-shotcut-wrapper

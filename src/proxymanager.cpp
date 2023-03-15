@@ -370,7 +370,7 @@ bool ProxyManager::filterXML(QString &xmlString, QString root)
         }
         case QXmlStreamReader::EndElement:
             // At the end of a non-property element
-            if (xml.name() != "property") {
+            if (xml.name().toString() != "property") {
                 processProperties(newXml, properties, root);
                 newXml.writeEndElement();
             }

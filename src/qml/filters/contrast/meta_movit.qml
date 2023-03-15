@@ -1,10 +1,10 @@
-import QtQuick 2.0
-import org.shotcut.qml 1.0
+import QtQuick
+import org.shotcut.qml
 
 Metadata {
     type: Metadata.Filter
     name: qsTr("Contrast")
-    keywords: qsTr('variation value', 'search keywords for the Contrast video filter') + ' contrast'
+    keywords: qsTr('variation value', 'search keywords for the Contrast video filter') + ' contrast gpu'
     objectName: "movitContrast"
     mlt_service: "movit.lift_gamma_gain"
     needsGPU: true
@@ -24,5 +24,4 @@ Metadata {
             }
         ]
     }
-
 }

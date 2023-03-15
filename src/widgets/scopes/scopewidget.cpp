@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +24,7 @@ ScopeWidget::ScopeWidget(const QString &name)
     , m_queue(3, DataQueue<SharedFrame>::OverflowModeDiscardOldest)
     , m_future()
     , m_refreshPending(false)
-    , m_mutex(QMutex::NonRecursive)
+    , m_mutex()
     , m_forceRefresh(false)
     , m_size(0, 0)
 {
@@ -47,7 +46,7 @@ void ScopeWidget::onNewFrame(const SharedFrame &frame)
 void ScopeWidget::requestRefresh()
 {
     if (m_future.isFinished()) {
-        m_future = QtConcurrent::run(this, &ScopeWidget::refreshInThread);
+        m_future = QtConcurrent::run(&ScopeWidget::refreshInThread, this);
     } else {
         m_refreshPending = true;
     }

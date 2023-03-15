@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQml.Models 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import org.shotcut.qml 1.0 as Shotcut
+import QtQml.Models
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import org.shotcut.qml as Shotcut
 
 Rectangle {
     id: attachedFilters
@@ -66,19 +66,16 @@ Rectangle {
             border.width: 2
             border.color: _dragTarget === model.index ? activePalette.highlight : "transparent"
 
-            Row {
+            RowLayout {
+                spacing: 0
                 height: parent.height
-
-                Item {
-                    width: 4
-                    height: parent.height
-                }
 
                 CheckBox {
                     id: filterDelegateCheck
 
-                    anchors.verticalCenter: parent.verticalCenter
-                    enabled: model.pluginType != Shotcut.Metadata.Link
+                    Layout.topMargin: (parent.height - height) / 2
+                    Layout.alignment: Qt.AlignTop
+                    enabled: model.pluginType !== Shotcut.Metadata.Link
                     opacity: enabled ? 1 : 0.5
                     checkState: model.checkState
 
@@ -88,12 +85,6 @@ Rectangle {
                             model.checkState = !model.checkState;
                         }
                     }
-
-                }
-
-                Item {
-                    width: 4
-                    height: parent.height
                 }
 
                 Label {
@@ -102,6 +93,7 @@ Rectangle {
                     text: model.display
                     color: _currentIndex === model.index ? activePalette.highlightedText : activePalette.windowText
                     width: background.ListView.width - 23
+                    Layout.alignment: Qt.AlignTop
 
                     MouseArea {
                         id: mouseArea
@@ -112,13 +104,9 @@ Rectangle {
                         }
                         onClicked: filterClicked(model.index)
                     }
-
                 }
-
             }
-
         }
-
     }
 
     Component {
@@ -143,9 +131,7 @@ Rectangle {
                 color: activePalette.windowText
                 font.bold: true
             }
-
         }
-
     }
 
     ScrollView {
@@ -229,26 +215,23 @@ Rectangle {
                 propagateComposedEvents: true
                 anchors.fill: attachedFiltersView.contentItem
                 z: 1
-                onClicked: {
+                onClicked: mouse => {
                     filterClicked(attachedFiltersView.indexAt(mouseX, mouseY));
                     mouse.accepted = false;
                 }
                 onPressAndHold: {
                     if (oldIndex === -1)
                         beginDrag();
-
                 }
-                onReleased: {
+                onReleased: mouse => {
                     if (oldIndex !== -1 && attachedFiltersView.dragTarget !== -1 && oldIndex !== attachedFiltersView.dragTarget)
                         attachedfiltersmodel.move(oldIndex, attachedFiltersView.dragTarget);
-
                     endDrag();
                     mouse.accepted = true;
                 }
                 onPositionChanged: {
                     if (oldIndex === -1)
                         beginDrag();
-
                     updateDragTarget();
                 }
                 onCanceled: endDrag()
@@ -273,7 +256,6 @@ Rectangle {
                         }
                     }
                 }
-
             }
 
             Loader {
@@ -293,9 +275,6 @@ Rectangle {
                 color: activePalette.highlight
                 width: parent ? parent.width : undefined
             }
-
         }
-
     }
-
 }

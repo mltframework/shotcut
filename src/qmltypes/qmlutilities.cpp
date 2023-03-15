@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,14 @@
  */
 
 #include "qmltypes/qmlapplication.h"
+#include "qmltypes/colordialog.h"
 #include "qmltypes/colorpickeritem.h"
 #include "qmltypes/colorwheelitem.h"
+#include "qmltypes/fontdialog.h"
+#include "qmltypes/messagedialog.h"
 #include "qmltypes/qmleditmenu.h"
 #include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlutilities.h"
-#include "qmltypes/qmlview.h"
 #include "qmltypes/qmlfile.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlmarkermenu.h"
@@ -62,6 +64,9 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<QmlMarkerMenu>("Shotcut.Controls", 1, 0, "MarkerMenu");
     qmlRegisterType<QmlEditMenu>("Shotcut.Controls", 1, 0, "EditContextMenu");
     qmlRegisterType<QmlRichTextMenu>("Shotcut.Controls", 1, 0, "RichTextMenu");
+    qmlRegisterType<ColorDialog>("Shotcut.Controls", 1, 0, "ColorDialog");
+    qmlRegisterType<FontDialog>("Shotcut.Controls", 1, 0, "FontDialog");
+    qmlRegisterType<MessageDialog>("Shotcut.Controls", 1, 0, "MessageDialog");
     registerTimelineItems();
 }
 

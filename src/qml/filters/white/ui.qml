@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     property var defaultParameters: []
@@ -153,9 +152,7 @@ Item {
                             position: 1
                             color: "#DDFFFE"
                         }
-
                     }
-
                 }
 
                 handle: Rectangle {
@@ -168,7 +165,6 @@ Item {
                     height: tempslider.height
                     radius: 4
                 }
-
             }
 
             Shotcut.DoubleSpinBox {
@@ -182,7 +178,6 @@ Item {
                 suffix: qsTr('degrees')
                 onValueModified: tempslider.value = value
             }
-
         }
 
         Shotcut.UndoButton {
@@ -192,7 +187,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

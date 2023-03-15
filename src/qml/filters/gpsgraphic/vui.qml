@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import Shotcut.Controls as Shotcut
 
 Shotcut.VuiBase {
     property string rectProperty: "rect"
@@ -55,7 +54,7 @@ Shotcut.VuiBase {
                 borderSize: Math.max(Math.round(1.33 / zoom), 1)
                 onWidthScaleChanged: setHandles(filter.getRect(rectProperty))
                 onHeightScaleChanged: setHandles(filter.getRect(rectProperty))
-                onRectChanged: {
+                onRectChanged: rect => {
                     filterRect.x = Math.round(rect.x / rectangle.widthScale);
                     filterRect.y = Math.round(rect.y / rectangle.heightScale);
                     filterRect.width = Math.round(rect.width / rectangle.widthScale);
@@ -63,14 +62,12 @@ Shotcut.VuiBase {
                     filter.set(rectProperty, filterRect);
                 }
             }
-
         }
-
     }
 
     Connections {
         target: filter
-        onChanged: {
+        function onChanged() {
             var newRect = filter.getRect(rectProperty);
             if (filterRect !== newRect) {
                 filterRect = newRect;
@@ -79,5 +76,4 @@ Shotcut.VuiBase {
             videoItem.enabled = filter.get('disable') !== '1';
         }
     }
-
 }

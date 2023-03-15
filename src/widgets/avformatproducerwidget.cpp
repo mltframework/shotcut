@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,23 +39,6 @@
 
 static const auto kHandleSeconds = 15.0;
 
-DecodeTask::DecodeTask(AvformatProducerWidget *widget)
-    : QObject(0)
-    , QRunnable()
-    , m_frame(widget->producer()->get_frame())
-{
-    connect(this, SIGNAL(frameDecoded()), widget, SLOT(onFrameDecoded()));
-}
-
-void DecodeTask::run()
-{
-    mlt_image_format format = mlt_image_none;
-    int w = MLT.profile().width();
-    int h = MLT.profile().height();
-    m_frame->get_image(format, w, h);
-    emit frameDecoded();
-}
-
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AvformatProducerWidget)
@@ -67,11 +50,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     ui->filenameLabel->setFrame(true);
     Util::setColorsToHighlight(ui->filenameLabel, QPalette::Base);
     connect(ui->applySpeedButton, SIGNAL(clicked()), SLOT(on_speedSpinBox_editingFinished()));
-    if (Settings.playerGPU())
-        connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
-                SLOT(onFrameDisplayed(const SharedFrame &)));
-    else
-        connect(this, SIGNAL(producerChanged(Mlt::Producer *)), SLOT(onProducerChanged(Mlt::Producer *)));
+    connect(this, SIGNAL(producerChanged(Mlt::Producer *)), SLOT(onProducerChanged(Mlt::Producer *)));
 }
 
 AvformatProducerWidget::~AvformatProducerWidget()
@@ -168,23 +147,10 @@ void AvformatProducerWidget::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void AvformatProducerWidget::onFrameDisplayed(const SharedFrame &)
-{
-    // This forces avformat-novalidate or unloaded avformat to load and get
-    // media information.
-    delete m_producer->get_frame();
-    onFrameDecoded();
-    // We can stop listening to this signal if this is audio-only or if we have
-    // received the video resolution.
-    if (m_producer->get_int("audio_index") == -1 || m_producer->get_int("meta.media.width")
-            || m_producer->get_int("meta.media.height"))
-        disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this, 0);
-}
-
 void AvformatProducerWidget::onProducerChanged(Mlt::Producer *producer)
 {
     if ( producer->get_producer() == m_producer->get_producer() ) {
-        QThreadPool::globalInstance()->start(new DecodeTask(this), 10);
+        reloadProducerValues();
     }
 }
 
@@ -268,8 +234,9 @@ void AvformatProducerWidget::recreateProducer()
     }
 }
 
-void AvformatProducerWidget::onFrameDecoded()
+void AvformatProducerWidget::reloadProducerValues()
 {
+    m_producer->probe();
     int tabIndex = ui->tabWidget->currentIndex();
     ui->tabWidget->setTabEnabled(0, false);
     ui->tabWidget->setTabEnabled(1, false);
@@ -581,7 +548,8 @@ void AvformatProducerWidget::onFrameDecoded()
         } else if (isVariableFrameRate) {
             LOG_INFO() << resource << "is variable frame rate";
             offerConvert(tr("This file is variable frame rate, which is not reliable for editing."));
-        } else if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
+        } else if (QFile::exists(resource) && (!MLT.isSeekable(m_producer.data())
+                                               || resource.endsWith(".flac"))) {
             LOG_INFO() << resource << "is not seekable";
             offerConvert(tr("This file does not support seeking and cannot be used for editing."));
         } else if (QFile::exists(resource) && resource.endsWith(".m2t")) {
@@ -622,9 +590,6 @@ void AvformatProducerWidget::on_scanComboBox_activated(int index)
             // by setting them NULL.
             m_producer->set("force_progressive", QString::number(index).toLatin1().constData());
         emit producerChanged(producer());
-        if (Settings.playerGPU())
-            connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
-                    SLOT(onFrameDisplayed(const SharedFrame &)));
     }
 }
 
@@ -635,9 +600,6 @@ void AvformatProducerWidget::on_fieldOrderComboBox_activated(int index)
         if (m_producer->get("force_tff") || tff != index)
             m_producer->set("force_tff", QString::number(index).toLatin1().constData());
         emit producerChanged(producer());
-        if (Settings.playerGPU())
-            connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
-                    SLOT(onFrameDisplayed(const SharedFrame &)));
     }
 }
 
@@ -655,9 +617,6 @@ void AvformatProducerWidget::on_aspectNumSpinBox_valueChanged(int)
             m_producer->set(kAspectRatioDenominator, ui->aspectDenSpinBox->text().toLatin1().constData());
         }
         emit producerChanged(producer());
-        if (Settings.playerGPU())
-            connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
-                    SLOT(onFrameDisplayed(const SharedFrame &)));
     }
 }
 
@@ -966,13 +925,13 @@ void AvformatProducerWidget::convert(TranscodeDialog &dialog)
             if (dialog.isSubClip()) {
                 if (m_producer->get(kMultitrackItemProperty)) {
                     QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
-                    QVector<QStringRef> parts = s.splitRef(':');
+                    auto parts = s.split(':');
                     if (parts.length() == 2) {
                         int clipIndex = parts[0].toInt();
                         int trackIndex = parts[1].toInt();
                         QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
                         if (!uuid.isNull()) {
-                            job->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, QString(), uuid.toByteArray(),
+                            job->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, QString(), uuid,
                                                                               in));
                             JOBS.add(job);
                         }
@@ -996,7 +955,7 @@ bool AvformatProducerWidget::revertToOriginalResource()
         m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
         if (m_producer->get(kMultitrackItemProperty)) {
             QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
-            QVector<QStringRef> parts = s.splitRef(':');
+            auto parts = s.split(':');
             if (parts.length() == 2) {
                 int clipIndex = parts[0].toInt();
                 int trackIndex = parts[1].toInt();
@@ -1206,14 +1165,14 @@ void AvformatProducerWidget::on_reverseButton_clicked()
 
             if (m_producer->get(kMultitrackItemProperty)) {
                 QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
-                QVector<QStringRef> parts = s.splitRef(':');
+                auto parts = s.split(':');
                 if (parts.length() == 2) {
                     int clipIndex = parts[0].toInt();
                     int trackIndex = parts[1].toInt();
                     QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
                     if (!uuid.isNull()) {
                         meltJob->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, tmpFileName,
-                                                                              uuid.toByteArray(), in));
+                                                                              uuid, in));
                         JOBS.add(meltJob);
                         return;
                     }
@@ -1439,7 +1398,7 @@ void AvformatProducerWidget::on_actionSetEquirectangular_triggered()
     QString filePath = QFileDialog::getSaveFileName(&MAIN, caption, directory, QString(),
                                                     nullptr, Util::getFileDialogOptions());
     if (!filePath.isEmpty()) {
-        if (SpatialMedia::injectSpherical(objectName().toStdString(), filePath.toStdString())) {
+        if (SpatialMedia::injectSpherical(info.filePath().toStdString(), filePath.toStdString())) {
             MAIN.showStatusMessage(tr("Successfully wrote %1").arg(QFileInfo(filePath).fileName()));
         } else {
             MAIN.showStatusMessage(tr("An error occurred saving the projection."));
@@ -1519,3 +1478,9 @@ void AvformatProducerWidget::on_actionExportGPX_triggered()
     JOBS.add(new GoPro2GpxJob(resource, args));
 }
 
+void AvformatProducerWidget::on_speedComboBox_textActivated(const QString &arg1)
+{
+    if (arg1.isEmpty()) return;
+    ui->speedSpinBox->setValue(arg1.toDouble());
+    on_speedSpinBox_editingFinished();
+}

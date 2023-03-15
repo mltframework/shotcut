@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2021 Meltytech, LLC
+ * Copyright (c) 2011-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -157,7 +157,6 @@ private:
     void setupAndConnectDocks();
     void setupMenuView();
     void connectVideoWidgetSignals();
-    void setupAndConnectLeapNetworkListener();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
     void setupActions();
@@ -219,10 +218,6 @@ private:
     QDateTime m_sourceUpdatedAt;
     MarkersDock *m_markersDock;
     NotesDock *m_notesDock;
-
-#ifdef WITH_LIBLEAP
-    LeapListener m_leapListener;
-#endif
 
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker &checker);
@@ -294,6 +289,7 @@ private slots:
     void on_actionLinearBlend_triggered(bool checked);
     void on_actionYadifTemporal_triggered(bool checked);
     void on_actionYadifSpatial_triggered(bool checked);
+    void on_actionBwdif_triggered(bool checked);
     void on_actionNearest_triggered(bool checked);
     void on_actionBilinear_triggered(bool checked);
     void on_actionBicubic_triggered(bool checked);
@@ -321,8 +317,6 @@ private slots:
     void on_actionUpgrade_triggered();
     void on_actionOpenXML_triggered();
     void onAutosaveTimeout();
-    void on_actionGammaSRGB_triggered(bool checked);
-    void on_actionGammaRec709_triggered(bool checked);
     void onFocusChanged(QWidget *old, QWidget *now) const;
     void onFocusObjectChanged(QObject *obj) const;
     void onFocusWindowChanged(QWindow *window) const;
@@ -340,7 +334,7 @@ private slots:
     void onClipCopied();
     void on_actionExportEDL_triggered();
     void on_actionExportFrame_triggered();
-    void onGLWidgetImageReady();
+    void onVideoWidgetImageReady();
     void on_actionAppDataSet_triggered();
     void on_actionAppDataShow_triggered();
     void on_actionNew_triggered();

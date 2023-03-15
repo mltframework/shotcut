@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     property string rectProperty: 'shotcut:rect'
@@ -54,7 +53,6 @@ Item {
     function updateFilterRect(rect, position) {
         if (position === null)
             position = -1;
-
         filter.set(rectProperty, rect, position);
         if (filter.get(patternProperty) === 'gradient_linear') {
             filter.set(startXProperty, rect.x / profile.width, position);
@@ -106,14 +104,12 @@ Item {
         var alpha = Math.round(filter.getDouble(endOpacityProperty) * 255).toString(16);
         if (alpha.length < 2)
             alpha = '0' + alpha;
-
         colors[0] = filter.get(endColorProperty);
         colors[0] = colors[0].substring(colors[0].length - 6);
         colors[0] = '#' + alpha + colors[0];
         alpha = Math.round(filter.getDouble(startOpacityProperty) * 255).toString(16);
         if (alpha.length < 2)
             alpha = '0' + alpha;
-
         colors[1] = filter.get(startColorProperty);
         colors[1] = colors[1].substring(colors[1].length - 6);
         colors[1] = '#' + alpha + colors[1];
@@ -177,17 +173,14 @@ Item {
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(startValue, filter.getRect(rectProperty, 0));
-
             if (filter.animateOut > 0)
                 filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1));
-
         }
         filter.blockSignals = false;
         setControls();
         setKeyframedControls();
         if (filter.isNew)
             filter.set(rectProperty, filter.getRect(rectProperty));
-
     }
 
     ButtonGroup {
@@ -219,10 +212,8 @@ Item {
                 filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)
                     filter.set(startValue, filter.getRect(rectProperty, 0));
-
                 if (filter.animateOut > 0)
                     filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1));
-
                 filter.blockSignals = false;
             }
         }
@@ -254,7 +245,6 @@ Item {
                     setFilter(null);
                 }
             }
-
         }
 
         Shotcut.UndoButton {
@@ -294,15 +284,13 @@ Item {
             function cssColor(color) {
                 if (color.length > 7)
                     return '#' + color.substring(color.length - 6);
-
                 return color;
             }
 
             spinnerVisible: false
             onGradientChanged: {
                 if (_disableUpdate)
-                    return ;
-
+                    return;
                 var color = Qt.darker(colors[0], 1);
                 filter.set(endOpacityProperty, color.a);
                 filter.set(endColorProperty, cssColor(colors[0]));
@@ -368,7 +356,6 @@ Item {
                     }
                 }
             }
-
         }
 
         Shotcut.UndoButton {
@@ -426,7 +413,6 @@ Item {
                     }
                 }
             }
-
         }
 
         Shotcut.UndoButton {
@@ -541,9 +527,7 @@ Item {
                     text: qsTr('HSL Luminosity')
                     value: 'hslluminocity'
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -556,7 +540,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -590,5 +573,4 @@ Item {
 
         target: producer
     }
-
 }

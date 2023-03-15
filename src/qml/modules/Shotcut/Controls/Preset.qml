@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,19 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.1
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.0
-import QtQuick.Window 2.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Window
+import Shotcut.Controls as Shotcut
 
 RowLayout {
     property var parameters: []
 
     // Tell the parent QML page to update its controls.
-    signal beforePresetLoaded()
-    signal presetSelected()
+    signal beforePresetLoaded
+    signal presetSelected
 
     Component.onCompleted: {
         filter.loadPresets();
@@ -71,7 +70,6 @@ RowLayout {
         Shotcut.HoverTip {
             text: qsTr('Save')
         }
-
     }
 
     Shotcut.Button {
@@ -86,7 +84,6 @@ RowLayout {
         Shotcut.HoverTip {
             text: qsTr('Delete')
         }
-
     }
 
     SystemPalette {
@@ -108,7 +105,7 @@ RowLayout {
 
         flags: Qt.Dialog
         color: dialogPalette.window
-        modality: application.dialogModality
+        modality: Qt.ApplicationModal
         title: qsTr('Save Preset')
         width: 200
         height: 100
@@ -128,7 +125,7 @@ RowLayout {
                 Layout.fillWidth: true
                 selectByMouse: true
                 onAccepted: nameDialog.acceptName()
-                Keys.onPressed: {
+                Keys.onPressed: event => {
                     if (event.key === Qt.Key_Escape) {
                         nameDialog.close();
                         event.accepted = true;
@@ -153,11 +150,8 @@ RowLayout {
                     text: qsTr('Cancel')
                     onClicked: nameDialog.close()
                 }
-
             }
-
         }
-
     }
 
     Window {
@@ -165,7 +159,7 @@ RowLayout {
 
         flags: Qt.Dialog
         color: dialogPalette.window
-        modality: application.dialogModality
+        modality: Qt.ApplicationModal
         title: qsTr('Delete Preset')
         width: 300
         height: 90
@@ -201,11 +195,7 @@ RowLayout {
                     text: qsTr('Cancel')
                     onClicked: confirmDialog.close()
                 }
-
             }
-
         }
-
     }
-
 }

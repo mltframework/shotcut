@@ -49,7 +49,7 @@ jobs:
             mingw-w64-x86_64-libimagequant
             mingw-w64-x86_64-python3.10
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Build
         shell: msys2 {0}
@@ -61,20 +61,20 @@ jobs:
           echo VERSION=$VERSION
           FILENAME_VERSION=$(echo $VERSION | tr -d .)
           pushd "$HOME"
+          echo Downloading Qt
+          mkdir Qt
+          cd Qt
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.4.2-x64-mingw810.txz
+          echo Extracting Qt
+          tar -xJf qt-6.4.2-x64-mingw810.txz
+          cd ..
           echo Downloading prebuilt SWH LADSPA plugins
           curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
           echo Downloading a few other prebuilt dependencies
           curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v4.txz
           echo Extracting prebuilt dependencies
-          tar -xJf mlt-prebuilt-mingw64-v4.txz
-          rm mlt-prebuilt-mingw64-v4.txz
-          mkdir Qt
-          cd Qt
-          echo Downloading Qt
-          curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-5.15.2-x64-mingw810.txz
-          echo Extracting Qt
-          tar -xJf qt-5.15.2-x64-mingw810.txz
-          rm qt-5.15.2-x64-mingw810.txz
+          tar -xJf mlt-prebuilt-mingw64-v5.txz
+          rm mlt-prebuilt-mingw64-v5.txz
           CHECKOUT_DIR=$(popd)
           popd
           echo Running the build script
@@ -87,7 +87,7 @@ jobs:
           echo Done
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: windows-sdk
           path: ./build/shotcut-win64-sdk-*.zip

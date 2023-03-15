@@ -26,14 +26,14 @@
 #include <QDir>
 #include <QCoreApplication>
 #include <QUrl>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <Logger.h>
 #include <clocale>
 #include <utime.h>
 
 static QString getPrefix(const QString &name, const QString &value);
 
-static bool isMltClass(const QStringRef &name)
+static bool isMltClass(const QString &name)
 {
     return name == "profile" || name == "producer" ||
            name == "filter" || name == "playlist" ||
@@ -45,9 +45,10 @@ static bool isMltClass(const QStringRef &name)
 static bool isNetworkResource(const QString &string)
 {
     // Check if it looks like a qualified URL. Try parsing it and see.
-    QRegExp schemaTest(QLatin1String("^[a-zA-Z]{2,}\\:.*"));
+    QRegularExpression schemaTest(QLatin1String("^[a-zA-Z]{2,}\\:.*"));
     // Not actually checking network URL due to latency and transience.
-    return (schemaTest.exactMatch(string) && QUrl(string).isValid() && !string.startsWith("plain:"));
+    return (schemaTest.match(string).hasMatch() && QUrl(string).isValid()
+            && !string.startsWith("plain:"));
 }
 
 static bool isNumericProperty(const QString &name)
@@ -84,7 +85,7 @@ QXmlStreamReader::Error MltXmlChecker::check(const QString &fileName)
         m_newXml.setAutoFormatting(true);
         m_newXml.setAutoFormattingIndent(2);
         if (m_xml.readNextStartElement()) {
-            if (m_xml.name() == "mlt") {
+            if (m_xml.name().toString() == "mlt") {
                 m_newXml.writeStartDocument();
                 m_newXml.writeCharacters("\n");
                 m_newXml.writeStartElement("mlt");
@@ -102,7 +103,7 @@ QXmlStreamReader::Error MltXmlChecker::check(const QString &fileName)
                         m_newXml.writeAttribute(a.name().toString(), "Shotcut version " SHOTCUT_VERSION);
                         auto parts = a.value().split(' ');
                         LOG_DEBUG() << parts;
-                        if (parts.size() > 2 && parts[1] == "version") {
+                        if (parts.size() > 2 && parts[1].toString() == "version") {
                             m_shotcutVersion = parts[2].toString();
                         }
                     } else {
@@ -172,7 +173,7 @@ void MltXmlChecker::setLocale()
 
 void MltXmlChecker::readMlt()
 {
-    Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "mlt");
+    Q_ASSERT(m_xml.isStartElement() && m_xml.name().toString() == "mlt");
     bool isPropertyElement = false;
 
     while (!m_xml.atEnd()) {
@@ -205,24 +206,24 @@ void MltXmlChecker::readMlt()
             isPropertyElement = false;
             if (element == "property") {
                 isPropertyElement = true;
-                if (isMltClass(&mlt_class)) {
+                if (isMltClass(mlt_class)) {
                     const QString name = m_xml.attributes().value("name").toString();
                     m_properties << MltProperty(name, m_xml.readElementText());
                 }
             } else {
                 processProperties();
                 m_newXml.writeStartElement(m_xml.namespaceUri().toString(), element);
-                if (isMltClass(m_xml.name()))
+                if (isMltClass(m_xml.name().toString()))
                     mlt_class = element;
                 checkInAndOutPoints(); // This also copies the attributes.
             }
             break;
         }
         case QXmlStreamReader::EndElement:
-            if (m_xml.name() != "property") {
+            if (m_xml.name().toString() != "property") {
                 processProperties();
                 m_newXml.writeEndElement();
-                if (isMltClass(m_xml.name())) {
+                if (isMltClass(m_xml.name().toString())) {
                     mlt_class.clear();
                 }
             }
@@ -317,7 +318,7 @@ void MltXmlChecker::checkInAndOutPoints()
 
     // Fix numeric values of in and out point attributes.
     foreach (QXmlStreamAttribute a, m_xml.attributes()) {
-        if (a.name() == "in" || a.name() == "out") {
+        if (a.name().toString() == "in" || a.name().toString() == "out") {
             QString value = a.value().toString();
             if (checkNumericString(value)) {
                 m_newXml.writeAttribute(a.name().toString(), value);
@@ -446,8 +447,9 @@ void MltXmlChecker::checkGpuEffects(const QString &mlt_service)
 
 void MltXmlChecker::checkCpuEffects(const QString &mlt_service)
 {
-    if (mlt_service.startsWith("dynamictext") || mlt_service.startsWith("vidstab"))
-        m_needsCPU = true;
+    // For example, if needed again:
+    // if (mlt_service.startsWith("dynamictext") || mlt_service.startsWith("vidstab"))
+    //     m_needsCPU = true;
 }
 
 void MltXmlChecker::checkUnlinkedFile(const QString &mlt_service)

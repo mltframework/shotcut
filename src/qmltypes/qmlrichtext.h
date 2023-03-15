@@ -37,7 +37,6 @@
 #include <QQuickTextDocument>
 
 #include <QtGui/QTextCharFormat>
-#include <QtCore/QTextCodec>
 
 #include <qqmlfile.h>
 

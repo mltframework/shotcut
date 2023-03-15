@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import Shotcut.Controls as Shotcut
 
 Shotcut.VuiBase {
     property string rectProperty: 'shotcut:rect'
@@ -38,8 +37,7 @@ Shotcut.VuiBase {
 
     function setRectangleControl() {
         if (blockUpdate)
-            return ;
-
+            return;
         var position = getPosition();
         var newValue = filter.getRect(rectProperty, position);
         if (filterRect !== newValue) {
@@ -60,7 +58,6 @@ Shotcut.VuiBase {
     function updateFilterRect(rect, position) {
         if (position === null)
             position = -1;
-
         filter.set(rectProperty, rect, position);
         if (filter.get(patternProperty) === 'gradient_linear') {
             filter.set(startXProperty, rect.x / profile.width, position);
@@ -142,9 +139,7 @@ Shotcut.VuiBase {
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: setFilter(getPosition())
             }
-
         }
-
     }
 
     Connections {
@@ -163,5 +158,4 @@ Shotcut.VuiBase {
 
         target: producer
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.1
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 RowLayout {
     property real value
@@ -79,7 +78,6 @@ RowLayout {
                     topMargin: 1
                     bottomMargin: 1
                 }
-
             }
 
             // Indicate percentage full.
@@ -94,14 +92,11 @@ RowLayout {
                     bottom: parent.bottom
                     margins: 1
                 }
-
             }
-
         }
 
         handle: Rectangle {
         }
-
     }
 
     // Optional label between slider and spinner
@@ -153,9 +148,7 @@ RowLayout {
                     topMargin: 1
                     bottomMargin: 1
                 }
-
             }
-
         }
 
         up.indicator: Rectangle {
@@ -163,7 +156,5 @@ RowLayout {
 
         down.indicator: Rectangle {
         }
-
     }
-
 }

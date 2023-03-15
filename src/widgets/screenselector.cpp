@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  * Inspiration: KDENLIVE colorpickerwidget.cpp by Till Theato (root@ttill.de)
  * Inspiration: QColorDialog.cpp
  *
@@ -104,7 +104,7 @@ bool ScreenSelector::onMousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton && !m_selectionInProgress) {
         m_selectionInProgress = true;
         show();
-        m_selectionRect = QRect(event->globalPos(), QSize(1, 1));
+        m_selectionRect = QRect(event->globalPosition().toPoint(), QSize(1, 1));
         lockGeometry(m_selectionRect.normalized());
     }
     return true;
@@ -113,9 +113,9 @@ bool ScreenSelector::onMousePressEvent(QMouseEvent *event)
 bool ScreenSelector::onMouseMoveEvent(QMouseEvent *event)
 {
     if (m_boundingRect.x() > -1 &&
-            !m_boundingRect.contains(event->globalX(), event->globalY())) {
-        int x = qBound(m_boundingRect.left(), event->globalX(), m_boundingRect.right());
-        int y = qBound(m_boundingRect.top(), event->globalY(), m_boundingRect.bottom());
+            !m_boundingRect.contains(event->globalPosition().toPoint())) {
+        int x = qBound(m_boundingRect.left(), qRound(event->globalPosition().x()), m_boundingRect.right());
+        int y = qBound(m_boundingRect.top(), qRound(event->globalPosition().y()), m_boundingRect.bottom());
         QCursor::setPos(x, y);
         return true;
     }
@@ -123,19 +123,19 @@ bool ScreenSelector::onMouseMoveEvent(QMouseEvent *event)
     if (m_selectionInProgress) {
         if (m_fixedSize.width() > -1) {
             // Center the selection around the cursor
-            int x = event->globalX() - m_fixedSize.width() / 2;
-            int y = event->globalY() - m_fixedSize.height() /  2;
+            int x = qRound(event->globalPosition().x()) - m_fixedSize.width() / 2;
+            int y = qRound(event->globalPosition().y()) - m_fixedSize.height() /  2;
             if (m_boundingRect.x() > -1) {
                 x = qBound(m_boundingRect.left(), x, m_boundingRect.right() - m_fixedSize.width());
                 y = qBound(m_boundingRect.top(), y, m_boundingRect.bottom() - m_fixedSize.height());
             }
             m_selectionRect = QRect(QPoint(x, y), m_fixedSize);
-            m_selectionPoint = event->globalPos();
+            m_selectionPoint = event->globalPosition().toPoint();
             emit screenSelected(m_selectionRect);
             emit pointSelected(m_selectionPoint);
         } else {
-            m_selectionRect.setWidth(event->globalX() - m_selectionRect.x());
-            m_selectionRect.setHeight(event->globalY() - m_selectionRect.y());
+            m_selectionRect.setWidth(qRound(event->globalPosition().x()) - m_selectionRect.x());
+            m_selectionRect.setHeight(qRound(event->globalPosition().y()) - m_selectionRect.y());
 
             if (m_selectionRect.width() == 0) {
                 m_selectionRect.setWidth(1);

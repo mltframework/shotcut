@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick
+import QtQuick.Controls
 
 Grid {
     id: root
@@ -24,9 +23,8 @@ Grid {
     property alias from: slider.from
     property alias value: slider.value
     property alias to: slider.to
-    property alias orientation: slider.orientation
     property int decimals: 1
-    property int orientation: Qt.Horizontal
+    property int orientation: Qt.Vertical
 
     padding: 0
     spacing: 0
@@ -49,7 +47,6 @@ Grid {
                 target: slider
                 orientation: Qt.Horizontal
             }
-
         },
         State {
             name: "vertical"
@@ -65,7 +62,6 @@ Grid {
                 target: slider
                 orientation: Qt.Vertical
             }
-
         }
     ]
 
@@ -81,36 +77,38 @@ Grid {
         implicitHeight: orientation == Qt.Horizontal ? 18 : parent.height
         implicitWidth: orientation == Qt.Horizontal ? parent.width : 20
 
+        onVisualPositionChanged: {
+            if (orientation == Qt.Horizontal) {
+                indicatorRect.x = (bgRect.width - 5) * slider.visualPosition;
+                indicatorRect.y = 0;
+                indicatorRect.width = 4;
+                indicatorRect.height = bgRect.height;
+            } else {
+                indicatorRect.x = 0;
+                indicatorRect.y = (bgRect.height - 5) * slider.visualPosition;
+                indicatorRect.width = bgRect.width;
+                indicatorRect.height = 4;
+            }
+        }
+
         background: Rectangle {
+            id: bgRect
             radius: 3
             color: activePalette.alternateBase
             border.color: 'gray'
             border.width: 1
             height: parent.height
+            width: parent.width
 
             Rectangle {
+                id: indicatorRect
                 radius: parent.radius
-                width: orientation == Qt.Horizontal ? 4 : parent.width
-                height: orientation == Qt.Horizontal ? parent.height : 4
-                x: orientation == Qt.Horizontal ? (parent.width - 5) * slider.visualPosition : 0
-                y: orientation == Qt.Horizontal ? 0 : (parent.height - 5) * slider.visualPosition
                 color: activePalette.highlight
-
-                anchors {
-                    top: orientation == Qt.Horizontal ? parent.top : undefined
-                    bottom: orientation == Qt.Horizontal ? parent.bottom : undefined
-                    left: orientation == Qt.Horizontal ? undefined : parent.left
-                    right: orientation == Qt.Horizontal ? undefined : parent.right
-                    margins: 1
-                }
-
             }
-
         }
 
         handle: Rectangle {
         }
-
     }
 
     Item {
@@ -131,9 +129,7 @@ Grid {
                 height: orientation == Qt.Horizontal ? lineSize : 1
                 color: 'gray'
             }
-
         }
-
     }
 
     Item {
@@ -142,7 +138,6 @@ Grid {
             for (var i = 0; i < children.length; i++) {
                 if (children[i].implicitWidth > widest)
                     widest = children[i].implicitWidth;
-
             }
             return widest;
         }
@@ -175,7 +170,5 @@ Grid {
             horizontalAlignment: Text.AlignRight
             verticalAlignment: orientation == Qt.Horizontal ? Text.AlignVCenter : Text.AlignTop
         }
-
     }
-
 }

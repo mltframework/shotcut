@@ -1,10 +1,10 @@
-import QtQuick 2.0
-import org.shotcut.qml 1.0
+import QtQuick
+import org.shotcut.qml
 
 Metadata {
     type: Metadata.Filter
     name: qsTr("Glow")
-    keywords: qsTr('shne blur', 'search keywords for the Glow video filter') + ' glow'
+    keywords: qsTr('shne blur', 'search keywords for the Glow video filter') + ' glow gpu'
     mlt_service: "movit.glow"
     needsGPU: true
     qml: "ui_movit.qml"
@@ -38,5 +38,4 @@ Metadata {
             }
         ]
     }
-
 }

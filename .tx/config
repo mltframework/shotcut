@@ -1,9 +1,9 @@
 [main]
 host = https://www.transifex.com
 
-[shotcut.main-ui]
+[o:ddennedy:p:shotcut:r:main-ui]
 file_filter = translations/shotcut_<lang>.ts
 source_file = translations/shotcut_en.ts
 source_lang = en
-type = QT
+type        = QT
 

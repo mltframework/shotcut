@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import "FilterMenu.js" as Logic
-import QtQuick 2.2
-import QtQuick.Controls 2.12
-import org.shotcut.qml 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import org.shotcut.qml as Shotcut
 
 Rectangle {
     id: wrapper
@@ -53,7 +52,6 @@ Rectangle {
                 icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
                 onClicked: favorite = !favorite
             }
-
         }
 
         Rectangle {
@@ -101,9 +99,6 @@ Rectangle {
                     wrapper.ListView.view.currentIndex = index;
                 }
             }
-
         }
-
     }
-
 }

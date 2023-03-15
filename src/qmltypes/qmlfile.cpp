@@ -41,6 +41,7 @@ QString QmlFile::getUrl()
 void QmlFile::setUrl(QString text)
 {
     QUrl url = text.replace('\\', "/");
+    QString s = url.toString();;
     QUrl::FormattingOptions options =
         QUrl::RemoveScheme |
         QUrl::RemovePassword |
@@ -48,32 +49,43 @@ void QmlFile::setUrl(QString text)
         QUrl::RemovePort |
         QUrl::RemoveAuthority |
         QUrl::RemoveQuery;
-#ifdef Q_OS_WIN
-    // If the scheme is a drive letter, do not remove it.
-    if (url.scheme().size() == 1) {
-        options ^= QUrl::RemoveScheme;
+
+    if (s.startsWith("file://") && s.size() > 9 && s[9] != ':') {
         // QUrl removes the host from a UNC path when removing the scheme.
-    } else if (text.startsWith("file://") && text.size() > 9 && text[9] != ':') {
         options ^= QUrl::RemoveScheme;
         options ^= QUrl::RemoveAuthority;
     }
 
-    QUrl adj = url.adjusted(options);
-    QString s = adj.toString();
+#ifdef Q_OS_WIN
+    // If the scheme is a drive letter, do not remove it.
+    if (url.scheme().size() == 1) {
+        options ^= QUrl::RemoveScheme;
+    }
+#endif
 
+    s = url.adjusted(options).toString();
+
+#ifdef Q_OS_WIN
     // If there is a slash before a drive letter.
     // On Windows, file URLs look like file:///C:/Users/....
     // The scheme is removed but only "://" (not 3 slashes) between scheme and path.
     if (s.size() > 2 && s[0] == '/' && s[2]  == ':') {
         // Remove the leading slash.
-        adj = s.mid(1);
-    } else if (s.startsWith("file://")) { // UNC path
-        // Remove the scheme.
-        adj = s.mid(5);
+        s = s.mid(1);
     }
-#else
-    QUrl adj = url.adjusted(options);
 #endif
+
+    if (s.startsWith("file://")) { // UNC path
+        // Remove the scheme.
+        s = s.mid(5);
+    }
+
+    if (s.startsWith("///")) {
+        // Linux leaves 3 leading slashes sometimes
+        s = s.mid(2);
+    }
+
+    QUrl adj = s;
 
     if (m_url != adj) {
         m_url = adj;

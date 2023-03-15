@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@
 #include "widgets/docktoolbar.h"
 
 #include <QAction>
+#include <QActionGroup>
 #include <QMenu>
 #include <QSlider>
 #include <QToolBar>
@@ -72,7 +73,6 @@ TimelineDock::TimelineDock(QWidget *parent) :
     QIcon icon = QIcon::fromTheme("view-time-schedule",
                                   QIcon(":/icons/oxygen/32x32/actions/view-time-schedule.png"));
     setWindowIcon(icon);
-    setFeatures(QDockWidget::AllDockWidgetFeatures);
     setAllowedAreas(Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
 
     toggleViewAction()->setIcon(windowIcon());
@@ -273,7 +273,7 @@ void TimelineDock::setupActions()
     QAction *action;
 
     action = new QAction(tr("Add Audio Track"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_U));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_U));
     connect(action, &QAction::triggered, this, [&]() {
         show();
         raise();
@@ -282,7 +282,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineAddAudioTrackAction", action);
 
     action = new QAction(tr("Add Video Track"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_I));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_I));
     connect(action, &QAction::triggered, this, [&]() {
         show();
         raise();
@@ -291,7 +291,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineAddVideoTrackAction", action);
 
     action = new QAction(tr("Insert Track"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_I));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_I));
     connect(action, &QAction::triggered, this, [&]() {
         show();
         raise();
@@ -300,7 +300,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineInsertTrackAction", action);
 
     action = new QAction(tr("Remove Track"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_U));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_U));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
@@ -310,7 +310,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineRemoveTrackAction", action);
 
     action = new QAction(tr("Move Track Up"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::ALT + Qt::Key_Up));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::ALT | Qt::Key_Up));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
@@ -320,7 +320,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineMoveTrackUpAction", action);
 
     action = new QAction(tr("Move Track Down"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::ALT + Qt::Key_Down));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::ALT | Qt::Key_Down));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
@@ -332,9 +332,9 @@ void TimelineDock::setupActions()
     action = new QAction(tr("Show/Hide Selected Track"), this);
 #ifdef Q_OS_MAC
     // OS X uses Cmd+H to hide an app.
-    action->setShortcut(QKeySequence(Qt::META + Qt::Key_H));
+    action->setShortcut(QKeySequence(Qt::META | Qt::Key_H));
 #else
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_H));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_H));
 #endif
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -350,9 +350,9 @@ void TimelineDock::setupActions()
     // it to be the apple keyboard control key aka meta. Therefore, to be
     // consistent with all track header toggles, we make the lock toggle also use
     // meta.
-    action->setShortcut(QKeySequence(Qt::META + Qt::Key_L));
+    action->setShortcut(QKeySequence(Qt::META | Qt::Key_L));
 #else
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
 #endif
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -365,9 +365,9 @@ void TimelineDock::setupActions()
     action = new QAction(tr("Mute/Unmute Selected Track"), this);
 #ifdef Q_OS_MAC
     // OS X uses Cmd+M to minimize an app.
-    action->setShortcut(QKeySequence(Qt::META + Qt::Key_M));
+    action->setShortcut(QKeySequence(Qt::META | Qt::Key_M));
 #else
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_M));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_M));
 #endif
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
@@ -378,7 +378,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineToggleTrackMuteAction", action);
 
     action = new QAction(tr("Blend/Unblend Selected Track"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_B));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_B));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
@@ -393,7 +393,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineToggleTrackBlendingAction", action);
 
     action = new QAction(tr("Make Tracks Shorter"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Minus));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Minus));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         m_model.setTrackHeight(std::max(10, m_model.trackHeight() - 20));
@@ -401,7 +401,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineTracksShorterAction", action);
 
     action = new QAction(tr("Make Tracks Taller"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Plus));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Plus));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         m_model.setTrackHeight(m_model.trackHeight() + 20);
@@ -409,7 +409,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineTracksTallerAction", action);
 
     action = new QAction(tr("Reset Track Height"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Equal));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Equal));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         m_model.setTrackHeight(50);
@@ -417,7 +417,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineResetTrackHeightAction", action);
 
     action = new QAction(tr("Select All"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_A));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_A));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
@@ -427,7 +427,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineSelectAllAction", action);
 
     action = new QAction(tr("Select All On Current Track"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_A));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_A));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
@@ -437,7 +437,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineSelectAllOnTrackAction", action);
 
     action = new QAction(tr("Select None"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_D));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_D));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
@@ -448,7 +448,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineSelectNoneAction", action);
 
     action = new QAction(tr("Select Next Clip"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Right));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Right));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         if (selection().isEmpty()) {
@@ -462,7 +462,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineSelectNextClipAction", action);
 
     action = new QAction(tr("Select Previous Clip"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Left));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Left));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         if (selection().isEmpty()) {
@@ -476,14 +476,14 @@ void TimelineDock::setupActions()
     Actions.add("timelineSelectPrevClipAction", action);
 
     action = new QAction(tr("Select Clip Above"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Up));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         if (selection().isEmpty())
             selectClipUnderPlayhead();
         int newClipIndex = -1;
         int trackIndex = currentTrack() - 1;
-        if (!selection().isEmpty() && trackIndex > -1) {
+        if (!selection().isEmpty() && trackIndex > -1 && !selection().isEmpty()) {
             int navigationPosition = centerOfClip(selection().first().y(),
                                                   selection().first().x());
             newClipIndex = clipIndexAtPosition(trackIndex, navigationPosition);
@@ -497,14 +497,14 @@ void TimelineDock::setupActions()
     Actions.add("timelineSelectClipAboveAction", action);
 
     action = new QAction(tr("Select Clip Below"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Down));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         if (selection().isEmpty())
             selectClipUnderPlayhead();
         int newClipIndex = -1;
         int trackIndex = currentTrack() + 1;
-        if (!selection().isEmpty() && trackIndex < model()->trackList().count()) {
+        if (trackIndex < model()->trackList().count() && !selection().isEmpty()) {
             int navigationPosition = centerOfClip(selection().first().y(),
                                                   selection().first().x());
             newClipIndex = clipIndexAtPosition(trackIndex, navigationPosition);
@@ -518,7 +518,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineSelectClipBelowAction", action);
 
     action = new QAction(tr("Set Current Track Above"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Up));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Up));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         incrementCurrentTrack(-1);
@@ -526,7 +526,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineCurrentTrackAboveAction", action);
 
     action = new QAction(tr("Set Current Track Below"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_Down));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_Down));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid() || !isVisible()) return;
         incrementCurrentTrack(1);
@@ -535,10 +535,10 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Select Clip Under Playhead"), this);
     QList<QKeySequence> clipUnderPlayheadShortcuts;
-    clipUnderPlayheadShortcuts << QKeySequence(Qt::CTRL + Qt::Key_Space);
+    clipUnderPlayheadShortcuts << QKeySequence(Qt::CTRL | Qt::Key_Space);
 #ifdef Q_OS_MAC
     // Spotlight defaults to Cmd+Space, so also accept Ctrl+Space.
-    clipUnderPlayheadShortcuts << QKeySequence(Qt::META + Qt::Key_Space);
+    clipUnderPlayheadShortcuts << QKeySequence(Qt::META | Qt::Key_Space);
 #endif
     action->setShortcuts(clipUnderPlayheadShortcuts);
     connect(action, &QAction::triggered, this, [&]() {
@@ -548,7 +548,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineSelectClipUnderPlayheadAction", action);
 
     action = new QAction(tr("Cu&t"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_X));
     icon = QIcon::fromTheme("edit-cut",
                             QIcon(":/icons/oxygen/32x32/actions/edit-cut.png"));
     action->setIcon(icon);
@@ -560,7 +560,7 @@ void TimelineDock::setupActions()
     });
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
         bool enabled = m_selection.selectedClips.length() > 0;
-        if (enabled) {
+        if (enabled && !selection().isEmpty()) {
             int trackIndex = selection().first().y();
             int clipIndex = selection().first().x();
             enabled = !isBlank(trackIndex, clipIndex) && !isTransition(trackIndex, clipIndex);
@@ -571,7 +571,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("&Copy"), this);
     QList<QKeySequence> copyShortcuts;
-    copyShortcuts << QKeySequence(Qt::CTRL + Qt::Key_C);
+    copyShortcuts << QKeySequence(Qt::CTRL | Qt::Key_C);
     copyShortcuts << QKeySequence(Qt::Key_C);
     action->setShortcuts(copyShortcuts);
     icon = QIcon::fromTheme("edit-copy",
@@ -590,7 +590,7 @@ void TimelineDock::setupActions()
     });
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
         bool enabled = m_selection.selectedClips.length() > 0;
-        if (enabled) {
+        if (enabled && !selection().isEmpty()) {
             int trackIndex = selection().first().y();
             int clipIndex = selection().first().x();
             enabled = !isBlank(trackIndex, clipIndex) && !isTransition(trackIndex, clipIndex);
@@ -601,7 +601,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("&Paste"), this);
     QList<QKeySequence> pasteShortcuts;
-    pasteShortcuts << QKeySequence(Qt::CTRL + Qt::Key_V);
+    pasteShortcuts << QKeySequence(Qt::CTRL | Qt::Key_V);
     pasteShortcuts << QKeySequence(Qt::Key_V);
     action->setShortcuts(pasteShortcuts);
     icon = QIcon::fromTheme("edit-paste",
@@ -629,8 +629,8 @@ void TimelineDock::setupActions()
     action = new QAction(tr("Ripple Delete"), this);
     QList<QKeySequence> deleteShortcuts;
     deleteShortcuts << QKeySequence(Qt::Key_X);
-    deleteShortcuts << QKeySequence(Qt::SHIFT + Qt::Key_Backspace);
-    deleteShortcuts << QKeySequence(Qt::SHIFT + Qt::Key_Delete);
+    deleteShortcuts << QKeySequence(Qt::SHIFT | Qt::Key_Backspace);
+    deleteShortcuts << QKeySequence(Qt::SHIFT | Qt::Key_Delete);
     action->setShortcuts(deleteShortcuts);
     icon = QIcon::fromTheme("list-remove",
                             QIcon(":/icons/oxygen/32x32/actions/list-remove.png"));
@@ -745,7 +745,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineNextMarkerAction", action);
 
     action = new QAction(tr("Delete Marker"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_M));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_M));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
@@ -755,7 +755,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineDeleteMarkerAction", action);
 
     action = new QAction(tr("Cycle Marker Color"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_M));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_M));
     connect(action, &QAction::triggered, this, [&]() {
         int markerIndex = m_markersModel.markerIndexForPosition(m_position);
         if (markerIndex >= 0) {
@@ -771,7 +771,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineCycleMarkerColorAction", action);
 
     action = new QAction(tr("Create Marker Around Selected Clip"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_M));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_M));
     connect(action, &QAction::triggered, this, [&]() {
         if (!isMultitrackValid()) return;
         show();
@@ -781,7 +781,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineMarkSelectedClipAction", action);
 
     action = new QAction(tr("Snap"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_P));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_P));
     icon = QIcon::fromTheme("snap",
                             QIcon(":/icons/oxygen/32x32/actions/snap.png"));
     action->setIcon(icon);
@@ -810,7 +810,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineScrubDragAction", action);
 
     action = new QAction(tr("Ripple"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_R));
     icon = QIcon::fromTheme("target",
                             QIcon(":/icons/oxygen/32x32/actions/target.png"));
     action->setIcon(icon);
@@ -825,7 +825,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineRippleAction", action);
 
     action = new QAction(tr("Ripple All Tracks"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_R));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_R));
     icon = QIcon::fromTheme("ripple-all",
                             QIcon(":/icons/oxygen/32x32/actions/ripple-all.png"));
     action->setIcon(icon);
@@ -840,7 +840,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineRippleAllTracksAction", action);
 
     action = new QAction(tr("Ripple Markers"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_R));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_R));
     icon = QIcon::fromTheme("ripple-marker",
                             QIcon(":/icons/oxygen/32x32/actions/ripple-marker.png"));
     action->setIcon(icon);
@@ -855,7 +855,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineRippleMarkersAction", action);
 
     action = new QAction(tr("Toggle Ripple And All Tracks"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_R));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_R));
     connect(action, &QAction::triggered, this, [&]() {
         Settings.setTimelineRippleAllTracks(!Settings.timelineRipple());
         Settings.setTimelineRipple(!Settings.timelineRipple());
@@ -863,7 +863,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineToggleRippleAndAllTracksAction", action);
 
     action = new QAction(tr("Toggle Ripple, All Tracks, And Markers"), this);
-    action->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::Key_R));
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::SHIFT | Qt::Key_R));
     connect(action, &QAction::triggered, this, [&]() {
         Settings.setTimelineRippleAllTracks(!Settings.timelineRipple());
         Settings.setTimelineRipple(!Settings.timelineRipple());
@@ -911,7 +911,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineShowThumbnailsAction", action);
 
     action = new QAction(tr("Center the Playhead"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_P));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P));
     action->setCheckable(true);
     action->setChecked(Settings.timelineCenterPlayhead());
     connect(action, &QAction::triggered, this, [&](bool checked) {
@@ -923,7 +923,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineCenterPlayheadAction", action);
 
     action = new QAction(tr("Scroll to Playhead on Zoom"), this);
-    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_P));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_P));
     action->setCheckable(true);
     action->setChecked(Settings.timelineScrollZoom());
     connect(action, &QAction::triggered, this, [&](bool checked) {
@@ -996,13 +996,13 @@ void TimelineDock::setupActions()
     action = new QAction(tr("Rejoin With Next Clip"), this);
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&](bool checked) {
-        if (m_selection.selectedClips.length() == 1) {
+        if (m_selection.selectedClips.length() == 1 && !selection().isEmpty()) {
             mergeClipWithNext(selection().first().y(), selection().first().x(), false);
         }
     });
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
         bool enabled = false;
-        if (m_selection.selectedClips.length() == 1) {
+        if (m_selection.selectedClips.length() == 1 && !selection().isEmpty()) {
             enabled = mergeClipWithNext(selection().first().y(), selection().first().x(), true);
         }
         action->setEnabled(enabled);
@@ -1012,13 +1012,13 @@ void TimelineDock::setupActions()
     action = new QAction(tr("Detach Audio"), this);
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&](bool checked) {
-        if (m_selection.selectedClips.length() == 1) {
+        if (m_selection.selectedClips.length() == 1 && !selection().isEmpty()) {
             detachAudio(selection().first().y(), selection().first().x());
         }
     });
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
         bool enabled = false;
-        if (m_selection.selectedClips.length() == 1) {
+        if (m_selection.selectedClips.length() == 1 && !selection().isEmpty()) {
             int trackIndex = selection().first().y();
             int clipIndex = selection().first().x();
             if (trackIndex >= 0 && clipIndex >= 0) {
@@ -1105,14 +1105,14 @@ void TimelineDock::setupActions()
     Actions.add("timelineRebuildAudioWaveformAction", action);
 
     action = new QAction(tr("Ripple Trim Clip In"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_I));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_I));
     connect(action, &QAction::triggered, this, [&](bool checked) {
         trimClipAtPlayhead(TimelineDock::TrimInPoint, true);
     });
     Actions.add("timelineRippleTrimClipInAction", action);
 
     action = new QAction(tr("Ripple Trim Clip Out"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_O));
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_O));
     connect(action, &QAction::triggered, this, [&](bool checked) {
         trimClipAtPlayhead(TimelineDock::TrimOutPoint, true);
     });
@@ -1669,7 +1669,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
     QString xmlAfter = MLT.XML(after);
     m_updateCommand->setXmlAfter(xmlAfter);
     setSelection(); // clearing selection prevents a crash
-    MAIN.undoStack()->push(m_updateCommand.take());
+    MAIN.undoStack()->push(m_updateCommand.release());
 }
 
 void TimelineDock::addAudioTrack()
@@ -2068,8 +2068,8 @@ void TimelineDock::remakeAudioLevels(int trackIndex, int clipIndex, bool force)
 void TimelineDock::commitTrimCommand()
 {
     if (m_trimCommand && (m_trimDelta || m_transitionDelta)) {
-        if (m_undoHelper) m_trimCommand->setUndoHelper(m_undoHelper.take());
-        MAIN.undoStack()->push(m_trimCommand.take());
+        if (m_undoHelper) m_trimCommand->setUndoHelper(m_undoHelper.release());
+        MAIN.undoStack()->push(m_trimCommand.release());
     }
     m_trimDelta = 0;
     m_transitionDelta = 0;
@@ -2626,7 +2626,7 @@ static QString convertUrlsToXML(const QString &xml)
             longTask.reportProgress(Util::baseName(path), i++, count);
             Mlt::Producer p;
             if (path.endsWith(".mlt") || path.endsWith(".xml")) {
-                p = Mlt::Producer(MLT.profile(), "xml", path.toUtf8().constData());
+                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
                 if (p.is_valid()) {
                     p.set(kShotcutVirtualClip, 1);
                     p.set("resource", path.toUtf8().constData());
@@ -3016,7 +3016,7 @@ void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 
 void TimelineDock::dragMoveEvent(QDragMoveEvent *event)
 {
-    emit dragging(event->posF(), event->mimeData()->text().toInt());
+    emit dragging(event->position(), event->mimeData()->text().toInt());
 }
 
 void TimelineDock::dragLeaveEvent(QDragLeaveEvent *event)
@@ -3212,7 +3212,8 @@ void TimelineDock::replaceClipsWithHash(const QString &hash, Mlt::Producer &prod
         int trackIndex = -1;
         int clipIndex = -1;
         // lookup the current track and clip index by UUID
-        auto info = m_model.findClipByUuid(clip.get(kUuidProperty), trackIndex, clipIndex);
+        auto info = m_model.findClipByUuid(QUuid::fromString(clip.get(kUuidProperty)), trackIndex,
+                                           clipIndex);
 
         if (info && info->producer->is_valid() && trackIndex >= 0 && clipIndex >= 0
                 && info->producer->type() != mlt_service_tractor_type) {
@@ -3313,8 +3314,8 @@ void TimelineDock::recordAudio()
 #endif
     args << "-flush_packets" << "1" << "-y" << filename;
     m_recordJob.reset(new FfmpegJob("vo", args, false, priority));
-    connect(m_recordJob.data(), SIGNAL(started()), SLOT(onRecordStarted()));
-    connect(m_recordJob.data(), SIGNAL(finished(AbstractJob *, bool)),
+    connect(m_recordJob.get(), SIGNAL(started()), SLOT(onRecordStarted()));
+    connect(m_recordJob.get(), SIGNAL(finished(AbstractJob *, bool)),
             SLOT(onRecordFinished(AbstractJob *, bool)));
     m_recordJob->start();
     m_isRecording = true;

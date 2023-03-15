@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     property bool blockUpdate: true
@@ -29,19 +28,14 @@ Item {
             // When enabling simple keyframes, initialize the keyframes with the current value
             if (filter.keyframeCount("yaw") <= 0)
                 yawStart = yawMiddle = yawEnd = filter.getDouble("yaw");
-
             if (filter.keyframeCount("pitch") <= 0)
                 pitchStart = pitchMiddle = pitchEnd = filter.getDouble("pitch");
-
             if (filter.keyframeCount("roll") <= 0)
                 rollStart = rollMiddle = rollEnd = filter.getDouble("roll");
-
             if (filter.keyframeCount("fov") <= 0)
                 fovStart = fovMiddle = fovEnd = filter.getDouble("fov");
-
             if (filter.keyframeCount("amount") <= 0)
                 amountStart = amountMiddle = amountEnd = filter.getDouble("amount");
-
         }
         setControls();
         updateProperty_yaw(null);
@@ -70,8 +64,7 @@ Item {
 
     function updateProperty_yaw(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = yawSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -102,8 +95,7 @@ Item {
 
     function updateProperty_pitch(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = pitchSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -134,8 +126,7 @@ Item {
 
     function updateProperty_roll(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = rollSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -166,8 +157,7 @@ Item {
 
     function updateProperty_fov(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = fovSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -198,8 +188,7 @@ Item {
 
     function updateProperty_amount(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = amountSlider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -230,8 +219,7 @@ Item {
 
     function updateProperty_interpolation() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = interpolationComboBox.currentIndex;
         filter.set("interpolation", value);
     }
@@ -249,10 +237,8 @@ Item {
             yawMiddle = filter.getDouble("yaw", filter.animateIn);
             if (filter.animateIn > 0)
                 yawStart = filter.getDouble("yaw", 0);
-
             if (filter.animateOut > 0)
                 yawEnd = filter.getDouble("yaw", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("pitch", -90);
@@ -260,10 +246,8 @@ Item {
             pitchMiddle = filter.getDouble("pitch", filter.animateIn);
             if (filter.animateIn > 0)
                 pitchStart = filter.getDouble("pitch", 0);
-
             if (filter.animateOut > 0)
                 pitchEnd = filter.getDouble("pitch", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("roll", 0);
@@ -271,10 +255,8 @@ Item {
             rollMiddle = filter.getDouble("roll", filter.animateIn);
             if (filter.animateIn > 0)
                 rollStart = filter.getDouble("roll", 0);
-
             if (filter.animateOut > 0)
                 rollEnd = filter.getDouble("roll", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("fov", 160);
@@ -282,10 +264,8 @@ Item {
             fovMiddle = filter.getDouble("fov", filter.animateIn);
             if (filter.animateIn > 0)
                 fovStart = filter.getDouble("fov", 0);
-
             if (filter.animateOut > 0)
                 fovEnd = filter.getDouble("fov", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("amount", 100);
@@ -293,10 +273,8 @@ Item {
             amountMiddle = filter.getDouble("amount", filter.animateIn);
             if (filter.animateIn > 0)
                 amountStart = filter.getDouble("amount", 0);
-
             if (filter.animateOut > 0)
                 amountEnd = filter.getDouble("amount", filter.duration - 1);
-
         }
         if (filter.isNew)
             filter.set("interpolation", 1);
@@ -304,7 +282,6 @@ Item {
             interpolationValue = filter.get("interpolation");
         if (filter.isNew)
             filter.savePreset(preset.parameters);
-
         setControls();
     }
 
@@ -335,38 +312,28 @@ Item {
                 yawMiddle = filter.getDouble("yaw", filter.animateIn);
                 if (filter.animateIn > 0)
                     yawStart = filter.getDouble("yaw", 0);
-
                 if (filter.animateOut > 0)
                     yawEnd = filter.getDouble("yaw", filter.duration - 1);
-
                 pitchMiddle = filter.getDouble("pitch", filter.animateIn);
                 if (filter.animateIn > 0)
                     pitchStart = filter.getDouble("pitch", 0);
-
                 if (filter.animateOut > 0)
                     pitchEnd = filter.getDouble("pitch", filter.duration - 1);
-
                 rollMiddle = filter.getDouble("roll", filter.animateIn);
                 if (filter.animateIn > 0)
                     rollStart = filter.getDouble("roll", 0);
-
                 if (filter.animateOut > 0)
                     rollEnd = filter.getDouble("roll", filter.duration - 1);
-
                 fovMiddle = filter.getDouble("fov", filter.animateIn);
                 if (filter.animateIn > 0)
                     fovStart = filter.getDouble("fov", 0);
-
                 if (filter.animateOut > 0)
                     fovEnd = filter.getDouble("fov", filter.duration - 1);
-
                 amountMiddle = filter.getDouble("amount", filter.animateIn);
                 if (filter.animateIn > 0)
                     amountStart = filter.getDouble("amount", 0);
-
                 if (filter.animateOut > 0)
                     amountEnd = filter.getDouble("amount", filter.duration - 1);
-
                 interpolationValue = filter.get("interpolation");
                 setControls(null);
             }
@@ -618,7 +585,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -656,5 +622,4 @@ Item {
 
         target: producer
     }
-
 }

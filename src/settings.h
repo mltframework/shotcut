@@ -65,6 +65,7 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(bool smallIcons READ smallIcons WRITE setSmallIcons NOTIFY smallIconsChanged)
     Q_PROPERTY(bool askOutputFilter READ askOutputFilter WRITE setAskOutputFilter NOTIFY
                askOutputFilterChanged)
+    Q_PROPERTY(QString appDataLocation READ appDataLocation CONSTANT)
 
 public:
     static ShotcutSettings &singleton();
@@ -133,8 +134,6 @@ public:
     void setPlayerDeinterlacer(const QString &);
     QString playerExternal() const;
     void setPlayerExternal(const QString &);
-    QString playerGamma() const;
-    void setPlayerGamma(const QString &);
     bool playerGPU() const;
     void setPlayerGPU(bool);
     bool playerWarnGPU() const;

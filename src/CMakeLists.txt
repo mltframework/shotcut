@@ -48,7 +48,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/recentdock.ui
   docks/scopedock.cpp docks/scopedock.h
   docks/timelinedock.cpp docks/timelinedock.h
-  glwidget.cpp glwidget.h
   jobqueue.cpp jobqueue.h
   jobs/abstractjob.cpp jobs/abstractjob.h
   jobs/encodejob.cpp jobs/encodejob.h
@@ -59,7 +58,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   jobs/postjobaction.cpp jobs/postjobaction.h
   jobs/qimagejob.cpp jobs/qimagejob.h
   jobs/videoqualityjob.cpp jobs/videoqualityjob.h
-  leapnetworklistener.cpp leapnetworklistener.h
   main.cpp
   mainwindow.cpp mainwindow.h
   mainwindow.ui
@@ -78,8 +76,11 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   openotherdialog.ui
   player.cpp player.h
   proxymanager.cpp proxymanager.h
+  qmltypes/colordialog.h qmltypes/colordialog.cpp
   qmltypes/colorpickeritem.cpp qmltypes/colorpickeritem.h
   qmltypes/colorwheelitem.cpp qmltypes/colorwheelitem.h
+  qmltypes/fontdialog.h qmltypes/fontdialog.cpp
+  qmltypes/messagedialog.h qmltypes/messagedialog.cpp
   qmltypes/qmlapplication.cpp qmltypes/qmlapplication.h
   qmltypes/qmleditmenu.cpp qmltypes/qmleditmenu.h
   qmltypes/qmlfile.cpp qmltypes/qmlfile.h
@@ -106,6 +107,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   spatialmedia/spatialmedia.cpp spatialmedia/spatialmedia.h
   transportcontrol.h
   util.cpp util.h
+  videowidget.cpp videowidget.h
   widgets/alsawidget.cpp widgets/alsawidget.h
   widgets/alsawidget.ui
   widgets/audiometerwidget.cpp widgets/audiometerwidget.h
@@ -135,7 +137,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/gdigrabwidget.ui
   widgets/glaxnimateproducerwidget.cpp widgets/glaxnimateproducerwidget.h
   widgets/glaxnimateproducerwidget.ui
-  widgets/gltestwidget.cpp widgets/gltestwidget.h
   widgets/imageproducerwidget.cpp widgets/imageproducerwidget.h
   widgets/imageproducerwidget.ui
   widgets/isingwidget.cpp widgets/isingwidget.h
@@ -232,15 +233,15 @@ target_link_libraries(shotcut
   CuteLogger
   PkgConfig::mlt++
   PkgConfig::FFTW
-  Qt5::Multimedia
-  Qt5::Network
-  Qt5::OpenGL
-  Qt5::QuickControls2
-  Qt5::QuickWidgets
-  Qt5::Sql
-  Qt5::WebSockets
-  Qt5::Widgets
-  Qt5::Xml
+  Qt6::Multimedia
+  Qt6::Network
+  Qt6::OpenGL
+  Qt6::OpenGLWidgets
+  Qt6::QuickControls2
+  Qt6::QuickWidgets
+  Qt6::Sql
+  Qt6::Widgets
+  Qt6::Xml
 )
 
 file(GLOB_RECURSE QML_SRC "qml/*")
@@ -256,9 +257,12 @@ if(WIN32)
   target_sources(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
 
   # Windows integration features
-  find_package(Qt5 5.15 REQUIRED COMPONENTS WinExtras)
-  target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
-  target_link_libraries(shotcut PRIVATE Qt5::WinExtras)
+  # These are not yet available in Qt 6. They plan to make a cross-platform API planned but not yet implemented.
+#  find_package(Qt 6.2 REQUIRED COMPONENTS WinExtras)
+#  target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
+#  target_link_libraries(shotcut PRIVATE Qt6::WinExtras)
+  target_sources(shotcut PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
+  target_link_libraries(shotcut PRIVATE d3d11 d3dcompiler)
 
   # Runtime exception handler for debug only
   target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)
@@ -273,10 +277,13 @@ if(WIN32)
   endif()
 
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
+else()
+    target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
 endif()
 
 if(APPLE)
-  target_sources(shotcut PRIVATE macos.mm macos.h)
+  target_sources(shotcut PRIVATE macos.mm macos.h
+    widgets/metalvideowidget.h widgets/metalvideowidget.mm)
   string(SUBSTRING ${SHOTCUT_VERSION} 0, 5, SHORT_VERSION)
   set_target_properties(shotcut PROPERTIES
     OUTPUT_NAME "Shotcut"

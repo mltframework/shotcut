@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,6 +84,10 @@ public:
 public slots:
     //! Provides a new frame to the scope. Should be called by the application.
     virtual void onNewFrame(const SharedFrame &frame) Q_DECL_FINAL;
+
+signals:
+    //! Tells the widget it has been moved. Should be called by the application.
+    void moved();
 
 protected:
     /*!

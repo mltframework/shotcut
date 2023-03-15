@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ VideoVectorScopeWidget::VideoVectorScopeWidget()
     : ScopeWidget("VideoVector")
     , m_frame()
     , m_renderImg()
-    , m_mutex(QMutex::NonRecursive)
+    , m_mutex()
     , m_displayImg()
     , m_profileChanged(false)
 {
@@ -243,7 +243,7 @@ void VideoVectorScopeWidget::mouseMoveEvent(QMouseEvent *event)
     qreal v = (squareRect.height() - realY) * 255.0 / squareRect.height();
     QString text =  QString(tr("U: %1\nV: %2")).arg(QString::number(qRound(u)),
                                                     QString::number(qRound(v)));
-    QToolTip::showText(event->globalPos(), text);
+    QToolTip::showText(event->globalPosition().toPoint(), text);
 }
 
 QRect VideoVectorScopeWidget::getCenteredSquare()

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
-import org.shotcut.qml 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Item {
     id: shapeRoot
@@ -41,10 +40,8 @@ Item {
         middleValue = filter.getDouble('filter.mix', filter.animateIn);
         if (filter.animateIn > 0)
             startValue = filter.getDouble('filter.mix', 0);
-
         if (filter.animateOut > 0)
             endValue = filter.getDouble('filter.mix', filter.duration - 1);
-
     }
 
     function getPosition() {
@@ -108,8 +105,7 @@ Item {
 
     function updateFilter(parameter, value, position, button) {
         if (blockUpdate)
-            return ;
-
+            return;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
                 startValue = value;
@@ -178,10 +174,8 @@ Item {
         } else {
             if (filter.get('filter.use_mix').length === 0)
                 filter.set('filter.use_mix', 1);
-
             if (filter.get('filter.audio_match').length === 0)
                 filter.set('filter.audio_match', 1);
-
             initSimpleAnimation();
         }
         setControls();
@@ -198,12 +192,11 @@ Item {
     FileDialog {
         id: fileDialog
 
-        modality: application.dialogModality
-        selectMultiple: false
-        selectFolder: false
-        folder: settingsOpenPath
+        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
+        fileMode: FileDialog.OpenFile
+        currentFolder: settingsOpenPath
         onAccepted: {
-            shapeFile.url = fileDialog.fileUrl;
+            shapeFile.url = fileDialog.currentFile;
             filter.set('filter.resource', shapeFile.url);
             fileLabel.text = shapeFile.fileName;
             fileLabelTip.text = shapeFile.filePath;
@@ -254,7 +247,6 @@ Item {
                 fileLabel.text = '';
                 fileLabelTip.text = '';
                 if (index === 1) {
-                    fileDialog.selectExisting = true;
                     fileDialog.title = qsTr('Open Mask File');
                     fileDialog.open();
                 } else {
@@ -274,7 +266,7 @@ Item {
                 // toggling focus works around a weird bug involving sticky
                 // input event focus on the ComboBox
                 enabled = false;
-                updateResource(index);
+                updateResource(currentIndex);
                 enabled = true;
             }
 
@@ -287,13 +279,13 @@ Item {
                 id: listModel
 
                 Component.onCompleted: {
-                    application.wipes.forEach(function(el) {
-                        wipeFile.url = el;
-                        append({
-                            "text": wipeFile.fileName,
-                            "value": el
+                    application.wipes.forEach(function (el) {
+                            wipeFile.url = el;
+                            append({
+                                    "text": wipeFile.fileName,
+                                    "value": el
+                                });
                         });
-                    });
                 }
 
                 ListElement {
@@ -410,9 +402,7 @@ Item {
                     text: qsTr('Clock Top')
                     value: '%luma22.pgm'
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -452,7 +442,6 @@ Item {
             Shotcut.HoverTip {
                 id: fileLabelTip
             }
-
         }
 
         Item {
@@ -482,7 +471,6 @@ Item {
 
             CheckBox {
                 // reset the old reverse
-
                 id: reverseCheckBox
 
                 text: qsTr('Reverse')
@@ -491,27 +479,24 @@ Item {
                     filter.set(reverseProperty, checked);
                     if (filter.isAtLeastVersion(3))
                         filter.set('filter.reverse', 0);
-
                 }
             }
 
             Shotcut.UndoButton {
-                // reset the old reverse
 
+                // reset the old reverse
                 visible: reverseCheckBox.visible
                 onClicked: {
                     reverseCheckBox.checked = false;
                     filter.set(reverseProperty, checked);
                     if (filter.isAtLeastVersion(3))
                         filter.set('filter.reverse', 0);
-
                 }
             }
 
             Item {
                 width: 1
             }
-
         }
 
         Label {
@@ -575,11 +560,8 @@ Item {
                         text: qsTr('Subtract')
                         value: 'subtract'
                     }
-
                 }
-
             }
-
         }
 
         Shotcut.UndoButton {
@@ -655,7 +637,6 @@ Item {
         Label {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -693,5 +674,4 @@ Item {
 
         target: producer
     }
-
 }

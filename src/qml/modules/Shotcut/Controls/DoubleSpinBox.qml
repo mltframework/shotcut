@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     id: root
@@ -41,15 +40,13 @@ Item {
     property bool _blockSpinUpdate: false
     property bool _blockTextUpdate: false
 
-    signal valueModified()
+    signal valueModified
 
     function updateValues() {
         if (!_blockSpinUpdate)
             spinbox.value = value * _factor;
-
         if (!_blockTextUpdate)
             textInput.text = spinbox.textFromValue(spinbox.value, spinbox.locale);
-
     }
 
     implicitHeight: spinbox.implicitHeight
@@ -78,11 +75,11 @@ Item {
         onValueModified: {
             root.valueModified();
         }
-        textFromValue: function(value, locale) {
+        textFromValue: function (value, locale) {
             var realValue = value * 1 / _factor;
             return Number(realValue).toLocaleString(locale, 'f', decimals);
         }
-        valueFromText: function(text, locale) {
+        valueFromText: function (text, locale) {
             var textValue = Number.fromLocaleString(locale, text);
             return textValue * 1 * _factor;
         }
@@ -107,7 +104,6 @@ Item {
                 // Leading zeros
                 // Do not parse - allow editing to continue
                 // Assume editing in progress
-
                 id: textInput
 
                 property var _lastValidText: ""
@@ -135,7 +131,6 @@ Item {
                 function textInProgress(text, locale) {
                     if (!text || text == locale.negativeSign || text == locale.decimalPoint)
                         return true;
-
                     return false;
                 }
 
@@ -172,7 +167,6 @@ Item {
                 onTextChanged: {
                     if (!_blockTextUpdate)
                         _lastValidText = text;
-
                 }
                 onEditingFinished: {
                     _blockTextUpdate = true;
@@ -190,7 +184,6 @@ Item {
                 Shotcut.EditMenu {
                     id: contextMenu
                 }
-
             }
 
             Text {
@@ -202,9 +195,6 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 visible: text != ""
             }
-
         }
-
     }
-
 }

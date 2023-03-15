@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQml.Models 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQml.Models
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     width: 200
@@ -79,9 +78,7 @@ Item {
                         text: qsTr('Top')
                         value: 'vertical'
                     }
-
                 }
-
             }
 
             Shotcut.UndoButton {
@@ -91,13 +88,10 @@ Item {
                     modeCombo.currentIndex = 0;
                 }
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

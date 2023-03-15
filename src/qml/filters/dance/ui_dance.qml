@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     property var defaultParameters: ['osc', 'initial_zoom', 'zoom', 'up', 'down', 'left', 'right', 'clockwise', 'counterclockwise', 'frequency_low', 'frequency_high', 'threshold']
@@ -88,7 +87,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The amount to zoom the image before any motion occurs.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -113,7 +111,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Oscillation can be useful to make the image move back and forth during long periods of sound.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -138,7 +135,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The amount that the audio affects the zoom of the image.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -163,7 +159,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The amount that the audio affects the upward offset of the image.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -188,7 +183,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The amount that the audio affects the downward offset of the image.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -213,7 +207,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The amount that the audio affects the left offset of the image.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -238,7 +231,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The amount that the audio affects the right offset of the image.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -263,7 +255,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The amount that the audio affects the clockwise rotation of the image.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -288,7 +279,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The amount that the audio affects the counterclockwise rotation of the image.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -313,7 +303,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The low end of the frequency range to be used to influence the image motion.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -328,7 +317,6 @@ Item {
                 filter.set("frequency_low", value);
                 if (!_disableUpdate && (value + _minFreqDelta) > freqHighSlider.value)
                     freqHighSlider.value = value + _minFreqDelta;
-
             }
         }
 
@@ -343,7 +331,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The high end of the frequency range to be used to influence the image motion.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -358,7 +345,6 @@ Item {
                 filter.set("frequency_high", value);
                 if (!_disableUpdate && (value - _minFreqDelta) < freqLowSlider.value)
                     freqLowSlider.value = value - _minFreqDelta;
-
             }
         }
 
@@ -373,7 +359,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the image to move.')
             }
-
         }
 
         Shotcut.SliderSpinner {
@@ -394,7 +379,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

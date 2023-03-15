@@ -35,6 +35,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_isClipOnly(false)
     , m_isGpuCompatible(true)
     , m_isDeprecated(false)
+    , m_seekReverse(false)
 {
 }
 
@@ -113,13 +114,9 @@ QUrl QmlMetadata::vuiFilePath() const
     return retVal;
 }
 
-void QmlMetadata::setIconFileName(const QUrl &fileName)
+void QmlMetadata::setIconFileName(const QString &fileName)
 {
-    if (fileName.isRelative()) {
-        m_icon = QUrl::fromLocalFile(m_path.absoluteFilePath(fileName.toLocalFile()));
-    } else {
-        m_icon = fileName;
-    }
+    m_icon = fileName;
 }
 
 void QmlMetadata::setIsAudio(bool isAudio)

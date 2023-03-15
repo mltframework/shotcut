@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.3
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import Shotcut.Controls as Shotcut
 
 Rectangle {
     id: clipRoot
@@ -49,7 +48,7 @@ Rectangle {
     signal trimmedIn(var clip)
     signal trimmingOut(var clip, real delta, var mouse)
     signal trimmedOut(var clip)
-    signal rightClicked()
+    signal rightClicked
 
     function getColor() {
         return isAudio ? 'darkseagreen' : root.shotcutBlue;
@@ -59,7 +58,8 @@ Rectangle {
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
         waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth);
-        for (var i = 0; i < waveformRepeater.count; i++) waveformRepeater.itemAt(0).update()
+        for (var i = 0; i < waveformRepeater.count; i++)
+            waveformRepeater.itemAt(0).update();
     }
 
     function imagePath(time) {
@@ -81,7 +81,6 @@ Rectangle {
                 target: clipRoot
                 z: 0
             }
-
         },
         State {
             name: 'selectedBlank'
@@ -96,7 +95,6 @@ Rectangle {
                 target: gradientStop
                 color: Qt.darker(selectedTrackColor)
             }
-
         },
         State {
             name: 'selected'
@@ -111,7 +109,6 @@ Rectangle {
                 target: gradientStop
                 color: Qt.darker(getColor())
             }
-
         }
     ]
 
@@ -167,10 +164,10 @@ Rectangle {
             model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
 
             Shotcut.TimelineWaveform {
+
                 // right edge
                 // left edge
                 // bottom edge
-
                 property int channels: 2
 
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
@@ -181,9 +178,7 @@ Rectangle {
                 levels: audioLevels
                 active: ((clipRoot.x + x + width) > tracksFlickable.contentX) && ((clipRoot.x + x) < tracksFlickable.contentX + tracksFlickable.width) && ((trackRoot.y + y + height) > tracksFlickable.contentY) && ((trackRoot.y + y) < tracksFlickable.contentY + tracksFlickable.height) // top edge
             }
-
         }
-
     }
 
     Rectangle {
@@ -226,7 +221,6 @@ Rectangle {
             topMargin: parent.border.width + 1
             leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width) + 1
         }
-
     }
 
     MouseArea {
@@ -249,16 +243,13 @@ Rectangle {
         opacity: 0.5
     }
 
-    MessageDialog {
+    Shotcut.MessageDialog {
         id: confirmRemoveAdvancedDialog
 
-        visible: false
-        modality: application.dialogModality
-        icon: StandardIcon.Question
         title: qsTr("Confirm Removing Advanced Keyframes")
         text: qsTr('This will remove all advanced keyframes to enable simple keyframes.<p>Do you still want to do this?')
-        standardButtons: StandardButton.Yes | StandardButton.No
-        onYes: {
+        buttons: MessageDialog.Yes | MessageDialog.No
+        onAccepted: {
             parameters.removeAdvancedKeyframes();
         }
     }
@@ -318,7 +309,7 @@ Rectangle {
                     bubbleHelp.hide();
                 }
             }
-            onPositionChanged: {
+            onPositionChanged: mouse => {
                 if (!dragBlocked && mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale);
                     var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration);
@@ -332,7 +323,7 @@ Rectangle {
             onExited: animateInControl.scale = 1
         }
 
-        SequentialAnimation on scale {
+        SequentialAnimation on scale  {
             loops: Animation.Infinite
             running: animateInMouseArea.containsMouse
 
@@ -349,9 +340,7 @@ Rectangle {
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
-
         }
-
     }
 
     Shotcut.TimelineTriangle {
@@ -369,7 +358,6 @@ Rectangle {
             xScale: -1
             origin.x: animateOutTriangle.width / 2
         }
-
     }
 
     Rectangle {
@@ -426,13 +414,13 @@ Rectangle {
                     bubbleHelp.hide();
                 }
             }
-            onPositionChanged: {
+            onPositionChanged: mouse => {
                 if (!dragBlocked && mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((startX - parent.x) / timeScale);
                     var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration);
                     filter.animateOut = duration;
                     // Show fade duration as time in a "bubble" help.
-                    var s = application.timecode(duration, 0);
+                    var s = application.timecode(Math.max(duration, 0));
                     bubbleHelp.show(s.substring(6));
                 }
             }
@@ -440,7 +428,7 @@ Rectangle {
             onExited: animateOutControl.scale = 1
         }
 
-        SequentialAnimation on scale {
+        SequentialAnimation on scale  {
             loops: Animation.Infinite
             running: animateOutMouseArea.containsMouse
 
@@ -457,9 +445,7 @@ Rectangle {
                 duration: 250
                 easing.type: Easing.InOutQuad
             }
-
         }
-
     }
 
     Rectangle {
@@ -497,7 +483,7 @@ Rectangle {
                 parent.anchors.left = clipRoot.left;
                 clipRoot.trimmedIn(clipRoot);
             }
-            onPositionChanged: {
+            onPositionChanged: mouse => {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newX = mapToItem(null, x, y).x;
                     var delta = Math.round((newX - startX) / timeScale);
@@ -509,7 +495,6 @@ Rectangle {
                 }
             }
         }
-
     }
 
     Rectangle {
@@ -547,7 +532,7 @@ Rectangle {
                 parent.anchors.right = clipRoot.right;
                 clipRoot.trimmedOut(clipRoot);
             }
-            onPositionChanged: {
+            onPositionChanged: mouse => {
                 if (mouse.buttons === Qt.LeftButton) {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale);
                     var delta = duration - newDuration;
@@ -559,7 +544,6 @@ Rectangle {
                 }
             }
         }
-
     }
 
     gradient: Gradient {
@@ -576,7 +560,5 @@ Rectangle {
             position: 1
             color: getColor()
         }
-
     }
-
 }

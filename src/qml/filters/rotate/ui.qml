@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Shotcut.KeyframableFilter {
     property bool isAtLeastVersion4: filter.isAtLeastVersion('4')
@@ -53,8 +52,7 @@ Shotcut.KeyframableFilter {
 
     function updateFilterScale(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = getScaleValue();
         var index = 1;
         if (position !== null) {
@@ -108,11 +106,9 @@ Shotcut.KeyframableFilter {
             var scale = filter.getDouble('transition.scale_x');
             if (scale !== 0)
                 filter.set('transition.scale_x', 1 / scale);
-
             scale = filter.getDouble('transition.scale_y');
             if (scale !== 0)
                 filter.set('transition.scale_y', 1 / scale);
-
             filter.set('transition.invert_scale', 1);
         }
         if (filter.isNew) {
@@ -335,7 +331,6 @@ Shotcut.KeyframableFilter {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -382,5 +377,4 @@ Shotcut.KeyframableFilter {
 
         target: parameters
     }
-
 }

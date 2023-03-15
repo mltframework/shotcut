@@ -1,8 +1,9 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Dialogs 1.3
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Dialogs
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Item {
     property bool blockUpdate: true
@@ -24,6 +25,7 @@ Item {
     property double timeBiasPitchValue: 0
     property double timeBiasRollValue: 0
     property double clipOffsetValue: 0
+    property url settingsOpenPath: 'file:///' + settings.openPath
 
     function setControls() {
         var position = getPosition();
@@ -51,144 +53,126 @@ Item {
 
     function updateProperty_analyze() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = analyzeCheckBox.checked;
         filter.set("analyze", value);
     }
 
     function updateProperty_transformWhenAnalyzing() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = transformWhenAnalyzingCheckBox.checked;
         filter.set("transformWhenAnalyzing", value);
     }
 
     function updateProperty_interpolation() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = interpolationComboBox.currentIndex;
         filter.set("interpolation", value);
     }
 
     function updateProperty_sampleRadius(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = sampleRadiusSlider.value;
         filter.set("sampleRadius", value);
     }
 
     function updateProperty_searchRadius(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = searchRadiusSlider.value;
         filter.set("searchRadius", value);
     }
 
     function updateProperty_offset(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = offsetSlider.value;
         filter.set("offset", value);
     }
 
     function updateProperty_analysisFile() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = analysisFileTextField.text;
         filter.set("analysisFile", value);
     }
 
     function updateProperty_useBackTrackpoints() {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = useBackTrackpointsCheckBox.checked;
         filter.set("useBackTrackpoints", value);
     }
 
     function updateProperty_stabilizeYaw(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = stabilizeYawSlider.value;
         filter.set("stabilizeYaw", value);
     }
 
     function updateProperty_stabilizePitch(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = stabilizePitchSlider.value;
         filter.set("stabilizePitch", value);
     }
 
     function updateProperty_stabilizeRoll(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = stabilizeRollSlider.value;
         filter.set("stabilizeRoll", value);
     }
 
     function updateProperty_smoothYaw(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = smoothYawSlider.value;
         filter.set("smoothYaw", value);
     }
 
     function updateProperty_smoothPitch(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = smoothPitchSlider.value;
         filter.set("smoothPitch", value);
     }
 
     function updateProperty_smoothRoll(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = smoothRollSlider.value;
         filter.set("smoothRoll", value);
     }
 
     function updateProperty_timeBiasYaw(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = timeBiasYawSlider.value;
         filter.set("timeBiasYaw", value);
     }
 
     function updateProperty_timeBiasPitch(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = timeBiasPitchSlider.value;
         filter.set("timeBiasPitch", value);
     }
 
     function updateProperty_timeBiasRoll(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = timeBiasRollSlider.value;
         filter.set("timeBiasRoll", value);
     }
 
     function updateProperty_clipOffset(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = parseFloat(clipOffsetTextField.text);
         filter.set("clipOffset", value);
     }
@@ -207,11 +191,9 @@ Item {
 
     function toggleMode() {
         if (blockUpdate)
-            return ;
-
+            return;
         if (analyzeCheckBox.checked && analysisFileTextField.text == "")
             selectAnalysisFile.open();
-
         updateProperty_analyze();
     }
 
@@ -297,24 +279,26 @@ Item {
             clipOffsetValue = filter.getDouble("clipOffset");
         if (filter.isNew)
             filter.savePreset(preset.parameters);
-
         setControls();
+    }
+
+    Shotcut.File {
+        id: analysisFile
     }
 
     FileDialog {
         id: selectAnalysisFile
 
         title: "File for motion analysis"
-        folder: shortcuts.home
-        modality: application.dialogModality
-        selectMultiple: false
-        selectExisting: false
-        selectFolder: false
+        fileMode: FileDialog.SaveFile
+        currentFolder: settingsOpenPath
+        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
         nameFilters: ['Motion Analysis Files (*.bigsh0t360motion)', 'All Files (*)']
         onAccepted: {
-            var urlString = selectAnalysisFile.fileUrl.toString();
-            analysisFileTextField.text = urlString;
+            analysisFile.url = selectAnalysisFile.selectedFile;
+            analysisFileTextField.text = analysisFile.filePath;
             updateProperty_analysisFile();
+            settings.openPath = analysisFile.path;
         }
         onRejected: {
         }
@@ -410,7 +394,6 @@ Item {
             Shotcut.HoverTip {
                 text: qsTr('Browse...')
             }
-
         }
 
         Label {
@@ -784,7 +767,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -822,5 +804,4 @@ Item {
 
         target: producer
     }
-
 }

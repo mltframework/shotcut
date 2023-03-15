@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import "Keyframes.js" as Logic
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import org.shotcut.qml 1.0
+import QtQuick
+import QtQuick.Controls
+import org.shotcut.qml
 
 Rectangle {
     id: keyframeRoot
@@ -89,7 +88,6 @@ Rectangle {
             delay: mouseAreaLeft.pressed ? 0 : 1000
             timeout: mouseAreaLeft.pressed ? -1 : 5000
         }
-
     }
 
     MouseArea {
@@ -98,7 +96,11 @@ Rectangle {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
         onClicked: producer.position = position
-        onDoubleClicked: removeMenuItem.triggered()
+        onDoubleClicked: {
+            parameters.remove(parameterIndex, index);
+            root.selection = [];
+        }
+
         onPressed: {
             parent.clicked(keyframeRoot);
             if (isCurve) {
@@ -115,14 +117,12 @@ Rectangle {
         onEntered: {
             if (isCurve)
                 parent.anchors.verticalCenter = undefined;
-
         }
         onReleased: {
             if (isCurve)
                 parent.anchors.verticalCenter = parameterRoot.verticalCenter;
-
         }
-        onPositionChanged: {
+        onPositionChanged: mouse => {
             if (isCurve) {
                 if (mouse.modifiers & Qt.ControlModifier)
                     drag.axis = Drag.YAxis;
@@ -160,7 +160,5 @@ Rectangle {
             minimumY: minDragY
             maximumY: maxDragY
         }
-
     }
-
 }

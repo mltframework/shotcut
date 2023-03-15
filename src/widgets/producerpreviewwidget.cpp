@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include <Logger.h>
 #include "scrubbar.h"
 #include "mltcontroller.h"
+#include "settings.h"
 
 #include <QtConcurrent/QtConcurrent>
 #include <QHBoxLayout>
@@ -75,6 +76,9 @@ ProducerPreviewWidget::~ProducerPreviewWidget()
 
 void ProducerPreviewWidget::start(const Mlt::Producer &producer)
 {
+    if (Settings.playerGPU())
+        return;
+
     m_producer = producer;
 
     if (m_producer.is_valid()) {
@@ -87,7 +91,7 @@ void ProducerPreviewWidget::start(const Mlt::Producer &producer)
         // Set up the producer frame generator
         m_seekTo = 0;
         m_generateFrames = true;
-        m_future = QtConcurrent::run(this, &ProducerPreviewWidget::frameGeneratorThread);
+        m_future = QtConcurrent::run(&ProducerPreviewWidget::frameGeneratorThread, this);
     }
 }
 

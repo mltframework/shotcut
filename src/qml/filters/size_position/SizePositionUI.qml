@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     property string fillProperty
@@ -93,8 +92,7 @@ Item {
 
     function updateRotation(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         if (position !== null) {
             filter.blockSignals = true;
             if (position <= 0 && filter.animateIn > 0)
@@ -257,7 +255,6 @@ Item {
     function updateSimpleKeyframes() {
         if (rotationProperty)
             updateRotation(null);
-
         setFilter(null);
     }
 
@@ -266,7 +263,6 @@ Item {
     Component.onCompleted: {
         if (rotationProperty)
             preset.parameters.push(rotationProperty);
-
         filter.blockSignals = true;
         filter.set(middleValue, Qt.rect(0, 0, profile.width, profile.height));
         filter.set(startValue, Qt.rect(0, 0, profile.width, profile.height));
@@ -389,7 +385,6 @@ Item {
             // Add default preset.
             if (backgroundProperty)
                 filter.set(backgroundProperty, 'color:#00000000');
-
             filter.set(rectProperty, defaultRect);
             filter.get(rectProperty);
             filter.savePreset(preset.parameters);
@@ -404,17 +399,13 @@ Item {
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(startValue, filter.getRect(rectProperty, 0));
-
             if (filter.animateOut > 0)
                 filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1));
-
             filter.set(rotationMiddleValue, filter.getDouble(rotationProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(rotationStartValue, filter.getDouble(rotationProperty, 0));
-
             if (filter.animateOut > 0)
                 filter.set(rotationEndValue, filter.getRect(rotationProperty, filter.duration - 1));
-
         }
         updateAspectRatio();
         filter.blockSignals = false;
@@ -422,7 +413,6 @@ Item {
         setKeyframedControls();
         if (filter.isNew)
             setFilter(getPosition());
-
     }
 
     ButtonGroup {
@@ -465,17 +455,13 @@ Item {
                 filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)
                     filter.set(startValue, filter.getRect(rectProperty, 0));
-
                 if (filter.animateOut > 0)
                     filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1));
-
                 filter.set(rotationMiddleValue, filter.getDouble(rotationProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)
                     filter.set(rotationStartValue, filter.getDouble(rotationProperty, 0));
-
                 if (filter.animateOut > 0)
                     filter.set(rotationEndValue, filter.getRect(rotationProperty, filter.duration - 1));
-
                 filter.blockSignals = false;
             }
         }
@@ -527,7 +513,6 @@ Item {
                     }
                 }
             }
-
         }
 
         Shotcut.UndoButton {
@@ -580,7 +565,6 @@ Item {
                 height: positionKeyframesButton.height
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
-
         }
 
         Label {
@@ -638,7 +622,6 @@ Item {
                     }
                 }
             }
-
         }
 
         Shotcut.UndoButton {
@@ -899,7 +882,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -948,5 +930,4 @@ Item {
 
         target: parameters
     }
-
 }

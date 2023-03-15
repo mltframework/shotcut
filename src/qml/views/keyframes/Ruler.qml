@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick
+import QtQuick.Controls
 
 Rectangle {
     id: rulerTop
@@ -34,8 +33,8 @@ Rectangle {
         model: parent.width / (intervalSeconds * profile.fps * timeScale)
 
         Rectangle {
-            // right edge
 
+            // right edge
             anchors.bottom: rulerTop.bottom
             height: 18
             width: 1
@@ -51,9 +50,7 @@ Rectangle {
                 color: activePalette.windowText
                 text: application.timecode(index * intervalSeconds * profile.fps + 2).substr(0, 8)
             }
-
         }
-
     }
 
     MouseArea {
@@ -61,10 +58,9 @@ Rectangle {
         hoverEnabled: true
         acceptedButtons: Qt.NoButton
         onExited: bubbleHelp.hide()
-        onPositionChanged: {
+        onPositionChanged: mouse => {
             var text = application.timecode(mouse.x / timeScale);
             bubbleHelp.show(text);
         }
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -183,7 +183,8 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool isDeprecated READ isDeprecated WRITE setIsDeprecated)
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
     Q_PROPERTY(QString keywords MEMBER m_keywords NOTIFY changed)
-    Q_PROPERTY(QUrl icon READ iconFilePath WRITE setIconFileName NOTIFY changed)
+    Q_PROPERTY(QString icon READ iconFilePath WRITE setIconFileName NOTIFY changed)
+    Q_PROPERTY(bool seekReverse MEMBER m_seekReverse NOTIFY changed)
 
 public:
     enum PluginType {
@@ -235,11 +236,12 @@ public:
     void setPath(const QDir &path);
     QUrl qmlFilePath() const;
     QUrl vuiFilePath() const;
-    QUrl iconFilePath() const
+    QString iconFilePath() const
     {
-        return m_icon;
+        return (m_icon.isEmpty() || m_icon.startsWith("qrc:")) ? m_icon :
+               QUrl::fromLocalFile(m_path.absoluteFilePath(m_icon)).toString();
     }
-    void setIconFileName(const QUrl &);
+    void setIconFileName(const QString &);
     bool isAudio() const
     {
         return m_isAudio;
@@ -299,6 +301,10 @@ public:
     {
         return m_keywords;
     }
+    bool seekReverse() const
+    {
+        return m_seekReverse;
+    }
 
 signals:
     void changed();
@@ -322,7 +328,8 @@ private:
     bool m_isDeprecated;
     QString m_minimumVersion;
     QString m_keywords;
-    QUrl m_icon;
+    QString m_icon;
+    bool m_seekReverse;
 };
 
 #endif // QMLMETADATA_H

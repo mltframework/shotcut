@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQml.Models 2.12
-import QtQuick 2.12
-import org.shotcut.qml 1.0
+import QtQml.Models
+import QtQuick
+import org.shotcut.qml
 
 Item {
     id: parameterRoot
@@ -100,18 +99,18 @@ Item {
             var widthOffset = keyframesRepeater.itemAt(0).width / 2;
             var heightOffset = keyframesRepeater.itemAt(0).height / 2;
             var points = [{
-                "x": keyframesRepeater.itemAt(g).x + widthOffset,
-                "y": keyframesRepeater.itemAt(g).y + heightOffset
-            }, {
-                "x": keyframesRepeater.itemAt(h).x + widthOffset,
-                "y": keyframesRepeater.itemAt(h).y + heightOffset
-            }, {
-                "x": keyframesRepeater.itemAt(i).x + widthOffset,
-                "y": keyframesRepeater.itemAt(i).y + heightOffset
-            }, {
-                "x": keyframesRepeater.itemAt(j).x + widthOffset,
-                "y": keyframesRepeater.itemAt(j).y + heightOffset
-            }];
+                    "x": keyframesRepeater.itemAt(g).x + widthOffset,
+                    "y": keyframesRepeater.itemAt(g).y + heightOffset
+                }, {
+                    "x": keyframesRepeater.itemAt(h).x + widthOffset,
+                    "y": keyframesRepeater.itemAt(h).y + heightOffset
+                }, {
+                    "x": keyframesRepeater.itemAt(i).x + widthOffset,
+                    "y": keyframesRepeater.itemAt(i).y + heightOffset
+                }, {
+                    "x": keyframesRepeater.itemAt(j).x + widthOffset,
+                    "y": keyframesRepeater.itemAt(j).y + heightOffset
+                }];
             context.bezierCurveTo(-a * points[0].x + points[1].x + a * points[2].x, -a * points[0].y + points[1].y + a * points[2].y, a * points[1].x + points[2].x - a * points[3].x, a * points[1].y + points[2].y - a * points[3].y, points[2].x, points[2].y);
         }
 
@@ -158,11 +157,11 @@ Item {
         model: parameters
 
         Keyframe {
-            property int frame: model.frame
+            property int frame: model.frame ? model.frame : 0
 
-            interpolation: model.interpolation
-            name: model.name
-            value: model.value
+            interpolation: model.interpolation ? model.interpolation : 0
+            name: model.name ? model.name : ""
+            value: model.value ? model.value : 0
             minDragX: (filter.in - producer.in + model.minimumFrame) * timeScale - width / 2
             maxDragX: (filter.in - producer.in + model.maximumFrame) * timeScale - width / 2
             isSelected: root.currentTrack === parameterRoot.DelegateModel.itemsIndex && root.selection.indexOf(index) !== -1
@@ -170,8 +169,8 @@ Item {
             minimum: parameterRoot.minimum
             maximum: parameterRoot.maximum
             parameterIndex: parameterRoot.DelegateModel.itemsIndex
-            onClicked: parameterRoot.clicked(keyframe, parameterRoot)
-            onRightClicked: parameterRoot.rightClicked(keyframe, parameterRoot)
+            onClicked: keyframe => parameterRoot.clicked(keyframe, parameterRoot)
+            onRightClicked: keyframe => parameterRoot.rightClicked(keyframe, parameterRoot)
             onInterpolationChanged: canvas.requestPaint()
             Component.onCompleted: {
                 position = (filter.in - producer.in) + model.frame;
@@ -182,7 +181,5 @@ Item {
             onPositionChanged: canvas.requestPaint()
             onValueChanged: canvas.requestPaint()
         }
-
     }
-
 }

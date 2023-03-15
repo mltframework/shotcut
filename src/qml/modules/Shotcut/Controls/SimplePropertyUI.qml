@@ -1,6 +1,6 @@
-import QtQuick 2.1
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
 Column {
     id: root
@@ -31,7 +31,6 @@ Column {
                 anchors {
                     verticalCenter: propField.verticalCenter
                 }
-
             }
 
             TextField {
@@ -42,9 +41,6 @@ Column {
                 text: filter.get(modelData)
                 onTextChanged: filter.set(modelData, text)
             }
-
         }
-
     }
-
 }

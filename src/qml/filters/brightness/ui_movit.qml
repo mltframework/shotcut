@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021 Meltytech, LLC
+ * Copyright (c) 2016-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     property bool blockUpdate: true
@@ -41,8 +40,7 @@ Item {
 
     function updateFilter(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = brightnessSlider.value / 100;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -83,10 +81,8 @@ Item {
             middleValue = filter.getDouble('opacity', filter.animateIn);
             if (filter.animateIn > 0)
                 startValue = filter.getDouble('opacity', 0);
-
             if (filter.animateOut > 0)
                 endValue = filter.getDouble('opacity', filter.duration - 1);
-
         }
         setControls();
     }
@@ -157,10 +153,8 @@ Item {
                 middleValue = filter.getDouble(parameters[0], filter.animateIn);
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(parameters[0], 0);
-
                 if (filter.animateOut > 0)
                     endValue = filter.getDouble(parameters[0], filter.duration - 1);
-
             }
         }
 
@@ -203,7 +197,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import Shotcut.Controls as Shotcut
 
 Shotcut.VuiBase {
-    // 80/90% Safe Areas
-    // EBU R95 Safe Areas
-    // 80/90% Safe Areas
-    // EBU R95 Safe Areas
 
+    // 80/90% Safe Areas
+    // EBU R95 Safe Areas
+    // 80/90% Safe Areas
+    // EBU R95 Safe Areas
     property string corner1xProperty: '0'
     property string corner1yProperty: '1'
     property string corner2xProperty: '2'
@@ -53,7 +52,8 @@ Shotcut.VuiBase {
     function setCornersControl() {
         var position = getPosition();
         blockUpdate = true;
-        for (var i in corners) corners[i] = filter.getRect(cornerProperties[i], position)
+        for (var i in corners)
+            corners[i] = filter.getRect(cornerProperties[i], position);
         setHandles();
         cornersControl.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
         blockUpdate = false;
@@ -68,11 +68,13 @@ Shotcut.VuiBase {
         filter.resetProperty(corner3yProperty);
         filter.resetProperty(corner4xProperty);
         filter.resetProperty(corner4yProperty);
-        for (var i in cornerProperties) filter.resetProperty(cornerProperties[i])
+        for (var i in cornerProperties)
+            filter.resetProperty(cornerProperties[i]);
     }
 
     function setFilterCorners(corners, position) {
-        for (var i in cornerProperties) filter.set(cornerProperties[i], corners[i], position)
+        for (var i in cornerProperties)
+            filter.set(cornerProperties[i], corners[i], position);
         filter.set(corner1xProperty, corners[0].x, position);
         filter.set(corner1yProperty, corners[0].y, position);
         filter.set(corner2xProperty, corners[1].x, position);
@@ -85,8 +87,7 @@ Shotcut.VuiBase {
 
     function updateFilterCorners(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         corners[0].x = mapValueBack((corner1Handle.x + handleOffset) / video.rect.width);
         corners[0].y = mapValueBack((corner1Handle.y + handleOffset) / video.rect.height);
         corners[1].x = mapValueBack((corner2Handle.x + handleOffset) / video.rect.width);
@@ -98,11 +99,14 @@ Shotcut.VuiBase {
         if (position !== null) {
             filter.blockSignals = true;
             if (position <= 0 && filter.animateIn > 0) {
-                for (var i in cornerStartValues) filter.set(cornerStartValues[i], corners[i])
+                for (var i in cornerStartValues)
+                    filter.set(cornerStartValues[i], corners[i]);
             } else if (position >= filter.duration - 1 && filter.animateOut > 0) {
-                for (i in cornerEndValues) filter.set(cornerEndValues[i], corners[i])
+                for (i in cornerEndValues)
+                    filter.set(cornerEndValues[i], corners[i]);
             } else {
-                for (i in cornerMiddleValues) filter.set(cornerMiddleValues[i], corners[i])
+                for (i in cornerMiddleValues)
+                    filter.set(cornerMiddleValues[i], corners[i]);
             }
             filter.blockSignals = false;
         }
@@ -161,7 +165,6 @@ Shotcut.VuiBase {
     function snapX(x) {
         if (!video.snapToGrid || video.grid === 0)
             return x;
-
         if (video.grid !== 95 && video.grid !== 8090) {
             var n = (video.grid > 10000) ? cornersControl.width / (profile.width / (video.grid - 10000)) : cornersControl.width / video.grid;
             return snapGrid(x, n);
@@ -176,7 +179,6 @@ Shotcut.VuiBase {
                     var delta = x - deltas[i] * cornersControl.width;
                     if (Math.abs(delta) < snapMargin)
                         return x - delta;
-
                 }
             }
         }
@@ -186,7 +188,6 @@ Shotcut.VuiBase {
     function snapY(y) {
         if (!video.snapToGrid || video.grid === 0)
             return y;
-
         if (video.grid !== 95 && video.grid !== 8090) {
             var n = (video.grid > 10000) ? cornersControl.height / (profile.height / (video.grid - 10000)) : cornersControl.height / video.grid;
             return snapGrid(y, n);
@@ -201,7 +202,6 @@ Shotcut.VuiBase {
                     var delta = y - deltas[i] * cornersControl.height;
                     if (Math.abs(delta) < snapMargin)
                         return y - delta;
-
                 }
             }
         }
@@ -264,7 +264,6 @@ Shotcut.VuiBase {
                         font.pixelSize: handleSize * 0.8
                         anchors.centerIn: parent
                     }
-
                 }
 
                 Rectangle {
@@ -295,7 +294,6 @@ Shotcut.VuiBase {
                         font.pixelSize: handleSize * 0.8
                         anchors.centerIn: parent
                     }
-
                 }
 
                 Rectangle {
@@ -312,7 +310,7 @@ Shotcut.VuiBase {
                         acceptedButtons: Qt.LeftButton
                         cursorShape: Qt.SizeFDiagCursor
                         drag.target: parent
-                        onPositionChanged: {
+                        onPositionChanged: mouse => {
                             if (!(mouse.modifiers & Qt.AltModifier)) {
                                 corner3Handle.x = snapX(corner3Handle.x + handleOffset) - handleOffset;
                                 corner3Handle.y = snapY(corner3Handle.y + handleOffset) - handleOffset;
@@ -326,7 +324,6 @@ Shotcut.VuiBase {
                         font.pixelSize: handleSize * 0.8
                         anchors.centerIn: parent
                     }
-
                 }
 
                 Rectangle {
@@ -357,13 +354,9 @@ Shotcut.VuiBase {
                         font.pixelSize: handleSize * 0.8
                         anchors.centerIn: parent
                     }
-
                 }
-
             }
-
         }
-
     }
 
     Connections {
@@ -390,5 +383,4 @@ Shotcut.VuiBase {
 
         target: video
     }
-
 }

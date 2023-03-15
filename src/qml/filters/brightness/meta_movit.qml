@@ -1,10 +1,10 @@
-import QtQuick 2.0
-import org.shotcut.qml 1.0
+import QtQuick
+import org.shotcut.qml
 
 Metadata {
     type: Metadata.Filter
     name: qsTr("Brightness")
-    keywords: qsTr('lightness value', 'search keywords for the Brightness video filter') + ' brightness'
+    keywords: qsTr('lightness value', 'search keywords for the Brightness video filter') + ' brightness gpu'
     objectName: "movitBrightness"
     mlt_service: "movit.opacity"
     needsGPU: true
@@ -26,5 +26,4 @@ Metadata {
             }
         ]
     }
-
 }

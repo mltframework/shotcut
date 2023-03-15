@@ -1,7 +1,7 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     property bool blockUpdate: true
@@ -23,16 +23,12 @@ Item {
             // When enabling simple keyframes, initialize the keyframes with the current value
             if (filter.keyframeCount("hfov0") <= 0)
                 hfov0Start = hfov0Middle = hfov0End = filter.getDouble("hfov0");
-
             if (filter.keyframeCount("hfov1") <= 0)
                 hfov1Start = hfov1Middle = hfov1End = filter.getDouble("hfov1");
-
             if (filter.keyframeCount("vfov0") <= 0)
                 vfov0Start = vfov0Middle = vfov0End = filter.getDouble("vfov0");
-
             if (filter.keyframeCount("vfov1") <= 0)
                 vfov1Start = vfov1Middle = vfov1End = filter.getDouble("vfov1");
-
         }
         setControls();
         updateProperty_hfov0(null);
@@ -57,8 +53,7 @@ Item {
 
     function updateProperty_hfov0(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = hfov0Slider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -89,8 +84,7 @@ Item {
 
     function updateProperty_hfov1(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = hfov1Slider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -121,8 +115,7 @@ Item {
 
     function updateProperty_vfov0(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = vfov0Slider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -153,8 +146,7 @@ Item {
 
     function updateProperty_vfov1(position) {
         if (blockUpdate)
-            return ;
-
+            return;
         var value = vfov1Slider.value;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -196,10 +188,8 @@ Item {
             hfov0Middle = filter.getDouble("hfov0", filter.animateIn);
             if (filter.animateIn > 0)
                 hfov0Start = filter.getDouble("hfov0", 0);
-
             if (filter.animateOut > 0)
                 hfov0End = filter.getDouble("hfov0", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("hfov1", 200);
@@ -207,10 +197,8 @@ Item {
             hfov1Middle = filter.getDouble("hfov1", filter.animateIn);
             if (filter.animateIn > 0)
                 hfov1Start = filter.getDouble("hfov1", 0);
-
             if (filter.animateOut > 0)
                 hfov1End = filter.getDouble("hfov1", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("vfov0", 140);
@@ -218,10 +206,8 @@ Item {
             vfov0Middle = filter.getDouble("vfov0", filter.animateIn);
             if (filter.animateIn > 0)
                 vfov0Start = filter.getDouble("vfov0", 0);
-
             if (filter.animateOut > 0)
                 vfov0End = filter.getDouble("vfov0", filter.duration - 1);
-
         }
         if (filter.isNew) {
             filter.set("vfov1", 160);
@@ -229,14 +215,11 @@ Item {
             vfov1Middle = filter.getDouble("vfov1", filter.animateIn);
             if (filter.animateIn > 0)
                 vfov1Start = filter.getDouble("vfov1", 0);
-
             if (filter.animateOut > 0)
                 vfov1End = filter.getDouble("vfov1", filter.duration - 1);
-
         }
         if (filter.isNew)
             filter.savePreset(preset.parameters);
-
         setControls();
     }
 
@@ -265,31 +248,23 @@ Item {
                 hfov0Middle = filter.getDouble("hfov0", filter.animateIn);
                 if (filter.animateIn > 0)
                     hfov0Start = filter.getDouble("hfov0", 0);
-
                 if (filter.animateOut > 0)
                     hfov0End = filter.getDouble("hfov0", filter.duration - 1);
-
                 hfov1Middle = filter.getDouble("hfov1", filter.animateIn);
                 if (filter.animateIn > 0)
                     hfov1Start = filter.getDouble("hfov1", 0);
-
                 if (filter.animateOut > 0)
                     hfov1End = filter.getDouble("hfov1", filter.duration - 1);
-
                 vfov0Middle = filter.getDouble("vfov0", filter.animateIn);
                 if (filter.animateIn > 0)
                     vfov0Start = filter.getDouble("vfov0", 0);
-
                 if (filter.animateOut > 0)
                     vfov0End = filter.getDouble("vfov0", filter.duration - 1);
-
                 vfov1Middle = filter.getDouble("vfov1", filter.animateIn);
                 if (filter.animateIn > 0)
                     vfov1Start = filter.getDouble("vfov1", 0);
-
                 if (filter.animateOut > 0)
                     vfov1End = filter.getDouble("vfov1", filter.duration - 1);
-
                 setControls(null);
             }
         }
@@ -485,7 +460,6 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
 
     Connections {
@@ -523,5 +497,4 @@ Item {
 
         target: producer
     }
-
 }

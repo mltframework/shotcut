@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  * Author: Brian Matherly <code@brianmatherly.com>
  * Some ideas came from Qt-Plus: https://github.com/liuyanghejerry/Qt-Plus
@@ -227,7 +227,7 @@ void ColorWheelItem::mouseReleaseEvent(QMouseEvent *event)
 
 void ColorWheelItem::hoverMoveEvent(QHoverEvent *event)
 {
-    updateCursor(event->pos());
+    updateCursor(event->position().toPoint());
 }
 
 void ColorWheelItem::wheelEvent(QWheelEvent *event)
@@ -364,8 +364,7 @@ void ColorWheelItem::drawSlider()
 
 void ColorWheelItem::updateCursor(const QPoint &pos)
 {
-    if (m_wheelRegion.contains(pos) ||
-            m_sliderRegion.contains(pos)) {
+    if (m_wheelRegion.contains(pos) || m_sliderRegion.contains(pos)) {
         setCursor(QCursor(Qt::CrossCursor));
     } else {
         unsetCursor();

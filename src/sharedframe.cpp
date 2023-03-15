@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2023 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ void destroyFrame(void *p)
 class FrameData : public QSharedData
 {
 public:
-    FrameData() : f((mlt_frame)0) {};
+    FrameData() : f(nullptr) {};
     FrameData(Mlt::Frame &frame) : f(frame) {};
     ~FrameData() {};
 
@@ -78,8 +78,9 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
     int size = 0;
     Mlt::Frame cloneFrame(mlt_frame_init( NULL ));
     cloneFrame.inherit(d->f);
-    cloneFrame.set("_producer", d->f.get_data("_producer", size), 0, NULL, NULL);
-    cloneFrame.set("movit.convert", d->f.get_data("movit.convert", size), 0, NULL, NULL);
+    cloneFrame.set("_producer", d->f.get_data("_producer", size), size);
+    cloneFrame.set("movit.convert", d->f.get_data("movit.convert", size), size);
+    cloneFrame.set("_movit cpu_convert", d->f.get_data("_movit cpu_convert", size), size);
     cloneFrame.get_frame()->convert_image = d->f.get_frame()->convert_image;
     cloneFrame.get_frame()->convert_audio = d->f.get_frame()->convert_audio;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ VideoRgbParadeScopeWidget::VideoRgbParadeScopeWidget()
     : ScopeWidget("RgbParade")
     , m_frame()
     , m_renderImg()
-    , m_mutex(QMutex::NonRecursive)
+    , m_mutex()
     , m_displayImg()
 {
     LOG_DEBUG() << "begin";
@@ -174,7 +174,7 @@ void VideoRgbParadeScopeWidget::mouseMoveEvent(QMouseEvent *event)
     } else {
         text =  QString(tr("Channel: %1\nValue: %2")).arg(channelLabel).arg(QString::number(value));
     }
-    QToolTip::showText(event->globalPos(), text);
+    QToolTip::showText(event->globalPosition().toPoint(), text);
 }
 
 QString VideoRgbParadeScopeWidget::getTitle()

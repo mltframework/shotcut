@@ -1,4 +1,4 @@
-find_package(Qt5LinguistTools)
+find_package(Qt6LinguistTools)
 
 # Translation howto:
 # - Translations are mentioned in the LANGUAGES variable below
@@ -20,6 +20,7 @@ set(LANGUAGES
     fr
     gd
     gl
+    he_IL
     hu
     it
     ko
@@ -51,11 +52,11 @@ list(TRANSFORM TS_FILES APPEND ".ts")
 
 # lupdate ts files
 add_custom_target(translations COMMAND
-  ${Qt5_LUPDATE_EXECUTABLE} -locations absolute -no-obsolete -recursive
+  ${Qt6_LUPDATE_EXECUTABLE} -locations absolute -no-obsolete -recursive
   ${CMAKE_SOURCE_DIR}/src -ts ${TS_FILES})
 
 # generate qm files with lrelease
-qt5_add_translation(QM_FILES ${TS_FILES})
+qt6_add_translation(QM_FILES ${TS_FILES})
 add_custom_target(qm ALL DEPENDS ${QM_FILES})
 
 if(UNIX AND NOT APPLE)

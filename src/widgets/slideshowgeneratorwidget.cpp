@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Meltytech, LLC
+ * Copyright (c) 2020-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -440,7 +440,8 @@ void SlideshowGeneratorWidget::on_parameterChanged()
     }
 
     m_preview->stop();
-    m_preview->showText(tr("Generating Preview..."));
+    m_preview->showText(Settings.playerGPU() ? tr("Preview Not Available") :
+                        tr("Generating Preview..."));
     m_mutex.lock();
     m_refreshPreview = true;
     m_config.clipDuration = m_clipDurationSpinner->value();
@@ -451,7 +452,7 @@ void SlideshowGeneratorWidget::on_parameterChanged()
     m_config.transitionSoftness = m_softnessSpinner->value();
     if (m_future.isFinished() || m_future.isCanceled()) {
         // Generate the preview producer in another thread because it can take some time
-        m_future = QtConcurrent::run(this, &SlideshowGeneratorWidget::generatePreviewSlideshow);
+        m_future = QtConcurrent::run(&SlideshowGeneratorWidget::generatePreviewSlideshow, this);
     }
     m_mutex.unlock();
 }

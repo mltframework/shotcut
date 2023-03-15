@@ -21,7 +21,7 @@
 #include <QSpinBox>
 #include <QLineEdit>
 
-class QRegExpValidator;
+class QRegularExpressionValidator;
 
 class TimeSpinBox : public QSpinBox
 {
@@ -40,7 +40,7 @@ signals:
     void accepted();
 
 private:
-    QRegExpValidator *m_validator;
+    QRegularExpressionValidator *m_validator;
 };
 
 class TimeSpinBoxLineEdit : public QLineEdit

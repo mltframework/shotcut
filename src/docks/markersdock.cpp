@@ -351,8 +351,8 @@ void MarkersDock::onRemoveAllRequested()
 void MarkersDock::onSearchChanged()
 {
     if (m_proxyModel) {
-        m_proxyModel->setFilterRegExp(QRegExp(m_searchField->text(), Qt::CaseInsensitive,
-                                              QRegExp::FixedString));
+        m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+        m_proxyModel->setFilterFixedString(m_searchField->text());
     }
 }
 

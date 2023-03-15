@@ -349,7 +349,7 @@ void AttachedFiltersModel::add(QmlMetadata *meta)
         if (m_producer->type() != mlt_service_chain_type) {
             LOG_WARNING() << "Not a chain";
         }
-        if (meta->mlt_service() == "timeremap" && m_producer->get_int("meta.media.has_b_frames") != 0) {
+        if (meta->seekReverse() && m_producer->get_int("meta.media.has_b_frames") != 0) {
             emit requestConvert(tr("This file has B-frames, which is not supported by %1.").arg(meta->name()),
                                 false, true);
             return;

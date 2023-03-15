@@ -14,12 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQml.Models 2.12
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Shotcut.Controls 1.0 as Shotcut
+import QtQml.Models
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 
 Item {
     property string _defaultStart: '00:00:00.000'
@@ -67,7 +66,6 @@ Item {
             filter.set("speed", _defaultSpeed);
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana');
-
             filter.set('fgcolour', '#ffffffff');
             filter.set('bgcolour', '#00000000');
             filter.set('olcolour', '#ff000000');
@@ -90,16 +88,13 @@ Item {
             filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(textFilterUi.startValue, filter.getRect(textFilterUi.rectProperty, 0));
-
             if (filter.animateOut > 0)
                 filter.set(textFilterUi.endValue, filter.getRect(textFilterUi.rectProperty, filter.duration - 1));
-
         }
         filter.blockSignals = false;
         setControls();
         if (filter.isNew)
             filter.set(textFilterUi.rectProperty, filter.getRect(textFilterUi.rectProperty));
-
     }
 
     GridLayout {
@@ -127,10 +122,8 @@ Item {
                 filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)
                     filter.set(textFilterUi.startValue, filter.getRect(textFilterUi.rectProperty, 0));
-
                 if (filter.animateOut > 0)
                     filter.set(textFilterUi.endValue, filter.getRect(textFilterUi.rectProperty, filter.duration - 1));
-
                 filter.blockSignals = false;
             }
         }
@@ -193,9 +186,7 @@ Item {
                     text: QT_TR_NOOP('SS.SSS')
                     format: "SS.SSS"
                 }
-
             }
-
         }
 
         Label {
@@ -221,9 +212,7 @@ Item {
                     text: QT_TR_NOOP('Down')
                     direction: "down"
                 }
-
             }
-
         }
 
         Label {
@@ -248,7 +237,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed.')
                 }
-
             }
 
             Shotcut.Button {
@@ -261,9 +249,7 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Set start to begin at the current position')
                 }
-
             }
-
         }
 
         Label {
@@ -288,7 +274,6 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('The timer will be frozen after the Duration has elapsed.') + '\n' + qsTr('A value of 0 will run the timer to the end of the filter')
                 }
-
             }
 
             Shotcut.Button {
@@ -301,15 +286,12 @@ Item {
                     var endTime = (producer.position - (filter.in - producer.in)) / profile.fps;
                     if (endTime > startTime)
                         durationSpinner.setValueSeconds(endTime - startTime);
-
                 }
 
                 Shotcut.HoverTip {
                     text: qsTr('Set duration to end at the current position')
                 }
-
             }
-
         }
 
         Label {
@@ -334,9 +316,7 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('When the direction is Down, the timer will count down to Offset.\nWhen the direction is Up, the timer will count up starting from Offset.')
                 }
-
             }
-
         }
 
         Label {
@@ -363,9 +343,7 @@ Item {
                 Shotcut.HoverTip {
                     text: qsTr('Timer seconds per playback second. Scales Duration but does not affect Start Delay or Offset.')
                 }
-
             }
-
         }
 
         Shotcut.TextFilterUi {
@@ -377,7 +355,5 @@ Item {
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

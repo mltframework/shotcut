@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,8 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.12
+import QtQuick
 
 Repeater {
     id: markerbar
@@ -23,7 +22,7 @@ Repeater {
     property real timeScale: 1
     property var snapper
 
-    signal exited()
+    signal exited
     signal mouseStatusChanged(int mouseX, int mouseY, var text, int start, int end)
     signal seekRequested(int pos)
 
@@ -36,8 +35,7 @@ Repeater {
         text: model.text
         index: model.index
         onExited: markerbar.exited()
-        onMouseStatusChanged: markerbar.mouseStatusChanged(mouseX, mouseY, text, start, end)
-        onSeekRequested: markerbar.seekRequested(pos)
+        onMouseStatusChanged: (mouseX, mouseY, text, start, end) => markerbar.mouseStatusChanged(mouseX, mouseY, text, start, end)
+        onSeekRequested: pos => markerbar.seekRequested(pos)
     }
-
 }

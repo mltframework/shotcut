@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import QtQuick 2.7
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import Shotcut.Controls as Shotcut
 
 Shotcut.VuiBase {
     property string rectProperty
@@ -45,8 +44,7 @@ Shotcut.VuiBase {
 
     function setRectangleControl() {
         if (blockUpdate)
-            return ;
-
+            return;
         var position = getPosition();
         var newValue = filter.getRect(rectProperty, position);
         if (filterRect !== newValue) {
@@ -55,7 +53,6 @@ Shotcut.VuiBase {
         }
         if (rotationProperty)
             rectangle.rotation = filter.getDouble(rotationProperty, position);
-
         rectangle.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
@@ -152,7 +149,6 @@ Shotcut.VuiBase {
     function snapRotation(degrees, strength) {
         if ((Math.abs(degrees) + strength) % 90 < strength * 2)
             degrees = Math.round(degrees / 90) * 90;
-
         return degrees;
     }
 
@@ -163,6 +159,7 @@ Shotcut.VuiBase {
     }
 
     PinchArea {
+
         // Pinch zoom conflicts too much with mouse wheel
         //            if (!blockUpdate) {
         //                var scale = currentScale + (pinch.scale - 2) / 3
@@ -170,7 +167,6 @@ Shotcut.VuiBase {
         //                    scale = 1.0
         //                updateScale(Math.min(scale, 10))
         //            }
-
         property real currentScale: 1
         property real currentRotation: 0
         property bool noModifiers: true
@@ -206,12 +202,11 @@ Shotcut.VuiBase {
             anchors.fill: parent
             acceptedButtons: Qt.NoButton
             scrollGestureEnabled: true
-            onWheel: {
+            onWheel: wheel => {
                 if (rotationProperty && (wheel.modifiers & Qt.ControlModifier)) {
                     var degrees = rectangle.rotation - wheel.angleDelta.y / 120 * 5;
                     if (!(wheel.modifiers & Qt.AltModifier))
                         degrees = snapRotation(degrees, 1.5);
-
                     rectangle.rotation = degrees;
                     blockUpdate = true;
                     updateRotation(rectangle.rotation % 360);
@@ -223,7 +218,6 @@ Shotcut.VuiBase {
                 }
             }
         }
-
     }
 
     Flickable {
@@ -255,10 +249,9 @@ Shotcut.VuiBase {
                 onWidthScaleChanged: setHandles(filterRect)
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: setFilter(getPosition())
-                onRotated: {
+                onRotated: (degrees, mouse) => {
                     if (!(mouse.modifiers & Qt.AltModifier))
                         degrees = snapRotation(degrees, 4) % 360;
-
                     blockUpdate = true;
                     updateRotation(degrees);
                     blockUpdate = false;
@@ -267,9 +260,7 @@ Shotcut.VuiBase {
                     rectangle.rotation = filter.getDouble(rotationProperty, getPosition());
                 }
             }
-
         }
-
     }
 
     Connections {
@@ -292,5 +283,4 @@ Shotcut.VuiBase {
 
         target: producer
     }
-
 }

@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import org.shotcut.qml 1.0
+import QtQuick
+import org.shotcut.qml
 
 Metadata {
     type: Metadata.Filter
@@ -16,5 +16,4 @@ Metadata {
         allowAnimateOut: true
         simpleProperties: ['shotcut:rect']
     }
-
 }

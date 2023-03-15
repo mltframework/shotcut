@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 #include <QWidget>
 #include <QRunnable>
 #include "abstractproducerwidget.h"
-#include "sharedframe.h"
 #include "dialogs/transcodedialog.h"
 
 namespace Ui {
@@ -54,11 +53,8 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private slots:
-    void onFrameDisplayed(const SharedFrame &);
 
     void onProducerChanged(Mlt::Producer *);
-
-    void onFrameDecoded();
 
     void on_videoTrackComboBox_activated(int index);
 
@@ -126,6 +122,8 @@ private slots:
 
     void on_actionExportGPX_triggered();
 
+    void on_speedComboBox_textActivated(const QString &arg1);
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;
@@ -137,22 +135,7 @@ private:
     void convert(TranscodeDialog &dialog);
     bool revertToOriginalResource();
     void setSyncVisibility();
-};
-
-
-class DecodeTask : public QObject, public QRunnable
-{
-    Q_OBJECT
-
-public:
-    explicit DecodeTask(AvformatProducerWidget *widget);
-    void run();
-
-signals:
-    void frameDecoded();
-
-private:
-    QScopedPointer<Mlt::Frame> m_frame;
+    void reloadProducerValues();
 };
 
 #endif // AVFORMATPRODUCERWIDGET_H
