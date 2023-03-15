@@ -262,7 +262,28 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->fpsSpinner->setValue(preset.get_double("frame_rate_num") / preset.get_double("frame_rate_den"));
         } else if (name == "pix_fmt") {
             QString pix_fmt(preset.get("pix_fmt"));
-            other.append(QString("%1=%2").arg(name).arg(pix_fmt));
+
+            // Handle 10 bit encoding with hardware encoder and GPU Effects
+            if (pix_fmt.contains("p10le")) {
+                if (vcodec.endsWith("_nvenc") || vcodec.endsWith("_videotoolbox")) {
+                    pix_fmt = "p010le";
+                } else if (vcodec.endsWith("_vaapi")) {
+                    pix_fmt = "p010";
+                }
+                if (Settings.playerGPU()) {
+                    if (pix_fmt == "yuv444p10le") {
+                        other.append("mlt_image_format=yuv444p10");
+                    } else if (pix_fmt == "yuva444p10le") {
+                        other.append("mlt_image_format=rgba");
+                    } else {
+                        other.append("mlt_image_format=yuv422p10");
+                    }
+                } else {
+                    other.append("mlt_image_format=rgb");
+                }
+            }
+
+            other.append(QString("%1=%2").arg(name, pix_fmt));
         } else if (name == "pass")
             ui->dualPassCheckbox->setChecked(true);
         else if (name == "v2pass")
@@ -335,7 +356,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         } else if (name != "an" && name != "vn" && name != "threads"
                    && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
                    && !name.startsWith('_') && !name.startsWith("meta.preset.")) {
-            other.append(QString("%1=%2").arg(name).arg(preset.get(i)));
+            other.append(QString("%1=%2").arg(name, preset.get(i)));
         }
     }
     filterX265Params(other);
@@ -496,7 +517,7 @@ void EncodeDock::loadPresets()
                         QString profile = textParts.at(0);
                         textParts.removeFirst();
                         if (m_profiles->get_data(profile.toLatin1().constData()))
-                            name = QString("%1 (%2)").arg(textParts.join('/')).arg(profile);
+                            name = QString("%1 (%2)").arg(textParts.join('/'), profile);
                     }
                 }
                 // Create a category node if the name includes a slash.
@@ -650,7 +671,7 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 }
                 if (ui->scanModeCombo->currentIndex() == 0 && !x265params.contains("interlace=")) {
                     x265params = QString("interlace=%1:%2").arg(
-                                     ui->fieldOrderCombo->currentIndex() ? "tff" : "bff").arg(x265params);
+                                     ui->fieldOrderCombo->currentIndex() ? "tff" : "bff", x265params);
                 }
                 // Also set some properties so that custom presets can be interpreted properly.
                 setIfNotSet(p, "g", ui->gopSpinner->value());
@@ -924,7 +945,7 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target
                 codec == "targa" || codec == "tiff" || (codec == "mjpeg"
                                                         && ui->formatCombo->currentText() == "image2")) {
             QFileInfo fi(mytarget);
-            mytarget = QString("%1/%2-%05d.%3").arg(fi.path()).arg(fi.baseName()).arg(fi.completeSuffix());
+            mytarget = QString("%1/%2-%05d.%3").arg(fi.path(), fi.baseName(), fi.completeSuffix());
         }
     }
 
@@ -1512,8 +1533,7 @@ void EncodeDock::on_encodeButton_clicked()
     QString directory = Settings.encodePath();
     if (!m_extension.isEmpty()) {
         if (!MAIN.fileName().isEmpty()) {
-            directory += QString("/%1.%2").arg(QFileInfo(MAIN.fileName()).completeBaseName())
-                         .arg(m_extension);
+            directory += QString("/%1.%2").arg(QFileInfo(MAIN.fileName()).completeBaseName(), m_extension);
         }
     } else {
         if (!MAIN.fileName().isEmpty()) {
@@ -1533,7 +1553,7 @@ void EncodeDock::on_encodeButton_clicked()
     } else {
         QString nameFilter;
         if (!m_extension.isEmpty())
-            nameFilter = tr("%1 (*.%2);;All Files (*)").arg(ui->formatCombo->currentText()).arg(m_extension);
+            nameFilter = tr("%1 (*.%2);;All Files (*)").arg(ui->formatCombo->currentText(), m_extension);
         else
             nameFilter = tr("Determined by Export (*)");
         QString newName = QFileDialog::getSaveFileName(this, caption, directory, nameFilter,
@@ -1736,7 +1756,7 @@ void EncodeDock::on_addPresetButton_clicked()
 
         for (int i = 0; i < data->count(); i++)
             if (strlen(data->get_name(i)) > 0)
-                ls << QString("%1=%2").arg(data->get_name(i)).arg(data->get(i));
+                ls << QString("%1=%2").arg(data->get_name(i), data->get(i));
     }
 
     dialog.setWindowTitle(tr("Add Export Preset"));
@@ -2282,4 +2302,3 @@ void EncodeDock::on_resolutionComboBox_activated(int arg1)
     ui->widthSpinner->setValue(parts[0].toInt());
     ui->heightSpinner->setValue(parts[2].toInt());
 }
-
