@@ -92,4 +92,4 @@ jobs:
           FILENAME=$(ls *.txz)
           sed "s/\$VERSION/${VERSION}/ ; s/\$FILENAME/${FILENAME}/" snapcraft.yaml.in > snap/snapcraft.yaml
           sg lxd -c 'snapcraft --use-lxd'
-          snapcraft upload --release=beta shotcut_*.snap
+          snapcraft upload --release=edge shotcut_*.snap
