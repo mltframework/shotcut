@@ -265,11 +265,6 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
 
             // Handle 10 bit encoding with hardware encoder and GPU Effects
             if (pix_fmt.contains("p10le")) {
-                if (vcodec.endsWith("_nvenc") || vcodec.endsWith("_videotoolbox")) {
-                    pix_fmt = "p010le";
-                } else if (vcodec.endsWith("_vaapi")) {
-                    pix_fmt = "p010";
-                }
                 if (Settings.playerGPU()) {
                     if (pix_fmt == "yuv444p10le") {
                         other.append("mlt_image_format=yuv444p10");
@@ -281,6 +276,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 } else {
                     other.append("mlt_image_format=rgb");
                 }
+                pix_fmt = "p010le";
             }
 
             other.append(QString("%1=%2").arg(name, pix_fmt));
