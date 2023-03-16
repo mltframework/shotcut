@@ -273,10 +273,14 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                     } else {
                         other.append("mlt_image_format=yuv422p10");
                     }
+                    // Hardware encoder
+                    if (vcodec.endsWith("_nvenc") || vcodec.endsWith("_qsv")
+                            || vcodec.endsWith("_vaapi") || vcodec.endsWith("_videotoolbox")) {
+                        pix_fmt = "p010le";
+                    }
                 } else {
                     other.append("mlt_image_format=rgb");
                 }
-                pix_fmt = "p010le";
             }
 
             other.append(QString("%1=%2").arg(name, pix_fmt));
