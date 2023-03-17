@@ -548,8 +548,7 @@ void AvformatProducerWidget::reloadProducerValues()
         } else if (isVariableFrameRate) {
             LOG_INFO() << resource << "is variable frame rate";
             offerConvert(tr("This file is variable frame rate, which is not reliable for editing."));
-        } else if (QFile::exists(resource) && (!MLT.isSeekable(m_producer.data())
-                                               || resource.endsWith(".flac"))) {
+        } else if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
             LOG_INFO() << resource << "is not seekable";
             offerConvert(tr("This file does not support seeking and cannot be used for editing."));
         } else if (QFile::exists(resource) && resource.endsWith(".m2t")) {
