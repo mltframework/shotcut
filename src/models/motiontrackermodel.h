@@ -35,12 +35,6 @@ class MotionTrackerModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    enum Operation {
-        Position,
-        OffsetPosition,
-    };
-    Q_ENUM(Operation)
-
     struct TrackingItem {
         int frame;
         QRectF rect;
