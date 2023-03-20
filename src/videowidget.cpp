@@ -353,7 +353,7 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer->set("0.deinterlacer",
                             property("deinterlacer").toString().toLatin1().constData());
             m_consumer->set("0.buffer", qMax(25, qRound(profile().fps())));
-            m_consumer->set("0.prefill", qMax(1, qRound(profile().fps() / 25.0)));
+            m_consumer->set("0.prefill", 8);
             m_consumer->set("0.drop_max", qRound(profile().fps() / 4.0));
             if (property("keyer").isValid())
                 m_consumer->set("0.keyer", property("keyer").toInt());
@@ -365,7 +365,7 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer->set("deinterlacer",
                             property("deinterlacer").toString().toLatin1().constData());
             m_consumer->set("buffer", qMax(25, qRound(profile().fps())));
-            m_consumer->set("prefill", qMax(1, qRound(profile().fps() / 25.0)));
+            m_consumer->set("prefill", 8);
             m_consumer->set("drop_max", qRound(profile().fps() / 4.0));
             if (property("keyer").isValid())
                 m_consumer->set("keyer", property("keyer").toInt());
