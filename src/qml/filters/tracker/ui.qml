@@ -314,23 +314,8 @@ Item {
                 }
 
                 ListElement {
-                    text: 'BOOSTING: AdaBoost'
-                    value: 'BOOSTING'
-                }
-
-                ListElement {
-                    text: 'TLD: Tracking Learning Detection'
-                    value: 'TLD'
-                }
-
-                ListElement {
                     text: 'MEDIANFLOW: Lucas-Kanade Median Flow'
                     value: 'MEDIANFLOW'
-                }
-
-                ListElement {
-                    text: 'GOTURN: Regression Network'
-                    value: 'GOTURN'
                 }
 
                 ListElement {
