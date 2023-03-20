@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1343,6 +1343,10 @@ void RemoveTrackCommand::redo()
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
     Mlt::Playlist playlist(*producer);
+    for (int i = 0; i < playlist.count(); ++i) {
+        if (!playlist.is_blank(i))
+            emit m_model.removing(playlist.get_clip(i));
+    }
     playlist.clear();
     m_undoHelper.recordAfterState();
     m_model.removeTrack(m_trackIndex);

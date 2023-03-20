@@ -2762,6 +2762,16 @@ void MultitrackModel::removeTrack(int trackIndex)
         QScopedPointer<Mlt::Field> field(m_tractor->field());
         QScopedPointer<Mlt::Transition> transition(getVideoBlendTransition(track.mlt_index));
 
+        // Get the playlist, loop over its clips, and emit removing
+        QScopedPointer<Mlt::Producer> producer(m_tractor->track(track.mlt_index));
+        if (producer) {
+            Mlt::Playlist playlist(*producer);
+            for (int i = 0; i < playlist.count(); ++i) {
+                if (!playlist.is_blank(i))
+                    emit removing(playlist.get_clip(i));
+            }
+        }
+
         // Remove transitions.
         if (transition && transition->is_valid())
             field->disconnect_service(*transition);
