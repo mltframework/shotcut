@@ -295,6 +295,13 @@ if(APPLE)
   target_sources(shotcut PRIVATE ${APP_ICON})
   set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
+  #Create a symlink to the qml folder after building
+  add_custom_command(
+      TARGET shotcut POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E create_symlink
+      ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/qml
+  )
+
   install(TARGETS shotcut BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
 endif()
