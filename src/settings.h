@@ -68,8 +68,10 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(QString appDataLocation READ appDataLocation CONSTANT)
 
 public:
+    static const qsizetype MaxPath {32767};
+
     static ShotcutSettings &singleton();
-    explicit ShotcutSettings() : QObject() {}
+    explicit ShotcutSettings();
     explicit ShotcutSettings(const QString &appDataLocation);
     void log();
 
@@ -312,6 +314,7 @@ signals:
 private:
     QSettings settings;
     QString m_appDataLocation;
+    QSettings *m_recent;
 };
 
 #define Settings ShotcutSettings::singleton()
