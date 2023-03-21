@@ -32,6 +32,7 @@ static const QString RECENT_INI_FILENAME("recent.ini");
 static QScopedPointer<ShotcutSettings> instance;
 static QString appDataForSession;
 static const int kMaximumTrackHeight = 125;
+static const QString kRecentKey("recent");
 
 ShotcutSettings &ShotcutSettings::singleton()
 {
@@ -56,12 +57,16 @@ ShotcutSettings::ShotcutSettings()
     m_recent = new QSettings(dir.filePath(RECENT_INI_FILENAME), QSettings::IniFormat, this);
 
     // Migrate recent to separate INI file
-    auto recents = settings.value("recent").toStringList();
-    if (!recents.isEmpty()) {
-        QStringList newRecents;
-        for (const auto &a : recents) {
-            if (a.size() < ShotcutSettings::MaxPath)
-                newRecents << a;
+    auto oldRecents = settings.value(kRecentKey).toStringList();
+    if (!oldRecents.isEmpty()) {
+        auto newRecents = recent();
+        for (const auto &a : oldRecents) {
+            if (a.size() < ShotcutSettings::MaxPath && !newRecents.contains(a)) {
+                while (newRecents.size() > 100) {
+                    newRecents.removeLast();
+                }
+                newRecents.prepend(a);
+            }
         }
         setRecent(newRecents);
         m_recent->sync();
@@ -142,15 +147,15 @@ void ShotcutSettings::setSavePath(const QString &s)
 
 QStringList ShotcutSettings::recent() const
 {
-    return m_recent->value("recent").toStringList();
+    return m_recent->value(kRecentKey).toStringList();
 }
 
 void ShotcutSettings::setRecent(const QStringList &ls)
 {
     if (ls.isEmpty())
-        m_recent->remove("recent");
+        m_recent->remove(kRecentKey);
     else if (!clearRecent())
-        m_recent->setValue("recent", ls);
+        m_recent->setValue(kRecentKey, ls);
 }
 
 QString ShotcutSettings::theme() const
