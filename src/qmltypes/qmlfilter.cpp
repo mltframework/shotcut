@@ -802,7 +802,8 @@ AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter &filter)
     , m_uuid(QUuid::createUuid())
     , m_serviceName(filter.get("mlt_service"))
 {
-    filter.set(kShotcutHashProperty, m_uuid.toByteArray().data());
+    auto ba = m_uuid.toByteArray();
+    filter.set(kShotcutHashProperty, ba.data());
 }
 
 class FindFilterParser : public Mlt::Parser

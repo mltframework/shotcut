@@ -225,7 +225,7 @@ Rectangle {
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
             enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
             opacity: enabled ? 1 : 0.5
-            onClicked: application.copyFilters()
+            onClicked: copyFiltersDialog.show()
 
             Shotcut.HoverTip {
                 text: qsTr('Copy checked filters')
@@ -240,7 +240,7 @@ Rectangle {
             opacity: enabled ? 1 : 0.5
             icon.name: 'edit-paste'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
-            onClicked: application.pasteFilters()
+            onClicked: pasteFiltersDialog.show()
 
             Shotcut.HoverTip {
                 text: qsTr('Paste filters')
@@ -389,6 +389,14 @@ Rectangle {
             bottom: parent.bottom
             topMargin: attachedContainer.anchors.topMargin
         }
+    }
+
+    CopyFiltersDialog {
+        id: copyFiltersDialog
+    }
+
+    PasteFiltersDialog {
+        id: pasteFiltersDialog
     }
 
     Connections {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,12 @@
 #include "models/audiolevelstask.h"
 #include "mainwindow.h"
 #include "widgets/glaxnimateproducerwidget.h"
+#include "settings.h"
+#include <Logger.h>
+
+#include <QGuiApplication>
+#include <QClipboard>
+#include <QSaveFile>
 
 static const char *kWidthProperty = "meta.media.width";
 static const char *kHeightProperty = "meta.media.height";
@@ -166,6 +172,87 @@ void QmlProducer::launchGlaxnimate(const QString &filename) const
 {
     if (!filename.isEmpty()) {
         GlaxnimateIpcServer::instance().launch(m_producer, filename, false);
+    }
+}
+
+QStringList QmlProducer::filterSets() const
+{
+    QStringList sets;
+    sets << tr("Clipboard");
+    QDir dir(Settings.appDataLocation());
+    if (dir.cd("filter-sets")) {
+        QStringList entries = dir.entryList(QDir::Files | QDir::Readable);
+        for (const auto &s : entries) {
+            if (s == QUrl::toPercentEncoding(QUrl::fromPercentEncoding(s.toUtf8())))
+                sets << QUrl::fromPercentEncoding(s.toUtf8());
+            else
+                sets << s;
+        }
+    }
+    return sets;
+}
+
+void QmlProducer::saveFilterSet(const QString &name)
+{
+    QDir dir(Settings.appDataLocation());
+    const auto folder = QString::fromLatin1("filter-sets");
+
+    if (!dir.exists())
+        dir.mkpath(dir.path());
+    if (!dir.cd(folder)) {
+        if (dir.mkdir(folder))
+            dir.cd(folder);
+    }
+
+    auto filename = QString::fromUtf8(QUrl::toPercentEncoding(name));
+    QSaveFile file(dir.filePath(filename));
+    file.setDirectWriteFallback(true);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        LOG_ERROR() << "failed to open filter set file for writing" << file.fileName();
+        return;
+    }
+    QTextStream stream(&file);
+    stream.setEncoding(QStringConverter::Utf8);
+    stream << QGuiApplication::clipboard()->text();
+    if (file.error() != QFileDevice::NoError) {
+        LOG_ERROR() << "error while writing filter set file" << file.fileName() << ":" <<
+                    file.errorString();
+        return;
+    }
+    if (file.commit()) {
+        emit filterSetsChanged();
+    }
+}
+
+void QmlProducer::deleteFilterSet(const QString &name)
+{
+    QDir dir(Settings.appDataLocation());
+    if (!dir.cd("filter-sets"))
+        return;
+
+    auto fileName = QUrl::toPercentEncoding(name.toUtf8());
+    if (QFile::remove(dir.filePath(fileName))) {
+        emit filterSetsChanged();
+    } else if (QFile::remove(dir.filePath(name))) {
+        emit filterSetsChanged();
+    }
+}
+
+void QmlProducer::pasteFilterSet(const QString &name)
+{
+    QDir dir(Settings.appDataLocation());
+    if (!dir.cd("filter-sets"))
+        return;
+
+    auto fileName = QUrl::toPercentEncoding(name.toUtf8());
+    QFile filtersetFile(dir.filePath(fileName));
+    if (filtersetFile.open(QIODevice::ReadOnly)) {
+        QGuiApplication::clipboard()->setText(QString::fromUtf8(filtersetFile.readAll()));
+    } else {
+        filtersetFile.setFileName(dir.filePath(name));
+        if (filtersetFile.open(QIODevice::ReadOnly)) {
+            QGuiApplication::clipboard()->setText(QString::fromUtf8(filtersetFile.readAll()));
+        }
     }
 }
 
