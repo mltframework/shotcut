@@ -153,7 +153,7 @@ Item {
                 bgColor.value = s.substring(7);
         }
         motionTrackerCombo.currentIndex = motionTrackerCombo.indexOfValue(filter.get('shotcut:motionTracker.name'));
-        trackingOperationCombo.currentIndex = parseInt(filter.getDouble('shotcut:motionTracker.operation'));
+        trackingOperationCombo.currentIndex = trackingOperationCombo.indexOfValue(filter.get('shotcut:motionTracker.operation'));
     }
 
     function isSimpleKeyframesActive() {
@@ -269,26 +269,39 @@ Item {
             let previous = null;
             let frame = 0;
             let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerCombo.currentIndex);
-            for (let i in data) {
-                let current = filter.getRect(trackingProperty, frame);
-                if (previous !== null) {
-                    let x = data[i].x - previous.x;
-                    let y = data[i].y - previous.y;
-                    switch (trackingOperationCombo.currentIndex) {
-                    case 0:
-                        current.x += x;
-                        current.y += y;
-                        break;
-                    case 1:
-                        current.x -= x;
-                        current.y -= y;
-                        break;
+            let interpolation = KeyframesModel.SmoothInterpolation;
+            data.forEach(i => {
+                    let current = filter.getRect(trackingProperty, frame);
+                    if (previous !== null) {
+                        let x = i.x - previous.x;
+                        let y = i.y - previous.y;
+                        switch (trackingOperationCombo.currentValue) {
+                        case 'relativePos':
+                            current.x += x;
+                            current.y += y;
+                            break;
+                        case 'offsetPos':
+                            current.x -= x;
+                            current.y -= y;
+                            break;
+                        case 'absPos':
+                            current.x = i.x + i.width / 2 - current.width / 2;
+                            current.y = i.y + i.height / 2 - current.height / 2;
+                            interpolation = KeyframesModel.LinearInterpolation;
+                            break;
+                        case 'absSizePos':
+                            current.x = i.x;
+                            current.y = i.y;
+                            current.width = i.width;
+                            current.height = i.height;
+                            interpolation = KeyframesModel.LinearInterpolation;
+                            break;
+                        }
                     }
-                }
-                previous = data[i];
-                filter.set(trackingProperty, current, frame, KeyframesModel.SmoothInterpolation);
-                frame += interval;
-            }
+                    previous = i;
+                    filter.set(trackingProperty, current, frame, interpolation);
+                    frame += interval;
+                });
         }
     }
 
@@ -919,53 +932,29 @@ Item {
             visible: motionTrackerCombo.visible
         }
 
-        RowLayout {
+        Shotcut.ComboBox {
+            id: motionTrackerCombo
+
             Layout.columnSpan: 3
-            visible: motionTrackerCombo.visible
+            visible: !!trackingProperty
+            implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
+            textRole: 'display'
+            valueRole: 'display'
+            currentIndex: 0
+            model: motionTrackerModel
 
-            Shotcut.ComboBox {
-                id: motionTrackerCombo
-
-                visible: !!trackingProperty
-                implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
-                textRole: 'display'
-                valueRole: 'display'
-                currentIndex: 0
-                model: motionTrackerModel
-
-                onActivated: {
-                    if (currentIndex > 0) {
-                        enabled = false;
-                        filter.set('shotcut:motionTracker.name', currentText);
-                        applyTracking();
-                        enabled = true;
-                    }
-                }
-            }
-
-            Label {
-                text: qsTr('Operation')
-            }
-
-            Shotcut.ComboBox {
-                id: trackingOperationCombo
-
-                implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
-                currentIndex: 0
-                model: [qsTr('Position'), qsTr('Offset Position')]
-
-                onActivated: {
-                    if (motionTrackerCombo.currentIndex > 0) {
-                        enabled = false;
-                        filter.set('shotcut:motionTracker.operation', currentIndex);
-                        applyTracking();
-                        enabled = true;
-                    }
+            onActivated: {
+                if (currentIndex > 0) {
+                    enabled = false;
+                    filter.set('shotcut:motionTracker.name', currentText);
+                    applyTracking();
+                    enabled = true;
                 }
             }
         }
 
         Shotcut.UndoButton {
+            Layout.rowSpan: 2
             visible: motionTrackerCombo.visible
             onClicked: {
                 filter.set(rectProperty, filter.get('shotcut:backup'));
@@ -978,12 +967,62 @@ Item {
                 scaleSlider.update();
                 setFilter(getPosition());
                 motionTrackerCombo.currentIndex = 0;
+                trackingOperationCombo.currentIndex = 0;
             }
+        }
+
+        Item {
+            Layout.rowSpan: 2
+            width: 1
+            visible: motionTrackerCombo.visible
         }
 
         Item {
             width: 1
             visible: motionTrackerCombo.visible
+        }
+
+        RowLayout {
+            Layout.columnSpan: 3
+            visible: motionTrackerCombo.visible
+
+            Label {
+                text: qsTr('Adjust')
+            }
+
+            Shotcut.ComboBox {
+                id: trackingOperationCombo
+
+                implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
+                textRole: 'text'
+                valueRole: 'value'
+                model: [
+                    {
+                        "text": '',
+                        "value": ''
+                    }, {
+                        "text": qsTr('Relative Position'),
+                        "value": 'relativePos'
+                    }, {
+                        "text": qsTr('Offset Position'),
+                        "value": 'offsetPos'
+                    }, {
+                        "text": qsTr('Absolute Position'),
+                        "value": 'absPos'
+                    }, {
+                        "text": qsTr('Size And Position'),
+                        "value": 'absSizePos'
+                    },]
+
+                onActivated: {
+                    if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
+                        enabled = false;
+                        filter.set('shotcut:motionTracker.operation', currentValue);
+                        applyTracking();
+                        enabled = true;
+                    }
+                }
+            }
         }
 
         Item {
