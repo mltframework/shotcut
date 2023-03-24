@@ -8,6 +8,7 @@ Metadata {
     mlt_service: 'choppy'
     qml: 'ui.qml'
     icon: 'icon.webp'
+    isGpuCompatible: false
 
     keyframes {
         allowAnimateIn: true

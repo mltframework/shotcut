@@ -996,8 +996,7 @@ Item {
                 implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
                 textRole: 'text'
                 valueRole: 'value'
-                model: [
-                    {
+                model: [{
                         "text": '',
                         "value": ''
                     }, {
