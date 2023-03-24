@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -447,9 +447,8 @@ void MltXmlChecker::checkGpuEffects(const QString &mlt_service)
 
 void MltXmlChecker::checkCpuEffects(const QString &mlt_service)
 {
-    // For example, if needed again:
-    // if (mlt_service.startsWith("dynamictext") || mlt_service.startsWith("vidstab"))
-    //     m_needsCPU = true;
+    if (mlt_service.startsWith("frei0r.cairoblend") || mlt_service.startsWith("choppy"))
+        m_needsCPU = true;
 }
 
 void MltXmlChecker::checkUnlinkedFile(const QString &mlt_service)
