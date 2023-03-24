@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Item {
     property var defaultParameters: ['gamma_r', 'gamma_g', 'gamma_b', 'gain_r', 'gain_g', 'gain_b']
@@ -44,7 +45,7 @@ Item {
     function updateFilter(position) {
         if (blockUpdate)
             return;
-        var value = contrastSlider.value / 100;
+        var value = contrastSlider.getValue() / 100;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
                 startValue = value;
@@ -169,6 +170,10 @@ Item {
         Shotcut.SliderSpinner {
             id: contrastSlider
 
+            function getValue() {
+                return filter.get('mlt_service') === 'movit.lift_gamma_gain' ? Math.min(value, 99.6) : value;
+            }
+
             minimumValue: 0
             maximumValue: 100
             decimals: 1
@@ -184,7 +189,7 @@ Item {
             id: keyframesButton
 
             onToggled: {
-                var value = contrastSlider.value / 100;
+                var value = contrastSlider.getValue() / 100;
                 blockUpdate = true;
                 filter.resetProperty('gamma_r');
                 filter.resetProperty('gamma_g');
