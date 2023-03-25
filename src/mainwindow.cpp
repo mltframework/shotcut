@@ -2381,33 +2381,14 @@ void MainWindow::hideEvent(QHideEvent *event)
 
 void MainWindow::on_actionOpenOther_triggered()
 {
-    // these static are used to open dialog with previous configuration
-    OpenOtherDialog dialog(this);
-
-    if (MLT.producer())
-        dialog.load(MLT.producer());
-    if (dialog.exec() == QDialog::Accepted) {
-        auto isDevice = AbstractProducerWidget::isDevice(dialog.currentWidget());
-        if (isDevice)
-            closeProducer();
-        auto &profile = MLT.profile();
-        auto producer = dialog.newProducer(profile);
-        if (!(producer && producer->is_valid())) {
-            delete producer;
-            return;
-        }
-        if (!isDevice)
-            closeProducer();
-
-        if (!profile.is_explicit()) {
-            profile.from_producer(*producer);
-            profile.set_width(Util::coerceMultiple(profile.width()));
-            profile.set_height(Util::coerceMultiple(profile.height()));
-        }
-        MLT.updatePreviewProfile();
-        setPreviewScale(Settings.playerPreviewScale());
-        open(producer);
+    auto dialog = new OpenOtherDialog(this);
+    if (MLT.producer()) {
+        // open dialog with previous configuration
+        dialog->load(MLT.producer());
     }
+    auto result = dialog->exec();
+    m_producerWidget.reset(dialog->currentWidget());
+    onOpenOtherFinished(result);
 }
 
 void MainWindow::onProducerOpened(bool withReopen)
@@ -4226,45 +4207,69 @@ void MainWindow::on_actionOpenOther2_triggered()
 
 void MainWindow::onOpenOtherTriggered(QWidget *widget)
 {
-    QDialog dialog(this);
-    dialog.resize(426, 288);
-    QVBoxLayout vlayout(&dialog);
-    vlayout.addWidget(widget);
-    QDialogButtonBox buttonBox(&dialog);
-    buttonBox.setOrientation(Qt::Horizontal);
-    buttonBox.setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
-    vlayout.addWidget(&buttonBox);
-    connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
-    connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
-    QString name = widget->objectName();
-    if (name == "NoiseWidget" || dialog.exec() == QDialog::Accepted) {
-        auto isDevice = AbstractProducerWidget::isDevice(widget);
-        if (isDevice && !Settings.playerGPU())
-            closeProducer();
-        auto &profile = MLT.profile();
-        auto producer = dynamic_cast<AbstractProducerWidget *>(widget)->newProducer(profile);
-        if (!(producer && producer->is_valid())) {
-            delete producer;
-            return;
-        }
-
-        if (!profile.is_explicit()) {
-            profile.from_producer(*producer);
-            profile.set_width(Util::coerceMultiple(profile.width()));
-            profile.set_height(Util::coerceMultiple(profile.height()));
-        }
-        MLT.updatePreviewProfile();
-        setPreviewScale(Settings.playerPreviewScale());
-        open(producer);
-        if (name == "TextProducerWidget") {
-            m_filtersDock->show();
-            m_filtersDock->raise();
-        } else {
-            m_propertiesDock->show();
-            m_propertiesDock->raise();
-        }
+    m_producerWidget.reset(widget);
+    auto dialog = new QDialog(this);
+    dialog->resize(426, 288);
+    dialog->setWindowModality(QmlApplication::dialogModality());
+    auto vlayout = new QVBoxLayout(dialog);
+    vlayout->addWidget(widget);
+    auto buttonBox = new QDialogButtonBox(dialog);
+    buttonBox->setOrientation(Qt::Horizontal);
+    buttonBox->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Open);
+    if (!AbstractProducerWidget::isDevice(widget)) {
+        auto button = buttonBox->addButton(tr("Add To Timeline"), QDialogButtonBox::ApplyRole);
+        connect(button, &QPushButton::clicked, this, [ = ]() {
+            dialog->done(-1);
+        });
     }
-    delete widget;
+    vlayout->addWidget(buttonBox);
+    connect(buttonBox, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
+    connect(dialog, &QDialog::finished, this, &MainWindow::onOpenOtherFinished);
+    dialog->show();
+}
+
+void MainWindow::onOpenOtherFinished(int result)
+{
+    if (QDialog::Rejected == result || !m_producerWidget)
+        return;
+    if (AbstractProducerWidget::isDevice(m_producerWidget.get()) && !Settings.playerGPU())
+        closeProducer();
+    auto &profile = MLT.profile();
+    auto producer = dynamic_cast<AbstractProducerWidget *>(
+                        m_producerWidget.get())->newProducer(profile);
+    if (!(producer && producer->is_valid())) {
+        delete producer;
+        m_producerWidget.reset();
+        return;
+    }
+    if (!profile.is_explicit()) {
+        profile.from_producer(*producer);
+        profile.set_width(Util::coerceMultiple(profile.width()));
+        profile.set_height(Util::coerceMultiple(profile.height()));
+    }
+    MLT.updatePreviewProfile();
+    setPreviewScale(Settings.playerPreviewScale());
+    auto name = m_producerWidget->objectName();
+    if (QDialog::Accepted == result) {
+        // open in the source player
+        open(producer);
+        // Mlt::Controller owns the producer now
+    } else {
+        auto trackType = ("ToneProducerWidget" == name || "toneWidget" == name)
+                         ? AudioTrackType : VideoTrackType;
+        auto trackIndex = m_timelineDock->addTrackIfNeeded(trackType);
+        m_timelineDock->overwrite(trackIndex, -1, MLT.XML(producer), false);
+        delete producer;
+    }
+    if ("TextProducerWidget" == name || "textWidget" == name) {
+        m_filtersDock->show();
+        m_filtersDock->raise();
+    } else {
+        m_propertiesDock->show();
+        m_propertiesDock->raise();
+    }
+    m_producerWidget.reset();
 }
 
 void MainWindow::onOpenOtherTriggered()

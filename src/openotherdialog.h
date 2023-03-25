@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ class Properties;
 class Producer;
 class Profile;
 }
+class QPushButton;
 
 class OpenOtherDialog : public QDialog
 {
@@ -51,6 +52,7 @@ private slots:
 private:
     Ui::OpenOtherDialog *ui;
     QWidget *m_current;
+    QPushButton *m_addTimelineButton;
 
     Mlt::Producer *newProducer(Mlt::Profile &, QObject *widget) const;
     void selectTreeWidget(const QString &s);

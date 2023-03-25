@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,8 +39,12 @@ void AbstractProducerWidget::setProducer(Mlt::Producer *producer)
 bool AbstractProducerWidget::isDevice(const QWidget *widget)
 {
     auto name = widget->objectName();
-    return "AlsaWidget" == name || "AvfoundationProducerWidget" == name
-           || "DecklinkProducerWidget" == name || "DirectShowVideoWidget" == name
-           || "GDIgrabWidget" == name || "PulseAudioWidget" == name
-           || "Video4LinuxWidget" == name || "X11grabWidget" == name;
+    return "AlsaWidget" == name || "alsaWidget" == name
+           || "AvfoundationProducerWidget" == name || "avfoundationWidget" == name
+           || "DecklinkProducerWidget" == name || "decklinkWidget" == name
+           || "DirectShowVideoWidget" == name || "dshowVideoWidget" == name
+           || "GDIgrabWidget" == name || "gdigrabWidget" == name
+           || "PulseAudioWidget" == name || "pulseWidget" == name
+           || "Video4LinuxWidget" == name || "v4lWidget" == name
+           || "X11grabWidget" == name || "x11grabWidget" == name;
 }

@@ -29,6 +29,10 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     m_current = ui->networkWidget;
+    m_addTimelineButton = ui->buttonBox->addButton(tr("Add To Timeline"), QDialogButtonBox::ApplyRole);
+    connect(m_addTimelineButton, &QPushButton::clicked, this, [ = ]() {
+        done(-1);
+    });
 
     QScopedPointer<Mlt::Properties> mltProducers(MLT.repository()->producers());
     QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
@@ -194,53 +198,65 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
 {
     if (current->data(0, Qt::UserRole).isValid()) {
         QString currentData(current->data(0, Qt::UserRole).toString());
+        m_addTimelineButton->setVisible(true);
         for (int i = 0; i < ui->methodTabWidget->count(); i++) {
             QString tabName(ui->methodTabWidget->widget(i)->objectName());
             if (currentData == tabName) {
                 ui->methodTabWidget->setCurrentIndex(i);
                 QWidget *w = ui->methodTabWidget->currentWidget();
-                if (w == ui->networkTab)
+                if (w == ui->networkTab) {
                     m_current = ui->networkWidget;
-                else if (w == ui->decklinkTab)
+                    m_addTimelineButton->setVisible(false);
+                } else if (w == ui->decklinkTab) {
                     m_current = ui->decklinkWidget;
-                else if (w == ui->v4lTab)
+                    m_addTimelineButton->setVisible(false);
+                } else if (w == ui->v4lTab) {
                     m_current = ui->v4lWidget;
-                else if (w == ui->colorTab)
+                    m_addTimelineButton->setVisible(false);
+                } else if (w == ui->colorTab) {
                     m_current = ui->colorWidget;
-                else if (w == ui->textTab)
+                } else if (w == ui->textTab) {
                     m_current = ui->textWidget;
-                else if (w == ui->glaxnimateTab)
+                } else if (w == ui->glaxnimateTab) {
                     m_current = ui->glaxnimateWidget;
-                else if (w == ui->noiseTab)
+                } else if (w == ui->noiseTab) {
                     m_current = ui->noiseWidget;
-                else if (w == ui->isingTab)
+                } else if (w == ui->isingTab) {
                     m_current = ui->isingWidget;
-                else if (w == ui->lissajousTab)
+                } else if (w == ui->lissajousTab) {
                     m_current = ui->lissajousWidget;
-                else if (w == ui->plasmaTab)
+                } else if (w == ui->plasmaTab) {
                     m_current = ui->plasmaWidget;
-                else if (w == ui->colorbarsTab)
+                } else if (w == ui->colorbarsTab) {
                     m_current = ui->colorbarsWidget;
-                else if (w == ui->pulseTab)
+                } else if (w == ui->pulseTab) {
                     m_current = ui->pulseWidget;
-                else if (w == ui->jackTab)
+                    m_addTimelineButton->setVisible(false);
+                } else if (w == ui->jackTab) {
                     m_current = ui->jackWidget;
-                else if (w == ui->alsaTab)
+                    m_addTimelineButton->setVisible(false);
+                } else if (w == ui->alsaTab) {
                     m_current = ui->alsaWidget;
-                else if (w == ui->x11grabTab)
+                    m_addTimelineButton->setVisible(false);
+                } else if (w == ui->x11grabTab) {
                     m_current = ui->x11grabWidget;
-                else if (w == ui->gdigrabTab)
+                    m_addTimelineButton->setVisible(false);
+                } else if (w == ui->gdigrabTab) {
                     m_current = ui->gdigrabWidget;
-                else if (w == ui->dshowVideoTab)
+                    m_addTimelineButton->setVisible(false);
+                } else if (w == ui->dshowVideoTab) {
                     m_current = ui->dshowVideoWidget;
-                else if (w == ui->toneTab)
+                    m_addTimelineButton->setVisible(false);
+                } else if (w == ui->toneTab) {
                     m_current = ui->toneWidget;
-                else if (w == ui->countTab)
+                } else if (w == ui->countTab) {
                     m_current = ui->countWidget;
-                else if (w == ui->avfoundationTab)
+                } else if (w == ui->avfoundationTab) {
                     m_current = ui->avfoundationWidget;
-                else if (w == ui->blipTab)
+                    m_addTimelineButton->setVisible(false);
+                } else if (w == ui->blipTab) {
                     m_current = ui->blipWidget;
+                }
                 break;
             }
         }

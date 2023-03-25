@@ -1119,6 +1119,30 @@ void TimelineDock::setupActions()
     Actions.add("timelineRippleTrimClipOutAction", action);
 }
 
+int TimelineDock::addTrackIfNeeded(TrackType trackType)
+{
+    // See if current track matches with no clips at playhead and beyond
+    bool addTrack = true;
+    auto trackIndex = currentTrack();
+    // Hunt for next available track
+    while (addTrack && trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
+        auto clipIndex = clipIndexAtPosition(trackIndex, position());
+        if (clipIndex == -1 || (isBlank(trackIndex, clipIndex) && clipIndex >= clipCount(trackIndex) - 1)) {
+            // This track is available if correct type
+            addTrack = m_model.trackList().at(trackIndex).type != trackType;
+        }
+        if (addTrack)
+            // Still looking
+            trackIndex += (trackType == AudioTrackType) ? 1 : -1;
+    }
+    // Add track if needed
+    if (addTrack) {
+        trackIndex = (trackType == AudioTrackType) ? addAudioTrack() : addVideoTrack();
+        setCurrentTrack(trackIndex);
+    }
+    return trackIndex;
+}
+
 void TimelineDock::setPosition(int position)
 {
     if (!m_model.tractor()) return;
@@ -1672,20 +1696,22 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
     MAIN.undoStack()->push(m_updateCommand.release());
 }
 
-void TimelineDock::addAudioTrack()
+int TimelineDock::addAudioTrack()
 {
     if (m_selection.selectedTrack != -1)
         setSelection();
     MAIN.undoStack()->push(
         new Timeline::AddTrackCommand(m_model, false));
+    return m_model.trackList().size() - 1;
 }
 
-void TimelineDock::addVideoTrack()
+int TimelineDock::addVideoTrack()
 {
     if (m_selection.selectedTrack != -1)
         setSelection();
     MAIN.undoStack()->push(
         new Timeline::AddTrackCommand(m_model, true));
+    return 0;
 }
 
 void TimelineDock::alignSelectedClips()
@@ -3273,25 +3299,8 @@ void TimelineDock::recordAudio()
     Settings.setSavePath(info.path());
     MAIN.undoStack()->beginMacro(tr("Record Audio: %1").arg(info.fileName()));
 
-    // See if current track is audio track with no clips at playhead and beyond.
-    auto trackIndex = currentTrack();
-    bool addTrack = false;
-    if (trackIndex >= 0 && trackIndex < m_model.trackList().size() &&
-            m_model.trackList().at(trackIndex).type == AudioTrackType) {
-        auto clipIndex = clipIndexAtPosition(trackIndex, position());
-        addTrack = clipIndex != -1 &&
-                   (!isBlank(trackIndex, clipIndex) || clipIndex < clipCount(trackIndex) - 1);
-    } else {
-        addTrack = true;
-    }
-    // Add audio track if needed.
-    if (addTrack) {
-        addAudioTrack();
-        trackIndex = m_model.trackList().size() - 1;
-        setCurrentTrack(trackIndex);
-    }
-
     // Add renamed color clip to audio track.
+    auto trackIndex = addTrackIfNeeded(AudioTrackType);
     auto clip = Mlt::Producer(MLT.profile(), "color:");
     clip.set(kShotcutCaptionProperty, info.fileName().toUtf8().constData());
     clip.set(kShotcutDetailProperty, filename.toUtf8().constData());

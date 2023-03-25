@@ -218,6 +218,7 @@ private:
     QDateTime m_sourceUpdatedAt;
     MarkersDock *m_markersDock;
     NotesDock *m_notesDock;
+    std::unique_ptr<QWidget> m_producerWidget;
 
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker &checker);
@@ -353,6 +354,7 @@ private slots:
     void on_actionLayoutRemove_triggered();
     void on_actionOpenOther2_triggered();
     void onOpenOtherTriggered(QWidget *widget);
+    void onOpenOtherFinished(int result);
     void onOpenOtherTriggered();
     void on_actionClearRecentOnExit_toggled(bool arg1);
     void onSceneGraphInitialized();

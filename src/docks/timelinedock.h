@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,6 +106,7 @@ public:
     {
         return m_isRecording;
     }
+    int addTrackIfNeeded(TrackType trackType);
 
 signals:
     void currentTrackChanged();
@@ -139,8 +140,8 @@ signals:
     void updateThumbnails(int trackIndex, int clipIndex);
 
 public slots:
-    void addAudioTrack();
-    void addVideoTrack();
+    int addAudioTrack();
+    int addVideoTrack();
     void alignSelectedClips();
     void onShowFrame(const SharedFrame &frame);
     void onSeeked(int position);
