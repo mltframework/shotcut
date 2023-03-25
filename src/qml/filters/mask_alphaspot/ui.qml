@@ -138,7 +138,6 @@ Item {
             let frame = 0;
             let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerCombo.currentIndex);
             let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
-
             filter.blockSignals = true;
 
             // reset
@@ -199,7 +198,6 @@ Item {
                     previous = i;
                     frame += interval;
                 });
-
             filter.blockSignals = false;
             filter.changed();
             filter.animateInChanged();
