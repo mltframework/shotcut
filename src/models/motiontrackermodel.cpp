@@ -365,17 +365,10 @@ Qt::ItemFlags MotionTrackerModel::flags(const QModelIndex &index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
 
-//bool MotionTrackerModel::insertRows(int row, int count, const QModelIndex &parent)
-//{
-//    beginInsertRows(parent, row, row + count - 1);
-//    endInsertRows();
-//    return true;
-//}
-
-//bool MotionTrackerModel::removeRows(int row, int count, const QModelIndex &parent)
-//{
-//    beginRemoveRows(parent, row, row + count - 1);
-//    // FIXME: Implement me!
-//    endRemoveRows();
-//    return true;
-//}
+void MotionTrackerModel::undo(QmlFilter *filter, const QString &propertyName)
+{
+    if (filter) {
+        filter->set(propertyName, filter->get(kBackupProperty));
+        filter->resetProperty(kBackupProperty);
+    }
+}

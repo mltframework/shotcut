@@ -33,6 +33,8 @@ class Service;
 class MotionTrackerModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(QString nameProperty READ trackerNameProperty CONSTANT)
+    Q_PROPERTY(QString operationProperty READ trackerOperationProperty CONSTANT)
 
 public:
     struct TrackingItem {
@@ -60,8 +62,15 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value,
                  int role = Qt::EditRole) override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
-    //    bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    //    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+    Q_INVOKABLE static void undo(QmlFilter *filter, const QString &propertyName);
+    static QString trackerNameProperty()
+    {
+        return QString::fromLatin1("shotcut:motionTracker.name");
+    }
+    static QString trackerOperationProperty()
+    {
+        return QString::fromLatin1("shotcut:motionTracker.operation");
+    }
 
 public slots:
     void removeFromService(Mlt::Service *service);

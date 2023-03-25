@@ -18,7 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
-import org.shotcut.qml
+import org.shotcut.qml as Shotcut
 
 Item {
     property string fillProperty
@@ -152,8 +152,8 @@ Item {
             else if (s.substring(0, 7) === 'colour:')
                 bgColor.value = s.substring(7);
         }
-        motionTrackerCombo.currentIndex = motionTrackerCombo.indexOfValue(filter.get('shotcut:motionTracker.name'));
-        trackingOperationCombo.currentIndex = trackingOperationCombo.indexOfValue(filter.get('shotcut:motionTracker.operation'));
+        motionTrackerCombo.currentIndex = motionTrackerCombo.indexOfValue(filter.get(motionTrackerModel.nameProperty));
+        trackingOperationCombo.currentIndex = trackingOperationCombo.indexOfValue(filter.get(motionTrackerModel.operationProperty));
     }
 
     function isSimpleKeyframesActive() {
@@ -269,7 +269,7 @@ Item {
             let previous = null;
             let frame = 0;
             let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerCombo.currentIndex);
-            let interpolation = KeyframesModel.SmoothInterpolation;
+            let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
             data.forEach(i => {
                     let current = filter.getRect(trackingProperty, frame);
                     if (previous !== null) {
@@ -287,14 +287,14 @@ Item {
                         case 'absPos':
                             current.x = i.x + i.width / 2 - current.width / 2;
                             current.y = i.y + i.height / 2 - current.height / 2;
-                            interpolation = KeyframesModel.LinearInterpolation;
+                            interpolation = Shotcut.KeyframesModel.LinearInterpolation;
                             break;
                         case 'absSizePos':
                             current.x = i.x;
                             current.y = i.y;
                             current.width = i.width;
                             current.height = i.height;
-                            interpolation = KeyframesModel.LinearInterpolation;
+                            interpolation = Shotcut.KeyframesModel.LinearInterpolation;
                             break;
                         }
                     }
@@ -306,7 +306,7 @@ Item {
     }
 
     width: 500
-    height: 280
+    height: 320
     Component.onCompleted: {
         if (rotationProperty)
             preset.parameters.push(rotationProperty);
@@ -946,7 +946,7 @@ Item {
             onActivated: {
                 if (currentIndex > 0) {
                     enabled = false;
-                    filter.set('shotcut:motionTracker.name', currentText);
+                    filter.set(motionTrackerModel.nameProperty, currentText);
                     applyTracking();
                     enabled = true;
                 }
@@ -957,8 +957,7 @@ Item {
             Layout.rowSpan: 2
             visible: motionTrackerCombo.visible
             onClicked: {
-                filter.set(rectProperty, filter.get('shotcut:backup'));
-                filter.resetProperty('shotcut:backup');
+                motionTrackerModel.undo(filter, rectProperty);
                 filterRect = filter.getRect(rectProperty, getPosition());
                 rectX.value = filterRect.x;
                 rectY.value = filterRect.y;
@@ -1016,7 +1015,7 @@ Item {
                 onActivated: {
                     if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
                         enabled = false;
-                        filter.set('shotcut:motionTracker.operation', currentValue);
+                        filter.set(motionTrackerModel.operationProperty, currentValue);
                         applyTracking();
                         enabled = true;
                     }
