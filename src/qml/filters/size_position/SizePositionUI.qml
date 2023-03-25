@@ -263,7 +263,7 @@ Item {
     }
 
     function applyTracking() {
-        if (motionTrackerCombo.currentIndex > 0) {
+        if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
             motionTrackerModel.reset(filter, trackingProperty, motionTrackerCombo.currentIndex);
             const data = motionTrackerModel.trackingData(motionTrackerCombo.currentIndex);
             let previous = null;
@@ -272,31 +272,33 @@ Item {
             let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
             data.forEach(i => {
                     let current = filter.getRect(trackingProperty, frame);
+                    let x = 0;
+                    let y = 0;
                     if (previous !== null) {
-                        let x = i.x - previous.x;
-                        let y = i.y - previous.y;
-                        switch (trackingOperationCombo.currentValue) {
-                        case 'relativePos':
-                            current.x += x;
-                            current.y += y;
-                            break;
-                        case 'offsetPos':
-                            current.x -= x;
-                            current.y -= y;
-                            break;
-                        case 'absPos':
-                            current.x = i.x + i.width / 2 - current.width / 2;
-                            current.y = i.y + i.height / 2 - current.height / 2;
-                            interpolation = Shotcut.KeyframesModel.LinearInterpolation;
-                            break;
-                        case 'absSizePos':
-                            current.x = i.x;
-                            current.y = i.y;
-                            current.width = i.width;
-                            current.height = i.height;
-                            interpolation = Shotcut.KeyframesModel.LinearInterpolation;
-                            break;
-                        }
+                        x = i.x - previous.x;
+                        y = i.y - previous.y;
+                    }
+                    switch (trackingOperationCombo.currentValue) {
+                    case 'relativePos':
+                        current.x += x;
+                        current.y += y;
+                        break;
+                    case 'offsetPos':
+                        current.x -= x;
+                        current.y -= y;
+                        break;
+                    case 'absPos':
+                        current.x = i.x + i.width / 2 - current.width / 2;
+                        current.y = i.y + i.height / 2 - current.height / 2;
+                        interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                        break;
+                    case 'absSizePos':
+                        current.x = i.x;
+                        current.y = i.y;
+                        current.width = i.width;
+                        current.height = i.height;
+                        interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                        break;
                     }
                     previous = i;
                     filter.set(trackingProperty, current, frame, interpolation);
@@ -947,7 +949,9 @@ Item {
                 if (currentIndex > 0) {
                     enabled = false;
                     filter.set(motionTrackerModel.nameProperty, currentText);
-                    applyTracking();
+                    if (trackingOperationCombo.currentIndex > 0) {
+                        applyTracking();
+                    }
                     enabled = true;
                 }
             }
@@ -1013,10 +1017,12 @@ Item {
                     },]
 
                 onActivated: {
-                    if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
+                    if (currentIndex > 0) {
                         enabled = false;
                         filter.set(motionTrackerModel.operationProperty, currentValue);
-                        applyTracking();
+                        if (motionTrackerCombo.currentIndex > 0) {
+                            applyTracking();
+                        }
                         enabled = true;
                     }
                 }

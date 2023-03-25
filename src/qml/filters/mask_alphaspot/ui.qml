@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2022 Meltytech, LLC
+ * Copyright (c) 2017-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Item {
     property string paramShape: 'filter.0'
@@ -59,6 +60,8 @@ Item {
         heightKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHeight) > 0;
         rotationSlider.updateFromFilter();
         rotationKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramRotation) > 0;
+        motionTrackerCombo.currentIndex = motionTrackerCombo.indexOfValue(filter.get(motionTrackerModel.nameProperty));
+        trackingOperationCombo.currentIndex = trackingOperationCombo.indexOfValue(filter.get(motionTrackerModel.operationProperty));
         blockUpdate = false;
         horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled = rotationSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
         operationCombo.currentIndex = Math.round(filter.getDouble(paramOperation) * 4);
@@ -128,8 +131,84 @@ Item {
         updateFilter(paramRotation, rotationSlider.filterValue(), null, rotationKeyframesButton);
     }
 
+    function applyTracking() {
+        if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
+            const data = motionTrackerModel.trackingData(motionTrackerCombo.currentIndex);
+            let previous = null;
+            let frame = 0;
+            let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerCombo.currentIndex);
+            let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
+
+            filter.blockSignals = true;
+
+            // reset
+            if (data.length > 0) {
+                let params = [paramHorizontal, paramVertical, paramWidth, paramHeight];
+                // Use a shotcut property to backup current values
+                if (filter.get('shotcut:backup.' + paramHorizontal).length === 0) {
+                    params.forEach(param => {
+                            filter.set('shotcut:backup.' + param, filter.getDouble(param));
+                        });
+                } else {
+                    params.forEach(param => {
+                            filter.resetProperty(param);
+                            filter.set(param, filter.get('shotcut:backup.' + param));
+                        });
+                }
+            }
+            data.forEach(i => {
+                    let current = Qt.rect(filter.getDouble(paramHorizontal, frame), filter.getDouble(paramVertical, frame), filter.getDouble(paramWidth, frame), filter.getDouble(paramHeight, frame));
+                    let x = 0;
+                    let y = 0;
+                    if (previous !== null) {
+                        x = (i.x - previous.x) / profile.width;
+                        y = (i.y - previous.y) / profile.height;
+                    }
+                    switch (trackingOperationCombo.currentValue) {
+                    case 'relativePos':
+                        current.x += x;
+                        current.y += y;
+                        filter.set(paramHorizontal, current.x, frame, interpolation);
+                        filter.set(paramVertical, current.y, frame, interpolation);
+                        break;
+                    case 'offsetPos':
+                        current.x -= x;
+                        current.y -= y;
+                        filter.set(paramHorizontal, current.x, frame, interpolation);
+                        filter.set(paramVertical, current.y, frame, interpolation);
+                        break;
+                    case 'absPos':
+                        current.x = (i.x + i.width / 2) / profile.width;
+                        current.y = (i.y + i.height / 2) / profile.height;
+                        interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                        filter.set(paramHorizontal, current.x, frame, interpolation);
+                        filter.set(paramVertical, current.y, frame, interpolation);
+                        break;
+                    case 'absSizePos':
+                        current.x = (i.x + i.width / 2) / profile.width;
+                        current.y = (i.y + i.height / 2) / profile.height;
+                        current.width = i.width / profile.width / 2;
+                        current.height = i.height / profile.height / 2;
+                        interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                        filter.set(paramHorizontal, current.x, frame, interpolation);
+                        filter.set(paramVertical, current.y, frame, interpolation);
+                        filter.set(paramWidth, current.width, frame, interpolation);
+                        filter.set(paramHeight, current.height, frame, interpolation);
+                        break;
+                    }
+                    previous = i;
+                    frame += interval;
+                });
+
+            filter.blockSignals = false;
+            filter.changed();
+            filter.animateInChanged();
+            filter.animateOutChanged();
+        }
+    }
+
     width: 350
-    height: 300
+    height: 350
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
@@ -371,6 +450,101 @@ Item {
         Shotcut.UndoButton {
             Layout.columnSpan: 2
             onClicked: softnessSlider.value = 20
+        }
+
+        Label {
+            text: qsTr('Motion tracker')
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Shotcut.ComboBox {
+            id: motionTrackerCombo
+
+            implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
+            textRole: 'display'
+            valueRole: 'display'
+            currentIndex: 0
+            model: motionTrackerModel
+
+            onActivated: {
+                if (currentIndex > 0) {
+                    enabled = false;
+                    filter.set(motionTrackerModel.nameProperty, currentText);
+                    if (trackingOperationCombo.currentIndex > 0) {
+                        applyTracking();
+                    }
+                    enabled = true;
+                }
+            }
+        }
+
+        Shotcut.UndoButton {
+            Layout.rowSpan: 2
+            onClicked: {
+                filter.blockSignals = true;
+                filter.resetProperty(motionTrackerModel.nameProperty);
+                filter.resetProperty(motionTrackerModel.operationProperty);
+                let params = [paramHorizontal, paramVertical, paramWidth, paramHeight];
+                params.forEach(param => {
+                        filter.resetProperty(param);
+                        filter.set(param, filter.getDouble('shotcut:backup.' + param));
+                        filter.resetProperty('shotcut:backup.' + param);
+                    });
+                filter.blockSignals = false;
+                filter.changed();
+                filter.animateInChanged();
+                filter.animateOutChanged();
+            }
+        }
+
+        Item {
+            Layout.rowSpan: 2
+            width: 1
+        }
+
+        Item {
+            width: 1
+        }
+
+        RowLayout {
+            Label {
+                text: qsTr('Adjust')
+            }
+
+            Shotcut.ComboBox {
+                id: trackingOperationCombo
+
+                implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
+                textRole: 'text'
+                valueRole: 'value'
+                model: [{
+                        "text": '',
+                        "value": ''
+                    }, {
+                        "text": qsTr('Relative Position'),
+                        "value": 'relativePos'
+                    }, {
+                        "text": qsTr('Offset Position'),
+                        "value": 'offsetPos'
+                    }, {
+                        "text": qsTr('Absolute Position'),
+                        "value": 'absPos'
+                    }, {
+                        "text": qsTr('Size And Position'),
+                        "value": 'absSizePos'
+                    },]
+
+                onActivated: {
+                    if (currentIndex > 0) {
+                        enabled = false;
+                        filter.set(motionTrackerModel.operationProperty, currentValue);
+                        if (trackingOperationCombo.currentIndex > 0) {
+                            applyTracking();
+                        }
+                        enabled = true;
+                    }
+                }
+            }
         }
 
         Shotcut.TipBox {

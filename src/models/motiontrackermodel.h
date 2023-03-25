@@ -62,7 +62,7 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value,
                  int role = Qt::EditRole) override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
-    Q_INVOKABLE static void undo(QmlFilter *filter, const QString &propertyName);
+    Q_INVOKABLE static void undo(QmlFilter *filter = nullptr, const QString &propertyName = QString());
     static QString trackerNameProperty()
     {
         return QString::fromLatin1("shotcut:motionTracker.name");

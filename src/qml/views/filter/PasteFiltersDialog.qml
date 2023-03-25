@@ -29,7 +29,6 @@ Window {
     title: qsTr('Paste Filters')
     width: 300
     height: 100
-    Component.onCompleted: nameField.forceActiveFocus(Qt.TabFocusReason)
 
     SystemPalette {
         id: dialogPalette

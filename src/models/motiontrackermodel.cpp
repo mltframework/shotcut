@@ -367,7 +367,7 @@ Qt::ItemFlags MotionTrackerModel::flags(const QModelIndex &index) const
 
 void MotionTrackerModel::undo(QmlFilter *filter, const QString &propertyName)
 {
-    if (filter) {
+    if (filter && !propertyName.isEmpty()) {
         filter->set(propertyName, filter->get(kBackupProperty));
         filter->resetProperty(kBackupProperty);
     }
