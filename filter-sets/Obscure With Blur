@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mlt LC_NUMERIC="C" version="7.15.0" root="" parent="producer0" in="00:00:00.000" out="00:08:20.487">
+  <producer id="producer0" in="00:00:00.000" out="00:08:20.487">
+    <property name="length">15000</property>
+    <property name="eof">pause</property>
+    <property name="resource">black</property>
+    <property name="aspect_ratio">1</property>
+    <property name="mlt_service">color</property>
+    <property name="shotcut:filtersClipboard">1</property>
+    <filter id="filter0" out="00:00:30.030">
+      <property name="filter">frei0r.alphaspot</property>
+      <property name="mlt_service">mask_start</property>
+      <property name="shotcut:filter">maskSimpleShape</property>
+      <property name="filter.9">0</property>
+      <property name="filter.0">0</property>
+      <property name="filter.1">0.5</property>
+      <property name="filter.2">0.5</property>
+      <property name="filter.3">0.1</property>
+      <property name="filter.4">0.1</property>
+      <property name="filter.5">0.5</property>
+      <property name="filter.6">0.2</property>
+    </filter>
+    <filter id="filter1" out="00:00:30.030">
+      <property name="version">0.2</property>
+      <property name="mlt_service">frei0r.IIRblur</property>
+      <property name="shotcut:filter">blur_exponential</property>
+      <property name="1">0</property>
+      <property name="0">0.6</property>
+    </filter>
+    <filter id="filter2" out="00:00:30.030">
+      <property name="transition">frei0r.composition</property>
+      <property name="mlt_image_format">rgba</property>
+      <property name="mlt_service">mask_apply</property>
+      <property name="transition.threads">0</property>
+    </filter>
+  </producer>
+</mlt>

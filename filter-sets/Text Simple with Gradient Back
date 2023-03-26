@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mlt LC_NUMERIC="C" version="7.15.0" root="" parent="producer0" in="00:00:00.000" out="00:09:59.960">
+  <producer id="producer0" in="00:00:00.000" out="00:09:59.960">
+    <property name="length">15000</property>
+    <property name="eof">pause</property>
+    <property name="resource">black</property>
+    <property name="aspect_ratio">1</property>
+    <property name="mlt_service">color</property>
+    <property name="shotcut:filtersClipboard">1</property>
+    <filter id="filter0" out="00:00:03.960">
+      <property name="version">1</property>
+      <property name="mlt_service">frei0r.cairogradient</property>
+      <property name="shotcut:filter">gradient</property>
+      <property name="0">gradient_linear</property>
+      <property name="1">#000000</property>
+      <property name="2">1</property>
+      <property name="3">#000000</property>
+      <property name="4">0</property>
+      <property name="9">0</property>
+      <property name="10">normal</property>
+      <property name="shotcut:rect">50% 65% 0 25%</property>
+      <property name="5">0.5</property>
+      <property name="6">0.75</property>
+      <property name="7">0.5</property>
+      <property name="8">1</property>
+    </filter>
+    <filter id="filter1" out="00:00:03.960">
+      <property name="argument">Edit your text using the Filters panel.</property>
+      <property name="geometry">0% 75% 100% 25%</property>
+      <property name="family">Sans</property>
+      <property name="size">80</property>
+      <property name="weight">7000</property>
+      <property name="style">normal</property>
+      <property name="fgcolour">#ffffffff</property>
+      <property name="bgcolour">#00000000</property>
+      <property name="olcolour">#aa000000</property>
+      <property name="pad">0</property>
+      <property name="halign">center</property>
+      <property name="valign">top</property>
+      <property name="outline">3</property>
+      <property name="mlt_service">dynamictext</property>
+      <property name="shotcut:filter">dynamicText</property>
+      <property name="shotcut:usePointSize">1</property>
+      <property name="shotcut:pointSize">60</property>
+    </filter>
+  </producer>
+</mlt>

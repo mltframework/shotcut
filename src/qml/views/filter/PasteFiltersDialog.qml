@@ -28,7 +28,10 @@ Window {
     modality: Qt.ApplicationModal
     title: qsTr('Paste Filters')
     width: 300
-    height: 100
+    height: 300
+    minimumHeight: 100
+    minimumWidth: 300
+    onVisibilityChanged: presetCombo.currentIndex = 0
 
     SystemPalette {
         id: dialogPalette

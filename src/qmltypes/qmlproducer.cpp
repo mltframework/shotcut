@@ -20,6 +20,7 @@
 #include "util.h"
 #include "models/audiolevelstask.h"
 #include "mainwindow.h"
+#include "qmltypes/qmlapplication.h"
 #include "widgets/glaxnimateproducerwidget.h"
 #include "settings.h"
 #include <Logger.h>
@@ -178,9 +179,8 @@ void QmlProducer::launchGlaxnimate(const QString &filename) const
 QStringList QmlProducer::filterSets() const
 {
     QStringList sets;
-    sets << tr("Clipboard");
-    QDir dir(Settings.appDataLocation());
-    if (dir.cd("filter-sets")) {
+    auto dir = QmlApplication::dataDir();
+    if (dir.cd("shotcut") && dir.cd("filter-sets")) {
         QStringList entries = dir.entryList(QDir::Files | QDir::Readable);
         for (const auto &s : entries) {
             if (s == QUrl::toPercentEncoding(QUrl::fromPercentEncoding(s.toUtf8())))
@@ -188,6 +188,24 @@ QStringList QmlProducer::filterSets() const
             else
                 sets << s;
         }
+    }
+    sets.sort(Qt::CaseInsensitive);
+    sets.prepend(tr("Clipboard"));
+    QStringList sets2;
+    dir = Settings.appDataLocation();
+    if (dir.cd("filter-sets")) {
+        QStringList entries = dir.entryList(QDir::Files | QDir::Readable);
+        for (const auto &s : entries) {
+            if (s == QUrl::toPercentEncoding(QUrl::fromPercentEncoding(s.toUtf8())))
+                sets2 << QUrl::fromPercentEncoding(s.toUtf8());
+            else
+                sets2 << s;
+        }
+    }
+    if (!sets2.isEmpty()) {
+        sets << "";
+        sets2.sort(Qt::CaseInsensitive);
+        sets.append(sets2);
     }
     return sets;
 }
@@ -240,9 +258,14 @@ void QmlProducer::deleteFilterSet(const QString &name)
 
 void QmlProducer::pasteFilterSet(const QString &name)
 {
-    QDir dir(Settings.appDataLocation());
-    if (!dir.cd("filter-sets"))
-        return;
+    auto dir = QmlApplication::dataDir();
+    dir.cd("shotcut");
+    dir.cd("filter-sets");
+    if (!QFileInfo::exists(dir.filePath(name))) {
+        dir = Settings.appDataLocation();
+        if (!dir.cd("filter-sets"))
+            return;
+    }
 
     auto fileName = QUrl::toPercentEncoding(name.toUtf8());
     QFile filtersetFile(dir.filePath(fileName));

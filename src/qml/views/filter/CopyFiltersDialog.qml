@@ -44,7 +44,10 @@ Window {
     title: qsTr('Copy Filters')
     width: 300
     height: 115
+    minimumWidth: 300
+    minimumHeight: 115
     Component.onCompleted: nameField.forceActiveFocus(Qt.TabFocusReason)
+    onVisibilityChanged: nameField.text = ''
 
     ColumnLayout {
         anchors.fill: parent
