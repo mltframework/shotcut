@@ -303,6 +303,7 @@ if(APPLE)
 
   install(TARGETS shotcut BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
+  install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
 endif()
 
 if(UNIX AND NOT APPLE)
