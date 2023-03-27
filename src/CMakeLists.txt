@@ -299,7 +299,8 @@ if(APPLE)
 
   #Create a symlink to the qml folder after building
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/)
-  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/qml SYMBOLIC)
+  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/qml SYMBOLIC)
+  file(CREATE_LINK ${CMAKE_SOURCE_DIR}/filter-sets ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/filter-sets SYMBOLIC)
 
   install(TARGETS shotcut BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
