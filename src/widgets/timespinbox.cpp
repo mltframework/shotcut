@@ -27,16 +27,14 @@ TimeSpinBox::TimeSpinBox(QWidget *parent)
 {
     setLineEdit(new TimeSpinBoxLineEdit);
     setRange(0, INT_MAX);
-    setFixedWidth(this->fontMetrics().boundingRect("_HHH:MM:SS;MMM_").width());
     setAlignment(Qt::AlignRight);
     m_validator = new QRegularExpressionValidator(
         QRegularExpression("^\\s*(\\d*:){0,2}(\\d*[.;:])?\\d*\\s*$"), this);
     setValue(0);
-#ifdef Q_OS_MAC
     QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     font.setPointSize(QGuiApplication::font().pointSize());
     setFont(font);
-#endif
+    setFixedWidth(fontMetrics().boundingRect("_HHH:MM:SS;FFF_").width());
 }
 
 QValidator::State TimeSpinBox::validate(QString &input, int &pos) const

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,11 +56,9 @@ AbstractJob *JobQueue::add(AbstractJob *job)
     QStandardItem *item = new QStandardItem(job->label());
     items << item;
     item = new QStandardItem(tr("pending"));
-#ifdef Q_OS_MAC
     QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     font.setPointSize(QGuiApplication::font().pointSize());
     item->setFont(font);
-#endif
     item->setToolTip(tr("Estimated Hours:Minutes:Seconds"));
     items << item;
     appendRow(items);
