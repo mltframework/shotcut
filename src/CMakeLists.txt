@@ -298,7 +298,7 @@ if(APPLE)
   set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
   #Create a symlink to the qml folder after building
-  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/)
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/qml SYMBOLIC)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/filter-sets ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/filter-sets SYMBOLIC)
 
