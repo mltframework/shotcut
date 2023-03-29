@@ -191,12 +191,14 @@ Item {
             onToggled: {
                 var value = contrastSlider.getValue() / 100;
                 blockUpdate = true;
+                filter.blockSignals = true;
                 filter.resetProperty('gamma_r');
                 filter.resetProperty('gamma_g');
                 filter.resetProperty('gamma_b');
                 filter.resetProperty('gain_r');
                 filter.resetProperty('gain_g');
                 filter.resetProperty('gain_b');
+                filter.blockSignals = false;
                 if (checked) {
                     filter.animateIn = filter.animateOut = 0;
                     blockUpdate = false;
