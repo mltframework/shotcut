@@ -7,7 +7,7 @@ description: >
   no import required meaning native timeline editing; Blackmagic Design
   support for input and preview monitoring; and resolution support to 4k.
 
-base: core18
+base: core20
 grade: stable
 confinement: classic
 
@@ -22,6 +22,8 @@ apps:
     command: Shotcut.app/ffprobe
   melt:
     command: Shotcut.app/melt
+  glaxnimate:
+    command: Shotcut.app/glaxnimate
 
 parts:
   shotcut:
