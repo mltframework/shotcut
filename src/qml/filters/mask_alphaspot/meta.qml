@@ -8,40 +8,18 @@ Metadata {
     mlt_service: 'mask_start'
     objectName: 'maskSimpleShape'
     qml: 'ui.qml'
+    vui: 'vui.qml'
     icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['filter.1', 'filter.2', 'filter.3', 'filter.4', 'filter.5']
+        simpleProperties: ['filter.1', 'filter.2', 'filter.3', 'filter.4', 'filter.5', 'shotcut:rect']
         parameters: [
             Parameter {
-                name: qsTr('Horizontal')
-                property: 'filter.1'
-                isCurve: true
-                minimum: -1
-                maximum: 2
-            },
-            Parameter {
-                name: qsTr('Vertical')
-                property: 'filter.2'
-                isCurve: true
-                minimum: -1
-                maximum: 2
-            },
-            Parameter {
-                name: qsTr('Width')
-                property: 'filter.3'
-                isCurve: true
-                minimum: 0
-                maximum: 1
-            },
-            Parameter {
-                name: qsTr('Height')
-                property: 'filter.4'
-                isCurve: true
-                minimum: 0
-                maximum: 1
+                name: qsTr('Size & Position')
+                property: 'shotcut:rect'
+                isRectangle: true
             },
             Parameter {
                 name: qsTr('Rotation')

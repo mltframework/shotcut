@@ -21,7 +21,7 @@ Metadata {
         simpleProperties: ['rect']
         parameters: [
             Parameter {
-                name: qsTr('Position / Size')
+                name: qsTr('Size & Position')
                 property: 'rect'
                 isRectangle: true
             }

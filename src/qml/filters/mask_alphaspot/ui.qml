@@ -29,18 +29,28 @@ Item {
     property string paramRotation: 'filter.5'
     property string paramSoftness: 'filter.6'
     property string paramOperation: 'filter.9'
-    property var defaultParameters: [paramHorizontal, paramVertical, paramWidth, paramHeight, paramShape, paramRotation, paramSoftness, paramOperation]
+    property string rectProperty: 'shotcut:rect'
+    property var defaultParameters: [paramHorizontal, paramVertical, paramWidth, paramHeight, paramShape, paramRotation, paramSoftness, paramOperation, rectProperty]
     property bool blockUpdate: true
     property var startValues: [0.5, 0.5, 0.1, 0.1, 0, 0.5]
     property var middleValues: [0.5, 0.5, 0.1, 0.1, 0, 0.5]
     property var endValues: [0.5, 0.5, 0.1, 0.1, 0, 0.5]
+    property string startValueRect: '_shotcut:startValue'
+    property string middleValueRect: '_shotcut:middleValue'
+    property string endValueRect: '_shotcut:endValue'
+    property rect filterRect
 
     function initSimpleAnimation() {
         middleValues = [filter.getDouble(paramHorizontal, filter.animateIn), filter.getDouble(paramVertical, filter.animateIn), filter.getDouble(paramWidth, filter.animateIn), filter.getDouble(paramHeight, filter.animateIn), 0, filter.getDouble(paramRotation, filter.animateIn)];
-        if (filter.animateIn > 0)
+        filter.set(middleValueRect, filter.getRect(rectProperty, filter.animateIn + 1));
+        if (filter.animateIn > 0) {
             startValues = [filter.getDouble(paramHorizontal, 0), filter.getDouble(paramVertical, 0), filter.getDouble(paramWidth, 0), filter.getDouble(paramHeight, 0), 0, filter.getDouble(paramRotation, 0)];
-        if (filter.animateOut > 0)
+            filter.set(startValueRect, filter.getRect(rectProperty, 0));
+        }
+        if (filter.animateOut > 0) {
             endValues = [filter.getDouble(paramHorizontal, filter.duration - 1), filter.getDouble(paramVertical, filter.duration - 1), filter.getDouble(paramWidth, filter.duration - 1), filter.getDouble(paramHeight, filter.duration - 1), 0, filter.getDouble(paramRotation, filter.duration - 1)];
+            filter.set(endValueRect, filter.getRect(rectProperty, filter.duration - 1));
+        }
     }
 
     function getPosition() {
@@ -50,29 +60,41 @@ Item {
     function setControls() {
         var position = getPosition();
         blockUpdate = true;
-        horizontalSlider.value = filter.getDouble(paramHorizontal, position) * 100;
-        horizontalKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHorizontal) > 0;
-        verticalSlider.value = filter.getDouble(paramVertical, position) * 100;
-        verticalKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramVertical) > 0;
-        widthSlider.value = filter.getDouble(paramWidth, position) * 100;
-        widthKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramWidth) > 0;
-        heightSlider.value = filter.getDouble(paramHeight, position) * 100;
-        heightKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHeight) > 0;
-        rotationSlider.updateFromFilter();
-        rotationKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramRotation) > 0;
         motionTrackerCombo.currentIndex = motionTrackerCombo.indexOfValue(filter.get(motionTrackerModel.nameProperty));
         trackingOperationCombo.currentIndex = trackingOperationCombo.indexOfValue(filter.get(motionTrackerModel.operationProperty));
         blockUpdate = false;
-        horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled = rotationSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
         operationCombo.currentIndex = Math.round(filter.getDouble(paramOperation) * 4);
         shapeCombo.currentIndex = Math.round(filter.getDouble(paramShape) * 3);
         softnessSlider.value = filter.getDouble(paramSoftness) * 100;
     }
 
-    function updateFilter(parameter, value, position, button) {
+    function setKeyframedControls() {
+        let position = getPosition();
+        let newValue = filter.getRect(rectProperty, position);
+        if (filterRect !== newValue) {
+            filterRect = newValue;
+            rectX.value = filterRect.x.toFixed();
+            rectY.value = filterRect.y.toFixed();
+            rectW.value = filterRect.width.toFixed();
+            rectH.value = filterRect.height.toFixed();
+        }
+        let enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
+        rectX.enabled = enabled;
+        rectY.enabled = enabled;
+        rectW.enabled = enabled;
+        rectH.enabled = enabled;
+        positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        blockUpdate = true;
+        rotationSlider.updateFromFilter();
+        rotationKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramRotation) > 0;
+        blockUpdate = false;
+        rotationSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
+    }
+
+    function updateFilterParam(parameter, value, position, button) {
         if (blockUpdate)
             return;
-        var index = defaultParameters.indexOf(parameter);
+        let index = defaultParameters.indexOf(parameter);
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
                 startValues[index] = value;
@@ -100,6 +122,65 @@ Item {
         }
     }
 
+    function resetRectProperties() {
+        filter.resetProperty(rectProperty);
+        filter.resetProperty(paramHorizontal);
+        filter.resetProperty(paramVertical);
+        filter.resetProperty(paramWidth);
+        filter.resetProperty(paramHeight);
+    }
+
+    function setRectProperties(rect, position) {
+        if (position === null)
+            position = -1;
+        filter.set(rectProperty, rect, position);
+        rect.width /= profile.width * 2;
+        rect.height /= profile.height * 2;
+        rect.x = rect.x / profile.width + rect.width;
+        rect.y = rect.y / profile.height + rect.height;
+        filter.blockSignals = true;
+        filter.set(paramHorizontal, rect.x, position);
+        filter.set(paramVertical, rect.y, position);
+        filter.set(paramWidth, rect.width, position);
+        filter.set(paramHeight, rect.height, position);
+        filter.blockSignals = false;
+    }
+
+    function updateFilterRect(position) {
+        if (position !== null) {
+            filter.blockSignals = true;
+            if (position <= 0 && filter.animateIn > 0)
+                filter.set(startValueRect, filterRect);
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                filter.set(endValueRect, filterRect);
+            else
+                filter.set(middleValueRect, filterRect);
+            filter.blockSignals = false;
+        }
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            resetRectProperties();
+            positionKeyframesButton.checked = false;
+            if (filter.animateIn > 0) {
+                setRectProperties(filter.getRect(startValueRect), 0);
+                setRectProperties(filter.getRect(middleValueRect), filter.animateIn - 1);
+            }
+            if (filter.animateOut > 0) {
+                setRectProperties(filter.getRect(middleValueRect), filter.duration - filter.animateOut);
+                setRectProperties(filter.getRect(endValueRect), filter.duration - 1);
+            }
+        } else if (!positionKeyframesButton.checked) {
+            resetRectProperties();
+            setRectProperties(filter.getRect(middleValueRect));
+        } else if (position !== null) {
+            setRectProperties(filterRect, position);
+        }
+    }
+
+    function updateFilter() {
+        updateFilterParam(paramRotation, rotationSlider.filterValue(), null, rotationKeyframesButton);
+        updateFilterRect(null);
+    }
+
     function onKeyframesButtonClicked(checked, parameter, value) {
         if (checked) {
             blockUpdate = true;
@@ -122,13 +203,9 @@ Item {
         }
     }
 
-    function updatedSimpleAnimation() {
-        setControls();
-        updateFilter(paramHorizontal, horizontalSlider.value / 100, null, horizontalKeyframesButton);
-        updateFilter(paramVertical, verticalSlider.value / 100, null, verticalKeyframesButton);
-        updateFilter(paramWidth, widthSlider.value / 100, null, widthKeyframesButton);
-        updateFilter(paramHeight, heightSlider.value / 100, null, heightKeyframesButton);
-        updateFilter(paramRotation, rotationSlider.filterValue(), null, rotationKeyframesButton);
+    function updateSimpleAnimation() {
+        setKeyframedControls();
+        updateFilter();
     }
 
     function applyTracking() {
@@ -208,11 +285,17 @@ Item {
     width: 350
     height: 350
     Component.onCompleted: {
+        filter.blockSignals = true;
+        let rect = Qt.rect(0.4 * profile.width, 0.4 * profile.height, 0.2 * profile.width, 0.2 * profile.height);
+        filter.set(startValueRect, rect);
+        filter.set(middleValueRect, rect);
+        filter.set(endValueRect, rect);
         if (filter.isNew) {
             // Set default parameter values
             filter.set('filter', 'frei0r.alphaspot');
             filter.set(paramOperation, 0);
             filter.set(paramShape, 0);
+            filter.set(rectProperty, '40%/40%:20%x20%');
             filter.set(paramHorizontal, 0.5);
             filter.set(paramVertical, 0.5);
             filter.set(paramWidth, 0.1);
@@ -223,7 +306,9 @@ Item {
         } else {
             initSimpleAnimation();
         }
+        filter.blockSignals = false;
         setControls();
+        setKeyframedControls();
     }
 
     GridLayout {
@@ -240,15 +325,16 @@ Item {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: {
-                filter.resetProperty(paramHorizontal);
-                filter.resetProperty(paramVertical);
-                filter.resetProperty(paramWidth);
-                filter.resetProperty(paramHeight);
+                filterRect = Qt.rect(0, 0, 0, 0);
+                resetRectProperties();
                 filter.resetProperty(paramRotation);
             }
             onPresetSelected: {
                 setControls();
+                setKeyframedControls();
+                filter.blockSignals = true;
                 initSimpleAnimation();
+                filter.blockSignals = false;
             }
         }
 
@@ -295,103 +381,139 @@ Item {
         }
 
         Label {
-            text: qsTr('Horizontal')
+            text: qsTr('Position')
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
-            id: horizontalSlider
+        RowLayout {
+            Shotcut.DoubleSpinBox {
+                id: rectX
 
-            minimumValue: -100
-            maximumValue: 200
-            decimals: 2
-            suffix: ' %'
-            onValueChanged: updateFilter(paramHorizontal, value / 100, getPosition(), horizontalKeyframesButton)
+                Layout.minimumWidth: 100
+                horizontalAlignment: Qt.AlignRight
+                decimals: 0
+                stepSize: 1
+                from: -1e+09
+                to: 1e+09
+                onValueModified: {
+                    if (filterRect.x !== value) {
+                        filterRect.x = value;
+                        updateFilterRect(getPosition(), true);
+                    }
+                }
+            }
+
+            Label {
+                text: ','
+                Layout.minimumWidth: 20
+                horizontalAlignment: Qt.AlignHCenter
+            }
+
+            Shotcut.DoubleSpinBox {
+                id: rectY
+
+                Layout.minimumWidth: 100
+                horizontalAlignment: Qt.AlignRight
+                decimals: 0
+                stepSize: 1
+                from: -1e+09
+                to: 1e+09
+                onValueModified: {
+                    if (filterRect.y !== value) {
+                        filterRect.y = value;
+                        updateFilterRect(getPosition());
+                    }
+                }
+            }
         }
 
         Shotcut.UndoButton {
-            onClicked: horizontalSlider.value = 50
+            onClicked: {
+                rectX.value = 0.4 * profile.width;
+                rectY.value = 0.4 * profile.height;
+                filterRect.x = 0.4 * profile.width;
+                filterRect.y = 0.4 * profile.height;
+                updateFilterRect(getPosition());
+            }
         }
 
         Shotcut.KeyframesButton {
-            id: horizontalKeyframesButton
+            id: positionKeyframesButton
 
-            onToggled: onKeyframesButtonClicked(checked, paramHorizontal, horizontalSlider.value / 100)
+            Layout.rowSpan: 2
+            onToggled: {
+                filterRect = filter.getRect(rectProperty, getPosition());
+                if (checked) {
+                    filter.blockSignals = true;
+                    filter.clearSimpleAnimation(rectProperty);
+                    filter.clearSimpleAnimation(paramHorizontal);
+                    filter.clearSimpleAnimation(paramVertical);
+                    filter.clearSimpleAnimation(paramWidth);
+                    filter.clearSimpleAnimation(paramHeight);
+                    filter.blockSignals = false;
+                    updateFilterRect(getPosition());
+                } else {
+                    updateFilterRect(null);
+                }
+                checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+            }
         }
 
         Label {
-            text: qsTr('Vertical')
+            text: qsTr('Size')
             Layout.alignment: Qt.AlignRight
         }
 
-        Shotcut.SliderSpinner {
-            id: verticalSlider
+        RowLayout {
+            Shotcut.DoubleSpinBox {
+                id: rectW
 
-            minimumValue: -100
-            maximumValue: 200
-            decimals: 2
-            suffix: ' %'
-            onValueChanged: updateFilter(paramVertical, value / 100, getPosition(), verticalKeyframesButton)
+                Layout.minimumWidth: 100
+                horizontalAlignment: Qt.AlignRight
+                decimals: 0
+                stepSize: 1
+                from: -1e+09
+                to: 1e+09
+                onValueModified: {
+                    if (filterRect.width !== value) {
+                        filterRect.width = value;
+                        updateFilterRect(getPosition());
+                    }
+                }
+            }
+
+            Label {
+                text: 'x'
+                Layout.minimumWidth: 20
+                horizontalAlignment: Qt.AlignHCenter
+            }
+
+            Shotcut.DoubleSpinBox {
+                id: rectH
+
+                Layout.minimumWidth: 100
+                horizontalAlignment: Qt.AlignRight
+                decimals: 0
+                stepSize: 1
+                from: -1e+09
+                to: 1e+09
+                onValueModified: {
+                    if (filterRect.height !== value) {
+                        filterRect.height = value;
+                        updateFilterRect(getPosition());
+                    }
+                }
+            }
         }
 
         Shotcut.UndoButton {
-            onClicked: verticalSlider.value = 50
-        }
-
-        Shotcut.KeyframesButton {
-            id: verticalKeyframesButton
-
-            onToggled: onKeyframesButtonClicked(checked, paramVertical, verticalSlider.value / 100)
-        }
-
-        Label {
-            text: qsTr('Width')
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Shotcut.SliderSpinner {
-            id: widthSlider
-
-            minimumValue: 0.0001
-            maximumValue: 100
-            decimals: 2
-            suffix: ' %'
-            onValueChanged: updateFilter(paramWidth, value / 100, getPosition(), widthKeyframesButton)
-        }
-
-        Shotcut.UndoButton {
-            onClicked: widthSlider.value = 10
-        }
-
-        Shotcut.KeyframesButton {
-            id: widthKeyframesButton
-
-            onToggled: onKeyframesButtonClicked(checked, paramWidth, widthSlider.value / 100)
-        }
-
-        Label {
-            text: qsTr('Height')
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Shotcut.SliderSpinner {
-            id: heightSlider
-
-            minimumValue: 0.0001
-            maximumValue: 100
-            decimals: 2
-            suffix: ' %'
-            onValueChanged: updateFilter(paramHeight, value / 100, getPosition(), heightKeyframesButton)
-        }
-
-        Shotcut.UndoButton {
-            onClicked: heightSlider.value = 10
-        }
-
-        Shotcut.KeyframesButton {
-            id: heightKeyframesButton
-
-            onToggled: onKeyframesButtonClicked(checked, paramHeight, heightSlider.value / 100)
+            onClicked: {
+                rectW.value = 0.2 * profile.width;
+                rectH.value = 0.2 * profile.height;
+                filterRect.width = 0.2 * profile.width;
+                filterRect.height = 0.2 * profile.height;
+                updateFilterRect(getPosition());
+            }
         }
 
         Label {
@@ -415,7 +537,7 @@ Item {
             decimals: 1
             spinnerWidth: 110
             suffix: qsTr(' deg', 'degrees')
-            onValueChanged: updateFilter(paramRotation, filterValue(), getPosition(), rotationKeyframesButton)
+            onValueChanged: updateFilterParam(paramRotation, filterValue(), getPosition(), rotationKeyframesButton)
         }
 
         Shotcut.UndoButton {
@@ -559,27 +681,27 @@ Item {
 
     Connections {
         function onChanged() {
-            setControls();
+            setKeyframedControls();
         }
 
         function onInChanged() {
-            updatedSimpleAnimation();
+            updateSimpleAnimation();
         }
 
         function onOutChanged() {
-            updatedSimpleAnimation();
+            updateSimpleAnimation();
         }
 
         function onAnimateInChanged() {
-            updatedSimpleAnimation();
+            updateSimpleAnimation();
         }
 
         function onAnimateOutChanged() {
-            updatedSimpleAnimation();
+            updateSimpleAnimation();
         }
 
         function onPropertyChanged(name) {
-            setControls();
+            updateSimpleAnimation();
         }
 
         target: filter
@@ -587,18 +709,7 @@ Item {
 
     Connections {
         function onPositionChanged() {
-            if (filter.animateIn > 0 || filter.animateOut > 0) {
-                setControls();
-            } else {
-                blockUpdate = true;
-                horizontalSlider.value = filter.getDouble(paramHorizontal, getPosition()) * 100;
-                verticalSlider.value = filter.getDouble(paramVertical, getPosition()) * 100;
-                widthSlider.value = filter.getDouble(paramWidth, getPosition()) * 100;
-                heightSlider.value = filter.getDouble(paramHeight, getPosition()) * 100;
-                rotationSlider.updateFromFilter();
-                blockUpdate = false;
-                horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled = true;
-            }
+            setKeyframedControls();
         }
 
         target: producer
