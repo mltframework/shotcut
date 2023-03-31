@@ -51,6 +51,7 @@ Item {
         algorithmCombo.currentIndex = algorithmCombo.indexOfValue(filter.get('algo'));
         previewCheckBox.checked = parseInt(filter.get('shape_width')) !== 0;
         name.text = filter.get('shotcut:name');
+        colorPicker.value = filter.get('shape_color');
     }
 
     function visibleShapeWidth() {
@@ -340,12 +341,30 @@ Item {
         Label {
         }
 
-        CheckBox {
-            id: previewCheckBox
-
-            text: qsTr('Show preview')
+        RowLayout {
             Layout.columnSpan: 2
-            onClicked: filter.set('shape_width', checked ? visibleShapeWidth() : 0)
+
+            CheckBox {
+                id: previewCheckBox
+
+                text: qsTr('Show preview')
+                onClicked: filter.set('shape_width', checked ? visibleShapeWidth() : 0)
+            }
+
+            Shotcut.ColorPicker {
+                id: colorPicker
+
+                property bool isReady: false
+
+                alpha: false
+                eyedropper: false
+                Component.onCompleted: isReady = true
+                onValueChanged: {
+                    if (isReady) {
+                        filter.set('shape_color', value);
+                    }
+                }
+            }
         }
 
         Label {
