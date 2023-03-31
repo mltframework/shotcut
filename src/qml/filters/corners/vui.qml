@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Meltytech, LLC
+ * Copyright (c) 2020-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -210,6 +210,7 @@ Shotcut.VuiBase {
 
     Component.onCompleted: {
         setCornersControl();
+        application.showStatusMessage(qsTr('Hold Shift while dragging any corner to drag all corners'));
     }
 
     Flickable {
@@ -246,14 +247,26 @@ Shotcut.VuiBase {
                     radius: handleSize / 2
 
                     MouseArea {
+                        property point before
+                        onPressed: before = Qt.point(corner1Handle.x, corner1Handle.y)
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton
                         cursorShape: Qt.SizeFDiagCursor
                         drag.target: parent
-                        onPositionChanged: {
+                        onPositionChanged: mouse => {
                             if (!(mouse.modifiers & Qt.AltModifier)) {
                                 corner1Handle.x = snapX(corner1Handle.x + handleOffset) - handleOffset;
                                 corner1Handle.y = snapY(corner1Handle.y + handleOffset) - handleOffset;
+                            }
+                            let delta = Qt.point(corner1Handle.x - before.x, corner1Handle.y - before.y);
+                            if (mouse.modifiers & Qt.ShiftModifier) {
+                                before = Qt.point(corner1Handle.x, corner1Handle.y);
+                                corner2Handle.x += delta.x;
+                                corner2Handle.y += delta.y;
+                                corner3Handle.x += delta.x;
+                                corner3Handle.y += delta.y;
+                                corner4Handle.x += delta.x;
+                                corner4Handle.y += delta.y;
                             }
                             updateFilterCorners(getPosition());
                         }
@@ -276,14 +289,26 @@ Shotcut.VuiBase {
                     radius: handleSize / 2
 
                     MouseArea {
+                        property point before
+                        onPressed: before = Qt.point(corner2Handle.x, corner2Handle.y)
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton
                         cursorShape: Qt.SizeBDiagCursor
                         drag.target: parent
-                        onPositionChanged: {
+                        onPositionChanged: mouse => {
                             if (!(mouse.modifiers & Qt.AltModifier)) {
                                 corner2Handle.x = snapX(corner2Handle.x + handleOffset) - handleOffset;
                                 corner2Handle.y = snapY(corner2Handle.y + handleOffset) - handleOffset;
+                            }
+                            let delta = Qt.point(corner2Handle.x - before.x, corner2Handle.y - before.y);
+                            if (mouse.modifiers & Qt.ShiftModifier) {
+                                before = Qt.point(corner2Handle.x, corner2Handle.y);
+                                corner1Handle.x += delta.x;
+                                corner1Handle.y += delta.y;
+                                corner3Handle.x += delta.x;
+                                corner3Handle.y += delta.y;
+                                corner4Handle.x += delta.x;
+                                corner4Handle.y += delta.y;
                             }
                             updateFilterCorners(getPosition());
                         }
@@ -306,6 +331,8 @@ Shotcut.VuiBase {
                     radius: handleSize / 2
 
                     MouseArea {
+                        property point before
+                        onPressed: before = Qt.point(corner3Handle.x, corner3Handle.y)
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton
                         cursorShape: Qt.SizeFDiagCursor
@@ -314,6 +341,16 @@ Shotcut.VuiBase {
                             if (!(mouse.modifiers & Qt.AltModifier)) {
                                 corner3Handle.x = snapX(corner3Handle.x + handleOffset) - handleOffset;
                                 corner3Handle.y = snapY(corner3Handle.y + handleOffset) - handleOffset;
+                            }
+                            let delta = Qt.point(corner3Handle.x - before.x, corner3Handle.y - before.y);
+                            if (mouse.modifiers & Qt.ShiftModifier) {
+                                before = Qt.point(corner3Handle.x, corner3Handle.y);
+                                corner1Handle.x += delta.x;
+                                corner1Handle.y += delta.y;
+                                corner2Handle.x += delta.x;
+                                corner2Handle.y += delta.y;
+                                corner4Handle.x += delta.x;
+                                corner4Handle.y += delta.y;
                             }
                             updateFilterCorners(getPosition());
                         }
@@ -336,14 +373,26 @@ Shotcut.VuiBase {
                     radius: handleSize / 2
 
                     MouseArea {
+                        property point before
+                        onPressed: before = Qt.point(corner4Handle.x, corner4Handle.y)
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton
                         cursorShape: Qt.SizeBDiagCursor
                         drag.target: parent
-                        onPositionChanged: {
+                        onPositionChanged: mouse => {
                             if (!(mouse.modifiers & Qt.AltModifier)) {
                                 corner4Handle.x = snapX(corner4Handle.x + handleOffset) - handleOffset;
                                 corner4Handle.y = snapY(corner4Handle.y + handleOffset) - handleOffset;
+                            }
+                            let delta = Qt.point(corner4Handle.x - before.x, corner4Handle.y - before.y);
+                            if (mouse.modifiers & Qt.ShiftModifier) {
+                                before = Qt.point(corner4Handle.x, corner4Handle.y);
+                                corner1Handle.x += delta.x;
+                                corner1Handle.y += delta.y;
+                                corner2Handle.x += delta.x;
+                                corner2Handle.y += delta.y;
+                                corner3Handle.x += delta.x;
+                                corner3Handle.y += delta.y;
                             }
                             updateFilterCorners(getPosition());
                         }
