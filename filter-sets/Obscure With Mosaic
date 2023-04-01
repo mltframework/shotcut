@@ -11,6 +11,7 @@
       <property name="filter">frei0r.alphaspot</property>
       <property name="mlt_service">mask_start</property>
       <property name="shotcut:filter">maskSimpleShape</property>
+      <property name="shotcut:rect">40%/40%:20%x20%</property>
       <property name="filter.9">0</property>
       <property name="filter.0">0</property>
       <property name="filter.1">0.5</property>
