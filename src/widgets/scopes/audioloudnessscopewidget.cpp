@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
 
     hlayout->addStretch();
 
-    QTimer::singleShot(100, this, &AudioLoudnessScopeWidget::resetQview);
+    QTimer::singleShot(300, this, &AudioLoudnessScopeWidget::resetQview);
 
     connect(this, &ScopeWidget::moved, this, &AudioLoudnessScopeWidget::resetQview);
 
@@ -301,7 +301,11 @@ bool AudioLoudnessScopeWidget::event(QEvent *event)
 
 void AudioLoudnessScopeWidget::resetQview()
 {
-    LOG_DEBUG() << "begin";
+    LOG_DEBUG() << "begin" << "isSceneGraphInitialized" <<
+                m_qview->quickWindow()->isSceneGraphInitialized();
+    if (!m_qview->quickWindow()->isSceneGraphInitialized()) {
+        return;
+    }
     if (m_qview->status() != QQuickWidget::Null) {
         m_qview->setSource(QUrl(""));
     }
@@ -320,12 +324,14 @@ void AudioLoudnessScopeWidget::resetQview()
     QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("audioloudnessscope.qml"));
     m_qview->setSource(source);
 
-    m_qview->rootObject()->setProperty("orientation", m_orientation);
-    m_qview->rootObject()->setProperty("enableIntegrated",
-                                       Settings.loudnessScopeShowMeter("integrated"));
-    m_qview->rootObject()->setProperty("enableShortterm", Settings.loudnessScopeShowMeter("shortterm"));
-    m_qview->rootObject()->setProperty("enableMomentary", Settings.loudnessScopeShowMeter("momentary"));
-    m_qview->rootObject()->setProperty("enableRange", Settings.loudnessScopeShowMeter("range"));
-    m_qview->rootObject()->setProperty("enablePeak", Settings.loudnessScopeShowMeter("peak"));
-    m_qview->rootObject()->setProperty("enableTruePeak", Settings.loudnessScopeShowMeter("truepeak"));
+    if (m_qview->rootObject()) {
+        m_qview->rootObject()->setProperty("orientation", m_orientation);
+        m_qview->rootObject()->setProperty("enableIntegrated",
+                                           Settings.loudnessScopeShowMeter("integrated"));
+        m_qview->rootObject()->setProperty("enableShortterm", Settings.loudnessScopeShowMeter("shortterm"));
+        m_qview->rootObject()->setProperty("enableMomentary", Settings.loudnessScopeShowMeter("momentary"));
+        m_qview->rootObject()->setProperty("enableRange", Settings.loudnessScopeShowMeter("range"));
+        m_qview->rootObject()->setProperty("enablePeak", Settings.loudnessScopeShowMeter("peak"));
+        m_qview->rootObject()->setProperty("enableTruePeak", Settings.loudnessScopeShowMeter("truepeak"));
+    }
 }
