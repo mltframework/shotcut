@@ -85,7 +85,6 @@ Shotcut.KeyframableFilter {
         stretchxKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchxProperty) > 0;
         stretchyKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchyProperty) > 0;
         featheralphaKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(featherProperty) > 0;
-        motionTrackerCombo.currentIndex = motionTrackerCombo.indexOfValue(filter.get(motionTrackerModel.nameProperty));
         blockUpdate = false;
         enableControls(isSimpleKeyframesActive());
     }
@@ -172,61 +171,58 @@ Shotcut.KeyframableFilter {
         }
     }
 
-    function applyTracking() {
-        if (motionTrackerCombo.currentIndex > 0) {
-            const data = motionTrackerModel.trackingData(motionTrackerCombo.currentIndex);
-            let previous = null;
-            let frame = 0;
-            let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerCombo.currentIndex);
-            let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
-            filter.blockSignals = true;
+    function applyTracking(motionTrackerRow, frame) {
+        const data = motionTrackerModel.trackingData(motionTrackerRow);
+        let previous = null;
+        let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
+        let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
+        filter.blockSignals = true;
 
-            // reset
-            if (data.length > 0) {
-                let params = [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty];
-                // Use a shotcut property to backup current values
-                if (filter.get('shotcut:backup.' + params[0]).length === 0) {
-                    params.forEach(param => {
-                            filter.set('shotcut:backup.' + param, filter.getDouble(param));
-                        });
-                } else {
-                    params.forEach(param => {
-                            filter.resetProperty(param);
-                            filter.set(param, filter.get('shotcut:backup.' + param));
-                        });
-                }
+        // reset
+        if (data.length > 0) {
+            let params = [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty];
+            // Use a shotcut property to backup current values
+            if (filter.get('shotcut:backup.' + params[0]).length === 0) {
+                params.forEach(param => {
+                        filter.set('shotcut:backup.' + param, filter.getDouble(param));
+                    });
+            } else {
+                params.forEach(param => {
+                        filter.resetProperty(param);
+                        filter.set(param, filter.get('shotcut:backup.' + param));
+                    });
             }
-            data.forEach(i => {
-                    let xCorners = [filter.getDouble(corner1xProperty, frame), filter.getDouble(corner2xProperty, frame), filter.getDouble(corner3xProperty, frame), filter.getDouble(corner4xProperty, frame)];
-                    let yCorners = [filter.getDouble(corner1yProperty, frame), filter.getDouble(corner2yProperty, frame), filter.getDouble(corner3yProperty, frame), filter.getDouble(corner4yProperty, frame)];
-                    let x = 0;
-                    let y = 0;
-                    if (previous !== null) {
-                        x = (i.x - previous.x) / profile.width / 3;
-                        y = (i.y - previous.y) / profile.height / 3;
-                    }
-                    for (let j in xCorners) {
-                        xCorners[j] += x;
-                        yCorners[j] += y;
-                        filter.set(cornerProperties[j], Qt.rect(xCorners[j], yCorners[j], 0, 0), frame);
-                    }
-                    filter.set(corner1xProperty, xCorners[0], frame, interpolation);
-                    filter.set(corner1yProperty, yCorners[0], frame, interpolation);
-                    filter.set(corner2xProperty, xCorners[1], frame, interpolation);
-                    filter.set(corner2yProperty, yCorners[1], frame, interpolation);
-                    filter.set(corner3xProperty, xCorners[2], frame, interpolation);
-                    filter.set(corner3yProperty, yCorners[2], frame, interpolation);
-                    filter.set(corner4xProperty, xCorners[3], frame, interpolation);
-                    filter.set(corner4yProperty, yCorners[3], frame, interpolation);
-                    previous = i;
-                    frame += interval;
-                });
-            filter.blockSignals = false;
-            filter.changed();
-            filter.animateInChanged();
-            filter.animateOutChanged();
-            setControls();
         }
+        data.forEach(i => {
+                let xCorners = [filter.getDouble(corner1xProperty, frame), filter.getDouble(corner2xProperty, frame), filter.getDouble(corner3xProperty, frame), filter.getDouble(corner4xProperty, frame)];
+                let yCorners = [filter.getDouble(corner1yProperty, frame), filter.getDouble(corner2yProperty, frame), filter.getDouble(corner3yProperty, frame), filter.getDouble(corner4yProperty, frame)];
+                let x = 0;
+                let y = 0;
+                if (previous !== null) {
+                    x = (i.x - previous.x) / profile.width / 3;
+                    y = (i.y - previous.y) / profile.height / 3;
+                }
+                for (let j in xCorners) {
+                    xCorners[j] += x;
+                    yCorners[j] += y;
+                    filter.set(cornerProperties[j], Qt.rect(xCorners[j], yCorners[j], 0, 0), frame);
+                }
+                filter.set(corner1xProperty, xCorners[0], frame, interpolation);
+                filter.set(corner1yProperty, yCorners[0], frame, interpolation);
+                filter.set(corner2xProperty, xCorners[1], frame, interpolation);
+                filter.set(corner2yProperty, yCorners[1], frame, interpolation);
+                filter.set(corner3xProperty, xCorners[2], frame, interpolation);
+                filter.set(corner3yProperty, yCorners[2], frame, interpolation);
+                filter.set(corner4xProperty, xCorners[3], frame, interpolation);
+                filter.set(corner4yProperty, yCorners[3], frame, interpolation);
+                previous = i;
+                frame += interval;
+            });
+        filter.blockSignals = false;
+        filter.changed();
+        filter.animateInChanged();
+        filter.animateOutChanged();
+        setControls();
     }
 
     keyframableParameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchxProperty, stretchyProperty, featherProperty]
@@ -234,7 +230,7 @@ Shotcut.KeyframableFilter {
     middleValues: [corner1xDefault, corner1yDefault, corner2xDefault, corner2yDefault, corner3xDefault, corner3yDefault, corner4xDefault, corner4yDefault, stretchxDefault, stretchyDefault, featheralphaDefault]
     endValues: [corner1xDefault, corner1yDefault, corner2xDefault, corner2yDefault, corner3xDefault, corner3yDefault, corner4xDefault, corner4yDefault, stretchxDefault, stretchyDefault, featheralphaDefault]
     width: 350
-    height: 450
+    height: 400
     Component.onCompleted: {
         filter.blockSignals = true;
         var cornersString = JSON.stringify(corners);
@@ -724,53 +720,38 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Label {
-            text: qsTr('Motion tracker')
-            Layout.alignment: Qt.AlignRight
-        }
-
-        Shotcut.ComboBox {
-            id: motionTrackerCombo
-
-            implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
-            textRole: 'display'
-            valueRole: 'display'
-            currentIndex: 0
-            model: motionTrackerModel
-
-            onActivated: {
-                if (currentIndex > 0) {
-                    enabled = false;
-                    filter.set(motionTrackerModel.nameProperty, currentText);
-                    applyTracking();
-                    enabled = true;
-                }
-            }
-        }
-
-        Shotcut.UndoButton {
-            onClicked: {
-                filter.blockSignals = true;
-                filter.resetProperty(motionTrackerModel.nameProperty);
-                let params = [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty];
-                params.forEach(param => {
-                        filter.resetProperty(param);
-                        filter.set(param, filter.getDouble('shotcut:backup.' + param));
-                        filter.resetProperty('shotcut:backup.' + param);
-                    });
-                filter.blockSignals = false;
-                filter.changed();
-                filter.animateInChanged();
-                filter.animateOutChanged();
-            }
-        }
-
         Item {
             width: 1
         }
 
+        Shotcut.Button {
+            Layout.columnSpan: parent.columns - 1
+            text: motionTrackerDialog.title
+            onClicked: motionTrackerDialog.show()
+        }
+
         Item {
             Layout.fillHeight: true
+        }
+    }
+
+    Shotcut.MotionTrackerDialog {
+        id: motionTrackerDialog
+        operationVisible: false
+        onAccepted: (motionTrackerRow, operation, startFrame) => applyTracking(motionTrackerRow, startFrame)
+        onReset: if (filter.keyframeCount(corner1xProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {
+            filter.blockSignals = true;
+            filter.resetProperty(motionTrackerModel.nameProperty);
+            let params = [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty];
+            params.forEach(param => {
+                    filter.resetProperty(param);
+                    filter.set(param, filter.getDouble('shotcut:backup.' + param));
+                    filter.resetProperty('shotcut:backup.' + param);
+                });
+            filter.blockSignals = false;
+            filter.changed();
+            filter.animateInChanged();
+            filter.animateOutChanged();
         }
     }
 

@@ -24,6 +24,7 @@ import org.shotcut.qml as Shotcut
 Window {
     id: motionTrackerDialog
 
+    property alias operationVisible: trackingOperationCombo.visible
     signal accepted(int motionTrackerRow, string operation, int startFrame)
     signal reset
 
@@ -68,6 +69,7 @@ Window {
         Label {
             text: qsTr('Adjust')
             Layout.alignment: Qt.AlignRight
+            visible: trackingOperationCombo.visible
         }
 
         Shotcut.ComboBox {
@@ -130,7 +132,7 @@ Window {
                 text: qsTr('Apply')
                 onClicked: {
                     motionTrackerDialog.hide();
-                    if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
+                    if (motionTrackerCombo.currentIndex > 0 && (trackingOperationCombo.currentIndex > 0 || !trackingOperationCombo.visible)) {
                         let operation = trackingOperationCombo.currentValue;
                         let startFrame = currentRadioButton.checked ? getPosition() : 0;
                         accepted(motionTrackerCombo.currentIndex, operation, startFrame);
