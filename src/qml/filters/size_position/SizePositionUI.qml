@@ -17,6 +17,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Window
 import Shotcut.Controls as Shotcut
 import org.shotcut.qml as Shotcut
 
@@ -152,8 +153,6 @@ Item {
             else if (s.substring(0, 7) === 'colour:')
                 bgColor.value = s.substring(7);
         }
-        motionTrackerCombo.currentIndex = motionTrackerCombo.indexOfValue(filter.get(motionTrackerModel.nameProperty));
-        trackingOperationCombo.currentIndex = trackingOperationCombo.indexOfValue(filter.get(motionTrackerModel.operationProperty));
     }
 
     function isSimpleKeyframesActive() {
@@ -262,53 +261,51 @@ Item {
         setFilter(null);
     }
 
-    function applyTracking() {
-        if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
-            motionTrackerModel.reset(filter, trackingProperty, motionTrackerCombo.currentIndex);
-            const data = motionTrackerModel.trackingData(motionTrackerCombo.currentIndex);
-            let previous = null;
-            let frame = currentRadioButton.checked ? getPosition() : 0;
-            let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerCombo.currentIndex);
-            let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
-            data.forEach(i => {
-                    let current = filter.getRect(trackingProperty, frame);
-                    let x = 0;
-                    let y = 0;
-                    if (previous !== null) {
-                        x = i.x - previous.x;
-                        y = i.y - previous.y;
-                    }
-                    switch (trackingOperationCombo.currentValue) {
-                    case 'relativePos':
-                        current.x += x;
-                        current.y += y;
-                        break;
-                    case 'offsetPos':
-                        current.x -= x;
-                        current.y -= y;
-                        break;
-                    case 'absPos':
-                        current.x = i.x + i.width / 2 - current.width / 2;
-                        current.y = i.y + i.height / 2 - current.height / 2;
-                        interpolation = Shotcut.KeyframesModel.LinearInterpolation;
-                        break;
-                    case 'absSizePos':
-                        current.x = i.x;
-                        current.y = i.y;
-                        current.width = i.width;
-                        current.height = i.height;
-                        interpolation = Shotcut.KeyframesModel.LinearInterpolation;
-                        break;
-                    }
-                    previous = i;
-                    filter.set(trackingProperty, current, frame, interpolation);
-                    frame += interval;
-                });
-        }
+    function applyTracking(motionTrackerRow, operation) {
+        motionTrackerModel.reset(filter, trackingProperty, motionTrackerRow);
+        const data = motionTrackerModel.trackingData(motionTrackerRow);
+        let previous = null;
+        let frame = currentRadioButton.checked ? getPosition() : 0;
+        let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
+        let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
+        data.forEach(i => {
+                let current = filter.getRect(trackingProperty, frame);
+                let x = 0;
+                let y = 0;
+                if (previous !== null) {
+                    x = i.x - previous.x;
+                    y = i.y - previous.y;
+                }
+                switch (operation) {
+                case 'relativePos':
+                    current.x += x;
+                    current.y += y;
+                    break;
+                case 'offsetPos':
+                    current.x -= x;
+                    current.y -= y;
+                    break;
+                case 'absPos':
+                    current.x = i.x + i.width / 2 - current.width / 2;
+                    current.y = i.y + i.height / 2 - current.height / 2;
+                    interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                    break;
+                case 'absSizePos':
+                    current.x = i.x;
+                    current.y = i.y;
+                    current.width = i.width;
+                    current.height = i.height;
+                    interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                    break;
+                }
+                previous = i;
+                filter.set(trackingProperty, current, frame, interpolation);
+                frame += interval;
+            });
     }
 
-    width: 500
-    height: 320
+    width: 425
+    height: 250
     Component.onCompleted: {
         if (rotationProperty)
             preset.parameters.push(rotationProperty);
@@ -928,127 +925,37 @@ Item {
             visible: bgColor.visible
         }
 
-        Label {
-            text: qsTr('Motion tracker')
-            Layout.alignment: Qt.AlignRight
-            visible: motionTrackerCombo.visible
-        }
-
-        Shotcut.ComboBox {
-            id: motionTrackerCombo
-
-            Layout.columnSpan: 3
-            visible: !!trackingProperty
-            implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
-            textRole: 'display'
-            valueRole: 'display'
-            currentIndex: 0
-            model: motionTrackerModel
-
-            onActivated: {
-                if (currentIndex > 0) {
-                    enabled = false;
-                    filter.set(motionTrackerModel.nameProperty, currentText);
-                    if (trackingOperationCombo.currentIndex > 0) {
-                        applyTracking();
-                    }
-                    enabled = true;
-                }
-            }
-        }
-
-        Shotcut.UndoButton {
-            Layout.rowSpan: 2
-            visible: motionTrackerCombo.visible
-            onClicked: {
-                motionTrackerModel.undo(filter, rectProperty);
-                filterRect = filter.getRect(rectProperty, getPosition());
-                rectX.value = filterRect.x;
-                rectY.value = filterRect.y;
-                rectW.value = filterRect.width;
-                rectH.value = filterRect.height;
-                scaleSlider.update();
-                setFilter(getPosition());
-                motionTrackerCombo.currentIndex = 0;
-                trackingOperationCombo.currentIndex = 0;
-                startRadioButton.checked = true;
-            }
-        }
-
         Item {
-            Layout.rowSpan: 2
             width: 1
-            visible: motionTrackerCombo.visible
+            visible: !!trackingProperty
         }
 
-        Label {
-            text: qsTr('Tracker adjusts')
-            Layout.alignment: Qt.AlignRight
-            visible: motionTrackerCombo.visible
-        }
-
-        RowLayout {
-            Layout.columnSpan: 3
-            visible: motionTrackerCombo.visible
-
-            Shotcut.ComboBox {
-                id: trackingOperationCombo
-
-                implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
-                textRole: 'text'
-                valueRole: 'value'
-                model: [{
-                        "text": '',
-                        "value": ''
-                    }, {
-                        "text": qsTr('Relative Position'),
-                        "value": 'relativePos'
-                    }, {
-                        "text": qsTr('Offset Position'),
-                        "value": 'offsetPos'
-                    }, {
-                        "text": qsTr('Absolute Position'),
-                        "value": 'absPos'
-                    }, {
-                        "text": qsTr('Size And Position'),
-                        "value": 'absSizePos'
-                    },]
-
-                onActivated: {
-                    if (currentIndex > 0) {
-                        enabled = false;
-                        filter.set(motionTrackerModel.operationProperty, currentValue);
-                        if (motionTrackerCombo.currentIndex > 0) {
-                            applyTracking();
-                        }
-                        enabled = true;
-                    }
-                }
-            }
-
-            RadioButton {
-                id: startRadioButton
-                text: qsTr('From start')
-                checked: true
-                onToggled: {
-                    if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
-                        applyTracking();
-                    }
-                }
-            }
-            RadioButton {
-                id: currentRadioButton
-                text: qsTr('Current position')
-                onToggled: {
-                    if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
-                        applyTracking();
-                    }
-                }
-            }
+        Shotcut.Button {
+            visible: !!trackingProperty
+            Layout.columnSpan: parent.columns - 1
+            text: motionTrackerDialog.title
+            onClicked: motionTrackerDialog.show()
         }
 
         Item {
             Layout.fillHeight: true
+        }
+    }
+
+    Shotcut.MotionTrackerDialog {
+        id: motionTrackerDialog
+        onAccepted: (motionTrackerRow, operation) => {
+            applyTracking(motionTrackerRow, operation);
+        }
+        onReset: if (filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {
+            motionTrackerModel.undo(filter, rectProperty);
+            filterRect = filter.getRect(rectProperty, getPosition());
+            rectX.value = filterRect.x;
+            rectY.value = filterRect.y;
+            rectW.value = filterRect.width;
+            rectH.value = filterRect.height;
+            scaleSlider.update();
+            setFilter(getPosition());
         }
     }
 
