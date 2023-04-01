@@ -268,8 +268,8 @@ Item {
                         interpolation = Shotcut.KeyframesModel.LinearInterpolation;
                         filter.set(paramHorizontal, current.x, frame, interpolation);
                         filter.set(paramVertical, current.y, frame, interpolation);
-                        filterRect.x = i.x + i.width / 2 - filterRect.width/2;
-                        filterRect.y = i.y + i.height / 2 - filterRect.height/2;
+                        filterRect.x = i.x + i.width / 2 - filterRect.width / 2;
+                        filterRect.y = i.y + i.height / 2 - filterRect.height / 2;
                         filter.set(rectProperty, filterRect, frame, interpolation);
                         break;
                     case 'absSizePos':

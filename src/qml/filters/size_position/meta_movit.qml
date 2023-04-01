@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     objectName: 'movitSizePosition'
-    name: qsTr('Size and Position')
+    name: qsTr('Size & Position')
     keywords: qsTr('transform zoom distort fill move', 'search keywords for the Size and Position filter') + ' size position gpu'
     mlt_service: 'movit.rect'
     needsGPU: true

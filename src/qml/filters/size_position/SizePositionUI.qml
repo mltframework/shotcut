@@ -267,7 +267,7 @@ Item {
             motionTrackerModel.reset(filter, trackingProperty, motionTrackerCombo.currentIndex);
             const data = motionTrackerModel.trackingData(motionTrackerCombo.currentIndex);
             let previous = null;
-            let frame = 0;
+            let frame = currentRadioButton.checked ? getPosition() : 0;
             let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerCombo.currentIndex);
             let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
             data.forEach(i => {
@@ -971,6 +971,7 @@ Item {
                 setFilter(getPosition());
                 motionTrackerCombo.currentIndex = 0;
                 trackingOperationCombo.currentIndex = 0;
+                startRadioButton.checked = true;
             }
         }
 
@@ -980,18 +981,15 @@ Item {
             visible: motionTrackerCombo.visible
         }
 
-        Item {
-            width: 1
+        Label {
+            text: qsTr('Tracker adjusts')
+            Layout.alignment: Qt.AlignRight
             visible: motionTrackerCombo.visible
         }
 
         RowLayout {
             Layout.columnSpan: 3
             visible: motionTrackerCombo.visible
-
-            Label {
-                text: qsTr('Adjust')
-            }
 
             Shotcut.ComboBox {
                 id: trackingOperationCombo
@@ -1024,6 +1022,26 @@ Item {
                             applyTracking();
                         }
                         enabled = true;
+                    }
+                }
+            }
+
+            RadioButton {
+                id: startRadioButton
+                text: qsTr('From start')
+                checked: true
+                onToggled: {
+                    if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
+                        applyTracking();
+                    }
+                }
+            }
+            RadioButton {
+                id: currentRadioButton
+                text: qsTr('Current position')
+                onToggled: {
+                    if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
+                        applyTracking();
                     }
                 }
             }
