@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -25,8 +24,8 @@ import org.shotcut.qml as Shotcut
 Window {
     id: motionTrackerDialog
 
-    signal accepted(int motionTrackerRow, string operation);
-    signal reset();
+    signal accepted(int motionTrackerRow, string operation, int startFrame)
+    signal reset
 
     SystemPalette {
         id: dialogPalette
@@ -37,8 +36,8 @@ Window {
     color: dialogPalette.window
     modality: Qt.ApplicationModal
     title: qsTr('Load Keyframes from Motion Tracker')
-    minimumWidth: 350
-    minimumHeight: 150
+    minimumWidth: 360
+    minimumHeight: 160
 
     GridLayout {
         anchors.fill: parent
@@ -130,16 +129,19 @@ Window {
             Shotcut.Button {
                 text: qsTr('Apply')
                 onClicked: {
-                    motionTrackerDialog.hide()
-                    if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0)
-                        accepted();
+                    motionTrackerDialog.hide();
+                    if (motionTrackerCombo.currentIndex > 0 && trackingOperationCombo.currentIndex > 0) {
+                        let operation = trackingOperationCombo.currentValue;
+                        let startFrame = currentRadioButton.checked ? getPosition() : 0;
+                        accepted(motionTrackerCombo.currentIndex, operation, startFrame);
+                    }
                 }
             }
 
             Shotcut.Button {
                 text: qsTr('Reset')
                 onClicked: {
-                    motionTrackerDialog.hide()
+                    motionTrackerDialog.hide();
                     motionTrackerCombo.currentIndex = 0;
                     trackingOperationCombo.currentIndex = 0;
                     startRadioButton.checked = true;

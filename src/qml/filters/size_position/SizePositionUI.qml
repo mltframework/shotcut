@@ -261,11 +261,10 @@ Item {
         setFilter(null);
     }
 
-    function applyTracking(motionTrackerRow, operation) {
+    function applyTracking(motionTrackerRow, operation, frame) {
         motionTrackerModel.reset(filter, trackingProperty, motionTrackerRow);
         const data = motionTrackerModel.trackingData(motionTrackerRow);
         let previous = null;
-        let frame = currentRadioButton.checked ? getPosition() : 0;
         let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
         let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
         data.forEach(i => {
@@ -944,9 +943,7 @@ Item {
 
     Shotcut.MotionTrackerDialog {
         id: motionTrackerDialog
-        onAccepted: (motionTrackerRow, operation) => {
-            applyTracking(motionTrackerRow, operation);
-        }
+        onAccepted: (motionTrackerRow, operation, startFrame) => applyTracking(motionTrackerRow, operation, startFrame)
         onReset: if (filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {
             motionTrackerModel.undo(filter, rectProperty);
             filterRect = filter.getRect(rectProperty, getPosition());
