@@ -51,11 +51,8 @@ ShotcutSettings &ShotcutSettings::singleton()
 
 ShotcutSettings::ShotcutSettings()
     : QObject()
+    , m_recent(QDir(appDataLocation()).filePath(RECENT_INI_FILENAME), QSettings::IniFormat)
 {
-    // Setup separate INI file for recent storage
-    QDir dir(appDataLocation());
-    m_recent = new QSettings(dir.filePath(RECENT_INI_FILENAME), QSettings::IniFormat, this);
-
     // Migrate old startup layout to a custom layout and start fresh
     if (!settings.contains("geometry2")) {
         auto geometry = settings.value("geometry").toByteArray();
@@ -78,7 +75,7 @@ ShotcutSettings::ShotcutSettings()
             }
         }
         setRecent(newRecents);
-        m_recent->sync();
+        m_recent.sync();
 //        settings.remove("recent");
         settings.sync();
     }
@@ -88,6 +85,7 @@ ShotcutSettings::ShotcutSettings(const QString &appDataLocation)
     : QObject()
     , settings(appDataLocation + SHOTCUT_INI_FILENAME, QSettings::IniFormat)
     , m_appDataLocation(appDataLocation)
+    , m_recent(QDir(appDataLocation).filePath(RECENT_INI_FILENAME), QSettings::IniFormat)
 {
     ShotcutSettings();
 }
@@ -156,15 +154,15 @@ void ShotcutSettings::setSavePath(const QString &s)
 
 QStringList ShotcutSettings::recent() const
 {
-    return m_recent->value(kRecentKey).toStringList();
+    return m_recent.value(kRecentKey).toStringList();
 }
 
 void ShotcutSettings::setRecent(const QStringList &ls)
 {
     if (ls.isEmpty())
-        m_recent->remove(kRecentKey);
+        m_recent.remove(kRecentKey);
     else if (!clearRecent())
-        m_recent->setValue(kRecentKey, ls);
+        m_recent.setValue(kRecentKey, ls);
 }
 
 QString ShotcutSettings::theme() const

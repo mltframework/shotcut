@@ -71,8 +71,6 @@ public:
     static const qsizetype MaxPath {32767};
 
     static ShotcutSettings &singleton();
-    explicit ShotcutSettings();
-    explicit ShotcutSettings(const QString &appDataLocation);
     void log();
 
     // general
@@ -312,9 +310,12 @@ signals:
     void askOutputFilterChanged();
 
 private:
+    explicit ShotcutSettings();
+    explicit ShotcutSettings(const QString &appDataLocation);
+
     QSettings settings;
     QString m_appDataLocation;
-    QSettings *m_recent;
+    QSettings m_recent;
 };
 
 #define Settings ShotcutSettings::singleton()
