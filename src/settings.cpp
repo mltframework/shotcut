@@ -56,6 +56,15 @@ ShotcutSettings::ShotcutSettings()
     QDir dir(appDataLocation());
     m_recent = new QSettings(dir.filePath(RECENT_INI_FILENAME), QSettings::IniFormat, this);
 
+    // Migrate old startup layout to a custom layout and start fresh
+    if (!settings.contains("geometry2")) {
+        auto geometry = settings.value("geometry").toByteArray();
+        auto windowState = settings.value("windowState").toByteArray();
+        setLayout(tr("Old (before v23) Layout"), geometry, windowState);
+        setLayoutMode(2);
+        settings.sync();
+    }
+
     // Migrate recent to separate INI file
     auto oldRecents = settings.value(kRecentKey).toStringList();
     if (!oldRecents.isEmpty()) {
@@ -225,12 +234,12 @@ void ShotcutSettings::setSmallIcons(bool b)
 
 QByteArray ShotcutSettings::windowGeometry() const
 {
-    return settings.value("geometry").toByteArray();
+    return settings.value("geometry2").toByteArray();
 }
 
 void ShotcutSettings::setWindowGeometry(const QByteArray &a)
 {
-    settings.setValue("geometry", a);
+    settings.setValue("geometry2", a);
 }
 
 QByteArray ShotcutSettings::windowGeometryDefault() const
@@ -245,12 +254,12 @@ void ShotcutSettings::setWindowGeometryDefault(const QByteArray &a)
 
 QByteArray ShotcutSettings::windowState() const
 {
-    return settings.value("windowState").toByteArray();
+    return settings.value("windowState2").toByteArray();
 }
 
 void ShotcutSettings::setWindowState(const QByteArray &a)
 {
-    settings.setValue("windowState", a);
+    settings.setValue("windowState2", a);
 }
 
 QByteArray ShotcutSettings::windowStateDefault() const
@@ -930,14 +939,14 @@ bool ShotcutSettings::setLayout(const QString &name, const QByteArray &geometry,
                                 const QByteArray &state)
 {
     bool isNew = false;
-    QStringList layouts = Settings.layouts();
+    QStringList layouts = this->layouts();
     if (layouts.indexOf(name) == -1) {
         isNew = true;
         layouts.append(name);
         settings.setValue("layout/layouts", layouts);
     }
-    settings.setValue(QString("layout/%1_%2").arg(name).arg("geometry"), geometry);
-    settings.setValue(QString("layout/%1_%2").arg(name).arg("state"), state);
+    settings.setValue(QString("layout/%1_%2").arg(name, "geometry"), geometry);
+    settings.setValue(QString("layout/%1_%2").arg(name, "state"), state);
     return isNew;
 }
 
@@ -963,8 +972,8 @@ bool ShotcutSettings::removeLayout(const QString &name)
             settings.remove("layout/layouts");
         else
             settings.setValue("layout/layouts", list);
-        settings.remove(QString("layout/%1_%2").arg(name).arg("geometry"));
-        settings.remove(QString("layout/%1_%2").arg(name).arg("state"));
+        settings.remove(QString("layout/%1_%2").arg(name, "geometry"));
+        settings.remove(QString("layout/%1_%2").arg(name, "state"));
         return true;
     }
     return false;
