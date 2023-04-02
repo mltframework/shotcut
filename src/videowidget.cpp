@@ -341,7 +341,8 @@ int VideoWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
-        m_consumer->set("mlt_image_format", m_glslManager ? "rgba" : "yuv420p");
+        m_consumer->set("mlt_image_format",
+                        m_glslManager ? "rgba" : serviceName.startsWith("decklink") ? "yuv422p" : "yuv420p");
         m_consumer->set("channels", property("audio_channels").toInt());
 
         if (isMulti) {
