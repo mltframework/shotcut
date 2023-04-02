@@ -129,6 +129,10 @@ public:
     {
         return m_simpleProperties;
     }
+    bool allowSmooth() const
+    {
+        return m_allowSmooth;
+    }
 
     QQmlListProperty<QmlKeyframesParameter> parameters()
     {

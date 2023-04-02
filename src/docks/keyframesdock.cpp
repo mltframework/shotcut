@@ -309,6 +309,14 @@ void KeyframesDock::setupActions()
             m_model.setInterpolation(currentTrack, keyframeIndex.toInt(), KeyframesModel::SmoothInterpolation);
         }
     });
+    connect(this, &KeyframesDock::newFilter, action, [ = ]() {
+        bool enabled = true;
+        if (m_metadata && m_metadata->keyframes() && !m_metadata->keyframes()->allowSmooth()) {
+            enabled = false;
+        }
+        action->setVisible(enabled);
+        action->setEnabled(enabled);
+    });
     keyframeTypeActionGroup->addAction(action);
     Actions.add("keyframesTypeSmoothAction", action);
 
