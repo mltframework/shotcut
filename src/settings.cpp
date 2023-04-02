@@ -79,7 +79,7 @@ ShotcutSettings::ShotcutSettings()
         }
         setRecent(newRecents);
         m_recent->sync();
-        settings.remove("recent");
+//        settings.remove("recent");
         settings.sync();
     }
 }
