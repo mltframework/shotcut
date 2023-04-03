@@ -53,15 +53,22 @@ ShotcutSettings::ShotcutSettings()
     : QObject()
     , m_recent(QDir(appDataLocation()).filePath(RECENT_INI_FILENAME), QSettings::IniFormat)
 {
-    // Migrate old startup layout to a custom layout and start fresh
-    if (!settings.contains("geometry2")) {
-        auto geometry = settings.value("geometry").toByteArray();
-        auto windowState = settings.value("windowState").toByteArray();
-        setLayout(tr("Old (before v23) Layout"), geometry, windowState);
-        setLayoutMode(2);
-        settings.sync();
-    }
+    migrateLayout();
+    migrateRecent();
+}
 
+ShotcutSettings::ShotcutSettings(const QString &appDataLocation)
+    : QObject()
+    , settings(appDataLocation + SHOTCUT_INI_FILENAME, QSettings::IniFormat)
+    , m_appDataLocation(appDataLocation)
+    , m_recent(QDir(appDataLocation).filePath(RECENT_INI_FILENAME), QSettings::IniFormat)
+{
+    migrateLayout();
+    migrateRecent();
+}
+
+void ShotcutSettings::migrateRecent()
+{
     // Migrate recent to separate INI file
     auto oldRecents = settings.value(kRecentKey).toStringList();
     if (!oldRecents.isEmpty()) {
@@ -81,13 +88,16 @@ ShotcutSettings::ShotcutSettings()
     }
 }
 
-ShotcutSettings::ShotcutSettings(const QString &appDataLocation)
-    : QObject()
-    , settings(appDataLocation + SHOTCUT_INI_FILENAME, QSettings::IniFormat)
-    , m_appDataLocation(appDataLocation)
-    , m_recent(QDir(appDataLocation).filePath(RECENT_INI_FILENAME), QSettings::IniFormat)
+void ShotcutSettings::migrateLayout()
 {
-    ShotcutSettings();
+    // Migrate old startup layout to a custom layout and start fresh
+    if (!settings.contains("geometry2")) {
+        auto geometry = settings.value("geometry").toByteArray();
+        auto windowState = settings.value("windowState").toByteArray();
+        setLayout(tr("Old (before v23) Layout"), geometry, windowState);
+        setLayoutMode(2);
+        settings.sync();
+    }
 }
 
 void ShotcutSettings::log()

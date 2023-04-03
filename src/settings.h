@@ -312,6 +312,8 @@ signals:
 private:
     explicit ShotcutSettings();
     explicit ShotcutSettings(const QString &appDataLocation);
+    void migrateRecent();
+    void migrateLayout();
 
     QSettings settings;
     QString m_appDataLocation;
