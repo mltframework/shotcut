@@ -64,7 +64,7 @@ Item {
         if (filter.isNew) {
             // Add default preset.
             filter.set(rectProperty, '45%/45%:10%x10%');
-            filter.set('algo', 'KCF');
+            filter.set('algo', 'CSRT');
             filter.savePreset(preset.parameters);
             filter.set('shape_width', visibleShapeWidth());
             filter.set('shape_color', '#00ff00');
