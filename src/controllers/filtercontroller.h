@@ -76,7 +76,6 @@ private slots:
     void handleAttachedRowsInserted(const QModelIndex &parent, int first, int last);
     void handleAttachDuplicateFailed(int index);
     void onQmlFilterChanged(const QString &name);
-    void onAnalyzeFinished(bool isSuccess);
 
 private:
     void loadFilterMetadata();

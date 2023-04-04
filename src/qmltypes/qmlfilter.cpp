@@ -1043,4 +1043,24 @@ void AnalyzeDelegate::updateFilter(Mlt::Filter &filter, const QString &results)
     filter.set("reload", 1);
     filter.clear(kShotcutHashProperty);
     LOG_INFO() << "updated filter" << filter.get("mlt_service") << "with results:" << results;
+
+    if (QString::fromLatin1("opencv.tracker") == filter.get("mlt_service")) {
+        auto model = MAIN.filterController()->motionTrackerModel();
+        if (model) {
+            auto name = QString::fromUtf8(filter.get(kTrackNameProperty));
+            if (name.isEmpty()) {
+                name = model->nextName();
+                filter.set(kTrackNameProperty, name.toUtf8().constData());
+            }
+            auto key = model->keyForFilter(&filter);
+            if (key.isEmpty()) {
+                key = model->add(name, results);
+                if (!key.isEmpty()) {
+                    filter.set(kUuidProperty, key.toUtf8().constData());
+                }
+            } else {
+                model->updateData(key, results);
+            }
+        }
+    }
 }

@@ -182,7 +182,6 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
         filter = new QmlFilter(*m_mltService, meta);
         filter->setIsNew(isNew);
         connect(filter, SIGNAL(changed(QString)), SLOT(onQmlFilterChanged(const QString &)));
-        connect(filter, &QmlFilter::analyzeFinished, this, &FilterController::onAnalyzeFinished);
     }
 
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
@@ -259,27 +258,6 @@ void FilterController::onQmlFilterChanged(const QString &name)
         emit m_attachedModel.dataChanged(index, index, QVector<int>() << Qt::CheckStateRole);
     }
     emit filterChanged(m_mltService);
-}
-
-void FilterController::onAnalyzeFinished(bool isSuccess)
-{
-    if (isSuccess && m_currentFilter && "opencv.tracker" == m_currentFilter->get("mlt_service")) {
-        auto results = m_currentFilter->get("results");
-        auto name = m_currentFilter->get(kTrackNameProperty);
-        if (name.isEmpty()) {
-            name = m_motionTrackerModel.nextName();
-            m_currentFilter->set(kTrackNameProperty, name);
-        }
-        auto key = m_motionTrackerModel.keyForFilter(&m_currentFilter->service());
-        if (key.isEmpty()) {
-            key = m_motionTrackerModel.add(name, results);
-            if (!key.isEmpty()) {
-                m_currentFilter->set(kUuidProperty, key);
-            }
-        } else {
-            m_motionTrackerModel.updateData(key, results);
-        }
-    }
 }
 
 void FilterController::removeCurrent()
