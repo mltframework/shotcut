@@ -304,7 +304,7 @@ Item {
     }
 
     width: 425
-    height: 250
+    height: 280
     Component.onCompleted: {
         if (rotationProperty)
             preset.parameters.push(rotationProperty);
