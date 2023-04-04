@@ -39,6 +39,12 @@ Window {
     title: qsTr('Load Keyframes from Motion Tracker')
     minimumWidth: 360
     minimumHeight: 160
+    onVisibleChanged: {
+        if (visible) {
+            motionTrackerCombo.currentIndex = motionTrackerCombo.indexOfValue(filter.get(motionTrackerModel.nameProperty));
+            trackingOperationCombo.currentIndex = trackingOperationCombo.indexOfValue(filter.get(motionTrackerModel.operationProperty));
+        }
+    }
 
     GridLayout {
         anchors.fill: parent
@@ -56,7 +62,6 @@ Window {
             implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
             textRole: 'display'
             valueRole: 'display'
-            currentIndex: indexOfValue(filter.get(motionTrackerModel.nameProperty))
             model: motionTrackerModel
 
             onActivated: {
@@ -78,7 +83,6 @@ Window {
             implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
             textRole: 'text'
             valueRole: 'value'
-            currentIndex: indexOfValue(filter.get(motionTrackerModel.operationProperty))
             model: [{
                     "text": '',
                     "value": ''
