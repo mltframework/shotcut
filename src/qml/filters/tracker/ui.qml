@@ -68,7 +68,6 @@ Item {
             filter.savePreset(preset.parameters);
             filter.set('shape_width', visibleShapeWidth());
             filter.set('shape_color', '#00ff00');
-            filter.set('modelsfolder', settings.appDataLocation + '/opencvmodels');
         }
         // Reset the filter if clip was pasted or split
         if (filter.get('results').length > 0 && filter.get('_shotcut:uuid').length === 0) {
