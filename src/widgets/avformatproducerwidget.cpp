@@ -915,6 +915,11 @@ void AvformatProducerWidget::convert(TranscodeDialog &dialog)
             if (Util::warnIfNotWritable(filename, this, dialog.windowTitle()))
                 return;
 
+            if (Util::warnIfLowDiskSpace(filename)) {
+                MAIN.showStatusMessage(tr("Convert canceled"));
+                return;
+            }
+
             Settings.setSavePath(QFileInfo(filename).path());
             args << "-y" << filename;
             m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
@@ -1136,6 +1141,11 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             }
             if (Util::warnIfNotWritable(filename, this, dialog.windowTitle()))
                 return;
+
+            if (Util::warnIfLowDiskSpace(filename)) {
+                MAIN.showStatusMessage(tr("Reverse canceled"));
+                return;
+            }
 
             Settings.setSavePath(QFileInfo(filename).path());
 
