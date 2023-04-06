@@ -35,6 +35,8 @@
 #include <QMediaDevices>
 #include <QCamera>
 #include <QCameraDevice>
+#include <QStorageInfo>
+#include <QCheckBox>
 
 #include <MltChain.h>
 #include <MltProducer.h>
@@ -43,6 +45,8 @@
 #include "shotcut_mlt_properties.h"
 #include "qmltypes/qmlapplication.h"
 #include "proxymanager.h"
+#include "settings.h"
+
 #include <math.h>
 #include <memory>
 
@@ -55,6 +59,7 @@ static const unsigned int kLowMemoryThresholdPercent = 10U;
 #else
 static const unsigned int kLowMemoryThresholdKB = 256U * 1024U;
 #endif
+static const qint64 kFreeSpaceThesholdGB = 25LL * 1024 * 1024 * 1024;
 
 QString Util::baseName(const QString &filePath, bool trimQuery)
 {
@@ -698,4 +703,32 @@ void Util::passProducerProperties(Mlt::Producer *src, Mlt::Producer *dst)
     QString service(src->get("mlt_service"));
     if (service.startsWith("avformat") || shotcutProducer == "avformat")
         dst->set(kShotcutProducerProperty, "avformat");
+}
+
+bool Util::warnIfLowDiskSpace(const QString &path)
+{
+    // Check if the drive this file will be on is getting low on space.
+    if (Settings.encodeFreeSpaceCheck()) {
+        QStorageInfo si(QFileInfo(path).path());
+        LOG_DEBUG() << si.bytesAvailable() << "bytes available on" << si.displayName();
+        if (si.isValid() && si.bytesAvailable() < kFreeSpaceThesholdGB) {
+            QMessageBox dialog(QMessageBox::Question, QApplication::applicationDisplayName(),
+                               QObject::tr("The drive you chose only has %1 MiB of free space.\n"
+                                           "Do you still want to continue?")
+                               .arg(si.bytesAvailable() / 1024 / 1024),
+                               QMessageBox::No | QMessageBox::Yes);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            dialog.setCheckBox(new QCheckBox(QObject::tr("Do not show this anymore.",
+                                                         "Export free disk space warning dialog")));
+            int result = dialog.exec();
+            if (dialog.checkBox()->isChecked())
+                Settings.setEncodeFreeSpaceCheck(false);
+            if (result == QMessageBox::No) {
+                return true;
+            }
+        }
+    }
+    return false;
 }

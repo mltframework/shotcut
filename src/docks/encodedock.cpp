@@ -37,7 +37,6 @@
 #include <QtMath>
 #include <QTimer>
 #include <QFileInfo>
-#include <QStorageInfo>
 #include <QProcess>
 #include <QRegularExpression>
 
@@ -45,7 +44,6 @@
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min)) * float(rel) / 100.0f)
 #define TO_RELATIVE(min, max, abs) qRound(100.0f * float((abs) - (min)) / float((max) - (min)))
 static const int kOpenCaptureFileDelayMs = 1500;
-static const qint64 kFreeSpaceThesholdGB = 25LL * 1024 * 1024 * 1024;
 static const int kCustomPresetFileNameRole = Qt::UserRole + 1;
 #ifdef Q_OS_WIN
 static const QString kNullTarget = "nul";
@@ -1528,6 +1526,8 @@ void EncodeDock::on_encodeButton_clicked()
         return;
     }
 
+    MLT.pause();
+
     QString directory = Settings.encodePath();
     if (!m_extension.isEmpty()) {
         if (!MAIN.fileName().isEmpty()) {
@@ -1570,34 +1570,13 @@ void EncodeDock::on_encodeButton_clicked()
         return;
     }
 
-    QFileInfo fi(m_outputFilenames[0]);
-    MLT.pause();
-    Settings.setEncodePath(fi.path());
-
-    // Check if the drive this file will be on is getting low on space.
-    if (Settings.encodeFreeSpaceCheck()) {
-        QStorageInfo si(fi.path());
-        LOG_DEBUG() << si.bytesAvailable() << "bytes available on" << si.displayName();
-        if (si.isValid() && si.bytesAvailable() < kFreeSpaceThesholdGB) {
-            QMessageBox dialog(QMessageBox::Question, caption,
-                               tr("The drive you chose only has %1 MiB of free space.\n"
-                                  "Do you still want to continue?")
-                               .arg(si.bytesAvailable() / 1024 / 1024),
-                               QMessageBox::No | QMessageBox::Yes, this);
-            dialog.setWindowModality(QmlApplication::dialogModality());
-            dialog.setDefaultButton(QMessageBox::Yes);
-            dialog.setEscapeButton(QMessageBox::No);
-            dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.",
-                                                "Export free disk space warning dialog")));
-            int result = dialog.exec();
-            if (dialog.checkBox()->isChecked())
-                Settings.setEncodeFreeSpaceCheck(false);
-            if (result == QMessageBox::No) {
-                MAIN.showStatusMessage(tr("Export canceled."));
-                return;
-            }
-        }
+    if (Util::warnIfLowDiskSpace(m_outputFilenames[0])) {
+        MAIN.showStatusMessage(tr("Export canceled"));
+        return;
     }
+
+    QFileInfo fi(m_outputFilenames[0]);
+    Settings.setEncodePath(fi.path());
 
     if (seekable) {
         MLT.purgeMemoryPool();
