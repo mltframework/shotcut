@@ -52,6 +52,7 @@
 #include "docks/filtersdock.h"
 #include "dialogs/actionsdialog.h"
 #include "dialogs/customprofiledialog.h"
+#include "dialogs/resourcedialog.h"
 #include "dialogs/saveimagedialog.h"
 #include "settings.h"
 #include "database.h"
@@ -661,6 +662,7 @@ void MainWindow::setupAndConnectDocks()
 void MainWindow::setupMenuView()
 {
     ui->menuView->addSeparator();
+    ui->menuView->addAction(ui->actionResources);
     ui->menuView->addAction(ui->actionApplicationLog);
 }
 
@@ -3743,6 +3745,12 @@ void MainWindow::onDrawingMethodTriggered(QAction *action)
     }
 }
 #endif
+
+void MainWindow::on_actionResources_triggered()
+{
+    ResourceDialog dialog(this);
+    dialog.exec();
+}
 
 void MainWindow::on_actionApplicationLog_triggered()
 {

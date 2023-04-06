@@ -327,6 +327,7 @@ private slots:
 #if !defined(Q_OS_MAC)
     void onDrawingMethodTriggered(QAction *);
 #endif
+    void on_actionResources_triggered();
     void on_actionApplicationLog_triggered();
     void on_actionClose_triggered();
     void onPlayerTabIndexChanged(int index);
