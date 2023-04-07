@@ -1851,8 +1851,8 @@ void MainWindow::readWindowSettings()
     Settings.setWindowStateDefault(saveState());
     Settings.sync();
     if (!Settings.windowGeometry().isEmpty()) {
-        restoreGeometry(Settings.windowGeometry());
         restoreState(Settings.windowState());
+        restoreGeometry(Settings.windowGeometry());
     } else {
         restoreState(kLayoutEditingDefault);
     }
