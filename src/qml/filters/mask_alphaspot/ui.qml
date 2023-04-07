@@ -404,6 +404,7 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (filterRect.x !== value) {
+                        filterRect = filter.getRect(rectProperty, getPosition());
                         filterRect.x = value;
                         updateFilterRect(getPosition(), true);
                     }
@@ -427,6 +428,7 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (filterRect.y !== value) {
+                        filterRect = filter.getRect(rectProperty, getPosition());
                         filterRect.y = value;
                         updateFilterRect(getPosition());
                     }
@@ -483,6 +485,7 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (filterRect.width !== value) {
+                        filterRect = filter.getRect(rectProperty, getPosition());
                         filterRect.width = value;
                         updateFilterRect(getPosition());
                     }
@@ -506,6 +509,7 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (filterRect.height !== value) {
+                        filterRect = filter.getRect(rectProperty, getPosition());
                         filterRect.height = value;
                         updateFilterRect(getPosition());
                     }
