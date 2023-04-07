@@ -284,7 +284,7 @@ Rectangle {
                             contentX = tracksFlickable.contentX;
                     }
 
-                    Ruler {
+                    KeyframeRuler {
                         id: ruler
 
                         width: producer.duration * timeScale
