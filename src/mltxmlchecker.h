@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,11 +75,6 @@ public:
     {
         return m_unlinkedFilesModel;
     }
-    void setLocale();
-    bool usesLocale() const
-    {
-        return m_usesLocale;
-    }
     QString shotcutVersion() const
     {
         return m_shotcutVersion;
@@ -114,7 +109,6 @@ private:
     bool m_hasEffects;
     bool m_isCorrected;
     bool m_isUpdated;
-    bool m_usesLocale;
     QChar m_decimalPoint;
     QScopedPointer<QTemporaryFile> m_tempFile;
     bool m_numericValueChanged;

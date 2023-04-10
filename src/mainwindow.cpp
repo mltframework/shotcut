@@ -1562,10 +1562,6 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
         if (m_profileGroup->checkedAction() && m_profileGroup->checkedAction()->data().toString().isEmpty())
             MLT.profile().set_explicit(false);
     }
-    if (url.endsWith(".mlt") || url.endsWith(".xml")) {
-        checker.setLocale();
-        LOG_INFO() << "decimal point" << MLT.decimalPoint();
-    }
     QString urlToOpen = checker.isUpdated() ? checker.tempFile().fileName() : url;
     if (!MLT.open(QDir::fromNativeSeparators(urlToOpen), QDir::fromNativeSeparators(url))
             && MLT.producer() && MLT.producer()->is_valid()) {
@@ -3626,26 +3622,6 @@ void MainWindow::on_actionOpenXML_triggered()
             if (!isCompatibleWithGpuMode(checker))
                 return;
             isXmlRepaired(checker, url);
-            // Check if the locale usage differs.
-            // Get current locale.
-            QString localeName = QString(::setlocale(MLT_LC_CATEGORY, nullptr)).toUpper();
-            // Test if it is C or POSIX.
-            bool currentlyUsingLocale = (localeName != "" && localeName != "C" && localeName != "POSIX");
-            if (currentlyUsingLocale != checker.usesLocale()) {
-                // Show a warning dialog and cancel if requested.
-                QMessageBox dialog(QMessageBox::Question,
-                                   qApp->applicationName(),
-                                   tr("The decimal point of the MLT XML file\nyou want to open is incompatible.\n\n"
-                                      "Do you want to continue to open this MLT XML file?"),
-                                   QMessageBox::No |
-                                   QMessageBox::Yes,
-                                   this);
-                dialog.setWindowModality(QmlApplication::dialogModality());
-                dialog.setDefaultButton(QMessageBox::No);
-                dialog.setEscapeButton(QMessageBox::No);
-                if (dialog.exec() != QMessageBox::Yes)
-                    return;
-            }
         } else {
             showStatusMessage(tr("Failed to open ").append(url));
             showIncompatibleProjectMessage(checker.shotcutVersion());
@@ -3733,7 +3709,6 @@ void MainWindow::on_actionClose_triggered()
         m_notesDock->setText("");
         m_player->enableTab(Player::SourceTabIndex, false);
         MLT.purgeMemoryPool();
-        MLT.resetLocale();
     }
 }
 

@@ -63,7 +63,6 @@ MltXmlChecker::MltXmlChecker()
     , m_hasEffects(false)
     , m_isCorrected(false)
     , m_isUpdated(false)
-    , m_usesLocale(false)
     , m_decimalPoint('.')
     , m_numericValueChanged(false)
 {
@@ -92,11 +91,9 @@ QXmlStreamReader::Error MltXmlChecker::check(const QString &fileName)
                 foreach (QXmlStreamAttribute a, m_xml.attributes()) {
                     if (a.name().toString().toUpper() == "LC_NUMERIC") {
                         QString value = a.value().toString().toUpper();
-                        // Determine whether this document uses a non-POSIX/-generic numeric locale.
-                        m_usesLocale = (value != "" && value != "C" && value != "POSIX" && QLocale().decimalPoint() != '.');
-                        // Upon correcting the document to conform to current system,
-                        // update the declared LC_NUMERIC.
-                        m_newXml.writeAttribute("LC_NUMERIC", m_usesLocale ? QLocale().name() : "C");
+                        m_newXml.writeAttribute("LC_NUMERIC", "C");
+                        MLT.resetLocale();
+                        m_decimalPoint = '.';
                     } else if (a.name().toString().toLower() == "version") {
                         m_mltVersion = QVersionNumber::fromString(a.value());
                     } else if (a.name().toString().toLower() == "title") {
@@ -112,24 +109,6 @@ QXmlStreamReader::Error MltXmlChecker::check(const QString &fileName)
                 }
                 if (!checkMltVersion()) {
                     return QXmlStreamReader::CustomError;
-                }
-                // We cannot apply the locale change to the session at this point
-                // because we are merely checking at this point and not loading.
-                // Save the current locale state.
-                bool isCLocale = (::qgetenv(MLT_LC_NAME).toUpper() == "C");
-                // Apply the chosen locale temporarily.
-                setLocale();
-                // Get the decimal point expected based on the current system
-                // locale or POSIX/C if the document is using POSIX.
-                m_decimalPoint = MLT.decimalPoint();
-                LOG_INFO() << "decimal point" << m_decimalPoint;
-                // Restore the current locale state.
-                if (isCLocale) {
-                    ::qputenv(MLT_LC_NAME, "C");
-                    ::setlocale(MLT_LC_CATEGORY, "C");
-                } else {
-                    ::qunsetenv(MLT_LC_NAME);
-                    ::setlocale(MLT_LC_CATEGORY, "");
                 }
 
                 readMlt();
@@ -157,18 +136,6 @@ QXmlStreamReader::Error MltXmlChecker::check(const QString &fileName)
 QString MltXmlChecker::errorString() const
 {
     return m_xml.errorString();
-}
-
-void MltXmlChecker::setLocale()
-{
-    // Returns whether this document uses a non-POSIX/-generic numeric locale.
-    if (m_usesLocale) {
-        ::qunsetenv(MLT_LC_NAME);
-        ::setlocale(MLT_LC_CATEGORY, "");
-    } else {
-        ::qputenv(MLT_LC_NAME, "C");
-        ::setlocale(MLT_LC_CATEGORY, "C");
-    }
 }
 
 void MltXmlChecker::readMlt()
