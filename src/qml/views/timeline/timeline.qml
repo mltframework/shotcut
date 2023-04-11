@@ -44,7 +44,7 @@ Rectangle {
         var before = multitrack.scaleFactor;
         if (isNaN(value))
             value = 0;
-        multitrack.scaleFactor = Math.pow(value, 3) + 0.01;
+        multitrack.scaleFactor = Math.pow(Math.max(value, 0), 3) + 0.01;
         if (!settings.timelineCenterPlayhead && !settings.timelineScrollZoom)
             tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset;
         for (var i = 0; i < tracksRepeater.count; i++)
@@ -516,11 +516,11 @@ Rectangle {
 
                                     x: clip && typeof dragDelta !== 'undefined' ? clip.x + dragDelta.x : 0
                                     y: track ? track.y : 0
-                                    width: clip.width
+                                    width: clip ? clip.width : 0
                                     height: track ? track.height : 0
                                     color: 'transparent'
                                     border.color: 'red'
-                                    visible: !clip.Drag.active && clip.trackIndex === clip.originalTrackIndex
+                                    visible: clip && !clip.Drag.active && clip.trackIndex === clip.originalTrackIndex
                                 }
                             }
                         }

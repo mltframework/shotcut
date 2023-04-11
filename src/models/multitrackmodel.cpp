@@ -589,13 +589,13 @@ bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta,
 int MultitrackModel::trackHeight() const
 {
     int result = m_tractor ? m_tractor->get_int(kTrackHeightProperty) : Settings.timelineTrackHeight();
-    return result ? result : qMax(10, Settings.timelineTrackHeight());
+    return qBound(10, result ? result : Settings.timelineTrackHeight(), 150);
 }
 
 void MultitrackModel::setTrackHeight(int height)
 {
     if (m_tractor) {
-        Settings.setTimelineTrackHeight(height);
+        Settings.setTimelineTrackHeight(qBound(10, height, 150));
         m_tractor->set(kTrackHeightProperty, Settings.timelineTrackHeight());
         emit trackHeightChanged();
     }
@@ -604,13 +604,13 @@ void MultitrackModel::setTrackHeight(int height)
 double MultitrackModel::scaleFactor() const
 {
     double result = m_tractor ? m_tractor->get_double(kTimelineScaleProperty) : 0;
-    return (result > 0) ? result : (qPow(1.0, 3.0) + 0.01);
+    return (result > 0) ? qBound(0.0, result, 27.01) : (qPow(1.0, 3.0) + 0.01);
 }
 
 void MultitrackModel::setScaleFactor(double scale)
 {
     if (m_tractor) {
-        m_tractor->set(kTimelineScaleProperty, scale);
+        m_tractor->set(kTimelineScaleProperty, qBound(0.0, scale, 27.01));
         emit scaleFactorChanged();
     }
 }
