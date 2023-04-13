@@ -2761,6 +2761,10 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
             MAIN.undoStack()->endMacro();
 
         } else {
+            if (producer.type() == mlt_service_chain_type) {
+                ProxyManager::generateIfNotExists(producer);
+                xmlToUse = MLT.XML(&producer);
+            }
             if (m_model.trackList().size() == 0) {
                 position = 0;
                 addVideoTrack();
@@ -2879,6 +2883,10 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
             MAIN.undoStack()->endMacro();
 
         } else {
+            if (producer.type() == mlt_service_chain_type) {
+                ProxyManager::generateIfNotExists(producer);
+                xmlToUse = MLT.XML(&producer);
+            }
             if (m_model.trackList().size() == 0) {
                 position = 0;
                 addVideoTrack();
