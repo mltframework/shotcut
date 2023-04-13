@@ -787,7 +787,7 @@ Rectangle {
                 Logic.scrollIfNeeded();
         }
 
-        function onDragging() {
+        function onDragging(pos, duration) {
             Logic.dragging(pos, duration);
         }
 
@@ -795,7 +795,7 @@ Rectangle {
             Logic.dropped();
         }
 
-        function onDropAccepted() {
+        function onDropAccepted(xml) {
             Logic.acceptDrop(xml);
         }
 
