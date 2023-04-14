@@ -27,6 +27,7 @@
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlfilter.h"
+#include "qmltypes/qmlapplication.h"
 
 #include <MltLink.h>
 
@@ -132,9 +133,42 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     return meta;
 }
 
+void FilterController::loadFilterSets()
+{
+    QStringList sets;
+    auto dir = QmlApplication::dataDir();
+    if (dir.cd("shotcut") && dir.cd("filter-sets")) {
+        QStringList entries = dir.entryList(QDir::Files | QDir::Readable);
+        for (const auto &s : entries) {
+            auto meta = new QmlMetadata;
+            meta->setType(QmlMetadata::FilterSet);
+            if (s == QUrl::toPercentEncoding(QUrl::fromPercentEncoding(s.toUtf8())))
+                meta->setName(QUrl::fromPercentEncoding(s.toUtf8()));
+            else
+                meta->setName(s);
+            meta->set_mlt_service("stock");
+            addMetadata(meta);
+        }
+    }
+    dir = Settings.appDataLocation();
+    if (dir.cd("filter-sets")) {
+        QStringList entries = dir.entryList(QDir::Files | QDir::Readable);
+        for (const auto &s : entries) {
+            auto meta = new QmlMetadata;
+            meta->setType(QmlMetadata::FilterSet);
+            if (s == QUrl::toPercentEncoding(QUrl::fromPercentEncoding(s.toUtf8())))
+                meta->setName(QUrl::fromPercentEncoding(s.toUtf8()));
+            else
+                meta->setName(s);
+            addMetadata(meta);
+        }
+    }
+}
+
 void FilterController::timerEvent(QTimerEvent *event)
 {
     loadFilterMetadata();
+    loadFilterSets();
     killTimer(event->timerId());
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,15 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "qmltypes/qmlapplication.h"
+#include "settings.h"
+
 #include <QApplication>
 #include <QMessageBox>
 #include <QTimer>
-#include <Logger.h>
+#include <QGuiApplication>
+#include <QClipboard>
 
+#include <Logger.h>
 #include <MltChain.h>
 #include <MltLink.h>
 
@@ -312,80 +316,16 @@ void AttachedFiltersModel::add(QmlMetadata *meta)
         }
     }
 
-    int mltIndex = -1;
-    if (meta->type() == QmlMetadata::Filter) {
-        Mlt::Filter *filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
-        if (filter->is_valid()) {
-            if (!meta->objectName().isEmpty())
-                filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
-            filter->set_in_and_out(
-                m_producer->get(kFilterInProperty) ? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
-                m_producer->get(kFilterOutProperty) ? m_producer->get_int(kFilterOutProperty) :
-                m_producer->get_out());
-
-            // Calculate the MLT index for the new filter.
-            if (m_metaList.count() == 0) {
-                mltIndex = m_producer->filter_count();
-            } else if (insertRow == 0) {
-                mltIndex = m_normFilterCount;
-            } else {
-                mltIndex = mltFilterIndex(insertRow - 1) + 1;
-            }
-            beginInsertRows(QModelIndex(), insertRow, insertRow);
-            if (MLT.isSeekable())
-                MLT.pause();
-            m_event->block();
-            m_producer->attach(*filter);
-            m_producer->move_filter(m_producer->filter_count() - 1, mltIndex);
-            m_event->unblock();
-            m_metaList.insert(insertRow, meta);
-
-            endInsertRows();
-            emit addedOrRemoved(m_producer.data());
-            emit changed();
-        } else LOG_WARNING() << "Failed to load filter" << meta->mlt_service();
-        delete filter;
-    } else if (meta->type() == QmlMetadata::Link) {
-        if (m_producer->type() != mlt_service_chain_type) {
-            LOG_WARNING() << "Not a chain";
-        }
-        if (meta->seekReverse() && m_producer->get_int("meta.media.has_b_frames") != 0) {
-            emit requestConvert(tr("This file has B-frames, which is not supported by %1.").arg(meta->name()),
-                                false, true);
-            return;
-        }
-        Mlt::Link *link = new Mlt::Link(meta->mlt_service().toUtf8().constData());
-        if (link && link->is_valid()) {
-            LOG_WARNING() << "Add Link" << insertRow << meta->mlt_service().toUtf8().constData();
-
-            if (!meta->objectName().isEmpty())
-                link->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
-            link->set_in_and_out(
-                m_producer->get(kFilterInProperty) ? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
-                m_producer->get(kFilterOutProperty) ? m_producer->get_int(kFilterOutProperty) :
-                m_producer->get_out());
-
-            beginInsertRows(QModelIndex(), insertRow, insertRow);
-            if (MLT.isSeekable())
-                MLT.pause();
-            m_event->block();
-            Mlt::Chain chain(*(m_producer.data()));
-            if (m_metaList.count() == 0) {
-                mltIndex = chain.link_count();
-            } else if (insertRow == 0) {
-                mltIndex = m_normLinkCount;
-            } else {
-                mltIndex = mltLinkIndex(insertRow - 1) + 1;
-            }
-            chain.attach(*link);
-            chain.move_link(chain.link_count() - 1, mltIndex);
-            m_event->unblock();
-            m_metaList.insert(insertRow, meta);
-            endInsertRows();
-            emit addedOrRemoved(m_producer.data());
-            emit changed();
-        } else LOG_WARNING() << "Failed to load link" << meta->mlt_service();
-        delete link;
+    switch (meta->type()) {
+    case QmlMetadata::Filter:
+        addFilter(meta, insertRow);
+        break;
+    case QmlMetadata::Link:
+        addLink(meta, insertRow);
+    case QmlMetadata::FilterSet:
+        addFilterSet(meta, insertRow);
+    default:
+        break;
     }
 }
 
@@ -524,6 +464,124 @@ int AttachedFiltersModel::mltLinkIndex(int row) const
         }
     }
     return -1;
+}
+
+void AttachedFiltersModel::addFilter(QmlMetadata *meta, int insertRow)
+{
+    Mlt::Filter *filter = new Mlt::Filter(MLT.profile(), meta->mlt_service().toUtf8().constData());
+    if (filter->is_valid()) {
+        int mltIndex = -1;
+        if (!meta->objectName().isEmpty())
+            filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
+        filter->set_in_and_out(
+            m_producer->get(kFilterInProperty) ? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
+            m_producer->get(kFilterOutProperty) ? m_producer->get_int(kFilterOutProperty) :
+            m_producer->get_out());
+
+        // Calculate the MLT index for the new filter.
+        if (m_metaList.count() == 0) {
+            mltIndex = m_producer->filter_count();
+        } else if (insertRow == 0) {
+            mltIndex = m_normFilterCount;
+        } else {
+            mltIndex = mltFilterIndex(insertRow - 1) + 1;
+        }
+        beginInsertRows(QModelIndex(), insertRow, insertRow);
+        if (MLT.isSeekable())
+            MLT.pause();
+        m_event->block();
+        m_producer->attach(*filter);
+        m_producer->move_filter(m_producer->filter_count() - 1, mltIndex);
+        m_event->unblock();
+        m_metaList.insert(insertRow, meta);
+
+        endInsertRows();
+        emit addedOrRemoved(m_producer.data());
+        emit changed();
+    } else LOG_WARNING() << "Failed to load filter" << meta->mlt_service();
+    delete filter;
+}
+
+void AttachedFiltersModel::addLink(QmlMetadata *meta, int insertRow)
+{
+    if (m_producer->type() != mlt_service_chain_type) {
+        LOG_WARNING() << "Not a chain";
+    }
+    if (meta->seekReverse() && m_producer->get_int("meta.media.has_b_frames") != 0) {
+        emit requestConvert(tr("This file has B-frames, which is not supported by %1.").arg(meta->name()),
+                            false, true);
+        return;
+    }
+    Mlt::Link *link = new Mlt::Link(meta->mlt_service().toUtf8().constData());
+    if (link && link->is_valid()) {
+        int mltIndex = -1;
+        LOG_WARNING() << "Add Link" << insertRow << meta->mlt_service().toUtf8().constData();
+
+        if (!meta->objectName().isEmpty())
+            link->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
+        link->set_in_and_out(
+            m_producer->get(kFilterInProperty) ? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
+            m_producer->get(kFilterOutProperty) ? m_producer->get_int(kFilterOutProperty) :
+            m_producer->get_out());
+
+        beginInsertRows(QModelIndex(), insertRow, insertRow);
+        if (MLT.isSeekable())
+            MLT.pause();
+        m_event->block();
+        Mlt::Chain chain(*(m_producer.data()));
+        if (m_metaList.count() == 0) {
+            mltIndex = chain.link_count();
+        } else if (insertRow == 0) {
+            mltIndex = m_normLinkCount;
+        } else {
+            mltIndex = mltLinkIndex(insertRow - 1) + 1;
+        }
+        chain.attach(*link);
+        chain.move_link(chain.link_count() - 1, mltIndex);
+        m_event->unblock();
+        m_metaList.insert(insertRow, meta);
+        endInsertRows();
+        emit addedOrRemoved(m_producer.data());
+        emit changed();
+    } else LOG_WARNING() << "Failed to load link" << meta->mlt_service();
+    delete link;
+
+}
+
+void AttachedFiltersModel::addFilterSet(QmlMetadata *meta, int insertRow)
+{
+    Q_UNUSED(insertRow);
+    auto name = meta->name();
+    auto dir = QmlApplication::dataDir();
+    dir.cd("shotcut");
+    dir.cd("filter-sets");
+    if (!QFileInfo::exists(dir.filePath(name))) {
+        dir = Settings.appDataLocation();
+        if (!dir.cd("filter-sets"))
+            return;
+    }
+
+    auto fileName = QUrl::toPercentEncoding(name.toUtf8());
+    QFile filtersetFile(dir.filePath(fileName));
+    QString xml;
+    if (filtersetFile.open(QIODevice::ReadOnly)) {
+        xml = QString::fromUtf8(filtersetFile.readAll());
+    } else {
+        filtersetFile.setFileName(dir.filePath(name));
+        if (filtersetFile.open(QIODevice::ReadOnly)) {
+            xml = QString::fromUtf8(filtersetFile.readAll());
+        }
+    }
+    if (m_producer && MLT.isMltXml(xml)) {
+        Mlt::Profile profile(kDefaultMltProfile);
+        Mlt::Producer filtersProducer(profile, "xml-string", xml.toUtf8().constData());
+        if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0
+                && QmlApplication::confirmOutputFilter()) {
+            Mlt::Producer producer(m_producer.get());
+            MLT.pasteFilters(&producer, &filtersProducer);
+            emit QmlApplication::singleton().filtersPasted(m_producer.get());
+        }
+    }
 }
 
 void AttachedFiltersModel::producerChanged(mlt_properties, AttachedFiltersModel *model)

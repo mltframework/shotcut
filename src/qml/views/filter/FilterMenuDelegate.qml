@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
 import "FilterMenu.js" as Logic
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
+import Shotcut.Controls as Shotcut
 import org.shotcut.qml as Shotcut
 
 Rectangle {
@@ -71,8 +73,8 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 enabled: false
-                icon.name: needsGpu ? 'cpu' : isAudio ? 'speaker' : pluginType == Shotcut.Metadata.Link ? 'chronometer' : 'video-television'
-                icon.source: needsGpu ? 'qrc:///icons/oxygen/32x32/devices/cpu.png' : isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : pluginType == Shotcut.Metadata.Link ? 'qrc:///icons/oxygen/32x32/actions/chronometer.png' : 'qrc:///icons/oxygen/32x32/devices/video-television.png'
+                icon.name: needsGpu ? 'cpu' : isAudio ? 'speaker' : pluginType === Shotcut.Metadata.Link ? 'chronometer' : pluginType === Shotcut.Metadata.FilterSet ? 'server-database' : 'video-television'
+                icon.source: needsGpu ? 'qrc:///icons/oxygen/32x32/devices/cpu.png' : isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : pluginType === Shotcut.Metadata.Link ? 'qrc:///icons/oxygen/32x32/actions/chronometer.png' : pluginType === Shotcut.Metadata.FilterSet ? 'qrc:///icons/oxygen/32x32/places/server-database.png' : 'qrc:///icons/oxygen/32x32/devices/video-television.png'
             }
 
             Label {
@@ -92,11 +94,57 @@ Rectangle {
 
                 anchors.fill: parent
                 hoverEnabled: wrapper.height > 0
-                onClicked: {
-                    wrapper.ListView.view.itemSelected(index);
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: mouse => {
+                    if (mouse.button === Qt.LeftButton)
+                        wrapper.ListView.view.itemSelected(index);
+                    else if (pluginType === Shotcut.Metadata.FilterSet && service.length === 0)
+                        confirmDialog.show();
                 }
                 onEntered: {
                     wrapper.ListView.view.currentIndex = index;
+                }
+            }
+        }
+    }
+
+    Window {
+        id: confirmDialog
+
+        flags: Qt.Dialog
+        color: activePalette.window
+        modality: Qt.ApplicationModal
+        title: qsTr('Delete Filter Set')
+        width: 400
+        height: 90
+        Component.onCompleted: confirmDialogOk.forceActiveFocus(Qt.TabFocusReason)
+
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 10
+
+            Label {
+                text: qsTr("Are you sure you want to delete this?\n%1").arg(name)
+                wrapMode: Text.Wrap
+            }
+
+            RowLayout {
+                Layout.alignment: Qt.AlignRight
+
+                Shotcut.Button {
+                    id: confirmDialogOk
+
+                    text: qsTr('OK')
+                    focus: true
+                    onClicked: {
+                        metadatamodel.deleteFilterSet(name);
+                        confirmDialog.close();
+                    }
+                }
+
+                Shotcut.Button {
+                    text: qsTr('Cancel')
+                    onClicked: confirmDialog.close()
                 }
             }
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,6 +81,9 @@ private:
     void reset(Mlt::Producer *producer = 0);
     int mltFilterIndex(int row) const;
     int mltLinkIndex(int row) const;
+    void addFilter(QmlMetadata *meta, int insertRow);
+    void addLink(QmlMetadata *meta, int insertRow);
+    void addFilterSet(QmlMetadata *meta, int insertRow);
 
     int m_dropRow;
     int m_removeRow;

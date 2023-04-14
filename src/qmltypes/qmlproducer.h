@@ -44,8 +44,6 @@ class QmlProducer : public QObject
     Q_PROPERTY(double speed READ speed NOTIFY producerChanged)
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(double displayAspectRatio READ displayAspectRatio NOTIFY producerChanged)
-    Q_PROPERTY(QStringList filterSets READ filterSets NOTIFY filterSetsChanged)
-
 
 public:
     explicit QmlProducer(QObject *parent = 0);
@@ -94,10 +92,6 @@ public:
     Q_INVOKABLE bool outOfBounds();
     Q_INVOKABLE void newGlaxnimateFile(const QString &filename);
     Q_INVOKABLE void launchGlaxnimate(const QString &filename = QString()) const;
-    QStringList filterSets() const;
-    Q_INVOKABLE void saveFilterSet(const QString &name);
-    Q_INVOKABLE void deleteFilterSet(const QString &name);
-    Q_INVOKABLE void pasteFilterSet(const QString &name);
 
 signals:
     void producerChanged();
@@ -108,7 +102,6 @@ signals:
     void audioLevelsChanged();
     void durationChanged();
     void lengthChanged();
-    void filterSetsChanged();
 
 public slots:
     void setProducer(Mlt::Producer &producer);

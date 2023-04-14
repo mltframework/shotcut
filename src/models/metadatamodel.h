@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +49,7 @@ public:
         VideoFilter,
         AudioFilter,
         LinkFilter,
+        FilterSetFilter,
     };
 
     enum FilterMaskBits {
@@ -85,6 +86,8 @@ public:
     Q_INVOKABLE bool isVisible(int row) const;
     void setIsClipProducer(bool isClipProducer);
     void setIsChainProducer(bool isChainProducer);
+    Q_INVOKABLE void saveFilterSet(const QString &name);
+    Q_INVOKABLE void deleteFilterSet(const QString &name);
 
 signals:
     void filterChanged();

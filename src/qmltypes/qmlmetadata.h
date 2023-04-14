@@ -27,7 +27,6 @@
 class QmlKeyframesParameter : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(RangeType)
     Q_PROPERTY(RangeType rangeType MEMBER m_rangeType NOTIFY changed)
     Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
     Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
@@ -43,6 +42,7 @@ public:
         MinMax,
         ClipLength,
     };
+    Q_ENUM(RangeType)
     explicit QmlKeyframesParameter(QObject *parent = 0);
 
     QString name() const
@@ -167,24 +167,23 @@ private:
 class QmlMetadata : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(PluginType)
     Q_PROPERTY(PluginType type READ type WRITE setType NOTIFY changed)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY changed)
-    Q_PROPERTY(QString mlt_service READ mlt_service WRITE set_mlt_service)
+    Q_PROPERTY(QString mlt_service READ mlt_service WRITE set_mlt_service NOTIFY changed)
     Q_PROPERTY(bool needsGPU READ needsGPU WRITE setNeedsGPU NOTIFY changed)
-    Q_PROPERTY(QString qml READ qmlFileName WRITE setQmlFileName)
-    Q_PROPERTY(QString vui READ vuiFileName WRITE setVuiFileName)
-    Q_PROPERTY(QUrl qmlFilePath READ qmlFilePath )
-    Q_PROPERTY(QUrl vuiFilePath READ vuiFilePath )
+    Q_PROPERTY(QString qml READ qmlFileName WRITE setQmlFileName NOTIFY changed)
+    Q_PROPERTY(QString vui READ vuiFileName WRITE setVuiFileName NOTIFY changed)
+    Q_PROPERTY(QUrl qmlFilePath READ qmlFilePath NOTIFY changed)
+    Q_PROPERTY(QUrl vuiFilePath READ vuiFilePath NOTIFY changed)
     Q_PROPERTY(bool isAudio READ isAudio WRITE setIsAudio NOTIFY changed)
     Q_PROPERTY(bool isHidden READ isHidden WRITE setIsHidden NOTIFY changed)
     Q_PROPERTY(bool isFavorite READ isFavorite WRITE setIsFavorite NOTIFY changed)
     Q_PROPERTY(QString gpuAlt READ gpuAlt WRITE setGpuAlt NOTIFY changed)
-    Q_PROPERTY(bool allowMultiple READ allowMultiple WRITE setAllowMultiple)
-    Q_PROPERTY(bool isClipOnly READ isClipOnly WRITE setIsClipOnly)
-    Q_PROPERTY(bool isGpuCompatible READ isGpuCompatible() WRITE setIsGpuCompatible)
+    Q_PROPERTY(bool allowMultiple READ allowMultiple WRITE setAllowMultiple NOTIFY changed)
+    Q_PROPERTY(bool isClipOnly READ isClipOnly WRITE setIsClipOnly NOTIFY changed)
+    Q_PROPERTY(bool isGpuCompatible READ isGpuCompatible() WRITE setIsGpuCompatible NOTIFY changed)
     Q_PROPERTY(QmlKeyframesMetadata *keyframes READ keyframes NOTIFY changed)
-    Q_PROPERTY(bool isDeprecated READ isDeprecated WRITE setIsDeprecated)
+    Q_PROPERTY(bool isDeprecated READ isDeprecated WRITE setIsDeprecated NOTIFY changed)
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
     Q_PROPERTY(QString keywords MEMBER m_keywords NOTIFY changed)
     Q_PROPERTY(QString icon READ iconFilePath WRITE setIconFileName NOTIFY changed)
@@ -196,7 +195,9 @@ public:
         Producer,
         Transition,
         Link,
+        FilterSet,
     };
+    Q_ENUM(PluginType)
     unsigned filterMask;
 
     explicit QmlMetadata(QObject *parent = 0);

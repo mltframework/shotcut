@@ -240,7 +240,7 @@ Rectangle {
             opacity: enabled ? 1 : 0.5
             icon.name: 'edit-paste'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
-            onClicked: pasteFiltersDialog.show()
+            onClicked: application.pasteFilters()
 
             Shotcut.HoverTip {
                 text: qsTr('Paste filters')
@@ -393,10 +393,6 @@ Rectangle {
 
     CopyFiltersDialog {
         id: copyFiltersDialog
-    }
-
-    PasteFiltersDialog {
-        id: pasteFiltersDialog
     }
 
     Connections {

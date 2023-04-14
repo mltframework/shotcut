@@ -20,6 +20,10 @@
 #include "settings.h"
 #include <Logger.h>
 
+#include <QGuiApplication>
+#include <QClipboard>
+#include <QSaveFile>
+
 MetadataModel::MetadataModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_filter(FavoritesFilter)
@@ -173,6 +177,9 @@ bool MetadataModel::isVisible(int row) const
         case LinkFilter:
             if (meta->type() != QmlMetadata::Link) return false;
             break;
+        case FilterSetFilter:
+            if (meta->type() != QmlMetadata::FilterSet) return false;
+            break;
         default:
             break;
         }
@@ -217,4 +224,59 @@ unsigned MetadataModel::computeFilterMask(const QmlMetadata *meta)
     if (meta->needsGPU()) mask |= needsGPUMaskBit;
     if (meta->type() == QmlMetadata::Link) mask |= linkMaskBit;
     return mask;
+}
+
+void MetadataModel::saveFilterSet(const QString &name)
+{
+    QDir dir(Settings.appDataLocation());
+    const auto folder = QString::fromLatin1("filter-sets");
+
+    if (!dir.exists())
+        dir.mkpath(dir.path());
+    if (!dir.cd(folder)) {
+        if (dir.mkdir(folder))
+            dir.cd(folder);
+    }
+
+    auto filename = QString::fromUtf8(QUrl::toPercentEncoding(name));
+    QSaveFile file(dir.filePath(filename));
+    file.setDirectWriteFallback(true);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        LOG_ERROR() << "failed to open filter set file for writing" << file.fileName();
+        return;
+    }
+    QTextStream stream(&file);
+    stream.setEncoding(QStringConverter::Utf8);
+    stream << QGuiApplication::clipboard()->text();
+    if (file.error() != QFileDevice::NoError) {
+        LOG_ERROR() << "error while writing filter set file" << file.fileName() << ":" <<
+                    file.errorString();
+        return;
+    }
+    if (file.commit()) {
+        auto meta = new QmlMetadata;
+        meta->setType(QmlMetadata::FilterSet);
+        meta->setName(name);
+        add(meta);
+    }
+}
+
+void MetadataModel::deleteFilterSet(const QString &name)
+{
+    QDir dir(Settings.appDataLocation());
+    if (!dir.cd("filter-sets"))
+        return;
+
+    auto fileName = QUrl::toPercentEncoding(name.toUtf8());
+    if (QFile::remove(dir.filePath(fileName)) || QFile::remove(dir.filePath(name))) {
+        auto i = 0;
+        for (const auto &meta : m_list) {
+            if (meta->type() == QmlMetadata::FilterSet && meta->name() == name) {
+                beginRemoveRows(QModelIndex(), i, i);
+                m_list.remove(i);
+                endRemoveRows();
+            }
+            ++i;
+        }
+    }
 }

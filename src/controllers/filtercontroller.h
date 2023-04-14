@@ -78,6 +78,7 @@ private slots:
     void onQmlFilterChanged(const QString &name);
 
 private:
+    void loadFilterSets();
     void loadFilterMetadata();
 
     QFuture<void> m_future;

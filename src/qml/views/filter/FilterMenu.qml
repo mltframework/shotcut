@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-20232 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,13 +38,13 @@ Rectangle {
 
     visible: false
     onVisibleChanged: {
-        if (metadatamodel.filter == Shotcut.MetadataModel.FavoritesFilter)
+        if (metadatamodel.filter === Shotcut.MetadataModel.FavoritesFilter)
             favButton.checked = true;
-        else if (metadatamodel.filter == Shotcut.MetadataModel.VideoFilter)
+        else if (metadatamodel.filter === Shotcut.MetadataModel.VideoFilter)
             vidButton.checked = true;
-        else if (metadatamodel.filter == Shotcut.MetadataModel.AudioFilter)
+        else if (metadatamodel.filter === Shotcut.MetadataModel.AudioFilter)
             audButton.checked = true;
-        else if (metadatamodel.filter == Shotcut.MetadataModel.LinkFilter)
+        else if (metadatamodel.filter === Shotcut.MetadataModel.LinkFilter)
             lnkButton.checked = true;
     }
     color: activePalette.window
@@ -210,6 +210,27 @@ Rectangle {
                 }
             }
 
+            Shotcut.ToggleButton {
+                id: setButton
+
+                implicitWidth: 82
+                icon.name: 'server-database'
+                icon.source: 'qrc:///icons/oxygen/32x32/places/server-database.png'
+                text: qsTr('Sets')
+                ButtonGroup.group: typeGroup
+                onClicked: {
+                    if (checked) {
+                        metadatamodel.filter = Shotcut.MetadataModel.FilterSetFilter;
+                        searchField.text = '';
+                        checked = true;
+                    }
+                }
+
+                Shotcut.HoverTip {
+                    text: qsTr('Show filter sets')
+                }
+            }
+
             // separator
             Button {
                 enabled: false
@@ -310,7 +331,7 @@ Rectangle {
             Label {
                 id: keywordsLabel
 
-                text: menuListView.currentIndex >= 0 ? metadatamodel.get(menuListView.currentIndex).keywords : ''
+                text: icon.current ? (icon.current.type === Shotcut.Metadata.FilterSet && icon.current.mlt_service.length === 0) ? qsTr('Delete a custom filter set by right-clicking it.') : icon.current.keywords : ''
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft

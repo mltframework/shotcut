@@ -27,7 +27,7 @@ Window {
         application.copyFilters();
         let name = nameField.text.trim();
         if (name.length) {
-            producer.saveFilterSet(name);
+            metadatamodel.saveFilterSet(name);
         }
         nameDialog.close();
     }
