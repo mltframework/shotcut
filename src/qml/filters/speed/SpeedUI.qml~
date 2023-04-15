@@ -146,7 +146,7 @@ Item {
 
         Shotcut.UndoButton {
             onClicked: {
-                speedSpinner.value = 1.0;
+                speedSpinner.value = 1.0
             }
         }
 
