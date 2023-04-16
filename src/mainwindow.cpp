@@ -3059,7 +3059,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         }
         if (-1 != w->metaObject()->indexOfSlot("offerConvert(QString)")) {
             connect(m_filterController->attachedModel(), SIGNAL(requestConvert(QString, bool, bool)), w,
-                    SLOT(offerConvert(QString, bool, bool)));
+                    SLOT(offerConvert(QString, bool, bool)), Qt::QueuedConnection);
         }
         scrollArea->setWidget(w);
         onProducerChanged();
