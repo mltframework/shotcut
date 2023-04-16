@@ -71,7 +71,7 @@ void ShotcutSettings::migrateRecent()
 {
     // Migrate recent to separate INI file
     auto oldRecents = settings.value(kRecentKey).toStringList();
-    if (!oldRecents.isEmpty()) {
+    if (recent().isEmpty() && !oldRecents.isEmpty()) {
         auto newRecents = recent();
         for (const auto &a : oldRecents) {
             if (a.size() < ShotcutSettings::MaxPath && !newRecents.contains(a)) {
