@@ -127,8 +127,8 @@ bool UnlinkedFilesDialog::lookInDir(const QDir &dir, bool recurse)
         }
     }
     if (outstanding && recurse) {
-        foreach (const QString &dirName,
-                 dir.entryList(QDir::Dirs | QDir::Executable | QDir::NoDotAndDotDot)) {
+        for (const QString &dirName :
+                dir.entryList(QDir::Dirs | QDir::Executable | QDir::NoDotAndDotDot)) {
             if (!lookInDir(dir.absoluteFilePath(dirName), true))
                 break;
         }
