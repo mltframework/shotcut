@@ -420,7 +420,10 @@ void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition *lu
     }
     luma->set("softness", config.transitionSoftness / 100.0);
     luma->set("progressive", 1);
-    if (!Settings.playerGPU()) luma->set("alpha_over", 1);
+    if (!Settings.playerGPU()) {
+        luma->set("alpha_over", 1);
+        luma->set("fix_background_alpha", 1);
+    }
 }
 
 void SlideshowGeneratorWidget::on_parameterChanged()
