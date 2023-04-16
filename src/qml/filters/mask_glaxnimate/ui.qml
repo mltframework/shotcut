@@ -58,9 +58,9 @@ Item {
         }
         setControls();
     }
-    onFileOpened: {
+    onFileOpened: path => {
         settings.openPath = path;
-        fileDialog.folder = 'file:///' + path;
+        fileDialog.currentFolder = 'file:///' + path;
     }
 
     Shotcut.File {
@@ -84,7 +84,7 @@ Item {
         currentFolder: settingsOpenPath
         onAccepted: {
             shapeFile.url = fileDialog.currentFile;
-            if (!fileDialog.selectExisting) {
+            if (fileDialog.fileMode === FileDialog.SaveFile) {
                 // Force file extension to ".rawr"
                 var filename = shapeFile.url;
                 var extension = ".rawr";
@@ -98,7 +98,7 @@ Item {
             filter.set('filter.resource', shapeFile.url);
             fileLabelTip.text = shapeFile.filePath;
             shapeRoot.fileOpened(shapeFile.path);
-            if (!fileDialog.selectExisting)
+            if (fileDialog.fileMode === FileDialog.SaveFile)
                 producer.launchGlaxnimate(shapeFile.url);
         }
     }
