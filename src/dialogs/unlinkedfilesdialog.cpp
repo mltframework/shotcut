@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,9 +94,9 @@ bool UnlinkedFilesDialog::lookInDir(const QDir &dir, bool recurse)
         if (model->data(replacementIndex, MltXmlChecker::ShotcutHashRole).isNull())
             ++outstanding;
     }
-    if (outstanding)
-        foreach (const QString &fileName,
-                 dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot)) {
+    if (outstanding) {
+        for (const auto &fileName :
+                dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot)) {
             QString hash = Util::getFileHash(dir.absoluteFilePath(fileName));
             for (int row = 0; row < model->rowCount(); row++) {
                 QModelIndex replacementIndex = model->index(row, MltXmlChecker::ReplacementColumn);
@@ -125,6 +125,7 @@ bool UnlinkedFilesDialog::lookInDir(const QDir &dir, bool recurse)
                 }
             }
         }
+    }
     if (outstanding && recurse) {
         foreach (const QString &dirName,
                  dir.entryList(QDir::Dirs | QDir::Executable | QDir::NoDotAndDotDot)) {
