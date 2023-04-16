@@ -73,7 +73,6 @@ TimelineDock::TimelineDock(QWidget *parent) :
     QIcon icon = QIcon::fromTheme("view-time-schedule",
                                   QIcon(":/icons/oxygen/32x32/actions/view-time-schedule.png"));
     setWindowIcon(icon);
-    setAllowedAreas(Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
 
     toggleViewAction()->setIcon(windowIcon());
     setupActions();
