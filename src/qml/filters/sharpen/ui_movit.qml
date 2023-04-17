@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -160,7 +160,7 @@ Item {
             id: circleSlider
 
             minimumValue: 0
-            maximumValue: 99.99
+            maximumValue: 10
             decimals: 2
             stepSize: 0.1
             onValueChanged: updateFilter('circle_radius', value, getPosition(), circleKeyframesButton)
@@ -186,7 +186,7 @@ Item {
             id: gaussianSlider
 
             minimumValue: 0
-            maximumValue: 99.99
+            maximumValue: 10
             decimals: 2
             stepSize: 0.1
             onValueChanged: updateFilter('gaussian_radius', value, getPosition(), gaussianKeyframesButton)
@@ -212,7 +212,7 @@ Item {
             id: correlationSlider
 
             minimumValue: 0
-            maximumValue: 1
+            maximumValue: 0.99
             decimals: 2
             onValueChanged: updateFilter('correlation', value, getPosition(), correlationKeyframesButton)
         }
@@ -236,7 +236,7 @@ Item {
         Shotcut.SliderSpinner {
             id: noiseSlider
 
-            minimumValue: 0
+            minimumValue: 0.01
             maximumValue: 1
             decimals: 2
             onValueChanged: updateFilter('noise', value, getPosition(), noiseKeyframesButton)

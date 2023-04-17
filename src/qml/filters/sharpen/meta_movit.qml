@@ -20,27 +20,27 @@ Metadata {
                 property: 'circle_radius'
                 isCurve: true
                 minimum: 0
-                maximum: 99.99
+                maximum: 10
             },
             Parameter {
                 name: qsTr('Gaussian radius')
                 property: 'gaussian_radius'
                 isCurve: true
                 minimum: 0
-                maximum: 99.99
+                maximum: 10
             },
             Parameter {
                 name: qsTr('Correlation')
                 property: 'correlation'
                 isCurve: true
                 minimum: 0
-                maximum: 1
+                maximum: 0.99
             },
             Parameter {
                 name: qsTr('Noise')
                 property: 'noise'
                 isCurve: true
-                minimum: 0
+                minimum: 0.01
                 maximum: 1
             }
         ]
