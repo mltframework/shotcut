@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Meltytech, LLC
+ * Copyright (c) 2020-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
 Item {
     property string rectProperty: 'geometry'
@@ -131,8 +132,50 @@ Item {
         }
     }
 
+    function applyTracking(motionTrackerRow, operation, frame) {
+        motionTrackerModel.reset(filter, rectProperty, motionTrackerRow);
+        const data = motionTrackerModel.trackingData(motionTrackerRow);
+        let previous = null;
+        let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
+        let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
+        data.forEach(i => {
+                let current = filter.getRect(rectProperty, frame);
+                let x = 0;
+                let y = 0;
+                if (previous !== null) {
+                    x = i.x - previous.x;
+                    y = i.y - previous.y;
+                }
+                switch (operation) {
+                case 'relativePos':
+                    current.x += x;
+                    current.y += y;
+                    break;
+                case 'offsetPos':
+                    current.x -= x;
+                    current.y -= y;
+                    break;
+                case 'absPos':
+                    current.x = i.x + i.width / 2 - current.width / 2;
+                    current.y = i.y + i.height / 2 - current.height / 2;
+                    interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                    break;
+                case 'absSizePos':
+                    current.x = i.x;
+                    current.y = i.y;
+                    current.width = i.width;
+                    current.height = i.height;
+                    interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                    break;
+                }
+                previous = i;
+                filter.set(rectProperty, current, frame, interpolation);
+                frame += interval;
+            });
+    }
+
     width: 350
-    height: 230
+    height: 250
     Component.onCompleted: {
         filter.blockSignals = true;
         filter.set(middleValue, defaultRect);
@@ -520,7 +563,31 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
 
         Item {
+            width: 1
+        }
+
+        Shotcut.Button {
+            Layout.columnSpan: parent.columns - 1
+            text: motionTrackerDialog.title
+            onClicked: motionTrackerDialog.show()
+        }
+
+        Item {
             Layout.fillHeight: true
+        }
+    }
+
+    Shotcut.MotionTrackerDialog {
+        id: motionTrackerDialog
+        onAccepted: (motionTrackerRow, operation, startFrame) => applyTracking(motionTrackerRow, operation, startFrame)
+        onReset: if (filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {
+            motionTrackerModel.undo(filter, rectProperty);
+            filterRect = filter.getRect(rectProperty, getPosition());
+            rectX.value = filterRect.x;
+            rectY.value = filterRect.y;
+            rectW.value = filterRect.width;
+            rectH.value = filterRect.height;
+            updateFilter(getPosition());
         }
     }
 
