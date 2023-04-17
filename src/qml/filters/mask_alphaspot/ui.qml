@@ -177,10 +177,9 @@ Item {
         updateFilterRect(null);
     }
 
-    function onKeyframesButtonClicked(checked, parameter, value) {
+    function onRotationKeyframesButtonClicked(checked, parameter, value) {
         if (checked) {
             blockUpdate = true;
-            horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled = true;
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 filter.resetProperty(paramHorizontal);
                 filter.resetProperty(paramVertical);
@@ -558,7 +557,7 @@ Item {
         Shotcut.KeyframesButton {
             id: rotationKeyframesButton
 
-            onToggled: onKeyframesButtonClicked(checked, paramRotation, rotationSlider.filterValue())
+            onToggled: onRotationKeyframesButtonClicked(checked, paramRotation, rotationSlider.filterValue())
         }
 
         Label {
@@ -649,10 +648,6 @@ Item {
         }
 
         function onAnimateOutChanged() {
-            updateSimpleAnimation();
-        }
-
-        function onPropertyChanged(name) {
             updateSimpleAnimation();
         }
 
