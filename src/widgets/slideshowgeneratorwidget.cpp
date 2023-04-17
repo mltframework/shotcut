@@ -342,16 +342,26 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig &config, Mlt::
         beginRect.h = beginRect.h + (beginScale * beginRect.h);
     }
 
-    Mlt::Filter filter(MLT.profile(), "affine");
-    filter.anim_set("transition.rect", beginRect, 0);
-    filter.anim_set("transition.rect", endRect, endPosition);
-    filter.set("transition.fill", 1);
-    filter.set("transition.distort", 0);
-    filter.set("transition.valign", "middle");
-    filter.set("transition.halign", "center");
-    filter.set("transition.threads", 0);
-    filter.set("background", "color:#000000");
-    filter.set(kShotcutFilterProperty, "affineSizePosition");
+    Mlt::Filter filter(MLT.profile(), Settings.playerGPU() ? "movit.rect" : "affine");
+    if (Settings.playerGPU()) {
+        filter.anim_set("rect", beginRect, 0);
+        filter.anim_set("rect", endRect, endPosition);
+        filter.set("fill", 1);
+        filter.set("distort", 0);
+        filter.set("valign", "middle");
+        filter.set("halign", "center");
+        filter.set(kShotcutFilterProperty, "movitSizePosition");
+    } else {
+        filter.anim_set("transition.rect", beginRect, 0);
+        filter.anim_set("transition.rect", endRect, endPosition);
+        filter.set("transition.fill", 1);
+        filter.set("transition.distort", 0);
+        filter.set("transition.valign", "middle");
+        filter.set("transition.halign", "center");
+        filter.set("transition.threads", 0);
+        filter.set("background", "color:#000000");
+        filter.set(kShotcutFilterProperty, "affineSizePosition");
+    }
     filter.set(kShotcutAnimInProperty, producer->frames_to_time(endPosition + 1, mlt_time_clock));
     filter.set(kShotcutAnimOutProperty, producer->frames_to_time(0, mlt_time_clock));
     producer->attach(filter);
