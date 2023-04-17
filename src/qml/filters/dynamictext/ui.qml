@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ Item {
     }
 
     width: 500
-    height: 380
+    height: 400
     Component.onCompleted: {
         filter.blockSignals = true;
         filter.set(textFilterUi.middleValue, Qt.rect(0, 0, profile.width, profile.height));
