@@ -674,6 +674,8 @@ void MainWindow::connectVideoWidgetSignals()
             &Mlt::VideoWidget::renderVideo, Qt::DirectConnection);
     connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, this,
             &MainWindow::onSceneGraphInitialized, Qt::QueuedConnection);
+    connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, m_timelineDock,
+            &TimelineDock::initLoad);
     connect(videoWidget, &Mlt::VideoWidget::frameDisplayed, m_scopeController,
             &ScopeController::newFrame);
     connect(m_filterController, &FilterController::currentFilterChanged, videoWidget,

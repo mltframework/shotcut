@@ -251,7 +251,6 @@ TimelineDock::TimelineDock(QWidget *parent) :
                                                                                        bool)), Qt::QueuedConnection);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
             SLOT(onShowFrame(const SharedFrame &)));
-    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load()));
     connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
     connect(this, SIGNAL(warnTrackLocked(int)), SLOT(onWarnTrackLocked()));
     connect(&m_markersModel, SIGNAL(rangesChanged()), this, SIGNAL(markerRangesChanged()));
@@ -2395,6 +2394,11 @@ void TimelineDock::trimClipIn(bool ripple)
 void TimelineDock::trimClipOut(bool ripple)
 {
     trimClipAtPlayhead(TimelineDock::TrimOutPoint, ripple);
+}
+
+void TimelineDock::initLoad()
+{
+    load(false);
 }
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)

@@ -205,6 +205,7 @@ public slots:
     void onFilterModelChanged();
     void trimClipIn(bool ripple = false);
     void trimClipOut(bool ripple = false);
+    void initLoad();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -259,7 +260,7 @@ private:
     QMenu *m_clipMenu;
 
 private slots:
-    void load(bool force = false);
+    void load(bool force);
     void onTopLevelChanged(bool floating);
     void onTransitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
     void selectClip(int trackIndex, int clipIndex);
