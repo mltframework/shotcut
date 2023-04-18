@@ -573,8 +573,10 @@ int Controller::consumerChanged()
     if (m_consumer) {
         bool jackEnabled = !m_jackFilter.isNull();
         m_consumer->stop();
-        m_consumer.reset();
-        m_jackFilter.reset();
+        if (!Settings.playerGPU()) {
+            m_consumer.reset();
+            m_jackFilter.reset();
+        }
         error = reconfigure(false);
         if (m_consumer) {
             enableJack(jackEnabled);
