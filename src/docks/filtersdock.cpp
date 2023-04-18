@@ -79,7 +79,8 @@ void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int ind
 {
     if (filter && filter->producer().is_valid()) {
         m_producer.setProducer(filter->producer());
-        m_producer.seek(MLT.producer()->position());
+        if (mlt_service_playlist_type != filter->producer().type())
+            m_producer.seek(MLT.producer()->position());
     } else {
         Mlt::Producer emptyProducer(mlt_producer(0));
         m_producer.setProducer(emptyProducer);
