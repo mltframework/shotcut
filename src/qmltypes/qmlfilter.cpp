@@ -373,7 +373,7 @@ void QmlFilter::analyze(bool isAudio)
     if (!isAudio) mltFilter.set("analyze", 1);
 
     // Fix in/out points of filters on clip-only project.
-    if (MLT.isSeekableClip()) {
+    if (MLT.isSeekableClip() && mlt_service_chain_type != MLT.producer()->type()) {
         Mlt::Producer producer(MLT.profile(), "xml-string", MLT.XML().toUtf8().constData());
         service = Mlt::Service(producer);
         int producerIn = producer.get_in();
