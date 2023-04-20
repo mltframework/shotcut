@@ -352,7 +352,7 @@ void QmlFilter::deletePreset(const QString &name)
     emit presetsChanged();
 }
 
-void QmlFilter::analyze(bool isAudio)
+void QmlFilter::analyze(bool isAudio, bool deferJob)
 {
     // Analyze is only supported for filters, not links.
     if (m_service.type() != mlt_service_filter_type) return;
@@ -446,9 +446,13 @@ void QmlFilter::analyze(bool isAudio)
             file.open(QFile::WriteOnly);
             file.write("");
         }
-        QTimer::singleShot(0, [ = ]() {
+        if (deferJob) {
+            QTimer::singleShot(0, this, [ = ]() {
+                JOBS.add(job);
+            });
+        } else {
             JOBS.add(job);
-        });
+        }
     }
 }
 

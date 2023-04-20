@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ public:
     /// returns the index of the new preset
     Q_INVOKABLE int  savePreset(const QStringList &propertyNames, const QString &name = QString());
     Q_INVOKABLE void deletePreset(const QString &name);
-    Q_INVOKABLE void analyze(bool isAudio = false);
+    Q_INVOKABLE void analyze(bool isAudio = false, bool deferJob = true);
     Q_INVOKABLE static int framesFromTime(const QString &time);
     Q_INVOKABLE static QString timeFromFrames(int frames, TimeFormat format = TIME_TIMECODE_DF);
     Q_INVOKABLE void getHash();

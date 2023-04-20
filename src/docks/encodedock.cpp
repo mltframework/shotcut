@@ -1226,7 +1226,7 @@ void EncodeDock::enqueueAnalysis()
                     QScopedPointer<QmlMetadata> meta(new QmlMetadata);
                     QmlFilter qmlFilter(filter, meta.data());
                     bool isAudio = !::qstrcmp("loudness", filter.get("mlt_service"));
-                    qmlFilter.analyze(isAudio);
+                    qmlFilter.analyze(isAudio, false);
                 }
             }
         }
