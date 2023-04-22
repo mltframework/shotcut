@@ -176,12 +176,11 @@ public slots:
     void onAnalyzeFinished(AbstractJob *job, bool isSuccess);
 
 private:
-    QString resultsFromXml(const QString &fileName, const QString &serviceName);
+    QString resultsFromXml(const QString &fileName);
     void updateFilter(Mlt::Filter &filter, const QString &results);
     void updateJob(EncodeJob *job, const QString &results);
 
     QUuid m_uuid;
-    QString m_serviceName;
 };
 
 #endif // FILTER_H

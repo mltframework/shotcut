@@ -372,6 +372,11 @@ void QmlFilter::analyze(bool isAudio, bool deferJob)
     mltFilter.set("disable", 0);
     if (!isAudio) mltFilter.set("analyze", 1);
 
+    // Tag the filter with a UUID stored in a shotcut property to uniquely find it later
+    auto uuid = QUuid::createUuid();
+    auto ba = uuid.toByteArray();
+    mltFilter.set(kShotcutHashProperty, ba.constData());
+
     // Fix in/out points of filters on clip-only project.
     if (MLT.isSeekableClip() && mlt_service_chain_type != MLT.producer()->type()) {
         Mlt::Producer producer(MLT.profile(), "xml-string", MLT.XML().toUtf8().constData());
@@ -802,12 +807,9 @@ bool QmlFilter::allowAnimateOut() const
 }
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter &filter)
-    : QObject(0)
-    , m_uuid(QUuid::createUuid())
-    , m_serviceName(filter.get("mlt_service"))
+    : QObject(nullptr)
+    , m_uuid(filter.get(kShotcutHashProperty))
 {
-    auto ba = m_uuid.toByteArray();
-    filter.set(kShotcutHashProperty, ba.data());
 }
 
 class FindFilterParser : public Mlt::Parser
@@ -965,7 +967,7 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
     QString fileName = job->objectName();
 
     if (isSuccess) {
-        QString results = resultsFromXml(fileName, m_serviceName);
+        QString results = resultsFromXml(fileName);
         if (!results.isEmpty()) {
             // look for filters by UUID in each pending export job.
             foreach (AbstractJob *job, JOBS.jobs()) {
@@ -1005,7 +1007,7 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
     deleteLater();
 }
 
-QString AnalyzeDelegate::resultsFromXml(const QString &fileName, const QString &serviceName)
+QString AnalyzeDelegate::resultsFromXml(const QString &fileName)
 {
     // parse the xml
     QFile file(fileName);
@@ -1022,8 +1024,8 @@ QString AnalyzeDelegate::resultsFromXml(const QString &fileName, const QString &
         QDomNodeList properties = filterNode.toElement().elementsByTagName("property");
         for (int j = 0; j < properties.size(); j++) {
             QDomNode propertyNode = properties.at(j);
-            if (propertyNode.attributes().namedItem("name").toAttr().value() == "mlt_service"
-                    && propertyNode.toElement().text() == serviceName) {
+            if (propertyNode.attributes().namedItem("name").toAttr().value() == kShotcutHashProperty
+                    && propertyNode.toElement().text() == m_uuid.toString()) {
                 found = true;
                 break;
             }
