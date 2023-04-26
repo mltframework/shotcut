@@ -21,9 +21,6 @@
 #include <QOpenGLContext>
 #include <QtQml>
 #include <QQuickItem>
-#ifdef Q_OS_WIN
-#include <QMediaDevices>
-#endif
 #include <Mlt.h>
 #include <Logger.h>
 #include "videowidget.h"
@@ -69,11 +66,6 @@ VideoWidget::VideoWidget(QObject *parent)
             Qt::QueuedConnection);
     connect(&m_refreshTimer, &QTimer::timeout, this, &VideoWidget::onRefreshTimeout);
     connect(this, &VideoWidget::rectChanged, this, &VideoWidget::zoomChanged);
-#ifdef Q_OS_WIN
-    connect(new QMediaDevices(this), &QMediaDevices::audioOutputsChanged, this, [ = ] () {
-        consumerChanged();
-    });
-#endif
     LOG_DEBUG() << "end";
 }
 
