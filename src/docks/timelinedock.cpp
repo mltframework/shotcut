@@ -225,6 +225,14 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.setAttribute(Qt::WA_AcceptTouchEvents);
 #endif
 
+    connect(&m_quickView, &QQuickWidget::statusChanged, this, [&]() {
+        if ( m_quickView.status() == QQuickWidget::Ready) {
+            connect(m_quickView.rootObject(), SIGNAL(clipClicked()), this, SIGNAL(clipClicked()));
+            connect(m_quickView.rootObject(), SIGNAL(timelineRightClicked()),  this,
+                    SLOT(onTimelineRightClicked()));
+            connect(m_quickView.rootObject(), SIGNAL(clipRightClicked()), this, SLOT(onClipRightClicked()));
+        }
+    });
     connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
     connect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip,
             Qt::QueuedConnection);
@@ -3107,10 +3115,6 @@ void TimelineDock::load(bool force)
         sourcePath.cd("timeline");
         m_quickView.setFocusPolicy(isFloating() ? Qt::NoFocus : Qt::StrongFocus);
         m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
-        connect(m_quickView.rootObject(), SIGNAL(clipClicked()), this, SIGNAL(clipClicked()));
-        connect(m_quickView.rootObject(), SIGNAL(timelineRightClicked()),  this,
-                SLOT(onTimelineRightClicked()));
-        connect(m_quickView.rootObject(), SIGNAL(clipRightClicked()), this, SLOT(onClipRightClicked()));
         if (force && Settings.timelineShowWaveforms())
             m_model.reload();
         if (saveCurrentTrack != -1)
