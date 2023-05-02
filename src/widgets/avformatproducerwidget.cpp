@@ -267,6 +267,17 @@ void AvformatProducerWidget::reloadProducerValues()
     }
     ui->rangeComboBox->setEnabled(true);
 
+    // Disable all actions if the file does not exist
+    auto exists = QFile::exists(resource);
+    ui->speedSpinBox->setEnabled(exists);
+    ui->speedComboBox->setEnabled(exists);
+    ui->applySpeedButton->setEnabled(exists);
+    ui->durationSpinBox->setEnabled(exists);
+    ui->menuButton->setEnabled(exists);
+    ui->convertButton->setEnabled(exists);
+    ui->reverseButton->setEnabled(exists);
+    ui->proxyButton->setEnabled(exists);
+
     // populate the track combos
     int n = m_producer->get_int("meta.media.nb_streams");
     int videoIndex = 1;
