@@ -67,6 +67,7 @@ jobs:
           curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.4.2-x64-mingw810.txz
           echo Extracting Qt
           tar -xJf qt-6.4.2-x64-mingw810.txz
+          rm qt-6.4.2-x64-mingw810.txz
           cd ..
           echo Downloading prebuilt SWH LADSPA plugins
           curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
