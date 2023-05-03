@@ -463,7 +463,8 @@ void GlaxnimateIpcServer::onReadyRead()
         } else {
             m_isProtocolValid = true;
         }
-    } else if (parent) {
+    }
+    if (m_isProtocolValid && parent) {
         qreal time = -1.0;
         for (int i = 0; i < 1000 && !m_stream->atEnd(); i++) {
             *m_stream >> time;
