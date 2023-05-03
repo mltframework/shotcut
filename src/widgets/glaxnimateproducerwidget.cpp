@@ -332,7 +332,7 @@ void GlaxnimateProducerWidget::onFileChanged(const QString &path)
         m_title = caption;
         m_producer->set("refresh", 1);
         MLT.refreshConsumer();
-        QTimer::singleShot(1000, this, [ = ]() {
+        QTimer::singleShot(1000, [this]() {
             if (ui->durationSpinBox->value() != m_producer->get_length()) {
                 ui->durationSpinBox->setValue(m_producer->get_length());
                 on_durationSpinBox_editingFinished();
@@ -440,11 +440,6 @@ void GlaxnimateIpcServer::onConnect()
     m_socket->flush();
     m_server->close();
     m_isProtocolValid = false;
-    // Sometimes Glaxnimate needs another greeting
-    QTimer::singleShot(100, this, [ = ] () {
-        *m_stream << QString("hello");
-        m_socket->flush();
-    });
 }
 
 int GlaxnimateIpcServer::toMltFps(float frame) const
