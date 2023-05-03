@@ -855,6 +855,7 @@ function get_subproject {
           cmd git --no-pager clone --quiet --recurse-submodules $REPOLOC || die "Unable to git clone source for $1 from $REPOLOC"
           cmd cd $1 || die "Unable to change to directory $1"
           cmd git checkout --recurse-submodules $REVISION || die "Unable to git checkout $REVISION"
+          [ "$SDK" = "1" -a "shotcut" != "$1" -a "mlt" != "$1" ] && cmd rm -rf .git
       fi
   elif test "svn" = "$REPOTYPE" ; then
       # Create subdir if not exist
@@ -1229,7 +1230,7 @@ function deploy
 
     log Creating archive
     cmd cd ..
-    cmd zip -gr shotcut-sdk.zip Shotcut
+    cmd tar -cJf shotcut-sdk.txz Shotcut
     fi
   popd
 }
