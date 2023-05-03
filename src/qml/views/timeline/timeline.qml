@@ -309,7 +309,7 @@ Rectangle {
 
                                 anchors.fill: parent
                                 keys: ["trackHeader"]
-                                onEntered: (drag) => {
+                                onEntered: drag => {
                                     if (trackHead.isVideo == drag.source.trackHead.isVideo) {
                                         containsValidDrag = true;
                                         timeline.currentTrack = trackHead.trackIndex;
@@ -320,7 +320,7 @@ Rectangle {
                                 onExited: {
                                     containsValidDrag = false;
                                 }
-                                onDropped: (drop) => {
+                                onDropped: drop => {
                                     if (drop.proposedAction == Qt.MoveAction) {
                                         if (trackHead.isVideo && !drop.source.trackHead.isVideo) {
                                             application.showStatusMessage(qsTr('Can not move audio track above video track'));
