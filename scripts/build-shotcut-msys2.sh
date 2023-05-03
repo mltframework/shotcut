@@ -464,7 +464,7 @@ function set_globals {
     REVISIONS[4]="$SHOTCUT_REVISION"
   fi
   REVISIONS[5]="swh-plugins-0.4.15+1"
-  REVISIONS[6]="sdk/11.0" # nv-codec-headers
+  REVISIONS[6]="sdk/8.1" # nv-codec-headers
   REVISIONS[7]="" # AMF
   REVISIONS[8]=""
   if test 0 = "$BIGSH0T_HEAD" -a "$BIGSH0T_REVISION" ; then
