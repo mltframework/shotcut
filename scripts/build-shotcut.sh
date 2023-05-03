@@ -607,7 +607,7 @@ function set_globals {
   if test 0 = "$X265_HEAD" -a "$X265_REVISION" ; then
     REVISIONS[13]="$X265_REVISION"
   fi
-  REVISIONS[15]="sdk/8.1"
+  REVISIONS[15]="sdk/11.0" # nv-codec-headers
   REVISIONS[16]=""
   REVISIONS[17]="1.25"
   REVISIONS[18]=""
