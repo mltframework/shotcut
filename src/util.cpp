@@ -362,6 +362,7 @@ void Util::applyCustomProperties(Mlt::Producer &destination, Mlt::Producer &sour
     p.clear("force_aspect_ratio");
     p.clear("video_delay");
     p.clear("color_range");
+    p.clear("force_full_range");
     p.clear("speed");
     p.clear("warp_speed");
     p.clear("warp_pitch");
@@ -376,7 +377,7 @@ void Util::applyCustomProperties(Mlt::Producer &destination, Mlt::Producer &sour
     if (!p.get_int(kIsProxyProperty))
         p.clear(kOriginalResourceProperty);
     destination.pass_list(source, "mlt_service, audio_index, video_index, force_progressive, force_tff,"
-                          "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch, rotate,"
+                          "force_aspect_ratio, force_full_range, video_delay, color_range, warp_speed, warp_pitch, rotate,"
                           kAspectRatioNumerator ","
                           kAspectRatioDenominator ","
                           kCommentProperty ","
@@ -686,7 +687,7 @@ QString Util::updateCaption(Mlt::Producer *producer)
 void Util::passProducerProperties(Mlt::Producer *src, Mlt::Producer *dst)
 {
     dst->pass_list(*src, "audio_index, video_index, force_aspect_ratio,"
-                   "video_delay, force_progressive, force_tff, force_full_range, color_range, warp_pitch, rotate,"
+                   "video_delay, force_progressive, force_full_range, force_tff, force_full_range, color_range, warp_pitch, rotate,"
                    kAspectRatioNumerator ","
                    kAspectRatioDenominator ","
                    kShotcutHashProperty ","

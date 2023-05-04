@@ -1276,6 +1276,7 @@ void AvformatProducerWidget::on_rangeComboBox_activated(int index)
 {
     if (m_producer) {
         m_producer->set("color_range", index ? 2 : 1);
+        m_producer->set("force_full_range", index);
         recreateProducer();
     }
 }
