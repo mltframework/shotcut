@@ -3163,7 +3163,7 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
         }
         if (videoTransitions[bTrack].is_valid()) {
             Mlt::Transition vTransition (MLT.profile(), videoTransitions[bTrack].get("mlt_service"));
-            vTransition.inherit(videoTransitions[bTrack]);
+            vTransition.set("1", videoTransitions[bTrack].get("1"));
             if (bTrack == 1) {
                 vTransition.set("disable", 1);
             } else {
