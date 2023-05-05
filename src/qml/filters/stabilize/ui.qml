@@ -61,6 +61,7 @@ Item {
     height: 150
     Component.onCompleted: {
         filter.set('analyze', 0);
+        filter.set('shakiness', 6.0);
         shakinessSlider.value = filter.getDouble('shakiness');
         accuracySlider.value = filter.getDouble('accuracy');
         setStatus(false);
@@ -138,7 +139,7 @@ Item {
         }
 
         Shotcut.UndoButton {
-            onClicked: shakinessSlider.value = 4
+            onClicked: shakinessSlider.value = 6
         }
 
         Label {
