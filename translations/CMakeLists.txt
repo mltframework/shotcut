@@ -1,4 +1,4 @@
-find_package(Qt6LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 # Translation howto:
 # - Translations are mentioned in the LANGUAGES variable below
@@ -51,9 +51,8 @@ list(TRANSFORM TS_FILES PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/)
 list(TRANSFORM TS_FILES APPEND ".ts")
 
 # lupdate ts files
-add_custom_target(translations COMMAND
-  ${Qt6_LUPDATE_EXECUTABLE} -locations absolute -no-obsolete -recursive
-  ${CMAKE_SOURCE_DIR}/src -ts ${TS_FILES})
+qt_add_lupdate(shotcut TS_FILES ${TS_FILES} OPTIONS -locations absolute -no-obsolete -recursive)
+add_custom_target(translations DEPENDS shotcut_lupdate)
 
 # generate qm files with lrelease
 qt6_add_translation(QM_FILES ${TS_FILES})
