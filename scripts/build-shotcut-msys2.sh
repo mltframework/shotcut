@@ -1197,6 +1197,15 @@ function deploy
   cmd cp -p /mingw64/bin/{libcrypto-1_1-x64,libssl-1_1-x64}.dll .
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
     cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .
+    cmd cp -p /mingw64/bin/libfftw3*.dll bin/
+    cmd cp -p /mingw64/lib/libfftw3*.a lib/
+    cmd cp -p /mingw64/include/fftw3* include/
+    cmd cp -p /mingw64/lib/pkgconfig/fftw3*.pc lib/pkgconfig/
+#    cmd mkdir -p lib/cmake/fftw3 lib/cmake/fftw3f lib/cmake/fftw3l lib/cmake/fftw3q
+#    cmd cp -p /mingw64/lib/cmake/fftw3/*.cmake lib/cmake/fftw3/
+#    cmd cp -p /mingw64/lib/cmake/fftw3f/*.cmake lib/cmake/fftw3f/
+#    cmd cp -p /mingw64/lib/cmake/fftw3l/*.cmake lib/cmake/fftw3l/
+#    cmd cp -p /mingw64/lib/cmake/fftw3q/*.cmake lib/cmake/fftw3q/
   fi
 
   log Copying some plugins, qml, and translations from Qt
