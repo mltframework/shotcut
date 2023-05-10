@@ -51,7 +51,9 @@ list(TRANSFORM TS_FILES PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/)
 list(TRANSFORM TS_FILES APPEND ".ts")
 
 # lupdate ts files
-qt_add_lupdate(shotcut TS_FILES ${TS_FILES} OPTIONS -locations absolute -no-obsolete -recursive)
+file(GLOB_RECURSE SOURCES "${CMAKE_SOURCE_DIR}/src/*")
+qt_add_lupdate(shotcut TS_FILES ${TS_FILES} SOURCES ${SOURCES}
+    OPTIONS -locations absolute -no-obsolete -recursive)
 add_custom_target(translations DEPENDS shotcut_lupdate)
 
 # generate qm files with lrelease
