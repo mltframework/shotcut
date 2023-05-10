@@ -76,9 +76,9 @@ void ShotcutSettings::migrateRecent()
         for (const auto &a : oldRecents) {
             if (a.size() < ShotcutSettings::MaxPath && !newRecents.contains(a)) {
                 while (newRecents.size() > 100) {
-                    newRecents.removeLast();
+                    newRecents.removeFirst();
                 }
-                newRecents.prepend(a);
+                newRecents.append(a);
             }
         }
         setRecent(newRecents);
