@@ -8,4 +8,5 @@ Metadata {
     keywords: qsTr('tracking', 'search keywords for the Motion Tracker video filter') + ' motion tracker'
     qml: 'ui.qml'
     vui: 'vui.qml'
+    icon: 'icon.webp'
 }
