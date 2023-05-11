@@ -97,7 +97,7 @@ Item {
             var filename = selectedFile.toString();
             // Remove resource prefix ("file://")
             if (filename.substring(0, 8) == 'file:///')
-                filename = filename.substring(7);
+                filename = filename.substring(application.OS === 'Windows' ? 8 : 7);
             else if (filename.substring(0, 7) == 'file://')
                 filename = filename.substring(6);
 
