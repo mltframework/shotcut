@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -169,7 +169,8 @@ bool MetadataModel::isVisible(int row) const
             if (!meta->isFavorite()) return false;
             break;
         case VideoFilter:
-            if (meta->isAudio() || meta->type() == QmlMetadata::Link) return false;
+            if (meta->isAudio() || meta->type() == QmlMetadata::Link
+                    || meta->type() == QmlMetadata::FilterSet) return false;
             break;
         case AudioFilter:
             if (!meta->isAudio()) return false;
