@@ -32,7 +32,6 @@ MetadataModel::MetadataModel(QObject *parent)
 {
     if (Settings.playerGPU()) {
         m_filterMask |= gpuIncompatibleMaskBit;
-        m_filterMask |= gpuAlternativeMaskBit;
     } else {
         m_filterMask |= needsGPUMaskBit;
     }
@@ -169,7 +168,7 @@ bool MetadataModel::isVisible(int row) const
             if (!meta->isFavorite()) return false;
             break;
         case VideoFilter:
-            if (meta->isAudio() || meta->type() == QmlMetadata::Link
+            if (meta->isAudio() || meta->needsGPU() || meta->type() == QmlMetadata::Link
                     || meta->type() == QmlMetadata::FilterSet) return false;
             break;
         case AudioFilter:
@@ -180,6 +179,9 @@ bool MetadataModel::isVisible(int row) const
             break;
         case FilterSetFilter:
             if (meta->type() != QmlMetadata::FilterSet) return false;
+            break;
+        case GPUFilter:
+            if (!meta->needsGPU()) return false;
             break;
         default:
             break;
@@ -221,7 +223,6 @@ unsigned MetadataModel::computeFilterMask(const QmlMetadata *meta)
     if (meta->isHidden()) mask |= HiddenMaskBit;
     if (meta->isClipOnly()) mask |= clipOnlyMaskBit;
     if (!meta->isGpuCompatible()) mask |= gpuIncompatibleMaskBit;
-    if (!meta->needsGPU() && !meta->gpuAlt().isEmpty()) mask |= gpuAlternativeMaskBit;
     if (meta->needsGPU()) mask |= needsGPUMaskBit;
     if (meta->type() == QmlMetadata::Link) mask |= linkMaskBit;
     return mask;

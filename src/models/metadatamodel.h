@@ -50,6 +50,7 @@ public:
         AudioFilter,
         LinkFilter,
         FilterSetFilter,
+        GPUFilter,
     };
 
     enum FilterMaskBits {

@@ -113,6 +113,25 @@ Rectangle {
                     text: qsTr('Clear search')
                 }
             }
+
+            Shotcut.Button {
+                id: closeButton
+
+                icon.name: 'window-close'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
+                padding: 2
+                implicitWidth: 20
+                implicitHeight: 20
+                onClicked: filterWindow.close()
+
+                Shotcut.HoverTip {
+                    text: qsTr('Close menu')
+                }
+            }
+
+            Label {
+                width: 4
+            }
         }
 
         RowLayout {
@@ -128,10 +147,11 @@ Rectangle {
                 id: favButton
 
                 checked: true
-                implicitWidth: 82
+                implicitWidth: 20
                 icon.name: 'bookmarks'
                 icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
                 text: qsTr('Favorite')
+                display: AbstractButton.IconOnly
                 ButtonGroup.group: typeGroup
                 onClicked: {
                     if (checked) {
@@ -147,9 +167,32 @@ Rectangle {
             }
 
             Shotcut.ToggleButton {
+                id: gpuButton
+
+                visible: settings.playerGPU
+                checked: true
+                implicitWidth: 60
+                icon.name: 'cpu'
+                icon.source: 'qrc:///icons/oxygen/32x32/devices/cpu.png'
+                text: 'GPU'
+                ButtonGroup.group: typeGroup
+                onClicked: {
+                    if (checked) {
+                        metadatamodel.filter = Shotcut.MetadataModel.GPUFilter;
+                        searchField.text = '';
+                        checked = true;
+                    }
+                }
+
+                Shotcut.HoverTip {
+                    text: qsTr('Show GPU video filters')
+                }
+            }
+
+            Shotcut.ToggleButton {
                 id: vidButton
 
-                implicitWidth: 82
+                implicitWidth: 80
                 icon.name: 'video-television'
                 icon.source: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
                 text: qsTr('Video')
@@ -170,7 +213,7 @@ Rectangle {
             Shotcut.ToggleButton {
                 id: audButton
 
-                implicitWidth: 82
+                implicitWidth: 80
                 icon.name: 'speaker'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
                 text: qsTr('Audio')
@@ -191,7 +234,7 @@ Rectangle {
             Shotcut.ToggleButton {
                 id: lnkButton
 
-                implicitWidth: 82
+                implicitWidth: 80
                 visible: attachedfiltersmodel.supportsLinks
                 icon.name: 'chronometer'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
@@ -213,7 +256,7 @@ Rectangle {
             Shotcut.ToggleButton {
                 id: setButton
 
-                implicitWidth: 82
+                implicitWidth: 80
                 icon.name: 'server-database'
                 icon.source: 'qrc:///icons/oxygen/32x32/places/server-database.png'
                 text: qsTr('Sets')
@@ -228,28 +271,6 @@ Rectangle {
 
                 Shotcut.HoverTip {
                     text: qsTr('Show filter sets')
-                }
-            }
-
-            // separator
-            Button {
-                enabled: false
-                implicitWidth: 1
-                implicitHeight: 20
-            }
-
-            Shotcut.Button {
-                id: closeButton
-
-                icon.name: 'window-close'
-                icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
-                padding: 2
-                implicitWidth: 20
-                implicitHeight: 20
-                onClicked: filterWindow.close()
-
-                Shotcut.HoverTip {
-                    text: qsTr('Close menu')
                 }
             }
 
@@ -296,6 +317,7 @@ Rectangle {
                 anchors.fill: parent
                 model: metadatamodel
                 boundsBehavior: Flickable.StopAtBounds
+                maximumFlickVelocity: 600
                 currentIndex: -1
                 focus: true
                 onCountChanged: {
