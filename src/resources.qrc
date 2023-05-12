@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/glaxnimate.rawr</file>
+        <file>resources/qtquickcontrols2-dark.conf</file>
+        <file>resources/qtquickcontrols2-light.conf</file>
     </qresource>
 </RCC>

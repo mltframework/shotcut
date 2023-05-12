@@ -102,6 +102,8 @@
 #include <clocale>
 #include <algorithm>
 
+#define SHOTCUT_THEME
+
 static bool eventDebugCallback(void **data)
 {
     QEvent *event = reinterpret_cast<QEvent *>(data[1]);
@@ -2913,16 +2915,56 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
         QIcon::setThemeName("dark");
+        if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
+            ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-dark.conf");
     } else if (mytheme == "light") {
-        QStyle *style = QStyleFactory::create("Fusion");
-        QApplication::setStyle(style);
-        QApplication::setPalette(style->standardPalette());
+        QApplication::setStyle("Fusion");
+        QPalette palette;
+        palette.setColor(QPalette::Window, "#efefef");
+        palette.setColor(QPalette::WindowText, "#000000");
+        palette.setColor(QPalette::Base, "#ffffff");
+        palette.setColor(QPalette::AlternateBase, "#f7f7f7");
+        palette.setColor(QPalette::Highlight, "#308cc6");
+        palette.setColor(QPalette::HighlightedText, "#ffffff");
+        palette.setColor(QPalette::ToolTipBase, "#308cc6");
+        palette.setColor(QPalette::ToolTipText, "#000000");
+        palette.setColor(QPalette::Text, "#000000");
+        palette.setColor(QPalette::BrightText, "#ffffff");
+        palette.setColor(QPalette::Button, "#efefef");
+        palette.setColor(QPalette::ButtonText, "#000000");
+        palette.setColor(QPalette::Link, "#308cc6");
+        palette.setColor(QPalette::LinkVisited, "#308cc6");
+        palette.setColor(QPalette::Disabled, QPalette::Text, Qt::darkGray);
+        palette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
+        palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
+        QApplication::setPalette(palette);
         QIcon::setThemeName("light");
+        if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
+            ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
     } else {
         QApplication::setStyle(qApp->property("system-style").toString());
         QIcon::setThemeName("oxygen");
+        if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
+            ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
     }
 #endif
+
+//    auto pal = QGuiApplication::palette();
+//    LOG_INFO() << "altBase" << pal.alternateBase().color().name();
+//    LOG_INFO() << "base" << pal.base().color().name();
+//    LOG_INFO() << "window" << pal.window().color().name();
+//    LOG_INFO() << "windowText" << pal.windowText().color().name();
+//    LOG_INFO() << "toolTipBase" << pal.toolTipBase().color().name();
+//    LOG_INFO() << "toolTipText" << pal.toolTipText().color().name();
+//    LOG_INFO() << "text" << pal.text().color().name();
+//    LOG_INFO() << "button" << pal.button().color().name();
+//    LOG_INFO() << "buttonText" << pal.buttonText().color().name();
+//    LOG_INFO() << "placeholderText" << pal.placeholderText().color().name();
+//    LOG_INFO() << "brightText" << pal.brightText().color().name();
+//    LOG_INFO() << "highlight" << pal.highlight().color().name();
+//    LOG_INFO() << "highlightedText" << pal.highlightedText().color().name();
+//    LOG_INFO() << "link" << pal.link().color().name();
+//    LOG_INFO() << "linkVisited" << pal.linkVisited().color().name();
     LOG_DEBUG() << "end";
 }
 
