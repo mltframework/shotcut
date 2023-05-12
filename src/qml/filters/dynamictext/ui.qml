@@ -43,7 +43,7 @@ Item {
             filter.set('bgcolour', '#00000000');
             filter.set('olcolour', '#aa000000');
             filter.set('outline', 3);
-            filter.set('weight', 10 * Font.Normal);
+            filter.set('weight', Font.Normal);
             filter.set('style', 'normal');
             filter.set(textFilterUi.useFontSizeProperty, false);
             filter.set('size', profile.height);

@@ -77,7 +77,7 @@ GridLayout {
 
     function refreshFontButton() {
         var s = filter.get('family');
-        if (filter.getDouble('weight') > 10 * Font.Medium)
+        if (filter.getDouble('weight') > Font.Medium)
             s += ' ' + qsTr('Bold');
         if (filter.get('style') === 'italic')
             s += ' ' + qsTr('Italic');
@@ -111,7 +111,7 @@ GridLayout {
                 "family": filter.get('family'),
                 "pointSize": getPointSize(),
                 "italic": filter.get('style') === 'italic',
-                "weight": filter.getDouble('weight') / 10
+                "weight": filter.getDouble('weight')
             });
         fontSizeCheckBox.checked = parseInt(filter.get(useFontSizeProperty));
         refreshFontButton();
@@ -222,7 +222,7 @@ GridLayout {
 
                 onSelectedFontChanged: {
                     filter.set('family', selectedFont.family);
-                    filter.set('weight', 10 * selectedFont.weight);
+                    filter.set('weight', selectedFont.weight);
                     filter.set('style', selectedFont.italic ? 'italic' : 'normal');
                     if (parseInt(filter.get(useFontSizeProperty))) {
                         filter.set('size', selectedFont.pixelSize);

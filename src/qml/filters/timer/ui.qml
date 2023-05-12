@@ -69,7 +69,7 @@ Item {
             filter.set('fgcolour', '#ffffffff');
             filter.set('bgcolour', '#00000000');
             filter.set('olcolour', '#ff000000');
-            filter.set('weight', 10 * Font.Normal);
+            filter.set('weight', Font.Normal);
             filter.set('style', 'normal');
             filter.set(textFilterUi.useFontSizeProperty, false);
             filter.set('size', profile.height);
