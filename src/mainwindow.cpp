@@ -2944,8 +2944,13 @@ void MainWindow::changeTheme(const QString &theme)
     } else {
         QApplication::setStyle(qApp->property("system-style").toString());
         QIcon::setThemeName("oxygen");
-        if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
-            ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
+        if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF")) {
+            auto brightness = QGuiApplication::palette().color(QPalette::Text).lightnessF();
+            if (brightness < 0.5f)
+                ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
+            else
+                ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-dark.conf");
+        }
     }
 #endif
 
@@ -3510,7 +3515,7 @@ void MainWindow::restartAfterChangeTheme()
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QMessageBox::Yes) {
-        m_exitCode = EXIT_RESTART;
+//        m_exitCode = EXIT_RESTART;
         QApplication::closeAllWindows();
     }
 }
