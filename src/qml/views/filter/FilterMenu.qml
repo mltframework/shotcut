@@ -114,6 +114,10 @@ Rectangle {
                 }
             }
 
+            Label {
+                width: 10
+            }
+
             Shotcut.Button {
                 id: closeButton
 
@@ -130,7 +134,7 @@ Rectangle {
             }
 
             Label {
-                width: 4
+                width: 40
             }
         }
 
@@ -147,11 +151,11 @@ Rectangle {
                 id: favButton
 
                 checked: true
-                implicitWidth: 20
+                implicitWidth: settings.playerGPU ? 20 : 80
                 icon.name: 'bookmarks'
                 icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
                 text: qsTr('Favorite')
-                display: AbstractButton.IconOnly
+                display: settings.playerGPU ? AbstractButton.IconOnly : AbstractButton.TextBesideIcon
                 ButtonGroup.group: typeGroup
                 onClicked: {
                     if (checked) {
