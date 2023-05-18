@@ -179,18 +179,13 @@ Rectangle {
         source: imagePath(inPoint)
     }
 
-    Loader {
-        active: isTransition && !elided
-        sourceComponent: Component {
-            Shotcut.TimelineTransition {
-                property var color: isAudio ? 'darkseagreen' : root.shotcutBlue
+    Shotcut.TimelineTransition {
+        property var color: isAudio ? 'darkseagreen' : root.shotcutBlue
 
-                width: clipRoot.width
-                height: clipRoot.height
-                colorA: color
-                colorB: clipRoot.selected ? Qt.darker(color) : Qt.lighter(color)
-            }
-        }
+        visible: !elided && isTransition
+        anchors.fill: parent
+        colorA: color
+        colorB: clipRoot.selected ? Qt.darker(color) : Qt.lighter(color)
     }
 
     Row {
@@ -210,20 +205,21 @@ Rectangle {
             id: waveformRepeater
 
             model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
-            Loader {
-                active: waveform.visible
-                sourceComponent: Component {
-                    Shotcut.TimelineWaveform {
-                        property int channels: 2
 
-                        width: Math.min(waveform.innerWidth, waveform.maxWidth)
-                        height: waveform.height
-                        fillColor: getColor()
-                        inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
-                        outPoint: inPoint + Math.round(width / timeScale * speed) * channels
-                        levels: audioLevels
-                    }
-                }
+            Shotcut.TimelineWaveform {
+
+                // right edge
+                // left edge
+                // bottom edge
+                property int channels: 2
+
+                width: Math.min(waveform.innerWidth, waveform.maxWidth)
+                height: waveform.height
+                fillColor: getColor()
+                inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
+                outPoint: inPoint + Math.round(width / timeScale * speed) * channels
+                levels: audioLevels
+                active: ((clipRoot.x + x + width) > tracksFlickable.contentX) && ((clipRoot.x + x) < tracksFlickable.contentX + tracksFlickable.width) && ((trackRoot.y + y + height) > tracksFlickable.contentY) && ((trackRoot.y + y) < tracksFlickable.contentY + tracksFlickable.height) // top edge
             }
         }
     }
