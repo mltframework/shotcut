@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -142,6 +142,13 @@ Rectangle {
         ScrollBar.vertical.policy: ScrollBar.AlwaysOn
         ScrollBar.vertical.visible: contentHeight > height
         ScrollBar.vertical.width: 16
+        ScrollBar.vertical.contentItem: Rectangle {
+            color: (palette.windowText.hsvValue > palette.window.hsvValue) ? Qt.lighter(palette.window, 2) : Qt.darker(palette.window)
+            radius: width / 2
+        }
+        ScrollBar.vertical.background: Rectangle {
+            color: parent.palette.alternateBase
+        }
 
         ListView {
             id: attachedFiltersView

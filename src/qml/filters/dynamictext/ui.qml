@@ -236,8 +236,7 @@ Item {
                     // workaround initialization problem
                 }
 
-                ScrollBar.horizontal: ScrollBar {
-                    height: 16
+                ScrollBar.horizontal: Shotcut.HorizontalScrollBar {
                     policy: ScrollBar.AlwaysOn
                     visible: scrollview.contentWidth > scrollview.width
                     parent: scrollview.parent
@@ -246,8 +245,7 @@ Item {
                     anchors.right: scrollview.right
                 }
 
-                ScrollBar.vertical: ScrollBar {
-                    width: 16
+                ScrollBar.vertical: Shotcut.VerticalScrollBar {
                     policy: ScrollBar.AlwaysOn
                     visible: scrollview.contentHeight > scrollview.height
                     parent: scrollview.parent

@@ -431,24 +431,18 @@ Rectangle {
                         }
                     }
 
-                    ScrollBar.horizontal: ScrollBar {
+                    ScrollBar.horizontal: Shotcut.HorizontalScrollBar {
                         id: horizontalScrollBar
 
-                        height: 16
                         policy: ScrollBar.AlwaysOn
                         visible: tracksContainer.width > tracksFlickable.width
                         parent: tracksFlickable.parent
                         anchors.top: tracksFlickable.bottom
                         anchors.left: tracksFlickable.left
                         anchors.right: tracksFlickable.right
-
-                        background: Rectangle {
-                            color: Qt.lighter(parent.palette.alternateBase)
-                        }
                     }
 
-                    ScrollBar.vertical: ScrollBar {
-                        width: 16
+                    ScrollBar.vertical: Shotcut.VerticalScrollBar {
                         policy: ScrollBar.AlwaysOn
                         visible: tracksFlickable.contentHeight > tracksFlickable.height
                         parent: tracksFlickable.parent
@@ -456,10 +450,6 @@ Rectangle {
                         anchors.left: tracksFlickable.right
                         anchors.bottom: tracksFlickable.bottom
                         anchors.bottomMargin: -16
-
-                        background: Rectangle {
-                            color: Qt.lighter(parent.palette.alternateBase)
-                        }
                     }
                 }
             }

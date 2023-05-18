@@ -345,32 +345,22 @@ Rectangle {
             }
         }
 
-        ScrollBar.horizontal: ScrollBar {
-            height: 16
+        ScrollBar.horizontal: Shotcut.HorizontalScrollBar {
             policy: ScrollBar.AlwaysOn
             visible: filterConfigScrollView.contentWidth > filterConfigScrollView.width
             parent: filterConfigScrollView.parent
             anchors.top: filterConfigScrollView.bottom
             anchors.left: filterConfigScrollView.left
             anchors.right: filterConfigScrollView.right
-
-            background: Rectangle {
-                color: Qt.lighter(parent.palette.alternateBase)
-            }
         }
 
-        ScrollBar.vertical: ScrollBar {
-            width: 16
+        ScrollBar.vertical: Shotcut.VerticalScrollBar {
             policy: ScrollBar.AlwaysOn
             visible: filterConfigScrollView.contentHeight > filterConfigScrollView.height
             parent: filterConfigScrollView.parent
             anchors.top: filterConfigScrollView.top
             anchors.left: filterConfigScrollView.right
             anchors.bottom: filterConfigScrollView.bottom
-
-            background: Rectangle {
-                color: Qt.lighter(parent.palette.alternateBase)
-            }
         }
     }
 

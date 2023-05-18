@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -757,8 +757,7 @@ Item {
                     }
                 }
 
-                ScrollBar.horizontal: ScrollBar {
-                    height: 16
+                ScrollBar.horizontal: Shotcut.HorizontalScrollBar {
                     policy: ScrollBar.AlwaysOn
                     visible: scrollview.contentWidth > scrollview.width
                     parent: scrollview.parent
@@ -767,8 +766,7 @@ Item {
                     anchors.right: scrollview.right
                 }
 
-                ScrollBar.vertical: ScrollBar {
-                    width: 16
+                ScrollBar.vertical: Shotcut.VerticalScrollBar {
                     policy: ScrollBar.AlwaysOn
                     visible: scrollview.contentHeight > scrollview.height
                     parent: scrollview.parent

@@ -25,3 +25,5 @@ TipBox 1.0 TipBox.qml
 Marker 1.0 Marker.qml
 MarkerBar 1.0 MarkerBar.qml
 MotionTrackerDialog 1.0 MotionTrackerDialog.qml
+HorizontalScrollBar 1.0 HorizontalScrollBar.qml
+VerticalScrollBar 1.0 VerticalScrollBar.qml
