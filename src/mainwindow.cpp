@@ -1119,12 +1119,12 @@ void MainWindow::open(Mlt::Producer *producer)
     else if (producer->get_int("error"))
         showStatusMessage(tr("Failed to open ") + producer->get("resource"));
 
-    bool ok = false;
-    int screen = Settings.playerExternal().toInt(&ok);
-    if (ok && screen < QGuiApplication::screens().count()
-            && QGuiApplication::screens().at(screen) != this->screen()) {
-        m_player->moveVideoToScreen(screen);
-    }
+//    bool ok = false;
+//    int screen = Settings.playerExternal().toInt(&ok);
+//    if (ok && screen < QGuiApplication::screens().count()
+//            && QGuiApplication::screens().at(screen) != this->screen()) {
+//        m_player->moveVideoToScreen(screen);
+//    }
 
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer)) {
