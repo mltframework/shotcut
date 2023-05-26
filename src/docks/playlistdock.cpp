@@ -1101,6 +1101,15 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             }
             Mlt::Producer p;
             if (path.endsWith(".mlt") || path.endsWith(".xml")) {
+                if (Settings.playerGPU() && MLT.profile().is_explicit()) {
+                    Mlt::Profile testProfile;
+                    Mlt::Producer producer(testProfile, path.toUtf8().constData());
+                    if (testProfile.width() != MLT.profile().width()
+                            || testProfile.height() != MLT.profile().height()) {
+                        emit showStatusMessage(tr("Failed to open ").append(path));
+                        continue;
+                    }
+                }
                 p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
                 if (p.is_valid()) {
                     // Convert MLT XML to a virtual clip.

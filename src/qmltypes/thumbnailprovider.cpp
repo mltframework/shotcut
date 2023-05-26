@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "models/playlistmodel.h"
 #include "database.h"
 #include "util.h"
+#include "settings.h"
 
 #include <Logger.h>
 
@@ -68,7 +69,7 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
             Mlt::Producer producer;
             if (service == "count") {
                 producer = Mlt::Producer(m_profile, service.toUtf8().constData(), "loader-nogl");
-            } else {
+            } else if (!Settings.playerGPU() || (service != "xml-nogl" && service != "consumer")) {
                 producer = Mlt::Producer(m_profile, service.toUtf8().constData(), resource.toUtf8().constData());
             }
             if (producer.is_valid()) {

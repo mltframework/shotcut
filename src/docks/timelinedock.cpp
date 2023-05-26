@@ -2663,6 +2663,15 @@ static QString convertUrlsToXML(const QString &xml)
             longTask.reportProgress(Util::baseName(path), i++, count);
             Mlt::Producer p;
             if (path.endsWith(".mlt") || path.endsWith(".xml")) {
+                if (Settings.playerGPU() && MLT.profile().is_explicit()) {
+                    Mlt::Profile testProfile;
+                    Mlt::Producer producer(testProfile, path.toUtf8().constData());
+                    if (testProfile.width() != MLT.profile().width()
+                            || testProfile.height() != MLT.profile().height()) {
+                        MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
+                        continue;
+                    }
+                }
                 p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
                 if (p.is_valid()) {
                     p.set(kShotcutVirtualClip, 1);

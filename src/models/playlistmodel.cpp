@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,11 +81,11 @@ public:
                 service = "xml-nogl";
             if (service == "count") {
                 m_tempProducer = new Mlt::Producer(m_profile, service.toUtf8().constData(), "loader-nogl");
-            } else {
+            } else if (!Settings.playerGPU() || (service != "xml-nogl" && service != "consumer")) {
                 m_tempProducer = new Mlt::Producer(m_profile, service.toUtf8().constData(),
                                                    m_producer.get("resource"));
             }
-            if (m_tempProducer->is_valid()) {
+            if (m_tempProducer && m_tempProducer->is_valid()) {
                 Mlt::Filter scaler(m_profile, "swscale");
                 Mlt::Filter padder(m_profile, "resize");
                 Mlt::Filter converter(m_profile, "avcolor_space");
