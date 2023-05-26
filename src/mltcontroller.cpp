@@ -60,6 +60,7 @@ Controller::Controller()
     , m_blockRefresh(false)
 {
     LOG_DEBUG() << "begin";
+    ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate");
     m_repo = Mlt::Factory::init();
     resetLocale();
     initFiltersClipboard();
