@@ -1,15 +1,12 @@
 app: Shotcut
 verbose: true
 
-ingredients:
-  packages:
-    - libsdl2-2.0-0
-    - libxkbcommon-x11-0
-  dist: bionic
-  sources: 
-    - deb http://us.archive.ubuntu.com/ubuntu/ bionic main universe
-  script:
-    - echo "multiarch-support" >> excludedeblist                                                                                         
+#ingredients:
+#  dist: focal
+#  sources:
+#    - deb http://us.archive.ubuntu.com/ubuntu/ focal main universe
+#  script:
+#    - echo "multiarch-support" >> excludedeblist
                                                                                                                                          
 script:
   - tar xJ -C usr/bin --strip=2 -f ../../../../scripts/shotcut-linux-x86_64-*.txz
