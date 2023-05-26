@@ -2667,7 +2667,8 @@ static QString convertUrlsToXML(const QString &xml)
                     Mlt::Profile testProfile;
                     Mlt::Producer producer(testProfile, path.toUtf8().constData());
                     if (testProfile.width() != MLT.profile().width()
-                            || testProfile.height() != MLT.profile().height()) {
+                            || testProfile.height() != MLT.profile().height()
+                            || Util::isFpsDifferent(MLT.profile().fps(), testProfile.fps())) {
                         MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
                         continue;
                     }

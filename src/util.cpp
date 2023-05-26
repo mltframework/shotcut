@@ -732,3 +732,8 @@ bool Util::warnIfLowDiskSpace(const QString &path)
     }
     return false;
 }
+
+bool Util::isFpsDifferent(double a, double b)
+{
+    return qAbs(a - b) > 0.001;
+}

@@ -113,11 +113,6 @@ int Controller::setProducer(Mlt::Producer *producer, bool)
     return error;
 }
 
-static bool isFpsDifferent(double a, double b)
-{
-    return qAbs(a - b) > 0.001;
-}
-
 int Controller::open(const QString &url, const QString &urlToSave)
 {
     int error = checkFile(url);
@@ -163,7 +158,8 @@ int Controller::open(const QString &url, const QString &urlToSave)
                 setProjectFolder(QString());
             }
         }
-        if (isFpsDifferent(profile().fps(), fps) || (Settings.playerGPU() && !profile().is_explicit())) {
+        if (Util::isFpsDifferent(profile().fps(), fps) || (Settings.playerGPU()
+                                                           && !profile().is_explicit())) {
             // Reload with correct FPS or with Movit normalizing filters attached.
             delete newProducer;
             newProducer = new Mlt::Producer(profile(), myUrl.toUtf8().constData());
@@ -193,7 +189,8 @@ bool Controller::openXML(const QString &filename)
     if (Settings.playerGPU() && profile().is_explicit()) {
         Profile testProfile;
         Producer producer(testProfile, filename.toUtf8().constData());
-        if (testProfile.width() != profile().width() || testProfile.height() != profile().height()) {
+        if (testProfile.width() != profile().width() || testProfile.height() != profile().height()
+                || Util::isFpsDifferent(profile().fps(), testProfile.fps())) {
             return error;
         }
     }
@@ -207,7 +204,7 @@ bool Controller::openXML(const QString &filename)
         }
         updatePreviewProfile();
         setPreviewScale(Settings.playerPreviewScale());
-        if (isFpsDifferent(profile().fps(), fps)) {
+        if (Util::isFpsDifferent(profile().fps(), fps)) {
             // reopen with the correct fps
             producer = Producer(profile(), filename.toUtf8().constData());
         }

@@ -72,6 +72,7 @@ public:
     static QString updateCaption(Mlt::Producer *producer);
     static void passProducerProperties(Mlt::Producer *src, Mlt::Producer *dst);
     static bool warnIfLowDiskSpace(const QString &path);
+    static bool isFpsDifferent(double a, double b);
 };
 
 #endif // UTIL_H
