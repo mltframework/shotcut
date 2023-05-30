@@ -99,6 +99,7 @@
 #include <QVersionNumber>
 #include <QApplication>
 #include <QClipboard>
+#include <QImageReader>
 #include <clocale>
 #include <algorithm>
 
@@ -215,6 +216,7 @@ MainWindow::MainWindow()
 
     QThreadPool::globalInstance()->setMaxThreadCount(qMin(4,
                                                           QThreadPool::globalInstance()->maxThreadCount()));
+    QImageReader::setAllocationLimit(1024);
 
     ProxyManager::removePending();
 
