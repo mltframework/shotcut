@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
-** Copyright (c) 2020-2022 Meltytech, LLC
+** Copyright (c) 2020-2023 Meltytech, LLC
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions are
@@ -80,10 +80,12 @@ void QmlRichText::setFileUrl(const QUrl &arg)
             if (file.open(QFile::ReadOnly)) {
                 QByteArray data = file.readAll();
                 if (Qt::mightBeRichText(data)) {
-                    auto decoder = QStringDecoder(QStringConverter::encodingForHtml(data).value());
+                    auto decoder = QStringDecoder(QStringConverter::encodingForHtml(data).value_or(
+                                                      QStringConverter::Utf8));
                     setText(decoder(data));
                 } else {
-                    auto decoder = QStringDecoder(QStringConverter::encodingForData(data).value());
+                    auto decoder = QStringDecoder(QStringConverter::encodingForData(data).value_or(
+                                                      QStringConverter::Utf8));
                     setText(QStringLiteral("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
                                            "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
                                            "p, li { white-space: pre-wrap; }"
