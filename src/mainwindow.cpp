@@ -1918,6 +1918,14 @@ void MainWindow::setupActions()
     shortcuts << QKeySequence(Qt::Key_Slash);
     ui->actionKeyboardShortcuts->setShortcuts(shortcuts);
 
+    // Shortcuts for actions that are only in context menus do not work unless
+    // they are added to something visible.
+    addAction(Actions["timelineMergeWithNextAction"]);
+    addAction(Actions["timelineDetachAudioAction"]);
+    addAction(Actions["timelineAlignToReferenceAction"]);
+    addAction(Actions["timelineUpdateThumbnailsAction"]);
+    addAction(Actions["timelineRebuildAudioWaveformAction"]);
+
     Actions.initializeShortcuts();
 }
 
