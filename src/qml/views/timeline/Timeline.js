@@ -31,10 +31,6 @@ function scrollIfNeeded(center) {
                 tracksFlickable.contentX += tracksFlickable.width - 100;
             else if (x < tracksFlickable.contentX + 50)
                 tracksFlickable.contentX = Math.max(tracksFlickable.contentX - tracksFlickable.width + 100, 0);
-            //else if (tracksFlickable.contentX < tracksFlickable.width - 100)
-            //    tracksFlickable.contentX = 0;
-            //else if (x < tracksFlickable.contentX + 50)
-            //    tracksFlickable.contentX -= tracksFlickable.width - 100;
         } else {
             if (x > tracksFlickable.contentX + tracksFlickable.width - 50)
                 tracksFlickable.contentX = x - tracksFlickable.width + 50;
