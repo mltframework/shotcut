@@ -30,12 +30,19 @@ function scrollIfNeeded(center) {
         else if (x < tracksFlickable.contentX + tracksFlickable.width * 0.5)
             tracksFlickable.contentX = x - tracksFlickable.width * 0.5;
     } else if (tracksContainer.width > tracksFlickable.width) {
-        if (x > tracksFlickable.contentX + tracksFlickable.width - 50)
-            tracksFlickable.contentX = x - tracksFlickable.width + 50;
-        else if (x < 50)
-            tracksFlickable.contentX = 0;
-        else if (x < tracksFlickable.contentX + 50)
-            tracksFlickable.contentX = x - 50;
+        if (settings.timelineAutoScrollPaging) {
+            if (x > tracksFlickable.contentX + tracksFlickable.width - 50)
+                tracksFlickable.contentX += tracksFlickable.width - 100;
+            else if (x < tracksFlickable.contentX + 50)
+                tracksFlickable.contentX = Math.max(tracksFlickable.contentX - tracksFlickable.width + 100, 0);
+        } else {
+            if (x > tracksFlickable.contentX + tracksFlickable.width - 50)
+                tracksFlickable.contentX = x - tracksFlickable.width + 50;
+            else if (x < 50)
+                tracksFlickable.contentX = 0;
+            else if (x < tracksFlickable.contentX + 50)
+                tracksFlickable.contentX = x - 50;
+        }
     }
 }
 

@@ -482,6 +482,7 @@ void MainWindow::setupAndConnectDocks()
     ui->menuTimeline->addAction(Actions["timelinePerformanceWaveformsAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowThumbnailsAction"]);
     ui->menuTimeline->addAction(Actions["timelineCenterPlayheadAction"]);
+    ui->menuTimeline->addAction(Actions["timelineAutoScrollPagingAction"]);
     ui->menuTimeline->addAction(Actions["timelineScrollZoomAction"]);
 
     m_filterController = new FilterController(this);

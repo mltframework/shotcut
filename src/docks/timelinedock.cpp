@@ -928,6 +928,17 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineCenterPlayheadAction", action);
 
+    action = new QAction(tr("Auto-Scroll by Pages"), this);
+    action->setCheckable(true);
+    action->setChecked(Settings.timelineAutoScrollPaging());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setTimelineAutoScrollPaging(checked);
+    });
+    connect(&Settings, &ShotcutSettings::timelineAutoScrollPagingChanged, action, [ = ]() {
+        action->setChecked(Settings.timelineAutoScrollPaging());
+    });
+    Actions.add("timelineAutoScrollPagingAction", action);
+
     action = new QAction(tr("Scroll to Playhead on Zoom"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_P));
     action->setCheckable(true);
