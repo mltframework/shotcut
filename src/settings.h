@@ -43,8 +43,6 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(bool timelineSnap READ timelineSnap WRITE setTimelineSnap NOTIFY timelineSnapChanged)
     Q_PROPERTY(bool timelineCenterPlayhead READ timelineCenterPlayhead WRITE setTimelineCenterPlayhead
                NOTIFY timelineCenterPlayheadChanged)
-    Q_PROPERTY(bool timelineAutoScrollPaging READ timelineAutoScrollPaging WRITE setTimelineAutoScrollPaging
-               NOTIFY timelineAutoScrollPagingChanged)
     Q_PROPERTY(bool timelineScrollZoom READ timelineScrollZoom WRITE setTimelineScrollZoom NOTIFY
                timelineScrollZoomChanged)
     Q_PROPERTY(bool timelineFramebufferWaveform READ timelineFramebufferWaveform WRITE
@@ -189,8 +187,6 @@ public:
     void setTimelineSnap(bool);
     bool timelineCenterPlayhead() const;
     void setTimelineCenterPlayhead(bool);
-    bool timelineAutoScrollPaging() const;
-    void setTimelineAutoScrollPaging(bool);
     int timelineTrackHeight() const;
     void setTimelineTrackHeight(int);
     bool timelineScrollZoom() const;
@@ -300,7 +296,6 @@ signals:
     void timelineRippleMarkersChanged();
     void timelineSnapChanged();
     void timelineCenterPlayheadChanged();
-    void timelineAutoScrollPagingChanged();
     void timelineScrollZoomChanged();
     void timelineFramebufferWaveformChanged();
     void playerAudioChannelsChanged(int);

@@ -677,17 +677,6 @@ void ShotcutSettings::setTimelineCenterPlayhead(bool b)
     emit timelineCenterPlayheadChanged();
 }
 
-bool ShotcutSettings::timelineAutoScrollPaging() const
-{
-    return settings.value("timeline/autoscrollPaging", false).toBool();
-}
-
-void ShotcutSettings::setTimelineAutoScrollPaging(bool b)
-{
-    settings.setValue("timeline/autoscrollPaging", b);
-    emit timelineAutoScrollPagingChanged();
-}
-
 int ShotcutSettings::timelineTrackHeight() const
 {
     return qMin(settings.value("timeline/trackHeight", 50).toInt(), kMaximumTrackHeight);
