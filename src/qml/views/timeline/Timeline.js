@@ -26,10 +26,9 @@ function scrollIfNeeded(center) {
         else if (x < tracksFlickable.contentX + tracksFlickable.width * 0.5)
             tracksFlickable.contentX = x - tracksFlickable.width * 0.5;
     } else if (tracksContainer.width > tracksFlickable.width) {
-        if (x > tracksFlickable.contentX + tracksFlickable.width - 50)
-            tracksFlickable.contentX += tracksFlickable.width - 100;
-        else if (x < tracksFlickable.contentX + 50)
-            tracksFlickable.contentX = Math.max(tracksFlickable.contentX - tracksFlickable.width + 100, 0);
+        var leftLimit = tracksFlickable.contentX + 50
+        var pageCount = Math.floor((x - leftLimit)/(tracksFlickable.width - 100))
+        tracksFlickable.contentX = Math.max(tracksFlickable.contentX + pageCount*(tracksFlickable.width - 100), 0);
     }
 }
 
