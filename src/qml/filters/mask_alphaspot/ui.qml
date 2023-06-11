@@ -405,7 +405,7 @@ Item {
                     if (filterRect.x !== value) {
                         filterRect = filter.getRect(rectProperty, getPosition());
                         filterRect.x = value;
-                        updateFilterRect(getPosition(), true);
+                        updateFilterRect(getPosition());
                     }
                 }
             }
@@ -660,5 +660,16 @@ Item {
         }
 
         target: producer
+    }
+
+    Connections {
+        function onKeyframeAdded(parameter, position) {
+            if (parameter === rectProperty) {
+                filterRect = filter.getRect(rectProperty, position);
+                updateFilterRect(position);
+            }
+        }
+
+        target: parameters
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -457,6 +457,7 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 m_filter->blockSignals(true);
                 m_filter->set(name, value, position, keyframeType);
                 m_filter->blockSignals(false);
+                emit keyframeAdded(name, position);
             }
         } else if (parameter->isCurve()) {
             // Get the value from the existing position.
@@ -480,6 +481,7 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                     m_filter->set(key, value, position, keyframeType);
                 }
                 m_filter->blockSignals(false);
+                emit keyframeAdded(name, position);
             }
         } else {
             emit keyframeAdded(name, position);
