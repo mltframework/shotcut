@@ -20,6 +20,7 @@ Metadata {
                 name: qsTr('Size & Position')
                 property: 'shotcut:rect'
                 isRectangle: true
+                gangedProperties: ['filter.1', 'filter.2', 'filter.3', 'filter.4']
             },
             Parameter {
                 name: qsTr('Rotation')
