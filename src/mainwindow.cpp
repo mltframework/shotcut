@@ -1925,6 +1925,10 @@ void MainWindow::setupActions()
     addAction(Actions["timelineAlignToReferenceAction"]);
     addAction(Actions["timelineUpdateThumbnailsAction"]);
     addAction(Actions["timelineRebuildAudioWaveformAction"]);
+    addAction(Actions["keyframesTypeHoldAction"]);
+    addAction(Actions["keyframesTypeLinearAction"]);
+    addAction(Actions["keyframesTypeSmoothAction"]);
+    addAction(Actions["keyframesRemoveAction"]);
 
     Actions.initializeShortcuts();
 }
