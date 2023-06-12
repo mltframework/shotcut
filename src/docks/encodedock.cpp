@@ -299,7 +299,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         } else if (name == "abr") {
             if (preset.get_int("abr"))
                 ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
-        } else if (name == "vq" || name == "vglobal_quality" || name == "qscale" || qmin_nvenc_amf) {
+        } else if (name == "vq" || name == "vqp" || name == "vglobal_quality" || name == "qscale"
+                   || qmin_nvenc_amf) {
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize") ? RateControlConstrained :
                                                        RateControlQuality);
             videoQuality = preset.get_int(name.toUtf8().constData());
@@ -690,7 +691,7 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 }
                 case RateControlQuality: {
                     setIfNotSet(p, "rc", "constqp");
-                    setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
+                    setIfNotSet(p, "vqp", TO_ABSOLUTE(51, 0, vq));
                     setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
                     break;
                 }
@@ -2112,7 +2113,7 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
         s = QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
     } else if (vcodec.contains("nvenc")) {
         if (ui->videoRateControlCombo->currentIndex() == RateControlQuality)
-            s = QString("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 0, vq));
+            s = QString("vqp=%1").arg(TO_ABSOLUTE(51, 0, vq));
         else
             s = QString("qmin=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_amf")) {

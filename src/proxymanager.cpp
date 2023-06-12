@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Meltytech, LLC
+ * Copyright (c) 2020-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -170,7 +170,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
         if (hwCodecs.contains("hevc_nvenc")) {
             args << "-codec:v" << "hevc_nvenc";
             args << "-rc" << "constqp";
-            args << "-vglobal_quality" << "37";
+            args << "-qp:v" << "37";
         } else if (hwCodecs.contains("hevc_qsv")) {
             args << "-load_plugin" << "hevc_hw";
             args << "-codec:v" << "hevc_qsv";
@@ -186,7 +186,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
         } else if (hwCodecs.contains("h264_nvenc")) {
             args << "-codec:v" << "h264_nvenc";
             args << "-rc" << "constqp";
-            args << "-vglobal_quality" << "37";
+            args << "-qp:v" << "37";
         } else if (hwCodecs.contains("h264_vaapi")) {
             args << "-init_hw_device" << "vaapi=vaapi0:" << "-filter_hw_device" << "vaapi0";
             args << "-codec:v" << "h264_vaapi";
