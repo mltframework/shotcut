@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -368,7 +368,8 @@ static QString GetFilenameFromProducer(Mlt::Producer *producer, bool useOriginal
 
 void ImageProducerWidget::on_actionCopyFullFilePath_triggered()
 {
-    qApp->clipboard()->setText(GetFilenameFromProducer(producer()));
+    auto s = GetFilenameFromProducer(producer());
+    qApp->clipboard()->setText(QDir::toNativeSeparators(s));
 }
 
 void ImageProducerWidget::on_actionOpenFolder_triggered()

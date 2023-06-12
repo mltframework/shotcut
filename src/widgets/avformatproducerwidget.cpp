@@ -710,7 +710,8 @@ void AvformatProducerWidget::on_menuButton_clicked()
 
 void AvformatProducerWidget::on_actionCopyFullFilePath_triggered()
 {
-    qApp->clipboard()->setText(Util::GetFilenameFromProducer(producer()));
+    auto s = Util::GetFilenameFromProducer(producer());
+    qApp->clipboard()->setText(QDir::toNativeSeparators(s));
 }
 
 void AvformatProducerWidget::on_notesTextEdit_textChanged()
