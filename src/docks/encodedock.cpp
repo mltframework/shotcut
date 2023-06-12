@@ -1411,8 +1411,8 @@ void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset)
             }
             ui->advancedTextEdit->setPlainText(newValue);
         }
-        if (vcodec.contains("hevc"))
-            ui->bFramesSpinner->setValue(0);
+//        if (vcodec.contains("hevc"))
+        ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
     } else if (vcodec.endsWith("_amf")) {
