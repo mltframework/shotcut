@@ -28,13 +28,8 @@ Item {
     property double startValue: 50
     property double middleValue: 50
     property double endValue: 50
-    property url settingsOpenPath: 'file:///' + settings.openPath
     property int previousResourceComboIndex
     property string reverseProperty: filter.isAtLeastVersion(3) ? 'filter.invert_mask' : 'filter.reverse'
-
-    // This signal is used to workaround context properties not available in
-    // the FileDialog onAccepted signal handler on Qt 5.5.
-    signal fileOpened(string path)
 
     function initSimpleAnimation() {
         middleValue = filter.getDouble('filter.mix', filter.animateIn);
@@ -180,29 +175,22 @@ Item {
         }
         setControls();
     }
-    onFileOpened: {
-        settings.openPath = path;
-        fileDialog.folder = 'file:///' + path;
-    }
 
     Shotcut.File {
         id: shapeFile
     }
 
-    FileDialog {
+    Shotcut.FileDialog {
         id: fileDialog
 
-        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
-        fileMode: FileDialog.OpenFile
-        currentFolder: settingsOpenPath
         onAccepted: {
-            shapeFile.url = fileDialog.currentFile;
+            shapeFile.url = fileDialog.selectedFile;
             filter.set('filter.resource', shapeFile.url);
             fileLabel.text = shapeFile.fileName;
             fileLabelTip.text = shapeFile.filePath;
             previousResourceComboIndex = resourceCombo.currentIndex;
             alphaRadioButton.enabled = true;
-            shapeRoot.fileOpened(shapeFile.path);
+            settings.openPath = shapeFile.path;
         }
         onRejected: resourceCombo.currentIndex = previousResourceComboIndex
     }

@@ -24,12 +24,6 @@ import org.shotcut.qml as Shotcut
 Item {
     id: shapeRoot
 
-    property url settingsOpenPath: 'file:///' + settings.openPath
-
-    // This signal is used to workaround context properties not available in
-    // the FileDialog onAccepted signal handler on Qt 5.5.
-    signal fileOpened(string path)
-
     function setControls() {
         shapeFile.url = filter.get('filter.resource');
         invertCheckBox.checked = filter.getDouble('filter.invert') === 1;
@@ -58,10 +52,6 @@ Item {
         }
         setControls();
     }
-    onFileOpened: path => {
-        settings.openPath = path;
-        fileDialog.currentFolder = 'file:///' + path;
-    }
 
     Shotcut.File {
         id: shapeFile
@@ -76,29 +66,27 @@ Item {
         onFileChanged: filter.set('filter.producer.refresh', 1)
     }
 
-    FileDialog {
+    Shotcut.FileDialog {
         id: fileDialog
 
-        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
-        fileMode: FileDialog.OpenFile
-        currentFolder: settingsOpenPath
+        fileMode: Shotcut.FileDialog.OpenFile
         onAccepted: {
-            shapeFile.url = fileDialog.currentFile;
-            if (fileDialog.fileMode === FileDialog.SaveFile) {
+            shapeFile.url = fileDialog.selectedFile;
+            if (fileDialog.fileMode === Shotcut.FileDialog.SaveFile) {
                 // Force file extension to ".rawr"
                 var filename = shapeFile.url;
                 var extension = ".rawr";
                 var extIndex = filename.indexOf(extension, filename.length - extension.length);
                 if (extIndex == -1) {
                     filename += extension;
-                    shapeFile.url = filename;
                 }
+                shapeFile.url = filename;
                 producer.newGlaxnimateFile(filename);
             }
             filter.set('filter.resource', shapeFile.url);
             fileLabelTip.text = shapeFile.filePath;
-            shapeRoot.fileOpened(shapeFile.path);
-            if (fileDialog.fileMode === FileDialog.SaveFile)
+            settings.openPath = shapeFile.path;
+            if (fileDialog.fileMode === Shotcut.FileDialog.SaveFile)
                 producer.launchGlaxnimate(shapeFile.url);
         }
     }
@@ -119,10 +107,10 @@ Item {
                         producer.newGlaxnimateFile(filename);
                         shapeFile.url = filename;
                         filter.set('filter.resource', shapeFile.url);
-                        shapeRoot.fileOpened(shapeFile.path);
+                        settings.openPath = shapeFile.path;
                         producer.launchGlaxnimate(shapeFile.url);
                     } else {
-                        fileDialog.fileMode = FileDialog.SaveFile;
+                        fileDialog.fileMode = Shotcut.FileDialog.SaveFile;
                         fileDialog.title = qsTr('New Animation File');
                         fileDialog.open();
                     }
@@ -132,7 +120,7 @@ Item {
             Shotcut.Button {
                 text: qsTr('Open...')
                 onClicked: {
-                    fileDialog.fileMode = FileDialog.OpenFile;
+                    fileDialog.fileMode = Shotcut.FileDialog.OpenFile;
                     fileDialog.title = qsTr('Open Animation File');
                     fileDialog.open();
                 }

@@ -25,17 +25,8 @@ import org.shotcut.qml as Shotcut
 Item {
     id: lut3dRoot
 
-    property url settingsOpenPath: 'file:///' + settings.openPath
-
-    // This signal is used to workaround context properties not available in
-    // the FileDialog onAccepted signal handler on Qt 5.5.
-    signal fileOpened(string path)
-
     width: 350
     height: 100
-    onFileOpened: path => {
-        settings.openPath = path;
-    }
     Component.onCompleted: {
         var resource = filter.get('av.file');
         lutFile.url = resource;
@@ -65,16 +56,13 @@ Item {
         id: lutFile
     }
 
-    FileDialog {
+    Shotcut.FileDialog {
         id: fileDialog
 
-        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
-        fileMode: FileDialog.OpenFile
-        currentFolder: settingsOpenPath
         nameFilters: ['3D-LUT Files (*.3dl *.cube *.dat *.m3d)', 'AfterEffects (*.3dl)', 'Iridas (*.cube)', 'DaVinci (*.dat)', 'Pandora (*.m3d)', 'All Files (*)']
         onAccepted: {
-            lutFile.url = fileDialog.currentFile;
-            lut3dRoot.fileOpened(lutFile.path);
+            lutFile.url = fileDialog.selectedFile;
+            settings.openPath = lutFile.path;
             fileLabel.text = lutFile.fileName;
             fileLabel.color = activePalette.text;
             fileLabelTip.text = lutFile.filePath;

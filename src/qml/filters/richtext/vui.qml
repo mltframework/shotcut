@@ -37,7 +37,6 @@ Shotcut.VuiBase {
     property string sizeProperty: '_shotcut:size'
     property bool smallIcons: settings.smallIcons || toolbar.maxWidth >= videoItem.width
     property int smallIconSize: 22
-    property url settingsSavePath: 'file:///' + settings.savePath
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0);
@@ -558,11 +557,11 @@ Shotcut.VuiBase {
         id: menu
 
         onOpenTriggered: {
-            fileDialog.fileMode = FileDialog.OpenFile;
+            fileDialog.fileMode = Shotcut.FileDialog.OpenFile;
             fileDialog.open();
         }
         onSaveAsTriggered: {
-            fileDialog.fileMode = FileDialog.SaveFile;
+            fileDialog.fileMode = Shotcut.FileDialog.SaveFile;
             fileDialog.open();
         }
         onUndoTriggered: {
@@ -699,17 +698,15 @@ Shotcut.VuiBase {
         onTriggered: document.indentMore()
     }
 
-    FileDialog {
+    Shotcut.FileDialog {
         id: fileDialog
 
-        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
-        currentFolder: settingsSavePath
         nameFilters: ["HTML files (*.html *.htm)", "Text files (*.txt)", "All files (*)"]
         onAccepted: {
-            if (fileMode === FileDialog.OpenFile)
-                document.fileUrl = selectedFile;
+            if (fileMode === Shotcut.FileDialog.OpenFile)
+                document.fileUrl = 'file:///' + selectedFile;
             else
-                document.saveAs(selectedFile, selectedNameFilter.extensions);
+                document.saveAs('file:///' + selectedFile);
         }
     }
 

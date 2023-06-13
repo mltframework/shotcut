@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,6 @@ Item {
     property string default_rect: '10%/10%:30%x30%'
     property int js_tz_offset: 0
     property bool _disableUpdate: true
-    property url settingsOpenPath: 'file:///' + settings.openPath
 
     signal fileOpened(string path)
 
@@ -390,12 +389,10 @@ Item {
     }
 
     //gps funcs
-    FileDialog {
+    Shotcut.FileDialog {
         id: fileDialog
 
-        title: "Select GPS file"
-        currentFolder: settingsOpenPath
-        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
+        title: qsTr("Select GPS File")
         nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
         onAccepted: {
             gpsFile.url = fileDialog.selectedFile;
@@ -434,12 +431,10 @@ Item {
         }
     }
 
-    FileDialog {
+    Shotcut.FileDialog {
         id: selectBgImage
 
-        title: "Select background image"
-        currentFolder: settingsOpenPath
-        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
+        title: qsTr("Select Background Image")
         nameFilters: ['Image files (*.jpg *.jpeg *.png)', 'JPG (*.jpg *.jpeg)', 'PNG (*.png)', 'All files (*)']
         onAccepted: {
             bgFile.url = selectBgImage.selectedFile;

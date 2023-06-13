@@ -121,8 +121,10 @@ void QmlRichText::setText(const QString &arg)
     }
 }
 
-void QmlRichText::saveAs(const QUrl &arg, const QString &fileType)
+void QmlRichText::saveAs(const QUrl &arg, QString fileType)
 {
+    if (fileType.isEmpty())
+        fileType = QFileInfo(arg.toString()).suffix();
     bool isHtml = fileType.contains(QLatin1String("htm"));
     QLatin1String ext(isHtml ? ".html" : ".txt");
     QString localPath = arg.toLocalFile();

@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
-** Copyright (c) 2020 Meltytech, LLC
+** Copyright (c) 2020-2023 Meltytech, LLC
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions are
@@ -114,7 +114,7 @@ public slots:
     void setFontFamily(const QString &arg);
     void setFileUrl(const QUrl &arg);
     void setText(const QString &arg);
-    void saveAs(const QUrl &arg, const QString &fileType);
+    void saveAs(const QUrl &arg, QString fileType = QString());
     void insertTable(int rows = 1, int columns = 2, int border = 0);
     void indentLess();
     void indentMore();

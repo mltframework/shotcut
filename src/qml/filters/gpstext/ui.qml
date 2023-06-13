@@ -26,7 +26,6 @@ import org.shotcut.qml as Shotcut
 Item {
     id: gpsTextRoot
 
-    property url settingsOpenPath: 'file:///' + settings.openPath
     property int js_tz_offset: 0
 
     signal fileOpened(string path)
@@ -153,11 +152,9 @@ Item {
         id: gpsFile
     }
 
-    FileDialog {
+    Shotcut.FileDialog {
         id: fileDialog
 
-        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
-        currentFolder: settingsOpenPath
         nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
         onAccepted: {
             gpsFile.url = fileDialog.selectedFile;

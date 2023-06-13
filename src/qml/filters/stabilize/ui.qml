@@ -83,18 +83,15 @@ Item {
         target: filter
     }
 
-    FileDialog {
+    Shotcut.FileDialog {
         // In Windows, the prefix is a little different
         id: fileDialog
 
         title: qsTr('Select a file to store analysis results.')
-        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
-        fileMode: FileDialog.SaveFile
-        currentFolder: settingsSavePath
+        fileMode: Shotcut.FileDialog.SaveFile
         nameFilters: ["Stabilize Results (*.stab)"]
-        selectedNameFilter.index: 0
         onAccepted: {
-            var filename = selectedFile.toString();
+            var filename = selectedFile;
             // Remove resource prefix ("file://")
             if (filename.substring(0, 8) == 'file:///')
                 filename = filename.substring(application.OS === 'Windows' ? 8 : 7);

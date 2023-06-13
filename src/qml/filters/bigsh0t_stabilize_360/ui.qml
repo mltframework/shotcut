@@ -25,7 +25,6 @@ Item {
     property double timeBiasPitchValue: 0
     property double timeBiasRollValue: 0
     property double clipOffsetValue: 0
-    property url settingsOpenPath: 'file:///' + settings.openPath
 
     function setControls() {
         var position = getPosition();
@@ -286,21 +285,17 @@ Item {
         id: analysisFile
     }
 
-    FileDialog {
+    Shotcut.FileDialog {
         id: selectAnalysisFile
 
-        title: "File for motion analysis"
-        fileMode: FileDialog.SaveFile
-        currentFolder: settingsOpenPath
-        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
+        title: qsTr("File for motion analysis")
+        fileMode: Shotcut.FileDialog.SaveFile
         nameFilters: ['Motion Analysis Files (*.bigsh0t360motion)', 'All Files (*)']
         onAccepted: {
             analysisFile.url = selectAnalysisFile.selectedFile;
             analysisFileTextField.text = analysisFile.filePath;
             updateProperty_analysisFile();
             settings.openPath = analysisFile.path;
-        }
-        onRejected: {
         }
     }
 
