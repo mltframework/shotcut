@@ -42,7 +42,7 @@ ToolButton {
                 confirmRemoveSimpleDialog.open();
             }
             if (checked) {
-                application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only').arg(application.OS === 'OS X' ? '⌘' : 'Ctrl').arg(application.OS === 'OS X' ? '⌥' : 'Alt'));
+                application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only').arg(application.OS === 'macOS' ? '⌘' : 'Ctrl').arg(application.OS === 'macOS' ? '⌥' : 'Alt'));
                 keyframes.show();
                 keyframes.raise();
                 toggled();

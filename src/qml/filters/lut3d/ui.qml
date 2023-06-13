@@ -68,7 +68,7 @@ Item {
     FileDialog {
         id: fileDialog
 
-        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
+        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
         fileMode: FileDialog.OpenFile
         currentFolder: settingsOpenPath
         nameFilters: ['3D-LUT Files (*.3dl *.cube *.dat *.m3d)', 'AfterEffects (*.3dl)', 'Iridas (*.cube)', 'DaVinci (*.dat)', 'Pandora (*.m3d)', 'All Files (*)']

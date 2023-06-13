@@ -192,7 +192,7 @@ Item {
     FileDialog {
         id: fileDialog
 
-        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
+        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
         fileMode: FileDialog.OpenFile
         currentFolder: settingsOpenPath
         onAccepted: {

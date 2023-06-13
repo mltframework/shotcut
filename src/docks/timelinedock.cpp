@@ -337,7 +337,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Show/Hide Selected Track"), this);
 #ifdef Q_OS_MAC
-    // OS X uses Cmd+H to hide an app.
+    // macOS uses Cmd+H to hide an app.
     action->setShortcut(QKeySequence(Qt::META | Qt::Key_H));
 #else
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_H));
@@ -352,7 +352,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Lock/Unlock Selected Track"), this);
 #ifdef Q_OS_MAC
-    // OS X uses Cmd+H to hide an app and Cmd+M to minimize. Therefore, we force
+    // macOS uses Cmd+H to hide an app and Cmd+M to minimize. Therefore, we force
     // it to be the apple keyboard control key aka meta. Therefore, to be
     // consistent with all track header toggles, we make the lock toggle also use
     // meta.
@@ -370,7 +370,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Mute/Unmute Selected Track"), this);
 #ifdef Q_OS_MAC
-    // OS X uses Cmd+M to minimize an app.
+    // macOS uses Cmd+M to minimize an app.
     action->setShortcut(QKeySequence(Qt::META | Qt::Key_M));
 #else
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_M));
@@ -2341,7 +2341,7 @@ void TimelineDock::createMarker()
     marker.end = position();
     m_markersModel.append(marker);
     emit showStatusMessage(tr("Added marker: \"%1\". Hold %2 and drag to create a range")
-                           .arg(marker.text, QmlApplication::OS() == "OS X" ? "⌘" : "Ctrl"));
+                           .arg(marker.text, QmlApplication::OS() == "macOS" ? "⌘" : "Ctrl"));
 }
 
 void TimelineDock::editMarker(int markerIndex)

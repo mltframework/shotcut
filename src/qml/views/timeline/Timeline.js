@@ -124,7 +124,7 @@ function onMouseWheel(wheel) {
             adjustZoom(wheel.angleDelta.y / 2000, wheel.x)
         }
         if (wheel.modifiers & Qt.ShiftModifier) {
-            n = (application.OS === 'OS X')? wheel.angleDelta.x : wheel.angleDelta.y
+            n = (application.OS === 'macOS')? wheel.angleDelta.x : wheel.angleDelta.y
             multitrack.trackHeight = Math.max(10, multitrack.trackHeight + n / 25)
         }
     } else {
@@ -143,7 +143,7 @@ function onMouseWheel(wheel) {
         } else {
             // Vertical only mouse wheel requires modifier for vertical scroll.
             if (wheel.modifiers === Qt.AltModifier) {
-                n = Math.round((application.OS === 'OS X'? wheel.angleDelta.y : wheel.angleDelta.x) / 2)
+                n = Math.round((application.OS === 'macOS'? wheel.angleDelta.y : wheel.angleDelta.x) / 2)
                 tracksFlickable.contentY = clamp(tracksFlickable.contentY - n, 0, scrollMax().y)
             } else {
                 n = Math.round(wheel.angleDelta.y / 2)

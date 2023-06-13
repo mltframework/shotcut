@@ -395,7 +395,7 @@ Item {
 
         title: "Select GPS file"
         currentFolder: settingsOpenPath
-        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
+        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
         nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
         onAccepted: {
             gpsFile.url = fileDialog.selectedFile;
@@ -439,7 +439,7 @@ Item {
 
         title: "Select background image"
         currentFolder: settingsOpenPath
-        modality: application.OS === 'OS X' ? Qt.NonModal : application.dialogModality
+        modality: application.OS === 'macOS' ? Qt.NonModal : application.dialogModality
         nameFilters: ['Image files (*.jpg *.jpeg *.png)', 'JPG (*.jpg *.jpeg)', 'PNG (*.png)', 'All files (*)']
         onAccepted: {
             bgFile.url = selectBgImage.selectedFile;

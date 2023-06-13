@@ -84,8 +84,8 @@ QColor QmlApplication::toolTipTextColor()
 
 QString QmlApplication::OS()
 {
-#if defined(Q_OS_OSX)
-    return "OS X";
+#if defined(Q_OS_MAC)
+    return "macOS";
 #elif defined(Q_OS_LINUX)
     return "Linux";
 #elif defined(Q_OS_UNIX)

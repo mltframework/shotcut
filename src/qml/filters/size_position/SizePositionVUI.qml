@@ -153,7 +153,7 @@ Shotcut.VuiBase {
     }
 
     Component.onCompleted: {
-        application.showStatusMessage(qsTr('Click in rectangle + hold Shift to drag, Wheel to zoom, or %1+Wheel to rotate').arg(application.OS === 'OS X' ? 'Cmd' : 'Ctrl'));
+        application.showStatusMessage(qsTr('Click in rectangle + hold Shift to drag, Wheel to zoom, or %1+Wheel to rotate').arg(application.OS === 'macOS' ? 'Cmd' : 'Ctrl'));
         rectangle.aspectRatio = getAspectRatio();
         setRectangleControl();
     }
