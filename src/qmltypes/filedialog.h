@@ -24,8 +24,8 @@ class FileDialog : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(FileDialog::FileMode fileMode READ fileMode WRITE setFileMode NOTIFY fileModeChanged)
-    Q_PROPERTY(QString title READ title WRITE setTitle CONSTANT)
-    Q_PROPERTY(QStringList nameFilters READ nameFilters WRITE setNameFilters CONSTANT)
+    Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+    Q_PROPERTY(QStringList nameFilters READ nameFilters WRITE setNameFilters NOTIFY nameFiltersChanged)
     Q_PROPERTY(QString selectedFile READ selectedFile NOTIFY fileSelected)
 
 public:
@@ -47,6 +47,8 @@ public:
 
 signals:
     void fileModeChanged();
+    void titleChanged();
+    void nameFiltersChanged();
     void fileSelected(const QString &file);
     void filterSelected(const QString &filter);
     void accepted();

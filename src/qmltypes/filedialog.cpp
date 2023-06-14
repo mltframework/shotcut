@@ -42,7 +42,10 @@ QString FileDialog::title() const
 
 void FileDialog::setTitle(const QString &title)
 {
-    m_fileDialog->setWindowTitle(title);
+    if (title != m_fileDialog->windowTitle()) {
+        m_fileDialog->setWindowTitle(title);
+        emit titleChanged();
+    }
 }
 
 QStringList FileDialog::nameFilters() const
@@ -52,7 +55,10 @@ QStringList FileDialog::nameFilters() const
 
 void FileDialog::setNameFilters(const QStringList &filters)
 {
-    m_fileDialog->setNameFilters(filters);
+    if (filters != m_fileDialog->nameFilters()) {
+        m_fileDialog->setNameFilters(filters);
+        emit nameFiltersChanged();
+    }
 }
 
 QString FileDialog::selectedFile()
