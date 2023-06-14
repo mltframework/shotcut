@@ -60,6 +60,7 @@ public:
         gpuAlternativeMaskBit = 1 << 3,
         needsGPUMaskBit = 1 << 4,
         linkMaskBit = 1 << 5,
+        trackOnlyMaskBit = 1 << 6,
     };
 
     explicit MetadataModel(QObject *parent = 0);
@@ -87,6 +88,7 @@ public:
     Q_INVOKABLE bool isVisible(int row) const;
     void setIsClipProducer(bool isClipProducer);
     void setIsChainProducer(bool isChainProducer);
+    void setIsTrackProducer(bool isTrackProducer);
     Q_INVOKABLE void saveFilterSet(const QString &name);
     Q_INVOKABLE void deleteFilterSet(const QString &name);
 
@@ -100,6 +102,7 @@ private:
     MetadataFilter m_filter;
     bool m_isClipProducer;
     bool m_isChainProducer;
+    bool m_isTrackProducer;
     QString m_search;
     unsigned m_filterMask;
 
