@@ -244,7 +244,7 @@
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="511"/>
         <source>This file has B-frames, which is not supported by %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό το αρχείο έχει διανυσματικά προβλεπτικά καρέ (B-frames), τα οποία δεν υποστηρίζονται από το %1</translation>
     </message>
 </context>
 <context>
@@ -467,7 +467,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="199"/>
         <source>Speed Presets</source>
-        <translation type="unfinished"></translation>
+        <translation>Προρυθμίσεις ταχύτητας</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="251"/>
@@ -482,7 +482,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="261"/>
         <source>Pitch Compensation</source>
-        <translation>Aντιστάθμιση τονικού ύψους.</translation>
+        <translation>Aντιστάθμιση τονικού ύψους</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="315"/>
@@ -704,13 +704,13 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="993"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1019"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1020"/>
         <source>Reverse...</source>
-        <translation>ανάποδη κίνηση</translation>
+        <translation>Αντιστροφή...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1057"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1216"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1217"/>
         <source>Extract Sub-clip...</source>
         <translation>Εξαγωγή, μέρος κλιπ...</translation>
     </message>
@@ -783,107 +783,109 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>Αυτή η μορφή αρχείου (HDV) δεν είναι αξιόπιστη για επεξεργασία.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="753"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1015"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="754"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1016"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Επιλέξτε την παρακάτω μορφή και, στην συνέχεια, πατήστε στο πλήκτρο OK για να επιλέξετε ένα όνομα αρχείου. Αφού επιλέξετε ένα όνομα αρχείου, μια εργασία έχει δημιουργηθεί. Όταν γίνει αυτό, πατήστε δύο φορές στην εργασία για να την ανοίξετε.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="885"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1103"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="886"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1104"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="897"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1124"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="898"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1125"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="903"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1134"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="904"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1135"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="910"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="911"/>
         <source>Converted</source>
         <translation>Η μετατροπή ολοκληρώθηκε</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="930"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="931"/>
         <source>Convert canceled</source>
         <translation>Η μετατροπή ακυρώθηκε.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="939"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1176"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="940"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1177"/>
         <source>Convert %1</source>
-        <translation>μετατροπή 1%</translation>
+        <translation>Μετατροπή %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1138"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1139"/>
         <source>Reversed</source>
-        <translation>αναποδογύρισε</translation>
+        <translation>Ανεστραμένο</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1157"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1158"/>
         <source>Reverse canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Η αντιστροφή ακυρώθηκε.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1184"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1185"/>
         <source>Reverse %1</source>
-        <translation>πίσω 1%</translation>
+        <translation>Αντιστροφή %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1431"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1432"/>
         <source>Choose the Other Video</source>
         <translation>Επιλέξτε το άλλο βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1478"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1479"/>
         <source>Measure %1</source>
         <translation>Μέτρηση %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="910"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1215"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="911"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1216"/>
         <source>Sub-clip</source>
         <translation>μέρος κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1217"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1218"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1261"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1262"/>
         <source>Extract sub-clip %1</source>
         <translation>εξαγωγή, μέρος κλιπ 1%</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1368"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1369"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
-        <translation>Ο παρακάτω κωδικός Hash έχει ήδη αντιγραφεί στο πρόχειρό σας:</translation>
+        <translation>Ο παρακάτω κωδικός hash έχει ήδη αντιγραφεί στο πρόχειρό σας:
+
+</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1412"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1413"/>
         <source>Set Equirectangular Projection</source>
         <translation>Ορισμός ισοορθογώνιας προβολής</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1422"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1423"/>
         <source>Successfully wrote %1</source>
         <translation>Επιτυχής εγγραφή %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1424"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1425"/>
         <source>An error occurred saving the projection.</source>
         <translation>Παρουσιάστηκε σφάλμα κατά την αποθήκευση της προβολής.</translation>
     </message>
@@ -899,7 +901,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="26"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="100"/>
         <source>Audio/Video Device</source>
-        <translation>συσκευή εικόνας/ήχου</translation>
+        <translation>Συσκευή Βίντεο/Ηχου</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="39"/>
@@ -1086,7 +1088,8 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <location filename="../src/qml/views/filter/CopyFiltersDialog.qml" line="57"/>
         <source>Enter a name to save a filter set, or
 leave blank to use the clipboard:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισάγετε ένα όνομα για να αποθηκεύσετε ένα σύνολο φίλτρων ή
+αφήστε κενό για να χρησιμοποιήσετε το πρόχειρο:</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/CopyFiltersDialog.qml" line="64"/>
@@ -1336,7 +1339,7 @@ leave blank to use the clipboard:</source>
         <location filename="../src/widgets/directshowvideowidget.ui" line="26"/>
         <location filename="../src/widgets/directshowvideowidget.cpp" line="150"/>
         <source>Audio/Video Device</source>
-        <translation>συσκευή εικόνας/ήχου</translation>
+        <translation>Συσκευή Βίντεο/Ηχου</translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="52"/>
@@ -1809,9 +1812,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1874"/>
-        <location filename="../src/docks/encodedock.cpp" line="932"/>
-        <location filename="../src/docks/encodedock.cpp" line="1543"/>
-        <location filename="../src/docks/encodedock.cpp" line="1977"/>
+        <location filename="../src/docks/encodedock.cpp" line="933"/>
+        <location filename="../src/docks/encodedock.cpp" line="1544"/>
+        <location filename="../src/docks/encodedock.cpp" line="1978"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="934"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1544"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1999"/>
@@ -1840,9 +1843,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1914"/>
-        <location filename="../src/docks/encodedock.cpp" line="1687"/>
-        <location filename="../src/docks/encodedock.cpp" line="1694"/>
-        <location filename="../src/docks/encodedock.cpp" line="1807"/>
+        <location filename="../src/docks/encodedock.cpp" line="1688"/>
+        <location filename="../src/docks/encodedock.cpp" line="1695"/>
+        <location filename="../src/docks/encodedock.cpp" line="1808"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1709"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1716"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1829"/>
@@ -1851,9 +1854,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1941"/>
-        <location filename="../src/docks/encodedock.cpp" line="1517"/>
-        <location filename="../src/docks/encodedock.cpp" line="1612"/>
-        <location filename="../src/docks/encodedock.cpp" line="1625"/>
+        <location filename="../src/docks/encodedock.cpp" line="1518"/>
+        <location filename="../src/docks/encodedock.cpp" line="1613"/>
+        <location filename="../src/docks/encodedock.cpp" line="1626"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1519"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1634"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1647"/>
@@ -1875,49 +1878,49 @@ in temporal compression</source>
         <translation>Προεπιλογή για το φορμά</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="412"/>
+        <location filename="../src/docks/encodedock.cpp" line="413"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="417"/>
         <source>Timeline</source>
         <translation>Χρονολόγιο</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="414"/>
+        <location filename="../src/docks/encodedock.cpp" line="415"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="419"/>
         <source>Playlist</source>
         <translation>Λίστα</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="415"/>
+        <location filename="../src/docks/encodedock.cpp" line="416"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="420"/>
         <source>Each Playlist Item</source>
         <translation>Κάθε Αντικείμενο της Λίστας</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="418"/>
-        <location filename="../src/docks/encodedock.cpp" line="424"/>
+        <location filename="../src/docks/encodedock.cpp" line="419"/>
+        <location filename="../src/docks/encodedock.cpp" line="425"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="423"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="429"/>
         <source>Source</source>
         <translation>Πηγή</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="429"/>
-        <location filename="../src/docks/encodedock.cpp" line="436"/>
+        <location filename="../src/docks/encodedock.cpp" line="430"/>
+        <location filename="../src/docks/encodedock.cpp" line="437"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="434"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="441"/>
         <source>Marker</source>
         <translation>Δείκτης</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="447"/>
+        <location filename="../src/docks/encodedock.cpp" line="448"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="452"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Πρέπει να εισάγετε αριθμητικές τιμές χρησιμοποιώντας το &apos;%1&apos; ως υποδιαστολή.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="456"/>
-        <location filename="../src/docks/encodedock.cpp" line="1465"/>
+        <location filename="../src/docks/encodedock.cpp" line="457"/>
         <location filename="../src/docks/encodedock.cpp" line="1466"/>
+        <location filename="../src/docks/encodedock.cpp" line="1467"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="461"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1467"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1468"/>
@@ -1925,19 +1928,19 @@ in temporal compression</source>
         <translation>Προσαρμοσμένο</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="492"/>
+        <location filename="../src/docks/encodedock.cpp" line="493"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="497"/>
         <source>Stock</source>
         <translation>Στοκ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="495"/>
+        <location filename="../src/docks/encodedock.cpp" line="496"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="500"/>
         <source>Default</source>
         <translation>προεπιλογή</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="988"/>
+        <location filename="../src/docks/encodedock.cpp" line="989"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="990"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
@@ -1945,7 +1948,7 @@ Try again with a different folder or file name.</source>
 Δοκιμάστε ξανά με ένα διαφορετικό όνομα φακέλου ή αρχείου.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1217"/>
+        <location filename="../src/docks/encodedock.cpp" line="1218"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1219"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
@@ -1953,107 +1956,107 @@ Do you want to run the analysis jobs now?</source>
 Θέλετε να εκτελέσετε τις εργασίες ανάλυσης τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1543"/>
-        <location filename="../src/docks/encodedock.cpp" line="1979"/>
+        <location filename="../src/docks/encodedock.cpp" line="1544"/>
+        <location filename="../src/docks/encodedock.cpp" line="1980"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1544"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2001"/>
         <source>Capture File</source>
         <translation>Καταγραφή Αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1545"/>
+        <location filename="../src/docks/encodedock.cpp" line="1546"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1546"/>
         <source>Export Files</source>
         <translation>Εξαγωγή Αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1546"/>
+        <location filename="../src/docks/encodedock.cpp" line="1547"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1547"/>
         <source>Export Each Playlist Item</source>
-        <translation>Εξαγωγή κάθε αντικειμένου της λίστας</translation>
+        <translation>Εξαγωγή κάθε αντικειμένου της λίστας αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1555"/>
+        <location filename="../src/docks/encodedock.cpp" line="1556"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1556"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1557"/>
+        <location filename="../src/docks/encodedock.cpp" line="1558"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1558"/>
         <source>Determined by Export (*)</source>
         <translation>Καθορισμός από Εξαγωγή (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1682"/>
-        <location filename="../src/docks/encodedock.cpp" line="1704"/>
+        <location filename="../src/docks/encodedock.cpp" line="1683"/>
+        <location filename="../src/docks/encodedock.cpp" line="1705"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1704"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1726"/>
         <source>Stop Stream</source>
         <translation>Στάση Ροής</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1696"/>
+        <location filename="../src/docks/encodedock.cpp" line="1697"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1718"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Εισαγωγή πρωτοκόλλου δικτύου, διεύθυνση, πόρτα και παραμέτρους σαν ένα URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1740"/>
+        <location filename="../src/docks/encodedock.cpp" line="1741"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1762"/>
         <source>Add Export Preset</source>
         <translation>Εισαγωγή Πρότυπου Εξαγωγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1784"/>
+        <location filename="../src/docks/encodedock.cpp" line="1785"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1806"/>
         <source>Delete Preset</source>
         <translation>Διαγραφή Πρότυπου</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1785"/>
+        <location filename="../src/docks/encodedock.cpp" line="1786"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1807"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Είστε βέβαιοι πως θέλετε να διαγραφή το %1;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1912"/>
+        <location filename="../src/docks/encodedock.cpp" line="1913"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1934"/>
         <source>None</source>
         <translation>Κανένα</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1963"/>
+        <location filename="../src/docks/encodedock.cpp" line="1964"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1985"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2063"/>
+        <location filename="../src/docks/encodedock.cpp" line="2064"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2085"/>
         <source>Detect</source>
         <translation>Εντοπισμός</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2154"/>
+        <location filename="../src/docks/encodedock.cpp" line="2155"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2176"/>
         <source>Detecting hardware encoders...</source>
         <translation>Εντοπισμός κωδικοποιητών υλικού...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2188"/>
+        <location filename="../src/docks/encodedock.cpp" line="2189"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2210"/>
         <source>Nothing found</source>
         <translation>δεν βρέθηκε τίποτα</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2190"/>
+        <location filename="../src/docks/encodedock.cpp" line="2191"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2212"/>
         <source>Found %1</source>
         <translation>εύρεση 1%</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2261"/>
+        <location filename="../src/docks/encodedock.cpp" line="2262"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2283"/>
         <source>Your project is missing some files.
 
@@ -2065,18 +2068,18 @@ Shotcut will attempt to repair your project.</source>
 Το Shotcut θα προσπαθήσει να επιδιορθώσει το έργο σας.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2061"/>
+        <location filename="../src/docks/encodedock.cpp" line="2062"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2083"/>
         <source>Configure Hardware Encoding</source>
         <translation>Διαμόρφωση κωδικοποίησης υλικού</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1575"/>
+        <location filename="../src/docks/encodedock.cpp" line="1576"/>
         <source>Export canceled</source>
         <translation>Η εξαγωγή ακυρώθηκε.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2085"/>
+        <location filename="../src/docks/encodedock.cpp" line="2086"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2107"/>
         <source>Export Frames/sec</source>
         <translation>Εξαγωγή Καρέ/δευτ</translation>
@@ -2085,19 +2088,19 @@ Shotcut will attempt to repair your project.</source>
         <location filename="../src/docks/encodedock.cpp.orig" line="1585"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
-        <translation type="unfinished">Ο χώρος αποθήκευσης που επιλέξατε έχει μόνο %1 MiB ελεύθερο χώρο.
+        <translation>Ο χώρος αποθήκευσης που επιλέξατε έχει μόνο %1 MiB ελεύθερο χώρο.
 Θέλετε ακόμα να συνεχίσετε;</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp.orig" line="1592"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Καμμία εμφάνιση ξανά.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp.orig" line="1598"/>
         <source>Export canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Η εξαγωγή ακυρώθηκε.</translation>
     </message>
 </context>
 <context>
@@ -2249,64 +2252,69 @@ Do you still want to continue?</source>
         <translation>Εκκαθάριση αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="145"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="169"/>
         <source>Show favorite filters</source>
         <translation>Εμφάνιση αγαπημένων φίλτρων</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="166"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="192"/>
+        <source>Show GPU video filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="213"/>
         <source>Show video filters</source>
         <translation>Εμφάνιση φίλτρων βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="187"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="234"/>
         <source>Show audio filters</source>
         <translation>Εμφάνιση φίλτρων ήχου</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="198"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="245"/>
         <source>Time</source>
         <translation>Χρόνος</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="209"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="256"/>
         <source>Show time filters</source>
         <translation>Εμφάνιση φίλτρων χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="219"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="266"/>
         <source>Sets</source>
-        <translation type="unfinished"></translation>
+        <translation>Σετ</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="230"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="277"/>
         <source>Show filter sets</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφάνιση σετ φίλτρων</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="252"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="132"/>
         <source>Close menu</source>
         <translation>Κλείσιμο μενού</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="334"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="364"/>
         <source>Delete a custom filter set by right-clicking it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαγράψτε ένα προσαρμοσμένο φίλτρο κάνοντας δεξί κλικ πάνω του.</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="134"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="157"/>
         <source>Favorite</source>
         <translation>Αγαπημένο</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="155"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="202"/>
         <source>Video</source>
         <translation>Βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="176"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="223"/>
         <source>Audio</source>
-        <translation>Ήχος</translation>
+        <translation>Ηχος</translation>
     </message>
 </context>
 <context>
@@ -2314,13 +2322,14 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="117"/>
         <source>Delete Filter Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαγραφή σετ φίλτρων</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="127"/>
         <source>Are you sure you want to delete this?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Είστε βέβαιοι πως θέλετε να διαγραφεί αυτό;
+%1</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="137"/>
@@ -2341,42 +2350,42 @@ Do you still want to continue?</source>
         <translation>Φίλτρα</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="190"/>
+        <location filename="../src/docks/filtersdock.cpp" line="191"/>
         <source>Add</source>
         <translation>Προσθήκη</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="192"/>
+        <location filename="../src/docks/filtersdock.cpp" line="193"/>
         <source>Choose a filter to add</source>
         <translation>Επιλέξτε ένα φίλτρο για προσθήκη</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="205"/>
+        <location filename="../src/docks/filtersdock.cpp" line="206"/>
         <source>Remove</source>
         <translation>Αφαίρεση</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="207"/>
+        <location filename="../src/docks/filtersdock.cpp" line="208"/>
         <source>Remove selected filter</source>
         <translation>Αφαίρεση επιλεγμένου φίλτρου</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="217"/>
+        <location filename="../src/docks/filtersdock.cpp" line="218"/>
         <source>Copy Filters</source>
         <translation>Αντιγραφή φίλτρων</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="218"/>
+        <location filename="../src/docks/filtersdock.cpp" line="219"/>
         <source>Copy checked filters to the clipboard</source>
         <translation>Αντιγραφή ελεγμένων φίλτρων στο πρόχειρο</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="228"/>
+        <location filename="../src/docks/filtersdock.cpp" line="229"/>
         <source>Paste Filters</source>
         <translation>Επικόλληση φίλτρων</translation>
     </message>
     <message>
-        <location filename="../src/docks/filtersdock.cpp" line="229"/>
+        <location filename="../src/docks/filtersdock.cpp" line="230"/>
         <source>Paste the filters from the clipboard</source>
         <translation>Επικόλληση των φίλτρων από το πρόχειρο</translation>
     </message>
@@ -2512,7 +2521,7 @@ Click Cancel if you do not have Glaxnimate.</source>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="20"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animation</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.ui" line="30"/>
@@ -2557,7 +2566,7 @@ Click Cancel if you do not have Glaxnimate.</source>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="198"/>
         <source>animation</source>
-        <translation type="unfinished"></translation>
+        <translation>animation</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="199"/>
@@ -2567,7 +2576,7 @@ Click Cancel if you do not have Glaxnimate.</source>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="200"/>
         <source>New Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Νέο Animation</translation>
     </message>
 </context>
 <context>
@@ -2728,7 +2737,7 @@ Click to change</source>
         <translation>Επαναφόρτωση της ακολουθίας εικόνων...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="451"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="452"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -2904,12 +2913,12 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="249"/>
         <source>Confirm Removing Advanced Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιβεβαίωση αφαίρεσης προηγμένων Keyframes</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="250"/>
         <source>This will remove all advanced keyframes to enable simple keyframes.&lt;p&gt;Do you still want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό θα διαγράψει όλα τα προηγμένα keyframes για να ενεργοποιήσει τα απλά keyframes.&lt;p&gt;Εξακολουθείτε να θέλετε να το κάνετε αυτό;</translation>
     </message>
 </context>
 <context>
@@ -2917,32 +2926,32 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="58"/>
         <source>Use Keyframes for this parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρήση Keyframes για αυτή την παράμετρο</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="45"/>
         <source>Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only</source>
-        <translation type="unfinished"></translation>
+        <translation>Κρατήστε πατημένο το %1 για να σύρετε ένα keyframe μόνο κατακόρυφα ή το %2 για να σύρετε μόνο οριζόντια</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="64"/>
         <source>Confirm Removing Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιβεβαίωση αφαίρεσης Keyframes</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="65"/>
         <source>This will remove all keyframes for this parameter.&lt;p&gt;Do you still want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό θα διαγράψει όλα τα keyframes για αυτήν την παράμετρο.&lt;p&gt;Εξακολουθείτε να θέλετε να το κάνετε αυτό;</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="80"/>
         <source>Confirm Removing Simple Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιβεβαίωση αφαίρεσης απλών Keyframes</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="81"/>
         <source>This will remove all simple keyframes for all parameters.&lt;p&gt;Simple keyframes will be converted to advanced keyframes.&lt;p&gt;Do you still want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό θα διαγράψει όλα τα απλά keyframes για όλες τις παραμέτρους.&lt;p&gt;Τα απλά keyframes θα μετατραπούν σε προηγμένα keyframes.&lt;p&gt;Εξακολουθείτε να θέλετε να το κάνετε αυτό;</translation>
     </message>
 </context>
 <context>
@@ -2951,7 +2960,7 @@ the list. This does not stop a currently running job. Right-
         <location filename="../src/docks/keyframesdock.cpp" line="49"/>
         <location filename="../src/docks/keyframesdock.cpp" line="62"/>
         <source>Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Keyframes</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="70"/>
@@ -2961,27 +2970,27 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="77"/>
         <source>Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Keyframe</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="78"/>
         <source>Keyframe Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Τύπος Keyframe</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="86"/>
         <source>Keyframes Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλιπ Keyframes</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="94"/>
         <source>Keyframes Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Χειριστήρια Keyframes</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="98"/>
         <source>Keyframes Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Μενού Keyframes</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="169"/>
@@ -2996,27 +3005,27 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="207"/>
         <source>Set First Simple Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορισμός πρώτου απλού keyframe</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="226"/>
         <source>Set Second Simple Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορισμός δεύτερου απλού keyframe</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="245"/>
         <source>Zoom Keyframes Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Σμίκρυνση Keyframes</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="256"/>
         <source>Zoom Keyframes In</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεγέθυνση Keyframes</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="267"/>
         <source>Zoom Keyframes To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ταίριασμα μεγέθυνσης Keyframes</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="281"/>
@@ -3041,22 +3050,22 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="333"/>
         <source>Rebuild Audio Waveform</source>
-        <translation>Αναδόμηση της Κυματομορφής Ήχου</translation>
+        <translation>Επαναδημιουργία της Κυματομορφής Ήχου</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="345"/>
         <source>Seek Previous Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση προηγούμενου keyframe</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="361"/>
         <source>Seek Next Keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση επόμενου keyframe</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="377"/>
         <source>Toggle Keyframe At Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>Εναλλαγή keyframe στην κεφαλή αναπαραγωγής</translation>
     </message>
 </context>
 <context>
@@ -3354,7 +3363,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="104"/>
         <source>Preview Not Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη διαθέσιμη προεπισκόπηση</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="243"/>
@@ -3549,7 +3558,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="466"/>
-        <location filename="../src/mainwindow.cpp" line="3080"/>
+        <location filename="../src/mainwindow.cpp" line="3141"/>
         <location filename="../src/mainwindow.cpp.orig" line="3079"/>
         <source>Enter Full Screen</source>
         <translation>Πλήρης Οθόνη</translation>
@@ -3561,8 +3570,8 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="490"/>
-        <location filename="../src/mainwindow.cpp" line="372"/>
-        <location filename="../src/mainwindow.cpp" line="1888"/>
+        <location filename="../src/mainwindow.cpp" line="376"/>
+        <location filename="../src/mainwindow.cpp" line="1892"/>
         <location filename="../src/mainwindow.cpp.orig" line="371"/>
         <location filename="../src/mainwindow.cpp.orig" line="1881"/>
         <source>Properties</source>
@@ -3570,7 +3579,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="499"/>
-        <location filename="../src/mainwindow.cpp" line="1897"/>
+        <location filename="../src/mainwindow.cpp" line="1901"/>
         <location filename="../src/mainwindow.cpp.orig" line="1890"/>
         <source>Recent</source>
         <translation>Πρόσφατα</translation>
@@ -3583,7 +3592,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="517"/>
-        <location filename="../src/mainwindow.cpp" line="566"/>
+        <location filename="../src/mainwindow.cpp" line="570"/>
         <location filename="../src/mainwindow.cpp.orig" line="559"/>
         <source>History</source>
         <translation>Ιστορικό</translation>
@@ -3710,7 +3719,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="172"/>
         <location filename="../src/mainwindow.ui" line="743"/>
-        <location filename="../src/mainwindow.cpp" line="1906"/>
+        <location filename="../src/mainwindow.cpp" line="1910"/>
         <location filename="../src/mainwindow.cpp.orig" line="1899"/>
         <source>Timeline</source>
         <translation>Χρονολόγιο</translation>
@@ -3760,7 +3769,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="831"/>
         <source>Low</source>
-        <translation type="unfinished"></translation>
+        <translation>Χαμηλό</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="839"/>
@@ -3806,7 +3815,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1260"/>
         <location filename="../src/mainwindow.ui" line="1263"/>
-        <location filename="../src/mainwindow.cpp" line="4755"/>
+        <location filename="../src/mainwindow.cpp" line="4816"/>
         <location filename="../src/mainwindow.cpp.orig" line="4747"/>
         <source>Export Chapters</source>
         <translation>Εξαγωγή κεφαλαίων</translation>
@@ -3814,7 +3823,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1268"/>
         <source>Audio/Video Device...</source>
-        <translation>Συσκευή εικόνας/ήχου...</translation>
+        <translation>Συσκευή Βίντεο/Ηχου...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="919"/>
@@ -3867,7 +3876,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="936"/>
         <location filename="../src/mainwindow.ui" line="939"/>
         <source>Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Keyframes</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="944"/>
@@ -3877,7 +3886,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="963"/>
         <source>Audio</source>
-        <translation>Ήχος</translation>
+        <translation>Ηχος</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="966"/>
@@ -3892,12 +3901,12 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="977"/>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Καταγραφή</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="980"/>
         <source>Switch to the logging layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Εναλλαγή στη διάταξη καταγραφής</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="983"/>
@@ -4064,7 +4073,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1035"/>
         <source>Open Other</source>
-        <translation>Άνοιγμα Άλλου</translation>
+        <translation>Ανοιγμα Αλλου</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1049"/>
@@ -4102,7 +4111,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>360p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="139"/>
+        <location filename="../src/mainwindow.cpp" line="142"/>
         <location filename="../src/mainwindow.cpp.orig" line="138"/>
         <source>Error: This program requires the JACK 1 library.
 
@@ -4112,7 +4121,7 @@ Please install it using your package manager. It may be named libjack0, jack-aud
 Παρακαλώ εγκαταστήστε την χρησιμοποιώντας τον διαχειριστή πακέτων. Μπορεί να ονομάζεται  libjack0, jack-audio-connection-kit, jack ή παρόμοια.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="147"/>
+        <location filename="../src/mainwindow.cpp" line="150"/>
         <location filename="../src/mainwindow.cpp.orig" line="146"/>
         <source>Error: This program requires the SDL 2 library.
 
@@ -4122,148 +4131,148 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 Παρακαλώ εγκαταστήστε την χρησιμοποιώντας τον διαχειριστή πακέτων. Μπορεί να ονομάζεται libsdl2-2.0-0, SDL2 ή παρομοίως.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="775"/>
+        <location filename="../src/mainwindow.cpp" line="779"/>
         <location filename="../src/mainwindow.cpp.orig" line="768"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>Οθόνη %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="800"/>
+        <location filename="../src/mainwindow.cpp" line="804"/>
         <location filename="../src/mainwindow.cpp.orig" line="792"/>
         <source>Off</source>
         <translation>Απενεργοποίηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="803"/>
+        <location filename="../src/mainwindow.cpp" line="807"/>
         <location filename="../src/mainwindow.cpp.orig" line="795"/>
         <source>Internal</source>
         <translation>Εσωτερικό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="806"/>
+        <location filename="../src/mainwindow.cpp" line="810"/>
         <location filename="../src/mainwindow.cpp.orig" line="798"/>
         <source>External</source>
         <translation>Εξωτερικό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="820"/>
+        <location filename="../src/mainwindow.cpp" line="824"/>
         <location filename="../src/mainwindow.cpp.orig" line="812"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1214"/>
-        <location filename="../src/mainwindow.cpp" line="1057"/>
+        <location filename="../src/mainwindow.cpp" line="1061"/>
         <location filename="../src/mainwindow.cpp.orig" line="1049"/>
         <source>Color</source>
         <translation>Χρώμα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1059"/>
+        <location filename="../src/mainwindow.cpp" line="1063"/>
         <location filename="../src/mainwindow.cpp.orig" line="1051"/>
         <source>Text</source>
         <translation>Κείμενο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1062"/>
+        <location filename="../src/mainwindow.cpp" line="1066"/>
         <location filename="../src/mainwindow.cpp.orig" line="1054"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animation</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1065"/>
+        <location filename="../src/mainwindow.cpp" line="1069"/>
         <location filename="../src/mainwindow.cpp.orig" line="1057"/>
         <source>Noise</source>
         <translation>Θόρυβος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1067"/>
+        <location filename="../src/mainwindow.cpp" line="1071"/>
         <location filename="../src/mainwindow.cpp.orig" line="1059"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1069"/>
+        <location filename="../src/mainwindow.cpp" line="1073"/>
         <location filename="../src/mainwindow.cpp.orig" line="1061"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1072"/>
+        <location filename="../src/mainwindow.cpp" line="1076"/>
         <location filename="../src/mainwindow.cpp.orig" line="1064"/>
         <source>Plasma</source>
         <translation>Plasma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1074"/>
+        <location filename="../src/mainwindow.cpp" line="1078"/>
         <location filename="../src/mainwindow.cpp.orig" line="1066"/>
         <source>Color Bars</source>
         <translation>Μπάρες Χρώματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1077"/>
+        <location filename="../src/mainwindow.cpp" line="1081"/>
         <location filename="../src/mainwindow.cpp.orig" line="1069"/>
         <source>Audio Tone</source>
         <translation>Χροιά Ήχου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1079"/>
+        <location filename="../src/mainwindow.cpp" line="1083"/>
         <location filename="../src/mainwindow.cpp.orig" line="1071"/>
         <source>Count</source>
         <translation>Αρίθμηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1081"/>
+        <location filename="../src/mainwindow.cpp" line="1085"/>
         <location filename="../src/mainwindow.cpp.orig" line="1073"/>
         <source>Blip Flash</source>
         <translation>Αναπαραγωγή ήχου Μπλιπ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1085"/>
+        <location filename="../src/mainwindow.cpp" line="1089"/>
         <location filename="../src/mainwindow.cpp.orig" line="1077"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1086"/>
+        <location filename="../src/mainwindow.cpp" line="1090"/>
         <location filename="../src/mainwindow.cpp.orig" line="1078"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1087"/>
+        <location filename="../src/mainwindow.cpp" line="1091"/>
         <location filename="../src/mainwindow.cpp.orig" line="1079"/>
         <source>JACK Audio</source>
-        <translation>Ήχος JACK</translation>
+        <translation>Ηχος JACK</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1088"/>
+        <location filename="../src/mainwindow.cpp" line="1092"/>
         <location filename="../src/mainwindow.cpp.orig" line="1080"/>
         <source>ALSA Audio</source>
-        <translation>Ήχος ALSA</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1090"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1082"/>
-        <source>Audio/Video Device</source>
-        <translation>συσκευή εικόνας/ήχου</translation>
+        <translation>Ηχος ALSA</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1094"/>
+        <location filename="../src/mainwindow.cpp.orig" line="1082"/>
+        <source>Audio/Video Device</source>
+        <translation>Συσκευή Βίντεο/Ηχου</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1098"/>
         <location filename="../src/mainwindow.cpp.orig" line="1086"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1116"/>
-        <location filename="../src/mainwindow.cpp" line="1118"/>
-        <location filename="../src/mainwindow.cpp" line="1514"/>
-        <location filename="../src/mainwindow.cpp" line="1522"/>
-        <location filename="../src/mainwindow.cpp" line="1543"/>
-        <location filename="../src/mainwindow.cpp" line="1594"/>
-        <location filename="../src/mainwindow.cpp" line="3629"/>
-        <location filename="../src/mainwindow.cpp" line="3642"/>
-        <location filename="../src/mainwindow.cpp" line="4536"/>
+        <location filename="../src/mainwindow.cpp" line="1120"/>
+        <location filename="../src/mainwindow.cpp" line="1122"/>
+        <location filename="../src/mainwindow.cpp" line="1518"/>
+        <location filename="../src/mainwindow.cpp" line="1526"/>
+        <location filename="../src/mainwindow.cpp" line="1547"/>
+        <location filename="../src/mainwindow.cpp" line="1598"/>
+        <location filename="../src/mainwindow.cpp" line="3690"/>
+        <location filename="../src/mainwindow.cpp" line="3703"/>
+        <location filename="../src/mainwindow.cpp" line="4597"/>
         <location filename="../src/mainwindow.cpp.orig" line="1108"/>
         <location filename="../src/mainwindow.cpp.orig" line="1110"/>
         <location filename="../src/mainwindow.cpp.orig" line="1507"/>
@@ -4277,12 +4286,12 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
         <translation>Αποτυχία ανοίγματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1146"/>
+        <location filename="../src/mainwindow.cpp" line="1150"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.</source>
         <translation>Το αρχείο που ανοίξατε χρησιμοποιεί εφέ GPU, όμως τα εφέ GPU δεν είναι ενεργοποιημένα.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1158"/>
+        <location filename="../src/mainwindow.cpp" line="1162"/>
         <location filename="../src/mainwindow.cpp.orig" line="1151"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
@@ -4290,25 +4299,25 @@ Do you want to disable GPU effects and restart?</source>
 Θέλετε να απενεργοποιήσετε τα εφέ GPU και να επανεκκινήσετε το Shotcut;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1181"/>
+        <location filename="../src/mainwindow.cpp" line="1185"/>
         <location filename="../src/mainwindow.cpp.orig" line="1174"/>
         <source>Repaired</source>
         <translation>Επισκευασμένο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1182"/>
+        <location filename="../src/mainwindow.cpp" line="1186"/>
         <location filename="../src/mainwindow.cpp.orig" line="1175"/>
         <source>Save Repaired XML</source>
         <translation>Αποθήκευση επιδιορθωμένου XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1215"/>
+        <location filename="../src/mainwindow.cpp" line="1219"/>
         <location filename="../src/mainwindow.cpp.orig" line="1208"/>
         <source>Repairing the project failed.</source>
         <translation>Η επισκευή του πρότζεκτ απέτυχε.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1228"/>
+        <location filename="../src/mainwindow.cpp" line="1232"/>
         <location filename="../src/mainwindow.cpp.orig" line="1221"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
@@ -4322,25 +4331,25 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 με το &quot;-Επισκευασμένο&quot; στο όνομα αρχείου και θα το ανοίξει.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1263"/>
+        <location filename="../src/mainwindow.cpp" line="1267"/>
         <location filename="../src/mainwindow.cpp.orig" line="1256"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Υπάρχουν αρχεία αυτόματης αποθήκευσης. Θέλετε να τα ανακτίσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1333"/>
+        <location filename="../src/mainwindow.cpp" line="1337"/>
         <location filename="../src/mainwindow.cpp.orig" line="1326"/>
         <source>You cannot add a project to itself!</source>
         <translation>Δεν μπορείτε να προσθέσετε ένα έργο στον εαυτό του!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1369"/>
+        <location filename="../src/mainwindow.cpp" line="1373"/>
         <location filename="../src/mainwindow.cpp.orig" line="1362"/>
         <source>There was an error saving. Please try again.</source>
         <translation>Παρουσιάστηκε σφάλμα κατά την αποθήκευση. Παρακαλώ προσπαθήστε ξανά.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1446"/>
+        <location filename="../src/mainwindow.cpp" line="1450"/>
         <location filename="../src/mainwindow.cpp.orig" line="1439"/>
         <source>This project file requires a newer version!
 
@@ -4350,7 +4359,7 @@ It was made with version </source>
 Δημιουργήθηκε με την έκδοση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1471"/>
+        <location filename="../src/mainwindow.cpp" line="1475"/>
         <location filename="../src/mainwindow.cpp.orig" line="1464"/>
         <source>You are running low on available memory!
 
@@ -4362,121 +4371,121 @@ Or save and restart Shotcut.</source>
 Ή αποθηκεύστε και επανεκκινήστε το Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1508"/>
+        <location filename="../src/mainwindow.cpp" line="1512"/>
         <location filename="../src/mainwindow.cpp.orig" line="1501"/>
         <source>Opening %1</source>
         <translation>Ανοιγμα %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1635"/>
-        <location filename="../src/mainwindow.cpp" line="3619"/>
+        <location filename="../src/mainwindow.cpp" line="1639"/>
+        <location filename="../src/mainwindow.cpp" line="3680"/>
         <location filename="../src/mainwindow.cpp.orig" line="1632"/>
         <location filename="../src/mainwindow.cpp.orig" line="3613"/>
         <source>Open File</source>
         <translation>Άνοιγμα Αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1636"/>
+        <location filename="../src/mainwindow.cpp" line="1640"/>
         <location filename="../src/mainwindow.cpp.orig" line="1633"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Ολα τα αρχεία (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1881"/>
+        <location filename="../src/mainwindow.cpp" line="1885"/>
         <location filename="../src/mainwindow.cpp.orig" line="1874"/>
         <source>Rename Clip</source>
         <translation>Μετονομασία Κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1890"/>
+        <location filename="../src/mainwindow.cpp" line="1894"/>
         <location filename="../src/mainwindow.cpp.orig" line="1883"/>
         <source>Find</source>
         <translation>Εύρεση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1899"/>
+        <location filename="../src/mainwindow.cpp" line="1903"/>
         <location filename="../src/mainwindow.cpp.orig" line="1892"/>
         <source>Reload</source>
         <translation>Επαναφόρτωση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1981"/>
+        <location filename="../src/mainwindow.cpp" line="1997"/>
         <location filename="../src/mainwindow.cpp.orig" line="1971"/>
         <source>Untitled</source>
         <translation>Χωρίς τίτλο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2002"/>
+        <location filename="../src/mainwindow.cpp" line="2018"/>
         <location filename="../src/mainwindow.cpp.orig" line="1992"/>
         <source>About %1</source>
         <translation>Σχετικά %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2123"/>
+        <location filename="../src/mainwindow.cpp" line="2139"/>
         <location filename="../src/mainwindow.cpp.orig" line="2113"/>
         <source>Non-Broadcast</source>
         <translation>Μη-Εκπεμπόμενο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2128"/>
+        <location filename="../src/mainwindow.cpp" line="2144"/>
         <location filename="../src/mainwindow.cpp.orig" line="2118"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Ευρείας Οθόνης NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2129"/>
+        <location filename="../src/mainwindow.cpp" line="2145"/>
         <location filename="../src/mainwindow.cpp.orig" line="2119"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Ευρείας Οθόνης PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2140"/>
+        <location filename="../src/mainwindow.cpp" line="2156"/>
         <location filename="../src/mainwindow.cpp.orig" line="2130"/>
         <source>Square 1080p 30 fps</source>
         <translation>Τετράγωνο 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2141"/>
+        <location filename="../src/mainwindow.cpp" line="2157"/>
         <location filename="../src/mainwindow.cpp.orig" line="2131"/>
         <source>Square 1080p 60 fps</source>
         <translation>Τετράγωνο 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2142"/>
+        <location filename="../src/mainwindow.cpp" line="2158"/>
         <location filename="../src/mainwindow.cpp.orig" line="2132"/>
         <source>Vertical HD 30 fps</source>
         <translation>Κατακόρυφο HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2143"/>
+        <location filename="../src/mainwindow.cpp" line="2159"/>
         <location filename="../src/mainwindow.cpp.orig" line="2133"/>
         <source>Vertical HD 60 fps</source>
         <translation>Κατακόρυφο HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2144"/>
+        <location filename="../src/mainwindow.cpp" line="2160"/>
         <location filename="../src/mainwindow.cpp.orig" line="2134"/>
         <source>Custom</source>
         <translation>Προσαρμοσμένο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2175"/>
-        <location filename="../src/mainwindow.cpp" line="2469"/>
+        <location filename="../src/mainwindow.cpp" line="2191"/>
+        <location filename="../src/mainwindow.cpp" line="2485"/>
         <location filename="../src/mainwindow.cpp.orig" line="2165"/>
         <location filename="../src/mainwindow.cpp.orig" line="2468"/>
         <source>Saved %1</source>
         <translation>Αποθήκευση %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2461"/>
-        <location filename="../src/mainwindow.cpp" line="2483"/>
+        <location filename="../src/mainwindow.cpp" line="2477"/>
+        <location filename="../src/mainwindow.cpp" line="2499"/>
         <location filename="../src/mainwindow.cpp.orig" line="2460"/>
         <location filename="../src/mainwindow.cpp.orig" line="2482"/>
         <source>Save XML</source>
         <translation>Αποθήκευση XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3310"/>
+        <location filename="../src/mainwindow.cpp" line="3371"/>
         <source>GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.
 At this time, a project created with GPU effects cannot be converted to a CPU-only project later.
 
@@ -4487,36 +4496,36 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 Θέλετε να ενεργοποιήσετε τα εφέ GPU και να επανεκκινήσετε το Shotcut;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4198"/>
+        <location filename="../src/mainwindow.cpp" line="4259"/>
         <source>Add To Timeline</source>
         <translation>Προσθήκη στη γραμμή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4731"/>
+        <location filename="../src/mainwindow.cpp" line="4792"/>
         <location filename="../src/mainwindow.cpp.orig" line="4723"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>Συμπερίληψη διαστημάτων (Διάρκεια &gt; 1 καρέ);</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4742"/>
+        <location filename="../src/mainwindow.cpp" line="4803"/>
         <location filename="../src/mainwindow.cpp.orig" line="4734"/>
         <source>Choose Markers</source>
         <translation>Επιλέξτε δείκτες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4757"/>
+        <location filename="../src/mainwindow.cpp" line="4818"/>
         <location filename="../src/mainwindow.cpp.orig" line="4749"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Κείμενο (*.txt);;Ολα τα αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4811"/>
+        <location filename="../src/mainwindow.cpp" line="4872"/>
         <location filename="../src/mainwindow.cpp.orig" line="4803"/>
         <source>Failed to open export-chapters.js</source>
         <translation>Αποτυχία ανοίγματος export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4851"/>
+        <location filename="../src/mainwindow.cpp" line="4912"/>
         <location filename="../src/mainwindow.cpp.orig" line="4843"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
@@ -4524,15 +4533,15 @@ Do you want to reset and restart now?</source>
 Θέλετε να κάνετε επαναφορά και επανεκκίνηση τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1184"/>
-        <location filename="../src/mainwindow.cpp" line="2485"/>
+        <location filename="../src/mainwindow.cpp" line="1188"/>
+        <location filename="../src/mainwindow.cpp" line="2501"/>
         <location filename="../src/mainwindow.cpp.orig" line="1177"/>
         <location filename="../src/mainwindow.cpp.orig" line="2484"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2504"/>
+        <location filename="../src/mainwindow.cpp" line="2520"/>
         <location filename="../src/mainwindow.cpp.orig" line="2503"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
@@ -4540,7 +4549,7 @@ Do you want to save your changes?</source>
 Θέλετε να αποθηκευτούν οι αλλαγές σας;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2533"/>
+        <location filename="../src/mainwindow.cpp" line="2549"/>
         <location filename="../src/mainwindow.cpp.orig" line="2532"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
@@ -4548,7 +4557,7 @@ Do you want to still want to exit?</source>
 Θέλετε ακόμη να εξέρθετε;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2546"/>
+        <location filename="../src/mainwindow.cpp" line="2562"/>
         <location filename="../src/mainwindow.cpp.orig" line="2545"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
@@ -4556,31 +4565,31 @@ Do you want to still want to exit?</source>
 Θέλετε σίγουρα έξοδο;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3083"/>
+        <location filename="../src/mainwindow.cpp" line="3144"/>
         <location filename="../src/mainwindow.cpp.orig" line="3082"/>
         <source>Exit Full Screen</source>
         <translation>Έξοδος Πλήρης Οθόνης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4500"/>
+        <location filename="../src/mainwindow.cpp" line="4561"/>
         <location filename="../src/mainwindow.cpp.orig" line="4492"/>
         <source>Turn Proxy On</source>
         <translation>Ενεργοποίηση Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4500"/>
+        <location filename="../src/mainwindow.cpp" line="4561"/>
         <location filename="../src/mainwindow.cpp.orig" line="4492"/>
         <source>Turn Proxy Off</source>
         <translation>Απενεργοποίηση Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4504"/>
+        <location filename="../src/mainwindow.cpp" line="4565"/>
         <location filename="../src/mainwindow.cpp.orig" line="4496"/>
         <source>Converting</source>
         <translation>Μετατροπή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4518"/>
+        <location filename="../src/mainwindow.cpp" line="4579"/>
         <location filename="../src/mainwindow.cpp.orig" line="4510"/>
         <source>Do you want to create missing proxies for every file in this project?
 
@@ -4590,61 +4599,61 @@ You must reopen your project after all proxy jobs are finished.</source>
 Πρέπει να ανοίξετε ξανά το έργο σας αφού ολοκληρωθούν όλες οι εργασίες διακομιστή μεσολάβησης.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4553"/>
+        <location filename="../src/mainwindow.cpp" line="4614"/>
         <location filename="../src/mainwindow.cpp.orig" line="4545"/>
         <source>Proxy Folder</source>
         <translation>Φάκελος Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4569"/>
+        <location filename="../src/mainwindow.cpp" line="4630"/>
         <location filename="../src/mainwindow.cpp.orig" line="4561"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Θέλετε να μετακινήσετε όλα τα αρχεία από τον παλιό φάκελο στον νέο φάκελο;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4576"/>
+        <location filename="../src/mainwindow.cpp" line="4637"/>
         <location filename="../src/mainwindow.cpp.orig" line="4568"/>
         <source>Moving Files</source>
         <translation>Μετακίνηση αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3096"/>
+        <location filename="../src/mainwindow.cpp" line="3157"/>
         <location filename="../src/mainwindow.cpp.orig" line="3095"/>
         <source>GPU effects are not supported</source>
         <translation>Τα εφέ GPU δεν υποστηρίζονται</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="423"/>
+        <location filename="../src/mainwindow.cpp" line="427"/>
         <location filename="../src/mainwindow.cpp.orig" line="422"/>
         <source>View mode</source>
         <translation>Τρόπος Προβολής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="427"/>
+        <location filename="../src/mainwindow.cpp" line="431"/>
         <location filename="../src/mainwindow.cpp.orig" line="426"/>
         <source>Thumbnails</source>
         <translation>Μικρογραφίες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2003"/>
+        <location filename="../src/mainwindow.cpp" line="2019"/>
         <location filename="../src/mainwindow.cpp.orig" line="1993"/>
         <source>&lt;h1&gt;Shotcut version %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Licensed under the %5&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://glaxnimate.mattbas.org/&quot;&gt;Glaxnimate&lt;/a&gt; vector animation program&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut έκδοση %2&lt;/h1&gt;&lt;p&gt;Το&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; είναι ένα δωρεάν, ανοιχτού κώδικα, cross platform επεξεργαστής βίντεο.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Αδεια σύμφωνα με το %5&lt;/p&gt;&lt;p&gt;Αυτό το πρόγραμμα χρησιμοποιεί περήφανα τα ακόλουθα έργα:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; εφαρμογή και πλαίσιο διεπαφής χρήστη&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; πλαίσιο συγγραφής πολυμέσων&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; μορφή πολυμέσων και βιβλιοθήκες κωδικοποιητών&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; κωδικοποιητής H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; κωδικοποιητές VP8 και VP9&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; κωδικοποιητής MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; πρόσθετα βίντεο&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; πρόσθετα ήχου&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; συλλογή εικονιδίων από &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://glaxnimate.mattbas.org/&quot;&gt;Glaxnimate&lt;/a&gt; πρόγραμμα δημιουργίας κινουμένων σχεδίων από διανύσματα&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Μπορείτε να κατεβάσετε τον πηγαίο κώδικα που χρησιμοποιήθηκε για τη δημιουργία αυτού του προγράμματος από το &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;Αυτό το πρόγραμμα διανέμεται με την ελπίδα ότι θα είναι χρήσιμο, αλλά ΧΩΡΙΣ ΚΑΜΙΑ ΕΓΓΥΗΣΗ. χωρίς καν την σιωπηρή εγγύηση ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3116"/>
+        <location filename="../src/mainwindow.cpp" line="3177"/>
         <location filename="../src/mainwindow.cpp.orig" line="3115"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Κάντε Κλικ εδώ για έλεγχο νέας έκδοσης του Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3226"/>
+        <location filename="../src/mainwindow.cpp" line="3287"/>
         <location filename="../src/mainwindow.cpp.orig" line="3220"/>
         <source>Open Files</source>
         <translation>Ανοιγμα αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3260"/>
+        <location filename="../src/mainwindow.cpp" line="3321"/>
         <location filename="../src/mainwindow.cpp.orig" line="3254"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
@@ -4652,7 +4661,7 @@ Do you want to restart now?</source>
 Θέλετε να επανακινήσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3301"/>
+        <location filename="../src/mainwindow.cpp" line="3362"/>
         <location filename="../src/mainwindow.cpp.orig" line="3295"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
@@ -4660,7 +4669,7 @@ Please verify that JACK is installed and running.</source>
 Παρακαλώ επαληθεύστε ότι το JACK είναι εγκατεστημένο και εκτελείται.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3328"/>
+        <location filename="../src/mainwindow.cpp" line="3389"/>
         <location filename="../src/mainwindow.cpp.orig" line="3323"/>
         <source>Shotcut must restart to disable GPU effects.
 
@@ -4670,7 +4679,7 @@ Disable GPU effects and restart?</source>
 Απενεργοποίηση εφέ GPU και επανεκκίνηση;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3463"/>
+        <location filename="../src/mainwindow.cpp" line="3524"/>
         <location filename="../src/mainwindow.cpp.orig" line="3459"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
@@ -4678,26 +4687,26 @@ Do you want to restart now?</source>
 Θέλετε να κάνετε επανεκκίνηση τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3596"/>
+        <location filename="../src/mainwindow.cpp" line="3657"/>
         <location filename="../src/mainwindow.cpp.orig" line="3590"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Θέλετε να γίνεται έλεγχος για ενημερώσεις αυτόματα στο μέλλον;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3603"/>
+        <location filename="../src/mainwindow.cpp" line="3664"/>
         <location filename="../src/mainwindow.cpp.orig" line="3597"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Να μην ξαναεμφανιστεί αυτό.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3620"/>
+        <location filename="../src/mainwindow.cpp" line="3681"/>
         <location filename="../src/mainwindow.cpp.orig" line="3614"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Όλα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3667"/>
+        <location filename="../src/mainwindow.cpp" line="3728"/>
         <location filename="../src/mainwindow.cpp.orig" line="3681"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
@@ -4705,25 +4714,25 @@ Do you want to restart now?</source>
 Θέλετε να επανεκκινήσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3689"/>
+        <location filename="../src/mainwindow.cpp" line="3750"/>
         <location filename="../src/mainwindow.cpp.orig" line="3703"/>
         <source>Application Log</source>
         <translation>Καταγραφή Εφαρμογής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3738"/>
+        <location filename="../src/mainwindow.cpp" line="3799"/>
         <location filename="../src/mainwindow.cpp.orig" line="3754"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Είναι διαθέσιμη η έκδοση %1 του Shotcut. Κάντε Κλικ εδώ για την λάβετε.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3745"/>
+        <location filename="../src/mainwindow.cpp" line="3806"/>
         <location filename="../src/mainwindow.cpp.orig" line="3761"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Εκτελείτε την τελευταία έκδοση του Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3759"/>
+        <location filename="../src/mainwindow.cpp" line="3820"/>
         <location filename="../src/mainwindow.cpp.orig" line="3775"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Αδυναμία ανάγνωσης του version.json κατά τον έλεγχο. Κάντε Κλικ εδώ για να μεταβείτε στην ιστοσελίδα.</translation>
@@ -4731,39 +4740,39 @@ Do you want to restart now?</source>
     <message>
         <location filename="../src/mainwindow.ui" line="883"/>
         <location filename="../src/mainwindow.ui" line="886"/>
-        <location filename="../src/mainwindow.cpp" line="3779"/>
+        <location filename="../src/mainwindow.cpp" line="3840"/>
         <location filename="../src/mainwindow.cpp.orig" line="3795"/>
         <source>Export EDL</source>
         <translation>Εξαγωγή EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3781"/>
+        <location filename="../src/mainwindow.cpp" line="3842"/>
         <location filename="../src/mainwindow.cpp.orig" line="3797"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Ολα τα αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3827"/>
-        <location filename="../src/mainwindow.cpp" line="4808"/>
+        <location filename="../src/mainwindow.cpp" line="3888"/>
+        <location filename="../src/mainwindow.cpp" line="4869"/>
         <location filename="../src/mainwindow.cpp.orig" line="3843"/>
         <location filename="../src/mainwindow.cpp.orig" line="4800"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Προέκυψε ένα σφάλμα JavaScript κατά την εξαγωγή. </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3830"/>
+        <location filename="../src/mainwindow.cpp" line="3891"/>
         <location filename="../src/mainwindow.cpp.orig" line="3846"/>
         <source>Failed to open export-edl.js</source>
         <translation>Αδυναμία ανοίγματος του export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3859"/>
+        <location filename="../src/mainwindow.cpp" line="3920"/>
         <location filename="../src/mainwindow.cpp.orig" line="3875"/>
         <source>Export frame from proxy?</source>
         <translation>Εξαγωγή καρέ από διακομιστή μεσολάβησης (proxy);</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3860"/>
+        <location filename="../src/mainwindow.cpp" line="3921"/>
         <location filename="../src/mainwindow.cpp.orig" line="3876"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
@@ -4775,19 +4784,19 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/mainwindow.ui" line="894"/>
         <location filename="../src/mainwindow.ui" line="897"/>
-        <location filename="../src/mainwindow.cpp" line="3872"/>
+        <location filename="../src/mainwindow.cpp" line="3933"/>
         <location filename="../src/mainwindow.cpp.orig" line="3888"/>
         <source>Export Frame</source>
         <translation>Εξαγωγή Πλαισίου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3878"/>
+        <location filename="../src/mainwindow.cpp" line="3939"/>
         <location filename="../src/mainwindow.cpp.orig" line="3894"/>
         <source>Unable to export frame.</source>
         <translation>Αδυναμία εξαγωγής πλαισίου.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3886"/>
+        <location filename="../src/mainwindow.cpp" line="3947"/>
         <location filename="../src/mainwindow.cpp.orig" line="3902"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
@@ -4795,37 +4804,37 @@ Do you want to continue?</source>
 Θέλετε να επανεκκινήσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3895"/>
+        <location filename="../src/mainwindow.cpp" line="3956"/>
         <location filename="../src/mainwindow.cpp.orig" line="3911"/>
         <source>Data Directory</source>
         <translation>Κατάλογος Δεδομένων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4091"/>
+        <location filename="../src/mainwindow.cpp" line="4152"/>
         <location filename="../src/mainwindow.cpp.orig" line="4107"/>
         <source>Add Custom Layout</source>
         <translation>Προσθήκη Προσαρμοσμένης Διάταξης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4092"/>
+        <location filename="../src/mainwindow.cpp" line="4153"/>
         <location filename="../src/mainwindow.cpp.orig" line="4108"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4130"/>
+        <location filename="../src/mainwindow.cpp" line="4191"/>
         <location filename="../src/mainwindow.cpp.orig" line="4146"/>
         <source>Remove Video Mode</source>
         <translation>Λειτουργία Αφαίρεσης Βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4144"/>
+        <location filename="../src/mainwindow.cpp" line="4205"/>
         <location filename="../src/mainwindow.cpp.orig" line="4160"/>
         <source>Remove Layout</source>
         <translation>Κατάργηση Διάταξης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4308"/>
+        <location filename="../src/mainwindow.cpp" line="4369"/>
         <location filename="../src/mainwindow.cpp.orig" line="4300"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
@@ -4839,14 +4848,17 @@ Do you want to disable GPU effects and restart Shotcut?</source>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Το αρχείο που ανοίξατε χρησιμοποιεί εφέ GPU, αλλά τα εφέ GPU δεν είναι ενεργοποιημένα.
+
+Τα εφέ GPU είναι ΠΕΙΡΑΜΑΤΙΚΑ, ΑΣΤΑΘΗ και ΜΗ ΥΠΟΣΤΗΡΙΖΟΜΕΝΑ! Μη υποστήριξη ενός εφέ σημαίνει ότι δεν θα γίνονται δεκτές αναφορές σφαλμάτων σχετικά με αυτό.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp.orig" line="3304"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
-        <translation type="unfinished"></translation>
+        <translation>Τα εφέ GPU είναι πειραματικά και ενδέχεται να προκαλέσουν αστάθεια σε ορισμένα συστήματα. Ορισμένα εφέ CPU δεν είναι συμβατά με τα εφέ GPU και θα απενεργοποιηθούν. Ενα έργο που δημιουργήθηκε με εφέ GPU δεν μπορεί αργότερα να μετατραπεί σε έργο μόνο CPU.
+Θέλετε να ενεργοποιήσετε τα εφέ GPU και να επανεκκινήσετε το Shotcut;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp.orig" line="3631"/>
@@ -4854,7 +4866,9 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 you want to open is incompatible.
 
 Do you want to continue to open this MLT XML file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Η υποδιαστολή του αρχείου MLT XML που θέλετε να ανοίξετε δεν είναι συμβατή.
+
+Θέλετε να συνεχίσετε με το άνοιγμα αυτού του αρχείου MLT XML;</translation>
     </message>
 </context>
 <context>
@@ -4979,7 +4993,7 @@ Do you want to continue to open this MLT XML file?</source>
     <message>
         <location filename="../src/jobs/meltjob.cpp" line="52"/>
         <source>Open</source>
-        <translation>Άνοιγμα</translation>
+        <translation>Ανοιγμα</translation>
     </message>
     <message>
         <location filename="../src/jobs/meltjob.cpp" line="54"/>
@@ -5008,7 +5022,7 @@ Do you want to continue to open this MLT XML file?</source>
     <message>
         <location filename="../src/videowidget.cpp" line="187"/>
         <source>You cannot drag a non-seekable source</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν μπορείτε να σύρετε μια πηγή χωρίς δυνατότητα αναζήτησης</translation>
     </message>
 </context>
 <context>
@@ -5021,37 +5035,37 @@ Do you want to continue to open this MLT XML file?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/MotionTrackerDialog.qml" line="55"/>
         <source>Motion tracker</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανίχνευση κίνησης</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/MotionTrackerDialog.qml" line="75"/>
         <source>Adjust</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσαρμογή</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/MotionTrackerDialog.qml" line="90"/>
         <source>Relative Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Σχετική Θέση</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/MotionTrackerDialog.qml" line="93"/>
         <source>Offset Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετατόπιση Θέσης</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/MotionTrackerDialog.qml" line="96"/>
         <source>Absolute Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Απόλυτη Θέση</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/MotionTrackerDialog.qml" line="99"/>
         <source>Size And Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Μέγεθος και Θέση</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/MotionTrackerDialog.qml" line="117"/>
         <source>From start</source>
-        <translation type="unfinished"></translation>
+        <translation>Από την αρχή</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/MotionTrackerDialog.qml" line="122"/>
@@ -5079,7 +5093,7 @@ Do you want to continue to open this MLT XML file?</source>
     <message>
         <location filename="../src/models/motiontrackermodel.cpp" line="228"/>
         <source>Tracker %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανιχνευτής %1</translation>
     </message>
 </context>
 <context>
@@ -5324,7 +5338,9 @@ Try again with a different name.</source>
         <source>Unable to create folder %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν είναι δυνατή η δημιουργία του φακέλου %1
+Ισως δεν έχετε τα κατάλληλα δικαιώματα.
+Δοκιμάστε ξανά με έναν διαφορετικό φάκελο.</translation>
     </message>
 </context>
 <context>
@@ -5418,7 +5434,7 @@ Try again with a different folder.</source>
         <location filename="../src/openotherdialog.cpp" line="70"/>
         <location filename="../src/openotherdialog.cpp" line="153"/>
         <source>Audio/Video Device</source>
-        <translation>συσκευή εικόνας/ήχου</translation>
+        <translation>Συσκευή Βίντεο/Ηχου</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="75"/>
@@ -5440,7 +5456,7 @@ Try again with a different folder.</source>
         <location filename="../src/openotherdialog.cpp" line="85"/>
         <location filename="../src/openotherdialog.cpp" line="163"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animation</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="89"/>
@@ -5496,32 +5512,32 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="151"/>
         <source>Seek to previous keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση προηγούμενου keyframe</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="151"/>
         <source>Seek backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση προς τα πίσω</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="171"/>
         <source>Add a keyframe at play head</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσθήκη ενός keyframe στην κεφαλή αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="199"/>
         <source>Delete the selected keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Αφαίρεση επιλεγμένου keyframe</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="228"/>
         <source>Seek to next keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση επόμενου keyframe</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="228"/>
         <source>Seek forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση προς τα εμπρός</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="245"/>
@@ -5536,7 +5552,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="256"/>
         <source>Zoom keyframe values</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεγέθυνση τιμών των Keyframes</translation>
     </message>
 </context>
 <context>
@@ -5722,12 +5738,12 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="439"/>
         <source>Seek Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση Αρχής</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="446"/>
         <source>Seek End</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναζήτηση Τέλους</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="454"/>
@@ -5782,17 +5798,17 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="536"/>
         <source>Forward Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεταπήδηση Εμπρός</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="544"/>
         <source>Backward Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεταπήδηση Πίσω</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="552"/>
         <source>Set Jump Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορισμός Χρόνου Μεταπήδησης</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="563"/>
@@ -5828,7 +5844,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="776"/>
         <source>Not Seekable</source>
-        <translation type="unfinished"></translation>
+        <translation>Χωρίς δυνατότητα αναζήτησης</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="263"/>
@@ -5868,17 +5884,17 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="275"/>
         <source>EBU R95 Safe Areas</source>
-        <translation type="unfinished"></translation>
+        <translation>EBU R95 Ασφαλείς περιοχές</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="280"/>
         <source>Snapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Κούμπωμα...</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="290"/>
         <source>Toggle grid display on the player</source>
-        <translation type="unfinished"></translation>
+        <translation>Εναλλαγή εμφάνισης πλέγματος στο πρόγραμμα αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="596"/>
@@ -6028,7 +6044,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="213"/>
         <source>Playlist Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Μενού λίστας αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="306"/>
@@ -6038,7 +6054,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="395"/>
         <source>Open the clip in the Source player</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανοιγμα του κλιπ στην Αναπαραγωγή πηγής</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="405"/>
@@ -6088,12 +6104,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="505"/>
         <source>Add Selected to Slideshow</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσθήκη επιλεγμένων στην Παρουσίαση</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="603"/>
         <source>Play After Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναπαραγωγή μετά το Ανοιγμα</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="458"/>
@@ -6133,12 +6149,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="208"/>
         <source>Playlist Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Χειριστήρια προγράμματος αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="336"/>
         <source>Add files to playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσθήκη αρχείων στη λίστα αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="355"/>
@@ -6153,12 +6169,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="394"/>
         <source>Open</source>
-        <translation>Άνοιγμα</translation>
+        <translation>Ανοιγμα</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="404"/>
         <source>GoTo</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετάβαση</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="414"/>
@@ -6168,22 +6184,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="415"/>
         <source>Open a copy of the clip in the Source player</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανοιγμα ενός αντιγράφου του κλιπ στο Πρόγραμμα αναπαραγωγής πηγής</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="474"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετακίνηση Πάνω</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="486"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετακίνηση Κάτω</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="611"/>
         <source>Open Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανοιγμα προηγούμενου</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="624"/>
@@ -6250,7 +6266,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="897"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1156"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1166"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Δεν μπορείτε να εισάγετε μία λίστα σε άλλη λίστα!</translation>
     </message>
@@ -6270,21 +6286,22 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="1099"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1110"/>
         <source>Failed to open </source>
         <translation>Αποτυχία ανοίγματος</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1236"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1246"/>
         <source>Generating</source>
         <translation>Δημιουργία</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1444"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1454"/>
         <source>Open File</source>
-        <translation>Άνοιγμα Αρχείου</translation>
+        <translation>Ανοιγμα Αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1445"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1455"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Ολα τα αρχεία (*);;MLT XML (*.mlt)</translation>
     </message>
@@ -6295,7 +6312,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/widgets/playlisticonview.cpp" line="158"/>
         <source>P</source>
         <comment>The first letter or symbol of &quot;proxy&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
 </context>
 <context>
@@ -6412,7 +6429,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/jobs/qimagejob.cpp" line="32"/>
         <source>Make proxy for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Δημιουργία proxy για %1</translation>
     </message>
 </context>
 <context>
@@ -6450,7 +6467,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="193"/>
         <source>Sort playlist by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ταξινόμηση λίστας αναπαραγωγής κατά %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="227"/>
@@ -6465,7 +6482,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="302"/>
         <source>Replace playlist item %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Αφαίρεση του αντικειμένου λίστας αναπαραγωγής %1</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="50"/>
@@ -6480,17 +6497,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="58"/>
         <source>Preparing</source>
-        <translation type="unfinished"></translation>
+        <translation>Προετοιμασία...</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="65"/>
         <source>Appending</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσάρτηση...</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="76"/>
         <source>Finishing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ολοκλήρωση...</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="101"/>
@@ -6559,7 +6576,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="461"/>
         <source>Move timeline clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετακίνηση κλιπ γραμμής χρόνου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="621"/>
@@ -6642,12 +6659,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1384"/>
         <source>Move track down</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετακίνηση κομματιού κάτω</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1386"/>
         <source>Move track up</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετακίνηση κομματιού πάνω</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1408"/>
@@ -6667,15 +6684,15 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1612"/>
         <source>Replace timeline clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Αντικατάσταση κλιπ γραμμής χρόνου</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1641"/>
         <source>Align clips to reference track</source>
-        <translation type="unfinished"></translation>
+        <translation>Ευθυγράμμιση κλιπ με κομμάτι αναφοράς</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3236"/>
+        <location filename="../src/mainwindow.cpp" line="3297"/>
         <location filename="../src/mainwindow.cpp.orig" line="3230"/>
         <source>You cannot add a project to itself!</source>
         <translation>Δεν μπορείτε να προσθέσετε ένα έργο στον εαυτό του!</translation>
@@ -6687,14 +6704,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/util.cpp" line="142"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="920"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1147"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1224"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="921"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1148"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1225"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
         <translation>Δεν είναι δυνατή η εγγραφή του αρχείου %1
-Ίσως δεν έχετε άδεια χρήσεως
+Ισως δεν έχετε τα κατάλληλα δικαιώματα.
 Δοκιμάστε ξανά με έναν διαφορετικό φάκελο.</translation>
     </message>
     <message>
@@ -6710,7 +6727,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/util.cpp" line="162"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξοδος</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="324"/>
@@ -6747,33 +6764,34 @@ Do you still want to continue?</source>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2660"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2672"/>
         <source>Failed to open </source>
         <translation>Αποτυχία ανοίγματος</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2676"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2686"/>
         <source>Not adding non-seekable file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχείο χωρίς δυνατότητα αναζήτησης δεν προστέθηκε:</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1235"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1245"/>
         <source>Generate Slideshow</source>
-        <translation type="unfinished"></translation>
+        <translation>Δημιουργία παρουσίασης</translation>
     </message>
     <message>
         <location filename="../src/proxymanager.cpp" line="218"/>
         <source>Make proxy for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Δημιουργία proxy για %1</translation>
     </message>
     <message>
         <location filename="../src/database.cpp" line="64"/>
         <source>Converting Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετατροπή μικρογραφιών</translation>
     </message>
     <message>
         <location filename="../src/database.cpp" line="83"/>
         <source>Please wait for this one-time update to the thumbnail cache...</source>
-        <translation type="unfinished"></translation>
+        <translation>Παρακαλώ περιμένετε για αυτή την ενημέρωση την μνήμης cache μικρογραφιών - θα γίνει μόνο μια φορά...</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="29"/>
@@ -6809,7 +6827,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="599"/>
         <source>Edit With Glaxnimate</source>
-        <translation type="unfinished"></translation>
+        <translation>Επεξεργασία με το Glaxnimate</translation>
     </message>
 </context>
 <context>
@@ -6817,7 +6835,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/qmltypes/qmlapplication.cpp" line="209"/>
         <source>&lt;p&gt;Do you really want to add filters to &lt;b&gt;Output&lt;/b&gt;?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Timeline &gt; Output&lt;/b&gt; is currently selected. Adding filters to &lt;b&gt;Output&lt;/b&gt; affects ALL clips in the timeline including new ones that will be added.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Θέλετε πραγματικά να προσθέσετε φίλτρα στην&lt;b&gt;Εξοδο&lt;/b&gt;;&lt;/p&gt;&lt;p&gt;&lt;b&gt; Γραμμή χρόνου &gt; Εξοδος&lt;/b&gt; έχει επιλεγεί αυτήν τη στιγμή. Η προσθήκη φίλτρων στην &lt;b&gt;Εξοδο&lt;/b&gt; επηρεάζει ΟΛΑ τα κλιπ στη γραμμή χρόνου, συμπεριλαμβανομένων των νέων που θα προστεθούν.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlapplication.cpp" line="217"/>
@@ -6913,17 +6931,17 @@ Do you still want to continue?</source>
 <context>
     <name>QmlRichText</name>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="131"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="135"/>
         <source>Cannot save: </source>
         <translation>Αδυναμία αποθήκευσης:</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="161"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="165"/>
         <source>Row</source>
         <translation>Γραμμή</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="163"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="167"/>
         <source>Column</source>
         <translation>Στήλη</translation>
     </message>
@@ -6938,7 +6956,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/qmltypes/qmlrichtextmenu.cpp" line="33"/>
         <source>Open...</source>
-        <translation>Άνοιγμα...</translation>
+        <translation>Ανοιγμα...</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlrichtextmenu.cpp" line="37"/>
@@ -6988,7 +7006,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/qmltypes/qmlrichtextmenu.cpp" line="80"/>
         <source>Insert Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή πίνακα</translation>
     </message>
 </context>
 <context>
@@ -7028,7 +7046,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/dialogs/saveimagedialog.cpp" line="48"/>
         <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;Ολα τα αρχεία (*)</translation>
     </message>
 </context>
 <context>
@@ -7099,13 +7117,13 @@ Do you still want to continue?</source>
         <location filename="../src/dialogs/actionsdialog.cpp" line="69"/>
         <location filename="../src/dialogs/actionsdialog.cpp" line="70"/>
         <source>Set to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορισμός ως προεπιλογή</translation>
     </message>
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="79"/>
         <location filename="../src/dialogs/actionsdialog.cpp" line="80"/>
         <source>Clear shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαγραφή συντόμευσης</translation>
     </message>
 </context>
 <context>
@@ -7121,7 +7139,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/settings.cpp" line="97"/>
         <source>Old (before v23) Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Παλιά διάταξη (πριν την έκδοση 23)</translation>
     </message>
 </context>
 <context>
@@ -7439,7 +7457,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionVUI.qml" line="156"/>
         <source>Click in rectangle + hold Shift to drag, Wheel to zoom, or %1+Wheel to rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Κάντε κλικ στο ορθογώνιο + κρατήστε πατημένο το Shift για μεταφορά, χρησιμοποιήστε τη ροδέλα του ποντικιού για μεγέθυνση ή %1+ροδέλα για περιστροφή</translation>
     </message>
 </context>
 <context>
@@ -7504,7 +7522,8 @@ Do you still want to continue?</source>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="85"/>
         <source>Set the percentage of the zoom-in effect.
 0% will result in no zoom effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορίστε το ποσοστό του εφέ μεγέθυνσης.
+Το 0% θα οδηγήσει σε μηδενική μεγέθυνση.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="93"/>
@@ -7661,7 +7680,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="456"/>
         <source>Preview Not Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Μη διαθέσιμη προεπισκόπηση</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="457"/>
@@ -7674,7 +7693,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="60"/>
         <source>Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only</source>
-        <translation type="unfinished"></translation>
+        <translation>Κρατήστε πατημένο το %1 για να σύρετε ένα keyframe μόνο κατακόρυφα ή το %2 για να σύρετε μόνο οριζόντια</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="107"/>
@@ -7699,7 +7718,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="158"/>
         <source>Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρησιμοποιήστε την καθορισμένη λειτουργία επιλογής εικόνας. Το Πλησιέστερο θα εμφανίσει την εικόνα που είναι πλησιέστερα στην αντιστοιχισμένη ώρα. Το Ανάμιξη θα συνδυάσει όλες τις εικόνες που εμφανίζονται κατά τη διάρκεια του αντιστοιχισμένου χρόνου.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="177"/>
@@ -7709,12 +7728,12 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="182"/>
         <source>Blend</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανάμιξη</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="198"/>
         <source>Enable pitch compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενεργοποίηση αντιστάθμισης τονικού ύψους</translation>
     </message>
 </context>
 <context>
@@ -7722,22 +7741,22 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="14"/>
         <source>Player Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Συγχρονισμός προγράμματος αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="20"/>
         <source>Adjust your playback audio/video synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσαρμόστε τον συγχρονισμό ήχου/εικόνας αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="48"/>
         <source>Reset to default value 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναφορά στην προεπιλεγμένη τιμή 0</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="65"/>
         <source>Video offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετατόπιση βίντεο</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="75"/>
@@ -7849,7 +7868,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterVui.qml" line="85"/>
         <source>Click in rectangle + hold Shift to drag</source>
-        <translation type="unfinished"></translation>
+        <translation>Κάντε κλικ στο ορθογώνιο + κρατήστε πατημένο το Shift για να σύρετε</translation>
     </message>
 </context>
 <context>
@@ -7867,7 +7886,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="39"/>
         <source>Type or paste the text here</source>
-        <translation type="unfinished"></translation>
+        <translation>Πληκτρολογήστε ή επικολλήστε το κείμενο εδώ</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="48"/>
@@ -7882,12 +7901,12 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="88"/>
         <source>Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Απλό</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="98"/>
         <source>Rich</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμπλουτισμένο</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="120"/>
@@ -7976,23 +7995,23 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1229"/>
         <source>You cannot add a non-seekable source.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν μπορείτε να προσθέσετε μια πηγή χωρίς δυνατότητα αναζήτησης</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1574"/>
         <location filename="../src/docks/timelinedock.cpp" line="1607"/>
         <source>Track %1 was not moved</source>
-        <translation type="unfinished"></translation>
+        <translation>Το κομμάτι %1 δεν μετακινήθηκε</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1579"/>
         <source>Can not move audio track above video track</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν είναι δυνατή η μετακίνηση ενός κομματιού ήχου πάνω από ένα κομμάτι βίντεο</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1595"/>
         <source>Can not move video track below audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν είναι δυνατή η μετακίνηση ενός κομματιού βίντεο κάτω από ένα κομμάτι ήχου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1684"/>
@@ -8003,7 +8022,7 @@ If the duration is 0, no transition will be created.</source>
         <location filename="../src/docks/timelinedock.cpp" line="1045"/>
         <location filename="../src/docks/timelinedock.cpp" line="1727"/>
         <source>Align To Reference Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Ευθυγράμμιση με κομμάτι αναφοράς</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="81"/>
@@ -8038,17 +8057,17 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="138"/>
         <source>Timeline Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλιπ γραμμής χρόνου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="156"/>
         <source>Timeline Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Χειριστήρια γραμμής χρόνου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="160"/>
         <source>Timeline Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Μενού γραμμής χρόνου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="281"/>
@@ -8098,7 +8117,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="386"/>
         <source>Blend/Unblend Selected Track</source>
-        <translation>Μίξη/Κατάργηση μίξης επιλεγμένου κομματιού</translation>
+        <translation>Μίξη/Κατάργηση ανάμιξης επιλεγμένου κομματιού</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="401"/>
@@ -8163,7 +8182,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="542"/>
         <source>Select Clip Under Playhead</source>
-        <translation>Επιλογή Clip κάτω από την κεφαλή αναπαραγωγής</translation>
+        <translation>Επιλογή κλιπ κάτω από την κεφαλή αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="556"/>
@@ -8203,7 +8222,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="683"/>
         <source>Split At Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαχωρισμός στην Κεφαλή Αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="696"/>
@@ -8213,22 +8232,22 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="714"/>
         <source>Create/Edit Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσθήκη/Επεξεργασία δείκτη</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="727"/>
         <source>Previous Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Προηγούμενος δείκτης</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="740"/>
         <source>Next Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Επόμενος δείκτης</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="753"/>
         <source>Delete Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Διαγραφή δείκτη</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="763"/>
@@ -8238,17 +8257,17 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="779"/>
         <source>Create Marker Around Selected Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Δημιουργία δείκτη για ολόκληρο το επιλεγμένο κλιπ</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="789"/>
         <source>Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Κούμπωμα</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="804"/>
         <source>Scrub While Dragging</source>
-        <translation type="unfinished"></translation>
+        <translation>Τρίψιμο κατά το σύρσιμο</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="818"/>
@@ -8283,7 +8302,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="893"/>
         <source>Use Higher Performance Waveforms</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρήση κυματομορφών υψηλότερης απόδοσης</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="908"/>
@@ -8293,27 +8312,27 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="919"/>
         <source>Center the Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>Κεντράρισμα κεφαλής αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="931"/>
         <source>Scroll to Playhead on Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Κύλιση στην κεφαλίδα αναπαραγωγής κατά την μεγέθυνση/σμίκρυνση</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="943"/>
         <source>Zoom Timeline Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Σμίκρυνση γραμμής χρόνου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="954"/>
         <source>Zoom Timeline In</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεγέθυνση γραμμής χρόνου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="965"/>
         <source>Zoom Timeline To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεγέθυνση γραμμής χρόνου ώστε να ταιριάζει</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="993"/>
@@ -8323,7 +8342,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1002"/>
         <source>Rejoin With Next Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Επανένωση με το επόμενο κλιπ</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1018"/>
@@ -8338,7 +8357,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1089"/>
         <source>Rebuild Audio Waveform</source>
-        <translation>Αναδόμηση της Κυματομορφής Ήχου</translation>
+        <translation>Επαναδημιουργία της Κυματομορφής Ήχου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1113"/>
@@ -8353,22 +8372,22 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1794"/>
         <source>Append multiple to timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσάρτηση πολλαπλών στη γραμμή χρόνου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1898"/>
         <source>Cut %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Αποκοπή %1 από τη γραμμή χρόνου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1900"/>
         <source>Remove %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Αφαίρεση %1 από τη γραμμή χρόνου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1923"/>
         <source>Lift %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανασήκωση %1 από τη γραμμή χρόνου</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2247"/>
@@ -8383,75 +8402,75 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2292"/>
         <source>Select a clip in the timeline to create a marker around it</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλέξτε ένα κλιπ στη γραμμή χρόνου για να δημιουργήσετε έναν δείκτη που να το περικλείει ολόκληρο</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2323"/>
         <source>Added marker: &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Προστέθηκε ο δείκτης: &quot;%1&quot;.</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="2343"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
-        <translation type="unfinished"></translation>
+        <translation>Προστέθηκε ο δείκτης: &quot;% 1&quot;. Κρατήστε πατημένο το %2 και σύρετε για να δημιουργήσετε ένα εύρος</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2748"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2758"/>
         <source>Insert multiple into timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2871"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2881"/>
         <source>Overwrite multiple onto timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2963"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2973"/>
         <source>You cannot split a transition.</source>
         <translation>Δεν μπορείτε να χωρήσετε μία μετάβαση.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="3251"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3261"/>
         <source>Replace %n timeline clips</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Αντικατάσταση %n κλιπ γραμμής χρόνου</numerusform>
+            <numerusform>Αντικατάσταση %n κλιπ γραμμής χρόνου</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3302"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3312"/>
         <source>voiceover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3303"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3313"/>
         <source>Opus (*.opus);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="976"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3304"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3402"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3314"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3412"/>
         <source>Record Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Εγγραφή Ηχου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3315"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3325"/>
         <source>Record Audio: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Εγγραφή Ηχου %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3379"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3389"/>
         <source>Record Audio error: check PulseAudio settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Σφάλμα εγγραφής ήχου: ελέγξτε τις ρυθμίσεις PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3381"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3391"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3408"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3418"/>
         <source>Saving audio recording...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8771,7 +8790,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="155"/>
         <source>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτό είναι χρήσιμο όταν το βίντεο πηγής είναι HDR (High Dynamic Range), το οποίο απαιτεί αντιστοίχιση τόνου στο παλιό, τυπικό εύρος (SDR).</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="249"/>
@@ -8814,7 +8833,7 @@ only the currently selected one.</source>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="181"/>
         <source>Keep Advanced open</source>
-        <translation type="unfinished"></translation>
+        <translation>Διατήρηση Προχωρημένων ανοικτών</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="148"/>
@@ -8828,7 +8847,11 @@ only the currently selected one.</source>
 Duplicate: Duplicate frames.
 Blend: Blend frames.
 Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Μέθοδος μετατροπής ρυθμού καρέ
+
+Διπλότυπο: Διπλασιασμός καρέ.
+Ανάμιξη: Συνδυασμός καρέ.
+Αντιστάθμιση κίνησης: Παρεμβολή νέων καρέ χρησιμοποιώντας αντιστάθμιση κίνησης. Αυτή η μέθοδος είναι πολύ αργή και μπορεί να οδηγήσει σε artifacts.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
@@ -8858,7 +8881,7 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="51"/>
         <source>Blend</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανάμιξη</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="52"/>
@@ -9346,7 +9369,7 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="304"/>
         <source>Video Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Μεγέθυνση βίντεο</translation>
     </message>
 </context>
 <context>
@@ -9619,27 +9642,27 @@ Most users do not need to change this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="173"/>
+        <location filename="../src/main.cpp" line="172"/>
         <source>How to handle a fractional display scale: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="175"/>
+        <location filename="../src/main.cpp" line="174"/>
         <source>string</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="179"/>
+        <location filename="../src/main.cpp" line="177"/>
         <source>Zero or more files or folders to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="375"/>
+        <location filename="../src/main.cpp" line="367"/>
         <source>Loading plugins...</source>
         <translation>Φόρτωση αρθωμάτων...</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="354"/>
+        <location filename="../src/main.cpp" line="346"/>
         <source>Expiring cache...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10307,7 +10330,7 @@ Most users do not need to change this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="26"/>
         <location filename="../src/qml/filters/rotate/meta.qml" line="19"/>
         <source>Rotation</source>
         <translation>Περιστροφή</translation>
@@ -10888,13 +10911,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blend_mode/meta.qml" line="6"/>
         <source>Blend Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Τρόπος Ανάμιξης</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/meta.qml" line="7"/>
         <source>blending composite porter duff</source>
         <comment>search keywords for the Blend Mode video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ανάμιξη σύνθετου porter duff</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/meta.qml" line="6"/>
@@ -11199,7 +11222,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="7"/>
         <source>Text: Rich</source>
-        <translation type="unfinished"></translation>
+        <translation>Κείμενο: Εμπλουτισμένο</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="8"/>
@@ -11525,7 +11548,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/speed/meta_forward.qml" line="8"/>
         <source>Speed: Forward Only</source>
-        <translation type="unfinished"></translation>
+        <translation>Ταχύτητα: Μόνο προς τα εμπρός</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/meta_forward.qml" line="9"/>
@@ -11544,7 +11567,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/speed/meta_forward_reverse.qml" line="8"/>
         <source>Speed: Forward &amp; Reverse</source>
-        <translation type="unfinished"></translation>
+        <translation>Ταχύτητα: προς τα εμπρός και πίσω</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/meta_forward_reverse.qml" line="9"/>
@@ -11920,57 +11943,57 @@ Most users do not need to change this.</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="149"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="150"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξοδος</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="178"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="179"/>
         <source>Filters</source>
         <translation>Φίλτρα</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="283"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="284"/>
         <source>Move %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="326"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="327"/>
         <source>Can not move audio track above video track</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν είναι δυνατή η μετακίνηση ενός κομματιού ήχου πάνω από ένα κομμάτι βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="328"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="329"/>
         <source>Can not move video track below audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν είναι δυνατή η μετακίνηση ενός κομματιού βίντεο κάτω από ένα κομμάτι ήχου</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="330"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="331"/>
         <source>Track %1 was not moved</source>
-        <translation type="unfinished"></translation>
+        <translation>Το κομμάτι %1 δεν μετακινήθηκε</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="609"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="600"/>
         <source>Insert</source>
         <translation>Εισαγωγή</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="609"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="600"/>
         <source>Overwrite</source>
         <translation>Επικάληψη </translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="897"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="888"/>
         <source>Do you want to insert an audio or video track?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="907"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="898"/>
         <source>Audio</source>
-        <translation>Ήχος</translation>
+        <translation>Ηχος</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="915"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="906"/>
         <source>Video</source>
         <translation>Βίντεο</translation>
     </message>
@@ -11979,7 +12002,7 @@ Most users do not need to change this.</source>
     <name>ui</name>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="54"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="358"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="353"/>
         <location filename="../src/qml/filters/reflect/ui.qml" line="46"/>
         <source>Mode</source>
         <translation>Τρόπος</translation>
@@ -12019,7 +12042,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="150"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="138"/>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="190"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="582"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="570"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="118"/>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="158"/>
         <source>Threshold</source>
@@ -12034,9 +12057,9 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="120"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="543"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="549"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="624"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="699"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="544"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="619"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="694"/>
         <location filename="../src/qml/filters/blur_exponential/ui.qml" line="84"/>
         <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="84"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="79"/>
@@ -12050,8 +12073,8 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="148"/>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="457"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="171"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="445"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="406"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="124"/>
         <source>Invert</source>
@@ -12143,7 +12166,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="294"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="692"/>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="150"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="313"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="308"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="211"/>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="50"/>
         <location filename="../src/qml/filters/blur_exponential/ui.qml" line="65"/>
@@ -12167,8 +12190,8 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="900"/>
         <location filename="../src/qml/filters/fspp/ui.qml" line="52"/>
         <location filename="../src/qml/filters/glitch/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="481"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="674"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="476"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="671"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="196"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="48"/>
         <location filename="../src/qml/filters/grid/ui.qml" line="137"/>
@@ -12182,7 +12205,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/mask/ui.qml" line="153"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="326"/>
         <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="52"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="204"/>
         <location filename="../src/qml/filters/mosaic/ui.qml" line="71"/>
         <location filename="../src/qml/filters/nervous/ui.qml" line="42"/>
         <location filename="../src/qml/filters/noise_fast/ui.qml" line="47"/>
@@ -12550,7 +12573,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="235"/>
         <source>Reset the measurement if a discontinuity is detected - such as seeking or clip change.</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναφέρετε τη μέτρηση εάν εντοπιστεί ασυνέχεια - όπως αναζήτηση ή αλλαγή κλιπ.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="261"/>
@@ -12614,8 +12637,8 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="98"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="365"/>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="168"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="360"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="165"/>
         <location filename="../src/qml/filters/tracker/ui.qml" line="378"/>
         <source>Analyze</source>
         <translation>Ανάλυση</translation>
@@ -12643,7 +12666,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="126"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="175"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="503"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="491"/>
         <source>Channel</source>
         <translation>Κανάλι</translation>
     </message>
@@ -12798,7 +12821,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="239"/>
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="328"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1578"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1573"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="370"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="471"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="231"/>
@@ -12982,38 +13005,38 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="170"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="698"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="695"/>
         <source>Text</source>
         <translation>Κείμενο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="262"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="260"/>
         <source>Insert field</source>
         <translation>Εισαγωγή πεδίου</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="268"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="266"/>
         <source># (Hash sign)</source>
         <translation># (Υπογραφή κατακερματισμού)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="273"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="271"/>
         <source>Timecode</source>
         <translation>Χρόνος</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="278"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="276"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation>Καρέ #</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="283"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="281"/>
         <source>File date</source>
         <translation>Ημερομηνία αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="288"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="286"/>
         <source>File name</source>
         <translation>Όνομα αρχείου</translation>
     </message>
@@ -13034,7 +13057,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="168"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1441"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1436"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="126"/>
         <source>Thickness</source>
         <translation>Πάχος</translation>
@@ -13042,7 +13065,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="192"/>
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="253"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1523"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1518"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="313"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="390"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="156"/>
@@ -13093,7 +13116,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     </message>
     <message>
         <location filename="../src/qml/filters/grain/ui.qml" line="80"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="515"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="503"/>
         <source>Brightness</source>
         <translation>Φωτεινότητα</translation>
     </message>
@@ -13103,7 +13126,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1422"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1417"/>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="101"/>
         <source> °</source>
         <comment>degrees</comment>
@@ -13415,25 +13438,25 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation>Σκωτεινότητα </translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="52"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="43"/>
         <source>No File Loaded</source>
         <translation>Δεν Φορτώθηκε Αρχείο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="45"/>
         <source>No 3D LUT file loaded.
 Click &quot;Open&quot; to load a file.</source>
         <translation>Δεν φορτώθηκε  3D LUT αρχείο.
 Κλικ στο &quot;Άνοιγμα&quot; για φόρτωση ενός αρχείου.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="93"/>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="121"/>
         <source>Open...</source>
         <translation>Άνοιγμα...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="96"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="84"/>
         <source>Open 3D LUT File</source>
         <translation>Άνοιγμα Αρχείου 3D LUT</translation>
     </message>
@@ -13442,9 +13465,9 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="343"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="791"/>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="181"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="423"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="418"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="248"/>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="101"/>
         <source>Interpolation</source>
         <translation>Παρεμβολή</translation>
     </message>
@@ -13452,7 +13475,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="366"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="367"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="820"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="543"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="538"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="271"/>
         <source>Yaw</source>
         <translation type="unfinished"></translation>
@@ -13461,7 +13484,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="410"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="411"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="864"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="618"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="613"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="315"/>
         <source>Pitch</source>
         <comment>rotation around the side-to-side axis (roll, pitch, yaw)</comment>
@@ -13471,7 +13494,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="454"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="455"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="909"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="693"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="688"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="359"/>
         <source>Roll</source>
         <translation type="unfinished"></translation>
@@ -13490,25 +13513,25 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="134"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="122"/>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="403"/>
         <source>Nearest</source>
         <translation>Πλησιέστερο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="134"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="122"/>
         <source>Trilinear</source>
         <translation>Τριγραμμικό</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="134"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="122"/>
         <source>Tetrahedral</source>
         <translation>Τετραεδρικό</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="173"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="348"/>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="214"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="202"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="350"/>
         <source>Operation</source>
         <translation>Λειτουργία</translation>
@@ -13546,7 +13569,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="653"/>
         <source>Nearest Neighbor</source>
-        <translation type="unfinished"></translation>
+        <translation>Πλησιέστερο Γειτονικό</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="653"/>
@@ -13585,8 +13608,8 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/corners/ui.qml" line="675"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="181"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="356"/>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="238"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="545"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="226"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="533"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="370"/>
         <source>Maximum</source>
         <translation>Μέγιστο</translation>
@@ -13595,8 +13618,8 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/corners/ui.qml" line="675"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="181"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="356"/>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="243"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="550"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="231"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="538"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="375"/>
         <source>Minimum</source>
         <translation>Ελάχιστο</translation>
@@ -13610,8 +13633,8 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/corners/ui.qml" line="675"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="181"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="356"/>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="233"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="540"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="221"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="528"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="365"/>
         <source>Overwrite</source>
         <translation>Επικάληψη </translation>
@@ -13628,8 +13651,8 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/gradient/ui.qml" line="452"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="181"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="356"/>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="248"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="555"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="236"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="543"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="380"/>
         <source>Add</source>
         <translation>Προσθήκη</translation>
@@ -13638,8 +13661,8 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/corners/ui.qml" line="675"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="181"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="356"/>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="253"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="560"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="241"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="548"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="385"/>
         <source>Subtract</source>
         <translation>Αφαίρεση</translation>
@@ -13734,7 +13757,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Ύψος</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1407"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1402"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="315"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="530"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="158"/>
@@ -13744,7 +13767,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="336"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="566"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="608"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="596"/>
         <source>Softness</source>
         <translation>Απαλότητα</translation>
     </message>
@@ -13902,7 +13925,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="552"/>
         <source>Nearest neighbor</source>
-        <translation type="unfinished"></translation>
+        <translation>Πλησιέστερο γειτονικό</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="562"/>
@@ -13958,7 +13981,7 @@ Like used in GoPro&apos;s superview</source>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="673"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="707"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1717"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1712"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="187"/>
         <source>Scale</source>
         <translation>Κλίμακα</translation>
@@ -14264,8 +14287,8 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/chromahold/ui.qml" line="86"/>
         <location filename="../src/qml/filters/crop_circle/ui.qml" line="133"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1299"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1360"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1294"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1355"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="126"/>
         <source>Color</source>
         <translation>Χρώμα</translation>
@@ -14360,38 +14383,38 @@ Change top/side distortion bias</source>
         <translation>Επιλέξτε ένα αρχείο για αποθήκευση των αποτελεσμάτων της ανάλυσης.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="119"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="116"/>
         <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
         <translation>&lt;b&gt;Επιλογές Ανάλυσης&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="124"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="121"/>
         <source>Shakiness</source>
         <translation>Τρέμουλο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="142"/>
         <source>Accuracy</source>
         <translation>Ακρίβεια</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="184"/>
         <source>&lt;b&gt;Filter Options&lt;/b&gt;</source>
         <translation>&lt;b&gt;Επιλογές Φίλτρου&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="189"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="118"/>
         <source>Zoom</source>
         <translation>Μεγέθυνση</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="251"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="248"/>
         <source>Stabilization file:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="255"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="252"/>
         <source>The stabilization file generated by the analysis.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14401,62 +14424,67 @@ Change top/side distortion bias</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="395"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="291"/>
+        <source>File for motion analysis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="390"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="400"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="395"/>
         <source>Start Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="412"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="407"/>
         <source>seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="443"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="438"/>
         <source>Analysis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="454"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="449"/>
         <source>Apply transform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="460"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="455"/>
         <source>Sample Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="483"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="478"/>
         <source>Search Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="529"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="524"/>
         <source>Track Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="536"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="531"/>
         <source>Use backwards-facing track points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="572"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="647"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="722"/>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="215"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="567"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="642"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="717"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="212"/>
         <source>Smoothing</source>
         <translation>Εξομάλυνση</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="595"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="670"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="745"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="590"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="665"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="740"/>
         <source>Time Bias</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14496,12 +14524,12 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="68"/>
         <source>Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only</source>
-        <translation type="unfinished"></translation>
+        <translation>Κρατήστε πατημένο το %1 για να σύρετε ένα keyframe μόνο κατακόρυφα ή το %2 για να σύρετε μόνο οριζόντια</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="50"/>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Εμπρός</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="52"/>
@@ -14578,17 +14606,17 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="383"/>
         <source>Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρησιμοποιήστε την καθορισμένη λειτουργία επιλογής εικόνας. Το Πλησιέστερο θα εμφανίσει την εικόνα που είναι πλησιέστερα στην αντιστοιχισμένη ώρα. Το Ανάμιξη θα συνδυάσει όλες τις εικόνες που εμφανίζονται κατά τη διάρκεια του αντιστοιχισμένου χρόνου.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="408"/>
         <source>Blend</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανάμιξη</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="425"/>
         <source>Enable pitch compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ενεργοποίηση αντιστάθμισης τονικού ύψους.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="453"/>
@@ -14606,7 +14634,7 @@ Change top/side distortion bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="906"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="901"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="323"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="89"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="78"/>
@@ -14843,12 +14871,12 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="403"/>
         <source>Measure similarity using average of neighbors</source>
-        <translation type="unfinished"></translation>
+        <translation>Μέτρηση ομοιότητας με χρήση μέσου όρου γειτονικών</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="407"/>
         <source>Compare to thresholds using average versus exact neighbor values</source>
-        <translation type="unfinished"></translation>
+        <translation>Σύγκριση με κατώτατα όρια με χρήση μέσου όρου έναντι ακριβούς γειτονικού</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="425"/>
@@ -14898,7 +14926,7 @@ All = 360° + Randomize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="506"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="501"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="258"/>
         <location filename="../src/qml/filters/nosync/ui.qml" line="83"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="298"/>
@@ -14906,145 +14934,145 @@ All = 360° + Randomize</source>
         <translation>Μετατόπιση</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="372"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="235"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="367"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="223"/>
         <source>File</source>
         <translation>Αρχείο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="297"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="285"/>
         <source>Custom...</source>
         <translation>Προσαρμοσμένο...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="292"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="280"/>
         <source>Bar Horizontal</source>
         <translation>Οριζόντιες Μπάρες</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="302"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="290"/>
         <source>Bar Vertical</source>
         <translation>Κάθετες Μπάρες</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="307"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="295"/>
         <source>Barn Door Horizontal</source>
         <translation>Οριζόντια Πόρτα Αχυρώνα</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="312"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="300"/>
         <source>Barn Door Vertical</source>
         <translation>Κάθετη Πόρτα Στάβλου</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="317"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="305"/>
         <source>Barn Door Diagonal SW-NE</source>
         <translation>Διαγώνια Πόρτα Στάβλου SW-NE</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="322"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="310"/>
         <source>Barn Door Diagonal NW-SE</source>
         <translation>Διαγώνια Πόρτα Στάβλου NW-SE</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="327"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="315"/>
         <source>Diagonal Top Left</source>
         <translation>Διαγώνια Πάνω Αριστερά</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="332"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="320"/>
         <source>Diagonal Top Right</source>
         <translation>Διαγώνια Πάνω Δεξιά</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="337"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="325"/>
         <source>Matrix Waterfall Horizontal</source>
         <translation>Οριζόντιο Πλέγμα Καταράχτη </translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="342"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="330"/>
         <source>Matrix Waterfall Vertical</source>
         <translation>Κάθετο Πλέγμα Καταρράχτη </translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="347"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="335"/>
         <source>Matrix Snake Horizontal</source>
         <translation>Οριζόντιο Πλέγμα Φιδιού</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="352"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="340"/>
         <source>Matrix Snake Parallel Horizontal</source>
         <translation>Παράλληλα Οριζόντιο Πλέγμα Φιδιού</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="357"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="345"/>
         <source>Matrix Snake Vertical</source>
         <translation>Κάθετο Πλέγμα Φιδιού</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="362"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="350"/>
         <source>Matrix Snake Parallel Vertical</source>
         <translation>Παράλληλα Κάθετο Πλέγμα Φιδιού</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="367"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="355"/>
         <source>Barn V Up</source>
         <translation>Στάβλος V Πάνω</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="372"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="360"/>
         <source>Iris Circle</source>
         <translation>Ίριδα Κύκλος</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="377"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="365"/>
         <source>Double Iris</source>
         <translation>Διπλή Ίριδα</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="382"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="370"/>
         <source>Iris Box</source>
         <translation>Ίριδα Κουτί</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="387"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="375"/>
         <source>Box Bottom Right</source>
         <translation>Κουτί Δεξιά Κάτω</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="392"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="380"/>
         <source>Box Bottom Left</source>
         <translation>Κουτί Αριστερά Κάτω</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="397"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="385"/>
         <source>Box Right Center</source>
         <translation>Κουτί Δεξιά Κέντρο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="402"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="390"/>
         <source>Clock Top</source>
         <translation>Ρολόι Πάνω</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="262"/>
         <source>Set a mask from another file&apos;s brightness or alpha.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="250"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="238"/>
         <source>Open Mask File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="201"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="476"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="189"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="464"/>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="48"/>
         <source>Reverse</source>
         <translation>Αντιστροφή</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="523"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="511"/>
         <source>Alpha</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15370,473 +15398,483 @@ All = 360° + Randomize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="105"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="41"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="104"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="40"/>
         <source>No File Loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="107"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="43"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="106"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="42"/>
         <source>No GPS file loaded.
 Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="462"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="395"/>
+        <source>Select GPS File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="437"/>
+        <source>Select Background Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="457"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="210"/>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανοιγμα Αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="216"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="213"/>
         <source>Open GPS File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανοιγμα Αρχείου GPS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="502"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="233"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="497"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="230"/>
         <source>&lt;b&gt;GPS options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="509"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="240"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="504"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="237"/>
         <source>GPS offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="513"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="244"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="508"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="241"/>
         <source>This is added to video time to sync with gps time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="532"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="261"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="527"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="258"/>
         <source>+ : Adds time to video (use if GPS is ahead).
  - : Subtracts time from video (use if video is ahead).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="573"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="302"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="568"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="299"/>
         <source>Number of days to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="612"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="341"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="607"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="338"/>
         <source>Number of hours to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="651"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="380"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="646"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="377"/>
         <source>Number of minutes to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="690"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="419"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="685"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="416"/>
         <source>Number of seconds to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="709"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="438"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="704"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="435"/>
         <source>Sync start of GPS to start of video file.
 Tip: use this if you started GPS and video recording at the same time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="748"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="477"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="743"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="474"/>
         <source>Sync start of GPS to current video time.
 Tip: use this if you recorded the moment of the first GPS fix.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="758"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="487"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="753"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="484"/>
         <source>GPS smoothing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="762"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="491"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="757"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="488"/>
         <source>Average nearby GPS points to smooth out errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="888"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="883"/>
         <source>&lt;b&gt;Graph data&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="893"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="888"/>
         <source>Data source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="897"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="892"/>
         <source>Choose which data type is used for graph drawing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="906"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="901"/>
         <source>Location (2D map)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="906"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="901"/>
         <source>Altitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="906"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="901"/>
         <source>Heart rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="918"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="913"/>
         <source>Graph type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="922"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="917"/>
         <source>Graph types can add advanced interactions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="931"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="926"/>
         <source>Standard</source>
         <translation>Πρότυπο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="931"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="926"/>
         <source>Follow dot (cropped)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="931"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="926"/>
         <source>Speedometer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="940"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="935"/>
         <source>Standard = just a static map.
 Follow dot = centers on the current location.
 Speedometer = draws a simple speedometer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="946"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="941"/>
         <source>Trim time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="950"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="945"/>
         <source>Hides part of the graph at beginning or end.
 This does not recompute min/max for any field.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="977"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="972"/>
         <source>Hides part of the beginning of the graph.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1021"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1016"/>
         <source>Hides part of the end of the graph.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1038"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1033"/>
         <source>Crop horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1042"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1037"/>
         <source>Zooms in on the graph on the horizontal axis (longitude if map, time if simple graph).
 The number is either a percentage or a numeric value interpreted as the legend type.
 This field is not applicable for Speedometer type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1064"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1059"/>
         <source>Crops the graph from the left side.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1107"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1102"/>
         <source>Crops the graph from the right side. This value is ignored if mode is Follow dot.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1115"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1224"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1110"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1219"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1115"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1224"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1110"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1219"/>
         <source>value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1125"/>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1234"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1120"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1229"/>
         <source>The crop values are interpreted as a percentage of total or as an absolute value (in legend unit).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1129"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1124"/>
         <source>Input for horizontal crops can be a percentage or an absolute value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1146"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1141"/>
         <source>Crop vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1150"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1145"/>
         <source>Zooms in on the graph on the vertical axis (latitude if map, value if simple graph).
 The number is either a percentage or a numeric value interpreted as the legend type.
 This field affects min/max values on the Speedometer type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1173"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1168"/>
         <source>Crops the graph from the bottom side.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1216"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1211"/>
         <source>Crops the graph from the top side. This value is ignored if mode is Follow dot.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1238"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1233"/>
         <source>Input for vertical crops can be a percentage or an absolute value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1256"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1251"/>
         <source>&lt;b&gt;Graph design&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1261"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1256"/>
         <source>Color style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1265"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1260"/>
         <source>Choose how you want to color the graph line.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1286"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1281"/>
         <source>One color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1286"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1281"/>
         <source>Two colors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1286"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1281"/>
         <source>Solid past, thin future</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1286"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1281"/>
         <source>Solid future, thin past</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1286"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1281"/>
         <source>Vertical gradient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1286"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1281"/>
         <source>Horizontal gradient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1286"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1281"/>
         <source>Color by duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1286"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1281"/>
         <source>Color by altitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1286"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1281"/>
         <source>Color by heart rate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1286"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1281"/>
         <source>Color by speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1303"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1298"/>
         <source>Color by Altitude/HR only work if there are recorded values in the gps file.
 For speedometer type, only first 2 colors are used.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1342"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1337"/>
         <source>Now dot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1346"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1341"/>
         <source>Draw a dot showing current position on the graph.
 For speedometer type, this is the needle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1364"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1359"/>
         <source>Set the color of the inside of the now dot (or needle).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1388"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1383"/>
         <source>Now text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1393"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1388"/>
         <source>Draw a large white text showing the current value.
 The legend unit (if present) will be appended at the end.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1411"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1406"/>
         <source>Rotate the entire graph. Speedometer also rotates internal text.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1445"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1440"/>
         <source>Set the thickness of the graph line. Does not affect speedometer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1475"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1470"/>
         <source>Draw legend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1479"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1474"/>
         <source>Draw 5 horizontal white lines with individual values for graph readability. 2D map also draws vertical (longitude) lines.
 For speedometer this draws text for divisions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1492"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1487"/>
         <source>Unit</source>
         <translation>Μονάδα</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1496"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1491"/>
         <source>This will be used in legend text if active and in absolute value math.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1508"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1503"/>
         <source>Defaults are km/h (speed) and meters (altitude).
  Available options: km/h, mi/h, nm/h (kn), m/s, ft/s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1642"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1637"/>
         <source>Sets the height to the correct map aspect ratio or 1:1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1649"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1644"/>
         <source>&lt;b&gt;Background options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1654"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1649"/>
         <source>Image path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1658"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1653"/>
         <source>Choose an image to overlay behind the graph. Tip: you can use an actual map image to make the GPS track more interesting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1690"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1685"/>
         <source>GPS file center is: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1693"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1688"/>
         <source>Get the center coordinate of GPS map. This does not change with trim or crop.
 TIP:OpenStreetMap website can save the current standard map centered on searched location (but only at screen resolution).
 Google Earth for desktop can center on a coordinate and save a 4K image of it. Disable the Terrain layer for best results.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1704"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1699"/>
         <source>Browse for an image file to be assigned as graph background.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1721"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1716"/>
         <source>Increase or decrease the size of the background image.
 Values smaller than 1 will zoom into image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="579"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="576"/>
         <source>Processing start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="584"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="581"/>
         <source>Distances are calculated since the start of the gps file, use this field to reset them (GPS time).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="601"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="598"/>
         <source>Insert date and time formatted exactly as: YYYY-MM-DD HH:MM:SS (GPS time).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="616"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="613"/>
         <source>Set start of GPS processing to current video time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="669"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="666"/>
         <source>&lt;b&gt;Text options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="783"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="778"/>
         <source>Insert GPS field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="862"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="857"/>
         <source>Extra arguments can be added inside keywords:
 Distance units: m [km|ft|mi].
 Speed units: km/h [mi/h|m/s|ft/s].
@@ -15845,159 +15883,159 @@ Extra keyword: RAW (prints only values from file).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>GPS latitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>GPS longitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Elevation (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Speed (km/h)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Distance (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>GPS date-time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Video file date-time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Heart-rate (bpm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Bearing (degrees)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Bearing (compass)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Elevation gain (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Elevation loss (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Distance uphill (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Distance downhill (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="808"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
         <source>Distance flat (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="876"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="871"/>
         <source>&lt;b&gt;Advanced options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="847"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="629"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="842"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="626"/>
         <source>Video speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="851"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="634"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="846"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="631"/>
         <source>If the current video is sped up (timelapse) or slowed down use this field to set the speed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="874"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="655"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="869"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="652"/>
         <source>Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="881"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="876"/>
         <source>Update speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="886"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="881"/>
         <source>Set how many text updates to show per second.
 Set to 0 to only print real points (no interpolation).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="904"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="899"/>
         <source>Fractional times are also allowed (0.25 = update every 4 seconds, 5 = 5 updates per second).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="914"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="909"/>
         <source> per second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1759"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="936"/>
+        <source>Video start time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1764"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="941"/>
-        <source>Video start time:</source>
+        <source>Detected date-time for the video file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1769"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="946"/>
-        <source>Detected date-time for the video file.</source>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1782"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="959"/>
+        <source>GPS start time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1787"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="964"/>
-        <source>GPS start time:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1792"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="969"/>
         <source>Detected date-time for the GPS file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1803"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="980"/>
+        <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1798"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="975"/>
         <source>This time will be used for synchronization.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="599"/>
         <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="112"/>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="271"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="634"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="259"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="622"/>
         <source>Tip: Mask other video filters by adding filters after this one followed by &lt;b&gt;Mask: Apply&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16079,7 +16117,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="130"/>
         <source>Low</source>
-        <translation type="unfinished"></translation>
+        <translation>Χαμηλό</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="188"/>
@@ -16132,32 +16170,32 @@ Set to 0 to only print real points (no interpolation).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="103"/>
         <source>New...</source>
         <translation>Νέο...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="114"/>
         <source>New Animation File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="136"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="124"/>
         <source>Open Animation File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανοιγμα αρχείου Animation</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="146"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="134"/>
         <source>Click &lt;b&gt;New...&lt;/b&gt; or &lt;b&gt;Open...&lt;/b&gt; to use this filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="149"/>
         <source>Edit...</source>
         <translation>Επεξεργασία...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="154"/>
         <source>Reload</source>
         <translation>Επαναφόρτωση</translation>
     </message>
@@ -16656,12 +16694,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="312"/>
         <source>Mirror the spectrum.</source>
-        <translation>Καθρεπτισμός τού φάσματος.</translation>
+        <translation>Καθρεπτισμός του φάσματος.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="324"/>
         <source>Reverse the spectrum.</source>
-        <translation>Αντιστροφή τού φάσματος.</translation>
+        <translation>Αντιστροφή του φάσματος.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="329"/>
@@ -16737,108 +16775,108 @@ Set to 0 to only print real points (no interpolation).</source>
         <translation type="unfinished">4</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="367"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="366"/>
         <source>Text size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="386"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="385"/>
         <source>Text color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="488"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="487"/>
         <source>Collapse Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="488"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="487"/>
         <source>Expand Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="271"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="270"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="597"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="596"/>
         <source>Left</source>
         <translation>Αριστερά</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="608"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="607"/>
         <source>Center</source>
         <translation>Κέντρο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="619"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="618"/>
         <source>Right</source>
         <translation>Δεξιά</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="630"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="629"/>
         <source>Justify</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="641"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="640"/>
         <source>Bold</source>
         <translation>Έντονα</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="652"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="651"/>
         <source>Italic</source>
         <translation>Πλάγια</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="663"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="662"/>
         <source>Underline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="815"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="812"/>
         <source>OK</source>
         <translation>ΟΚ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="823"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="820"/>
         <source>Cancel</source>
         <translation>Άκυρο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="332"/>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="674"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="331"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="673"/>
         <source>Font</source>
         <translation>Γραμματοσειρά</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="749"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="746"/>
         <source>Insert Table</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή πίνακα</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="687"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="686"/>
         <source>Decrease Indent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="696"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="695"/>
         <source>Insert Indent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="761"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="758"/>
         <source>Rows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="778"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="775"/>
         <source>Columns</source>
         <translation>Στήλες</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="794"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="791"/>
         <source>Border</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16853,7 +16891,7 @@ Set to 0 to only print real points (no interpolation).</source>
         <location filename="../src/qml/filters/tracker/vui.qml" line="48"/>
         <location filename="../src/qml/filters/waveform/vui.qml" line="26"/>
         <source>Click in rectangle + hold Shift to drag</source>
-        <translation type="unfinished"></translation>
+        <translation>Κάντε κλικ στο ορθογώνιο + κρατήστε πατημένο το Shift για να σύρετε</translation>
     </message>
 </context>
 <context>
@@ -16861,7 +16899,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/vui_spectrum.qml" line="26"/>
         <source>Click in rectangle + hold Shift to drag</source>
-        <translation type="unfinished"></translation>
+        <translation>Κάντε κλικ στο ορθογώνιο + κρατήστε πατημένο το Shift για να σύρετε</translation>
     </message>
 </context>
 </TS>
