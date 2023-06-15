@@ -25,7 +25,7 @@ Item {
     }
 
     width: 480
-    height: 325
+    height: 125
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
@@ -88,7 +88,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Fade Duration')
+            text: qsTr('Fade duration')
             Layout.alignment: Qt.AlignRight
 
             Shotcut.HoverTip {
@@ -112,8 +112,23 @@ Item {
             onClicked: durationSlider.value = -2
         }
 
+        Rectangle {
+            Layout.columnSpan: 3
+            Layout.fillWidth: true
+            Layout.minimumHeight: 12
+            color: 'transparent'
+
+            Rectangle {
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
+                height: 2
+                radius: 2
+                color: activePalette.text
+            }
+        }
+
         Label {
-            text: qsTr('Fade In')
+            text: qsTr('Fade in')
             Layout.alignment: Qt.AlignRight
 
             Shotcut.HoverTip {
@@ -143,7 +158,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Fade Out')
+            text: qsTr('Fade out')
             Layout.alignment: Qt.AlignRight
 
             Shotcut.HoverTip {
