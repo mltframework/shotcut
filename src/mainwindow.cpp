@@ -2380,7 +2380,7 @@ void MainWindow::showEvent(QShowEvent *event)
 
     QTimer::singleShot(200, this, [ = ]() {
         Database::singleton(this);
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
         this->setProperty("windowOpacity", 1.0);
 #endif
     });
@@ -2389,7 +2389,7 @@ void MainWindow::showEvent(QShowEvent *event)
 void MainWindow::hideEvent(QHideEvent *event)
 {
     Q_UNUSED(event)
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     setProperty("windowOpacity", 0.0);
 #endif
 }
