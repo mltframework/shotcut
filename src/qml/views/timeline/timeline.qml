@@ -368,6 +368,7 @@ Rectangle {
             focus: true
 
             MouseArea {
+                id: scrubMouseArea
                 property bool skim: false
 
                 // This provides skimming and continuous scrubbing at the left/right edges.
@@ -775,7 +776,7 @@ Rectangle {
     Connections {
         function onPositionChanged() {
             if (!stopScrolling)
-                Logic.scrollIfNeeded();
+                Logic.scrollIfNeeded(false, scrubMouseArea.containsPress);
         }
 
         function onDragging(pos, duration) {

@@ -574,7 +574,7 @@ Rectangle {
     Connections {
         function onPositionChanged() {
             if (!stopScrolling)
-                Logic.scrollIfNeeded();
+                Logic.scrollIfNeeded(false, tracksAreaMouse.containsPress);
         }
 
         target: producer

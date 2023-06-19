@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function scrollIfNeeded(center) {
+function scrollIfNeeded(center, continouous) {
     var x = timeline.position * multitrack.scaleFactor;
     if (!tracksFlickable) return;
     if (settings.timelineCenterPlayhead || center) {
@@ -26,9 +26,19 @@ function scrollIfNeeded(center) {
         else if (x < tracksFlickable.contentX + tracksFlickable.width * 0.5)
             tracksFlickable.contentX = x - tracksFlickable.width * 0.5;
     } else if (tracksContainer.width > tracksFlickable.width) {
-        var leftLimit = tracksFlickable.contentX + 50
-        var pageCount = Math.floor((x - leftLimit)/(tracksFlickable.width - 100))
-        tracksFlickable.contentX = Math.max(tracksFlickable.contentX + pageCount*(tracksFlickable.width - 100), 0);
+        if (continouous) {
+            if (x > tracksFlickable.contentX + tracksFlickable.width - 50)
+                tracksFlickable.contentX = x - tracksFlickable.width + 50;
+            else if (x < 50)
+                tracksFlickable.contentX = 0;
+            else if (x < tracksFlickable.contentX + 50)
+                tracksFlickable.contentX = x - 50;
+        } else {
+            // paginated
+            var leftLimit = tracksFlickable.contentX + 50
+            var pageCount = Math.floor((x - leftLimit)/(tracksFlickable.width - 100))
+            tracksFlickable.contentX = Math.max(tracksFlickable.contentX + pageCount*(tracksFlickable.width - 100), 0);
+        }
     }
 }
 
