@@ -30,7 +30,7 @@ Item {
     }
 
     width: 480
-    height: 325
+    height: 345
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values

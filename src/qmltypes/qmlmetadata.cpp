@@ -33,6 +33,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_gpuAlt("")
     , m_allowMultiple(true)
     , m_isClipOnly(false)
+    , m_isTrackOnly(false)
     , m_isGpuCompatible(true)
     , m_isDeprecated(false)
     , m_seekReverse(false)
@@ -159,6 +160,11 @@ void QmlMetadata::setAllowMultiple(bool allowMultiple)
 void QmlMetadata::setIsClipOnly(bool isClipOnly)
 {
     m_isClipOnly = isClipOnly;
+}
+
+void QmlMetadata::setIsTrackOnly(bool isTrackOnly)
+{
+    m_isTrackOnly = isTrackOnly;
 }
 
 bool QmlMetadata::isMltVersion(const QString &version)

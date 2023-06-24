@@ -217,11 +217,24 @@ void MetadataModel::setIsChainProducer(bool isChainProducer)
     endResetModel();
 }
 
+void MetadataModel::setIsTrackProducer(bool isTrackProducer)
+{
+    beginResetModel();
+    m_isTrackProducer = isTrackProducer;
+    if (m_isTrackProducer) {
+        m_filterMask &= ~trackOnlyMaskBit;
+    } else {
+        m_filterMask |= trackOnlyMaskBit;
+    }
+    endResetModel();
+}
+
 unsigned MetadataModel::computeFilterMask(const QmlMetadata *meta)
 {
     unsigned mask = 0;
     if (meta->isHidden()) mask |= HiddenMaskBit;
     if (meta->isClipOnly()) mask |= clipOnlyMaskBit;
+    if (meta->isTrackOnly()) mask |= trackOnlyMaskBit;
     if (!meta->isGpuCompatible()) mask |= gpuIncompatibleMaskBit;
     if (meta->needsGPU()) mask |= needsGPUMaskBit;
     if (meta->type() == QmlMetadata::Link) mask |= linkMaskBit;
