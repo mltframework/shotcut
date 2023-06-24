@@ -18,7 +18,7 @@
 function scrollIfNeeded(center, continouous) {
     var x = timeline.position * multitrack.scaleFactor;
     if (!tracksFlickable) return;
-    if (settings.timelineCenterPlayhead || center) {
+    if (center) {
         if (x > tracksFlickable.contentX + tracksFlickable.width * 0.5)
             tracksFlickable.contentX = x - tracksFlickable.width * 0.5;
         else if (x < tracksFlickable.width * 0.5)

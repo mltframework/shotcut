@@ -776,7 +776,7 @@ Rectangle {
     Connections {
         function onPositionChanged() {
             if (!stopScrolling)
-                Logic.scrollIfNeeded(false, scrubMouseArea.containsPress);
+                Logic.scrollIfNeeded(false, scrubMouseArea.containsPress || scrubMouseArea.skim);
         }
 
         function onDragging(pos, duration) {
@@ -845,7 +845,7 @@ Rectangle {
     Connections {
         function onScaleFactorChanged() {
             if (settings.timelineCenterPlayhead)
-                Logic.scrollIfNeeded();
+                Logic.scrollIfNeeded(true);
         }
 
         target: multitrack

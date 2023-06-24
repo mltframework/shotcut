@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021 Meltytech, LLC
+ * Copyright (c) 2017-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ function trackHeight(isCurves) {
 function scrollIfNeeded(center, continuous) {
     var x = producer.position * timeScale;
     if (!tracksFlickable) return;
-    if (settings.timelineCenterPlayhead || center) {
+    if (center) {
         if (x > tracksFlickable.contentX + tracksFlickable.width * 0.5)
             tracksFlickable.contentX = x - tracksFlickable.width * 0.5;
         else if (x < tracksFlickable.width * 0.5)

@@ -38,7 +38,7 @@ Rectangle {
     signal clipRightClicked
 
     function redrawWaveforms() {
-        Logic.scrollIfNeeded();
+        Logic.scrollIfNeeded(settings.timelineCenterPlayhead);
         beforeClip.generateWaveform();
         activeClip.generateWaveform();
         afterClip.generateWaveform();
@@ -574,7 +574,7 @@ Rectangle {
     Connections {
         function onPositionChanged() {
             if (!stopScrolling)
-                Logic.scrollIfNeeded(false, tracksAreaMouse.containsPress);
+                Logic.scrollIfNeeded(false, tracksAreaMouse.containsPress || tracksAreaMouse.skim);
         }
 
         target: producer
