@@ -309,11 +309,7 @@ void PlaylistDock::setupActions()
     icon = QIcon::fromTheme("list-add",
                             QIcon(":/icons/oxygen/32x32/actions/list-add.png"));
     action->setIcon(icon);
-    action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onAppendCutActionTriggered);
-    connect(this, &PlaylistDock::producerOpened, action, [ = ]() {
-        action->setEnabled(!MLT.isMultitrack() && !MLT.isPlaylist());
-    });
     Actions.add("playlistAppendCutAction", action);
 
     action = new QAction(tr("Remove"), this);
@@ -404,11 +400,7 @@ void PlaylistDock::setupActions()
     action = new QAction(tr("GoTo"), this);
     action->setToolTip(tr("Go to the start of this clip in the Project player"));
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Return));
-    action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onGotoActionTriggered);
-    connect(this, &PlaylistDock::producerOpened, action, [ = ]() {
-        action->setEnabled(!MLT.isMultitrack() && !MLT.isPlaylist());
-    });
     Actions.add("playlistGoToAction", action);
 
     action = new QAction(tr("Copy"), this);
@@ -424,11 +416,7 @@ void PlaylistDock::setupActions()
     action = new QAction(tr("Insert"), this);
     action->setToolTip(tr("Insert"));
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_V));
-    action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onInsertCutActionTriggered);
-    connect(this, &PlaylistDock::producerOpened, action, [ = ]() {
-        action->setEnabled(MLT.isClip() || MLT.savedProducer());
-    });
     Actions.add("playlistInsertCutAction", action);
 
     action = new QAction(tr("Update Thumbnails"), this);
