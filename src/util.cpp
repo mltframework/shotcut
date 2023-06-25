@@ -737,3 +737,20 @@ bool Util::isFpsDifferent(double a, double b)
 {
     return qAbs(a - b) > 0.001;
 }
+
+QString Util::getNextFile(const QString &filePath)
+{
+    QFileInfo info(filePath);
+    QString basename = info.completeBaseName();
+    QString extension = info.suffix();
+    if (extension.isEmpty()) {
+        extension = basename;
+        basename = QString();
+    }
+    for (unsigned i = 1; i < std::numeric_limits<unsigned>::max(); i++) {
+        QString filename = QString::fromLatin1("%1%2.%3").arg(basename).arg(i).arg(extension);
+        if (!info.dir().exists(filename))
+            return info.dir().filePath(filename);
+    }
+    return filePath;
+}

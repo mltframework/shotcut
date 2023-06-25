@@ -66,3 +66,8 @@ ResourceWidget::ResourceWidget(QWidget *parent)
 ResourceWidget::~ResourceWidget()
 {
 }
+
+QList<Mlt::Producer> ResourceWidget::getSelected()
+{
+    return m_model->getProducers(m_table->selectionModel()->selectedRows());
+}

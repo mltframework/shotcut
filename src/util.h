@@ -73,6 +73,7 @@ public:
     static void passProducerProperties(Mlt::Producer *src, Mlt::Producer *dst);
     static bool warnIfLowDiskSpace(const QString &path);
     static bool isFpsDifferent(double a, double b);
+    static QString getNextFile(const QString &filePath);
 };
 
 #endif // UTIL_H

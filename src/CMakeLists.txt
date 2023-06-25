@@ -104,6 +104,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   settings.cpp settings.h
   sharedframe.cpp sharedframe.h
   shotcut_mlt_properties.h
+  transcoder.cpp transcoder.h
   spatialmedia/box.cpp spatialmedia/box.h
   spatialmedia/container.cpp spatialmedia/container.h
   spatialmedia/mpeg4_container.cpp spatialmedia/mpeg4_container.h

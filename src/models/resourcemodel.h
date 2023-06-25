@@ -42,6 +42,7 @@ public:
     void clear();
     void search(Mlt::Producer *producer);
     void add(Mlt::Producer *producer);
+    QList<Mlt::Producer> getProducers(const QModelIndexList &indices);
 
 protected:
     bool exists(const QString &hash);

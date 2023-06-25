@@ -15,29 +15,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef RESOURCEWIDGET_H
-#define RESOURCEWIDGET_H
+#ifndef TRANSCODER_H
+#define TRANSCODER_H
 
-#include <Mlt.h>
+#include "dialogs/transcodedialog.h"
 
-#include <QWidget>
+#include <MltProducer.h>
 
-class ResourceModel;
-class QTreeView;
+#include <QList>
+#include <QObject>
 
-class ResourceWidget : public QWidget
+class Transcoder : public QObject
 {
     Q_OBJECT
 
 public:
-    ResourceWidget(QWidget *parent);
-    virtual ~ResourceWidget();
 
-    QList<Mlt::Producer> getSelected();
+    explicit Transcoder() : QObject() {}
+    void setProducers(QList<Mlt::Producer> &producers);
+    void addProducer(Mlt::Producer &producer);
+    void addProducer(Mlt::Producer *producer);
+    void convert(TranscodeDialog &dialog);
 
 private:
-    ResourceModel *m_model;
-    QTreeView *m_table;
+    void convertProducer(Mlt::Producer *producer, TranscodeDialog &dialog);
+    QList<Mlt::Producer> m_producers;
 };
 
-#endif // RESOURCEWIDGET_H
+#endif // TRANSCODER_H

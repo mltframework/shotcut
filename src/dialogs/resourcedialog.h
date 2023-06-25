@@ -20,14 +20,19 @@
 
 #include <QDialog>
 
+class ResourceWidget;
+
 class ResourceDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit ResourceDialog(QWidget *parent = 0);
 
-private:
+private slots:
+    void convert();
 
+private:
+    ResourceWidget *m_resourceWidget;
 };
 
 #endif // RESOURCEDIALOG_H

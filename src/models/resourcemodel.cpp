@@ -152,6 +152,18 @@ void ResourceModel::add(Mlt::Producer *producer)
     }
 }
 
+QList<Mlt::Producer> ResourceModel::getProducers(const QModelIndexList &indices)
+{
+    QList<Mlt::Producer> producers;
+    foreach (auto index, indices) {
+        int row = index.row();
+        if (row >= 0 && row < m_producers.size()) {
+            producers << m_producers[row];
+        }
+    }
+    return producers;
+}
+
 bool ResourceModel::exists(const QString &hash)
 {
     for ( int i = 0; i < m_producers.count(); ++i ) {
