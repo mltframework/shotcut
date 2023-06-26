@@ -199,7 +199,7 @@ Shotcut.VuiBase {
                         id: cursor
 
                         visible: textArea.cursorVisible
-                        width: 2 / scale
+                        width: 4 / scale
                         color: 'white'
                         border.color: 'black'
                         border.width: 1
