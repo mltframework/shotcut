@@ -174,6 +174,8 @@ Item {
                     text = spinbox.textFromValue(spinbox.value, spinbox.locale);
                     _blockTextUpdate = false;
                 }
+                Keys.onUpPressed: spinbox.increase()
+                Keys.onDownPressed: spinbox.decrease()
 
                 MouseArea {
                     acceptedButtons: Qt.RightButton
