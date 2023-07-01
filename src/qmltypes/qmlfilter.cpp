@@ -393,6 +393,8 @@ void QmlFilter::analyze(bool isAudio, bool deferJob)
     } else {
         service.set("in", mltFilter.get_in());
         service.set("out", mltFilter.get_out());
+        if (mlt_service_producer_type == service.type())
+            mltFilter.set_in_and_out(0, mltFilter.get_length() - 1);
     }
 
     // Write the job XML
