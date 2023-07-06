@@ -776,7 +776,7 @@ Rectangle {
     Connections {
         function onPositionChanged() {
             if (!stopScrolling)
-                Logic.scrollIfNeeded(false, scrubMouseArea.containsPress || scrubMouseArea.skim);
+                Logic.scrollIfNeeded(settings.timelineCenterPlayhead, scrubMouseArea.containsPress || scrubMouseArea.skim);
         }
 
         function onDragging(pos, duration) {

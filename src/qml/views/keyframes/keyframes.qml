@@ -574,7 +574,7 @@ Rectangle {
     Connections {
         function onPositionChanged() {
             if (!stopScrolling)
-                Logic.scrollIfNeeded(false, tracksAreaMouse.containsPress || tracksAreaMouse.skim);
+                Logic.scrollIfNeeded(settings.timelineCenterPlayhead, tracksAreaMouse.containsPress || tracksAreaMouse.skim);
         }
 
         target: producer
