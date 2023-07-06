@@ -597,9 +597,11 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 setIfNotSet(p, "compression_level", TO_ABSOLUTE(0, 10, ui->audioQualitySpinner->value()));
             } else {
                 setIfNotSet(p, "vbr", "on");
-                int aq = ui->audioQualitySpinner->value();
+                double aq = ui->audioQualitySpinner->value();
                 if (acodec == "libmp3lame")
                     aq = TO_ABSOLUTE(9, 0, aq);
+                else if (acodec == "aac")
+                    aq = 0.1 + 1.9 * aq / 100.0;
                 else if (acodec == "libvorbis" || acodec == "vorbis")
                     aq = TO_ABSOLUTE(0, 10, aq);
                 else
@@ -2135,14 +2137,19 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
 void EncodeDock::on_audioQualitySpinner_valueChanged(int aq)
 {
     const QString &acodec = ui->audioCodecCombo->currentText();
-    if (acodec == "libmp3lame")
-        aq = TO_ABSOLUTE(9, 0, aq);
-    else if (acodec == "libvorbis" || acodec == "vorbis")
-        aq = TO_ABSOLUTE(0, 10, aq);
-    else
-        aq = TO_ABSOLUTE(0, 500, aq);
     QString s("aq=%1");
-    ui->audioQualitySuffixLabel->setText(s.arg(aq));
+    if (acodec == "aac") {
+        auto a = 0.1 + 1.9 * aq / 100.0;
+        ui->audioQualitySuffixLabel->setText(s.arg(a));
+    } else {
+        if (acodec == "libmp3lame")
+            aq = TO_ABSOLUTE(9, 0, aq);
+        else if (acodec == "libvorbis" || acodec == "vorbis")
+            aq = TO_ABSOLUTE(0, 10, aq);
+        else
+            aq = TO_ABSOLUTE(0, 500, aq);
+        ui->audioQualitySuffixLabel->setText(s.arg(aq));
+    }
 }
 
 void EncodeDock::on_parallelCheckbox_clicked(bool checked)
