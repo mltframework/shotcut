@@ -520,7 +520,7 @@ function set_globals {
 
   # set global environment for all jobs
   alias make=mingw32-make
-  export QTDIR="$HOME/Qt/6.4.2/mingw_64"
+  export QTDIR="$HOME/Qt/6.4.3/mingw_64"
   export PKG_CONFIG_PATH="$HOME/lib/pkgconfig:$PKG_CONFIG_PATH"
   export PATH="$FINAL_INSTALL_DIR/bin:$PATH"
   export LD_RUN_PATH="$FINAL_INSTALL_DIR/lib"

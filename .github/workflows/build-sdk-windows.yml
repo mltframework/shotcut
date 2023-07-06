@@ -64,18 +64,18 @@ jobs:
           echo Downloading Qt
           mkdir Qt
           cd Qt
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.4.2-x64-mingw810.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.4.3-x64-mingw.txz
           echo Extracting Qt
-          tar -xJf qt-6.4.2-x64-mingw810.txz
-          rm qt-6.4.2-x64-mingw810.txz
+          tar -xJf qt-6.4.3-x64-mingw.txz
+          rm qt-6.4.3-x64-mingw.txz
           cd ..
           echo Downloading prebuilt SWH LADSPA plugins
           curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
           echo Downloading a few other prebuilt dependencies
-          curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v5.txz
+          curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v6.txz
           echo Extracting prebuilt dependencies
-          tar -xJf mlt-prebuilt-mingw64-v5.txz
-          rm mlt-prebuilt-mingw64-v5.txz
+          tar -xJf mlt-prebuilt-mingw64-v6.txz
+          rm mlt-prebuilt-mingw64-v6.txz
           CHECKOUT_DIR=$(popd)
           popd
           echo Running the build script
