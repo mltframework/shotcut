@@ -1577,6 +1577,11 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         m_player->setPauseAfterOpen(!play || !MLT.isClip());
 
+#if defined(Q_OS_WIN)
+        if (!::qEnvironmentVariableIsSet("SDL_AUDIODRIVER")) {
+            ::qputenv("SDL_AUDIODRIVER", MLT.audioChannels() > 2 ? "directsound" : "winmm");
+        }
+#endif
         setAudioChannels(MLT.audioChannels());
         if (url.endsWith(".mlt") || url.endsWith(".xml")) {
             setVideoModeMenu();
@@ -3206,7 +3211,7 @@ void MainWindow::on_actionProgressive_triggered(bool checked)
 
 void MainWindow::changeAudioChannels(bool checked, int channels)
 {
-    if ( checked ) {
+    if (checked) {
         Settings.setPlayerAudioChannels(channels);
         setAudioChannels(Settings.playerAudioChannels());
     }
