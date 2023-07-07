@@ -173,6 +173,19 @@ public:
                                              .arg("Round, Ceil, Floor, RoundPreferFloor, PassThrough"),
                                              QCoreApplication::translate("main", "string"), "PassThrough");
         parser.addOption(scalePolicyOption);
+#if defined(Q_OS_WIN)
+        QCommandLineOption sdlAudioDriverOption("SDL_AUDIODRIVER",
+                                                QCoreApplication::translate("main", "Which operating system audio API to use: %1")
+                                                .arg("directsound, wasapi, winmm"),
+                                                QCoreApplication::translate("main", "string"), "wasapi");
+        parser.addOption(sdlAudioDriverOption);
+#elif defined(Q_OS_LINUX)
+        QCommandLineOption sdlAudioDriverOption("SDL_AUDIODRIVER",
+                                                QCoreApplication::translate("main", "Which operating system audio API to use: %1")
+                                                .arg("alsa, arts, dsp, esd, jack, pipewire, pulseaudio"),
+                                                QCoreApplication::translate("main", "string"), "pulseaudio");
+        parser.addOption(sdlAudioDriverOption);
+#endif
         parser.addPositionalArgument("[FILE]...",
                                      QCoreApplication::translate("main", "Zero or more files or folders to open"));
         parser.process(arguments());
@@ -309,6 +322,16 @@ int main(int argc, char **argv)
             }
         }
     }
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+    if (!::qEnvironmentVariableIsSet("SDL_AUDIODRIVER")) {
+        for (int i = 1; i + 1 < argc; i++) {
+            if (!::qstrcmp("--SDL_AUDIODRIVER", argv[i])) {
+                ::qputenv("SDL_AUDIODRIVER", argv[i + 1]);
+                break;
+            }
+        }
+    }
+#endif
 #ifdef Q_OS_MAC
     // Launcher and Spotlight on macOS are not setting this environment
     // variable needed by setlocale() as used by MLT.
