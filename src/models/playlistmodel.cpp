@@ -535,7 +535,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
     Q_UNUSED(column)
     Q_UNUSED(parent)
     // Internal reorder
-    if (action == Qt::MoveAction) {
+    if (action == Qt::MoveAction && !data->hasUrls()) {
         m_dropRow = row;
         m_rowsRemoved.clear();
         return true;
