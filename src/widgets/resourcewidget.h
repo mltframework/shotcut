@@ -33,7 +33,12 @@ public:
     ResourceWidget(QWidget *parent);
     virtual ~ResourceWidget();
 
+    void search(Mlt::Producer *producer);
+    void add(Mlt::Producer *producer);
+    void selectTroubleClips();
+    bool hasTroubleClips();
     QList<Mlt::Producer> getSelected();
+    void updateSize();
 
 private:
     ResourceModel *m_model;

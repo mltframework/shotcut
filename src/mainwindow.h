@@ -204,6 +204,7 @@ private:
     QMenu *m_customProfileMenu;
     QMenu *m_keyerMenu;
     QStringList m_multipleFiles;
+    bool m_multipleFilesLoading;
     bool m_isPlaylistLoaded;
     QActionGroup *m_languagesGroup;
     QSharedPointer<AutoSaveFile> m_autosaveFile;
@@ -223,7 +224,8 @@ private:
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker &checker);
     bool isXmlRepaired(MltXmlChecker &checker, QString &fileName);
-    bool open(QString url, const Mlt::Properties * = nullptr, bool play = true);
+    bool open(QString url, const Mlt::Properties * = nullptr, bool play = true,
+              bool skipConvert = false);
     void openMultiple(const QStringList &paths);
     void openMultiple(const QList<QUrl> &urls);
     void openVideo();
@@ -303,6 +305,7 @@ private slots:
     void onProfileChanged();
     void on_actionAddCustomProfile_triggered();
     void processMultipleFiles();
+    void processSingleFile();
     void onLanguageTriggered(QAction *);
     void on_actionSystemTheme_triggered();
     void on_actionFusionDark_triggered();

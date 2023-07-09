@@ -113,7 +113,7 @@ int Controller::setProducer(Mlt::Producer *producer, bool)
     return error;
 }
 
-int Controller::open(const QString &url, const QString &urlToSave)
+int Controller::open(const QString &url, const QString &urlToSave, bool skipConvert)
 {
     int error = checkFile(url);
     if (error) {
@@ -171,6 +171,7 @@ int Controller::open(const QString &url, const QString &urlToSave)
                 m_url = urlToSave;
         }
         Producer *producer = setupNewProducer(newProducer);
+        producer->set(kShotcutSkipConvertProperty, skipConvert);
         delete newProducer;
         newProducer = producer;
     } else {

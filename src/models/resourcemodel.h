@@ -29,22 +29,19 @@ class ResourceModel : public QAbstractItemModel
 public:
 
     enum Columns {
-        COLUMN_NAME = 0,
+        COLUMN_INFO = 0,
+        COLUMN_NAME,
         COLUMN_SIZE,
         COLUMN_VID_DESCRIPTION,
         COLUMN_AUD_DESCRIPTION,
         COLUMN_COUNT,
     };
-    static const int INVALID_OFFSET = std::numeric_limits<int>::max();
 
     explicit ResourceModel(QObject *parent = 0);
     virtual ~ResourceModel();
-    void clear();
     void search(Mlt::Producer *producer);
     void add(Mlt::Producer *producer);
     QList<Mlt::Producer> getProducers(const QModelIndexList &indices);
-
-protected:
     bool exists(const QString &hash);
     // Implement QAbstractItemModel
     int rowCount(const QModelIndex &parent) const;

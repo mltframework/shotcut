@@ -38,7 +38,7 @@ public:
     void convert(TranscodeDialog &dialog);
 
 private:
-    void convertProducer(Mlt::Producer *producer, TranscodeDialog &dialog);
+    void convertProducer(Mlt::Producer *producer, TranscodeDialog &dialog, QString filename);
     QList<Mlt::Producer> m_producers;
 };
 

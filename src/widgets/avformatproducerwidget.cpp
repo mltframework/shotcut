@@ -349,39 +349,7 @@ void AvformatProducerWidget::reloadProducerValues()
                 ui->videoTableWidget->setItem(4, 1, new QTableWidgetItem(csString));
                 key = QString("meta.media.%1.codec.color_trc").arg(i);
                 int trc = m_producer->get_int(key.toLatin1().constData());
-                QString trcString = tr("unknown (%1)").arg(trc);
-                switch (trc) {
-                case 0:
-                    trcString = tr("NA");
-                    break;
-                case 1:
-                    trcString = "ITU-R BT.709";
-                    break;
-                case 6:
-                    trcString = "ITU-R BT.601";
-                    break;
-                case 7:
-                    trcString = "SMPTE ST240";
-                    break;
-                case 11:
-                    trcString = "IEC 61966-2-4";
-                    break;
-                case 14:
-                    trcString = "ITU-R BT.2020";
-                    break;
-                case 15:
-                    trcString = "ITU-R BT.2020";
-                    break;
-                case 16:
-                    trcString = "SMPTE ST2084 (PQ)";
-                    break;
-                case 17:
-                    trcString = "SMPTE ST428";
-                    break;
-                case 18:
-                    trcString = "ARIB B67 (HLG)";
-                    break;
-                }
+                QString trcString = Util::trcString(trc);
                 QTableWidgetItem *trcItem = new QTableWidgetItem(trcString);
                 trcItem->setData(Qt::UserRole, QVariant(trc));
                 ui->videoTableWidget->setItem(5, 1, trcItem);
@@ -545,31 +513,6 @@ void AvformatProducerWidget::reloadProducerValues()
     }
     ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
     setSyncVisibility();
-
-    if (Settings.showConvertClipDialog() && !m_producer->get_int(kShotcutSkipConvertProperty)) {
-        auto transferItem = ui->videoTableWidget->item(5, 1);
-        if (transferItem) LOG_INFO() << "color transfer" << transferItem->data(
-                                             Qt::UserRole).toInt() << "=" << transferItem->text();
-        if (transferItem && transferItem->data(Qt::UserRole).toInt() > 7
-                && transferItem->data(Qt::UserRole).toInt() != 11
-                && transferItem->data(Qt::UserRole).toInt() != 18) {
-            // Transfer characteristics > SMPTE240M Probably need conversion except IEC61966-2-4 is OK
-            QString trcString = ui->videoTableWidget->item(5, 1)->text();
-            LOG_INFO() << resource << "Probable HDR" << trcString;
-            offerConvert(
-                tr("This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.").arg(
-                    trcString), true);
-        } else if (isVariableFrameRate) {
-            LOG_INFO() << resource << "is variable frame rate";
-            offerConvert(tr("This file is variable frame rate, which is not reliable for editing."));
-        } else if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
-            LOG_INFO() << resource << "is not seekable";
-            offerConvert(tr("This file does not support seeking and cannot be used for editing."));
-        } else if (QFile::exists(resource) && resource.endsWith(".m2t")) {
-            LOG_INFO() << resource << "is HDV";
-            offerConvert(tr("This file format (HDV) is not reliable for editing."));
-        }
-    }
 }
 
 void AvformatProducerWidget::on_videoTrackComboBox_activated(int index)

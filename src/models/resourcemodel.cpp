@@ -110,26 +110,17 @@ private:
 ResourceModel::ResourceModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
-    LOG_DEBUG() << "Start parser";
-    Mlt::Producer multitrack(*MAIN.multitrack());
-    search(&multitrack);
-    Mlt::Producer playlist(*MAIN.playlist());
-    search(&playlist);
 }
 
 ResourceModel::~ResourceModel()
 {
 }
 
-void ResourceModel::clear()
-{
-    beginResetModel();
-    m_producers.clear();
-    endResetModel();
-}
-
 void ResourceModel::search(Mlt::Producer *producer)
 {
+    if (!producer) {
+        return;
+    }
     ProducerFinder parser(this);
     parser.start(*producer);
 }
@@ -142,12 +133,16 @@ void ResourceModel::add(Mlt::Producer *producer)
         Mlt::Producer parent = producer->parent();
         QString hash = Util::getHash(parent);
         if (!hash.isEmpty() && !exists(hash)) {
+            beginInsertRows(QModelIndex(), m_producers.size(), m_producers.size());
             m_producers.append(parent);
+            endInsertRows();
         }
     } else {
         QString hash = Util::getHash(*producer);
         if (!hash.isEmpty() && !exists(hash)) {
+            beginInsertRows(QModelIndex(), m_producers.size(), m_producers.size());
             m_producers.append(*producer);
+            endInsertRows();
         }
     }
 }
@@ -194,7 +189,6 @@ QVariant ResourceModel::data(const QModelIndex &index, int role) const
     case Qt::StatusTipRole:
     case Qt::FontRole:
     case Qt::SizeHintRole:
-    case Qt::DecorationRole:
     case Qt::CheckStateRole:
     case Qt::BackgroundRole:
     case Qt::ForegroundRole:
@@ -211,6 +205,8 @@ QVariant ResourceModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case Qt::DisplayRole:
         switch (index.column()) {
+        case COLUMN_INFO:
+            break;
         case COLUMN_NAME: {
             QString path = Util::GetFilenameFromProducer(producer, true);
             QFileInfo info(path);
@@ -269,14 +265,31 @@ QVariant ResourceModel::data(const QModelIndex &index, int role) const
             break;
         }
         default:
-            LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role] << role;
+            LOG_ERROR() << "Invalid DisplayRole Column" << index.row() << index.column() << roleNames()[role] <<
+                        role;
             break;
         }
         break;
     case Qt::ToolTipRole:
-        return Util::GetFilenameFromProducer(producer, true);
+        switch (index.column()) {
+        case COLUMN_INFO:
+            result = Util::getConversionAdvice(producer);
+            break;
+        case COLUMN_NAME:
+        case COLUMN_VID_DESCRIPTION:
+        case COLUMN_AUD_DESCRIPTION:
+        case COLUMN_SIZE:
+            result = Util::GetFilenameFromProducer(producer, true);
+            break;
+        default:
+            LOG_ERROR() << "Invalid ToolTipRole Column" << index.row() << index.column() << roleNames()[role] <<
+                        role;
+            break;
+        }
+        break;
     case Qt::TextAlignmentRole:
         switch (index.column()) {
+        case COLUMN_INFO:
         case COLUMN_NAME:
         case COLUMN_VID_DESCRIPTION:
         case COLUMN_AUD_DESCRIPTION:
@@ -286,7 +299,28 @@ QVariant ResourceModel::data(const QModelIndex &index, int role) const
             result = Qt::AlignRight;
             break;
         default:
-            LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role] << role;
+            LOG_ERROR() << "Invalid TextAlignmentRole Column" << index.row() << index.column() <<
+                        roleNames()[role] << role;
+            break;
+        }
+        break;
+    case Qt::DecorationRole:
+        switch (index.column()) {
+        case COLUMN_INFO:
+            if (!Util::getConversionAdvice(producer).isEmpty()) {
+                result = QIcon(":/icons/oxygen/32x32/status/task-attempt.png");
+            } else {
+                result = QIcon(":/icons/oxygen/32x32/status/task-complete.png");
+            }
+            break;
+        case COLUMN_NAME:
+        case COLUMN_VID_DESCRIPTION:
+        case COLUMN_AUD_DESCRIPTION:
+        case COLUMN_SIZE:
+            break;
+        default:
+            LOG_ERROR() << "Invalid DecorationRole Column" << index.row() << index.column() << roleNames()[role]
+                        << role;
             break;
         }
         break;

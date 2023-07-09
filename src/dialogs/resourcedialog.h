@@ -22,14 +22,26 @@
 
 class ResourceWidget;
 
+namespace Mlt {
+class Producer;
+}
+
 class ResourceDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit ResourceDialog(QWidget *parent = 0);
 
+    void search(Mlt::Producer *producer);
+    void add(Mlt::Producer *producer);
+    void selectTroubleClips();
+    bool hasTroubleClips();
+
 private slots:
     void convert();
+
+protected:
+    virtual void showEvent(QShowEvent *event) override;
 
 private:
     ResourceWidget *m_resourceWidget;

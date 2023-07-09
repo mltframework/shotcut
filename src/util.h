@@ -74,6 +74,9 @@ public:
     static bool warnIfLowDiskSpace(const QString &path);
     static bool isFpsDifferent(double a, double b);
     static QString getNextFile(const QString &filePath);
+    static QString trcString(int trc);
+    static bool trcIsCompatible(int trc);
+    static QString getConversionAdvice(Mlt::Producer *producer);
 };
 
 #endif // UTIL_H

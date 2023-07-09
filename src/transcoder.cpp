@@ -50,19 +50,89 @@ void Transcoder::convert(TranscodeDialog &dialog)
     if (dialog.isCheckBoxChecked()) {
         Settings.setShowConvertClipDialog(false);
     }
-    if (result == QDialog::Accepted) {
+    if (result != QDialog::Accepted) {
+        return;
+    }
+
+    QString path = Settings.savePath();
+    QString suffix = dialog.isSubClip() ? tr("Sub-clip") + ' ' : tr("Converted");
+    QString filename;
+    QString nameFormat;
+    QString nameFilter;
+
+    switch (dialog.format()) {
+    case 0:
+        nameFormat = "/%1 - %2.mp4";
+        nameFilter = tr("MP4 (*.mp4);;All Files (*)");
+        break;
+    case 1:
+        nameFormat = "/%1 - %2.mov";
+        nameFilter = tr("MOV (*.mov);;All Files (*)");
+        break;
+    case 2:
+        nameFormat = "/%1 - %2.mkv";
+        nameFilter = tr("MKV (*.mkv);;All Files (*)");
+        break;
+    }
+
+    if (m_producers.length() == 1) {
+        QString resource = Util::GetFilenameFromProducer(&m_producers[0]);
+        QFileInfo fi(resource);
+        filename = path + nameFormat.arg(fi.completeBaseName(), suffix);
+        if (dialog.isSubClip()) {
+            filename = Util::getNextFile(path);
+        }
+        filename = QFileDialog::getSaveFileName(MAIN.centralWidget(), dialog.windowTitle(), filename,
+                                                nameFilter,
+                                                nullptr, Util::getFileDialogOptions());
+        if (!filename.isEmpty()) {
+            if (filename == QDir::toNativeSeparators(resource)) {
+                QMessageBox::warning(MAIN.centralWidget(), dialog.windowTitle(),
+                                     QObject::tr("Unable to write file %1\n"
+                                                 "Perhaps you do not have permission.\n"
+                                                 "Try again with a different folder.")
+                                     .arg(fi.fileName()));
+                return;
+            }
+            if (Util::warnIfNotWritable(filename, MAIN.centralWidget(), dialog.windowTitle()))
+                return;
+
+            if (Util::warnIfLowDiskSpace(filename)) {
+                MAIN.showStatusMessage(tr("Convert canceled"));
+                return;
+            }
+        }
+        convertProducer(&m_producers[0], dialog, filename);
+    } else if (m_producers.length() > 1) {
+        path = QFileDialog::getExistingDirectory(MAIN.centralWidget(), dialog.windowTitle(), path,
+                                                 Util::getFileDialogOptions());
+        if (path.isEmpty()) {
+            MAIN.showStatusMessage(tr("Convert canceled"));
+            return;
+        }
+        if (Util::warnIfNotWritable(path, MAIN.centralWidget(), dialog.windowTitle())) {
+            return;
+        }
+        if (Util::warnIfLowDiskSpace(path)) {
+            MAIN.showStatusMessage(tr("Convert canceled"));
+            return;
+        }
+
         for (auto &producer : m_producers) {
-            convertProducer(&producer, dialog);
+            QString resource = Util::GetFilenameFromProducer(&producer);
+            QFileInfo fi(resource);
+            filename = path + nameFormat.arg(fi.completeBaseName(), suffix);
+            filename = Util::getNextFile(filename);
+            convertProducer(&producer, dialog, filename);
         }
     }
+    Settings.setSavePath(QFileInfo(filename).path());
 }
 
-void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialog)
+void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialog, QString filename)
 {
     QString resource = Util::GetFilenameFromProducer(producer);
-    QString path = Settings.savePath();
     QStringList args;
-    QString nameFilter;
     int in = -1;
 
     args << "-loglevel" << "verbose";
@@ -138,7 +208,7 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
         color_range = "mpeg";
     }
 
-    if (dialog.get709Convert()) {
+    if (dialog.get709Convert() && !Util::trcIsCompatible(producer->get_int("meta.media.color_trc"))) {
         QString convertFilter =
             QString("zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv422p,");
         filterString = filterString + convertFilter;
@@ -161,7 +231,11 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
     args << filterString;
 
     // Specify color range
-    args << "-color_range" << color_range;
+    if (color_range == "full") {
+        args << "-color_range" << "2";
+    } else {
+        args << "-color_range" << "1";
+    }
 
     int progressive = producer->get_int("meta.media.progressive")
                       || producer->get_int("force_progressive");
@@ -172,8 +246,6 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
 
     switch (dialog.format()) {
     case 0:
-        path.append("/%1 - %2.mp4");
-        nameFilter = tr("MP4 (*.mp4);;All Files (*)");
         args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v" << "libx264";
         args << "-preset" << "medium" << "-g" << "1" << "-crf" << "15";
         break;
@@ -184,72 +256,41 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
         } else { // interlaced
             args << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
         }
-        path.append("/%1 - %2.mov");
-        nameFilter = tr("MOV (*.mov);;All Files (*)");
         break;
     case 2:
         args << "-f" << "matroska" << "-codec:a" << "pcm_f32le" << "-codec:v" << "utvideo";
         args << "-pix_fmt" << "yuv422p";
-        path.append("/%1 - %2.mkv");
-        nameFilter = tr("MKV (*.mkv);;All Files (*)");
         break;
     }
     if (dialog.get709Convert()) {
         args << "-colorspace" << "bt709" << "-color_primaries" << "bt709" << "-color_trc" << "bt709";
     }
-    QFileInfo fi(resource);
-    QString suffix = dialog.isSubClip() ? tr("Sub-clip") + ' ' : tr("Converted");
-    path = path.arg(fi.completeBaseName(), suffix);
+
+    args << "-y" << filename;
+    producer->Mlt::Properties::clear(kOriginalResourceProperty);
+
+    FfmpegJob *job = new FfmpegJob(filename, args, false);
+    job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
     if (dialog.isSubClip()) {
-        path = Util::getNextFile(path);
-    }
-    QString filename = QFileDialog::getSaveFileName(MAIN.centralWidget(), dialog.windowTitle(), path,
-                                                    nameFilter,
-                                                    nullptr, Util::getFileDialogOptions());
-    if (!filename.isEmpty()) {
-        if (filename == QDir::toNativeSeparators(resource)) {
-            QMessageBox::warning(MAIN.centralWidget(), dialog.windowTitle(),
-                                 QObject::tr("Unable to write file %1\n"
-                                             "Perhaps you do not have permission.\n"
-                                             "Try again with a different folder.")
-                                 .arg(fi.fileName()));
-            return;
-        }
-        if (Util::warnIfNotWritable(filename, MAIN.centralWidget(), dialog.windowTitle()))
-            return;
-
-        if (Util::warnIfLowDiskSpace(filename)) {
-            MAIN.showStatusMessage(tr("Convert canceled"));
-            return;
-        }
-
-        Settings.setSavePath(QFileInfo(filename).path());
-        args << "-y" << filename;
-        producer->Mlt::Properties::clear(kOriginalResourceProperty);
-
-        FfmpegJob *job = new FfmpegJob(filename, args, false);
-        job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
-        if (dialog.isSubClip()) {
-            if (producer->get(kMultitrackItemProperty)) {
-                QString s = QString::fromLatin1(producer->get(kMultitrackItemProperty));
-                auto parts = s.split(':');
-                if (parts.length() == 2) {
-                    int clipIndex = parts[0].toInt();
-                    int trackIndex = parts[1].toInt();
-                    QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
-                    if (!uuid.isNull()) {
-                        job->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, QString(), uuid,
-                                                                          in));
-                        JOBS.add(job);
-                    }
+        if (producer->get(kMultitrackItemProperty)) {
+            QString s = QString::fromLatin1(producer->get(kMultitrackItemProperty));
+            auto parts = s.split(':');
+            if (parts.length() == 2) {
+                int clipIndex = parts[0].toInt();
+                int trackIndex = parts[1].toInt();
+                QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
+                if (!uuid.isNull()) {
+                    job->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, QString(), uuid,
+                                                                      in));
+                    JOBS.add(job);
                 }
-            } else {
-                job->setPostJobAction(new OpenPostJobAction(resource, filename, QString()));
-                JOBS.add(job);
             }
-            return;
+        } else {
+            job->setPostJobAction(new OpenPostJobAction(resource, filename, QString()));
+            JOBS.add(job);
         }
-        job->setPostJobAction(new ReplaceAllPostJobAction(resource, filename, Util::getHash(*producer)));
-        JOBS.add(job);
+        return;
     }
+    job->setPostJobAction(new ReplaceAllPostJobAction(resource, filename, Util::getHash(*producer)));
+    JOBS.add(job);
 }

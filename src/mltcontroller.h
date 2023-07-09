@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2022 Meltytech, LLC
+ * Copyright (c) 2011-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ public:
 
     virtual QObject *videoWidget() = 0;
     virtual int setProducer(Mlt::Producer *, bool isMulti = false);
-    virtual int open(const QString &url, const QString &urlToSave);
+    virtual int open(const QString &url, const QString &urlToSave, bool skipConvert = false);
     bool openXML(const QString &filename);
     virtual void close();
     virtual int displayWidth() const = 0;

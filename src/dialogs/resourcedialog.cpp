@@ -24,8 +24,9 @@
 #include "transcoder.h"
 #include "widgets/resourcewidget.h"
 
-#include <QVBoxLayout>
 #include <QDialogButtonBox>
+#include <QMessageBox>
+#include <QVBoxLayout>
 #include <QPushButton>
 
 ResourceDialog::ResourceDialog(QWidget *parent)
@@ -35,7 +36,6 @@ ResourceDialog::ResourceDialog(QWidget *parent)
     setSizeGripEnabled(true) ;
 
     QVBoxLayout *vlayout = new QVBoxLayout();
-    LOG_DEBUG() << "Create resource widget";
     m_resourceWidget = new ResourceWidget(this);
     vlayout->addWidget(m_resourceWidget);
 
@@ -50,11 +50,45 @@ ResourceDialog::ResourceDialog(QWidget *parent)
     vlayout->addWidget(buttonBox);
 
     setLayout(vlayout);
-    resize(m_resourceWidget->width() + 4, m_resourceWidget->height());
+}
+
+void ResourceDialog::search(Mlt::Producer *producer)
+{
+    m_resourceWidget->search(producer);
+}
+
+void ResourceDialog::add(Mlt::Producer *producer)
+{
+    m_resourceWidget->add(producer);
+}
+
+void ResourceDialog::selectTroubleClips()
+{
+    m_resourceWidget->selectTroubleClips();
+}
+
+bool ResourceDialog::hasTroubleClips()
+{
+    return m_resourceWidget->hasTroubleClips();
 }
 
 void ResourceDialog::convert()
 {
+    QList<Mlt::Producer> producers(m_resourceWidget->getSelected());
+
+    // Only convert avformat producers
+    QMutableListIterator<Mlt::Producer> i(producers);
+    while (i.hasNext()) {
+        Mlt::Producer producer = i.next();
+        if (!QString(producer.get("mlt_service")).startsWith("avformat"))
+            i.remove();
+    }
+
+    if (producers.length() < 1) {
+        QMessageBox::warning(this, windowTitle(), tr("No resources to convert"));
+        return;
+    }
+
     TranscodeDialog dialog(
         tr("Choose an edit-friendly format below and then click OK to choose a file name. "
            "After choosing a file name, a job is created. "
@@ -62,8 +96,16 @@ void ResourceDialog::convert()
         MLT.profile().progressive(), this);
     dialog.setWindowTitle(tr("Convert..."));
     dialog.setWindowModality(QmlApplication::dialogModality());
-    QList<Mlt::Producer> producers(m_resourceWidget->getSelected());
+    dialog.set709Convert(true);
     Transcoder transcoder;
     transcoder.setProducers(producers);
     transcoder.convert(dialog);
+    accept();
+}
+
+void ResourceDialog::showEvent(QShowEvent *event)
+{
+    m_resourceWidget->updateSize();
+    resize(m_resourceWidget->width() + 4, m_resourceWidget->height());
+    QDialog::showEvent(event);
 }

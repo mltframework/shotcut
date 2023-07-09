@@ -29,8 +29,6 @@ ResourceWidget::ResourceWidget(QWidget *parent)
 {
     QVBoxLayout *vlayout = new QVBoxLayout();
 
-    LOG_DEBUG() << "Create Resource Model";
-
     m_model = new ResourceModel(this);
 
     m_table = new QTreeView();
@@ -43,6 +41,10 @@ ResourceWidget::ResourceWidget(QWidget *parent)
     m_table->setModel(m_model);
     m_table->setWordWrap(false);
     m_table->header()->setStretchLastSection(false);
+    qreal rowHeight = fontMetrics().height() * devicePixelRatioF();
+    m_table->header()->setMinimumSectionSize(rowHeight);
+    m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_INFO, QHeaderView::Fixed);
+    m_table->setColumnWidth(ResourceModel::COLUMN_INFO, rowHeight);
     m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_NAME, QHeaderView::ResizeToContents);
     m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_SIZE, QHeaderView::ResizeToContents);
     m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_VID_DESCRIPTION,
@@ -55,19 +57,54 @@ ResourceWidget::ResourceWidget(QWidget *parent)
     vlayout->addWidget(m_table);
 
     setLayout(vlayout);
-
-    int tableWidth = 38;
-    for (int i = 0; i < m_table->model()->columnCount(); i++) {
-        tableWidth += m_table->columnWidth(i);
-    }
-    resize(tableWidth, 400);
 }
 
 ResourceWidget::~ResourceWidget()
 {
 }
 
+void ResourceWidget::search(Mlt::Producer *producer)
+{
+    m_model->search(producer);
+}
+
+void ResourceWidget::add(Mlt::Producer *producer)
+{
+    m_model->add(producer);
+}
+
+void ResourceWidget::selectTroubleClips()
+{
+    m_table->selectionModel()->clearSelection();
+    for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) {
+        QModelIndex index = m_model->index(i, ResourceModel::COLUMN_INFO);
+        if (!m_model->data(index, Qt::ToolTipRole).toString().isEmpty()) {
+            m_table->selectionModel()->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        }
+    }
+}
+
+bool ResourceWidget::hasTroubleClips()
+{
+    for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) {
+        QModelIndex index = m_model->index(i, ResourceModel::COLUMN_INFO);
+        if (!m_model->data(index, Qt::ToolTipRole).toString().isEmpty()) {
+            return true;
+        }
+    }
+    return false;
+}
+
 QList<Mlt::Producer> ResourceWidget::getSelected()
 {
     return m_model->getProducers(m_table->selectionModel()->selectedRows());
+}
+
+void ResourceWidget::updateSize()
+{
+    int tableWidth = 38;
+    for (int i = 0; i < m_table->model()->columnCount(); i++) {
+        tableWidth += m_table->columnWidth(i);
+    }
+    resize(tableWidth, 400);
 }
