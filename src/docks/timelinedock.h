@@ -206,6 +206,7 @@ public slots:
     void trimClipIn(bool ripple = false);
     void trimClipOut(bool ripple = false);
     void initLoad();
+    void handleDrop(int trackIndex, int position, QString xml);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

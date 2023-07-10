@@ -106,10 +106,7 @@ function dropped() {
 
 function acceptDrop(xml) {
     var position = Math.round((dropTarget.x + tracksFlickable.contentX - headerWidth) / multitrack.scaleFactor)
-    if (settings.timelineRipple)
-        timeline.insert(timeline.currentTrack, position, xml, false)
-    else
-        timeline.overwrite(timeline.currentTrack, position, xml, false)
+    timeline.handleDrop(timeline.currentTrack, position, xml)
 }
 
 function trackHeight(isAudio) {

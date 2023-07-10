@@ -33,6 +33,7 @@
 #include "dialogs/alignaudiodialog.h"
 #include "dialogs/editmarkerdialog.h"
 #include "dialogs/longuitask.h"
+#include "dialogs/resourcedialog.h"
 #include "widgets/docktoolbar.h"
 
 #include <QAction>
@@ -2409,6 +2410,88 @@ void TimelineDock::initLoad()
     load(false);
 }
 
+void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
+{
+    if (xml.startsWith(kFileUrlProtocol)) {
+        // Handle drop from file manager to empty project.
+        if (!MLT.producer() || !MLT.producer()->is_valid()) {
+            QUrl url = xml.split(kFilesUrlDelimiter).first();
+            Mlt::Properties properties;
+            properties.set(kShotcutSkipConvertProperty, 1);
+            if (!MAIN.open(Util::removeFileScheme(url), &properties, false /* play */))
+                MAIN.open(Util::removeFileScheme(url, false), &properties, false /* play */);
+        }
+
+        LongUiTask longTask(QObject::tr("Drop Files"));
+        Mlt::Playlist playlist(MLT.profile());
+        QList<QUrl> urls;
+        auto strings = xml.split(kFilesUrlDelimiter);
+        for (auto &s : strings) {
+#ifdef Q_OS_WIN
+            if (!s.startsWith(kFileUrlProtocol)) {
+                s.prepend(kFileUrlProtocol);
+            }
+#endif
+            urls << s;
+        }
+        int i = 0, count = urls.size();
+        ResourceDialog dialog(this);
+        for (const auto &path : Util::sortedFileList(urls)) {
+            if (MAIN.isSourceClipMyProject(path, /* withDialog */ false)) continue;
+            if (MLT.checkFile(path)) {
+                MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
+                continue;
+            }
+            longTask.reportProgress(Util::baseName(path), i++, count);
+            Mlt::Producer p;
+            if (path.endsWith(".mlt") || path.endsWith(".xml")) {
+                if (Settings.playerGPU() && MLT.profile().is_explicit()) {
+                    Mlt::Profile testProfile;
+                    Mlt::Producer producer(testProfile, path.toUtf8().constData());
+                    if (testProfile.width() != MLT.profile().width()
+                            || testProfile.height() != MLT.profile().height()
+                            || Util::isFpsDifferent(MLT.profile().fps(), testProfile.fps())) {
+                        MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
+                        continue;
+                    }
+                }
+                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
+                if (p.is_valid()) {
+                    p.set(kShotcutVirtualClip, 1);
+                    p.set("resource", path.toUtf8().constData());
+                }
+            } else {
+                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
+            }
+            if (p.is_valid()) {
+                if (!qstrcmp(p.get("mlt_service"), "avformat") && !p.get_int("seekable")) {
+                    MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
+                    continue;
+                }
+                Mlt::Producer *producer = MLT.setupNewProducer(&p);
+                producer->set(kShotcutSkipConvertProperty, true);
+                ProxyManager::generateIfNotExists(*producer);
+                playlist.append(*producer);
+                dialog.add(producer);
+                delete producer;
+            }
+        }
+        xml = MLT.XML(&playlist);
+        if (dialog.hasTroubleClips()) {
+            dialog.selectTroubleClips();
+            dialog.setWindowTitle(tr("Dropped Files"));
+            longTask.cancel();
+            dialog.exec();
+        }
+    }
+
+    if (Settings.timelineRipple()) {
+        insert(trackIndex, position, xml, false);
+    } else {
+        overwrite(trackIndex, position, xml, false);
+    }
+}
+
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
 {
     MAIN.undoStack()->push(
@@ -2638,65 +2721,6 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
     return true;
 }
 
-static QString convertUrlsToXML(const QString &xml)
-{
-    if (xml.startsWith(kFileUrlProtocol)) {
-        LongUiTask longTask(QObject::tr("Drop Files"));
-        Mlt::Playlist playlist(MLT.profile());
-        QList<QUrl> urls;
-        auto strings = xml.split(kFilesUrlDelimiter);
-        for (auto &s : strings) {
-#ifdef Q_OS_WIN
-            if (!s.startsWith(kFileUrlProtocol)) {
-                s.prepend(kFileUrlProtocol);
-            }
-#endif
-            urls << s;
-        }
-        int i = 0, count = urls.size();
-        for (const auto &path : Util::sortedFileList(urls)) {
-            if (MAIN.isSourceClipMyProject(path, /* withDialog */ false)) continue;
-            if (MLT.checkFile(path)) {
-                MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
-                continue;
-            }
-            longTask.reportProgress(Util::baseName(path), i++, count);
-            Mlt::Producer p;
-            if (path.endsWith(".mlt") || path.endsWith(".xml")) {
-                if (Settings.playerGPU() && MLT.profile().is_explicit()) {
-                    Mlt::Profile testProfile;
-                    Mlt::Producer producer(testProfile, path.toUtf8().constData());
-                    if (testProfile.width() != MLT.profile().width()
-                            || testProfile.height() != MLT.profile().height()
-                            || Util::isFpsDifferent(MLT.profile().fps(), testProfile.fps())) {
-                        MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
-                        continue;
-                    }
-                }
-                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
-                if (p.is_valid()) {
-                    p.set(kShotcutVirtualClip, 1);
-                    p.set("resource", path.toUtf8().constData());
-                }
-            } else {
-                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
-            }
-            if (p.is_valid()) {
-                if (!qstrcmp(p.get("mlt_service"), "avformat") && !p.get_int("seekable")) {
-                    MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
-                    continue;
-                }
-                Mlt::Producer *producer = MLT.setupNewProducer(&p);
-                ProxyManager::generateIfNotExists(*producer);
-                playlist.append(*producer);
-                delete producer;
-            }
-        }
-        return MLT.XML(&playlist);
-    }
-    return xml;
-}
-
 void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool seek)
 {
     // Validations
@@ -2707,15 +2731,6 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         return;
     }
     if (xml.contains(MAIN.fileName()) && MAIN.isSourceClipMyProject()) return;
-
-    // Handle drop from file manager to empty project.
-    if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith(kFileUrlProtocol)) {
-        QUrl url = xml.split(kFilesUrlDelimiter).first();
-        Mlt::Properties properties;
-        properties.set(kShotcutSkipConvertProperty, 1);
-        if (!MAIN.open(Util::removeFileScheme(url), &properties, false /* play */))
-            MAIN.open(Util::removeFileScheme(url, false), &properties, false /* play */);
-    }
 
     // Use MLT XML on the clipboard if it exists and is newer than source clip.
     QString xmlToUse = QGuiApplication::clipboard()->text();
@@ -2734,11 +2749,8 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
             ProxyManager::generateIfNotExists(producer);
             xmlToUse = MLT.XML(&producer);
         } else if (!xml.isEmpty()) {
-            // Convert a list of file URLs from the xml arg to MLT XML
-            xmlToUse = convertUrlsToXML(xml);
-            if (xml.startsWith(kFileUrlProtocol) && xml.split(kFilesUrlDelimiter).size() > 1) {
-                selectBlocker.reset(new TimelineSelectionBlocker(*this));
-            }
+            xmlToUse = xml;
+            selectBlocker.reset(new TimelineSelectionBlocker(*this));
         }
         if (xmlToUse.isEmpty()) {
             return;
@@ -2835,15 +2847,6 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
     }
     if (xml.contains(MAIN.fileName()) && MAIN.isSourceClipMyProject()) return;
 
-    // Handle drop from file manager to empty project.
-    if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith(kFileUrlProtocol)) {
-        QUrl url = xml.split(kFilesUrlDelimiter).first();
-        Mlt::Properties properties;
-        properties.set(kShotcutSkipConvertProperty, 1);
-        if (!MAIN.open(Util::removeFileScheme(url), &properties, false /* play */))
-            MAIN.open(Util::removeFileScheme(url, false), &properties, false /* play */);
-    }
-
     // Use MLT XML on the clipboard if it exists and is newer than source clip.
     QString xmlToUse = QGuiApplication::clipboard()->text();
     if (isSystemClipboardValid(xmlToUse)) {
@@ -2861,10 +2864,8 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
             ProxyManager::generateIfNotExists(producer);
             xmlToUse = MLT.XML(&producer);
         } else if (!xml.isEmpty()) {
-            xmlToUse = convertUrlsToXML(xml);
-            if (xml.startsWith(kFileUrlProtocol) && xml.split(kFilesUrlDelimiter).size() > 1) {
-                selectBlocker.reset(new TimelineSelectionBlocker(*this));
-            }
+            xmlToUse = xml;
+            selectBlocker.reset(new TimelineSelectionBlocker(*this));
         }
         if (position < 0) {
             position = qMax(m_position, 0);
@@ -2912,7 +2913,6 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
                 position = 0;
                 addVideoTrack();
             }
-
             MAIN.undoStack()->push(
                 new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse, seek));
         }
