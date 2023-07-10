@@ -100,7 +100,7 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
 class Application : public QApplication
 {
 public:
-    MainWindow *mainWindow;
+    MainWindow *mainWindow {nullptr};
     QTranslator qtTranslator;
     QTranslator qtBaseTranslator;
     QTranslator shotcutTranslator;
@@ -226,20 +226,6 @@ public:
         mlt_log_set_callback(mlt_log_handler);
         cuteLogger->logToGlobalInstance("qml", true);
 
-        // Log some basic info.
-        LOG_INFO() << "Starting Shotcut version" << SHOTCUT_VERSION;
-#if defined(Q_OS_WIN)
-        LOG_INFO() << "Windows version" << QSysInfo::productVersion();
-#elif defined(Q_OS_MAC)
-        LOG_INFO() << "macOS version" << QSysInfo::productVersion();
-#else
-        LOG_INFO() << "Linux version" << QSysInfo::productVersion();;
-#endif
-        LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
-        LOG_INFO() << "locale =" << QLocale();
-        LOG_INFO() << "install dir =" << appPath;
-        Settings.log();
-
 #if defined(Q_OS_WIN)
         dir.setPath(appPath);
 #elif !defined(Q_OS_MAC)
@@ -352,7 +338,7 @@ int main(int argc, char **argv)
 #endif
 
 #if defined(Q_OS_WIN)
-    QQuickWindow::setGraphicsApi(QSGRendererInterface::Direct3D11);
+    // Windows can use Direct3D or OpenGL
 #elif defined(Q_OS_MAC)
     QQuickWindow::setGraphicsApi(QSGRendererInterface::Metal);
     QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
@@ -363,69 +349,106 @@ int main(int argc, char **argv)
 #endif
 
     Application a(argc, argv);
-    QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));
+    int result = EXIT_SUCCESS;
+#ifdef Q_OS_WIN
+    if (::qEnvironmentVariableIsSet("QSG_RHI_BACKEND")) {
+#endif
+        QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));
 
-    // Expire old items from the qmlcache
-    splash.showMessage(QCoreApplication::translate("main", "Expiring cache..."),
-                       Qt::AlignRight | Qt::AlignVCenter);
-    splash.show();
-    a.processEvents();
-    auto dir = QDir(QStandardPaths::standardLocations(QStandardPaths::CacheLocation).constFirst());
-    if (dir.exists() && dir.cd("qmlcache")) {
-        auto ls = dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot, QDir::Time);
-        if (qMax(0, ls.size() - kMaxCacheCount) > 0) {
-            LOG_INFO() << "removing" << qMax(0, ls.size() - kMaxCacheCount) << "from" << dir.path();
-        }
-        for (int i = kMaxCacheCount; i < ls.size(); i++) {
-            QString filePath = dir.filePath(ls[i]);
-            if (!QFile::remove(filePath)) {
-                LOG_WARNING() << "failed to delete" << filePath;
+        // Log some basic info.
+        LOG_INFO() << "Starting Shotcut version" << SHOTCUT_VERSION;
+#if defined(Q_OS_WIN)
+        LOG_INFO() << "Windows version" << QSysInfo::productVersion();
+#elif defined(Q_OS_MAC)
+        LOG_INFO() << "macOS version" << QSysInfo::productVersion();
+#else
+        LOG_INFO() << "Linux version" << QSysInfo::productVersion();;
+#endif
+        LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
+        LOG_INFO() << "locale =" << QLocale();
+        LOG_INFO() << "install dir =" << a.applicationDirPath();
+        Settings.log();
+
+        // Expire old items from the qmlcache
+        splash.showMessage(QCoreApplication::translate("main", "Expiring cache..."),
+                           Qt::AlignRight | Qt::AlignVCenter);
+        splash.show();
+        a.processEvents();
+        auto dir = QDir(QStandardPaths::standardLocations(QStandardPaths::CacheLocation).constFirst());
+        if (dir.exists() && dir.cd("qmlcache")) {
+            auto ls = dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot, QDir::Time);
+            if (qMax(0, ls.size() - kMaxCacheCount) > 0) {
+                LOG_INFO() << "removing" << qMax(0, ls.size() - kMaxCacheCount) << "from" << dir.path();
             }
-            if (i % 1000 == 0) {
-                a.processEvents();
+            for (int i = kMaxCacheCount; i < ls.size(); i++) {
+                QString filePath = dir.filePath(ls[i]);
+                if (!QFile::remove(filePath)) {
+                    LOG_WARNING() << "failed to delete" << filePath;
+                }
+                if (i % 1000 == 0) {
+                    a.processEvents();
+                }
             }
         }
-    }
 
-    splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."),
-                       Qt::AlignRight | Qt::AlignVCenter);
-    a.processEvents();
+        splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."),
+                           Qt::AlignRight | Qt::AlignVCenter);
+        a.processEvents();
 
-    a.setProperty("system-style", a.style()->objectName());
-    MainWindow::changeTheme(Settings.theme());
-    QQuickStyle::setStyle("Fusion");
+        a.setProperty("system-style", a.style()->objectName());
+        MainWindow::changeTheme(Settings.theme());
+        QQuickStyle::setStyle("Fusion");
 
-    a.mainWindow = &MAIN;
-    if (!a.appDirArg.isEmpty())
-        a.mainWindow->hideSetDataDirectory();
+        a.mainWindow = &MAIN;
+        if (!a.appDirArg.isEmpty())
+            a.mainWindow->hideSetDataDirectory();
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    a.mainWindow->setProperty("windowOpacity", 0.0);
+        a.mainWindow->setProperty("windowOpacity", 0.0);
 #endif
-    a.mainWindow->show();
-    a.processEvents();
-    a.mainWindow->setFullScreen(a.isFullScreen);
-    splash.finish(a.mainWindow);
+        a.mainWindow->show();
+        a.processEvents();
+        a.mainWindow->setFullScreen(a.isFullScreen);
+        splash.finish(a.mainWindow);
 
-    if (!a.resourceArg.isEmpty())
-        a.mainWindow->openMultiple(a.resourceArg);
-    else
-        a.mainWindow->open(a.mainWindow->untitledFileName());
+        if (!a.resourceArg.isEmpty())
+            a.mainWindow->openMultiple(a.resourceArg);
+        else
+            a.mainWindow->open(a.mainWindow->untitledFileName());
 
-    int result = a.exec();
+        result = a.exec();
 
-    if (EXIT_RESTART == result || EXIT_RESET == result) {
-        LOG_DEBUG() << "restarting app";
+        if (EXIT_RESTART == result || EXIT_RESET == result) {
+            LOG_DEBUG() << "restarting app";
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-        ::qputenv("LIBGL_ALWAYS_SOFTWARE",
-                  Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()
-                  ? "1" : "0");
+            ::qputenv("LIBGL_ALWAYS_SOFTWARE",
+                      Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()
+                      ? "1" : "0");
 #endif
-        QProcess *restart = new QProcess;
+            QProcess *restart = new QProcess;
+            QStringList args = a.arguments();
+            if (!args.isEmpty())
+                args.removeFirst();
+            restart->start(a.applicationFilePath(), args, QIODevice::NotOpen);
+            result = EXIT_SUCCESS;
+        }
+
+#ifdef Q_OS_WIN
+    } else { // if (::qEnvironmentVariableIsSet("QSG_RHI_BACKEND"))
+        // Run as a parent process to check if the child crashes on startup
+        QProcess *child = new QProcess;
         QStringList args = a.arguments();
         if (!args.isEmpty())
             args.removeFirst();
-        restart->start(a.applicationFilePath(), args, QIODevice::NotOpen);
-        result = EXIT_SUCCESS;
+        ::qputenv("QSG_RHI_BACKEND", "d3d11");
+        child->start(a.applicationFilePath(), args, QIODevice::NotOpen);
+        child->waitForFinished();
+        if (QProcess::CrashExit == child->exitStatus() || child->exitCode()) {
+            LOG_WARNING() << "child process failed, restarting in OpenGL mode";
+            ::qputenv("QSG_RHI_BACKEND", "opengl");
+            child->start(a.applicationFilePath(), args, QIODevice::NotOpen);
+        }
     }
+#endif
+
     return result;
 }

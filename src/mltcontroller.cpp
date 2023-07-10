@@ -41,6 +41,7 @@
 #include "proxymanager.h"
 #if defined(Q_OS_WIN)
 #include "widgets/d3dvideowidget.h"
+#include "widgets/openglvideowidget.h"
 #elif defined(Q_OS_MAC)
 #include "widgets/metalvideowidget.h"
 #else
@@ -74,7 +75,10 @@ Controller &Controller::singleton(QObject *parent)
         qRegisterMetaType<Mlt::Frame>("Mlt::Frame");
         qRegisterMetaType<SharedFrame>("SharedFrame");
 #if defined(Q_OS_WIN)
-        instance = new D3DVideoWidget(parent);
+        if (QSGRendererInterface::Direct3D11 == QQuickWindow::graphicsApi())
+            instance = new D3DVideoWidget(parent);
+        else
+            instance = new OpenGLVideoWidget(parent);
 #elif defined(Q_OS_MAC)
         instance = new MetalVideoWidget(parent);
 #else

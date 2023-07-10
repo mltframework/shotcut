@@ -102,17 +102,14 @@ void ShotcutSettings::migrateLayout()
 
 void ShotcutSettings::log()
 {
-    LOG_DEBUG() << "language" << language();
-    LOG_DEBUG() << "deinterlacer" << playerDeinterlacer();
-    LOG_DEBUG() << "external monitor" << playerExternal();
-    LOG_DEBUG() << "GPU processing" << playerGPU();
-    LOG_DEBUG() << "interpolation" << playerInterpolation();
-    LOG_DEBUG() << "video mode" << playerProfile();
-    LOG_DEBUG() << "realtime" << playerRealtime();
-    LOG_DEBUG() << "audio channels" << playerAudioChannels();
-#ifdef Q_OS_WIN
-    LOG_DEBUG() << "display method" << drawMethod();
-#endif
+    LOG_INFO() << "language" << language();
+    LOG_INFO() << "deinterlacer" << playerDeinterlacer();
+    LOG_INFO() << "external monitor" << playerExternal();
+    LOG_INFO() << "GPU processing" << playerGPU();
+    LOG_INFO() << "interpolation" << playerInterpolation();
+    LOG_INFO() << "video mode" << playerProfile();
+    LOG_INFO() << "realtime" << playerRealtime();
+    LOG_INFO() << "audio channels" << playerAudioChannels();
 }
 
 QString ShotcutSettings::language() const
