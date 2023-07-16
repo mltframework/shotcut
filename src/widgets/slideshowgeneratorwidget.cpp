@@ -43,6 +43,10 @@ enum {
 
 static const int minTransitionFrames = 2;
 
+static const int randomIndex = 0;
+static const int cutIndex = 1;
+static const int dissolveIndex = 2;
+
 SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget *parent)
     : QWidget(parent)
     , m_clips(clips)
@@ -107,6 +111,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     m_transitionStyleCombo = new QComboBox();
     m_transitionStyleCombo->setMaximumWidth(350);
     m_transitionStyleCombo->addItem(tr("Random"));
+    m_transitionStyleCombo->addItem(tr("Cut"));
     m_transitionStyleCombo->addItem(tr("Dissolve"));
     m_transitionStyleCombo->addItem(tr("Bar Horizontal"));
     m_transitionStyleCombo->addItem(tr("Bar Vertical"));
@@ -134,7 +139,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
         m_transitionStyleCombo->addItem(QFileInfo(s).fileName(), s);
     }
     m_transitionStyleCombo->setToolTip(tr("Choose a transition effect."));
-    m_transitionStyleCombo->setCurrentIndex(1);
+    m_transitionStyleCombo->setCurrentIndex(dissolveIndex);
     connect(m_transitionStyleCombo, SIGNAL(currentIndexChanged(int)), this,
             SLOT(on_parameterChanged()));
     grid->addWidget(m_transitionStyleCombo, 4, 1);
@@ -414,21 +419,25 @@ void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition *lu
 {
     int index = config.transitionStyle;
 
-    if (index == 0) {
-        // Random: pick any number other than 0
-        index = rand() % m_transitionStyleCombo->count() + 1;
+    if (index == randomIndex) {
+        // Random: pick any number other than randomIndex (0) or cutIndex (1)
+        index = rand() % (m_transitionStyleCombo->count() - 2) + 2;
     }
 
-    if (index == 1) {
-        // Dissolve
+    if (index == cutIndex) {
+        luma->set("resource", "color:#7f7f7f");
+        luma->set("softness", 0);
+    } else if (index == dissolveIndex) {
         luma->set("resource", "");
-    } else if (index <= 23) {
-        luma->set("resource", QString("%luma%1.pgm").arg(index - 1, 2, 10,
+        luma->set("softness", 0);
+    } else if (index <= 24) {
+        luma->set("resource", QString("%luma%1.pgm").arg(index - 2, 2, 10,
                                                          QChar('0')).toLatin1().constData());
+        luma->set("softness", config.transitionSoftness / 100.0);
     } else {
         luma->set("resource", m_transitionStyleCombo->itemData(index).toString().toUtf8().constData());
+        luma->set("softness", config.transitionSoftness / 100.0);
     }
-    luma->set("softness", config.transitionSoftness / 100.0);
     luma->set("progressive", 1);
     if (!Settings.playerGPU()) {
         luma->set("alpha_over", 1);
@@ -441,10 +450,13 @@ void SlideshowGeneratorWidget::on_parameterChanged()
     if (m_transitionDurationSpinner->value() > m_clipDurationSpinner->value() / 2 ) {
         m_transitionDurationSpinner->setValue(m_clipDurationSpinner->value() / 2);
     }
-    if (m_transitionDurationSpinner->value() == 0) {
+    if (m_transitionDurationSpinner->value() == randomIndex) {
         m_transitionStyleCombo->setEnabled(false);
         m_softnessSpinner->setEnabled(false);
-    } else if (m_transitionStyleCombo->currentIndex() == 1) {
+    } else if (m_transitionStyleCombo->currentIndex() == cutIndex) {
+        m_transitionStyleCombo->setEnabled(true);
+        m_softnessSpinner->setEnabled(false);
+    } else if (m_transitionStyleCombo->currentIndex() == dissolveIndex) {
         m_transitionStyleCombo->setEnabled(true);
         m_softnessSpinner->setEnabled(false);
     } else {
