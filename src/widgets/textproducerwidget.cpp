@@ -72,11 +72,8 @@ void TextProducerWidget::on_colorButton_clicked()
     if (m_producer) {
         color = QColor(QFileInfo(m_producer->get("resource")).baseName());
     }
-    QColorDialog dialog(color);
-    dialog.setOption(QColorDialog::ShowAlphaChannel);
-    dialog.setModal(QmlApplication::dialogModality());
-    if (dialog.exec() == QDialog::Accepted && dialog.currentColor() != color) {
-        auto newColor = dialog.currentColor();
+    auto newColor = QColorDialog::getColor(color, this, QString(), QColorDialog::ShowAlphaChannel);
+    if (newColor.isValid() && newColor != color) {
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
         rgb.setAlpha(color.alpha());
@@ -86,7 +83,7 @@ void TextProducerWidget::on_colorButton_clicked()
         }
         ui->colorLabel->setText(colorToString(newColor));
         ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
-                                      .arg(Util::textColor(dialog.currentColor()), dialog.currentColor().name()));
+                                      .arg(Util::textColor(newColor), newColor.name()));
         if (m_producer) {
             m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
             m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());

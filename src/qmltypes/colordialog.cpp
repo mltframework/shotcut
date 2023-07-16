@@ -28,13 +28,8 @@ ColorDialog::ColorDialog(QObject *parent)
 void ColorDialog::open()
 {
     auto color = m_color;
-    QColorDialog dialog(m_color);
-    if (!m_title.isEmpty())
-        dialog.setWindowTitle(m_title);
-    dialog.setOption(QColorDialog::ShowAlphaChannel);
-    dialog.setModal(QmlApplication::dialogModality());
-    if (dialog.exec() == QDialog::Accepted && dialog.currentColor() != m_color) {
-        auto newColor = dialog.currentColor();
+    auto newColor = QColorDialog::getColor(color, nullptr, m_title, QColorDialog::ShowAlphaChannel);
+    if (newColor.isValid() && newColor != color) {
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
         rgb.setAlpha(color.alpha());
