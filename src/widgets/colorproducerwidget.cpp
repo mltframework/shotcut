@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ void ColorProducerWidget::on_colorButton_clicked()
     QColorDialog dialog(color);
     dialog.setOption(QColorDialog::ShowAlphaChannel);
     dialog.setModal(QmlApplication::dialogModality());
-    if (dialog.exec() == QDialog::Accepted) {
+    if (dialog.exec() == QDialog::Accepted && dialog.currentColor() != color) {
         auto newColor = dialog.currentColor();
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);

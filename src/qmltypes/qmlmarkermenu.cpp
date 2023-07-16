@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ void QmlMarkerMenu::popup()
         QColor markerColor = m_timeline->markersModel()->getMarker(m_index).color;
         QColorDialog colorDialog(markerColor);
         colorDialog.setModal(QmlApplication::dialogModality());
-        if (colorDialog.exec() == QDialog::Accepted) {
+        if (colorDialog.exec() == QDialog::Accepted && colorDialog.currentColor() != markerColor) {
             m_timeline->markersModel()->setColor(m_index, colorDialog.currentColor());
         }
     });

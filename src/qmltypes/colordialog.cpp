@@ -33,7 +33,7 @@ void ColorDialog::open()
         dialog.setWindowTitle(m_title);
     dialog.setOption(QColorDialog::ShowAlphaChannel);
     dialog.setModal(QmlApplication::dialogModality());
-    if (dialog.exec() == QDialog::Accepted) {
+    if (dialog.exec() == QDialog::Accepted && dialog.currentColor() != m_color) {
         auto newColor = dialog.currentColor();
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);

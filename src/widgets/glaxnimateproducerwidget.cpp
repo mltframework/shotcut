@@ -92,7 +92,7 @@ void GlaxnimateProducerWidget::on_colorButton_clicked()
     QColorDialog dialog(color);
     dialog.setOption(QColorDialog::ShowAlphaChannel);
     dialog.setModal(QmlApplication::dialogModality());
-    if (dialog.exec() == QDialog::Accepted) {
+    if (dialog.exec() == QDialog::Accepted && dialog.currentColor() != color) {
         auto newColor = dialog.currentColor();
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
