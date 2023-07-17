@@ -29,7 +29,7 @@ hdiutil create -srcfolder $TMP -volname Shotcut -format UDBZ -size 800m \
 rm -rf $TMP
 
 ./notarize.sh ~/Desktop/shotcut-macos-${VERSION}.dmg
+./staple.sh ~/Desktop/shotcut-macos-${VERSION}.dmg
 
-echo wait for the e-mail from Apple and then run:
-echo ./staple.sh ~/Desktop/shotcut-macos-${VERSION}.dmg
+echo Now run:
 echo sudo xcode-select -s /Library/Developer/CommandLineTools
