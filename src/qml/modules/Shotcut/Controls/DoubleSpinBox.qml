@@ -174,13 +174,27 @@ Item {
                     text = spinbox.textFromValue(spinbox.value, spinbox.locale);
                     _blockTextUpdate = false;
                 }
-                Keys.onUpPressed: spinbox.increase()
-                Keys.onDownPressed: spinbox.decrease()
+                Keys.onUpPressed: {
+                    spinbox.increase();
+                    root.valueModified();
+                }
+                Keys.onDownPressed: {
+                    spinbox.decrease();
+                    root.valueModified();
+                }
 
                 MouseArea {
                     acceptedButtons: Qt.RightButton
                     anchors.fill: parent
                     onClicked: contextMenu.popup()
+                    onWheel: wheel => {
+                        spinbox.stepSize = root.stepSize * _factor * (wheel.modifiers & Qt.ControlModifier ? 10 : 1);
+                        if (wheel.angleDelta.y > 0)
+                            spinbox.increase();
+                        else
+                            spinbox.decrease();
+                        root.valueModified();
+                    }
                 }
 
                 Shotcut.EditMenu {
