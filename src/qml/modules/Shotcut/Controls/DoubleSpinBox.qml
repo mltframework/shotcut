@@ -194,6 +194,7 @@ Item {
                         else
                             spinbox.decrease();
                         root.valueModified();
+                        spinbox.stepSize = root.stepSize * _factor;
                     }
                 }
 
