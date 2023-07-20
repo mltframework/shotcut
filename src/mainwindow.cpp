@@ -2383,7 +2383,7 @@ void MainWindow::showEvent(QShowEvent *event)
 #endif
     onAutosaveTimeout();
 
-    QTimer::singleShot(200, this, [ = ]() {
+    QTimer::singleShot(400, this, [ = ]() {
         Database::singleton(this);
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
         this->setProperty("windowOpacity", 1.0);
