@@ -16,7 +16,6 @@
  */
 
 #include "colordialog.h"
-#include "qmlapplication.h"
 
 #include <QColorDialog>
 
@@ -29,7 +28,7 @@ void ColorDialog::open()
 {
     auto color = m_color;
     auto newColor = QColorDialog::getColor(color, nullptr, m_title, QColorDialog::ShowAlphaChannel);
-    if (newColor.isValid() && newColor != color) {
+    if (newColor.isValid()) {
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
         rgb.setAlpha(color.alpha());

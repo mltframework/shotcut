@@ -23,7 +23,6 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "mltcontroller.h"
-#include "qmltypes/qmlapplication.h"
 
 static const QString kTransparent = QObject::tr("transparent", "Open Other > Color");
 static const char *kSimpleFilterName = "dynamicText";
@@ -73,7 +72,7 @@ void TextProducerWidget::on_colorButton_clicked()
         color = QColor(QFileInfo(m_producer->get("resource")).baseName());
     }
     auto newColor = QColorDialog::getColor(color, this, QString(), QColorDialog::ShowAlphaChannel);
-    if (newColor.isValid() && newColor != color) {
+    if (newColor.isValid()) {
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
         rgb.setAlpha(color.alpha());

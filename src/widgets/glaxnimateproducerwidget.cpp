@@ -90,7 +90,7 @@ void GlaxnimateProducerWidget::on_colorButton_clicked()
         color = QColor(QFileInfo(m_producer->get("background")).baseName());
     }
     auto newColor = QColorDialog::getColor(color, this, QString(), QColorDialog::ShowAlphaChannel);
-    if (newColor.isValid() && newColor != color) {
+    if (newColor.isValid()) {
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
         rgb.setAlpha(color.alpha());

@@ -79,7 +79,7 @@ void QmlMarkerMenu::popup()
         QColor markerColor = m_timeline->markersModel()->getMarker(m_index).color;
         QColorDialog colorDialog(markerColor);
         colorDialog.setModal(QmlApplication::dialogModality());
-        if (colorDialog.exec() == QDialog::Accepted && colorDialog.currentColor() != markerColor) {
+        if (colorDialog.exec() == QDialog::Accepted) {
             m_timeline->markersModel()->setColor(m_index, colorDialog.currentColor());
         }
     });
