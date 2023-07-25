@@ -783,24 +783,8 @@ Item {
             Layout.bottomMargin: 5
 
             Shotcut.ComboBox {
-
-                //0
-                //1
-                //2
-                //3
-                //4
-                //5
-                //6
-                //7
-                //8
-                //9
-                //10
-                //11
-                //12
-                //13
-                //14
                 implicitWidth: 300
-                model: [qsTr('GPS latitude'), qsTr('GPS longitude'), qsTr('Elevation (m)'), qsTr('Speed (km/h)'), qsTr('Distance (m)'), qsTr('GPS date-time'), qsTr('Video file date-time'), qsTr('Heart-rate (bpm)'), qsTr('Bearing (degrees)'), qsTr('Bearing (compass)'), qsTr('Elevation gain (m)'), qsTr('Elevation loss (m)'), qsTr('Distance uphill (m)'), qsTr('Distance downhill (m)'), qsTr('Distance flat (m)')]
+                model: [qsTr('GPS latitude'), qsTr('GPS longitude'), qsTr('Elevation (m)'), qsTr('Speed (km/h)'), qsTr('Distance (m)'), qsTr('GPS date-time'), qsTr('Video file date-time'), qsTr('Heart-rate (bpm)'), qsTr('Bearing (degrees)'), qsTr('Bearing (compass)'), qsTr('Elevation gain (m)'), qsTr('Elevation loss (m)'), qsTr('Distance uphill (m)'), qsTr('Distance downhill (m)'), qsTr('Distance flat (m)'), qsTr('Cadence'), qsTr('Temperature (C)'), qsTr('Grade (%)'), qsTr('Grade (degrees)')]
                 onActivated: {
                     switch (currentIndex) {
                     case 0:
@@ -810,13 +794,13 @@ Item {
                         onClicked: textArea.insert(textArea.cursorPosition, '#gps_lon#');
                         break;
                     case 2:
-                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_elev m#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_elev m#m');
                         break;
                     case 3:
-                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_speed kmh#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_speed kmh#km/h');
                         break;
                     case 4:
-                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist m#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist m#m');
                         break;
                     case 5:
                         onClicked: textArea.insert(textArea.cursorPosition, '#gps_datetime_now#');
@@ -825,28 +809,40 @@ Item {
                         onClicked: textArea.insert(textArea.cursorPosition, '#file_datetime_now#');
                         break;
                     case 7:
-                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_hr#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_hr#bpm');
                         break;
                     case 8:
-                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_bearing#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_bearing#°');
                         break;
                     case 9:
                         onClicked: textArea.insert(textArea.cursorPosition, '#gps_compass#');
                         break;
                     case 10:
-                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_vdist_up#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_vdist_up#m');
                         break;
                     case 11:
-                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_vdist_down#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_vdist_down#m');
                         break;
                     case 12:
-                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist_uphill#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist_uphill#m');
                         break;
                     case 13:
-                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist_downhill#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist_downhill#m');
                         break;
                     case 14:
-                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist_flat#');
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist_flat#m');
+                        break;
+                    case 15:
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_cadence#rpm');
+                        break;
+                    case 16:
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_temperature#°C');
+                        break;
+                    case 17:
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_grade_percentage#%');
+                        break;
+                    case 18:
+                    	onClicked: textArea.insert(textArea.cursorPosition, '#gps_grade_degrees#°');
                         break;
                     default:
                         console.log('gps_combobox: current index not supported: ' + currentIndex);
