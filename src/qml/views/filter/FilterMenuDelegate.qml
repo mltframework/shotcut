@@ -116,7 +116,9 @@ Rectangle {
         modality: Qt.ApplicationModal
         title: qsTr('Delete Filter Set')
         width: 400
+        minimumWidth: 400
         height: 90
+        minimumHeight: 90
         Component.onCompleted: confirmDialogOk.forceActiveFocus(Qt.TabFocusReason)
 
         ColumnLayout {
@@ -124,12 +126,17 @@ Rectangle {
             anchors.margins: 10
 
             Label {
-                text: qsTr("Are you sure you want to delete this?\n%1").arg(name)
-                maximumLineCount: 2
+                text: qsTr("Are you sure you want to delete this?\n%1")
+                maximumLineCount: 1
+            }
+            Label {
+                text: name
+                elide: Text.ElideRight
+                Layout.preferredWidth: confirmDialog.width - parent.anchors.margins * 2
             }
 
             RowLayout {
-                Layout.alignment: Qt.AlignHCenter
+                Layout.alignment: Qt.AlignRight
 
                 Shotcut.Button {
                     id: confirmDialogOk
