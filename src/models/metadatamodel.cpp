@@ -16,6 +16,8 @@
  */
 
 #include "metadatamodel.h"
+#include "controllers/filtercontroller.h"
+#include "mainwindow.h"
 #include "qmltypes/qmlmetadata.h"
 #include "settings.h"
 #include <Logger.h>
@@ -160,6 +162,9 @@ bool MetadataModel::isVisible(int row) const
 {
     QmlMetadata *meta = m_list.at(row);
     if (meta->filterMask & m_filterMask) {
+        return false;
+    }
+    if (Settings.playerGPU() && meta->needsGPU() && MAIN.filterController()->isOutputTrackSelected()) {
         return false;
     }
     if (m_search.isEmpty()) {
