@@ -783,10 +783,10 @@ Item {
             Layout.bottomMargin: 5
             Shotcut.ComboBox {
                 implicitWidth: 300
-                
+
                 property var gps_cbox_strings_v0: [qsTr('GPS latitude'), qsTr('GPS longitude'), qsTr('Elevation (m)'), qsTr('Speed (km/h)'), qsTr('Distance (m)'), qsTr('GPS date-time'), qsTr('Video file date-time'), qsTr('Heart-rate (bpm)'), qsTr('Bearing (degrees)'), qsTr('Bearing (compass)'), qsTr('Elevation gain (m)'), qsTr('Elevation loss (m)'), qsTr('Distance uphill (m)'), qsTr('Distance downhill (m)'), qsTr('Distance flat (m)')];
-                property var gps_cbox_strings_v3: [qsTr('Cadence'), qsTr('Temperature (C)'), qsTr('Grade (%)'), qsTr('Grade (degrees)')];
-                property var gps_cbox_strings: filter.isAtLeastVersion(3) ? gps_cbox_strings_v0.concat(gps_cbox_strings_v3) : gps_cbox_strings_v0
+                property var gps_cbox_strings_v3: gps_cbox_strings_v0.concat([qsTr('Cadence'), qsTr('Temperature (C)'), qsTr('Grade (%)'), qsTr('Grade (degrees)')]);
+                property var gps_cbox_strings: filter.isAtLeastVersion(3) ? gps_cbox_strings_v3 : gps_cbox_strings_v0
 
                 model: gps_cbox_strings
                 onActivated: {
