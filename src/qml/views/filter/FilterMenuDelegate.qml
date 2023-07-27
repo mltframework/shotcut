@@ -125,11 +125,11 @@ Rectangle {
 
             Label {
                 text: qsTr("Are you sure you want to delete this?\n%1").arg(name)
-                wrapMode: Text.Wrap
+                maximumLineCount: 2
             }
 
             RowLayout {
-                Layout.alignment: Qt.AlignRight
+                Layout.alignment: Qt.AlignHCenter
 
                 Shotcut.Button {
                     id: confirmDialogOk
@@ -140,12 +140,17 @@ Rectangle {
                         metadatamodel.deleteFilterSet(name);
                         confirmDialog.close();
                     }
+                    Keys.onEscapePressed: confirmDialog.close()
                 }
 
                 Shotcut.Button {
                     text: qsTr('Cancel')
                     onClicked: confirmDialog.close()
+                    Keys.onEscapePressed: confirmDialog.close()
                 }
+            }
+            Item {
+                Layout.fillHeight: true
             }
         }
     }
