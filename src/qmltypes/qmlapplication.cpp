@@ -197,13 +197,7 @@ int QmlApplication::maxTextureSize()
 bool QmlApplication::confirmOutputFilter()
 {
     bool result = true;
-    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
-                                               MAIN.filterController()->attachedModel()->producer()));
-    if (producer->is_valid()
-            && mlt_service_tractor_type == producer->type()
-            && !producer->get(kShotcutTransitionProperty)
-            && MAIN.filterController()->attachedModel()->rowCount() == 0
-            && Settings.askOutputFilter()) {
+    if (MAIN.filterController()->isOutputTrackSelected() && Settings.askOutputFilter()) {
         QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
                            tr("<p>Do you really want to add filters to <b>Output</b>?</p>"

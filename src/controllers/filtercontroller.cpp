@@ -133,6 +133,14 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     return meta;
 }
 
+bool FilterController::isOutputTrackSelected() const
+{
+    return m_attachedModel.producer() && m_attachedModel.producer()->is_valid()
+           && mlt_service_tractor_type == m_attachedModel.producer()->type()
+           && !m_attachedModel.producer()->get(kShotcutTransitionProperty)
+           && m_attachedModel.rowCount() == 0;
+}
+
 void FilterController::loadFilterSets()
 {
     QStringList sets;

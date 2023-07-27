@@ -48,6 +48,7 @@ public:
     {
         return m_currentFilter.data();
     }
+    bool isOutputTrackSelected() const;
 
 protected:
     void timerEvent(QTimerEvent *);
