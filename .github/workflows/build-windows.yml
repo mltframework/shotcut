@@ -53,7 +53,7 @@ jobs:
             mingw-w64-x86_64-libarchive
             mingw-w64-x86_64-potrace
             mingw-w64-x86_64-libimagequant
-            mingw-w64-x86_64-python3.10
+            mingw-w64-x86_64-python3.11
 
       - name: Downgrade GCC to v12
         shell: msys2 {0}

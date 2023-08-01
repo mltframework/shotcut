@@ -1181,12 +1181,12 @@ function deploy
   bundle_dlls glaxnimate.exe
 
   log Copying some DLLs and python libraries for Glaxnimate
-  cmd cp -p /mingw64/bin/libpython3.10.dll python310.dll
+  cmd cp -p /mingw64/bin/libpython3.11.dll python311.dll
   cmd cp -p "$SOURCE_DIR"/glaxnimate/external/Qt-Color-Widgets/libQtColorWidgets.dll .
   cmd mkdir -p share/glaxnimate/glaxnimate/pythonhome/lib/python
-  cmd cp -r /mingw64/lib/python3.10/*.py \
-            /mingw64/lib/python3.10/lib-dynload/* \
-            /mingw64/lib/python3.10/{json,collections,encodings,logging,urllib} \
+  cmd cp -r /mingw64/lib/python3.11/*.py \
+            /mingw64/lib/python3.11/lib-dynload/* \
+            /mingw64/lib/python3.11/{json,collections,encodings,logging,urllib} \
       share/glaxnimate/glaxnimate/pythonhome/lib/python
 
   log Copying some libs from mlt-prebuilt

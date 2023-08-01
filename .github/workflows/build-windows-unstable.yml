@@ -53,7 +53,7 @@ jobs:
             mingw-w64-x86_64-libarchive
             mingw-w64-x86_64-potrace
             mingw-w64-x86_64-libimagequant
-            mingw-w64-x86_64-python3.10
+            mingw-w64-x86_64-python3.11
 
       - uses: actions/checkout@v3
         with:
