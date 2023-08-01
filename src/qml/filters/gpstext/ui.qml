@@ -785,7 +785,7 @@ Item {
                 implicitWidth: 300
 
                 property var gps_cbox_strings_v0: [qsTr('GPS latitude'), qsTr('GPS longitude'), qsTr('Elevation (m)'), qsTr('Speed (km/h)'), qsTr('Distance (m)'), qsTr('GPS date-time'), qsTr('Video file date-time'), qsTr('Heart-rate (bpm)'), qsTr('Bearing (degrees)'), qsTr('Bearing (compass)'), qsTr('Elevation gain (m)'), qsTr('Elevation loss (m)'), qsTr('Distance uphill (m)'), qsTr('Distance downhill (m)'), qsTr('Distance flat (m)')];
-                property var gps_cbox_strings_v3: gps_cbox_strings_v0.concat([qsTr('Cadence'), qsTr('Temperature (C)'), qsTr('Grade (%)'), qsTr('Grade (degrees)')]);
+                property var gps_cbox_strings_v3: gps_cbox_strings_v0.concat([qsTr('Cadence'), qsTr('Temperature (C)'), qsTr('Grade (%)'), qsTr('Grade (degrees)'), qsTr('Vertical speed (m/s)'), qsTr('3D Speed (km/h)')]);
                 property var gps_cbox_strings: filter.isAtLeastVersion(3) ? gps_cbox_strings_v3 : gps_cbox_strings_v0
 
                 model: gps_cbox_strings
@@ -847,6 +847,12 @@ Item {
                         break;
                     case 18:
                     	onClicked: textArea.insert(textArea.cursorPosition, '#gps_grade_degrees#°');
+                        break;
+                    case 19:
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_speed vertical m/s#m/s');
+                        break;
+                    case 20:
+                        onClicked: textArea.insert(textArea.cursorPosition, '#gps_speed 3d km/h#km/h');
                         break;
                     default:
                         console.log('gps_combobox: current index not supported: ' + currentIndex);
