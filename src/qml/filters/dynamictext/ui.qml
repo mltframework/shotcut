@@ -213,7 +213,7 @@ Item {
                             filter.set('size', profile.height / text.split('\n').length);
                         filter.set('argument', text);
                     }
-                    Keys.onPressed: {
+                    Keys.onPressed: event => {
                         if (event.key === Qt.Key_V && (event.modifiers & Qt.ShiftModifier) && (event.modifiers & Qt.ControlModifier || event.modifiers & Qt.MetaModifier)) {
                             event.accepted = true;
                             textArea.paste();

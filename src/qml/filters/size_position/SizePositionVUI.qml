@@ -176,10 +176,10 @@ Shotcut.VuiBase {
         pinch.maximumRotation: 360
         pinch.minimumScale: 0.1
         pinch.maximumScale: 10
-        Keys.onPressed: {
+        Keys.onPressed: event => {
             noModifiers = event.modifiers === Qt.NoModifier;
         }
-        Keys.onReleased: {
+        Keys.onReleased: event => {
             noModifiers = event.modifiers === Qt.NoModifier;
         }
         onPinchStarted: {
