@@ -129,6 +129,7 @@ Item {
             if (filter.animateOut > 0)
                 filter.set(textFilterUi.endValue, filter.getRect(textFilterUi.rectProperty, filter.duration - 1));
         }
+        insertCombo.currentIndex = -1;
         filter.blockSignals = false;
         setControls();
         if (filter.isNew)
@@ -261,30 +262,68 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
 
-        RowLayout {
-            Shotcut.Button {
-                text: qsTr('# (Hash sign)')
-                onClicked: textArea.insert(textArea.cursorPosition, '\\#')
+        Shotcut.ComboBox {
+            id: insertCombo
+
+            implicitWidth: 180
+            textRole: 'text'
+            onActivated: {
+                if (currentIndex >= 0) {
+                    textArea.insert(textArea.cursorPosition, insertModel.get(currentIndex).value);
+                }
+                insertCombo.currentIndex = -1;
             }
 
-            Shotcut.Button {
-                text: qsTr('Timecode')
-                onClicked: textArea.insert(textArea.cursorPosition, '#timecode#')
-            }
+            model: ListModel {
+                id: insertModel
 
-            Shotcut.Button {
-                text: qsTr('Frame #', 'Frame number')
-                onClicked: textArea.insert(textArea.cursorPosition, '#frame#')
-            }
+                ListElement {
+                }
 
-            Shotcut.Button {
-                text: qsTr('File date')
-                onClicked: textArea.insert(textArea.cursorPosition, '#localfiledate#')
-            }
+                ListElement {
+                    text: qsTr('# (Hash sign)')
+                    value: '\\#'
+                }
 
-            Shotcut.Button {
-                text: qsTr('File name')
-                onClicked: textArea.insert(textArea.cursorPosition, '#resource#')
+                ListElement {
+                    text: qsTr('Timecode (drop frame)')
+                    value: '#timecode#'
+                }
+
+                ListElement {
+                    text: qsTr('Timecode (non-drop frame)')
+                    value: '#smpte_ndf#'
+                }
+
+                ListElement {
+                    text: qsTr('Frame #', 'Frame number')
+                    value: '#frame#'
+                }
+
+                ListElement {
+                    text: qsTr('File date')
+                    value: '#localfiledate#'
+                }
+
+                ListElement {
+                    text: qsTr('Creation date')
+                    value: '#createdate#'
+                }
+
+                ListElement {
+                    text: qsTr('File name and path')
+                    value: '#resource#'
+                }
+
+                ListElement {
+                    text: qsTr('File name')
+                    value: '#filename#'
+                }
+
+                ListElement {
+                    text: qsTr('File base name')
+                    value: '#basename#'
+                }
             }
         }
 
