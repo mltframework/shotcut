@@ -96,6 +96,26 @@ Rectangle {
         }
     }
 
+    Timer {
+        id: zoomToFitTimer
+
+        property var loopCount: 0
+        interval: 1
+        repeat: true
+        function startZoomFit() {
+            loopCount = 0;
+            start();
+        }
+        onTriggered: {
+            setZoom(Math.pow((tracksFlickable.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1 / 3));
+            loopCount++;
+            // Due to rounding errors, sometimes the zoom needs to be calculated twice to get it right.
+            if (loopCount >= 2) {
+                stop();
+            }
+        }
+    }
+
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
@@ -807,9 +827,9 @@ Rectangle {
         }
 
         function onZoomToFit() {
-            setZoom(Math.pow((tracksFlickable.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1 / 3));
             scrollZoomTimer.stop();
             tracksFlickable.contentX = 0;
+            zoomToFitTimer.startZoomFit();
         }
 
         function onSetZoom(value) {
