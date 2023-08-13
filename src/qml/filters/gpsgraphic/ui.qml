@@ -31,6 +31,7 @@ Item {
     property rect filterRect: filter.getRect(rectProperty)
     property var allParameters: ['time_offset', 'smoothing_value', 'speed_multiplier', 'graph_data_source', 'graph_type', 'trim_start_p', 'trim_end_p', 'crop_mode_h', 'crop_left_p', 'crop_right_p', 'crop_mode_v', 'crop_bot_p', 'crop_top_p', 'color_style', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'show_now_dot', 'now_dot_color', 'show_now_text', 'angle', 'thickness', rectProperty, 'show_grid', 'legend_unit', 'draw_individual_dots', 'bg_img_path', 'bg_scale_w']
     property var default_colors: ["#00aaff", "#00e000", "#ffff00", "#ff8c00", "#ff0000"]
+    property var default_colors_grade: ["#ff00ff", "#00aaff", "#00e000", "#ffff00", "#ff0000"]
     property string color_white: "#ffffff"
     property string default_now_dot: "#00ffffff"
     property string default_rect: '10%/10%:30%x30%'
@@ -365,10 +366,15 @@ Item {
             usedParams = set_graph_style_params(9);
             usedParams.push(set_graph_colors(_, default_colors[0], default_colors[1], default_colors[2], default_colors[3], default_colors[4]));
             filter.savePreset(usedParams, "Map colors: gradient of speed");
+            usedParams = set_graph_style_params(11);
+            usedParams.push(set_graph_colors(_, "#ff00ff", default_colors[0], default_colors[1], default_colors[2], default_colors[4]));
+            filter.savePreset(usedParams, "Map colors: gradient of grade");
             usedParams = set_graph_colors(_, default_colors[0], default_colors[1], default_colors[2], default_colors[3], default_colors[4]);
             filter.savePreset(usedParams, "Colors: default (5)");
             usedParams = set_graph_colors(_, default_colors[4], default_colors[3], default_colors[2], default_colors[1], default_colors[0]);
             filter.savePreset(usedParams, "Colors: inversed default (5)");
+            usedParams = set_graph_colors(_, "#ff00ff", default_colors[0], default_colors[1], default_colors[2], default_colors[4]);
+            filter.savePreset(usedParams, "Colors: green middle (5)");
             usedParams = reset_all_params();
             filter.savePreset(usedParams);
         }
@@ -1263,9 +1269,6 @@ Item {
 
         RowLayout {
             Shotcut.ComboBox {
-                //0
-                //4
-                //6
                 id: combo_color_style
 
                 function get_combo_gradient_nr_colors() {
@@ -1278,7 +1281,12 @@ Item {
                 }
 
                 implicitWidth: 300
-                model: [qsTr('One color'), qsTr('Two colors'), qsTr('Solid past, thin future'), qsTr('Solid future, thin past'), qsTr('Vertical gradient'), qsTr('Horizontal gradient'), qsTr('Color by duration'), qsTr('Color by altitude'), qsTr('Color by heart rate'), qsTr('Color by speed')]
+                //0 to 9
+                property var colorstyle_cbox_strings_v0: [qsTr('One color'), qsTr('Two colors'), qsTr('Solid past, thin future'), qsTr('Solid future, thin past'), qsTr('Vertical gradient'), qsTr('Horizontal gradient'), qsTr('Color by duration'), qsTr('Color by altitude'), qsTr('Color by heart rate'), qsTr('Color by speed')]
+                //10 to 12
+                property var colorstyle_cbox_strings_v2: colorstyle_cbox_strings_v0.concat([qsTr('Color by speed (max 100km/h)'), qsTr('Color by grade (max 90°)'), qsTr('Color by grade (max 20°)')])
+                property var colorstyle_cbox_strings: filter.isAtLeastVersion(2) ? colorstyle_cbox_strings_v2 : colorstyle_cbox_strings_v0
+                model: colorstyle_cbox_strings
                 currentIndex: 1
                 onActivated: {
                     if (_disableUpdate)
@@ -1305,11 +1313,14 @@ Item {
 
                 function set_defcolors_in_gradient_control() {
                     filter.setGradient('color', []);
+                    //saved colors (in .mlt) are reset to default ones on project reopen, not sure how to fix
                     if (combo_color_style.currentIndex === 0) {
                         colGradient.colors = default_colors.slice(0, 1);
                     } else if (combo_color_style.currentIndex <= 3) {
                         colGradient.colors = default_colors.slice(0, 2);
                         colGradient.colors[1] = color_white;
+                    } else if (filter.isAtLeastVersion(2) && (combo_color_style.currentIndex === 11 || combo_color_style.currentIndex === 12)) {
+                        colGradient.colors = default_colors_grade.slice(0, 5);
                     } else {
                         colGradient.colors = default_colors.slice(0, 5);
                     }
