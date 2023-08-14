@@ -18,7 +18,7 @@ jobs:
           msystem: MINGW64
           update: true
           install: >-
-            autotools base-devel bzip2 coreutils git gzip tar xz zip
+            autotools base-devel bzip2 coreutils git gzip python-pip tar xz zip
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-meson
@@ -26,7 +26,6 @@ jobs:
             mingw-w64-x86_64-ninja
             mingw-w64-x86_64-nsis
             mingw-w64-x86_64-osslsigncode
-            mingw-w64-x86_64-python-pip
             mingw-w64-x86_64-yasm
             mingw-w64-x86_64-cairo
             mingw-w64-x86_64-eigen3
