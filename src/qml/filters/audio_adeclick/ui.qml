@@ -27,6 +27,7 @@ Item {
             return;
         sliderWindow.value = filter.getDouble('av.window');
         sliderThreshold.value = filter.getDouble('av.threshold');
+        sliderBurst.value = filter.getDouble('av.burst') * 10;
     }
 
     width: 200
@@ -38,7 +39,7 @@ Item {
             filter.set('av.aorder', 2);
             filter.set('av.threshold', 2);
             filter.set('av.burst', 2);
-            filter.set('av.method', 'add');
+            filter.set('av.method', 'save');
             filter.savePreset(preset.parameters);
         }
         setControls();
@@ -119,6 +120,35 @@ Item {
 
         Shotcut.UndoButton {
             onClicked: sliderThreshold.value = 2
+        }
+
+        Label {
+            text: qsTr('Burst Fusion')
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip {
+                text: qsTr('Treat small bursts that are close together as one large burst. Units are percent of the window size. A higher percent will combine bursts that are farther apart.')
+            }
+        }
+
+        Shotcut.SliderSpinner {
+            id: sliderBurst
+
+            minimumValue: 0
+            maximumValue: 100
+            decimals: 0
+            suffix: ' %'
+            stepSize: 10
+            onValueChanged: {
+                if (blockControls)
+                    return;
+                blockControls = true;
+                filter.set('av.burst', value / 10);
+                blockControls = false;
+            }
+        }
+
+        Shotcut.UndoButton {
+            onClicked: sliderBurst.value = 2
         }
 
         Item {
