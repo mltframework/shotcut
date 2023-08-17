@@ -40,17 +40,18 @@ ResourceWidget::ResourceWidget(QWidget *parent)
     m_table->setSortingEnabled(false);
     m_table->setModel(m_model);
     m_table->setWordWrap(false);
+    m_table->setAlternatingRowColors(true);
     m_table->header()->setStretchLastSection(false);
     qreal rowHeight = fontMetrics().height() * devicePixelRatioF();
     m_table->header()->setMinimumSectionSize(rowHeight);
     m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_INFO, QHeaderView::Fixed);
     m_table->setColumnWidth(ResourceModel::COLUMN_INFO, rowHeight);
-    m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_NAME, QHeaderView::ResizeToContents);
-    m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_SIZE, QHeaderView::ResizeToContents);
+    m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_NAME, QHeaderView::Interactive);
+    m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_SIZE, QHeaderView::Interactive);
     m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_VID_DESCRIPTION,
-                                            QHeaderView::ResizeToContents);
+                                            QHeaderView::Interactive);
     m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_AUD_DESCRIPTION,
-                                            QHeaderView::ResizeToContents);
+                                            QHeaderView::Interactive);
     connect(m_table->selectionModel(), &QItemSelectionModel::currentChanged, this, [ = ]() {
         m_table->selectionModel()->clearCurrentIndex();
     });
@@ -102,9 +103,16 @@ QList<Mlt::Producer> ResourceWidget::getSelected()
 
 void ResourceWidget::updateSize()
 {
-    int tableWidth = 38;
-    for (int i = 0; i < m_table->model()->columnCount(); i++) {
-        tableWidth += m_table->columnWidth(i);
+    static const int MAX_COLUMN_WIDTH = 300;
+    int tableWidth = 38 + m_table->columnWidth(ResourceModel::COLUMN_INFO);
+    for (int i = ResourceModel::COLUMN_NAME; i < m_table->model()->columnCount(); i++) {
+        m_table->resizeColumnToContents(i);
+        int columnWidth = m_table->columnWidth(i);
+        if (columnWidth > MAX_COLUMN_WIDTH) {
+            columnWidth = MAX_COLUMN_WIDTH;
+            m_table->setColumnWidth(i, columnWidth);
+        }
+        tableWidth += columnWidth;
     }
     resize(tableWidth, 400);
 }
