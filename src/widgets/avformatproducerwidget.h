@@ -132,7 +132,6 @@ private:
 
     void reopen(Mlt::Producer *p);
     void recreateProducer();
-    void convert(TranscodeDialog &dialog);
     bool revertToOriginalResource();
     void setSyncVisibility();
     void reloadProducerValues();

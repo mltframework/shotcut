@@ -21,6 +21,7 @@
 #include "dialogs/durationdialog.h"
 #include "dialogs/filedatedialog.h"
 #include "dialogs/longuitask.h"
+#include "dialogs/resourcedialog.h"
 #include "dialogs/slideshowgeneratordialog.h"
 #include "mainwindow.h"
 #include "settings.h"
@@ -1075,6 +1076,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
 {
     bool resetIndex = true;
     if (data && data->hasUrls()) {
+        ResourceDialog dialog(this);
         LongUiTask longTask(tr("Add Files"));
         int insertNextAt = row;
         bool first = true;
@@ -1114,7 +1116,9 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 if (first) {
                     first = false;
                     if (!MLT.producer() || !MLT.producer()->is_valid()) {
-                        MAIN.open(path, nullptr, false);
+                        Mlt::Properties properties;
+                        properties.set(kShotcutSkipConvertProperty, 1);
+                        MAIN.open(path, &properties, false);
                         if (MLT.producer() && MLT.producer()->is_valid()) {
                             producer = MLT.producer();
                             first = true;
@@ -1122,6 +1126,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     }
                 }
                 producer = MLT.setupNewProducer(producer);
+                producer->set(kShotcutSkipConvertProperty, true);
                 if (!MLT.isLiveProducer(producer) || producer->get_int(kShotcutVirtualClip)) {
                     ProxyManager::generateIfNotExists(*producer);
                     if (row == -1)
@@ -1130,10 +1135,10 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                         MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
                 } else {
                     LongUiTask::cancel();
-                    DurationDialog dialog(this);
-                    dialog.setDuration(MLT.profile().fps() * 5);
-                    if (dialog.exec() == QDialog::Accepted) {
-                        producer->set_in_and_out(0, dialog.duration() - 1);
+                    DurationDialog durationDialog(this);
+                    durationDialog.setDuration(MLT.profile().fps() * 5);
+                    if (durationDialog.exec() == QDialog::Accepted) {
+                        producer->set_in_and_out(0, durationDialog.duration() - 1);
                         if (row == -1)
                             MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
                         else
@@ -1145,8 +1150,15 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     setIndex(0);
                     resetIndex = false;
                 }
+                dialog.add(producer);
                 delete producer;
             }
+        }
+        if (dialog.hasTroubleClips()) {
+            dialog.selectTroubleClips();
+            dialog.setWindowTitle(tr("Dropped Files"));
+            longTask.cancel();
+            dialog.exec();
         }
     } else if (data && data->hasFormat(Mlt::XmlMimeType)) {
         if (MLT.producer() && MLT.producer()->is_valid()) {

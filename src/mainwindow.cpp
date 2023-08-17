@@ -52,6 +52,7 @@
 #include "docks/filtersdock.h"
 #include "dialogs/actionsdialog.h"
 #include "dialogs/customprofiledialog.h"
+#include "dialogs/resourcedialog.h"
 #include "dialogs/saveimagedialog.h"
 #include "settings.h"
 #include "database.h"
@@ -80,6 +81,7 @@
 #include "dialogs/longuitask.h"
 #include "dialogs/systemsyncdialog.h"
 #include "proxymanager.h"
+#include "transcoder.h"
 #include "models/motiontrackermodel.h"
 #if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
 #include "windowstools.h"
@@ -134,6 +136,7 @@ MainWindow::MainWindow()
     , m_exitCode(EXIT_SUCCESS)
     , m_upgradeUrl("https://www.shotcut.org/download/")
     , m_keyframesDock(0)
+    , m_multipleFilesLoading(false)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QLibrary libJack("libjack.so.0");
@@ -288,6 +291,7 @@ void MainWindow::setupAndConnectPlayerWidget()
     connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
     connect(m_player, SIGNAL(tabIndexChanged(int)), SLOT(onPlayerTabIndexChanged(int)));
     connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
+    connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processSingleFile()));
     connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
     connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
     connect(MLT.videoWidget(), SIGNAL(toggleZoom(bool)), m_player, SLOT(toggleZoom(bool)));
@@ -661,6 +665,7 @@ void MainWindow::setupAndConnectDocks()
 void MainWindow::setupMenuView()
 {
     ui->menuView->addSeparator();
+    ui->menuView->addAction(ui->actionResources);
     ui->menuView->addAction(ui->actionApplicationLog);
 }
 
@@ -1495,7 +1500,7 @@ void MainWindow::onAutosaveTimeout()
     }
 }
 
-bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
+bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play, bool skipConvert)
 {
     // returns false when MLT is unable to open the file, possibly because it has percent sign in the path
     LOG_DEBUG() << url;
@@ -1570,7 +1575,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
             MLT.profile().set_explicit(false);
     }
     QString urlToOpen = checker.isUpdated() ? checker.tempFile().fileName() : url;
-    if (!MLT.open(QDir::fromNativeSeparators(urlToOpen), QDir::fromNativeSeparators(url))
+    if (!MLT.open(QDir::fromNativeSeparators(urlToOpen), QDir::fromNativeSeparators(url), skipConvert)
             && MLT.producer() && MLT.producer()->is_valid()) {
         Mlt::Properties *props = const_cast<Mlt::Properties *>(properties);
         if (props && props->is_valid())
@@ -1625,7 +1630,7 @@ void MainWindow::openMultiple(const QList<QUrl> &urls)
 {
     if (urls.size() > 1) {
         m_multipleFiles = Util::sortedFileList(Util::expandDirectories(urls));
-        open(m_multipleFiles.first());
+        open(m_multipleFiles.first(), nullptr, true, true);
     } else if (urls.size() > 0) {
         QUrl url = urls.first();
         if (!open(Util::removeFileScheme(url)))
@@ -1649,7 +1654,7 @@ void MainWindow::openVideo()
         activateWindow();
         if (filenames.length() > 1)
             m_multipleFiles = filenames;
-        open(filenames.first());
+        open(filenames.first(), nullptr, true, filenames.length() > 1);
     } else {
         // If file invalid, then on some platforms the dialog messes up SDL.
         MLT.onWindowResize();
@@ -3128,7 +3133,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         }
         if (-1 != w->metaObject()->indexOfSlot("offerConvert(QString)")) {
             connect(m_filterController->attachedModel(), SIGNAL(requestConvert(QString, bool, bool)), w,
-                    SLOT(offerConvert(QString, bool, bool)), Qt::QueuedConnection);
+                    SLOT(offerConvert(QString, bool)), Qt::QueuedConnection);
         }
         scrollArea->setWidget(w);
         onProducerChanged();
@@ -3289,9 +3294,11 @@ void MainWindow::processMultipleFiles()
     m_multipleFiles.clear();
     int count = multipleFiles.length();
     if (count > 1) {
+        m_multipleFilesLoading = true;
         LongUiTask longTask(tr("Open Files"));
         m_playlistDock->show();
         m_playlistDock->raise();
+        ResourceDialog dialog(this);
         for (int i = 0; i < count; i++) {
             QString filename = multipleFiles.takeFirst();
             LOG_DEBUG() << filename;
@@ -3305,16 +3312,55 @@ void MainWindow::processMultipleFiles()
                 Util::getHash(p);
                 Mlt::Producer *producer = MLT.setupNewProducer(&p);
                 ProxyManager::generateIfNotExists(*producer);
+                producer->set(kShotcutSkipConvertProperty, true);
                 undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(producer), false));
                 m_recentDock->add(filename.toUtf8().constData());
+                dialog.add(producer);
                 delete producer;
             }
         }
         emit m_playlistDock->model()->modified();
+        if (dialog.hasTroubleClips()) {
+            dialog.selectTroubleClips();
+            dialog.setWindowTitle(tr("Opened Files"));
+            dialog.exec();
+        }
+        m_multipleFilesLoading = false;
     }
     if (m_isPlaylistLoaded && Settings.playerGPU()) {
         updateThumbnails();
         m_isPlaylistLoaded = false;
+    }
+}
+
+void MainWindow::processSingleFile()
+{
+    if (!m_multipleFilesLoading && Settings.showConvertClipDialog()
+            && !MLT.producer()->get_int(kShotcutSkipConvertProperty)) {
+        int trc = MLT.producer()->get_int("meta.media.color_trc");
+        QString convertAdvice = Util::getConversionAdvice(MLT.producer());
+        if (!convertAdvice.isEmpty()) {
+            MLT.producer()->set(kShotcutSkipConvertProperty, true);
+            LongUiTask::cancel();
+            MLT.pause();
+            TranscodeDialog dialog(convertAdvice.append(
+                                       tr(" Do you want to convert it to an edit-friendly format?\n\n"
+                                          "If yes, choose a format below and then click OK to choose a file name. "
+                                          "After choosing a file name, a job is created. "
+                                          "When it is done, it automatically replaces clips, or you can double-click the job to open it.\n")),
+                                   MLT.producer()->get_int("progressive"), this);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.showCheckBox();
+            dialog.set709Convert(!Util::trcIsCompatible(MLT.producer()->get_int("meta.media.color_trc")));
+            dialog.showSubClipCheckBox();
+            LOG_DEBUG() << "in" << MLT.producer()->get_in() << "out" << MLT.producer()->get_out() << "length" <<
+                        MLT.producer()->get_length() - 1;
+            dialog.setSubClipChecked(MLT.producer()->get_in() > 0
+                                     || MLT.producer()->get_out() < MLT.producer()->get_length() - 1);
+            Transcoder transcoder;
+            transcoder.addProducer(MLT.producer());
+            transcoder.convert(dialog);
+        }
     }
 }
 
@@ -3743,6 +3789,14 @@ void MainWindow::onDrawingMethodTriggered(QAction *action)
     }
 }
 #endif
+
+void MainWindow::on_actionResources_triggered()
+{
+    ResourceDialog dialog(this);
+    dialog.search(multitrack());
+    dialog.search(playlist());
+    dialog.exec();
+}
 
 void MainWindow::on_actionApplicationLog_triggered()
 {

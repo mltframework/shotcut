@@ -24,6 +24,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/listselectiondialog.ui
   dialogs/longuitask.cpp dialogs/longuitask.h
   dialogs/multifileexportdialog.cpp dialogs/multifileexportdialog.h
+  dialogs/resourcedialog.cpp dialogs/resourcedialog.h
   dialogs/saveimagedialog.cpp dialogs/saveimagedialog.h
   dialogs/slideshowgeneratordialog.cpp dialogs/slideshowgeneratordialog.h
   dialogs/systemsyncdialog.cpp dialogs/systemsyncdialog.h
@@ -73,6 +74,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   models/motiontrackermodel.h models/motiontrackermodel.cpp
   models/multitrackmodel.cpp models/multitrackmodel.h
   models/playlistmodel.cpp models/playlistmodel.h
+  models/resourcemodel.cpp models/resourcemodel.h
   openotherdialog.cpp openotherdialog.h
   openotherdialog.ui
   player.cpp player.h
@@ -102,6 +104,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   settings.cpp settings.h
   sharedframe.cpp sharedframe.h
   shotcut_mlt_properties.h
+  transcoder.cpp transcoder.h
   spatialmedia/box.cpp spatialmedia/box.h
   spatialmedia/container.cpp spatialmedia/container.h
   spatialmedia/mpeg4_container.cpp spatialmedia/mpeg4_container.h
@@ -164,6 +167,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/producerpreviewwidget.cpp widgets/producerpreviewwidget.h
   widgets/pulseaudiowidget.cpp widgets/pulseaudiowidget.h
   widgets/pulseaudiowidget.ui
+  widgets/resourcewidget.cpp widgets/resourcewidget.h
   widgets/scopes/audioloudnessscopewidget.cpp widgets/scopes/audioloudnessscopewidget.h
   widgets/scopes/audiopeakmeterscopewidget.cpp widgets/scopes/audiopeakmeterscopewidget.h
   widgets/scopes/audiospectrumscopewidget.cpp widgets/scopes/audiospectrumscopewidget.h

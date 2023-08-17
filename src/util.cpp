@@ -737,3 +737,88 @@ bool Util::isFpsDifferent(double a, double b)
 {
     return qAbs(a - b) > 0.001;
 }
+
+QString Util::getNextFile(const QString &filePath)
+{
+    QFileInfo info(filePath);
+    QString basename = info.completeBaseName();
+    QString extension = info.suffix();
+    if (extension.isEmpty()) {
+        extension = basename;
+        basename = QString();
+    }
+    for (unsigned i = 1; i < std::numeric_limits<unsigned>::max(); i++) {
+        QString filename = QString::fromLatin1("%1%2.%3").arg(basename).arg(i).arg(extension);
+        if (!info.dir().exists(filename))
+            return info.dir().filePath(filename);
+    }
+    return filePath;
+}
+
+QString Util::trcString(int trc)
+{
+    QString trcString = QObject::tr("unknown (%1)").arg(trc);
+    switch (trc) {
+    case 0:
+        trcString = QObject::tr("NA");
+        break;
+    case 1:
+        trcString = "ITU-R BT.709";
+        break;
+    case 6:
+        trcString = "ITU-R BT.601";
+        break;
+    case 7:
+        trcString = "SMPTE ST240";
+        break;
+    case 11:
+        trcString = "IEC 61966-2-4";
+        break;
+    case 14:
+        trcString = "ITU-R BT.2020";
+        break;
+    case 15:
+        trcString = "ITU-R BT.2020";
+        break;
+    case 16:
+        trcString = "SMPTE ST2084 (PQ)";
+        break;
+    case 17:
+        trcString = "SMPTE ST428";
+        break;
+    case 18:
+        trcString = "ARIB B67 (HLG)";
+        break;
+    }
+    return trcString;
+}
+
+bool Util::trcIsCompatible(int trc)
+{
+    // Transfer characteristics > SMPTE240M Probably need conversion except IEC61966-2-4 is OK
+    return trc <= 7 || trc == 11 || trc == 18;
+}
+
+QString Util::getConversionAdvice(Mlt::Producer *producer)
+{
+    QString advice;
+    producer->probe();
+    QString resource = Util::GetFilenameFromProducer(producer);
+    int trc = producer->get_int("meta.media.color_trc");
+    if (!Util::trcIsCompatible(trc)) {
+        QString trcString = Util::trcString(trc);
+        LOG_INFO() << resource << "Probable HDR" << trcString;
+        advice = QObject::tr("This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.").arg(
+                     trcString);
+    } else if (producer->get_int("meta.media.variable_frame_rate")) {
+        LOG_INFO() << resource << "is variable frame rate";
+        advice = QObject::tr("This file is variable frame rate, which is not reliable for editing.");
+    } else if (QFile::exists(resource) && !MLT.isSeekable(producer)) {
+        LOG_INFO() << resource << "is not seekable";
+        advice = QObject::tr("This file does not support seeking and cannot be used for editing.");
+    } else if (QFile::exists(resource) && resource.endsWith(".m2t")) {
+        LOG_INFO() << resource << "is HDV";
+        advice = QObject::tr("This file format (HDV) is not reliable for editing.");
+    }
+    return advice;
+}

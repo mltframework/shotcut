@@ -839,6 +839,11 @@
     <string>Normal</string>
    </property>
   </action>
+  <action name="actionResources">
+   <property name="text">
+    <string>Resources...</string>
+   </property>
+  </action>
   <action name="actionApplicationLog">
    <property name="text">
     <string>Application Log...</string>

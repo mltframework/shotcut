@@ -34,6 +34,7 @@
 #include "proxymanager.h"
 #include "dialogs/longuitask.h"
 #include "spatialmedia/spatialmedia.h"
+#include "transcoder.h"
 
 #include <QtWidgets>
 
@@ -134,7 +135,9 @@ void AvformatProducerWidget::offerConvert(QString message, bool set709Convert, b
                 m_producer->get_length() - 1;
     dialog.setSubClipChecked(setSubClip && (m_producer->get_in() > 0
                                             || m_producer->get_out() < m_producer->get_length() - 1));
-    convert(dialog);
+    Transcoder transcoder;
+    transcoder.addProducer(m_producer.data());
+    transcoder.convert(dialog);
 }
 
 void AvformatProducerWidget::keyPressEvent(QKeyEvent *event)
@@ -346,39 +349,7 @@ void AvformatProducerWidget::reloadProducerValues()
                 ui->videoTableWidget->setItem(4, 1, new QTableWidgetItem(csString));
                 key = QString("meta.media.%1.codec.color_trc").arg(i);
                 int trc = m_producer->get_int(key.toLatin1().constData());
-                QString trcString = tr("unknown (%1)").arg(trc);
-                switch (trc) {
-                case 0:
-                    trcString = tr("NA");
-                    break;
-                case 1:
-                    trcString = "ITU-R BT.709";
-                    break;
-                case 6:
-                    trcString = "ITU-R BT.601";
-                    break;
-                case 7:
-                    trcString = "SMPTE ST240";
-                    break;
-                case 11:
-                    trcString = "IEC 61966-2-4";
-                    break;
-                case 14:
-                    trcString = "ITU-R BT.2020";
-                    break;
-                case 15:
-                    trcString = "ITU-R BT.2020";
-                    break;
-                case 16:
-                    trcString = "SMPTE ST2084 (PQ)";
-                    break;
-                case 17:
-                    trcString = "SMPTE ST428";
-                    break;
-                case 18:
-                    trcString = "ARIB B67 (HLG)";
-                    break;
-                }
+                QString trcString = Util::trcString(trc);
                 QTableWidgetItem *trcItem = new QTableWidgetItem(trcString);
                 trcItem->setData(Qt::UserRole, QVariant(trc));
                 ui->videoTableWidget->setItem(5, 1, trcItem);
@@ -542,31 +513,6 @@ void AvformatProducerWidget::reloadProducerValues()
     }
     ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
     setSyncVisibility();
-
-    if (Settings.showConvertClipDialog() && !m_producer->get_int(kShotcutSkipConvertProperty)) {
-        auto transferItem = ui->videoTableWidget->item(5, 1);
-        if (transferItem) LOG_INFO() << "color transfer" << transferItem->data(
-                                             Qt::UserRole).toInt() << "=" << transferItem->text();
-        if (transferItem && transferItem->data(Qt::UserRole).toInt() > 7
-                && transferItem->data(Qt::UserRole).toInt() != 11
-                && transferItem->data(Qt::UserRole).toInt() != 18) {
-            // Transfer characteristics > SMPTE240M Probably need conversion except IEC61966-2-4 is OK
-            QString trcString = ui->videoTableWidget->item(5, 1)->text();
-            LOG_INFO() << resource << "Probable HDR" << trcString;
-            offerConvert(
-                tr("This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.").arg(
-                    trcString), true);
-        } else if (isVariableFrameRate) {
-            LOG_INFO() << resource << "is variable frame rate";
-            offerConvert(tr("This file is variable frame rate, which is not reliable for editing."));
-        } else if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
-            LOG_INFO() << resource << "is not seekable";
-            offerConvert(tr("This file does not support seeking and cannot be used for editing."));
-        } else if (QFile::exists(resource) && resource.endsWith(".m2t")) {
-            LOG_INFO() << resource << "is HDV";
-            offerConvert(tr("This file format (HDV) is not reliable for editing."));
-        }
-    }
 }
 
 void AvformatProducerWidget::on_videoTrackComboBox_activated(int index)
@@ -758,210 +704,9 @@ void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.set709Convert(ui->videoTableWidget->item(5, 1)->data(Qt::UserRole).toInt() > 7);
     dialog.showSubClipCheckBox();
-    convert(dialog);
-}
-
-static QString getNextFile(const QString &filePath)
-{
-    QFileInfo info(filePath);
-    QString basename = info.completeBaseName();
-    QString extension = info.suffix();
-    if (extension.isEmpty()) {
-        extension = basename;
-        basename = QString();
-    }
-    for (unsigned i = 1; i < std::numeric_limits<unsigned>::max(); i++) {
-        QString filename = QString::fromLatin1("%1%2.%3").arg(basename).arg(i).arg(extension);
-        if (!info.dir().exists(filename))
-            return info.dir().filePath(filename);
-    }
-    return filePath;
-}
-
-void AvformatProducerWidget::convert(TranscodeDialog &dialog)
-{
-    int result = dialog.exec();
-    if (dialog.isCheckBoxChecked()) {
-        Settings.setShowConvertClipDialog(false);
-    }
-    if (result == QDialog::Accepted) {
-        QString resource = Util::GetFilenameFromProducer(producer());
-        QString path = Settings.savePath();
-        QStringList args;
-        QString nameFilter;
-        int in = -1;
-
-        args << "-loglevel" << "verbose";
-        args << "-i" << resource;
-        args << "-max_muxing_queue_size" << "9999";
-
-        if (dialog.isSubClip()) {
-            if (Settings.proxyEnabled()) {
-                m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
-            }
-
-            // set trim options
-            if (m_producer->get(kFilterInProperty)) {
-                in = m_producer->get_int(kFilterInProperty);
-                int ss = qMax(0, in - qRound(m_producer->get_fps() * kHandleSeconds));
-                auto s = QString::fromLatin1(m_producer->frames_to_time(ss, mlt_time_clock));
-                args << "-ss" << s.replace(',', '.');
-                in -= ss;
-            } else {
-                args << "-ss" << QString::fromLatin1(m_producer->get_time("in", mlt_time_clock)).replace(',',
-                                                                                                         '.').replace(',', '.');
-            }
-            if (m_producer->get(kFilterOutProperty)) {
-                int out = m_producer->get_int(kFilterOutProperty);
-                int to = qMin(m_producer->get_playtime() - 1, out + qRound(m_producer->get_fps() * kHandleSeconds));
-                auto s = QString::fromLatin1(m_producer->frames_to_time(to, mlt_time_clock));
-                args << "-to" << s.replace(',', '.');
-            } else {
-                args << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
-            }
-        }
-
-        // transcode all streams except data, subtitles, and attachments
-        auto audioIndex = m_producer->property_exists(kDefaultAudioIndexProperty) ? m_producer->get_int(
-                              kDefaultAudioIndexProperty) : m_producer->get_int("audio_index");
-        if (m_producer->get_int("video_index") < audioIndex) {
-            args << "-map" << "0:V?" << "-map" << "0:a?";
-        } else {
-            args << "-map" << "0:a?" << "-map" << "0:V?";
-        }
-        args << "-map_metadata" << "0" << "-ignore_unknown";
-
-        // Set Sample rate if different than source
-        if ( !dialog.sampleRate().isEmpty() ) {
-            args << "-ar" << dialog.sampleRate();
-        }
-
-        // Set video filters
-        args << "-vf";
-        QString filterString;
-        if (dialog.deinterlace()) {
-            QString deinterlaceFilter = QString("bwdif,");
-            filterString = filterString + deinterlaceFilter;
-        }
-        QString range;
-        if (ui->rangeComboBox->currentIndex())
-            range = "full";
-        else
-            range = "mpeg";
-        if (dialog.get709Convert()) {
-            QString convertFilter =
-                QString("zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv422p,");
-            filterString = filterString + convertFilter;
-        }
-        filterString = filterString +
-                       QString("scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=%1:out_range=%2").arg(
-                           range).arg(range);
-        if (dialog.fpsOverride()) {
-            auto fps = QString("%1").arg(dialog.fps(), 0, 'f', 6);
-            int numerator, denominator;
-            Util::normalizeFrameRate(dialog.fps(), numerator, denominator);
-            if (denominator == 1001) {
-                fps = QString("%1/%2").arg(numerator).arg(denominator);
-            }
-            QString minterpFilter =
-                QString(",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'").arg(
-                    dialog.frc()).arg(fps);
-            filterString = filterString + minterpFilter;
-        }
-        args << filterString;
-
-        // Specify color range
-        if (ui->rangeComboBox->currentIndex())
-            args << "-color_range" << "jpeg";
-        else
-            args << "-color_range" << "mpeg";
-
-        if (!dialog.deinterlace() && !ui->scanComboBox->currentIndex())
-            args << "-flags" << "+ildct+ilme" << "-top" << QString::number(
-                     ui->fieldOrderComboBox->currentIndex());
-
-        switch (dialog.format()) {
-        case 0:
-            path.append("/%1 - %2.mp4");
-            nameFilter = tr("MP4 (*.mp4);;All Files (*)");
-            args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v" << "libx264";
-            args << "-preset" << "medium" << "-g" << "1" << "-crf" << "15";
-            break;
-        case 1:
-            args << "-f" << "mov" << "-codec:a" << "pcm_f32le";
-            if (dialog.deinterlace() || ui->scanComboBox->currentIndex()) { // progressive
-                args << "-codec:v" << "dnxhd" << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
-            } else { // interlaced
-                args << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
-            }
-            path.append("/%1 - %2.mov");
-            nameFilter = tr("MOV (*.mov);;All Files (*)");
-            break;
-        case 2:
-            args << "-f" << "matroska" << "-codec:a" << "pcm_f32le" << "-codec:v" << "utvideo";
-            args << "-pix_fmt" << "yuv422p";
-            path.append("/%1 - %2.mkv");
-            nameFilter = tr("MKV (*.mkv);;All Files (*)");
-            break;
-        }
-        if (dialog.get709Convert()) {
-            args << "-colorspace" << "bt709" << "-color_primaries" << "bt709" << "-color_trc" << "bt709";
-        }
-        QFileInfo fi(resource);
-        QString suffix = dialog.isSubClip() ? tr("Sub-clip") + ' ' : tr("Converted");
-        path = path.arg(fi.completeBaseName(), suffix);
-        if (dialog.isSubClip()) {
-            path = getNextFile(path);
-        }
-        QString filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path, nameFilter,
-                                                        nullptr, Util::getFileDialogOptions());
-        if (!filename.isEmpty()) {
-            if (filename == QDir::toNativeSeparators(resource)) {
-                QMessageBox::warning(this, dialog.windowTitle(),
-                                     QObject::tr("Unable to write file %1\n"
-                                                 "Perhaps you do not have permission.\n"
-                                                 "Try again with a different folder.")
-                                     .arg(fi.fileName()));
-                return;
-            }
-            if (Util::warnIfNotWritable(filename, this, dialog.windowTitle()))
-                return;
-
-            if (Util::warnIfLowDiskSpace(filename)) {
-                MAIN.showStatusMessage(tr("Convert canceled"));
-                return;
-            }
-
-            Settings.setSavePath(QFileInfo(filename).path());
-            args << "-y" << filename;
-            m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
-
-            FfmpegJob *job = new FfmpegJob(filename, args, false);
-            job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
-            if (dialog.isSubClip()) {
-                if (m_producer->get(kMultitrackItemProperty)) {
-                    QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
-                    auto parts = s.split(':');
-                    if (parts.length() == 2) {
-                        int clipIndex = parts[0].toInt();
-                        int trackIndex = parts[1].toInt();
-                        QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
-                        if (!uuid.isNull()) {
-                            job->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, QString(), uuid,
-                                                                              in));
-                            JOBS.add(job);
-                        }
-                    }
-                } else {
-                    job->setPostJobAction(new OpenPostJobAction(resource, filename, QString()));
-                    JOBS.add(job);
-                }
-                return;
-            }
-            job->setPostJobAction(new ReplaceAllPostJobAction(resource, filename, Util::getHash(*m_producer)));
-            JOBS.add(job);
-        }
-    }
+    Transcoder transcoder;
+    transcoder.addProducer(m_producer.data());
+    transcoder.convert(dialog);
 }
 
 bool AvformatProducerWidget::revertToOriginalResource()
