@@ -18,8 +18,8 @@
 #include "resourcemodel.h"
 
 #include "util.h"
-#include "Logger.h"
-#include "mainwindow.h"
+#include <Logger.h>
+#include <Mlt.h>
 
 class ProducerFinder : public Mlt::Parser
 {
@@ -122,7 +122,13 @@ void ResourceModel::search(Mlt::Producer *producer)
         return;
     }
     ProducerFinder parser(this);
+    beginResetModel();
     parser.start(*producer);
+    std::sort(m_producers.begin(), m_producers.end(), [ & ](Mlt::Producer & a, Mlt::Producer & b) {
+        return Util::GetFilenameFromProducer(&a, true).compare(Util::GetFilenameFromProducer(&b, true),
+                                                               Qt::CaseInsensitive) < 0;
+    });
+    endResetModel();
 }
 
 void ResourceModel::add(Mlt::Producer *producer)
