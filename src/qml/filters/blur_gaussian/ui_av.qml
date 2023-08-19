@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ Shotcut.KeyframableFilter {
         blockUpdate = true;
         amountSlider.value = filter.getDouble(amountH, position);
         amountKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(amountH) > 0;
+        alphaCheckBox.checked = filter.get('av.planes') !== '0x7';
         blockUpdate = false;
         enableControls(isSimpleKeyframesActive());
     }
@@ -54,6 +55,7 @@ Shotcut.KeyframableFilter {
         if (filter.isNew) {
             filter.set(amountH, amountSliderDefault);
             filter.set(amountV, amountSliderDefault);
+            filter.set('av.planes', '0xf');
             filter.savePreset(preset.parameters);
         }
         setControls();
@@ -72,7 +74,7 @@ Shotcut.KeyframableFilter {
         Shotcut.Preset {
             id: preset
 
-            parameters: keyframableParameters
+            parameters: keyframableParameters.concat('av.planes')
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
                 resetSimpleKeyframes();
@@ -114,6 +116,33 @@ Shotcut.KeyframableFilter {
                 toggleKeyframes(checked, amountH, amountSlider.value);
                 toggleKeyframes(checked, amountV, amountSlider.value);
             }
+        }
+
+        Item {
+        }
+
+        CheckBox {
+            id: alphaCheckBox
+
+            text: qsTr('Blur alpha')
+            onClicked: {
+                if (checked) {
+                    filter.set('av.planes', '0xf');
+                } else {
+                    filter.set('av.planes', '0x7');
+                }
+            }
+        }
+
+        Shotcut.UndoButton {
+
+            onClicked: {
+                alphaCheckBox.checked = true;
+                filter.set('av.planes', '0xf');
+            }
+        }
+
+        Item {
         }
 
         Item {

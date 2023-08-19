@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ Shotcut.KeyframableFilter {
         widthKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('hradius') > 0;
         hslider.value = filter.getDouble('vradius', position);
         heightKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('vradius') > 0;
+        alphaCheckBox.checked = filter.get('preserve_alpha') !== '1';
         blockUpdate = false;
         enableControls(isSimpleKeyframesActive());
     }
@@ -74,7 +75,7 @@ Shotcut.KeyframableFilter {
             id: preset
 
             Layout.columnSpan: parent.columns - 1
-            parameters: ['hradius', 'vradius']
+            parameters: ['hradius', 'vradius', 'preserve_alpha']
             onBeforePresetLoaded: {
                 filter.resetProperty('hradius');
                 filter.resetProperty('vradius');
@@ -141,6 +142,31 @@ Shotcut.KeyframableFilter {
                 enableControls(true);
                 toggleKeyframes(checked, 'vradius', hslider.value);
             }
+        }
+
+        Item {
+        }
+
+        CheckBox {
+            id: alphaCheckBox
+
+            text: qsTr('Blur alpha')
+            visible: filter.isAtLeastVersion(2)
+            onClicked: {
+                filter.set('preserve_alpha', !checked);
+            }
+        }
+
+        Shotcut.UndoButton {
+
+            visible: alphaCheckBox.visible
+            onClicked: {
+                alphaCheckBox.checked = true;
+                filter.set('preserve_alpha', !alphaCheckBox.checked);
+            }
+        }
+
+        Item {
         }
 
         Item {
