@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,10 +35,14 @@ Item {
             filter.set(paramAmount, 0.5);
         }
         var current = filter.getDouble(paramOperation);
-        for (var i = 0; i < operationModel.count; ++i) {
-            if (operationModel.get(i).value === current) {
-                modeCombo.currentIndex = i;
-                break;
+        if (current === 0.8 && filter.getDouble(paramAmount) === 1.0) {
+            modeCombo.currentIndex = operationModel.count - 1;
+        } else {
+            for (var i = 0; i < operationModel.count; ++i) {
+                if (operationModel.get(i).value === current) {
+                    modeCombo.currentIndex = i;
+                    break;
+                }
             }
         }
         sliderAmount.value = filter.getDouble(paramAmount) * 100;
@@ -61,7 +65,14 @@ Item {
             implicitWidth: 180
             textRole: 'text'
             onActivated: {
-                filter.set(paramOperation, operationModel.get(currentIndex).value);
+                if (operationModel.get(currentIndex).value === -1) {
+                    filter.set(paramOperation, 0.8);
+                    sliderAmount.value = 100;
+                } else {
+                    if (filter.getDouble(paramOperation) === 0.8 && filter.getDouble(paramAmount) === 1.0)
+                        sliderAmount.value = 50;
+                    filter.set(paramOperation, operationModel.get(currentIndex).value);
+                }
             }
 
             model: ListModel {
@@ -106,6 +117,11 @@ Item {
                     text: qsTr('Blur')
                     value: 1
                 }
+
+                ListElement {
+                    text: qsTr('Reset')
+                    value: -1
+                }
             }
         }
 
@@ -124,6 +140,7 @@ Item {
         Shotcut.SliderSpinner {
             id: sliderAmount
 
+            enabled: operationModel.get(modeCombo.currentIndex).value !== -1
             minimumValue: 0
             maximumValue: 100
             decimals: 1
