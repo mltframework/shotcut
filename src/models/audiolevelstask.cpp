@@ -152,12 +152,9 @@ QString AudioLevelsTask::cacheKey()
         key = hash.result().toHex();
     }
     if (producer->get("audio_index")) {
-        if (m_isForce) {
-            producer->set(kDefaultAudioIndexProperty, -1);
-        }
         // Add the audio index only if different than default to avoid cache miss.
-        if (producer->get(kDefaultAudioIndexProperty) &&
-                producer->get_int("audio_index") != producer->get_int(kDefaultAudioIndexProperty)) {
+        if (m_isForce || (producer->get(kDefaultAudioIndexProperty) &&
+                          producer->get_int("audio_index") != producer->get_int(kDefaultAudioIndexProperty))) {
             key += QString(" %1").arg(producer->get("audio_index"));
         }
     }

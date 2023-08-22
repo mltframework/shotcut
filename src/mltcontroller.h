@@ -33,6 +33,14 @@ class QQuickView;
 #define MLT_LC_CATEGORY LC_ALL
 #define MLT_LC_NAME     "LC_ALL"
 
+#if LIBMLT_VERSION_INT >= ((7<<16)+(19<<8))
+#define kAudioIndexProperty "astream"
+#define kVideoIndexProperty "vstream"
+#else
+#define kAudioIndexProperty "audio_index"
+#define kVideoIndexProperty "video_index"
+#endif
+
 namespace Mlt {
 
 const int kMaxImageDurationSecs = 3600 * 4;

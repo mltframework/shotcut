@@ -1517,6 +1517,7 @@ void DetachAudioCommand::redo()
     if (audioClip.is_valid() && videoClip.is_valid()) {
 
         // Disable audio on the video clip.
+        videoClip.set("astream", -1);
         videoClip.set("audio_index", -1);
         // Remove audio filters from the video clip.
         for (int i = 0; i < videoClip.filter_count(); i++) {
@@ -1532,6 +1533,7 @@ void DetachAudioCommand::redo()
         }
 
         // Disable video on the audio clip.
+        audioClip.set("vstream", -1);
         audioClip.set("video_index", -1);
         // Remove video filters from the audio clip.
         for (int i = 0; i < audioClip.filter_count(); i++) {
