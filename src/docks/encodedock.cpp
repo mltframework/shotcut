@@ -380,7 +380,12 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             // 0 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
         else if (vcodec.endsWith("_videotoolbox"))
+#if defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM)
+            ui->videoQualitySpinner->setValue(ui->hwencodeCheckBox->isChecked() ? videoQuality * 55.0 / 23.0 :
+                                              videoQuality);
+#else
             ui->videoQualitySpinner->setValue(videoQuality);
+#endif
         else if (vcodec.endsWith("_qsv"))
             // 1 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 1, videoQuality));
@@ -1343,12 +1348,7 @@ void EncodeDock::resetOptions()
     preset.set("f", "mp4");
     preset.set("movflags", "+faststart");
     preset.set("vcodec", "libx264");
-#if defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM)
-    if (ui->hwencodeCheckBox->isChecked())
-        preset.set("crf", "55");
-    else
-#endif
-        preset.set("crf", "23");
+    preset.set("crf", "23");
     preset.set("preset", "fast");
     preset.set("acodec", "aac");
     preset.set("meta.preset.extension", "mp4");
