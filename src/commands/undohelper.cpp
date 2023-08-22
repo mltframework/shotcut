@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,7 +147,7 @@ void UndoHelper::undoChanges()
         emit m_model.modified();
         return;
     }
-    int indexAdjustment = 0;
+    QMap<int, int> indexAdjustment;
 
     /* We're walking through the list in the order of uids, which is the order in which the
      * clips were laid out originally. As we go through the clips we make sure the clips behind
@@ -157,12 +157,12 @@ void UndoHelper::undoChanges()
         UNDOLOG << "Handling uid" << uid << "on track" << info.oldTrackIndex << "index" <<
                 info.oldClipIndex;
 
-        int mltIndex = m_model.trackList()[info.oldTrackIndex].mlt_index;
-        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
+        int trackIndex = m_model.trackList()[info.oldTrackIndex].mlt_index;
+        QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(trackIndex));
         Mlt::Playlist playlist(*trackProducer);
 
         /* This is the index in the track we're currently restoring */
-        int currentIndex = qMin(info.oldClipIndex + indexAdjustment, playlist.count() - 1);
+        int currentIndex = qMin(info.oldClipIndex + indexAdjustment[trackIndex], playlist.count() - 1);
 
         /* Clips that were moved are simply searched for using the uid, and moved in place. We
          * do not use the indices directly because they become invalid once the playlist is
@@ -217,7 +217,7 @@ void UndoHelper::undoChanges()
             Q_ASSERT(!clip.isNull());
             MLT.setUuid(*clip, uid);
             AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
-            ++indexAdjustment;
+            indexAdjustment[trackIndex]++;
         }
 
         /* Only in/out points handled so far */
