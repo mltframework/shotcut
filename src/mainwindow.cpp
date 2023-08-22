@@ -1886,6 +1886,14 @@ void MainWindow::setupActions()
 #ifdef Q_OS_MAC
     fullScreenShortcuts << QKeySequence(Qt::CTRL | Qt::META | Qt::Key_F);
     fullScreenShortcuts << QKeySequence(Qt::Key_F11);
+
+    action = new QAction(tr("Preferences"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Comma));
+    connect(action, &QAction::triggered, this, [&]() {
+        ui->menuSettings->popup(QPoint(145 * devicePixelRatioF(), ui->menuBar->height()),
+                                ui->menuSettings->defaultAction());
+    });
+    ui->menuEdit->addAction(action);
 #else
     fullScreenShortcuts << QKeySequence(Qt::Key_F11);
     fullScreenShortcuts << QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F);
