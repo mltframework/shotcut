@@ -375,7 +375,8 @@ void Util::applyCustomProperties(Mlt::Producer &destination, Mlt::Producer &sour
     p.clear(kOriginalOutProperty);
     if (!p.get_int(kIsProxyProperty))
         p.clear(kOriginalResourceProperty);
-    destination.pass_list(source, "mlt_service, audio_index, video_index, force_progressive, force_tff,"
+    destination.pass_list(source,
+                          "mlt_service, audio_index, video_index, astream, vstream, force_progressive, force_tff,"
                           "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch, rotate,"
                           kAspectRatioNumerator ","
                           kAspectRatioDenominator ","
@@ -685,7 +686,7 @@ QString Util::updateCaption(Mlt::Producer *producer)
 
 void Util::passProducerProperties(Mlt::Producer *src, Mlt::Producer *dst)
 {
-    dst->pass_list(*src, "audio_index, video_index, force_aspect_ratio,"
+    dst->pass_list(*src, "audio_index, video_index, astream, vstream, force_aspect_ratio,"
                    "video_delay, force_progressive, force_tff, force_full_range, color_range, warp_pitch, rotate,"
                    kAspectRatioNumerator ","
                    kAspectRatioDenominator ","

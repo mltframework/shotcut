@@ -283,8 +283,8 @@ void AvformatProducerWidget::reloadProducerValues()
 
     // populate the track combos
     int n = m_producer->get_int("meta.media.nb_streams");
-    int videoIndex = 1;
-    int audioIndex = 1;
+    int videoIndex = 0;
+    int audioIndex = 0;
     int totalAudioChannels = 0;
     bool populateTrackCombos = (ui->videoTrackComboBox->count() == 0 &&
                                 ui->audioTrackComboBox->count() == 0);
@@ -301,16 +301,22 @@ void AvformatProducerWidget::reloadProducerValues()
             key = QString("meta.media.%1.codec.height").arg(i);
             QString height(m_producer->get(key.toLatin1().constData()));
             QString name = QString("%1: %2x%3 %4")
-                           .arg(videoIndex)
+                           .arg(videoIndex + 1)
                            .arg(width)
                            .arg(height)
                            .arg(codec);
             if (populateTrackCombos) {
                 if (ui->videoTrackComboBox->count() == 0)
                     ui->videoTrackComboBox->addItem(tr("None"), -1);
+#if LIBMLT_VERSION_INT >= ((7<<16)+(19<<8))
+                ui->videoTrackComboBox->addItem(name, videoIndex);
+            }
+            if (videoIndex == m_producer->get_int(kVideoIndexProperty)) {
+#else
                 ui->videoTrackComboBox->addItem(name, i);
             }
-            if (i == m_producer->get_int("video_index")) {
+            if (i == m_producer->get_int(kVideoIndexProperty)) {
+#endif
                 key = QString("meta.media.%1.codec.long_name").arg(i);
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->videoTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
@@ -353,7 +359,7 @@ void AvformatProducerWidget::reloadProducerValues()
                 QTableWidgetItem *trcItem = new QTableWidgetItem(trcString);
                 trcItem->setData(Qt::UserRole, QVariant(trc));
                 ui->videoTableWidget->setItem(5, 1, trcItem);
-                ui->videoTrackComboBox->setCurrentIndex(videoIndex);
+                ui->videoTrackComboBox->setCurrentIndex(videoIndex + 1);
             }
             ui->tabWidget->setTabEnabled(0, true);
             videoIndex++;
@@ -366,16 +372,22 @@ void AvformatProducerWidget::reloadProducerValues()
             key = QString("meta.media.%1.codec.sample_rate").arg(i);
             QString sampleRate(m_producer->get(key.toLatin1().constData()));
             QString name = QString("%1: %2 ch %3 KHz %4")
-                           .arg(audioIndex)
+                           .arg(audioIndex + 1)
                            .arg(channels)
                            .arg(sampleRate.toDouble() / 1000)
                            .arg(codec);
             if (populateTrackCombos) {
                 if (ui->audioTrackComboBox->count() == 0)
                     ui->audioTrackComboBox->addItem(tr("None"), -1);
+#if LIBMLT_VERSION_INT >= ((7<<16)+(19<<8))
+                ui->audioTrackComboBox->addItem(name, audioIndex);
+            }
+            if (QString::number(audioIndex) == m_producer->get(kAudioIndexProperty)) {
+#else
                 ui->audioTrackComboBox->addItem(name, i);
             }
-            if ( QString::number(i) == m_producer->get("audio_index")) {
+            if (QString::number(i) == m_producer->get(kAudioIndexProperty)) {
+#endif
                 key = QString("meta.media.%1.codec.long_name").arg(i);
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
@@ -386,7 +398,7 @@ void AvformatProducerWidget::reloadProducerValues()
                 key = QString("meta.media.%1.codec.sample_fmt").arg(i);
                 ui->audioTableWidget->setItem(3, 1, new QTableWidgetItem(
                                                   m_producer->get(key.toLatin1().constData())));
-                ui->audioTrackComboBox->setCurrentIndex(audioIndex);
+                ui->audioTrackComboBox->setCurrentIndex(audioIndex + 1);
             }
             ui->tabWidget->setTabEnabled(1, true);
             audioIndex++;
@@ -518,7 +530,7 @@ void AvformatProducerWidget::reloadProducerValues()
 void AvformatProducerWidget::on_videoTrackComboBox_activated(int index)
 {
     if (m_producer) {
-        m_producer->set("video_index", ui->videoTrackComboBox->itemData(index).toInt());
+        m_producer->set(kVideoIndexProperty, ui->videoTrackComboBox->itemData(index).toInt());
         recreateProducer();
     }
 }
@@ -530,7 +542,7 @@ void AvformatProducerWidget::on_audioTrackComboBox_activated(int index)
         if (!m_producer->get(kDefaultAudioIndexProperty)) {
             m_producer->set(kDefaultAudioIndexProperty, m_producer->get_int("audio_index"));
         }
-        m_producer->set("audio_index",
+        m_producer->set(kAudioIndexProperty,
                         ui->audioTrackComboBox->itemData(index).toString().toUtf8().constData());
         recreateProducer();
     }
