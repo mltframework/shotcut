@@ -142,6 +142,7 @@ GridLayout {
         let previous = null;
         let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
         let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
+        filter.blockSignals = true;
         data.forEach(i => {
                 let current = filter.getRect(rectProperty, frame);
                 let x = 0;
@@ -176,6 +177,8 @@ GridLayout {
                 filter.set(rectProperty, current, frame, interpolation);
                 frame += interval;
             });
+        filter.blockSignals = false;
+        parameters.reload();
     }
 
     columns: 6

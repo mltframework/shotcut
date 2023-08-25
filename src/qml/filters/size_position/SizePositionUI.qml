@@ -267,6 +267,7 @@ Item {
         let previous = null;
         let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
         let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
+        filter.blockSignals = true;
         data.forEach(i => {
                 let current = filter.getRect(trackingProperty, frame);
                 let x = 0;
@@ -301,6 +302,8 @@ Item {
                 filter.set(trackingProperty, current, frame, interpolation);
                 frame += interval;
             });
+        filter.blockSignals = false;
+        parameters.reload();
     }
 
     width: 425
