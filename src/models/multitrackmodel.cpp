@@ -932,7 +932,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer &clip, int posi
                                    bool notify)
 {
     createIfNeeded();
-    Mlt::Playlist result;
+    Mlt::Playlist result(MLT.profile());
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
