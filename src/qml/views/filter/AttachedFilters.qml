@@ -188,6 +188,7 @@ Rectangle {
                 property string grabSection: ""
 
                 function beginDrag() {
+                    preventStealing = true
                     var grabbedItem = attachedFiltersView.itemAt(mouseX, mouseY);
                     oldIndex = attachedFiltersView.indexAt(mouseX, mouseY);
                     grabPos = Qt.point(mouseX - grabbedItem.x, mouseY - grabbedItem.y);
@@ -208,6 +209,7 @@ Rectangle {
                     dragItem.sourceComponent = null;
                     cursorShape = Qt.ArrowCursor;
                     autoScrollTimer.running = false;
+                    preventStealing = false
                 }
 
                 function updateDragTarget() {
