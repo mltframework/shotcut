@@ -17,8 +17,10 @@
 
 #include "resourcemodel.h"
 
-#include "util.h"
 #include <Logger.h>
+#include "util.h"
+#include "shotcut_mlt_properties.h"
+
 #include <Mlt.h>
 
 class ProducerFinder : public Mlt::Parser
@@ -31,7 +33,23 @@ public:
 
     int on_start_producer(Mlt::Producer *producer)
     {
-        m_model->add(producer);
+        if (!m_isBackgroundTrack && producer->parent().get("resource") != QString("<tractor>")) {
+            if (!m_isTransition)
+                m_clipIndex++;
+            if (!producer->is_blank()) {
+                QString location;
+                if (m_trackIndex == -1) {
+                    location = QObject::tr("Playlist Clip: %1").arg(m_clipIndex + 1);
+                } else {
+                    if (m_isTransition) {
+                        location = QObject::tr("Track: %1, Clip: %2 (transition)").arg(m_trackName).arg(m_clipIndex + 1);
+                    } else {
+                        location = QObject::tr("Track: %1, Clip: %2").arg(m_trackName).arg(m_clipIndex + 1);
+                    }
+                }
+                m_model->add(producer, location);
+            }
+        }
         return 0;
     }
 
@@ -43,20 +61,35 @@ public:
     {
         return 0;
     }
-    int on_start_playlist(Mlt::Playlist *)
+    int on_start_playlist(Mlt::Playlist *playlist)
     {
+        if (playlist->get("id") == QString("background")) {
+            m_isBackgroundTrack = true;
+        } else {
+            m_trackName = playlist->get(kTrackNameProperty);
+        }
         return 0;
     }
     int on_end_playlist(Mlt::Playlist *)
     {
+        m_trackName.clear();
+        m_isBackgroundTrack = false;
         return 0;
     }
     int on_start_tractor(Mlt::Tractor *)
     {
+        if (!m_isTimeline) {
+            m_isTimeline = true;
+        } else {
+            m_isTransition = true;
+            // Count both clips in a transition as the same index;
+            m_clipIndex++;
+        }
         return 0;
     }
     int on_end_tractor(Mlt::Tractor *)
     {
+        m_isTransition = false;
         return 0;
     }
     int on_start_multitrack(Mlt::Multitrack *)
@@ -69,6 +102,10 @@ public:
     }
     int on_start_track()
     {
+        if (!m_isTransition) {
+            m_trackIndex++;
+            m_clipIndex = -1;
+        }
         return 0;
     }
     int on_end_track()
@@ -105,7 +142,22 @@ public:
     }
 private:
     ResourceModel *m_model;
+    bool m_isTimeline = false;
+    bool m_isTransition = false;
+    bool m_isBackgroundTrack = false;
+    int m_trackIndex = -1;
+    int m_clipIndex = -1;
+    QString m_trackName;
 };
+
+QString appendLocation(QString &currentLocations, const QString &location)
+{
+    if (currentLocations.isEmpty()) {
+        return location;
+    } else {
+        return currentLocations + "\n" + location;
+    }
+}
 
 ResourceModel::ResourceModel(QObject *parent)
     : QAbstractItemModel(parent)
@@ -131,24 +183,30 @@ void ResourceModel::search(Mlt::Producer *producer)
     endResetModel();
 }
 
-void ResourceModel::add(Mlt::Producer *producer)
+void ResourceModel::add(Mlt::Producer *producer, const QString &location)
 {
     if (producer->is_blank()) {
         // Do not add
     } else if (producer->is_cut()) {
         Mlt::Producer parent = producer->parent();
         QString hash = Util::getHash(parent);
-        if (!hash.isEmpty() && !exists(hash)) {
-            beginInsertRows(QModelIndex(), m_producers.size(), m_producers.size());
-            m_producers.append(parent);
-            endInsertRows();
+        if (!hash.isEmpty()) {
+            if (!exists(hash)) {
+                beginInsertRows(QModelIndex(), m_producers.size(), m_producers.size());
+                m_producers.append(parent);
+                endInsertRows();
+            }
+            m_locations[hash] = appendLocation(m_locations[hash], location);
         }
     } else {
         QString hash = Util::getHash(*producer);
-        if (!hash.isEmpty() && !exists(hash)) {
-            beginInsertRows(QModelIndex(), m_producers.size(), m_producers.size());
-            m_producers.append(*producer);
-            endInsertRows();
+        if (!hash.isEmpty()) {
+            if (!exists(hash)) {
+                beginInsertRows(QModelIndex(), m_producers.size(), m_producers.size());
+                m_producers.append(*producer);
+                endInsertRows();
+            }
+            m_locations[hash] = appendLocation(m_locations[hash], location);
         }
     }
 }
@@ -284,9 +342,17 @@ QVariant ResourceModel::data(const QModelIndex &index, int role) const
         case COLUMN_NAME:
         case COLUMN_VID_DESCRIPTION:
         case COLUMN_AUD_DESCRIPTION:
-        case COLUMN_SIZE:
-            result = Util::GetFilenameFromProducer(producer, true);
+        case COLUMN_SIZE: {
+            QString filename = Util::GetFilenameFromProducer(producer, true);
+            QString hash = Util::getHash(*producer);
+            QString locations = m_locations[hash];
+            if (locations.isEmpty()) {
+                result = filename;
+            } else {
+                result = filename + "\n" + locations;
+            }
             break;
+        }
         default:
             LOG_ERROR() << "Invalid ToolTipRole Column" << index.row() << index.column() << roleNames()[role] <<
                         role;

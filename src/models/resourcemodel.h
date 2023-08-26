@@ -40,7 +40,7 @@ public:
     explicit ResourceModel(QObject *parent = 0);
     virtual ~ResourceModel();
     void search(Mlt::Producer *producer);
-    void add(Mlt::Producer *producer);
+    void add(Mlt::Producer *producer, const QString &location = QString());
     QList<Mlt::Producer> getProducers(const QModelIndexList &indices);
     bool exists(const QString &hash);
     // Implement QAbstractItemModel
@@ -54,6 +54,7 @@ public:
 private:
 
     QList<Mlt::Producer> m_producers;
+    QMap<QString, QString> m_locations;
 };
 
 #endif // RESOURCEMODEL_H
