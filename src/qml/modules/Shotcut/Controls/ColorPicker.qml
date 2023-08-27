@@ -20,7 +20,7 @@ import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 
 RowLayout {
-    property string value: "white"
+    property color value: "white"
     property bool alpha: false
     property alias eyedropper: pickerButton.visible
 

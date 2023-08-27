@@ -823,3 +823,13 @@ QString Util::getConversionAdvice(Mlt::Producer *producer)
     }
     return advice;
 }
+
+mlt_color Util::mltColorFromQColor(const QColor &color)
+{
+    return mlt_color {
+        static_cast<uint8_t>(color.red()),
+        static_cast<uint8_t>(color.green()),
+        static_cast<uint8_t>(color.blue()),
+        static_cast<uint8_t>(color.alpha())
+    };
+}

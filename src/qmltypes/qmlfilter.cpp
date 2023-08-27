@@ -78,6 +78,18 @@ QString QmlFilter::get(QString name, int position)
     }
 }
 
+QColor QmlFilter::getColor(QString name, int position)
+{
+    mlt_color color = {0, 0, 0, 0};
+    if (m_service.is_valid()) {
+        if (position < 0)
+            color = m_service.get_color(qUtf8Printable(name));
+        else
+            color = m_service.anim_get_color(qUtf8Printable(name), position, duration());
+    }
+    return QColor(color.r, color.g, color.b, color.a);
+}
+
 double QmlFilter::getDouble(QString name, int position)
 {
     if (m_service.is_valid()) {
@@ -170,6 +182,28 @@ void QmlFilter::set(QString name, QString value, int position)
         if (!animation.is_valid() || !animation.is_key(position)
                 || value != m_service.anim_get(qUtf8Printable(name), position, duration())) {
             m_service.anim_set(qUtf8Printable(name), qUtf8Printable(value), position, duration());
+            emit changed(name);
+        }
+    }
+}
+
+void QmlFilter::set(QString name, QColor value, int position, mlt_keyframe_type keyframeType)
+{
+    if (!m_service.is_valid()) return;
+    if (position < 0) {
+        auto mltColor = m_service.get_color(qUtf8Printable(name));
+        if (!m_service.get(qUtf8Printable(name))
+                || value != QColor(mltColor.r, mltColor.g, mltColor.b, mltColor.a)) {
+            m_service.set(qUtf8Printable(name), Util::mltColorFromQColor(value));
+            emit changed(name);
+        }
+    } else {
+        // Only set an animation keyframe if it does not already exist with the same value.
+        Mlt::Animation animation(m_service.get_animation(qUtf8Printable(name)));
+        auto mltColor = m_service.anim_get_color(qUtf8Printable(name), position, duration());
+        if (!animation.is_valid() || !animation.is_key(position)
+                || value != QColor(mltColor.r, mltColor.g, mltColor.b, mltColor.a)) {
+            m_service.anim_set(qUtf8Printable(name), Util::mltColorFromQColor(value), position, duration());
             emit changed(name);
         }
     }

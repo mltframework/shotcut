@@ -23,6 +23,7 @@
 #include <QVariant>
 #include <QRectF>
 #include <QUuid>
+#include <QColor>
 #include <MltService.h>
 #include <MltProducer.h>
 #include <MltAnimation.h>
@@ -76,11 +77,14 @@ public:
     }
 
     Q_INVOKABLE QString get(QString name, int position = -1);
+    Q_INVOKABLE QColor getColor(QString name, int position = -1);
     Q_INVOKABLE double getDouble(QString name, int position = -1);
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);
     Q_INVOKABLE void removeRectPercents(QString name);
     Q_INVOKABLE QStringList getGradient(QString name);
     Q_INVOKABLE void set(QString name, QString value, int position = -1);
+    Q_INVOKABLE void set(QString name, QColor value,
+                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     Q_INVOKABLE void set(QString name, double value,
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     Q_INVOKABLE void set(QString name, int value,

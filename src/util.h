@@ -77,6 +77,7 @@ public:
     static QString trcString(int trc);
     static bool trcIsCompatible(int trc);
     static QString getConversionAdvice(Mlt::Producer *producer);
+    static mlt_color mltColorFromQColor(const QColor &color);
 };
 
 #endif // UTIL_H

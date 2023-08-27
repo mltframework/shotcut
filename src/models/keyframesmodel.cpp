@@ -484,6 +484,19 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 emit keyframeAdded(name, position);
             }
         } else {
+            // Strings and color values
+            auto value = m_filter->get(name, position);
+            Mlt::Animation anim = m_filter->getAnimation(name);
+            if (anim.is_valid() && !anim.is_key(position)) {
+                mlt_keyframe_type keyframeType = m_filter->getKeyframeType(anim, position, mlt_keyframe_type(-1));
+                m_filter->blockSignals(true);
+                m_filter->set(name, value, position, keyframeType);
+                for (auto &key : parameter->gangedProperties()) {
+                    value = m_filter->get(key, position);
+                    m_filter->set(key, value, position, keyframeType);
+                }
+                m_filter->blockSignals(false);
+            }
             emit keyframeAdded(name, position);
         }
         onFilterChanged(name);
