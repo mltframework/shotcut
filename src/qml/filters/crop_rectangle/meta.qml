@@ -14,7 +14,7 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['rect', 'radius']
+        simpleProperties: ['rect', 'radius', 'color']
         parameters: [
             Parameter {
                 name: qsTr('Position / Size')
@@ -27,6 +27,11 @@ Metadata {
                 isCurve: true
                 minimum: 0
                 maximum: 1
+            },
+            Parameter {
+                name: qsTr('Padding color')
+                property: 'color'
+                isCurve: false
             }
         ]
     }

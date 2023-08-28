@@ -20,28 +20,22 @@ import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 import org.shotcut.qml as Shotcut
 
-Item {
-    property bool blockUpdate: true
-    property double startValueRadius: 0
-    property double middleValueRadius: 0
-    property double endValueRadius: 0
+Shotcut.KeyframableFilter {
     property string startValueRect: '_shotcut:startValue'
     property string middleValueRect: '_shotcut:middleValue'
     property string endValueRect: '_shotcut:endValue'
     property string rectProperty: 'rect'
     property rect filterRect
 
-    function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0);
-    }
-
-    function setRatioControls() {
+    function setControls() {
         var position = getPosition();
         blockUpdate = true;
         slider.value = filter.getDouble('radius', position) * slider.maximumValue;
-        blockUpdate = false;
-        slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
+        colorSwatch.value = filter.getColor('color', position);
         radiusKeyframesButton.checked = filter.keyframeCount('radius') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        colorKeyframesButton.checked = filter.keyframeCount('color') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        blockUpdate = false;
+        slider.enabled = isSimpleKeyframesActive();
     }
 
     function setRectControls() {
@@ -60,38 +54,6 @@ Item {
         rectW.enabled = enabled;
         rectH.enabled = enabled;
         positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
-    }
-
-    function updateFilterRatio(position) {
-        if (blockUpdate)
-            return;
-        var value = slider.value / 100;
-        setRatioControls();
-        if (position !== null) {
-            if (position <= 0 && filter.animateIn > 0)
-                startValueRadius = value;
-            else if (position >= filter.duration - 1 && filter.animateOut > 0)
-                endValueRadius = value;
-            else
-                middleValueRadius = value;
-        }
-        if (filter.animateIn > 0 || filter.animateOut > 0) {
-            filter.resetProperty('radius');
-            radiusKeyframesButton.checked = false;
-            if (filter.animateIn > 0) {
-                filter.set('radius', startValueRadius, 0);
-                filter.set('radius', middleValueRadius, filter.animateIn - 1);
-            }
-            if (filter.animateOut > 0) {
-                filter.set('radius', middleValueRadius, filter.duration - filter.animateOut);
-                filter.set('radius', endValueRadius, filter.duration - 1);
-            }
-        } else if (!radiusKeyframesButton.checked) {
-            filter.resetProperty('radius');
-            filter.set('radius', middleValueRadius);
-        } else if (position !== null) {
-            filter.set('radius', value, position);
-        }
     }
 
     function updateFilterRect(position) {
@@ -130,9 +92,23 @@ Item {
         }
     }
 
-    function updateFilter() {
-        updateFilterRatio(null);
+    function initSimpleKeyframes() {
+        middleValues[0] = filter.getDouble('radius', filter.animateIn);
+        middleValues[1] = filter.getColor('color', filter.animateIn);
+        if (filter.animateIn > 0) {
+            startValues[0] = filter.getDouble('radius', 0);
+            startValues[1] = filter.getColor('color', 0);
+        }
+        if (filter.animateOut > 0) {
+            endValues[0] = filter.getDouble('radius', filter.duration - 1);
+            endValues[1] = filter.getColor('color', filter.duration - 1);
+        }
+    }
+
+    function updateParameters() {
         updateFilterRect(null);
+        updateFilter('radius', slider.value / 100, radiusKeyframesButton, null);
+        updateFilter('color', colorSwatch.value, colorKeyframesButton, null);
     }
 
     function applyTracking(motionTrackerRow, operation, frame) {
@@ -180,6 +156,10 @@ Item {
         parameters.reload();
     }
 
+    keyframableParameters: ['radius', 'color']
+    startValues: [0, Qt.rgba(0, 0, 0, 1)]
+    middleValues: [0, Qt.rgba(0, 0, 0, 1)]
+    endValues: [0, Qt.rgba(0, 0, 0, 1)]
     width: 400
     height: 180
     Component.onCompleted: {
@@ -189,26 +169,23 @@ Item {
         filter.set(endValueRect, Qt.rect(0, 0, profile.width, profile.height));
         if (filter.isNew) {
             // Set default parameter values
-            filter.set('color', '#ff000000');
+            filter.set('color', Qt.rgba(0, 0, 0, 1));
             filter.set('radius', 0);
             filter.set(rectProperty, '0%/0%:100%x100%');
             filter.savePreset(preset.parameters);
         } else {
-            middleValueRadius = filter.getDouble('radius', filter.animateIn);
+            initSimpleKeyframes();
             filter.set(middleValueRect, filter.getRect(rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0) {
-                startValueRadius = filter.getDouble('radius', 0);
                 filter.set(startValueRect, filter.getRect(rectProperty, 0));
             }
             if (filter.animateOut > 0) {
-                endValueRadius = filter.getDouble('radius', filter.duration - 1);
                 filter.set(endValueRect, filter.getRect(rectProperty, filter.duration - 1));
             }
         }
         filter.blockSignals = false;
-        setRatioControls();
+        setControls();
         setRectControls();
-        colorSwatch.value = filter.get('color');
         if (filter.isNew)
             filter.set(rectProperty, filter.getRect(rectProperty));
     }
@@ -231,21 +208,18 @@ Item {
             onBeforePresetLoaded: {
                 filterRect = Qt.rect(0, 0, 0, 0);
                 filter.resetProperty(rectProperty);
-                filter.resetProperty('radius');
+                resetSimpleKeyframes();
             }
             onPresetSelected: {
-                setRatioControls();
+                setControls();
                 setRectControls();
-                colorSwatch.value = filter.get('color');
+                initSimpleKeyframes();
                 filter.blockSignals = true;
-                middleValueRadius = filter.getDouble('radius', filter.animateIn);
                 filter.set(middleValueRect, filter.getRect(rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0) {
-                    startValueRadius = filter.getDouble('radius', 0);
                     filter.set(startValueRect, filter.getRect(rectProperty, 0));
                 }
                 if (filter.animateOut > 0) {
-                    endValueRadius = filter.getDouble('radius', filter.duration - 1);
                     filter.set(endValueRect, filter.getRect(rectProperty, filter.duration - 1));
                 }
                 filter.blockSignals = false;
@@ -396,7 +370,7 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            onValueChanged: updateFilterRatio(getPosition())
+            onValueChanged: updateFilter('radius', value / 100, radiusKeyframesButton, getPosition())
         }
 
         Shotcut.UndoButton {
@@ -407,15 +381,8 @@ Item {
             id: radiusKeyframesButton
 
             onToggled: {
-                var value = slider.value / 100;
-                if (checked) {
-                    filter.clearSimpleAnimation('radius');
-                    filter.set('radius', value, getPosition());
-                } else {
-                    filter.resetProperty('radius');
-                    filter.set('radius', value);
-                }
-                checked = filter.keyframeCount('radius') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+                toggleKeyframes(checked, 'radius', slider.value / 100);
+                setControls();
             }
         }
 
@@ -431,31 +398,33 @@ Item {
                 property bool isReady: false
 
                 alpha: true
+                enabled: slider.enabled
                 Component.onCompleted: isReady = true
                 onValueChanged: {
                     if (isReady) {
-                        filter.set('color', value);
-                        filter.set("disable", 0);
+                        updateFilter('color', value, colorKeyframesButton, getPosition());
+                        filter.set('disable', 0);
                     }
                 }
                 onPickStarted: {
-                    filter.set("disable", 1);
+                    filter.set('disable', 1);
                 }
                 onPickCancelled: filter.set('disable', 0)
             }
 
             Shotcut.Button {
                 text: qsTr('Transparent')
-                onClicked: colorSwatch.value = '#00000000'
+                onClicked: colorSwatch.value = Qt.rgba(0, 0, 0, 0)
             }
         }
 
         Shotcut.UndoButton {
-            onClicked: colorSwatch.value = '#FF000000'
+            onClicked: colorSwatch.value = Qt.rgba(0, 0, 0, 1)
         }
 
-        Item {
-            width: 1
+        Shotcut.KeyframesButton {
+            id: colorKeyframesButton
+            onToggled: toggleKeyframes(checked, 'color', colorSwatch.value)
         }
 
         Item {
@@ -490,28 +459,28 @@ Item {
     Connections {
         function onChanged() {
             setRectControls();
-            setRatioControls();
+            setRectControls();
         }
 
         function onInChanged() {
-            updateFilter(null);
+            updateParameters();
         }
 
         function onOutChanged() {
-            updateFilter(null);
+            updateParameters();
         }
 
         function onAnimateInChanged() {
-            updateFilter(null);
+            updateParameters();
         }
 
         function onAnimateOutChanged() {
-            updateFilter(null);
+            updateParameters();
         }
 
         function onPropertyChanged(name) {
             setRectControls();
-            setRatioControls();
+            setControls();
         }
 
         target: filter
@@ -519,7 +488,7 @@ Item {
 
     Connections {
         function onPositionChanged() {
-            setRatioControls();
+            setControls();
             setRectControls();
         }
 
