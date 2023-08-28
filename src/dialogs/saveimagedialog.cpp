@@ -52,7 +52,7 @@ SaveImageDialog::SaveImageDialog(QWidget *parent, const QString &caption, QImage
     QString suffix = Settings.exportFrameSuffix();
     QString selectedNameFilter = nameFilters[0];
     for (const auto &f : nameFilters) {
-        if (f.contains(suffix)) {
+        if (f.contains(suffix.toLower())) {
             selectedNameFilter = f;
             break;
         }
