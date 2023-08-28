@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2023 Meltytech, LLC
  * Author: Lauren Dennedy
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,23 +20,51 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 
-Item {
+Shotcut.KeyframableFilter {
+    property string centerProperty: '0'
+    property string bandwidthProperty: '1'
+    property string stagesProperty: '2'
+    property string wetnessProperty: 'wetness'
+
     function setControls() {
-        sliderCenter.value = filter.getDouble('0');
-        sliderBandwidth.value = filter.getDouble('1');
-        sliderStages.value = filter.get('2');
-        sliderWetness.value = filter.getDouble('wetness') * sliderWetness.maximumValue;
+        var position = getPosition();
+        blockUpdate = true;
+        sliderCenter.value = filter.getDouble(centerProperty, position);
+        centerKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(centerProperty) > 0;
+        sliderBandwidth.value = filter.getDouble(bandwidthProperty, position);
+        bandwidthKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(bandwidthProperty) > 0;
+        sliderStages.value = filter.getDouble(stagesProperty, position);
+        stagesKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stagesProperty) > 0;
+        sliderWetness.value = filter.getDouble(wetnessProperty, position) * sliderWetness.maximumValue;
+        wetnessKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(wetnessProperty) > 0;
+        blockUpdate = false;
+        enableControls(isSimpleKeyframesActive());
     }
 
+    function enableControls(enabled) {
+        sliderCenter.enabled = sliderBandwidth.enabled = sliderStages.enabled = sliderWetness.enabled = enabled;
+    }
+
+    function updateSimpleKeyframes() {
+        updateFilter(centerProperty, sliderCenter.value, centerKeyframesButton, null);
+        updateFilter(bandwidthProperty, sliderBandwidth.value, bandwidthKeyframesButton, null);
+        updateFilter(stagesProperty, sliderStages.value, stagesKeyframesButton, null);
+        updateFilter(wetnessProperty, sliderWetness.value / sliderWetness.maximumValue, wetnessKeyframesButton, null);
+    }
+
+    keyframableParameters: preset.parameters
+    startValues: [322, 322, 1, 1]
+    middleValues: [322, 322, 1, 1]
+    endValues: [322, 322, 1, 1]
     width: 350
     height: 150
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            filter.set('0', 322);
-            filter.set('1', 322);
-            filter.set('2', 1);
-            filter.set('wetness', 1);
+            filter.set(centerProperty, 322);
+            filter.set(bandwidthProperty, 322);
+            filter.set(stagesProperty, 1);
+            filter.set(wetnessProperty, 1);
             filter.savePreset(preset.parameters);
         }
         setControls();
@@ -45,7 +73,7 @@ Item {
     GridLayout {
         anchors.fill: parent
         anchors.margins: 8
-        columns: 3
+        columns: 4
 
         Label {
             text: qsTr('Preset')
@@ -55,9 +83,15 @@ Item {
         Shotcut.Preset {
             id: preset
 
-            parameters: ['0', '1', '2', 'wetness']
-            Layout.columnSpan: 2
-            onPresetSelected: setControls()
+            parameters: [centerProperty, bandwidthProperty, stagesProperty, wetnessProperty]
+            Layout.columnSpan: parent.columns - 1
+            onBeforePresetLoaded: {
+                resetSimpleKeyframes();
+            }
+            onPresetSelected: {
+                setControls();
+                initializeSimpleKeyframes();
+            }
         }
 
         Label {
@@ -71,15 +105,20 @@ Item {
             minimumValue: 5
             maximumValue: 21600
             suffix: ' Hz'
-            spinnerWidth: 100
-            value: filter.getDouble('0')
-            onValueChanged: {
-                filter.set('0', value);
-            }
+            onValueChanged: updateFilter(centerProperty, value, centerKeyframesButton, getPosition())
         }
 
         Shotcut.UndoButton {
             onClicked: sliderCenter.value = 322
+        }
+
+        Shotcut.KeyframesButton {
+            id: centerKeyframesButton
+
+            onToggled: {
+                enableControls(true);
+                toggleKeyframes(checked, centerProperty, sliderCenter.value);
+            }
         }
 
         Label {
@@ -93,15 +132,20 @@ Item {
             minimumValue: 5
             maximumValue: 21600
             suffix: ' Hz'
-            spinnerWidth: 100
-            value: filter.getDouble('1')
-            onValueChanged: {
-                filter.set('1', value);
-            }
+            onValueChanged: updateFilter(bandwidthProperty, value, bandwidthKeyframesButton, getPosition())
         }
 
         Shotcut.UndoButton {
             onClicked: sliderBandwidth.value = 322
+        }
+
+        Shotcut.KeyframesButton {
+            id: bandwidthKeyframesButton
+
+            onToggled: {
+                enableControls(true);
+                toggleKeyframes(checked, bandwidthProperty, sliderBandwidth.value);
+            }
         }
 
         Label {
@@ -114,15 +158,20 @@ Item {
 
             minimumValue: 1
             maximumValue: 10
-            spinnerWidth: 100
-            value: filter.get('2')
-            onValueChanged: {
-                filter.set('2', value);
-            }
+            onValueChanged: updateFilter(stagesProperty, value, stagesKeyframesButton, getPosition())
         }
 
         Shotcut.UndoButton {
             onClicked: sliderStages.value = 1
+        }
+
+        Shotcut.KeyframesButton {
+            id: stagesKeyframesButton
+
+            onToggled: {
+                enableControls(true);
+                toggleKeyframes(checked, stagesProperty, sliderStages.value);
+            }
         }
 
         Label {
@@ -136,21 +185,62 @@ Item {
             minimumValue: 0
             maximumValue: 100
             decimals: 1
-            spinnerWidth: 100
             label: qsTr('Wet')
             suffix: ' %'
-            value: filter.getDouble('wetness') * maximumValue
-            onValueChanged: {
-                filter.set('wetness', value / maximumValue);
-            }
+            onValueChanged: updateFilter(wetnessProperty, value / maximumValue, wetnessKeyframesButton, getPosition())
         }
 
         Shotcut.UndoButton {
             onClicked: sliderWetness.value = sliderWetness.maximumValue
         }
 
+        Shotcut.KeyframesButton {
+            id: wetnessKeyframesButton
+
+            onToggled: {
+                enableControls(true);
+                toggleKeyframes(checked, wetnessProperty, sliderWetness.value / sliderWetness.maximumValue);
+            }
+        }
+
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateInChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onAnimateOutChanged() {
+            updateSimpleKeyframes();
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
+        target: filter
+    }
+
+    Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
+        target: producer
     }
 }
