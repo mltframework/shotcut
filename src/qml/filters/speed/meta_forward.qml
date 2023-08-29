@@ -15,8 +15,9 @@ Metadata {
 
     keyframes {
         allowTrim: false
-        allowAnimateIn: false
-        allowAnimateOut: false
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['speed_map']
         allowSmooth: false
         parameters: [
             Parameter {

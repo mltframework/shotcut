@@ -24,6 +24,9 @@ Item {
     property bool blockUpdate: true
     property double min: -10
     property double max: 10
+    property double startValue: 1.0
+    property double middleValue: 1.0
+    property double endValue: 1.0
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0);
@@ -32,9 +35,9 @@ Item {
     function setControls() {
         if (blockUpdate)
             return;
-        var outPosition = getPosition();
+        var position = getPosition();
         blockUpdate = true;
-        speedSpinner.value = filter.getDouble('speed_map', outPosition);
+        speedSpinner.value = filter.getDouble('speed_map', position);
         var current = filter.get('image_mode');
         for (var i = 0; i < imageModeModel.count; ++i) {
             if (imageModeModel.get(i).value === current) {
@@ -43,8 +46,41 @@ Item {
             }
         }
         pitchCheckbox.checked = filter.get('pitch') === '1';
-        var speed = filter.getDouble('speed');
         blockUpdate = false;
+        speedSpinner.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
+    }
+
+    function updateFilter(position) {
+        if (blockUpdate)
+            return;
+        var value = speedSpinner.value;
+        if (position !== null) {
+            if (position <= 0 && filter.animateIn > 0)
+                startValue = value;
+            else if (position >= filter.duration - 1 && filter.animateOut > 0)
+                endValue = value;
+            else
+                middleValue = value;
+        }
+        if (filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('speed_map') <= 0) {
+            // Simple keyframes have been disabled
+            filter.clearSimpleAnimation('speed_map');
+            filter.set('speed_map', middleValue, 0);
+            filter.set('speed_map', middleValue, filter.duration - 1);
+        }
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            filter.resetProperty('speed_map');
+            if (filter.animateIn > 0) {
+                filter.set('speed_map', startValue, 0);
+                filter.set('speed_map', middleValue, filter.animateIn - 1);
+            }
+            if (filter.animateOut > 0) {
+                filter.set('speed_map', middleValue, filter.duration - filter.animateOut);
+                filter.set('speed_map', endValue, filter.duration - 1);
+            }
+        } else if (position !== null) {
+            filter.set('speed_map', value, position);
+        }
     }
 
     width: 200
@@ -60,42 +96,6 @@ Item {
             application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only').arg(application.OS === 'macOS' ? '⌘' : 'Ctrl').arg(application.OS === 'macOS' ? '⌥' : 'Alt'));
         }
         blockUpdate = false;
-        timer.restart();
-    }
-
-    Connections {
-        function onInChanged() {
-            timer.restart();
-        }
-
-        function onOutChanged() {
-            timer.restart();
-        }
-
-        function onPropertyChanged() {
-            timer.restart();
-        }
-
-        target: filter
-    }
-
-    Timer {
-        id: timer
-
-        interval: 200
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: {
-            setControls();
-        }
-    }
-
-    Connections {
-        function onPositionChanged() {
-            timer.restart();
-        }
-
-        target: producer
     }
 
     GridLayout {
@@ -116,8 +116,12 @@ Item {
                 filter.resetProperty(parameters[0]);
             }
             onPresetSelected: {
-                timer.restart();
-                mapKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0;
+                setControls();
+                middleValue = filter.getDouble(parameters[0], filter.animateIn);
+                if (filter.animateIn > 0)
+                    startValue = filter.getDouble(parameters[0], 0);
+                if (filter.animateOut > 0)
+                    endValue = filter.getDouble(parameters[0], filter.duration - 1);
             }
         }
 
@@ -139,8 +143,7 @@ Item {
             onValueChanged: {
                 if (blockUpdate)
                     return;
-                filter.set('speed_map', speedSpinner.value, getPosition());
-                timer.restart();
+                updateFilter(getPosition());
             }
         }
 
@@ -210,5 +213,41 @@ Item {
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    Connections {
+        function onChanged() {
+            setControls();
+        }
+
+        function onInChanged() {
+            updateFilter(null);
+        }
+
+        function onOutChanged() {
+            updateFilter(null);
+        }
+
+        function onAnimateInChanged() {
+            updateFilter(null);
+        }
+
+        function onAnimateOutChanged() {
+            updateFilter(null);
+        }
+
+        function onPropertyChanged(name) {
+            setControls();
+        }
+
+        target: filter
+    }
+
+    Connections {
+        function onPositionChanged() {
+            setControls();
+        }
+
+        target: producer
     }
 }
