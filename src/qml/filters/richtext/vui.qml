@@ -114,7 +114,7 @@ Shotcut.VuiBase {
     Component.onCompleted: {
         setRectangleControl();
         filter.set('_hide', 1);
-        background.color = filter.get('bgcolour');
+        background.color = filter.getColor('bgcolour', getPosition());
         setTextAreaHeight();
         textArea.text = filter.get('html');
         fontSizeSpinBox.value = document.fontSize;
@@ -854,7 +854,7 @@ Shotcut.VuiBase {
         function onChanged() {
             setRectangleControl();
             videoItem.enabled = filter.get('disable') !== '1';
-            background.color = filter.get('bgcolour');
+            background.color = filter.getColor('bgcolour', getPosition());
             setTextAreaHeight();
         }
 
@@ -864,6 +864,7 @@ Shotcut.VuiBase {
     Connections {
         function onPositionChanged() {
             setRectangleControl();
+            background.color = filter.getColor('bgcolour', getPosition());
         }
 
         target: producer

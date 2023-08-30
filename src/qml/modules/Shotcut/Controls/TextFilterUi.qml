@@ -139,9 +139,9 @@ GridLayout {
         rectH.enabled = enabled;
         fgColor.enabled = enabled;
         positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
-        fgcolorKeyframesButton.checked = filter.keyframeCount('fgcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
-        olcolorKeyframesButton.checked = filter.keyframeCount('olcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
-        bgcolorKeyframesButton.checked = filter.keyframeCount('bgcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        fgcolorKeyframesButton.checked = filter.keyframeCount('fgcolour') > 0;
+        olcolorKeyframesButton.checked = filter.keyframeCount('olcolour') > 0;
+        bgcolorKeyframesButton.checked = filter.keyframeCount('bgcolour') > 0;
     }
 
     function resetColorKeyframes() {

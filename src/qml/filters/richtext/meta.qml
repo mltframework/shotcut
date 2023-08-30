@@ -22,6 +22,11 @@ Metadata {
                 name: qsTr('Position / Size')
                 property: 'geometry'
                 isRectangle: true
+            },
+            Parameter {
+                name: qsTr('Background color')
+                property: 'bgcolour'
+                isCurve: false
             }
         ]
     }

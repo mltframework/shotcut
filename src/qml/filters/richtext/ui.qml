@@ -29,12 +29,13 @@ Item {
     property string sizeProperty: '_shotcut:size'
     property string specialPresetProperty: 'shotcut:preset'
     property rect defaultRect: Qt.rect(Math.round(profile.width * 0.1), Math.round(profile.height * 0.1), Math.round(profile.width * 0.8), Math.round(profile.height * 0.8))
+    property bool blockUpdate: true
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0);
     }
 
-    function updateFilter(position) {
+    function updateFilterRect(position) {
         if (position !== null) {
             filter.blockSignals = true;
             if (position <= 0 && filter.animateIn > 0)
@@ -65,7 +66,6 @@ Item {
     }
 
     function setControls() {
-        bgColor.value = filter.get('bgcolour');
         switch (filter.get('overflow-y')) {
         case '':
             automaticOverflowRadioButton.checked = true;
@@ -95,12 +95,16 @@ Item {
             rectW.value = filterRect.width;
             rectH.value = filterRect.height;
         }
+        blockUpdate = true;
+        bgColor.value = filter.getColor('bgcolour', position);
+        blockUpdate = false;
         var enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
         rectX.enabled = enabled;
         rectY.enabled = enabled;
         rectW.enabled = enabled;
         rectH.enabled = enabled;
         positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        bgcolorKeyframesButton.checked = filter.keyframeCount('bgcolour') > 0;
         var document = getTextDimensions();
         if (parseInt(sizeW.text) !== Math.round(document.width) || parseInt(sizeH.text) !== Math.round(document.height)) {
             sizeW.text = Math.round(document.width);
@@ -129,6 +133,30 @@ Item {
                 console.log(filter.get(specialPresetProperty) + ': ' + s);
                 filter.set(rectProperty, s);
             }
+        }
+    }
+
+    function updateFilter(parameter, value, button, position) {
+        if (blockUpdate)
+            return;
+        if (button.checked && position !== null) {
+            filter.set(parameter, value, position);
+        } else if (position !== null) {
+            filter.set(parameter, value);
+        }
+    }
+
+    function toggleKeyframes(isEnabled, parameter, value) {
+        if (isEnabled) {
+            blockUpdate = true;
+            filter.clearSimpleAnimation(parameter);
+            blockUpdate = false;
+            // Set this keyframe value.
+            filter.set(parameter, value, getPosition());
+        } else {
+            // Remove keyframes and set the parameter.
+            filter.resetProperty(parameter);
+            filter.set(parameter, value);
         }
     }
 
@@ -271,6 +299,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             onBeforePresetLoaded: {
                 filter.resetProperty(rectProperty);
                 filter.resetProperty(specialPresetProperty);
+                filter.resetProperty('bgcolour');
             }
             onPresetSelected: {
                 handleSpecialPreset();
@@ -314,7 +343,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 onValueModified: {
                     if (Math.abs(filterRect.x - value) > 1) {
                         filterRect.x = value;
-                        updateFilter(getPosition());
+                        updateFilterRect(getPosition());
                     }
                 }
             }
@@ -337,7 +366,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 onValueModified: {
                     if (Math.abs(filterRect.y - value) > 1) {
                         filterRect.y = value;
-                        updateFilter(getPosition());
+                        updateFilterRect(getPosition());
                     }
                 }
             }
@@ -347,7 +376,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             onClicked: {
                 filterRect.x = rectX.value = defaultRect.x;
                 filterRect.y = rectY.value = defaultRect.y;
-                updateFilter(getPosition());
+                updateFilterRect(getPosition());
             }
         }
 
@@ -391,7 +420,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 onValueModified: {
                     if (Math.abs(filterRect.width - value) > 1) {
                         filterRect.width = value;
-                        updateFilter(getPosition());
+                        updateFilterRect(getPosition());
                     }
                 }
             }
@@ -414,7 +443,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 onValueModified: {
                     if (Math.abs(filterRect.height - value) > 1) {
                         filterRect.height = value;
-                        updateFilter(getPosition());
+                        updateFilterRect(getPosition());
                     }
                 }
             }
@@ -424,7 +453,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             onClicked: {
                 filterRect.width = rectW.value = defaultRect.width;
                 filterRect.height = rectH.value = defaultRect.height;
-                updateFilter(getPosition());
+                updateFilterRect(getPosition());
             }
         }
 
@@ -503,15 +532,16 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             Layout.columnSpan: 3
             eyedropper: false
             alpha: true
-            onValueChanged: filter.set('bgcolour', value)
+            onValueChanged: updateFilter('bgcolour', value, bgcolorKeyframesButton, getPosition())
         }
 
         Shotcut.UndoButton {
-            onClicked: bgColor.value = '#00000000'
+            onClicked: bgColor.value = Qt.rgba(0, 0, 0, 0)
         }
 
-        Item {
-            Layout.fillWidth: true
+        Shotcut.KeyframesButton {
+            id: bgcolorKeyframesButton
+            onToggled: toggleKeyframes(checked, 'bgcolour', bgColor.value)
         }
 
         Label {
@@ -590,7 +620,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             rectY.value = filterRect.y;
             rectW.value = filterRect.width;
             rectH.value = filterRect.height;
-            updateFilter(getPosition());
+            updateFilterRect(getPosition());
         }
     }
 
@@ -600,19 +630,19 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
 
         function onInChanged() {
-            updateFilter(null);
+            updateFilterRect(null);
         }
 
         function onOutChanged() {
-            updateFilter(null);
+            updateFilterRect(null);
         }
 
         function onAnimateInChanged() {
-            updateFilter(null);
+            updateFilterRect(null);
         }
 
         function onAnimateOutChanged() {
-            updateFilter(null);
+            updateFilterRect(null);
         }
 
         target: filter
