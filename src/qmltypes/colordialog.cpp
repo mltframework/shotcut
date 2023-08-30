@@ -27,7 +27,12 @@ ColorDialog::ColorDialog(QObject *parent)
 void ColorDialog::open()
 {
     auto color = m_color;
-    auto newColor = QColorDialog::getColor(color, nullptr, m_title, QColorDialog::ShowAlphaChannel);
+    QColorDialog::ColorDialogOptions flags = QColorDialog::ShowAlphaChannel;
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    if (qEnvironmentVariableIsSet("SNAP") || qEnvironmentVariableIsSet("GNOME_SHELL_SESSION_MODE"))
+        flags = flags | QColorDialog::DontUseNativeDialog;
+#endif
+    auto newColor = QColorDialog::getColor(color, nullptr, m_title, flags);
     if (newColor.isValid()) {
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
