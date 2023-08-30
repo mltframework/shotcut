@@ -115,6 +115,7 @@ Item {
             parameters: textFilterUi.parameterList.concat(['format', 'direction', 'start', 'duration'])
             onBeforePresetLoaded: {
                 filter.resetProperty(textFilterUi.rectProperty);
+                textFilterUi.resetColorKeyframes();
             }
             onPresetSelected: {
                 setControls();

@@ -187,7 +187,7 @@ void QmlFilter::set(QString name, QString value, int position)
     }
 }
 
-void QmlFilter::set(QString name, QColor value, int position, mlt_keyframe_type keyframeType)
+void QmlFilter::set(QString name, const QColor &value, int position, mlt_keyframe_type keyframeType)
 {
     if (!m_service.is_valid()) return;
     if (position < 0) {

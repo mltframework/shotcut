@@ -402,8 +402,8 @@ Shotcut.KeyframableFilter {
                 Component.onCompleted: isReady = true
                 onValueChanged: {
                     if (isReady) {
-                        updateFilter('color', value, colorKeyframesButton, getPosition());
                         filter.set('disable', 0);
+                        updateFilter('color', value, colorKeyframesButton, getPosition());
                     }
                 }
                 onPickStarted: {
@@ -458,7 +458,6 @@ Shotcut.KeyframableFilter {
 
     Connections {
         function onChanged() {
-            setRectControls();
             setRectControls();
         }
 

@@ -83,7 +83,7 @@ public:
     Q_INVOKABLE void removeRectPercents(QString name);
     Q_INVOKABLE QStringList getGradient(QString name);
     Q_INVOKABLE void set(QString name, QString value, int position = -1);
-    Q_INVOKABLE void set(QString name, QColor value,
+    Q_INVOKABLE void set(QString name, const QColor &value,
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     Q_INVOKABLE void set(QString name, double value,
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));

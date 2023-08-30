@@ -23,6 +23,7 @@
 #include <Logger.h>
 
 #include <QTimer>
+#include <QRegularExpression>
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
 
@@ -449,6 +450,8 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
         auto parameter = m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex]);
+        static auto regex = QRegularExpression("=#[0-9A-Fa-f]{6,8};");
+
         if (parameter->isRectangle()) {
             auto value = m_filter->getRect(name, position);
             Mlt::Animation anim = m_filter->getAnimation(name);
@@ -483,9 +486,9 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 m_filter->blockSignals(false);
                 emit keyframeAdded(name, position);
             }
-        } else {
-            // Strings and color values
-            auto value = m_filter->get(name, position);
+        } else if (regex.match(m_filter->get(name)).hasMatch()) {
+            // Color values
+            auto value = m_filter->getColor(name, position);
             Mlt::Animation anim = m_filter->getAnimation(name);
             if (anim.is_valid() && !anim.is_key(position)) {
                 mlt_keyframe_type keyframeType = m_filter->getKeyframeType(anim, position, mlt_keyframe_type(-1));

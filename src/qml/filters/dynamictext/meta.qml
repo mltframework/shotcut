@@ -20,6 +20,21 @@ Metadata {
                 name: qsTr('Position / Size')
                 property: 'geometry'
                 isRectangle: true
+            },
+            Parameter {
+                name: qsTr('Font color')
+                property: 'fgcolour'
+                isCurve: false
+            },
+            Parameter {
+                name: qsTr('Outline')
+                property: 'olcolour'
+                isCurve: false
+            },
+            Parameter {
+                name: qsTr('Background')
+                property: 'bgcolour'
+                isCurve: false
             }
         ]
     }

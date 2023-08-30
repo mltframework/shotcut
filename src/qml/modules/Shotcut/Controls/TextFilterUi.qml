@@ -31,12 +31,14 @@ GridLayout {
     property string middleValue: '_shotcut:middleValue'
     property string endValue: '_shotcut:endValue'
     property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', useFontSizeProperty]
+    property var keyframableParameters: ['fgcolour', 'olcolour', 'bgcolour']
+    property bool blockUpdate: true
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0);
     }
 
-    function updateFilter(position) {
+    function updateFilterRect(position) {
         if (position !== null) {
             filter.blockSignals = true;
             if (position <= 0 && filter.animateIn > 0)
@@ -87,11 +89,8 @@ GridLayout {
     }
 
     function setControls() {
-        fgColor.value = filter.get('fgcolour');
         fontButton.text = filter.get('family');
-        outlineColor.value = filter.get('olcolour');
         outlineSpinner.value = filter.getDouble('outline');
-        bgColor.value = filter.get('bgcolour');
         padSpinner.value = filter.getDouble('pad');
         var align = filter.get(halignProperty);
         if (align === 'left')
@@ -128,12 +127,50 @@ GridLayout {
             rectW.value = filterRect.width.toFixed();
             rectH.value = filterRect.height.toFixed();
         }
+        blockUpdate = true;
+        fgColor.value = filter.getColor('fgcolour', position);
+        outlineColor.value = filter.getColor('olcolour', position);
+        bgColor.value = filter.getColor('bgcolour', position);
+        blockUpdate = false;
         var enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
         rectX.enabled = enabled;
         rectY.enabled = enabled;
         rectW.enabled = enabled;
         rectH.enabled = enabled;
+        fgColor.enabled = enabled;
         positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        fgcolorKeyframesButton.checked = filter.keyframeCount('fgcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        olcolorKeyframesButton.checked = filter.keyframeCount('olcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        bgcolorKeyframesButton.checked = filter.keyframeCount('bgcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+    }
+
+    function resetColorKeyframes() {
+        for (var i in keyframableParameters)
+            filter.resetProperty(keyframableParameters[i]);
+    }
+
+    function updateFilter(parameter, value, button, position) {
+        if (blockUpdate)
+            return;
+        if (button.checked && position !== null) {
+            filter.set(parameter, value, position);
+        } else if (position !== null) {
+            filter.set(parameter, value);
+        }
+    }
+
+    function toggleKeyframes(isEnabled, parameter, value) {
+        if (isEnabled) {
+            blockUpdate = true;
+            filter.clearSimpleAnimation(parameter);
+            blockUpdate = false;
+            // Set this keyframe value.
+            filter.set(parameter, value, getPosition());
+        } else {
+            // Remove keyframes and set the parameter.
+            filter.resetProperty(parameter);
+            filter.set(parameter, value);
+        }
     }
 
     function applyTracking(motionTrackerRow, operation, frame) {
@@ -196,12 +233,19 @@ GridLayout {
         Layout.alignment: Qt.AlignRight
     }
 
-    Shotcut.ColorPicker {
-        id: fgColor
+    RowLayout {
+        Shotcut.ColorPicker {
+            id: fgColor
 
-        eyedropper: false
-        alpha: true
-        onValueChanged: filter.set('fgcolour', value)
+            eyedropper: false
+            alpha: true
+            onValueChanged: updateFilter('fgcolour', value, fgcolorKeyframesButton, getPosition())
+        }
+
+        Shotcut.KeyframesButton {
+            id: fgcolorKeyframesButton
+            onToggled: toggleKeyframes(checked, 'fgcolour', fgColor.value)
+        }
     }
 
     RowLayout {
@@ -263,12 +307,20 @@ GridLayout {
         Layout.alignment: Qt.AlignRight
     }
 
-    Shotcut.ColorPicker {
-        id: outlineColor
+    RowLayout {
+        Shotcut.ColorPicker {
+            id: outlineColor
 
-        eyedropper: false
-        alpha: true
-        onValueChanged: filter.set('olcolour', value)
+            eyedropper: false
+            alpha: true
+            enabled: fgColor.enabled
+            onValueChanged: updateFilter('olcolour', value, olcolorKeyframesButton, getPosition())
+        }
+
+        Shotcut.KeyframesButton {
+            id: olcolorKeyframesButton
+            onToggled: toggleKeyframes(checked, 'olcolour', outlineColor.value)
+        }
     }
 
     Label {
@@ -291,12 +343,20 @@ GridLayout {
         Layout.alignment: Qt.AlignRight
     }
 
-    Shotcut.ColorPicker {
-        id: bgColor
+    RowLayout {
+        Shotcut.ColorPicker {
+            id: bgColor
 
-        eyedropper: false
-        alpha: true
-        onValueChanged: filter.set('bgcolour', value)
+            eyedropper: false
+            alpha: true
+            enabled: fgColor.enabled
+            onValueChanged: updateFilter('bgcolour', value, bgcolorKeyframesButton, getPosition())
+        }
+
+        Shotcut.KeyframesButton {
+            id: bgcolorKeyframesButton
+            onToggled: toggleKeyframes(checked, 'bgcolour', bgColor.value)
+        }
     }
 
     Label {
@@ -334,7 +394,7 @@ GridLayout {
             onValueModified: {
                 if (filterRect.x !== value) {
                     filterRect.x = value;
-                    updateFilter(getPosition());
+                    updateFilterRect(getPosition());
                 }
             }
         }
@@ -357,7 +417,7 @@ GridLayout {
             onValueModified: {
                 if (filterRect.y !== value) {
                     filterRect.y = value;
-                    updateFilter(getPosition());
+                    updateFilterRect(getPosition());
                 }
             }
         }
@@ -367,7 +427,7 @@ GridLayout {
         onClicked: {
             rectX.value = rectY.value = 0;
             filterRect.x = filterRect.y = 0;
-            updateFilter(getPosition());
+            updateFilterRect(getPosition());
         }
     }
 
@@ -411,7 +471,7 @@ GridLayout {
             onValueModified: {
                 if (filterRect.width !== value) {
                     filterRect.width = value;
-                    updateFilter(getPosition());
+                    updateFilterRect(getPosition());
                 }
             }
         }
@@ -434,7 +494,7 @@ GridLayout {
             onValueModified: {
                 if (filterRect.height !== value) {
                     filterRect.height = value;
-                    updateFilter(getPosition());
+                    updateFilterRect(getPosition());
                 }
             }
         }
@@ -446,7 +506,7 @@ GridLayout {
             rectH.value = profile.height;
             filterRect.width = profile.width;
             filterRect.height = profile.height;
-            updateFilter(getPosition());
+            updateFilterRect(getPosition());
         }
     }
 
@@ -550,7 +610,7 @@ GridLayout {
             rectY.value = filterRect.y;
             rectW.value = filterRect.width;
             rectH.value = filterRect.height;
-            updateFilter(getPosition());
+            updateFilterRect(getPosition());
         }
     }
 
@@ -560,19 +620,19 @@ GridLayout {
         }
 
         function onInChanged() {
-            updateFilter(null);
+            updateFilterRect(null);
         }
 
         function onOutChanged() {
-            updateFilter(null);
+            updateFilterRect(null);
         }
 
         function onAnimateInChanged() {
-            updateFilter(null);
+            updateFilterRect(null);
         }
 
         function onAnimateOutChanged() {
-            updateFilter(null);
+            updateFilterRect(null);
         }
 
         target: filter

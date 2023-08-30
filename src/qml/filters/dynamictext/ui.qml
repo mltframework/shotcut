@@ -154,6 +154,7 @@ Item {
             parameters: textFilterUi.parameterList.concat(['argument'])
             onBeforePresetLoaded: {
                 filter.resetProperty(textFilterUi.rectProperty);
+                textFilterUi.resetColorKeyframes();
             }
             onPresetSelected: {
                 setControls();
