@@ -2941,7 +2941,7 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
         Mlt::Producer producer(playlist->get_clip(0));
         auto clipIndex = m_model.appendClip(trackIndex, producer);
         if (clipIndex >= 0)
-            m_model.removeClip(trackIndex, clipIndex, Settings.timelineRippleAllTracks());
+            m_model.removeClip(trackIndex, clipIndex, false);
     }
     disconnect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip);
     MAIN.undoStack()->push(
