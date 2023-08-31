@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ SaveImageDialog::SaveImageDialog(QWidget *parent, const QString &caption, QImage
     selectNameFilter(selectedNameFilter);
 
     // Use the current player time as a suggested file name
-    QString nameSuggestion = QString("Shotcut_%1").arg(MLT.producer()->frame_time( mlt_time_clock ));
+    QString nameSuggestion = QString("Shotcut_%1").arg(MLT.producer()->frame_time(mlt_time_clock));
     nameSuggestion = nameSuggestion.replace(":", "_");
     nameSuggestion = nameSuggestion.replace(".", "_");
     nameSuggestion += suffix;

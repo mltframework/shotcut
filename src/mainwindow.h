@@ -386,6 +386,7 @@ private slots:
     void on_actionExportChapters_triggered();
     void on_actionAudioVideoDevice_triggered();
     void on_actionReset_triggered();
+    void on_actionBackupSave_triggered();
 };
 
 #define MAIN MainWindow::singleton()

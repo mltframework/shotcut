@@ -1186,8 +1186,8 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker)
 bool MainWindow::saveRepairedXmlFile(MltXmlChecker &checker, QString &fileName)
 {
     QFileInfo fi(fileName);
-    auto filename = QString("%1/%2 - %3.%4").arg(fi.path())
-                    .arg(fi.completeBaseName()).arg(tr("Repaired")).arg(fi.suffix());
+    auto filename = QString("%1/%2 - %3.%4").arg(fi.path(), fi.completeBaseName(), tr("Repaired"),
+                                                 fi.suffix());
     auto caption = tr("Save Repaired XML");
     filename = QFileDialog::getSaveFileName(this, caption, filename,
                                             tr("MLT XML (*.mlt)"), nullptr, Util::getFileDialogOptions());
@@ -2528,6 +2528,28 @@ bool MainWindow::on_actionSave_As_triggered()
         newProject(filename);
     }
     return !filename.isEmpty();
+}
+
+void MainWindow::on_actionBackupSave_triggered()
+{
+    m_timelineDock->stopRecording();
+    if (m_currentFile.isEmpty()) {
+        on_actionSave_As_triggered();
+    } else {
+        QFileInfo info(m_currentFile);
+        auto dateTime = info.lastModified().toString(Qt::ISODate);
+        dateTime.replace(':', '-');
+        auto filename = QString("%1/%2 %3.mlt").arg(info.canonicalPath(), info.completeBaseName(),
+                                                    dateTime);
+        if (Util::warnIfNotWritable(filename, this, tr("Save XML")))
+            return;
+        auto result = QFile::copy(m_currentFile, filename);
+        LOG_INFO() << filename << result;
+        if (isWindowModified())
+            on_actionSave_triggered();
+        else if (result)
+            showStatusMessage(tr("Saved backup %1").arg(filename));
+    }
 }
 
 bool MainWindow::continueModified()
@@ -3999,7 +4021,7 @@ void MainWindow::onVideoWidgetImageReady()
     if (!image.isNull()) {
         SaveImageDialog dialog(this, tr("Export Frame"), image);
         dialog.exec();
-        if ( !dialog.saveFile().isEmpty() ) {
+        if (!dialog.saveFile().isEmpty()) {
             m_recentDock->add(dialog.saveFile());
         }
     } else {
@@ -4989,4 +5011,3 @@ void MainWindow::on_actionReset_triggered()
         QApplication::closeAllWindows();
     }
 }
-

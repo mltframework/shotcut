@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>1270</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -62,6 +62,7 @@
     <addaction name="separator"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
+    <addaction name="actionBackupSave"/>
     <addaction name="menuExport"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
@@ -1276,6 +1277,17 @@
   <action name="actionReset">
    <property name="text">
     <string>Reset...</string>
+   </property>
+  </action>
+  <action name="actionBackupSave">
+   <property name="text">
+    <string>Backup and Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Backup and Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+S</string>
    </property>
   </action>
  </widget>
