@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2022 Meltytech, LLC
+ * Copyright (c) 2017-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: {
+        onClicked: mouse => {
             parent.clicked();
             if (mouse.button == Qt.RightButton)
                 parent.rightClicked();
