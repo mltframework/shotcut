@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Meltytech, LLC
+ * Copyright (c) 2020-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,12 +33,14 @@ Item {
         var position = getPosition();
         blockUpdate = true;
         slider.value = filter.getDouble('radius', position) * slider.maximumValue;
+        colorSwatch.value = filter.getColor('color', position);
         keyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0;
+        colorKeyframesButton.checked = filter.keyframeCount('color') > 0;
         blockUpdate = false;
         slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
-    function updateFilter(position) {
+    function updateSimpleKeyframes(position) {
         if (blockUpdate)
             return;
         var value = slider.value / 100;
@@ -69,6 +71,30 @@ Item {
         }
     }
 
+    function updateFilter(parameter, value, button, position) {
+        if (blockUpdate)
+            return;
+        if (button.checked && position !== null) {
+            filter.set(parameter, value, position);
+        } else if (position !== null) {
+            filter.set(parameter, value);
+        }
+    }
+
+    function toggleKeyframes(isEnabled, parameter, value) {
+        if (isEnabled) {
+            blockUpdate = true;
+            filter.clearSimpleAnimation(parameter);
+            blockUpdate = false;
+            // Set this keyframe value.
+            filter.set(parameter, value, getPosition());
+        } else {
+            // Remove keyframes and set the parameter.
+            filter.resetProperty(parameter);
+            filter.set(parameter, value);
+        }
+    }
+
     width: 400
     height: 100
     Component.onCompleted: {
@@ -85,7 +111,6 @@ Item {
                 endValue = filter.getDouble('radius', filter.duration - 1);
         }
         setControls();
-        colorSwatch.value = filter.get('color');
     }
 
     GridLayout {
@@ -105,7 +130,7 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            onValueChanged: updateFilter(getPosition())
+            onValueChanged: updateSimpleKeyframes(getPosition())
         }
 
         Shotcut.UndoButton {
@@ -144,7 +169,7 @@ Item {
                 Component.onCompleted: isReady = true
                 onValueChanged: {
                     if (isReady) {
-                        filter.set('color', value);
+                        updateFilter('color', value, colorKeyframesButton, getPosition());
                         filter.set("disable", 0);
                     }
                 }
@@ -156,16 +181,17 @@ Item {
 
             Shotcut.Button {
                 text: qsTr('Transparent')
-                onClicked: colorSwatch.value = '#00000000'
+                onClicked: colorSwatch.value = Qt.rgba(0, 0, 0, 0)
             }
         }
 
         Shotcut.UndoButton {
-            onClicked: colorSwatch.value = '#FF000000'
+            onClicked: colorSwatch.value = Qt.rgba(0, 0, 0, 1)
         }
 
-        Item {
-            width: 1
+        Shotcut.KeyframesButton {
+            id: colorKeyframesButton
+            onToggled: toggleKeyframes(checked, 'color', colorSwatch.value)
         }
 
         Item {
@@ -179,19 +205,19 @@ Item {
         }
 
         function onInChanged() {
-            updateFilter(null);
+            updateSimpleKeyframes(null);
         }
 
         function onOutChanged() {
-            updateFilter(null);
+            updateSimpleKeyframes(null);
         }
 
         function onAnimateInChanged() {
-            updateFilter(null);
+            updateSimpleKeyframes(null);
         }
 
         function onAnimateOutChanged() {
-            updateFilter(null);
+            updateSimpleKeyframes(null);
         }
 
         function onPropertyChanged(name) {
@@ -203,14 +229,7 @@ Item {
 
     Connections {
         function onPositionChanged() {
-            if (filter.animateIn > 0 || filter.animateOut > 0) {
-                setControls();
-            } else {
-                blockUpdate = true;
-                slider.value = filter.getDouble('radius', getPosition()) * slider.maximumValue;
-                blockUpdate = false;
-                slider.enabled = true;
-            }
+            setControls();
         }
 
         target: producer

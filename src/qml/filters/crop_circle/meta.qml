@@ -21,6 +21,11 @@ Metadata {
                 isCurve: true
                 minimum: 0
                 maximum: 1
+            },
+            Parameter {
+                name: qsTr('Color')
+                property: 'color'
+                isCurve: false
             }
         ]
     }
