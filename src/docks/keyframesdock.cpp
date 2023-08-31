@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,7 +151,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
 #endif
     setCurrentFilter(0, 0);
-    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load()));
+    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load(bool)));
 
     vboxLayout->addWidget(&m_qview);
     QWidget *dockContentsWidget = new QWidget();
@@ -474,7 +474,7 @@ int KeyframesDock::currentParameter() const
 
 void KeyframesDock::load(bool force)
 {
-    LOG_DEBUG() << "begin";
+    LOG_DEBUG() << "begin" << m_qview.source().isEmpty() << force;
 
     if (m_qview.source().isEmpty() || force) {
         QDir viewPath = QmlUtilities::qmlDir();
@@ -495,6 +495,7 @@ void KeyframesDock::load(bool force)
         connect(m_qview.rootObject(), SIGNAL(keyframeRightClicked()),  this,
                 SLOT(onKeyframeRightClicked()));
         connect(m_qview.rootObject(), SIGNAL(clipRightClicked()),  this, SLOT(onClipRightClicked()));
+        emit timeScaleChanged();
     }
 }
 
