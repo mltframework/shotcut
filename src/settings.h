@@ -41,8 +41,6 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(bool timelineRippleMarkers READ timelineRippleMarkers WRITE setTimelineRippleMarkers
                NOTIFY timelineRippleMarkersChanged)
     Q_PROPERTY(bool timelineSnap READ timelineSnap WRITE setTimelineSnap NOTIFY timelineSnapChanged)
-    Q_PROPERTY(bool timelineCenterPlayhead READ timelineCenterPlayhead WRITE setTimelineCenterPlayhead
-               NOTIFY timelineCenterPlayheadChanged)
     Q_PROPERTY(bool timelineScrollZoom READ timelineScrollZoom WRITE setTimelineScrollZoom NOTIFY
                timelineScrollZoomChanged)
     Q_PROPERTY(bool timelineFramebufferWaveform READ timelineFramebufferWaveform WRITE
@@ -66,9 +64,18 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(bool askOutputFilter READ askOutputFilter WRITE setAskOutputFilter NOTIFY
                askOutputFilterChanged)
     Q_PROPERTY(QString appDataLocation READ appDataLocation CONSTANT)
+    Q_PROPERTY(TimelineScrolling timelineScrolling READ timelineScrolling WRITE setTimelineScrolling
+               NOTIFY timelineScrollingChanged)
+    Q_ENUMS(TimelineScrolling)
 
 public:
     static const qsizetype MaxPath {32767};
+    enum TimelineScrolling {
+        NoScrolling,
+        CenterPlayhead,
+        PageScrolling,
+        SmoothScrolling
+    };
 
     static ShotcutSettings &singleton();
     void log();
@@ -185,8 +192,6 @@ public:
     void setTimelineRippleMarkers(bool);
     bool timelineSnap() const;
     void setTimelineSnap(bool);
-    bool timelineCenterPlayhead() const;
-    void setTimelineCenterPlayhead(bool);
     int timelineTrackHeight() const;
     void setTimelineTrackHeight(int);
     bool timelineScrollZoom() const;
@@ -199,6 +204,8 @@ public:
     void setAudioReferenceSpeedRange(double);
     bool timelinePreviewTransition() const;
     void setTimelinePreviewTransition(bool);
+    void setTimelineScrolling(TimelineScrolling value);
+    TimelineScrolling timelineScrolling() const;
 
     // filter
     QString filterFavorite(const QString &filterName);
@@ -295,7 +302,6 @@ signals:
     void timelineRippleAllTracksChanged();
     void timelineRippleMarkersChanged();
     void timelineSnapChanged();
-    void timelineCenterPlayheadChanged();
     void timelineScrollZoomChanged();
     void timelineFramebufferWaveformChanged();
     void playerAudioChannelsChanged(int);
@@ -308,6 +314,7 @@ signals:
     void viewModeChanged();
     void smallIconsChanged();
     void askOutputFilterChanged();
+    void timelineScrollingChanged();
 
 private:
     explicit ShotcutSettings();

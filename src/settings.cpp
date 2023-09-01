@@ -663,17 +663,6 @@ void ShotcutSettings::setTimelineSnap(bool b)
     emit timelineSnapChanged();
 }
 
-bool ShotcutSettings::timelineCenterPlayhead() const
-{
-    return settings.value("timeline/centerPlayhead", false).toBool();
-}
-
-void ShotcutSettings::setTimelineCenterPlayhead(bool b)
-{
-    settings.setValue("timeline/centerPlayhead", b);
-    emit timelineCenterPlayheadChanged();
-}
-
 int ShotcutSettings::timelineTrackHeight() const
 {
     return qMin(settings.value("timeline/trackHeight", 50).toInt(), kMaximumTrackHeight);
@@ -732,6 +721,23 @@ bool ShotcutSettings::timelinePreviewTransition() const
 void ShotcutSettings::setTimelinePreviewTransition(bool b)
 {
     settings.setValue("timeline/previewTransition", b);
+}
+
+void ShotcutSettings::setTimelineScrolling(ShotcutSettings::TimelineScrolling value)
+{
+    settings.remove("timeline/centerPlayhead");
+    settings.setValue("timeline/scrolling", value);
+    emit timelineScrollingChanged();
+}
+
+ShotcutSettings::TimelineScrolling ShotcutSettings::timelineScrolling() const
+{
+    if (settings.contains("timeline/centerPlayhead")
+            && settings.value("timeline/centerPlayhead").toBool())
+        return ShotcutSettings::TimelineScrolling::CenterPlayhead;
+    else
+        return ShotcutSettings::TimelineScrolling(settings.value("timeline/scrolling",
+                                                                 SmoothScrolling).toInt());
 }
 
 QString ShotcutSettings::filterFavorite(const QString &filterName)

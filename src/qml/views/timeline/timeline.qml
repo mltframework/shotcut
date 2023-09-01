@@ -20,6 +20,7 @@ import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
 import QtQuick.Window
+import org.shotcut.qml as Shotcut
 import Shotcut.Controls as Shotcut
 import "Timeline.js" as Logic
 
@@ -45,11 +46,11 @@ Rectangle {
         if (isNaN(value))
             value = 0;
         multitrack.scaleFactor = Math.pow(Math.max(value, 0), 3) + 0.01;
-        if (!settings.timelineCenterPlayhead && !settings.timelineScrollZoom)
+        if (settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead && !settings.timelineScrollZoom)
             tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset;
         for (var i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms(false);
-        if (settings.timelineScrollZoom && !settings.timelineCenterPlayhead)
+        if (settings.timelineScrollZoom && settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead)
             scrollZoomTimer.restart();
     }
 
@@ -99,7 +100,7 @@ Rectangle {
     Timer {
         id: zoomToFitTimer
 
-        property var loopCount: 0
+        property int loopCount: 0
         interval: 1
         repeat: true
         function startZoomFit() {
@@ -795,8 +796,10 @@ Rectangle {
 
     Connections {
         function onPositionChanged() {
-            if (!stopScrolling)
-                Logic.scrollIfNeeded(settings.timelineCenterPlayhead, scrubMouseArea.containsPress || scrubMouseArea.skim);
+            if (!stopScrolling && settings.timelineScrolling !== Shotcut.Settings.NoScrolling) {
+                var smooth = settings.timelineScrolling === Shotcut.Settings.SmoothScrolling || scrubMouseArea.containsPress || scrubMouseArea.skim;
+                Logic.scrollIfNeeded(settings.timelineScrolling === Shotcut.Settings.CenterPlayhead, smooth);
+            }
         }
 
         function onDragging(pos, duration) {
@@ -864,7 +867,7 @@ Rectangle {
 
     Connections {
         function onScaleFactorChanged() {
-            if (settings.timelineCenterPlayhead)
+            if (settings.timelineScrolling === Shotcut.Settings.CenterPlayhead)
                 Logic.scrollIfNeeded(true);
         }
 

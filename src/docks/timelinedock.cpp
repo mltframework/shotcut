@@ -917,17 +917,57 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineShowThumbnailsAction", action);
 
+    action = new QAction(tr("No"), this);
+    action->setCheckable(true);
+    action->setChecked(ShotcutSettings::TimelineScrolling::NoScrolling == Settings.timelineScrolling());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setTimelineScrolling(ShotcutSettings::TimelineScrolling::NoScrolling);
+    });
+    connect(&Settings, &ShotcutSettings::timelineScrollingChanged, action, [ = ]() {
+        if (ShotcutSettings::TimelineScrolling::NoScrolling == Settings.timelineScrolling())
+            action->setChecked(true);
+    });
+    Actions.add("timelineScrollingNo", action);
+
+    action = new QAction(tr("Page"), this);
+    action->setCheckable(true);
+    action->setChecked(ShotcutSettings::TimelineScrolling::PageScrolling ==
+                       Settings.timelineScrolling());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setTimelineScrolling(ShotcutSettings::TimelineScrolling::PageScrolling);
+    });
+    connect(&Settings, &ShotcutSettings::timelineScrollingChanged, action, [ = ]() {
+        if (ShotcutSettings::TimelineScrolling::PageScrolling == Settings.timelineScrolling())
+            action->setChecked(true);
+    });
+    Actions.add("timelineScrollingPage", action);
+
+    action = new QAction(tr("Smooth"), this);
+    action->setCheckable(true);
+    action->setChecked(ShotcutSettings::TimelineScrolling::SmoothScrolling ==
+                       Settings.timelineScrolling());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setTimelineScrolling(ShotcutSettings::TimelineScrolling::SmoothScrolling);
+    });
+    connect(&Settings, &ShotcutSettings::timelineScrollingChanged, action, [ = ]() {
+        if (ShotcutSettings::TimelineScrolling::SmoothScrolling == Settings.timelineScrolling())
+            action->setChecked(true);
+    });
+    Actions.add("timelineScrollingSmooth", action);
+
     action = new QAction(tr("Center the Playhead"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_P));
     action->setCheckable(true);
-    action->setChecked(Settings.timelineCenterPlayhead());
+    action->setChecked(ShotcutSettings::TimelineScrolling::CenterPlayhead ==
+                       Settings.timelineScrolling());
     connect(action, &QAction::triggered, this, [&](bool checked) {
-        Settings.setTimelineCenterPlayhead(checked);
+        Settings.setTimelineScrolling(ShotcutSettings::TimelineScrolling::CenterPlayhead);
     });
-    connect(&Settings, &ShotcutSettings::timelineCenterPlayheadChanged, action, [ = ]() {
-        action->setChecked(Settings.timelineCenterPlayhead());
+    connect(&Settings, &ShotcutSettings::timelineScrollingChanged, action, [ = ]() {
+        if (ShotcutSettings::TimelineScrolling::CenterPlayhead == Settings.timelineScrolling())
+            action->setChecked(true);
     });
-    Actions.add("timelineCenterPlayheadAction", action);
+    Actions.add("timelineScrollingCenterPlayhead", action);
 
     action = new QAction(tr("Scroll to Playhead on Zoom"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_P));

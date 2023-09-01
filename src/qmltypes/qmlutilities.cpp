@@ -60,6 +60,8 @@ void QmlUtilities::registerCommonTypes()
     // MetadataModel is registered to access its MetadataFilter enum.
     qmlRegisterUncreatableType<MetadataModel>("org.shotcut.qml", 1, 0, "MetadataModel",
                                               "You cannot create a MetadataModel from QML.");
+    qmlRegisterUncreatableType<ShotcutSettings>("org.shotcut.qml", 1, 0, "Settings",
+                                                "You cannot create a Settings from QML.");
     qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
     qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
     qmlRegisterType<QmlMarkerMenu>("Shotcut.Controls", 1, 0, "MarkerMenu");

@@ -487,8 +487,17 @@ void MainWindow::setupAndConnectDocks()
     ui->menuTimeline->addAction(Actions["timelineShowWaveformsAction"]);
     ui->menuTimeline->addAction(Actions["timelinePerformanceWaveformsAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowThumbnailsAction"]);
-    ui->menuTimeline->addAction(Actions["timelineCenterPlayheadAction"]);
-    ui->menuTimeline->addAction(Actions["timelineScrollZoomAction"]);
+    auto submenu = ui->menuTimeline->addMenu(tr("Scrolling"));
+    auto *group = new QActionGroup(this);
+    submenu->addAction(Actions["timelineScrollingCenterPlayhead"]);
+    group->addAction(Actions["timelineScrollingCenterPlayhead"]);
+    submenu->addAction(Actions["timelineScrollingNo"]);
+    group->addAction(Actions["timelineScrollingNo"]);
+    submenu->addAction(Actions["timelineScrollingPage"]);
+    group->addAction(Actions["timelineScrollingPage"]);
+    submenu->addAction(Actions["timelineScrollingSmooth"]);
+    group->addAction(Actions["timelineScrollingSmooth"]);
+    submenu->addAction(Actions["timelineScrollZoomAction"]);
 
     m_filterController = new FilterController(this);
     m_filtersDock = new FiltersDock(m_filterController->metadataModel(),

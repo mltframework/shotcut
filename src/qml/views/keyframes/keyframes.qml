@@ -18,6 +18,7 @@ import "Keyframes.js" as Logic
 import QtQml.Models
 import QtQuick
 import QtQuick.Controls
+import org.shotcut.qml as Shotcut
 import Shotcut.Controls as Shotcut
 
 Rectangle {
@@ -38,7 +39,7 @@ Rectangle {
     signal clipRightClicked
 
     function redrawWaveforms() {
-        Logic.scrollIfNeeded(settings.timelineCenterPlayhead);
+        Logic.scrollIfNeeded(settings.timelineScrolling === Shotcut.Settings.CenterPlayhead);
         beforeClip.generateWaveform();
         activeClip.generateWaveform();
         afterClip.generateWaveform();
@@ -53,7 +54,7 @@ Rectangle {
             value = 0;
         timeScale = Math.pow(value, 3) + 0.01;
         tracksFlickable.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x);
-        if (settings.timelineScrollZoom && !settings.timelineCenterPlayhead)
+        if (settings.timelineScrollZoom && settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead)
             scrollZoomTimer.restart();
     }
 
@@ -587,8 +588,10 @@ Rectangle {
 
     Connections {
         function onPositionChanged() {
-            if (!stopScrolling)
-                Logic.scrollIfNeeded(settings.timelineCenterPlayhead, tracksAreaMouse.containsPress || tracksAreaMouse.skim);
+            if (!stopScrolling && settings.timelineScrolling !== Shotcut.Settings.NoScrolling) {
+                var smooth = settings.timelineScrolling === Shotcut.Settings.SmoothScrolling || tracksAreaMouse.containsPress || tracksAreaMouse.skim;
+                Logic.scrollIfNeeded(settings.timelineScrolling === Shotcut.Settings.CenterPlayhead, smooth);
+            }
         }
 
         target: producer

@@ -80,7 +80,7 @@ Item {
 
     function getTextDimensions() {
         var document = filter.getRect(sizeProperty);
-        if (bgColor.value.substring(0, 3) !== '#00')
+        if (bgColor.value.toString().substring(0, 3) !== '#00')
             document.height = Math.max(document.height, filterRect.height);
         return document;
     }
