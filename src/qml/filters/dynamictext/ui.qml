@@ -25,7 +25,7 @@ Item {
         textFilterUi.setControls();
     }
 
-    width: 500
+    width: 425
     height: 400
     Component.onCompleted: {
         filter.blockSignals = true;
