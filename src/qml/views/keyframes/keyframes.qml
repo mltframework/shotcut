@@ -96,7 +96,7 @@ Rectangle {
         id: zoomToFitTimer
 
         property var loopCount: 0
-        interval: 1
+        interval: 10
         repeat: true
         function startZoomFit() {
             loopCount = 0;
