@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@
 #define KEYFRAMESDOCK_H
 
 #include "qmltypes/qmlfilter.h"
-#include "models/metadatamodel.h"
-#include "sharedframe.h"
 #include "models/keyframesmodel.h"
 
 #include <QDockWidget>
@@ -29,7 +27,6 @@
 
 class QmlFilter;
 class QmlMetadata;
-class MetadataModel;
 class AttachedFiltersModel;
 class QmlProducer;
 class QMenu;
@@ -37,6 +34,7 @@ class QMenu;
 class KeyframesDock : public QDockWidget
 {
     Q_OBJECT
+    Q_PROPERTY(double timeScale READ timeScale WRITE setTimeScale NOTIFY timeScaleChanged)
 
 public:
     explicit KeyframesDock(QmlProducer *qmlProducer, QWidget *parent = 0);
@@ -48,6 +46,11 @@ public:
     Q_INVOKABLE int seekPrevious();
     Q_INVOKABLE int seekNext();
     int currentParameter() const;
+    double timeScale() const
+    {
+        return m_timeScale;
+    }
+    void setTimeScale(double value);
 
 signals:
     void changed(); /// Notifies when a filter parameter changes.
@@ -87,6 +90,7 @@ private:
     QMenu *m_mainMenu;
     QMenu *m_keyMenu;
     QMenu *m_clipMenu;
+    double m_timeScale {1.0};
 };
 
 #endif // KEYFRAMESDOCK_H

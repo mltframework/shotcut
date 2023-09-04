@@ -120,12 +120,8 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
         emit setZoom(value / 100.0);
     });
     connect(this, &KeyframesDock::timeScaleChanged, zoomSlider, [ = ]() {
-        double value = 1.0;
-        if (m_qview.rootObject()) {
-            double scaleFactor = m_qview.rootObject()->property("timeScale").toDouble();
-            double value = round(pow(scaleFactor - 0.01, 1.0 / 3.0) * 100.0);
-            zoomSlider->setValue(value);
-        }
+        double value = round(pow(m_timeScale - 0.01, 1.0 / 3.0) * 100.0);
+        zoomSlider->setValue(value);
     });
     toolbar->addWidget(zoomSlider);
     toolbar->addAction(Actions["keyframesZoomInAction"]);
@@ -472,6 +468,12 @@ int KeyframesDock::currentParameter() const
     return m_qview.rootObject()->property("currentTrack").toInt();
 }
 
+void KeyframesDock::setTimeScale(double value)
+{
+    m_timeScale = value;
+    emit timeScaleChanged();
+}
+
 void KeyframesDock::load(bool force)
 {
     LOG_DEBUG() << "begin" << m_qview.source().isEmpty() << force;
@@ -490,7 +492,6 @@ void KeyframesDock::load(bool force)
         m_qview.quickWindow()->setColor(palette().window().color());
         QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("keyframes.qml"));
         m_qview.setSource(source);
-        connect(m_qview.rootObject(), SIGNAL(timeScaleChanged()), this, SIGNAL(timeScaleChanged()));
         connect(m_qview.rootObject(), SIGNAL(rightClicked()),  this, SLOT(onDockRightClicked()));
         connect(m_qview.rootObject(), SIGNAL(keyframeRightClicked()),  this,
                 SLOT(onKeyframeRightClicked()));

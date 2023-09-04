@@ -30,7 +30,7 @@ Rectangle {
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3)
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23 / 255, 92 / 255, 118 / 255, 1)
-    property double timeScale: 1
+    property double timeScale: keyframes.timeScale
     property var selection: []
     property alias paramRepeater: parametersRepeater
 
@@ -52,7 +52,7 @@ Rectangle {
         var before = timeScale;
         if (isNaN(value))
             value = 0;
-        timeScale = Math.pow(value, 3) + 0.01;
+        keyframes.timeScale = Math.pow(value, 3) + 0.01;
         tracksFlickable.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x);
         if (settings.timelineScrollZoom && settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead)
             scrollZoomTimer.restart();
@@ -95,7 +95,7 @@ Rectangle {
     Timer {
         id: zoomToFitTimer
 
-        property var loopCount: 0
+        property int loopCount: 0
         interval: 10
         repeat: true
         function startZoomFit() {
@@ -392,7 +392,7 @@ Rectangle {
                                         speed: producer.speed
                                         onTrimmingIn: (clip, delta, mouse) => {
                                             var n = filter.in + delta;
-                                            if (delta != 0 && n >= producer.in && n <= filter.out) {
+                                            if (delta !== 0 && n >= producer.in && n <= filter.out) {
                                                 parameters.trimFilterIn(n);
                                                 // Show amount trimmed as a time in a "bubble" help.
                                                 var s = application.timecode(Math.abs(clip.originalX));
@@ -405,7 +405,7 @@ Rectangle {
                                         onTrimmedIn: bubbleHelp.hide()
                                         onTrimmingOut: (clip, delta, mouse) => {
                                             var n = filter.out - delta;
-                                            if (delta != 0 && n >= filter.in && n <= producer.out) {
+                                            if (delta !== 0 && n >= filter.in && n <= producer.out) {
                                                 parameters.trimFilterOut(n);
                                                 // Show amount trimmed as a time in a "bubble" help.
                                                 var s = application.timecode(Math.abs(clip.originalX));
