@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -128,12 +128,15 @@ void PlaylistIconView::setSelection(const QRect &rect, QItemSelectionModel::Sele
         return;
     }
     if (m_isToggleSelect) {
-        command = QItemSelectionModel::Toggle;
+        command = QItemSelectionModel::Select;
         selectionModel()->select(indexAt(rect.bottomRight()), command);
         return;
     } else if (m_isRangeSelect && topLeft.isValid()) {
         QModelIndex bottomRight = indexAt(rect.bottomRight());
         selectionModel()->select(QItemSelection(topLeft, bottomRight), command);
+        return;
+    } else if (topLeft.isValid()) {
+        selectionModel()->select(indexAt(rect.topLeft()), command);
         return;
     }
     m_pendingSelect = indexAt(rect.topLeft());
