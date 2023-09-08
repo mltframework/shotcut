@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,12 @@ void ColorProducerWidget::on_colorButton_clicked()
     if (m_producer) {
         color = QColor(QFileInfo(m_producer->get("resource")).baseName());
     }
-    auto newColor = QColorDialog::getColor(color, this, QString(), QColorDialog::ShowAlphaChannel);
+    QColorDialog::ColorDialogOptions flags = QColorDialog::ShowAlphaChannel;
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    if (qEnvironmentVariableIsSet("SNAP") || qEnvironmentVariableIsSet("GNOME_SHELL_SESSION_MODE"))
+        flags = flags | QColorDialog::DontUseNativeDialog;
+#endif
+    auto newColor = QColorDialog::getColor(color, this, QString(), flags);
     if (newColor.isValid()) {
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
