@@ -16,7 +16,7 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['geometry']
+        simpleProperties: ['geometry', 'bgcolour']
         parameters: [
             Parameter {
                 name: qsTr('Position / Size')

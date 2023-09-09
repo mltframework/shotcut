@@ -20,7 +20,7 @@ import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 import org.shotcut.qml as Shotcut
 
-Item {
+Shotcut.KeyframableFilter {
     property string rectProperty: 'geometry'
     property rect filterRect
     property string startValue: '_shotcut:startValue'
@@ -29,11 +29,6 @@ Item {
     property string sizeProperty: '_shotcut:size'
     property string specialPresetProperty: 'shotcut:preset'
     property rect defaultRect: Qt.rect(Math.round(profile.width * 0.1), Math.round(profile.height * 0.1), Math.round(profile.width * 0.8), Math.round(profile.height * 0.8))
-    property bool blockUpdate: true
-
-    function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0);
-    }
 
     function updateFilterRect(position) {
         if (position !== null) {
@@ -104,7 +99,7 @@ Item {
         rectW.enabled = enabled;
         rectH.enabled = enabled;
         positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
-        bgcolorKeyframesButton.checked = filter.keyframeCount('bgcolour') > 0;
+        bgcolorKeyframesButton.checked = filter.keyframeCount('bgcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
         var document = getTextDimensions();
         if (parseInt(sizeW.text) !== Math.round(document.width) || parseInt(sizeH.text) !== Math.round(document.height)) {
             sizeW.text = Math.round(document.width);
@@ -136,28 +131,19 @@ Item {
         }
     }
 
-    function updateFilter(parameter, value, button, position) {
-        if (blockUpdate)
-            return;
-        if (button.checked && position !== null) {
-            filter.set(parameter, value, position);
-        } else if (position !== null) {
-            filter.set(parameter, value);
+    function initSimpleKeyframes() {
+        middleValues[0] = filter.getColor('bgcolour', filter.animateIn);
+        if (filter.animateIn > 0) {
+            startValues[0] = filter.getColor('bgcolour', 0);
+        }
+        if (filter.animateOut > 0) {
+            endValues[0] = filter.getColor('bgcolour', filter.duration - 1);
         }
     }
 
-    function toggleKeyframes(isEnabled, parameter, value) {
-        if (isEnabled) {
-            blockUpdate = true;
-            filter.clearSimpleAnimation(parameter);
-            blockUpdate = false;
-            // Set this keyframe value.
-            filter.set(parameter, value, getPosition());
-        } else {
-            // Remove keyframes and set the parameter.
-            filter.resetProperty(parameter);
-            filter.set(parameter, value);
-        }
+    function updateParameters() {
+        updateFilterRect(null);
+        updateFilter('bgcolour', Qt.color(bgColor.value), bgcolorKeyframesButton, null);
     }
 
     function applyTracking(motionTrackerRow, operation, frame) {
@@ -205,6 +191,10 @@ Item {
         parameters.reload();
     }
 
+    keyframableParameters: ['bgcolour']
+    startValues: [Qt.rgba(0, 0, 0, 0)]
+    middleValues: [Qt.rgba(0, 0, 0, 0)]
+    endValues: [Qt.rgba(0, 0, 0, 0)]
     width: 350
     height: 250
     Component.onCompleted: {
@@ -221,7 +211,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 </style></head><body></body></html>
 '.arg(application.OS === 'Windows' ? 'Verdana' : 'sans-serif'));
             filter.set('argument', '');
-            filter.set('bgcolour', '#00000000');
+            filter.set('bgcolour', Qt.rgba(0, 0, 0, 0));
             filter.set(rectProperty, '5%/66.66%:90%x28.34%');
             filter.savePreset(presetParams, qsTr('Lower Third'));
             filter.set(rectProperty, '0%/0%:100%x100%');
@@ -268,6 +258,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             filter.set(rectProperty, '10%/10%:80%x80%');
             filter.savePreset(preset.parameters);
         } else {
+            initSimpleKeyframes();
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(startValue, filter.getRect(rectProperty, 0));
@@ -299,12 +290,13 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             onBeforePresetLoaded: {
                 filter.resetProperty(rectProperty);
                 filter.resetProperty(specialPresetProperty);
-                filter.resetProperty('bgcolour');
+                resetSimpleKeyframes();
             }
             onPresetSelected: {
                 handleSpecialPreset();
                 setControls();
                 setKeyframedControls();
+                initSimpleKeyframes();
                 positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
                 filter.blockSignals = true;
                 filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
@@ -532,7 +524,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             Layout.columnSpan: 3
             eyedropper: false
             alpha: true
-            onValueChanged: updateFilter('bgcolour', value, bgcolorKeyframesButton, getPosition())
+            onValueChanged: updateFilter('bgcolour', Qt.color(value), bgcolorKeyframesButton, getPosition())
         }
 
         Shotcut.UndoButton {
@@ -541,7 +533,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
         Shotcut.KeyframesButton {
             id: bgcolorKeyframesButton
-            onToggled: toggleKeyframes(checked, 'bgcolour', bgColor.value)
+            onToggled: toggleKeyframes(checked, 'bgcolour', Qt.color(bgColor.value))
         }
 
         Label {
@@ -630,19 +622,19 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
 
         function onInChanged() {
-            updateFilterRect(null);
+            updateParameters();
         }
 
         function onOutChanged() {
-            updateFilterRect(null);
+            updateParameters();
         }
 
         function onAnimateInChanged() {
-            updateFilterRect(null);
+            updateParameters();
         }
 
         function onAnimateOutChanged() {
-            updateFilterRect(null);
+            updateParameters();
         }
 
         target: filter
