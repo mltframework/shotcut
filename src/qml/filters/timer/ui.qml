@@ -19,8 +19,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
+import org.shotcut.qml as Shotcut
 
-Item {
+Shotcut.KeyframableFilter {
     property string _defaultStart: '00:00:00.000'
     property string _defaultDuration: '00:00:10.000'
     property string _defaultOffset: '00:00:00.000'
@@ -52,6 +53,10 @@ Item {
         textFilterUi.setControls();
     }
 
+    keyframableParameters: ['fgcolour', 'olcolour', 'bgcolour']
+    startValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
+    middleValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
+    endValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
     width: 400
     height: 450
     Component.onCompleted: {
@@ -85,6 +90,7 @@ Item {
             filter.set(textFilterUi.rectProperty, '0%/0%:100%x100%');
             filter.savePreset(preset.parameters);
         } else {
+            textFilterUi.initSimpleKeyframes();
             filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(textFilterUi.startValue, filter.getRect(textFilterUi.rectProperty, 0));
@@ -115,10 +121,12 @@ Item {
             parameters: textFilterUi.parameterList.concat(['format', 'direction', 'start', 'duration'])
             onBeforePresetLoaded: {
                 filter.resetProperty(textFilterUi.rectProperty);
-                textFilterUi.resetColorKeyframes();
+                resetSimpleKeyframes();
             }
             onPresetSelected: {
                 setControls();
+                textFilterUi.setKeyframedControls();
+                textFilterUi.initSimpleKeyframes();
                 filter.blockSignals = true;
                 filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)

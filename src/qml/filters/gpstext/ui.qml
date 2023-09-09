@@ -23,7 +23,7 @@ import QtQuick.Window
 import Shotcut.Controls as Shotcut
 import org.shotcut.qml as Shotcut
 
-Item {
+Shotcut.KeyframableFilter {
     id: gpsTextRoot
 
     property int js_tz_offset: 0
@@ -86,6 +86,10 @@ Item {
         filter.set('time_offset', Number(secs).toFixed(0));
     }
 
+    keyframableParameters: ['fgcolour', 'olcolour', 'bgcolour']
+    startValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
+    middleValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
+    endValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
     width: 300
     height: 800
     onFileOpened: path => {
@@ -122,6 +126,7 @@ Item {
             filter.savePreset(presetParams);
             filter.set(textFilterUi.rectProperty, filter.getRect(textFilterUi.rectProperty));
         } else {
+            textFilterUi.initSimpleKeyframes();
             filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(textFilterUi.startValue, filter.getRect(textFilterUi.rectProperty, 0));
@@ -678,10 +683,12 @@ Item {
             parameters: textFilterUi.parameterList.concat(['argument'])
             onBeforePresetLoaded: {
                 filter.resetProperty(textFilterUi.rectProperty);
-                textFilterUi.resetColorKeyframes();
+                resetSimpleKeyframes();
             }
             onPresetSelected: {
                 setControls();
+                textFilterUi.setKeyframedControls();
+                textFilterUi.initSimpleKeyframes();
                 filter.blockSignals = true;
                 filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)

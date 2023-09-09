@@ -31,12 +31,6 @@ GridLayout {
     property string middleValue: '_shotcut:middleValue'
     property string endValue: '_shotcut:endValue'
     property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', useFontSizeProperty]
-    property var keyframableParameters: ['fgcolour', 'olcolour', 'bgcolour']
-    property bool blockUpdate: true
-
-    function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0);
-    }
 
     function updateFilterRect(position) {
         if (position !== null) {
@@ -139,38 +133,29 @@ GridLayout {
         rectH.enabled = enabled;
         fgColor.enabled = enabled;
         positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
-        fgcolorKeyframesButton.checked = filter.keyframeCount('fgcolour') > 0;
-        olcolorKeyframesButton.checked = filter.keyframeCount('olcolour') > 0;
-        bgcolorKeyframesButton.checked = filter.keyframeCount('bgcolour') > 0;
+        fgcolorKeyframesButton.checked = filter.keyframeCount('fgcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        olcolorKeyframesButton.checked = filter.keyframeCount('olcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        bgcolorKeyframesButton.checked = filter.keyframeCount('bgcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
     }
 
-    function resetColorKeyframes() {
-        for (var i in keyframableParameters)
-            filter.resetProperty(keyframableParameters[i]);
-    }
-
-    function updateFilter(parameter, value, button, position) {
-        if (blockUpdate)
-            return;
-        if (button.checked && position !== null) {
-            filter.set(parameter, value, position);
-        } else if (position !== null) {
-            filter.set(parameter, value);
+    function initSimpleKeyframes() {
+        function initializeSimpleKeyframes() {
+            for (var i in keyframableParameters) {
+                var parameter = keyframableParameters[i];
+                middleValues[i] = filter.getColor(parameter, filter.animateIn);
+                if (filter.animateIn > 0)
+                    startValues[i] = filter.getColor(parameter, 0);
+                if (filter.animateOut > 0)
+                    endValues[i] = filter.getColor(parameter, filter.duration - 1);
+            }
         }
     }
 
-    function toggleKeyframes(isEnabled, parameter, value) {
-        if (isEnabled) {
-            blockUpdate = true;
-            filter.clearSimpleAnimation(parameter);
-            blockUpdate = false;
-            // Set this keyframe value.
-            filter.set(parameter, value, getPosition());
-        } else {
-            // Remove keyframes and set the parameter.
-            filter.resetProperty(parameter);
-            filter.set(parameter, value);
-        }
+    function updateParameters() {
+        updateFilterRect(null);
+        updateFilter('fgcolour', Qt.color(fgColor.value), fgcolorKeyframesButton, null);
+        updateFilter('olcolour', Qt.color(outlineColor.value), olcolorKeyframesButton, null);
+        updateFilter('bgcolour', Qt.color(bgColor.value), bgcolorKeyframesButton, null);
     }
 
     function applyTracking(motionTrackerRow, operation, frame) {
@@ -239,12 +224,12 @@ GridLayout {
 
             eyedropper: false
             alpha: true
-            onValueChanged: updateFilter('fgcolour', value, fgcolorKeyframesButton, getPosition())
+            onValueChanged: updateFilter('fgcolour', Qt.color(value), fgcolorKeyframesButton, getPosition())
         }
 
         Shotcut.KeyframesButton {
             id: fgcolorKeyframesButton
-            onToggled: toggleKeyframes(checked, 'fgcolour', fgColor.value)
+            onToggled: toggleKeyframes(checked, 'fgcolour', Qt.color(fgColor.value))
         }
     }
 
@@ -314,12 +299,12 @@ GridLayout {
             eyedropper: false
             alpha: true
             enabled: fgColor.enabled
-            onValueChanged: updateFilter('olcolour', value, olcolorKeyframesButton, getPosition())
+            onValueChanged: updateFilter('olcolour', Qt.color(value), olcolorKeyframesButton, getPosition())
         }
 
         Shotcut.KeyframesButton {
             id: olcolorKeyframesButton
-            onToggled: toggleKeyframes(checked, 'olcolour', outlineColor.value)
+            onToggled: toggleKeyframes(checked, 'olcolour', Qt.color(outlineColor.value))
         }
     }
 
@@ -350,12 +335,12 @@ GridLayout {
             eyedropper: false
             alpha: true
             enabled: fgColor.enabled
-            onValueChanged: updateFilter('bgcolour', value, bgcolorKeyframesButton, getPosition())
+            onValueChanged: updateFilter('bgcolour', Qt.color(value), bgcolorKeyframesButton, getPosition())
         }
 
         Shotcut.KeyframesButton {
             id: bgcolorKeyframesButton
-            onToggled: toggleKeyframes(checked, 'bgcolour', bgColor.value)
+            onToggled: toggleKeyframes(checked, 'bgcolour', Qt.color(bgColor.value))
         }
     }
 
@@ -620,19 +605,19 @@ GridLayout {
         }
 
         function onInChanged() {
-            updateFilterRect(null);
+            updateParameters();
         }
 
         function onOutChanged() {
-            updateFilterRect(null);
+            updateParameters();
         }
 
         function onAnimateInChanged() {
-            updateFilterRect(null);
+            updateParameters();
         }
 
         function onAnimateOutChanged() {
-            updateFilterRect(null);
+            updateParameters();
         }
 
         target: filter
