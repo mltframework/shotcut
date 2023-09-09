@@ -108,7 +108,7 @@ Shotcut.KeyframableFilter {
     function updateParameters() {
         updateFilterRect(null);
         updateFilter('radius', slider.value / 100, radiusKeyframesButton, null);
-        updateFilter('color', colorSwatch.value, colorKeyframesButton, null);
+        updateFilter('color', Qt.color(colorSwatch.value), colorKeyframesButton, null);
     }
 
     function applyTracking(motionTrackerRow, operation, frame) {
@@ -424,7 +424,7 @@ Shotcut.KeyframableFilter {
 
         Shotcut.KeyframesButton {
             id: colorKeyframesButton
-            onToggled: toggleKeyframes(checked, 'color', colorSwatch.value)
+            onToggled: toggleKeyframes(checked, 'color', Qt.color(colorSwatch.value))
         }
 
         Item {

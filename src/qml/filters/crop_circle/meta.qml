@@ -13,7 +13,7 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['radius']
+        simpleProperties: ['radius', 'color']
         parameters: [
             Parameter {
                 name: qsTr('Radius')
