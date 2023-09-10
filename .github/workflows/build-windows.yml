@@ -24,7 +24,6 @@ jobs:
             mingw-w64-x86_64-meson
             mingw-w64-x86_64-nasm
             mingw-w64-x86_64-ninja
-            mingw-w64-x86_64-nsis
             mingw-w64-x86_64-osslsigncode
             mingw-w64-x86_64-yasm
             mingw-w64-x86_64-cairo
@@ -119,7 +118,12 @@ jobs:
           echo Packaging the portable zip
           zip -gr shotcut-win64-$FILENAME_VERSION.zip Shotcut
           echo Packaging the installer
-          makensis shotcut.nsi
+          PATH="$HOME/bin:$PATH"
+          pushd $HOME/bin
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc6.txz
+          tar -xJf iscc6.txz
+          popd
+          ISCC -Q -O. shotcut.iss
           echo Signing the installer
           osslsigncode sign -pkcs12 CodeSignCertificates2023.p12 -readpass CodeSignCertificates.pass -n "Shotcut Installer" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in shotcut-setup.exe -out shotcut-setup-signed.exe
           mv shotcut-setup-signed.exe shotcut-win64-$FILENAME_VERSION.exe

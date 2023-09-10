@@ -693,8 +693,8 @@ function install_amf {
 function install_shotcut {
   cmd ninja install
   cmd install -c COPYING "$FINAL_INSTALL_DIR"
-  cmd install -c packaging/windows/shotcut.nsi "$FINAL_INSTALL_DIR"/..
-  cmd sed -i "s/YY.MM.DD/$SHOTCUT_VERSION/" "$FINAL_INSTALL_DIR"/../shotcut.nsi
+  cmd install -c packaging/windows/shotcut.iss "$FINAL_INSTALL_DIR"/..
+  cmd sed -i "s/YY.MM.DD/$SHOTCUT_VERSION/" "$FINAL_INSTALL_DIR"/../shotcut.iss
   cmd install -d "$FINAL_INSTALL_DIR"/share/translations
   cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
 }

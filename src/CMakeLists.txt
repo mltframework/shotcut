@@ -224,7 +224,7 @@ add_custom_target(OTHER_FILES
   ../packaging/linux/snapcraft.yaml.in
   ../packaging/macos/Info.plist.in
   ../packaging/macos/shotcut.icns
-  ../packaging/windows/shotcut.nsi
+  ../packaging/windows/shotcut.iss
   ../packaging/windows/shotcut.rc.in
   ../README.md
   ../scripts/build-shotcut-msys2.sh
