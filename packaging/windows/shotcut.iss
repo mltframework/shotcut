@@ -72,3 +72,36 @@ function ShouldSkipPage(PageID: Integer): Boolean;
 begin
   Result := IsAdminInstallMode and (PageID = wpUserInfo);
 end;
+
+procedure InitializeWizard();
+var
+  CustomStatusLabel: TNewStaticText;
+begin
+  // Hide radio buttons on License page and pre-select "accept" to enable "next" button
+  WizardForm.LicenseAcceptedRadio.Checked := True;
+  WizardForm.LicenseAcceptedRadio.Visible := False;
+  WizardForm.LicenseNotAcceptedRadio.Visible := False;
+  WizardForm.LicenseLabel1.Visible := False;
+  WizardForm.LicenseMemo.Top := WizardForm.LicenseLabel1.Top;
+  WizardForm.LicenseMemo.Height :=
+    WizardForm.LicenseNotAcceptedRadio.Top +
+    WizardForm.LicenseNotAcceptedRadio.Height -
+    WizardForm.LicenseMemo.Top - ScaleY(5);
+
+  WizardForm.FilenameLabel.Visible := False;
+  WizardForm.StatusLabel.Visible := False;
+
+  WizardForm.ProgressGauge.Top := WizardForm.InstallingPage.Height - ScaleY(60);
+
+  CustomStatusLabel := TNewStaticText.Create(WizardForm);
+  CustomStatusLabel.Parent := WizardForm.InstallingPage;
+  CustomStatusLabel.Caption := 'Installing Shotcut...';
+  CustomStatusLabel.Font.Size := CustomStatusLabel.Font.Size + 4;
+  CustomStatusLabel.Font.Style := [fsBold];
+  CustomStatusLabel.AutoSize := True;
+  CustomStatusLabel.Top :=
+    WizardForm.ProgressGauge.Top - CustomStatusLabel.Height - ScaleY(8);
+  CustomStatusLabel.Left :=
+    WizardForm.ProgressGauge.Left +
+    ((WizardForm.ProgressGauge.Width - CustomStatusLabel.Width) div 2);
+end;
