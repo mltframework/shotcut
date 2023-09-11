@@ -1541,7 +1541,8 @@ int Controller::checkFile(const QString &path)
 {
     int error = 0;
     if (path.endsWith(".json") || path.endsWith(".rawr") || path.endsWith(".lottie")
-            || path.endsWith(".tgs")) {
+            || path.endsWith(".riv") || path.endsWith(".tgs") || path.endsWith(".avd")
+            || path.endsWith(".aep")) {
         QString shotcutPath = qApp->applicationDirPath();
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
         QFileInfo meltPath(shotcutPath, "melt-7");
