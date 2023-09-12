@@ -468,7 +468,6 @@ void QmlFilter::analyze(bool isAudio, bool deferJob)
         consumerNode.setAttribute("video_off", 1);
     else
         consumerNode.setAttribute("audio_off", 1);
-    consumerNode.setAttribute("no_meta", 1);
     consumerNode.setAttribute("resource", tmpTarget->fileName());
 
     AbstractJob *job = new MeltJob(tmpTarget->fileName(), dom.toString(2),

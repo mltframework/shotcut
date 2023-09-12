@@ -94,7 +94,7 @@ public:
     virtual void refreshConsumer(bool scrubAudio = false);
     bool saveXML(const QString &filename, Service *service = nullptr, bool withRelativePaths = true,
                  QTemporaryFile *tempFile = nullptr, bool proxy = false, QString projectNote = QString());
-    QString XML(Service *service = nullptr, bool withProfile = false, bool withMetadata = false);
+    QString XML(Service *service = nullptr, bool withProfile = false, bool withMetadata = true);
     int consumerChanged();
     void setProfile(const QString &profile_name);
     void setAudioChannels(int audioChannels);

@@ -511,7 +511,6 @@ bool Controller::saveXML(const QString &filename, Service *service, bool withRel
         if (ignore)
             s.set("ignore_points", 0);
         c.set("time_format", "clock");
-        c.set("no_meta", 1);
         c.set("store", "shotcut");
         c.set("root", root.toUtf8().constData());
         c.set("no_root", 1);
