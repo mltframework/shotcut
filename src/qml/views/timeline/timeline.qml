@@ -93,7 +93,7 @@ Rectangle {
 
         interval: 100
         onTriggered: {
-            Logic.scrollIfNeeded(true);
+            Logic.scrollIfNeeded(false);
         }
     }
 
