@@ -13,7 +13,6 @@ Metadata {
         allowAnimateIn: true
         allowAnimateOut: true
         simpleProperties: ['transition.fix_rotate_x', 'transition.scale_x']
-        minimumVersion: '3'
         parameters: [
             Parameter {
                 name: qsTr('Rotation')

@@ -13,7 +13,6 @@ Metadata {
         allowAnimateIn: true
         allowAnimateOut: true
         simpleProperties: ['radius', 'smooth', 'opacity']
-        minimumVersion: '1.0'
         parameters: [
             Parameter {
                 name: qsTr('Radius')

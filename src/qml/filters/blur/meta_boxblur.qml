@@ -9,7 +9,6 @@ Metadata {
     isHidden: true
 
     keyframes {
-        minimumVersion: '3'
         allowAnimateIn: true
         allowAnimateOut: true
         simpleProperties: ['hori', 'vert']

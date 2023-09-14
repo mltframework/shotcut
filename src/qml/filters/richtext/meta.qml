@@ -11,7 +11,6 @@ Metadata {
     vui: 'vui.qml'
     icon: 'icon.webp'
     isFavorite: true
-    minimumVersion: '2'
 
     keyframes {
         allowAnimateIn: true
