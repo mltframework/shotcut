@@ -228,10 +228,8 @@ void ProxyManager::generateImageProxy(Mlt::Producer &producer, bool replace)
 {
     // Always regenerate per preview scaling or 540 if not specified
     QString resource = ProxyManager::resource(producer);
-    QStringList args;
     QString hash = Util::getHash(producer);
     QString fileName = ProxyManager::dir().filePath(hash + kProxyPendingImageExtension);
-    QString filters;
 
     // Touch file to make it in progress
     QFile file(fileName);
@@ -283,14 +281,14 @@ static void processProperties(QXmlStreamWriter &newXml, QVector<MltProperty> &pr
                     newResource = newResource.mid(root.size());
                 }
                 if (service == "timewarp") {
-                    newProperties << MltProperty(p.first, QString("%1:%2").arg(speed).arg(newResource));
+                    newProperties << MltProperty(p.first, QString("%1:%2").arg(speed, newResource));
                 } else {
                     newProperties << MltProperty(p.first, newResource);
                 }
             } else if (p.first == "warp_resource") {
                 newProperties << MltProperty(p.first, newResource);
                 // Remove special proxy and original resource properties
-            } else if (p.first != kIsProxyProperty && p.first != kOriginalResourceProperty) {
+            } else if (p.first != kOriginalResourceProperty) {
                 newProperties << MltProperty(p.first, p.second);
             }
         }

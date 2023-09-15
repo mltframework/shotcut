@@ -124,6 +124,7 @@ private:
         QString prefix;
         QString suffix;
         int audio_index, video_index;
+        bool isProxy;
 
         void clear()
         {
@@ -134,6 +135,7 @@ private:
             prefix.clear();
             suffix.clear();
             audio_index = video_index = -1;
+            isProxy = false;
         }
     } m_resource;
     QVersionNumber m_mltVersion;

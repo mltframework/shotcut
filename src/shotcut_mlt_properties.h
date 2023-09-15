@@ -57,6 +57,7 @@
 #define kOriginalOutProperty "shotcut:originalOut"
 #define kDisableProxyProperty "shotcut:disableProxy"
 #define kBackupProperty "shotcut:backup"
+#define kIsProxyProperty "shotcut:proxy"
 
 /* Project specific properties */
 #define kShotcutProjectAudioChannels "shotcut:projectAudioChannels"
@@ -90,7 +91,6 @@
 #define kUuidProperty "_shotcut:uuid"
 #define kMultitrackItemProperty "_shotcut:multitrack-item"
 #define kExportFromProperty "_shotcut:exportFromDefault"
-#define kIsProxyProperty "shotcut:proxy"
 #define kTrackIndexProperty "_shotcut:trackIndex"
 #define kClipIndexProperty "_shotcut:clipIndex"
 #define kShotcutInProperty "_shotcut:in"

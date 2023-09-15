@@ -214,6 +214,8 @@ void MltXmlChecker::processProperties()
             mlt_service = p.second;
         } else if (p.first == kShotcutHashProperty) {
             m_resource.hash = p.second;
+        } else if (p.first == kIsProxyProperty) {
+            m_resource.isProxy = true;
         } else if (isNumericProperty(p.first)) {
             checkNumericString(p.second);
         } else if (p.first == "resource" && mlt_service == "webvfx" && fixWebVfxPath(p.second)) {
@@ -243,7 +245,8 @@ void MltXmlChecker::processProperties()
         replaceWebVfxCropFilters(mlt_service, newProperties);
         replaceWebVfxChoppyFilter(mlt_service, newProperties);
 #endif
-        if (Settings.proxyEnabled())
+        bool proxyEnabled = Settings.proxyEnabled();
+        if (proxyEnabled)
             checkForProxy(mlt_service, newProperties);
 
         // Second pass: amend property values.
@@ -262,6 +265,10 @@ void MltXmlChecker::processProperties()
                 p.second.clear();
             } else if (p.first == "audio_index" || p.first == "video_index") {
                 fixStreamIndex(p);
+            } else if (!proxyEnabled && m_resource.isProxy && (p.first == kIsProxyProperty ||
+                                                               p.first.startsWith("meta."))) {
+                p.second.clear();
+                m_isUpdated = true;
             }
 
             if (!p.second.isEmpty())
@@ -667,7 +674,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
                 if (p.first == "resource") {
                     p.second = ProxyManager::GoProProxyFilePath(resource);
                     if (isTimewarp) {
-                        p.second = QString("%1:%2").arg(speed).arg(p.second);
+                        p.second = QString("%1:%2").arg(speed, p.second);
                     }
                     properties << MltProperty(kIsProxyProperty, "1");
                     properties << MltProperty(kOriginalResourceProperty, resource);
@@ -692,7 +699,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
                         p.second = proxyDir.filePath(fileName);
                     }
                     if (isTimewarp) {
-                        p.second = QString("%1:%2").arg(speed).arg(p.second);
+                        p.second = QString("%1:%2").arg(speed, p.second);
                     }
                     break;
                 }
