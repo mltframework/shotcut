@@ -127,8 +127,7 @@ void EditMarkerWidget::on_colorButton_clicked()
     QColor color = QColor(m_colorLabel->text());
     QColorDialog dialog(color);
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    if (qEnvironmentVariableIsSet("SNAP") || qEnvironmentVariableIsSet("GNOME_SHELL_SESSION_MODE"))
-        dialog.setOptions(QColorDialog::DontUseNativeDialog);
+    dialog.setOptions(QColorDialog::DontUseNativeDialog);
 #endif
     dialog.setModal(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {

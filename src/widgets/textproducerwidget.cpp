@@ -73,8 +73,7 @@ void TextProducerWidget::on_colorButton_clicked()
     }
     QColorDialog::ColorDialogOptions flags = QColorDialog::ShowAlphaChannel;
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    if (qEnvironmentVariableIsSet("SNAP") || qEnvironmentVariableIsSet("GNOME_SHELL_SESSION_MODE"))
-        flags = flags | QColorDialog::DontUseNativeDialog;
+    flags = flags | QColorDialog::DontUseNativeDialog;
 #endif
     auto newColor = QColorDialog::getColor(color, this, QString(), flags);
     if (newColor.isValid()) {

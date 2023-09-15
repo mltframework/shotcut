@@ -79,8 +79,7 @@ void QmlMarkerMenu::popup()
         QColor markerColor = m_timeline->markersModel()->getMarker(m_index).color;
         QColorDialog colorDialog(markerColor);
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-        if (qEnvironmentVariableIsSet("SNAP") || qEnvironmentVariableIsSet("GNOME_SHELL_SESSION_MODE"))
-            colorDialog.setOptions(QColorDialog::DontUseNativeDialog);
+        colorDialog.setOptions(QColorDialog::DontUseNativeDialog);
 #endif
         colorDialog.setModal(QmlApplication::dialogModality());
         if (colorDialog.exec() == QDialog::Accepted) {
