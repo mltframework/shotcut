@@ -17,7 +17,6 @@
 
 #include "qmlmetadata.h"
 #include "settings.h"
-#include "util.h"
 #include <Logger.h>
 #include <QVersionNumber>
 
@@ -185,6 +184,15 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject *parent)
     , m_enabled(true)
     , m_allowSmooth(true)
 {
+}
+
+QmlKeyframesParameter *QmlKeyframesMetadata::parameter(const QString &propertyName) const
+{
+    for (const auto &p : m_parameters) {
+        if (propertyName == p->property())
+            return p;
+    }
+    return nullptr;
 }
 
 void QmlKeyframesMetadata::checkVersion(const QString &version)

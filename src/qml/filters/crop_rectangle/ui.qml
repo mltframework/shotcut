@@ -92,19 +92,6 @@ Shotcut.KeyframableFilter {
         }
     }
 
-    function initSimpleKeyframes() {
-        middleValues[0] = filter.getDouble('radius', filter.animateIn);
-        middleValues[1] = filter.getColor('color', filter.animateIn);
-        if (filter.animateIn > 0) {
-            startValues[0] = filter.getDouble('radius', 0);
-            startValues[1] = filter.getColor('color', 0);
-        }
-        if (filter.animateOut > 0) {
-            endValues[0] = filter.getDouble('radius', filter.duration - 1);
-            endValues[1] = filter.getColor('color', filter.duration - 1);
-        }
-    }
-
     function updateParameters() {
         updateFilterRect(null);
         updateFilter('radius', slider.value / 100, radiusKeyframesButton, null);
@@ -174,7 +161,6 @@ Shotcut.KeyframableFilter {
             filter.set(rectProperty, '0%/0%:100%x100%');
             filter.savePreset(preset.parameters);
         } else {
-            initSimpleKeyframes();
             filter.set(middleValueRect, filter.getRect(rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0) {
                 filter.set(startValueRect, filter.getRect(rectProperty, 0));
@@ -213,7 +199,7 @@ Shotcut.KeyframableFilter {
             onPresetSelected: {
                 setControls();
                 setRectControls();
-                initSimpleKeyframes();
+                initializeSimpleKeyframes();
                 filter.blockSignals = true;
                 filter.set(middleValueRect, filter.getRect(rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0) {

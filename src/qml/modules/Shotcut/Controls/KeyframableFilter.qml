@@ -43,11 +43,19 @@ Item {
     function initializeSimpleKeyframes() {
         for (var i in keyframableParameters) {
             var parameter = keyframableParameters[i];
-            middleValues[i] = filter.getDouble(parameter, filter.animateIn);
-            if (filter.animateIn > 0)
-                startValues[i] = filter.getDouble(parameter, 0);
-            if (filter.animateOut > 0)
-                endValues[i] = filter.getDouble(parameter, filter.duration - 1);
+            if (metadata.keyframes.parameter(parameter).isColor) {
+                middleValues[i] = filter.getColor(parameter, filter.animateIn);
+                if (filter.animateIn > 0)
+                    startValues[i] = filter.getColor(parameter, 0);
+                if (filter.animateOut > 0)
+                    endValues[i] = filter.getColor(parameter, filter.duration - 1);
+            } else {
+                middleValues[i] = filter.getDouble(parameter, filter.animateIn);
+                if (filter.animateIn > 0)
+                    startValues[i] = filter.getDouble(parameter, 0);
+                if (filter.animateOut > 0)
+                    endValues[i] = filter.getDouble(parameter, filter.duration - 1);
+            }
         }
     }
 

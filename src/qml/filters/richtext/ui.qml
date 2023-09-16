@@ -131,16 +131,6 @@ Shotcut.KeyframableFilter {
         }
     }
 
-    function initSimpleKeyframes() {
-        middleValues[0] = filter.getColor('bgcolour', filter.animateIn);
-        if (filter.animateIn > 0) {
-            startValues[0] = filter.getColor('bgcolour', 0);
-        }
-        if (filter.animateOut > 0) {
-            endValues[0] = filter.getColor('bgcolour', filter.duration - 1);
-        }
-    }
-
     function updateParameters() {
         updateFilterRect(null);
         updateFilter('bgcolour', Qt.color(bgColor.value), bgcolorKeyframesButton, null);
@@ -258,7 +248,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             filter.set(rectProperty, '10%/10%:80%x80%');
             filter.savePreset(preset.parameters);
         } else {
-            initSimpleKeyframes();
+            initializeSimpleKeyframes();
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(startValue, filter.getRect(rectProperty, 0));
@@ -296,7 +286,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 handleSpecialPreset();
                 setControls();
                 setKeyframedControls();
-                initSimpleKeyframes();
+                initializeSimpleKeyframes();
                 positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
                 filter.blockSignals = true;
                 filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1));

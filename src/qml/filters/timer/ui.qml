@@ -90,7 +90,7 @@ Shotcut.KeyframableFilter {
             filter.set(textFilterUi.rectProperty, '0%/0%:100%x100%');
             filter.savePreset(preset.parameters);
         } else {
-            textFilterUi.initSimpleKeyframes();
+            initializeSimpleKeyframes();
             filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(textFilterUi.startValue, filter.getRect(textFilterUi.rectProperty, 0));
@@ -126,7 +126,7 @@ Shotcut.KeyframableFilter {
             onPresetSelected: {
                 setControls();
                 textFilterUi.setKeyframedControls();
-                textFilterUi.initSimpleKeyframes();
+                initializeSimpleKeyframes();
                 filter.blockSignals = true;
                 filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
                 if (filter.animateIn > 0)

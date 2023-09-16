@@ -138,19 +138,6 @@ GridLayout {
         bgcolorKeyframesButton.checked = filter.keyframeCount('bgcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
     }
 
-    function initSimpleKeyframes() {
-        function initializeSimpleKeyframes() {
-            for (var i in keyframableParameters) {
-                var parameter = keyframableParameters[i];
-                middleValues[i] = filter.getColor(parameter, filter.animateIn);
-                if (filter.animateIn > 0)
-                    startValues[i] = filter.getColor(parameter, 0);
-                if (filter.animateOut > 0)
-                    endValues[i] = filter.getColor(parameter, filter.duration - 1);
-            }
-        }
-    }
-
     function updateParameters() {
         updateFilterRect(null);
         updateFilter('fgcolour', Qt.color(fgColor.value), fgcolorKeyframesButton, null);

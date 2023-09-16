@@ -33,19 +33,6 @@ Shotcut.KeyframableFilter {
         slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
-    function initSimpleKeyframes() {
-        middleValues[0] = filter.getDouble('radius', filter.animateIn);
-        middleValues[1] = filter.getColor('color', filter.animateIn);
-        if (filter.animateIn > 0) {
-            startValues[0] = filter.getDouble('radius', 0);
-            startValues[1] = filter.getColor('color', 0);
-        }
-        if (filter.animateOut > 0) {
-            endValues[0] = filter.getDouble('radius', filter.duration - 1);
-            endValues[1] = filter.getColor('color', filter.duration - 1);
-        }
-    }
-
     function updateParameters() {
         updateFilter('radius', slider.value / slider.maximumValue, radiusKeyframesButton, null);
         updateFilter('color', colorSwatch.value, colorKeyframesButton, null);
@@ -63,8 +50,6 @@ Shotcut.KeyframableFilter {
             // Set default parameter values
             filter.set('color', Qt.rgba(0, 0, 0, 1));
             filter.set('radius', 0.5);
-        } else {
-            initSimpleKeyframes();
         }
         setControls();
     }

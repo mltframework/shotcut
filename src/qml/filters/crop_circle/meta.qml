@@ -26,6 +26,7 @@ Metadata {
                 name: qsTr('Color')
                 property: 'color'
                 isCurve: false
+                isColor: true
             }
         ]
     }

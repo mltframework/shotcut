@@ -450,7 +450,6 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
         auto parameter = m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex]);
-        static auto regex = QRegularExpression("=#[0-9A-Fa-f]{6,8};");
 
         if (parameter->isRectangle()) {
             auto value = m_filter->getRect(name, position);
@@ -486,7 +485,7 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 m_filter->blockSignals(false);
                 emit keyframeAdded(name, position);
             }
-        } else if (regex.match(m_filter->get(name)).hasMatch()) {
+        } else if (parameter->isColor()) {
             // Color values
             auto value = m_filter->getColor(name, position);
             Mlt::Animation anim = m_filter->getAnimation(name);
@@ -684,6 +683,26 @@ void KeyframesModel::removeSimpleKeyframes()
                 }
                 if (clearKeyframes) {
                     m_filter->set(name, firstValue);
+                }
+            } else if (parameter->isColor()) {
+                auto firstValue = m_filter->getColor(name, 0);
+                Mlt::Animation anim = m_filter->getAnimation(name);
+                if (anim.is_valid()) {
+                    for (int k = 1; k < anim.key_count(); k++) {
+                        auto value = m_filter->getColor(name, anim.key_get_frame(k));
+                        if (value != firstValue) {
+                            clearKeyframes = false;
+                            break;
+                        }
+                    }
+                }
+                if (clearKeyframes) {
+                    m_filter->set(name, firstValue);
+                    m_filter->blockSignals(true);
+                    for (auto &key : parameter->gangedProperties()) {
+                        m_filter->set(key, m_filter->getColor(key, 0));
+                    }
+                    m_filter->blockSignals(false);
                 }
             } else {
                 double firstValue = m_filter->getDouble(name, 0);

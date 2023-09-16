@@ -32,6 +32,7 @@ Metadata {
                 name: qsTr('Padding color')
                 property: 'color'
                 isCurve: false
+                isColor: true
             }
         ]
     }

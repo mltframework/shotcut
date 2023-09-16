@@ -36,6 +36,7 @@ class QmlKeyframesParameter : public QObject
     Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
     Q_PROPERTY(QString units MEMBER m_units NOTIFY changed)
     Q_PROPERTY(bool isRectangle MEMBER m_isRectangle NOTIFY changed)
+    Q_PROPERTY(bool isColor MEMBER m_isColor NOTIFY changed)
 
 public:
     enum RangeType {
@@ -81,6 +82,10 @@ public:
     {
         return m_rangeType;
     }
+    bool isColor() const
+    {
+        return m_isColor;
+    }
 
 signals:
     void changed();
@@ -95,6 +100,7 @@ private:
     QString m_units;
     bool m_isRectangle;
     RangeType m_rangeType;
+    bool m_isColor;
 };
 
 class QmlKeyframesMetadata : public QObject
@@ -146,6 +152,7 @@ public:
     {
         return m_parameters[index];
     }
+    Q_INVOKABLE QmlKeyframesParameter *parameter(const QString &propertyName) const;
     void checkVersion(const QString &version);
     void setDisabled();
 

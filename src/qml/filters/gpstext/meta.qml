@@ -40,16 +40,19 @@ Metadata {
                 name: qsTr('Font color')
                 property: 'fgcolour'
                 isCurve: false
+                isColor: true
             },
             Parameter {
                 name: qsTr('Outline')
                 property: 'olcolour'
                 isCurve: false
+                isColor: true
             },
             Parameter {
                 name: qsTr('Background')
                 property: 'bgcolour'
                 isCurve: false
+                isColor: true
             }
         ]
     }
