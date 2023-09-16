@@ -265,8 +265,12 @@ void MltXmlChecker::processProperties()
                 p.second.clear();
             } else if (p.first == "audio_index" || p.first == "video_index") {
                 fixStreamIndex(p);
-            } else if (!proxyEnabled && m_resource.isProxy && (p.first == kIsProxyProperty ||
-                                                               p.first.startsWith("meta."))) {
+            } else if ((proxyEnabled
+                        && m_resource.notProxyMeta
+                        && p.first.startsWith("meta.")) ||
+                       (!proxyEnabled
+                        && m_resource.isProxy
+                        && (p.first == kIsProxyProperty || p.first.startsWith("meta.")))) {
                 p.second.clear();
                 m_isUpdated = true;
             }
@@ -678,6 +682,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
                     }
                     properties << MltProperty(kIsProxyProperty, "1");
                     properties << MltProperty(kOriginalResourceProperty, resource);
+                    m_resource.notProxyMeta = !m_resource.isProxy;
                     m_isUpdated = true;
                     return;
                 }
@@ -706,6 +711,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
             }
             properties << MltProperty(kIsProxyProperty, "1");
             properties << MltProperty(kOriginalResourceProperty, resource);
+            m_resource.notProxyMeta = !m_resource.isProxy;
             m_isUpdated = true;
         }
     } else if ((mlt_service == "qimage" || mlt_service == "pixbuf")
@@ -743,6 +749,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
             }
             properties << MltProperty(kIsProxyProperty, "1");
             properties << MltProperty(kOriginalResourceProperty, resource);
+            m_resource.notProxyMeta = !m_resource.isProxy;
             m_isUpdated = true;
         }
     }
