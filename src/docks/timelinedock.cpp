@@ -1815,10 +1815,13 @@ void TimelineDock::append(int trackIndex)
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xmlToUse.isEmpty()) {
+        Mlt::Producer producer;
         if (xmlToUse.isEmpty()) {
             Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
             ProxyManager::generateIfNotExists(producer);
             xmlToUse = MLT.XML(&producer);
+        } else {
+            producer = Mlt::Producer(MLT.profile(), "xml-string", xmlToUse.toUtf8().constData());
         }
         if (xmlToUse.isEmpty()) {
             return;
@@ -1827,7 +1830,6 @@ void TimelineDock::append(int trackIndex)
         // Insert multiple if the XML is a <tractor> with child <property name="shotcut">1</property>
         // No need to create a track in an empty timeline.
         // This can be a macro of QUndoCommands.
-        Mlt::Producer producer(MLT.profile(), "xml-string", xmlToUse.toUtf8().constData());
         if (producer.is_valid() && producer.type() == mlt_service_tractor_type
                 && producer.get_int(kShotcutXmlProperty)) {
             Mlt::Tractor tractor(producer);
@@ -2783,6 +2785,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty() || !xmlToUse.isEmpty()) {
+        Mlt::Producer producer;
         QScopedPointer<TimelineSelectionBlocker> selectBlocker;
         if (xmlToUse.isEmpty() && xml.isEmpty()) {
             Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
@@ -2791,6 +2794,8 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         } else if (!xml.isEmpty()) {
             xmlToUse = xml;
             selectBlocker.reset(new TimelineSelectionBlocker(*this));
+        } else {
+            producer = Mlt::Producer(MLT.profile(), "xml-string", xmlToUse.toUtf8().constData());
         }
         if (xmlToUse.isEmpty()) {
             return;
@@ -2802,7 +2807,6 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         // Insert multiple if the XML is a <tractor> with child <property name="shotcut">1</property>
         // No need to create a track in an empty timeline.
         // This can be a macro of QUndoCommands.
-        Mlt::Producer producer(MLT.profile(), "xml-string", xmlToUse.toUtf8().constData());
         if (producer.is_valid() && producer.type() == mlt_service_tractor_type
                 && producer.get_int(kShotcutXmlProperty)) {
             Mlt::Tractor tractor(producer);
@@ -2834,10 +2838,6 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
             MAIN.undoStack()->endMacro();
 
         } else {
-            if (producer.type() == mlt_service_chain_type) {
-                ProxyManager::generateIfNotExists(producer);
-                xmlToUse = MLT.XML(&producer);
-            }
             if (m_model.trackList().size() == 0) {
                 position = 0;
                 addVideoTrack();
@@ -2898,6 +2898,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty() || !xmlToUse.isEmpty()) {
+        Mlt::Producer producer;
         QScopedPointer<TimelineSelectionBlocker> selectBlocker;
         if (xmlToUse.isEmpty() && xml.isEmpty()) {
             Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
@@ -2906,6 +2907,8 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
         } else if (!xml.isEmpty()) {
             xmlToUse = xml;
             selectBlocker.reset(new TimelineSelectionBlocker(*this));
+        } else {
+            producer = Mlt::Producer(MLT.profile(), "xml-string", xmlToUse.toUtf8().constData());
         }
         if (position < 0) {
             position = qMax(m_position, 0);
@@ -2914,7 +2917,6 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
         // Overwrite multiple if the XML is a <tractor> with child <property name="shotcut">1</property>
         // No need to create a track in an empty timeline.
         // This can be a macro of QUndoCommands.
-        Mlt::Producer producer(MLT.profile(), "xml-string", xmlToUse.toUtf8().constData());
         if (producer.is_valid() && producer.type() == mlt_service_tractor_type
                 && producer.get_int(kShotcutXmlProperty)) {
             Mlt::Tractor tractor(producer);
@@ -2945,10 +2947,6 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
             MAIN.undoStack()->endMacro();
 
         } else {
-            if (producer.type() == mlt_service_chain_type) {
-                ProxyManager::generateIfNotExists(producer);
-                xmlToUse = MLT.XML(&producer);
-            }
             if (m_model.trackList().size() == 0) {
                 position = 0;
                 addVideoTrack();
