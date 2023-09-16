@@ -153,7 +153,14 @@ void AvformatProducerWidget::keyPressEvent(QKeyEvent *event)
 void AvformatProducerWidget::onProducerChanged(Mlt::Producer *producer)
 {
     if ( producer->get_producer() == m_producer->get_producer() ) {
-        reloadProducerValues();
+        if (Settings.playerGPU()) {
+            QTimer::singleShot(50, this, &AvformatProducerWidget::reloadProducerValues);
+        } else {
+            auto task = new ProbeTask(producer);
+            QThreadPool::globalInstance()->start(task, 10);
+            connect(task, &ProbeTask::probeFinished, this, &AvformatProducerWidget::reloadProducerValues,
+                    Qt::QueuedConnection);
+        }
     }
 }
 
@@ -239,7 +246,8 @@ void AvformatProducerWidget::recreateProducer()
 
 void AvformatProducerWidget::reloadProducerValues()
 {
-    m_producer->probe();
+    if (Settings.playerGPU())
+        m_producer->probe();
     int tabIndex = ui->tabWidget->currentIndex();
     ui->tabWidget->setTabEnabled(0, false);
     ui->tabWidget->setTabEnabled(1, false);
@@ -1261,4 +1269,17 @@ void AvformatProducerWidget::on_speedComboBox_textActivated(const QString &arg1)
     if (arg1.isEmpty()) return;
     ui->speedSpinBox->setValue(arg1.toDouble());
     on_speedSpinBox_editingFinished();
+}
+
+ProbeTask::ProbeTask(Mlt::Producer *producer)
+    : QObject(0)
+    , QRunnable()
+    , m_producer(*producer)
+{
+}
+
+void ProbeTask::run()
+{
+    m_producer.probe();
+    emit probeFinished();
 }

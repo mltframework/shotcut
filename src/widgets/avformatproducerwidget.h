@@ -134,7 +134,23 @@ private:
     void recreateProducer();
     bool revertToOriginalResource();
     void setSyncVisibility();
+
+private slots:
     void reloadProducerValues();
+};
+
+class ProbeTask : public QObject, public QRunnable
+{
+    Q_OBJECT
+
+public:
+    explicit ProbeTask(Mlt::Producer *producer);
+    void run();
+
+signals:
+    void probeFinished();
+private:
+    Mlt::Producer m_producer;
 };
 
 #endif // AVFORMATPRODUCERWIDGET_H
