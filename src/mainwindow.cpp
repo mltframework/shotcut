@@ -2468,10 +2468,10 @@ void MainWindow::onProducerOpened(bool withReopen)
                 m_timelineDock->setSelection();
             });
         }
-    } else {
-        m_filterController->motionTrackerModel()->load();
     }
     if (MLT.isClip()) {
+        m_filterController->motionTrackerModel()->load();
+        m_filterController->setProducer(MLT.producer());
         m_player->enableTab(Player::SourceTabIndex);
         m_player->switchToTab(Player::SourceTabIndex);
         Util::getHash(*MLT.producer());
