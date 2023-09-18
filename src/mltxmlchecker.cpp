@@ -214,7 +214,7 @@ void MltXmlChecker::processProperties()
             mlt_service = p.second;
         } else if (p.first == kShotcutHashProperty) {
             m_resource.hash = p.second;
-        } else if (p.first == kIsProxyProperty) {
+        } else if (p.first.startsWith(kIsProxyProperty)) {
             m_resource.isProxy = true;
         } else if (isNumericProperty(p.first)) {
             checkNumericString(p.second);
@@ -681,6 +681,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
                         p.second = QString("%1:%2").arg(speed, p.second);
                     }
                     properties << MltProperty(kIsProxyProperty, "1");
+                    properties << MltProperty(kMetaProxyProperty, "1");
                     properties << MltProperty(kOriginalResourceProperty, resource);
                     m_resource.notProxyMeta = !m_resource.isProxy;
                     m_isUpdated = true;
@@ -710,6 +711,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
                 }
             }
             properties << MltProperty(kIsProxyProperty, "1");
+            properties << MltProperty(kMetaProxyProperty, "1");
             properties << MltProperty(kOriginalResourceProperty, resource);
             m_resource.notProxyMeta = !m_resource.isProxy;
             m_isUpdated = true;
@@ -748,6 +750,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
                 }
             }
             properties << MltProperty(kIsProxyProperty, "1");
+            properties << MltProperty(kMetaProxyProperty, "1");
             properties << MltProperty(kOriginalResourceProperty, resource);
             m_resource.notProxyMeta = !m_resource.isProxy;
             m_isUpdated = true;

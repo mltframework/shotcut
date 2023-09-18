@@ -57,7 +57,9 @@
 #define kOriginalOutProperty "shotcut:originalOut"
 #define kDisableProxyProperty "shotcut:disableProxy"
 #define kBackupProperty "shotcut:backup"
-#define kIsProxyProperty "shotcut:proxy"
+// "shotcut:proxy" is internal only because older versions do not know to hide it.
+// "shotcut:metaProxy" indicates whether the "meta." properties reflect source or proxy.
+#define kMetaProxyProperty "shotcut:proxy.meta"
 
 /* Project specific properties */
 #define kShotcutProjectAudioChannels "shotcut:projectAudioChannels"
@@ -97,6 +99,7 @@
 #define kShotcutOutProperty "_shotcut:out"
 #define kNewTrackIndexProperty "_shotcut:newTrackIndex"
 #define kShotcutFiltersClipboard "shotcut:filtersClipboard"
+#define kIsProxyProperty "shotcut:proxy"
 
 #define kDefaultMltProfile "atsc_1080p_25"
 

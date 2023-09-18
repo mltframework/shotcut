@@ -287,8 +287,8 @@ static void processProperties(QXmlStreamWriter &newXml, QVector<MltProperty> &pr
                 }
             } else if (p.first == "warp_resource") {
                 newProperties << MltProperty(p.first, newResource);
+            } else if (p.first != kIsProxyProperty && p.first != kOriginalResourceProperty) {
                 // Remove special proxy and original resource properties
-            } else if (p.first != kOriginalResourceProperty) {
                 newProperties << MltProperty(p.first, p.second);
             }
         }
@@ -478,6 +478,7 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer &producer, bool replace)
                 auto gopro = GoProProxyFilePath(producer.get("resource"));
                 if (QFile::exists(gopro)) {
                     producer.set(kIsProxyProperty, 1);
+                    producer.set(kMetaProxyProperty, 1);
                     producer.set(kOriginalResourceProperty, producer.get("resource"));
                     producer.set("resource", gopro.toUtf8().constData());
                     return true;
@@ -490,6 +491,7 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer &producer, bool replace)
                 return false;
             }
             producer.set(kIsProxyProperty, 1);
+            producer.set(kMetaProxyProperty, 1);
             producer.set(kOriginalResourceProperty, producer.get("resource"));
             if (projectDir.exists(fileName)) {
                 ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
