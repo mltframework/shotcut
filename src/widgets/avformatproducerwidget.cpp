@@ -157,9 +157,9 @@ void AvformatProducerWidget::onProducerChanged(Mlt::Producer *producer)
             QTimer::singleShot(50, this, &AvformatProducerWidget::reloadProducerValues);
         } else {
             auto task = new ProbeTask(producer);
-            QThreadPool::globalInstance()->start(task, 10);
             connect(task, &ProbeTask::probeFinished, this, &AvformatProducerWidget::reloadProducerValues,
                     Qt::QueuedConnection);
+            QThreadPool::globalInstance()->start(task, 10);
         }
     }
 }
