@@ -198,7 +198,8 @@ bool MetadataModel::isVisible(int row) const
     return true;
 }
 
-void MetadataModel::setIsClipProducer(bool isClipProducer)
+void MetadataModel::updateFilterMask(bool isClipProducer, bool isChainProducer,
+                                     bool isTrackProducer)
 {
     beginResetModel();
     m_isClipProducer = isClipProducer;
@@ -207,24 +208,12 @@ void MetadataModel::setIsClipProducer(bool isClipProducer)
     } else {
         m_filterMask |= clipOnlyMaskBit;
     }
-    endResetModel();
-}
-
-void MetadataModel::setIsChainProducer(bool isChainProducer)
-{
-    beginResetModel();
     m_isChainProducer = isChainProducer;
     if (m_isChainProducer) {
         m_filterMask &= ~linkMaskBit;
     } else {
         m_filterMask |= linkMaskBit;
     }
-    endResetModel();
-}
-
-void MetadataModel::setIsTrackProducer(bool isTrackProducer)
-{
-    beginResetModel();
     m_isTrackProducer = isTrackProducer;
     if (m_isTrackProducer) {
         m_filterMask &= ~trackOnlyMaskBit;

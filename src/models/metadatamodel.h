@@ -86,9 +86,7 @@ public:
     }
     void setSearch(const QString &search);
     Q_INVOKABLE bool isVisible(int row) const;
-    void setIsClipProducer(bool isClipProducer);
-    void setIsChainProducer(bool isChainProducer);
-    void setIsTrackProducer(bool isTrackProducer);
+    void updateFilterMask(bool isClipProducer, bool isChainProducer, bool isTrackProducer);
     Q_INVOKABLE void saveFilterSet(const QString &name);
     Q_INVOKABLE void deleteFilterSet(const QString &name);
 
