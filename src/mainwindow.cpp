@@ -1765,7 +1765,6 @@ void MainWindow::seekTimeline(int position, bool seekPlayer)
         updateMarkers();
         m_player->setFocus();
         m_player->switchToTab(Player::ProjectTabIndex);
-        m_timelineDock->emitSelectedFromSelection();
     }
     if (seekPlayer)
         m_player->seek(position);
