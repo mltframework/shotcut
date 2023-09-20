@@ -250,6 +250,8 @@ void MltXmlChecker::processProperties()
             checkForProxy(mlt_service, newProperties);
 
         // Second pass: amend property values.
+        bool relinkMismatch = !m_resource.hash.isEmpty() && !m_resource.newHash.isEmpty()
+                              && m_resource.hash != m_resource.newHash;
         m_properties = newProperties;
         newProperties.clear();
         foreach (MltProperty p, m_properties) {
@@ -263,14 +265,25 @@ void MltXmlChecker::processProperties()
             } else if (p.first == kShotcutDetailProperty) {
                 // We no longer save this (leaks absolute paths).
                 p.second.clear();
-            } else if (p.first == "audio_index" || p.first == "video_index") {
-                fixStreamIndex(p);
+            } else if (relinkMismatch && p.first == "audio_index") {
+                // Reset stream index properties if re-linked file is different.
+                p.second = QString::number(m_resource.audio_index);
+            } else if (relinkMismatch && p.first == "astream") {
+                p.second = "0";
+            } else if (relinkMismatch && p.first == "video_index") {
+                p.second = QString::number(m_resource.video_index);
+            } else if (relinkMismatch && p.first == "vstream") {
+                p.second = "0";
+            } else if (relinkMismatch && p.first.startsWith("meta.")) {
+                // Remove meta properties if re-linked file is different.
+                p.second.clear();
             } else if ((proxyEnabled
                         && m_resource.notProxyMeta
                         && p.first.startsWith("meta.")) ||
                        (!proxyEnabled
                         && m_resource.isProxy
                         && (p.first == kIsProxyProperty || p.first.startsWith("meta.")))) {
+                // Remove meta properties if they misrepresent proxy/original
                 p.second.clear();
                 m_isUpdated = true;
             }
@@ -493,19 +506,6 @@ bool MltXmlChecker::fixUnlinkedFile(QString &value)
         }
     }
     return false;
-}
-
-void MltXmlChecker::fixStreamIndex(MltProperty &property)
-{
-    // Remove a stream index property if re-linked file is different.
-    if (!m_resource.hash.isEmpty() && !m_resource.newHash.isEmpty()
-            && m_resource.hash != m_resource.newHash) {
-        if (property.first == "audio_index") {
-            property.second = QString::number(m_resource.audio_index);
-        } else if (property.first == "video_index") {
-            property.second = QString::number(m_resource.video_index);
-        }
-    }
 }
 
 bool MltXmlChecker::fixVersion1701WindowsPathBug(QString &value)
