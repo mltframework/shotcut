@@ -141,6 +141,7 @@ void UnlinkedFilesDialog::on_searchFolderButton_clicked()
     QString dirName = QFileDialog::getExistingDirectory(this, windowTitle(), Settings.openPath(),
                                                         Util::getFileDialogOptions());
     if (!dirName.isEmpty()) {
+        Settings.setOpenPath(dirName);
         lookInDir(dirName);
     }
 }
