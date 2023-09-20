@@ -151,6 +151,9 @@ public:
         QCommandLineOption noupgradeOption("noupgrade",
                                            QCoreApplication::translate("main", "Hide upgrade prompt and menu item."));
         parser.addOption(noupgradeOption);
+        QCommandLineOption glaxnimateOption("glaxnimate",
+                                            QCoreApplication::translate("main", "Run Glaxnimate instead of Shotcut."));
+        parser.addOption(glaxnimateOption);
         QCommandLineOption gpuOption("gpu",
                                      QCoreApplication::translate("main", "Use GPU processing."));
         parser.addOption(gpuOption);
@@ -190,6 +193,16 @@ public:
         parser.addPositionalArgument("[FILE]...",
                                      QCoreApplication::translate("main", "Zero or more files or folders to open"));
         parser.process(arguments());
+        if (parser.isSet(glaxnimateOption)) {
+            QStringList args = arguments();
+            if (!args.isEmpty())
+                args.removeFirst();
+            args.removeAll("--glaxnimate");
+            QProcess child;
+            if (child.startDetached(Settings.glaxnimatePath(), args))
+                ::exit(EXIT_SUCCESS);
+        }
+
 #ifdef Q_OS_WIN
         isFullScreen = false;
 #else

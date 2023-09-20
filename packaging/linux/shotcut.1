@@ -1,4 +1,4 @@
-.TH SHOTCUT "1" "December 2018" "Shotcut" "User Commands"
+.TH SHOTCUT "1" "September 2023" "Shotcut" "User Commands"
 .SH NAME
 shotcut \- video editor
 .SH SYNOPSIS
@@ -18,6 +18,9 @@ Fill the screen with the Shotcut window.
 \fB\-\-noupgrade\fR
 Hide upgrade prompt and menu item.
 .TP
+\fB\-\-glaxnimate\fR
+Run Glaxnimate instead of Shotcut.
+.TP
 \fB\-\-gpu\fR
 Use GPU processing.
 .TP
@@ -26,6 +29,18 @@ Clear Recent on Exit
 .TP
 \fB\-\-appdata\fR <directory>
 The directory for app configuration and data.
+.TP
+\fB\-\-QT_SCALE_FACTOR\fR <number>
+The scale factor for a high-DPI screen
+.TP
+\fB\-\-QT_SCREEN_SCALE_FACTORS\fR <list>
+A semicolon-separated list of scale factors for each screen
+.TP
+\fB\-\-QT_SCALE_FACTOR_ROUNDING_POLICY\fR <string>
+How to handle a fractional display scale: Round, Ceil, Floor, RoundPreferFloor, PassThrough
+.TP
+\fB\-\-SDL_AUDIODRIVER\fR <string>
+Which operating system audio API to use: alsa, arts, dsp, esd, jack, pipewire, pulseaudio
 .SS "Arguments:"
 .TP
 [FILE]...
