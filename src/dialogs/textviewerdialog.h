@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +29,7 @@ class TextViewerDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit TextViewerDialog(QWidget *parent = 0);
+    explicit TextViewerDialog(QWidget *parent = 0, bool forMltXml = false);
     ~TextViewerDialog();
     void setText(const QString &s);
 
@@ -39,6 +38,7 @@ private slots:
 
 private:
     Ui::TextViewerDialog *ui;
+    bool m_forMltXml;
 };
 
 #endif // TEXTVIEWERDIALOG_H

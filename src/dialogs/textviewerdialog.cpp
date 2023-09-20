@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,10 @@
 
 #include <QFileDialog>
 
-TextViewerDialog::TextViewerDialog(QWidget *parent) :
+TextViewerDialog::TextViewerDialog(QWidget *parent, bool forMltXml) :
     QDialog(parent),
-    ui(new Ui::TextViewerDialog)
+    ui(new Ui::TextViewerDialog),
+    m_forMltXml(forMltXml)
 {
     ui->setupUi(this);
 }
@@ -44,9 +45,19 @@ void TextViewerDialog::on_buttonBox_accepted()
     QString path = Settings.savePath();
     QString caption = tr("Save Text");
     QString nameFilter = tr("Text Documents (*.txt);;All Files (*)");
+    if (m_forMltXml) {
+        nameFilter = tr("MLT XML (*.mlt);;All Files (*)");
+    }
     QString filename = QFileDialog::getSaveFileName(this, caption, path, nameFilter,
                                                     nullptr, Util::getFileDialogOptions());
     if (!filename.isEmpty()) {
+        QFileInfo fi(filename);
+        if (fi.suffix().isEmpty()) {
+            if (m_forMltXml)
+                filename += ".mlt";
+            else
+                filename += ".txt";
+        }
         if (Util::warnIfNotWritable(filename, this, caption))
             return;
         QFile f(filename);

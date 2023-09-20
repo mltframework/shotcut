@@ -161,7 +161,7 @@ void MeltJob::setInAndOut(int in, int out)
 
 void MeltJob::onViewXmlTriggered()
 {
-    TextViewerDialog dialog(&MAIN);
+    TextViewerDialog dialog(&MAIN, true);
     dialog.setWindowTitle(tr("MLT XML"));
     dialog.setText(xml());
     dialog.exec();
