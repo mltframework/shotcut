@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 20222-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
 
 #include "actionsdialog.h"
 
-#include "actions.h"
 #include "widgets/statuslabelwidget.h"
 
 #include <QDialogButtonBox>
@@ -192,6 +191,19 @@ public:
         return editInProgress;
     }
 
+#ifdef Q_OS_MAC
+    virtual void keyPressEvent(QKeyEvent *event) override
+    {
+        if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+            emit activated(currentIndex());
+        } else if (event->key() == Qt::Key_F2)  {
+            edit(currentIndex(), QAbstractItemView::EditKeyPressed, event);
+        } else {
+            QAbstractItemView::keyPressEvent(event);
+        }
+    }
+#endif
+
 signals:
     void editRejected();
 };
@@ -321,7 +333,11 @@ void ActionsDialog::hideEvent(QHideEvent *event)
 {
     Q_UNUSED(event)
     saveCurrentEditor();
-    // Reset the dialog when hidden since it is no longer destroyed.
+}
+
+void ActionsDialog::showEvent(QShowEvent *event)
+{
+    Q_UNUSED(event)
     m_searchField->setFocus();
     m_searchField->clear();
     m_table->clearSelection();
