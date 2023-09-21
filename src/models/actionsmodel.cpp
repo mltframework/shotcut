@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
         case COLUMN_SEQUENCE1: {
             QList<QKeySequence> sequences = action->shortcuts();
             if (sequences.size() > 0)
-                result = sequences[0].toString();
+                result = sequences[0].toString(QKeySequence::NativeText);
         }
         break;
         case COLUMN_SEQUENCE2: {
@@ -94,7 +94,7 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
             if (result.toString().isEmpty()) {
                 QList<QKeySequence> sequences = action->shortcuts();
                 if (sequences.size() > 1)
-                    result = sequences[1].toString();
+                    result = sequences[1].toString(QKeySequence::NativeText);
             }
         }
         break;

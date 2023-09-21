@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -155,7 +155,7 @@ void ShotcutActions::initializeShortcuts()
 void ShotcutActions::addShortcutToToolTip(QAction *action)
 {
     QString tooltip = action->property(defaultToolTipProperty).toString();
-    QString shortcut = action->shortcut().toString();
+    QString shortcut = action->shortcut().toString(QKeySequence::NativeText);
 
     if (shortcut.isEmpty())
         shortcut = action->property(hardKeyProperty).toString();
