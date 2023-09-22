@@ -289,22 +289,22 @@ bool AttachedFiltersModel::moveRows(const QModelIndex &sourceParent, int sourceR
     return false;
 }
 
-void AttachedFiltersModel::add(QmlMetadata *meta)
+int AttachedFiltersModel::add(QmlMetadata *meta)
 {
-    if (!m_producer) return;
+    if (!m_producer) return -1;
 
     if (!meta->allowMultiple()) {
         for (int i = 0; i < m_metaList.count(); i++) {
             const QmlMetadata *attachedMeta = m_metaList[i];
             if (attachedMeta && meta->uniqueId() == attachedMeta->uniqueId()) {
                 emit duplicateAddFailed(i);
-                return;
+                return -1;
             }
         }
     }
     if (m_producer->is_valid() && mlt_service_tractor_type != m_producer->type()
             && !QmlApplication::confirmOutputFilter()) {
-        return;
+        return -1;
     }
 
     // Put the filter after the last filter that is less than or equal in sort order.
@@ -325,8 +325,11 @@ void AttachedFiltersModel::add(QmlMetadata *meta)
     case QmlMetadata::FilterSet:
         addFilterSet(meta, insertRow);
     default:
+        insertRow = -1;
         break;
     }
+
+    return insertRow;
 }
 
 void AttachedFiltersModel::remove(int row)

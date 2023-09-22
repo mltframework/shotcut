@@ -72,7 +72,7 @@ signals:
     void requestConvert(QString, bool set709Convert, bool withSubClip);
 
 public slots:
-    void add(QmlMetadata *meta);
+    int add(QmlMetadata *meta);
     void remove(int row);
     bool move(int fromRow, int toRow);
 

@@ -344,6 +344,29 @@ Shotcut.KeyframableFilter {
             }
         }
 
+        Item {
+            width: 1
+        }
+
+        Shotcut.Button {
+            Layout.columnSpan: parent.columns - 1
+            text: qsTr('Apply to Source')
+            function sanitedFilterRect() {
+                let rect = Qt.rect(Math.max(0, filterRect.x),
+                               Math.max(0, filterRect.y),
+                               filterRect.width,
+                               filterRect.height);
+                if (rect.x + rect.width > profile.width * profile.sar)
+                    rect.width = Math.round(profile.width * profile.sar) - rect.x;
+                if (rect.y + rect.height > profile.height)
+                    rect.height = profile.height - rect.y;
+                return rect;
+            }
+
+            enabled: Math.abs(profile.aspectRatio - producer.getDouble('meta.media.width') / producer.getDouble('meta.media.height')) < 0.000001
+            onClicked: filter.crop(sanitedFilterRect())
+        }
+
         Label {
             text: qsTr('Corner radius')
             Layout.alignment: Qt.AlignRight

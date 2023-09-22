@@ -43,6 +43,7 @@ public:
     }
     AttachedFiltersModel *attachedModel();
 
+    QmlMetadata *metadata(const QString &id);
     QmlMetadata *metadataForService(Mlt::Service *service);
     QmlFilter *currentFilter() const
     {

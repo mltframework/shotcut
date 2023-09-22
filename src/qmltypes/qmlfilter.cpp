@@ -841,6 +841,11 @@ bool QmlFilter::allowAnimateOut() const
     return false;
 }
 
+void QmlFilter::crop(const QRectF &rect)
+{
+    MAIN.cropSource(rect);
+}
+
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter &filter)
     : QObject(nullptr)
     , m_uuid(filter.get(kShotcutHashProperty))

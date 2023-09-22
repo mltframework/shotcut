@@ -142,6 +142,7 @@ public:
     bool allowTrim() const;
     bool allowAnimateIn() const;
     bool allowAnimateOut() const;
+    Q_INVOKABLE void crop(const QRectF &rect);
 
 public slots:
     void preset(const QString &name);

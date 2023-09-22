@@ -111,6 +111,22 @@ void FilterController::loadFilterMetadata()
     };
 }
 
+QmlMetadata *FilterController::metadata(const QString &id)
+{
+    QmlMetadata *meta = 0;
+    int rowCount = m_metadataModel.rowCount();
+
+    for (int i = 0; i < rowCount; i++) {
+        QmlMetadata *tmpMeta = m_metadataModel.get(i);
+        if (tmpMeta->uniqueId() == id) {
+            meta = tmpMeta;
+            break;
+        }
+    }
+
+    return meta;
+}
+
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
     QmlMetadata *meta = 0;
@@ -122,15 +138,7 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
         uniqueId = service->get("mlt_service");
     }
 
-    for (int i = 0; i < rowCount; i++) {
-        QmlMetadata *tmpMeta = m_metadataModel.get(i);
-        if (tmpMeta->uniqueId() == uniqueId) {
-            meta = tmpMeta;
-            break;
-        }
-    }
-
-    return meta;
+    return metadata(uniqueId);
 }
 
 bool FilterController::isOutputTrackSelected() const

@@ -126,6 +126,7 @@ public:
     }
     int mltIndexForTrack(int trackIndex) const;
     int bottomVideoTrackIndex() const;
+    void cropSource(const QRectF &rect);
 
 signals:
     void audioChannelsChanged();
