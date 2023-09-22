@@ -737,7 +737,7 @@ ShotcutSettings::TimelineScrolling ShotcutSettings::timelineScrolling() const
         return ShotcutSettings::TimelineScrolling::CenterPlayhead;
     else
         return ShotcutSettings::TimelineScrolling(settings.value("timeline/scrolling",
-                                                                 SmoothScrolling).toInt());
+                                                                 PageScrolling).toInt());
 }
 
 QString ShotcutSettings::filterFavorite(const QString &filterName)
