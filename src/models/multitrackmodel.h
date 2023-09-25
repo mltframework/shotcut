@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -161,7 +161,7 @@ public slots:
                       bool notify = true);
     int insertClip(int trackIndex, Mlt::Producer &clip, int position, bool rippleAllTracks,
                    bool seek = true, bool notify = true);
-    int appendClip(int trackIndex, Mlt::Producer &clip);
+    int appendClip(int trackIndex, Mlt::Producer &clip, bool seek = true, bool notify = true);
     void removeClip(int trackIndex, int clipIndex, bool rippleAllTracks);
     void liftClip(int trackIndex, int clipIndex);
     void splitClip(int trackIndex, int clipIndex, int position);

@@ -1836,6 +1836,7 @@ void TimelineDock::append(int trackIndex)
             Mlt::ClipInfo info;
             MAIN.undoStack()->beginMacro(tr("Append multiple to timeline"));
             Mlt::Controller::RefreshBlocker blocker;
+            TimelineSelectionBlocker selectBlocker(*this);
 
             // Loop over each source track
             for (int mltTrackIndex = 0; mltTrackIndex < tractor.count(); mltTrackIndex++) {
@@ -1851,8 +1852,9 @@ void TimelineDock::append(int trackIndex)
                             playlist.clip_info(mltClipIndex, &info);
                             Mlt::Producer clip(info.producer);
                             clip.set_in_and_out(info.frame_in, info.frame_out);
+                            bool lastClip = mltTrackIndex == tractor.count() - 1 && mltClipIndex == playlist.count() - 1;
                             MAIN.undoStack()->push(
-                                new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(&clip)));
+                                new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(&clip), false, lastClip));
                         }
                     }
                 }
@@ -2813,6 +2815,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
             Mlt::ClipInfo info;
             MAIN.undoStack()->beginMacro(tr("Insert multiple into timeline"));
             Mlt::Controller::RefreshBlocker blocker;
+            TimelineSelectionBlocker selectBlocker(*this);
 
             // Loop over each source track
             for (int mltTrackIndex = 0; mltTrackIndex < tractor.count(); mltTrackIndex++) {
@@ -2828,9 +2831,10 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
                             playlist.clip_info(mltClipIndex, &info);
                             Mlt::Producer clip(info.producer);
                             clip.set_in_and_out(info.frame_in, info.frame_out);
+                            bool lastClip = mltTrackIndex == tractor.count() - 1 && mltClipIndex == playlist.count() - 1;
                             MAIN.undoStack()->push(
                                 new Timeline::InsertCommand(m_model, m_markersModel, trackIndex, position + info.start,
-                                                            MLT.XML(&clip), seek));
+                                                            MLT.XML(&clip), lastClip));
                         }
                     }
                 }
@@ -2923,6 +2927,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
             Mlt::ClipInfo info;
             MAIN.undoStack()->beginMacro(tr("Overwrite multiple onto timeline"));
             Mlt::Controller::RefreshBlocker blocker;
+            TimelineSelectionBlocker selectBlocker(*this);
 
             // Loop over each source track
             for (int mltTrackIndex = 0; mltTrackIndex < tractor.count(); mltTrackIndex++) {
@@ -2938,8 +2943,9 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
                             playlist.clip_info(mltClipIndex, &info);
                             Mlt::Producer clip(info.producer);
                             clip.set_in_and_out(info.frame_in, info.frame_out);
+                            bool lastClip = mltTrackIndex == tractor.count() - 1 && mltClipIndex == playlist.count() - 1;
                             MAIN.undoStack()->push(
-                                new Timeline::OverwriteCommand(m_model, trackIndex, position + info.start, MLT.XML(&clip), seek));
+                                new Timeline::OverwriteCommand(m_model, trackIndex, position + info.start, MLT.XML(&clip), false));
                         }
                     }
                 }

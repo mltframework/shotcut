@@ -1130,7 +1130,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
     return result;
 }
 
-int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
+int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip, bool seek, bool notify)
 {
     if (!createIfNeeded()) {
         return -1;
@@ -1149,9 +1149,11 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
         endInsertRows();
         QModelIndex index = createIndex(i, 0, trackIndex);
         AudioLevelsTask::start(clip.parent(), this, index);
-        emit appended(trackIndex, i);
-        emit modified();
-        emit seeked(playlist.clip_start(i) + playlist.clip_length(i));
+        if (notify) {
+            emit appended(trackIndex, i);
+            emit modified();
+            emit seeked(playlist.clip_start(i) + playlist.clip_length(i), seek);
+        }
         return i;
     }
     return -1;

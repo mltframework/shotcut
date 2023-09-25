@@ -47,7 +47,7 @@ class AppendCommand : public QUndoCommand
 {
 public:
     AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml, bool skipProxy = false,
-                  QUndoCommand *parent = 0);
+                  bool seek = true, QUndoCommand *parent = 0);
     void redo();
     void undo();
 private:
@@ -56,6 +56,7 @@ private:
     QString m_xml;
     UndoHelper m_undoHelper;
     bool m_skipProxy;
+    bool m_seek;
 };
 
 class InsertCommand : public QUndoCommand
