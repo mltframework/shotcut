@@ -62,6 +62,9 @@ Root: HKCR; Subkey: "Shotcut.mlt"; ValueType: string; ValueName: ""; ValueData: 
 Root: HKCR; Subkey: "Shotcut.mlt\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\shotcut.exe"" ""%1"""; Check: IsAdminInstallMode; Tasks: associateExtension
 Root: HKCU; Subkey: "Software\Meltytech\Shotcut"; Tasks: removeSettings; AfterInstall: RemoveShotcutSettings()
 
+[Run]
+Filename: "{app}\shotcut.exe"; Description: "Start Shotcut After Install"; Flags: postinstall nowait skipifsilent
+
 [Code]
 procedure RemoveShotcutSettings();
 begin
