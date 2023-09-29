@@ -78,7 +78,9 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     QMenu *keyTypeMenu = new QMenu(tr("Keyframe Type"), this);
     keyTypeMenu->addAction(Actions["keyframesTypeHoldAction"]);
     keyTypeMenu->addAction(Actions["keyframesTypeLinearAction"]);
-    keyTypeMenu->addAction(Actions["keyframesTypeSmoothAction"]);
+    keyTypeMenu->addAction(Actions["keyframesTypeSmoothLooseAction"]);
+    keyTypeMenu->addAction(Actions["keyframesTypeSmoothNaturalAction"]);
+    keyTypeMenu->addAction(Actions["keyframesTypeSmoothTightAction"]);
     m_keyMenu->addMenu(keyTypeMenu);
     m_keyMenu->addAction(Actions["keyframesRemoveAction"]);
     Actions.loadFromMenu(m_keyMenu);
@@ -297,12 +299,13 @@ void KeyframesDock::setupActions()
     keyframeTypeActionGroup->addAction(action);
     Actions.add("keyframesTypeLinearAction", action);
 
-    action = new QAction(tr("Smooth"), this);
+    action = new QAction(tr("Smooth Loose"), this);
     connect(action, &QAction::triggered, this, [&]() {
         if (!isVisible() || !m_qview.rootObject()) return;
         int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
         for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
-            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(), KeyframesModel::SmoothInterpolation);
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::SmoothLooseInterpolation);
         }
     });
     connect(this, &KeyframesDock::newFilter, action, [ = ]() {
@@ -314,7 +317,31 @@ void KeyframesDock::setupActions()
         action->setEnabled(enabled);
     });
     keyframeTypeActionGroup->addAction(action);
-    Actions.add("keyframesTypeSmoothAction", action);
+    Actions.add("keyframesTypeSmoothLooseAction", action);
+
+    action = new QAction(tr("Smooth Natural"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::SmoothNaturalInterpolation);
+        }
+    });
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeSmoothNaturalAction", action);
+
+    action = new QAction(tr("Smooth Tight"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::SmoothTightInterpolation);
+        }
+    });
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeSmoothTightAction", action);
 
     action = new QAction(tr("Remove"), this);
     connect(action, &QAction::triggered, this, [&]() {

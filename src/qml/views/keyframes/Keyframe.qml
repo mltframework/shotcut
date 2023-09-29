@@ -58,7 +58,7 @@ Rectangle {
     border.color: activePalette.button
     opacity: inRange ? 1 : 0.3
     border.width: 1
-    radius: (interpolation === KeyframesModel.SmoothInterpolation) ? height / 2 : 0 // circle for smooth
+    radius: (interpolation > KeyframesModel.LinearInterpolation) ? height / 2 : 0 // circle for smooth
     rotation: (interpolation === KeyframesModel.LinearInterpolation) ? 45 : 0 // diamond for linear
 
     SystemPalette {

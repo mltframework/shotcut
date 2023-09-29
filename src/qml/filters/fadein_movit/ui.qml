@@ -66,7 +66,7 @@ Item {
                 onValueChanged: {
                     filter.animateIn = duration;
                     filter.resetProperty('opacity');
-                    filter.set('opacity', 0, 0, KeyframesModel.SmoothInterpolation);
+                    filter.set('opacity', 0, 0, KeyframesModel.SmoothNaturalInterpolation);
                     filter.set('opacity', 1, Math.min(duration, filter.duration) - 1);
                 }
                 onSetDefaultClicked: {

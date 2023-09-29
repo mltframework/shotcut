@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,9 @@ public:
     enum InterpolationType {
         DiscreteInterpolation,
         LinearInterpolation,
-        SmoothInterpolation
+        SmoothLooseInterpolation,
+        SmoothNaturalInterpolation,
+        SmoothTightInterpolation,
     };
     Q_ENUM(InterpolationType)
 

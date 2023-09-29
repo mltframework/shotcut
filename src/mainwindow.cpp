@@ -1955,7 +1955,9 @@ void MainWindow::setupActions()
     addAction(Actions["timelineRebuildAudioWaveformAction"]);
     addAction(Actions["keyframesTypeHoldAction"]);
     addAction(Actions["keyframesTypeLinearAction"]);
-    addAction(Actions["keyframesTypeSmoothAction"]);
+    addAction(Actions["keyframesTypeSmoothLooseAction"]);
+    addAction(Actions["keyframesTypeSmoothNaturalAction"]);
+    addAction(Actions["keyframesTypeSmoothTightAction"]);
     addAction(Actions["keyframesRemoveAction"]);
 
     Actions.initializeShortcuts();

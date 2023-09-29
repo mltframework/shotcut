@@ -1436,7 +1436,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     if (Settings.playerGPU()) {
                         // Special handling for animation keyframes on movit.opacity.
                         filter->clear("opacity");
-                        filter->anim_set("opacity", 0, 0, 0, mlt_keyframe_smooth);
+                        filter->anim_set("opacity", 0, 0, 0, mlt_keyframe_smooth_natural);
                         filter->anim_set("opacity", 1, duration - 1);
                     } else {
                         // Special handling for animation keyframes on brightness.
@@ -1549,7 +1549,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     if (Settings.playerGPU()) {
                         // Special handling for animation keyframes on movit.opacity.
                         filter->clear("opacity");
-                        filter->anim_set("opacity", 1, info->frame_count - duration, 0, mlt_keyframe_smooth);
+                        filter->anim_set("opacity", 1, info->frame_count - duration, 0, mlt_keyframe_smooth_natural);
                         filter->anim_set("opacity", 0, info->frame_count - 1);
                     } else {
                         // Special handling for animation keyframes on brightness.

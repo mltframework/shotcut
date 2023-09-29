@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,14 +91,17 @@ Item {
     Canvas {
         id: canvas
 
-        function catmullRomToBezier(context, i) {
-            var a = 1 / 6;
+        function distance(x0, y0, x1, y1) {
+            return Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
+        }
+
+        function drawCatmullRom(ctx, i, alpha, tension) {
             var g = i - 2 >= 0 ? i - 2 : i;
             var h = i - 1 >= 0 ? i - 1 : i;
             var j = i + 1 < keyframesRepeater.count ? i + 1 : i;
             var widthOffset = keyframesRepeater.itemAt(0).width / 2;
             var heightOffset = keyframesRepeater.itemAt(0).height / 2;
-            var points = [{
+            var p = [{
                     "x": keyframesRepeater.itemAt(g).x + widthOffset,
                     "y": keyframesRepeater.itemAt(g).y + heightOffset
                 }, {
@@ -111,7 +114,33 @@ Item {
                     "x": keyframesRepeater.itemAt(j).x + widthOffset,
                     "y": keyframesRepeater.itemAt(j).y + heightOffset
                 }];
-            context.bezierCurveTo(-a * points[0].x + points[1].x + a * points[2].x, -a * points[0].y + points[1].y + a * points[2].y, a * points[1].x + points[2].x - a * points[3].x, a * points[1].y + points[2].y - a * points[3].y, points[2].x, points[2].y);
+            if (p[0].x == p[1].x) {
+                p[0].x -= 10000;
+            }
+            if (p[3].x == p[2].x) {
+                p[3].x += 10000;
+            }
+            var step = 1 / keyframesRepeater.itemAt(i).width;
+            for (var t = 0.0; t < 1.0; t += step) {
+                var m1 = 0.0;
+                var m2 = 0.0;
+                var t12 = Math.pow(distance(p[1].x, p[1].y, p[2].x, p[2].y), alpha);
+                if (tension > 0.0 || (p[1].y < p[0].y && p[1].y > p[2].y) || (p[1].y > p[0].y && p[1].y < p[2].y)) {
+                    var t01 = Math.pow(distance(p[0].x, p[0].y, p[1].x, p[1].y), alpha);
+                    m1 = Math.abs(tension) * (p[2].y - p[1].y + t12 * ((p[1].y - p[0].y) / t01 - (p[2].y - p[0].y) / (t01 + t12)));
+                }
+                if (tension > 0.0 || (p[2].y < p[1].y && p[2].y > p[3].y) || (p[2].y > p[1].y && p[2].y < p[3].y)) {
+                    var t23 = Math.pow(distance(p[2].x, p[2].y, p[3].x, p[3].y), alpha);
+                    m2 = Math.abs(tension) * (p[2].y - p[2].y + t12 * ((p[3].y - p[2].y) / t23 - (p[3].y - p[1].y) / (t12 + t23)));
+                }
+                var a = 2.0 * (p[1].y - p[2].y) + m1 + m2;
+                var b = -3.0 * (p[1].y - p[2].y) - m1 - m1 - m2;
+                var c = m1;
+                var d = p[1].y;
+                var xt = p[1].x + ((p[2].x - p[1].x) * t);
+                var yt = a * t * t * t + b * t * t + c * t + d;
+                context.lineTo(xt, yt);
+            }
         }
 
         visible: isCurve
@@ -134,10 +163,19 @@ Item {
                     case KeyframesModel.LinearInterpolation:
                         ctx.lineTo(keyframesRepeater.itemAt(i).x + widthOffset, keyframesRepeater.itemAt(i).y + heightOffset);
                         break;
-                    case KeyframesModel.SmoothInterpolation:
-                        catmullRomToBezier(ctx, i);
+                    case KeyframesModel.SmoothLooseInterpolation:
+                        drawCatmullRom(ctx, i, 0.0, 1.0);
                         ctx.moveTo(keyframesRepeater.itemAt(i).x + widthOffset, keyframesRepeater.itemAt(i).y + heightOffset);
-                        break; // KeyframesModel.DiscreteInterpolation
+                        break;
+                    case KeyframesModel.SmoothNaturalInterpolation:
+                        drawCatmullRom(ctx, i, 0.5, -1.0);
+                        ctx.moveTo(keyframesRepeater.itemAt(i).x + widthOffset, keyframesRepeater.itemAt(i).y + heightOffset);
+                        break;
+                    case KeyframesModel.SmoothTightInterpolation:
+                        drawCatmullRom(ctx, i, 0.5, 0.0);
+                        ctx.moveTo(keyframesRepeater.itemAt(i).x + widthOffset, keyframesRepeater.itemAt(i).y + heightOffset);
+                        break;
+                    case KeyframesModel.DiscreteInterpolation:
                     default:
                         ctx.lineTo(keyframesRepeater.itemAt(i).x + widthOffset, keyframesRepeater.itemAt(i - 1).y + heightOffset);
                         ctx.moveTo(keyframesRepeater.itemAt(i).x + widthOffset, keyframesRepeater.itemAt(i).y + heightOffset);
