@@ -114,7 +114,6 @@ class QmlKeyframesMetadata : public QObject
     Q_PROPERTY(QList<QString> simpleProperties MEMBER m_simpleProperties NOTIFY changed)
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
     Q_PROPERTY(bool enabled MEMBER m_enabled NOTIFY changed)
-    Q_PROPERTY(bool allowSmooth MEMBER m_allowSmooth NOTIFY changed)
 
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);
@@ -134,10 +133,6 @@ public:
     QList<QString> simpleProperties() const
     {
         return m_simpleProperties;
-    }
-    bool allowSmooth() const
-    {
-        return m_allowSmooth;
     }
 
     QQmlListProperty<QmlKeyframesParameter> parameters()
@@ -167,7 +162,6 @@ private:
     QList<QString> m_simpleProperties;
     QString m_minimumVersion;
     bool m_enabled;
-    bool m_allowSmooth;
 };
 
 

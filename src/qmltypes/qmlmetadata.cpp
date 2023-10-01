@@ -182,7 +182,6 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject *parent)
     , m_allowAnimateIn(false)
     , m_allowAnimateOut(false)
     , m_enabled(true)
-    , m_allowSmooth(true)
 {
 }
 
