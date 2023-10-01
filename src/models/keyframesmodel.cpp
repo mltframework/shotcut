@@ -78,13 +78,9 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                             type = tr("Linear");
                             break;
                         case mlt_keyframe_smooth_loose:
-                            type = tr("Smooth Loose");
-                            break;
                         case mlt_keyframe_smooth_natural:
-                            type = tr("Smooth Natural");
-                            break;
                         case mlt_keyframe_smooth_tight:
-                            type = tr("Smooth Tight");
+                            type = tr("Smooth");
                             break;
                         default:
                             break;
