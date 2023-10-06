@@ -1664,6 +1664,7 @@ function bundle_libs
          ($3 !~ /\/libedit\./) &&
          ($3 !~ /\/libgio-2.0\./) &&
          ($3 !~ /\/libgmodule-2.0\./) &&
+         ($3 !~ /\/libpixman-1\./) &&
          ($3 !~ /\/libwayland/) \
          {print $3}')
   for lib in $libs; do
