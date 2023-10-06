@@ -108,3 +108,12 @@ begin
     WizardForm.ProgressGauge.Left +
     ((WizardForm.ProgressGauge.Width - CustomStatusLabel.Width) div 2);
 end;
+
+procedure CurPageChanged(CurPageID: Integer);
+begin
+  if CurPageID = wpInstalling then
+  begin;
+    RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut');
+    RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'SOFTWARE\Shotcut');
+  end;
+end;
