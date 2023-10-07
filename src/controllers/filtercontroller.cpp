@@ -32,7 +32,6 @@
 #include <MltLink.h>
 
 FilterController::FilterController(QObject *parent) : QObject(parent),
-    m_mltService(0),
     m_metadataModel(this),
     m_attachedModel(this),
     m_currentFilterIndex(QmlFilter::NoCurrentFilter)
@@ -217,9 +216,9 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
 
     // VUIs may instruct MLT filters to not render if they are doing the rendering
     // theirself, for example, Text: Rich. Component.onDestruction is not firing.
-    if (m_mltService) {
-        if (m_mltService->get_int("_hide")) {
-            m_mltService->clear("_hide");
+    if (m_mltService.is_valid()) {
+        if (m_mltService.get_int("_hide")) {
+            m_mltService.clear("_hide");
             MLT.refreshConsumer();
         }
     }
@@ -229,8 +228,8 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
     if (meta) {
         emit currentFilterChanged(nullptr, nullptr, QmlFilter::NoCurrentFilter);
         m_mltService = m_attachedModel.getService(m_currentFilterIndex);
-        if (!m_mltService) return;
-        filter = new QmlFilter(*m_mltService, meta);
+        if (!m_mltService.is_valid()) return;
+        filter = new QmlFilter(m_mltService, meta);
         filter->setIsNew(isNew);
         connect(filter, SIGNAL(changed(QString)), SLOT(onQmlFilterChanged(const QString &)));
     }
@@ -308,7 +307,7 @@ void FilterController::onQmlFilterChanged(const QString &name)
         QModelIndex index = m_attachedModel.index(m_currentFilterIndex);
         emit m_attachedModel.dataChanged(index, index, QVector<int>() << Qt::CheckStateRole);
     }
-    emit filterChanged(m_mltService);
+    emit filterChanged(&m_mltService);
 }
 
 void FilterController::removeCurrent()

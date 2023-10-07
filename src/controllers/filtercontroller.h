@@ -85,7 +85,7 @@ private:
 
     QFuture<void> m_future;
     QScopedPointer<QmlFilter> m_currentFilter;
-    Mlt::Service *m_mltService;
+    Mlt::Service m_mltService;
     MetadataModel m_metadataModel;
     MotionTrackerModel m_motionTrackerModel;
     AttachedFiltersModel m_attachedModel;
