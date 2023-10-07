@@ -2563,15 +2563,23 @@ void MainWindow::on_actionBackupSave_triggered()
 void MainWindow::cropSource(const QRectF &rect)
 {
     filterController()->removeCurrent();
-    auto meta = filterController()->metadata("crop");
-    auto i = filterController()->attachedModel()->add(meta);
-    auto service = filterController()->attachedModel()->getService(i);
 
-    service->set("use_profile", 1);
-    service->set("left", rect.x());
-    service->set("right", MLT.profile().width() - rect.x() - rect.width());
-    service->set("top", rect.y());
-    service->set("bottom", MLT.profile().height() - rect.y() - rect.height());
+    auto model = filterController()->attachedModel();
+    Mlt::Service service;
+    for (int i = 0; i < model->rowCount(); i++) {
+        service = model->getService(i);
+        if (!qstrcmp("crop", service.get("mlt_service")))
+            break;
+    }
+    if (!service.is_valid()) {
+        auto meta = filterController()->metadata("crop");
+        service = model->getService(model->add(meta));
+        service.set("use_profile", 1);
+    }
+    service.set("left", rect.x());
+    service.set("right", MLT.profile().width() - rect.x() - rect.width());
+    service.set("top", rect.y());
+    service.set("bottom", MLT.profile().height() - rect.y() - rect.height());
 
     auto newWidth = Util::coerceMultiple(rect.width());
     auto newHeight = Util::coerceMultiple(rect.height());
@@ -2589,10 +2597,10 @@ void MainWindow::cropSource(const QRectF &rect)
         auto topRatio = rect.y() / MLT.profile().height();
         auto bottomRatio = 1.0 - (rect.y() + newHeight) / MLT.profile().height();
 
-        service->set("left", qRound(leftRatio * newWidth));
-        service->set("right", qRound(rightRatio * newWidth));
-        service->set("top", qRound(topRatio * newHeight));
-        service->set("bottom", qRound(bottomRatio * newHeight));
+        service.set("left", qRound(leftRatio * newWidth));
+        service.set("right", qRound(rightRatio * newWidth));
+        service.set("top", qRound(topRatio * newHeight));
+        service.set("bottom", qRound(bottomRatio * newHeight));
 
         MLT.profile().set_width(newWidth);
         MLT.profile().set_height(newHeight);
