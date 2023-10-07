@@ -2566,11 +2566,10 @@ void MainWindow::cropSource(const QRectF &rect)
     auto meta = filterController()->metadata("crop");
     auto i = filterController()->attachedModel()->add(meta);
     auto service = filterController()->attachedModel()->getService(i);
-    auto displayWidth = qRound(MLT.profile().width() * MLT.profile().sar());
 
     service->set("use_profile", 1);
     service->set("left", rect.x());
-    service->set("right", displayWidth - rect.x() - rect.width());
+    service->set("right", MLT.profile().width() - rect.x() - rect.width());
     service->set("top", rect.y());
     service->set("bottom", MLT.profile().height() - rect.y() - rect.height());
 
@@ -2585,8 +2584,8 @@ void MainWindow::cropSource(const QRectF &rect)
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
     if (QMessageBox::Yes == dialog.exec()) {
-        auto leftRatio = rect.x() / displayWidth;
-        auto rightRatio = 1.0 - (rect.x() + newWidth) / displayWidth;
+        auto leftRatio = rect.x() / MLT.profile().width();
+        auto rightRatio = 1.0 - (rect.x() + newWidth) / MLT.profile().width();
         auto topRatio = rect.y() / MLT.profile().height();
         auto bottomRatio = 1.0 - (rect.y() + newHeight) / MLT.profile().height();
 
@@ -2597,8 +2596,7 @@ void MainWindow::cropSource(const QRectF &rect)
 
         MLT.profile().set_width(newWidth);
         MLT.profile().set_height(newHeight);
-        MLT.profile().set_sample_aspect(1, 1);
-        MLT.profile().set_display_aspect(newWidth, newHeight);
+        MLT.profile().set_display_aspect(newWidth * MLT.profile().sar(), newHeight);
         MLT.updatePreviewProfile();
         MLT.setPreviewScale(Settings.playerPreviewScale());
         auto xml = MLT.XML();

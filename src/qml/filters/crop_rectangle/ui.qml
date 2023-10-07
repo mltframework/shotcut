@@ -351,19 +351,27 @@ Shotcut.KeyframableFilter {
         Shotcut.Button {
             Layout.columnSpan: parent.columns - 1
             text: qsTr('Apply to Source')
+            function producerAspectRatio() {
+                let ratio = producer.getDouble('meta.media.sample_aspect_num') / producer.getDouble('meta.media.sample_aspect_den');
+                if (producer.get('force_aspect_ratio') !== '') {
+                    ratio = producer.get('force_aspect_ratio');
+                }
+                ratio *= producer.getDouble('meta.media.width') / producer.getDouble('meta.media.height');
+                return ratio;
+            }
+            enabled: Math.abs(profile.aspectRatio - producerAspectRatio()) < 0.000001
             function sanitedFilterRect() {
-                let rect = Qt.rect(Math.max(0, filterRect.x),
-                               Math.max(0, filterRect.y),
-                               filterRect.width,
-                               filterRect.height);
-                if (rect.x + rect.width > profile.width * profile.sar)
-                    rect.width = Math.round(profile.width * profile.sar) - rect.x;
+                let rect = Qt.rect(Math.max(0, filterRect.x), Math.max(0, filterRect.y), filterRect.width, filterRect.height);
+                if (rect.x + rect.width > profile.width)
+                    rect.width = profile.width - rect.x;
+                else if (filterRect.x < 0)
+                    rect.width = filterRect.width + filterRect.x;
                 if (rect.y + rect.height > profile.height)
                     rect.height = profile.height - rect.y;
+                else if (filterRect.y < 0)
+                    rect.height = filterRect.height + filterRect.y;
                 return rect;
             }
-
-            enabled: Math.abs(profile.aspectRatio - producer.getDouble('meta.media.width') / producer.getDouble('meta.media.height')) < 0.000001
             onClicked: filter.crop(sanitedFilterRect())
         }
 
