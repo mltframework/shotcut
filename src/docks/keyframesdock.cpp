@@ -79,6 +79,42 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     keyTypeMenu->addAction(Actions["keyframesTypeHoldAction"]);
     keyTypeMenu->addAction(Actions["keyframesTypeLinearAction"]);
     keyTypeMenu->addAction(Actions["keyframesTypeSmoothNaturalAction"]);
+    QMenu *keyEaseInMenu = new QMenu(tr("Ease In"), this);
+    keyEaseInMenu->addAction(Actions["keyframesTypeEaseInSinuAction"]);
+    keyEaseInMenu->addAction(Actions["keyframesTypeEaseInQuadAction"]);
+    keyEaseInMenu->addAction(Actions["keyframesTypeEaseInCubeAction"]);
+    keyEaseInMenu->addAction(Actions["keyframesTypeEaseInQuartAction"]);
+    keyEaseInMenu->addAction(Actions["keyframesTypeEaseInQuintAction"]);
+    keyEaseInMenu->addAction(Actions["keyframesTypeEaseInExpoAction"]);
+    keyEaseInMenu->addAction(Actions["keyframesTypeEaseInCircAction"]);
+    keyEaseInMenu->addAction(Actions["keyframesTypeEaseInBackAction"]);
+    keyEaseInMenu->addAction(Actions["keyframesTypeEaseInElasAction"]);
+    keyEaseInMenu->addAction(Actions["keyframesTypeEaseInBounAction"]);
+    keyTypeMenu->addMenu(keyEaseInMenu);
+    QMenu *keyEaseOutMenu = new QMenu(tr("Ease Out"), this);
+    keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutSinuAction"]);
+    keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutQuadAction"]);
+    keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutCubeAction"]);
+    keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutQuartAction"]);
+    keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutQuintAction"]);
+    keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutExpoAction"]);
+    keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutCircAction"]);
+    keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutBackAction"]);
+    keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutElasAction"]);
+    keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutBounAction"]);
+    keyTypeMenu->addMenu(keyEaseOutMenu);
+    QMenu *keyEaseInOutMenu = new QMenu(tr("Ease In/Out"), this);
+    keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutSinuAction"]);
+    keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutQuadAction"]);
+    keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutCubeAction"]);
+    keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutQuartAction"]);
+    keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutQuintAction"]);
+    keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutExpoAction"]);
+    keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutCircAction"]);
+    keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutBackAction"]);
+    keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutElasAction"]);
+    keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutBounAction"]);
+    keyTypeMenu->addMenu(keyEaseInOutMenu);
     m_keyMenu->addMenu(keyTypeMenu);
     m_keyMenu->addAction(Actions["keyframesRemoveAction"]);
     Actions.loadFromMenu(m_keyMenu);
@@ -308,6 +344,456 @@ void KeyframesDock::setupActions()
     });
     keyframeTypeActionGroup->addAction(action);
     Actions.add("keyframesTypeSmoothNaturalAction", action);
+
+    action = new QAction(tr("Ease In Sinusoidal"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInSinusoidal);
+        }
+    });
+    icon = QIcon::fromTheme("ease-in-sinu",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-in-sinu.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInSinuAction", action);
+
+    action = new QAction(tr("Ease In Quadratic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInQuadratic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-in-quad",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-in-quad.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInQuadAction", action);
+
+    action = new QAction(tr("Ease In Cubic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInCubic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-in-cube",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-in-cube.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInCubeAction", action);
+
+    action = new QAction(tr("Ease In Quartic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInQuartic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-in-quar",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-in-quar.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInQuartAction", action);
+
+    action = new QAction(tr("Ease In Quintic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInQuintic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-in-quin",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-in-quin.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInQuintAction", action);
+
+    action = new QAction(tr("Ease In Exponential"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInExponential);
+        }
+    });
+    icon = QIcon::fromTheme("ease-in-expo",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-in-expo.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInExpoAction", action);
+
+    action = new QAction(tr("Ease In Circular"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInCircular);
+        }
+    });
+    icon = QIcon::fromTheme("ease-in-circ",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-in-circ.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInCircAction", action);
+
+    action = new QAction(tr("Ease In Back"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInBack);
+        }
+    });
+    icon = QIcon::fromTheme("ease-in-back",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-in-back.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInBackAction", action);
+
+    action = new QAction(tr("Ease In Elastic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInElastic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-in-elas",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-in-elas.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInElasAction", action);
+
+    action = new QAction(tr("Ease In Bounce"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInBounce);
+        }
+    });
+    icon = QIcon::fromTheme("ease-in-boun",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-in-boun.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInBounAction", action);
+
+    action = new QAction(tr("Ease Out Sinusoidal"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseOutSinusoidal);
+        }
+    });
+    icon = QIcon::fromTheme("ease-out-sinu",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-out-sinu.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseOutSinuAction", action);
+
+    action = new QAction(tr("Ease Out Quadratic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseOutQuadratic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-out-quad",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-out-quad.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseOutQuadAction", action);
+
+    action = new QAction(tr("Ease Out Cubic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseOutCubic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-out-cube",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-out-cube.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseOutCubeAction", action);
+
+    action = new QAction(tr("Ease Out Quartic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseOutQuartic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-out-quar",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-out-quar.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseOutQuartAction", action);
+
+    action = new QAction(tr("Ease Out Quintic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseOutQuintic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-out-quin",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-out-quin.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseOutQuintAction", action);
+
+    action = new QAction(tr("Ease Out Exponential"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseOutExponential);
+        }
+    });
+    icon = QIcon::fromTheme("ease-out-expo",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-out-expo.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseOutExpoAction", action);
+
+    action = new QAction(tr("Ease Out Circular"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseOutCircular);
+        }
+    });
+    icon = QIcon::fromTheme("ease-out-circ",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-out-circ.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseOutCircAction", action);
+
+    action = new QAction(tr("Ease Out Back"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseOutBack);
+        }
+    });
+    icon = QIcon::fromTheme("ease-out-back",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-out-back.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseOutBackAction", action);
+
+    action = new QAction(tr("Ease Out Elastic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseOutElastic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-out-elas",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-out-elas.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseOutElasAction", action);
+
+    action = new QAction(tr("Ease Out Bounce"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseOutBounce);
+        }
+    });
+    icon = QIcon::fromTheme("ease-out-boun",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-out-boun.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseOutBounAction", action);
+
+    action = new QAction(tr("Ease In/Out Sinusoidal"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInOutSinusoidal);
+        }
+    });
+    icon = QIcon::fromTheme("ease-inout-sinu",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-inout-sinu.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInOutSinuAction", action);
+
+    action = new QAction(tr("Ease In/Out Quadratic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInOutQuadratic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-inout-quad",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-inout-quad.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInOutQuadAction", action);
+
+    action = new QAction(tr("Ease In/Out Cubic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInOutCubic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-inout-cube",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-inout-cube.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInOutCubeAction", action);
+
+    action = new QAction(tr("Ease In/Out Quartic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInOutQuartic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-inout-quar",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-inout-quar.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInOutQuartAction", action);
+
+    action = new QAction(tr("Ease In/Out Quintic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInOutQuintic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-inout-quin",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-inout-quin.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInOutQuintAction", action);
+
+    action = new QAction(tr("Ease In/Out Exponential"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInOutExponential);
+        }
+    });
+    icon = QIcon::fromTheme("ease-inout-expo",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-inout-expo.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInOutExpoAction", action);
+
+    action = new QAction(tr("Ease In/Out Circular"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInOutCircular);
+        }
+    });
+    icon = QIcon::fromTheme("ease-inout-circ",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-inout-circ.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInOutCircAction", action);
+
+    action = new QAction(tr("Ease In/Out Back"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInOutBack);
+        }
+    });
+    icon = QIcon::fromTheme("ease-inout-back",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-inout-back.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInOutBackAction", action);
+
+    action = new QAction(tr("Ease In/Out Elastic"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInOutElastic);
+        }
+    });
+    icon = QIcon::fromTheme("ease-inout-elas",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-inout-elas.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInOutElasAction", action);
+
+    action = new QAction(tr("Ease In/Out Bounce"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isVisible() || !m_qview.rootObject()) return;
+        int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
+        for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::EaseInOutBounce);
+        }
+    });
+    icon = QIcon::fromTheme("ease-inout-boun",
+                            QIcon(":/icons/oxygen/32x32/actions/ease-inout-boun.png"));
+    action->setIcon(icon);
+    keyframeTypeActionGroup->addAction(action);
+    Actions.add("keyframesTypeEaseInOutBounAction", action);
 
     action = new QAction(tr("Remove"), this);
     connect(action, &QAction::triggered, this, [&]() {

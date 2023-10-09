@@ -72,15 +72,105 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                     switch (role) {
                     case Qt::DisplayRole:
                     case NameRole: {
-                        QString type = tr("Hold");
+                        QString type = tr("Linear");
                         switch (const_cast<Mlt::Animation &>(animation).key_get_type(index.row())) {
-                        case mlt_keyframe_linear:
-                            type = tr("Linear");
+                        case mlt_keyframe_discrete:
+                            type = tr("Hold");
                             break;
                         case mlt_keyframe_smooth_loose:
                         case mlt_keyframe_smooth_natural:
                         case mlt_keyframe_smooth_tight:
                             type = tr("Smooth");
+                            break;
+                        case mlt_keyframe_sinusoidal_in:
+                            type = tr("Ease In Sinusoidal");
+                            break;
+                        case mlt_keyframe_sinusoidal_out:
+                            type = tr("Ease Out Sinusoidal");
+                            break;
+                        case mlt_keyframe_sinusoidal_in_out:
+                            type = tr("Ease In/Out Sinusoidal");
+                            break;
+                        case mlt_keyframe_quadratic_in:
+                            type = tr("Ease In Quadtratic");
+                            break;
+                        case mlt_keyframe_quadratic_out:
+                            type = tr("Ease Out Quadratic");
+                            break;
+                        case mlt_keyframe_quadratic_in_out:
+                            type = tr("Ease In/Out Quadratic");
+                            break;
+                        case mlt_keyframe_cubic_in:
+                            type = tr("Ease In Cubic");
+                            break;
+                        case mlt_keyframe_cubic_out:
+                            type = tr("Ease Out Cubic");
+                            break;
+                        case mlt_keyframe_cubic_in_out:
+                            type = tr("Ease In/Out Cubic");
+                            break;
+                        case mlt_keyframe_quartic_in:
+                            type = tr("Ease In Quartic");
+                            break;
+                        case mlt_keyframe_quartic_out:
+                            type = tr("Ease Out Quartic");
+                            break;
+                        case mlt_keyframe_quartic_in_out:
+                            type = tr("Ease In/Out Quartic");
+                            break;
+                        case mlt_keyframe_quintic_in:
+                            type = tr("Ease In Quintic");
+                            break;
+                        case mlt_keyframe_quintic_out:
+                            type = tr("Ease Out Quintic");
+                            break;
+                        case mlt_keyframe_quintic_in_out:
+                            type = tr("Ease In/Out Quintic");
+                            break;
+                        case mlt_keyframe_exponential_in:
+                            type = tr("Ease In Exponential");
+                            break;
+                        case mlt_keyframe_exponential_out:
+                            type = tr("Ease Out Exponential");
+                            break;
+                        case mlt_keyframe_exponential_in_out:
+                            type = tr("Ease In/Out Exponential");
+                            break;
+                        case mlt_keyframe_circular_in:
+                            type = tr("Ease In Circular");
+                            break;
+                        case mlt_keyframe_circular_out:
+                            type = tr("Ease Out Circular");
+                            break;
+                        case mlt_keyframe_circular_in_out:
+                            type = tr("Ease In/Out Circular");
+                            break;
+                        case mlt_keyframe_back_in:
+                            type = tr("Ease In Back");
+                            break;
+                        case mlt_keyframe_back_out:
+                            type = tr("Ease Out Back");
+                            break;
+                        case mlt_keyframe_back_in_out:
+                            type = tr("Ease In/Out Back");
+                            break;
+                        case mlt_keyframe_elastic_in:
+                            type = tr("Ease In Elastic");
+                            break;
+                        case mlt_keyframe_elastic_out:
+                            type = tr("Ease Out Elastic");
+                            break;
+                        case mlt_keyframe_elastic_in_out:
+                            type = tr("Ease In/Out Elastic");
+                            break;
+                        case mlt_keyframe_bounce_in:
+                            type = tr("Ease In Bounce");
+                            break;
+                        case mlt_keyframe_bounce_out:
+                            type = tr("Ease Out Bounce");
+                            break;
+                        case mlt_keyframe_bounce_in_out:
+                            type = tr("Ease In/Out Bounce");
                             break;
                         default:
                             break;
