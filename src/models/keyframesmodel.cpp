@@ -77,6 +77,7 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                         case mlt_keyframe_discrete:
                             type = tr("Hold");
                             break;
+#if LIBMLT_VERSION_INT >= ((7<<16)+(21<<8))
                         case mlt_keyframe_smooth_loose:
                         case mlt_keyframe_smooth_natural:
                         case mlt_keyframe_smooth_tight:
@@ -172,6 +173,11 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                         case mlt_keyframe_bounce_in_out:
                             type = tr("Ease In/Out Bounce");
                             break;
+#else
+                        case mlt_keyframe_smooth:
+                            type = tr("Smooth");
+                            break;
+#endif
                         default:
                             break;
                         }

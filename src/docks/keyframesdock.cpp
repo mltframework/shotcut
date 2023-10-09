@@ -79,6 +79,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     keyTypeMenu->addAction(Actions["keyframesTypeHoldAction"]);
     keyTypeMenu->addAction(Actions["keyframesTypeLinearAction"]);
     keyTypeMenu->addAction(Actions["keyframesTypeSmoothNaturalAction"]);
+#if LIBMLT_VERSION_INT >= ((7<<16)+(21<<8))
     QMenu *keyEaseInMenu = new QMenu(tr("Ease In"), this);
     keyEaseInMenu->addAction(Actions["keyframesTypeEaseInSinuAction"]);
     keyEaseInMenu->addAction(Actions["keyframesTypeEaseInQuadAction"]);
@@ -115,6 +116,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutElasAction"]);
     keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutBounAction"]);
     keyTypeMenu->addMenu(keyEaseInOutMenu);
+#endif
     m_keyMenu->addMenu(keyTypeMenu);
     m_keyMenu->addAction(Actions["keyframesRemoveAction"]);
     Actions.loadFromMenu(m_keyMenu);
