@@ -1,6 +1,12 @@
 <RCC>
     <qresource prefix="/icons">
         <file>dark/32x32/audio-meter.png</file>
+        <file>dark/32x32/keyframe-ease-in.png</file>
+        <file>dark/32x32/keyframe-ease-inout.png</file>
+        <file>dark/32x32/keyframe-ease-out.png</file>
+        <file>dark/32x32/keyframe-hold.png</file>
+        <file>dark/32x32/keyframe-linear.png</file>
+        <file>dark/32x32/keyframe-smooth.png</file>
         <file>dark/32x32/ease-in-sinu.png</file>
         <file>dark/32x32/ease-in-quad.png</file>
         <file>dark/32x32/ease-in-cube.png</file>
@@ -66,6 +72,12 @@
         <file>dark/index.theme</file>
         <file>light/32x32/audio-meter.png</file>
         <file>light/32x32/edit-undo.png</file>
+        <file>light/32x32/keyframe-ease-in.png</file>
+        <file>light/32x32/keyframe-ease-inout.png</file>
+        <file>light/32x32/keyframe-ease-out.png</file>
+        <file>light/32x32/keyframe-hold.png</file>
+        <file>light/32x32/keyframe-linear.png</file>
+        <file>light/32x32/keyframe-smooth.png</file>
         <file>light/32x32/ease-in-sinu.png</file>
         <file>light/32x32/ease-in-quad.png</file>
         <file>light/32x32/ease-in-cube.png</file>
@@ -128,6 +140,12 @@
         <file>light/32x32/view-media-playlist.png</file>
         <file>light/32x32/window-close.png</file>
         <file>light/index.theme</file>
+        <file>oxygen/32x32/actions/keyframe-ease-in.png</file>
+        <file>oxygen/32x32/actions/keyframe-ease-inout.png</file>
+        <file>oxygen/32x32/actions/keyframe-ease-out.png</file>
+        <file>oxygen/32x32/actions/keyframe-hold.png</file>
+        <file>oxygen/32x32/actions/keyframe-linear.png</file>
+        <file>oxygen/32x32/actions/keyframe-smooth.png</file>
         <file>oxygen/32x32/actions/ease-in-sinu.png</file>
         <file>oxygen/32x32/actions/ease-in-quad.png</file>
         <file>oxygen/32x32/actions/ease-in-cube.png</file>

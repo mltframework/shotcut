@@ -81,6 +81,9 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     keyTypeMenu->addAction(Actions["keyframesTypeSmoothNaturalAction"]);
 #if LIBMLT_VERSION_INT >= ((7<<16)+(21<<8))
     QMenu *keyEaseInMenu = new QMenu(tr("Ease In"), this);
+    icon = QIcon::fromTheme("keyframe-ease-in",
+                            QIcon(":/icons/oxygen/32x32/actions/keyframe-ease-in.png"));
+    keyEaseInMenu->setIcon(icon);
     keyEaseInMenu->addAction(Actions["keyframesTypeEaseInSinuAction"]);
     keyEaseInMenu->addAction(Actions["keyframesTypeEaseInQuadAction"]);
     keyEaseInMenu->addAction(Actions["keyframesTypeEaseInCubeAction"]);
@@ -93,6 +96,9 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     keyEaseInMenu->addAction(Actions["keyframesTypeEaseInBounAction"]);
     keyTypeMenu->addMenu(keyEaseInMenu);
     QMenu *keyEaseOutMenu = new QMenu(tr("Ease Out"), this);
+    icon = QIcon::fromTheme("keyframe-ease-out",
+                            QIcon(":/icons/oxygen/32x32/actions/keyframe-ease-out.png"));
+    keyEaseOutMenu->setIcon(icon);
     keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutSinuAction"]);
     keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutQuadAction"]);
     keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutCubeAction"]);
@@ -105,6 +111,9 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     keyEaseOutMenu->addAction(Actions["keyframesTypeEaseOutBounAction"]);
     keyTypeMenu->addMenu(keyEaseOutMenu);
     QMenu *keyEaseInOutMenu = new QMenu(tr("Ease In/Out"), this);
+    icon = QIcon::fromTheme("keyframe-ease-inout",
+                            QIcon(":/icons/oxygen/32x32/actions/keyframe-ease-inout.png"));
+    keyEaseInOutMenu->setIcon(icon);
     keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutSinuAction"]);
     keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutQuadAction"]);
     keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutCubeAction"]);
@@ -321,6 +330,9 @@ void KeyframesDock::setupActions()
                                      KeyframesModel::DiscreteInterpolation);
         }
     });
+    icon = QIcon::fromTheme("keyframe-hold",
+                            QIcon(":/icons/oxygen/32x32/actions/keyframe-hold.png"));
+    action->setIcon(icon);
     keyframeTypeActionGroup->addAction(action);
     Actions.add("keyframesTypeHoldAction", action);
 
@@ -332,6 +344,9 @@ void KeyframesDock::setupActions()
             m_model.setInterpolation(currentTrack, keyframeIndex.toInt(), KeyframesModel::LinearInterpolation);
         }
     });
+    icon = QIcon::fromTheme("keyframe-linear",
+                            QIcon(":/icons/oxygen/32x32/actions/keyframe-linear.png"));
+    action->setIcon(icon);
     keyframeTypeActionGroup->addAction(action);
     Actions.add("keyframesTypeLinearAction", action);
 
@@ -344,6 +359,9 @@ void KeyframesDock::setupActions()
                                      KeyframesModel::SmoothNaturalInterpolation);
         }
     });
+    icon = QIcon::fromTheme("keyframe-smooth",
+                            QIcon(":/icons/oxygen/32x32/actions/keyframe-smooth.png"));
+    action->setIcon(icon);
     keyframeTypeActionGroup->addAction(action);
     Actions.add("keyframesTypeSmoothNaturalAction", action);
 
