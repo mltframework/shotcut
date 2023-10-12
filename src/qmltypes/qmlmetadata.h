@@ -114,6 +114,7 @@ class QmlKeyframesMetadata : public QObject
     Q_PROPERTY(QList<QString> simpleProperties MEMBER m_simpleProperties NOTIFY changed)
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
     Q_PROPERTY(bool enabled MEMBER m_enabled NOTIFY changed)
+    Q_PROPERTY(bool allowOvershoot MEMBER m_allowOvershoot NOTIFY changed)
 
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);
@@ -134,7 +135,10 @@ public:
     {
         return m_simpleProperties;
     }
-
+    bool allowOvershoot() const
+    {
+        return m_allowOvershoot;
+    }
     QQmlListProperty<QmlKeyframesParameter> parameters()
     {
         return QQmlListProperty<QmlKeyframesParameter>(this, &m_parameters);
@@ -162,6 +166,7 @@ private:
     QList<QString> m_simpleProperties;
     QString m_minimumVersion;
     bool m_enabled;
+    bool m_allowOvershoot;
 };
 
 

@@ -479,6 +479,14 @@ void KeyframesDock::setupActions()
                                      KeyframesModel::EaseInBack);
         }
     });
+    connect(this, &KeyframesDock::newFilter, action, [ = ]() {
+        bool enabled = true;
+        if (m_metadata && m_metadata->keyframes() && !m_metadata->keyframes()->allowOvershoot()) {
+            enabled = false;
+        }
+        action->setVisible(enabled);
+        action->setEnabled(enabled);
+    });
     icon = QIcon::fromTheme("ease-in-back",
                             QIcon(":/icons/oxygen/32x32/actions/ease-in-back.png"));
     action->setIcon(icon);
@@ -493,6 +501,14 @@ void KeyframesDock::setupActions()
             m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
                                      KeyframesModel::EaseInElastic);
         }
+    });
+    connect(this, &KeyframesDock::newFilter, action, [ = ]() {
+        bool enabled = true;
+        if (m_metadata && m_metadata->keyframes() && !m_metadata->keyframes()->allowOvershoot()) {
+            enabled = false;
+        }
+        action->setVisible(enabled);
+        action->setEnabled(enabled);
     });
     icon = QIcon::fromTheme("ease-in-elas",
                             QIcon(":/icons/oxygen/32x32/actions/ease-in-elas.png"));
@@ -629,6 +645,14 @@ void KeyframesDock::setupActions()
                                      KeyframesModel::EaseOutBack);
         }
     });
+    connect(this, &KeyframesDock::newFilter, action, [ = ]() {
+        bool enabled = true;
+        if (m_metadata && m_metadata->keyframes() && !m_metadata->keyframes()->allowOvershoot()) {
+            enabled = false;
+        }
+        action->setVisible(enabled);
+        action->setEnabled(enabled);
+    });
     icon = QIcon::fromTheme("ease-out-back",
                             QIcon(":/icons/oxygen/32x32/actions/ease-out-back.png"));
     action->setIcon(icon);
@@ -643,6 +667,14 @@ void KeyframesDock::setupActions()
             m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
                                      KeyframesModel::EaseOutElastic);
         }
+    });
+    connect(this, &KeyframesDock::newFilter, action, [ = ]() {
+        bool enabled = true;
+        if (m_metadata && m_metadata->keyframes() && !m_metadata->keyframes()->allowOvershoot()) {
+            enabled = false;
+        }
+        action->setVisible(enabled);
+        action->setEnabled(enabled);
     });
     icon = QIcon::fromTheme("ease-out-elas",
                             QIcon(":/icons/oxygen/32x32/actions/ease-out-elas.png"));
@@ -779,6 +811,14 @@ void KeyframesDock::setupActions()
                                      KeyframesModel::EaseInOutBack);
         }
     });
+    connect(this, &KeyframesDock::newFilter, action, [ = ]() {
+        bool enabled = true;
+        if (m_metadata && m_metadata->keyframes() && !m_metadata->keyframes()->allowOvershoot()) {
+            enabled = false;
+        }
+        action->setVisible(enabled);
+        action->setEnabled(enabled);
+    });
     icon = QIcon::fromTheme("ease-inout-back",
                             QIcon(":/icons/oxygen/32x32/actions/ease-inout-back.png"));
     action->setIcon(icon);
@@ -793,6 +833,14 @@ void KeyframesDock::setupActions()
             m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
                                      KeyframesModel::EaseInOutElastic);
         }
+    });
+    connect(this, &KeyframesDock::newFilter, action, [ = ]() {
+        bool enabled = true;
+        if (m_metadata && m_metadata->keyframes() && !m_metadata->keyframes()->allowOvershoot()) {
+            enabled = false;
+        }
+        action->setVisible(enabled);
+        action->setEnabled(enabled);
     });
     icon = QIcon::fromTheme("ease-inout-elas",
                             QIcon(":/icons/oxygen/32x32/actions/ease-inout-elas.png"));
