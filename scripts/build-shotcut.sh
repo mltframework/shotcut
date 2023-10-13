@@ -92,6 +92,9 @@ ENABLE_GOPRO2GPX=1
 ENABLE_OPENCV=1
 OPENCV_HEAD=0
 OPENCV_REVISION="4.7.0"
+ENABLE_LIBWEBP=1
+LIBWEBP_HEAD=0
+LIBWEBP_REVISION="v1.3.2"
 
 PYTHON_VERSION_DEFAULT=3.8
 PYTHON_VERSION_DARWIN=3.10
@@ -249,6 +252,9 @@ function to_key {
     ;;
     opencv_contrib)
       echo 27
+    ;;
+    libwebp)
+      echo 28
     ;;
     *)
       echo UNKNOWN
@@ -487,6 +493,9 @@ function set_globals {
     if test "$ENABLE_OPENCV" = 1 ; then
         SUBDIRS="opencv opencv_contrib $SUBDIRS"
     fi
+    if test "$ENABLE_LIBWEBP" = 1 ; then
+        SUBDIRS="libwebp $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -536,6 +545,7 @@ function set_globals {
   REPOLOCS[25]="https://github.com/ddennedy/gopro2gpx.git"
   REPOLOCS[26]="https://github.com/opencv/opencv.git"
   REPOLOCS[27]="https://github.com/opencv/opencv_contrib.git"
+  REPOLOCS[28]="https://github.com/webmproject/libwebp.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -563,6 +573,7 @@ function set_globals {
   REPOTYPES[25]="git"
   REPOTYPES[26]="git"
   REPOTYPES[27]="git"
+  REPOTYPES[28]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -650,6 +661,10 @@ function set_globals {
   REVISIONS[27]=""
   if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
     REVISIONS[27]="$OPENCV_REVISION"
+  fi
+  REVISIONS[28]=""
+  if test 0 = "$LIBWEBP_HEAD" -a "$LIBWEBP_REVISION" ; then
+  REVISIONS[28]="$LIBWEBP_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -1011,6 +1026,15 @@ function set_globals {
   LDFLAGS_[26]="$LDFLAGS"
   BUILD[26]="ninja -C build -j $MAKEJ"
   INSTALL[26]="ninja -C build install"
+
+  #####
+  # libwebp
+  CONFIG[28]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_SHARED_LIBS=ON $CMAKE_DEBUG_FLAG"
+  [ "$TARGET_OS" = "Darwin" ] && CONFIG[28]="${CONFIG[28]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
+  CFLAGS_[28]="$CFLAGS"
+  LDFLAGS_[28]="$LDFLAGS"
+  BUILD[28]="ninja -C build -j $MAKEJ"
+  INSTALL[28]="ninja -C build install"
 }
 
 function build_ffmpeg_darwin {
