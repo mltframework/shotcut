@@ -464,6 +464,8 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
                     Mlt::Animation animation = m_filter->getAnimation(name);
                     animation.key_set_type(keyframeIndex, mlt_keyframe_type(type));
                 }
+                mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
+                mlt_events_fire(m_filter->service().get_properties(), "property-changed", eventData);
                 QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << KeyframeTypeRole << NameRole);
                 error = false;
@@ -524,6 +526,8 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
         if (animation.is_valid())
             animation.key_set_frame(keyframeIndex, position);
     }
+    mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
+    mlt_events_fire(m_filter->service().get_properties(), "property-changed", eventData);
     QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << FrameNumberRole << NameRole);
     updateNeighborsMinMax(parameterIndex, keyframeIndex);
