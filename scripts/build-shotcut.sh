@@ -493,7 +493,7 @@ function set_globals {
     if test "$ENABLE_OPENCV" = 1 ; then
         SUBDIRS="opencv opencv_contrib $SUBDIRS"
     fi
-    if test "$ENABLE_LIBWEBP" = 1 ; then
+    if test "$ENABLE_LIBWEBP" = 1  && test "$LIBWEBP_HEAD" = 1 -o "$LIBWEBP_REVISION" != ""; then
         SUBDIRS="libwebp $SUBDIRS"
     fi
   fi
