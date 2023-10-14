@@ -355,8 +355,13 @@ void KeyframesDock::setupActions()
         if (!isVisible() || !m_qview.rootObject()) return;
         int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
         for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
+#if LIBMLT_VERSION_INT >= ((7<<16)+(21<<8))
             m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
                                      KeyframesModel::SmoothNaturalInterpolation);
+#else
+            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
+                                     KeyframesModel::SmoothLooseInterpolation);
+#endif
         }
     });
     icon = QIcon::fromTheme("keyframe-smooth",
