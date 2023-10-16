@@ -162,6 +162,7 @@ void FilterController::loadFilterSets()
             else
                 meta->setName(s);
             meta->set_mlt_service("stock");
+            meta->loadSettings();
             addMetadata(meta);
         }
     }
@@ -175,6 +176,7 @@ void FilterController::loadFilterSets()
                 meta->setName(QUrl::fromPercentEncoding(s.toUtf8()));
             else
                 meta->setName(s);
+            meta->loadSettings();
             addMetadata(meta);
         }
     }

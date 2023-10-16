@@ -70,6 +70,8 @@ QString QmlMetadata::uniqueId() const
 {
     if (!objectName().isEmpty()) {
         return objectName();
+    } else if (m_type == FilterSet) {
+        return m_name;
     } else {
         return mlt_service();
     }
