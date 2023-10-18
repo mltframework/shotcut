@@ -134,9 +134,11 @@ private:
     void recreateProducer();
     bool revertToOriginalResource();
     void setSyncVisibility();
+    double fps();
 
 private slots:
     void reloadProducerValues();
+    void on_actionBitrateViewer_triggered();
 };
 
 class ProbeTask : public QObject, public QRunnable

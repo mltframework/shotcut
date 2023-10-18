@@ -35,7 +35,7 @@
         <x>0</x>
         <y>0</y>
         <width>466</width>
-        <height>516</height>
+        <height>512</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1109,6 +1109,14 @@
    </property>
    <property name="toolTip">
     <string>Export GPX</string>
+   </property>
+  </action>
+  <action name="actionBitrateViewer">
+   <property name="text">
+    <string>View Bitrate...</string>
+   </property>
+   <property name="toolTip">
+    <string>View Bitrate</string>
    </property>
   </action>
  </widget>

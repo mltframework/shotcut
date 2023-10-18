@@ -35,6 +35,7 @@
 #include "dialogs/longuitask.h"
 #include "spatialmedia/spatialmedia.h"
 #include "transcoder.h"
+#include "jobs/bitrateviewerjob.h"
 
 #include <QtWidgets>
 
@@ -488,14 +489,9 @@ void AvformatProducerWidget::reloadProducerValues()
     ui->aspectDenSpinBox->setValue(dar_denominator);
     ui->aspectDenSpinBox->blockSignals(false);
 
-    double fps = m_producer->get_double("meta.media.frame_rate_num");
-    if (m_producer->get_double("meta.media.frame_rate_den") > 0)
-        fps /= m_producer->get_double("meta.media.frame_rate_den");
-    if (m_producer->get("force_fps"))
-        fps = m_producer->get_double("fps");
     bool isVariableFrameRate = m_producer->get_int("meta.media.variable_frame_rate");
-    if (fps != 0.0 ) {
-        ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1 %2").arg(fps, 0, 'f', 6)
+    if (fps() != 0.0 ) {
+        ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1 %2").arg(fps(), 0, 'f', 6)
                                                                  .arg(isVariableFrameRate ? tr("(variable)") : "")));
     }
 
@@ -671,6 +667,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
     if (ui->actionExportGPX->isEnabled()) {
         menu.addAction(ui->actionExportGPX);
     }
+    menu.addAction(ui->actionBitrateViewer);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -770,6 +767,16 @@ void AvformatProducerWidget::setSyncVisibility()
     ui->syncSlider->setVisible(visible);
     ui->syncLabel->setVisible(visible);
     ui->syncSpinBox->setVisible(visible);
+}
+
+double AvformatProducerWidget::fps()
+{
+    double fps = m_producer->get_double("meta.media.frame_rate_num");
+    if (m_producer->get_double("meta.media.frame_rate_den") > 0)
+        fps /= m_producer->get_double("meta.media.frame_rate_den");
+    if (m_producer->get("force_fps"))
+        fps = m_producer->get_double("fps");
+    return fps;
 }
 
 void AvformatProducerWidget::on_reverseButton_clicked()
@@ -1211,15 +1218,8 @@ void AvformatProducerWidget::on_actionFFmpegVideoQuality_triggered()
         args << "-filter_complex";
         int width = m_producer->get_int("meta.media.width");
         int height = m_producer->get_int("meta.media.height");
-        double fps = m_producer->get_double("meta.media.frame_rate_num");
         int frameRateNum, frameRateDen;
-        if (m_producer->get_double("meta.media.frame_rate_den") > 0) {
-            fps /= m_producer->get_double("meta.media.frame_rate_den");
-        }
-        if (m_producer->get("force_fps")) {
-            fps = m_producer->get_double("fps");
-        }
-        Util::normalizeFrameRate(fps, frameRateNum, frameRateDen);
+        Util::normalizeFrameRate(fps(), frameRateNum, frameRateDen);
         auto colorRange = (ui->rangeComboBox->currentIndex() == 1) ? "full" : "limited";
 
 #ifdef Q_OS_WIN
@@ -1282,4 +1282,22 @@ void ProbeTask::run()
 {
     m_producer.probe();
     emit probeFinished();
+}
+
+void AvformatProducerWidget::on_actionBitrateViewer_triggered()
+{
+    QStringList args;
+    args << "-v" << "quiet";
+    args << "-print_format" << "json=compact=1";
+    if (m_producer->get_int("video_index") >= 0)
+        args << "-select_streams" << QString::fromLatin1("V:%1").arg(m_producer->get_int(
+                                                                         kVideoIndexProperty));
+    else
+        args << "-select_streams" << QString::fromLatin1("a:%1").arg(m_producer->get_int(
+                                                                         kAudioIndexProperty));
+    args << "-show_entries" << "packet=size,duration_time,pts_time,flags";
+    args << Util::GetFilenameFromProducer(producer());
+    auto job = new BitrateViewerJob(args.last(), args, fps());
+    job->setLabel(tr("Bitrate %1").arg(Util::baseName(args.last())));
+    JOBS.add(job);
 }

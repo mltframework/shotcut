@@ -31,6 +31,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt6 6.4 REQUIRED
   COMPONENTS
+  Charts
   Multimedia
   Network
   OpenGL

@@ -14,6 +14,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/addencodepresetdialog.ui
   dialogs/alignaudiodialog.cpp dialogs/alignaudiodialog.h
   dialogs/alignmentarray.cpp dialogs/alignmentarray.h
+  dialogs/bitratedialog.h dialogs/bitratedialog.cpp
   dialogs/customprofiledialog.cpp dialogs/customprofiledialog.h
   dialogs/customprofiledialog.ui
   dialogs/durationdialog.cpp dialogs/durationdialog.h
@@ -51,6 +52,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/timelinedock.cpp docks/timelinedock.h
   jobqueue.cpp jobqueue.h
   jobs/abstractjob.cpp jobs/abstractjob.h
+  jobs/bitrateviewerjob.h jobs/bitrateviewerjob.cpp
   jobs/encodejob.cpp jobs/encodejob.h
   jobs/ffmpegjob.cpp jobs/ffmpegjob.h
   jobs/ffprobejob.cpp jobs/ffprobejob.h
@@ -239,6 +241,7 @@ target_link_libraries(shotcut
   CuteLogger
   PkgConfig::mlt++
   PkgConfig::FFTW
+  Qt6::Charts
   Qt6::Multimedia
   Qt6::Network
   Qt6::OpenGL
