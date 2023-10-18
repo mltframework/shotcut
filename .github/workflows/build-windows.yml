@@ -123,6 +123,11 @@ jobs:
           curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc6.txz
           tar -xJf iscc6.txz
           popd
+          echo Extracting installer dependencies
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/innosetup-opera-1.txz
+          tar -xJf innosetup-opera-1.txz
+          rm innosetup-opera-1.txz
+          echo Running Inno Setup Compiler
           ISCC -Q -O. shotcut.iss
           echo Signing the installer
           osslsigncode sign -pkcs12 CodeSignCertificates2023.p12 -readpass CodeSignCertificates.pass -n "Shotcut Installer" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in shotcut-setup.exe -out shotcut-setup-signed.exe
