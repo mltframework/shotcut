@@ -19,11 +19,11 @@ import QtQuick
 Item {
     id: root
 
-    property Item clip
+    property Item clipN
     property bool mirrorGradient: false
 
     width: 100
-    height: clip ? clip.height : 0
+    height: clipN ? clipN.height : 0
 
     Rectangle {
         id: shadowGradient
