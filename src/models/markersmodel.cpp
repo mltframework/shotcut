@@ -328,7 +328,7 @@ void MarkersModel::doShift(int shiftPosition, int shiftAmount)
     int maxIndex = -1;
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
-        for (const auto i : qAsConst(m_keys)) {
+        for (const auto i : std::as_const(m_keys)) {
             QScopedPointer<Mlt::Properties> markerProperties(markerList->get_props(qUtf8Printable(
                                                                                        QString::number(i))));
             if (markerProperties && markerProperties->is_valid()) {
@@ -455,7 +455,7 @@ int MarkersModel::markerIndexForPosition(int position)
 {
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
-        for (const auto i : qAsConst(m_keys)) {
+        for (const auto i : std::as_const(m_keys)) {
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
             if (marker && marker->is_valid()) {
                 if (position == m_producer->time_to_frames(marker->get("start")) ||
@@ -471,7 +471,7 @@ int MarkersModel::markerIndexForRange(int start, int end)
 {
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
-        for (const auto i : qAsConst(m_keys)) {
+        for (const auto i : std::as_const(m_keys)) {
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
             if (marker && marker->is_valid()) {
                 if (start == m_producer->time_to_frames(marker->get("start")) &&
@@ -492,7 +492,7 @@ int MarkersModel::nextMarkerPosition(int position)
     }
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
-        for (const auto i : qAsConst(m_keys)) {
+        for (const auto i : std::as_const(m_keys)) {
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
             if (marker && marker->is_valid()) {
                 int markerPosition = m_producer->time_to_frames(marker->get("start"));
@@ -518,7 +518,7 @@ int MarkersModel::prevMarkerPosition(int position)
     }
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
-        for (const auto i : qAsConst(m_keys)) {
+        for (const auto i : std::as_const(m_keys)) {
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
             if (marker && marker->is_valid()) {
                 int markerPosition = m_producer->time_to_frames(marker->get("start"));
@@ -545,7 +545,7 @@ QMap<int, QString> MarkersModel::ranges()
     QMap<int, QString> result;
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
-        for (const auto i : qAsConst(m_keys)) {
+        for (const auto i : std::as_const(m_keys)) {
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
             if (marker && marker->is_valid()) {
                 Markers::Marker m;
@@ -571,7 +571,7 @@ QList<Markers::Marker> MarkersModel::getMarkers() const
         return markers;
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
-        for (const auto i : qAsConst(m_keys)) {
+        for (const auto i : std::as_const(m_keys)) {
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
             if (marker && marker->is_valid()) {
                 Markers::Marker m;

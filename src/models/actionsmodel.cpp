@@ -179,7 +179,7 @@ bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int 
     QAction *action = m_actions[index.row()];
 
     if (!ks.isEmpty()) {
-        for (const auto a : qAsConst(m_actions)) {
+        for (const auto a : std::as_const(m_actions)) {
             QList<QKeySequence> sequences = a->shortcuts();
             for (int i = 0; i < sequences.size(); i++) {
                 if (sequences[i] == ks) {
