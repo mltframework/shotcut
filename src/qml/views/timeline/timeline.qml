@@ -534,16 +534,16 @@ Rectangle {
                                 model: timeline.selection
 
                                 Rectangle {
-                                    property var clip: trackAt(modelData.y).clipAt(modelData.x)
-                                    property var track: typeof clip !== 'undefined' && typeof dragDelta !== 'undefined' ? trackAt(clip.trackIndex + dragDelta.y) : 0
+                                    property var clipN: trackAt(modelData.y).clipAt(modelData.x)
+                                    property var track: typeof clipN !== 'undefined' && typeof dragDelta !== 'undefined' ? trackAt(clipN.trackIndex + dragDelta.y) : 0
 
-                                    x: clip && typeof dragDelta !== 'undefined' ? clip.x + dragDelta.x : 0
+                                    x: clipN && typeof dragDelta !== 'undefined' ? clipN.x + dragDelta.x : 0
                                     y: track ? track.y : 0
-                                    width: clip ? clip.width : 0
+                                    width: clipN ? clipN.width : 0
                                     height: track ? track.height : 0
                                     color: 'transparent'
                                     border.color: 'red'
-                                    visible: clip && !clip.Drag.active && clip.trackIndex === clip.originalTrackIndex
+                                    visible: clipN && !clipN.Drag.active && clipN.trackIndex === clipN.originalTrackIndex
                                 }
                             }
                         }
@@ -574,14 +574,14 @@ Rectangle {
 
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(timeline.currentTrack).y + ruler.height - tracksFlickable.contentY : 0
-                clip: timeline.selection.length ? tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x) : null
-                opacity: clip && clip.x + clip.width < tracksFlickable.contentX ? 1 : 0
+                clipN: timeline.selection.length ? tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x) : null
+                opacity: clipN && clipN.x + clipN.width < tracksFlickable.contentX ? 1 : 0
             }
 
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(timeline.currentTrack).y + ruler.height - tracksFlickable.contentY : 0
-                clip: timeline.selection.length ? tracksRepeater.itemAt(timeline.selection[timeline.selection.length - 1].y).clipAt(timeline.selection[timeline.selection.length - 1].x) : null
-                opacity: clip && clip.x > tracksFlickable.contentX + tracksFlickable.width ? 1 : 0
+                clipN: timeline.selection.length ? tracksRepeater.itemAt(timeline.selection[timeline.selection.length - 1].y).clipAt(timeline.selection[timeline.selection.length - 1].x) : null
+                opacity: clipN && clipN.x > tracksFlickable.contentX + tracksFlickable.width ? 1 : 0
                 anchors.right: parent.right
                 mirrorGradient: true
             }
