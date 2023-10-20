@@ -87,7 +87,8 @@ void ResourceWidget::selectTroubleClips()
 
 bool ResourceWidget::hasTroubleClips()
 {
-    for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) {
+    auto n = m_model->rowCount(QModelIndex());
+    for (int i = 0; n > 1 && i < n; i++) {
         QModelIndex index = m_model->index(i, ResourceModel::COLUMN_INFO);
         if (!m_model->data(index, Qt::ToolTipRole).toString().isEmpty()) {
             return true;

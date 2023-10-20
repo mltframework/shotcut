@@ -3412,7 +3412,7 @@ void MainWindow::processMultipleFiles()
             }
         }
         emit m_playlistDock->model()->modified();
-        if (dialog.hasTroubleClips()) {
+        if (Settings.showConvertClipDialog() && dialog.hasTroubleClips()) {
             dialog.selectTroubleClips();
             dialog.setWindowTitle(tr("Opened Files"));
             dialog.exec();

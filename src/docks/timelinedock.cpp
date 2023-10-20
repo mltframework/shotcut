@@ -2457,17 +2457,6 @@ void TimelineDock::initLoad()
 void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
 {
     if (xml.startsWith(kFileUrlProtocol)) {
-        // Handle drop from file manager to empty project.
-        if (!MLT.producer() || !MLT.producer()->is_valid()) {
-            QUrl url = xml.split(kFilesUrlDelimiter).first();
-            Mlt::Properties properties;
-            properties.set(kShotcutSkipConvertProperty, 1);
-            if (!MAIN.open(Util::removeFileScheme(url), &properties, false /* play */))
-                MAIN.open(Util::removeFileScheme(url, false), &properties, false /* play */);
-        }
-
-        LongUiTask longTask(QObject::tr("Drop Files"));
-        Mlt::Playlist playlist(MLT.profile());
         QList<QUrl> urls;
         auto strings = xml.split(kFilesUrlDelimiter);
         for (auto &s : strings) {
@@ -2479,6 +2468,19 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
             urls << s;
         }
         int i = 0, count = urls.size();
+
+        // Handle drop from file manager to empty project.
+        if (!MLT.producer() || !MLT.producer()->is_valid()) {
+            QUrl url = xml.split(kFilesUrlDelimiter).first();
+            Mlt::Properties properties;
+            if (count > 1)
+                properties.set(kShotcutSkipConvertProperty, 1);
+            if (!MAIN.open(Util::removeFileScheme(url), &properties, false /* play */))
+                MAIN.open(Util::removeFileScheme(url, false), &properties, false /* play */);
+        }
+
+        LongUiTask longTask(QObject::tr("Drop Files"));
+        Mlt::Playlist playlist(MLT.profile());
         ResourceDialog dialog(this);
         for (const auto &path : Util::sortedFileList(urls)) {
             if (MAIN.isSourceClipMyProject(path, /* withDialog */ false)) continue;
@@ -2513,7 +2515,8 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
                     continue;
                 }
                 Mlt::Producer *producer = MLT.setupNewProducer(&p);
-                producer->set(kShotcutSkipConvertProperty, true);
+                if (count > 1)
+                    producer->set(kShotcutSkipConvertProperty, 1);
                 ProxyManager::generateIfNotExists(*producer);
                 playlist.append(*producer);
                 dialog.add(producer);
@@ -2521,7 +2524,7 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
             }
         }
         xml = MLT.XML(&playlist);
-        if (dialog.hasTroubleClips()) {
+        if (Settings.showConvertClipDialog() && dialog.hasTroubleClips()) {
             dialog.selectTroubleClips();
             dialog.setWindowTitle(tr("Dropped Files"));
             longTask.cancel();

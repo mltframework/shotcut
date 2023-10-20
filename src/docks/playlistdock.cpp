@@ -1117,7 +1117,8 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     first = false;
                     if (!MLT.producer() || !MLT.producer()->is_valid()) {
                         Mlt::Properties properties;
-                        properties.set(kShotcutSkipConvertProperty, 1);
+                        if (count > 1)
+                            properties.set(kShotcutSkipConvertProperty, 1);
                         MAIN.open(path, &properties, false);
                         if (MLT.producer() && MLT.producer()->is_valid()) {
                             producer = MLT.producer();
@@ -1126,7 +1127,8 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     }
                 }
                 producer = MLT.setupNewProducer(producer);
-                producer->set(kShotcutSkipConvertProperty, true);
+                if (count > 1)
+                    producer->set(kShotcutSkipConvertProperty, 1);
                 if (!MLT.isLiveProducer(producer) || producer->get_int(kShotcutVirtualClip)) {
                     ProxyManager::generateIfNotExists(*producer);
                     if (row == -1)
@@ -1154,7 +1156,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 delete producer;
             }
         }
-        if (dialog.hasTroubleClips()) {
+        if (Settings.showConvertClipDialog() && dialog.hasTroubleClips()) {
             dialog.selectTroubleClips();
             dialog.setWindowTitle(tr("Dropped Files"));
             longTask.cancel();
