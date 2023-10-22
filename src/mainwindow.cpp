@@ -1145,8 +1145,12 @@ void MainWindow::open(Mlt::Producer *producer)
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer)) {
         emit producerOpened();
-        if (!MLT.profile().is_explicit() || MLT.URL().endsWith(".mlt") || MLT.URL().endsWith(".xml"))
+        if (MLT.URL().endsWith(".mlt") || MLT.URL().endsWith(".xml")) {
+            m_filterController->motionTrackerModel()->load();
             emit profileChanged();
+        } else if (!MLT.profile().is_explicit()) {
+            emit profileChanged();
+        }
     }
     m_player->setFocus();
     emit m_playlistDock->enableUpdate(false);
@@ -1699,6 +1703,7 @@ void MainWindow::hideProducer()
 void MainWindow::closeProducer()
 {
     hideProducer();
+    m_filterController->motionTrackerModel()->load();
     MLT.stop();
     MLT.close();
     MLT.setSavedProducer(0);
@@ -2441,7 +2446,6 @@ void MainWindow::onProducerOpened(bool withReopen)
     } else if (MLT.isPlaylist()) {
         m_playlistDock->model()->load();
         if (playlist()) {
-            m_filterController->motionTrackerModel()->load();
             m_isPlaylistLoaded = true;
             m_player->setIn(-1);
             m_player->setOut(-1);
@@ -2455,7 +2459,6 @@ void MainWindow::onProducerOpened(bool withReopen)
         m_timelineDock->model()->load();
         m_timelineDock->blockSelection(false);
         if (isMultitrackValid()) {
-            m_filterController->motionTrackerModel()->load();
             m_player->setIn(-1);
             m_player->setOut(-1);
             m_timelineDock->setVisible(true);
@@ -2469,7 +2472,6 @@ void MainWindow::onProducerOpened(bool withReopen)
         }
     }
     if (MLT.isClip()) {
-        m_filterController->motionTrackerModel()->load();
         m_filterController->setProducer(MLT.producer());
         m_player->enableTab(Player::SourceTabIndex);
         m_player->switchToTab(Player::SourceTabIndex);
