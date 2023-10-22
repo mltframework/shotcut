@@ -272,7 +272,7 @@ void AudioLoudnessScopeWidget::onTruePeakToggled(bool checked)
 
 void AudioLoudnessScopeWidget::updateMeters(void)
 {
-    if (!m_newData) return;
+    if (!m_newData || !m_qview->rootObject()) return;
     if (m_loudnessFilter->get_int("calc_program") )
         m_qview->rootObject()->setProperty("integrated", onedec(m_loudnessFilter->get_double("program")));
     if (m_loudnessFilter->get_int("calc_shortterm") )
