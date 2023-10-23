@@ -21,6 +21,7 @@ import Shotcut.Controls as Shotcut
 import org.shotcut.qml as Shotcut
 
 GridLayout {
+    property bool showOpacity: true
     property string rectProperty: 'geometry'
     property string valignProperty: 'valign'
     property string halignProperty: 'halign'
@@ -30,7 +31,7 @@ GridLayout {
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue: '_shotcut:endValue'
-    property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', useFontSizeProperty]
+    property var parameterList: [rectProperty, halignProperty, valignProperty, 'size', 'style', 'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', 'opacity', useFontSizeProperty]
 
     function updateFilterRect(position) {
         if (position !== null) {
@@ -125,6 +126,7 @@ GridLayout {
         fgColor.value = filter.getColor('fgcolour', position);
         outlineColor.value = filter.getColor('olcolour', position);
         bgColor.value = filter.getColor('bgcolour', position);
+        opacitySlider.value = filter.getDouble('opacity', position) * 100.0;
         blockUpdate = false;
         var enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
         rectX.enabled = enabled;
@@ -136,6 +138,7 @@ GridLayout {
         fgcolorKeyframesButton.checked = filter.keyframeCount('fgcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
         olcolorKeyframesButton.checked = filter.keyframeCount('olcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
         bgcolorKeyframesButton.checked = filter.keyframeCount('bgcolour') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        opacityKeyframesButton.checked = filter.keyframeCount('opacity') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
     }
 
     function updateParameters() {
@@ -143,6 +146,7 @@ GridLayout {
         updateFilter('fgcolour', Qt.color(fgColor.value), fgcolorKeyframesButton, null);
         updateFilter('olcolour', Qt.color(outlineColor.value), olcolorKeyframesButton, null);
         updateFilter('bgcolour', Qt.color(bgColor.value), bgcolorKeyframesButton, null);
+        updateFilter('opacity', opacitySlider.value / 100.0, opacityKeyframesButton, null);
     }
 
     function applyTracking(motionTrackerRow, operation, frame) {
@@ -344,6 +348,36 @@ GridLayout {
         from: 0
         to: 100
         onValueModified: filter.set('pad', value)
+    }
+
+    Label {
+        text: qsTr('Opacity')
+        visible: showOpacity
+        Layout.alignment: Qt.AlignRight
+    }
+
+    Shotcut.SliderSpinner {
+        id: opacitySlider
+        visible: showOpacity
+        Layout.columnSpan: 3
+
+        minimumValue: 0
+        maximumValue: 100
+        stepSize: 1
+        decimals: 0
+        suffix: ' %'
+        onValueChanged: updateFilter('opacity', value / 100.0, opacityKeyframesButton, getPosition())
+    }
+
+    Shotcut.UndoButton {
+        visible: showOpacity
+        onClicked: opacitySlider.value = 100
+    }
+
+    Shotcut.KeyframesButton {
+        id: opacityKeyframesButton
+        visible: showOpacity
+        onToggled: toggleKeyframes(checked, 'opacity', opacitySlider.value / 100.0)
     }
 
     Label {

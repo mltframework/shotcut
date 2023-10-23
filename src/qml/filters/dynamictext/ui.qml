@@ -26,12 +26,12 @@ Shotcut.KeyframableFilter {
         textFilterUi.setControls();
     }
 
-    keyframableParameters: ['fgcolour', 'olcolour', 'bgcolour']
-    startValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
-    middleValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
-    endValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
+    keyframableParameters: ['fgcolour', 'olcolour', 'bgcolour', 'opacity']
+    startValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.0]
+    middleValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 1.0]
+    endValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.0]
     width: 425
-    height: 400
+    height: 455
     Component.onCompleted: {
         filter.blockSignals = true;
         filter.set(textFilterUi.middleValue, Qt.rect(0, 0, profile.width, profile.height));
@@ -47,6 +47,7 @@ Shotcut.KeyframableFilter {
             filter.set('fgcolour', '#ffffffff');
             filter.set('bgcolour', '#00000000');
             filter.set('olcolour', '#aa000000');
+            filter.set('opacity', 1.0);
             filter.set('outline', 3);
             filter.set('weight', Font.Normal);
             filter.set('style', 'normal');
@@ -337,7 +338,7 @@ Shotcut.KeyframableFilter {
 
         Shotcut.TextFilterUi {
             id: textFilterUi
-
+            showOpacity: filter.isAtLeastVersion(2)
             Layout.columnSpan: 2
         }
 

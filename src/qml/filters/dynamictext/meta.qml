@@ -14,7 +14,7 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['geometry', 'fgcolour', 'olcolour', 'bgcolour']
+        simpleProperties: ['geometry', 'fgcolour', 'olcolour', 'bgcolour', 'opacity']
         parameters: [
             Parameter {
                 name: qsTr('Position / Size')
@@ -38,6 +38,13 @@ Metadata {
                 property: 'bgcolour'
                 isCurve: false
                 isColor: true
+            },
+            Parameter {
+                name: qsTr('Opacity')
+                property: 'opacity'
+                isCurve: true
+                minimum: 0
+                maximum: 1
             }
         ]
     }

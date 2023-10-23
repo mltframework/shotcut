@@ -86,10 +86,10 @@ Shotcut.KeyframableFilter {
         filter.set('time_offset', Number(secs).toFixed(0));
     }
 
-    keyframableParameters: ['fgcolour', 'olcolour', 'bgcolour']
-    startValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
-    middleValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
-    endValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0)]
+    keyframableParameters: ['fgcolour', 'olcolour', 'bgcolour', 'opacity']
+    startValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.0]
+    middleValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 1.0]
+    endValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.1]
     width: 300
     height: 800
     onFileOpened: path => {
@@ -114,6 +114,7 @@ Shotcut.KeyframableFilter {
             filter.set('fgcolour', '#ffffffff');
             filter.set('bgcolour', '#00000000');
             filter.set('olcolour', '#aa000000');
+            filter.set('opacity', 1.0);
             filter.set('outline', 3);
             filter.set('weight', Font.Normal);
             filter.set('style', 'normal');
@@ -874,7 +875,7 @@ Shotcut.KeyframableFilter {
 
         Shotcut.TextFilterUi {
             id: textFilterUi
-
+            showOpacity: filter.isAtLeastVersion(4)
             Layout.leftMargin: 10
             Layout.columnSpan: 2
         }
