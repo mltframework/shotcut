@@ -198,7 +198,9 @@ TimelineDock::TimelineDock(QWidget *parent) :
     });
     connect(&m_model, &MultitrackModel::scaleFactorChanged, zoomSlider, [ = ]() {
         double value = round(pow(m_model.scaleFactor() - 0.01, 1.0 / 3.0) * 100.0);
+        zoomSlider->blockSignals(true);
         zoomSlider->setValue(value);
+        zoomSlider->blockSignals(false);
     });
     toolbar->addWidget(zoomSlider);
     toolbar->addAction(Actions["timelineZoomInAction"]);

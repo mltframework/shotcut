@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,7 @@ Rectangle {
     id: rulerTop
 
     property real timeScale: 1
-    property int adjustment: 0
-    property real intervalSeconds: ((timeScale > 5) ? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale)))) + adjustment
+    readonly property real intervalFrames: profile.fps * ((timeScale > 5) ? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale))))
 
     signal editMarkerRequested(int index)
     signal deleteMarkerRequested(int index)
@@ -31,12 +30,18 @@ Rectangle {
     height: 28
     color: activePalette.base
 
+    Timer {
+        id: updateTimer
+        interval: 100
+        onTriggered: repeater.model = Math.round(width / intervalFrames / timeScale)
+    }
+
     SystemPalette {
         id: activePalette
     }
 
     Repeater {
-        model: parent.width / (intervalSeconds * profile.fps * timeScale)
+        id: repeater
 
         Rectangle {
 
@@ -45,7 +50,7 @@ Rectangle {
             height: 18
             width: 1
             color: activePalette.windowText
-            x: index * intervalSeconds * profile.fps * timeScale
+            x: index * intervalFrames * timeScale
             visible: ((x + width) > tracksFlickable.contentX) && (x < tracksFlickable.contentX + tracksFlickable.width) // left edge
 
             Label {
@@ -54,7 +59,7 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 2
                 color: activePalette.windowText
-                text: application.timecode(index * intervalSeconds * profile.fps + 2).substr(0, 8)
+                text: application.timecode(index * intervalFrames + 2).substr(0, 8)
             }
         }
     }
@@ -74,7 +79,7 @@ Rectangle {
         anchors.top: rulerTop.top
         anchors.left: parent.left
         anchors.right: parent.right
-        timeScale: root.timeScale ? root.timescale : 1
+        timeScale: rulerTop.timeScale
         model: markers
         onExited: bubbleHelp.hide()
         onMouseStatusChanged: (mouseX, mouseY, text, start, end) => {
@@ -124,11 +129,21 @@ Rectangle {
 
     Connections {
         function onProfileChanged() {
-            // Force a repeater model change to update the labels.
-            ++adjustment;
-            --adjustment;
+            updateTimer.restart();
         }
 
         target: profile
+    }
+
+    Connections {
+        function onDurationChanged() {
+            updateTimer.restart();
+        }
+
+        function onScaleFactorChanged() {
+            updateTimer.restart();
+        }
+
+        target: multitrack
     }
 }

@@ -41,21 +41,21 @@ Rectangle {
     function setZoom(value, targetX) {
         if (!targetX)
             targetX = tracksFlickable.contentX + tracksFlickable.width / 2;
-        var offset = targetX - tracksFlickable.contentX;
-        var before = multitrack.scaleFactor;
+        let offset = targetX - tracksFlickable.contentX;
+        let before = multitrack.scaleFactor;
         if (isNaN(value))
             value = 0;
         multitrack.scaleFactor = Math.pow(Math.max(value, 0), 3) + 0.01;
         if (settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead && !settings.timelineScrollZoom)
             tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset;
-        for (var i = 0; i < tracksRepeater.count; i++)
+        for (let i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms(false);
         if (settings.timelineScrollZoom && settings.timelineScrolling !== Shotcut.Settings.CenterPlayhead)
             scrollZoomTimer.restart();
     }
 
     function adjustZoom(by, targetX) {
-        var value = Math.pow(multitrack.scaleFactor - 0.01, 1 / 3);
+        let value = Math.pow(multitrack.scaleFactor - 0.01, 1 / 3);
         setZoom(value + by, targetX);
     }
 
@@ -64,7 +64,7 @@ Rectangle {
     }
 
     function selectMultitrack() {
-        for (var i = 0; i < trackHeaderRepeater.count; i++)
+        for (let i = 0; i < trackHeaderRepeater.count; i++)
             trackHeaderRepeater.itemAt(i).selected = false;
         cornerstone.selected = true;
     }
@@ -399,7 +399,7 @@ Rectangle {
                     timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor;
                     bubbleHelp.hide();
                 }
-                onWheel: Logic.onMouseWheel(wheel)
+                onWheel: wheel => Logic.onMouseWheel(wheel)
                 onReleased: skim = false
                 onExited: skim = false
                 onPositionChanged: mouse => {

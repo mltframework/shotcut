@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -94,10 +94,10 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: {
+        onClicked: mouse => {
             parent.clicked();
             nameEdit.focus = false;
-            if (mouse.button == Qt.RightButton)
+            if (mouse.button === Qt.RightButton)
                 root.timelineRightClicked();
         }
     }

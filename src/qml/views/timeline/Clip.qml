@@ -73,7 +73,7 @@ Rectangle {
 
         // This is needed to make the model have the correct count.
         // Model as a property expression is not working in all cases.
-        waveformRepeater.model = Math.ceil(waveform.innerWidth / waveform.maxWidth);
+        waveformRepeater.model = Math.ceil(clipRoot.width / waveform.maxWidth);
         for (var i = 0; i < waveformRepeater.count; i++)
             waveformRepeater.itemAt(0).update();
     }
@@ -191,8 +191,7 @@ Rectangle {
     Row {
         id: waveform
 
-        property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
-        property int innerWidth: clipRoot.width - clipRoot.border.width * 2
+        readonly property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
 
         visible: !elided && !isBlank && settings.timelineShowWaveforms && (parseInt(audioIndex) > -1 || audioIndex === 'all')
         height: (isAudio || parent.height <= 20) ? parent.height : parent.height / 2
@@ -204,7 +203,7 @@ Rectangle {
         Repeater {
             id: waveformRepeater
 
-            model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
+            model: Math.ceil(clipRoot.width / waveform.maxWidth)
 
             Shotcut.TimelineWaveform {
 
@@ -213,7 +212,7 @@ Rectangle {
                 // bottom edge
                 property int channels: 2
 
-                width: Math.min(waveform.innerWidth, waveform.maxWidth)
+                width: Math.min(clipRoot.width, waveform.maxWidth)
                 height: waveform.height
                 fillColor: getColor()
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
