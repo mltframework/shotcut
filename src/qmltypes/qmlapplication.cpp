@@ -265,3 +265,8 @@ bool QmlApplication::addWipe(const QString &filePath)
     }
     return false;
 }
+
+bool QmlApplication::intersects(const QRectF &a, const QRectF &b)
+{
+    return a.intersects(b);
+}

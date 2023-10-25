@@ -391,24 +391,50 @@ Rectangle {
             MouseArea {
                 id: scrubMouseArea
                 property bool skim: false
+                property bool scrub: false
+                property real startX
+                property real startY
 
                 // This provides skimming and continuous scrubbing at the left/right edges.
                 anchors.fill: parent
                 hoverEnabled: true
-                onClicked: mouse => {
-                    timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor;
-                    bubbleHelp.hide();
-                }
                 onWheel: wheel => Logic.onMouseWheel(wheel)
-                onReleased: skim = false
+                onPressed: mouse => {
+                    if (mouse.y <= ruler.height || cursorBox.contains(mapToItem(cursorBox, mouse.x, mouse.y))) {
+                        timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor;
+                        scrub = true;
+                        bubbleHelp.hide();
+                    } else {
+                        startX = mouse.x;
+                        selectionBox.x = startX + tracksFlickable.contentX;
+                        startY = mouse.y;
+                        selectionBox.y = startY + tracksFlickable.contentY - ruler.height;
+                        selectionBox.visible = true;
+                    }
+                }
+                onReleased: {
+                    if (!skim && !scrub)
+                        Logic.selectClips();
+                    skim = false;
+                    scrub = false;
+                    selectionBox.visible = false;
+                }
                 onExited: skim = false
                 onPositionChanged: mouse => {
-                    if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
+                    if (!selectionBox.visible && (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || (containsPress && scrub))) {
                         timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor;
                         bubbleHelp.hide();
                         skim = true;
                     } else {
                         skim = false;
+                        if (mouse.x - startX < 0) {
+                            selectionBox.x = mouse.x + tracksFlickable.contentX;
+                        }
+                        if (mouse.y - startY < 0) {
+                            selectionBox.y = mouse.y + tracksFlickable.contentY - ruler.height;
+                        }
+                        selectionBox.width = Math.abs(mouse.x - startX);
+                        selectionBox.height = Math.abs(mouse.y - startY);
                     }
                 }
             }
@@ -442,7 +468,7 @@ Rectangle {
                     startY = mouse.y;
                 }
                 onPositionChanged: {
-                    var n = mouse.x - startX;
+                    let n = mouse.x - startX;
                     startX = mouse.x;
                     tracksFlickable.contentX = Logic.clamp(tracksFlickable.contentX - n, 0, Logic.scrollMax().x);
                     n = mouse.y - startY;
@@ -549,6 +575,24 @@ Rectangle {
                         }
                     }
 
+                    Rectangle {
+                        id: selectionBox
+                        color: "#33ff0000"
+                        border.color: "#ccff7d7d"
+                        border.width: 1
+                        visible: false
+                    }
+
+                    Rectangle {
+                        id: cursorBox
+
+                        visible: false
+                        width: playhead.width
+                        height: root.height - horizontalScrollBar.height
+                        x: timeline.position * multitrack.scaleFactor - width / 2
+                        y: 0
+                    }
+
                     ScrollBar.horizontal: Shotcut.HorizontalScrollBar {
                         id: horizontalScrollBar
 
@@ -633,7 +677,7 @@ Rectangle {
         property alias text: bubbleHelpLabel.text
 
         function show(text) {
-            var point = application.mousePos;
+            let point = application.mousePos;
             point = parent.mapFromGlobal(point.x, point.y);
             bubbleHelp.x = point.x + 20;
             bubbleHelp.y = Math.max(point.y - 20, 0);
@@ -720,8 +764,8 @@ Rectangle {
             isCurrentTrack: timeline.currentTrack === index
             timeScale: multitrack.scaleFactor
             onClipClicked: (clip, track, mouse) => {
-                var trackIndex = track.DelegateModel.itemsIndex;
-                var clipIndex = clip.DelegateModel.itemsIndex;
+                let trackIndex = track.DelegateModel.itemsIndex;
+                let clipIndex = clip.DelegateModel.itemsIndex;
                 timeline.currentTrack = trackIndex;
                 if (timeline.selection.length === 1 && tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x).isBlank)
                     timeline.selection = [];
@@ -761,13 +805,13 @@ Rectangle {
                 selectionContainer.visible = false;
             }
             onClipDraggedToTrack: (clip, direction) => {
-                var i = clip.trackIndex + direction;
-                var track = trackAt(i);
+                let i = clip.trackIndex + direction;
+                let track = trackAt(i);
                 clip.reparent(track);
                 clip.trackIndex = track.DelegateModel.itemsIndex;
             }
             onCheckSnap: clip => {
-                for (var i = 0; i < tracksRepeater.count; i++)
+                for (let i = 0; i < tracksRepeater.count; i++)
                     tracksRepeater.itemAt(i).snapClip(clip);
             }
 
@@ -797,7 +841,7 @@ Rectangle {
     Connections {
         function onPositionChanged() {
             if (!stopScrolling && settings.timelineScrolling !== Shotcut.Settings.NoScrolling) {
-                var smooth = settings.timelineScrolling === Shotcut.Settings.SmoothScrolling || scrubMouseArea.containsPress || scrubMouseArea.skim;
+                let smooth = settings.timelineScrolling === Shotcut.Settings.SmoothScrolling || scrubMouseArea.containsPress || scrubMouseArea.skim;
                 Logic.scrollIfNeeded(settings.timelineScrolling === Shotcut.Settings.CenterPlayhead, smooth);
             }
         }
@@ -816,8 +860,8 @@ Rectangle {
 
         function onSelectionChanged() {
             cornerstone.selected = timeline.isMultitrackSelected();
-            var selectedTrack = timeline.selectedTrack();
-            for (var i = 0; i < trackHeaderRepeater.count; i++)
+            let selectedTrack = timeline.selectedTrack();
+            for (let i = 0; i < trackHeaderRepeater.count; i++)
                 trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack);
         }
 
@@ -849,10 +893,10 @@ Rectangle {
 
         function onRefreshWaveforms() {
             if (!settings.timelineShowWaveforms) {
-                for (var i = 0; i < tracksRepeater.count; i++)
+                for (let i = 0; i < tracksRepeater.count; i++)
                     tracksRepeater.itemAt(i).redrawWaveforms();
             } else {
-                for (var i = 0; i < tracksRepeater.count; i++)
+                for (let i = 0; i < tracksRepeater.count; i++)
                     tracksRepeater.itemAt(i).remakeWaveforms(false);
             }
         }
@@ -885,7 +929,7 @@ Rectangle {
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            var delta = backwards ? -10 : 10;
+            let delta = backwards ? -10 : 10;
             if (item)
                 item.x += delta;
             tracksFlickable.contentX += delta;

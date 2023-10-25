@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,6 +65,7 @@ public:
     Q_INVOKABLE static QColor contrastingColor(QString color);
     static QStringList wipes();
     Q_INVOKABLE static bool addWipe(const QString &filePath);
+    Q_INVOKABLE static bool intersects(const QRectF &a, const QRectF &b);
 
 signals:
     void paletteChanged();
