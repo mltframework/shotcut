@@ -24,6 +24,7 @@ Rectangle {
 
     property int position
     property int interpolation: KeyframesModel.DiscreteInterpolation // rectangle for discrete
+    property int prevInterpolation: KeyframesModel.DiscreteInterpolation
     property bool isSelected: false
     property string name: ''
     property double value
@@ -43,6 +44,7 @@ Rectangle {
     signal rightClicked(var keyframe)
 
     onInterpolationChanged: canvas.requestPaint()
+    onPrevInterpolationChanged: canvas.requestPaint()
     onIsSelectedChanged: canvas.requestPaint()
 
     function updateX() {
@@ -61,7 +63,6 @@ Rectangle {
     opacity: inRange ? 1 : 0.3
     border.width: 0
     border.color: "transparent"
-    rotation: (interpolation === KeyframesModel.LinearInterpolation) ? 45 : 0 // diamond for linear
 
     SystemPalette {
         id: activePalette
@@ -167,53 +168,6 @@ Rectangle {
     Canvas {
         id: canvas
 
-        function drawHold() {
-            context.moveTo(0, 0);
-            context.lineTo(canvas.width, 0);
-            context.lineTo(canvas.width, canvas.height);
-            context.lineTo(0, canvas.height);
-            context.lineTo(0, 0);
-        }
-
-        function drawLinear() {
-            // Rotation is set above to make a diamond
-            drawHold();
-        }
-
-        function drawSmooth() {
-            context.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 0, 2 * Math.PI, false);
-        }
-
-        function drawEaseIn() {
-            context.moveTo(0, 0);
-            context.lineTo(canvas.width * 0.7, 0);
-            context.lineTo(canvas.width, canvas.height / 2);
-            context.lineTo(canvas.width * 0.7, canvas.height);
-            context.lineTo(0, canvas.height);
-            context.lineTo(canvas.width * 0.3, canvas.height / 2);
-            context.lineTo(0, 0);
-        }
-
-        function drawEaseOut() {
-            context.moveTo(canvas.width, 0);
-            context.lineTo(canvas.width * 0.3, 0);
-            context.lineTo(0, canvas.height / 2);
-            context.lineTo(canvas.width * 0.3, canvas.height);
-            context.lineTo(canvas.width, canvas.height);
-            context.lineTo(canvas.width * 0.7, canvas.height / 2);
-            context.lineTo(canvas.width, 0);
-        }
-
-        function drawEaseInOut() {
-            context.moveTo(0, 0);
-            context.lineTo(canvas.width, 0);
-            context.lineTo(canvas.width * 0.7, canvas.height / 2);
-            context.lineTo(canvas.width, canvas.height);
-            context.lineTo(0, canvas.height);
-            context.lineTo(canvas.width * 0.3, canvas.height / 2);
-            context.lineTo(0, 0);
-        }
-
         anchors.fill: parent
         onPaint: {
             var ctx = getContext("2d");
@@ -226,18 +180,22 @@ Rectangle {
             ctx.lineWidth = 1;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.beginPath();
-            switch (interpolation) {
+            context.moveTo(canvas.width / 2, 0);
+            switch (prevInterpolation) {
             case KeyframesModel.DiscreteInterpolation:
-                drawHold();
+                context.lineTo(0, 0);
+                context.lineTo(0, canvas.height);
+                context.lineTo(canvas.width / 2, canvas.height);
                 break;
             default:
             case KeyframesModel.LinearInterpolation:
-                drawLinear();
+                context.lineTo(0, canvas.height / 2);
+                context.lineTo(canvas.width / 2, canvas.height);
                 break;
             case KeyframesModel.SmoothNaturalInterpolation:
             case KeyframesModel.SmoothLooseInterpolation:
             case KeyframesModel.SmoothTightInterpolation:
-                drawSmooth();
+                context.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 3 * Math.PI / 2, Math.PI / 2, true);
                 break;
             case KeyframesModel.EaseInSinusoidal:
             case KeyframesModel.EaseInQuadratic:
@@ -249,8 +207,6 @@ Rectangle {
             case KeyframesModel.EaseInBack:
             case KeyframesModel.EaseInElastic:
             case KeyframesModel.EaseInBounce:
-                drawEaseIn();
-                break;
             case KeyframesModel.EaseOutSinusoidal:
             case KeyframesModel.EaseOutQuadratic:
             case KeyframesModel.EaseOutCubic:
@@ -261,8 +217,6 @@ Rectangle {
             case KeyframesModel.EaseOutBack:
             case KeyframesModel.EaseOutElastic:
             case KeyframesModel.EaseOutBounce:
-                drawEaseOut();
-                break;
             case KeyframesModel.EaseInOutSinusoidal:
             case KeyframesModel.EaseInOutQuadratic:
             case KeyframesModel.EaseInOutCubic:
@@ -273,7 +227,62 @@ Rectangle {
             case KeyframesModel.EaseInOutBack:
             case KeyframesModel.EaseInOutElastic:
             case KeyframesModel.EaseInOutBounce:
-                drawEaseInOut();
+                context.lineTo(0, 0);
+                context.lineTo(canvas.width * 0.3, canvas.height / 2);
+                context.lineTo(0, canvas.height);
+                context.lineTo(canvas.width / 2, canvas.height);
+                break;
+            }
+            switch (interpolation) {
+            case KeyframesModel.DiscreteInterpolation:
+                context.lineTo(canvas.width, canvas.height);
+                context.lineTo(canvas.width, 0);
+                context.lineTo(canvas.width / 2, 0);
+                break;
+            default:
+            case KeyframesModel.LinearInterpolation:
+                context.lineTo(canvas.width, canvas.height / 2);
+                context.lineTo(canvas.width / 2, 0);
+                break;
+            case KeyframesModel.SmoothNaturalInterpolation:
+            case KeyframesModel.SmoothLooseInterpolation:
+            case KeyframesModel.SmoothTightInterpolation:
+                context.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, Math.PI / 2, 3 * Math.PI / 2, true);
+                break;
+            case KeyframesModel.EaseInSinusoidal:
+            case KeyframesModel.EaseInQuadratic:
+            case KeyframesModel.EaseInCubic:
+            case KeyframesModel.EaseInQuartic:
+            case KeyframesModel.EaseInQuintic:
+            case KeyframesModel.EaseInExponential:
+            case KeyframesModel.EaseInCircular:
+            case KeyframesModel.EaseInBack:
+            case KeyframesModel.EaseInElastic:
+            case KeyframesModel.EaseInBounce:
+            case KeyframesModel.EaseOutSinusoidal:
+            case KeyframesModel.EaseOutQuadratic:
+            case KeyframesModel.EaseOutCubic:
+            case KeyframesModel.EaseOutQuartic:
+            case KeyframesModel.EaseOutQuintic:
+            case KeyframesModel.EaseOutExponential:
+            case KeyframesModel.EaseOutCircular:
+            case KeyframesModel.EaseOutBack:
+            case KeyframesModel.EaseOutElastic:
+            case KeyframesModel.EaseOutBounce:
+            case KeyframesModel.EaseInOutSinusoidal:
+            case KeyframesModel.EaseInOutQuadratic:
+            case KeyframesModel.EaseInOutCubic:
+            case KeyframesModel.EaseInOutQuartic:
+            case KeyframesModel.EaseInOutQuintic:
+            case KeyframesModel.EaseInOutExponential:
+            case KeyframesModel.EaseInOutCircular:
+            case KeyframesModel.EaseInOutBack:
+            case KeyframesModel.EaseInOutElastic:
+            case KeyframesModel.EaseInOutBounce:
+                context.lineTo(canvas.width, canvas.height);
+                context.lineTo(canvas.width * 0.7, canvas.height / 2);
+                context.lineTo(canvas.width, 0);
+                context.lineTo(canvas.width / 2, 0);
                 break;
             }
             ctx.fill();

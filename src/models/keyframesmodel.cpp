@@ -189,7 +189,15 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                     case FrameNumberRole:
                         return position;
                     case KeyframeTypeRole:
+                        if (index.row() >= animation.key_count() - 1) {
+                            return DiscreteInterpolation;
+                        }
                         return const_cast<Mlt::Animation &>(animation).key_get_type(index.row());
+                    case PrevKeyframeTypeRole:
+                        if (index.row() <= 0) {
+                            return DiscreteInterpolation;
+                        }
+                        return const_cast<Mlt::Animation &>(animation).key_get_type(index.row() - 1);
                     case NumericValueRole:
                         return m_filter->getDouble(name, position);
                     case MinimumFrameRole: {
@@ -324,6 +332,7 @@ QHash<int, QByteArray> KeyframesModel::roleNames() const
     roles[HighestValueRole] = "highest";
     roles[FrameNumberRole]  = "frame";
     roles[KeyframeTypeRole] = "interpolation";
+    roles[PrevKeyframeTypeRole] = "prevInterpolation";
     roles[NumericValueRole] = "value";
     roles[MinimumFrameRole] = "minimumFrame";
     roles[MaximumFrameRole] = "maximumFrame";
@@ -468,6 +477,8 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
                 mlt_events_fire(m_filter->service().get_properties(), "property-changed", eventData);
                 QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << KeyframeTypeRole << NameRole);
+                QModelIndex nextModelIndex = index(keyframeIndex + 1, 0, index(parameterIndex));
+                emit dataChanged(nextModelIndex, nextModelIndex, QVector<int>() << PrevKeyframeTypeRole);
                 error = false;
                 emit m_filter->changed(name.toUtf8().constData());
                 emit m_filter->propertyChanged(name.toUtf8().constData());

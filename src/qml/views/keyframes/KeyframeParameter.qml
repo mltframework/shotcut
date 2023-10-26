@@ -510,6 +510,7 @@ Item {
             property int frame: model.frame ? model.frame : 0
 
             interpolation: model.interpolation ? model.interpolation : 0
+            prevInterpolation: model.prevInterpolation ? model.prevInterpolation : 0
             name: model.name ? model.name : ""
             value: model.value ? model.value : 0
             minDragX: (filter.in - producer.in + model.minimumFrame) * timeScale - width / 2

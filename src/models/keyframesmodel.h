@@ -81,6 +81,7 @@ public:
         HighestValueRole, /// parameter only
         FrameNumberRole,  /// keyframe only
         KeyframeTypeRole, /// keyframe only
+        PrevKeyframeTypeRole, /// keyframe only
         NumericValueRole, /// keyframe only
         MinimumFrameRole, /// keyframe only
         MaximumFrameRole  /// keyframe only
