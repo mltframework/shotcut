@@ -116,6 +116,7 @@ public:
     Q_INVOKABLE void removeAdvancedKeyframes();
     Q_INVOKABLE bool simpleKeyframesInUse();
     Q_INVOKABLE void removeSimpleKeyframes();
+    int keyframeCount(int index) const;
 
 signals:
     void loaded();
@@ -135,7 +136,6 @@ private:
     QList<int> m_keyframeCounts;
     QList<int> m_metadataIndex;
 
-    int keyframeCount(int index) const;
     void updateNeighborsMinMax(int parameterIndex, int keyframeIndex);
 };
 

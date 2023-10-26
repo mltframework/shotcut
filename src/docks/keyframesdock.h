@@ -89,6 +89,8 @@ private:
     QmlProducer *m_qmlProducer;
     QMenu *m_mainMenu;
     QMenu *m_keyMenu;
+    QMenu *m_keyTypePrevMenu;
+    QMenu *m_keyTypeNextMenu;
     QMenu *m_clipMenu;
     double m_timeScale {1.0};
 };
