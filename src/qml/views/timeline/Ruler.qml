@@ -69,6 +69,8 @@ Rectangle {
         hoverEnabled: true
         acceptedButtons: Qt.NoButton
         onExited: bubbleHelp.hide()
+        property double currentPos: timeline.position * timeScale
+        cursorShape: (mouseX >= currentPos - 8 && mouseX <= currentPos + 8) ? Qt.SizeHorCursor : Qt.ArrowCursor
         onPositionChanged: mouse => {
             var text = application.timecode(mouse.x / timeScale);
             bubbleHelp.show(text);

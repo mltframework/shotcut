@@ -460,7 +460,7 @@ Rectangle {
                 // This provides drag-scrolling the timeline with the middle mouse button.
                 anchors.fill: parent
                 acceptedButtons: Qt.MiddleButton
-                cursorShape: drag.active ? Qt.ClosedHandCursor : Qt.ArrowCursor
+                cursorShape: drag.active ? Qt.ClosedHandCursor : (scrubMouseArea.mouseY <= ruler.height || cursorBox.contains(scrubMouseArea.mapToItem(cursorBox, scrubMouseArea.mouseX, scrubMouseArea.mouseY))) ? Qt.SizeHorCursor : Qt.ArrowCursor
                 drag.axis: Drag.XAndYAxis
                 drag.filterChildren: true
                 onPressed: {
