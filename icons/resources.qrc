@@ -1,6 +1,42 @@
 <RCC>
     <qresource prefix="/icons">
         <file>dark/32x32/audio-meter.png</file>
+        <file>dark/32x32/keyframe-ease-in.png</file>
+        <file>dark/32x32/keyframe-ease-inout.png</file>
+        <file>dark/32x32/keyframe-ease-out.png</file>
+        <file>dark/32x32/keyframe-hold.png</file>
+        <file>dark/32x32/keyframe-linear.png</file>
+        <file>dark/32x32/keyframe-smooth.png</file>
+        <file>dark/32x32/ease-in-sinu.png</file>
+        <file>dark/32x32/ease-in-quad.png</file>
+        <file>dark/32x32/ease-in-cube.png</file>
+        <file>dark/32x32/ease-in-quar.png</file>
+        <file>dark/32x32/ease-in-quin.png</file>
+        <file>dark/32x32/ease-in-expo.png</file>
+        <file>dark/32x32/ease-in-circ.png</file>
+        <file>dark/32x32/ease-in-back.png</file>
+        <file>dark/32x32/ease-in-elas.png</file>
+        <file>dark/32x32/ease-in-boun.png</file>
+        <file>dark/32x32/ease-inout-sinu.png</file>
+        <file>dark/32x32/ease-inout-quad.png</file>
+        <file>dark/32x32/ease-inout-cube.png</file>
+        <file>dark/32x32/ease-inout-quar.png</file>
+        <file>dark/32x32/ease-inout-quin.png</file>
+        <file>dark/32x32/ease-inout-expo.png</file>
+        <file>dark/32x32/ease-inout-circ.png</file>
+        <file>dark/32x32/ease-inout-back.png</file>
+        <file>dark/32x32/ease-inout-elas.png</file>
+        <file>dark/32x32/ease-inout-boun.png</file>
+        <file>dark/32x32/ease-out-sinu.png</file>
+        <file>dark/32x32/ease-out-quad.png</file>
+        <file>dark/32x32/ease-out-cube.png</file>
+        <file>dark/32x32/ease-out-quar.png</file>
+        <file>dark/32x32/ease-out-quin.png</file>
+        <file>dark/32x32/ease-out-expo.png</file>
+        <file>dark/32x32/ease-out-circ.png</file>
+        <file>dark/32x32/ease-out-back.png</file>
+        <file>dark/32x32/ease-out-elas.png</file>
+        <file>dark/32x32/ease-out-boun.png</file>
         <file>dark/32x32/edit-undo.png</file>
         <file>dark/32x32/format-justify-fill.png</file>
         <file>dark/32x32/list-add.png</file>
@@ -36,6 +72,42 @@
         <file>dark/index.theme</file>
         <file>light/32x32/audio-meter.png</file>
         <file>light/32x32/edit-undo.png</file>
+        <file>light/32x32/keyframe-ease-in.png</file>
+        <file>light/32x32/keyframe-ease-inout.png</file>
+        <file>light/32x32/keyframe-ease-out.png</file>
+        <file>light/32x32/keyframe-hold.png</file>
+        <file>light/32x32/keyframe-linear.png</file>
+        <file>light/32x32/keyframe-smooth.png</file>
+        <file>light/32x32/ease-in-sinu.png</file>
+        <file>light/32x32/ease-in-quad.png</file>
+        <file>light/32x32/ease-in-cube.png</file>
+        <file>light/32x32/ease-in-quar.png</file>
+        <file>light/32x32/ease-in-quin.png</file>
+        <file>light/32x32/ease-in-expo.png</file>
+        <file>light/32x32/ease-in-circ.png</file>
+        <file>light/32x32/ease-in-back.png</file>
+        <file>light/32x32/ease-in-elas.png</file>
+        <file>light/32x32/ease-in-boun.png</file>
+        <file>light/32x32/ease-inout-sinu.png</file>
+        <file>light/32x32/ease-inout-quad.png</file>
+        <file>light/32x32/ease-inout-cube.png</file>
+        <file>light/32x32/ease-inout-quar.png</file>
+        <file>light/32x32/ease-inout-quin.png</file>
+        <file>light/32x32/ease-inout-expo.png</file>
+        <file>light/32x32/ease-inout-circ.png</file>
+        <file>light/32x32/ease-inout-back.png</file>
+        <file>light/32x32/ease-inout-elas.png</file>
+        <file>light/32x32/ease-inout-boun.png</file>
+        <file>light/32x32/ease-out-sinu.png</file>
+        <file>light/32x32/ease-out-quad.png</file>
+        <file>light/32x32/ease-out-cube.png</file>
+        <file>light/32x32/ease-out-quar.png</file>
+        <file>light/32x32/ease-out-quin.png</file>
+        <file>light/32x32/ease-out-expo.png</file>
+        <file>light/32x32/ease-out-circ.png</file>
+        <file>light/32x32/ease-out-back.png</file>
+        <file>light/32x32/ease-out-elas.png</file>
+        <file>light/32x32/ease-out-boun.png</file>
         <file>light/32x32/format-justify-fill.png</file>
         <file>light/32x32/list-add.png</file>
         <file>light/32x32/list-remove.png</file>
@@ -68,6 +140,42 @@
         <file>light/32x32/view-media-playlist.png</file>
         <file>light/32x32/window-close.png</file>
         <file>light/index.theme</file>
+        <file>oxygen/32x32/actions/keyframe-ease-in.png</file>
+        <file>oxygen/32x32/actions/keyframe-ease-inout.png</file>
+        <file>oxygen/32x32/actions/keyframe-ease-out.png</file>
+        <file>oxygen/32x32/actions/keyframe-hold.png</file>
+        <file>oxygen/32x32/actions/keyframe-linear.png</file>
+        <file>oxygen/32x32/actions/keyframe-smooth.png</file>
+        <file>oxygen/32x32/actions/ease-in-sinu.png</file>
+        <file>oxygen/32x32/actions/ease-in-quad.png</file>
+        <file>oxygen/32x32/actions/ease-in-cube.png</file>
+        <file>oxygen/32x32/actions/ease-in-quar.png</file>
+        <file>oxygen/32x32/actions/ease-in-quin.png</file>
+        <file>oxygen/32x32/actions/ease-in-expo.png</file>
+        <file>oxygen/32x32/actions/ease-in-circ.png</file>
+        <file>oxygen/32x32/actions/ease-in-back.png</file>
+        <file>oxygen/32x32/actions/ease-in-elas.png</file>
+        <file>oxygen/32x32/actions/ease-in-boun.png</file>
+        <file>oxygen/32x32/actions/ease-inout-sinu.png</file>
+        <file>oxygen/32x32/actions/ease-inout-quad.png</file>
+        <file>oxygen/32x32/actions/ease-inout-cube.png</file>
+        <file>oxygen/32x32/actions/ease-inout-quar.png</file>
+        <file>oxygen/32x32/actions/ease-inout-quin.png</file>
+        <file>oxygen/32x32/actions/ease-inout-expo.png</file>
+        <file>oxygen/32x32/actions/ease-inout-circ.png</file>
+        <file>oxygen/32x32/actions/ease-inout-back.png</file>
+        <file>oxygen/32x32/actions/ease-inout-elas.png</file>
+        <file>oxygen/32x32/actions/ease-inout-boun.png</file>
+        <file>oxygen/32x32/actions/ease-out-sinu.png</file>
+        <file>oxygen/32x32/actions/ease-out-quad.png</file>
+        <file>oxygen/32x32/actions/ease-out-cube.png</file>
+        <file>oxygen/32x32/actions/ease-out-quar.png</file>
+        <file>oxygen/32x32/actions/ease-out-quin.png</file>
+        <file>oxygen/32x32/actions/ease-out-expo.png</file>
+        <file>oxygen/32x32/actions/ease-out-circ.png</file>
+        <file>oxygen/32x32/actions/ease-out-back.png</file>
+        <file>oxygen/32x32/actions/ease-out-elas.png</file>
+        <file>oxygen/32x32/actions/ease-out-boun.png</file>
         <file>oxygen/32x32/actions/edit-undo.png</file>
         <file>oxygen/32x32/actions/format-justify-fill.png</file>
         <file>oxygen/32x32/actions/list-add.png</file>

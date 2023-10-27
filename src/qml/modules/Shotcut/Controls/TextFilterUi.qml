@@ -154,7 +154,7 @@ GridLayout {
         const data = motionTrackerModel.trackingData(motionTrackerRow);
         let previous = null;
         let interval = motionTrackerModel.keyframeIntervalFrames(motionTrackerRow);
-        let interpolation = Shotcut.KeyframesModel.SmoothInterpolation;
+        let interpolation = Shotcut.KeyframesModel.SmoothNaturalInterpolation;
         filter.blockSignals = true;
         data.forEach(i => {
                 let current = filter.getRect(rectProperty, frame);

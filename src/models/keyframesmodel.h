@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,39 @@ public:
     enum InterpolationType {
         DiscreteInterpolation,
         LinearInterpolation,
-        SmoothInterpolation
+        SmoothLooseInterpolation,
+        SmoothNaturalInterpolation,
+        SmoothTightInterpolation,
+        EaseInSinusoidal,
+        EaseOutSinusoidal,
+        EaseInOutSinusoidal,
+        EaseInQuadratic,
+        EaseOutQuadratic,
+        EaseInOutQuadratic,
+        EaseInCubic,
+        EaseOutCubic,
+        EaseInOutCubic,
+        EaseInQuartic,
+        EaseOutQuartic,
+        EaseInOutQuartic,
+        EaseInQuintic,
+        EaseOutQuintic,
+        EaseInOutQuintic,
+        EaseInExponential,
+        EaseOutExponential,
+        EaseInOutExponential,
+        EaseInCircular,
+        EaseOutCircular,
+        EaseInOutCircular,
+        EaseInBack,
+        EaseOutBack,
+        EaseInOutBack,
+        EaseInElastic,
+        EaseOutElastic,
+        EaseInOutElastic,
+        EaseInBounce,
+        EaseOutBounce,
+        EaseInOutBounce,
     };
     Q_ENUM(InterpolationType)
 
@@ -49,6 +81,7 @@ public:
         HighestValueRole, /// parameter only
         FrameNumberRole,  /// keyframe only
         KeyframeTypeRole, /// keyframe only
+        PrevKeyframeTypeRole, /// keyframe only
         NumericValueRole, /// keyframe only
         MinimumFrameRole, /// keyframe only
         MaximumFrameRole  /// keyframe only
@@ -83,6 +116,7 @@ public:
     Q_INVOKABLE void removeAdvancedKeyframes();
     Q_INVOKABLE bool simpleKeyframesInUse();
     Q_INVOKABLE void removeSimpleKeyframes();
+    int keyframeCount(int index) const;
 
 signals:
     void loaded();
@@ -102,7 +136,6 @@ private:
     QList<int> m_keyframeCounts;
     QList<int> m_metadataIndex;
 
-    int keyframeCount(int index) const;
     void updateNeighborsMinMax(int parameterIndex, int keyframeIndex);
 };
 

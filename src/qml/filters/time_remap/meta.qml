@@ -16,7 +16,6 @@ Metadata {
         allowTrim: false
         allowAnimateIn: false
         allowAnimateOut: false
-        allowSmooth: false
         parameters: [
             Parameter {
                 name: qsTr('Time')

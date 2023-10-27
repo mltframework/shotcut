@@ -72,14 +72,112 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                     switch (role) {
                     case Qt::DisplayRole:
                     case NameRole: {
-                        QString type = tr("Hold");
+                        QString type = tr("Linear");
                         switch (const_cast<Mlt::Animation &>(animation).key_get_type(index.row())) {
-                        case mlt_keyframe_linear:
-                            type = tr("Linear");
+                        case mlt_keyframe_discrete:
+                            type = tr("Hold");
                             break;
+#if LIBMLT_VERSION_INT >= ((7<<16)+(21<<8))
+                        case mlt_keyframe_smooth_loose:
+                        case mlt_keyframe_smooth_natural:
+                        case mlt_keyframe_smooth_tight:
+                            type = tr("Smooth");
+                            break;
+                        case mlt_keyframe_sinusoidal_in:
+                            type = tr("Ease In Sinusoidal");
+                            break;
+                        case mlt_keyframe_sinusoidal_out:
+                            type = tr("Ease Out Sinusoidal");
+                            break;
+                        case mlt_keyframe_sinusoidal_in_out:
+                            type = tr("Ease In/Out Sinusoidal");
+                            break;
+                        case mlt_keyframe_quadratic_in:
+                            type = tr("Ease In Quadtratic");
+                            break;
+                        case mlt_keyframe_quadratic_out:
+                            type = tr("Ease Out Quadratic");
+                            break;
+                        case mlt_keyframe_quadratic_in_out:
+                            type = tr("Ease In/Out Quadratic");
+                            break;
+                        case mlt_keyframe_cubic_in:
+                            type = tr("Ease In Cubic");
+                            break;
+                        case mlt_keyframe_cubic_out:
+                            type = tr("Ease Out Cubic");
+                            break;
+                        case mlt_keyframe_cubic_in_out:
+                            type = tr("Ease In/Out Cubic");
+                            break;
+                        case mlt_keyframe_quartic_in:
+                            type = tr("Ease In Quartic");
+                            break;
+                        case mlt_keyframe_quartic_out:
+                            type = tr("Ease Out Quartic");
+                            break;
+                        case mlt_keyframe_quartic_in_out:
+                            type = tr("Ease In/Out Quartic");
+                            break;
+                        case mlt_keyframe_quintic_in:
+                            type = tr("Ease In Quintic");
+                            break;
+                        case mlt_keyframe_quintic_out:
+                            type = tr("Ease Out Quintic");
+                            break;
+                        case mlt_keyframe_quintic_in_out:
+                            type = tr("Ease In/Out Quintic");
+                            break;
+                        case mlt_keyframe_exponential_in:
+                            type = tr("Ease In Exponential");
+                            break;
+                        case mlt_keyframe_exponential_out:
+                            type = tr("Ease Out Exponential");
+                            break;
+                        case mlt_keyframe_exponential_in_out:
+                            type = tr("Ease In/Out Exponential");
+                            break;
+                        case mlt_keyframe_circular_in:
+                            type = tr("Ease In Circular");
+                            break;
+                        case mlt_keyframe_circular_out:
+                            type = tr("Ease Out Circular");
+                            break;
+                        case mlt_keyframe_circular_in_out:
+                            type = tr("Ease In/Out Circular");
+                            break;
+                        case mlt_keyframe_back_in:
+                            type = tr("Ease In Back");
+                            break;
+                        case mlt_keyframe_back_out:
+                            type = tr("Ease Out Back");
+                            break;
+                        case mlt_keyframe_back_in_out:
+                            type = tr("Ease In/Out Back");
+                            break;
+                        case mlt_keyframe_elastic_in:
+                            type = tr("Ease In Elastic");
+                            break;
+                        case mlt_keyframe_elastic_out:
+                            type = tr("Ease Out Elastic");
+                            break;
+                        case mlt_keyframe_elastic_in_out:
+                            type = tr("Ease In/Out Elastic");
+                            break;
+                        case mlt_keyframe_bounce_in:
+                            type = tr("Ease In Bounce");
+                            break;
+                        case mlt_keyframe_bounce_out:
+                            type = tr("Ease Out Bounce");
+                            break;
+                        case mlt_keyframe_bounce_in_out:
+                            type = tr("Ease In/Out Bounce");
+                            break;
+#else
                         case mlt_keyframe_smooth:
                             type = tr("Smooth");
                             break;
+#endif
                         default:
                             break;
                         }
@@ -91,7 +189,15 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                     case FrameNumberRole:
                         return position;
                     case KeyframeTypeRole:
+                        if (index.row() >= animation.key_count() - 1) {
+                            return DiscreteInterpolation;
+                        }
                         return const_cast<Mlt::Animation &>(animation).key_get_type(index.row());
+                    case PrevKeyframeTypeRole:
+                        if (index.row() <= 0) {
+                            return DiscreteInterpolation;
+                        }
+                        return const_cast<Mlt::Animation &>(animation).key_get_type(index.row() - 1);
                     case NumericValueRole:
                         return m_filter->getDouble(name, position);
                     case MinimumFrameRole: {
@@ -226,6 +332,7 @@ QHash<int, QByteArray> KeyframesModel::roleNames() const
     roles[HighestValueRole] = "highest";
     roles[FrameNumberRole]  = "frame";
     roles[KeyframeTypeRole] = "interpolation";
+    roles[PrevKeyframeTypeRole] = "prevInterpolation";
     roles[NumericValueRole] = "value";
     roles[MinimumFrameRole] = "minimumFrame";
     roles[MaximumFrameRole] = "maximumFrame";
@@ -366,8 +473,12 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
                     Mlt::Animation animation = m_filter->getAnimation(name);
                     animation.key_set_type(keyframeIndex, mlt_keyframe_type(type));
                 }
+                mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
+                mlt_events_fire(m_filter->service().get_properties(), "property-changed", eventData);
                 QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << KeyframeTypeRole << NameRole);
+                QModelIndex nextModelIndex = index(keyframeIndex + 1, 0, index(parameterIndex));
+                emit dataChanged(nextModelIndex, nextModelIndex, QVector<int>() << PrevKeyframeTypeRole);
                 error = false;
                 emit m_filter->changed(name.toUtf8().constData());
                 emit m_filter->propertyChanged(name.toUtf8().constData());
@@ -426,6 +537,8 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
         if (animation.is_valid())
             animation.key_set_frame(keyframeIndex, position);
     }
+    mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
+    mlt_events_fire(m_filter->service().get_properties(), "property-changed", eventData);
     QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << FrameNumberRole << NameRole);
     updateNeighborsMinMax(parameterIndex, keyframeIndex);

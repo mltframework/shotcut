@@ -18,7 +18,6 @@ Metadata {
         allowAnimateIn: true
         allowAnimateOut: true
         simpleProperties: ['speed_map']
-        allowSmooth: false
         parameters: [
             Parameter {
                 name: qsTr('Speed')
