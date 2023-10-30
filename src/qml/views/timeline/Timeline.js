@@ -213,12 +213,13 @@ function selectClips() {
             for (let clipIndex = 0; clipIndex < track.clipCount; clipIndex++) {
                 let clip = track.clipAt(clipIndex);
                 if (!clip.isBlank) {
-                    rectB = Qt.rect(clip.x, clip.y, clip.width, clip.height);
+                    rectB = selectionBox.parent.mapFromItem(track, clip.x, clip.y, clip.width, clip.height)
                     if (application.intersects(rectA, rectB))
                         result.push(Qt.point(clipIndex, trackIndex));
                 }
             }
         }
     }
-    timeline.selection = result;
+    if (result.length > 0)
+        timeline.selection = result;
 }
