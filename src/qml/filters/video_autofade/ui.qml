@@ -117,7 +117,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Fade Color')
+            text: qsTr('Fade color')
             Layout.alignment: Qt.AlignRight
         }
 
