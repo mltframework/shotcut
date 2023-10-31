@@ -28,8 +28,10 @@ Item {
     height: 125
     Component.onCompleted: {
         if (filter.isNew) {
-            // Set default parameter values
             filter.set('fade_duration', 100);
+            filter.savePreset(preset.parameters, qsTr('Fast Fade'));
+            // Set default parameter values
+            filter.set('fade_duration', 500);
             filter.savePreset(preset.parameters);
         }
         setControls();

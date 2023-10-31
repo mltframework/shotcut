@@ -29,10 +29,13 @@ Item {
     height: 125
     Component.onCompleted: {
         if (filter.isNew) {
-            // Set default parameter values
             filter.set('fade_audio', 0);
             filter.set('fade_video', 1);
-            filter.set('fade_duration', 100);
+            filter.set('fade_duration', 500);
+            filter.set('fade_color', Qt.rgba(1, 1, 1, 1));
+            filter.savePreset(preset.parameters, qsTr('Fade to White'));
+            // Set default parameter values
+            filter.set('fade_duration', 500);
             filter.set('fade_color', Qt.rgba(0, 0, 0, 1));
             filter.savePreset(preset.parameters);
         }
@@ -86,7 +89,7 @@ Item {
         Shotcut.Preset {
             id: preset
 
-            parameters: ['fade_duration']
+            parameters: ['fade_duration', 'fade_color']
             Layout.columnSpan: 2
             onPresetSelected: setControls()
         }
