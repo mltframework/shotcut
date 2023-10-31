@@ -206,6 +206,8 @@ public:
     void setTimelinePreviewTransition(bool);
     void setTimelineScrolling(TimelineScrolling value);
     TimelineScrolling timelineScrolling() const;
+    bool timelineAutoAddTracks() const;
+    void setTimelineAutoAddTracks(bool);
 
     // filter
     QString filterFavorite(const QString &filterName);
@@ -315,6 +317,7 @@ signals:
     void smallIconsChanged();
     void askOutputFilterChanged();
     void timelineScrollingChanged();
+    void timelineAutoAddTracksChanged();
 
 private:
     explicit ShotcutSettings();

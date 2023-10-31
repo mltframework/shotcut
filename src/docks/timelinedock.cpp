@@ -253,6 +253,14 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, SIGNAL(created()), SLOT(reloadTimelineMarkers()));
     connect(&m_model, SIGNAL(loaded()), SLOT(reloadTimelineMarkers()));
     connect(&m_model, SIGNAL(closed()), SLOT(reloadTimelineMarkers()));
+    connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, [ = ](bool isAudio) {
+        if (Settings.timelineAutoAddTracks()) {
+            if (isAudio)
+                addAudioTrack();
+            else
+                addVideoTrack();
+        }
+    }, Qt::QueuedConnection);
 
     vboxLayout->addWidget(&m_quickView);
 
@@ -788,6 +796,17 @@ void TimelineDock::setupActions()
         createOrEditSelectionMarker();
     });
     Actions.add("timelineMarkSelectedClipAction", action);
+
+    action = new QAction(tr("Automatically Add Tracks"), this);
+    action->setCheckable(true);
+    action->setChecked(Settings.timelineAutoAddTracks());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setTimelineAutoAddTracks(checked);
+    });
+    connect(&Settings, &ShotcutSettings::timelineAutoAddTracksChanged, action, [ = ]() {
+        action->setChecked(Settings.timelineAutoAddTracks());
+    });
+    Actions.add("timelineAutoAddTracksAction", action);
 
     action = new QAction(tr("Snap"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_P));
@@ -2156,7 +2175,6 @@ void TimelineDock::commitTrimCommand()
 
 void TimelineDock::onRowsInserted(const QModelIndex &parent, int first, int last)
 {
-    Q_UNUSED(parent)
     // Adjust selected clips for changed indices.
     if (-1 == m_selection.selectedTrack) {
         QList<QPoint> newSelection;

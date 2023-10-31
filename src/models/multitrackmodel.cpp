@@ -2552,6 +2552,24 @@ int MultitrackModel::bottomVideoTrackMltIndex() const
     return mltIndexForTrack(bottomVideoTrackIndex());
 }
 
+bool MultitrackModel::hasEmptyTrack(TrackType trackType) const
+{
+    bool isEmpty = false;
+    for (auto a : m_trackList) {
+        if (a.type == trackType) {
+            QScopedPointer<Mlt::Producer> producer(m_tractor->track(a.mlt_index));
+            if (producer) {
+                Mlt::Playlist track(*producer);
+                if (track.count() == 1 && track.is_blank(0)) {
+                    isEmpty = true;
+                    break;
+                }
+            }
+        }
+    }
+    return isEmpty;
+}
+
 void MultitrackModel::refreshVideoBlendTransitions()
 {
     int a_track = bottomVideoTrackMltIndex();
@@ -3668,5 +3686,10 @@ void MultitrackModel::removeBlankPlaceholder(Mlt::Playlist &playlist, int trackI
         beginRemoveRows(index(trackIndex), 0, 0);
         playlist.remove(0);
         endRemoveRows();
+
+        // Check for empty tracks
+        auto trackType = m_trackList.at(trackIndex).type;
+        if (!hasEmptyTrack(trackType))
+            emit noMoreEmptyTracks(AudioTrackType == trackType);
     }
 }

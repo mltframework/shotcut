@@ -142,6 +142,7 @@ signals:
     void inserted(int trackIndex, int clipIndex);
     void overWritten(int trackIndex, int clipIndex);
     void removing(Mlt::Service *service);
+    void noMoreEmptyTracks(bool isAudio);
 
 public slots:
     void refreshTrackList();
@@ -217,6 +218,7 @@ private:
     Mlt::Transition *getVideoBlendTransition(int trackIndex) const;
     void refreshVideoBlendTransitions();
     int bottomVideoTrackMltIndex() const;
+    bool hasEmptyTrack(TrackType trackType) const;
 
     friend class UndoHelper;
 

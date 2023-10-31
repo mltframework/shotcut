@@ -740,6 +740,17 @@ ShotcutSettings::TimelineScrolling ShotcutSettings::timelineScrolling() const
                                                                  PageScrolling).toInt());
 }
 
+bool ShotcutSettings::timelineAutoAddTracks() const
+{
+    return settings.value("timeline/autoAddTracks", false).toBool();
+}
+
+void ShotcutSettings::setTimelineAutoAddTracks(bool b)
+{
+    settings.setValue("timeline/autoAddTracks", b);
+    emit timelineAutoAddTracksChanged();
+}
+
 QString ShotcutSettings::filterFavorite(const QString &filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();
