@@ -349,7 +349,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             ui->rangeComboBox->setCurrentIndex(1);
         } else if (name != "an" && name != "vn" && name != "threads"
                    && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
-                   && !name.startsWith('_') && !name.startsWith("meta.preset.")) {
+                   && !name.startsWith('_') && !name.startsWith("qp_") && !name.startsWith("meta.preset.")) {
             other.append(QString("%1=%2").arg(name, value));
         }
     }
