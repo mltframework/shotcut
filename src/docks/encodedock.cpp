@@ -63,6 +63,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     m_fps(0.0)
 {
     LOG_DEBUG() << "begin";
+    initSpecialCodecLists();
     ui->setupUi(this);
     ui->stopCaptureButton->hide();
     ui->advancedButton->setChecked(Settings.encodeAdvanced());
@@ -1984,12 +1985,25 @@ void EncodeDock::on_fromCombo_currentIndexChanged(int index)
 
 void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
 {
+    auto lossy = !m_losslessVideoCodecs.contains(ui->videoCodecCombo->currentText());
+    ui->videoRateControlCombo->setEnabled(lossy);
+    ui->videoBitrateCombo->setEnabled(lossy);
+    ui->videoBufferSizeSpinner->setEnabled(lossy);
+    ui->videoQualitySpinner->setEnabled(lossy);
+    auto intraOnly = m_intraOnlyCodecs.contains(ui->videoCodecCombo->currentText());
+    ui->gopSpinner->setEnabled(!intraOnly);
+    ui->strictGopCheckBox->setEnabled(!intraOnly);
+    ui->bFramesSpinner->setEnabled(!intraOnly);
     onVideoCodecComboChanged(index);
 }
 
 void EncodeDock::on_audioCodecCombo_currentIndexChanged(int index)
 {
     Q_UNUSED(index)
+    auto lossy = !m_losslessAudioCodecs.contains(ui->audioCodecCombo->currentText());
+    ui->audioRateControlCombo->setEnabled(lossy);
+    ui->audioBitrateCombo->setEnabled(lossy);
+    ui->audioQualitySpinner->setEnabled(lossy);
     on_audioQualitySpinner_valueChanged(ui->audioQualitySpinner->value());
 }
 
@@ -2234,6 +2248,149 @@ QString &EncodeDock::defaultFormatExtension()
         LOG_ERROR() << "ffmpeg failed with" << proc.exitCode();
     }
     return m_extension;
+}
+
+void EncodeDock::initSpecialCodecLists()
+{
+    m_intraOnlyCodecs << "a64_multi";
+    m_intraOnlyCodecs << "a64_multi5";
+    m_intraOnlyCodecs << "alias_pix";
+    m_intraOnlyCodecs << "amv";
+    m_intraOnlyCodecs << "asv1";
+    m_intraOnlyCodecs << "asv2";
+    m_intraOnlyCodecs << "avrp";
+    m_intraOnlyCodecs << "avui";
+    m_intraOnlyCodecs << "ayuv";
+    m_intraOnlyCodecs << "bitpacked";
+    m_intraOnlyCodecs << "bmp";
+    m_intraOnlyCodecs << "cljr";
+    m_intraOnlyCodecs << "dnxhd";
+    m_intraOnlyCodecs << "dpx";
+    m_intraOnlyCodecs << "dvvideo";
+    m_intraOnlyCodecs << "exr";
+    m_intraOnlyCodecs << "ffvhuff";
+    m_intraOnlyCodecs << "fits";
+    m_intraOnlyCodecs << "hdr";
+    m_intraOnlyCodecs << "huffyuv";
+    m_intraOnlyCodecs << "jpeg2000";
+    m_intraOnlyCodecs << "jpegls";
+    m_intraOnlyCodecs << "ljpeg";
+    m_intraOnlyCodecs << "magicyuv";
+    m_intraOnlyCodecs << "mjpeg";
+    m_intraOnlyCodecs << "pam";
+    m_intraOnlyCodecs << "pbm";
+    m_intraOnlyCodecs << "pcx";
+    m_intraOnlyCodecs << "pfm";
+    m_intraOnlyCodecs << "pgm";
+    m_intraOnlyCodecs << "pgmyuv";
+    m_intraOnlyCodecs << "phm";
+    m_intraOnlyCodecs << "ppm";
+    m_intraOnlyCodecs << "prores";
+    m_intraOnlyCodecs << "qoi";
+    m_intraOnlyCodecs << "r10k";
+    m_intraOnlyCodecs << "r210";
+    m_intraOnlyCodecs << "rawvideo";
+    m_intraOnlyCodecs << "sgi";
+    m_intraOnlyCodecs << "speedhq";
+    m_intraOnlyCodecs << "sunrast";
+    m_intraOnlyCodecs << "targa";
+    m_intraOnlyCodecs << "tiff";
+    m_intraOnlyCodecs << "utvideo";
+    m_intraOnlyCodecs << "v210";
+    m_intraOnlyCodecs << "v308";
+    m_intraOnlyCodecs << "v408";
+    m_intraOnlyCodecs << "v410";
+    m_intraOnlyCodecs << "wbmp";
+    m_intraOnlyCodecs << "webp";
+    m_intraOnlyCodecs << "xbm";
+    m_intraOnlyCodecs << "xface";
+    m_intraOnlyCodecs << "xwd";
+    m_intraOnlyCodecs << "y41p";
+    m_intraOnlyCodecs << "yuv4";
+    m_intraOnlyCodecs << "zlib";
+
+    m_losslessVideoCodecs << "alias_pix";
+    m_losslessVideoCodecs << "apng";
+    m_losslessVideoCodecs << "avrp";
+    m_losslessVideoCodecs << "avui";
+    m_losslessVideoCodecs << "ayuv";
+    m_losslessVideoCodecs << "bitpacked";
+    m_losslessVideoCodecs << "bmp";
+    m_losslessVideoCodecs << "dpx";
+    m_losslessVideoCodecs << "ffv1";
+    m_losslessVideoCodecs << "ffvhuff";
+    m_losslessVideoCodecs << "fits";
+    m_losslessVideoCodecs << "flashsv";
+    m_losslessVideoCodecs << "gif";
+    m_losslessVideoCodecs << "huffyuv";
+    m_losslessVideoCodecs << "ljpeg";
+    m_losslessVideoCodecs << "magicyuv";
+    m_losslessVideoCodecs << "pam";
+    m_losslessVideoCodecs << "pbm";
+    m_losslessVideoCodecs << "pcx";
+    m_losslessVideoCodecs << "pfm";
+    m_losslessVideoCodecs << "pgm";
+    m_losslessVideoCodecs << "pgmyuv";
+    m_losslessVideoCodecs << "phm";
+    m_losslessVideoCodecs << "png";
+    m_losslessVideoCodecs << "ppm";
+    m_losslessVideoCodecs << "qoi";
+    m_losslessVideoCodecs << "qtrle";
+    m_losslessVideoCodecs << "r10k";
+    m_losslessVideoCodecs << "r210";
+    m_losslessVideoCodecs << "rawvideo";
+    m_losslessVideoCodecs << "sgi";
+    m_losslessVideoCodecs << "sunrast";
+    m_losslessVideoCodecs << "targa";
+    m_losslessVideoCodecs << "tiff";
+    m_losslessVideoCodecs << "utvideo";
+    m_losslessVideoCodecs << "v210";
+    m_losslessVideoCodecs << "v308";
+    m_losslessVideoCodecs << "v408";
+    m_losslessVideoCodecs << "v410";
+    m_losslessVideoCodecs << "wbmp";
+    m_losslessVideoCodecs << "wrapped_avframe";
+    m_losslessVideoCodecs << "xbm";
+    m_losslessVideoCodecs << "xwd";
+    m_losslessVideoCodecs << "y41p";
+    m_losslessVideoCodecs << "yuv4";
+    m_losslessVideoCodecs << "zlib";
+    m_losslessVideoCodecs << "zmbv";
+
+    m_losslessAudioCodecs << "alac";
+    m_losslessAudioCodecs << "flac";
+    m_losslessAudioCodecs << "mlp";
+    m_losslessAudioCodecs << "pcm_bluray";
+    m_losslessAudioCodecs << "pcm_dvd";
+    m_losslessAudioCodecs << "pcm_f32be";
+    m_losslessAudioCodecs << "pcm_f32le";
+    m_losslessAudioCodecs << "pcm_f64be";
+    m_losslessAudioCodecs << "pcm_f64le";
+    m_losslessAudioCodecs << "pcm_s16be";
+    m_losslessAudioCodecs << "pcm_s16be_planar";
+    m_losslessAudioCodecs << "pcm_s16le";
+    m_losslessAudioCodecs << "pcm_s16le_planar";
+    m_losslessAudioCodecs << "pcm_s24be";
+    m_losslessAudioCodecs << "pcm_s24daud";
+    m_losslessAudioCodecs << "pcm_s24le";
+    m_losslessAudioCodecs << "pcm_s24le_planar";
+    m_losslessAudioCodecs << "pcm_s32be";
+    m_losslessAudioCodecs << "pcm_s32le";
+    m_losslessAudioCodecs << "pcm_s32le_planar";
+    m_losslessAudioCodecs << "pcm_s64be";
+    m_losslessAudioCodecs << "pcm_s64le";
+    m_losslessAudioCodecs << "pcm_s8";
+    m_losslessAudioCodecs << "pcm_s8_planar";
+    m_losslessAudioCodecs << "pcm_u16be";
+    m_losslessAudioCodecs << "pcm_u16le";
+    m_losslessAudioCodecs << "pcm_u24be";
+    m_losslessAudioCodecs << "pcm_u24le";
+    m_losslessAudioCodecs << "pcm_u32be";
+    m_losslessAudioCodecs << "pcm_u32le";
+    m_losslessAudioCodecs << "pcm_u8";
+    m_losslessAudioCodecs << "s302m";
+    m_losslessAudioCodecs << "truehd";
+    m_losslessAudioCodecs << "tta";
 }
 
 bool EncodeDock::checkForMissingFiles()

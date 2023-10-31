@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include <QDomElement>
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
+#include <QStringList>
 #include <MltProperties.h>
 
 class QTreeWidgetItem;
@@ -149,6 +150,9 @@ private:
     QStringList m_outputFilenames;
     bool m_isDefaultSettings;
     double m_fps;
+    QStringList m_intraOnlyCodecs;
+    QStringList m_losslessVideoCodecs;
+    QStringList m_losslessAudioCodecs;
 
     void loadPresets();
     Mlt::Properties *collectProperties(int realtime, bool includeProfile = false);
@@ -165,6 +169,7 @@ private:
     void onVideoCodecComboChanged(int index, bool ignorePreset = false);
     bool checkForMissingFiles();
     QString &defaultFormatExtension();
+    void initSpecialCodecLists();
 };
 
 #endif // ENCODEDOCK_H
