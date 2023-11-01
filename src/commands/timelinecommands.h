@@ -467,7 +467,7 @@ class RemoveTransitionByTrimInCommand : public TrimCommand
 {
 public:
     RemoveTransitionByTrimInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta,
-                                    bool redo = true, QUndoCommand *parent = 0);
+                                    QString xml, bool redo = true, QUndoCommand *parent = 0);
     void redo();
     void undo();
 private:
@@ -475,6 +475,7 @@ private:
     int m_trackIndex;
     int m_clipIndex;
     int m_delta;
+    QString m_xml;
     bool m_redo;
 };
 
@@ -482,7 +483,7 @@ class RemoveTransitionByTrimOutCommand : public TrimCommand
 {
 public:
     RemoveTransitionByTrimOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta,
-                                     bool redo = true, QUndoCommand *parent = 0);
+                                     QString xml, bool redo = true, QUndoCommand *parent = 0);
     void redo();
     void undo();
 private:
@@ -490,6 +491,7 @@ private:
     int m_trackIndex;
     int m_clipIndex;
     int m_delta;
+    QString m_xml;
     bool m_redo;
 };
 

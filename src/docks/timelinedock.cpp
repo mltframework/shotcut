@@ -2665,18 +2665,18 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);
     } else if (!ripple && m_model.removeTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
         Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-        QModelIndex modelIndex = m_model.makeIndex(trackIndex, clipIndex - 1);
-        int n = m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
+        std::unique_ptr<Mlt::ClipInfo> clipInfo = m_model.getClipInfo(trackIndex, clipIndex - 1);
+        QString xml = MLT.XML(clipInfo->producer);
         m_model.liftClip(trackIndex, clipIndex - 1);
         if (delta < 0 ) {
-            m_model.trimClipIn(trackIndex, clipIndex, -n, false, false);
-            m_trimDelta += -n;
+            m_model.trimClipIn(trackIndex, clipIndex, -clipInfo->length, false, false);
+            m_trimDelta += -clipInfo->length;
         } else if (delta > 0) {
-            m_model.trimClipOut(trackIndex, clipIndex - 2, -n, false, false);
+            m_model.trimClipOut(trackIndex, clipIndex - 2, -clipInfo->length, false, false);
             m_transitionDelta = 0;
         }
         m_trimCommand.reset(new Timeline::RemoveTransitionByTrimInCommand(m_model, trackIndex,
-                                                                          clipIndex - 1, m_trimDelta, false));
+                                                                          clipIndex - 1, m_trimDelta, xml, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
                 && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex - 1, -1);
@@ -2726,18 +2726,18 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);
     } else if (!ripple && m_model.removeTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
         Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-        QModelIndex modelIndex = m_model.makeIndex(trackIndex, clipIndex + 1);
-        int n = m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
+        std::unique_ptr<Mlt::ClipInfo> clipInfo = m_model.getClipInfo(trackIndex, clipIndex + 1);
+        QString xml = MLT.XML(clipInfo->producer);
         m_model.liftClip(trackIndex, clipIndex + 1);
         if (delta < 0 ) {
-            m_model.trimClipOut(trackIndex, clipIndex, -n, false, false);
-            m_trimDelta += -n;
+            m_model.trimClipOut(trackIndex, clipIndex, -clipInfo->length, false, false);
+            m_trimDelta += -clipInfo->length;
         } else if (delta > 0) {
-            m_model.trimClipIn(trackIndex, clipIndex + 2, -n, false, false);
+            m_model.trimClipIn(trackIndex, clipIndex + 2, -clipInfo->length, false, false);
             m_transitionDelta = 0;
         }
         m_trimCommand.reset(new Timeline::RemoveTransitionByTrimOutCommand(m_model, trackIndex,
-                                                                           clipIndex + 1, m_trimDelta, false));
+                                                                           clipIndex + 1, m_trimDelta, xml, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
                 && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);
