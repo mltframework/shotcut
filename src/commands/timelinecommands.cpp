@@ -1137,12 +1137,13 @@ bool AddTransitionByTrimInCommand::mergeWith(const QUndoCommand *other)
 }
 
 RemoveTransitionByTrimInCommand::RemoveTransitionByTrimInCommand(MultitrackModel &model,
-                                                                 int trackIndex, int clipIndex, int delta, bool redo, QUndoCommand *parent)
+                                                                 int trackIndex, int clipIndex, int delta, QString xml, bool redo, QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_clipIndex(clipIndex)
     , m_delta(delta)
+    , m_xml(xml)
     , m_redo(redo)
 {
     setText(QObject::tr("Remove transition"));
@@ -1167,17 +1168,39 @@ void RemoveTransitionByTrimInCommand::undo()
     if (m_clipIndex > 0) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
         m_model.addTransitionByTrimOut(m_trackIndex, m_clipIndex - 1, m_delta);
+        // Copy properties from old transition to new transition
+        auto clipInfo = m_model.getClipInfo(m_trackIndex, m_clipIndex);
+        Mlt::Service oldService = Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+        while (oldService.is_valid()) {
+            if (oldService.type() == mlt_service_transition_type) {
+                Mlt::Service newService(clipInfo->producer);
+                while (newService.is_valid()) {
+                    if (newService.type() == mlt_service_transition_type &&
+                            QString(oldService.get("mlt_service")) == QString(newService.get("mlt_service"))) {
+                        newService.inherit(oldService);
+                        break;
+                    }
+                    Mlt::Service *tmpNewService = newService.producer();
+                    newService = Mlt::Service(*tmpNewService);
+                    delete tmpNewService;
+                }
+            }
+            Mlt::Service *tmpOldService = oldService.producer();
+            oldService = Mlt::Service(*tmpOldService);
+            delete tmpOldService;
+        }
         m_model.notifyClipIn(m_trackIndex, m_clipIndex + 1);
     } else LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
 RemoveTransitionByTrimOutCommand::RemoveTransitionByTrimOutCommand(MultitrackModel &model,
-                                                                   int trackIndex, int clipIndex, int delta, bool redo, QUndoCommand *parent)
+                                                                   int trackIndex, int clipIndex, int delta, QString xml, bool redo, QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_clipIndex(clipIndex)
     , m_delta(delta)
+    , m_xml(xml)
     , m_redo(redo)
 {
     setText(QObject::tr("Remove transition"));
@@ -1202,6 +1225,27 @@ void RemoveTransitionByTrimOutCommand::undo()
     if (m_clipIndex > 0) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
         m_model.addTransitionByTrimIn(m_trackIndex, m_clipIndex, m_delta);
+        // Copy properties from old transition to new transition
+        auto clipInfo = m_model.getClipInfo(m_trackIndex, m_clipIndex);
+        Mlt::Service oldService = Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+        while (oldService.is_valid()) {
+            if (oldService.type() == mlt_service_transition_type) {
+                Mlt::Service newService(clipInfo->producer);
+                while (newService.is_valid()) {
+                    if (newService.type() == mlt_service_transition_type &&
+                            QString(oldService.get("mlt_service")) == QString(newService.get("mlt_service"))) {
+                        newService.inherit(oldService);
+                        break;
+                    }
+                    Mlt::Service *tmpNewService = newService.producer();
+                    newService = Mlt::Service(*tmpNewService);
+                    delete tmpNewService;
+                }
+            }
+            Mlt::Service *tmpOldService = oldService.producer();
+            oldService = Mlt::Service(*tmpOldService);
+            delete tmpOldService;
+        }
         m_model.notifyClipOut(m_trackIndex, m_clipIndex - 1);
     } else LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
