@@ -2252,8 +2252,8 @@ QString &EncodeDock::defaultFormatExtension()
 
 void EncodeDock::initSpecialCodecLists()
 {
-    m_intraOnlyCodecs << "a64_multi";
-    m_intraOnlyCodecs << "a64_multi5";
+    m_intraOnlyCodecs << "a64multi";
+    m_intraOnlyCodecs << "a64multi5";
     m_intraOnlyCodecs << "alias_pix";
     m_intraOnlyCodecs << "amv";
     m_intraOnlyCodecs << "asv1";
@@ -2277,6 +2277,7 @@ void EncodeDock::initSpecialCodecLists()
     m_intraOnlyCodecs << "ljpeg";
     m_intraOnlyCodecs << "magicyuv";
     m_intraOnlyCodecs << "mjpeg";
+    m_intraOnlyCodecs << "mjpeg_vaapi";
     m_intraOnlyCodecs << "pam";
     m_intraOnlyCodecs << "pbm";
     m_intraOnlyCodecs << "pcx";
@@ -2286,6 +2287,8 @@ void EncodeDock::initSpecialCodecLists()
     m_intraOnlyCodecs << "phm";
     m_intraOnlyCodecs << "ppm";
     m_intraOnlyCodecs << "prores";
+    m_intraOnlyCodecs << "prores_aw";
+    m_intraOnlyCodecs << "prores_ks";
     m_intraOnlyCodecs << "qoi";
     m_intraOnlyCodecs << "r10k";
     m_intraOnlyCodecs << "r210";
@@ -2301,7 +2304,8 @@ void EncodeDock::initSpecialCodecLists()
     m_intraOnlyCodecs << "v408";
     m_intraOnlyCodecs << "v410";
     m_intraOnlyCodecs << "wbmp";
-    m_intraOnlyCodecs << "webp";
+    m_intraOnlyCodecs << "libwebp_anim";
+    m_intraOnlyCodecs << "libwebp";
     m_intraOnlyCodecs << "xbm";
     m_intraOnlyCodecs << "xface";
     m_intraOnlyCodecs << "xwd";
