@@ -409,6 +409,7 @@ Rectangle {
                         selectionBox.x = startX + tracksFlickable.contentX;
                         startY = mouse.y;
                         selectionBox.y = startY + tracksFlickable.contentY - ruler.height;
+                        selectionBox.width = selectionBox.height = 0;
                         selectionBox.visible = true;
                     }
                 }
