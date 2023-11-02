@@ -2256,6 +2256,7 @@ void EncodeDock::initSpecialCodecLists()
     m_intraOnlyCodecs << "a64multi5";
     m_intraOnlyCodecs << "alias_pix";
     m_intraOnlyCodecs << "amv";
+    m_intraOnlyCodecs << "apng";
     m_intraOnlyCodecs << "asv1";
     m_intraOnlyCodecs << "asv2";
     m_intraOnlyCodecs << "avrp";
@@ -2270,6 +2271,7 @@ void EncodeDock::initSpecialCodecLists()
     m_intraOnlyCodecs << "exr";
     m_intraOnlyCodecs << "ffvhuff";
     m_intraOnlyCodecs << "fits";
+    m_intraOnlyCodecs << "gif";
     m_intraOnlyCodecs << "hdr";
     m_intraOnlyCodecs << "huffyuv";
     m_intraOnlyCodecs << "jpeg2000";
@@ -2285,6 +2287,7 @@ void EncodeDock::initSpecialCodecLists()
     m_intraOnlyCodecs << "pgm";
     m_intraOnlyCodecs << "pgmyuv";
     m_intraOnlyCodecs << "phm";
+    m_intraOnlyCodecs << "png";
     m_intraOnlyCodecs << "ppm";
     m_intraOnlyCodecs << "prores";
     m_intraOnlyCodecs << "prores_aw";
