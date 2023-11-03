@@ -2673,6 +2673,20 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
 bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, int delta,
                               bool ripple)
 {
+    if (dynamic_cast<Timeline::RemoveTransitionByTrimInCommand *>(m_trimCommand.get())) {
+        if (delta < 0) {
+            // Do not trim past the removed tansition
+            return false;
+        } else {
+            // Untrimming - Restore the transition
+            dynamic_cast<Timeline::RemoveTransitionByTrimInCommand *>(m_trimCommand.get())->undo();
+            m_trimCommand.release();
+            m_undoHelper.release();
+            delta += m_trimDelta;
+            m_trimDelta = 0;
+            clipIndex += 1;
+        }
+    }
     if (!ripple && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
         clipIndex = m_model.addTransitionByTrimIn(trackIndex, clipIndex, delta);
         m_transitionDelta += delta;
@@ -2734,6 +2748,19 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
 
 bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple)
 {
+    if (dynamic_cast<Timeline::RemoveTransitionByTrimOutCommand *>(m_trimCommand.get())) {
+        if (delta < 0) {
+            // Do not trim past the removed tansition
+            return false;
+        } else {
+            // Untrimming - Restore the transition
+            dynamic_cast<Timeline::RemoveTransitionByTrimOutCommand *>(m_trimCommand.get())->undo();
+            m_trimCommand.release();
+            m_undoHelper.release();
+            delta += m_trimDelta;
+            m_trimDelta = 0;
+        }
+    }
     if (!ripple && m_model.addTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
         m_model.addTransitionByTrimOut(trackIndex, clipIndex, delta);
         m_transitionDelta += delta;
