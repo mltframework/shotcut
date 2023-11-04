@@ -171,6 +171,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
             args << "-codec:v" << "hevc_nvenc";
             args << "-rc" << "constqp";
             args << "-qp:v" << "37";
+            args << "b_ref_mode" << "0";
         } else if (hwCodecs.contains("hevc_qsv")) {
             args << "-load_plugin" << "hevc_hw";
             args << "-codec:v" << "hevc_qsv";
@@ -187,6 +188,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
             args << "-codec:v" << "h264_nvenc";
             args << "-rc" << "constqp";
             args << "-qp:v" << "37";
+            args << "b_ref_mode" << "0";
         } else if (hwCodecs.contains("h264_vaapi")) {
             args << "-init_hw_device" << "vaapi=vaapi0:" << "-filter_hw_device" << "vaapi0";
             args << "-codec:v" << "h264_vaapi";
