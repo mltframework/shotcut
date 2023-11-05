@@ -39,7 +39,7 @@ Metadata {
                 maximum: 180
             },
             Parameter {
-                name: qsTr('FOV')
+                name: qsTr('FOV', 'field of view')
                 property: 'fov'
                 isCurve: true
                 minimum: 0

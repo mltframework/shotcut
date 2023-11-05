@@ -11694,6 +11694,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="42"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
         <source>FOV</source>
+        <comment>field of view</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12653,7 +12654,7 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="136"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="543"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="544"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="544"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="619"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="694"/>
@@ -14184,12 +14185,24 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="498"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="499"/>
+        <source>FOV</source>
+        <comment>field of view</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="500"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="501"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="984"/>
+        <source>Field of view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="982"/>
         <source>FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="542"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="543"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="450"/>
         <source>Fisheye</source>
         <translation type="unfinished"></translation>
@@ -14393,7 +14406,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="279"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="373"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1392"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1393"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14470,8 +14483,8 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1026"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1349"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1027"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1350"/>
         <location filename="../src/qml/filters/crop_circle/ui.qml" line="63"/>
         <location filename="../src/qml/filters/halftone/ui.qml" line="104"/>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="33"/>
@@ -14479,19 +14492,19 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1069"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1070"/>
         <source>Front</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1075"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1212"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1076"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1213"/>
         <source>X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1118"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1255"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1119"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1256"/>
         <location filename="../src/qml/filters/corners/ui.qml" line="405"/>
         <location filename="../src/qml/filters/corners/ui.qml" line="457"/>
         <location filename="../src/qml/filters/corners/ui.qml" line="509"/>
@@ -14502,12 +14515,12 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1206"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1207"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1343"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1344"/>
         <source>Nadir</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15571,8 +15584,8 @@ All = 360° + Randomize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1161"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1298"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1162"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1299"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="217"/>
         <source>Up</source>
         <translation type="unfinished"></translation>

@@ -981,6 +981,9 @@ Item {
         Label {
             text: qsTr('FOV')
             Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip {
+                text: qsTr('Field of view')
+            }
         }
 
         Shotcut.SliderSpinner {
