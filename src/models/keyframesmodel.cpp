@@ -93,7 +93,7 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                             type = tr("Ease In/Out Sinusoidal");
                             break;
                         case mlt_keyframe_quadratic_in:
-                            type = tr("Ease In Quadtratic");
+                            type = tr("Ease In Quadratic");
                             break;
                         case mlt_keyframe_quadratic_out:
                             type = tr("Ease Out Quadratic");

@@ -3256,7 +3256,7 @@ the list. This does not stop a currently running job. Right-
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="96"/>
-        <source>Ease In Quadtratic</source>
+        <source>Ease In Quadratic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7107,7 +7107,7 @@ Do you still want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/proxymanager.cpp" line="227"/>
+        <location filename="../src/proxymanager.cpp" line="229"/>
         <source>Make proxy for %1</source>
         <translation type="unfinished"></translation>
     </message>
