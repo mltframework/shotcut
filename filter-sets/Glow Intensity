@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mlt LC_NUMERIC="C" version="7.21.0" root="" parent="producer0" in="00:00:00.000" out="00:08:20.487">
+  <producer id="producer0" in="00:00:00.000" out="00:08:20.487">
+    <property name="length">15000</property>
+    <property name="eof">pause</property>
+    <property name="resource">black</property>
+    <property name="aspect_ratio">1</property>
+    <property name="mlt_service">color</property>
+    <property name="shotcut:filtersClipboard">1</property>
+    <filter id="filter0" out="00:00:30.030">
+      <property name="filter">shape</property>
+      <property name="mlt_service">mask_start</property>
+      <property name="shotcut:filter">maskFromFile</property>
+      <property name="filter.mix">100</property>
+      <property name="filter.softness">0</property>
+      <property name="filter.invert">0</property>
+      <property name="filter.use_luminance">1</property>
+      <property name="filter.resource">%luma01.pgm</property>
+      <property name="filter.use_mix">1</property>
+      <property name="filter.audio_match">0</property>
+      <property name="filter.alpha_operation">overwrite</property>
+    </filter>
+    <filter id="filter1" out="00:00:30.030">
+      <property name="version">0.1</property>
+      <property name="mlt_service">frei0r.glow</property>
+      <property name="0">0.5</property>
+    </filter>
+    <filter id="filter2" out="00:00:30.030">
+      <property name="start">1</property>
+      <property name="level">1</property>
+      <property name="mlt_service">brightness</property>
+      <property name="shotcut:filter">brightnessOpacity</property>
+      <property name="alpha">0.5</property>
+      <property name="opacity">0.5</property>
+    </filter>
+    <filter id="filter3" out="00:00:30.030">
+      <property name="transition">frei0r.composition</property>
+      <property name="mlt_image_format">rgba</property>
+      <property name="mlt_service">mask_apply</property>
+      <property name="transition.threads">0</property>
+    </filter>
+  </producer>
+</mlt>
