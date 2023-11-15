@@ -2902,7 +2902,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="81"/>
         <source>This will remove all simple keyframes for all parameters.&lt;p&gt;Simple keyframes will be converted to advanced keyframes.&lt;p&gt;Do you still want to do this?</source>
-        <translation>浙江移除用于所有参数的所有简易关键帧&lt;p&gt;简易关键帧将被转换为高级关键帧。&lt;p&gt;您是否仍然想要这样做？</translation>
+        <translation>这将移除用于所有参数的所有简易关键帧&lt;p&gt;简易关键帧将被转换为高级关键帧。&lt;p&gt;您是否仍然想要这样做？</translation>
     </message>
 </context>
 <context>
