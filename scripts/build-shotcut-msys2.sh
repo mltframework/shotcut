@@ -533,7 +533,7 @@ function set_globals {
   #####
   # ffmpeg
   CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
-  CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libvpl --enable-libdav1d --enable-libaom --disable-decoder=libaom_av1 --enable-libwebp --disable-vulkan"
+  CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libvpl --enable-libdav1d --enable-libaom --disable-decoder=libaom_av1 --enable-libwebp --disable-vulkan --disable-vaapi"
   # Add optional parameters
   if [ "$ENABLE_ZIMG" = "1" ]; then
     CONFIG[0]="${CONFIG[0]} --enable-libzimg"
