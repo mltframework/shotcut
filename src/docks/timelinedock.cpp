@@ -253,14 +253,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, SIGNAL(created()), SLOT(reloadTimelineMarkers()));
     connect(&m_model, SIGNAL(loaded()), SLOT(reloadTimelineMarkers()));
     connect(&m_model, SIGNAL(closed()), SLOT(reloadTimelineMarkers()));
-    connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, [ = ](bool isAudio) {
-        if (Settings.timelineAutoAddTracks()) {
-            if (isAudio)
-                addAudioTrack();
-            else
-                addVideoTrack();
-        }
-    }, Qt::QueuedConnection);
+    connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks,
+            Qt::QueuedConnection);
 
     vboxLayout->addWidget(&m_quickView);
 
@@ -3038,9 +3032,12 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
             m_model.removeClip(trackIndex, clipIndex, false);
     }
     disconnect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip);
+    disconnect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, nullptr);
     MAIN.undoStack()->push(
         new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(playlist), skipProxy));
     connect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip,
+            Qt::QueuedConnection);
+    connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks,
             Qt::QueuedConnection);
 }
 
@@ -3251,6 +3248,16 @@ void TimelineDock::onTimelineRightClicked()
 void TimelineDock::onClipRightClicked()
 {
     m_clipMenu->popup(QCursor::pos());
+}
+
+void TimelineDock::onNoMoreEmptyTracks(bool isAudio)
+{
+    if (Settings.timelineAutoAddTracks()) {
+        if (isAudio)
+            addAudioTrack();
+        else
+            addVideoTrack();
+    }
 }
 
 class FindProducersByHashParser : public Mlt::Parser

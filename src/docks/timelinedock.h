@@ -273,6 +273,7 @@ private slots:
     void onWarnTrackLocked();
     void onTimelineRightClicked();
     void onClipRightClicked();
+    void onNoMoreEmptyTracks(bool isAudio);
 };
 
 class TimelineSelectionBlocker
