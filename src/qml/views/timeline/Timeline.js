@@ -45,10 +45,11 @@ function scrollIfNeeded(center, continouous) {
 function dragging(pos, duration) {
     if (tracksRepeater.count > 0) {
         let headerHeight = ruler.height
+        let i = 0;
         dropTarget.x = pos.x
         dropTarget.width = duration * multitrack.scaleFactor
 
-        for (let i = 0; i < tracksRepeater.count; i++) {
+        for (i = 0; i < tracksRepeater.count; i++) {
             let trackY = tracksRepeater.itemAt(i).y + headerHeight - tracksFlickable.contentY
             let trackH = tracksRepeater.itemAt(i).height
             if (pos.y >= trackY && pos.y < trackY + trackH) {
