@@ -1501,7 +1501,7 @@ void MainWindow::onAutosaveTimeout()
         dialog.setWindowModality(QmlApplication::dialogModality());
         switch (dialog.exec()) {
         case QMessageBox::Save:
-            on_actionSave_triggered();
+            on_actionBackupSave_triggered();
             m_exitCode = EXIT_RESTART;
             QApplication::closeAllWindows();
             break;
