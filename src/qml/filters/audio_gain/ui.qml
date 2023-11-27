@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -184,14 +184,15 @@ Item {
             id: gainKeyframesButton
 
             onToggled: {
+                let value = gainSlider.value;
                 if (checked) {
                     blockUpdate = true;
                     filter.clearSimpleAnimation('level');
                     blockUpdate = false;
-                    filter.set('level', gainSlider.value, getPosition());
+                    filter.set('level', value, getPosition());
                 } else {
                     filter.resetProperty('level');
-                    filter.set('level', gainSlider.value);
+                    filter.set('level', value);
                 }
             }
         }
