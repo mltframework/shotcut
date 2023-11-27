@@ -102,6 +102,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     selectionMenu->addAction(Actions["timelineSelectNoneAction"]);
     selectionMenu->addAction(Actions["timelineSelectNextClipAction"]);
     selectionMenu->addAction(Actions["timelineSelectPrevClipAction"]);
+    selectionMenu->addAction(Actions["timelineSplitAction"]);
     selectionMenu->addAction(Actions["timelineSelectClipAboveAction"]);
     selectionMenu->addAction(Actions["timelineSelectClipBelowAction"]);
     selectionMenu->addAction(Actions["timelineSelectClipUnderPlayheadAction"]);
@@ -112,7 +113,6 @@ TimelineDock::TimelineDock(QWidget *parent) :
     editMenu->addAction(Actions["timelinePasteAction"]);
     editMenu->addAction(Actions["timelineAppendAction"]);
     editMenu->addAction(Actions["timelineOverwriteAction"]);
-    editMenu->addAction(Actions["timelineSplitAction"]);
     editMenu->addAction(Actions["timelineReplaceAction"]);
     editMenu->addAction(Actions["timelineRecordAudioAction"]);
     editMenu->addAction(Actions["playerSetInAction"]);
@@ -142,6 +142,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_clipMenu->addAction(Actions["timelineDeleteAction"]);
     m_clipMenu->addAction(Actions["timelineLiftAction"]);
     m_clipMenu->addAction(Actions["timelineReplaceAction"]);
+    m_clipMenu->addAction(Actions["timelineSplitAction"]);
     m_clipMenu->addAction(Actions["timelineMergeWithNextAction"]);
     m_clipMenu->addAction(Actions["timelineDetachAudioAction"]);
     m_clipMenu->addAction(Actions["timelineAlignToReferenceAction"]);
