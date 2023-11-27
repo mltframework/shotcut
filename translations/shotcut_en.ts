@@ -10063,17 +10063,22 @@ Most users do not need to change this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="268"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="262"/>
+        <source>Save a filter set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/filterview.qml" line="284"/>
         <source>Move filter up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="283"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="299"/>
         <source>Move filter down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="310"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="326"/>
         <source>Deselect the filter</source>
         <translation type="unfinished"></translation>
     </message>

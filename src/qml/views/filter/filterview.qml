@@ -225,7 +225,7 @@ Rectangle {
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
             enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
             opacity: enabled ? 1 : 0.5
-            onClicked: copyFiltersDialog.show()
+            onClicked: application.copyFilters()
 
             Shotcut.HoverTip {
                 text: qsTr('Copy checked filters')
@@ -244,6 +244,21 @@ Rectangle {
 
             Shotcut.HoverTip {
                 text: qsTr('Paste filters')
+            }
+        }
+
+        Shotcut.Button {
+            id: filterSetButton
+
+            implicitWidth: height
+            icon.name: 'server-database'
+            icon.source: 'qrc:///icons/oxygen/32x32/places/server-database.png'
+            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
+            opacity: enabled ? 1 : 0.5
+            onClicked: copyFiltersDialog.show()
+
+            Shotcut.HoverTip {
+                text: qsTr('Save a filter set')
             }
         }
 
