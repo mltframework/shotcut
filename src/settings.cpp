@@ -751,6 +751,17 @@ void ShotcutSettings::setTimelineAutoAddTracks(bool b)
     emit timelineAutoAddTracksChanged();
 }
 
+bool ShotcutSettings::timelineRectangleSelect() const
+{
+    return settings.value("timeline/rectangleSelect", true).toBool();
+}
+
+void ShotcutSettings::setTimelineRectangleSelect(bool b)
+{
+    settings.setValue("timeline/rectangleSelect", b);
+    emit timelineRectangleSelectChanged();
+}
+
 QString ShotcutSettings::filterFavorite(const QString &filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();

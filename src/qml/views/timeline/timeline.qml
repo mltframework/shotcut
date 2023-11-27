@@ -400,7 +400,7 @@ Rectangle {
                 hoverEnabled: true
                 onWheel: wheel => Logic.onMouseWheel(wheel)
                 onPressed: mouse => {
-                    if (mouse.y <= ruler.height || cursorBox.contains(mapToItem(cursorBox, mouse.x, mouse.y)) || (mouse.modifiers & Qt.ShiftModifier)) {
+                    if (mouse.y <= ruler.height || cursorBox.contains(mapToItem(cursorBox, mouse.x, mouse.y)) || (!settings.timelineRectangleSelect === !(mouse.modifiers & Qt.ShiftModifier))) {
                         timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor;
                         scrub = true;
                         bubbleHelp.hide();

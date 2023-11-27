@@ -67,6 +67,8 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(TimelineScrolling timelineScrolling READ timelineScrolling WRITE setTimelineScrolling
                NOTIFY timelineScrollingChanged)
     Q_ENUMS(TimelineScrolling)
+    Q_PROPERTY(bool timelineRectangleSelect READ timelineRectangleSelect WRITE
+               setTimelineRectangleSelect NOTIFY timelineRectangleSelectChanged)
 
 public:
     static const qsizetype MaxPath {32767};
@@ -208,6 +210,8 @@ public:
     TimelineScrolling timelineScrolling() const;
     bool timelineAutoAddTracks() const;
     void setTimelineAutoAddTracks(bool);
+    bool timelineRectangleSelect() const;
+    void setTimelineRectangleSelect(bool);
 
     // filter
     QString filterFavorite(const QString &filterName);
@@ -318,6 +322,7 @@ signals:
     void askOutputFilterChanged();
     void timelineScrollingChanged();
     void timelineAutoAddTracksChanged();
+    void timelineRectangleSelectChanged();
 
 private:
     explicit ShotcutSettings();

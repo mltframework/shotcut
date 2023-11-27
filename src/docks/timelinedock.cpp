@@ -792,6 +792,17 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineMarkSelectedClipAction", action);
 
+    action = new QAction(tr("Rectangle Selection"), this);
+    action->setCheckable(true);
+    action->setChecked(Settings.timelineRectangleSelect());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setTimelineRectangleSelect(checked);
+    });
+    connect(&Settings, &ShotcutSettings::timelineRectangleSelectChanged, action, [ = ]() {
+        action->setChecked(Settings.timelineRectangleSelect());
+    });
+    Actions.add("timelineRectangleSelectAction", action);
+
     action = new QAction(tr("Automatically Add Tracks"), this);
     action->setCheckable(true);
     action->setChecked(Settings.timelineAutoAddTracks());
