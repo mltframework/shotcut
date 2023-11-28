@@ -1175,7 +1175,7 @@ void ShotcutSettings::reset()
 
 int ShotcutSettings::undoLimit() const
 {
-    return settings.value("undoLimit", 1000).toInt();
+    return settings.value("undoLimit", 50).toInt();
 }
 
 bool ShotcutSettings::warnLowMemory() const

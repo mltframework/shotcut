@@ -68,6 +68,7 @@ signals:
 public slots:
     void setCurrentFilter(QmlFilter *filter, QmlMetadata *meta);
     void load(bool force = false);
+    void reload();
     void onProducerModified();
 
 protected:

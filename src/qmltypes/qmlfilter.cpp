@@ -18,6 +18,7 @@
 #include "qmlfilter.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
+#include "commands/filtercommands.h"
 #include "controllers/filtercontroller.h"
 #include "jobqueue.h"
 #include "jobs/encodejob.h"
@@ -35,11 +36,13 @@
 #include <MltProducer.h>
 
 QmlFilter::QmlFilter()
-    : QObject(0)
-    , m_metadata(0)
-    , m_service(mlt_service(0))
-    , m_producer(mlt_producer(0))
+    : QObject(nullptr)
+    , m_metadata(nullptr)
+    , m_service(mlt_service(nullptr))
+    , m_producer(mlt_producer(nullptr))
     , m_isNew(false)
+    , m_changeCommand(nullptr)
+    , m_changeCommandPushed(false)
 {
     connect(this, SIGNAL(inChanged(int)), this, SIGNAL(durationChanged()));
     connect(this, SIGNAL(outChanged(int)), this, SIGNAL(durationChanged()));
@@ -52,7 +55,10 @@ QmlFilter::QmlFilter(Mlt::Service &mltService, const QmlMetadata *metadata, QObj
     , m_producer(mlt_producer(nullptr))
     , m_path(m_metadata->path().absolutePath().append('/'))
     , m_isNew(false)
+    , m_changeCommand(nullptr)
+    , m_changeCommandPushed(false)
 {
+
     if (m_service.type() == mlt_service_filter_type) {
         // Every attached filter has a service property that points to the service to which it is attached.
         m_producer = Mlt::Producer(mlt_producer(m_service.is_valid() ? m_service.get_data("service") : 0));
@@ -64,6 +70,10 @@ QmlFilter::QmlFilter(Mlt::Service &mltService, const QmlMetadata *metadata, QObj
 
 QmlFilter::~QmlFilter()
 {
+    if (m_changeCommand && !m_changeCommandPushed) {
+        delete m_changeCommand;
+        m_changeCommand = nullptr;
+    }
 }
 
 QString QmlFilter::get(QString name, int position)
@@ -175,6 +185,7 @@ void QmlFilter::set(QString name, QString value, int position)
         if (qstrcmp(m_service.get(qUtf8Printable(name)), qUtf8Printable(value)))  {
             m_service.set_string(qUtf8Printable(name), qUtf8Printable(value)) ;
             emit changed(name);
+            updateChangeCommand(name);
         }
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
@@ -183,6 +194,7 @@ void QmlFilter::set(QString name, QString value, int position)
                 || value != m_service.anim_get(qUtf8Printable(name), position, duration())) {
             m_service.anim_set(qUtf8Printable(name), qUtf8Printable(value), position, duration());
             emit changed(name);
+            updateChangeCommand(name);
         }
     }
 }
@@ -196,6 +208,7 @@ void QmlFilter::set(QString name, const QColor &value, int position, mlt_keyfram
                 || value != QColor(mltColor.r, mltColor.g, mltColor.b, mltColor.a)) {
             m_service.set(qUtf8Printable(name), Util::mltColorFromQColor(value));
             emit changed(name);
+            updateChangeCommand(name);
         }
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
@@ -205,6 +218,7 @@ void QmlFilter::set(QString name, const QColor &value, int position, mlt_keyfram
                 || value != QColor(mltColor.r, mltColor.g, mltColor.b, mltColor.a)) {
             m_service.anim_set(qUtf8Printable(name), Util::mltColorFromQColor(value), position, duration());
             emit changed(name);
+            updateChangeCommand(name);
         }
     }
 }
@@ -223,6 +237,7 @@ void QmlFilter::set(QString name, double value, int position, mlt_keyframe_type 
             } else if (name == "out") {
                 emit outChanged(delta);
             }
+            updateChangeCommand(name);
         }
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
@@ -232,6 +247,7 @@ void QmlFilter::set(QString name, double value, int position, mlt_keyframe_type 
             mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
             m_service.anim_set(qUtf8Printable(name), value, position, duration(), type);
             emit changed(name);
+            updateChangeCommand(name);
         }
     }
 }
@@ -250,6 +266,7 @@ void QmlFilter::set(QString name, int value, int position, mlt_keyframe_type key
             } else if (name == "out") {
                 emit outChanged(delta);
             }
+            updateChangeCommand(name);
         }
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
@@ -259,6 +276,7 @@ void QmlFilter::set(QString name, int value, int position, mlt_keyframe_type key
             mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
             m_service.anim_set(qUtf8Printable(name), value, position, duration(), type);
             emit changed(name);
+            updateChangeCommand(name);
         }
     }
 }
@@ -278,6 +296,7 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
                 || width != rect.w || height != rect.h || opacity != rect.o) {
             m_service.set(qUtf8Printable(name), x, y, width, height, opacity);
             emit changed(name);
+            updateChangeCommand(name);
         }
     } else {
         mlt_rect rect = m_service.anim_get_rect(qUtf8Printable(name), position, duration());
@@ -297,6 +316,7 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
             mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
             m_service.anim_set(qUtf8Printable(name), rect, position, duration(), type);
             emit changed(name);
+            updateChangeCommand(name);
         }
     }
 }
@@ -312,6 +332,7 @@ void QmlFilter::setGradient(QString name, const QStringList &gradient)
         }
     }
     emit changed(name.toUtf8().constData());
+    updateChangeCommand(name);
 }
 
 void QmlFilter::set(QString name, const QRectF &rect, int position, mlt_keyframe_type keyframeType)
@@ -504,7 +525,7 @@ int QmlFilter::framesFromTime(const QString &time)
     return 0;
 }
 
-QString QmlFilter::timeFromFrames(int frames, TimeFormat format)
+QString QmlFilter::timeFromFrames(int frames, QmlFilter::TimeFormat format)
 {
     if (MLT.producer()) {
         mlt_time_format mltFormat = mlt_time_smpte_df;
@@ -608,6 +629,7 @@ void QmlFilter::setAnimateIn(int value)
                 }
             }
         }
+        updateChangeCommand(kShotcutAnimInProperty);
         emit animateInChanged();
     }
 }
@@ -636,6 +658,7 @@ void QmlFilter::setAnimateOut(int value)
                 }
             }
         }
+        updateChangeCommand(kShotcutAnimOutProperty);
         emit animateOutChanged();
     }
 }
@@ -768,6 +791,19 @@ int QmlFilter::keyframeIndex(Mlt::Animation &animation, int position)
     return result;
 }
 
+void QmlFilter::updateChangeCommand(const QString &name)
+{
+    if (m_changeCommand) {
+        m_changeCommand->update(name);
+        if (!m_changeCommandPushed) {
+            MAIN.undoStack()->push(m_changeCommand);
+            auto index = MAIN.undoStack()->count() - 1;
+            m_changeCommand = (Filter::ChangeParameterCommand *) MAIN.undoStack()->command(index);
+            m_changeCommandPushed = true;
+        }
+    }
+}
+
 mlt_keyframe_type QmlFilter::getKeyframeType(Mlt::Animation &animation, int position,
                                              mlt_keyframe_type defaultType)
 {
@@ -839,6 +875,14 @@ bool QmlFilter::allowAnimateOut() const
     if (m_metadata && m_metadata->keyframes())
         return m_metadata->keyframes()->allowAnimateOut();
     return false;
+}
+
+void QmlFilter::startUndoTracking(FilterController *controller)
+{
+    if (m_changeCommand) {
+        delete m_changeCommand;
+    }
+    m_changeCommand = new Filter::ChangeParameterCommand(m_metadata->name(), m_service, controller);
 }
 
 void QmlFilter::crop(const QRectF &rect)

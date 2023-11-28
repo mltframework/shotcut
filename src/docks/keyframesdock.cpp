@@ -1114,6 +1114,11 @@ void KeyframesDock::load(bool force)
     }
 }
 
+void KeyframesDock::reload()
+{
+    load(true);
+}
+
 void KeyframesDock::onProducerModified()
 {
     // The clip name may have changed.

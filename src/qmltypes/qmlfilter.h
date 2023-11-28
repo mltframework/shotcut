@@ -33,12 +33,17 @@
 
 class AbstractJob;
 class EncodeJob;
+class QUndoCommand;
+class FilterController;
+namespace Filter {
+class ChangeParameterCommand;
+}
 
 class QmlFilter : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool isNew READ isNew)
-    Q_PROPERTY(QString path READ path)
+    Q_PROPERTY(bool isNew READ isNew CONSTANT)
+    Q_PROPERTY(QString path READ path CONSTANT)
     Q_PROPERTY(QStringList presets READ presets NOTIFY presetsChanged)
     Q_PROPERTY(int in READ in NOTIFY inChanged)
     Q_PROPERTY(int out READ out NOTIFY outChanged)
@@ -111,7 +116,8 @@ public:
     Q_INVOKABLE void deletePreset(const QString &name);
     Q_INVOKABLE void analyze(bool isAudio = false, bool deferJob = true);
     Q_INVOKABLE static int framesFromTime(const QString &time);
-    Q_INVOKABLE static QString timeFromFrames(int frames, TimeFormat format = TIME_TIMECODE_DF);
+    Q_INVOKABLE static QString timeFromFrames(int frames,
+                                              QmlFilter::TimeFormat format = TIME_TIMECODE_DF);
     Q_INVOKABLE void getHash();
     Mlt::Producer &producer()
     {
@@ -143,9 +149,11 @@ public:
     bool allowAnimateIn() const;
     bool allowAnimateOut() const;
     Q_INVOKABLE void crop(const QRectF &rect);
+    void startUndoTracking(FilterController *controller);
 
 public slots:
     void preset(const QString &name);
+    void updateChangeCommand(const QString &name);
 
 signals:
     void presetsChanged();
@@ -166,6 +174,8 @@ private:
     QString m_path;
     bool m_isNew;
     QStringList m_presets;
+    Filter::ChangeParameterCommand *m_changeCommand;
+    bool m_changeCommandPushed;
 
     QString objectNameOrService();
     int keyframeIndex(Mlt::Animation &animation, int position);

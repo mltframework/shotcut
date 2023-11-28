@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 namespace Markers {
 
 enum {
-    UndoIdUpdate,
+    UndoIdUpdate = 200,
 };
 
 class DeleteCommand : public QUndoCommand

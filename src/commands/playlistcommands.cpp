@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,11 @@ void AppendCommand::redo()
     LOG_DEBUG() << "";
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.append(producer, m_emitModified);
+    if (m_uuid.isNull()) {
+        m_uuid = MLT.ensureHasUuid(producer);
+    } else {
+        MLT.setUuid(producer, m_uuid);
+    }
 }
 
 void AppendCommand::undo()
@@ -60,6 +65,11 @@ void InsertCommand::redo()
     LOG_DEBUG() << "row" << m_row;
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.insert(producer, m_row);
+    if (m_uuid.isNull()) {
+        m_uuid = MLT.ensureHasUuid(producer);
+    } else {
+        MLT.setUuid(producer, m_uuid);
+    }
 }
 
 void InsertCommand::undo()
@@ -86,6 +96,11 @@ void UpdateCommand::redo()
     LOG_DEBUG() << "row" << m_row;
     Mlt::Producer producer(MLT.profile(), "xml-string", m_newXml.toUtf8().constData());
     m_model.update(m_row, producer);
+    if (m_uuid.isNull()) {
+        m_uuid = MLT.ensureHasUuid(producer);
+    } else {
+        MLT.setUuid(producer, m_uuid);
+    }
 }
 
 void UpdateCommand::undo()
@@ -114,6 +129,7 @@ RemoveCommand::RemoveCommand(PlaylistModel &model, int row, QUndoCommand *parent
     info->producer->set_in_and_out(info->frame_in, info->frame_out);
     m_xml = MLT.XML(info->producer);
     setText(QObject::tr("Remove playlist item %1").arg(row + 1));
+    m_uuid = MLT.ensureHasUuid(*info->producer);
 }
 
 void RemoveCommand::redo()
@@ -127,6 +143,7 @@ void RemoveCommand::undo()
     LOG_DEBUG() << "row" << m_row;
     Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     m_model.insert(producer, m_row);
+    MLT.setUuid(producer, m_uuid);
 }
 
 ClearCommand::ClearCommand(PlaylistModel &model, QUndoCommand *parent)
@@ -135,6 +152,12 @@ ClearCommand::ClearCommand(PlaylistModel &model, QUndoCommand *parent)
 {
     m_xml = MLT.XML(m_model.playlist());
     setText(QObject::tr("Clear playlist"));
+    for (int i = 0; i < m_model.playlist()->count(); i++) {
+        Mlt::Producer clip(m_model.playlist()->get_clip(i));
+        if (clip.is_valid()) {
+            m_uuids << MLT.ensureHasUuid(clip.parent());
+        }
+    }
 }
 
 void ClearCommand::redo()
@@ -152,6 +175,12 @@ void ClearCommand::undo()
         producer->set("resource", "<playlist>");
         if (!MLT.setProducer(producer)) {
             m_model.load();
+            for (int i = 0; i < m_model.playlist()->count(); i++) {
+                Mlt::Producer clip(m_model.playlist()->get_clip(i));
+                if (clip.is_valid() && i < m_uuids.size()) {
+                    MLT.setUuid(clip.parent(), m_uuids[i]);
+                }
+            }
             MLT.pause();
             MAIN.seekPlaylist(0);
         }
@@ -191,6 +220,12 @@ SortCommand::SortCommand(PlaylistModel &model, int column, Qt::SortOrder order,
     m_xml = MLT.XML(m_model.playlist());
     QString columnName = m_model.headerData(m_column, Qt::Horizontal, Qt::DisplayRole).toString();
     setText(QObject::tr("Sort playlist by %1").arg(columnName));
+    for (int i = 0; i < m_model.playlist()->count(); i++) {
+        Mlt::Producer clip(m_model.playlist()->get_clip(i));
+        if (clip.is_valid()) {
+            m_uuids << MLT.ensureHasUuid(clip.parent());
+        }
+    }
 }
 
 void SortCommand::redo()
@@ -208,6 +243,12 @@ void SortCommand::undo()
         producer->set("resource", "<playlist>");
         if (!MLT.setProducer(producer)) {
             m_model.load();
+            for (int i = 0; i < m_model.playlist()->count(); i++) {
+                Mlt::Producer clip(m_model.playlist()->get_clip(i));
+                if (clip.is_valid() && i < m_uuids.size()) {
+                    MLT.setUuid(clip.parent(), m_uuids[i]);
+                }
+            }
             MLT.pause();
             MAIN.seekPlaylist(0);
         }
@@ -302,6 +343,7 @@ ReplaceCommand::ReplaceCommand(PlaylistModel &model, const QString &xml, int row
     setText(QObject::tr("Replace playlist item %1").arg(row + 1));
     QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(row));
     info->producer->set_in_and_out(info->frame_in, info->frame_out);
+    m_uuid = MLT.ensureHasUuid(*info->producer);
     m_oldXml = MLT.XML(info->producer);
 }
 
@@ -317,6 +359,7 @@ void ReplaceCommand::undo()
     LOG_DEBUG() << "row" << m_row;
     Mlt::Producer producer(MLT.profile(), "xml-string", m_oldXml.toUtf8().constData());
     m_model.update(m_row, producer, true);
+    MLT.setUuid(producer, m_uuid);
 }
 
 } // namespace Playlist

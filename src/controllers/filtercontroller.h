@@ -50,6 +50,7 @@ public:
         return m_currentFilter.data();
     }
     bool isOutputTrackSelected() const;
+    void onUndoOrRedo(Mlt::Service &service);
 
 protected:
     void timerEvent(QTimerEvent *);
@@ -58,10 +59,11 @@ signals:
     void currentFilterChanged(QmlFilter *filter, QmlMetadata *meta, int index);
     void statusChanged(QString);
     void filterChanged(Mlt::Service *);
+    void undoOrRedo();
 
 public slots:
     void setProducer(Mlt::Producer *producer = 0);
-    void setCurrentFilter(int attachedIndex, bool isNew = false);
+    void setCurrentFilter(int attachedIndex);
     void onFadeInChanged();
     void onFadeOutChanged();
     void onServiceInChanged(int delta, Mlt::Service *service = 0);

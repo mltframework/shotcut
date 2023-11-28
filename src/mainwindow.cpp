@@ -516,6 +516,7 @@ void MainWindow::setupAndConnectDocks()
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter *, QmlMetadata *, int)),
             m_filtersDock, SLOT(setCurrentFilter(QmlFilter *, QmlMetadata *, int)));
+    connect(m_filterController, &FilterController::undoOrRedo, m_filtersDock, &FiltersDock::resetQview);
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
     connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(onFilterModelChanged()));
     connect(m_filtersDock, SIGNAL(changed()), SLOT(onFilterModelChanged()));
@@ -581,6 +582,7 @@ void MainWindow::setupAndConnectDocks()
             m_keyframesDock, SLOT(setCurrentFilter(QmlFilter *, QmlMetadata *)));
     connect(m_keyframesDock, SIGNAL(visibilityChanged(bool)), m_filtersDock->qmlProducer(),
             SLOT(remakeAudioLevels(bool)));
+    connect(m_filterController, &FilterController::undoOrRedo, m_keyframesDock, &KeyframesDock::reload);
 
     m_historyDock = new QDockWidget(tr("History"), this);
     m_historyDock->hide();
