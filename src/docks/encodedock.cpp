@@ -2043,6 +2043,7 @@ static QStringList codecs()
 #if defined(Q_OS_WIN)
     codecs << "h264_nvenc";
     codecs << "hevc_nvenc";
+    codecs << "av1_nvenc";
     codecs << "h264_amf";
     codecs << "hevc_amf";
     codecs << "h264_qsv";
