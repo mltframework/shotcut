@@ -2054,6 +2054,7 @@ static QStringList codecs()
     codecs << "h264_videotoolbox";
     codecs << "hevc_videotoolbox";
 #else
+    codecs << "av1_nvenc";
     codecs << "h264_nvenc";
     codecs << "hevc_nvenc";
     codecs << "h264_vaapi";
