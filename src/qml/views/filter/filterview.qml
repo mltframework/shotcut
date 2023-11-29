@@ -273,7 +273,7 @@ Rectangle {
             id: moveUpButton
 
             implicitWidth: height
-            enabled: selectedIndex > 0
+            enabled: attachedFilters.selectedCanMoveUp
             opacity: enabled ? 1 : 0.5
             icon.name: 'lift'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/lift.png'
@@ -288,7 +288,7 @@ Rectangle {
             id: moveDownButton
 
             implicitWidth: height
-            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter && selectedIndex + 1 < attachedfiltersmodel.rowCount()
+            enabled: attachedFilters.selectedCanMoveDown
             opacity: enabled ? 1 : 0.5
             icon.name: 'overwrite'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
