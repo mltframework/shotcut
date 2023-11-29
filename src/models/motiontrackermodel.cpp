@@ -272,9 +272,7 @@ QList<MotionTrackerModel::TrackingItem> MotionTrackerModel::trackingData(const Q
     Mlt::Properties props;
 
     for (const auto &i : l) {
-        auto pair = i.split("$=");
-        if (pair.size() == 1)
-            pair = i.split("~="); // legacy tracking data
+        auto pair = i.split("~=");
         if (pair.size() == 2) {
             auto frame = pair.at(0).toInt(&ok);
             props.set("", pair.at(1).toLatin1().constData());
