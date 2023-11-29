@@ -44,7 +44,7 @@ find_package(Qt6 6.4 REQUIRED
 )
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(mlt++ REQUIRED IMPORTED_TARGET mlt++-7>=7.18.0)
+pkg_check_modules(mlt++ REQUIRED IMPORTED_TARGET mlt++-7>=7.22.0)
 pkg_check_modules(FFTW IMPORTED_TARGET fftw3)
 if(NOT FFTW_FOUND)
   pkg_check_modules(FFTW REQUIRED IMPORTED_TARGET fftw)
