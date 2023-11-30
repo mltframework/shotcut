@@ -204,7 +204,7 @@ end;
 function DownloadOpera(): Boolean;
 begin
   Result := False;
-  if OperaCheckbox.Checked then
+  if ShouldOperaBeOffered() and OperaCheckbox.Checked then
   begin;
     DownloadPage.Clear;
     DownloadPage.Add('https://net.geo.opera.com/opera/stable/windows?utm_source=Meltytech&utm_medium=apb', 'opera-installer.exe', '');
