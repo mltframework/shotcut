@@ -632,6 +632,18 @@ Rectangle {
             }
 
             Rectangle {
+                id: loopIndicator
+
+                visible: timeline.loopStart != timeline.loopEnd
+                color: timeline.loopColor
+                opacity: 0.5
+                width: (timeline.loopEnd - timeline.loopStart) * multitrack.scaleFactor
+                height: root.height - horizontalScrollBar.height
+                x: timeline.loopStart * multitrack.scaleFactor - tracksFlickable.contentX
+                y: 0
+            }
+
+            Rectangle {
                 id: cursor
 
                 visible: timeline.position > -1

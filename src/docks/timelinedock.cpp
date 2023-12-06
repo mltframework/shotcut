@@ -60,7 +60,10 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_ignoreNextPositionChange(false),
     m_trimDelta(0),
     m_transitionDelta(0),
-    m_blockSetSelection(false)
+    m_blockSetSelection(false),
+    m_loopMarker(-1),
+    m_loopStart(-1),
+    m_loopEnd(-1)
 {
     LOG_DEBUG() << "begin";
     m_selection.selectedTrack = -1;
@@ -133,6 +136,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     markerMenu->addAction(Actions["timelineDeleteMarkerAction"]);
     markerMenu->addAction(Actions["timelineMarkSelectedClipAction"]);
     markerMenu->addAction(Actions["timelineCycleMarkerColorAction"]);
+    markerMenu->addAction(Actions["timelineToggleLoopMarkerAction"]);
     m_mainMenu->addMenu(markerMenu);
     Actions.loadFromMenu(m_mainMenu);
 
@@ -250,10 +254,22 @@ TimelineDock::TimelineDock(QWidget *parent) :
                                                                                      int)));
     connect(&m_model, SIGNAL(rowsMoved(const QModelIndex &, int, int, const QModelIndex &, int)),
             SLOT(onRowsMoved(const QModelIndex &, int, int, const QModelIndex &, int)));
-    connect(&m_model, SIGNAL(closed()), SLOT(onMultitrackClosed()));
-    connect(&m_model, SIGNAL(created()), SLOT(reloadTimelineMarkers()));
-    connect(&m_model, SIGNAL(loaded()), SLOT(reloadTimelineMarkers()));
-    connect(&m_model, SIGNAL(closed()), SLOT(reloadTimelineMarkers()));
+    connect(&m_model, &MultitrackModel::closed, this, [&]() {
+        onMultitrackClosed();
+        reloadTimelineMarkers();
+        m_loopMarker = -1;
+        updateLoop();
+    });
+    connect(&m_model, &MultitrackModel::created, this, [&]() {
+        reloadTimelineMarkers();
+        m_loopMarker = -1;
+        updateLoop();
+    });
+    connect(&m_model, &MultitrackModel::loaded, this, [&]() {
+        reloadTimelineMarkers();
+        m_loopMarker = -1;
+        updateLoop();
+    });
     connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks,
             Qt::QueuedConnection);
 
@@ -268,6 +284,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
     connect(this, SIGNAL(warnTrackLocked(int)), SLOT(onWarnTrackLocked()));
     connect(&m_markersModel, SIGNAL(rangesChanged()), this, SIGNAL(markerRangesChanged()));
+    connect(&m_markersModel, SIGNAL(modified()), this, SLOT(updateLoop()));
 
     QWidget *dockContentsWidget = new QWidget();
     dockContentsWidget->setLayout(vboxLayout);
@@ -791,6 +808,17 @@ void TimelineDock::setupActions()
         createOrEditSelectionMarker();
     });
     Actions.add("timelineMarkSelectedClipAction", action);
+
+    action = new QAction(tr("Loop/Unloop Marker"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_L));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isMultitrackValid()) return;
+        show();
+        raise();
+        int markerIndex = m_markersModel.rangeMarkerIndexForPosition(m_position);
+        toggleLoopMarker(markerIndex);
+    });
+    Actions.add("timelineToggleLoopMarkerAction", action);
 
     action = new QAction(tr("Rectangle Selection"), this);
     action->setCheckable(true);
@@ -2455,6 +2483,44 @@ void TimelineDock::seekPrevMarker()
     if (prevPos >= 0) {
         setPosition(prevPos);
         emit markerSeeked(m_markersModel.markerIndexForPosition(prevPos));
+    }
+}
+
+void TimelineDock::toggleLoopMarker(int index)
+{
+    if (index == -1 || m_loopMarker == index) {
+        m_loopMarker = -1;
+    } else {
+        m_loopMarker = index;
+    }
+    updateLoop();
+}
+
+void TimelineDock::updateLoop()
+{
+    int newStart = -1;
+    int newEnd = -1;
+    QColor newColor = m_loopColor;
+    Mlt::Producer *producer = m_model.tractor();
+    if (!producer || !producer->is_valid()) {
+        m_loopMarker = -1;
+    } else if (m_loopMarker >= m_markersModel.markerCount()) {
+        // Marker was deleted
+        m_loopMarker = -1;
+    } else if (m_loopMarker >= 0) {
+        Markers::Marker marker = m_markersModel.getMarker(m_loopMarker);
+        newStart = marker.start;
+        newEnd = marker.end;
+        newColor = marker.color;
+    }
+    if (m_loopStart != newStart || m_loopEnd != newEnd || newColor != m_loopColor) {
+        m_loopStart = newStart;
+        m_loopEnd = newEnd;
+        m_loopColor = newColor;
+        emit loopChanged();
+        if (producer) {
+            producer->set_loop_range(m_loopStart, m_loopEnd);
+        }
     }
 }
 

@@ -39,6 +39,9 @@ class TimelineDock : public QDockWidget
 {
     Q_OBJECT
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
+    Q_PROPERTY(int loopStart READ loopStart NOTIFY loopChanged)
+    Q_PROPERTY(int loopEnd READ loopEnd NOTIFY loopChanged)
+    Q_PROPERTY(QColor loopColor READ loopColor NOTIFY loopChanged)
     Q_PROPERTY(int currentTrack READ currentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
     Q_PROPERTY(QVariantList selection READ selectionForJS WRITE setSelectionFromJS NOTIFY
                selectionChanged)
@@ -66,6 +69,18 @@ public:
         return m_position;
     }
     void setPosition(int position);
+    int loopStart() const
+    {
+        return m_loopStart;
+    }
+    int loopEnd() const
+    {
+        return m_loopEnd;
+    }
+    QColor loopColor() const
+    {
+        return m_loopColor;
+    }
     Mlt::Producer producerForClip(int trackIndex, int clipIndex);
     int clipIndexAtPlayhead(int trackIndex = -1);
     int clipIndexAtPosition(int trackIndex, int position);
@@ -113,6 +128,7 @@ signals:
     void selectionChanged();
     void seeked(int position);
     void positionChanged();
+    void loopChanged();
     void clipOpened(Mlt::Producer *producer);
     void dragging(const QPointF &pos, int duration);
     void dropped();
@@ -202,6 +218,7 @@ public slots:
     void deleteMarker(int markerIndex = -1);
     void seekNextMarker();
     void seekPrevMarker();
+    void toggleLoopMarker(int index);
     void onFilterModelChanged();
     void trimClipIn(bool ripple = false);
     void trimClipOut(bool ripple = false);
@@ -259,6 +276,10 @@ private:
     int m_currentTrack {0};
     QMenu *m_mainMenu;
     QMenu *m_clipMenu;
+    int m_loopMarker;
+    int m_loopStart;
+    int m_loopEnd;
+    QColor m_loopColor;
 
 private slots:
     void load(bool force);
@@ -274,6 +295,7 @@ private slots:
     void onTimelineRightClicked();
     void onClipRightClicked();
     void onNoMoreEmptyTracks(bool isAudio);
+    void updateLoop();
 };
 
 class TimelineSelectionBlocker

@@ -121,5 +121,12 @@ void QmlMarkerMenu::popup()
         recentColorMenu->addAction(widgetAction);
     }
 
+    QAction loopAction(tr("Loop/Unloop Marker"));
+    loopAction.setShortcut(Actions["timelineToggleLoopMarkerAction"]->shortcut());
+    connect(&loopAction, &QAction::triggered, this, [&]() {
+        m_timeline->toggleLoopMarker(m_index);
+    });
+    menu.addAction(&loopAction);
+
     menu.exec(QCursor::pos());
 }
