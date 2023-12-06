@@ -59,6 +59,7 @@ void QmlMarkerMenu::popup()
         return;
 
     QMenu menu;
+    Markers::Marker marker = m_timeline->markersModel()->getMarker(m_index);
 
     QAction editAction(tr("Edit..."));
     editAction.setShortcut(Actions["timelineMarkerAction"]->shortcut());
@@ -123,6 +124,7 @@ void QmlMarkerMenu::popup()
 
     QAction loopAction(tr("Loop/Unloop Marker"));
     loopAction.setShortcut(Actions["timelineToggleLoopMarkerAction"]->shortcut());
+    loopAction.setEnabled(marker.start != marker.end);
     connect(&loopAction, &QAction::triggered, this, [&]() {
         m_timeline->toggleLoopMarker(m_index);
     });
