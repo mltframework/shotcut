@@ -1368,7 +1368,7 @@ RemoveTrackCommand::RemoveTrackCommand(MultitrackModel &model, int trackIndex, Q
 
     // Get the track as MLT playlist.
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
-    QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
+    QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
     if (producer && producer->is_valid()) {
         // Save track name.
         m_trackName = QString::fromUtf8(producer->get(kTrackNameProperty));
@@ -1387,7 +1387,7 @@ void RemoveTrackCommand::redo()
                                                               "video");
     m_undoHelper.recordBeforeState();
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
-    QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
+    QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
     Mlt::Playlist playlist(*producer);
     for (int i = 0; i < playlist.count(); ++i) {
         if (!playlist.is_blank(i))
@@ -1410,7 +1410,7 @@ void RemoveTrackCommand::undo()
 
     // Re-attach filters.
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
-    QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
+    QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
     Mlt::Playlist playlist(*producer);
     if (playlist.is_valid() && m_filtersProducer &&  m_filtersProducer->is_valid()) {
         MLT.copyFilters(*m_filtersProducer, playlist);
@@ -1597,11 +1597,11 @@ void DetachAudioCommand::redo()
         // Add an audio track if needed.
         int n = m_model.trackList().size();
         for (int i = 0; i < n; i++) {
-            Mlt::Producer track(m_model.tractor()->track(m_model.trackList()[i].mlt_index));
-            if (!track.is_valid())
+            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(m_model.trackList()[i].mlt_index));
+            if (!track->is_valid())
                 continue;
-            if (track.get(kAudioTrackProperty)) {
-                Mlt::Playlist playlist(track);
+            if (track->get(kAudioTrackProperty)) {
+                Mlt::Playlist playlist(*track.data());
                 int out = videoClip.get_playtime() - 1;
                 // If the audio track is blank in the target region.
                 if (playlist.is_blank_at(m_position) && playlist.is_blank_at(m_position + out)

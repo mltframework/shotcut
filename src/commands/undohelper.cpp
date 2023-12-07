@@ -313,9 +313,9 @@ void UndoHelper::restoreAffectedTracks()
     for (const auto &trackIndex : qAsConst(m_affectedTracks)) {
         if (trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
             auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
-            Mlt::Producer producer = m_model.tractor()->multitrack()->track(mlt_index);
-            if (producer.is_valid()) {
-                Mlt::Playlist playlist(producer);
+            QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
+            if (producer->is_valid()) {
+                Mlt::Playlist playlist(*producer.data());
                 m_model.beginRemoveRows(m_model.index(trackIndex), 0, playlist.count() - 1);
                 UNDOLOG << "clearing track" << trackIndex;
                 playlist.clear();
@@ -362,9 +362,9 @@ void UndoHelper::restoreAffectedTracks()
     for (const auto &trackIndex : qAsConst(m_affectedTracks)) {
         if (trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
             auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
-            Mlt::Producer producer = m_model.tractor()->multitrack()->track(mlt_index);
-            if (producer.is_valid()) {
-                Mlt::Playlist playlist(producer);
+            QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
+            if (producer->is_valid()) {
+                Mlt::Playlist playlist(*producer.data());
                 for (auto currentIndex = 0; currentIndex < playlist.count(); currentIndex++) {
                     Mlt::Producer clip = playlist.get_clip(currentIndex);
                     fixTransitions(playlist, currentIndex, clip);
@@ -388,13 +388,13 @@ void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Prod
         if (producer.is_valid() && producer.parent().get(kShotcutTransitionProperty)) {
             Mlt::Tractor transition(producer.parent());
             if (transition.is_valid()) {
-                Mlt::Producer transitionClip(transition.track(transitionIndex));
-                if (transitionClip.is_valid()
-                        && transitionClip.parent().get_service() != clip.parent().get_service()) {
+                QScopedPointer<Mlt::Producer> transitionClip(transition.track(transitionIndex));
+                if (transitionClip->is_valid()
+                        && transitionClip->parent().get_service() != clip.parent().get_service()) {
                     UNDOLOG << "Fixing transition at clip index" << currentIndex << "transition index" <<
                             transitionIndex;
-                    transitionClip = clip.cut(transitionClip.get_in(), transitionClip.get_out());
-                    transition.set_track(transitionClip, transitionIndex);
+                    transitionClip.reset(clip.cut(transitionClip->get_in(), transitionClip->get_out()));
+                    transition.set_track(*transitionClip.data(), transitionIndex);
                 }
             }
         }

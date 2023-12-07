@@ -1850,7 +1850,8 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
         track_a->set_in_and_out(track_a->get_in() - delta, track_a->get_out());
         track_b->set_in_and_out(track_b->get_in() - delta, track_b->get_out());
         playlist.unblock();
-        tractor.multitrack()->set_in_and_out(0, out);
+        QScopedPointer<Mlt::Multitrack> multitrack(tractor.multitrack());
+        multitrack->set_in_and_out(0, out);
         tractor.set_in_and_out(0, out);
         producer->set("length", producer->frames_to_time(out + 1, mlt_time_clock));
         producer->set_in_and_out(0, out);
@@ -1931,7 +1932,8 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         track_a->set_in_and_out(track_a->get_in(), track_a->get_out() + delta);
         track_b->set_in_and_out(track_b->get_in(), track_b->get_out() + delta);
         playlist.unblock();
-        tractor.multitrack()->set_in_and_out(0, out);
+        QScopedPointer<Mlt::Multitrack> multitrack(tractor.multitrack());
+        multitrack->set_in_and_out(0, out);
         tractor.set_in_and_out(0, out);
         producer->set("length", producer->frames_to_time(out + 1, mlt_time_clock));
         producer->set_in_and_out(0, out);
@@ -2437,6 +2439,7 @@ void MultitrackModel::consolidateBlanksAllTracks()
             Mlt::Playlist playlist(*track);
             consolidateBlanks(playlist, i);
         }
+        delete track;
         ++i;
     }
 }
@@ -2641,6 +2644,8 @@ std::unique_ptr<Mlt::ClipInfo> MultitrackModel::findClipByUuid(const QUuid &uuid
                 if ((info = playlist.clip_info(clipIndex))) {
                     if (MLT.uuid(*info->cut) == uuid)
                         return std::unique_ptr<Mlt::ClipInfo>(info);
+                    else
+                        delete info;
                 }
             }
         }
@@ -3116,7 +3121,7 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
     int toMltIndex = m_trackList.at(toTrackIndex).mlt_index;
 
     // Take a copy of the track
-    QScopedPointer<Mlt::Producer> producer(m_tractor->multitrack()->track(fromMltIndex));
+    QScopedPointer<Mlt::Producer> producer(m_tractor->track(fromMltIndex));
 
     // Take a copy of all the transitions
     // Save the transitions in order of their new track index
@@ -3391,10 +3396,10 @@ void MultitrackModel::reload(bool asynchronous)
 void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer &clip, bool copyFilters)
 {
     int i = m_trackList.at(trackIndex).mlt_index;
-    Mlt::Producer track(m_tractor->track(i));
-    if (track.is_valid()) {
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track->is_valid()) {
 //        LOG_DEBUG() << __FUNCTION__ << "replace" << position << MLT.XML(&clip);
-        Mlt::Playlist playlist(track);
+        Mlt::Playlist playlist(*track.data());
         int in = clip.get_in();
         int out = clip.get_out();
         Mlt::Producer oldClip(playlist.get_clip(clipIndex));
@@ -3434,11 +3439,11 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer &clip
             if (producer.is_valid()) {
                 Mlt::Tractor tractor(MLT_TRACTOR(producer.get_parent()));
                 Q_ASSERT(tractor.is_valid());
-                Mlt::Producer track(tractor.track(1));
-                if (!qstrcmp(track.parent().get(kShotcutHashProperty),
+                QScopedPointer<Mlt::Producer> track(tractor.track(1));
+                if (!qstrcmp(track->parent().get(kShotcutHashProperty),
                              oldClip.parent().get(kShotcutHashProperty))) {
-                    Mlt::Producer cut(clip.cut(in - transitionIn, in - 1));
-                    tractor.set_track(cut, 1);
+                    QScopedPointer<Mlt::Producer> cut(clip.cut(in - transitionIn, in - 1));
+                    tractor.set_track(*cut.data(), 1);
                 }
             }
         }
@@ -3448,11 +3453,11 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer &clip
             if (producer.is_valid()) {
                 Mlt::Tractor tractor(MLT_TRACTOR(producer.get_parent()));
                 Q_ASSERT(tractor.is_valid());
-                Mlt::Producer track(tractor.track(0));
-                if (!qstrcmp(track.parent().get(kShotcutHashProperty),
+                QScopedPointer<Mlt::Producer> track(tractor.track(0));
+                if (!qstrcmp(track->parent().get(kShotcutHashProperty),
                              oldClip.parent().get(kShotcutHashProperty))) {
-                    Mlt::Producer cut(clip.cut(out + 1, out + transitionOut));
-                    tractor.set_track(cut, 0);
+                    QScopedPointer<Mlt::Producer>  cut(clip.cut(out + 1, out + transitionOut));
+                    tractor.set_track(*cut.data(), 0);
                 }
             }
         }
