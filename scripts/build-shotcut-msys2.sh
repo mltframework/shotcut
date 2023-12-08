@@ -25,8 +25,8 @@ DEBUG_BUILD=0
 ASAN_BUILD=0
 DEPLOY=1
 ENABLE_FREI0R=1
-FREI0R_HEAD=0
-FREI0R_REVISION="origin/shotcut"
+FREI0R_HEAD=1
+FREI0R_REVISION=
 ENABLE_MOVIT=1
 SUBDIRS=
 MOVIT_HEAD=0
@@ -406,7 +406,7 @@ function set_globals {
   # REPOLOCS Array holds the repo urls
   REPOLOCS[0]="https://github.com/FFmpeg/FFmpeg.git"
   REPOLOCS[1]="https://github.com/mltframework/mlt.git"
-  REPOLOCS[2]="https://github.com/ddennedy/frei0r.git"
+  REPOLOCS[2]="https://github.com/dyne/frei0r.git"
   REPOLOCS[3]="https://github.com/ddennedy/movit.git"
   REPOLOCS[4]="https://github.com/mltframework/shotcut.git"
   REPOLOCS[5]="http://ftp.us.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
