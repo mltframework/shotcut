@@ -43,7 +43,8 @@ Item {
     function initializeSimpleKeyframes() {
         for (var i in keyframableParameters) {
             var parameter = keyframableParameters[i];
-            if (metadata.keyframes.parameter(parameter).isColor) {
+            var keyMeta = metadata.keyframes.parameter(parameter);
+            if (keyMeta && keyMeta.isColor) {
                 middleValues[i] = filter.getColor(parameter, filter.animateIn);
                 if (filter.animateIn > 0)
                     startValues[i] = filter.getColor(parameter, 0);
