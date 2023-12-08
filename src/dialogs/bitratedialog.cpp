@@ -162,6 +162,7 @@ BitrateDialog::BitrateDialog(const QString &resource, double fps, const QJsonArr
     connect(buttons, &QDialogButtonBox::accepted, this, [ = ] {
         QImage image(chartView->size(), QImage::Format_RGB32);
         QPainter painter(&image);
+        painter.setRenderHint(QPainter::Antialiasing);
         chartView->render(&painter);
         painter.end();
         SaveImageDialog(this, tr("Save Bitrate Graph"), image).exec();
