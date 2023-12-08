@@ -167,8 +167,8 @@ BitrateDialog::BitrateDialog(const QString &resource, double fps, const QJsonArr
         SaveImageDialog(this, tr("Save Bitrate Graph"), image).exec();
     });
     connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    chartView->setMinimumWidth(qMax(1010, periodCount * 5) * devicePixelRatio());
-    chartView->setMinimumHeight(530 * devicePixelRatio());
-    resize(1024 * devicePixelRatioF(), 576 * devicePixelRatio());
+    chartView->setMinimumWidth(qMax(1010, periodCount * 5));
+    chartView->setMinimumHeight(530);
+    resize(1024, 576);
     show();
 }
