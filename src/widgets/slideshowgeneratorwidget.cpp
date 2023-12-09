@@ -271,7 +271,10 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig &config, Mlt::
     double destDar = MLT.profile().dar();
     double sourceW = producer->get_double("meta.media.width");
     double sourceH = producer->get_double("meta.media.height");
-    double sourceAr = producer->get_double("aspect_ratio");
+    double sourceAr = producer->get_double("meta.media.aspect_ratio");
+    if (!sourceAr) {
+        sourceAr = producer->get_double("aspect_ratio");
+    }
     double sourceDar = destDar;
     if (sourceW && sourceH && sourceAr) {
         sourceDar = sourceW * sourceAr / sourceH;
@@ -387,7 +390,10 @@ void SlideshowGeneratorWidget::attachBlurFilter(SlideshowConfig &config, Mlt::Pr
     double destDar = MLT.profile().dar();
     double sourceW = producer->get_double("meta.media.width");
     double sourceH = producer->get_double("meta.media.height");
-    double sourceAr = producer->get_double("aspect_ratio");
+    double sourceAr = producer->get_double("meta.media.aspect_ratio");
+    if (!sourceAr) {
+        sourceAr = producer->get_double("aspect_ratio");
+    }
     double sourceDar = destDar;
     if ( sourceW && sourceH && sourceAr ) {
         sourceDar = sourceW * sourceAr / sourceH;
