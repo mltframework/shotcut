@@ -381,25 +381,30 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             && videoQuality > -1) {
         //val = min + (max - min) * paramval;
         if (vcodec.startsWith("libx264") || vcodec == "libx265" || vcodec.contains("nvenc")
-                || vcodec.endsWith("_amf") || vcodec.endsWith("_vaapi"))
+                || vcodec.endsWith("_amf") || vcodec.endsWith("_vaapi")) {
             // 0 (best, 100%) - 51 (worst)
-            ui->videoQualitySpinner->setValue(TO_RELATIVE((vcodec == "av1_nvenc") ? 63 : 51, 0, videoQuality));
-        else if (vcodec.endsWith("_videotoolbox"))
+            const auto qmax = QString::fromLatin1(preset.get("vcodec")) =="libaom-av1" ? 63 : maxQpNvenc(vcodec);
+            ui->videoQualitySpinner->setValue(TO_RELATIVE(qmax, 0, videoQuality));
+        } else if (vcodec.endsWith("_videotoolbox")) {
 #if defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM)
             ui->videoQualitySpinner->setValue(ui->hwencodeCheckBox->isChecked() ? videoQuality * 55.0 / 23.0 :
                                               videoQuality);
 #else
             ui->videoQualitySpinner->setValue(videoQuality);
 #endif
-        else if (vcodec.endsWith("_qsv"))
+        } else if (vcodec.endsWith("_qsv")) {
             // 1 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 1, videoQuality));
-        else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) // 0 (best, 100%) - 63 (worst)
+        } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
+            // 0 (best, 100%) - 63 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
-        else if (vcodec.startsWith("libwebp")) // 100 (best) - 0 (worst)
+        } else if (vcodec.startsWith("libwebp")) {
+            // 100 (best) - 0 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(0, 100, videoQuality));
-        else // 1 (best, NOT 100%) - 31 (worst)
+        } else {
+            // 1 (best, NOT 100%) - 31 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
+        }
     }
     onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true);
     on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
