@@ -383,7 +383,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         if (vcodec.startsWith("libx264") || vcodec == "libx265" || vcodec.contains("nvenc")
                 || vcodec.endsWith("_amf") || vcodec.endsWith("_vaapi")) {
             // 0 (best, 100%) - 51 (worst)
-            const auto qmax = QString::fromLatin1(preset.get("vcodec")) =="libaom-av1" ? 63 : maxQpNvenc(vcodec);
+            const auto qmax = QString::fromLatin1(preset.get("vcodec")) == "libaom-av1" ? 63 : maxQpNvenc(
+                                  vcodec);
             ui->videoQualitySpinner->setValue(TO_RELATIVE(qmax, 0, videoQuality));
         } else if (vcodec.endsWith("_videotoolbox")) {
 #if defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM)
