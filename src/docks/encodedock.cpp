@@ -2134,8 +2134,9 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
     } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
         s = QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
     } else if (vcodec.contains("nvenc")) {
+        vq = TO_ABSOLUTE(51, 0, vq);
         if (ui->videoRateControlCombo->currentIndex() == RateControlQuality)
-            s = QString("cq=%1").arg(TO_ABSOLUTE(51, 0, vq));
+            s = QString("cq=%1 %2").arg(vq).arg(vq == 0 ? tr("(auto)") : "");
         else
             s = QString("qmin=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_amf")) {
