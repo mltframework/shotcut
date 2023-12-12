@@ -52,10 +52,6 @@ static const QString kNullTarget = "/dev/null";
 #endif
 
 static double getBufferSize(Mlt::Properties &preset, const char *property);
-static int maxQpNvenc(const QString &vcodec)
-{
-    return vcodec == "av1_nvenc" ? 255 : 51;
-}
 
 EncodeDock::EncodeDock(QWidget *parent) :
     QDockWidget(parent),
@@ -306,7 +302,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             if (preset.get_int("abr"))
                 ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
         } else if (name == "vq" || name == "vqp" || name == "vglobal_quality" || name == "qscale"
-                   || qmin_nvenc_amf) {
+                   || qmin_nvenc_amf || name == "cq") {
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize") ? RateControlConstrained :
                                                        RateControlQuality);
             videoQuality = preset.get_int(name.toUtf8().constData());
@@ -383,8 +379,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         if (vcodec.startsWith("libx264") || vcodec == "libx265" || vcodec.contains("nvenc")
                 || vcodec.endsWith("_amf") || vcodec.endsWith("_vaapi")) {
             // 0 (best, 100%) - 51 (worst)
-            const auto qmax = QString::fromLatin1(preset.get("vcodec")) == "libaom-av1" ? 63 : maxQpNvenc(
-                                  vcodec);
+            const auto qmax = QString::fromLatin1(preset.get("vcodec")) == "libaom-av1" ? 63 : 51;
             ui->videoQualitySpinner->setValue(TO_RELATIVE(qmax, 0, videoQuality));
         } else if (vcodec.endsWith("_videotoolbox")) {
 #if defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM)
@@ -708,15 +703,13 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                     break;
                 }
                 case RateControlQuality: {
-                    setIfNotSet(p, "rc", "constqp");
-                    auto qmax = maxQpNvenc(vcodec);
-                    setIfNotSet(p, "vqp", TO_ABSOLUTE(qmax, 0, vq));
-                    setIfNotSet(p, "vq", TO_ABSOLUTE(qmax, 0, vq));
+                    setIfNotSet(p, "rc", "vbr");
+                    setIfNotSet(p, "cq", TO_ABSOLUTE(51, 0, vq));
                     break;
                 }
                 case RateControlConstrained: {
                     const QString &b = ui->videoBitrateCombo->currentText();
-                    setIfNotSet(p, "qmin", TO_ABSOLUTE(maxQpNvenc(vcodec), 0, vq));
+                    setIfNotSet(p, "qmin", TO_ABSOLUTE(51, 0, vq));
                     setIfNotSet(p, "vb", qRound(cvbr));
                     setIfNotSet(p, "vmaxrate", b.toLatin1().constData());
                     setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
@@ -2142,9 +2135,9 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
         s = QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
     } else if (vcodec.contains("nvenc")) {
         if (ui->videoRateControlCombo->currentIndex() == RateControlQuality)
-            s = QString("vqp=%1").arg(TO_ABSOLUTE(maxQpNvenc(vcodec), 0, vq));
+            s = QString("cq=%1").arg(TO_ABSOLUTE(51, 0, vq));
         else
-            s = QString("qmin=%1").arg(TO_ABSOLUTE(maxQpNvenc(vcodec), 0, vq));
+            s = QString("qmin=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_amf")) {
         s = QString("qp_i=qp_p=qp_b=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_vaapi")) {
