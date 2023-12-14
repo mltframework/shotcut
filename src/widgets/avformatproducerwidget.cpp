@@ -1231,7 +1231,7 @@ void AvformatProducerWidget::on_actionFFmpegVideoQuality_triggered()
         auto modelPath = (width < 3840
                           && height < 2160) ? dir.filePath("vmaf_v0.6.1.json") : dir.filePath("vmaf_4k_v0.6.1.json");
 #endif
-        args << QString("[0:v]fps=%4/%5,setpts=PTS-STARTPTS[reference];[1:v]scale=%1:%2:out_range=%6:flags=bicubic,fps=%4/%5,setpts=PTS-STARTPTS[distorted];[distorted][reference]libvmaf=log_fmt=csv:log_path='%8':feature='name=psnr|name=float_ssim':shortest=true:n_threads=%7:model='path=%3'")
+        args << QString("[0:v]scale=out_range=%6,fps=%4/%5,setpts=PTS-STARTPTS[reference];[1:v]scale=%1:%2:out_range=%6:flags=bicubic,fps=%4/%5,setpts=PTS-STARTPTS[distorted];[distorted][reference]libvmaf=log_fmt=csv:log_path='%8':feature='name=psnr|name=float_ssim':shortest=true:n_threads=%7:model='path=%3'")
              .arg(width).arg(height)
              .arg(modelPath)
              .arg(frameRateNum).arg(frameRateDen)
