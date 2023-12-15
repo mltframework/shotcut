@@ -131,7 +131,7 @@ private:
     bool m_askToConvert;
 
     void reopen(Mlt::Producer *p);
-    void recreateProducer();
+    void recreateProducer(bool getFrame = false);
     bool revertToOriginalResource();
     void setSyncVisibility();
     double fps();

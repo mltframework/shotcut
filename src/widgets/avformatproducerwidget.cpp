@@ -220,7 +220,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer *p)
     setProducer(p);
 }
 
-void AvformatProducerWidget::recreateProducer()
+void AvformatProducerWidget::recreateProducer(bool getFrame)
 {
     Mlt::Producer *p = newProducer(MLT.profile());
     Util::passProducerProperties(m_producer.data(), p);
@@ -238,6 +238,11 @@ void AvformatProducerWidget::recreateProducer()
         out = qMin(qRound(out * speedRatio), length - 1);
         p->set("length", p->frames_to_time(length, mlt_time_clock));
         p->set_in_and_out(in, out);
+        if (getFrame) {
+            // Getting a frame updates some properties such as audio_index,
+            // which is used by AudioLevelsTask.
+            delete p->get_frame();
+        }
         emit producerChanged(p);
         delete p;
     } else {
@@ -548,7 +553,7 @@ void AvformatProducerWidget::on_audioTrackComboBox_activated(int index)
         }
         m_producer->set(kAudioIndexProperty,
                         ui->audioTrackComboBox->itemData(index).toString().toUtf8().constData());
-        recreateProducer();
+        recreateProducer(true);
     }
 }
 
