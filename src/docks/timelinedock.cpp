@@ -2671,8 +2671,13 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
             }
         }
         setSelection();
+        if (fromTrack == toTrack)
+            disconnect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, nullptr);
         TimelineSelectionBlocker blocker(*this);
         MAIN.undoStack()->push(command);
+        if (fromTrack == toTrack)
+            connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks,
+                    Qt::QueuedConnection);
     }
 }
 
