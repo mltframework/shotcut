@@ -302,15 +302,17 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             if (preset.get_int("abr"))
                 ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
         } else if (name == "vq" || name == "vqp" || name == "vglobal_quality" || name == "qscale"
-                   || qmin_nvenc_amf || name == "cq") {
-            ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize") ? RateControlConstrained :
-                                                       RateControlQuality);
-            videoQuality = preset.get_int(name.toUtf8().constData());
-        } else if (name == "crf") {
+                   || qmin_nvenc_amf || name == "cq" || name == "crf") {
+            // On macOS videotoolbox, constant quality is only on Apple Silicon
+#if defined(Q_OS_MAC) && !defined(Q_PROCESSOR_ARM)
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize") ? RateControlConstrained
                                                        : vcodec.endsWith("_videotoolbox") ? RateControlAverage :
                                                        RateControlQuality);
-            videoQuality = preset.get_int("crf");
+#else
+            ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize") ? RateControlConstrained :
+                                                       RateControlQuality);
+#endif
+            videoQuality = preset.get_int(name.toUtf8().constData());
         } else if (name == "bufsize" || name == "vbufsize") {
             // traditionally "bufsize" means video only
             if (preset.get("vq") || preset.get("qscale") || preset.get("crf") || qmin_nvenc_amf)
@@ -1436,7 +1438,7 @@ void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset)
         ui->dualPassCheckbox->setEnabled(false);
     } else if (vcodec.endsWith("_videotoolbox")) {
         // According to FFmpeg source code, this is only on Apple Silicon
-#if !(defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM))
+#if defined(Q_OS_MAC) && !defined(Q_PROCESSOR_ARM)
         if (ui->videoRateControlCombo->currentIndex() == RateControlQuality) {
             ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
         }
