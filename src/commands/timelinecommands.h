@@ -28,6 +28,8 @@
 #include <MltTransition.h>
 #include <MltProducer.h>
 
+#include <vector>
+
 namespace Timeline {
 
 enum {
@@ -314,14 +316,16 @@ private:
 class SplitCommand : public QUndoCommand
 {
 public:
-    SplitCommand(MultitrackModel &model, int trackIndex, int clipIndex, int position,
+    SplitCommand(MultitrackModel &model, const std::vector<int> &trackIndex,
+                 const std::vector<int> &clipIndex,
+                 int position,
                  QUndoCommand *parent = 0);
     void redo();
     void undo();
 private:
     MultitrackModel &m_model;
-    int m_trackIndex;
-    int m_clipIndex;
+    std::vector<int> m_trackIndex;
+    std::vector<int> m_clipIndex;
     int m_position;
     UndoHelper m_undoHelper;
 };

@@ -1245,11 +1245,17 @@ void MultitrackModel::liftClip(int trackIndex, int clipIndex)
 
 void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
 {
+    if (trackIndex < 0 || trackIndex >= rowCount()) {
+        LOG_ERROR() << "Invalid track index" << trackIndex;
+    }
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        if (info.isNull()) {
+            LOG_ERROR() << "Invalid clip index" << trackIndex << clipIndex;
+        }
         int in = info->frame_in;
         int out = info->frame_out;
         int filterIn = MLT.filterIn(playlist, clipIndex);
