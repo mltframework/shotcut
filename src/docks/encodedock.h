@@ -166,7 +166,7 @@ private:
     void resetOptions();
     Mlt::Producer *fromProducer() const;
     static void filterX265Params(QStringList &other);
-    void onVideoCodecComboChanged(int index, bool ignorePreset = false);
+    void onVideoCodecComboChanged(int index, bool ignorePreset = false, bool resetBframes = true);
     bool checkForMissingFiles();
     QString &defaultFormatExtension();
     void initSpecialCodecLists();

@@ -404,7 +404,10 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
         }
     }
-    onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true);
+    vcodec = QString::fromLatin1(preset.get("vcodec"));
+    auto resetBframes = !vcodec.contains("nvenc") && !vcodec.endsWith("_amf")
+                        && !vcodec.endsWith("_qsv");
+    onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true, resetBframes);
     on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
     on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
     if (m_extension.isEmpty()) {
@@ -1405,7 +1408,7 @@ void EncodeDock::filterX265Params(QStringList &other)
     }
 }
 
-void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset)
+void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset, bool resetBframes)
 {
     Q_UNUSED(index)
     QString vcodec = ui->videoCodecCombo->currentText();
@@ -1420,19 +1423,19 @@ void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset)
             }
             ui->advancedTextEdit->setPlainText(newValue);
         }
-//        if (vcodec.contains("hevc"))
-        ui->bFramesSpinner->setValue(0);
+        if (resetBframes)
+            ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
     } else if (vcodec.endsWith("_amf")) {
-        if (vcodec.startsWith("hevc_"))
+        if (resetBframes && vcodec.startsWith("hevc_"))
             ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
     } else if (vcodec.endsWith("_qsv")) {
         if (vcodec.startsWith("hevc_") && !ui->advancedTextEdit->toPlainText().contains("load_plugin="))
             ui->advancedTextEdit->appendPlainText("\nload_plugin=hevc_hw\n");
-        if (vcodec.startsWith("av1_"))
+        if (resetBframes && vcodec.startsWith("av1_"))
             ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
