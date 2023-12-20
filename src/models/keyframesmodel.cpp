@@ -382,7 +382,8 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                     if (animation.is_valid() && !animation.remove(frame_num))
                         animation.interpolate();
                 }
-
+                mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
+                mlt_events_fire(m_filter->service().get_properties(), "property-changed", eventData);
                 QModelIndex modelIndex;
                 if (keyframeIndex > 0) {
                     modelIndex = index(keyframeIndex - 1, 0, index(parameterIndex));
