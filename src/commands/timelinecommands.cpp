@@ -808,31 +808,37 @@ bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-SplitCommand::SplitCommand(MultitrackModel &model, int trackIndex,
-                           int clipIndex, int position, QUndoCommand *parent)
+SplitCommand::SplitCommand(MultitrackModel &model, const std::vector<int> &trackIndex,
+                           const std::vector<int> &clipIndex, int position, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
-    , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
+    , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
     , m_position(position)
     , m_undoHelper(m_model)
 {
-    setText(QObject::tr("Split clip"));
+    if (m_clipIndex.size() == 1) {
+        setText(QObject::tr("Split clip"));
+    } else {
+        setText(QObject::tr("Split clips"));
+    }
     m_undoHelper.setHints(UndoHelper::RestoreTracks);
 }
 
 void SplitCommand::redo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
+    LOG_DEBUG() << "trackIndex" << m_trackIndex[0] << "clipIndex" << m_clipIndex[0] << "position" <<
                 m_position;
     m_undoHelper.recordBeforeState();
-    m_model.splitClip(m_trackIndex, m_clipIndex, m_position);
+    for (int i = 0; i < m_trackIndex.size(); i++) {
+        m_model.splitClip(m_trackIndex[i], m_clipIndex[i], m_position);
+    }
     m_undoHelper.recordAfterState();
 }
 
 void SplitCommand::undo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
+    LOG_DEBUG() << "trackIndex" << m_trackIndex[0] << "clipIndex" << m_clipIndex[0] << "position" <<
                 m_position;
     m_undoHelper.undoChanges();
 }

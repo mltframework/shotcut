@@ -103,6 +103,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     selectionMenu->addAction(Actions["timelineSelectNextClipAction"]);
     selectionMenu->addAction(Actions["timelineSelectPrevClipAction"]);
     selectionMenu->addAction(Actions["timelineSplitAction"]);
+    selectionMenu->addAction(Actions["timelineSplitAllTracksAction"]);
     selectionMenu->addAction(Actions["timelineSelectClipAboveAction"]);
     selectionMenu->addAction(Actions["timelineSelectClipBelowAction"]);
     selectionMenu->addAction(Actions["timelineSelectClipUnderPlayheadAction"]);
@@ -695,9 +696,82 @@ void TimelineDock::setupActions()
         if (!isMultitrackValid()) return;
         show();
         raise();
-        splitClip(currentTrack());
+        int clipIndex = -1;
+        int trackIndex = -1;
+        std::vector<int> tracks;
+        std::vector<int> clips;
+        // First check if any clips are selected under the playhead
+        QList<QPoint> selected = selection();
+        if (selected.size() > 0) {
+            for (auto c : selected) {
+                clipIndex = c.x();
+                trackIndex = c.y();
+                if (clipIndexAtPlayhead(trackIndex) == clipIndex &&  !isBlank(trackIndex, clipIndex)
+                        && !isTransition(trackIndex, clipIndex)) {
+                    auto info = m_model.getClipInfo(trackIndex, clipIndex);
+                    if (info && m_position > info->start && m_position < info->start + info->frame_count) {
+                        tracks.push_back(trackIndex);
+                        clips.push_back(clipIndex);
+                    }
+                }
+            }
+        }
+        // Next, choose a clip based on track selection
+        if (tracks.size() == 0) {
+            clipIndex = -1;
+            trackIndex = currentTrack();
+            chooseClipAtPosition(m_position, trackIndex, clipIndex);
+            if (trackIndex < 0 || clipIndex < 0) {
+                return;
+            } else  if (isBlank(trackIndex, clipIndex)) {
+                return;
+            } else if (isTransition(trackIndex, clipIndex)) {
+                emit showStatusMessage(tr("You cannot split a transition."));
+                return;
+            }
+            auto info = m_model.getClipInfo(trackIndex, clipIndex);
+            if (info && m_position > info->start && m_position < info->start + info->frame_count) {
+                setCurrentTrack(trackIndex);
+                tracks.push_back(trackIndex);
+                clips.push_back(clipIndex);
+            }
+        }
+        if (tracks.size() > 0) {
+            setSelection(); // Avoid filter views becoming out of sync
+            MAIN.undoStack()->push(new Timeline::SplitCommand(m_model, tracks, clips, m_position));
+        }
     });
     Actions.add("timelineSplitAction", action);
+
+    action = new QAction(tr("Split All Tracks At Playhead"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_S));
+    connect(action, &QAction::triggered, this, [&]() {
+        if (!isMultitrackValid()) return;
+        show();
+        raise();
+        std::vector<int> tracks;
+        std::vector<int> clips;
+        for (int trackIndex = 0; trackIndex < m_model.rowCount(); trackIndex++) {
+            int clipIndex = clipIndexAtPosition(trackIndex, m_position);
+            if (clipIndex < 0 || isBlank(trackIndex, clipIndex)) {
+                continue;
+            }
+            if (isTransition(trackIndex, clipIndex)) {
+                emit showStatusMessage(tr("You cannot split a transition."));
+                continue;
+            }
+            auto info = m_model.getClipInfo(trackIndex, clipIndex);
+            if (info && m_position > info->start && m_position < info->start + info->frame_count) {
+                tracks.push_back(trackIndex);
+                clips.push_back(clipIndex);
+            }
+        }
+        if (tracks.size() > 0) {
+            setSelection(); // Avoid filter views becoming out of sync
+            MAIN.undoStack()->push(new Timeline::SplitCommand(m_model, tracks, clips, m_position));
+        }
+    });
+    Actions.add("timelineSplitAllTracksAction", action);
 
     action = new QAction(tr("Replace"), this);
     action->setShortcut(QKeySequence(Qt::Key_R));
@@ -3056,32 +3130,6 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
             Qt::QueuedConnection);
     connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks,
             Qt::QueuedConnection);
-}
-
-void TimelineDock::splitClip(int trackIndex, int clipIndex)
-{
-    if (trackIndex < 0 || clipIndex < 0)
-        chooseClipAtPosition(m_position, trackIndex, clipIndex);
-    if (trackIndex < 0 || clipIndex < 0)
-        return;
-    setCurrentTrack(trackIndex);
-    if (clipIndex >= 0 && trackIndex >= 0) {
-        int i = m_model.trackList().at(trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
-        if (track) {
-            Mlt::Playlist playlist(*track);
-            if (!m_model.isTransition(playlist, clipIndex)) {
-                auto info = m_model.getClipInfo(trackIndex, clipIndex);
-                if (info && m_position > info->start && m_position < info->start + info->frame_count) {
-                    setSelection(); // Avoid filter views becoming out of sync
-                    MAIN.undoStack()->push(
-                        new Timeline::SplitCommand(m_model, trackIndex, clipIndex, m_position));
-                }
-            } else {
-                emit showStatusMessage(tr("You cannot split a transition."));
-            }
-        }
-    }
 }
 
 void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
