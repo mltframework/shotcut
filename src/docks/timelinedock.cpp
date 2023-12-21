@@ -102,8 +102,6 @@ TimelineDock::TimelineDock(QWidget *parent) :
     selectionMenu->addAction(Actions["timelineSelectNoneAction"]);
     selectionMenu->addAction(Actions["timelineSelectNextClipAction"]);
     selectionMenu->addAction(Actions["timelineSelectPrevClipAction"]);
-    selectionMenu->addAction(Actions["timelineSplitAction"]);
-    selectionMenu->addAction(Actions["timelineSplitAllTracksAction"]);
     selectionMenu->addAction(Actions["timelineSelectClipAboveAction"]);
     selectionMenu->addAction(Actions["timelineSelectClipBelowAction"]);
     selectionMenu->addAction(Actions["timelineSelectClipUnderPlayheadAction"]);
@@ -120,6 +118,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     editMenu->addAction(Actions["playerSetOutAction"]);
     editMenu->addAction(Actions["timelineRippleTrimClipInAction"]);
     editMenu->addAction(Actions["timelineRippleTrimClipOutAction"]);
+    editMenu->addAction(Actions["timelineSplitAction"]);
+    editMenu->addAction(Actions["timelineSplitAllTracksAction"]);
     m_mainMenu->addMenu(editMenu);
     QMenu *viewMenu = new QMenu(tr("View"), this);
     viewMenu->addAction(Actions["timelineZoomOutAction"]);
