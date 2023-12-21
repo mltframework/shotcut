@@ -1321,11 +1321,20 @@ void AddTrackCommand::redo()
         m_trackIndex = m_model.addVideoTrack();
     else
         m_trackIndex = m_model.addAudioTrack();
+    int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+    Mlt::Producer producer(m_model.tractor()->multitrack()->track(mlt_index));
+    if (producer.is_valid()) {
+        if (m_uuid.isNull()) {
+            m_uuid = MLT.ensureHasUuid(producer);
+        } else {
+            MLT.setUuid(producer, m_uuid);
+        }
+    }
 }
 
 void AddTrackCommand::undo()
 {
-    LOG_DEBUG() << (m_isVideo ? "video" : "audio");
+    LOG_DEBUG() << (m_isVideo ? "video" : "audio") << m_uuid;
     m_model.removeTrack(m_trackIndex);
 }
 
@@ -1351,6 +1360,15 @@ void InsertTrackCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "type" << (m_trackType == AudioTrackType ? "audio" :
                                                               "video");
     m_model.insertTrack(m_trackIndex, m_trackType);
+    int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+    Mlt::Producer producer(m_model.tractor()->multitrack()->track(mlt_index));
+    if (producer.is_valid()) {
+        if (m_uuid.isNull()) {
+            m_uuid = MLT.ensureHasUuid(producer);
+        } else {
+            MLT.setUuid(producer, m_uuid);
+        }
+    }
 }
 
 void InsertTrackCommand::undo()
@@ -1378,6 +1396,8 @@ RemoveTrackCommand::RemoveTrackCommand(MultitrackModel &model, int trackIndex, Q
     if (producer && producer->is_valid()) {
         // Save track name.
         m_trackName = QString::fromUtf8(producer->get(kTrackNameProperty));
+        // Save producer UUID.
+        m_uuid = MLT.ensureHasUuid(*producer);
         // Save the track filters.
         if (producer->filter_count() > 0) {
             m_filtersProducer.reset(new Mlt::Producer(MLT.profile(), "color"));
@@ -1419,6 +1439,7 @@ void RemoveTrackCommand::undo()
     QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
     Mlt::Playlist playlist(*producer);
     if (playlist.is_valid() && m_filtersProducer &&  m_filtersProducer->is_valid()) {
+        MLT.setUuid(playlist, m_uuid);
         MLT.copyFilters(*m_filtersProducer, playlist);
         QModelIndex modelIndex = m_model.index(m_trackIndex);
         emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::IsFilteredRole);
@@ -1625,6 +1646,16 @@ void DetachAudioCommand::redo()
         }
 
         if (m_targetTrackIndex > -1) {
+            // Set the producer UUID on the new track.
+            int mlt_index = m_model.trackList().at(m_targetTrackIndex).mlt_index;
+            Mlt::Producer producer(m_model.tractor()->multitrack()->track(mlt_index));
+            if (producer.is_valid()) {
+                if (m_uuid.isNull()) {
+                    m_uuid = MLT.ensureHasUuid(producer);
+                } else {
+                    MLT.setUuid(producer, m_uuid);
+                }
+            }
             // Add the clip to the new audio track.
             m_undoHelper.recordBeforeState();
             m_model.overwrite(m_targetTrackIndex, audioClip, m_position, false);

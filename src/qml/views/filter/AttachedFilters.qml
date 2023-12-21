@@ -22,6 +22,8 @@ import org.shotcut.qml as Shotcut
 
 Rectangle {
     id: attachedFilters
+    property bool selectedCanMoveUp: false
+    property bool selectedCanMoveDown: false
 
     signal filterClicked(int index)
 
@@ -162,6 +164,27 @@ Rectangle {
                 }
             }
 
+            function updateMobility() {
+                if (currentIndex >= 0 && count > 1) {
+                    let currentSection = attachedFiltersView.itemAtIndex(currentIndex).ListView.section;
+                    if (currentIndex <= 0) {
+                        selectedCanMoveUp = false;
+                    } else {
+                        let prevSection = attachedFiltersView.itemAtIndex(currentIndex - 1).ListView.section;
+                        selectedCanMoveUp = currentSection === prevSection;
+                    }
+                    if (currentIndex >= attachedFiltersView.count - 1) {
+                        selectedCanMoveDown = false;
+                    } else {
+                        let nextSection = attachedFiltersView.itemAtIndex(currentIndex + 1).ListView.section;
+                        selectedCanMoveDown = currentSection === nextSection;
+                    }
+                } else {
+                    selectedCanMoveUp = false;
+                    selectedCanMoveDown = false;
+                }
+            }
+
             anchors.fill: parent
             model: attachedfiltersmodel
             delegate: filterDelegate
@@ -175,10 +198,12 @@ Rectangle {
             highlightMoveVelocity: 1000
             Component.onCompleted: {
                 model.modelReset.connect(positionViewAtBeginning);
+                updateMobility();
             }
             onCurrentIndexChanged: {
                 possiblySelectFirstFilter();
                 positionViewAtIndex(currentIndex, ListView.Contain);
+                updateMobility();
             }
             onCountChanged: possiblySelectFirstFilter()
 

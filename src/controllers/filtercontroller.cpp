@@ -128,7 +128,7 @@ QmlMetadata *FilterController::metadata(const QString &id)
 
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
-    QmlMetadata *meta = 0;
+    QmlMetadata *meta = nullptr;
     int rowCount = m_metadataModel.rowCount();
     QString uniqueId = service->get(kShotcutFilterProperty);
 
@@ -182,6 +182,17 @@ void FilterController::loadFilterSets()
     }
 }
 
+void FilterController::onUndoOrRedo(Mlt::Service &service)
+{
+    MLT.refreshConsumer();
+    if (m_currentFilter && m_mltService.is_valid()
+            && service.get_service() == m_mltService.get_service()) {
+        emit undoOrRedo();
+        QMetaObject::invokeMethod(this, "setCurrentFilter", Qt::QueuedConnection, Q_ARG(int,
+                                                                                        m_currentFilterIndex));
+    }
+}
+
 void FilterController::timerEvent(QTimerEvent *event)
 {
     loadFilterMetadata();
@@ -209,7 +220,7 @@ void FilterController::setProducer(Mlt::Producer *producer)
     }
 }
 
-void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
+void FilterController::setCurrentFilter(int attachedIndex)
 {
     if (attachedIndex == m_currentFilterIndex) {
         return;
@@ -232,12 +243,16 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
         m_mltService = m_attachedModel.getService(m_currentFilterIndex);
         if (!m_mltService.is_valid()) return;
         filter = new QmlFilter(m_mltService, meta);
-        filter->setIsNew(isNew);
+        filter->setIsNew(m_mltService.get_int(kNewFilterProperty));
+        m_mltService.clear(kNewFilterProperty);
         connect(filter, SIGNAL(changed(QString)), SLOT(onQmlFilterChanged(const QString &)));
     }
 
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
+    if (filter && !m_attachedModel.isSourceClip()) {
+        filter->startUndoTracking(this);
+    }
 }
 
 void FilterController::onFadeInChanged()
@@ -293,7 +308,7 @@ void FilterController::handleAttachedRowsRemoved(const QModelIndex &, int first,
 void FilterController::handleAttachedRowsInserted(const QModelIndex &, int first, int)
 {
     m_currentFilterIndex = QmlFilter::DeselectCurrentFilter; // Force update
-    setCurrentFilter(qBound(0, first, qMax(m_attachedModel.rowCount() - 1, 0)), true);
+    setCurrentFilter(qBound(0, first, qMax(m_attachedModel.rowCount() - 1, 0)));
 }
 
 void FilterController::handleAttachDuplicateFailed(int index)

@@ -58,13 +58,11 @@ public slots:
     void onShowFrame(const SharedFrame &frame);
     void openFilterMenu() const;
     void onServiceInChanged(int delta, Mlt::Service *service);
+    void resetQview();
 
 protected:
     bool event(QEvent *event);
     void keyPressEvent(QKeyEvent *event);
-
-private slots:
-    void resetQview();
 
 private:
     void setupActions();

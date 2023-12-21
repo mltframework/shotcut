@@ -44,11 +44,19 @@ public:
     void setProducer(Mlt::Producer *producer = 0);
     QString producerTitle() const;
     bool isProducerSelected() const;
+    bool isSourceClip() const;
     bool supportsLinks() const;
     Mlt::Producer *producer() const
     {
         return m_producer.data();
     }
+    QString name(int row) const;
+
+    // The below are used by QUndoCommands
+    void doAddService(Mlt::Producer &producer, Mlt::Service &service, int row);
+    void doRemoveService(Mlt::Producer &producer, int row);
+    void doMoveService(Mlt::Producer &producer, int fromRow, int toRow);
+    void doSetDisabled(Mlt::Producer &producer, int row, bool disable);
 
     // QAbstractListModel Implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -79,16 +87,12 @@ public slots:
 private:
     static void producerChanged(mlt_properties owner, AttachedFiltersModel *model);
     void reset(Mlt::Producer *producer = 0);
-    int mltFilterIndex(int row) const;
-    int mltLinkIndex(int row) const;
-    void addFilter(QmlMetadata *meta, int insertRow);
-    void addLink(QmlMetadata *meta, int insertRow);
-    void addFilterSet(QmlMetadata *meta, int insertRow);
+    bool isProducerLoaded(Mlt::Producer &producer) const;
+    int findInsertRow(QmlMetadata *meta);
+    Mlt::Producer getFilterSetProducer(QmlMetadata *meta);
 
     int m_dropRow;
     int m_removeRow;
-    int m_normFilterCount;
-    int m_normLinkCount;
     QScopedPointer<Mlt::Producer> m_producer;
     QScopedPointer<Mlt::Event> m_event;
     typedef QList<QmlMetadata *> MetadataList;
