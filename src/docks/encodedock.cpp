@@ -269,16 +269,15 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                     } else {
                         other.append("mlt_image_format=yuv444p10");
                     }
-                    // Hardware encoder
-                    if (vcodec.endsWith("_nvenc") || vcodec.endsWith("_qsv")
-                            || vcodec.endsWith("_vaapi") || vcodec.endsWith("_videotoolbox")) {
-                        value = "p010le";
-                    }
                 } else {
                     other.append("mlt_image_format=rgb");
                 }
+                // Hardware encoder
+                if (vcodec.endsWith("_nvenc") || vcodec.endsWith("_qsv")
+                        || vcodec.endsWith("_vaapi") || vcodec.endsWith("_videotoolbox")) {
+                    value = "p010le";
+                }
             }
-
             other.append(QString("%1=%2").arg(name, value));
         } else if (name == "pass")
             ui->dualPassCheckbox->setChecked(true);
