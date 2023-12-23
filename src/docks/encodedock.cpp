@@ -269,7 +269,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                     } else {
                         other.append("mlt_image_format=yuv444p10");
                     }
-                } else {
+                } else if (!other.contains("mlt_image_format=rgb")) {
                     other.append("mlt_image_format=rgb");
                 }
                 // Hardware encoder
@@ -278,7 +278,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                     value = "p010le";
                 }
             }
-            other.append(QString("%1=%2").arg(name, value));
+            if (!value.isEmpty())
+                other.append(QString("%1=%2").arg(name, value));
         } else if (name == "pass")
             ui->dualPassCheckbox->setChecked(true);
         else if (name == "v2pass")
@@ -2078,7 +2079,23 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
             ui->hwencodeCheckBox->setChecked(false);
     }
     Settings.setEncodeUseHardware(ui->hwencodeCheckBox->isChecked());
+    std::unique_ptr<Mlt::Properties> properties {collectProperties(0, true)};
     resetOptions();
+    if (properties && properties->is_valid()) {
+        QString value = QString::fromLatin1(properties->get("vcodec"));
+        if (value.startsWith("av1_")) {
+            value = "libaom-av1";
+        } else if (value.startsWith("h264_")) {
+            value = "libx264";
+        } else if (value.startsWith("hevc_")) {
+            value = "libx265";
+        }
+        properties->set("vcodec", value.toUtf8().constData());
+        value = QString::fromLatin1(properties->get("pix_fmt"));
+        if (value.contains("p010le"))
+            properties->set("pix_fmt", "yuv420p10le");
+        loadPresetFromProperties(*properties);
+    }
 }
 
 void EncodeDock::on_hwencodeButton_clicked()
