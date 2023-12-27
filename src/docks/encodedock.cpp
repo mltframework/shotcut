@@ -1543,13 +1543,14 @@ void EncodeDock::on_encodeButton_clicked()
     MLT.pause();
 
     QString directory = Settings.encodePath();
+    auto projectBaseName = QFileInfo(MAIN.fileName()).completeBaseName();
     if (!m_extension.isEmpty()) {
         if (!MAIN.fileName().isEmpty()) {
-            directory += QString("/%1.%2").arg(QFileInfo(MAIN.fileName()).completeBaseName(), m_extension);
+            directory += QString("/%1.%2").arg(projectBaseName, m_extension);
         }
     } else {
         if (!MAIN.fileName().isEmpty()) {
-            directory += "/" + QFileInfo(MAIN.fileName()).completeBaseName();
+            directory += "/" + projectBaseName;
         }
     }
 
@@ -1557,7 +1558,7 @@ void EncodeDock::on_encodeButton_clicked()
     if (ui->fromCombo->currentData().toString() == "batch") {
         caption = tr("Export Files");
         MultiFileExportDialog dialog(tr("Export Each Playlist Item"), MAIN.playlist(),
-                                     QDir(directory).absolutePath(), QFileInfo(MAIN.fileName()).completeBaseName(), m_extension, this);
+                                     directory, projectBaseName, m_extension, this);
         if (dialog.exec() != QDialog::Accepted) {
             return;
         }
