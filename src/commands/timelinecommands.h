@@ -214,12 +214,9 @@ class MoveClipCommand : public QUndoCommand
 public:
     MoveClipCommand(MultitrackModel &model, MarkersModel &markersModel, int trackDelta, bool ripple,
                     QUndoCommand *parent = 0);
+    void addClip(int start, Mlt::Producer &clip);
     void redo();
     void undo();
-    QMultiMap<int, Mlt::Producer> &selection()
-    {
-        return m_selection;
-    }
 protected:
     int id() const
     {

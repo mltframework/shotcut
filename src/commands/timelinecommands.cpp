@@ -450,6 +450,12 @@ MoveClipCommand::MoveClipCommand(MultitrackModel &model, MarkersModel &markersMo
     m_undoHelper.recordBeforeState();
 }
 
+void MoveClipCommand::addClip(int start, Mlt::Producer &clip)
+{
+    MLT.ensureHasUuid(clip);
+    m_selection.insert(start, clip);
+}
+
 void MoveClipCommand::redo()
 {
     LOG_DEBUG() << "track delta" << m_trackDelta;

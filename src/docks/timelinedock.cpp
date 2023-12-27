@@ -1828,7 +1828,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                         new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
                     auto moveCommand = new Timeline::MoveClipCommand(m_model, m_markersModel, 0, true);
                     nextInfo->cut->set(kPlaylistStartProperty, position);
-                    moveCommand->selection().insert(nextInfo->start, *nextInfo->cut);
+                    moveCommand->addClip(nextInfo->start, *nextInfo->cut);
                     MAIN.undoStack()->push(moveCommand);
                     MAIN.undoStack()->push(
                         new Timeline::OverwriteCommand(m_model, trackIndex, info->start, MLT.XML(after), false));
@@ -2741,7 +2741,7 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
                 LOG_DEBUG() << "moving clip at" << clip << "start" << info->start << "+" << position << "=" <<
                             info->start + position;
                 info->cut->set(kPlaylistStartProperty, info->start + position);
-                command->selection().insert(info->start, *info->cut);
+                command->addClip(info->start, *info->cut);
             }
         }
         setSelection();
