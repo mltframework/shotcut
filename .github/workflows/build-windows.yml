@@ -53,19 +53,6 @@ jobs:
             mingw-w64-x86_64-libimagequant
             mingw-w64-x86_64-python3.11
 
-      - name: Downgrade GCC to v12
-        shell: msys2 {0}
-        run: |
-          curl -kLO --no-progress-meter https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-gcc-12.2.0-9-any.pkg.tar.zst
-          curl -kLO --no-progress-meter https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-gcc-ada-12.2.0-9-any.pkg.tar.zst
-          curl -kLO --no-progress-meter https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-gcc-fortran-12.2.0-9-any.pkg.tar.zst
-          curl -kLO --no-progress-meter https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-gcc-libgfortran-12.2.0-9-any.pkg.tar.zst
-          curl -kLO --no-progress-meter https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-gcc-libs-12.2.0-9-any.pkg.tar.zst
-          curl -kLO --no-progress-meter https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-gcc-objc-12.2.0-9-any.pkg.tar.zst
-          curl -kLO --no-progress-meter https://repo.msys2.org/mingw/mingw64/mingw-w64-x86_64-libgccjit-12.2.0-9-any.pkg.tar.zst
-          pacman -U --noconfirm *.pkg.tar.zst
-          rm *.pkg.tar.zst
-
       - uses: actions/checkout@v3
 
       - name: Build
