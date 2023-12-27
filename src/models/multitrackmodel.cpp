@@ -2640,6 +2640,13 @@ void MultitrackModel::adjustTrackFilters()
 std::unique_ptr<Mlt::ClipInfo> MultitrackModel::findClipByUuid(const QUuid &uuid, int &trackIndex,
                                                                int &clipIndex)
 {
+    if (uuid.isNull()) {
+        LOG_ERROR() << "Request to find clip without UUID";
+#ifndef NDEBUG
+        Q_ASSERT(!uuid.isNull());
+#endif
+        return nullptr;
+    }
     for (trackIndex = 0; trackIndex < trackList().size(); trackIndex++) {
         int i = trackList().at(trackIndex).mlt_index;
         QScopedPointer<Mlt::Producer> track(tractor()->track(i));
