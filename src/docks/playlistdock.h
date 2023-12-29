@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,7 @@ public:
     }
     int position();
     void replaceClipsWithHash(const QString &hash, Mlt::Producer &producer);
+    void getSelectionRange(int *start, int *end);
 
 signals:
     void clipOpened(Mlt::Producer *producer, bool play = false);

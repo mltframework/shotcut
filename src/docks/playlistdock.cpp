@@ -770,6 +770,27 @@ void PlaylistDock::replaceClipsWithHash(const QString &hash, Mlt::Producer &prod
     }
 }
 
+void PlaylistDock::getSelectionRange(int *start, int *end)
+{
+    Mlt::Playlist *playlist = m_model.playlist();
+    if (!playlist || !m_view->selectionModel()
+            || !m_view->selectionModel()->selectedIndexes().size() ) {
+        *start = -1;
+        *end = -1;
+        return;
+    }
+    // Find the earliest start and the latest end in the selection
+    *start = std::numeric_limits<int>::max();
+    *end = -1;
+    foreach (auto index, m_view->selectionModel()->selectedIndexes()) {
+        int row = index.row();
+        int clipStart = playlist->clip_start(row);
+        int clipEnd = clipStart + playlist->clip_length(row);
+        *start = qMin(*start, clipStart);
+        *end = qMax(*end, clipEnd);
+    }
+}
+
 void PlaylistDock::incrementIndex()
 {
     QModelIndex index = m_view->currentIndex();

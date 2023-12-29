@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,6 +92,7 @@ signals:
     void tabIndexChanged(int index);
     void trimIn();
     void trimOut();
+    void loopChanged(int start, int end);
 
 public slots:
     void play(double speed = 1.0);
@@ -128,6 +129,7 @@ private:
     void setupActions();
     void adjustScrollBars(float horizontal, float vertical);
     double setVolume(int volume);
+    void setLoopRange(int start, int end);
 
     ScrubBar *m_scrubber;
     TimeSpinBox *m_positionSpinner;
@@ -137,7 +139,9 @@ private:
     int m_position;
     int m_playPosition;
     QIcon m_playIcon;
+    QIcon m_loopIcon;
     QIcon m_pauseIcon;
+    QIcon m_stopIcon;
     QFrame *m_volumePopup;
     QSlider *m_volumeSlider;
     QPushButton *m_muteButton;
@@ -149,6 +153,7 @@ private:
     int m_isMeltedPlaying;
     QScrollBar *m_horizontalScroll;
     QScrollBar *m_verticalScroll;
+    QToolButton *m_playButton;
     QToolButton *m_zoomButton;
     QToolButton *m_gridButton;
     QActionGroup *m_gridActionGroup;
@@ -166,6 +171,8 @@ private:
     QMenu *m_zoomMenu;
     QMenu *m_mainMenu;
     NewProjectFolder *m_projectWidget;
+    int m_loopStart;
+    int m_loopEnd;
 
 private slots:
     void updateSelection();

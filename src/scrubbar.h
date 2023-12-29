@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Meltytech, LLC
+ * Copyright (c) 2011-2023 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -52,6 +52,7 @@ public:
     {
         m_margin = margin;
     }
+    void setLoopRange(int start, int end);
 
 signals:
     void seeked(int);
@@ -81,6 +82,8 @@ private:
     int m_timecodeWidth;
     int m_secondsPerTick;
     QList<int> m_markers;
+    int m_loopStart;
+    int m_loopEnd;
 
     void updatePixmap();
 };

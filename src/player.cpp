@@ -50,6 +50,8 @@ Player::Player(QWidget *parent)
     , m_pauseAfterOpen(false)
     , m_monitorScreen(-1)
     , m_currentTransport(nullptr)
+    , m_loopStart(-1)
+    , m_loopEnd(-1)
 {
     setObjectName("Player");
     Mlt::Controller::singleton();
@@ -191,7 +193,22 @@ Player::Player(QWidget *parent)
     toolbar->addWidget(spacer);
     toolbar->addAction(Actions["playerSkipPreviousAction"]);
     toolbar->addAction(Actions["playerRewindAction"]);
-    toolbar->addAction(Actions["playerPlayPauseAction"]);
+
+    // Add the play button to the toolbar
+    m_playButton = new QToolButton;
+    QMenu *playMenu = new QMenu(this);
+    playMenu->addAction(Actions["playerLoopAction"]);
+    QMenu *loopRangeMenu = new QMenu(tr("Set Loop Range"), this);
+    loopRangeMenu->addAction(Actions["playerLoopRangeAllAction"]);
+    loopRangeMenu->addAction(Actions["playerLoopRangeMarkerAction"]);
+    loopRangeMenu->addAction(Actions["playerLoopRangeSelectionAction"]);
+    loopRangeMenu->addAction(Actions["playerLoopRangeAroundAction"]);
+    playMenu->addMenu(loopRangeMenu);
+    m_playButton->setMenu(playMenu);
+    m_playButton->setPopupMode(QToolButton::MenuButtonPopup);
+    m_playButton->setDefaultAction(Actions["playerPlayPauseAction"]);
+    toolbar->addWidget(m_playButton);
+
     toolbar->addAction(Actions["playerFastForwardAction"]);
     toolbar->addAction(Actions["playerSkipNextAction"]);
 
@@ -350,8 +367,12 @@ void Player::setupActions()
 
     m_playIcon = QIcon::fromTheme("media-playback-start",
                                   QIcon(":/icons/oxygen/32x32/actions/media-playback-start.png"));
+    m_loopIcon = QIcon::fromTheme("media-playback-loop",
+                                  QIcon(":/icons/oxygen/32x32/actions/media-playback-loop.png"));
     m_pauseIcon = QIcon::fromTheme("media-playback-pause",
                                    QIcon(":/icons/oxygen/32x32/actions/media-playback-pause.png"));
+    m_stopIcon = QIcon::fromTheme("media-playback-stop",
+                                  QIcon(":/icons/oxygen/32x32/actions/media-playback-stop.png"));
 
     action = new QAction(tr("Play/Pause"), this);
     action->setShortcut(QKeySequence(Qt::Key_Space));
@@ -359,7 +380,8 @@ void Player::setupActions()
     action->setDisabled(true);
     action->setToolTip(tr("Toggle play or pause"));
     connect(action, &QAction::triggered, this, [&]() {
-        if (Actions["playerPlayPauseAction"]->icon().cacheKey() == m_playIcon.cacheKey())
+        if (Actions["playerPlayPauseAction"]->icon().cacheKey() == m_playIcon.cacheKey()
+                || Actions["playerPlayPauseAction"]->icon().cacheKey() == m_loopIcon.cacheKey())
             play();
         else if (m_isSeekable)
             pause();
@@ -367,6 +389,78 @@ void Player::setupActions()
             stop();
     });
     Actions.add("playerPlayPauseAction", action);
+
+    action = new QAction(tr("Loop"), this);
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_L));
+    action->setCheckable(true);
+    action->setToolTip(tr("Toggle player looping"));
+    connect(action, &QAction::toggled, this, [&]() {
+        if (Actions["playerLoopAction"]->isChecked()) {
+            if (Actions["playerPlayPauseAction"]->icon().cacheKey() == m_playIcon.cacheKey()) {
+                Actions["playerPlayPauseAction"]->setIcon(m_loopIcon);
+            }
+        } else {
+            if (Actions["playerPlayPauseAction"]->icon().cacheKey() == m_loopIcon.cacheKey()) {
+                Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
+            }
+        }
+        setLoopRange(m_loopStart, m_loopEnd);
+    });
+    Actions.add("playerLoopAction", action);
+
+    action = new QAction(tr("Loop All"), this);
+    action->setToolTip(tr("Loop back to the beginning when the end is reached"));
+    connect(action, &QAction::triggered, this, [&]() {
+        setLoopRange(0, m_duration - 1);
+    });
+    Actions.add("playerLoopRangeAllAction", action);
+
+    action = new QAction(tr("Loop Marker"), this);
+    action->setToolTip(tr("Loop around the marker under the cursor in the timeline"));
+    connect(action, &QAction::triggered, this, [&]() {
+        int start, end;
+        MAIN.getMarkerRange(m_position, &start, &end);
+        if (start >= 0) {
+            setLoopRange(start, end);
+        }
+    });
+    Actions.add("playerLoopRangeMarkerAction", action);
+
+    action = new QAction(tr("Loop Selection"), this);
+    action->setToolTip(tr("Loop around the selected clips"));
+    connect(action, &QAction::triggered, this, [&]() {
+        int start, end;
+        MAIN.getSelectionRange(&start, &end);
+        if (start >= 0) {
+            setLoopRange(start, end);
+        } else {
+            emit showStatusMessage(tr("Nothing selected"));
+        }
+    });
+    Actions.add("playerLoopRangeSelectionAction", action);
+
+    action = new QAction(tr("Loop Around Cursor"), this);
+    action->setToolTip(tr("Loop around the current cursor position"));
+    connect(action, &QAction::triggered, this, [&]() {
+        // Set the range one second before and after the cursor
+        int fps = qRound(MLT.profile().fps());
+        if (m_duration <= fps * 2) {
+            setLoopRange(0, m_duration - 1);
+        } else {
+            int start = position() - fps;
+            int end = position() + fps;
+            if (start < 0) {
+                end -= start;
+                start = 0;
+            }
+            if (end >= m_duration) {
+                start -= end - m_duration - 1;
+                end = m_duration - 1;
+            }
+            setLoopRange(start, end);
+        }
+    });
+    Actions.add("playerLoopRangeAroundAction", action);
 
     action = new QAction(tr("Skip Next"), this);
     action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Right));
@@ -701,8 +795,7 @@ void Player::play(double speed)
     if (m_isSeekable) {
         Actions["playerPlayPauseAction"]->setIcon(m_pauseIcon);
     } else {
-        Actions["playerPlayPauseAction"]->setIcon(QIcon::fromTheme("media-playback-stop",
-                                                                   QIcon(":/icons/oxygen/32x32/actions/media-playback-stop.png")));
+        Actions["playerPlayPauseAction"]->setIcon(m_stopIcon);
     }
     m_playPosition = m_position;
 }
@@ -716,7 +809,11 @@ void Player::pause()
 void Player::stop()
 {
     emit stopped();
-    Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
+    if (Actions["playerLoopAction"]->isChecked()) {
+        Actions["playerPlayPauseAction"]->setIcon(m_loopIcon);
+    } else {
+        Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
+    }
 }
 
 void Player::seek(int position)
@@ -727,7 +824,11 @@ void Player::seek(int position)
         }
     }
     // Seek implies pause.
-    Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
+    if (Actions["playerLoopAction"]->isChecked()) {
+        Actions["playerPlayPauseAction"]->setIcon(m_loopIcon);
+    } else {
+        Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
+    }
     m_playPosition = std::numeric_limits<int>::max();
 }
 
@@ -756,6 +857,7 @@ void Player::onProducerOpened(bool play)
     m_projectWidget->hide();
     m_videoWidget->show();
     m_duration = MLT.producer()->get_length();
+    setLoopRange(0, m_duration - 1);
     m_isSeekable = MLT.isSeekable();
     MLT.producer()->set("ignore_points", 1);
     m_scrubber->setFramerate(MLT.profile().fps());
@@ -777,6 +879,11 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setDisabled(true);
         // cause scrubber redraw
         m_scrubber->setScale(m_duration);
+    }
+    if (MLT.isMultitrack()) {
+        Actions["playerLoopRangeMarkerAction"]->setEnabled(true);
+    } else {
+        Actions["playerLoopRangeMarkerAction"]->setEnabled(false);
     }
     m_positionSpinner->setEnabled(m_isSeekable);
     setVolume(m_volumeSlider->value());
@@ -856,6 +963,7 @@ void Player::onMeltedUnitOpened()
 void Player::onDurationChanged()
 {
     m_duration = MLT.producer()->get_length();
+    setLoopRange(0, m_duration - 1);
     m_isSeekable = MLT.isSeekable();
     m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
@@ -874,18 +982,23 @@ void Player::onFrameDisplayed(const SharedFrame &frame)
         onProducerOpened(false);
     }
     int position = frame.get_position();
+    bool loop = position >= m_loopEnd && Actions["playerLoopAction"]->isChecked();
     if (position <= m_duration) {
         m_position = position;
         m_positionSpinner->blockSignals(true);
         m_positionSpinner->setValue(position);
         m_positionSpinner->blockSignals(false);
         m_scrubber->onSeek(position);
-        if (m_playPosition < m_previousOut && m_position >= m_previousOut) {
+        if (m_playPosition < m_previousOut && m_position >= m_previousOut && !loop) {
             seek(m_previousOut);
         }
     }
-    if (position >= m_duration - 1)
+    if (loop) {
+        MLT.producer()->seek(m_loopStart);
+        MLT.consumer()->purge();
+    } else if (position >= m_duration - 1) {
         emit endOfStream();
+    }
 }
 
 void Player::updateSelection()
@@ -944,7 +1057,11 @@ void Player::fastForward(bool forceChangeDirection)
 
 void Player::showPaused()
 {
-    Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
+    if (Actions["playerLoopAction"]->isChecked()) {
+        Actions["playerPlayPauseAction"]->setIcon(m_loopIcon);
+    } else {
+        Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
+    }
 }
 
 void Player::showPlaying()
@@ -1043,6 +1160,19 @@ double Player::setVolume(int volume)
     const double gain = double(volume) / VOLUME_KNEE;
     MLT.setVolume(gain);
     return gain;
+}
+
+void Player::setLoopRange(int start, int end)
+{
+    m_loopStart = start;
+    m_loopEnd = end;
+    if (Actions["playerLoopAction"]->isChecked()) {
+        m_scrubber->setLoopRange(m_loopStart, m_loopEnd);
+        emit loopChanged(m_loopStart, m_loopEnd);
+    } else {
+        m_scrubber->setLoopRange(-1, -1);
+        emit loopChanged(-1, -1);
+    }
 }
 
 void Player::showIdleStatus()

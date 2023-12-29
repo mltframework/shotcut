@@ -632,6 +632,18 @@ Rectangle {
             }
 
             Rectangle {
+                id: loopIndicator
+
+                visible: timeline.loopStart != timeline.loopEnd
+                color: activePalette.highlight
+                opacity: 0.25
+                width: (timeline.loopEnd - timeline.loopStart) * multitrack.scaleFactor
+                height: ruler.height - 10
+                x: timeline.loopStart * multitrack.scaleFactor - tracksFlickable.contentX
+                y: ruler.y + 10
+            }
+
+            Rectangle {
                 id: cursor
 
                 visible: timeline.position > -1

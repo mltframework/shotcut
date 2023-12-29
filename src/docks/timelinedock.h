@@ -43,6 +43,8 @@ class TimelineDock : public QDockWidget
     Q_PROPERTY(QVariantList selection READ selectionForJS WRITE setSelectionFromJS NOTIFY
                selectionChanged)
     Q_PROPERTY(bool isRecording READ isRecording NOTIFY isRecordingChanged)
+    Q_PROPERTY(int loopStart READ loopStart NOTIFY loopChanged)
+    Q_PROPERTY(int loopEnd READ loopEnd NOTIFY loopChanged)
 
 public:
     explicit TimelineDock(QWidget *parent = 0);
@@ -107,12 +109,22 @@ public:
         return m_isRecording;
     }
     int addTrackIfNeeded(TrackType trackType);
+    void getSelectionRange(int *start, int *end);
+    int loopStart() const
+    {
+        return m_loopStart;
+    }
+    int loopEnd() const
+    {
+        return m_loopEnd;
+    }
 
 signals:
     void currentTrackChanged();
     void selectionChanged();
     void seeked(int position);
     void positionChanged();
+    void loopChanged();
     void clipOpened(Mlt::Producer *producer);
     void dragging(const QPointF &pos, int duration);
     void dropped();
@@ -206,6 +218,7 @@ public slots:
     void trimClipOut(bool ripple = false);
     void initLoad();
     void handleDrop(int trackIndex, int position, QString xml);
+    void onLoopChanged(int start, int end);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -258,6 +271,8 @@ private:
     int m_currentTrack {0};
     QMenu *m_mainMenu;
     QMenu *m_clipMenu;
+    int m_loopStart;
+    int m_loopEnd;
 
 private slots:
     void load(bool force);
