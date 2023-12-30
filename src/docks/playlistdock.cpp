@@ -439,17 +439,13 @@ void PlaylistDock::setupActions()
     action = new QAction(tr("Remove All"), this);
     action->setToolTip(tr("Remove all items from the playlist"));
     connect(action, &QAction::triggered, this, &PlaylistDock::onRemoveAllActionTriggered);
-    connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 0);
-    });
+    action->setEnabled(m_model.rowCount() > 0);
     Actions.add("playlistRemoveAllAction", action);
 
     action = new QAction(tr("Select All"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_A));
     connect(action, &QAction::triggered, this, &PlaylistDock::onSelectAllActionTriggered);
-    connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 0);
-    });
+    action->setEnabled(m_model.rowCount() > 0);
     Actions.add("playlistSelectAllAction", action);
 
     action = new QAction(tr("Select None"), this);
@@ -1064,12 +1060,18 @@ void PlaylistDock::onPlaylistModified()
         ui->tableView->resizeColumnsToContents();
         m_blockResizeColumnsToContents = true;
     }
+    bool nonEmptyModel = m_model.rowCount() > 0;
+    Actions["playlistRemoveAllAction"]->setEnabled(nonEmptyModel);
+    Actions["playlistSelectAllAction"]->setEnabled(nonEmptyModel);
 }
 
 void PlaylistDock::onPlaylistCleared()
 {
     emit enableUpdate(false);
     m_blockResizeColumnsToContents = false;
+    bool nonEmptyModel = m_model.rowCount() > 0;
+    Actions["playlistRemoveAllAction"]->setEnabled(nonEmptyModel);
+    Actions["playlistSelectAllAction"]->setEnabled(nonEmptyModel);
 }
 
 void PlaylistDock::onDropped(const QMimeData *data, int row)

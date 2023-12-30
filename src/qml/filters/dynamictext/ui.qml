@@ -129,6 +129,8 @@ Shotcut.KeyframableFilter {
             filter.set(textFilterUi.rectProperty, '0%/0%:100%x100%');
             filter.savePreset(presetParams);
         } else {
+            if (filter.get('opacity') === null)
+                filter.set('opacity', 1.0);
             filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1));
             if (filter.animateIn > 0)
                 filter.set(textFilterUi.startValue, filter.getRect(textFilterUi.rectProperty, 0));
