@@ -391,7 +391,7 @@ void Player::setupActions()
     Actions.add("playerPlayPauseAction", action);
 
     action = new QAction(tr("Loop"), this);
-    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_L));
+    action->setShortcut(QKeySequence(Qt::Key_Backslash));
     action->setCheckable(true);
     action->setToolTip(tr("Toggle player looping"));
     connect(action, &QAction::toggled, this, [&]() {
