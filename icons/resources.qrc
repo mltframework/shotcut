@@ -54,6 +54,7 @@
         <file>dark/32x32/media-playback-pause.png</file>
         <file>dark/32x32/media-playback-start.png</file>
         <file>dark/32x32/media-playback-stop.png</file>
+        <file>dark/32x32/media-playback-loop.png</file>
         <file>dark/32x32/media-record.png</file>
         <file>dark/32x32/media-seek-backward.png</file>
         <file>dark/32x32/media-seek-forward.png</file>
@@ -124,6 +125,7 @@
         <file>light/32x32/media-playback-pause.png</file>
         <file>light/32x32/media-playback-start.png</file>
         <file>light/32x32/media-playback-stop.png</file>
+        <file>light/32x32/media-playback-loop.png</file>
         <file>light/32x32/media-record.png</file>
         <file>light/32x32/media-seek-backward.png</file>
         <file>light/32x32/media-seek-forward.png</file>
@@ -191,6 +193,7 @@
         <file>oxygen/32x32/actions/media-playback-pause.png</file>
         <file>oxygen/32x32/actions/media-playback-start.png</file>
         <file>oxygen/32x32/actions/media-playback-stop.png</file>
+        <file>oxygen/32x32/actions/media-playback-loop.png</file>
         <file>oxygen/32x32/actions/media-record.png</file>
         <file>oxygen/32x32/actions/media-seek-backward.png</file>
         <file>oxygen/32x32/actions/media-seek-forward.png</file>

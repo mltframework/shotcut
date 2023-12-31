@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2022 Meltytech, LLC
+ * Copyright (c) 2011-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,8 @@ ScrubBar::ScrubBar(QWidget *parent)
     , m_margin(14) /// left and right margins
     , m_activeControl(CONTROL_NONE)
     , m_timecodeWidth(0)
+    , m_loopStart(-1)
+    , m_loopEnd(-1)
 {
     setMouseTracking(true);
     setMinimumHeight(fontMetrics().height() + selectionSize);
@@ -103,6 +105,13 @@ void ScrubBar::setOutPoint(int out)
 void ScrubBar::setMarkers(const QList<int> &list)
 {
     m_markers = list;
+    updatePixmap();
+}
+
+void ScrubBar::setLoopRange(int start, int end)
+{
+    m_loopStart = start;
+    m_loopEnd = end;
     updatePixmap();
 }
 
@@ -316,6 +325,15 @@ void ScrubBar::updatePixmap()
             p.fillRect(x - markerWidth / 2, 0, markerWidth, markerHeight, palette().highlight().color());
             p.drawText(x - markerWidth / 3, markerHeight - 2 * ratio, s);
         }
+    }
+
+    // draw loop range
+    if (m_loopStart > -1 && m_loopEnd > -1) {
+        const int start = m_loopStart * m_scale * ratio;
+        const int end = m_loopEnd * m_scale * ratio;
+        QColor loopColor = palette().highlight().color();
+        loopColor.setAlphaF(0.5);
+        p.fillRect(l_margin + start, l_height - 7 * ratio, end - start, l_height * ratio, loopColor);
     }
 
     p.end();

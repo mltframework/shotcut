@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include <QSize>
 #include "sharedframe.h"
 
+class DockToolBar;
 class ScrubBar;
 class QSpinBox;
 class QLabel;
@@ -92,6 +93,7 @@ signals:
     void tabIndexChanged(int index);
     void trimIn();
     void trimOut();
+    void loopChanged(int start, int end);
 
 public slots:
     void play(double speed = 1.0);
@@ -128,6 +130,8 @@ private:
     void setupActions();
     void adjustScrollBars(float horizontal, float vertical);
     double setVolume(int volume);
+    void setLoopRange(int start, int end);
+    void layoutToolbars();
 
     ScrubBar *m_scrubber;
     TimeSpinBox *m_positionSpinner;
@@ -137,7 +141,9 @@ private:
     int m_position;
     int m_playPosition;
     QIcon m_playIcon;
+    QIcon m_loopIcon;
     QIcon m_pauseIcon;
+    QIcon m_stopIcon;
     QFrame *m_volumePopup;
     QSlider *m_volumeSlider;
     QPushButton *m_muteButton;
@@ -166,6 +172,14 @@ private:
     QMenu *m_zoomMenu;
     QMenu *m_mainMenu;
     NewProjectFolder *m_projectWidget;
+    int m_loopStart;
+    int m_loopEnd;
+    DockToolBar *m_currentDurationToolBar;
+    DockToolBar *m_controlsToolBar;
+    DockToolBar *m_optionsToolBar;
+    DockToolBar *m_inSelectedToolBar;
+    QHBoxLayout *m_toolRow1;
+    QHBoxLayout *m_toolRow2;
 
 private slots:
     void updateSelection();

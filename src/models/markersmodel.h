@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,6 +59,7 @@ public:
     int uniqueKey() const;
     int markerIndexForPosition(int position);
     int markerIndexForRange(int start, int end);
+    int rangeMarkerIndexForPosition(int position);
     Q_INVOKABLE int nextMarkerPosition(int position);
     Q_INVOKABLE int prevMarkerPosition(int position);
     QModelIndex modelIndexForRow(int row);

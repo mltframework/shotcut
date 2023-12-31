@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2022 Meltytech, LLC
+ * Copyright (c) 2021-2023 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -476,6 +476,23 @@ int MarkersModel::markerIndexForRange(int start, int end)
             if (marker && marker->is_valid()) {
                 if (start == m_producer->time_to_frames(marker->get("start")) &&
                         end == m_producer->time_to_frames(marker->get("end")))
+                    return keyIndex(i);
+            }
+        }
+    }
+    return -1;
+}
+
+int MarkersModel::rangeMarkerIndexForPosition(int position)
+{
+    QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
+    if (markerList &&  markerList->is_valid()) {
+        for (const auto i : qAsConst(m_keys)) {
+            QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
+            if (marker && marker->is_valid()) {
+                int start = m_producer->time_to_frames(marker->get("start"));
+                int end = m_producer->time_to_frames(marker->get("end"));
+                if (position >= start && position <= end && start != end)
                     return keyIndex(i);
             }
         }

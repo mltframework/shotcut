@@ -296,6 +296,13 @@ void MainWindow::setupAndConnectPlayerWidget()
     connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
     connect(MLT.videoWidget(), SIGNAL(toggleZoom(bool)), m_player, SLOT(toggleZoom(bool)));
     ui->menuPlayer->addAction(Actions["playerPlayPauseAction"]);
+    ui->menuPlayer->addAction(Actions["playerLoopAction"]);
+    QMenu *loopRangeMenu = new QMenu(tr("Set Loop Range"), this);
+    loopRangeMenu->addAction(Actions["playerLoopRangeAllAction"]);
+    loopRangeMenu->addAction(Actions["playerLoopRangeMarkerAction"]);
+    loopRangeMenu->addAction(Actions["playerLoopRangeSelectionAction"]);
+    loopRangeMenu->addAction(Actions["playerLoopRangeAroundAction"]);
+    ui->menuPlayer->addMenu(loopRangeMenu);
     ui->menuPlayer->addAction(Actions["playerFastForwardAction"]);
     ui->menuPlayer->addAction(Actions["playerRewindAction"]);
     ui->menuPlayer->addAction(Actions["playerSkipNextAction"]);
@@ -469,6 +476,7 @@ void MainWindow::setupAndConnectDocks()
             SLOT(onAddAllToTimeline(Mlt::Playlist *, bool)));
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
+    connect(m_player, SIGNAL(loopChanged(int, int)), m_timelineDock, SLOT(onLoopChanged(int, int)));
     connect(m_timelineDock, SIGNAL(isRecordingChanged(bool)), m_player,
             SLOT(onMuteButtonToggled(bool)));
     connect(m_player, SIGNAL(trimIn()), m_timelineDock, SLOT(trimClipIn()));
@@ -2651,6 +2659,41 @@ void MainWindow::cropSource(const QRectF &rect)
         MLT.restart(xml);
     }
     emit producerOpened(false);
+}
+
+void MainWindow::getMarkerRange(int position, int *start, int *end)
+{
+    if (!MLT.isMultitrack()) {
+        showStatusMessage(tr("Timeline is not loaded"));
+    } else {
+        MarkersModel *model = m_timelineDock->markersModel();
+        int markerIndex = model->rangeMarkerIndexForPosition(position);
+        if (markerIndex >= 0) {
+            Markers::Marker marker = model->getMarker(markerIndex);
+            *start = marker.start;
+            *end = marker.end;
+            return;
+        } else {
+            showStatusMessage(tr("Range marker not found under the timeline cursor"));
+        }
+    }
+    *start = -1;
+    *end = -1;
+}
+
+void MainWindow::getSelectionRange(int *start, int *end)
+{
+    if (MLT.isMultitrack()) {
+        m_timelineDock->getSelectionRange(start, end);
+    } else if (MLT.isPlaylist()) {
+        m_playlistDock->getSelectionRange(start, end);
+    } else if (MLT.isSeekableClip()) {
+        *start = MLT.producer()->get_in();
+        *end = MLT.producer()->get_out();
+    } else {
+        *start = -1;
+        *end = -1;
+    }
 }
 
 bool MainWindow::continueModified()

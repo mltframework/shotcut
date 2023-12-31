@@ -1291,6 +1291,31 @@ int TimelineDock::addTrackIfNeeded(TrackType trackType)
     return trackIndex;
 }
 
+void TimelineDock::getSelectionRange(int *start, int *end)
+{
+    auto selected = selection();
+    if (selected.isEmpty()) {
+        *start = -1;
+        *end = -1;
+        return;
+    }
+
+    // Find the earliest start and the latest end in the selection
+    *start = std::numeric_limits<int>::max();
+    *end = std::numeric_limits<int>::min();
+    for (const auto &clip : selected) {
+        auto info = m_model.getClipInfo(clip.y(), clip.x());
+        if (info) {
+            if (info->start < *start) {
+                *start = info->start;
+            }
+            if ((info->start + info->frame_count) > *end) {
+                *end = info->start + info->frame_count;
+            }
+        }
+    }
+}
+
 void TimelineDock::setPosition(int position)
 {
     if (!m_model.tractor()) return;
@@ -2439,21 +2464,11 @@ void TimelineDock::createOrEditSelectionMarker()
     }
 
     // Find the earliest start and the latest end in the selection
-    int start = std::numeric_limits<int>::max();
-    int end = std::numeric_limits<int>::min();
-    for (const auto &clip : selected) {
-        auto info = m_model.getClipInfo(clip.y(), clip.x());
-        if (info) {
-            if (info->start < start) {
-                start = info->start;
-            }
-            if ((info->start + info->frame_count) > end) {
-                end = info->start + info->frame_count;
-            }
-        }
-    }
+    int start = -1;
+    int end = -1;
+    getSelectionRange(&start, &end);
 
-    if (start != std::numeric_limits<int>::max()) {
+    if (start > -1) {
         int index = m_markersModel.markerIndexForRange(start, end);
         if (index >= 0) {
             editMarker(index);
@@ -2637,6 +2652,18 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
     } else {
         overwrite(trackIndex, position, xml, false);
     }
+}
+
+void TimelineDock::onLoopChanged(int start, int end)
+{
+    if (MLT.isMultitrack()) {
+        m_loopStart = start;
+        m_loopEnd = end;
+    } else {
+        m_loopStart = -1;
+        m_loopEnd = -1;
+    }
+    emit loopChanged();
 }
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)

@@ -50,6 +50,8 @@ Player::Player(QWidget *parent)
     , m_pauseAfterOpen(false)
     , m_monitorScreen(-1)
     , m_currentTransport(nullptr)
+    , m_loopStart(-1)
+    , m_loopEnd(-1)
 {
     setObjectName("Player");
     Mlt::Controller::singleton();
@@ -162,40 +164,52 @@ Player::Player(QWidget *parent)
     m_scrubber->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     vlayout->addWidget(m_scrubber);
 
-    // Add toolbar for transport controls.
-    DockToolBar *toolbar = new DockToolBar(tr("Transport Controls"), this);
-    toolbar->setAreaHint(Qt::BottomToolBarArea);
-    int s = style()->pixelMetric(QStyle::PM_SmallIconSize);
-    toolbar->setIconSize(QSize(s, s));
-    toolbar->setContentsMargins(0, 0, 0, 0);
-    QWidget *spacer = new QWidget(this);
-    spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    // Make a toolbar for the current and total duration times
+    m_currentDurationToolBar = new DockToolBar(tr("Current/Total Times"), this);
+    m_currentDurationToolBar->setAreaHint(Qt::BottomToolBarArea);
+    m_currentDurationToolBar->setContentsMargins(0, 0, 0, 0);
+    m_currentDurationToolBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     m_positionSpinner = new TimeSpinBox(this);
     m_positionSpinner->setToolTip(tr("Current position"));
     m_positionSpinner->setEnabled(false);
     m_positionSpinner->setKeyboardTracking(false);
+    m_currentDurationToolBar->addWidget(m_positionSpinner);
     m_durationLabel = new QLabel(this);
     m_durationLabel->setToolTip(tr("Total Duration"));
     m_durationLabel->setText(" / 00:00:00:00");
-    m_durationLabel->setFixedWidth(m_positionSpinner->width() - 20);
-    m_inPointLabel = new QLabel(this);
-    m_inPointLabel->setText("--:--:--:--");
-    m_inPointLabel->setToolTip(tr("In Point"));
-    m_inPointLabel->setFixedWidth(m_positionSpinner->width() - 20);
-    m_selectedLabel = new QLabel(this);
-    m_selectedLabel->setText("--:--:--:--");
-    m_selectedLabel->setToolTip(tr("Selected Duration"));
-    m_selectedLabel->setFixedWidth(m_positionSpinner->width() - 30);
-    toolbar->addWidget(m_positionSpinner);
-    toolbar->addWidget(m_durationLabel);
-    toolbar->addWidget(spacer);
-    toolbar->addAction(Actions["playerSkipPreviousAction"]);
-    toolbar->addAction(Actions["playerRewindAction"]);
-    toolbar->addAction(Actions["playerPlayPauseAction"]);
-    toolbar->addAction(Actions["playerFastForwardAction"]);
-    toolbar->addAction(Actions["playerSkipNextAction"]);
+    QFontMetrics fm(m_durationLabel->font());
+    m_durationLabel->setFixedWidth(fm.boundingRect(" / 00:00:00:00").width() + 2);
+    m_durationLabel->setFixedHeight(m_positionSpinner->sizeHint().height());
+    m_currentDurationToolBar->addWidget(m_durationLabel);
 
-    // Add zoom button to toolbar.
+    // Make toolbar for transport controls.
+    m_controlsToolBar = new DockToolBar(tr("Player Controls"), this);
+    m_controlsToolBar->setAreaHint(Qt::BottomToolBarArea);
+    m_controlsToolBar->setContentsMargins(0, 0, 0, 0);
+    m_controlsToolBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+    m_controlsToolBar->addAction(Actions["playerSkipPreviousAction"]);
+    m_controlsToolBar->addAction(Actions["playerRewindAction"]);
+    m_controlsToolBar->addAction(Actions["playerPlayPauseAction"]);
+    m_controlsToolBar->addAction(Actions["playerFastForwardAction"]);
+    m_controlsToolBar->addAction(Actions["playerSkipNextAction"]);
+
+    // Make a toolbar for player options
+    m_optionsToolBar = new DockToolBar(tr("Player Options"), this);
+    m_optionsToolBar->setAreaHint(Qt::BottomToolBarArea);
+    m_optionsToolBar->setContentsMargins(0, 0, 0, 0);
+    m_optionsToolBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+    // Pause button
+    QToolButton *loopButton = new QToolButton;
+    QMenu *loopMenu = new QMenu(this);
+    loopMenu->addAction(Actions["playerLoopRangeAllAction"]);
+    loopMenu->addAction(Actions["playerLoopRangeMarkerAction"]);
+    loopMenu->addAction(Actions["playerLoopRangeSelectionAction"]);
+    loopMenu->addAction(Actions["playerLoopRangeAroundAction"]);
+    loopButton->setMenu(loopMenu);
+    loopButton->setPopupMode(QToolButton::MenuButtonPopup);
+    loopButton->setDefaultAction(Actions["playerLoopAction"]);
+    m_optionsToolBar->addWidget(loopButton);
+    // Zoom button
     m_zoomButton = new QToolButton;
     m_zoomMenu = new QMenu(this);
     m_zoomMenu->addAction(
@@ -236,9 +250,8 @@ Player::Player(QWidget *parent)
     m_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
     m_zoomButton->setCheckable(true);
     m_zoomButton->setToolTip(tr("Toggle zoom"));
-    toolbar->addWidget(m_zoomButton);
+    m_optionsToolBar->addWidget(m_zoomButton);
     toggleZoom(false);
-
     // Add grid display button to toolbar.
     m_gridButton = new QToolButton;
     QMenu *gridMenu = new QMenu(this);
@@ -288,8 +301,7 @@ Player::Player(QWidget *parent)
     m_gridButton->setPopupMode(QToolButton::MenuButtonPopup);
     m_gridButton->setCheckable(true);
     m_gridButton->setToolTip(tr("Toggle grid display on the player"));
-    toolbar->addWidget(m_gridButton);
-
+    m_optionsToolBar->addWidget(m_gridButton);
     // Add volume control to toolbar.
     m_volumeButton = new QToolButton;
     m_volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
@@ -298,16 +310,35 @@ Player::Player(QWidget *parent)
     m_volumeButton->setText(tr("Volume"));
     m_volumeButton->setToolTip(tr("Show the volume control"));
     connect(m_volumeButton, SIGNAL(clicked()), this, SLOT(onVolumeTriggered()));
-    toolbar->addWidget(m_volumeButton);
+    m_optionsToolBar->addWidget(m_volumeButton);
 
-    // Add in-point and selected duration labels to toolbar.
-    spacer = new QWidget(this);
-    spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-    toolbar->addWidget(spacer);
-    toolbar->addWidget(m_inPointLabel);
-    toolbar->addWidget(m_selectedLabel);
-    vlayout->addWidget(toolbar);
+    // Make a toolbar for in-point and selected duration
+    m_inSelectedToolBar = new DockToolBar(tr("Player Options"), this);
+    m_inSelectedToolBar->setAreaHint(Qt::BottomToolBarArea);
+    m_inSelectedToolBar->setContentsMargins(0, 0, 0, 0);
+    m_inPointLabel = new QLabel(this);
+    m_inPointLabel->setText("--:--:--:-- / ");
+    m_inPointLabel->setToolTip(tr("In Point"));
+    m_inPointLabel->setFixedWidth(fm.boundingRect("00:00:00:00 / ").width() + 2);
+    m_inPointLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    m_inPointLabel->setFixedHeight(m_positionSpinner->sizeHint().height());
+    m_inSelectedToolBar->addWidget(m_inPointLabel);
+    m_selectedLabel = new QLabel(this);
+    m_selectedLabel->setText("--:--:--:--");
+    m_selectedLabel->setToolTip(tr("Selected Duration"));
+    m_selectedLabel->setFixedWidth(fm.boundingRect("00:00:00:00").width() + 2);
+    m_selectedLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    m_selectedLabel->setFixedHeight(m_positionSpinner->sizeHint().height());
+    m_inSelectedToolBar->addWidget(m_selectedLabel);
+
+    // Create two rows for the toolbars.
+    // The toolbars will be layed out in one or two rows depending on the width.
+    m_toolRow1 = new QHBoxLayout();
+    vlayout->addLayout(m_toolRow1);
+    m_toolRow2 = new QHBoxLayout();
+    vlayout->addLayout(m_toolRow2);
     vlayout->addLayout(tabLayout);
+    layoutToolbars();
 
     onMuteButtonToggled(Settings.playerMuted());
 
@@ -352,6 +383,8 @@ void Player::setupActions()
                                   QIcon(":/icons/oxygen/32x32/actions/media-playback-start.png"));
     m_pauseIcon = QIcon::fromTheme("media-playback-pause",
                                    QIcon(":/icons/oxygen/32x32/actions/media-playback-pause.png"));
+    m_stopIcon = QIcon::fromTheme("media-playback-stop",
+                                  QIcon(":/icons/oxygen/32x32/actions/media-playback-stop.png"));
 
     action = new QAction(tr("Play/Pause"), this);
     action->setShortcut(QKeySequence(Qt::Key_Space));
@@ -367,6 +400,75 @@ void Player::setupActions()
             stop();
     });
     Actions.add("playerPlayPauseAction", action);
+
+    action = new QAction(tr("Loop"), this);
+    action->setShortcut(QKeySequence(Qt::Key_Backslash));
+    action->setIcon(QIcon::fromTheme("media-playback-loop",
+                                     QIcon(":/icons/oxygen/32x32/actions/media-playback-loop.png")));
+    action->setCheckable(true);
+    action->setToolTip(tr("Toggle player looping"));
+    connect(action, &QAction::toggled, this, [&]() {
+        setLoopRange(m_loopStart, m_loopEnd);
+    });
+    Actions.add("playerLoopAction", action);
+
+    action = new QAction(tr("Loop All"), this);
+    action->setToolTip(tr("Loop back to the beginning when the end is reached"));
+    connect(action, &QAction::triggered, this, [&]() {
+        Actions["playerLoopAction"]->setChecked(true);
+        setLoopRange(0, m_duration - 1);
+    });
+    Actions.add("playerLoopRangeAllAction", action);
+
+    action = new QAction(tr("Loop Marker"), this);
+    action->setToolTip(tr("Loop around the marker under the cursor in the timeline"));
+    connect(action, &QAction::triggered, this, [&]() {
+        int start, end;
+        MAIN.getMarkerRange(m_position, &start, &end);
+        if (start >= 0) {
+            Actions["playerLoopAction"]->setChecked(true);
+            setLoopRange(start, end);
+        }
+    });
+    Actions.add("playerLoopRangeMarkerAction", action);
+
+    action = new QAction(tr("Loop Selection"), this);
+    action->setToolTip(tr("Loop around the selected clips"));
+    connect(action, &QAction::triggered, this, [&]() {
+        int start, end;
+        MAIN.getSelectionRange(&start, &end);
+        if (start >= 0) {
+            Actions["playerLoopAction"]->setChecked(true);
+            setLoopRange(start, end);
+        } else {
+            emit showStatusMessage(tr("Nothing selected"));
+        }
+    });
+    Actions.add("playerLoopRangeSelectionAction", action);
+
+    action = new QAction(tr("Loop Around Cursor"), this);
+    action->setToolTip(tr("Loop around the current cursor position"));
+    connect(action, &QAction::triggered, this, [&]() {
+        Actions["playerLoopAction"]->setChecked(true);
+        // Set the range one second before and after the cursor
+        int fps = qRound(MLT.profile().fps());
+        if (m_duration <= fps * 2) {
+            setLoopRange(0, m_duration - 1);
+        } else {
+            int start = position() - fps;
+            int end = position() + fps;
+            if (start < 0) {
+                end -= start;
+                start = 0;
+            }
+            if (end >= m_duration) {
+                start -= end - m_duration - 1;
+                end = m_duration - 1;
+            }
+            setLoopRange(start, end);
+        }
+    });
+    Actions.add("playerLoopRangeAroundAction", action);
 
     action = new QAction(tr("Skip Next"), this);
     action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Right));
@@ -671,6 +773,7 @@ void Player::resizeEvent(QResizeEvent *)
         m_horizontalScroll->hide();
         m_verticalScroll->hide();
     }
+    layoutToolbars();
 }
 
 bool Player::event(QEvent *event)
@@ -701,8 +804,7 @@ void Player::play(double speed)
     if (m_isSeekable) {
         Actions["playerPlayPauseAction"]->setIcon(m_pauseIcon);
     } else {
-        Actions["playerPlayPauseAction"]->setIcon(QIcon::fromTheme("media-playback-stop",
-                                                                   QIcon(":/icons/oxygen/32x32/actions/media-playback-stop.png")));
+        Actions["playerPlayPauseAction"]->setIcon(m_stopIcon);
     }
     m_playPosition = m_position;
 }
@@ -756,6 +858,7 @@ void Player::onProducerOpened(bool play)
     m_projectWidget->hide();
     m_videoWidget->show();
     m_duration = MLT.producer()->get_length();
+    setLoopRange(0, m_duration - 1);
     m_isSeekable = MLT.isSeekable();
     MLT.producer()->set("ignore_points", 1);
     m_scrubber->setFramerate(MLT.profile().fps());
@@ -777,6 +880,11 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setDisabled(true);
         // cause scrubber redraw
         m_scrubber->setScale(m_duration);
+    }
+    if (MLT.isMultitrack()) {
+        Actions["playerLoopRangeMarkerAction"]->setEnabled(true);
+    } else {
+        Actions["playerLoopRangeMarkerAction"]->setEnabled(false);
     }
     m_positionSpinner->setEnabled(m_isSeekable);
     setVolume(m_volumeSlider->value());
@@ -856,6 +964,7 @@ void Player::onMeltedUnitOpened()
 void Player::onDurationChanged()
 {
     m_duration = MLT.producer()->get_length();
+    setLoopRange(0, m_duration - 1);
     m_isSeekable = MLT.isSeekable();
     m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
@@ -874,18 +983,23 @@ void Player::onFrameDisplayed(const SharedFrame &frame)
         onProducerOpened(false);
     }
     int position = frame.get_position();
+    bool loop = position >= m_loopEnd && Actions["playerLoopAction"]->isChecked();
     if (position <= m_duration) {
         m_position = position;
         m_positionSpinner->blockSignals(true);
         m_positionSpinner->setValue(position);
         m_positionSpinner->blockSignals(false);
         m_scrubber->onSeek(position);
-        if (m_playPosition < m_previousOut && m_position >= m_previousOut) {
+        if (m_playPosition < m_previousOut && m_position >= m_previousOut && !loop) {
             seek(m_previousOut);
         }
     }
-    if (position >= m_duration - 1)
+    if (loop) {
+        MLT.producer()->seek(m_loopStart);
+        MLT.consumer()->purge();
+    } else if (position >= m_duration - 1) {
         emit endOfStream();
+    }
 }
 
 void Player::updateSelection()
@@ -1043,6 +1157,87 @@ double Player::setVolume(int volume)
     const double gain = double(volume) / VOLUME_KNEE;
     MLT.setVolume(gain);
     return gain;
+}
+
+void Player::setLoopRange(int start, int end)
+{
+    m_loopStart = start;
+    m_loopEnd = end;
+    if (Actions["playerLoopAction"]->isChecked()) {
+        m_scrubber->setLoopRange(m_loopStart, m_loopEnd);
+        emit loopChanged(m_loopStart, m_loopEnd);
+    } else {
+        m_scrubber->setLoopRange(-1, -1);
+        emit loopChanged(-1, -1);
+    }
+}
+
+void Player::layoutToolbars()
+{
+    int totalWidth = m_currentDurationToolBar->sizeHint().width() +
+                     m_controlsToolBar->sizeHint().width() + m_optionsToolBar->sizeHint().width() +
+                     m_inSelectedToolBar->sizeHint().width() + 20;
+    bool twoRowsInUse = m_toolRow2->count() > 0;
+
+    if (totalWidth <= this->width() && !twoRowsInUse) {
+        // Everything still fits in one toolbar. Nothing to change.
+        return;
+    } else if (totalWidth > this->width() && twoRowsInUse) {
+        // Two toolbars still needed. Nothing to change.
+        return;
+    }
+
+    // Remove all the widgets from the tool bar area
+    QLayoutItem *child;
+    while ((child = m_toolRow1->takeAt(0)) != nullptr) {
+        QWidget *widget = child->widget();
+        if (widget->objectName().startsWith("spacer")) {
+            delete widget;
+        }
+        delete child;
+    }
+    while ((child = m_toolRow2->takeAt(0)) != nullptr) {
+        QWidget *widget = child->widget();
+        if (widget->objectName().startsWith("spacer")) {
+            delete widget;
+        }
+        delete child;
+    }
+
+    QWidget *spacer;
+    if (totalWidth <= this->width()) {
+        // Use one row
+        m_toolRow1->addWidget(m_currentDurationToolBar);
+        spacer = new QWidget(this);
+        spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        spacer->setObjectName("spacerLeft");
+        m_toolRow1->addWidget(spacer);
+        m_toolRow1->addWidget(m_controlsToolBar);
+        m_toolRow1->addWidget(m_optionsToolBar);
+        spacer = new QWidget(this);
+        spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        spacer->setObjectName("spacerRight");
+        m_toolRow1->addWidget(spacer);
+        m_toolRow1->addWidget(m_inSelectedToolBar);
+    } else {
+        // Use two rows
+        spacer = new QWidget(this);
+        spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        spacer->setObjectName("spacerLeft");
+        m_toolRow1->addWidget(spacer);
+        m_toolRow1->addWidget(m_controlsToolBar);
+        m_toolRow1->addWidget(m_optionsToolBar);
+        spacer = new QWidget(this);
+        spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        spacer->setObjectName("spacerRight");
+        m_toolRow1->addWidget(spacer);
+        m_toolRow2->addWidget(m_currentDurationToolBar);
+        spacer = new QWidget(this);
+        spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        spacer->setObjectName("spacerMiddle");
+        m_toolRow2->addWidget(spacer);
+        m_toolRow2->addWidget(m_inSelectedToolBar);
+    }
 }
 
 void Player::showIdleStatus()
