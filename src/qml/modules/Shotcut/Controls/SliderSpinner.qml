@@ -61,7 +61,7 @@ RowLayout {
         background: Rectangle {
             radius: 3
             color: activePalette.alternateBase
-            border.color: 'gray'
+            border.color: (value <= maximumValue && value >= minimumValue) ? 'gray' : 'red'
             border.width: 1
             implicitHeight: spinner.height
 
@@ -83,7 +83,7 @@ RowLayout {
             // Indicate percentage full.
             Rectangle {
                 radius: parent.radius
-                width: parent.width * (value - minimumValue) / (maximumValue - minimumValue) - parent.border.width - (label.visible ? parent.border.width : 3)
+                width: parent.width * (Math.min(Math.max(value, minimumValue), maximumValue) - minimumValue) / (maximumValue - minimumValue) - parent.border.width - (label.visible ? parent.border.width : 3)
                 color: enabled ? activePalette.highlight : activePalette.midlight
 
                 anchors {
