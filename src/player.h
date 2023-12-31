@@ -23,6 +23,7 @@
 #include <QSize>
 #include "sharedframe.h"
 
+class DockToolBar;
 class ScrubBar;
 class QSpinBox;
 class QLabel;
@@ -130,6 +131,7 @@ private:
     void adjustScrollBars(float horizontal, float vertical);
     double setVolume(int volume);
     void setLoopRange(int start, int end);
+    void layoutToolbars();
 
     ScrubBar *m_scrubber;
     TimeSpinBox *m_positionSpinner;
@@ -153,7 +155,6 @@ private:
     int m_isMeltedPlaying;
     QScrollBar *m_horizontalScroll;
     QScrollBar *m_verticalScroll;
-    QToolButton *m_playButton;
     QToolButton *m_zoomButton;
     QToolButton *m_gridButton;
     QActionGroup *m_gridActionGroup;
@@ -173,6 +174,12 @@ private:
     NewProjectFolder *m_projectWidget;
     int m_loopStart;
     int m_loopEnd;
+    DockToolBar *m_currentDurationToolBar;
+    DockToolBar *m_controlsToolBar;
+    DockToolBar *m_optionsToolBar;
+    DockToolBar *m_inSelectedToolBar;
+    QHBoxLayout *m_toolRow1;
+    QHBoxLayout *m_toolRow2;
 
 private slots:
     void updateSelection();

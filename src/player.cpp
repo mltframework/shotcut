@@ -164,55 +164,52 @@ Player::Player(QWidget *parent)
     m_scrubber->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     vlayout->addWidget(m_scrubber);
 
-    // Add toolbar for transport controls.
-    DockToolBar *toolbar = new DockToolBar(tr("Transport Controls"), this);
-    toolbar->setAreaHint(Qt::BottomToolBarArea);
-    int s = style()->pixelMetric(QStyle::PM_SmallIconSize);
-    toolbar->setIconSize(QSize(s, s));
-    toolbar->setContentsMargins(0, 0, 0, 0);
-    QWidget *spacer = new QWidget(this);
-    spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    // Make a toolbar for the current and total duration times
+    m_currentDurationToolBar = new DockToolBar(tr("Current/Total Times"), this);
+    m_currentDurationToolBar->setAreaHint(Qt::BottomToolBarArea);
+    m_currentDurationToolBar->setContentsMargins(0, 0, 0, 0);
+    m_currentDurationToolBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     m_positionSpinner = new TimeSpinBox(this);
     m_positionSpinner->setToolTip(tr("Current position"));
     m_positionSpinner->setEnabled(false);
     m_positionSpinner->setKeyboardTracking(false);
+    m_currentDurationToolBar->addWidget(m_positionSpinner);
     m_durationLabel = new QLabel(this);
     m_durationLabel->setToolTip(tr("Total Duration"));
     m_durationLabel->setText(" / 00:00:00:00");
-    m_durationLabel->setFixedWidth(m_positionSpinner->width() - 20);
-    m_inPointLabel = new QLabel(this);
-    m_inPointLabel->setText("--:--:--:--");
-    m_inPointLabel->setToolTip(tr("In Point"));
-    m_inPointLabel->setFixedWidth(m_positionSpinner->width() - 20);
-    m_selectedLabel = new QLabel(this);
-    m_selectedLabel->setText("--:--:--:--");
-    m_selectedLabel->setToolTip(tr("Selected Duration"));
-    m_selectedLabel->setFixedWidth(m_positionSpinner->width() - 30);
-    toolbar->addWidget(m_positionSpinner);
-    toolbar->addWidget(m_durationLabel);
-    toolbar->addWidget(spacer);
-    toolbar->addAction(Actions["playerSkipPreviousAction"]);
-    toolbar->addAction(Actions["playerRewindAction"]);
+    QFontMetrics fm(m_durationLabel->font());
+    m_durationLabel->setFixedWidth(fm.boundingRect(" / 00:00:00:00").width() + 2);
+    m_durationLabel->setFixedHeight(m_positionSpinner->sizeHint().height());
+    m_currentDurationToolBar->addWidget(m_durationLabel);
 
-    // Add the play button to the toolbar
-    m_playButton = new QToolButton;
-    QMenu *playMenu = new QMenu(this);
-    playMenu->addAction(Actions["playerLoopAction"]);
-    QMenu *loopRangeMenu = new QMenu(tr("Set Loop Range"), this);
-    loopRangeMenu->addAction(Actions["playerLoopRangeAllAction"]);
-    loopRangeMenu->addAction(Actions["playerLoopRangeMarkerAction"]);
-    loopRangeMenu->addAction(Actions["playerLoopRangeSelectionAction"]);
-    loopRangeMenu->addAction(Actions["playerLoopRangeAroundAction"]);
-    playMenu->addMenu(loopRangeMenu);
-    m_playButton->setMenu(playMenu);
-    m_playButton->setPopupMode(QToolButton::MenuButtonPopup);
-    m_playButton->setDefaultAction(Actions["playerPlayPauseAction"]);
-    toolbar->addWidget(m_playButton);
+    // Make toolbar for transport controls.
+    m_controlsToolBar = new DockToolBar(tr("Player Controls"), this);
+    m_controlsToolBar->setAreaHint(Qt::BottomToolBarArea);
+    m_controlsToolBar->setContentsMargins(0, 0, 0, 0);
+    m_controlsToolBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+    m_controlsToolBar->addAction(Actions["playerSkipPreviousAction"]);
+    m_controlsToolBar->addAction(Actions["playerRewindAction"]);
+    m_controlsToolBar->addAction(Actions["playerPlayPauseAction"]);
+    m_controlsToolBar->addAction(Actions["playerFastForwardAction"]);
+    m_controlsToolBar->addAction(Actions["playerSkipNextAction"]);
 
-    toolbar->addAction(Actions["playerFastForwardAction"]);
-    toolbar->addAction(Actions["playerSkipNextAction"]);
-
-    // Add zoom button to toolbar.
+    // Make a toolbar for player options
+    m_optionsToolBar = new DockToolBar(tr("Player Options"), this);
+    m_optionsToolBar->setAreaHint(Qt::BottomToolBarArea);
+    m_optionsToolBar->setContentsMargins(0, 0, 0, 0);
+    m_optionsToolBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+    // Pause button
+    QToolButton *loopButton = new QToolButton;
+    QMenu *loopMenu = new QMenu(this);
+    loopMenu->addAction(Actions["playerLoopRangeAllAction"]);
+    loopMenu->addAction(Actions["playerLoopRangeMarkerAction"]);
+    loopMenu->addAction(Actions["playerLoopRangeSelectionAction"]);
+    loopMenu->addAction(Actions["playerLoopRangeAroundAction"]);
+    loopButton->setMenu(loopMenu);
+    loopButton->setPopupMode(QToolButton::MenuButtonPopup);
+    loopButton->setDefaultAction(Actions["playerLoopAction"]);
+    m_optionsToolBar->addWidget(loopButton);
+    // Zoom button
     m_zoomButton = new QToolButton;
     m_zoomMenu = new QMenu(this);
     m_zoomMenu->addAction(
@@ -253,9 +250,8 @@ Player::Player(QWidget *parent)
     m_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
     m_zoomButton->setCheckable(true);
     m_zoomButton->setToolTip(tr("Toggle zoom"));
-    toolbar->addWidget(m_zoomButton);
+    m_optionsToolBar->addWidget(m_zoomButton);
     toggleZoom(false);
-
     // Add grid display button to toolbar.
     m_gridButton = new QToolButton;
     QMenu *gridMenu = new QMenu(this);
@@ -305,8 +301,7 @@ Player::Player(QWidget *parent)
     m_gridButton->setPopupMode(QToolButton::MenuButtonPopup);
     m_gridButton->setCheckable(true);
     m_gridButton->setToolTip(tr("Toggle grid display on the player"));
-    toolbar->addWidget(m_gridButton);
-
+    m_optionsToolBar->addWidget(m_gridButton);
     // Add volume control to toolbar.
     m_volumeButton = new QToolButton;
     m_volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
@@ -315,16 +310,34 @@ Player::Player(QWidget *parent)
     m_volumeButton->setText(tr("Volume"));
     m_volumeButton->setToolTip(tr("Show the volume control"));
     connect(m_volumeButton, SIGNAL(clicked()), this, SLOT(onVolumeTriggered()));
-    toolbar->addWidget(m_volumeButton);
+    m_optionsToolBar->addWidget(m_volumeButton);
 
-    // Add in-point and selected duration labels to toolbar.
-    spacer = new QWidget(this);
-    spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-    toolbar->addWidget(spacer);
-    toolbar->addWidget(m_inPointLabel);
-    toolbar->addWidget(m_selectedLabel);
-    vlayout->addWidget(toolbar);
-    vlayout->addLayout(tabLayout);
+    // Make a toolbar for in-point and selected duration
+    m_inSelectedToolBar = new DockToolBar(tr("Player Options"), this);
+    m_inSelectedToolBar->setAreaHint(Qt::BottomToolBarArea);
+    m_inSelectedToolBar->setContentsMargins(0, 0, 0, 0);
+    m_inPointLabel = new QLabel(this);
+    m_inPointLabel->setText("--:--:--:-- / ");
+    m_inPointLabel->setToolTip(tr("In Point"));
+    m_inPointLabel->setFixedWidth(fm.boundingRect("00:00:00:00 / ").width() + 2);
+    m_inPointLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    m_inPointLabel->setFixedHeight(m_positionSpinner->sizeHint().height());
+    m_inSelectedToolBar->addWidget(m_inPointLabel);
+    m_selectedLabel = new QLabel(this);
+    m_selectedLabel->setText("--:--:--:--");
+    m_selectedLabel->setToolTip(tr("Selected Duration"));
+    m_selectedLabel->setFixedWidth(fm.boundingRect("00:00:00:00").width() + 2);
+    m_selectedLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    m_selectedLabel->setFixedHeight(m_positionSpinner->sizeHint().height());
+    m_inSelectedToolBar->addWidget(m_selectedLabel);
+
+    // Create two rows for the toolbars.
+    // The toolbars will be layed out in one or two rows depending on the width.
+    m_toolRow1 = new QHBoxLayout();
+    vlayout->addLayout(m_toolRow1);
+    m_toolRow2 = new QHBoxLayout();
+    vlayout->addLayout(m_toolRow2);
+    layoutToolbars();
 
     onMuteButtonToggled(Settings.playerMuted());
 
@@ -367,8 +380,6 @@ void Player::setupActions()
 
     m_playIcon = QIcon::fromTheme("media-playback-start",
                                   QIcon(":/icons/oxygen/32x32/actions/media-playback-start.png"));
-    m_loopIcon = QIcon::fromTheme("media-playback-loop",
-                                  QIcon(":/icons/oxygen/32x32/actions/media-playback-loop.png"));
     m_pauseIcon = QIcon::fromTheme("media-playback-pause",
                                    QIcon(":/icons/oxygen/32x32/actions/media-playback-pause.png"));
     m_stopIcon = QIcon::fromTheme("media-playback-stop",
@@ -380,8 +391,7 @@ void Player::setupActions()
     action->setDisabled(true);
     action->setToolTip(tr("Toggle play or pause"));
     connect(action, &QAction::triggered, this, [&]() {
-        if (Actions["playerPlayPauseAction"]->icon().cacheKey() == m_playIcon.cacheKey()
-                || Actions["playerPlayPauseAction"]->icon().cacheKey() == m_loopIcon.cacheKey())
+        if (Actions["playerPlayPauseAction"]->icon().cacheKey() == m_playIcon.cacheKey())
             play();
         else if (m_isSeekable)
             pause();
@@ -392,18 +402,11 @@ void Player::setupActions()
 
     action = new QAction(tr("Loop"), this);
     action->setShortcut(QKeySequence(Qt::Key_Backslash));
+    action->setIcon(QIcon::fromTheme("media-playback-loop",
+                                     QIcon(":/icons/oxygen/32x32/actions/media-playback-loop.png")));
     action->setCheckable(true);
     action->setToolTip(tr("Toggle player looping"));
     connect(action, &QAction::toggled, this, [&]() {
-        if (Actions["playerLoopAction"]->isChecked()) {
-            if (Actions["playerPlayPauseAction"]->icon().cacheKey() == m_playIcon.cacheKey()) {
-                Actions["playerPlayPauseAction"]->setIcon(m_loopIcon);
-            }
-        } else {
-            if (Actions["playerPlayPauseAction"]->icon().cacheKey() == m_loopIcon.cacheKey()) {
-                Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
-            }
-        }
         setLoopRange(m_loopStart, m_loopEnd);
     });
     Actions.add("playerLoopAction", action);
@@ -765,6 +768,7 @@ void Player::resizeEvent(QResizeEvent *)
         m_horizontalScroll->hide();
         m_verticalScroll->hide();
     }
+    layoutToolbars();
 }
 
 bool Player::event(QEvent *event)
@@ -809,11 +813,7 @@ void Player::pause()
 void Player::stop()
 {
     emit stopped();
-    if (Actions["playerLoopAction"]->isChecked()) {
-        Actions["playerPlayPauseAction"]->setIcon(m_loopIcon);
-    } else {
-        Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
-    }
+    Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
 }
 
 void Player::seek(int position)
@@ -824,11 +824,7 @@ void Player::seek(int position)
         }
     }
     // Seek implies pause.
-    if (Actions["playerLoopAction"]->isChecked()) {
-        Actions["playerPlayPauseAction"]->setIcon(m_loopIcon);
-    } else {
-        Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
-    }
+    Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
     m_playPosition = std::numeric_limits<int>::max();
 }
 
@@ -1057,11 +1053,7 @@ void Player::fastForward(bool forceChangeDirection)
 
 void Player::showPaused()
 {
-    if (Actions["playerLoopAction"]->isChecked()) {
-        Actions["playerPlayPauseAction"]->setIcon(m_loopIcon);
-    } else {
-        Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
-    }
+    Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
 }
 
 void Player::showPlaying()
@@ -1172,6 +1164,74 @@ void Player::setLoopRange(int start, int end)
     } else {
         m_scrubber->setLoopRange(-1, -1);
         emit loopChanged(-1, -1);
+    }
+}
+
+void Player::layoutToolbars()
+{
+    int totalWidth = m_currentDurationToolBar->sizeHint().width() +
+                     m_controlsToolBar->sizeHint().width() + m_optionsToolBar->sizeHint().width() +
+                     m_inSelectedToolBar->sizeHint().width() + 20;
+    bool twoRowsInUse = m_toolRow2->count() > 0;
+
+    if (totalWidth <= this->width() && !twoRowsInUse) {
+        // Everything still fits in one toolbar. Nothing to change.
+        return;
+    } else if (totalWidth > this->width() && twoRowsInUse) {
+        // Two toolbars still needed. Nothing to change.
+        return;
+    }
+
+    // Remove all the widgets from the tool bar area
+    QLayoutItem *child;
+    while ((child = m_toolRow1->takeAt(0)) != 0) {
+        QWidget *widget = child->widget();
+        if (widget->objectName().startsWith("spacer")) {
+            delete widget;
+        }
+        delete child;
+    }
+    while ((child = m_toolRow2->takeAt(0)) != 0) {
+        QWidget *widget = child->widget();
+        if (widget->objectName().startsWith("spacer")) {
+            delete widget;
+        }
+        delete child;
+    }
+
+    QWidget *spacer;
+    if (totalWidth <= this->width()) {
+        // Use one row
+        m_toolRow1->addWidget(m_currentDurationToolBar);
+        spacer = new QWidget(this);
+        spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        spacer->setObjectName("spacerLeft");
+        m_toolRow1->addWidget(spacer);
+        m_toolRow1->addWidget(m_controlsToolBar);
+        m_toolRow1->addWidget(m_optionsToolBar);
+        spacer = new QWidget(this);
+        spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        spacer->setObjectName("spacerRight");
+        m_toolRow1->addWidget(spacer);
+        m_toolRow1->addWidget(m_inSelectedToolBar);
+    } else {
+        // Use two rows
+        spacer = new QWidget(this);
+        spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        spacer->setObjectName("spacerLeft");
+        m_toolRow1->addWidget(spacer);
+        m_toolRow1->addWidget(m_controlsToolBar);
+        m_toolRow1->addWidget(m_optionsToolBar);
+        spacer = new QWidget(this);
+        spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        spacer->setObjectName("spacerRight");
+        m_toolRow1->addWidget(spacer);
+        m_toolRow2->addWidget(m_currentDurationToolBar);
+        spacer = new QWidget(this);
+        spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        spacer->setObjectName("spacerMiddle");
+        m_toolRow2->addWidget(spacer);
+        m_toolRow2->addWidget(m_inSelectedToolBar);
     }
 }
 
