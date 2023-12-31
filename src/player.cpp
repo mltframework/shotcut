@@ -337,6 +337,7 @@ Player::Player(QWidget *parent)
     vlayout->addLayout(m_toolRow1);
     m_toolRow2 = new QHBoxLayout();
     vlayout->addLayout(m_toolRow2);
+    vlayout->addLayout(tabLayout);
     layoutToolbars();
 
     onMuteButtonToggled(Settings.playerMuted());
@@ -1184,14 +1185,14 @@ void Player::layoutToolbars()
 
     // Remove all the widgets from the tool bar area
     QLayoutItem *child;
-    while ((child = m_toolRow1->takeAt(0)) != 0) {
+    while ((child = m_toolRow1->takeAt(0)) != nullptr) {
         QWidget *widget = child->widget();
         if (widget->objectName().startsWith("spacer")) {
             delete widget;
         }
         delete child;
     }
-    while ((child = m_toolRow2->takeAt(0)) != 0) {
+    while ((child = m_toolRow2->takeAt(0)) != nullptr) {
         QWidget *widget = child->widget();
         if (widget->objectName().startsWith("spacer")) {
             delete widget;
