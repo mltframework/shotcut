@@ -415,6 +415,7 @@ void Player::setupActions()
     action = new QAction(tr("Loop All"), this);
     action->setToolTip(tr("Loop back to the beginning when the end is reached"));
     connect(action, &QAction::triggered, this, [&]() {
+        Actions["playerLoopAction"]->setChecked(true);
         setLoopRange(0, m_duration - 1);
     });
     Actions.add("playerLoopRangeAllAction", action);
@@ -425,6 +426,7 @@ void Player::setupActions()
         int start, end;
         MAIN.getMarkerRange(m_position, &start, &end);
         if (start >= 0) {
+            Actions["playerLoopAction"]->setChecked(true);
             setLoopRange(start, end);
         }
     });
@@ -436,6 +438,7 @@ void Player::setupActions()
         int start, end;
         MAIN.getSelectionRange(&start, &end);
         if (start >= 0) {
+            Actions["playerLoopAction"]->setChecked(true);
             setLoopRange(start, end);
         } else {
             emit showStatusMessage(tr("Nothing selected"));
@@ -446,6 +449,7 @@ void Player::setupActions()
     action = new QAction(tr("Loop Around Cursor"), this);
     action->setToolTip(tr("Loop around the current cursor position"));
     connect(action, &QAction::triggered, this, [&]() {
+        Actions["playerLoopAction"]->setChecked(true);
         // Set the range one second before and after the cursor
         int fps = qRound(MLT.profile().fps());
         if (m_duration <= fps * 2) {
