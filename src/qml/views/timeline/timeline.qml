@@ -634,7 +634,7 @@ Rectangle {
             Rectangle {
                 id: loopIndicator
 
-                visible: timeline.loopStart != timeline.loopEnd
+                visible: trackHeaderRepeater.count > 0 && timeline.loopStart != timeline.loopEnd
                 color: activePalette.highlight
                 opacity: 0.25
                 width: (timeline.loopEnd - timeline.loopStart) * multitrack.scaleFactor
