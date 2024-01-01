@@ -780,8 +780,11 @@ Rectangle {
                 let trackIndex = track.DelegateModel.itemsIndex;
                 let clipIndex = clip.DelegateModel.itemsIndex;
                 timeline.currentTrack = trackIndex;
-                if (timeline.selection.length === 1 && tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x).isBlank)
-                    timeline.selection = [];
+                if (timeline.selection.length === 1) {
+                    let clip2 = tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x);
+                    if (clip2 === null || clip2.isBlank)
+                        timeline.selection = [];
+                }
                 if (tracksRepeater.itemAt(trackIndex).clipAt(clipIndex).isBlank)
                     timeline.selection = [Qt.point(clipIndex, trackIndex)];
                 else if (mouse && mouse.modifiers & Qt.ControlModifier)
