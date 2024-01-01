@@ -116,6 +116,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     editMenu->addAction(Actions["timelineRecordAudioAction"]);
     editMenu->addAction(Actions["playerSetInAction"]);
     editMenu->addAction(Actions["playerSetOutAction"]);
+    editMenu->addAction(Actions["timelineNudgeForwardAction"]);
+    editMenu->addAction(Actions["timelineNudgeBackwardAction"]);
     editMenu->addAction(Actions["timelineRippleTrimClipInAction"]);
     editMenu->addAction(Actions["timelineRippleTrimClipOutAction"]);
     editMenu->addAction(Actions["timelineSplitAction"]);
@@ -144,6 +146,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_clipMenu->addAction(Actions["timelineLiftAction"]);
     m_clipMenu->addAction(Actions["timelineReplaceAction"]);
     m_clipMenu->addAction(Actions["timelineSplitAction"]);
+    m_clipMenu->addAction(Actions["timelineNudgeForwardAction"]);
+    m_clipMenu->addAction(Actions["timelineNudgeBackwardAction"]);
     m_clipMenu->addAction(Actions["timelineMergeWithNextAction"]);
     m_clipMenu->addAction(Actions["timelineDetachAudioAction"]);
     m_clipMenu->addAction(Actions["timelineAlignToReferenceAction"]);
@@ -626,6 +630,52 @@ void TimelineDock::setupActions()
         insert(-1);
     });
     Actions.add("timelinePasteAction", action);
+
+    action = new QAction(tr("Nudge Forward"), this);
+    action->setShortcut(QKeySequence(Qt::Key_N));
+    action->setEnabled(false);
+    connect(action, &QAction::triggered, this, [&]() {
+        auto selectedClips = selection();
+        if (!selectedClips.isEmpty()) {
+            int trackIndex = selection().first().y();
+            int clipIndex = selection().first().x();
+            auto clipInfo = m_model.getClipInfo(trackIndex, clipIndex);
+            moveClip(trackIndex, trackIndex, clipIndex, clipInfo->start + 1, Settings.timelineRipple());
+        }
+    });
+    connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
+        bool enabled = m_selection.selectedClips.length() > 0;
+        if (enabled && !selection().isEmpty()) {
+            int trackIndex = selection().first().y();
+            int clipIndex = selection().first().x();
+            enabled = !isBlank(trackIndex, clipIndex);
+        }
+        action->setEnabled(enabled);
+    });
+    Actions.add("timelineNudgeForwardAction", action);
+
+    action = new QAction(tr("Nudge Backward"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_N));
+    action->setEnabled(false);
+    connect(action, &QAction::triggered, this, [&]() {
+        auto selectedClips = selection();
+        if (!selectedClips.isEmpty()) {
+            int trackIndex = selection().first().y();
+            int clipIndex = selection().first().x();
+            auto clipInfo = m_model.getClipInfo(trackIndex, clipIndex);
+            moveClip(trackIndex, trackIndex, clipIndex, clipInfo->start - 1, Settings.timelineRipple());
+        }
+    });
+    connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
+        bool enabled = m_selection.selectedClips.length() > 0;
+        if (enabled && !selection().isEmpty()) {
+            int trackIndex = selection().first().y();
+            int clipIndex = selection().first().x();
+            enabled = !isBlank(trackIndex, clipIndex);
+        }
+        action->setEnabled(enabled);
+    });
+    Actions.add("timelineNudgeBackwardAction", action);
 
     action = new QAction(tr("Append"), this);
     action->setShortcut(QKeySequence(Qt::Key_A));
