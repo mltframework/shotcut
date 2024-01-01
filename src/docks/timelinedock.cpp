@@ -637,9 +637,24 @@ void TimelineDock::setupActions()
     connect(action, &QAction::triggered, this, [&]() {
         auto selectedClips = selection();
         if (!selectedClips.isEmpty()) {
+            if (selection().size() > 1)
+                setSelection({selection().first()});
             int trackIndex = selection().first().y();
             int clipIndex = selection().first().x();
+            bool valid = clipIndex > 0 && !isTransition(trackIndex, clipIndex)
+                         && !isBlank(trackIndex, clipIndex);
+            if (valid && !Settings.timelineRipple()) {
+                valid = isBlank(trackIndex, clipIndex - 1) && ((clipIndex == clipCount(trackIndex) - 1)
+                                                               || isBlank(trackIndex, clipIndex + 1));
+            } else if (valid) {
+                valid = clipIndex < clipCount(trackIndex) - 1;
+            }
+            if (!valid) {
+                emit showStatusMessage(tr("Nudge Forward is not available"));
+                return;
+            }
             auto clipInfo = m_model.getClipInfo(trackIndex, clipIndex);
+            TimelineSelectionBlocker selectBlocker(*this);
             moveClip(trackIndex, trackIndex, clipIndex, clipInfo->start + 1, Settings.timelineRipple());
         }
     });
@@ -660,9 +675,17 @@ void TimelineDock::setupActions()
     connect(action, &QAction::triggered, this, [&]() {
         auto selectedClips = selection();
         if (!selectedClips.isEmpty()) {
+            if (selection().size() > 1)
+                setSelection({selection().first()});
             int trackIndex = selection().first().y();
             int clipIndex = selection().first().x();
+            if (clipIndex <= 0 || isTransition(trackIndex, clipIndex) || isBlank(trackIndex, clipIndex)
+                    || !isBlank(trackIndex, clipIndex - 1)) {
+                emit showStatusMessage(tr("Nudge Backward is not available"));
+                return;
+            }
             auto clipInfo = m_model.getClipInfo(trackIndex, clipIndex);
+            TimelineSelectionBlocker selectBlocker(*this);
             moveClip(trackIndex, trackIndex, clipIndex, clipInfo->start - 1, Settings.timelineRipple());
         }
     });
