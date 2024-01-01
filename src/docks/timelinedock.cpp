@@ -632,7 +632,7 @@ void TimelineDock::setupActions()
     Actions.add("timelinePasteAction", action);
 
     action = new QAction(tr("Nudge Forward"), this);
-    action->setShortcut(QKeySequence(Qt::Key_N));
+    action->setShortcut(QKeySequence(Qt::Key_Period));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&]() {
         auto selectedClips = selection();
@@ -655,7 +655,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineNudgeForwardAction", action);
 
     action = new QAction(tr("Nudge Backward"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_N));
+    action->setShortcut(QKeySequence(Qt::Key_Comma));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&]() {
         auto selectedClips = selection();
