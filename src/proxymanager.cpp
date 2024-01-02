@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2023 Meltytech, LLC
+ * Copyright (c) 2020-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -222,7 +222,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
         args << "-preset" << "veryfast";
         args << "-crf" << "23";
     }
-    args << "-g" << "1" << "-bf" << "0";
+    args << "-g" << "0" << "-bf" << "0";
     args << "-y" << fileName;
 
     FfmpegJob *job = new FfmpegJob(fileName, args, true);
