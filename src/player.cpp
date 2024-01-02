@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1340,10 +1340,9 @@ void Player::onVolumeTriggered()
 {
     // We must show first to realizes the volume popup geometry.
     m_volumePopup->show();
-    int x = (m_volumePopup->width() - m_volumeButton->width()) / 2;
-    x = mapToParent(m_volumeButton->geometry().bottomLeft()).x() - x;
-    int y = m_scrubber->geometry().height() - m_volumePopup->height();
-    m_volumePopup->move(mapToGlobal(m_scrubber->geometry().bottomLeft()) + QPoint(x, y));
+    int x = (m_volumeButton->width() - m_volumePopup->width()) / 2;
+    int y = m_volumeButton->height() - m_volumePopup->height();
+    m_volumePopup->move(m_volumeButton->mapToGlobal(QPoint(x, y)));
     m_volumeButton->hide();
     m_volumeButton->show();
 }
