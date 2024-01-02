@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,12 @@
 
 #include <QApplication>
 #include <QTimer>
+#include <QAction>
 #include <Logger.h>
 #ifdef Q_OS_WIN
 #include <windows.h>
+#else
+#include <signal.h>
 #endif
 
 AbstractJob::AbstractJob(const QString &name, QThread::Priority priority)
@@ -41,6 +44,22 @@ AbstractJob::AbstractJob(const QString &name, QThread::Priority priority)
     connect(this, SIGNAL(started()), this, SLOT(onStarted()));
     connect(this, SIGNAL(progressUpdated(QStandardItem *, int)), SLOT(onProgressUpdated(QStandardItem *,
                                                                                         int)));
+    auto actionPause = new QAction(tr("Pause"), this);
+    m_standardActions << actionPause;
+    auto actionResume = new QAction(tr("Resume"), this);
+    actionResume->setEnabled(false);
+    m_standardActions << actionResume;
+
+    connect(actionPause, &QAction::triggered, this, [ = ]() {
+        actionPause->setEnabled(false);
+        actionResume->setEnabled(true);
+        pause();
+    });
+    connect(actionResume, &QAction::triggered, this, [ = ]() {
+        actionPause->setEnabled(true);
+        actionResume->setEnabled(false);
+        resume();
+    });
 }
 
 void AbstractJob::start()
@@ -126,6 +145,24 @@ void AbstractJob::stop()
     terminate();
     QTimer::singleShot(2000, this, SLOT(kill()));
     m_killed = true;
+}
+
+void AbstractJob::pause()
+{
+#ifdef Q_OS_WIN
+    ::DebugActiveProcess(QProcess::processId());
+#else
+    ::kill(QProcess::processId(), SIGSTOP);
+#endif
+}
+
+void AbstractJob::resume()
+{
+#ifdef Q_OS_WIN
+    ::DebugActiveProcessStop(QProcess::processId());
+#else
+    ::kill(QProcess::processId(), SIGCONT);
+#endif
 }
 
 void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,6 +67,8 @@ public slots:
     void start(const QString &program, const QStringList &arguments);
     virtual void start();
     virtual void stop();
+    void pause();
+    void resume();
 
 signals:
     void progressUpdated(QStandardItem *item, int percent);
