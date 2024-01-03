@@ -222,7 +222,9 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
         args << "-preset" << "veryfast";
         args << "-crf" << "23";
     }
-    args << "-g" << "0" << "-bf" << "0";
+    args << "-g" << QString::fromLatin1(hwCodecs.contains("hevc_nvenc") ? "0" :
+                                        hwCodecs.contains("h264_nvenc") ? "2" : "1");
+    args << "-bf" << "0";
     args << "-y" << fileName;
 
     FfmpegJob *job = new FfmpegJob(fileName, args, true);
