@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -156,10 +156,30 @@ void JobQueue::pause()
     m_paused = true;
 }
 
+void JobQueue::pauseCurrent()
+{
+    for (auto job : m_jobs) {
+        if (job->state() == QProcess::Running) {
+            job->pause();
+            break;
+        }
+    }
+}
+
 void JobQueue::resume()
 {
     m_paused = false;
     startNextJob();
+}
+
+void JobQueue::resumeCurrent()
+{
+    for (auto job : m_jobs) {
+        if (job->state() == QProcess::Running) {
+            job->resume();
+            break;
+        }
+    }
 }
 
 bool JobQueue::isPaused() const

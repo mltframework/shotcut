@@ -44,22 +44,14 @@ AbstractJob::AbstractJob(const QString &name, QThread::Priority priority)
     connect(this, SIGNAL(started()), this, SLOT(onStarted()));
     connect(this, SIGNAL(progressUpdated(QStandardItem *, int)), SLOT(onProgressUpdated(QStandardItem *,
                                                                                         int)));
-    auto actionPause = new QAction(tr("Pause"), this);
-    m_standardActions << actionPause;
-    auto actionResume = new QAction(tr("Resume"), this);
-    actionResume->setEnabled(false);
-    m_standardActions << actionResume;
+    m_actionPause = new QAction(tr("Pause"), this);
+    m_standardActions << m_actionPause;
+    m_actionResume = new QAction(tr("Resume"), this);
+    m_actionResume->setEnabled(false);
+    m_standardActions << m_actionResume;
 
-    connect(actionPause, &QAction::triggered, this, [ = ]() {
-        actionPause->setEnabled(false);
-        actionResume->setEnabled(true);
-        pause();
-    });
-    connect(actionResume, &QAction::triggered, this, [ = ]() {
-        actionPause->setEnabled(true);
-        actionResume->setEnabled(false);
-        resume();
-    });
+    connect(m_actionPause, &QAction::triggered, this, &AbstractJob::pause);
+    connect(m_actionResume, &QAction::triggered, this, &AbstractJob::resume);
 }
 
 void AbstractJob::start()
@@ -112,7 +104,7 @@ QTime AbstractJob::estimateRemaining(int percent)
 {
     QTime result;
     if (percent) {
-        int averageMs = m_estimateTime.elapsed() / (percent - m_startingPercent);
+        int averageMs = m_estimateTime.elapsed() / qMax(1, percent - qMax(0, m_startingPercent));
         result = QTime::fromMSecsSinceStartOfDay(averageMs * (100 - percent));
     }
     return result;
@@ -149,6 +141,9 @@ void AbstractJob::stop()
 
 void AbstractJob::pause()
 {
+    m_actionPause->setEnabled(false);
+    m_actionResume->setEnabled(true);
+
 #ifdef Q_OS_WIN
     ::DebugActiveProcess(QProcess::processId());
 #else
@@ -158,6 +153,9 @@ void AbstractJob::pause()
 
 void AbstractJob::resume()
 {
+    m_actionPause->setEnabled(true);
+    m_actionResume->setEnabled(false);
+    m_startingPercent = -1;
 #ifdef Q_OS_WIN
     ::DebugActiveProcessStop(QProcess::processId());
 #else
@@ -223,7 +221,7 @@ void AbstractJob::onStarted()
 void AbstractJob::onProgressUpdated(QStandardItem *, int percent)
 {
     // Start timer on first reported percentage > 0.
-    if (percent == 1) {
+    if (percent == 1 || m_startingPercent < 0) {
         m_estimateTime.restart();
         m_startingPercent = percent;
     }

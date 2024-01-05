@@ -1498,29 +1498,45 @@ void MainWindow::onAutosaveTimeout()
     if (isWindowModified()) {
         auto result = QtConcurrent::run(autosaveTask, this);
     }
-    if (Settings.warnLowMemory() && Util::isMemoryLow()) {
-        MLT.pause();
-        QMessageBox dialog(QMessageBox::Critical,
-                           qApp->applicationName(),
-                           tr("You are running low on available memory!\n\n"
-                              "Please close other applications or web browser tabs and retry.\n"
-                              "Or save and restart Shotcut."),
-                           QMessageBox::Retry | QMessageBox::Save | QMessageBox::Ignore,
-                           this);
-        dialog.setDefaultButton(QMessageBox::Retry);
-        dialog.setEscapeButton(QMessageBox::Ignore);
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        switch (dialog.exec()) {
-        case QMessageBox::Save:
-            on_actionBackupSave_triggered();
-            m_exitCode = EXIT_RESTART;
-            QApplication::closeAllWindows();
-            break;
-        case QMessageBox::Retry:
-            onAutosaveTimeout();
-            break;
-        default:
-            break;
+    static QMessageBox *dialog = nullptr;
+    if (!dialog) {
+        dialog = new QMessageBox(QMessageBox::Critical,
+                                 qApp->applicationName(),
+                                 tr("You are running low on available memory!\n\n"
+                                    "Please close other applications or web browser tabs and retry.\n"
+                                    "Or save and restart Shotcut."),
+                                 QMessageBox::Retry | QMessageBox::Save | QMessageBox::Ignore,
+                                 this);
+        dialog->setDefaultButton(QMessageBox::Retry);
+        dialog->setEscapeButton(QMessageBox::Ignore);
+        dialog->setWindowModality(QmlApplication::dialogModality());
+        connect(dialog, &QDialog::finished, this, [&](int result) {
+            switch (result) {
+            case QMessageBox::Save:
+                on_actionBackupSave_triggered();
+                m_exitCode = EXIT_RESTART;
+                QApplication::closeAllWindows();
+                break;
+            case QMessageBox::Retry:
+                onAutosaveTimeout();
+                break;
+            default:
+                JOBS.resumeCurrent();
+                break;
+            }
+        });
+    }
+    if (Settings.warnLowMemory()) {
+        if (Util::isMemoryLow()) {
+            MLT.pause();
+            JOBS.pauseCurrent();
+            dialog->show();
+        } else {
+            if (dialog->isVisible()) {
+                dialog->hide();
+                QCoreApplication::processEvents();
+            }
+            JOBS.resumeCurrent();
         }
     }
 }

@@ -97,6 +97,8 @@ private:
     QElapsedTimer m_totalTime;
     QScopedPointer<PostJobAction> m_postJobAction;
     QThread::Priority m_priority;
+    QAction *m_actionPause;
+    QAction *m_actionResume;
 };
 
 #endif // ABSTRACTJOB_H
