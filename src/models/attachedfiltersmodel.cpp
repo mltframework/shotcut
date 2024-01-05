@@ -488,7 +488,6 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
             if (filter->is_valid() && !filter->get_int("_loader")) {
                 QmlMetadata *tmpMeta = MAIN.filterController()->metadataForService(filter);
                 insertRow = findInsertRow(meta);
-                filter->set(kNewFilterProperty, 1);
                 if (!meta->objectName().isEmpty())
                     filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
                 filter->set_in_and_out(
