@@ -132,6 +132,36 @@ private:
     QList<Markers::Marker> m_markers;
 };
 
+class GroupCommand : public QUndoCommand
+{
+public:
+    GroupCommand(MultitrackModel &model, QUndoCommand *parent = 0);
+    void addToGroup(Mlt::Producer &clip);
+    void redo();
+    void undo();
+private:
+    int getUniqueGroupNumber();
+
+    MultitrackModel &m_model;
+    QList<Mlt::Producer> m_clips;
+    QSet<QUuid> m_uuids;
+    QMap<QUuid, int> m_prevGroups;
+};
+
+class UngroupCommand : public QUndoCommand
+{
+public:
+    UngroupCommand(MultitrackModel &model, QUndoCommand *parent = 0);
+    void removeFromGroup(Mlt::Producer &clip);
+    void redo();
+    void undo();
+private:
+    MultitrackModel &m_model;
+    QList<Mlt::Producer> m_clips;
+    QSet<QUuid> m_uuids;
+    QMap<QUuid, int> m_prevGroups;
+};
+
 class NameTrackCommand : public QUndoCommand
 {
 public:

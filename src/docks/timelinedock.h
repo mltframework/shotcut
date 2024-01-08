@@ -83,6 +83,7 @@ public:
     const QVector<QUuid> selectionUuids();
     void saveAndClearSelection();
     Q_INVOKABLE void restoreSelection();
+    Q_INVOKABLE QVariantList getGroupForClip(int trackIndex, int clipIndex);
     void selectClipUnderPlayhead();
     int centerOfClip(int trackIndex, int clipIndex);
     bool isTrackLocked(int trackIndex) const;
