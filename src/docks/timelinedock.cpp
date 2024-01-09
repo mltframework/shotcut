@@ -1341,7 +1341,7 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineRippleTrimClipOutAction", action);
 
-    action = new QAction(tr("Group/UnGroup"), this);
+    action = new QAction(tr("Group/Ungroup"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_G));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&](bool checked) {
