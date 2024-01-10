@@ -102,7 +102,6 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QImageReader>
-#include <clocale>
 #include <algorithm>
 
 #define SHOTCUT_THEME
@@ -688,9 +687,13 @@ void MainWindow::setupAndConnectDocks()
 
 void MainWindow::setupMenuFile()
 {
+#ifdef Q_OS_MAC
+    static auto sep = "        ";
+#else
+    static auto sep = "\t";
+#endif
     connect(ui->menuOtherVersions, &QMenu::aboutToShow, this, [&] {
-        for (auto a : ui->menuOtherVersions->actions())
-            delete a;
+        ui->menuOtherVersions->clear();
         QDir dir(QFileInfo(m_currentFile).absolutePath());
         auto name = Util::baseName(m_currentFile, true);
         auto match = kBackupFileRegex.match(name);
@@ -705,11 +708,11 @@ void MainWindow::setupMenuFile()
             if (filename != name) {
                 auto text = filename;
                 if (!kBackupFileRegex.match(filename).hasMatch())
-                    text += QString::fromLatin1("\t(%1)").arg(fileInfo.lastModified().toString(Qt::ISODate));
+                    text += QString::fromLatin1("%1(%2)").arg(sep, fileInfo.lastModified().toString(Qt::ISODate));
                 ui->menuOtherVersions->addAction(text)->setData(dir.filePath(filename));
             }
         }
-        ui->menuOtherVersions->show();
+        QCoreApplication::processEvents();
     });
     connect(ui->menuOtherVersions, &QMenu::triggered, this, [&](QAction * action) {
         open(action->data().toString());
