@@ -140,8 +140,6 @@ public:
     void redo();
     void undo();
 private:
-    int getUniqueGroupNumber();
-
     MultitrackModel &m_model;
     QList<Mlt::Producer> m_clips;
     QSet<QUuid> m_uuids;

@@ -38,6 +38,32 @@ Mlt::Producer *deserializeProducer(QString &xml)
     return new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
 }
 
+int getUniqueGroupNumber(MultitrackModel &model)
+{
+    QSet<int> groups;
+    for (int trackIndex = 0; trackIndex < model.trackList().size(); trackIndex++) {
+        int i = model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            for (int clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
+                QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                if (info && info->cut && info->cut->property_exists(kShotcutGroupProperty)) {
+                    groups.insert(info->cut->get_int(kShotcutGroupProperty));
+                }
+            }
+        }
+    }
+    static const int MAX_GROUPS = 5000;
+    for (int i = 0; i < MAX_GROUPS; i++) {
+        if (!groups.contains(i)) {
+            return i;
+        }
+    }
+    LOG_ERROR() << "More than" << MAX_GROUPS << "groups!";
+    return 0;
+}
+
 AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml,
                              bool skipProxy, bool seek, QUndoCommand *parent)
     : QUndoCommand(parent)
@@ -312,7 +338,7 @@ void GroupCommand::addToGroup(Mlt::Producer &clip)
 
 void GroupCommand::redo()
 {
-    int groupNumber = getUniqueGroupNumber();
+    int groupNumber = getUniqueGroupNumber(m_model);
     if (m_clips.size() > 0) {
         // Use the original producer objects the first time.
         setText(QObject::tr("Group %n clips", nullptr, m_clips.size()));
@@ -368,32 +394,6 @@ void GroupCommand::undo()
             }
         }
     }
-}
-
-int GroupCommand::getUniqueGroupNumber()
-{
-    QSet<int> groups;
-    for (int trackIndex = 0; trackIndex < m_model.trackList().size(); trackIndex++) {
-        int i = m_model.trackList().at(trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
-        if (track) {
-            Mlt::Playlist playlist(*track);
-            for (int clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
-                QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-                if (info && info->cut && info->cut->property_exists(kShotcutGroupProperty)) {
-                    groups.insert(info->cut->get_int(kShotcutGroupProperty));
-                }
-            }
-        }
-    }
-    static const int MAX_GROUPS = 5000;
-    for (int i = 0; i < MAX_GROUPS; i++) {
-        if (!groups.contains(i)) {
-            return i;
-        }
-    }
-    LOG_ERROR() << "More than" << MAX_GROUPS << "groups!";
-    return 0;
 }
 
 UngroupCommand::UngroupCommand(MultitrackModel &model, QUndoCommand *parent)
@@ -1835,10 +1835,22 @@ void DetachAudioCommand::redo()
                     MLT.setUuid(producer, m_uuid);
                 }
             }
-            // Add the clip to the new audio track.
             m_undoHelper.recordBeforeState();
+            // Add the clip to the new audio track.
             m_model.overwrite(m_targetTrackIndex, audioClip, m_position, false);
+            // Replace the original clip with the video only clip
             m_model.overwrite(m_trackIndex, videoClip, m_position, false);
+            // Put the clips in a group
+            int groupNumber = getUniqueGroupNumber(m_model);
+            int audioClipIndex = m_model.clipIndex(m_targetTrackIndex, m_position);
+            auto audioClipInfo = m_model.getClipInfo(m_targetTrackIndex, audioClipIndex);
+            if (audioClipInfo && audioClipInfo->cut) {
+                audioClipInfo->cut->set(kShotcutGroupProperty, groupNumber);
+            }
+            auto videoClipInfo = m_model.getClipInfo(m_trackIndex, m_clipIndex);
+            if (videoClipInfo && videoClipInfo->cut) {
+                videoClipInfo->cut->set(kShotcutGroupProperty, groupNumber);
+            }
             m_undoHelper.recordAfterState();
             QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
             emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::AudioIndexRole);
