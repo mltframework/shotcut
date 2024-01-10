@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1181,4 +1181,14 @@ int ShotcutSettings::undoLimit() const
 bool ShotcutSettings::warnLowMemory() const
 {
     return settings.value("warnLowMemory", true).toBool();
+}
+
+int ShotcutSettings::backupPeriod() const
+{
+    return settings.value("backupPeriod", 24 * 60).toInt();
+}
+
+void ShotcutSettings::setBackupPeriod(int seconds)
+{
+    settings.setValue("backupPeriod", seconds);
 }

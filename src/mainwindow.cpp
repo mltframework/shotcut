@@ -124,6 +124,8 @@ static bool eventDebugCallback(void **data)
 static const int AUTOSAVE_TIMEOUT_MS = 60000;
 static const char *kReservedLayoutPrefix = "__%1";
 static const char *kLayoutSwitcherName("layoutSwitcherGrid");
+static QRegularExpression
+kBackupFileRegex("^(.+) ([0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9])-([0-5][0-9])-([0-5][0-9]).mlt$");
 
 MainWindow::MainWindow()
     : QMainWindow(0)
@@ -199,6 +201,7 @@ MainWindow::MainWindow()
 
     setupAndConnectDocks();
 
+    setupMenuFile();
     setupMenuView();
 
     connectVideoWidgetSignals();
@@ -683,6 +686,36 @@ void MainWindow::setupAndConnectDocks()
     resetDockCorners();
 }
 
+void MainWindow::setupMenuFile()
+{
+    connect(ui->menuOtherVersions, &QMenu::aboutToShow, this, [&] {
+        for (auto a : ui->menuOtherVersions->actions())
+            delete a;
+        QDir dir(QFileInfo(m_currentFile).absolutePath());
+        auto name = Util::baseName(m_currentFile, true);
+        auto match = kBackupFileRegex.match(name);
+        QStringList filters;
+        if (match.hasMatch())
+            filters << match.captured(1) + "*.mlt";
+        else
+            filters << QFileInfo(m_currentFile).baseName().split(" - ").first() + "*.mlt";
+        for (auto &fileInfo : dir.entryInfoList(filters, QDir::Files, QDir::Time))
+        {
+            auto filename = fileInfo.fileName();
+            if (filename != name) {
+                auto text = filename;
+                if (!kBackupFileRegex.match(filename).hasMatch())
+                    text += QString::fromLatin1("\t(%1)").arg(fileInfo.lastModified().toString(Qt::ISODate));
+                ui->menuOtherVersions->addAction(text)->setData(dir.filePath(filename));
+            }
+        }
+        ui->menuOtherVersions->show();
+    });
+    connect(ui->menuOtherVersions, &QMenu::triggered, this, [&](QAction * action) {
+        open(action->data().toString());
+    });
+}
+
 void MainWindow::setupMenuView()
 {
     ui->menuView->addSeparator();
@@ -775,6 +808,23 @@ void MainWindow::setupSettingsMenu()
     group->addAction(ui->actionYadifTemporal);
     group->addAction(ui->actionYadifSpatial);
     group->addAction(ui->actionBwdif);
+
+    group = new QActionGroup(this);
+    ui->actionBackupManually->setData(0);
+    group->addAction(ui->actionBackupManually);
+    ui->actionBackupHourly->setData(60);
+    group->addAction(ui->actionBackupHourly);
+    ui->actionBackupDaily->setData(24 * 60);
+    group->addAction(ui->actionBackupDaily);
+    ui->actionBackupWeekly->setData(7 * 24 * 60);
+    group->addAction(ui->actionBackupWeekly);
+    for (auto a : group->actions()) {
+        if (Settings.backupPeriod() == a->data().toInt())
+            a->setChecked(true);
+    }
+    connect(group, &QActionGroup::triggered, this, [&](QAction * action) {
+        Settings.setBackupPeriod(action->data().toInt());
+    });
 
     m_previewScaleGroup = new QActionGroup(this);
     m_previewScaleGroup->addAction(ui->actionPreviewNone);
@@ -1496,6 +1546,10 @@ static void autosaveTask(MainWindow *p)
 void MainWindow::onAutosaveTimeout()
 {
     if (isWindowModified()) {
+        // Automatic backup
+        backupPeriodically();
+
+        // Auto-save to recovery file
         auto result = QtConcurrent::run(autosaveTask, this);
     }
     static QMessageBox *dialog = nullptr;
@@ -2565,6 +2619,7 @@ bool MainWindow::on_actionSave_triggered()
     } else {
         if (Util::warnIfNotWritable(m_currentFile, this, tr("Save XML")))
             return false;
+        backupPeriodically();
         bool success = saveXML(m_currentFile);
         QMutexLocker locker(&m_autosaveMutex);
         m_autosaveFile.reset(new AutoSaveFile(m_currentFile));
@@ -2607,19 +2662,9 @@ void MainWindow::on_actionBackupSave_triggered()
     if (m_currentFile.isEmpty()) {
         on_actionSave_As_triggered();
     } else {
-        QFileInfo info(m_currentFile);
-        auto dateTime = info.lastModified().toString(Qt::ISODate);
-        dateTime.replace(':', '-');
-        auto filename = QString("%1/%2 %3.mlt").arg(info.canonicalPath(), info.completeBaseName(),
-                                                    dateTime);
-        if (Util::warnIfNotWritable(filename, this, tr("Save XML")))
-            return;
-        auto result = QFile::copy(m_currentFile, filename);
-        LOG_INFO() << filename << result;
+        backup();
         if (isWindowModified())
             on_actionSave_triggered();
-        else if (result)
-            showStatusMessage(tr("Saved backup %1").arg(filename));
     }
 }
 
@@ -3772,6 +3817,28 @@ void MainWindow::restartAfterChangeTheme()
     if (dialog.exec() == QMessageBox::Yes) {
 //        m_exitCode = EXIT_RESTART;
         QApplication::closeAllWindows();
+    }
+}
+
+void MainWindow::backup()
+{
+    QFileInfo info(m_currentFile);
+    auto dateTime = info.lastModified().toString(Qt::ISODate);
+    dateTime.replace(':', '-');
+    auto filename = QString("%1/%2 %3.mlt").arg(info.canonicalPath(), info.completeBaseName(),
+                                                dateTime);
+    if (!QFile::exists(filename) && !Util::warnIfNotWritable(filename, this, tr("Save XML"))
+            && QFile::copy(m_currentFile, filename)) {
+        showStatusMessage(tr("Saved backup %1").arg(filename));
+    }
+}
+
+void MainWindow::backupPeriodically()
+{
+    auto dateTime = QFileInfo(m_currentFile).lastModified();
+    if (Settings.backupPeriod() > 0 && !kBackupFileRegex.match(m_currentFile).hasMatch()
+            && dateTime.secsTo(QDateTime::currentDateTime()) / 60 > Settings.backupPeriod()) {
+        backup();
     }
 }
 

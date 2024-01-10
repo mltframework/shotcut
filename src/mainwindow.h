@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2023 Meltytech, LLC
+ * Copyright (c) 2011-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -158,6 +158,7 @@ private:
     void setupLayoutSwitcher();
     void centerLayoutInRemainingToolbarSpace();
     void setupAndConnectDocks();
+    void setupMenuFile();
     void setupMenuView();
     void connectVideoWidgetSignals();
     void setupSettingsMenu();
@@ -183,6 +184,8 @@ private:
     void resetDockCorners();
     void showIncompatibleProjectMessage(const QString &shotcutVersion);
     void restartAfterChangeTheme();
+    void backup();
+    void backupPeriodically();
 
     Ui::MainWindow *ui;
     Player *m_player;

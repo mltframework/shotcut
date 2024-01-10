@@ -55,6 +55,12 @@
      <addaction name="actionExportChapters"/>
      <addaction name="actionExportEDL"/>
     </widget>
+    <widget class="QMenu" name="menuOtherVersions">
+     <property name="title">
+      <string>Other Versions</string>
+     </property>
+     <addaction name="separator"/>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenOther"/>
@@ -63,6 +69,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionBackupSave"/>
+    <addaction name="menuOtherVersions"/>
     <addaction name="menuExport"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
@@ -250,10 +257,20 @@
      <addaction name="menuExternal"/>
      <addaction name="actionSync"/>
     </widget>
+    <widget class="QMenu" name="menuBackup">
+     <property name="title">
+      <string>Backup</string>
+     </property>
+     <addaction name="actionBackupManually"/>
+     <addaction name="actionBackupHourly"/>
+     <addaction name="actionBackupDaily"/>
+     <addaction name="actionBackupWeekly"/>
+    </widget>
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
     <addaction name="menuProfile"/>
     <addaction name="menuAudioChannels"/>
+    <addaction name="menuBackup"/>
     <addaction name="actionUser_Interface"/>
     <addaction name="menuPreviewScaling"/>
     <addaction name="menuProxy"/>
@@ -1288,6 +1305,41 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+S</string>
+   </property>
+  </action>
+  <action name="actionBackupManually">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Manually</string>
+   </property>
+  </action>
+  <action name="actionBackupHourly">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hourly</string>
+   </property>
+  </action>
+  <action name="actionBackupDaily">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Daily</string>
+   </property>
+  </action>
+  <action name="actionBackupWeekly">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Weekly</string>
    </property>
   </action>
  </widget>
