@@ -2365,6 +2365,11 @@ void TimelineDock::emitSelectedFromSelection()
         return;
     }
 
+    if (selection().size() > 1) {
+        emit selected(nullptr);
+        return;
+    }
+
     int trackIndex = selection().isEmpty() ? currentTrack() : selection().first().y();
     int clipIndex  = selection().isEmpty() ? 0              : selection().first().x();
     auto info = m_model.getClipInfo(trackIndex, clipIndex);
