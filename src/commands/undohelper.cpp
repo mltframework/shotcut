@@ -62,6 +62,9 @@ void UndoHelper::recordBeforeState()
             info.oldTrackIndex = i;
             info.oldClipIndex = j;
             info.isBlank = playlist.is_blank(j);
+            if (clipInfo.cut && clipInfo.cut->property_exists(kShotcutGroupProperty)) {
+                info.group = clipInfo.cut->get_int(kShotcutGroupProperty);
+            }
         }
     }
 }
@@ -209,6 +212,10 @@ void UndoHelper::undoChanges()
                     fixTransitions(playlist, currentIndex, restoredClip);
                 }
                 playlist.insert(restoredClip, currentIndex, info.frame_in, info.frame_out);
+                if (info.group >= 0) {
+                    QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
+                    clip->set(kShotcutGroupProperty, info.group);
+                }
             }
             m_model.endInsertRows();
 
@@ -348,7 +355,10 @@ void UndoHelper::restoreAffectedTracks()
                     restoredClip.set("mlt_type", "mlt_producer");
                 }
                 playlist.append(restoredClip, info.frame_in, info.frame_out);
-
+                if (info.group >= 0) {
+                    QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
+                    clip->set(kShotcutGroupProperty, info.group);
+                }
             }
             m_model.endInsertRows();
 

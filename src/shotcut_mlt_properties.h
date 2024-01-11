@@ -96,6 +96,7 @@
 #define kTrackIndexProperty "_shotcut:trackIndex"
 #define kClipIndexProperty "_shotcut:clipIndex"
 #define kFilterIndexProperty "_shotcut:filterIndex"
+#define kGroupProperty "_shotcut:group"
 #define kShotcutInProperty "_shotcut:in"
 #define kShotcutOutProperty "_shotcut:out"
 #define kNewTrackIndexProperty "_shotcut:newTrackIndex"

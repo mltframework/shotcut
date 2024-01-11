@@ -685,6 +685,9 @@ void MoveClipCommand::redo()
                 info->producer->set(kClipIndexProperty, clipIndex);
                 info->producer->set(kShotcutInProperty, info->frame_in);
                 info->producer->set(kShotcutOutProperty, info->frame_out);
+                if (info->cut->property_exists(kShotcutGroupProperty)) {
+                    info->producer->set(kGroupProperty, info->cut->get(kShotcutGroupProperty));
+                }
                 newSelection.insert(info->cut->get_int(kPlaylistStartProperty), info->producer);
                 if (m_markerOldStart < 0 || m_markerOldStart > info->start) {
                     // Record the left most clip position being moved
@@ -716,6 +719,13 @@ void MoveClipCommand::redo()
                 m_model.insertClip(toTrack, clip, start, m_rippleAllTracks);
             else
                 m_model.overwrite(toTrack, clip, start, false);
+            if (clip.property_exists(kGroupProperty)) {
+                int clipIndex = m_model.clipIndex(toTrack, start);
+                auto clipInfo = m_model.getClipInfo(toTrack, clipIndex);
+                if (clipInfo && clipInfo->cut) {
+                    clipInfo->cut->set(kShotcutGroupProperty, clip.get(kGroupProperty));
+                }
+            }
         }
     }
 
