@@ -4113,6 +4113,17 @@ void MainWindow::on_actionApplicationLog_triggered()
     dialog.setText(logFile.readAll());
     logFile.close();
     dialog.setWindowTitle(tr("Application Log"));
+    const auto previousLogName = dir.filePath("shotcut-log.bak");
+    if (QFile::exists(previousLogName)) {
+        auto button = dialog.buttonBox()->addButton(tr("Previous"), QDialogButtonBox::ActionRole);
+        connect(button, &QAbstractButton::clicked, this, [&]() {
+            QFile logFile(previousLogName);
+            logFile.open(QIODevice::ReadOnly | QIODevice::Text);
+            dialog.setText(logFile.readAll());
+            logFile.close();
+            button->setEnabled(false);
+        });
+    }
     dialog.exec();
 }
 

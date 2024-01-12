@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 
 #include <QDialog>
 
+class QDialogButtonBox;
+
 namespace Ui {
 class TextViewerDialog;
 }
@@ -31,7 +33,8 @@ class TextViewerDialog : public QDialog
 public:
     explicit TextViewerDialog(QWidget *parent = 0, bool forMltXml = false);
     ~TextViewerDialog();
-    void setText(const QString &s);
+    void setText(const QString &s, bool scroll = false);
+    QDialogButtonBox *buttonBox() const;
 
 private slots:
     void on_buttonBox_accepted();

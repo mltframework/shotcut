@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,9 @@
 #include "util.h"
 
 #include <QFileDialog>
+#include <QPushButton>
+#include <QClipboard>
+#include <QScrollBar>
 
 TextViewerDialog::TextViewerDialog(QWidget *parent, bool forMltXml) :
     QDialog(parent),
@@ -28,6 +31,10 @@ TextViewerDialog::TextViewerDialog(QWidget *parent, bool forMltXml) :
     m_forMltXml(forMltXml)
 {
     ui->setupUi(this);
+    auto button = ui->buttonBox->addButton(tr("Copy"), QDialogButtonBox::ActionRole);
+    connect(button, &QAbstractButton::clicked, this, [&]() {
+        QGuiApplication::clipboard()->setText(ui->plainTextEdit->toPlainText());
+    });
 }
 
 TextViewerDialog::~TextViewerDialog()
@@ -35,9 +42,18 @@ TextViewerDialog::~TextViewerDialog()
     delete ui;
 }
 
-void TextViewerDialog::setText(const QString &s)
+void TextViewerDialog::setText(const QString &s, bool scroll)
 {
-    ui->plainTextEdit->setPlainText(s);
+    if (s != ui->plainTextEdit->toPlainText()) {
+        ui->plainTextEdit->setPlainText(s);
+        if (scroll)
+            ui->plainTextEdit->verticalScrollBar()->setValue(ui->plainTextEdit->verticalScrollBar()->maximum());
+    }
+}
+
+QDialogButtonBox *TextViewerDialog::buttonBox() const
+{
+    return ui->buttonBox;
 }
 
 void TextViewerDialog::on_buttonBox_accepted()
