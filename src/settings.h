@@ -172,6 +172,8 @@ public:
     void setPlayerVideoDelayMs(int);
     double playerJumpSeconds() const;
     void setPlayerJumpSeconds(double);
+    QString playerAudioDriver() const;
+    void setPlayerAudioDriver(const QString &s);
 
     // playlist
     QString playlistThumbnails() const;

@@ -812,6 +812,51 @@ void MainWindow::setupSettingsMenu()
     group->addAction(ui->actionYadifSpatial);
     group->addAction(ui->actionBwdif);
 
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+    auto submenu = new QMenu(tr("Audio API"));
+    ui->menuPlayerSettings->insertMenu(ui->actionSync, submenu);
+    group = new QActionGroup(this);
+#if defined(Q_OS_WIN)
+    group->addAction(submenu->addAction("DirectSound"))->setData("directsound");
+    group->addAction(submenu->addAction("WASAPI"))->setData("wasapi");
+    group->addAction(submenu->addAction("Waveform Audio"))->setData("winmm");
+#else
+    group->addAction(submenu->addAction("ALSA"))->setData("alsa");
+    group->addAction(submenu->addAction("ESound"))->setData("esd");
+    group->addAction(submenu->addAction("OSS"))->setData("dsp");
+    group->addAction(submenu->addAction("PipeWire"))->setData("pipewire");
+    group->addAction(submenu->addAction("PulseAudio"))->setData("pulseaudio");
+#endif
+    for (auto a : group->actions()) {
+        a->setCheckable(true);
+        const auto data = a->data().toString();
+        if (data  == Settings.playerAudioDriver())
+            a->setChecked(true);
+        if ((data == "directsound" && Settings.playerAudioChannels() > 2) ||
+                (data == "winmm" && Settings.playerAudioChannels() <= 2) ||
+                (data == "pulseaudio")) {
+            a->setText(a->text() + QString::fromLatin1(" (%1)").arg(tr("default")));
+        }
+    }
+    connect(group, &QActionGroup::triggered, this, [&](QAction * action) {
+        Settings.setPlayerAudioDriver(action->data().toString());
+        QMessageBox dialog(QMessageBox::Information,
+                           qApp->applicationName(),
+                           tr("You must restart Shotcut to change the audio API.\n"
+                              "Do you want to restart now?"),
+                           QMessageBox::No | QMessageBox::Yes,
+                           this);
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        if (dialog.exec() == QMessageBox::Yes) {
+            ::qunsetenv("SDL_AUDIODRIVER");
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        }
+    });
+#endif
+
     group = new QActionGroup(this);
     ui->actionBackupManually->setData(0);
     group->addAction(ui->actionBackupManually);
@@ -1680,11 +1725,6 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         m_player->setPauseAfterOpen(!play || !MLT.isClip());
 
-#if defined(Q_OS_WIN)
-        if (!::qEnvironmentVariableIsSet("SDL_AUDIODRIVER")) {
-            ::qputenv("SDL_AUDIODRIVER", MLT.audioChannels() > 2 ? "directsound" : "winmm");
-        }
-#endif
         setAudioChannels(MLT.audioChannels());
         if (url.endsWith(".mlt") || url.endsWith(".xml")) {
             setVideoModeMenu();
@@ -1951,6 +1991,12 @@ void MainWindow::readPlayerSettings()
             break;
         }
     }
+
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+    if (!::qEnvironmentVariableIsSet("SDL_AUDIODRIVER")) {
+        ::qputenv("SDL_AUDIODRIVER", Settings.playerAudioDriver().toLocal8Bit().constData());
+    }
+#endif
 
     LOG_DEBUG() << "end";
 }

@@ -110,6 +110,13 @@ void ShotcutSettings::log()
     LOG_INFO() << "video mode" << playerProfile();
     LOG_INFO() << "realtime" << playerRealtime();
     LOG_INFO() << "audio channels" << playerAudioChannels();
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
+    if (::qEnvironmentVariableIsSet("SDL_AUDIODRIVER")) {
+        LOG_INFO() << "audio driver" <<::qgetenv("SDL_AUDIODRIVER");
+    } else {
+        LOG_INFO() << "audio driver" << playerAudioDriver();
+    }
+#endif
 }
 
 QString ShotcutSettings::language() const
@@ -563,6 +570,25 @@ double ShotcutSettings::playerJumpSeconds() const
 void ShotcutSettings::setPlayerJumpSeconds(double i)
 {
     settings.setValue("player/jumpSeconds", i);
+}
+
+QString ShotcutSettings::playerAudioDriver() const
+{
+#if defined(Q_OS_WIN)
+    auto s = playerAudioChannels() > 2 ? "directsound" : "winmm";
+#else
+    auto s = "pulseaudio";
+#endif
+    if (::qEnvironmentVariableIsSet("SDL_AUDIODRIVER")) {
+        return ::qgetenv("SDL_AUDIODRIVER");
+    } else {
+        return settings.value("player/audioDriver", s).toString();
+    }
+}
+
+void ShotcutSettings::setPlayerAudioDriver(const QString &s)
+{
+    settings.setValue("player/audioDriver", s);
 }
 
 QString ShotcutSettings::playlistThumbnails() const

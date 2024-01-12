@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2023 Meltytech, LLC
+ * Copyright (c) 2011-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -323,12 +323,10 @@ int main(int argc, char **argv)
         }
     }
 #if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
-    if (!::qEnvironmentVariableIsSet("SDL_AUDIODRIVER")) {
-        for (int i = 1; i + 1 < argc; i++) {
-            if (!::qstrcmp("--SDL_AUDIODRIVER", argv[i])) {
-                ::qputenv("SDL_AUDIODRIVER", argv[i + 1]);
-                break;
-            }
+    for (int i = 1; i + 1 < argc; i++) {
+        if (!::qstrcmp("--SDL_AUDIODRIVER", argv[i])) {
+            ::qputenv("SDL_AUDIODRIVER", argv[i + 1]);
+            break;
         }
     }
 #endif
