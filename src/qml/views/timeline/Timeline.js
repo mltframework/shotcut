@@ -161,20 +161,32 @@ function onMouseWheel(wheel) {
     }
 }
 
-function toggleSelection(trackIndex, clipIndex) {
-    let result = []
-    let skip = false
-    timeline.selection.forEach(function(el) {
-        if (tracksRepeater.itemAt(el.y).clipAt(el.x).isBlank)
-            // Do not support multiselect for blank clips
-            return
-        if (el.x !== clipIndex || el.y !== trackIndex)
-            result.push(el)
-        else
-            skip = true
+function toggleSelection(trackIndex, clipIndex, group) {
+    let result = timeline.selection
+    let append = true
+    // Check if this clip is already in selection to know if we append or remove
+    result.forEach(function(el) {
+        if (el.x === clipIndex && el.y === trackIndex)
+            append = false
     })
-    if (!skip)
+    if (append && !group) {
+        // Add this one clip to the selection
         result.push(Qt.point(clipIndex, trackIndex))
+    } else if (append && group) {
+        // Add this clip and its group to the selection
+        result = result.concat(timeline.getGroupForClip(trackIndex, clipIndex))
+    } else if (!append && !group) {
+        // Remove this one clip from the selection
+        result = result.filter( function( el ) {
+            return el.x !== clipIndex || el.y !== trackIndex;
+        } );
+    } else if (!append && group) {
+        // Remove this clip and its group from the selection
+        let groupClips = timeline.getGroupForClip(trackIndex, clipIndex)
+        result = result.filter( function( el ) {
+            return groupClips.indexOf( el ) < 0;
+        } );
+    }
     return result
 }
 

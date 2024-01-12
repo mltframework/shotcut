@@ -38,6 +38,32 @@ Mlt::Producer *deserializeProducer(QString &xml)
     return new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
 }
 
+int getUniqueGroupNumber(MultitrackModel &model)
+{
+    QSet<int> groups;
+    for (int trackIndex = 0; trackIndex < model.trackList().size(); trackIndex++) {
+        int i = model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            for (int clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
+                QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                if (info && info->cut && info->cut->property_exists(kShotcutGroupProperty)) {
+                    groups.insert(info->cut->get_int(kShotcutGroupProperty));
+                }
+            }
+        }
+    }
+    static const int MAX_GROUPS = 5000;
+    for (int i = 0; i < MAX_GROUPS; i++) {
+        if (!groups.contains(i)) {
+            return i;
+        }
+    }
+    LOG_ERROR() << "More than" << MAX_GROUPS << "groups!";
+    return 0;
+}
+
 AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml,
                              bool skipProxy, bool seek, QUndoCommand *parent)
     : QUndoCommand(parent)
@@ -294,6 +320,153 @@ void RemoveCommand::undo()
     }
 }
 
+GroupCommand::GroupCommand(MultitrackModel &model, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+{
+}
+
+void GroupCommand::addToGroup(Mlt::Producer &clip)
+{
+    QUuid id = MLT.ensureHasUuid(clip);
+    m_uuids.insert(id);
+    m_clips.append(clip);
+    if (clip.property_exists(kShotcutGroupProperty)) {
+        m_prevGroups.insert(id, clip.get_int(kShotcutGroupProperty));
+    }
+}
+
+void GroupCommand::redo()
+{
+    int groupNumber = getUniqueGroupNumber(m_model);
+    if (m_clips.size() > 0) {
+        // Use the original producer objects the first time.
+        setText(QObject::tr("Group %n clips", nullptr, m_clips.size()));
+        for (auto &clip : m_clips) {
+            clip.set(kShotcutGroupProperty, groupNumber);
+        }
+        m_clips.clear();
+    } else {
+        QSet<QUuid> tmpUuids = m_uuids;
+        for (int trackIndex = 0; trackIndex < m_model.trackList().size()
+                && tmpUuids.size() > 0; trackIndex++) {
+            int i = m_model.trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+            if (track) {
+                Mlt::Playlist playlist(*track);
+                for (int clipIndex = 0; clipIndex < playlist.count() && tmpUuids.size() > 0; clipIndex++) {
+                    QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                    if (info && info->cut) {
+                        QUuid id = MLT.uuid(*info->cut);
+                        if (!id.isNull() && tmpUuids.contains(id)) {
+                            info->cut->set(kShotcutGroupProperty, groupNumber);
+                            tmpUuids.remove(id);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void GroupCommand::undo()
+{
+    QSet<QUuid> tmpUuids = m_uuids;
+    for (int trackIndex = 0; trackIndex < m_model.trackList().size()
+            && tmpUuids.size() > 0; trackIndex++) {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            for (int clipIndex = 0; clipIndex < playlist.count() && tmpUuids.size() > 0; clipIndex++) {
+                QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                if (info && info->cut) {
+                    QUuid id = MLT.uuid(*info->cut);
+                    if (!id.isNull() && m_uuids.contains(id)) {
+                        if (m_prevGroups.contains(id)) {
+                            info->cut->set(kShotcutGroupProperty, m_prevGroups[id]);
+                        } else {
+                            info->cut->Mlt::Properties::clear(kShotcutGroupProperty);
+                        }
+                        tmpUuids.remove(id);
+                    }
+                }
+            }
+        }
+    }
+}
+
+UngroupCommand::UngroupCommand(MultitrackModel &model, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+{
+}
+
+void UngroupCommand::removeFromGroup(Mlt::Producer &clip)
+{
+    if (clip.property_exists(kShotcutGroupProperty)) {
+        QUuid id = MLT.ensureHasUuid(clip);
+        m_uuids.insert(id);
+        m_clips.append(clip);
+        m_prevGroups.insert(id, clip.get_int(kShotcutGroupProperty));
+    }
+}
+
+void UngroupCommand::redo()
+{
+    if (m_clips.size() > 0) {
+        // Use the original producer objects the first time.
+        setText(QObject::tr("Ungroup %n clips", nullptr, m_clips.size()));
+        for (auto &clip : m_clips) {
+            clip.Mlt::Properties::clear(kShotcutGroupProperty);
+        }
+        m_clips.clear();
+    } else {
+        QSet<QUuid> tmpUuids = m_uuids;
+        for (int trackIndex = 0; trackIndex < m_model.trackList().size()
+                && tmpUuids.size() > 0; trackIndex++) {
+            int i = m_model.trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+            if (track) {
+                Mlt::Playlist playlist(*track);
+                for (int clipIndex = 0; clipIndex < playlist.count() && tmpUuids.size() > 0; clipIndex++) {
+                    QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                    if (info && info->cut) {
+                        QUuid id = MLT.uuid(*info->cut);
+                        if (!id.isNull() && m_uuids.contains(id)) {
+                            info->cut->Mlt::Properties::clear(kShotcutGroupProperty);
+                            tmpUuids.remove(id);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void UngroupCommand::undo()
+{
+    auto tmpPrevGroups = m_prevGroups;
+    for (int trackIndex = 0; trackIndex < m_model.trackList().size()
+            && tmpPrevGroups.size() > 0; trackIndex++) {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            for (int clipIndex = 0; clipIndex < playlist.count() && tmpPrevGroups.size() > 0; clipIndex++) {
+                QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                if (info && info->cut) {
+                    QUuid id = MLT.uuid(*info->cut);
+                    if (!id.isNull() && m_prevGroups.contains(id)) {
+                        info->cut->set(kShotcutGroupProperty, m_prevGroups[id]);
+                        tmpPrevGroups.remove(id);
+                    }
+                }
+            }
+        }
+    }
+}
+
 NameTrackCommand::NameTrackCommand(MultitrackModel &model, int trackIndex,
                                    const QString &name, QUndoCommand *parent)
     : QUndoCommand(parent)
@@ -512,6 +685,9 @@ void MoveClipCommand::redo()
                 info->producer->set(kClipIndexProperty, clipIndex);
                 info->producer->set(kShotcutInProperty, info->frame_in);
                 info->producer->set(kShotcutOutProperty, info->frame_out);
+                if (info->cut->property_exists(kShotcutGroupProperty)) {
+                    info->producer->set(kGroupProperty, info->cut->get(kShotcutGroupProperty));
+                }
                 newSelection.insert(info->cut->get_int(kPlaylistStartProperty), info->producer);
                 if (m_markerOldStart < 0 || m_markerOldStart > info->start) {
                     // Record the left most clip position being moved
@@ -543,6 +719,13 @@ void MoveClipCommand::redo()
                 m_model.insertClip(toTrack, clip, start, m_rippleAllTracks);
             else
                 m_model.overwrite(toTrack, clip, start, false);
+            if (clip.property_exists(kGroupProperty)) {
+                int clipIndex = m_model.clipIndex(toTrack, start);
+                auto clipInfo = m_model.getClipInfo(toTrack, clipIndex);
+                if (clipInfo && clipInfo->cut) {
+                    clipInfo->cut->set(kShotcutGroupProperty, clip.get(kGroupProperty));
+                }
+            }
         }
     }
 
@@ -1662,10 +1845,22 @@ void DetachAudioCommand::redo()
                     MLT.setUuid(producer, m_uuid);
                 }
             }
-            // Add the clip to the new audio track.
             m_undoHelper.recordBeforeState();
+            // Add the clip to the new audio track.
             m_model.overwrite(m_targetTrackIndex, audioClip, m_position, false);
+            // Replace the original clip with the video only clip
             m_model.overwrite(m_trackIndex, videoClip, m_position, false);
+            // Put the clips in a group
+            int groupNumber = getUniqueGroupNumber(m_model);
+            int audioClipIndex = m_model.clipIndex(m_targetTrackIndex, m_position);
+            auto audioClipInfo = m_model.getClipInfo(m_targetTrackIndex, audioClipIndex);
+            if (audioClipInfo && audioClipInfo->cut) {
+                audioClipInfo->cut->set(kShotcutGroupProperty, groupNumber);
+            }
+            auto videoClipInfo = m_model.getClipInfo(m_trackIndex, m_clipIndex);
+            if (videoClipInfo && videoClipInfo->cut) {
+                videoClipInfo->cut->set(kShotcutGroupProperty, groupNumber);
+            }
             m_undoHelper.recordAfterState();
             QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
             emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::AudioIndexRole);

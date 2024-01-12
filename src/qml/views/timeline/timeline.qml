@@ -787,12 +787,16 @@ Rectangle {
                 }
                 if (tracksRepeater.itemAt(trackIndex).clipAt(clipIndex).isBlank)
                     timeline.selection = [Qt.point(clipIndex, trackIndex)];
+                else if (mouse && mouse.modifiers & Qt.ControlModifier && mouse.modifiers & Qt.AltModifier)
+                    timeline.selection = Logic.toggleSelection(trackIndex, clipIndex, false);
                 else if (mouse && mouse.modifiers & Qt.ControlModifier)
-                    timeline.selection = Logic.toggleSelection(trackIndex, clipIndex);
+                    timeline.selection = Logic.toggleSelection(trackIndex, clipIndex, true);
                 else if (mouse && mouse.modifiers & Qt.ShiftModifier)
                     timeline.selection = Logic.selectRange(trackIndex, clipIndex);
-                else if (!Logic.selectionContains(trackIndex, clipIndex))
+                else if (mouse && mouse.modifiers & Qt.AltModifier && !Logic.selectionContains(trackIndex, clipIndex))
                     timeline.selection = [Qt.point(clipIndex, trackIndex)];
+                else if (!Logic.selectionContains(trackIndex, clipIndex))
+                    timeline.selection = timeline.getGroupForClip(trackIndex, clipIndex);
                 root.clipClicked();
             }
             onClipRightClicked: root.clipRightClicked()

@@ -107,6 +107,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     selectionMenu->addAction(Actions["timelineSelectClipUnderPlayheadAction"]);
     selectionMenu->addAction(Actions["timelineCurrentTrackAboveAction"]);
     selectionMenu->addAction(Actions["timelineCurrentTrackBelowAction"]);
+    selectionMenu->addAction(Actions["timelineGroupAction"]);
     m_mainMenu->addMenu(selectionMenu);
     QMenu *editMenu = new QMenu(tr("Edit"), this);
     editMenu->addAction(Actions["timelinePasteAction"]);
@@ -146,6 +147,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_clipMenu->addAction(Actions["timelineLiftAction"]);
     m_clipMenu->addAction(Actions["timelineReplaceAction"]);
     m_clipMenu->addAction(Actions["timelineSplitAction"]);
+    m_clipMenu->addAction(Actions["timelineGroupAction"]);
     m_clipMenu->addAction(Actions["timelineNudgeForwardAction"]);
     m_clipMenu->addAction(Actions["timelineNudgeBackwardAction"]);
     m_clipMenu->addAction(Actions["timelineMergeWithNextAction"]);
@@ -1338,6 +1340,43 @@ void TimelineDock::setupActions()
         trimClipAtPlayhead(TimelineDock::TrimOutPoint, true);
     });
     Actions.add("timelineRippleTrimClipOutAction", action);
+
+    action = new QAction(tr("Group/Ungroup"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_G));
+    action->setEnabled(false);
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        auto selectedClips = selection();
+        if (selectedClips.size() <= 1) {
+            LOG_ERROR() << "Not enough clips selected" << selectedClips.size();
+            return;
+        }
+        auto firstClip = m_model.getClipInfo(selectedClips[0].y(), selectedClips[0].x());
+        if (firstClip->cut->property_exists(kShotcutGroupProperty)) {
+            // First clip is in a group. Need to ungroup
+            Timeline::UngroupCommand *ungroupCommand = new Timeline::UngroupCommand(m_model);
+            foreach (auto point, selectedClips) {
+                auto clipInfo = m_model.getClipInfo(point.y(), point.x());
+                if (!clipInfo->cut->is_blank()) {
+                    ungroupCommand->removeFromGroup(*clipInfo->cut);
+                }
+            }
+            MAIN.undoStack()->push(ungroupCommand);
+        } else {
+            // First clip is not in a group - ungroup
+            Timeline::GroupCommand *groupCommand = new Timeline::GroupCommand(m_model);
+            foreach (auto point, selectedClips) {
+                auto clipInfo = m_model.getClipInfo(point.y(), point.x());
+                if (!clipInfo->cut->is_blank()) {
+                    groupCommand->addToGroup(*clipInfo->cut);
+                }
+            }
+            MAIN.undoStack()->push(groupCommand);
+        }
+    });
+    connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
+        action->setEnabled(selection().size() > 1);
+    });
+    Actions.add("timelineGroupAction", action);
 }
 
 int TimelineDock::addTrackIfNeeded(TrackType trackType)
@@ -1636,6 +1675,36 @@ void TimelineDock::restoreSelection()
     }
     emit selectionChanged();
     emitSelectedFromSelection();
+}
+
+QVariantList TimelineDock::getGroupForClip(int trackIndex, int clipIndex)
+{
+    QVariantList result;
+
+    auto info = m_model.getClipInfo(trackIndex, clipIndex);
+    if (!info || !info->cut) {
+        return result;
+    }
+    if (!info->cut->property_exists(kShotcutGroupProperty)) {
+        result << QPoint(clipIndex, trackIndex);
+    } else {
+        int group = info->cut->get_int(kShotcutGroupProperty);
+        for (int trackIndex = 0; trackIndex < m_model.trackList().size(); trackIndex++) {
+            int i = m_model.trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+            if (track) {
+                Mlt::Playlist playlist(*track);
+                for (int clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
+                    QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                    if (info && info->cut && info->cut->property_exists(kShotcutGroupProperty)
+                            && info->cut->get_int(kShotcutGroupProperty) == group) {
+                        result << QPoint(clipIndex, trackIndex);
+                    }
+                }
+            }
+        }
+    }
+    return result;
 }
 
 void TimelineDock::selectClipUnderPlayhead()
@@ -2293,6 +2362,11 @@ void TimelineDock::emitSelectedFromSelection()
             selectMultitrack();
         else
             emit selected(nullptr);
+        return;
+    }
+
+    if (selection().size() > 1) {
+        emit selected(nullptr);
         return;
     }
 

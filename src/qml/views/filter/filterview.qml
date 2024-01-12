@@ -169,7 +169,7 @@ Rectangle {
 
             Label {
                 anchors.centerIn: parent
-                text: qsTr("Nothing selected")
+                text: qsTr("Select a clip")
                 color: activePalette.text
                 visible: !attachedfiltersmodel.isProducerSelected
             }

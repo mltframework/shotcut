@@ -64,6 +64,7 @@ private:
         int frame_out;
         int in_delta;
         int out_delta;
+        int group;
 
         int changes;
         Info()
@@ -77,6 +78,7 @@ private:
             , in_delta(0)
             , out_delta(0)
             , changes(NoChange)
+            , group(-1)
         {}
     };
     QMap<QUuid, Info> m_state;
