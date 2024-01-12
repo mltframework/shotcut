@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -142,7 +142,11 @@ void JobsDock::on_actionViewLog_triggered()
         TextViewerDialog dialog(this);
         dialog.setWindowTitle(tr("Job Log"));
         dialog.setText(job->log());
+        auto connection = connect(job, &AbstractJob::progressUpdated, this, [&]() {
+            dialog.setText(job->log(), true);
+        });
         dialog.exec();
+        disconnect(connection);
     }
 }
 
