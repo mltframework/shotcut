@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -219,5 +219,6 @@ QmlKeyframesParameter::QmlKeyframesParameter(QObject *parent)
     , m_units("")
     , m_isRectangle(false)
     , m_rangeType(MinMax)
+    , m_isColor(false)
 {
 }
