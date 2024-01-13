@@ -1192,6 +1192,66 @@ QList<QKeySequence> ShotcutSettings::shortcuts(const QString &name)
     return shortcuts;
 }
 
+double ShotcutSettings::slideshowClipDuration(double defaultClipDuration) const
+{
+    return settings.value("slideshow/clipDuration", defaultClipDuration).toDouble();
+}
+
+void ShotcutSettings::setSlideshowClipDuration(double clipDuration)
+{
+    settings.setValue("slideshow/clipDuration", clipDuration);
+}
+
+int ShotcutSettings::slideshowAspectConversion(int defaultAspectConversion) const
+{
+    return settings.value("slideshow/aspectConversion", defaultAspectConversion).toInt();
+}
+
+void ShotcutSettings::setSlideshowAspectConversion(int aspectConversion)
+{
+    settings.setValue("slideshow/aspectConversion", aspectConversion);
+}
+
+int ShotcutSettings::slideshowZoomPercent(int defaultZoomPercent) const
+{
+    return settings.value("slideshow/zoomPercent", defaultZoomPercent).toInt();
+}
+
+void ShotcutSettings::setSlideshowZoomPercent(int zoomPercent)
+{
+    settings.setValue("slideshow/zoomPercent", zoomPercent);
+}
+
+double ShotcutSettings::slideshowTransitionDuration(double defaultTransitionDuration) const
+{
+    return settings.value("slideshow/transitionDuration", defaultTransitionDuration).toDouble();
+}
+
+void ShotcutSettings::setSlideshowTransitionDuration(double transitionDuration)
+{
+    settings.setValue("slideshow/transitionDuration", transitionDuration);
+}
+
+int ShotcutSettings::slideshowTransitionStyle(int defaultTransitionStyle) const
+{
+    return settings.value("slideshow/transitionStyle", defaultTransitionStyle).toInt();
+}
+
+void ShotcutSettings::setSlideshowTransitionStyle(int transitionStyle)
+{
+    settings.setValue("slideshow/transitionStyle", transitionStyle);
+}
+
+int ShotcutSettings::slideshowTransitionSoftness(int defaultTransitionStyle) const
+{
+    return settings.value("slideshow/transitionSoftness", defaultTransitionStyle).toInt();
+}
+
+void ShotcutSettings::setSlideshowTransitionSoftness(int transitionSoftness)
+{
+    settings.setValue("slideshow/transitionSoftness", transitionSoftness);
+}
+
 void ShotcutSettings::reset()
 {
     for (auto &key : settings.allKeys()) {

@@ -299,6 +299,20 @@ public:
     void setShortcuts(const QString &name, const QList<QKeySequence> &shortcuts);
     QList<QKeySequence> shortcuts(const QString &name);
 
+    // Slideshow
+    double slideshowClipDuration(double defaultClipDuration) const;
+    void setSlideshowClipDuration(double clipDuration);
+    int slideshowAspectConversion(int defaultAspectConversion) const;
+    void setSlideshowAspectConversion(int aspectConversion);
+    int slideshowZoomPercent(int defaultZoomPercent) const;
+    void setSlideshowZoomPercent(int zoomPercent);
+    double slideshowTransitionDuration(double defaultTransitionDuration) const;
+    void setSlideshowTransitionDuration(double transitionDuration);
+    int slideshowTransitionStyle(int defaultTransitionStyle) const;
+    void setSlideshowTransitionStyle(int transitionStyle);
+    int slideshowTransitionSoftness(int defaultTransitionSoftness) const;
+    void setSlideshowTransitionSoftness(int transitionSoftness);
+
 public slots:
     void reset();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2023 Meltytech, LLC
+ * Copyright (c) 2020-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     m_clipDurationSpinner->setDecimals(1);
     m_clipDurationSpinner->setMinimum(0.2);
     m_clipDurationSpinner->setMaximum(3600 * 4);
-    m_clipDurationSpinner->setValue(10);
+    m_clipDurationSpinner->setValue(Settings.slideshowClipDuration(10.0));
     connect(m_clipDurationSpinner, SIGNAL(valueChanged(double)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_clipDurationSpinner, 0, 1);
 
@@ -78,7 +78,8 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
         }
     }
     m_aspectConversionCombo->setToolTip(tr("Choose an aspect ratio conversion method."));
-    m_aspectConversionCombo->setCurrentIndex(ASPECT_CONVERSION_CROP_CENTER);
+    m_aspectConversionCombo->setCurrentIndex(Settings.slideshowAspectConversion(
+                                                 ASPECT_CONVERSION_CROP_CENTER));
     connect(m_aspectConversionCombo, SIGNAL(currentIndexChanged(int)), this,
             SLOT(on_parameterChanged()));
     grid->addWidget(m_aspectConversionCombo, 1, 1);
@@ -90,7 +91,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     m_zoomPercentSpinner->setSuffix(" %");
     m_zoomPercentSpinner->setMinimum(-50);
     m_zoomPercentSpinner->setMaximum(50);
-    m_zoomPercentSpinner->setValue(10);
+    m_zoomPercentSpinner->setValue(Settings.slideshowZoomPercent(10));
     connect(m_zoomPercentSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_zoomPercentSpinner, 2, 1);
 
@@ -102,7 +103,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     m_transitionDurationSpinner->setDecimals(1);
     m_transitionDurationSpinner->setMinimum(0);
     m_transitionDurationSpinner->setMaximum(10);
-    m_transitionDurationSpinner->setValue(2);
+    m_transitionDurationSpinner->setValue(Settings.slideshowTransitionDuration(2.0));
     connect(m_transitionDurationSpinner, SIGNAL(valueChanged(double)), this,
             SLOT(on_parameterChanged()));
     grid->addWidget(m_transitionDurationSpinner, 3, 1);
@@ -139,7 +140,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
         m_transitionStyleCombo->addItem(QFileInfo(s).fileName(), s);
     }
     m_transitionStyleCombo->setToolTip(tr("Choose a transition effect."));
-    m_transitionStyleCombo->setCurrentIndex(dissolveIndex);
+    m_transitionStyleCombo->setCurrentIndex(Settings.slideshowTransitionStyle(dissolveIndex));
     connect(m_transitionStyleCombo, SIGNAL(currentIndexChanged(int)), this,
             SLOT(on_parameterChanged()));
     grid->addWidget(m_transitionStyleCombo, 4, 1);
@@ -150,7 +151,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     m_softnessSpinner->setSuffix(" %");
     m_softnessSpinner->setMaximum(100);
     m_softnessSpinner->setMinimum(0);
-    m_softnessSpinner->setValue(20);
+    m_softnessSpinner->setValue(Settings.slideshowTransitionSoftness(20));
     connect(m_softnessSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_softnessSpinner, 5, 1);
 
@@ -242,6 +243,13 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
             i++;
         }
     }
+
+    Settings.setSlideshowClipDuration(m_config.clipDuration);
+    Settings.setSlideshowAspectConversion(m_config.aspectConversion);
+    Settings.setSlideshowZoomPercent(m_config.zoomPercent);
+    Settings.setSlideshowTransitionDuration(m_config.transitionDuration);
+    Settings.setSlideshowTransitionStyle(m_config.transitionStyle);
+    Settings.setSlideshowTransitionSoftness(m_config.transitionSoftness);
 
     return slideshow;
 }
