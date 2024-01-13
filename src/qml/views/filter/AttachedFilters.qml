@@ -176,8 +176,13 @@ Rectangle {
                     if (currentIndex >= attachedFiltersView.count - 1) {
                         selectedCanMoveDown = false;
                     } else {
-                        let nextSection = attachedFiltersView.itemAtIndex(currentIndex + 1).ListView.section;
-                        selectedCanMoveDown = currentSection === nextSection;
+                        let item = attachedFiltersView.itemAtIndex(currentIndex + 1);
+                        if (item) {
+                            let nextSection = attachedFiltersView.itemAtIndex(currentIndex + 1).ListView.section;
+                            selectedCanMoveDown = currentSection === nextSection;
+                        } else {
+                            selectedCanMoveDown = false;
+                        }
                     }
                 } else {
                     selectedCanMoveUp = false;
