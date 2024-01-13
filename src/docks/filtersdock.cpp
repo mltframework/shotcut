@@ -156,6 +156,12 @@ void FiltersDock::resetQview()
         return;
 
     LOG_DEBUG() << "begin";
+    if (!isVisible()) {
+        m_qview.setSource(QUrl(""));
+        emit currentFilterRequested(QmlFilter::NoCurrentFilter);
+        return;
+    }
+
     if (m_qview.status() != QQuickWidget::Null) {
         QObject *root = m_qview.rootObject();
         QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),
