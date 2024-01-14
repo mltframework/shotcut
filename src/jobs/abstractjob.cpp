@@ -115,6 +115,11 @@ void AbstractJob::setPostJobAction(PostJobAction *action)
     m_postJobAction.reset(action);
 }
 
+bool AbstractJob::paused() const
+{
+    return !m_actionPause->isEnabled();
+}
+
 void AbstractJob::start(const QString &program, const QStringList &arguments)
 {
     QString prog = program;
@@ -149,6 +154,7 @@ void AbstractJob::pause()
 #else
     ::kill(QProcess::processId(), SIGSTOP);
 #endif
+    emit progressUpdated(m_item, -1);
 }
 
 void AbstractJob::resume()
@@ -161,6 +167,7 @@ void AbstractJob::resume()
 #else
     ::kill(QProcess::processId(), SIGCONT);
 #endif
+    emit progressUpdated(m_item, 0);
 }
 
 void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
@@ -221,7 +228,7 @@ void AbstractJob::onStarted()
 void AbstractJob::onProgressUpdated(QStandardItem *, int percent)
 {
     // Start timer on first reported percentage > 0.
-    if (percent == 1 || m_startingPercent < 0) {
+    if (percent > 0 && (percent == 1 || m_startingPercent < 0)) {
         m_estimateTime.restart();
         m_startingPercent = percent;
     }

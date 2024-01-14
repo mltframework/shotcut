@@ -62,6 +62,7 @@ public:
         return m_totalTime;
     }
     void setPostJobAction(PostJobAction *action);
+    bool paused() const;
 
 public slots:
     void start(const QString &program, const QStringList &arguments);

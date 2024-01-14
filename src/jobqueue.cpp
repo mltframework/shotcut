@@ -82,10 +82,21 @@ void JobQueue::onProgressUpdated(QStandardItem *standardItem, int percent)
     if (standardItem) {
         AbstractJob *job = m_jobs.at(standardItem->row());
         if (job) {
-            QString remaining = "--:--:--";
-            if (percent > 2)
-                remaining = job->estimateRemaining(percent).toString();
-            standardItem->setText(QString("%1% (%2)").arg(percent).arg(remaining));
+            QString remaining("--:--:--");
+            QIcon icon(":/icons/oxygen/32x32/actions/run-build.png");
+            if (job->paused()) {
+                icon = QIcon(":/icons/oxygen/32x32/actions/media-playback-pause.png");
+                remaining = tr("paused");
+            } else if (percent > 0) {
+                auto time = job->estimateRemaining(percent);
+                if (percent > 2 && QTime(0, 0).secsTo(time) > 0)
+                    remaining = time.toString();
+                remaining = QString("%1% (%2)").arg(percent).arg(remaining);
+            }
+            standardItem->setText(remaining);
+            standardItem = JOBS.item(standardItem->row(), JobQueue::COLUMN_ICON);
+            if (standardItem)
+                standardItem->setIcon(icon);
         }
     }
 #if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
