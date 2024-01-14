@@ -1633,11 +1633,9 @@ void MainWindow::onAutosaveTimeout()
             MLT.pause();
             JOBS.pauseCurrent();
             dialog->show();
-        } else {
-            if (dialog->isVisible()) {
-                dialog->hide();
-                QCoreApplication::processEvents();
-            }
+        } else if (dialog->isVisible()) {
+            dialog->hide();
+            QCoreApplication::processEvents();
             JOBS.resumeCurrent();
         }
     }
