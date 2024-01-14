@@ -2027,16 +2027,6 @@ End-of-shotcut-wrapper
 
   popd
 
-  log Creating desktop file in $TMPFILE
-  cp shotcut/packaging/linux/org.shotcut.Shotcut.desktop $TMPFILE
-  sed -i '1i #!/usr/bin/env xdg-open' $TMPFILE
-  sed -i 's|Exec=.*|Exec=sh -c "\$(dirname "%k")/Shotcut.app/shotcut "%F""|' $TMPFILE
-  sed -i 's|Icon=.*|Icon=applications-multimedia|' $TMPFILE
-  if test 0 != $? ; then
-    die "Unable to create desktop file"
-  fi
-  cp $TMPFILE "$FINAL_INSTALL_DIR/../Shotcut.desktop" || die "Unable to create desktop file - cp failed"
-
   feedback_status Done creating startup and environment script
 
   cmd pushd "$INSTALL_DIR"
