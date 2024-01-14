@@ -1,5 +1,5 @@
 ; -- shotcut.iss --
-; Copyright (c) 2023 Meltytech, LLC
+; Copyright (c) 2024 Meltytech, LLC
 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ ArchitecturesInstallIn64BitMode=x64
 AppMutex="Meltytech Shotcut Running Mutex"
 OutputBaseFilename=shotcut-setup
 UninstallDisplayName=Shotcut
-VersionInfoCopyright="Copyright (c) 2012-2023 Meltytech, LLC"
+VersionInfoCopyright="Copyright (c) 2012-2024 Meltytech, LLC"
 WizardSmallImageFile="shotcut-logo-64.bmp"
 WizardImageStretch=yes
 ShowLanguageDialog=no
