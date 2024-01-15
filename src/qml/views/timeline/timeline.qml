@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -569,7 +569,7 @@ Rectangle {
                                     width: clipN ? clipN.width : 0
                                     height: track ? track.height : 0
                                     color: 'transparent'
-                                    border.color: 'red'
+                                    border.color: (clipN && clipN.group < 0) ? 'red' : 'white'
                                     visible: clipN && !clipN.Drag.active && clipN.trackIndex === clipN.originalTrackIndex
                                 }
                             }

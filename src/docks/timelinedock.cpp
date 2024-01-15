@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1355,20 +1355,14 @@ void TimelineDock::setupActions()
             // First clip is in a group. Need to ungroup
             Timeline::UngroupCommand *ungroupCommand = new Timeline::UngroupCommand(m_model);
             foreach (auto point, selectedClips) {
-                auto clipInfo = m_model.getClipInfo(point.y(), point.x());
-                if (!clipInfo->cut->is_blank()) {
-                    ungroupCommand->removeFromGroup(*clipInfo->cut);
-                }
+                ungroupCommand->removeFromGroup(point.y(), point.x());
             }
             MAIN.undoStack()->push(ungroupCommand);
         } else {
-            // First clip is not in a group - ungroup
+            // First clip is not in a group - group
             Timeline::GroupCommand *groupCommand = new Timeline::GroupCommand(m_model);
             foreach (auto point, selectedClips) {
-                auto clipInfo = m_model.getClipInfo(point.y(), point.x());
-                if (!clipInfo->cut->is_blank()) {
-                    groupCommand->addToGroup(*clipInfo->cut);
-                }
+                groupCommand->addToGroup(point.y(), point.x());
             }
             MAIN.undoStack()->push(groupCommand);
         }

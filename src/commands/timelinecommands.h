@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,26 @@ enum {
     UndoIdAddTransitionByTrimOut,
     UndoIdUpdate,
     UndoIdMoveClip
+};
+
+struct ClipPosition {
+    ClipPosition(int track, int clip)
+    {
+        trackIndex = track;
+        clipIndex = clip;
+    }
+
+    bool operator < (const ClipPosition &rhs) const
+    {
+        if (trackIndex == rhs.trackIndex) {
+            return clipIndex < rhs.clipIndex;
+        } else {
+            return trackIndex < rhs.trackIndex;
+        }
+    }
+
+    int trackIndex;
+    int clipIndex;
 };
 
 class AppendCommand : public QUndoCommand
@@ -136,28 +156,25 @@ class GroupCommand : public QUndoCommand
 {
 public:
     GroupCommand(MultitrackModel &model, QUndoCommand *parent = 0);
-    void addToGroup(Mlt::Producer &clip);
+    void addToGroup(int trackIndex, int clipIndex);
     void redo();
     void undo();
 private:
     MultitrackModel &m_model;
-    QList<Mlt::Producer> m_clips;
-    QSet<QUuid> m_uuids;
-    QMap<QUuid, int> m_prevGroups;
+    QList<ClipPosition> m_clips;
+    QMap<ClipPosition, int> m_prevGroups;
 };
 
 class UngroupCommand : public QUndoCommand
 {
 public:
     UngroupCommand(MultitrackModel &model, QUndoCommand *parent = 0);
-    void removeFromGroup(Mlt::Producer &clip);
+    void removeFromGroup(int trackIndex, int clipIndex);
     void redo();
     void undo();
 private:
     MultitrackModel &m_model;
-    QList<Mlt::Producer> m_clips;
-    QSet<QUuid> m_uuids;
-    QMap<QUuid, int> m_prevGroups;
+    QMap<ClipPosition, int> m_prevGroups;
 };
 
 class NameTrackCommand : public QUndoCommand

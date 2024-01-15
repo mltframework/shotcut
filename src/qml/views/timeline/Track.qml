@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,6 +95,7 @@ Rectangle {
             hash: typeof model.hash !== 'undefined' ? model.hash : 0
             speed: typeof model.speed !== 'undefined' ? model.speed : 1
             audioIndex: typeof model.audioindex !== 'undefined' ? model.audioIndex : 0
+            group: typeof model.group !== 'undefined' ? model.group : -1
             selected: Logic.selectionContains(timeline.selection, trackIndex, index)
             isTrackMute: trackRoot.isMute
             onClicked: (clip, mouse) => {

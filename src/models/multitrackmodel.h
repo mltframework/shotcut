@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,7 +77,8 @@ public:
         IsBottomVideoRole,/// track only
         IsTopAudioRole,   /// track only
         IsBottomAudioRole,/// track only
-        AudioIndexRole    /// clip only
+        AudioIndexRole,   /// clip only
+        GroupRole,        /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);

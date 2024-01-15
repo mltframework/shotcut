@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -199,6 +199,11 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                     return isFiltered(info->producer);
                 case AudioIndexRole:
                     return QString::fromLatin1(info->producer->get("audio_index"));
+                case GroupRole:
+                    if (info->cut->property_exists(kShotcutGroupProperty))
+                        return info->cut->get_int(kShotcutGroupProperty);
+                    else
+                        return -1;
                 default:
                     break;
                 }
@@ -325,6 +330,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[IsTopAudioRole] = "isTopAudio";
     roles[IsBottomAudioRole] = "isBottomAudio";
     roles[AudioIndexRole] = "audioIndex";
+    roles[GroupRole] = "group";
     return roles;
 }
 
