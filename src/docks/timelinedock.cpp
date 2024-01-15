@@ -638,18 +638,13 @@ void TimelineDock::setupActions()
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&]() {
         auto selectedClips = selection();
-        if (!selectedClips.isEmpty()) {
-            if (selection().size() > 1)
-                setSelection({selection().first()});
-            int trackIndex = selection().first().y();
-            int clipIndex = selection().first().x();
+        if (selectedClips.size() == 1) {
+            int trackIndex = selectedClips.first().y();
+            int clipIndex = selectedClips.first().x();
             bool valid = clipIndex > 0 && !isTransition(trackIndex, clipIndex)
                          && !isBlank(trackIndex, clipIndex);
             if (valid && !Settings.timelineRipple()) {
-                valid = isBlank(trackIndex, clipIndex - 1) && ((clipIndex == clipCount(trackIndex) - 1)
-                                                               || isBlank(trackIndex, clipIndex + 1));
-            } else if (valid) {
-                valid = clipIndex < clipCount(trackIndex) - 1;
+                valid = (clipIndex == clipCount(trackIndex) - 1) || isBlank(trackIndex, clipIndex + 1);
             }
             if (!valid) {
                 emit showStatusMessage(tr("Nudge Forward is not available"));
@@ -661,11 +656,11 @@ void TimelineDock::setupActions()
         }
     });
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
-        bool enabled = m_selection.selectedClips.length() > 0;
-        if (enabled && !selection().isEmpty()) {
-            int trackIndex = selection().first().y();
-            int clipIndex = selection().first().x();
-            enabled = !isBlank(trackIndex, clipIndex);
+        auto selectedClips = selection();
+        bool enabled = selectedClips.size() == 1;
+        if (enabled) {
+            enabled = !isBlank(selectedClips.first().y(), selectedClips.first().x())
+                      && !isTransition(selectedClips.first().y(), selectedClips.first().x());
         }
         action->setEnabled(enabled);
     });
@@ -676,11 +671,9 @@ void TimelineDock::setupActions()
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&]() {
         auto selectedClips = selection();
-        if (!selectedClips.isEmpty()) {
-            if (selection().size() > 1)
-                setSelection({selection().first()});
-            int trackIndex = selection().first().y();
-            int clipIndex = selection().first().x();
+        if (selectedClips.size() == 1) {
+            int trackIndex = selectedClips.first().y();
+            int clipIndex = selectedClips.first().x();
             if (clipIndex <= 0 || isTransition(trackIndex, clipIndex) || isBlank(trackIndex, clipIndex)
                     || !isBlank(trackIndex, clipIndex - 1)) {
                 emit showStatusMessage(tr("Nudge Backward is not available"));
@@ -692,11 +685,11 @@ void TimelineDock::setupActions()
         }
     });
     connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
-        bool enabled = m_selection.selectedClips.length() > 0;
-        if (enabled && !selection().isEmpty()) {
-            int trackIndex = selection().first().y();
-            int clipIndex = selection().first().x();
-            enabled = !isBlank(trackIndex, clipIndex);
+        auto selectedClips = selection();
+        bool enabled = selectedClips.size() == 1;
+        if (enabled) {
+            enabled = !isBlank(selectedClips.first().y(), selectedClips.first().x())
+                      && !isTransition(selectedClips.first().y(), selectedClips.first().x());
         }
         action->setEnabled(enabled);
     });
