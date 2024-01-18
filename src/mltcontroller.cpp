@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2023 Meltytech, LLC
+ * Copyright (c) 2011-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1252,7 +1252,8 @@ static void shiftKeyframes(Mlt::Service *service, QmlMetadata *meta, int delta)
             animation.shift_frames(-delta);
             foreach (QString gangName, paramMeta->gangedProperties()) {
                 Mlt::Animation gangAnim = service->get_animation(qUtf8Printable(gangName));
-                gangAnim.shift_frames(-delta);
+                if (gangAnim.is_valid())
+                    gangAnim.shift_frames(-delta);
             }
         }
     }
