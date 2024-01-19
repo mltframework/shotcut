@@ -1179,12 +1179,14 @@ void Player::layoutToolbars()
                      m_inSelectedToolBar->sizeHint().width() + 20;
     bool twoRowsInUse = m_toolRow2->count() > 0;
 
-    if (totalWidth <= this->width() && !twoRowsInUse) {
-        // Everything still fits in one toolbar. Nothing to change.
-        return;
-    } else if (totalWidth > this->width() && twoRowsInUse) {
-        // Two toolbars still needed. Nothing to change.
-        return;
+    if (m_toolRow1->count() > 0) {
+        if (totalWidth <= this->width() && !twoRowsInUse) {
+            // Everything still fits in one toolbar. Nothing to change.
+            return;
+        } else if (totalWidth > this->width() && twoRowsInUse) {
+            // Two toolbars still needed. Nothing to change.
+            return;
+        }
     }
 
     // Remove all the widgets from the tool bar area
