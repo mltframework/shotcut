@@ -548,137 +548,128 @@ void LockTrackCommand::undo()
 }
 
 MoveClipCommand::MoveClipCommand(MultitrackModel &model, MarkersModel &markersModel, int trackDelta,
-                                 bool ripple, QUndoCommand *parent)
+                                 int positionDelta, bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_markersModel(markersModel)
     , m_trackDelta(trackDelta)
+    , m_positionDelta(positionDelta)
     , m_ripple(ripple)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
     , m_rippleMarkers(Settings.timelineRippleMarkers())
     , m_undoHelper(m_model)
     , m_redo(false)
-    , m_start(-1)
-    , m_markerOldStart(-1)
-    , m_markerNewStart(-1)
+    , m_earliestStart(-1)
 {
     m_undoHelper.setHints(UndoHelper::RestoreTracks);
     m_undoHelper.recordBeforeState();
 }
 
-void MoveClipCommand::addClip(int start, Mlt::Producer &clip)
+void MoveClipCommand::addClip(int trackIndex, int clipIndex)
 {
-    MLT.ensureHasUuid(clip);
-    m_selection.insert(start, clip);
+    auto info = m_model.getClipInfo(trackIndex, clipIndex);
+    if (info && info->cut) {
+        Info saveInfo;
+        saveInfo.trackIndex = trackIndex;
+        saveInfo.clipIndex = clipIndex;
+        saveInfo.frame_in = info->frame_in;
+        saveInfo.frame_out = info->frame_out;
+        saveInfo.start = info->start;
+        if (m_earliestStart == -1 || saveInfo.start < m_earliestStart) {
+            m_earliestStart = saveInfo.start;
+        }
+        if (info->cut->property_exists(kShotcutGroupProperty)) {
+            saveInfo.group = info->cut->get_int(kShotcutGroupProperty);
+        }
+        saveInfo.uuid = MLT.ensureHasUuid(*info->cut);
+        m_clips.insert(saveInfo.start, saveInfo);
+    }
 }
 
 void MoveClipCommand::redo()
 {
-    LOG_DEBUG() << "track delta" << m_trackDelta;
-    int trackIndex, clipIndex;
-    QMultiMap<int, Mlt::Producer> newSelection;
+    LOG_DEBUG() << "track delta" << m_trackDelta << "position delta" << m_positionDelta;
 
     if (!m_redo) {
-        if (m_selection.size() > 1)
-            setText(QObject::tr("Move %n timeline clips", nullptr, m_selection.size()));
+        if (m_clips.size() > 1)
+            setText(QObject::tr("Move %n timeline clips", nullptr, m_clips.size()));
         else
             setText(QObject::tr("Move timeline clip"));
     }
-    if (m_ripple && !m_trackDelta && m_selection.size() == 1) {
-        if (m_start == -1) {
-            auto info = m_model.findClipByUuid(MLT.uuid(m_selection.first()), trackIndex, clipIndex);
-            if (info && info->cut) {
-                auto newStart = info->cut->get_int(kPlaylistStartProperty);
-                auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
-                QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
-                if (track) {
-                    Mlt::Playlist playlist(*track);
-                    auto targetIndex = playlist.get_clip_index_at(newStart);
-                    if (targetIndex >= clipIndex || // pushing clips on same track
-                            // pulling clips on same track
-                            (playlist.is_blank_at(newStart) && targetIndex == clipIndex - 1)) {
-                        m_start = newStart;
-                        m_trackIndex = trackIndex;
-                        m_clipIndex = clipIndex;
-                        m_markerOldStart = info->start;
-                        m_markerNewStart = newStart;
+    if (m_ripple && !m_trackDelta && m_clips.size() == 1) {
+        auto info = m_model.getClipInfo(m_clips.first().trackIndex, m_clips.first().clipIndex);
+        if (info && info->cut) {
+            int newStart = info->start + m_positionDelta;
+            auto mlt_index = m_model.trackList().at(m_clips.first().trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+            if (track) {
+                Mlt::Playlist playlist(*track);
+                auto targetIndex = playlist.get_clip_index_at(newStart);
+                if (targetIndex >= m_clips.first().clipIndex || // pushing clips on same track
+                        // pulling clips on same track
+                        (playlist.is_blank_at(newStart) && targetIndex == m_clips.first().clipIndex - 1)) {
+                    // Use old behavior to push or pull clips on the same track.
+                    m_model.moveClip(m_clips.first().trackIndex, m_clips.first().trackIndex, m_clips.first().clipIndex,
+                                     m_clips.first().start + m_positionDelta, m_ripple, m_rippleAllTracks);
+                    if (!m_redo) {
+                        m_redo = true;
+                        m_undoHelper.recordAfterState();
                     }
+                    redoMarkers();
+                    return;
                 }
             }
         }
-        if (m_start >= 0) {
-            // Use old behavior to push or pull clips on the same track.
-            m_model.moveClip(m_trackIndex, m_trackIndex, m_clipIndex, m_start, m_ripple, m_rippleAllTracks);
-            m_undoHelper.recordAfterState();
-            redoMarkers();
-            m_redo = true;
+    }
+
+    QVector<Mlt::Producer> producers;
+
+    // First, save each clip and remove it
+    for (auto &clip : m_clips) {
+        int trackIndex, clipIndex;
+        auto info = m_model.findClipByUuid(clip.uuid, trackIndex, clipIndex);
+        if (info && info->producer && info->producer->is_valid() && info->cut) {
+            producers.append(info->producer);
+            if (m_ripple)
+                m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
+            else
+                m_model.liftClip(trackIndex, clipIndex);
+        } else {
+            LOG_ERROR() << "Unable to find clip to move" << trackIndex << clipIndex;
             return;
         }
     }
-    // First, remove each clip.
-    for (auto &clip : m_selection) {
-        if (!m_redo) {
-            // On the initial pass, remove clips while recording info about them.
-            auto info = m_model.findClipByUuid(MLT.uuid(clip), trackIndex, clipIndex);
-            if (info && info->producer && info->producer->is_valid() && info->cut) {
-                info->producer->set(kNewTrackIndexProperty, qBound(0, trackIndex + m_trackDelta,
-                                                                   qMax(int(m_model.trackList().size()) - 1, 0)));
-                info->producer->pass_property(*info->cut, kPlaylistStartProperty);
-                info->producer->set(kTrackIndexProperty, trackIndex);
-                info->producer->set(kClipIndexProperty, clipIndex);
-                info->producer->set(kShotcutInProperty, info->frame_in);
-                info->producer->set(kShotcutOutProperty, info->frame_out);
-                if (info->cut->property_exists(kShotcutGroupProperty)) {
-                    info->producer->set(kGroupProperty, info->cut->get(kShotcutGroupProperty));
-                }
-                newSelection.insert(info->cut->get_int(kPlaylistStartProperty), info->producer);
-                if (m_markerOldStart < 0 || m_markerOldStart > info->start) {
-                    // Record the left most clip position being moved
-                    m_markerOldStart = info->start;
-                    m_markerNewStart = info->cut->get_int(kPlaylistStartProperty);
-                }
-            }
-        } else {
-            // On redo, use the recorded indices to remove them.
-            trackIndex = clip.get_int(kTrackIndexProperty);
-            clipIndex = clip.get_int(kClipIndexProperty);
-        }
-        if (m_ripple)
-            m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
-        else
-            m_model.liftClip(trackIndex, clipIndex);
-    }
-    if (!m_redo) {
-        m_selection = newSelection;
-    }
-    // Next, add the save clips to their new locations.
-    for (auto &clip : m_selection) {
-        auto toTrack = clip.get_int(kNewTrackIndexProperty);
-        auto start = clip.get_int(kPlaylistStartProperty);
-        clip.set_in_and_out(clip.get_int(kShotcutInProperty), clip.get_int(kShotcutOutProperty));
-        if (start + clip.get_playtime() >= 0) {
-//            LOG_DEBUG() << "adding clip" << clip.get_int(kClipIndexProperty) << "to track" << toTrack << "start" << start;
+
+    // Then, place each clip in the new location
+    for (auto &clip : m_clips) {
+        Mlt::Producer &producer = producers.front();
+        int newTrackIndex = qBound(0, clip.trackIndex + m_trackDelta,
+                                   qMax(int(m_model.trackList().size()) - 1, 0));
+        int newStart = clip.start + m_positionDelta;
+        producer.set_in_and_out(clip.frame_in, clip.frame_out);
+        if (newStart + producer.get_playtime() >= 0) {
             if (m_ripple)
-                m_model.insertClip(toTrack, clip, start, m_rippleAllTracks);
+                m_model.insertClip(newTrackIndex, producer, newStart, m_rippleAllTracks);
             else
-                m_model.overwrite(toTrack, clip, start, false);
-            if (clip.property_exists(kGroupProperty)) {
-                int clipIndex = m_model.clipIndex(toTrack, start);
-                auto clipInfo = m_model.getClipInfo(toTrack, clipIndex);
-                if (clipInfo && clipInfo->cut) {
-                    clipInfo->cut->set(kShotcutGroupProperty, clip.get(kGroupProperty));
+                m_model.overwrite(newTrackIndex, producer, newStart, false);
+            int newClipIndex = m_model.clipIndex(newTrackIndex, newStart);
+            auto clipInfo = m_model.getClipInfo(newTrackIndex, newClipIndex);
+            if (clipInfo && clipInfo->cut) {
+                if (clip.group >= 0) {
+                    clipInfo->cut->set(kShotcutGroupProperty, clip.group);
+                    QModelIndex modelIndex = m_model.index(newClipIndex, 0, m_model.index(newTrackIndex));
+                    emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
                 }
-                QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(toTrack));
-                emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
+                MLT.setUuid(*clipInfo->cut, clip.uuid);
             }
         }
+        producers.pop_front();
     }
 
     if (!m_redo) {
         m_redo = true;
         m_undoHelper.recordAfterState();
     }
-
     redoMarkers();
 }
 
@@ -686,7 +677,7 @@ void MoveClipCommand::undo()
 {
     LOG_DEBUG() << "track delta" << m_trackDelta;
     m_undoHelper.undoChanges();
-    if (m_rippleMarkers && m_markerOldStart >= 0) {
+    if (m_rippleMarkers && m_markers.size() >= 0) {
         m_markersModel.doReplace(m_markers);
     }
 }
@@ -694,48 +685,48 @@ void MoveClipCommand::undo()
 bool MoveClipCommand::mergeWith(const QUndoCommand *other)
 {
     const MoveClipCommand *that = static_cast<const MoveClipCommand *>(other);
-    LOG_DEBUG() << "this clipIndex" << m_clipIndex << "that clipIndex" << that->m_clipIndex;
-    if (that->id() != id() || that->m_trackIndex != m_trackIndex
-            || that->m_selection.size() != m_selection.size()
+    LOG_DEBUG() << "this delta" << m_positionDelta << "that delta" << that->m_positionDelta;
+    if (that->id() != id() || that->m_clips.size() != m_clips.size()
             || that->m_ripple != m_ripple || that->m_rippleAllTracks != m_rippleAllTracks
             || that->m_rippleMarkers != m_rippleMarkers)
         return false;
-    int i = 0;
-    auto thatValues = that->m_selection.values();
-    for (auto &clip : m_selection) {
-        auto x = thatValues.at(i++);
-        if (clip.get_producer() != x.get_producer())
+    auto thisIterator = m_clips.begin();
+    auto thatIterator = that->m_clips.begin();
+    while (thisIterator != m_clips.end() && thatIterator != that->m_clips.end()) {
+        if (thisIterator.value().uuid != thatIterator.value().uuid)
             return false;
+        thisIterator++;
+        thatIterator++;
     }
     return true;
 }
 
 void MoveClipCommand::redoMarkers()
 {
-    if (m_rippleMarkers && m_markerOldStart >= 0) {
-        m_markers = m_markersModel.getMarkers();
+    if (m_rippleMarkers) {
+        if (m_markers.size() == 0) {
+            m_markers = m_markersModel.getMarkers();
+        }
         QList<Markers::Marker> newMarkers = m_markers;
         bool markersModified = false;
-        int startDelta = m_markerNewStart - m_markerOldStart;
         for (int i = 0; i < newMarkers.size(); i++) {
             Markers::Marker &marker = newMarkers[i];
-            if (marker.start < m_markerOldStart &&
-                    marker.start > m_markerNewStart) {
+            if (marker.start < m_earliestStart &&
+                    marker.start > (m_earliestStart + m_positionDelta)) {
                 // This marker is in the overwritten segment. Remove it
                 newMarkers.removeAt(i);
                 i--;
                 markersModified = true;
-            } else if (marker.start >= m_markerOldStart) {
+            } else if (marker.start >= m_earliestStart) {
                 // This marker is after the start of the moved segment. Shift it with the move
-                marker.start += startDelta;
-                marker.end += startDelta;
+                marker.start += m_positionDelta;
+                marker.end += m_positionDelta;
                 markersModified = true;
             }
         }
         if (markersModified) {
             m_markersModel.doReplace(newMarkers);
         } else {
-            m_markerOldStart = -1;
             m_markers.clear();
         }
     }

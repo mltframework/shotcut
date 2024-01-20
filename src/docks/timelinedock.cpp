@@ -1980,9 +1980,9 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                     MAIN.undoStack()->beginMacro(tr("Change clip properties"));
                     MAIN.undoStack()->push(
                         new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
-                    auto moveCommand = new Timeline::MoveClipCommand(m_model, m_markersModel, 0, true);
-                    nextInfo->cut->set(kPlaylistStartProperty, position);
-                    moveCommand->addClip(nextInfo->start, *nextInfo->cut);
+                    auto moveCommand = new Timeline::MoveClipCommand(m_model, m_markersModel, 0,
+                                                                     position - nextInfo->start, true);
+                    moveCommand->addClip(trackIndex, clipIndex + 1);
                     MAIN.undoStack()->push(moveCommand);
                     MAIN.undoStack()->push(
                         new Timeline::OverwriteCommand(m_model, trackIndex, info->start, MLT.XML(after), false));
@@ -2893,17 +2893,10 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
                 }
             }
         }
-        auto command = new Timeline::MoveClipCommand(m_model, m_markersModel, toTrack - fromTrack, ripple);
-
-        // Copy selected
+        auto command = new Timeline::MoveClipCommand(m_model, m_markersModel, toTrack - fromTrack, position,
+                                                     ripple);
         for (const auto &clip : selection()) {
-            auto info = m_model.getClipInfo(clip.y(), clip.x());
-            if (info && info->cut) {
-                LOG_DEBUG() << "moving clip at" << clip << "start" << info->start << "+" << position << "=" <<
-                            info->start + position;
-                info->cut->set(kPlaylistStartProperty, info->start + position);
-                command->addClip(info->start, *info->cut);
-            }
+            command->addClip(clip.y(), clip.x());
         }
         setSelection();
         if (fromTrack == toTrack)
