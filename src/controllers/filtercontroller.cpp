@@ -251,7 +251,7 @@ void FilterController::setCurrentFilter(int attachedIndex)
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
     if (filter && !m_attachedModel.isSourceClip()) {
-        filter->startUndoTracking(this);
+        filter->startUndoTracking(this, m_currentFilterIndex);
     }
 }
 

@@ -298,6 +298,20 @@ void AttachedFiltersModel::doSetDisabled(Mlt::Producer &producer, int row, bool 
     delete filter;
 }
 
+Mlt::Service AttachedFiltersModel::doGetService(Mlt::Producer &producer, int row)
+{
+    Mlt::Service service;
+    int mltIndex = mltFilterIndex(&producer, row);
+    Mlt::Filter *filter = producer.filter(mltIndex);
+    if (filter && filter->is_valid()) {
+        service = Mlt::Service(filter->get_service());
+    } else {
+        LOG_ERROR() << "Invalid filter index" << row;
+    }
+    delete filter;
+    return service;
+}
+
 QHash<int, QByteArray> AttachedFiltersModel::roleNames() const
 {
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();

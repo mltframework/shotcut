@@ -877,12 +877,12 @@ bool QmlFilter::allowAnimateOut() const
     return false;
 }
 
-void QmlFilter::startUndoTracking(FilterController *controller)
+void QmlFilter::startUndoTracking(FilterController *controller, int row)
 {
     if (m_changeCommand) {
         delete m_changeCommand;
     }
-    m_changeCommand = new Filter::ChangeParameterCommand(m_metadata->name(), m_service, controller);
+    m_changeCommand = new Filter::ChangeParameterCommand(m_metadata->name(), controller, row);
 }
 
 void QmlFilter::crop(const QRectF &rect)

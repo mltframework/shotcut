@@ -124,8 +124,8 @@ private:
 class ChangeParameterCommand : public QUndoCommand
 {
 public:
-    ChangeParameterCommand(const QString &filterName, Mlt::Service &service,
-                           FilterController *controller, QUndoCommand *parent = 0);
+    ChangeParameterCommand(const QString &name, FilterController *controller, int row,
+                           QUndoCommand *parent = 0);
     void update(const QString &propertyName);
     void redo();
     void undo();
@@ -136,8 +136,8 @@ protected:
     }
     bool mergeWith(const QUndoCommand *other);
 private:
-    QString m_filterName;
-    Mlt::Service m_service;
+    int m_row;
+    QUuid m_producerUuid;
     Mlt::Properties m_before;
     Mlt::Properties m_after;
     FilterController *m_filterController;

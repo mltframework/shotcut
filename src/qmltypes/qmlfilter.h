@@ -149,7 +149,7 @@ public:
     bool allowAnimateIn() const;
     bool allowAnimateOut() const;
     Q_INVOKABLE void crop(const QRectF &rect);
-    void startUndoTracking(FilterController *controller);
+    void startUndoTracking(FilterController *controller, int row);
 
 public slots:
     void preset(const QString &name);

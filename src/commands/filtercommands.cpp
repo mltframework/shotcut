@@ -337,56 +337,70 @@ bool DisableCommand::mergeWith(const QUndoCommand *other)
     */
 }
 
-ChangeParameterCommand::ChangeParameterCommand(const QString &filterName, Mlt::Service &service,
-                                               FilterController *controller, QUndoCommand *parent)
+ChangeParameterCommand::ChangeParameterCommand(const QString &name, FilterController *controller,
+                                               int row, QUndoCommand *parent)
     : QUndoCommand(parent)
-    , m_filterName(filterName)
-    , m_service(service)
     , m_filterController(controller)
+    , m_row(row)
+    , m_producerUuid(MLT.ensureHasUuid(*controller->attachedModel()->producer()))
     , m_firstRedo(true)
 {
-    setText(QObject::tr("Change %1 filter").arg(m_filterName));
-    m_before.inherit(m_service);
+    setText(QObject::tr("Change %1 filter").arg(name));
+    Mlt::Service *service = controller->attachedModel()->getService(m_row);
+    m_before.inherit(*service);
     if (!m_before.property_exists(kShotcutAnimInProperty)) {
         m_before.set(kShotcutAnimInProperty, 0);
     }
     if (!m_before.property_exists(kShotcutAnimOutProperty)) {
         m_before.set(kShotcutAnimOutProperty, 0);
     }
-    m_after.inherit(m_service);
+    m_after.inherit(*service);
 }
 
 void ChangeParameterCommand::update(const QString &propertyName)
 {
-    m_after.pass_property(m_service, propertyName.toUtf8().constData());
+    Mlt::Service *service = m_filterController->attachedModel()->getService(m_row);
+    m_after.pass_property(*service, propertyName.toUtf8().constData());
 }
 
 void ChangeParameterCommand::redo()
 {
-    LOG_DEBUG() << m_filterName;
+    LOG_DEBUG() << text();
     if (m_firstRedo) {
         m_firstRedo = false;
     } else {
-        m_service.inherit(m_after);
-        if (m_filterController) {
-            m_filterController->onUndoOrRedo(m_service);
+        Mlt::Producer producer = findProducer(m_producerUuid);
+        Q_ASSERT(producer.is_valid());
+        if (producer.is_valid() && m_filterController) {
+            Mlt::Service service = m_filterController->attachedModel()->doGetService(producer, m_row);
+            service.inherit(m_after);
+            m_filterController->onUndoOrRedo(service);
         }
     }
 }
 
 void ChangeParameterCommand::undo()
 {
-    LOG_DEBUG() << m_filterName;
-    m_service.inherit(m_before);
-    m_filterController->onUndoOrRedo(m_service);
+    LOG_DEBUG() << text();
+    Mlt::Producer producer = findProducer(m_producerUuid);
+    Q_ASSERT(producer.is_valid());
+    if (producer.is_valid() && m_filterController) {
+        Mlt::Service service = m_filterController->attachedModel()->doGetService(producer, m_row);
+        service.debug("current");
+        m_before.debug("before");
+
+        service.inherit(m_before);
+        service.debug("after");
+        m_filterController->onUndoOrRedo(service);
+    }
 }
 
 bool ChangeParameterCommand::mergeWith(const QUndoCommand *other)
 {
     ChangeParameterCommand *that = const_cast<ChangeParameterCommand *>
                                    (static_cast<const ChangeParameterCommand *>(other));
-    LOG_DEBUG() << "this filter" << m_filterName << "that filter" << that->m_filterName;
-    if (that->id() != id() || that->m_service.get_service() != m_service.get_service())
+    LOG_DEBUG() << "this filter" << m_row << "that filter" << that->m_row;
+    if (that->id() != id() || that->m_row != m_row || that->m_producerUuid != m_producerUuid)
         return false;
     m_after = that->m_after;
     return true;

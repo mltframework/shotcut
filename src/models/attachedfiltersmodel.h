@@ -57,6 +57,7 @@ public:
     void doRemoveService(Mlt::Producer &producer, int row);
     void doMoveService(Mlt::Producer &producer, int fromRow, int toRow);
     void doSetDisabled(Mlt::Producer &producer, int row, bool disable);
+    Mlt::Service doGetService(Mlt::Producer &producer, int row);
 
     // QAbstractListModel Implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
