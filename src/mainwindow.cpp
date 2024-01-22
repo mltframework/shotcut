@@ -4828,8 +4828,8 @@ void MainWindow::on_actionPreview720_triggered(bool checked)
 QUuid MainWindow::timelineClipUuid(int trackIndex, int clipIndex)
 {
     auto info = m_timelineDock->model()->getClipInfo(trackIndex, clipIndex);
-    if (info && info->cut && info->cut->is_valid())
-        return MLT.ensureHasUuid(*info->cut);
+    if (info && info->producer && info->producer->is_valid())
+        return MLT.ensureHasUuid(*info->producer);
     return QUuid();
 }
 

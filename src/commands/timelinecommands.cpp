@@ -581,7 +581,7 @@ void MoveClipCommand::addClip(int trackIndex, int clipIndex)
         if (info->cut->property_exists(kShotcutGroupProperty)) {
             saveInfo.group = info->cut->get_int(kShotcutGroupProperty);
         }
-        saveInfo.uuid = MLT.ensureHasUuid(*info->cut);
+        saveInfo.uuid = MLT.ensureHasUuid(*info->producer);
         m_clips.insert(saveInfo.start, saveInfo);
     }
 }
@@ -660,7 +660,7 @@ void MoveClipCommand::redo()
                     QModelIndex modelIndex = m_model.index(newClipIndex, 0, m_model.index(newTrackIndex));
                     emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
                 }
-                MLT.setUuid(*clipInfo->cut, clip.uuid);
+                MLT.setUuid(*clipInfo->producer, clip.uuid);
             }
         }
         producers.pop_front();

@@ -2661,7 +2661,7 @@ std::unique_ptr<Mlt::ClipInfo> MultitrackModel::findClipByUuid(const QUuid &uuid
             for (clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
                 Mlt::ClipInfo *info;
                 if ((info = playlist.clip_info(clipIndex))) {
-                    if (MLT.uuid(*info->cut) == uuid)
+                    if (MLT.uuid(*info->producer) == uuid)
                         return std::unique_ptr<Mlt::ClipInfo>(info);
                     else
                         delete info;

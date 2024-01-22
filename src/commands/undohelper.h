@@ -41,7 +41,7 @@ public:
     void setHints(OptimizationHints hints);
 
 private:
-    void debugPrintState();
+    void debugPrintState(const QString &title);
     void restoreAffectedTracks();
     void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
 
