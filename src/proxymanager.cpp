@@ -194,10 +194,10 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
             args << "-codec:v" << "h264_vaapi";
             args << "-qp" << "30";
 #if (defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM))
-        } else if (hwCodecs.contains("hevc_videotoolbox")) {
+        } else if (!fullRange && hwCodecs.contains("hevc_videotoolbox")) {
             args << "-codec:v" << "hevc_videotoolbox";
             args << "-q:v" << "45";
-        } else if (hwCodecs.contains("h264_videotoolbox")) {
+        } else if (!fullRange && hwCodecs.contains("h264_videotoolbox")) {
             args << "-codec:v" << "h264_videotoolbox";
             args << "-q:v" << "45";
 #else
