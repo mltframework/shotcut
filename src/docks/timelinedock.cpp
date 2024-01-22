@@ -3583,7 +3583,7 @@ void TimelineDock::replaceClipsWithHash(const QString &hash, Mlt::Producer &prod
         int trackIndex = -1;
         int clipIndex = -1;
         // lookup the current track and clip index by UUID
-        auto info = m_model.findClipByUuid(QUuid::fromString(clip.get(kUuidProperty)), trackIndex,
+        auto info = m_model.findClipByUuid(QUuid::fromString(clip.parent().get(kUuidProperty)), trackIndex,
                                            clipIndex);
 
         if (info && info->producer->is_valid() && trackIndex >= 0 && clipIndex >= 0
