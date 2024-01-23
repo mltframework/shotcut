@@ -134,6 +134,8 @@ void AbstractJob::start(const QString &program, const QStringList &arguments)
 #endif
     QProcess::start(prog, args);
     AbstractJob::start();
+    m_actionPause->setEnabled(true);
+    m_actionResume->setEnabled(false);
 }
 
 void AbstractJob::stop()
@@ -142,6 +144,8 @@ void AbstractJob::stop()
     terminate();
     QTimer::singleShot(2000, this, SLOT(kill()));
     m_killed = true;
+    m_actionPause->setEnabled(false);
+    m_actionResume->setEnabled(false);
 }
 
 void AbstractJob::pause()
