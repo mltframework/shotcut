@@ -1631,8 +1631,11 @@ const QVector<QUuid> TimelineDock::selectionUuids()
     QVector<QUuid> result;
     for (const auto &clip : selection()) {
         auto info = m_model.getClipInfo(clip.y(), clip.x());
-        if (info && info->cut && info->cut->is_valid())
+        if (info && info->cut && info->cut->is_blank()) {
             result << MLT.ensureHasUuid(*info->cut);
+        } else if (info && info->producer && info->producer->is_valid()) {
+            result << MLT.ensureHasUuid(*info->producer);
+        }
     }
     return result;
 }
