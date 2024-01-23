@@ -105,7 +105,7 @@
         </property>
         <property name="icon">
          <iconset theme="show-menu" resource="../../icons/resources.qrc">
-          <normaloff>:/icons/light/32x32/format-justify-fill.png</normaloff>:/icons/light/32x32/show-menu.png</iconset>
+          <normaloff>:/icons/light/32x32/show-menu.png</normaloff>:/icons/light/32x32/show-menu.png</iconset>
         </property>
        </widget>
       </item>
@@ -117,7 +117,7 @@ the list. This does not stop a currently running job. Right-
 -click a job to open a menu to stop a currently running job.</string>
         </property>
         <property name="text">
-         <string>Pause</string>
+         <string>Pause Queue</string>
         </property>
         <property name="checkable">
          <bool>true</bool>

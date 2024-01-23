@@ -5,12 +5,12 @@
     <name>AbstractJob</name>
     <message>
         <location filename="../src/jobs/abstractjob.cpp" line="47"/>
-        <source>Pause</source>
+        <source>Pause This Job</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/jobs/abstractjob.cpp" line="49"/>
-        <source>Resume</source>
+        <source>Resume This Job</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -255,7 +255,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="458"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="472"/>
         <source>This file has B-frames, which is not supported by %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2845,11 +2845,6 @@ the list. This does not stop a currently running job. Right-
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/jobsdock.ui" line="120"/>
-        <source>Pause</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/docks/jobsdock.ui" line="130"/>
         <source>Remove all of the completed and failed jobs from the list</source>
         <translation type="unfinished"></translation>
@@ -2862,6 +2857,11 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/jobsdock.ui" line="104"/>
         <source>Jobs Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/jobsdock.ui" line="120"/>
+        <source>Pause Queue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5595,7 +5595,7 @@ Do you want to continue to open this MLT XML file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="2542"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="2548"/>
         <source>Error: Shotcut could not find the %1 plugin on your system.
 
 Please install the %2 plugins.</source>
@@ -6394,28 +6394,28 @@ Try again with a different folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1246"/>
+        <location filename="../src/player.cpp" line="1248"/>
         <source>Proxy and preview scaling are ON at %1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1249"/>
+        <location filename="../src/player.cpp" line="1251"/>
         <source>Proxy is ON at %1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1252"/>
+        <location filename="../src/player.cpp" line="1254"/>
         <source>Preview scaling is ON at %1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1360"/>
+        <location filename="../src/player.cpp" line="1362"/>
         <source>Unmute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1331"/>
-        <location filename="../src/player.cpp" line="1367"/>
+        <location filename="../src/player.cpp" line="1333"/>
+        <location filename="../src/player.cpp" line="1369"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6999,7 +6999,7 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/commands/timelinecommands.cpp" line="419"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="390"/>
         <source>Ungroup %n clips</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -7007,37 +7007,37 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="478"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="421"/>
         <source>Change track name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="501"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="444"/>
         <source>Merge adjacent clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="525"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="468"/>
         <source>Toggle track mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="546"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="489"/>
         <source>Toggle track hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="569"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="512"/>
         <source>Change track compositing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="592"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="535"/>
         <source>Lock track</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/commands/timelinecommands.cpp" line="640"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="595"/>
         <source>Move %n timeline clips</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -7045,125 +7045,125 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="642"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="597"/>
         <source>Move timeline clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="812"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="748"/>
         <source>Trim clip in point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="912"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="848"/>
         <source>Trim clip out point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1010"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="946"/>
         <source>Split clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1012"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="948"/>
         <source>Split clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1045"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="981"/>
         <source>Adjust fade in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1080"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1016"/>
         <source>Adjust fade out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1122"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="1292"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="1459"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1058"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1228"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1395"/>
         <source>Add transition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1204"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1140"/>
         <source>Trim transition in point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1247"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1183"/>
         <source>Trim transition out point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1344"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="1401"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1280"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1337"/>
         <source>Remove transition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1501"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1437"/>
         <source>Add video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1503"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1439"/>
         <source>Add audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1542"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1478"/>
         <source>Insert audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1544"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1480"/>
         <source>Insert video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1578"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1514"/>
         <source>Remove audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1580"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1516"/>
         <source>Remove video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1646"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1582"/>
         <source>Move track down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1648"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1584"/>
         <source>Move track up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1670"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1606"/>
         <source>Change track blend mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1711"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1647"/>
         <source>Change clip properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1770"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1706"/>
         <source>Detach Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1898"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1836"/>
         <source>Replace timeline clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1927"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1865"/>
         <source>Align clips to reference track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7261,18 +7261,18 @@ Do you still want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2744"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2734"/>
         <source>Drop Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2750"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2762"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2740"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2752"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2776"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2766"/>
         <source>Not adding non-seekable file: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -8627,39 +8627,39 @@ If the duration is 0, no transition will be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1503"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1490"/>
         <source>This track is locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1508"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1495"/>
         <source>You cannot add a non-seekable source.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1883"/>
-        <location filename="../src/docks/timelinedock.cpp" line="1916"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1873"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1906"/>
         <source>Track %1 was not moved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1888"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1878"/>
         <source>Can not move audio track above video track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1904"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1894"/>
         <source>Can not move video track below audio track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1993"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1983"/>
         <source>Change clip properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1262"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2036"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1255"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2026"/>
         <source>Align To Reference Track</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8844,293 +8844,293 @@ If the duration is 0, no transition will be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="655"/>
+        <location filename="../src/docks/timelinedock.cpp" line="650"/>
         <source>Nudge Forward is not available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="674"/>
+        <location filename="../src/docks/timelinedock.cpp" line="669"/>
         <source>Nudge Backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="686"/>
+        <location filename="../src/docks/timelinedock.cpp" line="679"/>
         <source>Nudge Backward is not available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="705"/>
+        <location filename="../src/docks/timelinedock.cpp" line="698"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="717"/>
+        <location filename="../src/docks/timelinedock.cpp" line="710"/>
         <source>Ripple Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="734"/>
+        <location filename="../src/docks/timelinedock.cpp" line="727"/>
         <source>Lift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="752"/>
+        <location filename="../src/docks/timelinedock.cpp" line="745"/>
         <source>Overwrite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="765"/>
+        <location filename="../src/docks/timelinedock.cpp" line="758"/>
         <source>Split At Playhead</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="821"/>
+        <location filename="../src/docks/timelinedock.cpp" line="814"/>
         <source>Split All Tracks At Playhead</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="851"/>
+        <location filename="../src/docks/timelinedock.cpp" line="844"/>
         <source>Replace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="869"/>
+        <location filename="../src/docks/timelinedock.cpp" line="862"/>
         <source>Create/Edit Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="882"/>
+        <location filename="../src/docks/timelinedock.cpp" line="875"/>
         <source>Previous Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="895"/>
+        <location filename="../src/docks/timelinedock.cpp" line="888"/>
         <source>Next Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="908"/>
+        <location filename="../src/docks/timelinedock.cpp" line="901"/>
         <source>Delete Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="918"/>
+        <location filename="../src/docks/timelinedock.cpp" line="911"/>
         <source>Cycle Marker Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="934"/>
+        <location filename="../src/docks/timelinedock.cpp" line="927"/>
         <source>Create Marker Around Selected Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="944"/>
+        <location filename="../src/docks/timelinedock.cpp" line="937"/>
         <source>Rectangle Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="955"/>
+        <location filename="../src/docks/timelinedock.cpp" line="948"/>
         <source>Automatically Add Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="966"/>
+        <location filename="../src/docks/timelinedock.cpp" line="959"/>
         <source>Snap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="981"/>
+        <location filename="../src/docks/timelinedock.cpp" line="974"/>
         <source>Scrub While Dragging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="995"/>
+        <location filename="../src/docks/timelinedock.cpp" line="988"/>
         <source>Ripple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1010"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1003"/>
         <source>Ripple All Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1025"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1018"/>
         <source>Ripple Markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1040"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1033"/>
         <source>Toggle Ripple And All Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1048"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1041"/>
         <source>Toggle Ripple, All Tracks, And Markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1057"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1050"/>
         <source>Show Audio Waveforms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1070"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1063"/>
         <source>Use Higher Performance Waveforms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1085"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1078"/>
         <source>Show Video Thumbnails</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1096"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1089"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1108"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1101"/>
         <source>Page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1121"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1114"/>
         <source>Smooth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1134"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1127"/>
         <source>Center the Playhead</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1148"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1141"/>
         <source>Scroll to Playhead on Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1160"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1153"/>
         <source>Zoom Timeline Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1171"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1164"/>
         <source>Zoom Timeline In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1182"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1175"/>
         <source>Zoom Timeline To Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1210"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1203"/>
         <source>Properties</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1219"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1212"/>
         <source>Rejoin With Next Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1235"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1228"/>
         <source>Detach Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1282"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1275"/>
         <source>Update Thumbnails</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1306"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1299"/>
         <source>Rebuild Audio Waveform</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1330"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1323"/>
         <source>Ripple Trim Clip In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1337"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1330"/>
         <source>Ripple Trim Clip Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1344"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1337"/>
         <source>Group/Ungroup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2105"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2095"/>
         <source>Append multiple to timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2211"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2201"/>
         <source>Cut %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2213"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2203"/>
         <source>Remove %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2236"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2226"/>
         <source>Lift %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2564"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2554"/>
         <source>There is nothing in the Source player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2579"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2569"/>
         <source>You cannot replace a transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2609"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2599"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2630"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2620"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2650"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2640"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2791"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2781"/>
         <source>Dropped Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3125"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3108"/>
         <source>Insert multiple into timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3237"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3220"/>
         <source>Overwrite multiple onto timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="804"/>
-        <location filename="../src/docks/timelinedock.cpp" line="835"/>
+        <location filename="../src/docks/timelinedock.cpp" line="797"/>
+        <location filename="../src/docks/timelinedock.cpp" line="828"/>
         <source>You cannot split a transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="3601"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3584"/>
         <source>Replace %n timeline clips</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -9138,39 +9138,39 @@ If the duration is 0, no transition will be created.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3652"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3635"/>
         <source>voiceover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3653"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3636"/>
         <source>Opus (*.opus);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1193"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3654"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3752"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1186"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3637"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3735"/>
         <source>Record Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3665"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3648"/>
         <source>Record Audio: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3729"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3712"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3731"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3714"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3758"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3741"/>
         <source>Saving audio recording...</source>
         <translation type="unfinished"></translation>
     </message>

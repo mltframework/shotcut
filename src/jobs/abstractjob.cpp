@@ -44,9 +44,9 @@ AbstractJob::AbstractJob(const QString &name, QThread::Priority priority)
     connect(this, SIGNAL(started()), this, SLOT(onStarted()));
     connect(this, SIGNAL(progressUpdated(QStandardItem *, int)), SLOT(onProgressUpdated(QStandardItem *,
                                                                                         int)));
-    m_actionPause = new QAction(tr("Pause"), this);
+    m_actionPause = new QAction(tr("Pause This Job"), this);
     m_standardActions << m_actionPause;
-    m_actionResume = new QAction(tr("Resume"), this);
+    m_actionResume = new QAction(tr("Resume This Job"), this);
     m_actionResume->setEnabled(false);
     m_standardActions << m_actionResume;
 
