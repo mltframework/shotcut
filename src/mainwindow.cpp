@@ -173,6 +173,13 @@ MainWindow::MainWindow()
     // Create the UI.
     ui->setupUi(this);
     setDockNestingEnabled(true);
+    setStyleSheet(QStringLiteral("QMainWindow::separator {"
+                                 "  width: 10px;"
+                                 "}"
+                                 "QMainWindow::separator:hover {"
+                                 "  background-color: rgba(23, 92, 118, 20%);"
+                                 "}"));
+
     ui->statusBar->hide();
 
     connectUISignals();
