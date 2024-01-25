@@ -143,7 +143,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
 
     QVBoxLayout *vboxLayout = new QVBoxLayout();
     vboxLayout->setSpacing(0);
-    vboxLayout->setContentsMargins(0, 0, 0, 0);
+    vboxLayout->setContentsMargins(1, 1, 1, 1);
 
     DockToolBar *toolbar = new DockToolBar(tr("Keyframes Controls"));
     QToolButton *menuButton = new QToolButton();

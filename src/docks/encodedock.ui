@@ -23,16 +23,16 @@
      <number>0</number>
     </property>
     <property name="leftMargin">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="topMargin">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="rightMargin">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
+     <number>1</number>
     </property>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -799,7 +799,7 @@ with parallel processing enabled.</string>
                        <string>YADIF - temporal + spatial (better)</string>
                       </property>
                      </item>
-                    <item>
+                     <item>
                       <property name="text">
                        <string>BWDIF (best)</string>
                       </property>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2023 Meltytech, LLC
+ * Copyright (c) 2019-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,7 +106,7 @@ VideoZoomScopeWidget::VideoZoomScopeWidget()
     QWidget::setFont(font);
 
     QHBoxLayout *hlayout = new QHBoxLayout(this);
-    hlayout->setContentsMargins(0, 0, 0, 0);
+    hlayout->setContentsMargins(1, 1, 1, 1);
     hlayout->setSpacing(0);
     QGridLayout *glayout = new QGridLayout();
     glayout->setContentsMargins(5, 5, 2, 0);

@@ -160,7 +160,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     QVBoxLayout *vboxLayout = new QVBoxLayout();
     vboxLayout->setSpacing(0);
-    vboxLayout->setContentsMargins(0, 0, 0, 0);
+    vboxLayout->setContentsMargins(1, 1, 1, 1);
 
     DockToolBar *toolbar = new DockToolBar(tr("Timeline Controls"));
     QToolButton *menuButton = new QToolButton();

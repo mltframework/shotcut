@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include <QQmlContext>
 #include <QAction>
 #include <QIcon>
+#include <QVBoxLayout>
 #include <Logger.h>
 
 #include "actions.h"
@@ -58,7 +59,13 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
 #ifndef Q_OS_MAC
     m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
 #endif
-    setWidget(&m_qview);
+    auto vboxLayout = new QVBoxLayout;
+    vboxLayout->setSpacing(0);
+    vboxLayout->setContentsMargins(1, 1, 1, 1);
+    vboxLayout->addWidget(&m_qview);
+    auto dockContentsWidget = new QWidget;
+    dockContentsWidget->setLayout(vboxLayout);
+    QDockWidget::setWidget(dockContentsWidget);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));

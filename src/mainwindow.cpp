@@ -690,6 +690,17 @@ void MainWindow::setupAndConnectDocks()
     tabifyDockWidget(m_keyframesDock, m_timelineDock);
     m_recentDock->raise();
     resetDockCorners();
+
+    for (auto dock : findChildren<QDockWidget *>()) {
+        connect(qApp, &QApplication::focusChanged, dock, [ = ](QWidget * from, QWidget * to) {
+            while (to && to != dock)
+                to = to->parentWidget();
+            if (to == dock)
+                dock->setStyleSheet(QStringLiteral("QDockWidget > QWidget {border: 1px solid rgb(23, 92, 118)}"));
+            else
+                dock->setStyleSheet(QStringLiteral("QDockWidget > QWidget {border: 1px solid rgba(0, 0, 0, 0)}"));
+        });
+    }
 }
 
 void MainWindow::setupMenuFile()
