@@ -101,7 +101,7 @@ public:
     QModelIndex makeIndex(int trackIndex, int clipIndex) const;
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
-    Q_INVOKABLE void audioLevelsReady(const QModelIndex &index);
+    Q_INVOKABLE void audioLevelsReady(const QPersistentModelIndex &index);
     bool createIfNeeded();
     void addBackgroundTrack();
     int addAudioTrack();

@@ -2456,7 +2456,7 @@ void MultitrackModel::consolidateBlanksAllTracks()
     }
 }
 
-void MultitrackModel::audioLevelsReady(const QModelIndex &index)
+void MultitrackModel::audioLevelsReady(const QPersistentModelIndex &index)
 {
     QVector<int> roles;
     roles << AudioLevelsRole;
@@ -3360,6 +3360,7 @@ int MultitrackModel::getDuration()
 void MultitrackModel::load()
 {
     if (m_tractor) {
+        AudioLevelsTask::closeAll();
         beginResetModel();
         delete m_tractor;
         m_tractor = 0;
@@ -3404,6 +3405,7 @@ void MultitrackModel::reload(bool asynchronous)
         if (asynchronous) {
             emit reloadRequested();
         } else {
+            AudioLevelsTask::closeAll();
             beginResetModel();
             endResetModel();
             getAudioLevels();

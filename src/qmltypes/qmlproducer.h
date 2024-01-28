@@ -83,7 +83,7 @@ public:
     {
         return m_producer;
     }
-    Q_INVOKABLE void audioLevelsReady(const QModelIndex &index);
+    Q_INVOKABLE void audioLevelsReady(const QPersistentModelIndex &index);
     Q_INVOKABLE void remakeAudioLevels();
     double displayAspectRatio();
     Q_INVOKABLE QString get(QString name, int position = -1);

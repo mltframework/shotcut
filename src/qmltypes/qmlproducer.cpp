@@ -172,7 +172,7 @@ void QmlProducer::launchGlaxnimate(const QString &filename) const
     }
 }
 
-void QmlProducer::audioLevelsReady(const QModelIndex &index)
+void QmlProducer::audioLevelsReady(const QPersistentModelIndex &index)
 {
     Q_UNUSED(index)
     emit audioLevelsChanged();
