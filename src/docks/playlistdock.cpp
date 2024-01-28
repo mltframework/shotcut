@@ -1073,6 +1073,9 @@ void PlaylistDock::onPlaylistCreated()
 void PlaylistDock::onPlaylistLoaded()
 {
     onPlaylistCreated();
+    bool nonEmptyModel = m_model.rowCount() > 0;
+    Actions["playlistRemoveAllAction"]->setEnabled(nonEmptyModel);
+    Actions["playlistSelectAllAction"]->setEnabled(nonEmptyModel);
 }
 
 void PlaylistDock::onPlaylistModified()
