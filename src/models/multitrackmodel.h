@@ -129,7 +129,7 @@ public:
 
 signals:
     void created();
-    void loaded();
+    void aboutToClose();
     void closed();
     void modified();
     void seeked(int position, bool seekPlayer = true);
