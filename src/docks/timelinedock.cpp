@@ -250,22 +250,36 @@ TimelineDock::TimelineDock(QWidget *parent) :
             connect(m_quickView.rootObject(), SIGNAL(clipRightClicked()), this, SLOT(onClipRightClicked()));
         }
     });
-    connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
-    connect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip);
-    connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::selectClip);
-    connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip);
-    connect(&m_model, SIGNAL(rowsInserted(QModelIndex, int, int)), SLOT(onRowsInserted(QModelIndex, int,
-                                                                                       int)));
-    connect(&m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), SLOT(onRowsRemoved(QModelIndex, int,
-                                                                                     int)));
-    connect(&m_model, SIGNAL(rowsMoved(const QModelIndex &, int, int, const QModelIndex &, int)),
-            SLOT(onRowsMoved(const QModelIndex &, int, int, const QModelIndex &, int)));
-    connect(&m_model, SIGNAL(closed()), SLOT(onMultitrackClosed()));
-    connect(&m_model, SIGNAL(created()), SLOT(reloadTimelineMarkers()));
-    connect(&m_model, SIGNAL(loaded()), SLOT(reloadTimelineMarkers()));
-    connect(&m_model, SIGNAL(closed()), SLOT(reloadTimelineMarkers()));
-    connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks,
-            Qt::QueuedConnection);
+
+    connect(&m_model, &MultitrackModel::created, this, [&]() {
+        connect(&m_model, &MultitrackModel::modified, this, &TimelineDock::clearSelectionIfInvalid);
+        connect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip);
+        connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::selectClip);
+        connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip);
+        connect(&m_model, &MultitrackModel::rowsInserted, this, &TimelineDock::onRowsInserted);
+        connect(&m_model, &MultitrackModel::rowsRemoved, this, &TimelineDock::onRowsRemoved);
+        connect(&m_model, &MultitrackModel::rowsMoved, this, &TimelineDock::onRowsMoved);
+        connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks,
+                Qt::QueuedConnection);
+        reloadTimelineMarkers();
+    });
+
+    connect(&m_model, &MultitrackModel::aboutToClose, this, [&]() {
+        setSelection();
+        disconnect(&m_model, &MultitrackModel::modified, this, &TimelineDock::clearSelectionIfInvalid);
+        disconnect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip);
+        disconnect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::selectClip);
+        disconnect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip);
+        disconnect(&m_model, &MultitrackModel::rowsInserted, this, &TimelineDock::onRowsInserted);
+        disconnect(&m_model, &MultitrackModel::rowsRemoved, this, &TimelineDock::onRowsRemoved);
+        disconnect(&m_model, &MultitrackModel::rowsMoved, this, &TimelineDock::onRowsMoved);
+        disconnect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks);
+    });
+
+    connect(&m_model, &MultitrackModel::closed, this, [&]() {
+        onMultitrackClosed();
+        reloadTimelineMarkers();
+    });
 
     vboxLayout->addWidget(&m_quickView);
 

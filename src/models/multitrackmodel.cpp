@@ -3359,14 +3359,7 @@ int MultitrackModel::getDuration()
 
 void MultitrackModel::load()
 {
-    if (m_tractor) {
-        AudioLevelsTask::closeAll();
-        beginResetModel();
-        delete m_tractor;
-        m_tractor = 0;
-        m_trackList.clear();
-        endResetModel();
-    }
+    close();
     // In some versions of MLT, the resource property is the XML filename,
     // but the Mlt::Tractor(Service&) constructor will fail unless it detects
     // the type as tractor, and mlt_service_identify() needs the resource
@@ -3394,7 +3387,7 @@ void MultitrackModel::load()
         endInsertRows();
         getAudioLevels();
     }
-    emit loaded();
+    emit created();
     emit filteredChanged();
     emit scaleFactorChanged();
 }
@@ -3488,13 +3481,13 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer &clip
 void MultitrackModel::close()
 {
     if (!m_tractor) return;
-    if (m_trackList.count() > 0) {
-        beginRemoveRows(QModelIndex(), 0, m_trackList.count() - 1);
-        m_trackList.clear();
-        endRemoveRows();
-    }
+    emit aboutToClose();
+    AudioLevelsTask::closeAll();
+    beginResetModel();
     delete m_tractor;
-    m_tractor = 0;
+    m_tractor = nullptr;
+    m_trackList.clear();
+    endResetModel();
     emit closed();
 }
 
