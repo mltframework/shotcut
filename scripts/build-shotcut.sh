@@ -505,7 +505,7 @@ function set_globals {
   else
     CONFIGURE_DEBUG_FLAG=
     QMAKE_DEBUG_FLAG=
-    CMAKE_DEBUG_FLAG="-DCMAKE_BUILD_TYPE=Release"
+    CMAKE_DEBUG_FLAG="-DCMAKE_BUILD_TYPE=RelWithDebInfo"
   fi
 
   if [ "$ASAN_BUILD" = "1" ]; then
