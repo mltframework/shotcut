@@ -505,7 +505,7 @@ function set_globals {
   else
     CONFIGURE_DEBUG_FLAG=
     QMAKE_DEBUG_FLAG=
-    CMAKE_DEBUG_FLAG="-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+    CMAKE_DEBUG_FLAG="-DCMAKE_BUILD_TYPE=Release"
   fi
 
   if [ "$ASAN_BUILD" = "1" ]; then
@@ -778,15 +778,22 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_QT=OFF -DMOD_QT6=ON -DMOD_GLAXNIMATE_QT6=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF $CMAKE_DEBUG_FLAG"
+  CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_QT=OFF -DMOD_QT6=ON -DMOD_GLAXNIMATE_QT6=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF"
   # Remember, if adding more of these, to update the post-configure check.
   [ "$ENABLE_OPENCV" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_OPENCV=ON"
   [ "$MLT_DISABLE_SOX" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_SOX=OFF"
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[1]="${CONFIG[1]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
+    if [ "$DEBUG_BUILD" = "1" ]; then
+      CONFIG[1]="${CONFIG[1]} -DCMAKE_BUILD_TYPE=Debug"
+    else
+      CONFIG[1]="${CONFIG[1]} -DCMAKE_BUILD_TYPE=RelWithDebInfo"
+    fi
     CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include"
     LDFLAGS_[1]="${LDFLAGS_[1]} -L/opt/local/lib/libomp"
+  else
+    CONFIG[1]="${CONFIG[1]} $CMAKE_DEBUG_FLAG"
   fi
   CXXFLAGS_[1]="${CFLAGS_[1]} -std=c++11"
   LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
