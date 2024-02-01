@@ -2624,9 +2624,8 @@ void MainWindow::onProducerOpened(bool withReopen)
             m_player->switchToTab(Player::ProjectTabIndex);
         }
     } else if (MLT.isMultitrack()) {
-        m_timelineDock->blockSelection(true);
+        TimelineSelectionSilencer selectionSilencer(*m_timelineDock);
         m_timelineDock->model()->load();
-        m_timelineDock->blockSelection(false);
         if (isMultitrackValid()) {
             m_player->setIn(-1);
             m_player->setOut(-1);
@@ -2635,9 +2634,7 @@ void MainWindow::onProducerOpened(bool withReopen)
             m_player->enableTab(Player::ProjectTabIndex);
             m_player->switchToTab(Player::ProjectTabIndex);
             m_timelineDock->selectMultitrack();
-            QTimer::singleShot(0, this, [ = ]() {
-                m_timelineDock->setSelection();
-            });
+            m_timelineDock->setSelection();
         }
     }
     if (MLT.isClip()) {
@@ -3140,13 +3137,13 @@ void MainWindow::updateThumbnails()
 
 void MainWindow::on_actionUndo_triggered()
 {
-    TimelineSelectionBlocker blocker(*m_timelineDock);
+    TimelineSelectionSilencer selectionSilencer(*m_timelineDock);
     m_undoStack->undo();
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
-    TimelineSelectionBlocker blocker(*m_timelineDock);
+    TimelineSelectionSilencer selectionSilencer(*m_timelineDock);
     m_undoStack->redo();
 }
 

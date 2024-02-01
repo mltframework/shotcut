@@ -204,7 +204,6 @@ public slots:
     void detachAudio(int trackIndex, int clipIndex);
     void selectAll();
     void selectAllOnCurrentTrack();
-    bool blockSelection(bool block);
     void onProducerModified();
     void replace(int trackIndex, int clipIndex, const QString &xml = QString());
     void createOrEditMarker();
@@ -242,6 +241,7 @@ private:
     {
         return m_model.tractor() && !m_model.trackList().empty();
     }
+    void reportSelectionChange();
 
     QQuickWidget m_quickView;
     MultitrackModel m_model;
@@ -262,7 +262,8 @@ private:
     std::unique_ptr<UndoHelper> m_undoHelper;
     int m_trimDelta;
     int m_transitionDelta;
-    bool m_blockSetSelection;
+    int m_selectionSilenceCounter;
+    bool m_selectionChanged;
     bool m_isRecording {false};
     std::unique_ptr<AbstractJob> m_recordJob;
     QTimer m_recordingTimer;
@@ -289,20 +290,22 @@ private slots:
     void onTimelineRightClicked();
     void onClipRightClicked();
     void onNoMoreEmptyTracks(bool isAudio);
+
+    friend class TimelineSelectionSilencer;
 };
 
-class TimelineSelectionBlocker
+class TimelineSelectionSilencer
 {
 public:
-    TimelineSelectionBlocker(TimelineDock &timeline)
+    TimelineSelectionSilencer(TimelineDock &timeline)
         : m_timelineDock(timeline)
     {
-        m_timelineDock.blockSelection(true);
+        m_timelineDock.m_selectionSilenceCounter++;
     }
-    ~TimelineSelectionBlocker()
+    ~TimelineSelectionSilencer()
     {
-        QCoreApplication::processEvents();
-        m_timelineDock.blockSelection(false);
+        m_timelineDock.m_selectionSilenceCounter--;
+        m_timelineDock.reportSelectionChange();
     }
 
 private:

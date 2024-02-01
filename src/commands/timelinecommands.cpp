@@ -1116,8 +1116,6 @@ void AddTransitionCommand::undo()
     if (m_transitionIndex >= 0) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
                     m_position;
-        m_timeline.blockSelection(false);
-        m_timeline.setSelection();
         m_undoHelper.undoChanges();
         m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
 
@@ -1238,8 +1236,6 @@ void AddTransitionByTrimInCommand::redo()
         m_timeline.model()->addTransitionByTrimIn(m_trackIndex, m_clipIndex, m_duration);
         if (m_notify && m_clipIndex > 0)
             m_timeline.model()->notifyClipOut(m_trackIndex, m_clipIndex - 1);
-        m_timeline.blockSelection(false);
-        m_timeline.setSelection();
         m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex + 1, m_trackIndex));
     } else {
         m_redo = true;
@@ -1252,8 +1248,6 @@ void AddTransitionByTrimInCommand::undo()
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta;
         m_timeline.model()->removeTransitionByTrimIn(m_trackIndex, m_clipIndex, -m_trimDelta);
         m_notify = true;
-        m_timeline.blockSelection(false);
-        m_timeline.setSelection();
         m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
     } else LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
