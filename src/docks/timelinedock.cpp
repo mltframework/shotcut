@@ -246,12 +246,9 @@ TimelineDock::TimelineDock(QWidget *parent) :
         }
     });
     connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
-    connect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip,
-            Qt::QueuedConnection);
-    connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::selectClip,
-            Qt::QueuedConnection);
-    connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip,
-            Qt::QueuedConnection);
+    connect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip);
+    connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::selectClip);
+    connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip);
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex, int, int)), SLOT(onRowsInserted(QModelIndex, int,
                                                                                        int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), SLOT(onRowsRemoved(QModelIndex, int,
@@ -2529,7 +2526,7 @@ void TimelineDock::detachAudio(int trackIndex, int clipIndex)
         Mlt::Producer clip(MLT.profile(), "xml-string", MLT.XML(info->producer).toUtf8().constData());
         clip.set_in_and_out(info->frame_in, info->frame_out);
         MAIN.undoStack()->push(
-            new Timeline::DetachAudioCommand(m_model, trackIndex, clipIndex, info->start, MLT.XML(&clip)));
+            new Timeline::DetachAudioCommand(*this, trackIndex, clipIndex, info->start, MLT.XML(&clip)));
     }
 }
 

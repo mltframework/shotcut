@@ -1685,16 +1685,16 @@ void UpdateCommand::undo()
     m_isFirstRedo = false;
 }
 
-DetachAudioCommand::DetachAudioCommand(MultitrackModel &model, int trackIndex, int clipIndex,
+DetachAudioCommand::DetachAudioCommand(TimelineDock &timeline, int trackIndex, int clipIndex,
                                        int position, const QString &xml, QUndoCommand *parent)
     : QUndoCommand(parent)
-    , m_model(model)
-    , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
+    , m_timeline(timeline)
+    , m_trackIndex(qBound(0, trackIndex, qMax(timeline.model()->rowCount() - 1, 0)))
     , m_clipIndex(clipIndex)
     , m_position(position)
     , m_targetTrackIndex(-1)
     , m_xml(xml)
-    , m_undoHelper(m_model)
+    , m_undoHelper(*timeline.model())
     , m_trackAdded(false)
 {
     setText(QObject::tr("Detach Audio"));
@@ -1704,9 +1704,11 @@ void DetachAudioCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
                 m_position;
+    TimelineSelectionSilencer selectionSilencer(m_timeline);
     Mlt::Producer audioClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     Mlt::Producer videoClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (audioClip.is_valid() && videoClip.is_valid()) {
+        auto model = m_timeline.model();
 
         // Disable audio on the video clip.
         videoClip.set("astream", -1);
@@ -1741,9 +1743,9 @@ void DetachAudioCommand::redo()
         }
 
         // Add an audio track if needed.
-        int n = m_model.trackList().size();
+        int n = model->trackList().size();
         for (int i = 0; i < n; i++) {
-            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(m_model.trackList()[i].mlt_index));
+            QScopedPointer<Mlt::Producer> track(model->tractor()->track(model->trackList()[i].mlt_index));
             if (!track->is_valid())
                 continue;
             if (track->get(kAudioTrackProperty)) {
@@ -1760,14 +1762,14 @@ void DetachAudioCommand::redo()
         }
         if (m_targetTrackIndex == -1) {
             // No target audio track
-            m_targetTrackIndex = m_model.addAudioTrack();
+            m_targetTrackIndex = model->addAudioTrack();
             m_trackAdded = m_targetTrackIndex > -1;
         }
 
         if (m_targetTrackIndex > -1) {
             // Set the producer UUID on the new track.
-            int mlt_index = m_model.trackList().at(m_targetTrackIndex).mlt_index;
-            Mlt::Producer producer(m_model.tractor()->multitrack()->track(mlt_index));
+            int mlt_index = model->trackList().at(m_targetTrackIndex).mlt_index;
+            Mlt::Producer producer(model->tractor()->multitrack()->track(mlt_index));
             if (producer.is_valid()) {
                 if (m_uuid.isNull()) {
                     m_uuid = MLT.ensureHasUuid(producer);
@@ -1777,24 +1779,26 @@ void DetachAudioCommand::redo()
             }
             m_undoHelper.recordBeforeState();
             // Add the clip to the new audio track.
-            m_model.overwrite(m_targetTrackIndex, audioClip, m_position, false);
+            model->overwrite(m_targetTrackIndex, audioClip, m_position, false);
             // Replace the original clip with the video only clip
-            m_model.overwrite(m_trackIndex, videoClip, m_position, false);
+            model->overwrite(m_trackIndex, videoClip, m_position, false);
             // Put the clips in a group
-            int groupNumber = getUniqueGroupNumber(m_model);
-            int audioClipIndex = m_model.clipIndex(m_targetTrackIndex, m_position);
-            auto audioClipInfo = m_model.getClipInfo(m_targetTrackIndex, audioClipIndex);
+            int groupNumber = getUniqueGroupNumber(*model);
+            int audioClipIndex = model->clipIndex(m_targetTrackIndex, m_position);
+            auto audioClipInfo = model->getClipInfo(m_targetTrackIndex, audioClipIndex);
             if (audioClipInfo && audioClipInfo->cut) {
                 audioClipInfo->cut->set(kShotcutGroupProperty, groupNumber);
             }
-            auto videoClipInfo = m_model.getClipInfo(m_trackIndex, m_clipIndex);
+            auto videoClipInfo = model->getClipInfo(m_trackIndex, m_clipIndex);
             if (videoClipInfo && videoClipInfo->cut) {
                 videoClipInfo->cut->set(kShotcutGroupProperty, groupNumber);
             }
             m_undoHelper.recordAfterState();
-            QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
-            emit m_model.dataChanged(modelIndex, modelIndex,
-                                     QVector<int>() << MultitrackModel::AudioIndexRole << MultitrackModel::GroupRole);
+            QModelIndex modelIndex = model->makeIndex(m_trackIndex, m_clipIndex);
+            emit model->dataChanged(modelIndex, modelIndex,
+                                    QVector<int>() << MultitrackModel::AudioIndexRole << MultitrackModel::GroupRole);
+            m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex,
+                                                              m_trackIndex) << QPoint(audioClipIndex, m_targetTrackIndex));
         }
     }
 }
@@ -1803,18 +1807,21 @@ void DetachAudioCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
                 m_position;
+    TimelineSelectionSilencer selectionSilencer(m_timeline);
+    auto model = m_timeline.model();
     m_undoHelper.undoChanges();
     if (m_trackAdded) {
         // Remove the new audio track.
-        m_model.removeTrack(m_targetTrackIndex);
+        model->removeTrack(m_targetTrackIndex);
         m_targetTrackIndex = -1;
     }
     Mlt::Producer originalClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_model.overwrite(m_trackIndex, originalClip, m_position, true);
-    QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
-    emit m_model.dataChanged(modelIndex, modelIndex,
-                             QVector<int>() << MultitrackModel::AudioIndexRole << MultitrackModel::AudioLevelsRole <<
-                             MultitrackModel::GroupRole);
+    model->overwrite(m_trackIndex, originalClip, m_position, true);
+    QModelIndex modelIndex = model->makeIndex(m_trackIndex, m_clipIndex);
+    emit model->dataChanged(modelIndex, modelIndex,
+                            QVector<int>() << MultitrackModel::AudioIndexRole << MultitrackModel::AudioLevelsRole <<
+                            MultitrackModel::GroupRole);
+    m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
 }
 
 ReplaceCommand::ReplaceCommand(MultitrackModel &model, int trackIndex, int clipIndex,

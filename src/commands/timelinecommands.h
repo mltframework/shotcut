@@ -692,12 +692,12 @@ private:
 class DetachAudioCommand: public QUndoCommand
 {
 public:
-    DetachAudioCommand(MultitrackModel &model, int trackIndex, int clipIndex, int position,
+    DetachAudioCommand(TimelineDock &timeline, int trackIndex, int clipIndex, int position,
                        const QString &xml, QUndoCommand *parent = 0);
     void redo();
     void undo();
 private:
-    MultitrackModel &m_model;
+    TimelineDock &m_timeline;
     int m_trackIndex;
     int m_clipIndex;
     int m_position;
