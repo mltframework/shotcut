@@ -16,6 +16,9 @@
  */
 
 #include "metalvideowidget.h"
+
+#include <Logger.h>
+
 #include <Metal/Metal.h>
 
 
@@ -38,7 +41,7 @@ public:
 
     ~MetalVideoRenderer()
     {
-        qDebug("cleanup");
+        LOG_DEBUG() << "cleanup";
 
         for (int i = 0; i < 3; i++) {
             [m_texture[i] release];
@@ -53,7 +56,7 @@ public:
 
     void initialize(QQuickWindow *window)
     {
-        qDebug("init");
+        LOG_DEBUG() << "init";
         m_window = window;
 
         QSGRendererInterface *rif = m_window->rendererInterface();

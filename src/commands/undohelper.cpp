@@ -310,7 +310,7 @@ void UndoHelper::setHints(OptimizationHints hints)
 
 void UndoHelper::debugPrintState(const QString &title)
 {
-    qDebug() << "timeline state:" << title << "{";
+    LOG_DEBUG() << "timeline state:" << title << "{";
     for (int i = 0; i < m_model.trackList().count(); ++i) {
         int mltIndex = m_model.trackList()[i].mlt_index;
         QString trackStr = QString("   track %1 (mlt-idx %2):").arg(i).arg(mltIndex);
@@ -329,7 +329,7 @@ void UndoHelper::debugPrintState(const QString &title)
         }
         LOG_DEBUG() << qPrintable(trackStr);
     }
-    qDebug("}");
+    LOG_DEBUG() << "}";
 }
 
 void UndoHelper::restoreAffectedTracks()

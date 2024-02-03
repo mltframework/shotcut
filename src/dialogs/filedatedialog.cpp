@@ -16,6 +16,8 @@
  */
 
 #include "filedatedialog.h"
+
+#include <Logger.h>
 #include "shotcut_mlt_properties.h"
 #include "MltProducer.h"
 #include "proxymanager.h"
@@ -82,7 +84,7 @@ void FileDateDialog::accept()
 
 void FileDateDialog::dateSelected(int index)
 {
-    qDebug() << index;
+    LOG_DEBUG() << index;
     if ( index > -1 ) {
         m_dtEdit->setDateTime(m_dtCombo->itemData(index).toDateTime());
     }
