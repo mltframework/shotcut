@@ -547,11 +547,12 @@ void LockTrackCommand::undo()
     m_model.setTrackLock(m_trackIndex, m_oldValue);
 }
 
-MoveClipCommand::MoveClipCommand(MultitrackModel &model, MarkersModel &markersModel, int trackDelta,
-                                 int positionDelta, bool ripple, QUndoCommand *parent)
+MoveClipCommand::MoveClipCommand(TimelineDock &timeline, int trackDelta, int positionDelta,
+                                 bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
-    , m_model(model)
-    , m_markersModel(markersModel)
+    , m_timeline(timeline)
+    , m_model(*timeline.model())
+    , m_markersModel(*timeline.markersModel())
     , m_trackDelta(trackDelta)
     , m_positionDelta(positionDelta)
     , m_ripple(ripple)
@@ -596,33 +597,34 @@ void MoveClipCommand::redo()
         else
             setText(QObject::tr("Move timeline clip"));
     }
+    QList<QPoint> selection;
     if (m_ripple && !m_trackDelta && m_clips.size() == 1) {
-        auto info = m_model.getClipInfo(m_clips.first().trackIndex, m_clips.first().clipIndex);
-        if (info && info->cut) {
-            int newStart = info->start + m_positionDelta;
-            auto mlt_index = m_model.trackList().at(m_clips.first().trackIndex).mlt_index;
-            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
-            if (track) {
-                Mlt::Playlist playlist(*track);
-                auto targetIndex = playlist.get_clip_index_at(newStart);
-                if (targetIndex >= m_clips.first().clipIndex || // pushing clips on same track
-                        // pulling clips on same track
-                        (playlist.is_blank_at(newStart) && targetIndex == m_clips.first().clipIndex - 1)) {
-                    // Use old behavior to push or pull clips on the same track.
-                    m_model.moveClip(m_clips.first().trackIndex, m_clips.first().trackIndex, m_clips.first().clipIndex,
-                                     m_clips.first().start + m_positionDelta, m_ripple, m_rippleAllTracks);
-                    if (!m_redo) {
-                        m_redo = true;
-                        m_undoHelper.recordAfterState();
-                    }
-                    redoMarkers();
-                    return;
+        auto mlt_index = m_model.trackList().at(m_clips.first().trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            int newStart = m_clips.first().start + m_positionDelta;
+            auto targetIndex = playlist.get_clip_index_at(newStart);
+            if (targetIndex >= m_clips.first().clipIndex || // pushing clips on same track
+                    // pulling clips on same track
+                    (playlist.is_blank_at(newStart) && targetIndex == m_clips.first().clipIndex - 1)) {
+                // Use old behavior to push or pull clips on the same track.
+                m_model.moveClip(m_clips.first().trackIndex, m_clips.first().trackIndex, m_clips.first().clipIndex,
+                                 newStart, m_ripple, m_rippleAllTracks);
+                if (!m_redo) {
+                    m_redo = true;
+                    m_undoHelper.recordAfterState();
                 }
+                redoMarkers();
+                selection = m_timeline.uuidsToSelection(QVector<QUuid>() << m_clips.first().uuid);
+                m_timeline.setSelection(selection);
+                return;
             }
         }
     }
 
     QVector<Mlt::Producer> producers;
+    QVector<QUuid> uuids;
 
     // First, save each clip and remove it
     for (auto &clip : m_clips) {
@@ -661,6 +663,7 @@ void MoveClipCommand::redo()
                     emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
                 }
                 MLT.setUuid(*clipInfo->producer, clip.uuid);
+                uuids << clip.uuid;
             }
         }
         producers.pop_front();
@@ -671,6 +674,8 @@ void MoveClipCommand::redo()
         m_undoHelper.recordAfterState();
     }
     redoMarkers();
+    selection = m_timeline.uuidsToSelection(uuids);
+    m_timeline.setSelection(selection);
 }
 
 void MoveClipCommand::undo()
@@ -680,6 +685,12 @@ void MoveClipCommand::undo()
     if (m_rippleMarkers && m_markers.size() >= 0) {
         m_markersModel.doReplace(m_markers);
     }
+    // Select the original clips after undo.
+    QList<QPoint> selection;
+    for (auto &clip : m_clips) {
+        selection << QPoint(clip.clipIndex, clip.trackIndex);
+    }
+    m_timeline.setSelection(selection);
 }
 
 bool MoveClipCommand::mergeWith(const QUndoCommand *other)

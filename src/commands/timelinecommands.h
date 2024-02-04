@@ -257,8 +257,7 @@ private:
 class MoveClipCommand : public QUndoCommand
 {
 public:
-    MoveClipCommand(MultitrackModel &model, MarkersModel &markersModel, int trackDelta,
-                    int positionDelta, bool ripple,
+    MoveClipCommand(TimelineDock &timeline, int trackDelta, int positionDelta, bool ripple,
                     QUndoCommand *parent = 0);
     void addClip(int trackIndex, int clipIndex);
     void redo();
@@ -271,6 +270,8 @@ protected:
     bool mergeWith(const QUndoCommand *other);
 private:
     void redoMarkers();
+
+    TimelineDock &m_timeline;
     MultitrackModel &m_model;
     MarkersModel &m_markersModel;
 
@@ -292,7 +293,6 @@ private:
             , group(-1)
         {}
     };
-
 
     int m_trackDelta;
     int m_positionDelta;

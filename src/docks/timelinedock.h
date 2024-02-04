@@ -81,6 +81,7 @@ public:
     QVariantList selectionForJS() const;
     const QList<QPoint> selection() const;
     const QVector<QUuid> selectionUuids();
+    const QList<QPoint> uuidsToSelection(QVector<QUuid> uuids) const;
     void saveAndClearSelection();
     Q_INVOKABLE void restoreSelection();
     Q_INVOKABLE QVariantList getGroupForClip(int trackIndex, int clipIndex);

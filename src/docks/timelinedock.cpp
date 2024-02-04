@@ -1627,6 +1627,8 @@ void TimelineDock::setSelection(QList<QPoint> newSelection, int trackIndex, bool
         m_selection.isMultitrackSelected = isMultitrack;
         m_selectionChanged = true;
         reportSelectionChange();
+        // Save the selection in case it will be restored later due to a player tab change.
+        m_savedSelectionUuids = selectionUuids();
     }
 }
 
@@ -1659,45 +1661,45 @@ const QVector<QUuid> TimelineDock::selectionUuids()
     return result;
 }
 
+const QList<QPoint> TimelineDock::uuidsToSelection(QVector<QUuid> uuids) const
+{
+    QList<QPoint> points;
+    for (int trackIndex = 0; trackIndex < m_model.trackList().size()
+            && uuids.size() > 0; trackIndex++) {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            for (int clipIndex = 0; clipIndex < playlist.count() && uuids.size() > 0; clipIndex++) {
+                Mlt::ClipInfo *info;
+                if ((info = playlist.clip_info(clipIndex))) {
+                    for (int i = 0; i < uuids.size(); i++ ) {
+                        if (MLT.uuid(*info->producer) == uuids[i] || MLT.uuid(*info->cut) == uuids[i]) {
+                            points << QPoint(clipIndex, trackIndex);
+                            uuids.removeAt(i);
+                            break;
+                        }
+                    }
+                    delete info;
+                }
+            }
+        }
+    }
+    return points;
+}
+
 void TimelineDock::saveAndClearSelection()
 {
-    if (m_selection.selectedClips.size() == 0 && m_selection.selectedTrack == -1
-            && m_selection.isMultitrackSelected == false) {
-        // Selection is already clear
-        m_savedSelectedTrack = -1;
-        m_savedIsMultitrackSelected = false;
-        m_savedSelectionUuids.clear();
-    } else {
-        m_savedSelectedTrack = m_selection.selectedTrack;
-        m_savedIsMultitrackSelected = m_selection.isMultitrackSelected;
-        m_savedSelectionUuids = selectionUuids();
-        m_selection.selectedClips = QList<QPoint>();
-        m_selection.selectedTrack = -1;
-        m_selection.isMultitrackSelected = false;
-        m_selectionChanged = true;
-        reportSelectionChange();
-    }
+    m_savedSelectedTrack = m_selection.selectedTrack;
+    m_savedIsMultitrackSelected = m_selection.isMultitrackSelected;
+    m_savedSelectionUuids = selectionUuids();
+    setSelection();
 }
 
 void TimelineDock::restoreSelection()
 {
-    QList<QPoint> restoredSelection;
-    for (const auto &uuid : m_savedSelectionUuids) {
-        int trackIndex, clipIndex;
-        auto info = m_model.findClipByUuid(uuid, trackIndex, clipIndex);
-        if (info) {
-            restoredSelection << QPoint(clipIndex, trackIndex);
-        }
-    }
-    if (restoredSelection != m_selection.selectedClips
-            || m_selection.selectedTrack != m_savedSelectedTrack
-            || m_selection.isMultitrackSelected != m_savedIsMultitrackSelected) {
-        m_selection.selectedClips = restoredSelection;
-        m_selection.selectedTrack = m_savedSelectedTrack;
-        m_selection.isMultitrackSelected = m_savedIsMultitrackSelected;
-        m_selectionChanged = true;
-        reportSelectionChange();
-    }
+    QList<QPoint> restoredSelection = uuidsToSelection(m_savedSelectionUuids);
+    setSelection(restoredSelection, m_savedSelectedTrack, m_savedIsMultitrackSelected);
 }
 
 QVariantList TimelineDock::getGroupForClip(int trackIndex, int clipIndex)
@@ -2016,8 +2018,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                     MAIN.undoStack()->beginMacro(tr("Change clip properties"));
                     MAIN.undoStack()->push(
                         new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
-                    auto moveCommand = new Timeline::MoveClipCommand(m_model, m_markersModel, 0,
-                                                                     position - nextInfo->start, true);
+                    auto moveCommand = new Timeline::MoveClipCommand(*this, 0, position - nextInfo->start, true);
                     moveCommand->addClip(trackIndex, clipIndex + 1);
                     MAIN.undoStack()->push(moveCommand);
                     MAIN.undoStack()->push(
@@ -2923,8 +2924,7 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
                 }
             }
         }
-        auto command = new Timeline::MoveClipCommand(m_model, m_markersModel, toTrack - fromTrack, position,
-                                                     ripple);
+        auto command = new Timeline::MoveClipCommand(*this, toTrack - fromTrack, position, ripple);
         for (const auto &clip : selection()) {
             command->addClip(clip.y(), clip.x());
         }
