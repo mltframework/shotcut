@@ -2056,6 +2056,7 @@ static QStringList codecs()
     codecs << "av1_nvenc";
     codecs << "h264_amf";
     codecs << "hevc_amf";
+    codecs << "av1_amf";
     codecs << "h264_qsv";
     codecs << "hevc_qsv";
     codecs << "vp9_qsv";
@@ -2069,6 +2070,7 @@ static QStringList codecs()
     codecs << "hevc_nvenc";
     codecs << "h264_vaapi";
     codecs << "hevc_vaapi";
+    codecs << "av1_vaapi";
 #endif
     return codecs;
 }
