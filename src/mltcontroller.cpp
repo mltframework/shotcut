@@ -36,6 +36,7 @@
 #include "shotcut_mlt_properties.h"
 #include "mainwindow.h"
 #include "controllers/filtercontroller.h"
+#include "dialogs/longuitask.h"
 #include "qmltypes/qmlmetadata.h"
 #include "util.h"
 #include "proxymanager.h"
@@ -125,6 +126,8 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
     }
 
     Mlt::Producer *newProducer = nullptr;
+    LongUiTask longTask(QObject::tr("Open Project"));
+    longTask.setMinimumDuration(500);
 
     close();
 
@@ -133,12 +136,19 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
         // MLT xml producer does URL decoding; so if the URL contains % it must be encoded.
         myUrl = QUrl::toPercentEncoding(url).constData();
     }
-    if (Settings.playerGPU() && !profile().is_explicit())
+    QString openMessage = QObject::tr("Opening %1").arg(url.toUtf8().constData());
+    if (Settings.playerGPU() && !profile().is_explicit()) {
         // Prevent loading normalizing filters, which might be Movit ones that
         // may not have a proper OpenGL context when requesting a sample frame.
-        newProducer = new Mlt::Producer(profile(), "abnormal", myUrl.toUtf8().constData());
-    else
-        newProducer = new Mlt::Producer(profile(), myUrl.toUtf8().constData());
+        newProducer = longTask.runAsync<Mlt::Producer *>(openMessage, [ = ]() {
+            return new Mlt::Producer(profile(), "abnormal", myUrl.toUtf8().constData());
+        });
+    } else {
+        newProducer = longTask.runAsync<Mlt::Producer *>(openMessage, [ = ]() {
+            return new Mlt::Producer(profile(), myUrl.toUtf8().constData());
+        });
+    }
+    longTask.reportProgress(QObject::tr("Loading"), 0, 0);
     if (newProducer && newProducer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
