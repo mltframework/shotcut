@@ -926,6 +926,32 @@ Rectangle {
                 tracksRepeater.itemAt(trackIndex).updateThumbnails(clipIndex);
         }
 
+        function onCurrentTrackChanged() {
+            if (timeline.currentTrack >= 0) {
+                // Put the positions in order to find the current track position
+                var posArray = Array();
+                for (let i = 0; i < tracksRepeater.count; i++) {
+                    posArray.push(tracksRepeater.itemAt(i).y);
+                }
+                posArray.sort(function (a, b) {
+                        return a - b;
+                    });
+                let trackY = posArray[timeline.currentTrack];
+                let trackH = 0;
+                for (let i = 0; i < tracksRepeater.count; i++) {
+                    if (tracksRepeater.itemAt(i).y == trackY) {
+                        trackH = tracksRepeater.itemAt(i).height;
+                        break;
+                    }
+                }
+                if (trackY < tracksFlickable.contentY) {
+                    tracksFlickable.contentY = trackY;
+                } else if ((trackY + trackH) > tracksFlickable.contentY + tracksFlickable.height) {
+                    tracksFlickable.contentY = trackY + trackH - tracksFlickable.height;
+                }
+            }
+        }
+
         target: timeline
     }
 
