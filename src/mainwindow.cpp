@@ -2035,6 +2035,7 @@ void MainWindow::setupActions()
 #ifdef Q_OS_MAC
     fullScreenShortcuts << QKeySequence(Qt::CTRL | Qt::META | Qt::Key_F);
     fullScreenShortcuts << QKeySequence(Qt::Key_F11);
+    action->setShortcuts(fullScreenShortcuts);
 
     action = new QAction(tr("Preferences"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Comma));
@@ -2046,8 +2047,8 @@ void MainWindow::setupActions()
 #else
     fullScreenShortcuts << QKeySequence(Qt::Key_F11);
     fullScreenShortcuts << QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F);
-#endif
     action->setShortcuts(fullScreenShortcuts);
+#endif
 
     action = new QAction(tr("Rename Clip"), this);
     action->setShortcut(QKeySequence(Qt::Key_F2));
