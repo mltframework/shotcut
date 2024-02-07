@@ -416,7 +416,7 @@ void Player::setupActions()
     action->setToolTip(tr("Loop back to the beginning when the end is reached"));
     connect(action, &QAction::triggered, this, [&]() {
         Actions["playerLoopAction"]->setChecked(true);
-        setLoopRange(0, m_duration - 1);
+        setLoopRange(0, m_duration);
     });
     Actions.add("playerLoopRangeAllAction", action);
 
@@ -453,7 +453,7 @@ void Player::setupActions()
         // Set the range one second before and after the cursor
         int fps = qRound(MLT.profile().fps());
         if (m_duration <= fps * 2) {
-            setLoopRange(0, m_duration - 1);
+            setLoopRange(0, m_duration);
         } else {
             int start = position() - fps;
             int end = position() + fps;
@@ -462,8 +462,8 @@ void Player::setupActions()
                 start = 0;
             }
             if (end >= m_duration) {
-                start -= end - m_duration - 1;
-                end = m_duration - 1;
+                start -= end - m_duration;
+                end = m_duration;
             }
             setLoopRange(start, end);
         }
@@ -983,7 +983,7 @@ void Player::onFrameDisplayed(const SharedFrame &frame)
         onProducerOpened(false);
     }
     int position = frame.get_position();
-    bool loop = position >= m_loopEnd && Actions["playerLoopAction"]->isChecked();
+    bool loop = position >= (m_loopEnd - 1) && Actions["playerLoopAction"]->isChecked();
     if (position <= m_duration) {
         m_position = position;
         m_positionSpinner->blockSignals(true);
