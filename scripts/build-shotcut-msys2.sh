@@ -61,6 +61,9 @@ ENABLE_GOPRO2GPX=1
 ENABLE_OPENCV=1
 OPENCV_HEAD=0
 OPENCV_REVISION="4.7.0"
+ENABLE_LIBSPATIALAUDIO=1
+LIBSPATIALAUDIO_HEAD=1
+LIBSPATIALAUDIO_REVISION=
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -185,6 +188,9 @@ function to_key {
     ;;
     opencv_contrib)
       echo 16
+    ;;
+    libspatialaudio)
+      echo 17
     ;;
     *)
       echo UNKNOWN
@@ -380,6 +386,9 @@ function set_globals {
     if test "$ENABLE_OPENCV" = 1 ; then
         SUBDIRS="opencv opencv_contrib $SUBDIRS"
     fi
+    if test "$ENABLE_LIBSPATIALAUDIO" = 1  && test "$LIBSPATIALAUDIO_HEAD" = 1 -o "$LIBSPATIALAUDIO_REVISION" != ""; then
+        SUBDIRS="libspatialaudio $SUBDIRS"
+    fi
     SUBDIRS="$SUBDIRS mlt shotcut"
   fi
 
@@ -422,6 +431,7 @@ function set_globals {
   REPOLOCS[14]="https://github.com/ddennedy/gopro2gpx.git"
   REPOLOCS[15]="https://github.com/opencv/opencv.git"
   REPOLOCS[16]="https://github.com/opencv/opencv_contrib.git"
+  REPOLOCS[17]="https://github.com/videolabs/libspatialaudio.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -441,6 +451,7 @@ function set_globals {
   REPOTYPES[14]="git"
   REPOTYPES[15]="git"
   REPOTYPES[16]="git"
+  REPOTYPES[17]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -498,6 +509,10 @@ function set_globals {
   REVISIONS[16]=""
   if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
     REVISIONS[16]="$OPENCV_REVISION"
+  fi
+  REVISIONS[17]=""
+  if test 0 = "$LIBSPATIALAUDIO_HEAD" -a "$LIBSPATIALAUDIO_REVISION" ; then
+    REVISIONS[17]="$LIBSPATIALAUDIO_REVISION_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -677,6 +692,14 @@ function set_globals {
   LDFLAGS_[15]="$LDFLAGS"
   BUILD[15]="ninja -C build -j $MAKEJ"
   INSTALL[15]="ninja -C build install"
+
+  #####
+  # libspatialaudio
+  CONFIG[17]="cmake -G Ninja -B build -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  CFLAGS_[17]="$CFLAGS"
+  LDFLAGS_[17]="$LDFLAGS"
+  BUILD[17]="ninja -C build -j $MAKEJ"
+  INSTALL[17]="ninja -C build install"
 }
 
 function build_dav1d {

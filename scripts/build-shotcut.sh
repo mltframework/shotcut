@@ -95,6 +95,9 @@ OPENCV_REVISION="4.7.0"
 ENABLE_LIBWEBP=1
 LIBWEBP_HEAD=0
 LIBWEBP_REVISION="v1.3.2"
+ENABLE_LIBSPATIALAUDIO=1
+LIBSPATIALAUDIO_HEAD=1
+LIBSPATIALAUDIO_REVISION=
 
 PYTHON_VERSION_DEFAULT=3.8
 PYTHON_VERSION_DARWIN=3.10
@@ -198,6 +201,9 @@ function to_key {
     ;;
     movit)
       echo 5
+    ;;
+    libspatialaudio)
+      echo 6
     ;;
     shotcut)
       echo 7
@@ -496,6 +502,9 @@ function set_globals {
     if test "$ENABLE_LIBWEBP" = 1  && test "$LIBWEBP_HEAD" = 1 -o "$LIBWEBP_REVISION" != ""; then
         SUBDIRS="libwebp $SUBDIRS"
     fi
+    if test "$ENABLE_LIBSPATIALAUDIO" = 1  && test "$LIBSPATIALAUDIO_HEAD" = 1 -o "$LIBSPATIALAUDIO_REVISION" != ""; then
+        SUBDIRS="libspatialaudio $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -527,6 +536,7 @@ function set_globals {
   REPOLOCS[3]="https://github.com/mirror/x264.git"
   REPOLOCS[4]="https://chromium.googlesource.com/webm/libvpx.git"
   REPOLOCS[5]="https://github.com/ddennedy/movit.git"
+  REPOLOCS[6]="https://github.com/videolabs/libspatialaudio.git"
   REPOLOCS[7]="https://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="https://github.com/swh/ladspa.git"
   REPOLOCS[10]="https://github.com/georgmartius/vid.stab.git"
@@ -554,6 +564,7 @@ function set_globals {
   REPOTYPES[3]="git"
   REPOTYPES[4]="git"
   REPOTYPES[5]="git"
+  REPOTYPES[6]="git"
   REPOTYPES[7]="git"
   REPOTYPES[8]="git"
   REPOTYPES[9]="git"
@@ -600,6 +611,10 @@ function set_globals {
   REVISIONS[5]=""
   if test 0 = "$MOVIT_HEAD" -a "$MOVIT_REVISION" ; then
     REVISIONS[5]="$MOVIT_REVISION"
+  fi
+  REVISIONS[6]=""
+  if test 0 = "$LIBSPATIALAUDIO_HEAD" -a "$LIBSPATIALAUDIO_REVISION" ; then
+    REVISIONS[6]="$LIBSPATIALAUDIO_REVISION_REVISION"
   fi
   REVISIONS[7]=""
   if test 0 = "$SHOTCUT_HEAD" -a "$SHOTCUT_REVISION" ; then
@@ -850,6 +865,15 @@ function set_globals {
     BUILD[5]="make -j$MAKEJ RANLIB="$RANLIB" libmovit.la"
   fi
   INSTALL[5]="make install"
+
+  #####
+  # libspatialaudio
+  CONFIG[6]="cmake -G Ninja -B build -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  [ "$TARGET_OS" = "Darwin" ] && CONFIG[6]="${CONFIG[6]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
+  CFLAGS_[6]="$CFLAGS"
+  LDFLAGS_[6]="$LDFLAGS"
+  BUILD[6]="ninja -C build -j $MAKEJ"
+  INSTALL[6]="ninja -C build install"
 
   #####
   # shotcut
