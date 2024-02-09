@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -208,7 +208,7 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
         color_range = "mpeg";
     }
 
-    if (dialog.get709Convert() && !Util::trcIsCompatible(producer->get_int("meta.media.color_trc"))) {
+    if (dialog.get709Convert()) {
         QString convertFilter =
             QString("zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv422p,");
         filterString = filterString + convertFilter;
