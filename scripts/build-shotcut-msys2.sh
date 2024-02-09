@@ -699,7 +699,7 @@ function set_globals {
   CFLAGS_[17]="$CFLAGS"
   LDFLAGS_[17]="$LDFLAGS"
   BUILD[17]="ninja -C build -j $MAKEJ"
-  INSTALL[17]="ninja -C build install"
+  INSTALL[17]="install_spatialaudio"
 }
 
 function build_dav1d {
@@ -727,6 +727,12 @@ function install_vmaf {
   cmd install -d "$FINAL_INSTALL_DIR"/share/vmaf
   cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf || die "Unable to install $1"
 }
+
+function install_spatialaudio {
+  cmd ninja -C build install || die "Unable to install $1"
+  cmd sed -i "s,-I/mingw64/include,," "$FINAL_INSTALL_DIR"/lib/pkgconfig/spatialaudio.pc
+}
+
 
 ######################################################################
 # FEEDBACK FUNCTIONS
@@ -1111,17 +1117,6 @@ function sys_info {
   uname -a
   echo Information about cc at the time of compilation:
   LANG=C cc -v 2>&1
-  if which dpkg ; then
-    echo Found dpkg - running dpkg -l to grep libc6
-    dpkg -l | grep libc6
-  else
-    if which rpm ; then
-      echo Found rpm - running rpm -qa to grep libc6
-      rpm -qa | grep libc
-    else
-      echo Found neither dpkg or rpm...
-    fi
-  fi
 }
 
 
