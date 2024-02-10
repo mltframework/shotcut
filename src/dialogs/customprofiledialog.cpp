@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "util.h"
 #include <QDir>
 #include <QDesktopServices>
+#include <QRegularExpression>
 
 CustomProfileDialog::CustomProfileDialog(QWidget *parent) :
     QDialog(parent),
@@ -45,7 +46,11 @@ CustomProfileDialog::~CustomProfileDialog()
 
 QString CustomProfileDialog::profileName() const
 {
-    return ui->nameEdit->text();
+    // Replace characters that are not allowed in Windows file names
+    QString filename = ui->nameEdit->text();
+    QRegularExpression re("[" + QRegularExpression::escape( "\\/:*?\"<>|" ) + "]");
+    filename = filename.replace(re, QString( "_" ));
+    return filename;
 }
 
 void CustomProfileDialog::on_buttonBox_accepted()
@@ -87,7 +92,7 @@ void CustomProfileDialog::on_buttonBox_accepted()
         p.set("colorspace", MLT.profile().colorspace());
         p.set("frame_rate_num", MLT.profile().frame_rate_num());
         p.set("frame_rate_den", MLT.profile().frame_rate_den());
-        p.save(dir.filePath(ui->nameEdit->text()).toUtf8().constData());
+        p.save(dir.filePath(profileName()).toUtf8().constData());
     }
 }
 
