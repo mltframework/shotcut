@@ -1718,8 +1718,18 @@ void DetachAudioCommand::redo()
     TimelineSelectionSilencer selectionSilencer(m_timeline);
     Mlt::Producer audioClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     Mlt::Producer videoClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    int groupNumber = -1;
     if (audioClip.is_valid() && videoClip.is_valid()) {
         auto model = m_timeline.model();
+
+        // Save the group number if it exists
+        {
+            auto videoClipInfo = model->getClipInfo(m_trackIndex, m_clipIndex);
+            if (videoClipInfo && videoClipInfo->cut
+                    && videoClipInfo->cut->property_exists(kShotcutGroupProperty)) {
+                groupNumber = videoClipInfo->cut->get_int(kShotcutGroupProperty);
+            }
+        }
 
         // Disable audio on the video clip.
         videoClip.set("astream", -1);
@@ -1793,23 +1803,18 @@ void DetachAudioCommand::redo()
             model->overwrite(m_targetTrackIndex, audioClip, m_position, false);
             // Replace the original clip with the video only clip
             model->overwrite(m_trackIndex, videoClip, m_position, false);
-            // Put the clips in a group
-            int groupNumber = getUniqueGroupNumber(*model);
-            int audioClipIndex = model->clipIndex(m_targetTrackIndex, m_position);
-            auto audioClipInfo = model->getClipInfo(m_targetTrackIndex, audioClipIndex);
-            if (audioClipInfo && audioClipInfo->cut) {
-                audioClipInfo->cut->set(kShotcutGroupProperty, groupNumber);
-            }
-            auto videoClipInfo = model->getClipInfo(m_trackIndex, m_clipIndex);
-            if (videoClipInfo && videoClipInfo->cut) {
-                videoClipInfo->cut->set(kShotcutGroupProperty, groupNumber);
+            // Restore the video clip group
+            if (groupNumber >= 0) {
+                auto videoClipInfo = model->getClipInfo(m_trackIndex, m_clipIndex);
+                if (videoClipInfo && videoClipInfo->cut) {
+                    videoClipInfo->cut->set(kShotcutGroupProperty, groupNumber);
+                }
             }
             m_undoHelper.recordAfterState();
             QModelIndex modelIndex = model->makeIndex(m_trackIndex, m_clipIndex);
             emit model->dataChanged(modelIndex, modelIndex,
                                     QVector<int>() << MultitrackModel::AudioIndexRole << MultitrackModel::GroupRole);
-            m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex,
-                                                              m_trackIndex) << QPoint(audioClipIndex, m_targetTrackIndex));
+            m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
         }
     }
 }
