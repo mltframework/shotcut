@@ -64,10 +64,10 @@ jobs:
           echo Downloading Qt
           mkdir Qt
           cd Qt
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.4.3-x64-mingw.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.5.3-x64-mingw.txz
           echo Extracting Qt
-          tar -xJf qt-6.4.3-x64-mingw.txz
-          rm qt-6.4.3-x64-mingw.txz
+          tar -xJf qt-6.5.3-x64-mingw.txz
+          rm qt-6.5.3-x64-mingw.txz
           cd ..
           echo Downloading prebuilt SWH LADSPA plugins
           curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
