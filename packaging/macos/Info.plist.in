@@ -24,8 +24,8 @@
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.14.0</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>11.0.0</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Shotcut can show and record video</string>
 	<key>NSMicrophoneUsageDescription</key>
