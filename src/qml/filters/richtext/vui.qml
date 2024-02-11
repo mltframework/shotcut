@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2023 Meltytech, LLC
+ * Copyright (c) 2020-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -498,7 +498,7 @@ Shotcut.VuiBase {
                     }
                 }
 
-                Behavior on width  {
+                Behavior on width {
                     NumberAnimation {
                         duration: 100
                     }

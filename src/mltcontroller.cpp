@@ -136,7 +136,8 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
         // MLT xml producer does URL decoding; so if the URL contains % it must be encoded.
         myUrl = QUrl::toPercentEncoding(url).constData();
     }
-    QString openMessage = QObject::tr("Opening %1").arg(Util::baseName(urlToSave, true).toUtf8().constData());
+    QString openMessage = QObject::tr("Opening %1").arg(Util::baseName(urlToSave,
+                                                                       true).toUtf8().constData());
     if (Settings.playerGPU() && !profile().is_explicit()) {
         // Prevent loading normalizing filters, which might be Movit ones that
         // may not have a proper OpenGL context when requesting a sample frame.

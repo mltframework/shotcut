@@ -1,5 +1,5 @@
 /*7
- * Copyright (c) 2011-2023 Meltytech, LLC
+ * Copyright (c) 2011-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -532,7 +532,7 @@ RenderThread::RenderThread(thread_function_t function, void *data)
     , m_function{function}
     , m_data{data}
     , m_context{new QOpenGLContext}
-, m_surface{new QOffscreenSurface}
+    , m_surface{new QOffscreenSurface}
 {
     QSurfaceFormat format;
     format.setProfile(QSurfaceFormat::CoreProfile);

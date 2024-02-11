@@ -310,13 +310,13 @@ Rectangle {
                                         leftPadding: 10
                                     }
 
-                                    Behavior on opacity  {
+                                    Behavior on opacity {
                                         NumberAnimation {
                                         }
                                     }
                                 }
 
-                                Behavior on width  {
+                                Behavior on width {
                                     PropertyAnimation {
                                         easing.type: Easing.InOutCubic
                                     }
@@ -850,7 +850,7 @@ Rectangle {
                     }
                 }
 
-                Behavior on opacity  {
+                Behavior on opacity {
                     NumberAnimation {
                     }
                 }
