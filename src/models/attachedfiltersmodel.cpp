@@ -259,13 +259,12 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
 
 bool AttachedFiltersModel::setData(const QModelIndex &index, const QVariant &, int role)
 {
-    if (role != Qt::CheckStateRole || !m_producer || !m_producer->is_valid()
-            || index.row() >= m_producer->filter_count()) {
+    if (role != Qt::CheckStateRole || !m_producer || !m_producer->is_valid()) {
         return false;
     }
     int mltIndex = mltFilterIndex(m_producer.data(), index.row());
     Mlt::Filter *filter = m_producer->filter(mltIndex);
-    if (filter->is_valid()) {
+    if (filter && filter->is_valid()) {
         bool disabled = filter->get_int("disable");
         if (isSourceClip()) {
             doSetDisabled(*m_producer.data(), index.row(), !disabled);
