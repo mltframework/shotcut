@@ -140,6 +140,13 @@ void AbstractJob::start(const QString &program, const QStringList &arguments)
 
 void AbstractJob::stop()
 {
+    if (paused()) {
+#ifdef Q_OS_WIN
+        ::DebugActiveProcessStop(QProcess::processId());
+#else
+        ::kill(QProcess::processId(), SIGCONT);
+#endif
+    }
     closeWriteChannel();
     terminate();
     QTimer::singleShot(2000, this, SLOT(kill()));
