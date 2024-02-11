@@ -59,9 +59,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_position(-1),
     m_ignoreNextPositionChange(false),
     m_trimDelta(0),
-    m_transitionDelta(0),
-    m_selectionSilenceCounter(0),
-    m_selectionChanged(false)
+    m_transitionDelta(0)
 {
     LOG_DEBUG() << "begin";
     m_selection.selectedTrack = -1;
@@ -236,6 +234,16 @@ TimelineDock::TimelineDock(QWidget *parent) :
 #ifndef Q_OS_MAC
     m_quickView.setAttribute(Qt::WA_AcceptTouchEvents);
 #endif
+
+    m_selectionSignalTimer.setSingleShot(true);
+    m_selectionSignalTimer.setInterval(1);
+    connect(&m_selectionSignalTimer, &QTimer::timeout, this, [&]() {
+        emit selectionChanged();
+        if (!m_selection.selectedClips.isEmpty())
+            emitSelectedFromSelection();
+        else
+            emit selected(nullptr);
+    });
 
     connect(&m_quickView, &QQuickWidget::statusChanged, this, [&]() {
         if ( m_quickView.status() == QQuickWidget::Ready) {
@@ -663,7 +671,6 @@ void TimelineDock::setupActions()
                 return;
             }
             auto clipInfo = m_model.getClipInfo(trackIndex, clipIndex);
-            TimelineSelectionSilencer selectionSilencer(*this);
             moveClip(trackIndex, trackIndex, clipIndex, clipInfo->start + 1, Settings.timelineRipple());
         }
     });
@@ -692,7 +699,6 @@ void TimelineDock::setupActions()
                 return;
             }
             auto clipInfo = m_model.getClipInfo(trackIndex, clipIndex);
-            TimelineSelectionSilencer selectionSilencer(*this);
             moveClip(trackIndex, trackIndex, clipIndex, clipInfo->start - 1, Settings.timelineRipple());
         }
     });
@@ -1603,18 +1609,6 @@ void TimelineDock::setSelectionFromJS(const QVariantList &list)
     setSelection(points);
 }
 
-void TimelineDock::reportSelectionChange()
-{
-    if (m_selectionSilenceCounter == 0 && m_selectionChanged) {
-        emit selectionChanged();
-        if (!m_selection.selectedClips.isEmpty())
-            emitSelectedFromSelection();
-        else
-            emit selected(nullptr);
-        m_selectionChanged = false;
-    }
-}
-
 void TimelineDock::setSelection(QList<QPoint> newSelection, int trackIndex, bool isMultitrack)
 {
     if (newSelection != selection()
@@ -1625,10 +1619,9 @@ void TimelineDock::setSelection(QList<QPoint> newSelection, int trackIndex, bool
         m_selection.selectedClips = newSelection;
         m_selection.selectedTrack = trackIndex;
         m_selection.isMultitrackSelected = isMultitrack;
-        m_selectionChanged = true;
-        reportSelectionChange();
         // Save the selection in case it will be restored later due to a player tab change.
         m_savedSelectionUuids = selectionUuids();
+        m_selectionSignalTimer.start();
     }
 }
 
@@ -2128,7 +2121,6 @@ void TimelineDock::append(int trackIndex)
             Mlt::ClipInfo info;
             MAIN.undoStack()->beginMacro(tr("Append multiple to timeline"));
             Mlt::Controller::RefreshBlocker blocker;
-            TimelineSelectionSilencer selectionSilencer(*this);
 
             // Loop over each source track
             for (int mltTrackIndex = 0; mltTrackIndex < tractor.count(); mltTrackIndex++) {
@@ -2931,7 +2923,6 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
         setSelection();
         if (fromTrack == toTrack)
             disconnect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, nullptr);
-        TimelineSelectionSilencer selectionSilencer(*this);
         MAIN.undoStack()->push(command);
         if (fromTrack == toTrack)
             connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks,
@@ -3107,7 +3098,6 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty() || !xmlToUse.isEmpty()) {
         Mlt::Producer producer;
-        TimelineSelectionSilencer selectionSilencer(*this);
         if (xmlToUse.isEmpty() && xml.isEmpty()) {
             Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
             ProxyManager::generateIfNotExists(producer);
@@ -3219,7 +3209,6 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty() || !xmlToUse.isEmpty()) {
         Mlt::Producer producer;
-        TimelineSelectionSilencer selectionSilencer(*this);
         if (xmlToUse.isEmpty() && xml.isEmpty()) {
             Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
             ProxyManager::generateIfNotExists(producer);

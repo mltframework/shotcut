@@ -259,12 +259,11 @@ private:
     int m_savedSelectedTrack;
     bool m_savedIsMultitrackSelected;
     QVector<QUuid> m_savedSelectionUuids;
+    QTimer m_selectionSignalTimer;
     std::unique_ptr<Timeline::TrimCommand> m_trimCommand;
     std::unique_ptr<UndoHelper> m_undoHelper;
     int m_trimDelta;
     int m_transitionDelta;
-    int m_selectionSilenceCounter;
-    bool m_selectionChanged;
     bool m_isRecording {false};
     std::unique_ptr<AbstractJob> m_recordJob;
     QTimer m_recordingTimer;
@@ -291,26 +290,6 @@ private slots:
     void onTimelineRightClicked();
     void onClipRightClicked();
     void onNoMoreEmptyTracks(bool isAudio);
-
-    friend class TimelineSelectionSilencer;
-};
-
-class TimelineSelectionSilencer
-{
-public:
-    TimelineSelectionSilencer(TimelineDock &timeline)
-        : m_timelineDock(timeline)
-    {
-        m_timelineDock.m_selectionSilenceCounter++;
-    }
-    ~TimelineSelectionSilencer()
-    {
-        m_timelineDock.m_selectionSilenceCounter--;
-        m_timelineDock.reportSelectionChange();
-    }
-
-private:
-    TimelineDock &m_timelineDock;
 };
 
 #endif // TIMELINEDOCK_H

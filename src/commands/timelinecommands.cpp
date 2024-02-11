@@ -626,24 +626,44 @@ void MoveClipCommand::redo()
     QVector<Mlt::Producer> producers;
     QVector<QUuid> uuids;
 
-    // First, save each clip and remove it
+    // First, save each clip and uuid
     for (auto &clip : m_clips) {
+        uuids.append(clip.uuid);
+        auto info = m_model.getClipInfo(clip.trackIndex, clip.clipIndex);
+        if (info && info->producer && info->producer->is_valid() && info->cut) {
+            producers.append(info->producer);
+        } else {
+            LOG_ERROR() << "Unable to find clip to move" << clip.trackIndex << clip.clipIndex;
+            return;
+        }
+    }
+
+    // Next, remove each clip
+    for (auto &clip : m_clips) {
+        // Need to look up each one by UUID because indexes will change as clips are removed and
+        // some clips may be removed due to ripple.
         int trackIndex, clipIndex;
         auto info = m_model.findClipByUuid(clip.uuid, trackIndex, clipIndex);
         if (info && info->producer && info->producer->is_valid() && info->cut) {
-            producers.append(info->producer);
             if (m_ripple)
                 m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
             else
                 m_model.liftClip(trackIndex, clipIndex);
         } else {
-            LOG_ERROR() << "Unable to find clip to move" << trackIndex << clipIndex;
-            return;
+            // This can happen with ripple since a clip my be removed due to ripple
+            if (!m_ripple) {
+                LOG_ERROR() << "Unable to find clip to move" << trackIndex << clipIndex;
+                return;
+            }
         }
     }
 
-    // Then, place each clip in the new location
+    // Finally, place each clip in the new location
     for (auto &clip : m_clips) {
+        if (producers.size() == 0) {
+            LOG_ERROR() << "Missing producer in move command" << clip.trackIndex << clip.clipIndex;
+            return;
+        }
         Mlt::Producer &producer = producers.front();
         int newTrackIndex = qBound(0, clip.trackIndex + m_trackDelta,
                                    qMax(int(m_model.trackList().size()) - 1, 0));
@@ -1715,7 +1735,6 @@ void DetachAudioCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
                 m_position;
-    TimelineSelectionSilencer selectionSilencer(m_timeline);
     Mlt::Producer audioClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     Mlt::Producer videoClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     int groupNumber = -1;
@@ -1823,7 +1842,6 @@ void DetachAudioCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
                 m_position;
-    TimelineSelectionSilencer selectionSilencer(m_timeline);
     auto model = m_timeline.model();
     m_undoHelper.undoChanges();
     if (m_trackAdded) {

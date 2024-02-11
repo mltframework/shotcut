@@ -2625,7 +2625,6 @@ void MainWindow::onProducerOpened(bool withReopen)
             m_player->switchToTab(Player::ProjectTabIndex);
         }
     } else if (MLT.isMultitrack()) {
-        TimelineSelectionSilencer selectionSilencer(*m_timelineDock);
         m_timelineDock->model()->load();
         if (isMultitrackValid()) {
             m_player->setIn(-1);
@@ -3138,13 +3137,11 @@ void MainWindow::updateThumbnails()
 
 void MainWindow::on_actionUndo_triggered()
 {
-    TimelineSelectionSilencer selectionSilencer(*m_timelineDock);
     m_undoStack->undo();
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
-    TimelineSelectionSilencer selectionSilencer(*m_timelineDock);
     m_undoStack->redo();
 }
 
