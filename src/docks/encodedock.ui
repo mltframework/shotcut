@@ -1458,7 +1458,12 @@ in temporal compression</string>
                   </item>
                   <item>
                    <property name="text">
-                    <string>6 (5.1)</string>
+                    <string>4 (quad/Ambisonics)</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>6 (5.1 surround)</string>
                    </property>
                   </item>
                  </widget>

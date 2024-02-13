@@ -596,6 +596,8 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 setIfNotSet(p, "channels", 1);
             else if (ui->audioChannelsCombo->currentIndex() == AudioChannels2)
                 setIfNotSet(p, "channels", 2);
+            else if (ui->audioChannelsCombo->currentIndex() == AudioChannels4)
+                setIfNotSet(p, "channels", 4);
             else
                 setIfNotSet(p, "channels", 6);
             setIfNotSet(p, "ar", ui->sampleRateCombo->currentText().toLatin1().constData());
@@ -2019,12 +2021,20 @@ void EncodeDock::on_audioCodecCombo_currentIndexChanged(int index)
 
 void EncodeDock::setAudioChannels( int channels )
 {
-    if (channels == 1)
+    switch (channels) {
+    case 1:
         ui->audioChannelsCombo->setCurrentIndex(AudioChannels1);
-    else if (channels == 2)
+        break;
+    case 2:
         ui->audioChannelsCombo->setCurrentIndex(AudioChannels2);
-    else
+        break;
+    case 4:
+        ui->audioChannelsCombo->setCurrentIndex(AudioChannels4);
+        break;
+    case 6:
         ui->audioChannelsCombo->setCurrentIndex(AudioChannels6);
+        break;
+    }
 }
 
 void EncodeDock::on_widthSpinner_editingFinished()

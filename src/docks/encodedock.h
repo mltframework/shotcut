@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,6 +139,7 @@ private:
     enum {
         AudioChannels1 = 0,
         AudioChannels2,
+        AudioChannels4,
         AudioChannels6,
     };
     Ui::EncodeDock *ui;

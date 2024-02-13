@@ -138,6 +138,7 @@
      </property>
      <addaction name="actionChannels1"/>
      <addaction name="actionChannels2"/>
+     <addaction name="actionChannels4"/>
      <addaction name="actionChannels6"/>
     </widget>
     <widget class="QMenu" name="menuProfile">
@@ -587,12 +588,20 @@
     <string>2 (stereo)</string>
    </property>
   </action>
+  <action name="actionChannels4">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>4 (quad/Ambisonics)</string>
+   </property>
+  </action>
   <action name="actionChannels6">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>6 (5.1)</string>
+    <string>6 (5.1 surround)</string>
    </property>
   </action>
   <action name="actionOneField">

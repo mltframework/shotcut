@@ -97,6 +97,8 @@ void AudioPeakMeterScopeWidget::reconfigureMeter()
     QStringList channelLabels;
     if (m_channels == 2 )
         channelLabels << tr("L") << tr("R");
+    if (m_channels == 4 )
+        channelLabels << tr("L") << tr("R") << tr("Ls") << tr("Rs");
     else if (m_channels == 6 )
         channelLabels << tr("L") << tr("R") << tr("C") << tr("LF") << tr("Ls") << tr("Rs");
     m_audioMeter->setChannelLabels(channelLabels);

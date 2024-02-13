@@ -811,6 +811,7 @@ void MainWindow::setupSettingsMenu()
     QActionGroup *group = new QActionGroup(this);
     group->addAction(ui->actionChannels1);
     group->addAction(ui->actionChannels2);
+    group->addAction(ui->actionChannels4);
     group->addAction(ui->actionChannels6);
     group = new QActionGroup(this);
     group->addAction(ui->actionOneField);
@@ -1496,6 +1497,8 @@ void MainWindow::setAudioChannels(int channels)
         ui->actionChannels1->setChecked(true);
     else if (channels == 2)
         ui->actionChannels2->setChecked(true);
+    else if (channels == 4)
+        ui->actionChannels4->setChecked(true);
     else if (channels == 6)
         ui->actionChannels6->setChecked(true);
     emit audioChannelsChanged();
@@ -2168,6 +2171,8 @@ void MainWindow::configureVideoWidget()
         setAudioChannels(1);
     else if (ui->actionChannels2->isChecked())
         setAudioChannels(2);
+    else if (ui->actionChannels4->isChecked())
+        setAudioChannels(4);
     else
         setAudioChannels(6);
     if (ui->actionOneField->isChecked())
@@ -3514,6 +3519,11 @@ void MainWindow::on_actionChannels1_triggered(bool checked)
 void MainWindow::on_actionChannels2_triggered(bool checked)
 {
     changeAudioChannels(checked, 2);
+}
+
+void MainWindow::on_actionChannels4_triggered(bool checked)
+{
+    changeAudioChannels(checked, 4);
 }
 
 void MainWindow::on_actionChannels6_triggered(bool checked)
