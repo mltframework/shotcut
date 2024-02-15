@@ -179,7 +179,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    onClicked: {
+                    onClicked: mouse => {
                         timeline.selectMultitrack();
                         if (mouse.button == Qt.RightButton)
                             root.timelineRightClicked();
