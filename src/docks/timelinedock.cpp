@@ -239,10 +239,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_selectionSignalTimer.setInterval(1);
     connect(&m_selectionSignalTimer, &QTimer::timeout, this, [&]() {
         emit selectionChanged();
-        if (!m_selection.selectedClips.isEmpty())
-            emitSelectedFromSelection();
-        else
-            emit selected(nullptr);
+        emitSelectedFromSelection();
     });
 
     connect(&m_quickView, &QQuickWidget::statusChanged, this, [&]() {
@@ -2273,21 +2270,12 @@ void TimelineDock::selectTrackHead(int trackIndex)
 {
     if (trackIndex >= 0) {
         setSelection(QList<QPoint>(), trackIndex);
-        int i = m_model.trackList().at(trackIndex).mlt_index;
-        Mlt::Producer *producer = m_model.tractor()->track(i);
-        if (producer && producer->is_valid()) {
-            producer->set(kTrackIndexProperty, trackIndex);
-            emit selected(producer);
-        }
-        delete producer;
     }
 }
 
 void TimelineDock::selectMultitrack()
 {
     setSelection(QList<QPoint>(), -1, true);
-    emit multitrackSelected();
-    emit selected(m_model.tractor());
 }
 
 
@@ -2383,6 +2371,23 @@ void TimelineDock::emitSelectedFromSelection()
 
     if (selection().size() > 1) {
         emit selected(nullptr);
+        return;
+    }
+
+    if (selection().isEmpty() && m_selection.selectedTrack > -1) {
+        int i = m_model.trackList().at(m_selection.selectedTrack).mlt_index;
+        Mlt::Producer *producer = m_model.tractor()->track(i);
+        if (producer && producer->is_valid()) {
+            producer->set(kTrackIndexProperty, m_selection.selectedTrack);
+            emit selected(producer);
+        }
+        delete producer;
+        return;
+    }
+
+    if (selection().isEmpty() && m_selection.isMultitrackSelected) {
+        emit multitrackSelected();
+        emit selected(m_model.tractor());
         return;
     }
 
