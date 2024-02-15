@@ -1,6 +1,7 @@
 /*****************************************************************************
  * 
  * Copyright 2016 Varol Okan. All rights reserved.
+ * Copyright (c) 2024 Meltytech, LLC
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,17 +27,18 @@
 #include <iostream>
 #include <sstream>
 #include <iterator>
+#include <cmath>
 
 #include "constants.h"
 #include "sa3d.h"
 
-SA3DBox::SA3DBox ( Box * )
+SA3DBox::SA3DBox ()
   : Box ( )
 {
   memcpy ( m_name, constants::TAG_SA3D, 4 );
   m_iHeaderSize    = 8;
   m_iPosition      = 0;
-  m_iContentSize   = -1;
+  m_iContentSize   = 0;
   m_iVersion       = 0;
   m_iAmbisonicType = 0;
   m_iAmbisonicOrder= 0;
@@ -98,17 +100,18 @@ Box *SA3DBox::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
   return pNewBox;
 }
 
-Box *SA3DBox::create ( int32_t iNumChannels, AudioMetadata &amData )
+Box *SA3DBox::create (int32_t iNumChannels)
 {
-  (void) amData; // unused
   // audio_metadata: dictionary ('ambisonic_type': string, 'ambisonic_order': int),
 
   SA3DBox *pNewBox = new SA3DBox ( );
   pNewBox->m_iHeaderSize   = 8;
   memcpy ( pNewBox->m_name, constants::TAG_SA3D, 4 );
+  pNewBox->m_iAmbisonicOrder = ::sqrt(iNumChannels) - 1;
+
   pNewBox->m_iVersion       = 0; // # uint8
   pNewBox->m_iContentSize += 1; // # uint8
-//  pNewBox->m_iAmbisonicType= pNewBox->m_AmbisonicTypes[amData["ambisonic_type"]]; 
+//  pNewBox->m_iAmbisonicType= pNewBox->m_AmbisonicTypes[amData["ambisonic_type"]];
   pNewBox->m_iContentSize += 1; // # uint8
 //  pNewBox->m_iAmbisonicOrder = amData["ambisonic_order"];
   pNewBox->m_iContentSize += 4; // # uint32
@@ -119,11 +122,15 @@ Box *SA3DBox::create ( int32_t iNumChannels, AudioMetadata &amData )
   pNewBox->m_iNumChannels = iNumChannels;
   pNewBox->m_iContentSize += 4; // # uint32
 
-  std::vector<int> map; // = amData["channel_map"];
-  std::vector<int>::iterator it = map.begin ( );
-  while ( it != map.end ( ) )  {
-    pNewBox->m_ChannelMap.push_back ( *it++ );
-    pNewBox->m_iContentSize += 4;
+  // std::vector<int> map; // = amData["channel_map"];
+  // std::vector<int>::iterator it = map.begin ( );
+  // while ( it != map.end ( ) )  {
+  //   pNewBox->m_ChannelMap.push_back ( *it++ );
+  //   pNewBox->m_iContentSize += 4;
+  // }
+  for (uint32_t i = 0; i < iNumChannels; i++) {
+    pNewBox->m_ChannelMap.push_back(i);
+    pNewBox->m_iContentSize += 4; // # uint32
   }
   return pNewBox;
 }
@@ -132,16 +139,15 @@ void SA3DBox::save (std::fstream &fsIn, std::fstream &fsOut , int32_t)
 {
   (void) fsIn; // unused
   //char tmp, name[4];
-  uint64_t iSize = m_iContentSize;
  
   if ( m_iHeaderSize == 16 )  {
     writeUint32 ( fsOut, 1 );
     fsOut.write ( m_name,  4 );
-    writeUint64 ( fsOut, iSize );
+    writeUint64 ( fsOut, size() );
     //fsOut.write ( name,  4 ); I think this is a bug in the original code here.
   }
   else if ( m_iHeaderSize == 8 )  {
-    writeUint32 ( fsOut, m_iContentSize );
+    writeUint32 ( fsOut, size() );
     fsOut.write ( m_name, 4 );
   }
 

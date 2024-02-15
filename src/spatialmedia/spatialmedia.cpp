@@ -1,7 +1,7 @@
 /*****************************************************************************
  *
  * Copyright 2016 Varol Okan. All rights reserved.
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2024 Meltytech, LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 
 #include "spatialmedia.h"
 #include "mpeg4_container.h"
+#include "sa3d.h"
 
 #include <stdint.h>
 #include <fstream>
@@ -77,6 +78,132 @@ static Box *spherical_uuid ( std::string &strMetadata )
   return p;
 }
 
+static int get_descriptor_length(std::fstream &inFile)
+{
+    auto result = 0;
+    uint8_t size_byte;
+
+    for (int i = 0; i < 4; i++) {
+        inFile.read((char*) &size_byte, 1);
+        result = (result << 7) | (size_byte & 0x7f);
+        if (size_byte != 0x80) break;
+    }
+    return result;
+}
+
+static int get_aac_num_channels(Box *mp4aBox, std::fstream &inFile)
+{
+    auto result = -1;
+    auto size = sizeof(mp4aBox->m_name);
+    auto pos = inFile.tellg();
+
+    for (auto box : static_cast<Container*>(mp4aBox)->m_listContents) {
+        if (!memcmp(constants::TAG_WAVE, box->m_name, size)) {
+            // Handle .mov with AAC audio: stsd -> mp4a -> wave -> esds
+            return get_aac_num_channels(box, inFile);
+        } else if (!memcmp(constants::TAG_ESDS, box->m_name, size)) {
+            // Read the AAC AudioSpecificConfig
+            char data[2];
+            inFile.seekg(box->content_start() + 4);
+            // Verify the read descriptor is an elementary stream descriptor
+            inFile.read(data, 1);
+            if (data[0] != 3) break;
+            // Verify the read descriptor is a decoder config. descriptor
+            auto length = get_descriptor_length(inFile);
+            inFile.seekg(3, std::ios_base::cur);
+            inFile.read(data, 1);
+            if (data[0] != 4) break;
+            //  Verify the read descriptor is a decoder specific info descriptor
+            length = get_descriptor_length(inFile);
+            inFile.seekg(13, std::ios_base::cur); // offset to the decoder specific config descriptor
+            inFile.read(data, 1);
+            if (data[0] != 5) break;
+            auto audio_specific_descriptor_size = get_descriptor_length(inFile);
+            if (audio_specific_descriptor_size < 2) break;
+            inFile.read(data, 2);
+            auto object_type = (data[0] >> 3) & 0x1f;
+            if (object_type != 2) break;
+            auto sampling_frequency_index = ((data[0] & 0x07) << 1 | (data[1] >> 7) & 0x01);
+            // TODO: If the sample rate is 96kHz an additional 24 bit offset
+            // value here specifies the actual sample rate.
+            if (sampling_frequency_index == 0) break;
+            result = (data[1] >> 3) & 0x0f;
+        }
+    }
+    inFile.seekg(pos);
+    return result;
+}
+
+static bool sound_samples_contains(const char *name)
+{
+    auto nameSize = sizeof(Box::m_name);
+    auto size = sizeof(constants::SOUND_SAMPLE_DESCRIPTIONS) / nameSize;
+    for (int i = 0; i < size; i++) {
+        if (!memcmp(name, constants::SOUND_SAMPLE_DESCRIPTIONS[i], nameSize))
+            return true;
+    }
+    return false;
+}
+
+static int get_sample_description_num_channels(Box *ssdBox, std::fstream &inFile)
+{
+    auto result = -1;
+    auto size = sizeof(ssdBox->m_name);
+    auto pos = inFile.tellg();
+    char data[4];
+
+    // Read the AAC AudioSpecificConfig
+    inFile.seekg(ssdBox->content_start() + 8);
+    inFile.read(data, 2);
+    auto version = (data[0] << 8) | data[1];
+    inFile.seekg(2 + 4, std::ios_base::cur); // revision_level and vendor
+    switch (version) {
+    case 0:
+    case 1:
+        inFile.read(data, 2);
+        result = (data[0] << 8) | data[1];
+        break;
+    case 2:
+        inFile.seekg(24, std::ios_base::cur);
+        inFile.read(data, 4);
+        result = 0;
+        for (int i = 0; i < 4; i++)
+            result = (result << 8) | data[i];
+        break;
+    }
+    inFile.seekg(pos);
+    return result;
+}
+
+static void mpeg4_add_spatial_audio(Box *mdiaBox, std::fstream &inFile)
+{
+    auto size = sizeof(mdiaBox->m_name);
+    for (auto box : static_cast<Container*>(mdiaBox)->m_listContents) {
+        if (!memcmp(constants::TAG_MINF, box->m_name, size)) {
+            for (auto box : static_cast<Container*>(box)->m_listContents) {
+                if (!memcmp(constants::TAG_STBL, box->m_name, size)) {
+                    for (auto box : static_cast<Container*>(box)->m_listContents) {
+                        if (!memcmp(constants::TAG_STSD, box->m_name, size)) {
+                            for (auto box : static_cast<Container*>(box)->m_listContents) {
+                                auto channels = 0;
+                                if (!memcmp(constants::TAG_MP4A, box->m_name, size)) {
+                                    channels = get_aac_num_channels(box, inFile);
+                                } else if (sound_samples_contains(box->m_name)) {
+                                    channels = get_sample_description_num_channels(box, inFile);
+                                }
+                                if (4 == channels) {
+                                    static_cast<Container*>(box)->add(SA3DBox::create(channels));
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 static bool mpeg4_add_spherical ( Mpeg4Container *pMPEG4, std::fstream &inFile, std::string &strMetadata )
 {
   // Adds a spherical uuid box to an mpeg4 file for all video tracks.
@@ -108,6 +235,10 @@ static bool mpeg4_add_spherical ( Mpeg4Container *pMPEG4, std::fstream &inFile, 
         std::vector<Box *>::iterator it3 = pSub->m_listContents.begin ( );
         while ( it3 != pSub->m_listContents.end ( ) )  {
           Box *pMDIA = *it3++;
+          if  ( memcmp ( pMDIA->m_name, constants::TAG_MINF, 4 ) == 0 ) {
+              mpeg4_add_spatial_audio(pSub, inFile);
+              continue;
+          }
           if  ( memcmp ( pMDIA->m_name, constants::TAG_HDLR, 4 ) != 0 )
             continue;
 

@@ -665,7 +665,8 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegConvert);
     menu.addAction(ui->actionExtractSubclip);
     menu.addAction(ui->actionSetFileDate);
-    if (Util::GetFilenameFromProducer(producer()).toLower().endsWith(".mp4")) {
+    if (Util::GetFilenameFromProducer(producer()).toLower().endsWith(".mp4")
+            || Util::GetFilenameFromProducer(producer()).toLower().endsWith(".mov")) {
         menu.addAction(ui->actionSetEquirectangular);
     }
     menu.addAction(ui->actionFFmpegVideoQuality);
