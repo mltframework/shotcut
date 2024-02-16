@@ -1668,6 +1668,7 @@ UpdateCommand::UpdateCommand(TimelineDock &timeline, int trackIndex, int clipInd
     , m_isFirstRedo(true)
     , m_undoHelper(*timeline.model())
     , m_ripple(Settings.timelineRipple())
+    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
 {
     setText(QObject::tr("Change clip properties"));
     m_undoHelper.recordBeforeState();
@@ -1677,6 +1678,7 @@ void UpdateCommand::setXmlAfter(const QString &xml)
 {
     m_xmlAfter = xml;
     m_ripple = Settings.timelineRipple();
+    m_rippleAllTracks = Settings.timelineRippleAllTracks();
 }
 
 void UpdateCommand::setPosition(int trackIndex, int clipIndex, int position)
@@ -1698,8 +1700,8 @@ void UpdateCommand::redo()
         m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xmlAfter.toUtf8().constData());
     if (m_ripple) {
-        m_timeline.model()->removeClip(m_trackIndex, m_clipIndex, false);
-        m_timeline.model()->insertClip(m_trackIndex, clip, m_position, false, false);
+        m_timeline.model()->removeClip(m_trackIndex, m_clipIndex, m_rippleAllTracks);
+        m_timeline.model()->insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false);
     } else {
         m_timeline.model()->liftClip(m_trackIndex, m_clipIndex);
         m_timeline.model()->overwrite(m_trackIndex, clip, m_position, false);

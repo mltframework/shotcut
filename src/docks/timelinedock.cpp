@@ -1995,28 +1995,6 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                     //TODO: keyframes
                 }
             }
-
-            if (speedRatio != 1.0 && Settings.timelineRipple() && Settings.timelineRippleAllTracks()
-                    && (clipIndex + 1) < playlist.count()) {
-                auto position = info->start + out - in + 1;
-                QScopedPointer<Mlt::ClipInfo> nextInfo(playlist.clip_info(clipIndex + 1));
-                if (playlist.is_blank(clipIndex + 1)) {
-                    position += nextInfo->frame_count;
-                    nextInfo.reset(playlist.clip_info(clipIndex + 2));
-                }
-                if (nextInfo && nextInfo->cut) {
-                    MAIN.undoStack()->beginMacro(tr("Change clip properties"));
-                    MAIN.undoStack()->push(
-                        new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
-                    auto moveCommand = new Timeline::MoveClipCommand(*this, 0, position - nextInfo->start, true);
-                    moveCommand->addClip(trackIndex, clipIndex + 1);
-                    MAIN.undoStack()->push(moveCommand);
-                    MAIN.undoStack()->push(
-                        new Timeline::OverwriteCommand(m_model, trackIndex, info->start, MLT.XML(after), false));
-                    MAIN.undoStack()->endMacro();
-                    return;
-                }
-            }
         }
     }
     QString xmlAfter = MLT.XML(after);
