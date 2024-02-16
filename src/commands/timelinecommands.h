@@ -687,6 +687,7 @@ private:
     bool m_isFirstRedo;
     UndoHelper m_undoHelper;
     bool m_ripple;
+    bool m_rippleAllTracks;
 };
 
 class DetachAudioCommand: public QUndoCommand
