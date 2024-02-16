@@ -1664,10 +1664,6 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         url = pwd.filePath(url);
     }
     if (url.endsWith(".mlt") || url.endsWith(".xml")) {
-        if (url != untitledFileName()) {
-            showStatusMessage(tr("Opening %1").arg(url));
-            QCoreApplication::processEvents();
-        }
         switch (checker.check(url)) {
         case QXmlStreamReader::NoError:
             if (!isCompatibleWithGpuMode(checker)) {

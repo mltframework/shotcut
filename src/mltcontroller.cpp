@@ -126,8 +126,8 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
     }
 
     Mlt::Producer *newProducer = nullptr;
-    LongUiTask longTask(QObject::tr("Open Project"));
-    longTask.setMinimumDuration(500);
+    LongUiTask longTask(QObject::tr("Opening"));
+    longTask.setMinimumDuration(1000);
 
     close();
 
@@ -149,7 +149,7 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
             return new Mlt::Producer(profile(), myUrl.toUtf8().constData());
         });
     }
-    longTask.reportProgress(QObject::tr("Loading"), 0, 0);
+    longTask.reportProgress(openMessage, 0, 0);
     if (newProducer && newProducer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
