@@ -534,6 +534,15 @@ Item {
             }
         }
 
+        Label {
+        }
+        Shotcut.Button {
+            enabled: !binauralRadioButton.checked
+            Layout.columnSpan: 3
+            text: qsTr('Paste Parameters')
+            onClicked: filter.pasteParameters(['yaw', 'pitch', 'roll'])
+        }
+
         Item {
             Layout.fillHeight: true
         }

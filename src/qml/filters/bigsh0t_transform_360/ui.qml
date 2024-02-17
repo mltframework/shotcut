@@ -399,20 +399,26 @@ Item {
             }
         }
 
-        Item {
-            Layout.fillHeight: true
-        }
-
         Label {
         }
-
-        CheckBox {
-            id: gridCheckBox
-
-            text: qsTr('Show grid')
-            checked: false
+        RowLayout {
             Layout.columnSpan: 3
-            onCheckedChanged: updateProperty_grid()
+            CheckBox {
+                id: gridCheckBox
+
+                text: qsTr('Show grid')
+                checked: false
+                onCheckedChanged: updateProperty_grid()
+            }
+            Shotcut.Button {
+                Layout.columnSpan: 3
+                text: qsTr('Copy Parameters')
+                onClicked: filter.copyParameters()
+            }
+        }
+
+        Item {
+            Layout.fillHeight: true
         }
     }
 

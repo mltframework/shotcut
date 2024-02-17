@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,8 @@
 #include <QTemporaryFile>
 #include <QFile>
 #include <QtXml>
+#include <QGuiApplication>
+#include <QClipboard>
 #include <MltProducer.h>
 
 QmlFilter::QmlFilter()
@@ -883,6 +885,36 @@ void QmlFilter::startUndoTracking(FilterController *controller, int row)
         delete m_changeCommand;
     }
     m_changeCommand = new Filter::ChangeParameterCommand(m_metadata->name(), controller, row);
+}
+
+void QmlFilter::copyParameters()
+{
+    auto name = "color";
+    Mlt::Producer dummy(MLT.profile(), name);
+    dummy.inherit(m_service);
+    dummy.set("mlt_service", name);
+    QGuiApplication::clipboard()->setText(MLT.XML(&dummy));
+}
+
+void QmlFilter::pasteParameters(const QStringList &propertyNames)
+{
+    auto xml = QGuiApplication::clipboard()->text();
+    Mlt::Producer producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+    if (!producer.is_valid()) {
+        LOG_WARNING() << "failed to parse MLT XML on clipboard" << xml;
+        return;
+    }
+    auto isChanged = false;
+    for (const auto &name : propertyNames) {
+        if (producer.property_exists(name.toUtf8().constData())) {
+            LOG_DEBUG() << name << "=" << producer.get(name.toUtf8().constData());
+            m_service.pass_property(producer, name.toUtf8().constData());
+            isChanged = true;
+            emit changed(name);
+        }
+    }
+    if (isChanged)
+        emit changed();
 }
 
 void QmlFilter::crop(const QRectF &rect)

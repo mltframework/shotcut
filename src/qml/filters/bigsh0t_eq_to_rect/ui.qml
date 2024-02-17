@@ -584,6 +584,14 @@ Item {
             }
         }
 
+        Label {
+        }
+        Shotcut.Button {
+            Layout.columnSpan: 3
+            text: qsTr('Copy Parameters')
+            onClicked: filter.copyParameters()
+        }
+
         Item {
             Layout.fillHeight: true
         }

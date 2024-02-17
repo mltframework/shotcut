@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -150,6 +150,8 @@ public:
     bool allowAnimateOut() const;
     Q_INVOKABLE void crop(const QRectF &rect);
     void startUndoTracking(FilterController *controller, int row);
+    Q_INVOKABLE void copyParameters();
+    Q_INVOKABLE void pasteParameters(const QStringList &propertyNames);
 
 public slots:
     void preset(const QString &name);
