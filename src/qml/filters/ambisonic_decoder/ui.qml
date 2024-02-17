@@ -65,6 +65,10 @@ Item {
         zoomSlider.value = filter.getDouble("zoom", position) * 100;
         zoomKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("zoom") > 0;
         blockUpdate = false;
+        if (application.audioChannels() === 2)
+            binauralRadioButton.checked = parseInt(filter.get('binaural'));
+        else
+            ambisonicRadioButton.checked = parseInt(filter.get('ambisonic'));
     }
 
     function updateProperty_yaw(position) {
@@ -286,6 +290,61 @@ Item {
         }
 
         Label {
+            id: modeLabel
+            text: qsTr('Mode')
+            Layout.alignment: Qt.AlignRight
+            visible: application.audioChannels() <= 4
+        }
+        RowLayout {
+            visible: modeLabel.visible
+
+            ButtonGroup { id: binauralGroup }
+            RadioButton {
+                id: stereoRadioButton
+                text: qsTr('Stereo')
+                checked: true
+                visible: application.audioChannels() === 2
+                onClicked: filter.set('binaural', 0)
+                ButtonGroup.group: binauralGroup
+            }
+            RadioButton {
+                id: binauralRadioButton
+                text: qsTr('Binaural')
+                visible: application.audioChannels() === 2
+                onClicked: filter.set('binaural', 1)
+                ButtonGroup.group: binauralGroup
+            }
+            ButtonGroup { id: ambisonicGroup }
+            RadioButton {
+                id: quadRadioButton
+                text: qsTr('Quad')
+                checked: true
+                visible: application.audioChannels() === 4
+                onClicked: filter.set('ambisonic', 0)
+                ButtonGroup.group: ambisonicGroup
+            }
+            RadioButton {
+                id: ambisonicRadioButton
+                text: 'Ambisonic'
+                visible: application.audioChannels() === 4
+                onClicked: filter.set('ambisonic', 1)
+                ButtonGroup.group: ambisonicGroup
+            }
+        }
+
+        Shotcut.UndoButton {
+            Layout.columnSpan: 2
+            visible: modeLabel.visible
+            onClicked: {
+                stereoRadioButton.checked = true;
+                filter.set('binaural', 0);
+                quadRadioButton.checked = true;
+                // ambisonicRadioButton.checked = false;
+                filter.set('ambisonic', 0);
+            }
+        }
+
+        Label {
             text: qsTr('Yaw')
             Layout.alignment: Qt.AlignRight
         }
@@ -293,6 +352,7 @@ Item {
         Shotcut.SliderSpinner {
             id: yawSlider
 
+            enabled: !binauralRadioButton.checked
             minimumValue: -360
             maximumValue: 360
             spinnerWidth: 120
@@ -311,6 +371,7 @@ Item {
         Shotcut.KeyframesButton {
             id: yawKeyframesButton
 
+            enabled: !binauralRadioButton.checked
             onToggled: {
                 var value = yawSlider.value;
                 if (checked) {
@@ -337,6 +398,7 @@ Item {
         Shotcut.SliderSpinner {
             id: pitchSlider
 
+            enabled: !binauralRadioButton.checked
             minimumValue: -180
             maximumValue: 180
             spinnerWidth: 120
@@ -355,6 +417,7 @@ Item {
         Shotcut.KeyframesButton {
             id: pitchKeyframesButton
 
+            enabled: !binauralRadioButton.checked
             onToggled: {
                 var value = pitchSlider.value;
                 if (checked) {
@@ -381,6 +444,7 @@ Item {
         Shotcut.SliderSpinner {
             id: rollSlider
 
+            enabled: !binauralRadioButton.checked
             minimumValue: -180
             maximumValue: 180
             spinnerWidth: 120
@@ -399,6 +463,7 @@ Item {
         Shotcut.KeyframesButton {
             id: rollKeyframesButton
 
+            enabled: !binauralRadioButton.checked
             onToggled: {
                 var value = rollSlider.value;
                 if (checked) {
@@ -425,6 +490,7 @@ Item {
         Shotcut.SliderSpinner {
             id: zoomSlider
 
+            enabled: !binauralRadioButton.checked
             minimumValue: -100
             maximumValue: 100
             spinnerWidth: 120
@@ -443,6 +509,7 @@ Item {
         Shotcut.KeyframesButton {
             id: zoomKeyframesButton
 
+            enabled: !binauralRadioButton.checked
             onToggled: {
                 var value = zoomSlider.value / 100;
                 if (checked) {

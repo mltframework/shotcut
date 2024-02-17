@@ -6,7 +6,7 @@ Metadata {
     isAudio: true
     name: qsTr("Ambisonic Decoder")
     mlt_service: "ambisonic-decoder"
-    keywords: qsTr('spatial surround', 'search keywords for the Ambisonic Decoder audio filter') + ' ambisonic decoder'
+    keywords: qsTr('spatial surround binaural', 'search keywords for the Ambisonic Decoder audio filter') + ' ambisonic decoder'
     objectName: "ambisonic-decoder"
     qml: "ui.qml"
     vui: "vui.qml"
