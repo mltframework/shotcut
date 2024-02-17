@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,10 @@
 
 #include "audiolevelstask.h"
 #include "database.h"
-#include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
+#include "mainwindow.h"
+#include "util.h"
 #include <QString>
 #include <QVariantList>
 #include <QImage>
@@ -173,11 +174,12 @@ void AudioLevelsTask::run()
         // TODO: use project channel count
         int channels = 2;
 
+        auto message = QString("%1 %2").arg(QObject::tr("generating audio waveforms for"),
+                                            Util::baseName(tempProducer()->get("resource"), true));
         if (tempProducer()->get("audio_index")) {
-            LOG_DEBUG() << "generating audio levels for" << tempProducer()->get("resource")
-                        << "audio track =" << tempProducer()->get("audio_index");
+            LOG_DEBUG() << message << " with audio_index =" << tempProducer()->get("audio_index");
         } else {
-            LOG_DEBUG() << "generating audio levels for" << tempProducer()->get("resource");
+            LOG_DEBUG() << message;
         }
 
         // for each frame
@@ -244,6 +246,9 @@ void AudioLevelsTask::run()
                 DB.putThumbnail(cacheKey(), image);
             }
         }
+        message = QString("%1 %2").arg(QObject::tr("Done"), message);
+        QMetaObject::invokeMethod(&MAIN, "showStatusMessage",  Qt::QueuedConnection,
+                                  Q_ARG(QString, message));
     } else if (!m_isCanceled && !image.isNull()) {
         // convert cached image
         int channels = 2;
