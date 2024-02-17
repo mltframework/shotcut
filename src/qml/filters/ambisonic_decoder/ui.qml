@@ -65,10 +65,12 @@ Item {
         zoomSlider.value = filter.getDouble("zoom", position) * 100;
         zoomKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("zoom") > 0;
         blockUpdate = false;
+        binauralRadioButton.checked = parseInt(filter.get('binaural'));
+        ambisonicRadioButton.checked = parseInt(filter.get('ambisonic'));
         if (application.audioChannels() === 2)
-            binauralRadioButton.checked = parseInt(filter.get('binaural'));
-        else
-            ambisonicRadioButton.checked = parseInt(filter.get('ambisonic'));
+            stereoRadioButton.checked = !binauralRadioButton.checked && !ambisonicRadioButton.checked;
+        else if (application.audioChannels() === 4)
+            quadRadioButton.checked = !binauralRadioButton.checked && !ambisonicRadioButton.checked;
     }
 
     function updateProperty_yaw(position) {
@@ -298,37 +300,41 @@ Item {
         RowLayout {
             visible: modeLabel.visible
 
-            ButtonGroup { id: binauralGroup }
             RadioButton {
                 id: stereoRadioButton
                 text: qsTr('Stereo')
-                checked: true
                 visible: application.audioChannels() === 2
-                onClicked: filter.set('binaural', 0)
-                ButtonGroup.group: binauralGroup
+                onClicked: {
+                    filter.set('ambisonic', 0);
+                    filter.set('binaural', 0);
+                }
             }
             RadioButton {
                 id: binauralRadioButton
                 text: qsTr('Binaural')
-                visible: application.audioChannels() === 2
-                onClicked: filter.set('binaural', 1)
-                ButtonGroup.group: binauralGroup
+                visible: application.audioChannels() === 2 || application.audioChannels() === 4
+                onClicked: {
+                    filter.set('ambisonic', 0);
+                    filter.set('binaural', 1);
+                }
             }
-            ButtonGroup { id: ambisonicGroup }
             RadioButton {
                 id: quadRadioButton
                 text: qsTr('Quad')
-                checked: true
                 visible: application.audioChannels() === 4
-                onClicked: filter.set('ambisonic', 0)
-                ButtonGroup.group: ambisonicGroup
+                onClicked: {
+                    filter.set('ambisonic', 0);
+                    filter.set('binaural', 0);
+                }
             }
             RadioButton {
                 id: ambisonicRadioButton
                 text: 'Ambisonic'
                 visible: application.audioChannels() === 4
-                onClicked: filter.set('ambisonic', 1)
-                ButtonGroup.group: ambisonicGroup
+                onClicked: {
+                    filter.set('ambisonic', 1);
+                    filter.set('binaural', 0);
+                }
             }
         }
 
