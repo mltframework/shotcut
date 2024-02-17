@@ -1714,7 +1714,7 @@ void UpdateCommand::undo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
                 m_position;
     m_undoHelper.undoChanges();
-    m_timeline.emitSelectedFromSelection();
+    m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
     m_isFirstRedo = false;
 }
 
