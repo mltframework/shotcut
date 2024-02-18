@@ -1965,35 +1965,65 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
         int clipIndex = selection().first().x();
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
         if (info) {
-            double oldSpeed = qstrcmp("timewarp",
-                                      info->producer->get("mlt_service")) ? 1.0 : info->producer->get_double("warp_speed");
-            double newSpeed = qstrcmp("timewarp",
-                                      after->get("mlt_service")) ? 1.0 : after->get_double("warp_speed");
-            double speedRatio = oldSpeed / newSpeed;
-
-            int length = qRound(info->length * speedRatio);
-            int in = qMin(qRound(info->frame_in * speedRatio), length - 1);
-            int out = qMin(qRound(info->frame_out * speedRatio), length - 1);
-            if (!Settings.timelineRipple() && (clipIndex + 1) < playlist.count()) {
-                // limit the out point to what fits before the next clip
-                if (playlist.is_blank(clipIndex + 1)) {
-                    out = qMin(out, in + info->frame_count - 1 + playlist.clip_length(clipIndex + 1));
-                } else {
-                    out = qMin(out, in + info->frame_count - 1);
+            QString oldServiceName = info->producer->get("mlt_service");
+            QString newServiceName = after->get("mlt_service");
+            if (oldServiceName == "timewarp" || newServiceName == "timewarp") {
+                double oldSpeed = oldServiceName != "timewarp" ? 1.0 : info->producer->get_double("warp_speed");
+                double newSpeed = newServiceName != "timewarp" ? 1.0 : after->get_double("warp_speed");
+                double speedRatio = oldSpeed / newSpeed;
+                int length = qRound(info->length * speedRatio);
+                int in = qMin(qRound(info->frame_in * speedRatio), length - 1);
+                int out = qMin(qRound(info->frame_out * speedRatio), length - 1);
+                if (!Settings.timelineRipple() && (clipIndex + 1) < playlist.count()) {
+                    // limit the out point to what fits before the next clip
+                    if (playlist.is_blank(clipIndex + 1)) {
+                        out = qMin(out, in + info->frame_count - 1 + playlist.clip_length(clipIndex + 1));
+                    } else {
+                        out = qMin(out, in + info->frame_count - 1);
+                    }
                 }
-            }
-            after->set_in_and_out(in, out);
-
-            // Adjust filters.
-            int n = after->filter_count();
-            for (int j = 0; j < n; j++) {
-                QScopedPointer<Mlt::Filter> filter(after->filter(j));
-                if (filter && filter->is_valid() && !filter->get_int("_loader")) {
-                    in = qMin(qRound(filter->get_in() * speedRatio), length - 1);
-                    out = qMin(qRound(filter->get_out() * speedRatio), length - 1);
-                    filter->set_in_and_out(in, out);
-                    //TODO: keyframes
+                after->set_in_and_out(in, out);
+                // Adjust filters.
+                int n = after->filter_count();
+                for (int j = 0; j < n; j++) {
+                    QScopedPointer<Mlt::Filter> filter(after->filter(j));
+                    if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                        in = qMin(qRound(filter->get_in() * speedRatio), length - 1);
+                        out = qMin(qRound(filter->get_out() * speedRatio), length - 1);
+                        filter->set_in_and_out(in, out);
+                        //TODO: keyframes
+                    }
                 }
+            } else if (newServiceName == "qimage" || newServiceName == "pixbuf") {
+                int oldLength = info->frame_out - info->frame_in;
+                int newLength = after->get_out() - after->get_in();
+                int lengthDelta = newLength - oldLength;
+                if (lengthDelta != 0) {
+                    int in = after->get_in();
+                    int out = after->get_out();
+                    if (!Settings.timelineRipple() && (clipIndex + 1) < playlist.count()) {
+                        // limit the out point to what fits before the next clip
+                        if (playlist.is_blank(clipIndex + 1)) {
+                            out = qMin(out, in + info->frame_count - 1 + playlist.clip_length(clipIndex + 1));
+                        } else {
+                            out = qMin(out, in + info->frame_count - 1);
+                        }
+                    }
+                    after->set_in_and_out(in, out);
+                    // Adjust filters.
+                    int n = after->filter_count();
+                    for (int j = 0; j < n; j++) {
+                        QScopedPointer<Mlt::Filter> filter(after->filter(j));
+                        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                            in = qMin(filter->get_in(), newLength - 1);
+                            out = qMin(filter->get_out() + lengthDelta, newLength - 1);
+                            filter->set_in_and_out(in, out);
+                            //TODO: keyframes
+                        }
+                    }
+                }
+            } else {
+                after->set_in_and_out(info->frame_in, info->frame_out);
             }
         }
     }

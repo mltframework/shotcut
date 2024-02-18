@@ -114,8 +114,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer *p)
         ui->repeatSpinBox->setValue(m_producer->get_int("ttl"));
     ui->sequenceCheckBox->setChecked(m_producer->get_int(kShotcutSequenceProperty));
     ui->repeatSpinBox->setEnabled(m_producer->get_int(kShotcutSequenceProperty));
-    ui->durationSpinBox->setEnabled(!p->get(kMultitrackItemProperty)
-                                    && !m_producer->get_int(kShotcutSequenceProperty));
+    ui->durationSpinBox->setEnabled(!m_producer->get_int(kShotcutSequenceProperty));
     ui->defaultDurationButton->setEnabled(ui->durationSpinBox->isEnabled());
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
 }
