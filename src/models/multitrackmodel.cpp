@@ -3359,7 +3359,16 @@ int MultitrackModel::getDuration()
 
 void MultitrackModel::load()
 {
-    close();
+    if (m_tractor) {
+        emit aboutToClose();
+        AudioLevelsTask::closeAll();
+        beginResetModel();
+        delete m_tractor;
+        m_tractor = nullptr;
+        m_trackList.clear();
+        endResetModel();
+    }
+
     // In some versions of MLT, the resource property is the XML filename,
     // but the Mlt::Tractor(Service&) constructor will fail unless it detects
     // the type as tractor, and mlt_service_identify() needs the resource
