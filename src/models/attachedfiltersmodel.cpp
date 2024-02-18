@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -500,7 +500,7 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
             Mlt::Filter *filter = filterSetProducer.filter(i);
             if (filter->is_valid() && !filter->get_int("_loader")) {
                 QmlMetadata *tmpMeta = MAIN.filterController()->metadataForService(filter);
-                insertRow = findInsertRow(meta);
+                insertRow = findInsertRow(tmpMeta);
                 if (!meta->objectName().isEmpty())
                     filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
                 filter->set_in_and_out(
