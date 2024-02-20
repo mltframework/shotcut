@@ -344,7 +344,21 @@ int VideoWidget::reconfigure(bool isMulti)
         m_consumer->set("mlt_image_format",
                         m_glslManager ? "rgba" : serviceName.startsWith("decklink") ? "yuv422p" : "yuv420p");
         m_consumer->set("channels", property("audio_channels").toInt());
-
+        switch (MLT.profile().colorspace()) {
+        case 601:
+        case 170:
+            m_consumer->set("color_trc", "smpte170m");
+            break;
+        case 240:
+            m_consumer->set("color_trc", "smpte240m");
+            break;
+        case 470:
+            m_consumer->set("color_trc", "bt470bg");
+            break;
+        default:
+            m_consumer->set("color_trc", "bt709");
+            break;
+        }
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);
             m_consumer->set("0", serviceName.toLatin1().constData());
