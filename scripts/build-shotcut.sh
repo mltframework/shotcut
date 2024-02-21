@@ -1553,6 +1553,8 @@ function configure_compile_install_subproject {
       replace_rpath opencv_plot
       replace_rpath opencv_tracking
       replace_rpath opencv_video
+    elif [ "libspatialaudio" = "$1" ]; then
+      replace_rpath spatialaudio
     elif [ "vid.stab" = "$1" ]; then
       cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
     fi
