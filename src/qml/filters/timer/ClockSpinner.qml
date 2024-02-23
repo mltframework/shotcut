@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022 Meltytech, LLC
+ * Copyright (c) 2018-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -180,7 +180,7 @@ Item {
                 var frames = filter.framesFromTime(timeStr) - 1;
                 if (frames < 0)
                     frames = 0;
-                var newTime = filter.timeFromFrames(frames, Filter.TIME_CLOCK);
+                var newTime = application.clockFromFrames(frames);
                 var seconds = clamp(timeToSeconds(newTime), minimumValue, maximumValue);
                 timeField.text = secondsToTime(seconds);
             }
@@ -191,7 +191,7 @@ Item {
 
             onTriggered: {
                 var frames = filter.framesFromTime(timeStr) + 1;
-                var newTime = filter.timeFromFrames(frames, Filter.TIME_CLOCK);
+                var newTime = application.clockFromFrames(frames);
                 var seconds = clamp(timeToSeconds(newTime), minimumValue, maximumValue);
                 timeField.text = secondsToTime(seconds);
             }

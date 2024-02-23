@@ -889,6 +889,33 @@ void MainWindow::setupSettingsMenu()
     m_previewScaleGroup->addAction(ui->actionPreview720);
 
     group = new QActionGroup(this);
+    group->addAction(ui->actionTimeFrames);
+    ui->actionTimeFrames->setData(mlt_time_frames);
+    group->addAction(ui->actionTimeClock);
+    ui->actionTimeClock->setData(mlt_time_clock);
+    group->addAction(ui->actionTimeDF);
+    ui->actionTimeDF->setData(mlt_time_smpte_df);
+    group->addAction(ui->actionTimeNDF);
+    ui->actionTimeNDF->setData(mlt_time_smpte_ndf);
+    switch (Settings.timeFormat()) {
+    case mlt_time_frames:
+        ui->actionTimeFrames->setChecked(true);
+        break;
+    case mlt_time_clock:
+        ui->actionTimeClock->setChecked(true);
+        break;
+    case mlt_time_smpte_df:
+        ui->actionTimeDF->setChecked(true);
+        break;
+    default:
+        ui->actionTimeNDF->setChecked(true);
+        break;
+    }
+    connect(group, &QActionGroup::triggered, this, [&](QAction * action) {
+        Settings.setTimeFormat(action->data().toInt());
+    });
+
+    group = new QActionGroup(this);
     group->addAction(ui->actionNearest);
     group->addAction(ui->actionBilinear);
     group->addAction(ui->actionBicubic);

@@ -147,7 +147,7 @@ Rectangle {
                 trackRoot.clipDragged(clip, mapped.x, mapped.y);
                 // Show distance moved as time in a "bubble" help.
                 var delta = Math.round(clip.x / timeScale) - model.start;
-                var s = application.timecode(Math.abs(delta));
+                var s = application.timeFromFrames(Math.abs(delta));
                 // remove leading zeroes
                 if (s.substring(0, 3) === '00:')
                     s = s.substring(3);
@@ -161,8 +161,8 @@ Rectangle {
                 if (delta != 0) {
                     if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, clip.originalClipIndex, delta, settings.timelineRipple)) {
                         // Show amount trimmed as a time in a "bubble" help.
-                        var s = application.timecode(Math.abs(clip.originalX));
-                        s = '%1%2 = %3'.arg((clip.originalX < 0) ? '-' : (clip.originalX > 0) ? '+' : '').arg(s.substring(3)).arg(application.timecode(clipDuration));
+                        var s = application.timeFromFrames(Math.abs(clip.originalX));
+                        s = '%1%2 = %3'.arg((clip.originalX < 0) ? '-' : (clip.originalX > 0) ? '+' : '').arg(s.substring(3)).arg(application.timeFromFrames(clipDuration));
                         bubbleHelp.show(s);
                     } else {
                         clip.originalX -= originalDelta;
@@ -186,8 +186,8 @@ Rectangle {
                 if (delta != 0) {
                     if (timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta, settings.timelineRipple)) {
                         // Show amount trimmed as a time in a "bubble" help.
-                        var s = application.timecode(Math.abs(clip.originalX));
-                        s = '%1%2 = %3'.arg((clip.originalX < 0) ? '+' : (clip.originalX > 0) ? '-' : '').arg(s.substring(3)).arg(application.timecode(clipDuration));
+                        var s = application.timeFromFrames(Math.abs(clip.originalX));
+                        s = '%1%2 = %3'.arg((clip.originalX < 0) ? '+' : (clip.originalX > 0) ? '-' : '').arg(s.substring(3)).arg(application.timeFromFrames(clipDuration));
                         bubbleHelp.show(s);
                     } else {
                         clip.originalX -= originalDelta;

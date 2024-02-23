@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,8 @@ public:
     static bool hasFiltersOnClipboard();
     Q_INVOKABLE static void copyFilters();
     Q_INVOKABLE static void pasteFilters();
-    Q_INVOKABLE static QString timecode(int frames);
+    Q_INVOKABLE static QString clockFromFrames(int frames);
+    Q_INVOKABLE static QString timeFromFrames(int frames);
     Q_INVOKABLE static int audioChannels();
     Q_INVOKABLE static QString getNextProjectFile(const QString &filename);
     Q_INVOKABLE static bool isProjectFolder();

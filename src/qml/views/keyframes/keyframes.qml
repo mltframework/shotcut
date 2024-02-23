@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2023 Meltytech, LLC
+ * Copyright (c) 2017-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -395,8 +395,8 @@ Rectangle {
                                             if (delta !== 0 && n >= producer.in && n <= filter.out) {
                                                 parameters.trimFilterIn(n);
                                                 // Show amount trimmed as a time in a "bubble" help.
-                                                var s = application.timecode(Math.abs(clip.originalX));
-                                                s = '%1%2 = %3'.arg((clip.originalX < 0) ? '-' : (clip.originalX > 0) ? '+' : '').arg(s.substring(3)).arg(application.timecode(n));
+                                                var s = application.timeFromFrames(Math.abs(clip.originalX));
+                                                s = '%1%2 = %3'.arg((clip.originalX < 0) ? '-' : (clip.originalX > 0) ? '+' : '').arg(s.substring(3)).arg(application.timeFromFrames(n));
                                                 bubbleHelp.show(s);
                                             } else {
                                                 clip.originalX -= delta;
@@ -408,8 +408,8 @@ Rectangle {
                                             if (delta !== 0 && n >= filter.in && n <= producer.out) {
                                                 parameters.trimFilterOut(n);
                                                 // Show amount trimmed as a time in a "bubble" help.
-                                                var s = application.timecode(Math.abs(clip.originalX));
-                                                s = '%1%2 = %3'.arg((clip.originalX < 0) ? '+' : (clip.originalX > 0) ? '-' : '').arg(s.substring(3)).arg(application.timecode(n));
+                                                var s = application.timeFromFrames(Math.abs(clip.originalX));
+                                                s = '%1%2 = %3'.arg((clip.originalX < 0) ? '+' : (clip.originalX > 0) ? '-' : '').arg(s.substring(3)).arg(application.timeFromFrames(n));
                                                 bubbleHelp.show(s);
                                             } else {
                                                 clip.originalX -= delta;
