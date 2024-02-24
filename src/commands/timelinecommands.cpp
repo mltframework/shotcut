@@ -721,6 +721,9 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
             || that->m_ripple != m_ripple || that->m_rippleAllTracks != m_rippleAllTracks
             || that->m_rippleMarkers != m_rippleMarkers)
         return false;
+    if (that->m_undoHelper.affectedTracks() != m_undoHelper.affectedTracks()) {
+        return false;
+    }
     auto thisIterator = m_clips.begin();
     auto thatIterator = that->m_clips.begin();
     while (thisIterator != m_clips.end() && thatIterator != that->m_clips.end()) {

@@ -39,6 +39,10 @@ public:
     void recordAfterState();
     void undoChanges();
     void setHints(OptimizationHints hints);
+    QSet<int> affectedTracks() const
+    {
+        return m_affectedTracks;
+    }
 
 private:
     void debugPrintState(const QString &title);
