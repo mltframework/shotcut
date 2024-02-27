@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2023 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +18,7 @@
 #include "widgets/scopes/audioloudnessscopewidget.h"
 #include "widgets/scopes/audiopeakmeterscopewidget.h"
 #include "widgets/scopes/audiospectrumscopewidget.h"
+#include "widgets/scopes/audiovectorscopewidget.h"
 #include "widgets/scopes/audiowaveformscopewidget.h"
 #include "widgets/scopes/videohistogramscopewidget.h"
 #include "widgets/scopes/videorgbparadescopewidget.h"
@@ -39,6 +39,7 @@ ScopeController::ScopeController(QMainWindow *mainWindow, QMenu *menu)
     createScopeDock<AudioLoudnessScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioPeakMeterScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioSpectrumScopeWidget>(mainWindow, scopeMenu);
+    createScopeDock<AudioVectorScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioWaveformScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<VideoHistogramScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<VideoRgbParadeScopeWidget>(mainWindow, scopeMenu);

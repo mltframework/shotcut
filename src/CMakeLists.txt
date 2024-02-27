@@ -174,6 +174,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/scopes/audioloudnessscopewidget.cpp widgets/scopes/audioloudnessscopewidget.h
   widgets/scopes/audiopeakmeterscopewidget.cpp widgets/scopes/audiopeakmeterscopewidget.h
   widgets/scopes/audiospectrumscopewidget.cpp widgets/scopes/audiospectrumscopewidget.h
+  widgets/scopes/audiovectorscopewidget.cpp widgets/scopes/audiovectorscopewidget.h
   widgets/scopes/audiowaveformscopewidget.cpp widgets/scopes/audiowaveformscopewidget.h
   widgets/scopes/scopewidget.cpp widgets/scopes/scopewidget.h
   widgets/scopes/videohistogramscopewidget.cpp widgets/scopes/videohistogramscopewidget.h
