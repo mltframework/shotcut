@@ -236,7 +236,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 #endif
 
     m_selectionSignalTimer.setSingleShot(true);
-    m_selectionSignalTimer.setInterval(1);
+    m_selectionSignalTimer.setInterval(100);
     connect(&m_selectionSignalTimer, &QTimer::timeout, this, [&]() {
         emit selectionChanged();
         emitSelectedFromSelection();
