@@ -1683,7 +1683,10 @@ void TimelineDock::saveAndClearSelection()
     m_savedSelectedTrack = m_selection.selectedTrack;
     m_savedIsMultitrackSelected = m_selection.isMultitrackSelected;
     m_savedSelectionUuids = selectionUuids();
-    setSelection();
+    m_selection.selectedClips = QList<QPoint>();
+    m_selection.selectedTrack = -1;
+    m_selection.isMultitrackSelected = false;
+    emit selectionChanged();
 }
 
 void TimelineDock::restoreSelection()
