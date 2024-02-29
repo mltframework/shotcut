@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2019-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ Shotcut.KeyframableFilter {
     width: 350
     height: 100
     Component.onCompleted: {
-        filter.set('threads', 0);
+        filter.set('threads', 1);
         if (filter.isNew) {
             filter.set(center, centerDefault);
             filter.set(linearwidth, linearwidthDefault);
