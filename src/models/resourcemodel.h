@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,8 @@ public:
     void add(Mlt::Producer *producer, const QString &location = QString());
     QList<Mlt::Producer> getProducers(const QModelIndexList &indices);
     bool exists(const QString &hash);
+    int producerCount();
+    Mlt::Producer producer(int index);
     // Implement QAbstractItemModel
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;

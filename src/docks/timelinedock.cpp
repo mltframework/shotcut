@@ -2761,8 +2761,7 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
         if (!MLT.producer() || !MLT.producer()->is_valid()) {
             QUrl url = xml.split(kFilesUrlDelimiter).first();
             Mlt::Properties properties;
-            if (count > 1)
-                properties.set(kShotcutSkipConvertProperty, 1);
+            properties.set(kShotcutSkipConvertProperty, 1);
             if (!MAIN.open(Util::removeFileScheme(url), &properties, false /* play */))
                 MAIN.open(Util::removeFileScheme(url, false), &properties, false /* play */);
         }
@@ -2803,8 +2802,7 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
                     continue;
                 }
                 Mlt::Producer *producer = MLT.setupNewProducer(&p);
-                if (count > 1)
-                    producer->set(kShotcutSkipConvertProperty, 1);
+                producer->set(kShotcutSkipConvertProperty, 1);
                 ProxyManager::generateIfNotExists(*producer);
                 playlist.append(*producer);
                 dialog.add(producer);
@@ -2812,11 +2810,18 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
             }
         }
         xml = MLT.XML(&playlist);
-        if (Settings.showConvertClipDialog() && dialog.hasTroubleClips()) {
+        if (Settings.showConvertClipDialog() && dialog.producerCount() > 1 && dialog.hasTroubleClips()) {
             dialog.selectTroubleClips();
             dialog.setWindowTitle(tr("Dropped Files"));
             longTask.cancel();
             dialog.exec();
+        } else if (Settings.showConvertClipDialog() && dialog.producerCount() == 1) {
+            Mlt::Producer producer = dialog.producer(0);
+            QString convertAdvice = Util::getConversionAdvice(&producer);
+            if (!convertAdvice.isEmpty()) {
+                longTask.cancel();
+                Util::offerSingleFileConversion(convertAdvice, &producer, this);
+            }
         }
     }
 

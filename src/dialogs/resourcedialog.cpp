@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,16 @@ void ResourceDialog::selectTroubleClips()
 bool ResourceDialog::hasTroubleClips()
 {
     return m_resourceWidget->hasTroubleClips();
+}
+
+int ResourceDialog::producerCount()
+{
+    return m_resourceWidget->producerCount();
+}
+
+Mlt::Producer ResourceDialog::producer(int index)
+{
+    return m_resourceWidget->producer(index);
 }
 
 void ResourceDialog::convert()

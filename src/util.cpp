@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,11 +41,13 @@
 #include <MltChain.h>
 #include <MltProducer.h>
 #include <Logger.h>
+#include "dialogs/transcodedialog.h"
 #include "mainwindow.h"
 #include "shotcut_mlt_properties.h"
 #include "qmltypes/qmlapplication.h"
 #include "proxymanager.h"
 #include "settings.h"
+#include "transcoder.h"
 
 #include <math.h>
 #include <memory>
@@ -832,4 +834,25 @@ mlt_color Util::mltColorFromQColor(const QColor &color)
         static_cast<uint8_t>(color.blue()),
         static_cast<uint8_t>(color.alpha())
     };
+}
+
+void Util::offerSingleFileConversion(QString &message, Mlt::Producer *producer, QWidget *parent)
+{
+    TranscodeDialog dialog(message.append(
+                               QObject::tr(" Do you want to convert it to an edit-friendly format?\n\n"
+                                           "If yes, choose a format below and then click OK to choose a file name. "
+                                           "After choosing a file name, a job is created. "
+                                           "When it is done, it automatically replaces clips, or you can double-click the job to open it.\n")),
+                           producer->get_int("progressive"), parent);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.showCheckBox();
+    dialog.set709Convert(!Util::trcIsCompatible(producer->get_int("meta.media.color_trc")));
+    dialog.showSubClipCheckBox();
+    LOG_DEBUG() << "in" << producer->get_in() << "out" << producer->get_out() << "length" <<
+                producer->get_length() - 1;
+    dialog.setSubClipChecked(producer->get_in() > 0
+                             || producer->get_out() < producer->get_length() - 1);
+    Transcoder transcoder;
+    transcoder.addProducer(producer);
+    transcoder.convert(dialog);
 }
