@@ -1143,8 +1143,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     first = false;
                     if (!MLT.producer() || !MLT.producer()->is_valid()) {
                         Mlt::Properties properties;
-                        if (count > 1)
-                            properties.set(kShotcutSkipConvertProperty, 1);
+                        properties.set(kShotcutSkipConvertProperty, 1);
                         MAIN.open(path, &properties, false);
                         if (MLT.producer() && MLT.producer()->is_valid()) {
                             producer = MLT.producer();
@@ -1153,8 +1152,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     }
                 }
                 producer = MLT.setupNewProducer(producer);
-                if (count > 1)
-                    producer->set(kShotcutSkipConvertProperty, 1);
+                producer->set(kShotcutSkipConvertProperty, 1);
                 if (!MLT.isLiveProducer(producer) || producer->get_int(kShotcutVirtualClip)) {
                     ProxyManager::generateIfNotExists(*producer);
                     if (row == -1)
@@ -1182,11 +1180,18 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 delete producer;
             }
         }
-        if (Settings.showConvertClipDialog() && dialog.hasTroubleClips()) {
+        if (Settings.showConvertClipDialog() && dialog.producerCount() > 1 && dialog.hasTroubleClips()) {
             dialog.selectTroubleClips();
             dialog.setWindowTitle(tr("Dropped Files"));
             longTask.cancel();
             dialog.exec();
+        } else if (Settings.showConvertClipDialog() && dialog.producerCount() == 1) {
+            Mlt::Producer producer = dialog.producer(0);
+            QString convertAdvice = Util::getConversionAdvice(&producer);
+            if (!convertAdvice.isEmpty()) {
+                longTask.cancel();
+                Util::offerSingleFileConversion(convertAdvice, &producer, this);
+            }
         }
     } else if (data && data->hasFormat(Mlt::XmlMimeType)) {
         if (MLT.producer() && MLT.producer()->is_valid()) {

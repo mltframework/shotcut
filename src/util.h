@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,6 +78,7 @@ public:
     static bool trcIsCompatible(int trc);
     static QString getConversionAdvice(Mlt::Producer *producer);
     static mlt_color mltColorFromQColor(const QColor &color);
+    static void offerSingleFileConversion(QString &message, Mlt::Producer *producer, QWidget *parent);
 };
 
 #endif // UTIL_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -231,6 +231,19 @@ bool ResourceModel::exists(const QString &hash)
         }
     }
     return false;
+}
+
+int ResourceModel::producerCount()
+{
+    return m_producers.count();
+}
+
+Mlt::Producer ResourceModel::producer(int index)
+{
+    if (index >= 0 && index < m_producers.count()) {
+        return m_producers[index];
+    }
+    return Mlt::Producer();
 }
 
 int ResourceModel::rowCount(const QModelIndex &parent) const

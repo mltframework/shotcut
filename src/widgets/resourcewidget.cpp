@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,6 +95,16 @@ bool ResourceWidget::hasTroubleClips()
         }
     }
     return false;
+}
+
+int ResourceWidget::producerCount()
+{
+    return m_model->producerCount();
+}
+
+Mlt::Producer ResourceWidget::producer(int index)
+{
+    return m_model->producer(index);
 }
 
 QList<Mlt::Producer> ResourceWidget::getSelected()
