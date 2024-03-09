@@ -344,6 +344,11 @@ int VideoWidget::reconfigure(bool isMulti)
         m_consumer->set("mlt_image_format",
                         m_glslManager ? "rgba" : serviceName.startsWith("decklink") ? "yuv422p" : "yuv420p");
         m_consumer->set("channels", property("audio_channels").toInt());
+        if (property("audio_channels").toInt() == 4) {
+            m_consumer->set("channel_layout", "quad");
+        } else {
+            m_consumer->set("channel_layout", "auto");
+        }
         switch (MLT.profile().colorspace()) {
         case 601:
         case 170:
