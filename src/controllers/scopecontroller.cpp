@@ -18,6 +18,7 @@
 #include "widgets/scopes/audioloudnessscopewidget.h"
 #include "widgets/scopes/audiopeakmeterscopewidget.h"
 #include "widgets/scopes/audiospectrumscopewidget.h"
+#include "widgets/scopes/audiosurroundscopewidget.h"
 #include "widgets/scopes/audiovectorscopewidget.h"
 #include "widgets/scopes/audiowaveformscopewidget.h"
 #include "widgets/scopes/videohistogramscopewidget.h"
@@ -39,6 +40,7 @@ ScopeController::ScopeController(QMainWindow *mainWindow, QMenu *menu)
     createScopeDock<AudioLoudnessScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioPeakMeterScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioSpectrumScopeWidget>(mainWindow, scopeMenu);
+    createScopeDock<AudioSurroundScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioVectorScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioWaveformScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<VideoHistogramScopeWidget>(mainWindow, scopeMenu);
