@@ -405,7 +405,11 @@ void AvformatProducerWidget::reloadProducerValues()
                 key = QString("meta.media.%1.codec.long_name").arg(i);
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
-                const char *layout = mlt_audio_channel_layout_name(mlt_audio_channel_layout_default(channels));
+                key = QString("meta.media.%1.codec.layout").arg(i);
+                QString layout(m_producer->get(key.toLatin1().constData()));
+                if (layout.isEmpty()) {
+                    layout = mlt_audio_channel_layout_name(mlt_audio_channel_layout_default(channels));
+                }
                 QString channelsStr = QString("%1 (%2)").arg(channels).arg(layout);
                 ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem(channelsStr));
                 ui->audioTableWidget->setItem(2, 1, new QTableWidgetItem(sampleRate));
