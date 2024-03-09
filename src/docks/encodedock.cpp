@@ -592,14 +592,19 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
             const QString &acodec = ui->audioCodecCombo->currentText();
             if (ui->audioCodecCombo->currentIndex() > 0)
                 setIfNotSet(p, "acodec", ui->audioCodecCombo->currentText().toLatin1().constData());
-            if (ui->audioChannelsCombo->currentIndex() == AudioChannels1)
+            if (ui->audioChannelsCombo->currentIndex() == AudioChannels1) {
                 setIfNotSet(p, "channels", 1);
-            else if (ui->audioChannelsCombo->currentIndex() == AudioChannels2)
+                setIfNotSet(p, "channel_layout", "auto");
+            } else if (ui->audioChannelsCombo->currentIndex() == AudioChannels2) {
                 setIfNotSet(p, "channels", 2);
-            else if (ui->audioChannelsCombo->currentIndex() == AudioChannels4)
+                setIfNotSet(p, "channel_layout", "auto");
+            } else if (ui->audioChannelsCombo->currentIndex() == AudioChannels4) {
                 setIfNotSet(p, "channels", 4);
-            else
+                setIfNotSet(p, "channel_layout", "quad");
+            } else {
                 setIfNotSet(p, "channels", 6);
+                setIfNotSet(p, "channel_layout", "auto");
+            }
             setIfNotSet(p, "ar", ui->sampleRateCombo->currentText().toLatin1().constData());
             if (ui->audioRateControlCombo->currentIndex() == RateControlAverage
                     || ui->audioRateControlCombo->currentIndex() == RateControlConstant) {
