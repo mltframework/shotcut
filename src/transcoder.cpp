@@ -264,6 +264,9 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
     }
     if (dialog.get709Convert()) {
         args << "-colorspace" << "bt709" << "-color_primaries" << "bt709" << "-color_trc" << "bt709";
+    } else if (dialog.format() == 2 && producer->get_int("meta.media.colorspace") == 709) {
+        // Work around a limitation that FFMpeg does not pass colorspace for utvideo
+        args << "-colorspace" << "bt709";
     }
 
     args << "-y" << filename;
