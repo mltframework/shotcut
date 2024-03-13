@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
     connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
     connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
     setCurrentFilter(0, 0, QmlFilter::NoCurrentFilter);
-    connect(this, SIGNAL(visibilityChanged(bool)), SLOT(resetQview()));
+    connect(this, SIGNAL(visibilityChanged(bool)), SLOT(resetQview()), Qt::QueuedConnection);
 
     LOG_DEBUG() << "end";
 }
@@ -155,7 +155,7 @@ void FiltersDock::resetQview()
     if (!m_qview.quickWindow()->isSceneGraphInitialized())
         return;
 
-    LOG_DEBUG() << "begin";
+    LOG_DEBUG() << "begin" << "isVisible" << isVisible() << "qview.status" << m_qview.status();
     if (!isVisible()) {
         m_qview.setSource(QUrl(""));
         emit currentFilterRequested(QmlFilter::NoCurrentFilter);
