@@ -206,10 +206,10 @@
      <property name="title">
       <string>Time Format</string>
      </property>
-     <addaction name="actionTimeFrames"/>
      <addaction name="actionTimeClock"/>
      <addaction name="actionTimeDF"/>
      <addaction name="actionTimeNDF"/>
+     <addaction name="actionTimeFrames"/>
     </widget>
     <widget class="QMenu" name="menuProxy">
      <property name="title">
@@ -283,11 +283,11 @@
     <addaction name="menuBackup"/>
     <addaction name="actionUser_Interface"/>
     <addaction name="menuPreviewScaling"/>
-    <addaction name="menuTimeFormat"/>
     <addaction name="menuProxy"/>
     <addaction name="menuPlayerSettings"/>
     <addaction name="menuPlaylist"/>
     <addaction name="menuTimeline"/>
+    <addaction name="menuTimeFormat"/>
     <addaction name="menuLanguage"/>
     <addaction name="menuTheme"/>
     <addaction name="menuDrawingMethod"/>
@@ -1183,7 +1183,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Drop Frame</string>
+    <string>Timecode (drop Frame)</string>
    </property>
   </action>
   <action name="actionTimeFrames">
@@ -1207,7 +1207,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Non-Drop Frame</string>
+    <string>Timecode (non-drop frame)</string>
    </property>
   </action>
   <action name="actionTopics">

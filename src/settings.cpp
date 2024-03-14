@@ -1281,7 +1281,7 @@ void ShotcutSettings::setBackupPeriod(int seconds)
 
 mlt_time_format ShotcutSettings::timeFormat() const
 {
-    return (mlt_time_format)settings.value("timeFormat", mlt_time_smpte_ndf).toInt();
+    return (mlt_time_format)settings.value("timeFormat", mlt_time_smpte_df).toInt();
 }
 
 void ShotcutSettings::setTimeFormat(int format)
