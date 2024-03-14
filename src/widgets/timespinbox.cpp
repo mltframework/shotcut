@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 #include "timespinbox.h"
 #include "mltcontroller.h"
+#include "settings.h"
 #include <QRegularExpressionValidator>
 #include <QKeyEvent>
 #include <QFontDatabase>
@@ -35,6 +36,10 @@ TimeSpinBox::TimeSpinBox(QWidget *parent)
     font.setPointSize(QGuiApplication::font().pointSize());
     setFont(font);
     setFixedWidth(fontMetrics().boundingRect("_HHH:MM:SS;FFF_").width());
+
+    connect(&Settings, &ShotcutSettings::timeFormatChanged, this, [&]() {
+        setValue(value());
+    });
 }
 
 QValidator::State TimeSpinBox::validate(QString &input, int &pos) const
@@ -55,9 +60,9 @@ int TimeSpinBox::valueFromText(const QString &text) const
 QString TimeSpinBox::textFromValue(int val) const
 {
     if (MLT.producer() && MLT.producer()->is_valid()) {
-        return MLT.producer()->frames_to_time(val);
+        return MLT.producer()->frames_to_time(val, Settings.timeFormat());
     } else {
-        return Mlt::Producer(MLT.profile(), "color", "").frames_to_time(val);
+        return Mlt::Producer(MLT.profile(), "color", "").frames_to_time(val, Settings.timeFormat());
     }
     return QString();
 }

@@ -202,6 +202,15 @@
      <addaction name="actionPreview540"/>
      <addaction name="actionPreview720"/>
     </widget>
+    <widget class="QMenu" name="menuTimeFormat">
+     <property name="title">
+      <string>Time Format</string>
+     </property>
+     <addaction name="actionTimeClock"/>
+     <addaction name="actionTimeDF"/>
+     <addaction name="actionTimeNDF"/>
+     <addaction name="actionTimeFrames"/>
+    </widget>
     <widget class="QMenu" name="menuProxy">
      <property name="title">
       <string>Proxy</string>
@@ -278,6 +287,7 @@
     <addaction name="menuPlayerSettings"/>
     <addaction name="menuPlaylist"/>
     <addaction name="menuTimeline"/>
+    <addaction name="menuTimeFormat"/>
     <addaction name="menuLanguage"/>
     <addaction name="menuTheme"/>
     <addaction name="menuDrawingMethod"/>
@@ -1166,6 +1176,38 @@
    </property>
    <property name="shortcut">
     <string notr="true">F7</string>
+   </property>
+  </action>
+  <action name="actionTimeDF">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Timecode (Drop-Frame)</string>
+   </property>
+  </action>
+  <action name="actionTimeFrames">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Frames</string>
+   </property>
+  </action>
+  <action name="actionTimeClock">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Clock</string>
+   </property>
+  </action>
+  <action name="actionTimeNDF">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Timecode (Non-Drop Frame)</string>
    </property>
   </action>
   <action name="actionTopics">

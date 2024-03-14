@@ -18,6 +18,8 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
+#include <framework/mlt_types.h>
+
 #include <QKeySequence>
 #include <QObject>
 #include <QSettings>
@@ -283,6 +285,8 @@ public:
     bool warnLowMemory() const;
     int backupPeriod() const;
     void setBackupPeriod(int i);
+    mlt_time_format timeFormat() const;
+    void setTimeFormat(int format);
 
     // proxy
     bool proxyEnabled() const;
@@ -341,6 +345,7 @@ signals:
     void timelineScrollingChanged();
     void timelineAutoAddTracksChanged();
     void timelineRectangleSelectChanged();
+    void timeFormatChanged();
 
 private:
     explicit ShotcutSettings();

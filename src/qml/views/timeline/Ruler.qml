@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 2
                 color: activePalette.windowText
-                text: application.timecode(index * intervalFrames + 2).substr(0, 8)
+                text: application.clockFromFrames(index * intervalFrames + 2).substr(0, 8)
             }
         }
     }
@@ -72,7 +72,7 @@ Rectangle {
         property double currentPos: timeline.position * timeScale
         cursorShape: (mouseX >= currentPos - 8 && mouseX <= currentPos + 8) ? Qt.SizeHorCursor : Qt.ArrowCursor
         onPositionChanged: mouse => {
-            var text = application.timecode(mouse.x / timeScale);
+            var text = application.timeFromFrames(mouse.x / timeScale);
             bubbleHelp.show(text);
         }
     }
@@ -87,10 +87,10 @@ Rectangle {
         onMouseStatusChanged: (mouseX, mouseY, text, start, end) => {
             var msg = "<center>" + text;
             if (start === end) {
-                msg += "<br>" + application.timecode(start);
+                msg += "<br>" + application.timeFromFrames(start);
             } else {
-                msg += "<br>" + application.timecode(start) + " - " + application.timecode(end);
-                msg += "<br>" + application.timecode(end - start + 1);
+                msg += "<br>" + application.timeFromFrames(start) + " - " + application.timeFromFrames(end);
+                msg += "<br>" + application.timeFromFrames(end - start + 1);
             }
             msg += "</center>";
             bubbleHelp.show(msg);

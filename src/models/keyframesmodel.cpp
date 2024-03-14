@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 Meltytech, LLC
+ * Copyright (c) 2018-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
  */
 
 #include "keyframesmodel.h"
+#include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlfilter.h"
 #include "mltcontroller.h"
@@ -183,8 +184,8 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                         }
                         double value = m_filter->getDouble(name, position);
                         QString units = m_metadata->keyframes()->parameter(m_metadataIndex[index.internalId()])->units();
-                        return QString("%1 - %2\n%3%4").arg(m_filter->timeFromFrames(position)).arg(type).arg(value).arg(
-                                   units);
+                        return QString("%1 - %2\n%3%4").arg(QmlApplication::singleton().timeFromFrames(position)).arg(
+                                   type).arg(value).arg(units);
                     }
                     case FrameNumberRole:
                         return position;

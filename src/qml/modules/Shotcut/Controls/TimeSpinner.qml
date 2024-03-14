@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,12 +35,14 @@ RowLayout {
         return Math.max(min, Math.min(max, x));
     }
 
+    onValueChanged: timeField.text = application.timeFromFrames(clamp(value, minimumValue, maximumValue))
+
     spacing: 0
 
     TextField {
         id: timeField
 
-        text: filter.timeFromFrames(clamp(value, minimumValue, maximumValue))
+        text: application.timeFromFrames(clamp(value, minimumValue, maximumValue))
         horizontalAlignment: TextInput.AlignRight
         selectByMouse: true
         onEditingFinished: value = filter.framesFromTime(text)
@@ -136,5 +138,13 @@ RowLayout {
         id: incrementAction
 
         onTriggered: value = Math.min(value + 1, maximumValue)
+    }
+
+    Connections {
+        function onTimeFormatChanged() {
+            timeField.text = application.timeFromFrames(root.value);
+        }
+
+        target: settings
     }
 }

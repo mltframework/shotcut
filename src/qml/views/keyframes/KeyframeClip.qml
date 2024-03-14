@@ -315,7 +315,7 @@ Rectangle {
                     var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration);
                     filter.animateIn = duration;
                     // Show fade duration as time in a "bubble" help.
-                    var s = application.timecode(Math.max(duration, 0));
+                    var s = application.timeFromFrames(Math.max(duration, 0));
                     bubbleHelp.show(s.substring(6));
                 }
             }
@@ -420,7 +420,7 @@ Rectangle {
                     var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration);
                     filter.animateOut = duration;
                     // Show fade duration as time in a "bubble" help.
-                    var s = application.timecode(Math.max(duration, 0));
+                    var s = application.timeFromFrames(Math.max(duration, 0));
                     bubbleHelp.show(s.substring(6));
                 }
             }

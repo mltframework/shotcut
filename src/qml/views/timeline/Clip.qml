@@ -333,7 +333,7 @@ Rectangle {
                         if (comment.length > 0)
                             text += '<br>' + comment;
                     }
-                    text += '<br>' + application.timecode(clipDuration);
+                    text += '<br>' + application.timeFromFrames(clipDuration);
                     bubbleHelp.show(text);
                 }
             }
@@ -488,7 +488,7 @@ Rectangle {
                     var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration);
                     timeline.fadeIn(trackIndex, index, duration);
                     // Show fade duration as time in a "bubble" help.
-                    var s = application.timecode(duration);
+                    var s = application.timeFromFrames(duration);
                     bubbleHelp.show(s.substring(6));
                 }
             }
@@ -582,7 +582,7 @@ Rectangle {
                     var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration);
                     timeline.fadeOut(trackIndex, index, duration);
                     // Show fade duration as time in a "bubble" help.
-                    var s = application.timecode(duration);
+                    var s = application.timeFromFrames(duration);
                     bubbleHelp.show(s.substring(6));
                 }
             }

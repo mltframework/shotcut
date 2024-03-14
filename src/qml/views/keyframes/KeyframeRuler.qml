@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ Rectangle {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 2
                 color: activePalette.windowText
-                text: application.timecode(index * intervalSeconds * profile.fps + 2).substr(0, 8)
+                text: application.clockFromFrames(index * intervalSeconds * profile.fps + 2).substr(0, 8)
             }
         }
     }
@@ -59,7 +59,7 @@ Rectangle {
         acceptedButtons: Qt.NoButton
         onExited: bubbleHelp.hide()
         onPositionChanged: mouse => {
-            var text = application.timecode(mouse.x / timeScale);
+            var text = application.timeFromFrames(mouse.x / timeScale);
             bubbleHelp.show(text);
         }
     }

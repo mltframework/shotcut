@@ -37,6 +37,22 @@
 #define SEEK_INACTIVE (-1)
 #define VOLUME_SLIDER_HEIGHT (300)
 
+QString blankTime()
+{
+    switch (Settings.timeFormat()) {
+    case mlt_time_frames:
+        return "--------";
+    case mlt_time_clock:
+        return "--:--:--.---";
+    case mlt_time_smpte_df:
+        if (MLT.profile().fps() == 30000.0 / 1001.0 || MLT.profile().fps() == 60000.0 / 1001.0)
+            return "--:--:--;--";
+    // Fallthrough on purpose
+    default:
+        return "--:--:--:--";
+    }
+}
+
 Player::Player(QWidget *parent)
     : QWidget(parent)
     , m_position(0)
@@ -174,11 +190,12 @@ Player::Player(QWidget *parent)
     m_positionSpinner->setEnabled(false);
     m_positionSpinner->setKeyboardTracking(false);
     m_currentDurationToolBar->addWidget(m_positionSpinner);
+    m_currentDurationToolBar->addWidget(new QLabel(" / "));
     m_durationLabel = new QLabel(this);
     m_durationLabel->setToolTip(tr("Total Duration"));
-    m_durationLabel->setText(" / 00:00:00:00");
+    m_durationLabel->setText(blankTime());
     QFontMetrics fm(m_durationLabel->font());
-    m_durationLabel->setFixedWidth(fm.boundingRect(" / 00:00:00:00").width() + 2);
+    m_durationLabel->setFixedWidth(fm.boundingRect("00:00:00:.000").width() + 2);
     m_durationLabel->setFixedHeight(m_positionSpinner->sizeHint().height());
     m_currentDurationToolBar->addWidget(m_durationLabel);
 
@@ -317,16 +334,17 @@ Player::Player(QWidget *parent)
     m_inSelectedToolBar->setAreaHint(Qt::BottomToolBarArea);
     m_inSelectedToolBar->setContentsMargins(0, 0, 0, 0);
     m_inPointLabel = new QLabel(this);
-    m_inPointLabel->setText("--:--:--:-- / ");
+    m_inPointLabel->setText(blankTime());
     m_inPointLabel->setToolTip(tr("In Point"));
-    m_inPointLabel->setFixedWidth(fm.boundingRect("00:00:00:00 / ").width() + 2);
+    m_inPointLabel->setFixedWidth(fm.boundingRect("00:00:00.000").width() + 2);
     m_inPointLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     m_inPointLabel->setFixedHeight(m_positionSpinner->sizeHint().height());
     m_inSelectedToolBar->addWidget(m_inPointLabel);
+    m_inSelectedToolBar->addWidget(new QLabel(" / "));
     m_selectedLabel = new QLabel(this);
-    m_selectedLabel->setText("--:--:--:--");
+    m_selectedLabel->setText(blankTime());
     m_selectedLabel->setToolTip(tr("Selected Duration"));
-    m_selectedLabel->setFixedWidth(fm.boundingRect("00:00:00:00").width() + 2);
+    m_selectedLabel->setFixedWidth(fm.boundingRect("00:00:00.000").width() + 2);
     m_selectedLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     m_selectedLabel->setFixedHeight(m_positionSpinner->sizeHint().height());
     m_inSelectedToolBar->addWidget(m_selectedLabel);
@@ -355,6 +373,14 @@ Player::Player(QWidget *parent)
     connect(m_verticalScroll, SIGNAL(valueChanged(int)), MLT.videoWidget(), SLOT(setOffsetY(int)));
     connect(MLT.videoWidget(), SIGNAL(offsetChanged(const QPoint &)),
             SLOT(onOffsetChanged(const QPoint &)));
+
+    connect(&Settings, &ShotcutSettings::timeFormatChanged, this, [&]() {
+        updateSelection();
+        if (MLT.isSeekable()) {
+            onDurationChanged();
+        }
+    });
+
     setFocusPolicy(Qt::StrongFocus);
 }
 
@@ -836,9 +862,9 @@ void Player::seek(int position)
 void Player::reset()
 {
     m_scrubber->setMarkers(QList<int>());
-    m_inPointLabel->setText("--:--:--:-- / ");
-    m_selectedLabel->setText("--:--:--:--");
-    m_durationLabel->setText(" / 00:00:00:00");
+    m_inPointLabel->setText(blankTime());
+    m_selectedLabel->setText(blankTime());
+    m_durationLabel->setText(blankTime());
     m_scrubber->setDisabled(true);
     m_scrubber->setScale(1);
     m_positionSpinner->setValue(0);
@@ -865,10 +891,10 @@ void Player::onProducerOpened(bool play)
     m_scrubber->setScale(m_duration);
     if (!MLT.isPlaylist())
         m_scrubber->setMarkers(QList<int>());
-    m_inPointLabel->setText("--:--:--:-- / ");
-    m_selectedLabel->setText("--:--:--:--");
+    m_inPointLabel->setText(blankTime());
+    m_selectedLabel->setText(blankTime());
     if (m_isSeekable) {
-        m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
+        m_durationLabel->setText(QString(MLT.producer()->get_length_time(Settings.timeFormat())));
         MLT.producer()->get_length_time(mlt_time_clock);
         m_previousIn = MLT.isClip() ? MLT.producer()->get_in() : -1;
         m_scrubber->setEnabled(true);
@@ -876,7 +902,7 @@ void Player::onProducerOpened(bool play)
         m_previousOut = MLT.isClip() ? MLT.producer()->get_out() : -1;
         m_scrubber->setOutPoint(m_previousOut);
     } else {
-        m_durationLabel->setText(tr("Not Seekable").prepend(" / "));
+        m_durationLabel->setText(tr("Not Seekable"));
         m_scrubber->setDisabled(true);
         // cause scrubber redraw
         m_scrubber->setScale(m_duration);
@@ -938,9 +964,9 @@ void Player::onMeltedUnitOpened()
     m_scrubber->setFramerate(MLT.profile().fps());
     m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
-    m_inPointLabel->setText("--:--:--:-- / ");
-    m_selectedLabel->setText("--:--:--:--");
-    m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
+    m_inPointLabel->setText(blankTime());
+    m_selectedLabel->setText(blankTime());
+    m_durationLabel->setText(QString(MLT.producer()->get_length_time(Settings.timeFormat())));
     MLT.producer()->get_length_time(mlt_time_clock);
     m_previousIn = MLT.producer()->get_in();
     m_scrubber->setEnabled(true);
@@ -968,7 +994,7 @@ void Player::onDurationChanged()
     m_isSeekable = MLT.isSeekable();
     m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
-    m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
+    m_durationLabel->setText(QString(MLT.producer()->get_length_time(Settings.timeFormat())));
     MLT.producer()->get_length_time(mlt_time_clock);
     if (MLT.producer()->get_speed() == 0)
         seek(m_position);
@@ -1005,14 +1031,16 @@ void Player::onFrameDisplayed(const SharedFrame &frame)
 void Player::updateSelection()
 {
     if (MLT.producer() && MLT.producer()->get_in() > 0) {
-        m_inPointLabel->setText(QString(MLT.producer()->get_time("in")).append(" / "));
-        m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime()));
+        m_inPointLabel->setText(QString(MLT.producer()->get_time("in", Settings.timeFormat())));
+        m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime(),
+                                                                Settings.timeFormat()));
     } else {
-        m_inPointLabel->setText("--:--:--:-- / ");
+        m_inPointLabel->setText(blankTime());
         if (MLT.isClip() && MLT.producer()->get_out() < m_duration - 1) {
-            m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime()));
+            m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime(),
+                                                                    Settings.timeFormat()));
         } else if (!MLT.producer() || MLT.producer()->get_in() == 0) {
-            m_selectedLabel->setText("--:--:--:--");
+            m_selectedLabel->setText(blankTime());
         }
     }
 }

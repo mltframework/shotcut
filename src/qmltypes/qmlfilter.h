@@ -53,14 +53,6 @@ class QmlFilter : public QObject
     Q_PROPERTY(bool blockSignals READ signalsBlocked WRITE blockSignals)
 
 public:
-    enum TimeFormat {
-        TIME_FRAMES,
-        TIME_CLOCK,
-        TIME_TIMECODE_DF,
-        TIME_TIMECODE_NDF,
-    };
-    Q_ENUM(TimeFormat)
-
     enum CurrentFilterIndex {
         NoCurrentFilter = -1,
         DeselectCurrentFilter = -2
@@ -116,8 +108,6 @@ public:
     Q_INVOKABLE void deletePreset(const QString &name);
     Q_INVOKABLE void analyze(bool isAudio = false, bool deferJob = true);
     Q_INVOKABLE static int framesFromTime(const QString &time);
-    Q_INVOKABLE static QString timeFromFrames(int frames,
-                                              QmlFilter::TimeFormat format = TIME_TIMECODE_DF);
     Q_INVOKABLE void getHash();
     Mlt::Producer &producer()
     {

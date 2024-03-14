@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,12 +139,20 @@ void QmlApplication::pasteFilters()
     }
 }
 
-QString QmlApplication::timecode(int frames)
+QString QmlApplication::clockFromFrames(int frames)
 {
-    if (MLT.producer() && MLT.producer()->is_valid())
-        return MLT.producer()->frames_to_time(frames, mlt_time_smpte_df);
-    else
-        return QString();
+    if (MLT.producer()) {
+        return MLT.producer()->frames_to_time(frames, mlt_time_clock);
+    }
+    return QString();
+}
+
+QString QmlApplication::timeFromFrames(int frames)
+{
+    if (MLT.producer()) {
+        return MLT.producer()->frames_to_time(frames, Settings.timeFormat());
+    }
+    return QString();
 }
 
 int QmlApplication::audioChannels()
