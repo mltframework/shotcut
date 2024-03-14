@@ -1183,7 +1183,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Timecode (drop Frame)</string>
+    <string>Timecode (Drop-Frame)</string>
    </property>
   </action>
   <action name="actionTimeFrames">
@@ -1207,7 +1207,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Timecode (non-drop frame)</string>
+    <string>Timecode (Non-Drop Frame)</string>
    </property>
   </action>
   <action name="actionTopics">
