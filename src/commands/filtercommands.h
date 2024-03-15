@@ -129,6 +129,7 @@ public:
     void update(const QString &propertyName);
     void redo();
     void undo();
+    ChangeParameterCommand *resumeWithNewCommand();
 protected:
     int id() const
     {
@@ -136,6 +137,7 @@ protected:
     }
     bool mergeWith(const QUndoCommand *other);
 private:
+    ChangeParameterCommand(QUndoCommand *parent = 0);
     int m_row;
     QUuid m_producerUuid;
     Mlt::Properties m_before;

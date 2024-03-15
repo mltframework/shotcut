@@ -773,6 +773,16 @@ int QmlFilter::keyframeIndex(Mlt::Animation &animation, int position)
 void QmlFilter::updateChangeCommand(const QString &name)
 {
     if (m_changeCommand) {
+        if (m_changeCommandPushed) {
+            // Check if other commands have been pushed since this change command was pushed.
+            // If so, push a new command.
+            const QUndoCommand *lastCommand = MAIN.undoStack()->command(MAIN.undoStack()->count() - 1);
+            if (dynamic_cast<const Filter::ChangeParameterCommand *>(lastCommand) != m_changeCommand) {
+                // Need to push a new change command
+                m_changeCommand = m_changeCommand->resumeWithNewCommand();
+                m_changeCommandPushed = false;
+            }
+        }
         m_changeCommand->update(name);
         if (!m_changeCommandPushed) {
             MAIN.undoStack()->push(m_changeCommand);

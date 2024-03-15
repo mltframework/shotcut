@@ -357,6 +357,11 @@ ChangeParameterCommand::ChangeParameterCommand(const QString &name, FilterContro
     m_after.inherit(*service);
 }
 
+ChangeParameterCommand::ChangeParameterCommand(QUndoCommand *parent)
+    : QUndoCommand(parent)
+{
+}
+
 void ChangeParameterCommand::update(const QString &propertyName)
 {
     Mlt::Service *service = m_filterController->attachedModel()->getService(m_row);
@@ -404,6 +409,19 @@ bool ChangeParameterCommand::mergeWith(const QUndoCommand *other)
         return false;
     m_after = that->m_after;
     return true;
+}
+
+ChangeParameterCommand *ChangeParameterCommand::resumeWithNewCommand()
+{
+    ChangeParameterCommand *newCommand = new ChangeParameterCommand();
+    newCommand->m_row = m_row;
+    newCommand->m_producerUuid = m_producerUuid;
+    newCommand->m_before.inherit(m_after);
+    newCommand->m_after.inherit(m_after);
+    newCommand->m_filterController = m_filterController;
+    newCommand->m_firstRedo = true;
+    newCommand->setText(text());
+    return newCommand;
 }
 
 } // namespace Filter
