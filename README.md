@@ -28,7 +28,7 @@ Binaries are regularly built and are available at https://www.shotcut.org/downlo
 Shotcut's direct (linked or hard runtime) dependencies are:
 
 - [MLT](https://www.mltframework.org/): multimedia authoring framework
-- [Qt 6 (6.4 mininum](https://www.qt.io/): application and UI framework
+- [Qt 6 (6.4 mininum)](https://www.qt.io/): application and UI framework
 - [FFTW](https://fftw.org/)
 - [FFmpeg](https://www.ffmpeg.org/): multimedia format and codec libraries
 - [Frei0r](https://www.dyne.org/software/frei0r/): video plugins
