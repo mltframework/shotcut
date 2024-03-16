@@ -101,7 +101,9 @@ Rectangle {
         id: zoomToFitTimer
 
         property int loopCount: 0
+        property double lastContainerWidth: tracksContainer.width
         interval: 10
+        triggeredOnStart: true
         repeat: true
         function startZoomFit() {
             loopCount = 0;
@@ -110,10 +112,11 @@ Rectangle {
         onTriggered: {
             setZoom(Math.pow((tracksFlickable.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1 / 3));
             loopCount++;
-            // Due to rounding errors, sometimes the zoom needs to be calculated twice to get it right.
-            if (loopCount >= 2) {
+            // Sometimes the zoom needs to be calculated again
+            if (loopCount > 3 || tracksContainer.width !== lastContainerWidth) {
                 stop();
             }
+            lastContainerWidth = tracksContainer.width;
         }
     }
 
