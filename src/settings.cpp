@@ -1274,9 +1274,9 @@ int ShotcutSettings::backupPeriod() const
     return settings.value("backupPeriod", 24 * 60).toInt();
 }
 
-void ShotcutSettings::setBackupPeriod(int seconds)
+void ShotcutSettings::setBackupPeriod(int minutes)
 {
-    settings.setValue("backupPeriod", seconds);
+    settings.setValue("backupPeriod", minutes);
 }
 
 mlt_time_format ShotcutSettings::timeFormat() const
