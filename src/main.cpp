@@ -423,10 +423,14 @@ int main(int argc, char **argv)
         a.mainWindow->setFullScreen(a.isFullScreen);
         splash.finish(a.mainWindow);
 
-        if (!a.resourceArg.isEmpty())
-            a.mainWindow->openMultiple(a.resourceArg);
-        else
+        if (!a.resourceArg.isEmpty()) {
+            QStringList ls;
+            for (auto &s : a.resourceArg)
+                ls << QFileInfo(QDir::currentPath(), s).filePath();
+            a.mainWindow->openMultiple(ls);
+        } else {
             a.mainWindow->open(a.mainWindow->untitledFileName());
+        }
 
         result = a.exec();
 
