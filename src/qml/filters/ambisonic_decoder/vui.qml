@@ -22,6 +22,7 @@ Shotcut.VuiBase {
     property var startValues: []
     property var middleValues: []
     property var endValues: []
+    property real zoom: (video.zoom > 0) ? video.zoom : 1
 
     function clamp(x, min, max) {
         return Math.max(min, Math.min(max, x));
@@ -68,6 +69,93 @@ Shotcut.VuiBase {
         target: filter
     }
 
+    Flickable {
+        anchors.fill: parent
+        interactive: false
+        clip: true
+        contentWidth: video.rect.width * zoom
+        contentHeight: video.rect.height * zoom
+        contentX: video.offset.x
+        contentY: video.offset.y
+
+        Item {
+            id: videoItem
+
+            x: video.rect.x + 0.5 * video.rect.width
+            y: video.rect.y + 0.5 * video.rect.height
+            scale: zoom
+            opacity: 0.5
+            antialiasing: true
+            transform: [
+                Scale {
+                    id: scale
+                    xScale: filter.getDouble('zoom', getPosition()) + 1.25
+                    yScale: xScale
+                },
+                Rotation {
+                    id: yawRotation
+                    angle: filter.getDouble('yaw', getPosition())
+                    axis {
+                        x: 0
+                        y: 1
+                        z: 0
+                    }
+                },
+                Rotation {
+                    id: pitchRotation
+                    angle: filter.getDouble('pitch', getPosition())
+                    axis {
+                        x: 1
+                        y: 0
+                        z: 0
+                    }
+                },
+                Rotation {
+                    id: rollRotation
+                    angle: filter.getDouble('roll', getPosition())
+                    axis {
+                        x: 0
+                        y: 0
+                        z: 1
+                    }
+                }
+            ]
+            Rectangle {
+                anchors.centerIn: parent
+                width: 100
+                height: 10
+                radius: 5
+                gradient: Gradient {
+                    orientation: Gradient.Horizontal
+                    GradientStop {
+                        position: 0
+                        color: 'yellow'
+                    }
+                    GradientStop {
+                        position: 1
+                        color: 'red'
+                    }
+                }
+            }
+            Rectangle {
+                anchors.centerIn: parent
+                width: 10
+                height: 100
+                radius: 5
+                gradient: Gradient {
+                    GradientStop {
+                        position: 0
+                        color: 'blue'
+                    }
+                    GradientStop {
+                        position: 1
+                        color: 'green'
+                    }
+                }
+            }
+        }
+    }
+
     MouseArea {
         id: mouseArea
 
@@ -78,14 +166,14 @@ Shotcut.VuiBase {
         property int startY
 
         anchors.fill: parent
-        onPressed: {
+        onPressed: mouse => {
             startX = mouse.x;
             startY = mouse.y;
             startYaw = filter.getDouble('yaw', getPosition());
             startPitch = filter.getDouble('pitch', getPosition());
             startRoll = filter.getDouble('roll', getPosition());
         }
-        onPositionChanged: {
+        onPositionChanged: mouse => {
             if (mouse.modifiers === Qt.ControlModifier) {
                 updateProperty('roll', clamp(startRoll + 0.5 * (startY - mouse.y), -180, 180));
             } else {
@@ -93,10 +181,22 @@ Shotcut.VuiBase {
                 updateProperty('pitch', clamp(startPitch + 0.1 * (mouse.y - startY), -180, 180));
             }
         }
-        onWheel: {
+        onWheel: wheel => {
             var zoom = filter.getDouble('zoom', getPosition());
             console.log('' + wheel.angleDelta.y / 8 / 360);
             updateProperty('zoom', clamp(zoom + wheel.angleDelta.y / 8 / 360, -1, 1));
         }
+    }
+
+    Connections {
+        function onChanged() {
+            scale.xScale = filter.getDouble('zoom', getPosition()) + 1.25;
+            pitchRotation.angle = filter.getDouble('pitch', getPosition());
+            rollRotation.angle = filter.getDouble('roll', getPosition());
+            yawRotation.angle = filter.getDouble('yaw', getPosition());
+            videoItem.enabled = filter.get('disable') !== '1';
+        }
+
+        target: filter
     }
 }
