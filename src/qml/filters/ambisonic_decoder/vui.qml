@@ -32,6 +32,14 @@ Shotcut.VuiBase {
         return Math.max(producer.position - (filter.in - producer.in), 0);
     }
 
+    function updateControls() {
+        scale.xScale = filter.getDouble('zoom', getPosition()) + 1.25;
+        pitchRotation.angle = filter.getDouble('pitch', getPosition());
+        rollRotation.angle = filter.getDouble('roll', getPosition());
+        yawRotation.angle = filter.getDouble('yaw', getPosition());
+        videoItem.enabled = filter.get('disable') !== '1';
+    }
+
     function updateProperty(name, value) {
         var index = keyframableParameters.indexOf(name);
         var position = getPosition();
@@ -59,14 +67,6 @@ Shotcut.VuiBase {
         } else if (position !== null) {
             filter.set(name, value, position);
         }
-    }
-
-    Connections {
-        function onChanged() {
-            mouseArea.enabled = filter.get('disable') !== '1';
-        }
-
-        target: filter
     }
 
     Flickable {
@@ -165,6 +165,7 @@ Shotcut.VuiBase {
         property int startX
         property int startY
 
+        enabled: videoItem.enabled
         anchors.fill: parent
         onPressed: mouse => {
             startX = mouse.x;
@@ -190,13 +191,21 @@ Shotcut.VuiBase {
 
     Connections {
         function onChanged() {
-            scale.xScale = filter.getDouble('zoom', getPosition()) + 1.25;
-            pitchRotation.angle = filter.getDouble('pitch', getPosition());
-            rollRotation.angle = filter.getDouble('roll', getPosition());
-            yawRotation.angle = filter.getDouble('yaw', getPosition());
-            videoItem.enabled = filter.get('disable') !== '1';
+            updateControls();
+        }
+
+        function onPropertyChanged(name) {
+            updateControls();
         }
 
         target: filter
+    }
+
+    Connections {
+        function onPositionChanged() {
+            updateControls();
+        }
+
+        target: producer
     }
 }
