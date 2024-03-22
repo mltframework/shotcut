@@ -41,7 +41,7 @@ AudioVectorScopeWidget::AudioVectorScopeWidget()
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(0, 0, 0, 0);
     vlayout->setSpacing(0);
-    QHBoxLayout *hlayout = new QHBoxLayout(this);
+    QHBoxLayout *hlayout = new QHBoxLayout;
     hlayout->setContentsMargins(0, 0, 0, 0);
     hlayout->setSpacing(0);
     vlayout->addLayout(hlayout);
@@ -183,11 +183,11 @@ void AudioVectorScopeWidget::refreshScope(const QSize &size, bool full)
         const int16_t *a = (int16_t *)m_frame.get_audio();
         int16_t maxSampleValue = 0;
         for (int s = 0; s < samples; s++) {
-            if (fabs(a[c1]) > maxSampleValue) {
-                maxSampleValue = fabs(a[c1]);
+            if (std::abs(a[c1]) > maxSampleValue) {
+                maxSampleValue = std::abs(a[c1]);
             }
-            if (fabs(a[c2]) > maxSampleValue) {
-                maxSampleValue = fabs(a[c2]);
+            if (std::abs(a[c2]) > maxSampleValue) {
+                maxSampleValue = std::abs(a[c2]);
             }
             a += channels;
         }
