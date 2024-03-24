@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -251,7 +251,7 @@ void FilterController::setCurrentFilter(int attachedIndex)
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
     if (filter && !m_attachedModel.isSourceClip()) {
-        filter->startUndoTracking(this, m_currentFilterIndex);
+        filter->startUndoTracking();
     }
 }
 
