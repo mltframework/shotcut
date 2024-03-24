@@ -373,6 +373,7 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
             int frame_num = animation.key_get_frame(keyframeIndex);
             error = animation.remove(frame_num);
             if (!error) {
+                m_filter->startChangeRemoveKeyframeCommand();
                 animation.interpolate();
                 m_filter->updateChangeCommand(name);
                 beginRemoveRows(index(parameterIndex), keyframeIndex, keyframeIndex);
@@ -399,6 +400,7 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                 emit dataChanged(index(parameterIndex), index(parameterIndex),
                                  QVector<int>() << LowestValueRole << HighestValueRole);
                 emit m_filter->changed(name.toUtf8().constData());
+                m_filter->endChangeCommand();
             }
         }
     }
@@ -472,6 +474,7 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
         if (animation.is_valid()) {
             if (!animation.key_set_type(keyframeIndex, mlt_keyframe_type(type))) {
 //                LOG_DEBUG() << "keyframe index" << keyframeIndex << "keyframe type" << type;
+                m_filter->startChangeModifyKeyframeCommand(parameterIndex, keyframeIndex);
                 m_filter->updateChangeCommand(name);
                 for (auto &key : gangedProperties(parameterIndex)) {
                     Mlt::Animation animation = m_filter->getAnimation(key);
@@ -489,6 +492,7 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
                 error = false;
                 emit m_filter->changed(name.toUtf8().constData());
                 emit m_filter->propertyChanged(name.toUtf8().constData());
+                m_filter->endChangeCommand();
             }
         }
     }
@@ -538,6 +542,7 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
         return;
     }
 
+    m_filter->startChangeModifyKeyframeCommand(parameterIndex, keyframeIndex);
     m_filter->updateChangeCommand(name);
     for (auto &key : gangedProperties(parameterIndex)) {
         Mlt::Animation animation = m_filter->getAnimation(key);
@@ -553,6 +558,7 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
     updateNeighborsMinMax(parameterIndex, keyframeIndex);
     emit m_filter->changed(name.toUtf8().constData());
     emit m_filter->propertyChanged(name.toUtf8().constData());
+    m_filter->endChangeCommand();
 }
 
 void KeyframesModel::addKeyframe(int parameterIndex, double value, int position,
@@ -560,12 +566,14 @@ void KeyframesModel::addKeyframe(int parameterIndex, double value, int position,
 {
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
+        m_filter->startChangeAddKeyframeCommand();
         m_filter->set(name, value, position,  mlt_keyframe_type(type));
         m_filter->updateChangeCommand(name);
         for (auto &key : gangedProperties(parameterIndex)) {
             m_filter->set(key, value, position,  mlt_keyframe_type(type));
             m_filter->updateChangeCommand(key);
         }
+        m_filter->endChangeCommand();
     }
 }
 
@@ -574,8 +582,8 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
         auto parameter = m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex]);
-
         if (parameter->isRectangle()) {
+            m_filter->startChangeAddKeyframeCommand();
             auto value = m_filter->getRect(name, position);
             Mlt::Animation anim = m_filter->getAnimation(name);
             if (anim.is_valid() && !anim.is_key(position)) {
@@ -583,10 +591,11 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 m_filter->blockSignals(true);
                 m_filter->set(name, value, position, keyframeType);
                 m_filter->blockSignals(false);
-                m_filter->updateChangeCommand(name);
                 emit keyframeAdded(name, position);
             }
+            m_filter->endChangeCommand();
         } else if (parameter->isCurve()) {
+            m_filter->startChangeAddKeyframeCommand();
             // Get the value from the existing position.
             double value = m_filter->getDouble(name, position);
             Mlt::Animation anim = m_filter->getAnimation(name);
@@ -603,16 +612,16 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 // because it did not receive a "consumer-frame-show" event for it.
                 m_filter->blockSignals(true);
                 m_filter->set(name, value, position, keyframeType);
-                m_filter->updateChangeCommand(name);
                 for (auto &key : parameter->gangedProperties()) {
                     value = m_filter->getDouble(key, position);
                     m_filter->set(key, value, position, keyframeType);
-                    m_filter->updateChangeCommand(key);
                 }
                 m_filter->blockSignals(false);
                 emit keyframeAdded(name, position);
+                m_filter->endChangeCommand();
             }
         } else if (parameter->isColor()) {
+            m_filter->startChangeAddKeyframeCommand();
             // Color values
             auto value = m_filter->getColor(name, position);
             Mlt::Animation anim = m_filter->getAnimation(name);
@@ -620,15 +629,14 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 mlt_keyframe_type keyframeType = m_filter->getKeyframeType(anim, position, mlt_keyframe_type(-1));
                 m_filter->blockSignals(true);
                 m_filter->set(name, value, position, keyframeType);
-                m_filter->updateChangeCommand(name);
                 for (auto &key : parameter->gangedProperties()) {
                     value = m_filter->get(key, position);
                     m_filter->set(key, value, position, keyframeType);
-                    m_filter->updateChangeCommand(key);
                 }
                 m_filter->blockSignals(false);
             }
             emit keyframeAdded(name, position);
+            m_filter->endChangeCommand();
         }
         onFilterChanged(name);
     }
@@ -663,7 +671,7 @@ void KeyframesModel::setKeyframeValue(int parameterIndex, int keyframeIndex, dou
         LOG_ERROR() << "Invalid position" << parameterIndex << keyframeIndex;
         return;
     }
-
+    m_filter->startChangeModifyKeyframeCommand(parameterIndex, keyframeIndex);
     mlt_keyframe_type type = animation.key_get_type(keyframeIndex);
     m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(),
                                  type);
@@ -678,6 +686,7 @@ void KeyframesModel::setKeyframeValue(int parameterIndex, int keyframeIndex, dou
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << NumericValueRole << NameRole);
     emit dataChanged(index(parameterIndex), index(parameterIndex),
                      QVector<int>() << LowestValueRole << HighestValueRole);
+    m_filter->endChangeCommand();
 }
 
 void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value,
@@ -709,7 +718,7 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIn
         LOG_ERROR() << "Invalid key position" << parameterIndex << keyframeIndex << position;
         return;
     }
-
+    m_filter->startChangeModifyKeyframeCommand(parameterIndex, keyframeIndex);
     QVector<int> roles;
     int prevPosition = animation.key_get_frame(keyframeIndex);
     if (position != prevPosition) {
@@ -742,6 +751,7 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIn
     emit dataChanged(modelIndex, modelIndex, roles);
     emit dataChanged(index(parameterIndex), index(parameterIndex),
                      QVector<int>() << LowestValueRole << HighestValueRole);
+    m_filter->endChangeCommand();
 }
 
 bool KeyframesModel::isKeyframe(int parameterIndex, int position)

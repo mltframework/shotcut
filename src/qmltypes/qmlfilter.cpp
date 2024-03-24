@@ -43,8 +43,7 @@ QmlFilter::QmlFilter()
     , m_service(mlt_service(nullptr))
     , m_producer(mlt_producer(nullptr))
     , m_isNew(false)
-    , m_changeCommand(nullptr)
-    , m_changeCommandPushed(false)
+    , m_changeInProgress(0)
 {
     connect(this, SIGNAL(inChanged(int)), this, SIGNAL(durationChanged()));
     connect(this, SIGNAL(outChanged(int)), this, SIGNAL(durationChanged()));
@@ -57,10 +56,8 @@ QmlFilter::QmlFilter(Mlt::Service &mltService, const QmlMetadata *metadata, QObj
     , m_producer(mlt_producer(nullptr))
     , m_path(m_metadata->path().absolutePath().append('/'))
     , m_isNew(false)
-    , m_changeCommand(nullptr)
-    , m_changeCommandPushed(false)
+    , m_changeInProgress(false)
 {
-
     if (m_service.type() == mlt_service_filter_type) {
         // Every attached filter has a service property that points to the service to which it is attached.
         m_producer = Mlt::Producer(mlt_producer(m_service.is_valid() ? m_service.get_data("service") : 0));
@@ -72,10 +69,6 @@ QmlFilter::QmlFilter(Mlt::Service &mltService, const QmlMetadata *metadata, QObj
 
 QmlFilter::~QmlFilter()
 {
-    if (m_changeCommand && !m_changeCommandPushed) {
-        delete m_changeCommand;
-        m_changeCommand = nullptr;
-    }
 }
 
 QString QmlFilter::get(QString name, int position)
@@ -770,27 +763,121 @@ int QmlFilter::keyframeIndex(Mlt::Animation &animation, int position)
     return result;
 }
 
+void QmlFilter::startUndoTracking()
+{
+    m_previousState = Mlt::Properties();
+    m_previousState.inherit(m_service);
+    if (!m_previousState.property_exists(kShotcutAnimInProperty)) {
+        m_previousState.set(kShotcutAnimInProperty, 0);
+    }
+    if (!m_previousState.property_exists(kShotcutAnimOutProperty)) {
+        m_previousState.set(kShotcutAnimOutProperty, 0);
+    }
+}
+
+void QmlFilter::startChangeParameterCommand(const QString &desc)
+{
+    if (!m_previousState.count()) {
+//        LOG_DEBUG() << "Undo tracking has not started yet";
+        return;
+    }
+    m_changeInProgress++;
+    if (m_changeInProgress > 1) {
+//        LOG_DEBUG() << "Nested change command" << m_changeInProgress;
+        return;
+    }
+    auto command = new Filter::ChangeParameterCommand(m_metadata->name(),
+                                                      MAIN.filterController(), MAIN.filterController()->currentIndex(), m_previousState, desc);
+    MAIN.undoStack()->push(command);
+}
+
+void QmlFilter::startChangeAddKeyframeCommand()
+{
+    if (!m_previousState.count()) {
+//        LOG_DEBUG() << "Undo tracking has not started yet";
+        return;
+    }
+    m_changeInProgress++;
+    if (m_changeInProgress > 1) {
+//        LOG_DEBUG() << "Nested change command" << m_changeInProgress;
+        return;
+    }
+    auto command = new Filter::ChangeAddKeyframeCommand(m_metadata->name(),
+                                                        MAIN.filterController(), MAIN.filterController()->currentIndex(), m_previousState);
+    MAIN.undoStack()->push(command);
+}
+
+void QmlFilter::startChangeRemoveKeyframeCommand()
+{
+    if (!m_previousState.count()) {
+//        LOG_DEBUG() << "Undo tracking has not started yet";
+        return;
+    }
+    m_changeInProgress++;
+    if (m_changeInProgress > 1) {
+//        LOG_DEBUG() << "Nested change command" << m_changeInProgress;
+        return;
+    }
+    auto command = new Filter::ChangeRemoveKeyframeCommand(
+        m_metadata->name(), MAIN.filterController(), MAIN.filterController()->currentIndex(),
+        m_previousState);
+    MAIN.undoStack()->push(command);
+}
+
+void QmlFilter::startChangeModifyKeyframeCommand(int paramIndex, int keyframeIndex)
+{
+    if (!m_previousState.count()) {
+//        LOG_DEBUG() << "Undo tracking has not started yet";
+        return;
+    }
+    m_changeInProgress++;
+    if (m_changeInProgress > 1) {
+        //        LOG_DEBUG() << "Nested change command" << m_changeInProgress;
+        return;
+    }
+    auto command = new Filter::ChangeModifyKeyframeCommand(
+        m_metadata->name(), MAIN.filterController(), MAIN.filterController()->currentIndex(),
+        m_previousState, paramIndex, keyframeIndex);
+    MAIN.undoStack()->push(command);
+}
+
 void QmlFilter::updateChangeCommand(const QString &name)
 {
-    if (m_changeCommand) {
-        if (m_changeCommandPushed) {
-            // Check if other commands have been pushed since this change command was pushed.
-            // If so, push a new command.
-            const QUndoCommand *lastCommand = MAIN.undoStack()->command(MAIN.undoStack()->count() - 1);
-            if (dynamic_cast<const Filter::ChangeParameterCommand *>(lastCommand) != m_changeCommand) {
-                // Need to push a new change command
-                m_changeCommand = m_changeCommand->resumeWithNewCommand();
-                m_changeCommandPushed = false;
-            }
-        }
-        m_changeCommand->update(name);
-        if (!m_changeCommandPushed) {
-            MAIN.undoStack()->push(m_changeCommand);
-            auto index = MAIN.undoStack()->count() - 1;
-            m_changeCommand = (Filter::ChangeParameterCommand *) MAIN.undoStack()->command(index);
-            m_changeCommandPushed = true;
-        }
+    if (!m_previousState.count()) {
+//        LOG_DEBUG() << "Undo tracking has not started yet";
+        return;
     }
+    if (m_changeInProgress) {
+        const QUndoCommand *lastCommand = MAIN.undoStack()->command(MAIN.undoStack()->count() - 1);
+        Filter::ChangeParameterCommand *command = dynamic_cast<Filter::ChangeParameterCommand *>
+                                                  (const_cast<QUndoCommand *>(lastCommand));
+        if (command) {
+            // Update the change that is already in progress
+            command->update(name);
+        } else {
+            LOG_ERROR() << "Unable to find command in progress";
+            return;
+        }
+    } else {
+        // Nothing in progress... make a generic command for this update
+        auto command = new Filter::ChangeParameterCommand(m_metadata->name(), MAIN.filterController(),
+                                                          MAIN.filterController()->currentIndex(), m_previousState);
+        MAIN.undoStack()->push(command);
+    }
+    m_previousState.pass_property(m_service, name.toUtf8().constData());
+}
+
+void QmlFilter::endChangeCommand()
+{
+    if (!m_previousState.count()) {
+//        LOG_DEBUG() << "Undo tracking has not started yet";
+        return;
+    }
+    if (!m_changeInProgress) {
+        LOG_ERROR() << "Change is not in progress";
+        return;
+    }
+    m_changeInProgress--;
 }
 
 mlt_keyframe_type QmlFilter::getKeyframeType(Mlt::Animation &animation, int position,
@@ -864,14 +951,6 @@ bool QmlFilter::allowAnimateOut() const
     if (m_metadata && m_metadata->keyframes())
         return m_metadata->keyframes()->allowAnimateOut();
     return false;
-}
-
-void QmlFilter::startUndoTracking(FilterController *controller, int row)
-{
-    if (m_changeCommand) {
-        delete m_changeCommand;
-    }
-    m_changeCommand = new Filter::ChangeParameterCommand(m_metadata->name(), controller, row);
 }
 
 void QmlFilter::copyParameters()

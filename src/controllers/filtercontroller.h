@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,6 +51,10 @@ public:
     }
     bool isOutputTrackSelected() const;
     void onUndoOrRedo(Mlt::Service &service);
+    int currentIndex() const
+    {
+        return m_currentFilterIndex;
+    }
 
 protected:
     void timerEvent(QTimerEvent *);

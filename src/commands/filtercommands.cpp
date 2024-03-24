@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2023 Meltytech, LLC
+ * Copyright (c) 2021-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -338,28 +338,21 @@ bool DisableCommand::mergeWith(const QUndoCommand *other)
 }
 
 ChangeParameterCommand::ChangeParameterCommand(const QString &name, FilterController *controller,
-                                               int row, QUndoCommand *parent)
+                                               int row, Mlt::Properties &before, const QString &desc, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_filterController(controller)
     , m_row(row)
     , m_producerUuid(MLT.ensureHasUuid(*controller->attachedModel()->producer()))
     , m_firstRedo(true)
 {
-    setText(QObject::tr("Change %1 filter").arg(name));
+    if (desc.isEmpty()) {
+        setText(QObject::tr("Change %1 filter").arg(name));
+    } else {
+        setText(QObject::tr("Change %1 filter: %2").arg(name).arg(desc));
+    }
+    m_before.inherit(before);
     Mlt::Service *service = controller->attachedModel()->getService(m_row);
-    m_before.inherit(*service);
-    if (!m_before.property_exists(kShotcutAnimInProperty)) {
-        m_before.set(kShotcutAnimInProperty, 0);
-    }
-    if (!m_before.property_exists(kShotcutAnimOutProperty)) {
-        m_before.set(kShotcutAnimOutProperty, 0);
-    }
     m_after.inherit(*service);
-}
-
-ChangeParameterCommand::ChangeParameterCommand(QUndoCommand *parent)
-    : QUndoCommand(parent)
-{
 }
 
 void ChangeParameterCommand::update(const QString &propertyName)
@@ -405,23 +398,11 @@ bool ChangeParameterCommand::mergeWith(const QUndoCommand *other)
     ChangeParameterCommand *that = const_cast<ChangeParameterCommand *>
                                    (static_cast<const ChangeParameterCommand *>(other));
     LOG_DEBUG() << "this filter" << m_row << "that filter" << that->m_row;
-    if (that->id() != id() || that->m_row != m_row || that->m_producerUuid != m_producerUuid)
+    if (that->id() != id() || that->m_row != m_row || that->m_producerUuid != m_producerUuid
+            || that->text() != text())
         return false;
     m_after = that->m_after;
     return true;
-}
-
-ChangeParameterCommand *ChangeParameterCommand::resumeWithNewCommand()
-{
-    ChangeParameterCommand *newCommand = new ChangeParameterCommand();
-    newCommand->m_row = m_row;
-    newCommand->m_producerUuid = m_producerUuid;
-    newCommand->m_before.inherit(m_after);
-    newCommand->m_after.inherit(m_after);
-    newCommand->m_filterController = m_filterController;
-    newCommand->m_firstRedo = true;
-    newCommand->setText(text());
-    return newCommand;
 }
 
 } // namespace Filter

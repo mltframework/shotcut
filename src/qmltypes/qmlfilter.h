@@ -35,9 +35,6 @@ class AbstractJob;
 class EncodeJob;
 class QUndoCommand;
 class FilterController;
-namespace Filter {
-class ChangeParameterCommand;
-}
 
 class QmlFilter : public QObject
 {
@@ -139,13 +136,21 @@ public:
     bool allowAnimateIn() const;
     bool allowAnimateOut() const;
     Q_INVOKABLE void crop(const QRectF &rect);
-    void startUndoTracking(FilterController *controller, int row);
+
     Q_INVOKABLE void copyParameters();
     Q_INVOKABLE void pasteParameters(const QStringList &propertyNames);
 
+    // Functions for undo/redo
+    void startUndoTracking();
+    Q_INVOKABLE void startChangeParameterCommand(const QString &desc = QString());
+    void startChangeAddKeyframeCommand();
+    void startChangeRemoveKeyframeCommand();
+    void startChangeModifyKeyframeCommand(int paramIndex, int keyframeIndex);
+    void updateChangeCommand(const QString &name);
+    Q_INVOKABLE void endChangeCommand();
+
 public slots:
     void preset(const QString &name);
-    void updateChangeCommand(const QString &name);
 
 signals:
     void presetsChanged();
@@ -166,8 +171,8 @@ private:
     QString m_path;
     bool m_isNew;
     QStringList m_presets;
-    Filter::ChangeParameterCommand *m_changeCommand;
-    bool m_changeCommandPushed;
+    Mlt::Properties m_previousState;
+    int m_changeInProgress;
 
     QString objectNameOrService();
     int keyframeIndex(Mlt::Animation &animation, int position);

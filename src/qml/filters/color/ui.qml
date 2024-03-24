@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -120,6 +120,7 @@ Item {
 
         // Row 1
         Label {
+            id: presetLabel
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
@@ -128,6 +129,7 @@ Item {
             Layout.columnSpan: 8
             parameters: defaultParameters
             onBeforePresetLoaded: {
+                filter.startChangeParameterCommand(presetLabel.text);
                 filter.resetProperty('lift_r');
                 filter.resetProperty('lift_g');
                 filter.resetProperty('lift_b');
@@ -140,11 +142,13 @@ Item {
             }
             onPresetSelected: {
                 loadValues();
+                filter.endChangeCommand();
             }
         }
 
         // Row 2
         Label {
+            id: liftLabel
             text: qsTr('Shadows (Lift)')
         }
 
@@ -164,6 +168,7 @@ Item {
 
             Layout.alignment: Qt.AlignLeft
             onToggled: {
+                filter.startChangeParameterCommand(liftLabel.text);
                 if (checked) {
                     filter.set('lift_r', liftwheel.redF * 2 - 1, getPosition());
                     filter.set('lift_g', liftwheel.greenF * 2 - 1, getPosition());
@@ -176,10 +181,12 @@ Item {
                     filter.set('lift_g', liftwheel.greenF * 2 - 1);
                     filter.set('lift_b', liftwheel.blueF * 2 - 1);
                 }
+                filter.endChangeCommand();
             }
         }
 
         Label {
+            id: gammaLabel
             text: qsTr('Midtones (Gamma)')
         }
 
@@ -199,6 +206,7 @@ Item {
 
             Layout.alignment: Qt.AlignLeft
             onToggled: {
+                filter.startChangeParameterCommand(gammaLabel.text);
                 if (checked) {
                     filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, gammaFactor), getPosition());
                     filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor), getPosition());
@@ -211,10 +219,12 @@ Item {
                     filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor));
                     filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, gammaFactor));
                 }
+                filter.endChangeCommand();
             }
         }
 
         Label {
+            id: gainLabel
             text: qsTr('Highlights (Gain)')
         }
 
@@ -234,6 +244,7 @@ Item {
 
             Layout.alignment: Qt.AlignLeft
             onToggled: {
+                filter.startChangeParameterCommand(gainLabel.text);
                 if (checked) {
                     filter.set('gain_r', scaleWheelToValue(gainwheel.redF, gainFactor), getPosition());
                     filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor), getPosition());
@@ -246,6 +257,7 @@ Item {
                     filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor));
                     filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, gainFactor));
                 }
+                filter.endChangeCommand();
             }
         }
 
@@ -268,6 +280,7 @@ Item {
                 if (liftBlueSpinner.value != wheelToSpinner(liftwheel.blueF))
                     liftBlueSpinner.value = wheelToSpinner(liftwheel.blueF);
                 if (!blockUpdate) {
+                    filter.startChangeParameterCommand(liftLabel.text);
                     if (!liftKeyframesButton.checked) {
                         filter.resetProperty('lift_r');
                         filter.resetProperty('lift_g');
@@ -281,6 +294,7 @@ Item {
                         filter.set('lift_g', liftwheel.greenF * 2 - 1, position);
                         filter.set('lift_b', liftwheel.blueF * 2 - 1, position);
                     }
+                    filter.endChangeCommand();
                 }
             }
         }
@@ -303,6 +317,7 @@ Item {
                 if (gammaBlueSpinner.value != wheelToSpinner(gammawheel.blueF))
                     gammaBlueSpinner.value = wheelToSpinner(gammawheel.blueF);
                 if (!blockUpdate) {
+                    filter.startChangeParameterCommand(gammaLabel.text);
                     if (!gammaKeyframesButton.checked) {
                         filter.resetProperty('gamma_r');
                         filter.resetProperty('gamma_g');
@@ -316,6 +331,7 @@ Item {
                         filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor), position);
                         filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, gammaFactor), position);
                     }
+                    filter.endChangeCommand();
                 }
             }
         }
@@ -338,6 +354,7 @@ Item {
                 if (gainBlueSpinner.value != wheelToSpinner(gainwheel.blueF))
                     gainBlueSpinner.value = wheelToSpinner(gainwheel.blueF);
                 if (!blockUpdate) {
+                    filter.startChangeParameterCommand(gainLabel.text);
                     if (!gainKeyframesButton.checked) {
                         filter.resetProperty('gain_r');
                         filter.resetProperty('gain_g');
@@ -351,6 +368,7 @@ Item {
                         filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor), position);
                         filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, gainFactor), position);
                     }
+                    filter.endChangeCommand();
                 }
             }
         }
