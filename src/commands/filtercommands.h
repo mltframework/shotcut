@@ -124,11 +124,11 @@ private:
     bool m_disabled;
 };
 
-class ChangeParameterCommand : public QUndoCommand
+class UndoParameterCommand : public QUndoCommand
 {
 public:
-    ChangeParameterCommand(const QString &name, FilterController *controller, int row,
-                           Mlt::Properties  &before, const QString &desc = QString(), QUndoCommand *parent = 0);
+    UndoParameterCommand(const QString &name, FilterController *controller, int row,
+                         Mlt::Properties  &before, const QString &desc = QString(), QUndoCommand *parent = 0);
     void update(const QString &propertyName);
     void redo();
     void undo();
@@ -147,12 +147,12 @@ private:
     bool m_firstRedo;
 };
 
-class ChangeAddKeyframeCommand : public ChangeParameterCommand
+class UndoAddKeyframeCommand : public UndoParameterCommand
 {
 public:
-    ChangeAddKeyframeCommand(const QString &name, FilterController *controller, int row,
-                             Mlt::Properties &before)
-        : ChangeParameterCommand(name, controller, row, before, QObject::tr("add keyframe"))
+    UndoAddKeyframeCommand(const QString &name, FilterController *controller, int row,
+                           Mlt::Properties &before)
+        : UndoParameterCommand(name, controller, row, before, QObject::tr("add keyframe"))
     {}
 protected:
     int id() const
@@ -165,12 +165,12 @@ protected:
     }
 };
 
-class ChangeRemoveKeyframeCommand : public ChangeParameterCommand
+class UndoRemoveKeyframeCommand : public UndoParameterCommand
 {
 public:
-    ChangeRemoveKeyframeCommand(const QString &name, FilterController *controller, int row,
-                                Mlt::Properties &before)
-        : ChangeParameterCommand(name, controller, row, before, QObject::tr("remove keyframe"))
+    UndoRemoveKeyframeCommand(const QString &name, FilterController *controller, int row,
+                              Mlt::Properties &before)
+        : UndoParameterCommand(name, controller, row, before, QObject::tr("remove keyframe"))
     {}
 protected:
     int id() const
@@ -183,12 +183,12 @@ protected:
     }
 };
 
-class ChangeModifyKeyframeCommand : public ChangeParameterCommand
+class UndoModifyKeyframeCommand : public UndoParameterCommand
 {
 public:
-    ChangeModifyKeyframeCommand(const QString &name, FilterController *controller, int row,
-                                Mlt::Properties &before, int paramIndex, int keyframeIndex)
-        : ChangeParameterCommand(name, controller, row, before, QObject::tr("modify keyframe"))
+    UndoModifyKeyframeCommand(const QString &name, FilterController *controller, int row,
+                              Mlt::Properties &before, int paramIndex, int keyframeIndex)
+        : UndoParameterCommand(name, controller, row, before, QObject::tr("modify keyframe"))
         , m_paramIndex(paramIndex)
         , m_keyframeIndex(keyframeIndex)
     {}
@@ -199,11 +199,11 @@ protected:
     }
     bool mergeWith(const QUndoCommand *other)
     {
-        auto *that = dynamic_cast<const ChangeModifyKeyframeCommand *>(other);
+        auto *that = dynamic_cast<const UndoModifyKeyframeCommand *>(other);
         if (!that || m_paramIndex != that->m_paramIndex || m_keyframeIndex != that->m_keyframeIndex)
             return false;
         else
-            return ChangeParameterCommand::mergeWith(other);
+            return UndoParameterCommand::mergeWith(other);
     }
 
 private:

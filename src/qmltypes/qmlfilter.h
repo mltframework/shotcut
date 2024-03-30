@@ -142,12 +142,12 @@ public:
 
     // Functions for undo/redo
     void startUndoTracking();
-    Q_INVOKABLE void startChangeParameterCommand(const QString &desc = QString());
-    void startChangeAddKeyframeCommand();
-    void startChangeRemoveKeyframeCommand();
-    void startChangeModifyKeyframeCommand(int paramIndex, int keyframeIndex);
-    void updateChangeCommand(const QString &name);
-    Q_INVOKABLE void endChangeCommand();
+    Q_INVOKABLE void startUndoParameterCommand(const QString &desc = QString());
+    void startUndoAddKeyframeCommand();
+    void startUndoRemoveKeyframeCommand();
+    void startUndoModifyKeyframeCommand(int paramIndex, int keyframeIndex);
+    void updateUndoCommand(const QString &name);
+    Q_INVOKABLE void endUndoCommand();
 
 public slots:
     void preset(const QString &name);

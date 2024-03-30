@@ -337,8 +337,8 @@ bool DisableCommand::mergeWith(const QUndoCommand *other)
     */
 }
 
-ChangeParameterCommand::ChangeParameterCommand(const QString &name, FilterController *controller,
-                                               int row, Mlt::Properties &before, const QString &desc, QUndoCommand *parent)
+UndoParameterCommand::UndoParameterCommand(const QString &name, FilterController *controller,
+                                           int row, Mlt::Properties &before, const QString &desc, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_filterController(controller)
     , m_row(row)
@@ -355,13 +355,13 @@ ChangeParameterCommand::ChangeParameterCommand(const QString &name, FilterContro
     m_after.inherit(*service);
 }
 
-void ChangeParameterCommand::update(const QString &propertyName)
+void UndoParameterCommand::update(const QString &propertyName)
 {
     Mlt::Service *service = m_filterController->attachedModel()->getService(m_row);
     m_after.pass_property(*service, propertyName.toUtf8().constData());
 }
 
-void ChangeParameterCommand::redo()
+void UndoParameterCommand::redo()
 {
     LOG_DEBUG() << text();
     if (m_firstRedo) {
@@ -377,26 +377,22 @@ void ChangeParameterCommand::redo()
     }
 }
 
-void ChangeParameterCommand::undo()
+void UndoParameterCommand::undo()
 {
     LOG_DEBUG() << text();
     Mlt::Producer producer = findProducer(m_producerUuid);
     Q_ASSERT(producer.is_valid());
     if (producer.is_valid() && m_filterController) {
         Mlt::Service service = m_filterController->attachedModel()->doGetService(producer, m_row);
-        service.debug("current");
-        m_before.debug("before");
-
         service.inherit(m_before);
-        service.debug("after");
         m_filterController->onUndoOrRedo(service);
     }
 }
 
-bool ChangeParameterCommand::mergeWith(const QUndoCommand *other)
+bool UndoParameterCommand::mergeWith(const QUndoCommand *other)
 {
-    ChangeParameterCommand *that = const_cast<ChangeParameterCommand *>
-                                   (static_cast<const ChangeParameterCommand *>(other));
+    UndoParameterCommand *that = const_cast<UndoParameterCommand *>
+                                 (static_cast<const UndoParameterCommand *>(other));
     LOG_DEBUG() << "this filter" << m_row << "that filter" << that->m_row;
     if (that->id() != id() || that->m_row != m_row || that->m_producerUuid != m_producerUuid
             || that->text() != text())
