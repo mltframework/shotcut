@@ -180,7 +180,7 @@ void QmlFilter::set(QString name, QString value, int position)
         if (qstrcmp(m_service.get(qUtf8Printable(name)), qUtf8Printable(value)))  {
             m_service.set_string(qUtf8Printable(name), qUtf8Printable(value)) ;
             emit changed(name);
-            updateChangeCommand(name);
+            updateUndoCommand(name);
         }
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
@@ -189,7 +189,7 @@ void QmlFilter::set(QString name, QString value, int position)
                 || value != m_service.anim_get(qUtf8Printable(name), position, duration())) {
             m_service.anim_set(qUtf8Printable(name), qUtf8Printable(value), position, duration());
             emit changed(name);
-            updateChangeCommand(name);
+            updateUndoCommand(name);
         }
     }
 }
@@ -203,7 +203,7 @@ void QmlFilter::set(QString name, const QColor &value, int position, mlt_keyfram
                 || value != QColor(mltColor.r, mltColor.g, mltColor.b, mltColor.a)) {
             m_service.set(qUtf8Printable(name), Util::mltColorFromQColor(value));
             emit changed(name);
-            updateChangeCommand(name);
+            updateUndoCommand(name);
         }
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
@@ -213,7 +213,7 @@ void QmlFilter::set(QString name, const QColor &value, int position, mlt_keyfram
                 || value != QColor(mltColor.r, mltColor.g, mltColor.b, mltColor.a)) {
             m_service.anim_set(qUtf8Printable(name), Util::mltColorFromQColor(value), position, duration());
             emit changed(name);
-            updateChangeCommand(name);
+            updateUndoCommand(name);
         }
     }
 }
@@ -232,7 +232,7 @@ void QmlFilter::set(QString name, double value, int position, mlt_keyframe_type 
             } else if (name == "out") {
                 emit outChanged(delta);
             }
-            updateChangeCommand(name);
+            updateUndoCommand(name);
         }
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
@@ -242,7 +242,7 @@ void QmlFilter::set(QString name, double value, int position, mlt_keyframe_type 
             mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
             m_service.anim_set(qUtf8Printable(name), value, position, duration(), type);
             emit changed(name);
-            updateChangeCommand(name);
+            updateUndoCommand(name);
         }
     }
 }
@@ -261,7 +261,7 @@ void QmlFilter::set(QString name, int value, int position, mlt_keyframe_type key
             } else if (name == "out") {
                 emit outChanged(delta);
             }
-            updateChangeCommand(name);
+            updateUndoCommand(name);
         }
     } else {
         // Only set an animation keyframe if it does not already exist with the same value.
@@ -271,7 +271,7 @@ void QmlFilter::set(QString name, int value, int position, mlt_keyframe_type key
             mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
             m_service.anim_set(qUtf8Printable(name), value, position, duration(), type);
             emit changed(name);
-            updateChangeCommand(name);
+            updateUndoCommand(name);
         }
     }
 }
@@ -291,7 +291,7 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
                 || width != rect.w || height != rect.h || opacity != rect.o) {
             m_service.set(qUtf8Printable(name), x, y, width, height, opacity);
             emit changed(name);
-            updateChangeCommand(name);
+            updateUndoCommand(name);
         }
     } else {
         mlt_rect rect = m_service.anim_get_rect(qUtf8Printable(name), position, duration());
@@ -311,7 +311,7 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
             mlt_keyframe_type type = getKeyframeType(animation, position, keyframeType);
             m_service.anim_set(qUtf8Printable(name), rect, position, duration(), type);
             emit changed(name);
-            updateChangeCommand(name);
+            updateUndoCommand(name);
         }
     }
 }
@@ -327,7 +327,7 @@ void QmlFilter::setGradient(QString name, const QStringList &gradient)
         }
     }
     emit changed(name.toUtf8().constData());
-    updateChangeCommand(name);
+    updateUndoCommand(name);
 }
 
 void QmlFilter::set(QString name, const QRectF &rect, int position, mlt_keyframe_type keyframeType)
@@ -601,7 +601,7 @@ void QmlFilter::setAnimateIn(int value)
                 }
             }
         }
-        updateChangeCommand(kShotcutAnimInProperty);
+        updateUndoCommand(kShotcutAnimInProperty);
         emit animateInChanged();
     }
 }
@@ -630,7 +630,7 @@ void QmlFilter::setAnimateOut(int value)
                 }
             }
         }
-        updateChangeCommand(kShotcutAnimOutProperty);
+        updateUndoCommand(kShotcutAnimOutProperty);
         emit animateOutChanged();
     }
 }
@@ -775,7 +775,7 @@ void QmlFilter::startUndoTracking()
     }
 }
 
-void QmlFilter::startChangeParameterCommand(const QString &desc)
+void QmlFilter::startUndoParameterCommand(const QString &desc)
 {
     if (!m_previousState.count()) {
 //        LOG_DEBUG() << "Undo tracking has not started yet";
@@ -786,12 +786,12 @@ void QmlFilter::startChangeParameterCommand(const QString &desc)
 //        LOG_DEBUG() << "Nested change command" << m_changeInProgress;
         return;
     }
-    auto command = new Filter::ChangeParameterCommand(m_metadata->name(),
-                                                      MAIN.filterController(), MAIN.filterController()->currentIndex(), m_previousState, desc);
+    auto command = new Filter::UndoParameterCommand(m_metadata->name(),
+                                                    MAIN.filterController(), MAIN.filterController()->currentIndex(), m_previousState, desc);
     MAIN.undoStack()->push(command);
 }
 
-void QmlFilter::startChangeAddKeyframeCommand()
+void QmlFilter::startUndoAddKeyframeCommand()
 {
     if (!m_previousState.count()) {
 //        LOG_DEBUG() << "Undo tracking has not started yet";
@@ -802,12 +802,12 @@ void QmlFilter::startChangeAddKeyframeCommand()
 //        LOG_DEBUG() << "Nested change command" << m_changeInProgress;
         return;
     }
-    auto command = new Filter::ChangeAddKeyframeCommand(m_metadata->name(),
-                                                        MAIN.filterController(), MAIN.filterController()->currentIndex(), m_previousState);
+    auto command = new Filter::UndoAddKeyframeCommand(m_metadata->name(),
+                                                      MAIN.filterController(), MAIN.filterController()->currentIndex(), m_previousState);
     MAIN.undoStack()->push(command);
 }
 
-void QmlFilter::startChangeRemoveKeyframeCommand()
+void QmlFilter::startUndoRemoveKeyframeCommand()
 {
     if (!m_previousState.count()) {
 //        LOG_DEBUG() << "Undo tracking has not started yet";
@@ -818,13 +818,13 @@ void QmlFilter::startChangeRemoveKeyframeCommand()
 //        LOG_DEBUG() << "Nested change command" << m_changeInProgress;
         return;
     }
-    auto command = new Filter::ChangeRemoveKeyframeCommand(
+    auto command = new Filter::UndoRemoveKeyframeCommand(
         m_metadata->name(), MAIN.filterController(), MAIN.filterController()->currentIndex(),
         m_previousState);
     MAIN.undoStack()->push(command);
 }
 
-void QmlFilter::startChangeModifyKeyframeCommand(int paramIndex, int keyframeIndex)
+void QmlFilter::startUndoModifyKeyframeCommand(int paramIndex, int keyframeIndex)
 {
     if (!m_previousState.count()) {
 //        LOG_DEBUG() << "Undo tracking has not started yet";
@@ -835,13 +835,13 @@ void QmlFilter::startChangeModifyKeyframeCommand(int paramIndex, int keyframeInd
         //        LOG_DEBUG() << "Nested change command" << m_changeInProgress;
         return;
     }
-    auto command = new Filter::ChangeModifyKeyframeCommand(
+    auto command = new Filter::UndoModifyKeyframeCommand(
         m_metadata->name(), MAIN.filterController(), MAIN.filterController()->currentIndex(),
         m_previousState, paramIndex, keyframeIndex);
     MAIN.undoStack()->push(command);
 }
 
-void QmlFilter::updateChangeCommand(const QString &name)
+void QmlFilter::updateUndoCommand(const QString &name)
 {
     if (!m_previousState.count()) {
 //        LOG_DEBUG() << "Undo tracking has not started yet";
@@ -849,8 +849,8 @@ void QmlFilter::updateChangeCommand(const QString &name)
     }
     if (m_changeInProgress) {
         const QUndoCommand *lastCommand = MAIN.undoStack()->command(MAIN.undoStack()->count() - 1);
-        Filter::ChangeParameterCommand *command = dynamic_cast<Filter::ChangeParameterCommand *>
-                                                  (const_cast<QUndoCommand *>(lastCommand));
+        Filter::UndoParameterCommand *command = dynamic_cast<Filter::UndoParameterCommand *>
+                                                (const_cast<QUndoCommand *>(lastCommand));
         if (command) {
             // Update the change that is already in progress
             command->update(name);
@@ -860,14 +860,14 @@ void QmlFilter::updateChangeCommand(const QString &name)
         }
     } else {
         // Nothing in progress... make a generic command for this update
-        auto command = new Filter::ChangeParameterCommand(m_metadata->name(), MAIN.filterController(),
-                                                          MAIN.filterController()->currentIndex(), m_previousState);
+        auto command = new Filter::UndoParameterCommand(m_metadata->name(), MAIN.filterController(),
+                                                        MAIN.filterController()->currentIndex(), m_previousState);
         MAIN.undoStack()->push(command);
     }
     m_previousState.pass_property(m_service, name.toUtf8().constData());
 }
 
-void QmlFilter::endChangeCommand()
+void QmlFilter::endUndoCommand()
 {
     if (!m_previousState.count()) {
 //        LOG_DEBUG() << "Undo tracking has not started yet";

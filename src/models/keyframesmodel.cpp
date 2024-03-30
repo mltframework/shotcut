@@ -373,9 +373,9 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
             int frame_num = animation.key_get_frame(keyframeIndex);
             error = animation.remove(frame_num);
             if (!error) {
-                m_filter->startChangeRemoveKeyframeCommand();
+                m_filter->startUndoRemoveKeyframeCommand();
                 animation.interpolate();
-                m_filter->updateChangeCommand(name);
+                m_filter->updateUndoCommand(name);
                 beginRemoveRows(index(parameterIndex), keyframeIndex, keyframeIndex);
                 m_keyframeCounts[parameterIndex] -= 1;
                 endRemoveRows();
@@ -383,7 +383,7 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                     Mlt::Animation animation = m_filter->getAnimation(key);
                     if (animation.is_valid() && !animation.remove(frame_num)) {
                         animation.interpolate();
-                        m_filter->updateChangeCommand(key);
+                        m_filter->updateUndoCommand(key);
                     }
                 }
                 mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
@@ -400,7 +400,7 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                 emit dataChanged(index(parameterIndex), index(parameterIndex),
                                  QVector<int>() << LowestValueRole << HighestValueRole);
                 emit m_filter->changed(name.toUtf8().constData());
-                m_filter->endChangeCommand();
+                m_filter->endUndoCommand();
             }
         }
     }
@@ -474,13 +474,13 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
         if (animation.is_valid()) {
             if (!animation.key_set_type(keyframeIndex, mlt_keyframe_type(type))) {
 //                LOG_DEBUG() << "keyframe index" << keyframeIndex << "keyframe type" << type;
-                m_filter->startChangeModifyKeyframeCommand(parameterIndex, keyframeIndex);
-                m_filter->updateChangeCommand(name);
+                m_filter->startUndoModifyKeyframeCommand(parameterIndex, keyframeIndex);
+                m_filter->updateUndoCommand(name);
                 for (auto &key : gangedProperties(parameterIndex)) {
                     Mlt::Animation animation = m_filter->getAnimation(key);
                     if (animation.is_valid()) {
                         animation.key_set_type(keyframeIndex, mlt_keyframe_type(type));
-                        m_filter->updateChangeCommand(key);
+                        m_filter->updateUndoCommand(key);
                     }
                 }
                 mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
@@ -492,7 +492,7 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
                 error = false;
                 emit m_filter->changed(name.toUtf8().constData());
                 emit m_filter->propertyChanged(name.toUtf8().constData());
-                m_filter->endChangeCommand();
+                m_filter->endUndoCommand();
             }
         }
     }
@@ -542,13 +542,13 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
         return;
     }
 
-    m_filter->startChangeModifyKeyframeCommand(parameterIndex, keyframeIndex);
-    m_filter->updateChangeCommand(name);
+    m_filter->startUndoModifyKeyframeCommand(parameterIndex, keyframeIndex);
+    m_filter->updateUndoCommand(name);
     for (auto &key : gangedProperties(parameterIndex)) {
         Mlt::Animation animation = m_filter->getAnimation(key);
         if (animation.is_valid()) {
             animation.key_set_frame(keyframeIndex, position);
-            m_filter->updateChangeCommand(key);
+            m_filter->updateUndoCommand(key);
         }
     }
     mlt_event_data eventData = mlt_event_data_from_string(name.toUtf8().constData());
@@ -558,7 +558,7 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
     updateNeighborsMinMax(parameterIndex, keyframeIndex);
     emit m_filter->changed(name.toUtf8().constData());
     emit m_filter->propertyChanged(name.toUtf8().constData());
-    m_filter->endChangeCommand();
+    m_filter->endUndoCommand();
 }
 
 void KeyframesModel::addKeyframe(int parameterIndex, double value, int position,
@@ -566,14 +566,14 @@ void KeyframesModel::addKeyframe(int parameterIndex, double value, int position,
 {
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
-        m_filter->startChangeAddKeyframeCommand();
+        m_filter->startUndoAddKeyframeCommand();
         m_filter->set(name, value, position,  mlt_keyframe_type(type));
-        m_filter->updateChangeCommand(name);
+        m_filter->updateUndoCommand(name);
         for (auto &key : gangedProperties(parameterIndex)) {
             m_filter->set(key, value, position,  mlt_keyframe_type(type));
-            m_filter->updateChangeCommand(key);
+            m_filter->updateUndoCommand(key);
         }
-        m_filter->endChangeCommand();
+        m_filter->endUndoCommand();
     }
 }
 
@@ -583,7 +583,7 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
         QString name = m_propertyNames[parameterIndex];
         auto parameter = m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex]);
         if (parameter->isRectangle()) {
-            m_filter->startChangeAddKeyframeCommand();
+            m_filter->startUndoAddKeyframeCommand();
             auto value = m_filter->getRect(name, position);
             Mlt::Animation anim = m_filter->getAnimation(name);
             if (anim.is_valid() && !anim.is_key(position)) {
@@ -593,9 +593,9 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 m_filter->blockSignals(false);
                 emit keyframeAdded(name, position);
             }
-            m_filter->endChangeCommand();
+            m_filter->endUndoCommand();
         } else if (parameter->isCurve()) {
-            m_filter->startChangeAddKeyframeCommand();
+            m_filter->startUndoAddKeyframeCommand();
             // Get the value from the existing position.
             double value = m_filter->getDouble(name, position);
             Mlt::Animation anim = m_filter->getAnimation(name);
@@ -618,10 +618,10 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 }
                 m_filter->blockSignals(false);
                 emit keyframeAdded(name, position);
-                m_filter->endChangeCommand();
+                m_filter->endUndoCommand();
             }
         } else if (parameter->isColor()) {
-            m_filter->startChangeAddKeyframeCommand();
+            m_filter->startUndoAddKeyframeCommand();
             // Color values
             auto value = m_filter->getColor(name, position);
             Mlt::Animation anim = m_filter->getAnimation(name);
@@ -636,7 +636,7 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 m_filter->blockSignals(false);
             }
             emit keyframeAdded(name, position);
-            m_filter->endChangeCommand();
+            m_filter->endUndoCommand();
         }
         onFilterChanged(name);
     }
@@ -671,14 +671,14 @@ void KeyframesModel::setKeyframeValue(int parameterIndex, int keyframeIndex, dou
         LOG_ERROR() << "Invalid position" << parameterIndex << keyframeIndex;
         return;
     }
-    m_filter->startChangeModifyKeyframeCommand(parameterIndex, keyframeIndex);
+    m_filter->startUndoModifyKeyframeCommand(parameterIndex, keyframeIndex);
     mlt_keyframe_type type = animation.key_get_type(keyframeIndex);
     m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(),
                                  type);
-    m_filter->updateChangeCommand(name);
+    m_filter->updateUndoCommand(name);
     for (auto &key : gangedProperties(parameterIndex)) {
         m_filter->service().anim_set(key.toUtf8().constData(), value, position, m_filter->duration(), type);
-        m_filter->updateChangeCommand(key);
+        m_filter->updateUndoCommand(key);
     }
     emit m_filter->changed(name.toUtf8().constData());
     emit m_filter->propertyChanged(name.toUtf8().constData());
@@ -686,7 +686,7 @@ void KeyframesModel::setKeyframeValue(int parameterIndex, int keyframeIndex, dou
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << NumericValueRole << NameRole);
     emit dataChanged(index(parameterIndex), index(parameterIndex),
                      QVector<int>() << LowestValueRole << HighestValueRole);
-    m_filter->endChangeCommand();
+    m_filter->endUndoCommand();
 }
 
 void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value,
@@ -718,7 +718,7 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIn
         LOG_ERROR() << "Invalid key position" << parameterIndex << keyframeIndex << position;
         return;
     }
-    m_filter->startChangeModifyKeyframeCommand(parameterIndex, keyframeIndex);
+    m_filter->startUndoModifyKeyframeCommand(parameterIndex, keyframeIndex);
     QVector<int> roles;
     int prevPosition = animation.key_get_frame(keyframeIndex);
     if (position != prevPosition) {
@@ -739,10 +739,10 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIn
     mlt_keyframe_type type = animation.key_get_type(keyframeIndex);
     m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(),
                                  type);
-    m_filter->updateChangeCommand(name);
+    m_filter->updateUndoCommand(name);
     for (auto &key : gangedProperties(parameterIndex)) {
         m_filter->service().anim_set(key.toUtf8().constData(), value, position, m_filter->duration(), type);
-        m_filter->updateChangeCommand(key);
+        m_filter->updateUndoCommand(key);
     }
     emit m_filter->changed(name.toUtf8().constData());
     emit m_filter->propertyChanged(name.toUtf8().constData());
@@ -751,7 +751,7 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIn
     emit dataChanged(modelIndex, modelIndex, roles);
     emit dataChanged(index(parameterIndex), index(parameterIndex),
                      QVector<int>() << LowestValueRole << HighestValueRole);
-    m_filter->endChangeCommand();
+    m_filter->endUndoCommand();
 }
 
 bool KeyframesModel::isKeyframe(int parameterIndex, int position)
@@ -782,10 +782,10 @@ void KeyframesModel::removeAdvancedKeyframes()
             QString name = m_metadata->keyframes()->parameter(i)->property();
             if (m_filter->keyframeCount(name) > 0) {
                 m_filter->set(name, m_filter->get(name, 0));
-                m_filter->updateChangeCommand(name);
+                m_filter->updateUndoCommand(name);
                 for (auto &key : m_metadata->keyframes()->parameter(i)->gangedProperties()) {
                     m_filter->set(key, m_filter->get(key, 0));
-                    m_filter->updateChangeCommand(key);
+                    m_filter->updateUndoCommand(key);
                 }
             }
         }
@@ -826,7 +826,7 @@ void KeyframesModel::removeSimpleKeyframes()
                 }
                 if (clearKeyframes) {
                     m_filter->set(name, firstValue);
-                    m_filter->updateChangeCommand(name);
+                    m_filter->updateUndoCommand(name);
                 }
             } else if (parameter->isColor()) {
                 auto firstValue = m_filter->getColor(name, 0);
@@ -842,11 +842,11 @@ void KeyframesModel::removeSimpleKeyframes()
                 }
                 if (clearKeyframes) {
                     m_filter->set(name, firstValue);
-                    m_filter->updateChangeCommand(name);
+                    m_filter->updateUndoCommand(name);
                     m_filter->blockSignals(true);
                     for (auto &key : parameter->gangedProperties()) {
                         m_filter->set(key, m_filter->getColor(key, 0));
-                        m_filter->updateChangeCommand(key);
+                        m_filter->updateUndoCommand(key);
                     }
                     m_filter->blockSignals(false);
                 }
@@ -864,11 +864,11 @@ void KeyframesModel::removeSimpleKeyframes()
                 }
                 if (clearKeyframes) {
                     m_filter->set(name, firstValue);
-                    m_filter->updateChangeCommand(name);
+                    m_filter->updateUndoCommand(name);
                     m_filter->blockSignals(true);
                     for (auto &key : parameter->gangedProperties()) {
                         m_filter->set(key, m_filter->getDouble(key, 0));
-                        m_filter->updateChangeCommand(key);
+                        m_filter->updateUndoCommand(key);
                     }
                     m_filter->blockSignals(false);
                 }
@@ -951,7 +951,7 @@ void KeyframesModel::trimFilterIn(int in)
         Mlt::Filter filter = service;
         MLT.adjustFilter(&filter, filter.get_in(), filter.get_out(), in - filter.get_in(), 0,
                          in - filter.get_in());
-        m_filter->updateChangeCommand("in");
+        m_filter->updateUndoCommand("in");
     }
 }
 
@@ -961,7 +961,7 @@ void KeyframesModel::trimFilterOut(int out)
     if (service.is_valid() && service.type() == mlt_service_filter_type) {
         Mlt::Filter filter = service;
         MLT.adjustFilter(&filter, filter.get_in(), filter.get_out(), 0, filter.get_out() - out, 0);
-        m_filter->updateChangeCommand("out");
+        m_filter->updateUndoCommand("out");
     }
 }
 
