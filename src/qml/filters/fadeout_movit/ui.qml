@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import org.shotcut.qml
 
 Item {
     property alias duration: timeSpinner.value
+    property bool _blockUpdate: false
 
     function updateFilter() {
         var filterDuration = producer.duration;
@@ -48,7 +49,9 @@ Item {
 
     Connections {
         function onAnimateOutChanged() {
+            _blockUpdate = true;
             duration = filter.animateOut;
+            _blockUpdate = false;
         }
 
         target: filter
@@ -60,6 +63,7 @@ Item {
 
         RowLayout {
             Label {
+                id: durationLabel
                 text: qsTr('Duration')
             }
 
@@ -69,8 +73,12 @@ Item {
                 minimumValue: 2
                 maximumValue: 5000
                 onValueChanged: {
+                    if (_blockUpdate)
+                        return;
+                    filter.startUndoParameterCommand(durationLabel.text);
                     filter.animateOut = duration;
                     updateFilter();
+                    filter.endUndoCommand();
                 }
                 onSetDefaultClicked: {
                     duration = Math.ceil(settings.videoOutDuration * profile.fps);

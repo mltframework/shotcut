@@ -498,7 +498,7 @@ Shotcut.VuiBase {
                     }
                 }
 
-                Behavior on width {
+                Behavior on width  {
                     NumberAnimation {
                         duration: 100
                     }

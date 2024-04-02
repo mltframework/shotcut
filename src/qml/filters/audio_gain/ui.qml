@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -162,6 +162,7 @@ Item {
         }
 
         Label {
+            id: levelLabel
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
@@ -173,7 +174,11 @@ Item {
             maximumValue: 24
             suffix: ' dB'
             decimals: 1
-            onValueChanged: updateFilter(getPosition())
+            onValueChanged: {
+                filter.startUndoParameterCommand(levelLabel.text);
+                updateFilter(getPosition());
+                filter.endUndoCommand();
+            }
         }
 
         Shotcut.UndoButton {
@@ -184,6 +189,7 @@ Item {
             id: gainKeyframesButton
 
             onToggled: {
+                filter.startUndoParameterCommand(levelLabel.text);
                 let value = gainSlider.value;
                 if (checked) {
                     blockUpdate = true;
@@ -194,6 +200,7 @@ Item {
                     filter.resetProperty('level');
                     filter.set('level', value);
                 }
+                filter.endUndoCommand();
             }
         }
 
