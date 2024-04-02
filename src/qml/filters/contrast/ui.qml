@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2023 Meltytech, LLC
+ * Copyright (c) 2016-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ Item {
     property var defaultParameters: ['gamma_r', 'gamma_g', 'gamma_b', 'gain_r', 'gain_g', 'gain_b']
     property double gammaFactor: 2
     property double gainFactor: 2
-    property bool blockUpdate: true
+    property bool _blockUpdate: true
     property double startValue: 0.5
     property double middleValue: 0.5
     property double endValue: 0.5
@@ -35,15 +35,15 @@ Item {
 
     function setControls() {
         var position = getPosition();
-        blockUpdate = true;
+        _blockUpdate = true;
         contrastSlider.value = filter.getDouble("gain_r", position) / gainFactor * 100;
         keyframesButton.checked = filter.keyframeCount('gain_r') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
-        blockUpdate = false;
+        _blockUpdate = false;
         contrastSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
     function updateFilter(position) {
-        if (blockUpdate)
+        if (_blockUpdate)
             return;
         var value = contrastSlider.getValue() / 100;
         if (position !== null) {
@@ -163,6 +163,7 @@ Item {
         }
 
         Label {
+            id: levelLabel
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
@@ -178,7 +179,13 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            onValueChanged: updateFilter(getPosition())
+            onValueChanged: {
+                if (_blockUpdate)
+                    return;
+                filter.startUndoParameterCommand(levelLabel.text);
+                updateFilter(getPosition());
+                filter.endUndoCommand();
+            }
         }
 
         Shotcut.UndoButton {
@@ -189,8 +196,11 @@ Item {
             id: keyframesButton
 
             onToggled: {
+                if (_blockUpdate)
+                    return;
+                filter.startUndoParameterCommand(levelLabel.text);
                 var value = contrastSlider.getValue() / 100;
-                blockUpdate = true;
+                _blockUpdate = true;
                 filter.blockSignals = true;
                 filter.resetProperty('gamma_r');
                 filter.resetProperty('gamma_g');
@@ -201,7 +211,7 @@ Item {
                 filter.blockSignals = false;
                 if (checked) {
                     filter.animateIn = filter.animateOut = 0;
-                    blockUpdate = false;
+                    _blockUpdate = false;
                     var position = getPosition();
                     filter.set("gamma_r", (1 - value) * gammaFactor, position);
                     filter.set("gamma_g", (1 - value) * gammaFactor, position);
@@ -210,7 +220,7 @@ Item {
                     filter.set("gain_g", value * gainFactor, position);
                     filter.set("gain_b", value * gainFactor, position);
                 } else {
-                    blockUpdate = false;
+                    _blockUpdate = false;
                     filter.set("gamma_r", (1 - value) * gammaFactor);
                     filter.set("gamma_g", (1 - value) * gammaFactor);
                     filter.set("gamma_b", (1 - value) * gammaFactor);
@@ -218,6 +228,7 @@ Item {
                     filter.set("gain_g", value * gainFactor);
                     filter.set("gain_b", value * gainFactor);
                 }
+                filter.endUndoCommand();
             }
         }
 

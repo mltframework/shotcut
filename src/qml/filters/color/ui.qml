@@ -120,7 +120,6 @@ Item {
 
         // Row 1
         Label {
-            id: presetLabel
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
@@ -129,7 +128,6 @@ Item {
             Layout.columnSpan: 8
             parameters: defaultParameters
             onBeforePresetLoaded: {
-                filter.startUndoParameterCommand(presetLabel.text);
                 filter.resetProperty('lift_r');
                 filter.resetProperty('lift_g');
                 filter.resetProperty('lift_b');
@@ -142,7 +140,6 @@ Item {
             }
             onPresetSelected: {
                 loadValues();
-                filter.endUndoCommand();
             }
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -327,6 +327,9 @@ Item {
         defaultRect.x = Math.round((profile.width - defaultRect.width) / 2);
         defaultRect.y = Math.round((profile.height - defaultRect.height) / 2);
         if (filter.isNew) {
+            if (rotationProperty) {
+                filter.set(rotationProperty, 0);
+            }
             filter.set(fillProperty, 0);
             filter.set(distortProperty, 0);
             filter.set(rectProperty, '0%/50%:50%x50%');
@@ -515,6 +518,7 @@ Item {
         }
 
         Label {
+            id: positionLabel
             text: qsTr('Position')
             Layout.alignment: Qt.AlignRight
         }
@@ -533,8 +537,10 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (Math.abs(filterRect.x - value) >= 1) {
+                        filter.startUndoParameterCommand(positionLabel.text);
                         filterRect.x = value;
                         setFilter(getPosition());
+                        filter.endUndoCommand();
                     }
                 }
             }
@@ -556,8 +562,10 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (Math.abs(filterRect.y - value) >= 1) {
+                        filter.startUndoParameterCommand(positionLabel.text);
                         filterRect.y = value;
                         setFilter(getPosition());
+                        filter.endUndoCommand();
                     }
                 }
             }
@@ -565,9 +573,11 @@ Item {
 
         Shotcut.UndoButton {
             onClicked: {
+                filter.startUndoParameterCommand(positionLabel.text);
                 filterRect.x = rectX.value = defaultRect.x;
                 filterRect.y = rectY.value = defaultRect.y;
                 setFilter(getPosition());
+                filter.endUndoCommand();
             }
         }
 
@@ -590,6 +600,7 @@ Item {
                 id: positionKeyframesButton
 
                 onToggled: {
+                    filter.startUndoParameterCommand(positionLabel.text);
                     if (checked) {
                         blockUpdate = true;
                         filter.blockSignals = true;
@@ -604,6 +615,7 @@ Item {
                         filter.set(rectProperty, filterRect);
                     }
                     checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+                    filter.endUndoCommand();
                 }
             }
 
@@ -616,6 +628,7 @@ Item {
         }
 
         Label {
+            id: sizeLabel
             text: qsTr('Size')
             Layout.alignment: Qt.AlignRight
         }
@@ -634,12 +647,14 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (Math.abs(filterRect.width - value) >= 1) {
+                        filter.startUndoParameterCommand(sizeLabel.text);
                         if (isFillMode()) {
                             scaleByWidth(value);
                         } else {
                             filterRect.width = value;
                             setFilter(getPosition());
                         }
+                        filter.endUndoCommand();
                     }
                 }
             }
@@ -661,12 +676,14 @@ Item {
                 to: 1e+09
                 onValueModified: {
                     if (Math.abs(filterRect.height - value) >= 1) {
+                        filter.startUndoParameterCommand(sizeLabel.text);
                         if (isFillMode()) {
                             scaleByHeight(value);
                         } else {
                             filterRect.height = value;
                             setFilter(getPosition());
                         }
+                        filter.endUndoCommand();
                     }
                 }
             }
@@ -676,14 +693,17 @@ Item {
             id: sizeUndoButton
 
             onClicked: {
+                filter.startUndoParameterCommand(sizeLabel.text);
                 filterRect.width = rectW.value = defaultRect.width;
                 filterRect.height = rectH.value = defaultRect.height;
                 scaleSlider.update();
                 setFilter(getPosition());
+                filter.endUndoCommand();
             }
         }
 
         Label {
+            id: zoomLabel
             text: qsTr('Zoom')
             Layout.alignment: Qt.AlignRight
         }
@@ -704,6 +724,7 @@ Item {
             suffix: ' %'
             onValueChanged: {
                 if (!blockUpdate && Math.abs(value - filterRect.width / defaultRect.width * 100) > 0.1) {
+                    filter.startUndoParameterCommand(zoomLabel.text);
                     var centerX = filterRect.x + filterRect.width / 2;
                     var rightX = filterRect.x + filterRect.width;
                     filterRect.width = rectW.value = defaultRect.width * value / 100;
@@ -719,6 +740,7 @@ Item {
                     else if (bottomRadioButton.checked)
                         filterRect.y = rectY.value = bottomY - filterRect.height;
                     setFilter(getPosition());
+                    filter.endUndoCommand();
                 }
             }
         }
@@ -729,6 +751,7 @@ Item {
         }
 
         Label {
+            id: sizeModeLabel
             text: qsTr('Size mode')
             Layout.alignment: Qt.AlignRight
         }
@@ -739,9 +762,11 @@ Item {
             text: qsTr('Fit')
             ButtonGroup.group: sizeGroup
             onClicked: {
+                filter.startUndoParameterCommand(sizeModeLabel.text);
                 filter.set(fillProperty, 0);
                 filter.set(distortProperty, 0);
                 updateAspectRatio();
+                filter.endUndoCommand();
             }
         }
 
@@ -751,6 +776,7 @@ Item {
             text: qsTr('Fill')
             ButtonGroup.group: sizeGroup
             onClicked: {
+                filter.startUndoParameterCommand(sizeModeLabel.text);
                 filter.set(fillProperty, 1);
                 filter.set(distortProperty, 0);
                 updateAspectRatio();
@@ -760,6 +786,7 @@ Item {
                 else
                     filterRect.width = rectW.value = filterRect.height * producer.displayAspectRatio;
                 setFilter(getPosition());
+                filter.endUndoCommand();
             }
         }
 
@@ -769,18 +796,22 @@ Item {
             text: qsTr('Distort')
             ButtonGroup.group: sizeGroup
             onClicked: {
+                filter.startUndoParameterCommand(sizeModeLabel.text);
                 filter.set(fillProperty, 1);
                 filter.set(distortProperty, 1);
                 updateAspectRatio();
+                filter.endUndoCommand();
             }
         }
 
         Shotcut.UndoButton {
             onClicked: {
+                filter.startUndoParameterCommand(sizeModeLabel.text);
                 fitRadioButton.checked = true;
                 filter.set(fillProperty, 0);
                 filter.set(distortProperty, 0);
                 updateAspectRatio();
+                filter.endUndoCommand();
             }
         }
 
@@ -789,6 +820,7 @@ Item {
         }
 
         Label {
+            id: horizontalFitLabel
             text: qsTr('Horizontal fit')
             Layout.alignment: Qt.AlignRight
         }
@@ -798,7 +830,11 @@ Item {
 
             text: qsTr('Left')
             ButtonGroup.group: halignGroup
-            onClicked: filter.set(halignProperty, 'left')
+            onClicked: {
+                filter.startUndoParameterCommand(horizontalFitLabel.text);
+                filter.set(halignProperty, 'left');
+                filter.endUndoCommand();
+            }
         }
 
         RadioButton {
@@ -806,7 +842,11 @@ Item {
 
             text: qsTr('Center')
             ButtonGroup.group: halignGroup
-            onClicked: filter.set(halignProperty, 'center')
+            onClicked: {
+                filter.startUndoParameterCommand(horizontalFitLabel.text);
+                filter.set(halignProperty, 'center');
+                filter.endUndoCommand();
+            }
         }
 
         RadioButton {
@@ -814,13 +854,19 @@ Item {
 
             text: qsTr('Right')
             ButtonGroup.group: halignGroup
-            onClicked: filter.set(halignProperty, 'right')
+            onClicked: {
+                filter.startUndoParameterCommand(horizontalFitLabel.text);
+                filter.set(halignProperty, 'right');
+                filter.endUndoCommand();
+            }
         }
 
         Shotcut.UndoButton {
             onClicked: {
+                filter.startUndoParameterCommand(horizontalFitLabel.text);
                 leftRadioButton.checked = true;
                 filter.set(halignProperty, 'left');
+                filter.endUndoCommand();
             }
         }
 
@@ -829,6 +875,7 @@ Item {
         }
 
         Label {
+            id: verticalFitLabel
             text: qsTr('Vertical fit')
             Layout.alignment: Qt.AlignRight
         }
@@ -838,7 +885,11 @@ Item {
 
             text: qsTr('Top')
             ButtonGroup.group: valignGroup
-            onClicked: filter.set(valignProperty, 'top')
+            onClicked: {
+                filter.startUndoParameterCommand(verticalFitLabel.text);
+                filter.set(valignProperty, 'top');
+                filter.endUndoCommand();
+            }
         }
 
         RadioButton {
@@ -846,7 +897,11 @@ Item {
 
             text: qsTr('Middle', 'Size and Position video filter')
             ButtonGroup.group: valignGroup
-            onClicked: filter.set(valignProperty, 'middle')
+            onClicked: {
+                filter.startUndoParameterCommand(verticalFitLabel.text);
+                filter.set(valignProperty, 'middle');
+                filter.endUndoCommand();
+            }
         }
 
         RadioButton {
@@ -854,13 +909,19 @@ Item {
 
             text: qsTr('Bottom')
             ButtonGroup.group: valignGroup
-            onClicked: filter.set(valignProperty, 'bottom')
+            onClicked: {
+                filter.startUndoParameterCommand(verticalFitLabel.text);
+                filter.set(valignProperty, 'bottom');
+                filter.endUndoCommand();
+            }
         }
 
         Shotcut.UndoButton {
             onClicked: {
+                filter.startUndoParameterCommand(verticalFitLabel.text);
                 topRadioButton.checked = true;
                 filter.set(valignProperty, 'top');
+                filter.endUndoCommand();
             }
         }
 
@@ -869,6 +930,7 @@ Item {
         }
 
         Label {
+            id: rotationLabel
             text: qsTr('Rotation')
             Layout.alignment: Qt.AlignRight
             visible: !!rotationProperty
@@ -883,7 +945,11 @@ Item {
             maximumValue: 360
             decimals: 1
             suffix: qsTr(' °', 'degrees')
-            onValueChanged: updateRotation(getPosition())
+            onValueChanged: {
+                filter.startUndoParameterCommand(rotationLabel.text);
+                updateRotation(getPosition());
+                filter.endUndoCommand();
+            }
         }
 
         Shotcut.UndoButton {
@@ -896,12 +962,15 @@ Item {
 
             visible: !!rotationProperty
             onToggled: {
+                filter.startUndoParameterCommand(rotationLabel.text);
                 toggleKeyframes(checked, rotationProperty, rotationSlider.value);
                 setControls();
+                filter.endUndoCommand();
             }
         }
 
         Label {
+            id: backgroundColorLabel
             text: qsTr('Background color')
             Layout.alignment: Qt.AlignRight
             visible: bgColor.visible
@@ -914,7 +983,11 @@ Item {
             Layout.columnSpan: 3
             eyedropper: true
             alpha: true
-            onValueChanged: filter.set(backgroundProperty, 'color:' + value)
+            onValueChanged: {
+                filter.startUndoParameterCommand(backgroundColorLabel.text);
+                filter.set(backgroundProperty, 'color:' + value);
+                filter.endUndoCommand();
+            }
         }
 
         Shotcut.UndoButton {
@@ -946,16 +1019,24 @@ Item {
 
     Shotcut.MotionTrackerDialog {
         id: motionTrackerDialog
-        onAccepted: (motionTrackerRow, operation, startFrame) => applyTracking(motionTrackerRow, operation, startFrame)
-        onReset: if (filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {
-            motionTrackerModel.undo(filter, rectProperty);
-            filterRect = filter.getRect(rectProperty, getPosition());
-            rectX.value = filterRect.x;
-            rectY.value = filterRect.y;
-            rectW.value = filterRect.width;
-            rectH.value = filterRect.height;
-            scaleSlider.update();
-            setFilter(getPosition());
+        onAccepted: (motionTrackerRow, operation, startFrame) => {
+            filter.startUndoParameterCommand(title);
+            applyTracking(motionTrackerRow, operation, startFrame);
+            filter.endUndoCommand();
+        }
+        onReset: {
+            if (filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {
+                filter.startUndoParameterCommand(title);
+                motionTrackerModel.undo(filter, rectProperty);
+                filterRect = filter.getRect(rectProperty, getPosition());
+                rectX.value = filterRect.x;
+                rectY.value = filterRect.y;
+                rectW.value = filterRect.width;
+                rectH.value = filterRect.height;
+                scaleSlider.update();
+                setFilter(getPosition());
+                filter.endUndoCommand();
+            }
         }
     }
 

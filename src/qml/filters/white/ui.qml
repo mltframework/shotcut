@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,6 +77,7 @@ Item {
 
         // Row 1
         Label {
+            id: neutralColorLabel
             text: qsTr('Neutral color')
             Layout.alignment: Qt.AlignRight
         }
@@ -89,8 +90,10 @@ Item {
             Component.onCompleted: isReady = true
             onValueChanged: {
                 if (isReady) {
+                    filter.startUndoParameterCommand(neutralColorLabel.text);
                     filter.set(neutralParam, "" + value);
                     filter.set("disable", 0);
+                    filter.endUndoCommand();
                 }
             }
             onPickStarted: {
@@ -105,6 +108,7 @@ Item {
 
         // Row 2
         Label {
+            id: temperatureLabel
             text: qsTr('Color temperature')
             Layout.alignment: Qt.AlignRight
         }
@@ -123,8 +127,10 @@ Item {
                 Component.onCompleted: isReady = true
                 onValueChanged: {
                     if (isReady) {
+                        filter.startUndoParameterCommand(temperatureLabel.text);
                         tempspinner.value = value;
                         filter.set(tempParam, value / tempScale);
+                        filter.endUndoCommand();
                     }
                 }
 

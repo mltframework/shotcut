@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2022 Meltytech, LLC
+ * Copyright (c) 2016-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,7 @@ import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 
 Item {
-
-    //        console.log('level: ' + filter.get('level'))
-    property bool blockUpdate: true
+    property bool _blockUpdate: true
     property double startValue: 1
     property double middleValue: 1
     property double endValue: 1
@@ -33,15 +31,15 @@ Item {
 
     function setControls() {
         var position = getPosition();
-        blockUpdate = true;
+        _blockUpdate = true;
         brightnessSlider.value = filter.getDouble('level', position) * 100;
         brightnessKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('level') > 0;
-        blockUpdate = false;
+        _blockUpdate = false;
         brightnessSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1);
     }
 
     function updateFilter(position) {
-        if (blockUpdate)
+        if (_blockUpdate)
             return;
         var value = brightnessSlider.value / 100;
         if (position !== null) {
@@ -121,9 +119,9 @@ Item {
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 setControls();
             } else {
-                blockUpdate = true;
+                _blockUpdate = true;
                 brightnessSlider.value = filter.getDouble('level', getPosition()) * 100;
-                blockUpdate = false;
+                _blockUpdate = false;
                 brightnessSlider.enabled = true;
             }
         }
@@ -160,6 +158,7 @@ Item {
         }
 
         Label {
+            id: levelLabel
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
@@ -171,7 +170,13 @@ Item {
             maximumValue: 200
             decimals: 1
             suffix: ' %'
-            onValueChanged: updateFilter(getPosition())
+            onValueChanged: {
+                if (_blockUpdate)
+                    return;
+                filter.startUndoParameterCommand(levelLabel.text);
+                updateFilter(getPosition());
+                filter.endUndoCommand();
+            }
         }
 
         Shotcut.UndoButton {
@@ -182,16 +187,20 @@ Item {
             id: brightnessKeyframesButton
 
             onToggled: {
+                if (_blockUpdate)
+                    return;
+                filter.startUndoParameterCommand(levelLabel.text);
                 var value = brightnessSlider.value / 100;
                 if (checked) {
-                    blockUpdate = true;
+                    _blockUpdate = true;
                     filter.clearSimpleAnimation('level');
-                    blockUpdate = false;
+                    _blockUpdate = false;
                     filter.set('level', value, getPosition());
                 } else {
                     filter.resetProperty('level');
                     filter.set('level', value);
                 }
+                filter.endUndoCommand();
             }
         }
 

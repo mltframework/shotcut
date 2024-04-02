@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import Shotcut.Controls as Shotcut
 
 Item {
     property alias duration: timeSpinner.value
+    property bool _blockUpdate: false
 
     width: 100
     height: 50
@@ -40,7 +41,9 @@ Item {
 
     Connections {
         function onAnimateInChanged() {
+            _blockUpdate = true;
             duration = filter.animateIn;
+            _blockUpdate = false;
         }
 
         target: filter
@@ -52,6 +55,7 @@ Item {
 
         RowLayout {
             Label {
+                id: durationLabel
                 text: qsTr('Duration')
             }
 
@@ -61,10 +65,14 @@ Item {
                 minimumValue: 2
                 maximumValue: 5000
                 onValueChanged: {
+                    if (_blockUpdate)
+                        return;
+                    filter.startUndoParameterCommand(durationLabel.text);
                     filter.animateIn = duration;
                     filter.resetProperty('level');
                     filter.set('level', -60, 0);
                     filter.set('level', 0, Math.min(duration, filter.duration) - 1);
+                    filter.endUndoCommand();
                 }
                 onSetDefaultClicked: {
                     duration = Math.ceil(settings.audioInDuration * profile.fps);

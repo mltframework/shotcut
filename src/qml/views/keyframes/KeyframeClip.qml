@@ -323,7 +323,7 @@ Rectangle {
             onExited: animateInControl.scale = 1
         }
 
-        SequentialAnimation on scale {
+        SequentialAnimation on scale  {
             loops: Animation.Infinite
             running: animateInMouseArea.containsMouse
 
@@ -428,7 +428,7 @@ Rectangle {
             onExited: animateOutControl.scale = 1
         }
 
-        SequentialAnimation on scale {
+        SequentialAnimation on scale  {
             loops: Animation.Infinite
             running: animateOutMouseArea.containsMouse
 

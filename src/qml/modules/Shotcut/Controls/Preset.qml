@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ RowLayout {
         model: filter ? filter.presets : 0
         onActivated: {
             if (currentText.length > 0) {
+                filter.startUndoParameterCommand(qsTr('Preset'));
                 // toggling focus works around a weird bug involving sticky
                 // input event focus on the ComboBox
                 enabled = false;
@@ -54,6 +55,7 @@ RowLayout {
                 filter.animateInChanged();
                 filter.animateOutChanged();
                 enabled = true;
+                filter.endUndoCommand();
             }
         }
     }

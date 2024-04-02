@@ -306,6 +306,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
 
         Label {
+            id: positionLabel
             text: qsTr('Position')
             Layout.alignment: Qt.AlignRight
         }
@@ -324,8 +325,10 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 to: 1e+09
                 onValueModified: {
                     if (Math.abs(filterRect.x - value) > 1) {
+                        filter.startUndoParameterCommand(positionLabel.text);
                         filterRect.x = value;
                         updateFilterRect(getPosition());
+                        filter.endUndoCommand();
                     }
                 }
             }
@@ -347,8 +350,10 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 to: 1e+09
                 onValueModified: {
                     if (Math.abs(filterRect.y - value) > 1) {
+                        filter.startUndoParameterCommand(positionLabel.text);
                         filterRect.y = value;
                         updateFilterRect(getPosition());
+                        filter.endUndoCommand();
                     }
                 }
             }
@@ -356,9 +361,11 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
         Shotcut.UndoButton {
             onClicked: {
+                filter.startUndoParameterCommand(positionLabel.text);
                 filterRect.x = rectX.value = defaultRect.x;
                 filterRect.y = rectY.value = defaultRect.y;
                 updateFilterRect(getPosition());
+                filter.endUndoCommand();
             }
         }
 
@@ -367,6 +374,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
             Layout.rowSpan: 2
             onToggled: {
+                filter.startUndoParameterCommand(positionLabel.text);
                 if (checked) {
                     filter.blockSignals = true;
                     filter.clearSimpleAnimation(rectProperty);
@@ -379,10 +387,12 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                     filter.set(rectProperty, filterRect);
                 }
                 checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+                filter.endUndoCommand();
             }
         }
 
         Label {
+            id: backgroundSizeLabel
             text: qsTr('Background size')
             Layout.alignment: Qt.AlignRight
         }
@@ -401,8 +411,10 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 to: 1e+09
                 onValueModified: {
                     if (Math.abs(filterRect.width - value) > 1) {
+                        filter.startUndoParameterCommand(backgroundSizeLabel.text);
                         filterRect.width = value;
                         updateFilterRect(getPosition());
+                        filter.endUndoCommand();
                     }
                 }
             }
@@ -424,8 +436,10 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 to: 1e+09
                 onValueModified: {
                     if (Math.abs(filterRect.height - value) > 1) {
+                        filter.startUndoParameterCommand(backgroundSizeLabel.text);
                         filterRect.height = value;
                         updateFilterRect(getPosition());
+                        filter.endUndoCommand();
                     }
                 }
             }
@@ -433,9 +447,11 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
         Shotcut.UndoButton {
             onClicked: {
+                filter.startUndoParameterCommand(backgroundSizeLabel.text);
                 filterRect.width = rectW.value = defaultRect.width;
                 filterRect.height = rectH.value = defaultRect.height;
                 updateFilterRect(getPosition());
+                filter.endUndoCommand();
             }
         }
 
@@ -504,6 +520,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
 
         Label {
+            id: backgroundColorLabel
             text: qsTr('Background color')
             Layout.alignment: Qt.AlignRight
         }
@@ -514,7 +531,11 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             Layout.columnSpan: 3
             eyedropper: false
             alpha: true
-            onValueChanged: updateFilter('bgcolour', Qt.color(value), bgcolorKeyframesButton, getPosition())
+            onValueChanged: {
+                filter.startUndoParameterCommand(backgroundColorLabel.text);
+                updateFilter('bgcolour', Qt.color(value), bgcolorKeyframesButton, getPosition());
+                filter.endUndoCommand();
+            }
         }
 
         Shotcut.UndoButton {
@@ -523,10 +544,15 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
         Shotcut.KeyframesButton {
             id: bgcolorKeyframesButton
-            onToggled: toggleKeyframes(checked, 'bgcolour', Qt.color(bgColor.value))
+            onToggled: {
+                filter.startUndoParameterCommand(backgroundColorLabel.text);
+                toggleKeyframes(checked, 'bgcolour', Qt.color(bgColor.value));
+                filter.endUndoCommand();
+            }
         }
 
         Label {
+            id: overflowLabel
             text: qsTr('Overflow')
             Layout.alignment: Qt.AlignRight
         }
@@ -544,8 +570,10 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 text: qsTr('Automatic')
                 ButtonGroup.group: overflowGroup
                 onClicked: {
+                    filter.startUndoParameterCommand(overflowLabel.text);
                     filter.set('overflow-y', '');
                     filter.resetProperty('overflow-y');
+                    filter.endUndoCommand();
                 }
             }
 
@@ -554,7 +582,11 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
                 text: qsTr('Visible')
                 ButtonGroup.group: overflowGroup
-                onClicked: filter.set('overflow-y', 1)
+                onClicked: {
+                    filter.startUndoParameterCommand(overflowLabel.text);
+                    filter.set('overflow-y', 1);
+                    filter.endUndoCommand();
+                }
             }
 
             RadioButton {
@@ -562,14 +594,20 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
                 text: qsTr('Hidden')
                 ButtonGroup.group: overflowGroup
-                onClicked: filter.set('overflow-y', 0)
+                onClicked: {
+                    filter.startUndoParameterCommand(overflowLabel.text);
+                    filter.set('overflow-y', 0);
+                    filter.endUndoCommand();
+                }
             }
         }
 
         Shotcut.UndoButton {
             onClicked: {
+                filter.startUndoParameterCommand(overflowLabel.text);
                 filter.resetProperty('overflow-y');
                 automaticOverflowRadioButton.checked = true;
+                filter.endUndoCommand();
             }
         }
 
@@ -584,7 +622,9 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         Shotcut.Button {
             Layout.columnSpan: parent.columns - 1
             text: motionTrackerDialog.title
-            onClicked: motionTrackerDialog.show()
+            onClicked: {
+                motionTrackerDialog.show();
+            }
         }
 
         Item {
@@ -594,15 +634,23 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
     Shotcut.MotionTrackerDialog {
         id: motionTrackerDialog
-        onAccepted: (motionTrackerRow, operation, startFrame) => applyTracking(motionTrackerRow, operation, startFrame)
-        onReset: if (filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {
-            motionTrackerModel.undo(filter, rectProperty);
-            filterRect = filter.getRect(rectProperty, getPosition());
-            rectX.value = filterRect.x;
-            rectY.value = filterRect.y;
-            rectW.value = filterRect.width;
-            rectH.value = filterRect.height;
-            updateFilterRect(getPosition());
+        onAccepted: (motionTrackerRow, operation, startFrame) => {
+            filter.startUndoParameterCommand(title);
+            applyTracking(motionTrackerRow, operation, startFrame);
+            filter.endUndoCommand();
+        }
+        onReset: {
+            if (filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0) {
+                filter.startUndoParameterCommand(title);
+                motionTrackerModel.undo(filter, rectProperty);
+                filterRect = filter.getRect(rectProperty, getPosition());
+                rectX.value = filterRect.x;
+                rectY.value = filterRect.y;
+                rectW.value = filterRect.width;
+                rectH.value = filterRect.height;
+                updateFilterRect(getPosition());
+                filter.endUndoCommand();
+            }
         }
     }
 
