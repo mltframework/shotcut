@@ -150,7 +150,6 @@ bool FilterController::isOutputTrackSelected() const
 
 void FilterController::loadFilterSets()
 {
-    QStringList sets;
     auto dir = QmlApplication::dataDir();
     if (dir.cd("shotcut") && dir.cd("filter-sets")) {
         QStringList entries = dir.entryList(QDir::Files | QDir::Readable);
