@@ -243,6 +243,7 @@ private:
         return m_model.tractor() && !m_model.trackList().empty();
     }
     void reportSelectionChange();
+    void applyCopiedFiltersToSelectdClips();
 
     QQuickWidget m_quickView;
     MultitrackModel m_model;

@@ -1975,6 +1975,100 @@ void AlignClipsCommand::undo()
     m_undoHelper.undoChanges();
 }
 
+ApplyFiltersCommand::ApplyFiltersCommand(MultitrackModel &model, const QString &filterProducerXml,
+                                         QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_xml(filterProducerXml)
+{
+    setText(QObject::tr("Apply copied filters"));
+}
+
+void ApplyFiltersCommand::addClip(int trackIndex, int clipIndex)
+{
+    auto clipInfo = m_model.getClipInfo(trackIndex, clipIndex);
+    if (clipInfo && clipInfo->producer && !clipInfo->cut->is_blank() ) {
+        ClipPosition position(trackIndex, clipIndex);
+        m_prevFilters.insert(position, MLT.XML(clipInfo->producer));
+    }
+}
+
+void ApplyFiltersCommand::redo()
+{
+    LOG_DEBUG() << "clips:" << m_prevFilters.size();
+
+    Mlt::Producer filtersProducer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    if (!filtersProducer.is_valid() || filtersProducer.filter_count() < 1
+            || !filtersProducer.get_int(kShotcutFiltersClipboard)) {
+        LOG_ERROR() << "Invalid filters producer";
+        return;
+    }
+
+    // Get the metadata for all the applied filters
+    QList<QmlMetadata *> m_applyMeta;
+    for (int i = 0; i < filtersProducer.filter_count(); i++) {
+        Mlt::Filter *filter = filtersProducer.filter(i);
+        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+            m_applyMeta.append(MAIN.filterController()->metadataForService(filter));
+        }
+        delete filter;
+    }
+
+    for (auto &clip : m_prevFilters.keys()) {
+        auto clipInfo = m_model.getClipInfo(clip.trackIndex, clip.clipIndex);
+        if (clipInfo && clipInfo->producer) {
+            // Remove any filters that would be duplicated by the new filters
+            for (int i = 0; i < clipInfo->producer->filter_count(); i++) {
+                Mlt::Filter *filter = clipInfo->producer->filter(i);
+                if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                    QmlMetadata *currentMeta = MAIN.filterController()->metadataForService(filter);
+                    for (int j = 0; j < m_applyMeta.size(); j++) {
+                        if (m_applyMeta[j] == currentMeta) {
+                            clipInfo->producer->detach(*filter);
+                            i--;
+                            break;
+                        }
+                    }
+                }
+                delete filter;
+            }
+            // Apply the new filters
+            MLT.pasteFilters(clipInfo->producer, &filtersProducer);
+        } else {
+            LOG_ERROR() << "Unable to find clip" << clip.trackIndex << clip.clipIndex;
+        }
+    }
+}
+
+void ApplyFiltersCommand::undo()
+{
+    LOG_DEBUG() << "clips:" << m_prevFilters.size();
+    for (auto &clip : m_prevFilters.keys()) {
+        auto clipInfo = m_model.getClipInfo(clip.trackIndex, clip.clipIndex);
+        if (clipInfo && clipInfo->producer) {
+            // Remove existing filters
+            for (int i = 0; i < clipInfo->producer->filter_count(); i++) {
+                Mlt::Filter *filter = clipInfo->producer->filter(i);
+                if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                    clipInfo->producer->detach(*filter);
+                    i--;
+                }
+                delete filter;
+            }
+            // Copy the previous filters
+            Mlt::Producer previousProducer(MLT.profile(), "xml-string",
+                                           m_prevFilters[clip].toUtf8().constData());
+            if (previousProducer.is_valid()) {
+                MLT.pasteFilters(clipInfo->producer, &previousProducer);
+            } else {
+                LOG_ERROR() << "Unable to restore previous producer";
+            }
+        } else {
+            LOG_ERROR() << "Unable to find clip" << clip.trackIndex << clip.clipIndex;
+        }
+    }
+}
+
 } // namespace
 
 #include "moc_timelinecommands.cpp"

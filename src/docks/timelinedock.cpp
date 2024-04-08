@@ -122,6 +122,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     editMenu->addAction(Actions["timelineRippleTrimClipOutAction"]);
     editMenu->addAction(Actions["timelineSplitAction"]);
     editMenu->addAction(Actions["timelineSplitAllTracksAction"]);
+    editMenu->addAction(Actions["timelineApplyCopiedFiltersAction"]);
     m_mainMenu->addMenu(editMenu);
     QMenu *viewMenu = new QMenu(tr("View"), this);
     viewMenu->addAction(Actions["timelineZoomOutAction"]);
@@ -152,6 +153,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_clipMenu->addAction(Actions["timelineMergeWithNextAction"]);
     m_clipMenu->addAction(Actions["timelineDetachAudioAction"]);
     m_clipMenu->addAction(Actions["timelineAlignToReferenceAction"]);
+    m_clipMenu->addAction(Actions["timelineApplyCopiedFiltersAction"]);
     m_clipMenu->addAction(Actions["timelineUpdateThumbnailsAction"]);
     m_clipMenu->addAction(Actions["timelineRebuildAudioWaveformAction"]);
     m_clipMenu->addAction(Actions["timelinePropertiesAction"]);
@@ -1287,6 +1289,30 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineAlignToReferenceAction", action);
 
+    action = new QAction(tr("Apply Copied Filters"), this);
+    action->setEnabled(false);
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        if (m_selection.selectedClips.length() > 0) {
+            applyCopiedFiltersToSelectdClips();
+        }
+    });
+    connect(this, &TimelineDock::selectionChanged, action, [ = ]() {
+        bool enabled = false;
+        foreach (auto point, selection()) {
+            // At least one selected item must be a valid clip
+            if (!isBlank(point.y(), point.x()) && !isTransition(point.y(), point.x())) {
+                enabled = true;
+                break;
+            }
+        }
+        if (enabled) {
+            auto s = QGuiApplication::clipboard()->text();
+            enabled = s.contains(kShotcutFiltersClipboard);
+        }
+        action->setEnabled(enabled);
+    });
+    Actions.add("timelineApplyCopiedFiltersAction", action);
+
     action = new QAction(tr("Update Thumbnails"), this);
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&](bool checked) {
@@ -2061,6 +2087,26 @@ void TimelineDock::alignSelectedClips()
     AlignAudioDialog dialog(tr("Align To Reference Track"), &m_model, selection, this);
     dialog.exec();
     restoreSelection();
+}
+
+void TimelineDock::applyCopiedFiltersToSelectdClips()
+{
+    QString xmlToUse = QGuiApplication::clipboard()->text();
+    if (MLT.isMltXml(xmlToUse) && xmlToUse.contains(kShotcutFiltersClipboard)) {
+        if (!Settings.proxyEnabled()) {
+            ProxyManager::filterXML(xmlToUse, "");
+        }
+    } else {
+        LOG_DEBUG() << "Unable to read copied filters" << xmlToUse;
+        return;
+    }
+    Timeline::ApplyFiltersCommand *command = new Timeline::ApplyFiltersCommand(m_model, xmlToUse);
+    foreach (auto i, m_selection.selectedClips) {
+        if (!isBlank(i.y(), i.x()) && !isTransition(i.y(), i.x())) {
+            command->addClip(i.y(), i.x());
+        }
+    }
+    MAIN.undoStack()->push(command);
 }
 
 void TimelineDock::onShowFrame(const SharedFrame &frame)

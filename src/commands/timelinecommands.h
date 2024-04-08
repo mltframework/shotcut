@@ -746,6 +746,20 @@ private:
     QVector<Alignment> m_alignments;
 };
 
+class ApplyFiltersCommand : public QUndoCommand
+{
+public:
+    ApplyFiltersCommand(MultitrackModel &model, const QString &filterProducerXml,
+                        QUndoCommand *parent = 0);
+    void addClip(int trackIndex, int clipIndex);
+    void redo();
+    void undo();
+
+private:
+    MultitrackModel &m_model;
+    QString m_xml;
+    QMap<ClipPosition, QString> m_prevFilters;
+};
 
 } // namespace Timeline
 
