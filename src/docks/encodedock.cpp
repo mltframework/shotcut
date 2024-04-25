@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1150,6 +1150,12 @@ public:
                     if (!filename.isEmpty()) {
                         filter->set("filename", filename.toUtf8().constData());
                         m_filters << Mlt::Filter(*filter);
+
+                        // Touch file to prevent overwriting the same file
+                        QFile file(filename);
+                        file.open(QIODevice::WriteOnly);
+                        file.resize(0);
+                        file.close();
                     }
                 } else {
                     m_filters << Mlt::Filter(*filter);
