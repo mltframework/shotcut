@@ -51,7 +51,7 @@ The fastest way to build and try Shotcut development version is through [Qt Crea
 
 ### From command line
 
-First, check dependencies are satisfied and various paths are correctly set to find different libraries and include files (Qt 5, MLT, frei0r and so forth).
+First, check dependencies are satisfied and various paths are correctly set to find different libraries and include files (Qt, MLT, frei0r and so forth).
 
 #### Configure
 
