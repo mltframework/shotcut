@@ -257,16 +257,22 @@ void FilterController::setCurrentFilter(int attachedIndex)
 void FilterController::onFadeInChanged()
 {
     if (m_currentFilter) {
-        emit m_currentFilter->changed();
-        emit m_currentFilter->animateInChanged();
+        QString name = m_currentFilter->objectNameOrService();
+        if (name.startsWith("fadeIn")) {
+            emit m_currentFilter->changed();
+            emit m_currentFilter->animateInChanged();
+        }
     }
 }
 
 void FilterController::onFadeOutChanged()
 {
     if (m_currentFilter) {
-        emit m_currentFilter->changed();
-        emit m_currentFilter->animateOutChanged();
+        QString name = m_currentFilter->objectNameOrService();
+        if (name.startsWith("fadeOut")) {
+            emit m_currentFilter->changed();
+            emit m_currentFilter->animateOutChanged();
+        }
     }
 }
 

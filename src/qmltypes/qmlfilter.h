@@ -136,6 +136,7 @@ public:
     bool allowAnimateIn() const;
     bool allowAnimateOut() const;
     Q_INVOKABLE void crop(const QRectF &rect);
+    QString objectNameOrService();
 
     Q_INVOKABLE void copyParameters();
     Q_INVOKABLE void pasteParameters(const QStringList &propertyNames);
@@ -174,7 +175,6 @@ private:
     Mlt::Properties m_previousState;
     int m_changeInProgress;
 
-    QString objectNameOrService();
     int keyframeIndex(Mlt::Animation &animation, int position);
 };
 
