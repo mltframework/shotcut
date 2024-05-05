@@ -301,13 +301,29 @@ Mlt::Service AttachedFiltersModel::doGetService(Mlt::Producer &producer, int row
 {
     Mlt::Service service;
     int mltIndex = mltFilterIndex(&producer, row);
-    Mlt::Filter *filter = producer.filter(mltIndex);
-    if (filter && filter->is_valid()) {
-        service = Mlt::Service(filter->get_service());
+    if (mltIndex >= 0) {
+        Mlt::Filter *filter = producer.filter(mltIndex);
+        if (filter && filter->is_valid()) {
+            service = Mlt::Service(filter->get_service());
+        } else {
+            LOG_ERROR() << "Invalid filter index" << row << mltIndex;
+        }
+        delete filter;
     } else {
-        LOG_ERROR() << "Invalid filter index" << row;
+        mltIndex = mltLinkIndex(&producer, row);
+        if (mltIndex >= 0) {
+            Mlt::Chain chain(producer);
+            Mlt::Link *link = chain.link(mltIndex);
+            if (link && link->is_valid()) {
+                service = Mlt::Service(link->get_service());
+            } else {
+                LOG_ERROR() << "Invalid link index" << row << mltIndex;
+            }
+            delete link;
+        } else {
+            LOG_ERROR() << "Invalid service index" << row << mltIndex;
+        }
     }
-    delete filter;
     return service;
 }
 
