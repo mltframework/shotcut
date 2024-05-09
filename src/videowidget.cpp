@@ -1,4 +1,4 @@
-/*7
+/*
  * Copyright (c) 2011-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
@@ -341,8 +341,7 @@ int VideoWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
-        m_consumer->set("mlt_image_format",
-                        m_glslManager ? "rgba" : serviceName.startsWith("decklink") ? "yuv422p" : "yuv420p");
+        m_consumer->set("mlt_image_format", serviceName.startsWith("decklink") ? "yuv422p" : "yuv420p");
         m_consumer->set("channels", property("audio_channels").toInt());
         if (property("audio_channels").toInt() == 4) {
             m_consumer->set("channel_layout", "quad");
