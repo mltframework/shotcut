@@ -216,6 +216,8 @@ void FilterController::setProducer(Mlt::Producer *producer)
         m_metadataModel.updateFilterMask(!MLT.isTrackProducer(*producer),
                                          producer->type() == mlt_service_chain_type,
                                          producer->type() == mlt_service_playlist_type);
+    } else {
+        setCurrentFilter(QmlFilter::DeselectCurrentFilter);
     }
 }
 

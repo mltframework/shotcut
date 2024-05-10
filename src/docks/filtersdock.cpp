@@ -70,7 +70,14 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
     connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
     connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
     setCurrentFilter(0, 0, QmlFilter::NoCurrentFilter);
-    connect(this, SIGNAL(visibilityChanged(bool)), SLOT(resetQview()), Qt::QueuedConnection);
+    connect(this, &QDockWidget::visibilityChanged, this, [&]() {
+        if (isVisible()) {
+            resetQview();
+        } else {
+            m_qview.setSource(QUrl(""));
+            emit currentFilterRequested(QmlFilter::NoCurrentFilter);
+        }
+    }, Qt::QueuedConnection);
 
     LOG_DEBUG() << "end";
 }

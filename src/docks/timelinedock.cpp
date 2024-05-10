@@ -1519,6 +1519,13 @@ bool TimelineDock::blankIsSelected()
     return selection.size() == 1 && isBlank(selection[0].y(), selection[0].x());
 }
 
+bool TimelineDock::nothingIsSelected()
+{
+    const QList<QPoint> &selection = m_selection.selectedClips;
+    return selection.size() == 0 && !m_selection.isMultitrackSelected
+           && m_selection.selectedTrack == -1;
+}
+
 bool TimelineDock::isTransition(int trackIndex, int clipIndex)
 {
     return trackIndex >= 0 && clipIndex >= 0 &&
@@ -2426,7 +2433,7 @@ void TimelineDock::emitSelectedFromSelection()
         return;
     }
 
-    if (selection().size() > 1) {
+    if (selection().size() > 1 || nothingIsSelected()) {
         emit selected(nullptr);
         return;
     }
