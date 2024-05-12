@@ -778,7 +778,7 @@ function set_globals {
   fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
-  CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
+  CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include -Wno-incompatible-pointer-types $CFLAGS"
   LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
   if test "$TARGET_OS" = "Darwin"; then
     CFLAGS_[0]="${CFLAGS_[0]} -I/opt/local/include"
