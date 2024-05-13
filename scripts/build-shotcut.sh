@@ -1146,9 +1146,9 @@ function build_vmaf_darwin {
 function install_vmaf {
   if [ "$TARGET_OS" = "Darwin" ]; then
     cmd ninja install -C libvmaf/build-arm64
-    cmd rm "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib
-    cmd lipo -create libvmaf/build-arm64/src/libvmaf.1.dylib libvmaf/build-x86_64/src/libvmaf.1.dylib -output "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib
-    cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib
+    cmd rm "$FINAL_INSTALL_DIR"/lib/libvmaf.3.dylib
+    cmd lipo -create libvmaf/build-arm64/src/libvmaf.3.dylib libvmaf/build-x86_64/src/libvmaf.3.dylib -output "$FINAL_INSTALL_DIR"/lib/libvmaf.3.dylib
+    cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/libvmaf.3.dylib "$FINAL_INSTALL_DIR"/lib/libvmaf.3.dylib
   else
     cmd ninja -C libvmaf/build install
   fi
