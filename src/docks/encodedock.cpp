@@ -1898,6 +1898,7 @@ void EncodeDock::on_videoRateControlCombo_activated(int index)
         ui->videoQualitySuffixLabel->show();
         break;
     }
+    on_videoQualitySpinner_valueChanged(ui->videoQualitySpinner->value());
 }
 
 void EncodeDock::on_audioRateControlCombo_activated(int index)
