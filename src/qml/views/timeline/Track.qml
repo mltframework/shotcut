@@ -225,8 +225,8 @@ Rectangle {
                 }
             }
             onDropped: clip => {
+                timeline.selection = [];
                 if (placeHolderAdded) {
-                    timeline.selection = [];
                     multitrack.reload(true);
                     placeHolderAdded = false;
                 }

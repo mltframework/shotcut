@@ -80,14 +80,14 @@ ENABLE_ZIMG=1
 ZIMG_HEAD=0
 ZIMG_REVISION="51c3c7f750c2af61955377faad56e3ba1b03589f"
 DAV1D_HEAD=0
-DAV1D_REVISION="1.3.0"
+DAV1D_REVISION="1.4.1"
 AOM_HEAD=0
 AOM_REVISION="v3.8.0"
 VMAF_HEAD=0
-VMAF_REVISION="v2.3.1"
+VMAF_REVISION="v3.0.0"
 ENABLE_GLAXNIMATE=1
 GLAXNIMATE_HEAD=0
-GLAXNIMATE_REVISION="0.5.4"
+GLAXNIMATE_REVISION="origin/v0.5.4"
 ENABLE_GOPRO2GPX=1
 ENABLE_OPENCV=1
 OPENCV_HEAD=0
@@ -778,7 +778,7 @@ function set_globals {
   fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
-  CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
+  CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include -Wno-incompatible-pointer-types $CFLAGS"
   LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
   if test "$TARGET_OS" = "Darwin"; then
     CFLAGS_[0]="${CFLAGS_[0]} -I/opt/local/include"
@@ -1146,9 +1146,9 @@ function build_vmaf_darwin {
 function install_vmaf {
   if [ "$TARGET_OS" = "Darwin" ]; then
     cmd ninja install -C libvmaf/build-arm64
-    cmd rm "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib
-    cmd lipo -create libvmaf/build-arm64/src/libvmaf.1.dylib libvmaf/build-x86_64/src/libvmaf.1.dylib -output "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib
-    cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib "$FINAL_INSTALL_DIR"/lib/libvmaf.1.dylib
+    cmd rm "$FINAL_INSTALL_DIR"/lib/libvmaf.3.dylib
+    cmd lipo -create libvmaf/build-arm64/src/libvmaf.3.dylib libvmaf/build-x86_64/src/libvmaf.3.dylib -output "$FINAL_INSTALL_DIR"/lib/libvmaf.3.dylib
+    cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/libvmaf.3.dylib "$FINAL_INSTALL_DIR"/lib/libvmaf.3.dylib
   else
     cmd ninja -C libvmaf/build install
   fi

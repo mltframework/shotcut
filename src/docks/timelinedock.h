@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -234,6 +234,7 @@ private:
     bool isBlank(int trackIndex, int clipIndex);
     bool clipsAreSelected();
     bool blankIsSelected();
+    bool nothingIsSelected();
     bool isTransition(int trackIndex, int clipIndex);
     void emitNonSeekableWarning();
     void addTrackIfNeeded(int mltTrackIndex, Mlt::Producer *srcTrack);

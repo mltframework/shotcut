@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -677,6 +677,24 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
             for (auto &p : properties) {
                 if (p.first == "resource") {
                     p.second = ProxyManager::GoProProxyFilePath(resource);
+                    if (isTimewarp) {
+                        p.second = QString("%1:%2").arg(speed, p.second);
+                    }
+                    properties << MltProperty(kIsProxyProperty, "1");
+                    properties << MltProperty(kMetaProxyProperty, "1");
+                    properties << MltProperty(kOriginalResourceProperty, resource);
+                    m_resource.notProxyMeta = !m_resource.isProxy;
+                    m_isUpdated = true;
+                    return;
+                }
+            }
+        }
+
+        // Use DJI LRF if available
+        if (QFile::exists(ProxyManager::DJIProxyFilePath(resource))) {
+            for (auto &p : properties) {
+                if (p.first == "resource") {
+                    p.second = ProxyManager::DJIProxyFilePath(resource);
                     if (isTimewarp) {
                         p.second = QString("%1:%2").arg(speed, p.second);
                     }

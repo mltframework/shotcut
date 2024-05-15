@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 Meltytech, LLC
+ * Copyright (c) 2018-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,6 +88,7 @@ void ProxyReplacePostJobAction::doAction()
     FilePropertiesPostJobAction::doAction();
     QFileInfo info(m_dstFile);
     QString newFileName = info.path() + "/" + info.baseName() + "." + info.suffix();
+    QFile::remove(newFileName);
     if (QFile::rename(m_dstFile, newFileName)) {
         Mlt::Producer newProducer(MLT.profile(), newFileName.toUtf8().constData());
         if (newProducer.is_valid()) {
