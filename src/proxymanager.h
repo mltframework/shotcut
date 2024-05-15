@@ -59,6 +59,7 @@ public:
     static void generateIfNotExistsAll(Mlt::Producer &producer);
     static bool removePending();
     static QString GoProProxyFilePath(const QString &resource);
+    static QString DJIProxyFilePath(const QString &resource);
 };
 
 #endif // PROXYMANAGER_H

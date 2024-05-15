@@ -690,6 +690,24 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
             }
         }
 
+        // Use DJI LRF if available
+        if (QFile::exists(ProxyManager::DJIProxyFilePath(resource))) {
+            for (auto &p : properties) {
+                if (p.first == "resource") {
+                    p.second = ProxyManager::DJIProxyFilePath(resource);
+                    if (isTimewarp) {
+                        p.second = QString("%1:%2").arg(speed, p.second);
+                    }
+                    properties << MltProperty(kIsProxyProperty, "1");
+                    properties << MltProperty(kMetaProxyProperty, "1");
+                    properties << MltProperty(kOriginalResourceProperty, resource);
+                    m_resource.notProxyMeta = !m_resource.isProxy;
+                    m_isUpdated = true;
+                    return;
+                }
+            }
+        }
+
         QDir proxyDir(Settings.proxyFolder());
         QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
         QString fileName = hash + ProxyManager::videoFilenameExtension();

@@ -36,6 +36,7 @@
 static const char *kProxySubfolder = "proxies";
 static const char *kProxyVideoExtension = ".mp4";
 static const char *kGoProProxyVideoExtension = ".LRV";
+static const char *kDJIProxyVideoExtension = ".LRF";
 static const char *kProxyPendingVideoExtension = ".pending.mp4";
 static const char *kProxyImageExtension = ".jpg";
 static const char *kProxyPendingImageExtension = ".pending.jpg";
@@ -411,6 +412,9 @@ bool ProxyManager::fileExists(Mlt::Producer &producer)
         if (QFile::exists(GoProProxyFilePath(producer.get("resource")))) {
             return true;
         }
+        if (QFile::exists(DJIProxyFilePath(producer.get("resource")))) {
+            return true;
+        }
         fileName = Util::getHash(producer) + kProxyVideoExtension;
     } else if (isValidImage(producer)) {
         fileName = Util::getHash(producer) + kProxyImageExtension;
@@ -489,13 +493,20 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer &producer, bool replace)
             QString fileName;
             if (service.startsWith("avformat")) {
                 auto gopro = GoProProxyFilePath(producer.get("resource"));
+                auto dji = DJIProxyFilePath(producer.get("resource"));
                 if (QFile::exists(gopro)) {
                     producer.set(kIsProxyProperty, 1);
                     producer.set(kMetaProxyProperty, 1);
                     producer.set(kOriginalResourceProperty, producer.get("resource"));
                     producer.set("resource", gopro.toUtf8().constData());
                     return true;
-                } else {
+                } else if (QFile::exists(dji)) {
+                    producer.set(kIsProxyProperty, 1);
+                    producer.set(kMetaProxyProperty, 1);
+                    producer.set(kOriginalResourceProperty, producer.get("resource"));
+                    producer.set("resource", dji.toUtf8().constData());
+                    return true;
+                }else {
                     fileName = Util::getHash(producer) + kProxyVideoExtension;
                 }
             } else if (isValidImage(producer)) {
@@ -695,6 +706,15 @@ QString ProxyManager::GoProProxyFilePath(const QString &resource)
     auto base = fi.baseName();
     base = "GL" + base.mid(2);
     auto result = fi.absoluteDir().filePath(base + kGoProProxyVideoExtension);
+    LOG_DEBUG() << result;
+    return result;
+}
+
+QString ProxyManager::DJIProxyFilePath(const QString &resource)
+{
+    auto fi = QFileInfo(resource);
+    auto base = fi.baseName();
+    auto result = fi.absoluteDir().filePath(base + kDJIProxyVideoExtension);
     LOG_DEBUG() << result;
     return result;
 }
