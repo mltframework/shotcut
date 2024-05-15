@@ -375,6 +375,31 @@ void PlaylistDock::setupActions()
     modeGroup->addAction(action);
     Actions.add("playlistViewIconsAction", action);
 
+    QActionGroup *detailColumnGroup = new QActionGroup(this);
+    detailColumnGroup->setExclusive(true);
+
+    action = new QAction(tr("Default"), this);
+    action->setCheckable(true);
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        if (checked) {
+            ui->tableView->setColumnHidden(PlaylistModel::COLUMN_IN, false);
+            ui->tableView->setColumnHidden(PlaylistModel::COLUMN_START, false);
+        }
+    });
+    detailColumnGroup->addAction(action);
+    Actions.add("playlistDetailColumnDefaultAction", action);
+
+    action = new QAction(tr("Hide In/Start"), this);
+    action->setCheckable(true);
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        if (checked) {
+            ui->tableView->setColumnHidden(PlaylistModel::COLUMN_IN, true);
+            ui->tableView->setColumnHidden(PlaylistModel::COLUMN_START, true);
+        }
+    });
+    detailColumnGroup->addAction(action);
+    Actions.add("playlistDetailColumnHideInStartAction", action);
+
     action = new QAction(tr("Details"), this);
     action->setToolTip(tr("View as details"));
     icon = QIcon::fromTheme("view-list-text",
