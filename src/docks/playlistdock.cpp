@@ -1382,10 +1382,13 @@ void PlaylistDock::updateViewMode()
         m_view = ui->tableView;
         ui->tableView->setModel(&m_model);
 
-        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, !Settings.playlistShowColumn("thumbnails"));
-        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_RESOURCE, !Settings.playlistShowColumn("clip"));
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL,
+                                       !Settings.playlistShowColumn("thumbnails"));
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_RESOURCE,
+                                       !Settings.playlistShowColumn("clip"));
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_IN, !Settings.playlistShowColumn("in"));
-        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DURATION, !Settings.playlistShowColumn("duration"));
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DURATION,
+                                       !Settings.playlistShowColumn("duration"));
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_START, !Settings.playlistShowColumn("start"));
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DATE, !Settings.playlistShowColumn("date"));
 
