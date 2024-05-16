@@ -612,6 +612,16 @@ void ShotcutSettings::setPlaylistAutoplay(bool b)
     settings.setValue("playlist/autoplay", b);
 }
 
+bool ShotcutSettings::playlistShowColumn(const QString &column)
+{
+    return settings.value("playlist/columns/" + column, true).toBool();
+}
+
+void ShotcutSettings::setPlaylistShowColumn(const QString &column, bool b)
+{
+    settings.setValue("playlist/columns/" + column, b);
+}
+
 bool ShotcutSettings::timelineDragScrub() const
 {
     return settings.value("timeline/dragScrub", false).toBool();

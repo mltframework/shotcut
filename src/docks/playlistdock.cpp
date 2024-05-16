@@ -204,6 +204,13 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     QMenu *sortByMenu = m_mainMenu->addMenu(tr("Sort"));
     sortByMenu->addAction(Actions["playlistSortByNameAction"]);
     sortByMenu->addAction(Actions["playlistSortByDateAction"]);
+    QMenu *columnsMenu = m_mainMenu->addMenu(tr("Columns"));
+    columnsMenu->addAction(Actions["playlistColumnsToggleThumbnailsAction"]);
+    columnsMenu->addAction(Actions["playlistColumnsToggleClipAction"]);
+    columnsMenu->addAction(Actions["playlistColumnsToggleInAction"]);
+    columnsMenu->addAction(Actions["playlistColumnsToggleDurationAction"]);
+    columnsMenu->addAction(Actions["playlistColumnsToggleStartAction"]);
+    columnsMenu->addAction(Actions["playlistColumnsToggleDateAction"]);
     Actions.loadFromMenu(m_mainMenu);
 
     DockToolBar *toolbar = new DockToolBar(tr("Playlist Controls"));
@@ -727,6 +734,60 @@ void PlaylistDock::setupActions()
         action->setEnabled(m_model.rowCount() > 8);
     });
     Actions.add("playlistSelectClip9Action", action);
+
+    action = new QAction(tr("Thumbnails"), this);
+    action->setChecked(Settings.playlistShowColumn("thumbnails"));
+    action->setCheckable(true);
+    connect(action, &QAction::triggered, this, [ = ](bool checked) {
+        Settings.setPlaylistShowColumn("thumbnails", checked);
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL, !checked);
+    });
+    Actions.add("playlistColumnsToggleThumbnailsAction", action);
+
+    action = new QAction(tr("Clip"), this);
+    action->setChecked(Settings.playlistShowColumn("clip"));
+    action->setCheckable(true);
+    connect(action, &QAction::triggered, this, [ = ](bool checked) {
+        Settings.setPlaylistShowColumn("clip", checked);
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_RESOURCE, !checked);
+    });
+    Actions.add("playlistColumnsToggleClipAction", action);
+
+    action = new QAction(tr("In"), this);
+    action->setChecked(Settings.playlistShowColumn("in"));
+    action->setCheckable(true);
+    connect(action, &QAction::triggered, this, [ = ](bool checked) {
+        Settings.setPlaylistShowColumn("in", checked);
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_IN, !checked);
+    });
+    Actions.add("playlistColumnsToggleInAction", action);
+
+    action = new QAction(tr("Duration"), this);
+    action->setChecked(Settings.playlistShowColumn("duration"));
+    action->setCheckable(true);
+    connect(action, &QAction::triggered, this, [ = ](bool checked) {
+        Settings.setPlaylistShowColumn("duration", checked);
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DURATION, !checked);
+    });
+    Actions.add("playlistColumnsToggleDurationAction", action);
+
+    action = new QAction(tr("Start"), this);
+    action->setChecked(Settings.playlistShowColumn("start"));
+    action->setCheckable(true);
+    connect(action, &QAction::triggered, this, [ = ](bool checked) {
+        Settings.setPlaylistShowColumn("start", checked);
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_START, !checked);
+    });
+    Actions.add("playlistColumnsToggleStartAction", action);
+
+    action = new QAction(tr("Date"), this);
+    action->setChecked(Settings.playlistShowColumn("date"));
+    action->setCheckable(true);
+    connect(action, &QAction::triggered, this, [ = ](bool checked) {
+        Settings.setPlaylistShowColumn("date", checked);
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DATE, !checked);
+    });
+    Actions.add("playlistColumnsToggleDateAction", action);
 }
 
 int PlaylistDock::position()
@@ -1320,6 +1381,17 @@ void PlaylistDock::updateViewMode()
         m_model.setViewMode(PlaylistModel::Detailed);
         m_view = ui->tableView;
         ui->tableView->setModel(&m_model);
+
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL,
+                                       !Settings.playlistShowColumn("thumbnails"));
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_RESOURCE,
+                                       !Settings.playlistShowColumn("clip"));
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_IN, !Settings.playlistShowColumn("in"));
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DURATION,
+                                       !Settings.playlistShowColumn("duration"));
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_START, !Settings.playlistShowColumn("start"));
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DATE, !Settings.playlistShowColumn("date"));
+
         ui->tableView->resizeColumnsToContents();
         ui->tableView->show();
 
