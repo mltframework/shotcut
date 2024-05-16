@@ -49,7 +49,8 @@
 #include <QClipboard>
 #include <QActionGroup>
 
-static const int kInOutChangedTimeoutMs = 100;
+static const auto kInOutChangedTimeoutMs = 100;
+static const auto kTilePaddingPx = 10;
 
 #define kDetailedMode "detailed"
 #define kIconsMode "icons"
@@ -73,7 +74,7 @@ public:
         const QImage thumb = index.data(Qt::DecorationRole).value<QImage>();
         const QString setting = Settings.playlistThumbnails();
         const int lineHeight = painter->fontMetrics().height();
-        const bool roomEnoughForAllDetails = lineHeight * 5 < thumb.height();
+        const bool roomEnoughForAllDetails = lineHeight * 3 < thumb.height() + kTilePaddingPx;
         const QFont oldFont = painter->font();
         QFont boldFont(oldFont);
         boldFont.setBold(true);
@@ -100,7 +101,7 @@ public:
         painter->setFont(oldFont);
 
         QRect centeredTextRect = option.rect;
-        centeredTextRect.setHeight(lineHeight * (roomEnoughForAllDetails ? 5 : 3));
+        centeredTextRect.setHeight(lineHeight * (roomEnoughForAllDetails ? 3 : 2) + kTilePaddingPx);
         centeredTextRect.moveCenter(option.rect.center());
 
         QRect textRect = centeredTextRect;
@@ -123,10 +124,7 @@ public:
                                                                 PlaylistModel::FIELD_DURATION).toString()));
         if (roomEnoughForAllDetails) {
             textPoint.setY(textPoint.y() + lineHeight);
-            painter->drawText(textPoint, tr("In: %1").arg(index.data(PlaylistModel::FIELD_IN).toString()));
-            textPoint.setY(textPoint.y() + lineHeight);
-            painter->drawText(textPoint, tr("Start: %1").arg(index.data(
-                                                                 PlaylistModel::FIELD_START).toString()));
+            painter->drawText(textPoint, tr("Date: %1").arg(index.data(PlaylistModel::FIELD_DATE).toString()));
         }
     }
 
@@ -137,9 +135,8 @@ public:
         Q_UNUSED(index);
         const bool doubleHeight = Settings.playlistThumbnails() == "tall"
                                   || Settings.playlistThumbnails() == "large";
-        const int spacing = 10;
         return QSize(m_view->viewport()->width(),
-                     PlaylistModel::THUMBNAIL_HEIGHT * (doubleHeight ? 2 : 1) + spacing);
+                     PlaylistModel::THUMBNAIL_HEIGHT * (doubleHeight ? 2 : 1) + kTilePaddingPx);
     }
 
 private slots:
