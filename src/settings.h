@@ -182,6 +182,8 @@ public:
     void setPlaylistThumbnails(const QString &);
     bool playlistAutoplay() const;
     void setPlaylistAutoplay(bool);
+    bool playlistShowColumn(const QString &);
+    void setPlaylistShowColumn(const QString &, bool);
 
     // timeline
     bool timelineDragScrub() const;
