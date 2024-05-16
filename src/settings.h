@@ -180,8 +180,6 @@ public:
     // playlist
     QString playlistThumbnails() const;
     void setPlaylistThumbnails(const QString &);
-    QString playlistDetailsColumn();
-    void setPlaylistDetailsColumn(const QString &);
     bool playlistAutoplay() const;
     void setPlaylistAutoplay(bool);
 

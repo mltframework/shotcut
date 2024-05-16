@@ -448,9 +448,6 @@ void MainWindow::setupAndConnectDocks()
     viewModeMenu->addAction(Actions["playlistViewDetailsAction"]);
     viewModeMenu->addAction(Actions["playlistViewTilesAction"]);
     viewModeMenu->addAction(Actions["playlistViewIconsAction"]);
-    QMenu *detailsColMenu = ui->menuPlaylist->addMenu(tr("Details Columns"));
-    detailsColMenu->addAction(Actions["playlistDetailColumnDefaultAction"]);
-    detailsColMenu->addAction(Actions["playlistDetailColumnHideInStartAction"]);
     QMenu *subMenu = ui->menuPlaylist->addMenu(tr("Thumbnails"));
     subMenu->addAction(Actions["playlistThumbnailsHiddenAction"]);
     subMenu->addAction(Actions["playlistThumbnailsLeftAndRightAction"]);

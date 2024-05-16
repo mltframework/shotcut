@@ -601,15 +601,6 @@ void ShotcutSettings::setPlaylistThumbnails(const QString &s)
     settings.setValue("playlist/thumbnails", s);
     emit playlistThumbnailsChanged();
 }
-QString ShotcutSettings::playlistDetailsColumn()
-{
-    return settings.value("playlist/detailsColumn", "default").toString();
-}
-
-void ShotcutSettings::setPlaylistDetailsColumn(const QString &s)
-{
-    settings.setValue("playlist/detailsColumn", s);
-}
 
 bool ShotcutSettings::playlistAutoplay() const
 {
