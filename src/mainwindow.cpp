@@ -2543,7 +2543,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     } else if (mimeData->hasUrls()) {
         openMultiple(mimeData->urls());
         event->acceptProposedAction();
-    } else if (mimeData->hasFormat(Mlt::XmlMimeType )) {
+    } else if (mimeData->hasFormat(Mlt::XmlMimeType) && MLT.XML() != mimeData->data(Mlt::XmlMimeType)) {
         m_playlistDock->onOpenActionTriggered();
         event->acceptProposedAction();
     }
