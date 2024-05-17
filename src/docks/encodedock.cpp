@@ -158,7 +158,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             if ((vcodec == "libx264" && hw.startsWith("h264"))
                     || (vcodec == "libx265" && hw.startsWith("hevc"))
                     || (vcodec == "libvpx-vp9" && hw.startsWith("vp9"))
-                    || (vcodec == "libaom-av1" && hw.startsWith("av1"))) {
+                    || (vcodec == "libsvtav1" && hw.startsWith("av1"))) {
                 vcodec = hw;
                 break;
             }
@@ -357,7 +357,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             other.append(QString("%1=%2").arg(name, value));
         }
     }
-    filterX265Params(other);
+    filterCodecParams(vcodec, other);
     ui->advancedTextEdit->setPlainText(other.join("\n"));
 
     // normalize the quality settings
@@ -381,7 +381,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         if (vcodec.startsWith("libx264") || vcodec == "libx265" || vcodec.contains("nvenc")
                 || vcodec.endsWith("_amf") || vcodec.endsWith("_vaapi")) {
             // 0 (best, 100%) - 51 (worst)
-            const auto qmax = QString::fromLatin1(preset.get("vcodec")) == "libaom-av1" ? 63 : 51;
+            const auto qmax = QString::fromLatin1(preset.get("vcodec")) == "libsvtav1" ? 63 : 51;
             ui->videoQualitySpinner->setValue(TO_RELATIVE(qmax, 0, videoQuality));
         } else if (vcodec.endsWith("_videotoolbox")) {
 #if defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM)
@@ -393,7 +393,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         } else if (vcodec.endsWith("_qsv")) {
             // 1 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 1, videoQuality));
-        } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
+        } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-") || vcodec == "libsvtav1") {
             // 0 (best, 100%) - 63 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
         } else if (vcodec.startsWith("libwebp")) {
@@ -700,6 +700,77 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 setIfNotSet(p, "g", ui->gopSpinner->value());
                 setIfNotSet(p, "bf", ui->bFramesSpinner->value());
                 p->set("x265-params", x265params.toUtf8().constData());
+            } else if (vcodec == "libsvtav1") {
+                // Most SVT-AV1 parameters must be supplied through svtav1-params.
+                // The preset properties are for UI controls and custom presets.
+                QString bitrate_text = ui->videoBitrateCombo->currentText();
+                int bitrate_kbps = qMax(QString(bitrate_text).replace('k', "").replace('M', "000").toInt(), 1);
+                int buffer_bits = qRound(ui->videoBufferSizeSpinner->value() * 1024.0 * 8.0);
+                int buffer_ms = qRound(float(buffer_bits) / float(bitrate_kbps));
+                QStringList encParams;
+
+                switch (ui->videoRateControlCombo->currentIndex()) {
+                case RateControlAverage: {
+                    encParams << QString("rc=1");
+                    encParams << QString("tbr=%1").arg(bitrate_text);
+                    setIfNotSet(p, "vb", bitrate_text.toLatin1().constData());
+                    break;
+                }
+                case RateControlConstant: {
+                    encParams << QString("rc=2");
+                    encParams << QString("tbr=%1").arg(bitrate_text);
+                    encParams << QString("buf-sz=%1").arg(buffer_ms);
+                    setIfNotSet(p, "vb", bitrate_text.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", buffer_bits);
+                    break;
+                }
+                case RateControlQuality: {
+                    encParams << QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
+                    setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
+                    break;
+                }
+                case RateControlConstrained: {
+                    encParams << QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
+                    encParams << QString("mbr=%1").arg(bitrate_text);
+                    setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
+                    setIfNotSet(p, "vmaxrate", bitrate_text.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", buffer_bits); // For UI only; not used by svtav1-params
+                    break;
+                }
+                }
+
+                encParams << QString("keyint=%1").arg(ui->gopSpinner->value());
+                setIfNotSet(p, "g", ui->gopSpinner->value());
+
+                if (ui->strictGopCheckBox->isChecked()) {
+                    encParams << QString("scd=0");
+                    encParams << QString("enable-dg=0");
+                    setIfNotSet(p, "sc_threshold", 0);
+                } else {
+                    encParams << QString("scd=1");
+                    encParams << QString("enable-dg=1");
+                    setIfNotSet(p, "sc_threshold", 1);
+                }
+
+                // SVT-AV1 does not offer direct control of the
+                // B-frame count, but we can control whether
+                // delta frames are bi-directional or not.
+                if (ui->bFramesSpinner->value() == 0)
+                    encParams << QString("pred-struct=1");
+                else
+                    encParams << QString("pred-struct=2");
+                setIfNotSet(p, "bf", ui->bFramesSpinner->value());
+
+                encParams << QString("lp=%1").arg(ui->videoCodecThreadsSpinner->value());
+
+                // AV1 spec does not support interlacing.
+                setIfNotSet(p, "progressive", 1);
+
+                QString origParams = QString::fromUtf8(p->get("svtav1-params"));
+                if (!origParams.isEmpty())
+                    encParams << origParams;
+
+                p->set("svtav1-params", encParams.join(':').toUtf8().constData());
             } else if (vcodec.contains("nvenc")) {
                 switch (ui->videoRateControlCombo->currentIndex()) {
                 case RateControlAverage:
@@ -918,7 +989,8 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 setIfNotSet(p, "threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0
                      && !ui->videoCodecCombo->currentText().startsWith("libx264")
-                     && ui->videoCodecCombo->currentText() != "libx265")
+                     && ui->videoCodecCombo->currentText() != "libx265"
+                     && ui->videoCodecCombo->currentText() != "libsvtav1")
                 setIfNotSet(p, "threads", ui->videoCodecThreadsSpinner->maximum() - 1);
             else
                 setIfNotSet(p, "threads", ui->videoCodecThreadsSpinner->value());
@@ -1029,8 +1101,19 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target
         if (pass == 1 || pass == 2) {
             QString x265params = consumerNode.attribute("x265-params");
             x265params = QString("pass=%1:stats=%2:%3")
-                         .arg(pass).arg(mytarget.replace(":", "\\:") + "_2pass.log").arg(x265params);
+                         .arg(pass).arg(QString(mytarget).replace(":", "\\:") + "_2pass.log").arg(x265params);
             consumerNode.setAttribute("x265-params", x265params);
+        }
+    } else if ("libsvtav1" == ui->videoCodecCombo->currentText()) {
+        if (pass == 1 || pass == 2) {
+            QStringList encParams;
+            encParams << QString("passes=2");
+            encParams << QString("pass=%1").arg(pass);
+            encParams << QString("stats=%1").arg(QString(mytarget).replace(":", "\\:") + "_2pass.log");
+            QString origParams = consumerNode.attribute("svtav1-params");
+            if (!origParams.isEmpty())
+                encParams << origParams;
+            consumerNode.setAttribute("svtav1-params", encParams.join(':'));
         }
     } else {
         if (pass == 1 || pass == 2) {
@@ -1391,34 +1474,57 @@ Mlt::Producer *EncodeDock::fromProducer() const
         return 0;
 }
 
-void EncodeDock::filterX265Params(QStringList &other)
+void EncodeDock::filterCodecParams(const QString &vcodec, QStringList &other)
 {
-    auto i = 0;
-    auto x265ParamsKey = "x265-params=";
-    for (const auto &s : other) {
-        if (s.startsWith(x265ParamsKey))
+    QString codecKey;
+    QStringList filterKeys;
+
+    if (vcodec == "libx265") {
+        codecKey = "x265-params=";
+        filterKeys << "bitrate";
+        filterKeys << "vbv-bufsize";
+        filterKeys << "crf";
+        filterKeys << "vbv-maxrate";
+        filterKeys << "keyint";
+        filterKeys << "scenecut";
+        filterKeys << "bframes";
+        filterKeys << "interlace";
+    } else if (vcodec == "libsvtav1") {
+        codecKey = "svtav1-params=";
+        filterKeys << "rc";
+        filterKeys << "tbr";
+        filterKeys << "buf-sz";
+        filterKeys << "crf";
+        filterKeys << "mbr";
+        filterKeys << "keyint";
+        filterKeys << "scd";
+        filterKeys << "enable-dg";
+        filterKeys << "pred-struct";
+        filterKeys << "lp";
+    } else
+        return;
+
+    int i = 0;
+    foreach (const QString &line, other) {
+        if (line.startsWith(codecKey))
             break;
         ++i;
     }
-    if (i < other.size()) {
-        auto x265params = other[i].mid(::strlen(x265ParamsKey));
-        QStringList params;
-        for (const auto &s : x265params.split(':')) {
-            if (!s.isEmpty()
-                    && !s.startsWith("crf=")
-                    && !s.startsWith("bitrate=")
-                    && !s.startsWith("vbv-bufsize=")
-                    && !s.startsWith("vbv-maxrate=")
-                    && !s.startsWith("keyint=")
-                    && !s.startsWith("bframes=")
-                    && !s.startsWith("scenecut=")
-                    && !s.startsWith("interlace="))
-                params << s;
-        }
-        other.removeAt(i);
-        if (params.size() > 0)
-            other.insert(i, x265ParamsKey + params.join(':'));
+    if (i >= other.size())
+        return;
+
+    QString origParams = other[i].mid(codecKey.length());
+    QStringList keepParams;
+    foreach (const QString &kv_str, origParams.split(':', Qt::SkipEmptyParts)) {
+        QStringList kv_parts = kv_str.split('=', Qt::SkipEmptyParts);
+        if (kv_parts.size() > 1) // found key and value
+            if (!filterKeys.contains(kv_parts[0]))
+                keepParams << kv_str;
     }
+
+    other.removeAt(i);
+    if (keepParams.size() > 0)
+        other.insert(i, codecKey + keepParams.join(':'));
 }
 
 void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset, bool resetBframes)
@@ -2109,7 +2215,7 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
     if (properties && properties->is_valid()) {
         QString value = QString::fromLatin1(properties->get("vcodec"));
         if (value.startsWith("av1_")) {
-            value = "libaom-av1";
+            value = "libsvtav1";
         } else if (value.startsWith("h264_")) {
             value = "libx264";
         } else if (value.startsWith("hevc_")) {
@@ -2177,7 +2283,7 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
     QString s;
     if (vcodec.startsWith("libx264") || vcodec == "libx265") {
         s = QString("crf=%1").arg(TO_ABSOLUTE(51, 0, vq));
-    } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
+    } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-") || vcodec == "libsvtav1") {
         s = QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
     } else if (vcodec.contains("nvenc")) {
         vq = TO_ABSOLUTE(51, 0, vq);

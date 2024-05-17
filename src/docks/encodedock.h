@@ -166,7 +166,7 @@ private:
     void encode(const QString &target);
     void resetOptions();
     Mlt::Producer *fromProducer() const;
-    static void filterX265Params(QStringList &other);
+    static void filterCodecParams(const QString &vcodec, QStringList &other);
     void onVideoCodecComboChanged(int index, bool ignorePreset = false, bool resetBframes = true);
     bool checkForMissingFiles();
     QString &defaultFormatExtension();
