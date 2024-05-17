@@ -1695,6 +1695,11 @@ void UpdateCommand::setPosition(int trackIndex, int clipIndex, int position)
     m_undoHelper.recordBeforeState();
 }
 
+void UpdateCommand::setRippleAllTracks(bool ripple)
+{
+    m_rippleAllTracks = ripple;
+}
+
 void UpdateCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<

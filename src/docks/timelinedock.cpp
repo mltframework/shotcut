@@ -1992,6 +1992,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
         emit warnTrackLocked(trackIndex);
         return;
     }
+    auto resetRippleAll = true;
     int i = m_model.trackList().at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
     if (track) {
@@ -2030,6 +2031,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                         //TODO: keyframes
                     }
                 }
+                resetRippleAll = false;
             } else if (newServiceName == "qimage" || newServiceName == "pixbuf") {
                 int oldLength = info->frame_out - info->frame_in;
                 int newLength = after->get_out() - after->get_in();
@@ -2065,6 +2067,8 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
     }
     QString xmlAfter = MLT.XML(after);
     m_updateCommand->setXmlAfter(xmlAfter);
+    if (resetRippleAll)
+        m_updateCommand->setRippleAllTracks(false);
     setSelection(); // clearing selection prevents a crash
     MAIN.undoStack()->push(m_updateCommand.release());
 }
