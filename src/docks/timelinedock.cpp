@@ -1988,6 +1988,8 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
     int trackIndex = currentTrack();
     if (trackIndex < 0 || selection().isEmpty() || !m_updateCommand || !after || !after->is_valid())
         return;
+    if (!selection().isEmpty())
+        trackIndex = selection().first().y();
     if (isTrackLocked(trackIndex)) {
         emit warnTrackLocked(trackIndex);
         return;
