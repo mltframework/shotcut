@@ -3564,10 +3564,12 @@ void TimelineDock::onClipRightClicked()
 void TimelineDock::onNoMoreEmptyTracks(bool isAudio)
 {
     if (Settings.timelineAutoAddTracks()) {
-        if (isAudio)
+        if (isAudio) {
             addAudioTrack();
-        else
+        } else {
             addVideoTrack();
+            incrementCurrentTrack(1);
+        }
     }
 }
 
