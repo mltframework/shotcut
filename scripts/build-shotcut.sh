@@ -103,10 +103,10 @@ LIBSPATIALAUDIO_HEAD=1
 LIBSPATIALAUDIO_REVISION=
 
 PYTHON_VERSION_DEFAULT=3.8
-PYTHON_VERSION_DARWIN=3.10
+PYTHON_VERSION_DARWIN=3.11
 
 QT_VERSION_DEFAULT=6.4.3
-QT_VERSION_DARWIN=6.5.3
+QT_VERSION_DARWIN=6.7.0
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -1967,7 +1967,7 @@ function deploy_mac
       dmg_name="$INSTALL_DIR/unsigned.dmg"
       cmd rm "$dmg_name" 2>/dev/null
       sync
-      cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 900m "$dmg_name"
+      cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 1500m "$dmg_name"
 
       if [ "$ACTION_CLEANUP" = "1" ]; then
         cmd rm -rf staging
