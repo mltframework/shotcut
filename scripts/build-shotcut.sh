@@ -1084,6 +1084,7 @@ function set_globals {
   #####
   # SVT-AV1
   CONFIG[29]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D BUILD_TESTING=OFF -D BUILD_APPS=OFF -D ENABLE_AVX512=ON"
+  [ "$TARGET_OS" = "Darwin" ] && CONFIG[29]="${CONFIG[29]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
   CFLAGS_[29]=$CFLAGS
   LDFLAGS_[29]=$LDFLAGS
   BUILD[29]="ninja -C build -j $MAKEJ"
@@ -1577,6 +1578,8 @@ function configure_compile_install_subproject {
       replace_rpath opencv_video
     elif [ "libspatialaudio" = "$1" ]; then
       replace_rpath spatialaudio
+    elif [ "SVT-AV1" = "$1" ]; then
+    replace_rpath SvtAv1Enc
     elif [ "vid.stab" = "$1" ]; then
       cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
     fi
