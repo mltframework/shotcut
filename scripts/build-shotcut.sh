@@ -59,6 +59,7 @@ FFMPEG_SUPPORT_QSV=1
 FFMPEG_SUPPORT_DAV1D=1
 FFMPEG_SUPPORT_AOM=1
 FFMPEG_SUPPORT_WEBP=1
+FFMPEG_SUPPORT_SVTAV1=1
 FFMPEG_SUPPORT_VMAF=1
 FFMPEG_ADDITIONAL_OPTIONS=
 ENABLE_VIDSTAB=1
@@ -83,6 +84,8 @@ DAV1D_HEAD=0
 DAV1D_REVISION="1.4.1"
 AOM_HEAD=0
 AOM_REVISION="v3.8.0"
+SVTAV1_HEAD=0
+SVTAV1_REVISION="v2.0.0"
 VMAF_HEAD=0
 VMAF_REVISION="v3.0.0"
 ENABLE_GLAXNIMATE=1
@@ -261,6 +264,9 @@ function to_key {
     ;;
     libwebp)
       echo 28
+    ;;
+    SVT-AV1)
+      echo 29
     ;;
     *)
       echo UNKNOWN
@@ -487,6 +493,9 @@ function set_globals {
     if test "$FFMPEG_SUPPORT_AOM" = 1 && test "$AOM_HEAD" = 1 -o "$AOM_REVISION" != ""; then
         SUBDIRS="aom $SUBDIRS"
     fi
+    if test "$FFMPEG_SUPPORT_SVTAV1" = 1 && test "$SVTAV1_HEAD" = 1 -o "$SVTAV1_REVISION" != ""; then
+        SUBDIRS="SVT-AV1 $SUBDIRS"
+    fi
     if test "$FFMPEG_SUPPORT_VMAF" = 1 && test "$VMAF_HEAD" = 1 -o "$VMAF_REVISION" != ""; then
         SUBDIRS="vmaf $SUBDIRS"
     fi
@@ -556,6 +565,7 @@ function set_globals {
   REPOLOCS[26]="https://github.com/opencv/opencv.git"
   REPOLOCS[27]="https://github.com/opencv/opencv_contrib.git"
   REPOLOCS[28]="https://github.com/webmproject/libwebp.git"
+  REPOLOCS[29]="https://gitlab.com/AOMediaCodec/SVT-AV1.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -585,6 +595,7 @@ function set_globals {
   REPOTYPES[26]="git"
   REPOTYPES[27]="git"
   REPOTYPES[28]="git"
+  REPOTYPES[29]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -656,10 +667,6 @@ function set_globals {
   if test 0 = "$AOM_HEAD" -a "$AOM_REVISION" ; then
     REVISIONS[22]="$AOM_REVISION"
   fi
-  REVISIONS[22]=""
-  if test 0 = "$AOM_HEAD" -a "$AOM_REVISION" ; then
-    REVISIONS[22]="$AOM_REVISION"
-  fi
   REVISIONS[23]=""
   if test 0 = "$VMAF_HEAD" -a "$VMAF_REVISION" ; then
     REVISIONS[23]="$VMAF_REVISION"
@@ -679,7 +686,11 @@ function set_globals {
   fi
   REVISIONS[28]=""
   if test 0 = "$LIBWEBP_HEAD" -a "$LIBWEBP_REVISION" ; then
-  REVISIONS[28]="$LIBWEBP_REVISION"
+    REVISIONS[28]="$LIBWEBP_REVISION"
+  fi
+  REVISIONS[29]=""
+  if test 0 = "$SVTAV1_HEAD" -a "$SVTAV1_REVISION" ; then
+    REVISIONS[29]="$SVTAV1_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -769,6 +780,9 @@ function set_globals {
   fi
   if test 1 = "$FFMPEG_SUPPORT_WEBP" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libwebp"
+  fi
+  if test 1 = "$FFMPEG_SUPPORT_SVTAV1" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-libsvtav1"
   fi
   if test 1 = "$FFMPEG_SUPPORT_VMAF" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libvmaf"
@@ -1066,6 +1080,14 @@ function set_globals {
   LDFLAGS_[28]="$LDFLAGS"
   BUILD[28]="ninja -C build -j $MAKEJ"
   INSTALL[28]="ninja -C build install"
+
+  #####
+  # SVT-AV1
+  CONFIG[29]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D BUILD_TESTING=OFF -D BUILD_APPS=OFF -D ENABLE_AVX512=ON"
+  CFLAGS_[29]=$CFLAGS
+  LDFLAGS_[29]=$LDFLAGS
+  BUILD[29]="ninja -C build -j $MAKEJ"
+  INSTALL[29]="ninja -C build install"
 }
 
 function build_ffmpeg_darwin {
