@@ -701,8 +701,6 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 setIfNotSet(p, "bf", ui->bFramesSpinner->value());
                 p->set("x265-params", x265params.toUtf8().constData());
             } else if (vcodec == "libsvtav1") {
-                // Most SVT-AV1 parameters must be supplied through svtav1-params.
-                // The preset properties are for UI controls and custom presets.
                 QString bitrate_text = ui->videoBitrateCombo->currentText();
                 int bitrate_kbps = qMax(QString(bitrate_text).replace('k', "").replace('M', "000").toInt(), 1);
                 int buffer_bits = qRound(ui->videoBufferSizeSpinner->value() * 1024.0 * 8.0);
@@ -711,8 +709,6 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
 
                 switch (ui->videoRateControlCombo->currentIndex()) {
                 case RateControlAverage: {
-                    encParams << QString("rc=1");
-                    encParams << QString("tbr=%1").arg(bitrate_text);
                     setIfNotSet(p, "vb", bitrate_text.toLatin1().constData());
                     break;
                 }
@@ -725,13 +721,10 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                     break;
                 }
                 case RateControlQuality: {
-                    encParams << QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
                     setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
                     break;
                 }
                 case RateControlConstrained: {
-                    encParams << QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
-                    encParams << QString("mbr=%1").arg(bitrate_text);
                     setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
                     setIfNotSet(p, "vmaxrate", bitrate_text.toLatin1().constData());
                     setIfNotSet(p, "vbufsize", buffer_bits); // For UI only; not used by svtav1-params
@@ -739,7 +732,6 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 }
                 }
 
-                encParams << QString("keyint=%1").arg(ui->gopSpinner->value());
                 setIfNotSet(p, "g", ui->gopSpinner->value());
 
                 if (ui->strictGopCheckBox->isChecked()) {
