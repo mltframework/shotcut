@@ -35,6 +35,7 @@
 #endif
 
 #ifdef Q_OS_WIN
+#include <windows.h>
 #ifdef QT_DEBUG
 #   include <exchndl.h>
 #endif
