@@ -89,7 +89,6 @@ public:
     bool isMultitrackValid() const;
     void doAutosave();
     void setFullScreen(bool isFullScreen);
-    QString removeFileScheme(QUrl &url);
     QString untitledFileName() const;
     void setProfile(const QString &profile_name);
     QString fileName() const
