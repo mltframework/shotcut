@@ -248,7 +248,6 @@ void MetadataModel::saveFilterSet(const QString &name)
     }
 
     auto filename = QString::fromUtf8(QUrl::toPercentEncoding(name));
-    auto exists = dir.exists(filename);
     QSaveFile file(dir.filePath(filename));
     file.setDirectWriteFallback(true);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
@@ -263,7 +262,7 @@ void MetadataModel::saveFilterSet(const QString &name)
                     file.errorString();
         return;
     }
-    if (file.commit() && !exists) {
+    if (file.commit() && !dir.exists(filename)) {
         auto meta = new QmlMetadata;
         meta->setType(QmlMetadata::FilterSet);
         meta->setName(name);
