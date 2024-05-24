@@ -158,7 +158,7 @@ Rectangle {
             property int dragTarget: -1
 
             function possiblySelectFirstFilter() {
-                if (count > 0 && currentIndex == -1) {
+                if (count > 0 && currentIndex === -1) {
                     currentIndex = 0;
                     filterClicked(currentIndex);
                 }
@@ -255,7 +255,12 @@ Rectangle {
                 anchors.fill: attachedFiltersView.contentItem
                 z: 1
                 onClicked: mouse => {
-                    filterClicked(attachedFiltersView.indexAt(mouseX, mouseY));
+                    let index = attachedFiltersView.indexAt(mouseX, mouseY)
+                    if (index < 0) {
+                        return
+                    }
+
+                    filterClicked(index);
                     mouse.accepted = false;
                 }
                 onPressAndHold: {
