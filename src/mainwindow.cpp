@@ -533,7 +533,7 @@ void MainWindow::setupAndConnectDocks()
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter *, QmlMetadata *, int)),
             m_filtersDock, SLOT(setCurrentFilter(QmlFilter *, QmlMetadata *, int)));
-    connect(m_filterController, &FilterController::undoOrRedo, m_filtersDock, &FiltersDock::resetQview);
+    connect(m_filterController, &FilterController::undoOrRedo, m_filtersDock, &FiltersDock::load);
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
     connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(onFilterModelChanged()));
     connect(m_filtersDock, SIGNAL(changed()), SLOT(onFilterModelChanged()));
@@ -750,6 +750,8 @@ void MainWindow::connectVideoWidgetSignals()
             &MainWindow::onSceneGraphInitialized, Qt::QueuedConnection);
     connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, m_timelineDock,
             &TimelineDock::initLoad);
+    connect(videoWidget->quickWindow(), &QQuickWindow::sceneGraphInitialized, m_filtersDock,
+            &FiltersDock::load);
     connect(videoWidget, &Mlt::VideoWidget::frameDisplayed, m_scopeController,
             &ScopeController::newFrame);
     connect(m_filterController, &FilterController::currentFilterChanged, videoWidget,
@@ -4495,6 +4497,10 @@ void MainWindow::on_actionLayoutAudio_triggered()
 
 void MainWindow::on_actionLayoutPlayer_triggered()
 {
+    if (isMultitrackValid()) {
+        // Clearing selection causes Filters to clear, which prevents showing a filter's VUI
+        m_timelineDock->setSelection();
+    }
     Settings.setLayout(QString(kReservedLayoutPrefix).arg(Settings.layoutMode()), QByteArray(),
                        saveState());
     Settings.setLayoutMode(LayoutMode::PlayerOnly);

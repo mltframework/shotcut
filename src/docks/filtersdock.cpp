@@ -70,14 +70,6 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
     connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
     connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
     setCurrentFilter(0, 0, QmlFilter::NoCurrentFilter);
-    connect(this, &QDockWidget::visibilityChanged, this, [&]() {
-        if (isVisible()) {
-            resetQview();
-        } else {
-            m_qview.setSource(QUrl(""));
-            emit currentFilterRequested(QmlFilter::NoCurrentFilter);
-        }
-    }, Qt::QueuedConnection);
 
     LOG_DEBUG() << "end";
 }
@@ -107,7 +99,7 @@ bool FiltersDock::event(QEvent *event)
 {
     bool result = QDockWidget::event(event);
     if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange) {
-        resetQview();
+        load();
     }
     return result;
 }
@@ -157,17 +149,12 @@ void FiltersDock::onServiceInChanged(int delta, Mlt::Service *service)
     }
 }
 
-void FiltersDock::resetQview()
+void FiltersDock::load()
 {
     if (!m_qview.quickWindow()->isSceneGraphInitialized())
         return;
 
     LOG_DEBUG() << "begin" << "isVisible" << isVisible() << "qview.status" << m_qview.status();
-    if (!isVisible()) {
-        m_qview.setSource(QUrl(""));
-        emit currentFilterRequested(QmlFilter::NoCurrentFilter);
-        return;
-    }
 
     if (m_qview.status() != QQuickWidget::Null) {
         QObject *root = m_qview.rootObject();
@@ -193,7 +180,6 @@ void FiltersDock::resetQview()
 
     QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
                      SIGNAL(currentFilterRequested(int)));
-    emit currentFilterRequested(QmlFilter::NoCurrentFilter);
 }
 
 void FiltersDock::setupActions()
