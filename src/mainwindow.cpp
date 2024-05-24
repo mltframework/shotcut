@@ -533,7 +533,6 @@ void MainWindow::setupAndConnectDocks()
     connect(ui->actionFilters, SIGNAL(triggered()), this, SLOT(onFiltersDockTriggered()));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter *, QmlMetadata *, int)),
             m_filtersDock, SLOT(setCurrentFilter(QmlFilter *, QmlMetadata *, int)));
-    connect(m_filterController, &FilterController::undoOrRedo, m_filtersDock, &FiltersDock::resetQview);
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
     connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(onFilterModelChanged()));
     connect(m_filtersDock, SIGNAL(changed()), SLOT(onFilterModelChanged()));

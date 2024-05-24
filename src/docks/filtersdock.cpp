@@ -53,6 +53,23 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
     setMinimumSize(200, 200);
     setupActions();
 
+
+    QDir viewPath = QmlUtilities::qmlDir();
+    viewPath.cd("views");
+    viewPath.cd("filter");
+    m_qview.engine()->addImportPath(viewPath.path());
+
+    QDir modulePath = QmlUtilities::qmlDir();
+    modulePath.cd("modules");
+    m_qview.engine()->addImportPath(modulePath.path());
+    m_qview.setResizeMode(QQuickWidget::SizeRootObjectToView);
+    m_qview.quickWindow()->setColor(palette().window().color());
+    QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("filterview.qml"));
+    m_qview.setSource(source);
+
+    QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
+                     SIGNAL(currentFilterRequested(int)));
+
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
 #ifndef Q_OS_MAC
@@ -70,14 +87,6 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
     connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
     connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
     setCurrentFilter(0, 0, QmlFilter::NoCurrentFilter);
-    connect(this, &QDockWidget::visibilityChanged, this, [&]() {
-        if (isVisible()) {
-            resetQview();
-        } else {
-            m_qview.setSource(QUrl(""));
-            emit currentFilterRequested(QmlFilter::NoCurrentFilter);
-        }
-    }, Qt::QueuedConnection);
 
     LOG_DEBUG() << "end";
 }
@@ -105,11 +114,7 @@ void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int ind
 
 bool FiltersDock::event(QEvent *event)
 {
-    bool result = QDockWidget::event(event);
-    if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange) {
-        resetQview();
-    }
-    return result;
+    return QDockWidget::event(event);
 }
 
 void FiltersDock::keyPressEvent(QKeyEvent *event)
@@ -155,45 +160,6 @@ void FiltersDock::onServiceInChanged(int delta, Mlt::Service *service)
             && service->get_service() == m_producer.producer().get_service()) {
         emit producerInChanged(delta);
     }
-}
-
-void FiltersDock::resetQview()
-{
-    if (!m_qview.quickWindow()->isSceneGraphInitialized())
-        return;
-
-    LOG_DEBUG() << "begin" << "isVisible" << isVisible() << "qview.status" << m_qview.status();
-    if (!isVisible()) {
-        m_qview.setSource(QUrl(""));
-        emit currentFilterRequested(QmlFilter::NoCurrentFilter);
-        return;
-    }
-
-    if (m_qview.status() != QQuickWidget::Null) {
-        QObject *root = m_qview.rootObject();
-        QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),
-                            this, SIGNAL(currentFilterRequested(int)));
-
-        m_qview.setSource(QUrl(""));
-    }
-
-    QDir viewPath = QmlUtilities::qmlDir();
-    viewPath.cd("views");
-    viewPath.cd("filter");
-    m_qview.engine()->addImportPath(viewPath.path());
-
-    QDir modulePath = QmlUtilities::qmlDir();
-    modulePath.cd("modules");
-    m_qview.engine()->addImportPath(modulePath.path());
-
-    m_qview.setResizeMode(QQuickWidget::SizeRootObjectToView);
-    m_qview.quickWindow()->setColor(palette().window().color());
-    QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("filterview.qml"));
-    m_qview.setSource(source);
-
-    QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
-                     SIGNAL(currentFilterRequested(int)));
-    emit currentFilterRequested(QmlFilter::NoCurrentFilter);
 }
 
 void FiltersDock::setupActions()
