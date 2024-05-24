@@ -39,6 +39,7 @@ class FiltersDock : public QDockWidget
 public:
     explicit FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *attachedModel,
                          MotionTrackerModel *motionTrackerModel, QWidget *parent = 0);
+    void init();
 
     QmlProducer *qmlProducer()
     {
@@ -58,7 +59,6 @@ public slots:
     void onShowFrame(const SharedFrame &frame);
     void openFilterMenu() const;
     void onServiceInChanged(int delta, Mlt::Service *service);
-    void resetQview();
 
 protected:
     bool event(QEvent *event);
