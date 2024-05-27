@@ -255,11 +255,10 @@ Rectangle {
                 anchors.fill: attachedFiltersView.contentItem
                 z: 1
                 onClicked: mouse => {
-                    let index = attachedFiltersView.indexAt(mouseX, mouseY)
+                    let index = attachedFiltersView.indexAt(mouseX, mouseY);
                     if (index < 0) {
-                        return
+                        return;
                     }
-
                     filterClicked(index);
                     mouse.accepted = false;
                 }
