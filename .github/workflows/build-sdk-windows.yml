@@ -41,6 +41,7 @@ jobs:
             mingw-w64-x86_64-opus
             mingw-w64-x86_64-rubberband
             mingw-w64-x86_64-sox
+            mingw-w64-x86_64-svt-av1
             mingw-w64-x86_64-vid.stab
             mingw-w64-x86_64-x264
             mingw-w64-x86_64-x265
