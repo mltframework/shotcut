@@ -1010,6 +1010,9 @@ void Player::onFrameDisplayed(const SharedFrame &frame)
     }
     int position = frame.get_position();
     bool loop = position >= (m_loopEnd - 1) && Actions["playerLoopAction"]->isChecked();
+    if (position > MLT.producer()->get_length()) {
+        position = MLT.producer()->get_length();
+    }
     if (position <= m_duration) {
         m_position = position;
         m_positionSpinner->blockSignals(true);
