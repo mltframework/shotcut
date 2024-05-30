@@ -107,8 +107,7 @@ Grid {
             }
         }
 
-        handle: Rectangle {
-        }
+        handle: Rectangle {}
     }
 
     Item {

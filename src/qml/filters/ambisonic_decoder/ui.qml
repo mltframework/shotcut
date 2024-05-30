@@ -534,8 +534,7 @@ Item {
             }
         }
 
-        Label {
-        }
+        Label {}
         Shotcut.Button {
             enabled: !binauralRadioButton.checked
             Layout.columnSpan: 3

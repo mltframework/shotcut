@@ -286,9 +286,9 @@ Item {
             Component.onCompleted: {
                 if (dasiamFile.exists()) {
                     model.append({
-                            "text": 'DaSiam: Distractor-aware Siamese Networks',
-                            "value": 'DaSIAM'
-                        });
+                        "text": 'DaSiam: Distractor-aware Siamese Networks',
+                        "value": 'DaSIAM'
+                    });
                 }
             }
 
@@ -337,8 +337,7 @@ Item {
             }
         }
 
-        Label {
-        }
+        Label {}
 
         RowLayout {
             Layout.columnSpan: 2
@@ -366,8 +365,7 @@ Item {
             }
         }
 
-        Label {
-        }
+        Label {}
 
         RowLayout {
             Layout.columnSpan: 2

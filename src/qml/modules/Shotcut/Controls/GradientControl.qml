@@ -40,9 +40,9 @@ RowLayout {
         var stepSize = (colors.length > 1) ? 1 / (colors.length - 1) : 0;
         for (var idx = 0; idx < colors.length; idx++) {
             newStops.push(stopComponent.createObject(gradientView, {
-                        "position": stepSize * idx,
-                        "color": colors[idx]
-                    }));
+                "position": stepSize * idx,
+                "color": colors[idx]
+            }));
         }
         gradientView.stops = newStops;
         for (var idx = 0; idx < _stopHandles.length; idx++) {
@@ -51,9 +51,9 @@ RowLayout {
         var newHandles = [];
         for (var idx = 0; idx < colors.length; idx++) {
             newHandles.push(stopHandle.createObject(gradientFrame, {
-                        "stopIndex": idx,
-                        "colorList": colors
-                    }));
+                "stopIndex": idx,
+                "colorList": colors
+            }));
         }
         _stopHandles = newHandles;
     }
@@ -90,8 +90,7 @@ RowLayout {
     Component {
         id: stopComponent
 
-        GradientStop {
-        }
+        GradientStop {}
     }
 
     Component {

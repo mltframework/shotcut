@@ -222,8 +222,7 @@ Item {
             onClicked: maxrateSlider.value = 3
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: discResetCheckbox

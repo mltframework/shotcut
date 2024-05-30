@@ -290,8 +290,7 @@ Shotcut.KeyframableFilter {
             model: ListModel {
                 id: insertModel
 
-                ListElement {
-                }
+                ListElement {}
 
                 ListElement {
                     text: qsTr('# (Hash sign)')

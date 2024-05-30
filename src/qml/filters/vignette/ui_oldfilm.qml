@@ -202,8 +202,7 @@ Item {
             onToggled: onKeyframesButtonClicked(checked, 'smooth', smoothSlider.value / 100)
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: modeCheckBox

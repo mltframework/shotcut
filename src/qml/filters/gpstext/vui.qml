@@ -16,5 +16,4 @@
  */
 import Shotcut.Controls as Shotcut
 
-Shotcut.TextFilterVui {
-}
+Shotcut.TextFilterVui {}

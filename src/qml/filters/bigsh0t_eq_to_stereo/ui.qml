@@ -585,8 +585,7 @@ Item {
             }
         }
 
-        Label {
-        }
+        Label {}
         Shotcut.Button {
             Layout.columnSpan: 3
             text: qsTr('Copy Parameters')

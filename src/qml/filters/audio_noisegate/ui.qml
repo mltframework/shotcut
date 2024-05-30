@@ -175,8 +175,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: outputCheckbox

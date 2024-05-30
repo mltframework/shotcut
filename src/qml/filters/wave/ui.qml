@@ -92,8 +92,7 @@ Item {
             onClicked: speedSlider.value = 5
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: deformXCheckBox
@@ -110,8 +109,7 @@ Item {
             }
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: deformYCheckBox

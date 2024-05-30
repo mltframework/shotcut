@@ -156,8 +156,7 @@ Item {
             onClicked: sliderAmount.value = 50
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: invertCheckbox

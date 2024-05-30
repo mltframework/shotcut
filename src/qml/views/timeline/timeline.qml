@@ -313,13 +313,12 @@ Rectangle {
                                         leftPadding: 10
                                     }
 
-                                    Behavior on opacity  {
-                                        NumberAnimation {
-                                        }
+                                    Behavior on opacity {
+                                        NumberAnimation {}
                                     }
                                 }
 
-                                Behavior on width  {
+                                Behavior on width {
                                     PropertyAnimation {
                                         easing.type: Easing.InOutCubic
                                     }
@@ -853,9 +852,8 @@ Rectangle {
                     }
                 }
 
-                Behavior on opacity  {
-                    NumberAnimation {
-                    }
+                Behavior on opacity {
+                    NumberAnimation {}
                 }
             }
         }
@@ -937,8 +935,8 @@ Rectangle {
                     posArray.push(tracksRepeater.itemAt(i).y);
                 }
                 posArray.sort(function (a, b) {
-                        return a - b;
-                    });
+                    return a - b;
+                });
                 let trackY = posArray[timeline.currentTrack];
                 let trackH = 0;
                 for (let i = 0; i < tracksRepeater.count; i++) {

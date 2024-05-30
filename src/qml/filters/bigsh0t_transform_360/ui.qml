@@ -399,8 +399,7 @@ Item {
             }
         }
 
-        Label {
-        }
+        Label {}
         RowLayout {
             Layout.columnSpan: 3
             CheckBox {

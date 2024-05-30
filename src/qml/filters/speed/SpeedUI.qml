@@ -192,8 +192,7 @@ Item {
             onClicked: modeCombo.currentIndex = 0
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: pitchCheckbox

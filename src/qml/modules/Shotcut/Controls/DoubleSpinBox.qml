@@ -149,14 +149,16 @@ Item {
                     _blockTextUpdate = true;
                     if (!validNumberFormat(text, spinbox.locale)) {
                         text = _lastValidText;
-                    } else if (textInProgress(text, spinbox.locale)) {
-                    } else if (isNaN(text.replace(',', '').replace('.', ''))) {
+                    } else if (textInProgress(text, spinbox.locale))
+                    // do nothing
+                    {} else if (isNaN(text.replace(',', '').replace('.', ''))) {
                         // Reject non-numbers
                         text = _lastValidText;
                     } else {
                         var newValue = spinbox.valueFromText(text, spinbox.locale);
-                        if (isNaN(newValue)) {
-                        } else if (newValue >= spinbox.from && newValue <= spinbox.to) {
+                        if (isNaN(newValue))
+                        // do nothing
+                        {} else if (newValue >= spinbox.from && newValue <= spinbox.to) {
                             _lastValidText = text;
                             spinbox.value = newValue;
                             root.valueModified();

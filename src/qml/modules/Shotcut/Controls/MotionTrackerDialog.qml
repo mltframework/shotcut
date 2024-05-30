@@ -83,22 +83,28 @@ Window {
             implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
             textRole: 'text'
             valueRole: 'value'
-            model: [{
+            model: [
+                {
                     "text": '',
                     "value": ''
-                }, {
+                },
+                {
                     "text": qsTr('Relative Position'),
                     "value": 'relativePos'
-                }, {
+                },
+                {
                     "text": qsTr('Offset Position'),
                     "value": 'offsetPos'
-                }, {
+                },
+                {
                     "text": qsTr('Absolute Position'),
                     "value": 'absPos'
-                }, {
+                },
+                {
                     "text": qsTr('Size And Position'),
                     "value": 'absSizePos'
-                },]
+                },
+            ]
 
             onActivated: {
                 if (currentIndex > 0) {

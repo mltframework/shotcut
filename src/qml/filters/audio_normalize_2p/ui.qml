@@ -88,8 +88,7 @@ Item {
             onClicked: programSlider.value = -23
         }
 
-        Label {
-        }
+        Label {}
 
         Shotcut.Button {
             id: button

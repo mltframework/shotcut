@@ -101,19 +101,24 @@ Item {
             var j = i + 1 < keyframesRepeater.count ? i + 1 : i;
             var widthOffset = keyframesRepeater.itemAt(0).width / 2;
             var heightOffset = keyframesRepeater.itemAt(0).height / 2;
-            var p = [{
+            var p = [
+                {
                     "x": keyframesRepeater.itemAt(g).x + widthOffset,
                     "y": keyframesRepeater.itemAt(g).y + heightOffset
-                }, {
+                },
+                {
                     "x": keyframesRepeater.itemAt(h).x + widthOffset,
                     "y": keyframesRepeater.itemAt(h).y + heightOffset
-                }, {
+                },
+                {
                     "x": keyframesRepeater.itemAt(i).x + widthOffset,
                     "y": keyframesRepeater.itemAt(i).y + heightOffset
-                }, {
+                },
+                {
                     "x": keyframesRepeater.itemAt(j).x + widthOffset,
                     "y": keyframesRepeater.itemAt(j).y + heightOffset
-                }];
+                }
+            ];
             if (p[0].x == p[1].x) {
                 p[0].x -= 10000;
             }

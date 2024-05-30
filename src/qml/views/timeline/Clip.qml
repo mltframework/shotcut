@@ -496,7 +496,7 @@ Rectangle {
             onDoubleClicked: timeline.fadeIn(trackIndex, index, (fadeIn > 0) ? 0 : Math.round(profile.fps))
         }
 
-        SequentialAnimation on scale  {
+        SequentialAnimation on scale {
             loops: Animation.Infinite
             running: fadeInMouseArea.containsMouse
 
@@ -590,7 +590,7 @@ Rectangle {
             onDoubleClicked: timeline.fadeOut(trackIndex, index, (fadeOut > 0) ? 0 : Math.round(profile.fps))
         }
 
-        SequentialAnimation on scale  {
+        SequentialAnimation on scale {
             loops: Animation.Infinite
             running: fadeOutMouseArea.containsMouse
 

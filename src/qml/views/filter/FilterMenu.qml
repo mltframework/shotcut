@@ -336,8 +336,7 @@ Rectangle {
                     currentIndex = -1;
                 }
 
-                delegate: FilterMenuDelegate {
-                }
+                delegate: FilterMenuDelegate {}
             }
         }
 

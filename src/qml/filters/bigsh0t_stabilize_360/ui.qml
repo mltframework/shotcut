@@ -440,8 +440,7 @@ Item {
             Layout.columnSpan: 4
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: transformWhenAnalyzingCheckBox

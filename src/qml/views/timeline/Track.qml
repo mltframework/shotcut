@@ -208,20 +208,20 @@ Rectangle {
                 if (!placeHolderAdded) {
                     placeHolderAdded = true;
                     trackModel.items.insert(clip.DelegateModel.itemsIndex, {
-                            "name": '',
-                            "resource": '',
-                            "duration": clip.clipDuration,
-                            "mlt_service": '<producer',
-                            "in": 0,
-                            "out": clip.clipDuration - 1,
-                            "blank": true,
-                            "audio": false,
-                            "isTransition": false,
-                            "fadeIn": 0,
-                            "fadeOut": 0,
-                            "hash": '',
-                            "speed": 1
-                        });
+                        "name": '',
+                        "resource": '',
+                        "duration": clip.clipDuration,
+                        "mlt_service": '<producer',
+                        "in": 0,
+                        "out": clip.clipDuration - 1,
+                        "blank": true,
+                        "audio": false,
+                        "isTransition": false,
+                        "fadeIn": 0,
+                        "fadeOut": 0,
+                        "hash": '',
+                        "speed": 1
+                    });
                 }
             }
             onDropped: clip => {

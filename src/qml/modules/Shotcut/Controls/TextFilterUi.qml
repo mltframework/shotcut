@@ -102,11 +102,11 @@ GridLayout {
         else if (align === 'bottom')
             bottomRadioButton.checked = true;
         fontDialog.selectedFont = Qt.font({
-                "family": filter.get('family'),
-                "pointSize": getPointSize(),
-                "italic": filter.get('style') === 'italic',
-                "weight": filter.getDouble('weight')
-            });
+            "family": filter.get('family'),
+            "pointSize": getPointSize(),
+            "italic": filter.get('style') === 'italic',
+            "weight": filter.getDouble('weight')
+        });
         fontSizeCheckBox.checked = parseInt(filter.get(useFontSizeProperty));
         refreshFontButton();
         setKeyframedControls();
@@ -157,39 +157,39 @@ GridLayout {
         let interpolation = Shotcut.KeyframesModel.SmoothNaturalInterpolation;
         filter.blockSignals = true;
         data.forEach(i => {
-                let current = filter.getRect(rectProperty, frame);
-                let x = 0;
-                let y = 0;
-                if (previous !== null) {
-                    x = i.x - previous.x;
-                    y = i.y - previous.y;
-                }
-                switch (operation) {
-                case 'relativePos':
-                    current.x += x;
-                    current.y += y;
-                    break;
-                case 'offsetPos':
-                    current.x -= x;
-                    current.y -= y;
-                    break;
-                case 'absPos':
-                    current.x = i.x + i.width / 2 - current.width / 2;
-                    current.y = i.y + i.height / 2 - current.height / 2;
-                    interpolation = Shotcut.KeyframesModel.LinearInterpolation;
-                    break;
-                case 'absSizePos':
-                    current.x = i.x;
-                    current.y = i.y;
-                    current.width = i.width;
-                    current.height = i.height;
-                    interpolation = Shotcut.KeyframesModel.LinearInterpolation;
-                    break;
-                }
-                previous = i;
-                filter.set(rectProperty, current, frame, interpolation);
-                frame += interval;
-            });
+            let current = filter.getRect(rectProperty, frame);
+            let x = 0;
+            let y = 0;
+            if (previous !== null) {
+                x = i.x - previous.x;
+                y = i.y - previous.y;
+            }
+            switch (operation) {
+            case 'relativePos':
+                current.x += x;
+                current.y += y;
+                break;
+            case 'offsetPos':
+                current.x -= x;
+                current.y -= y;
+                break;
+            case 'absPos':
+                current.x = i.x + i.width / 2 - current.width / 2;
+                current.y = i.y + i.height / 2 - current.height / 2;
+                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                break;
+            case 'absSizePos':
+                current.x = i.x;
+                current.y = i.y;
+                current.width = i.width;
+                current.height = i.height;
+                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                break;
+            }
+            previous = i;
+            filter.set(rectProperty, current, frame, interpolation);
+            frame += interval;
+        });
         filter.blockSignals = false;
         parameters.reload();
     }

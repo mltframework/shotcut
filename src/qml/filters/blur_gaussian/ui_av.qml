@@ -118,8 +118,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Item {
-        }
+        Item {}
 
         CheckBox {
             id: alphaCheckBox
@@ -142,8 +141,7 @@ Shotcut.KeyframableFilter {
             }
         }
 
-        Item {
-        }
+        Item {}
 
         Item {
             Layout.fillHeight: true

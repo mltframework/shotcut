@@ -133,8 +133,7 @@ Shotcut.KeyframableFilter {
             width: 1
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: useAlphaCheckbox

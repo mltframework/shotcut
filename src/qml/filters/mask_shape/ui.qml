@@ -268,12 +268,12 @@ Item {
 
                 Component.onCompleted: {
                     application.wipes.forEach(function (el) {
-                            wipeFile.url = el;
-                            append({
-                                    "text": wipeFile.fileName,
-                                    "value": el
-                                });
+                        wipeFile.url = el;
+                        append({
+                            "text": wipeFile.fileName,
+                            "value": el
                         });
+                    });
                 }
 
                 ListElement {

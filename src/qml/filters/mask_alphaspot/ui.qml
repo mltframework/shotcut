@@ -216,72 +216,72 @@ Item {
             // Use a shotcut property to backup current values
             if (filter.get('shotcut:backup.' + paramHorizontal).length === 0) {
                 params.forEach(param => {
-                        filter.set('shotcut:backup.' + param, filter.getDouble(param));
-                    });
+                    filter.set('shotcut:backup.' + param, filter.getDouble(param));
+                });
                 filter.set('shotcut:backup.rect', filter.getRect(rectProperty));
             } else {
                 params.forEach(param => {
-                        filter.resetProperty(param);
-                        filter.set(param, filter.getDouble('shotcut:backup.' + param));
-                    });
+                    filter.resetProperty(param);
+                    filter.set(param, filter.getDouble('shotcut:backup.' + param));
+                });
                 filter.set(rectProperty, filter.getRect('shotcut:backup.rect'));
             }
         }
         filterRect = filter.getRect(rectProperty, frame);
         data.forEach(i => {
-                let current = Qt.rect(filter.getDouble(paramHorizontal, frame), filter.getDouble(paramVertical, frame), filter.getDouble(paramWidth, frame), filter.getDouble(paramHeight, frame));
-                let x = 0;
-                let y = 0;
-                if (previous !== null) {
-                    x = i.x - previous.x;
-                    y = i.y - previous.y;
-                }
-                switch (operation) {
-                case 'relativePos':
-                    current.x += x / profile.width;
-                    current.y += y / profile.height;
-                    filter.set(paramHorizontal, current.x, frame, interpolation);
-                    filter.set(paramVertical, current.y, frame, interpolation);
-                    filterRect.x += x;
-                    filterRect.y += y;
-                    filter.set(rectProperty, filterRect, frame, interpolation);
-                    break;
-                case 'offsetPos':
-                    current.x -= x / profile.width;
-                    current.y -= y / profile.height;
-                    filter.set(paramHorizontal, current.x, frame, interpolation);
-                    filter.set(paramVertical, current.y, frame, interpolation);
-                    filterRect.x -= x;
-                    filterRect.y -= y;
-                    filter.set(rectProperty, filterRect, frame, interpolation);
-                    break;
-                case 'absPos':
-                    current.x = (i.x + i.width / 2) / profile.width;
-                    current.y = (i.y + i.height / 2) / profile.height;
-                    interpolation = Shotcut.KeyframesModel.LinearInterpolation;
-                    filter.set(paramHorizontal, current.x, frame, interpolation);
-                    filter.set(paramVertical, current.y, frame, interpolation);
-                    filterRect.x = i.x + i.width / 2 - filterRect.width / 2;
-                    filterRect.y = i.y + i.height / 2 - filterRect.height / 2;
-                    filter.set(rectProperty, filterRect, frame, interpolation);
-                    break;
-                case 'absSizePos':
-                    current.x = (i.x + i.width / 2) / profile.width;
-                    current.y = (i.y + i.height / 2) / profile.height;
-                    current.width = i.width / profile.width / 2;
-                    current.height = i.height / profile.height / 2;
-                    interpolation = Shotcut.KeyframesModel.LinearInterpolation;
-                    filter.set(paramHorizontal, current.x, frame, interpolation);
-                    filter.set(paramVertical, current.y, frame, interpolation);
-                    filter.set(paramWidth, current.width, frame, interpolation);
-                    filter.set(paramHeight, current.height, frame, interpolation);
-                    filterRect = i;
-                    filter.set(rectProperty, filterRect, frame, interpolation);
-                    break;
-                }
-                previous = i;
-                frame += interval;
-            });
+            let current = Qt.rect(filter.getDouble(paramHorizontal, frame), filter.getDouble(paramVertical, frame), filter.getDouble(paramWidth, frame), filter.getDouble(paramHeight, frame));
+            let x = 0;
+            let y = 0;
+            if (previous !== null) {
+                x = i.x - previous.x;
+                y = i.y - previous.y;
+            }
+            switch (operation) {
+            case 'relativePos':
+                current.x += x / profile.width;
+                current.y += y / profile.height;
+                filter.set(paramHorizontal, current.x, frame, interpolation);
+                filter.set(paramVertical, current.y, frame, interpolation);
+                filterRect.x += x;
+                filterRect.y += y;
+                filter.set(rectProperty, filterRect, frame, interpolation);
+                break;
+            case 'offsetPos':
+                current.x -= x / profile.width;
+                current.y -= y / profile.height;
+                filter.set(paramHorizontal, current.x, frame, interpolation);
+                filter.set(paramVertical, current.y, frame, interpolation);
+                filterRect.x -= x;
+                filterRect.y -= y;
+                filter.set(rectProperty, filterRect, frame, interpolation);
+                break;
+            case 'absPos':
+                current.x = (i.x + i.width / 2) / profile.width;
+                current.y = (i.y + i.height / 2) / profile.height;
+                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                filter.set(paramHorizontal, current.x, frame, interpolation);
+                filter.set(paramVertical, current.y, frame, interpolation);
+                filterRect.x = i.x + i.width / 2 - filterRect.width / 2;
+                filterRect.y = i.y + i.height / 2 - filterRect.height / 2;
+                filter.set(rectProperty, filterRect, frame, interpolation);
+                break;
+            case 'absSizePos':
+                current.x = (i.x + i.width / 2) / profile.width;
+                current.y = (i.y + i.height / 2) / profile.height;
+                current.width = i.width / profile.width / 2;
+                current.height = i.height / profile.height / 2;
+                interpolation = Shotcut.KeyframesModel.LinearInterpolation;
+                filter.set(paramHorizontal, current.x, frame, interpolation);
+                filter.set(paramVertical, current.y, frame, interpolation);
+                filter.set(paramWidth, current.width, frame, interpolation);
+                filter.set(paramHeight, current.height, frame, interpolation);
+                filterRect = i;
+                filter.set(rectProperty, filterRect, frame, interpolation);
+                break;
+            }
+            previous = i;
+            frame += interval;
+        });
         filter.blockSignals = false;
         filter.changed();
         filter.animateInChanged();
@@ -613,10 +613,10 @@ Item {
             filter.resetProperty(motionTrackerModel.operationProperty);
             let params = [paramHorizontal, paramVertical, paramWidth, paramHeight];
             params.forEach(param => {
-                    filter.resetProperty(param);
-                    filter.set(param, filter.getDouble('shotcut:backup.' + param));
-                    filter.resetProperty('shotcut:backup.' + param);
-                });
+                filter.resetProperty(param);
+                filter.set(param, filter.getDouble('shotcut:backup.' + param));
+                filter.resetProperty('shotcut:backup.' + param);
+            });
             filter.resetProperty(rectProperty);
             filter.set(rectProperty, filter.getRect('shotcut:backup.rect'));
             filter.resetProperty('shotcut:backup.rect');

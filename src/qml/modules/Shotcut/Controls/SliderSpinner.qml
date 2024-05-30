@@ -95,8 +95,7 @@ RowLayout {
             }
         }
 
-        handle: Rectangle {
-        }
+        handle: Rectangle {}
     }
 
     // Optional label between slider and spinner
@@ -151,10 +150,8 @@ RowLayout {
             }
         }
 
-        up.indicator: Rectangle {
-        }
+        up.indicator: Rectangle {}
 
-        down.indicator: Rectangle {
-        }
+        down.indicator: Rectangle {}
     }
 }

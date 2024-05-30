@@ -339,8 +339,7 @@ Item {
             onClicked: amount2Slider.value = amount2Default * 100
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: showMaskCheckbox
@@ -353,8 +352,7 @@ Item {
             onClicked: showMaskCheckbox.checked = showMaskDefault
         }
 
-        Label {
-        }
+        Label {}
 
         CheckBox {
             id: maskAlphaCheckbox
