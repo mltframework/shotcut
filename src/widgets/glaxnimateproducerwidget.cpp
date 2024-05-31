@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023 Meltytech, LLC
+ * Copyright (c) 2022-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -568,8 +568,8 @@ void GlaxnimateIpcServer::newFile(const QString &filename, int duration)
     modifyJsonValue(jsonValue, "animation.width", qRound(MLT.profile().width() * MLT.profile().sar()));
     modifyJsonValue(jsonValue, "animation.height", MLT.profile().height());
     modifyJsonValue(jsonValue, "animation.fps", MLT.profile().fps());
-    modifyJsonValue(jsonValue, "animation.animation.last_frame", duration - 1);
-    modifyJsonValue(jsonValue, "animation.shapes[0].animation.last_frame", duration - 1);
+    modifyJsonValue(jsonValue, "animation.animation.last_frame", duration);
+    modifyJsonValue(jsonValue, "animation.shapes[0].animation.last_frame", duration);
     json = jsonValue.toObject();
 
     rawr.setFileName(filename);
