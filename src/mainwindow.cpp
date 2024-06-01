@@ -1691,6 +1691,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
     if (info.isRelative()) {
         QDir pwd(QDir::currentPath());
         url = pwd.filePath(url);
+        info.setFile(url);
     }
     if (url.endsWith(".mlt") || url.endsWith(".xml")) {
         if (url != untitledFileName()) {
@@ -1764,6 +1765,12 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
 
         setAudioChannels(MLT.audioChannels());
         if (url.endsWith(".mlt") || url.endsWith(".xml")) {
+            if (MLT.producer()->get_int(kShotcutProjectFolder)) {
+                MLT.setProjectFolder(info.absolutePath());
+                ProxyManager::removePending();
+            } else {
+                MLT.setProjectFolder(QString());
+            }
             setVideoModeMenu();
             m_notesDock->setText(MLT.producer()->get(kShotcutProjectNote));
         }

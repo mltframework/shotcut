@@ -148,19 +148,12 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
         }
         updatePreviewProfile();
         setPreviewScale(Settings.playerPreviewScale());
-        if ( url.endsWith(".mlt") ) {
+        if (url.endsWith(".mlt")) {
             // Load the number of audio channels being used when this project was created.
             int channels = newProducer->get_int(kShotcutProjectAudioChannels);
             if (!channels)
                 channels = 2;
             m_audioChannels = channels;
-            if (newProducer->get_int(kShotcutProjectFolder)) {
-                QFileInfo info(url);
-                setProjectFolder(info.absolutePath());
-                ProxyManager::removePending();
-            } else {
-                setProjectFolder(QString());
-            }
         }
         if (Util::isFpsDifferent(profile().fps(), fps) || (Settings.playerGPU()
                                                            && !profile().is_explicit())) {
