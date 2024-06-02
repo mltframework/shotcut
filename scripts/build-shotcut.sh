@@ -1044,10 +1044,10 @@ function set_globals {
 
   #####
   # glaxnimate
-  CONFIG[24]="cmake -G Ninja -DCMAKE_PREFIX_PATH=$QTDIR -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  CONFIG[24]="cmake -G Ninja -DCMAKE_PREFIX_PATH='$FINAL_INSTALL_DIR;$QTDIR' -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[24]="${CONFIG[24]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
-    CONFIG[24]="${CONFIG[24]} -DPython3_EXECUTABLE=/opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/bin/python${PYTHON_VERSION_DARWIN} -D PYTHON_EXECUTABLE=/opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/bin/python${PYTHON_VERSION_DARWIN}"
+    CONFIG[24]="${CONFIG[24]} -DPython3_EXECUTABLE=/opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/bin/python${PYTHON_VERSION_DARWIN}"
   fi
   CFLAGS_[24]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[24]="$ASAN_LDFLAGS $LDFLAGS"
