@@ -332,13 +332,24 @@ int main(int argc, char **argv)
         }
     }
 #endif
+
+    // The ffmpeg backend (default as of Qt 6.5) is likely using a different version of FFmpeg.
+    if (!qEnvironmentVariableIsSet("QT_MEDIA_BACKEND"))
+#if defined(Q_OS_MAC)
+        qputenv("QT_MEDIA_BACKEND", "darwin");
+#elif defined(Q_OS_WIN)
+        qputenv("QT_MEDIA_BACKEND", "windows");
+#else
+        ;
+#endif
+
 #ifdef Q_OS_MAC
     // Launcher and Spotlight on macOS are not setting this environment
     // variable needed by setlocale() as used by MLT.
     if (QProcessEnvironment::systemEnvironment().value(MLT_LC_NAME).isEmpty()) {
         qputenv(MLT_LC_NAME, QLocale().name().toUtf8());
 
-        QLocale localeByName(QLocale(QLocale().language(), QLocale().script(), QLocale().country()));
+        QLocale localeByName(QLocale(QLocale().language(), QLocale().script(), QLocale().territory()));
         if (QLocale().decimalPoint() != localeByName.decimalPoint()) {
             // If region's numeric format does not match the language's, then we run
             // into problems because we told MLT and libc to use a different numeric
