@@ -1004,7 +1004,10 @@ void Player::onDurationChanged()
 
 void Player::onFrameDisplayed(const SharedFrame &frame)
 {
-    if (MLT.producer() && MLT.producer()->get_length() != m_duration) {
+    if (!MLT.producer() || !MLT.producer()->is_valid())
+        return;
+
+    if (MLT.producer()->get_length() != m_duration) {
         // This can happen if the profile changes. Reload the properties from the producer.
         onProducerOpened(false);
     }
