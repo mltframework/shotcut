@@ -2627,6 +2627,16 @@ int MultitrackModel::mltIndexForTrack(int trackIndex) const
     return i;
 }
 
+bool MultitrackModel::checkForEmptyTracks(int trackIndex)
+{
+    auto trackType = m_trackList.at(trackIndex).type;
+    if (!hasEmptyTrack(trackType)) {
+        emit noMoreEmptyTracks(AudioTrackType == trackType);
+        return true;
+    }
+    return false;
+}
+
 void MultitrackModel::adjustTrackFilters()
 {
     if (!m_tractor) return;
@@ -3714,10 +3724,6 @@ void MultitrackModel::removeBlankPlaceholder(Mlt::Playlist &playlist, int trackI
         beginRemoveRows(index(trackIndex), 0, 0);
         playlist.remove(0);
         endRemoveRows();
-
-        // Check for empty tracks
-        auto trackType = m_trackList.at(trackIndex).type;
-        if (!hasEmptyTrack(trackType))
-            emit noMoreEmptyTracks(AudioTrackType == trackType);
+        checkForEmptyTracks(trackIndex);
     }
 }

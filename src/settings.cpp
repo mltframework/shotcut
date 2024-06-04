@@ -783,8 +783,10 @@ bool ShotcutSettings::timelineAutoAddTracks() const
 
 void ShotcutSettings::setTimelineAutoAddTracks(bool b)
 {
-    settings.setValue("timeline/autoAddTracks", b);
-    emit timelineAutoAddTracksChanged();
+    if (b != timelineAutoAddTracks()) {
+        settings.setValue("timeline/autoAddTracks", b);
+        emit timelineAutoAddTracksChanged();
+    }
 }
 
 bool ShotcutSettings::timelineRectangleSelect() const

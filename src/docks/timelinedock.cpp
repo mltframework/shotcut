@@ -2884,11 +2884,15 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
         }
     }
 
+    auto autoAddTracks = Settings.timelineAutoAddTracks();
+    Settings.setTimelineAutoAddTracks(false);
     if (Settings.timelineRipple()) {
         insert(trackIndex, position, xml, false);
     } else {
         overwrite(trackIndex, position, xml, false);
     }
+    Settings.setTimelineAutoAddTracks(true);
+    m_model.checkForEmptyTracks(trackIndex);
 }
 
 void TimelineDock::onLoopChanged(int start, int end)
@@ -3371,13 +3375,14 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
             m_model.removeClip(trackIndex, clipIndex, false);
     }
     disconnect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip);
-    disconnect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, nullptr);
+    auto autoAddTracks = Settings.timelineAutoAddTracks();
+    Settings.setTimelineAutoAddTracks(false);
     MAIN.undoStack()->push(
         new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(playlist), skipProxy));
     connect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip,
             Qt::QueuedConnection);
-    connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks,
-            Qt::QueuedConnection);
+    Settings.setTimelineAutoAddTracks(true);
+    m_model.checkForEmptyTracks(trackIndex);
 }
 
 void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)

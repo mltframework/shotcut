@@ -126,6 +126,7 @@ public:
     QString getTrackName(int trackIndex);
     int bottomVideoTrackIndex() const;
     int mltIndexForTrack(int trackIndex) const;
+    bool checkForEmptyTracks(int trackIndex);
 
 signals:
     void created();
