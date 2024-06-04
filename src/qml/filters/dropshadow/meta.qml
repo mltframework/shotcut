@@ -24,7 +24,7 @@ Metadata {
                 name: qsTr('Radius')
                 property: 'radius'
                 isCurve: true
-                minimum: -100
+                minimum: 0
                 maximum: 100
             },
             Parameter {

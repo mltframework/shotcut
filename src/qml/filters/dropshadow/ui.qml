@@ -134,7 +134,7 @@ Shotcut.KeyframableFilter {
         Shotcut.SliderSpinner {
             id: radiusSlider
 
-            minimumValue: -100
+            minimumValue: 0
             maximumValue: 100
             decimals: 1
             suffix: 'px'
