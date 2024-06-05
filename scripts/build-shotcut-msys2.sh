@@ -1230,6 +1230,7 @@ function deploy
   cmd mkdir -p lib/qt6/audio
   for plugin in audio generic iconengines imageformats multimedia platforms sqldrivers styles tls; do
     cmd cp -pr "$QTDIR"/plugins/${plugin} lib/qt6
+    cmd rm lib/qt6/multimedia/ffmpegmediaplugin.dll
     for lib in lib/qt6/${plugin}/*.dll; do
       bundle_dlls "$lib"
     done
