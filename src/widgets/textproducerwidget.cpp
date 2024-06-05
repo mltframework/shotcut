@@ -146,8 +146,7 @@ void TextProducerWidget::loadPreset(Mlt::Properties &p)
         filter.reset(MLT.getFilter(kRichFilterName, m_producer.data()));
         if (filter && filter->is_valid())
             m_producer->detach(*filter);
-        Mlt::Profile profile = m_producer->get_profile();
-        filter.reset(createFilter(profile, m_producer.data()));
+        filter.reset(createFilter(MLT.profile(), m_producer.data()));
         m_producer->attach(*filter);
         emit producerChanged(m_producer.data());
     }
