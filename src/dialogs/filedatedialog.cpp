@@ -22,6 +22,8 @@
 #include "MltProducer.h"
 #include "proxymanager.h"
 
+#include <MltProfile.h>
+
 #include <QComboBox>
 #include <QDateTimeEdit>
 #include <QDebug>
@@ -113,7 +115,8 @@ void FileDateDialog::populateDateOptions(Mlt::Producer *producer)
     }
 
     // Add metadata dates
-    Mlt::Producer tmpProducer( *(producer->profile()), "avformat", resource.toUtf8().constData() );
+    Mlt::Profile profile(mlt_profile_clone(producer->get_profile()));
+    Mlt::Producer tmpProducer( profile, "avformat", resource.toUtf8().constData() );
     if (tmpProducer.is_valid()) {
         // Standard FFMpeg creation_time
         dateTime = QDateTime::fromString(tmpProducer.get("meta.attr.creation_time.markup"),
