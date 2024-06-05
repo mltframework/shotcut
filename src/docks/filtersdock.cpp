@@ -69,6 +69,9 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
     connect(&m_producer, SIGNAL(seeked(int)), SIGNAL(seeked(int)));
     connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
     connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
+    connect(m_qview.quickWindow(), &QQuickWindow::sceneGraphInitialized, this, &FiltersDock::load,
+            Qt::QueuedConnection);
+
     setCurrentFilter(0, 0, QmlFilter::NoCurrentFilter);
 
     LOG_DEBUG() << "end";
@@ -151,8 +154,10 @@ void FiltersDock::onServiceInChanged(int delta, Mlt::Service *service)
 
 void FiltersDock::load()
 {
-    if (!m_qview.quickWindow()->isSceneGraphInitialized())
-        return;
+    if (!m_qview.quickWindow()->isSceneGraphInitialized() && loadTries++ < 5) {
+        LOG_WARNING() << "scene graph not yet initialized";
+        QTimer::singleShot(300, this, &FiltersDock::load);
+    }
 
     LOG_DEBUG() << "begin" << "isVisible" << isVisible() << "qview.status" << m_qview.status();
 

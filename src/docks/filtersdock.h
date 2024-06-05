@@ -68,6 +68,7 @@ private:
     void setupActions();
     QQuickWidget m_qview;
     QmlProducer m_producer;
+    unsigned loadTries {0};
 };
 
 #endif // FILTERSDOCK_H
