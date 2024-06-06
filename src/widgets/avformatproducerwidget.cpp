@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@
 #include "jobs/bitrateviewerjob.h"
 
 #include <QtWidgets>
+#include <limits>
 
 static const auto kHandleSeconds = 15.0;
 
@@ -258,8 +259,15 @@ void AvformatProducerWidget::reloadProducerValues()
     ui->tabWidget->setTabEnabled(0, false);
     ui->tabWidget->setTabEnabled(1, false);
     ui->tabWidget->setTabEnabled(2, false);
-    if (m_defaultDuration == -1)
+    if (m_defaultDuration == -1) {
         m_defaultDuration = m_producer->get_length();
+
+        // Special hack for images
+        if (m_defaultDuration == std::numeric_limits<int>().max() && fps() == 1.0) {
+            m_defaultDuration = qRound(MLT.profile().fps() * Settings.imageDuration());
+            m_producer->set("length", m_defaultDuration);
+        }
+    }
 
     double warpSpeed = Util::GetSpeedFromProducer(producer());
     QString resource = Util::GetFilenameFromProducer(producer());
@@ -268,7 +276,7 @@ void AvformatProducerWidget::reloadProducerValues()
     ui->filenameLabel->setCursorPosition(caption.length());
     ui->filenameLabel->setToolTip(resource);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
-    ui->durationSpinBox->setValue(m_producer->get_length());
+    ui->durationSpinBox->setValue(m_defaultDuration);
     updateDuration();
     m_recalcDuration = false;
     ui->speedSpinBox->setValue(warpSpeed);
