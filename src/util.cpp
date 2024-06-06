@@ -777,6 +777,8 @@ QString Util::trcString(int trc)
     case 11:
         trcString = "IEC 61966-2-4";
         break;
+    case 13:
+        trcString = "sRGB";
     case 14:
         trcString = "ITU-R BT.2020";
         break;
@@ -799,7 +801,7 @@ QString Util::trcString(int trc)
 bool Util::trcIsCompatible(int trc)
 {
     // Transfer characteristics > SMPTE240M Probably need conversion except IEC61966-2-4 is OK
-    return trc <= 7 || trc == 11 || trc == 18;
+    return trc <= 7 || trc == 11 || trc == 13 || trc == 18;
 }
 
 QString Util::getConversionAdvice(Mlt::Producer *producer)
