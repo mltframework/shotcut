@@ -779,6 +779,7 @@ QString Util::trcString(int trc)
         break;
     case 13:
         trcString = "sRGB";
+        break;
     case 14:
         trcString = "ITU-R BT.2020";
         break;
