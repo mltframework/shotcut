@@ -101,7 +101,8 @@ void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int ind
 bool FiltersDock::event(QEvent *event)
 {
     bool result = QDockWidget::event(event);
-    if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange) {
+    if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange
+            || event->type() == QEvent::Show) {
         load();
     }
     return result;
@@ -161,13 +162,7 @@ void FiltersDock::load()
 
     LOG_DEBUG() << "begin" << "isVisible" << isVisible() << "qview.status" << m_qview.status();
 
-    if (m_qview.status() != QQuickWidget::Null) {
-        QObject *root = m_qview.rootObject();
-        QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),
-                            this, SIGNAL(currentFilterRequested(int)));
-
-        m_qview.setSource(QUrl(""));
-    }
+    emit currentFilterRequested(QmlFilter::NoCurrentFilter);
 
     QDir viewPath = QmlUtilities::qmlDir();
     viewPath.cd("views");

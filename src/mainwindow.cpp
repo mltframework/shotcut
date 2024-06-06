@@ -2110,6 +2110,7 @@ void MainWindow::setupActions()
     connect(action, &QAction::triggered, this, [&]() {
         m_timelineDock->model()->reload();
         m_keyframesDock->model().reload();
+        m_filtersDock->load();
     });
     addAction(action);
     Actions.add("timelineReload", action, tr("Timeline"));
