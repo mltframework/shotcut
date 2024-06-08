@@ -101,7 +101,7 @@ void AvformatProducerWidget::updateDuration()
         auto duration = m_producer->get_int(kFilterOutProperty) - m_producer->get_int(
                             kFilterInProperty) + 1;
         ui->timelineDurationLabel->show();
-        ui->timelineDurationText->setText(m_producer->frames_to_time(duration));
+        ui->timelineDurationText->setText(m_producer->frames_to_time(duration, Settings.timeFormat()));
         ui->timelineDurationText->show();
     } else {
         ui->timelineDurationLabel->hide();

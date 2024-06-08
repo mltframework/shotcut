@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2023 Meltytech, LLC
+ * Copyright (c) 2021-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include "qmltypes/qmlapplication.h"
 #include "widgets/timespinbox.h"
 #include "util.h"
+#include "settings.h"
 
 #include <QColorDialog>
 #include <QDebug>
@@ -157,7 +158,7 @@ void EditMarkerWidget::updateDuration()
 {
     if (MLT.producer()) {
         int duration = m_endSpinner->value() - m_startSpinner->value() + 1;
-        m_durationLabel->setText(MLT.producer()->frames_to_time(duration));
+        m_durationLabel->setText(MLT.producer()->frames_to_time(duration, Settings.timeFormat()));
     } else {
         m_durationLabel->setText("--:--:--:--");
     }
