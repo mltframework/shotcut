@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 Meltytech, LLC
+ * Copyright (c) 2018-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,6 +138,8 @@ Rectangle {
             var cursorX = producer.position * timeScale;
             var newPosition = Math.round((keyX) / timeScale);
             var keyPosition = newPosition - (filter.in - producer.in);
+            if (keyPosition !== producer.position)
+                producer.position = keyPosition;
             // Snap to cursor
             if (settings.timelineSnap && keyX > cursorX - 10 && keyX < cursorX + 10 && cursorX > minDragX + parent.width / 2 && cursorX < maxDragX + parent.width / 2 && drag.axis != Drag.YAxis) {
                 keyPosition = Math.round((cursorX) / timeScale) - (filter.in - producer.in);
