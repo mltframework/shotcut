@@ -60,7 +60,7 @@ static int normalFilterCount(Mlt::Producer *producer)
     if (producer && producer->is_valid()) {
         for (int i = 0; i < producer->filter_count(); i++) {
             Mlt::Filter *filter = producer->filter(i);
-            if (filter->is_valid() && filter->get_int("_loader")) {
+            if (filter->is_valid() && (filter->get_int("_loader") || filter->get_int(kShotcutHiddenProperty))) {
                 count++;
             } else {
                 i = producer->filter_count();
@@ -514,7 +514,7 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
         }
         for (int i = 0; i < filterSetProducer.filter_count(); i++) {
             Mlt::Filter *filter = filterSetProducer.filter(i);
-            if (filter->is_valid() && !filter->get_int("_loader")) {
+            if (filter->is_valid() && !filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)) {
                 QmlMetadata *tmpMeta = MAIN.filterController()->metadataForService(filter);
                 insertRow = findInsertRow(tmpMeta);
                 if (!meta->objectName().isEmpty())
@@ -728,11 +728,10 @@ void AttachedFiltersModel::reset(Mlt::Producer *producer)
         count = m_producer->filter_count();
         for (int i = 0; i < count; i++) {
             Mlt::Filter *filter = m_producer->filter(i);
-            if (filter && filter->is_valid()) {
-                if (!filter->get_int("_loader")) {
-                    QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
-                    m_metaList.append(newMeta);
-                }
+            if (filter && filter->is_valid() && !filter->get_int("_loader")
+                    && !filter->get_int(kShotcutHiddenProperty)) {
+                QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
+                m_metaList.append(newMeta);
             }
             delete filter;
         }

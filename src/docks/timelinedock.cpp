@@ -263,7 +263,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
         connect(&m_model, &MultitrackModel::rowsMoved, this, &TimelineDock::onRowsMoved);
         connect(&m_model, &MultitrackModel::noMoreEmptyTracks, this, &TimelineDock::onNoMoreEmptyTracks,
                 Qt::QueuedConnection);
-        reloadTimelineMarkers();
+        reloadTimelineModels();
     });
 
     connect(&m_model, &MultitrackModel::aboutToClose, this, [&]() {
@@ -280,7 +280,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     connect(&m_model, &MultitrackModel::closed, this, [&]() {
         onMultitrackClosed();
-        reloadTimelineMarkers();
+        reloadTimelineModels();
     });
 
     vboxLayout->addWidget(&m_quickView);
@@ -1463,7 +1463,7 @@ void TimelineDock::setPosition(int position)
         emit seeked(position);
     } else {
         m_position = m_model.tractor()->get_length();
-        emit positionChanged();
+        emit positionChanged(m_position);
     }
 }
 
@@ -2026,7 +2026,8 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                 int n = after->filter_count();
                 for (int j = 0; j < n; j++) {
                     QScopedPointer<Mlt::Filter> filter(after->filter(j));
-                    if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                    if (filter && filter->is_valid() && !filter->get_int("_loader")
+                            && !filter->get_int(kShotcutHiddenProperty)) {
                         in = qMin(qRound(filter->get_in() * speedRatio), length - 1);
                         out = qMin(qRound(filter->get_out() * speedRatio), length - 1);
                         filter->set_in_and_out(in, out);
@@ -2054,7 +2055,8 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                     int n = after->filter_count();
                     for (int j = 0; j < n; j++) {
                         QScopedPointer<Mlt::Filter> filter(after->filter(j));
-                        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                        if (filter && filter->is_valid() && !filter->get_int("_loader")
+                                && !filter->get_int(kShotcutHiddenProperty)) {
                             in = qMin(filter->get_in(), newLength - 1);
                             out = qMin(filter->get_out() + lengthDelta, newLength - 1);
                             filter->set_in_and_out(in, out);
@@ -2128,7 +2130,7 @@ void TimelineDock::onShowFrame(const SharedFrame &frame)
         m_ignoreNextPositionChange = false;
     } else if (MLT.isMultitrack() && m_position != frame.get_position()) {
         m_position = qMin(frame.get_position(), m_model.tractor()->get_length());
-        emit positionChanged();
+        emit positionChanged(m_position);
     }
 }
 
@@ -2136,7 +2138,7 @@ void TimelineDock::onSeeked(int position)
 {
     if (MLT.isMultitrack() && m_position != position) {
         m_position = qMin(position, m_model.tractor()->get_length());
-        emit positionChanged();
+        emit positionChanged(m_position);
     }
 }
 
@@ -3265,9 +3267,10 @@ void TimelineDock::onMultitrackClosed()
     emit setZoom(1.0);
 }
 
-void TimelineDock::reloadTimelineMarkers()
+void TimelineDock::reloadTimelineModels()
 {
     m_markersModel.load(m_model.tractor());
+    m_subtitlesModel.load(m_model.tractor());
 }
 
 void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, bool seek)

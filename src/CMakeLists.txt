@@ -5,6 +5,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   commands/filtercommands.cpp commands/filtercommands.h
   commands/markercommands.cpp commands/markercommands.h
   commands/playlistcommands.cpp commands/playlistcommands.h
+  commands/subtitlecommands.cpp commands/subtitlecommands.h
   commands/timelinecommands.cpp commands/timelinecommands.h
   commands/undohelper.cpp commands/undohelper.h
   controllers/filtercontroller.cpp controllers/filtercontroller.h
@@ -29,6 +30,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/resourcedialog.cpp dialogs/resourcedialog.h
   dialogs/saveimagedialog.cpp dialogs/saveimagedialog.h
   dialogs/slideshowgeneratordialog.cpp dialogs/slideshowgeneratordialog.h
+  dialogs/subtitletrackdialog.cpp dialogs/subtitletrackdialog.h
   dialogs/systemsyncdialog.cpp dialogs/systemsyncdialog.h
   dialogs/systemsyncdialog.ui
   dialogs/textviewerdialog.cpp dialogs/textviewerdialog.h
@@ -50,6 +52,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/recentdock.cpp docks/recentdock.h
   docks/recentdock.ui
   docks/scopedock.cpp docks/scopedock.h
+  docks/subtitlesdock.cpp docks/subtitlesdock.h
   docks/timelinedock.cpp docks/timelinedock.h
   jobqueue.cpp jobqueue.h
   jobs/abstractjob.cpp jobs/abstractjob.h
@@ -78,6 +81,8 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   models/multitrackmodel.cpp models/multitrackmodel.h
   models/playlistmodel.cpp models/playlistmodel.h
   models/resourcemodel.cpp models/resourcemodel.h
+  models/subtitles.cpp models/subtitles.h
+  models/subtitlesmodel.cpp models/subtitlesmodel.h
   openotherdialog.cpp openotherdialog.h
   openotherdialog.ui
   player.cpp player.h
