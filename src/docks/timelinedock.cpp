@@ -2891,7 +2891,7 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
     } else {
         overwrite(trackIndex, position, xml, false);
     }
-    Settings.setTimelineAutoAddTracks(true);
+    Settings.setTimelineAutoAddTracks(autoAddTracks);
     m_model.checkForEmptyTracks(trackIndex);
 }
 
@@ -3381,7 +3381,7 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
         new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(playlist), skipProxy));
     connect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip,
             Qt::QueuedConnection);
-    Settings.setTimelineAutoAddTracks(true);
+    Settings.setTimelineAutoAddTracks(autoAddTracks);
     m_model.checkForEmptyTracks(trackIndex);
 }
 
