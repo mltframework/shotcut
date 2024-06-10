@@ -522,7 +522,9 @@ void MainWindow::setupAndConnectDocks()
     m_filterController = new FilterController(this);
     m_filtersDock = new FiltersDock(m_filterController->metadataModel(),
                                     m_filterController->attachedModel(),
-                                    m_filterController->motionTrackerModel(), this);
+                                    m_filterController->motionTrackerModel(),
+                                    m_timelineDock->subtitlesModel(),
+                                    this);
     m_filtersDock->setMinimumSize(400, 300);
     m_filtersDock->hide();
     m_filtersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_6));
