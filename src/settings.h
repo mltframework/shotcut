@@ -71,6 +71,8 @@ class ShotcutSettings : public QObject
     Q_ENUMS(TimelineScrolling)
     Q_PROPERTY(bool timelineRectangleSelect READ timelineRectangleSelect WRITE
                setTimelineRectangleSelect NOTIFY timelineRectangleSelectChanged)
+    Q_PROPERTY(bool keyframesDragScrub READ keyframesDragScrub WRITE setKeyframesDragScrub
+               NOTIFY keyframesDragScrubChanged)
 
 public:
     static const qsizetype MaxPath {32767};
@@ -319,6 +321,10 @@ public:
     int slideshowTransitionSoftness(int defaultTransitionSoftness) const;
     void setSlideshowTransitionSoftness(int transitionSoftness);
 
+    // Keyframes
+    bool keyframesDragScrub() const;
+    void setKeyframesDragScrub(bool);
+
 public slots:
     void reset();
 
@@ -348,6 +354,7 @@ signals:
     void timelineAutoAddTracksChanged();
     void timelineRectangleSelectChanged();
     void timeFormatChanged();
+    void keyframesDragScrubChanged();
 
 private:
     explicit ShotcutSettings();

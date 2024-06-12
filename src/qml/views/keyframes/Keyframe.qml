@@ -138,7 +138,7 @@ Rectangle {
             var cursorX = producer.position * timeScale;
             var newPosition = Math.round((keyX) / timeScale);
             var keyPosition = newPosition - (filter.in - producer.in);
-            if (keyPosition !== producer.position)
+            if (settings.keyframesDragScrub && (keyPosition !== producer.position))
                 producer.position = keyPosition;
             // Snap to cursor
             if (settings.timelineSnap && keyX > cursorX - 10 && keyX < cursorX + 10 && cursorX > minDragX + parent.width / 2 && cursorX < maxDragX + parent.width / 2 && drag.axis != Drag.YAxis) {

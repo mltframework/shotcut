@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2023 Meltytech, LLC
+ * Copyright (c) 2016-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,6 +64,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     m_mainMenu->addAction(Actions["keyframesTrimOutAction"]);
     m_mainMenu->addAction(Actions["keyframesAnimateInAction"]);
     m_mainMenu->addAction(Actions["keyframesAnimateOutAction"]);
+    m_mainMenu->addAction(Actions["keyframesScrubDragAction"]);
     m_mainMenu->addAction(Actions["keyframesToggleKeyframeAction"]);
     m_mainMenu->addAction(Actions["keyframesSeekPreviousAction"]);
     m_mainMenu->addAction(Actions["keyframesSeekNextAction"]);
@@ -159,7 +160,9 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     toolbar->addAction(Actions["keyframesTrimOutAction"]);
     toolbar->addAction(Actions["keyframesAnimateInAction"]);
     toolbar->addAction(Actions["keyframesAnimateOutAction"]);
+    toolbar->addSeparator();
     toolbar->addAction(Actions["timelineSnapAction"]);
+    toolbar->addAction(Actions["keyframesScrubDragAction"]);
     toolbar->addSeparator();
     toolbar->addAction(Actions["keyframesZoomOutAction"]);
     QSlider *zoomSlider = new QSlider();
@@ -291,6 +294,20 @@ void KeyframesDock::setupActions()
         action->setEnabled(enabled);
     });
     Actions.add("keyframesAnimateOutAction", action);
+
+    action = new QAction(tr("Scrub While Dragging"), this);
+    icon = QIcon::fromTheme("scrub_drag",
+                            QIcon(":/icons/oxygen/32x32/actions/scrub_drag.png"));
+    action->setIcon(icon);
+    action->setCheckable(true);
+    action->setChecked(Settings.keyframesDragScrub());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setKeyframesDragScrub(checked);
+    });
+    connect(&Settings, &ShotcutSettings::keyframesDragScrubChanged, action, [ = ]() {
+        action->setChecked(Settings.keyframesDragScrub());
+    });
+    Actions.add("keyframesScrubDragAction", action);
 
     action = new QAction(tr("Zoom Keyframes Out"), this);
     action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Minus));

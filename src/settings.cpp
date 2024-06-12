@@ -1264,6 +1264,17 @@ void ShotcutSettings::setSlideshowTransitionSoftness(int transitionSoftness)
     settings.setValue("slideshow/transitionSoftness", transitionSoftness);
 }
 
+bool ShotcutSettings::keyframesDragScrub() const
+{
+    return settings.value("keyframes/dragScrub", false).toBool();
+}
+
+void ShotcutSettings::setKeyframesDragScrub(bool b)
+{
+    settings.setValue("keyframes/dragScrub", b);
+    emit keyframesDragScrubChanged();
+}
+
 void ShotcutSettings::reset()
 {
     for (auto &key : settings.allKeys()) {
