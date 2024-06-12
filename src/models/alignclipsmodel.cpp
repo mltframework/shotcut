@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
  */
 
 #include "alignclipsmodel.h"
+#include "settings.h"
 
 #include <Logger.h>
 #include "mltcontroller.h"
@@ -151,9 +152,9 @@ QVariant AlignClipsModel::data(const QModelIndex &index, int role) const
             if (clip.progress != 0 && clip.offset != INVALID_OFFSET && MLT.producer()
                     && MLT.producer()->is_valid()) {
                 if (clip.offset >= 0) {
-                    result = QString::fromLatin1(MLT.producer()->frames_to_time(clip.offset, mlt_time_smpte_df));
+                    result = QString::fromLatin1(MLT.producer()->frames_to_time(clip.offset, Settings.timeFormat()));
                 } else {
-                    result = QString("-") + MLT.producer()->frames_to_time(-clip.offset, mlt_time_smpte_df);
+                    result = QString("-") + MLT.producer()->frames_to_time(-clip.offset, Settings.timeFormat());
                 }
             }
             break;

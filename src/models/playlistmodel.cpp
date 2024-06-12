@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,7 +99,7 @@ public:
 
     QString cacheKey(int frameNumber)
     {
-        QString time = m_producer.frames_to_time(frameNumber, mlt_time_clock);
+        QString time = m_producer.frames_to_time(frameNumber, Settings.timeFormat());
         // Reduce the precision to centiseconds to increase chance for cache hit
         // without much loss of accuracy.
         time = time.left(time.size() - 1);
@@ -278,19 +278,20 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         }
         case FIELD_IN:
             if (info->producer && info->producer->is_valid()) {
-                return QString::fromLatin1(info->producer->frames_to_time(info->frame_in));
+                return QString::fromLatin1(info->producer->frames_to_time(info->frame_in, Settings.timeFormat()));
             } else {
                 return "";
             }
         case FIELD_DURATION:
             if (info->producer && info->producer->is_valid()) {
-                return QString::fromLatin1(info->producer->frames_to_time(info->frame_count));
+                return QString::fromLatin1(info->producer->frames_to_time(info->frame_count,
+                                                                          Settings.timeFormat()));
             } else {
                 return "";
             }
         case FIELD_START:
             if (info->producer && info->producer->is_valid()) {
-                return QString::fromLatin1(info->producer->frames_to_time(info->start));
+                return QString::fromLatin1(info->producer->frames_to_time(info->start, Settings.timeFormat()));
             } else {
                 return "";
             }

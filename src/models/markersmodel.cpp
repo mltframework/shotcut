@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2023 Meltytech, LLC
+ * Copyright (c) 2021-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,8 +37,8 @@ static void markerToProperties(const Markers::Marker &marker, Mlt::Properties *p
                                Mlt::Producer *producer)
 {
     properties->set("text", qUtf8Printable(marker.text));
-    properties->set("start", producer->frames_to_time(marker.start, mlt_time_clock));
-    properties->set("end", producer->frames_to_time(marker.end, mlt_time_clock));
+    properties->set("start", producer->frames_to_time(marker.start, Settings.timeFormat()));
+    properties->set("end", producer->frames_to_time(marker.end, Settings.timeFormat()));
     auto s = QString::asprintf("#%02X%02X%02X", marker.color.red(), marker.color.green(),
                                marker.color.blue());
     properties->set("color", s.toLatin1().constData());
@@ -710,13 +710,13 @@ QVariant MarkersModel::data(const QModelIndex &index, int role) const
             result = marker.text;
             break;
         case COLUMN_START:
-            result = QString(m_producer->frames_to_time(marker.start, mlt_time_smpte_df));
+            result = QString(m_producer->frames_to_time(marker.start, Settings.timeFormat()));
             break;
         case COLUMN_END:
-            result = QString(m_producer->frames_to_time(marker.end, mlt_time_smpte_df));
+            result = QString(m_producer->frames_to_time(marker.end, Settings.timeFormat()));
             break;
         case COLUMN_DURATION:
-            result = QString(m_producer->frames_to_time(marker.end - marker.start + 1, mlt_time_smpte_df));
+            result = QString(m_producer->frames_to_time(marker.end - marker.start + 1, Settings.timeFormat()));
             break;
         default:
             LOG_ERROR() << "Invalid Column" << index.column() << role;
