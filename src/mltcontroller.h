@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2023 Meltytech, LLC
+ * Copyright (c) 2011-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,6 +113,7 @@ public:
     void next(int currentPosition);
     void setIn(int);
     void setOut(int);
+    void fixLengthProperties(Service &service);
     void restart(const QString &xml = "");
     void resetURL();
     QImage image(Frame *frame, int width, int height);

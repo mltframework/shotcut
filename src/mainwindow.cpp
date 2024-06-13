@@ -3836,8 +3836,18 @@ void MainWindow::onProfileTriggered(QAction *action)
 {
     Settings.setPlayerProfile(action->data().toString());
     if (MLT.producer() && MLT.producer()->is_valid()) {
+        // Figure out the top-level project producer
+        auto producer = MLT.producer();
+        if (m_timelineDock->model()->rowCount() > 0) {
+            producer = multitrack();
+        } else if (m_playlistDock->model()->rowCount() > 0) {
+            producer = playlist();
+        } else if (MLT.isMultitrack() || MLT.isPlaylist()) {
+            producer = MLT.savedProducer();
+        }
+        MLT.fixLengthProperties(*producer);
         // Save the XML to get correct in/out points before profile is changed.
-        QString xml = MLT.XML();
+        QString xml = MLT.XML(producer);
         setProfile(action->data().toString());
         MLT.restart(xml);
         emit producerOpened(false);

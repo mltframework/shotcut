@@ -170,7 +170,7 @@ signals:
 
 PlaylistModel::PlaylistModel(QObject *parent)
     : QAbstractTableModel(parent)
-    , m_playlist(0)
+    , m_playlist(nullptr)
     , m_dropRow(-1)
     , m_mode(Invalid)
 {
@@ -182,7 +182,7 @@ PlaylistModel::PlaylistModel(QObject *parent)
 PlaylistModel::~PlaylistModel()
 {
     delete m_playlist;
-    m_playlist = 0;
+    m_playlist = nullptr;
 }
 
 int PlaylistModel::rowCount(const QModelIndex & /*parent*/) const
@@ -628,7 +628,7 @@ void PlaylistModel::load()
     m_playlist = new Mlt::Playlist(*MLT.producer());
     if (!m_playlist->is_valid()) {
         delete m_playlist;
-        m_playlist = 0;
+        m_playlist = nullptr;
         return;
     }
     if (m_playlist->count() > 0) {
@@ -736,7 +736,7 @@ void PlaylistModel::close()
     if (!m_playlist) return;
     clear();
     delete m_playlist;
-    m_playlist = 0;
+    m_playlist = nullptr;
     emit closed();
 }
 

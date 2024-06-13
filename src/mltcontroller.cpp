@@ -811,6 +811,95 @@ void Controller::setOut(int out)
     }
 }
 
+class FixLengthPropertiesParser : public Mlt::Parser
+{
+public:
+    FixLengthPropertiesParser() : Mlt::Parser() {}
+
+    int on_start_filter(Mlt::Filter *)
+    {
+        return 0;
+    }
+    int on_start_producer(Mlt::Producer *)
+    {
+        return 0;
+    }
+    int on_end_producer(Mlt::Producer *s)
+    {
+        if (!::strchr(s->get("length"), ':'))
+            s->set("length", s->frames_to_time(s->get_int("length"), mlt_time_clock));
+        return 0;
+    }
+    int on_start_playlist(Mlt::Playlist *)
+    {
+        return 0;
+    }
+    int on_end_playlist(Mlt::Playlist *)
+    {
+        return 0;
+    }
+    int on_start_tractor(Mlt::Tractor *)
+    {
+        return 0;
+    }
+    int on_end_tractor(Mlt::Tractor *)
+    {
+        return 0;
+    }
+    int on_start_multitrack(Mlt::Multitrack *)
+    {
+        return 0;
+    }
+    int on_end_multitrack(Mlt::Multitrack *)
+    {
+        return 0;
+    }
+    int on_start_track()
+    {
+        return 0;
+    }
+    int on_end_track()
+    {
+        return 0;
+    }
+    int on_end_filter(Mlt::Filter *)
+    {
+        return 0;
+    }
+    int on_start_transition(Mlt::Transition *)
+    {
+        return 0;
+    }
+    int on_end_transition(Mlt::Transition *)
+    {
+        return 0;
+    }
+    int on_start_chain(Mlt::Chain *)
+    {
+        return 0;
+    }
+    int on_end_chain(Mlt::Chain *s)
+    {
+        if (!::strchr(s->get("length"), ':'))
+            s->set("length", s->frames_to_time(s->get_int("length"), mlt_time_clock));
+        return 0;
+    }
+    int on_start_link(Mlt::Link *)
+    {
+        return 0;
+    }
+    int on_end_link(Mlt::Link *)
+    {
+        return 0;
+    }
+};
+
+void Controller::fixLengthProperties(Service &service)
+{
+    FixLengthPropertiesParser parser;
+    parser.start(service);
+}
+
 void Controller::restart(const QString &xml)
 {
     if (!m_consumer || !m_consumer->is_valid() || !m_producer || !m_producer->is_valid())
