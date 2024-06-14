@@ -223,7 +223,9 @@ public:
         // Startup logging.
         dir.setPath(Settings.appDataLocation());
         if (!dir.exists()) dir.mkpath(dir.path());
-        QFile::copy(dir.filePath("shotcut-log.txt"), dir.filePath("shotcut-log.bak"));
+        auto previousLogName = dir.filePath("shotcut-log.bak");
+        QFile::remove(previousLogName);
+        QFile::copy(dir.filePath("shotcut-log.txt"), previousLogName);
         const QString logFileName = dir.filePath("shotcut-log.txt");
         QFile::remove(logFileName);
         FileAppender *fileAppender = new FileAppender(logFileName);
