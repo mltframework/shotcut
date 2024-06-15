@@ -38,6 +38,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QMenu>
+#include <QMessageBox>
 #include <QTextEdit>
 #include <QTreeView>
 #include <QToolButton>
@@ -389,6 +390,22 @@ void SubtitlesDock::removeSubtitleTrack()
 {
     QString name = m_trackCombo->currentData().toString();
     if (!name.isEmpty()) {
+        Mlt::Producer *multitrack = MAIN.multitrack();
+        if (multitrack && multitrack->is_valid()) {
+            for (int i = 0; i < multitrack->filter_count(); i++) {
+                QScopedPointer<Mlt::Filter> filter(multitrack->filter(i));
+                if (!filter || !filter->is_valid() || filter->get("mlt_service") != QString("subtitle")) {
+                    continue;
+                }
+                QString feed = filter->get("feed");
+                if (m_model->getTrackIndex(feed) > -1) {
+                    QMessageBox::warning(this, tr("Remove Subtitle Track"),
+                                         tr("This track is in use by a subtitle filter.\n"
+                                            "Remove the subtitle filter before removing this track."));
+                    return;
+                }
+            }
+        }
         m_model->removeTrack(name);
     }
 }

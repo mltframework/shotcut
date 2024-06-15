@@ -123,6 +123,17 @@ QList<SubtitlesModel::SubtitleTrack> SubtitlesModel::getTracks() const
     return m_tracks;
 }
 
+int SubtitlesModel::getTrackIndex(const QString &name)
+{
+    int index = -1;
+    for (int i = 0; i < m_tracks.size(); i++) {
+        if (m_tracks[i].name == name) {
+            return i;
+        }
+    }
+    return index;
+}
+
 SubtitlesModel::SubtitleTrack SubtitlesModel::getTrack(const QString &name)
 {
     for (auto &track : m_tracks) {

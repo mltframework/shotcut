@@ -58,6 +58,7 @@ public:
     int trackCount() const;
     QModelIndex trackModelIndex(int trackIndex) const;
     QList<SubtitlesModel::SubtitleTrack> getTracks() const;
+    int getTrackIndex(const QString &name);
     SubtitlesModel::SubtitleTrack getTrack(const QString &name);
     SubtitlesModel::SubtitleTrack getTrack(int index);
     void addTrack(SubtitlesModel::SubtitleTrack &track);
