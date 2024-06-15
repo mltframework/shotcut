@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,6 +78,9 @@ BitrateDialog::BitrateDialog(const QString &resource, double fps, const QJsonArr
 
         if (pts > 0.0)
             time = pts + qMax(0.0, duration);
+        if (i == 0)
+            firstTime = time;
+        time -= firstTime;
         if (o["flags"].toString()[0] == 'K') {
             keySubtotal += size;
         } else {
@@ -110,6 +113,8 @@ BitrateDialog::BitrateDialog(const QString &resource, double fps, const QJsonArr
             double sum = 0.0;
             for (auto &v : window)
                 sum += v;
+            // subtract 0.5 from the time because the X axis tick marks are centered
+            // under the bar such that "0s" is actually at 0.5s
             averageLine->append(time - 0.5, sum / window.size());
 
             // Reset counters
@@ -131,7 +136,7 @@ BitrateDialog::BitrateDialog(const QString &resource, double fps, const QJsonArr
     chart->addAxis(axisX, Qt::AlignBottom);
     barSeries->attachAxis(axisX);
     averageLine->attachAxis(axisX);
-    axisX->setRange(0.5, time + 0.5);
+    axisX->setRange(0.0, time);
     axisX->setLabelFormat("%.0f s");
     axisX->setTickType(QValueAxis::TicksDynamic);
     axisX->setTickInterval(periodCount > 100 ? 10.0 : 5.0);
@@ -169,7 +174,7 @@ BitrateDialog::BitrateDialog(const QString &resource, double fps, const QJsonArr
     });
     connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
     chartView->setMinimumWidth(qMax(1010, periodCount * 5));
-    chartView->setMinimumHeight(530);
+    chartView->setMinimumHeight(520);
     resize(1024, 576);
     show();
 }
