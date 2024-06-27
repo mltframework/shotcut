@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,13 +33,13 @@ Item {
     function setStatus(inProgress) {
         if (inProgress) {
             status.text = qsTr('Analyzing...');
-            results.text = "--";
+            results.setText("--");
         } else if (hasAnalysisCompleted()) {
             status.text = qsTr('Analysis complete.');
-            results.text = filter.get("results");
+            results.setText(filter.get("results"));
         } else {
             status.text = _analysisRequiredMessage;
-            results.text = "--";
+            results.setText("--");
         }
     }
 
@@ -256,7 +256,16 @@ Item {
         Label {
             id: results
 
+            function setText(path) {
+                text = path.substring(path.lastIndexOf('/') + 1);
+                resultsTip.text = path
+            }
+
             Layout.columnSpan: 2
+
+            Shotcut.HoverTip {
+                id: resultsTip
+            }
         }
 
         Item {
