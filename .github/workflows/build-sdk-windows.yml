@@ -90,7 +90,7 @@ jobs:
           echo Done
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: windows-sdk
           path: ./build/shotcut-win64-sdk-*.txz
