@@ -1,0 +1,30 @@
+name: build-shotcut-windows-arm64
+
+on:
+  workflow_dispatch:
+  schedule:
+    # nightly
+    - cron: '0 12 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ github.repository_owner == 'mltframework' }}
+    steps:
+      - name: Download from S3
+        run: |
+          VERSION=$(date +"%y%m%d")
+          echo VERSION=$VERSION
+          sudo apt install -yqq s3cmd
+          s3cmd --access_key=${{ secrets.AWS_ACCESS_KEY }} --secret_key=${{ secrets.AWS_SECRET_KEY }} --stop-on-error get s3://builds.us.meltytech/shotcut-build-win_arm.txt.xz
+          s3cmd --access_key=${{ secrets.AWS_ACCESS_KEY }} --secret_key=${{ secrets.AWS_SECRET_KEY }} --stop-on-error get s3://builds.us.meltytech/shotcut/shotcut-win_ARM-$VERSION.zip
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: portable
+          path: |
+            *.zip
+
+      - name: Dump log
+        run: xzcat shotcut-build-win_arm.txt.xz
