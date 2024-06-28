@@ -506,7 +506,7 @@ bool Util::isMemoryLow()
         }
     }
     return false;
-#elif defined(__FreeBSD__)
+#elif defined(__FreeBSD__) || defined(__OpenBSD__)
     QProcess p;
     p.start("sysctl -n hw.usermem");
     p.waitForFinished();
