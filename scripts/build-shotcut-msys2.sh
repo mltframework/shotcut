@@ -61,11 +61,6 @@ OPENCV_REVISION="4.9.0"
 ENABLE_LIBSPATIALAUDIO=1
 LIBSPATIALAUDIO_HEAD=1
 LIBSPATIALAUDIO_REVISION=
-
-# QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
-QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
-# QT_LIB_DIR="$(pkg-config --variable=prefix QtCore)/lib"
-QT_LIB_DIR=${QTDIR:+${QTDIR}/lib}
 MLT_DISABLE_SOX=0
 
 ################################################################################
@@ -101,8 +96,9 @@ function usage {
 # Parses the arguments passed in $@ and sets some global vars
 function parse_args {
   CONFIGFILEOPT=""
-  while getopts ":tsc:o:v:" OPT; do
+  while getopts ":tsc:a:o:v:" OPT; do
     case $OPT in
+      a ) TARGET_ARCH=$OPTARG;;
       c ) CONFIGFILEOPT=$OPTARG
           echo Setting configfile to $CONFIGFILEOPT
       ;;
@@ -330,6 +326,20 @@ function set_globals {
   fi
   export LDFLAGS=
 
+  # Set Qt installation variables.
+  test "$TARGET_ARCH" = "" && TARGET_ARCH=${MSYSTEM,,}
+  if [ "$TARGET_ARCH" = "clangarm64" ]; then
+    export QTDIR="$(pkg-config --variable=prefix Qt6Core)"
+    QT_INCLUDE_DIR="$QTDIR/qt6/include"
+    QT_LIB_DIR="$QTDIR/lib"
+    QT_SHARE_DIR="$QTDIR/share/qt6"
+  else
+    export QTDIR="$HOME/Qt/6.7.1/mingw_64"
+    QT_INCLUDE_DIR="$QTDIR/include"
+    QT_LIB_DIR="$QTDIR/lib"
+    QT_SHARE_DIR="$QTDIR"
+  fi
+
   # Set convenience variables.
   if test 1 = "$ACTION_GET" ; then
     GET=1
@@ -352,7 +362,9 @@ function set_globals {
   # Subdirs list, for number of common operations
   # Note, the function to_key depends on this
   if [ -z "$SUBDIRS" ]; then
-    SUBDIRS="aom dav1d AMF nv-codec-headers FFmpeg"
+    [ "$TARGET_ARCH" = "mingw64" ] && SUBDIRS="AMF nv-codec-headers"
+    SUBDIRS="$SUBDIRS aom dav1d FFmpeg"
+
     if test "$ENABLE_SWH_PLUGINS" = "1"; then
         SUBDIRS="$SUBDIRS swh-plugins"
     fi
@@ -522,7 +534,6 @@ function set_globals {
 
   # set global environment for all jobs
   alias make=mingw32-make
-  export QTDIR="$HOME/Qt/6.7.1/mingw_64"
   export PKG_CONFIG_PATH="$HOME/lib/pkgconfig:$PKG_CONFIG_PATH"
   export PATH="$FINAL_INSTALL_DIR/bin:$PATH"
   export LD_RUN_PATH="$FINAL_INSTALL_DIR/lib"
@@ -536,7 +547,7 @@ function set_globals {
   # ffmpeg
   CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
   CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libvpl --enable-libdav1d --enable-libaom --disable-decoder=libaom_av1 --enable-libsvtav1 --enable-libwebp --enable-libzimg --disable-vulkan --disable-vaapi"
-  CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libvpl --enable-libdav1d --enable-libaom --disable-decoder=libaom_av1 --enable-libsvtav1 --enable-libwebp --disable-vulkan --disable-vaapi"
+  [ "$TARGET_ARCH" = "clangarm64" ] && CONFIG[0]="${CONFIG[0]} --cc=clang --cxx=clang++ --arch=aarch64"
   # Add optional parameters
   if [ "$ENABLE_VMAF" = "1" ]; then
     CONFIG[0]="${CONFIG[0]} --enable-libvmaf --disable-w32threads"
@@ -637,14 +648,14 @@ function set_globals {
   else
     CONFIG[12]="${CONFIG[12]} --buildtype=release"
   fi
-  CFLAGS_[12]=$CFLAGS
-  LDFLAGS_[12]=$LDFLAGS
+  CFLAGS_[12]="$CFLAGS"
+  [ "$TARGET_ARCH" = "clangarm64" ] && LDFLAGS_[12]="$LDFLAGS -lwinpthread"
   BUILD[12]="ninja -C libvmaf/build -j $MAKEJ"
   INSTALL[12]="install_vmaf"
 
   #####
   # glaxnimate
-  CONFIG[13]="cmake -G Ninja -D CMAKE_PREFIX_PATH=$QTDIR -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D Python3_FIND_REGISTRY=NEVER"
+  CONFIG[13]="cmake -G Ninja -D CMAKE_PREFIX_PATH='$FINAL_INSTALL_DIR,$QTDIR' -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D Python3_FIND_REGISTRY=NEVER"
   if [ "$DEBUG_BUILD" = "1" ]; then
     CONFIG[13]="${CONFIG[13]} -D CMAKE_BUILD_TYPE=RelWithDebInfo"
   else
@@ -668,7 +679,7 @@ function set_globals {
   CONFIG[15]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules -D WITH_OPENMP=ON $CMAKE_DEBUG_FLAG"
   CFLAGS_[15]="$CFLAGS"
   LDFLAGS_[15]="$LDFLAGS"
-  BUILD[15]="ninja -C build -j $MAKEJ"
+  BUILD[15]="build_opencv"
   INSTALL[15]="ninja -C build install"
 
   #####
@@ -683,6 +694,11 @@ function set_globals {
 function build_dav1d {
   # dav1d frequently fails on Windows on generate symbol file
   cmd ninja -C builddir -j $MAKEJ || cmd ninja -C builddir -j $MAKEJ
+}
+
+function build_opencv {
+  [ grep M_PI 3rdparty/carotene/include/carotene/definitions.hpp ] || printf >>3rdparty/carotene/include/carotene/definitions.hpp '#ifndef M_PI\n#define M_PI (3.14159265358979323846)\n#endif'
+  cmd ninja -C build -j $MAKEJ
 }
 
 function install_amf {
@@ -708,7 +724,7 @@ function install_vmaf {
 
 function install_spatialaudio {
   cmd ninja -C build install || die "Unable to install $1"
-  cmd sed -i "s,-I/mingw64/include,," "$FINAL_INSTALL_DIR"/lib/pkgconfig/spatialaudio.pc
+  cmd sed -i "s,-I/${TARGET_ARCH}/include,," "$FINAL_INSTALL_DIR"/lib/pkgconfig/spatialaudio.pc
 }
 
 
@@ -1105,7 +1121,7 @@ function bundle_dlls
   log bundling library dependencies of $(basename "$1")
   target=$(dirname "$1")/$(basename "$1")
   basename_target=$(basename "$target")
-  libs=$(ldd "$target" | awk '($3 ~ /\/mingw64\/bin\//) {print $3}')
+  libs=$(ldd "$target" | awk "(\$3 ~ /\/$TARGET_ARCH\/bin\//) {print \$3}")
   for lib in $libs; do
     basename_lib=$(basename "$lib")
     if [ "$basename_lib" != "$basename_target" ]; then
@@ -1151,8 +1167,8 @@ function deploy
     cmd rm -rf lib/cmake lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0
     cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
     # OpenCV installs binaries to a weird place
-    cmd mv x64/mingw/bin/*.dll .
-    cmd rm -rf x64
+    cmd mv {x64,x86}/mingw/bin/*.dll .
+    cmd rm -rf {x64,x86}
     cmd rm OpenCVConfig*
     cmd rm setup_vars_opencv4.cmd
   fi
@@ -1175,14 +1191,18 @@ function deploy
     bundle_dlls "$lib"
   done
   bundle_dlls glaxnimate.exe
+  # for good measure
+  for lib in $(find -name '*.dll' -or -name '*.exe'); do
+    bundle_dlls "$lib"
+  done
 
   log Copying some DLLs and python libraries for Glaxnimate
-  cmd cp -p /mingw64/bin/libpython3.11.dll python311.dll
+  cmd cp -p /${TARGET_ARCH}/bin/libpython3.11.dll python311.dll
   cmd cp -p "$SOURCE_DIR"/glaxnimate/external/Qt-Color-Widgets/libQtColorWidgets.dll .
   cmd mkdir -p share/glaxnimate/glaxnimate/pythonhome/lib/python
-  cmd cp -r /mingw64/lib/python3.11/*.py \
-            /mingw64/lib/python3.11/lib-dynload/* \
-            /mingw64/lib/python3.11/{json,collections,encodings,logging,urllib} \
+  cmd cp -r /${TARGET_ARCH}/lib/python3.11/*.py \
+            /${TARGET_ARCH}/lib/python3.11/lib-dynload/* \
+            /${TARGET_ARCH}/lib/python3.11/{json,collections,encodings,logging,urllib} \
       share/glaxnimate/glaxnimate/pythonhome/lib/python
 
   log Copying some libs from mlt-prebuilt
@@ -1190,33 +1210,36 @@ function deploy
   cmd cp -p "$QTDIR"/bin/d3dcompiler_47.dll .
 
   log Copying some libs from msys2
-  cmd cp -p /mingw64/bin/{libcrypto-1_1-x64,libssl-1_1-x64}.dll .
+  cmd cp -p /${TARGET_ARCH}/bin/{libcrypto-3,libssl-3}.dll .
+  if [ "$TARGET_ARCH" = "clangarm64" ]; then
+    cmd cp -p /${TARGET_ARCH}/bin/{libjasper.dll,libjpeg-8.dll,libmng-2.dll,liblcms2-2.dll,libtiff-6.dll,libjbig-0.dll,libdeflate.dll,libLerc.dll,libunwind.dll,libwebpdemux-2.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libxml2-2.dll,libomp.dll,libebur128.dll,libsamplerate-0.dll,librubberband-2.dll,libsox-3.dll,libopencore-amrnb-0.dll,libvo-amrwbenc-0.dll,libFLAC.dll,libltdl-7.dll,libgsm.dll,libmad-0.dll,libao-4.dll,libid3tag-0.dll,libtwolame-0.dll,libvorbisfile-3.dll,libwavpack-1.dll,libsndfile-1.dll,libopencore-amrwb-0.dll,libmpg123-0.dll,libopusfile-0.dll,libmysofa.dll,libvidstab.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libpixman-1-0.dll,libfontconfig-1.dll,libexpat-1.dll,liblz4.dll} .
+  fi
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
     cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .
-    cmd cp -p /mingw64/bin/libfftw3*.dll bin/
-    cmd cp -p /mingw64/lib/libfftw3*.a lib/
-    cmd cp -p /mingw64/include/fftw3* include/
-    cmd cp -p /mingw64/lib/pkgconfig/fftw3*.pc lib/pkgconfig/
+    cmd cp -p /${TARGET_ARCH}/bin/libfftw3*.dll bin/
+    cmd cp -p /${TARGET_ARCH}/lib/libfftw3*.a lib/
+    cmd cp -p /${TARGET_ARCH}/include/fftw3* include/
+    cmd cp -p /${TARGET_ARCH}/lib/pkgconfig/fftw3*.pc lib/pkgconfig/
 #    cmd mkdir -p lib/cmake/fftw3 lib/cmake/fftw3f lib/cmake/fftw3l lib/cmake/fftw3q
-#    cmd cp -p /mingw64/lib/cmake/fftw3/*.cmake lib/cmake/fftw3/
-#    cmd cp -p /mingw64/lib/cmake/fftw3f/*.cmake lib/cmake/fftw3f/
-#    cmd cp -p /mingw64/lib/cmake/fftw3l/*.cmake lib/cmake/fftw3l/
-#    cmd cp -p /mingw64/lib/cmake/fftw3q/*.cmake lib/cmake/fftw3q/
+#    cmd cp -p /${TARGET_ARCH}/lib/cmake/fftw3/*.cmake lib/cmake/fftw3/
+#    cmd cp -p /${TARGET_ARCH}/lib/cmake/fftw3f/*.cmake lib/cmake/fftw3f/
+#    cmd cp -p /${TARGET_ARCH}/lib/cmake/fftw3l/*.cmake lib/cmake/fftw3l/
+#    cmd cp -p /${TARGET_ARCH}/lib/cmake/fftw3q/*.cmake lib/cmake/fftw3q/
   fi
 
   log Copying some plugins, qml, and translations from Qt
-  cmd mkdir -p lib/qt6/audio
-  for plugin in audio generic iconengines imageformats multimedia platforms sqldrivers styles tls; do
-    cmd cp -pr "$QTDIR"/plugins/${plugin} lib/qt6
+  cmd mkdir -p lib/qt6/generic
+  for plugin in generic iconengines imageformats multimedia platforms sqldrivers styles tls; do
+    cmd cp -pr "$QT_SHARE_DIR"/plugins/${plugin} lib/qt6
     cmd rm lib/qt6/multimedia/ffmpegmediaplugin.dll
     for lib in lib/qt6/${plugin}/*.dll; do
       bundle_dlls "$lib"
     done
   done
   cmd mkdir -p lib/qml
-  cmd cp -pr "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} lib/qml
-  cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
-  cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
+  cmd cp -pr "$QT_SHARE_DIR"/qml/{Qt,QtCore,QtQml,QtQuick} lib/qml
+  cmd cp -pr "$QT_SHARE_DIR"/translations/qt_*.qm share/translations
+  cmd cp -pr "$QT_SHARE_DIR"/translations/qtbase_*.qm share/translations
 
   log Removing things not needed
   cmd rm *.bundled
