@@ -27,8 +27,8 @@ DEPLOY=1
 ENABLE_FREI0R=1
 FREI0R_HEAD=0
 FREI0R_REVISION="36e7da5d9e1f8b8cac9e97e204db1c5834fee580"
-ENABLE_MOVIT=1
 SUBDIRS=
+ENABLE_MOVIT=1
 MOVIT_HEAD=0
 MOVIT_REVISION="origin/shotcut-opengl3"
 ENABLE_SWH_PLUGINS=0
@@ -44,9 +44,6 @@ SHOTCUT_VERSION=$(date '+%y.%m.%d')
 ENABLE_BIGSH0T=1
 BIGSH0T_HEAD=0
 BIGSH0T_REVISION="8fe56f6d4e"
-ENABLE_ZIMG=1
-ZIMG_HEAD=0
-ZIMG_REVISION="51c3c7f750c2af61955377faad56e3ba1b03589f"
 DAV1D_HEAD=0
 DAV1D_REVISION="1.4.2"
 AOM_HEAD=0
@@ -164,9 +161,6 @@ function to_key {
     ;;
     bigsh0t)
       echo 8
-    ;;
-    zimg)
-      echo 9
     ;;
     dav1d)
       echo 10
@@ -371,9 +365,6 @@ function set_globals {
     if test "$ENABLE_BIGSH0T" = 1 ; then
         SUBDIRS="$SUBDIRS bigsh0t"
     fi
-    if test "$ENABLE_ZIMG" = 1 ; then
-        SUBDIRS="zimg $SUBDIRS"
-    fi
     if test "$ENABLE_VMAF" = 1 ; then
         SUBDIRS="vmaf $SUBDIRS"
     fi
@@ -423,7 +414,6 @@ function set_globals {
   REPOLOCS[7]="https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
 #  REPOLOCS[8]="https://bitbucket.org/dandennedy/bigsh0t.git"
   REPOLOCS[8]="https://bitbucket.org/leo_sutic/bigsh0t.git"
-  REPOLOCS[9]="https://github.com/sekrit-twc/zimg.git"
   REPOLOCS[10]="https://code.videolan.org/videolan/dav1d.git"
   REPOLOCS[11]="https://aomedia.googlesource.com/aom"
   REPOLOCS[12]="https://github.com/Netflix/vmaf.git"
@@ -482,9 +472,6 @@ function set_globals {
     REVISIONS[8]="$BIGSH0T_REVISION"
   fi
   REVISIONS[9]=""
-  if test 0 = "$ZIMG_HEAD" -a "$ZIMG_REVISION" ; then
-    REVISIONS[9]="$ZIMG_REVISION"
-  fi
   REVISIONS[10]=""
   if test 0 = "$DAV1D_HEAD" -a "$DAV1D_REVISION" ; then
     REVISIONS[10]="$DAV1D_REVISION"
@@ -548,11 +535,9 @@ function set_globals {
   #####
   # ffmpeg
   CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
+  CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libvpl --enable-libdav1d --enable-libaom --disable-decoder=libaom_av1 --enable-libsvtav1 --enable-libwebp --enable-libzimg --disable-vulkan --disable-vaapi"
   CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libvpl --enable-libdav1d --enable-libaom --disable-decoder=libaom_av1 --enable-libsvtav1 --enable-libwebp --disable-vulkan --disable-vaapi"
   # Add optional parameters
-  if [ "$ENABLE_ZIMG" = "1" ]; then
-    CONFIG[0]="${CONFIG[0]} --enable-libzimg"
-  fi
   if [ "$ENABLE_VMAF" = "1" ]; then
     CONFIG[0]="${CONFIG[0]} --enable-libvmaf --disable-w32threads"
   fi
@@ -621,13 +606,6 @@ function set_globals {
   LDFLAGS_[8]=$LDFLAGS
   BUILD[8]="ninja -j $MAKEJ"
   INSTALL[8]="install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1"
-
-  #####
-  # zimg
-  [ ! -e "$SOURCE_DIR"/zimg/configure ] && PRECONFIG[9]="./autogen.sh"
-  CONFIG[9]="./configure --prefix=$FINAL_INSTALL_DIR"
-  CFLAGS_[9]=$CFLAGS
-  LDFLAGS_[9]=$LDFLAGS
 
   #####
   # dav1d
