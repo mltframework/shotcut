@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2023 Meltytech, LLC
+ * Copyright (c) 2018-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -177,8 +177,8 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
                        "http://www.w3.org/TR/REC-html40/strict.dtd\">"
                        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
                        "p, li { white-space: pre-wrap; }"
-                       "</style></head><body style=\" font-family:'Verdana'; font-size:11pt; font-weight:400; font-style:normal;\">"
-                       "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'sans-serif'; font-size:72pt; font-weight:600; color:#ffffff;\">%1</span></p></body></html>";
+                       "</style></head><body style=\" font-family:'Verdana'; font-size:11pt; font-weight:normal; font-style:normal;\">"
+                       "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'sans-serif'; font-size:72pt; font-weight:normal; color:#ffffff;\">%1</span></p></body></html>";
         html = html.arg(text);
         filter->set("html", html.toUtf8().constData());
     } else {

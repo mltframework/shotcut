@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
-** Copyright (c) 2020-2023 Meltytech, LLC
+** Copyright (c) 2020-2024 Meltytech, LLC
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions are
@@ -90,9 +90,9 @@ void QmlRichText::setFileUrl(const QUrl &arg)
                                            "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
                                            "p, li { white-space: pre-wrap; }"
 #ifdef Q_OS_WIN
-                                           "body { font-family:Verdana; font-size:72pt; font-weight:600; font-style:normal; color:#ffffff; }"
+                                           "body { font-family:Verdana; font-size:72pt; font-weight:normal; font-style:normal; color:#ffffff; }"
 #else
-                                           "body { font-family:sans-serif; font-size:72pt; font-weight:600; font-style:normal; color:#ffffff; }"
+                                           "body { font-family:sans-serif; font-size:72pt; font-weight:normal; font-style:normal; color:#ffffff; }"
 #endif
                                            "</style></head><body>")
                             % QString(decoder(data))

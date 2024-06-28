@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2023 Meltytech, LLC
+ * Copyright (c) 2020-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -197,7 +197,7 @@ Shotcut.KeyframableFilter {
             filter.set('html', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html><head><meta name="qrichtext" content="1" /><style type="text/css">
 p, li { white-space: pre-wrap; }
-body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color:#ffffff; }
+body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; color:#ffffff; }
 </style></head><body></body></html>
 '.arg(application.OS === 'Windows' ? 'Verdana' : 'sans-serif'));
             filter.set('argument', '');

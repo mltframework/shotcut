@@ -258,7 +258,7 @@ Item {
 
             function setText(path) {
                 text = path.substring(path.lastIndexOf('/') + 1);
-                resultsTip.text = path
+                resultsTip.text = path;
             }
 
             Layout.columnSpan: 2
