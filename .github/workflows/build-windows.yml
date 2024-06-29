@@ -55,7 +55,7 @@ jobs:
             mingw-w64-x86_64-python3.11
             mingw-w64-x86_64-zimg
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build
         shell: msys2 {0}
