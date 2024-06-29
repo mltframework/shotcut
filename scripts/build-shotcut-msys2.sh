@@ -655,7 +655,12 @@ function set_globals {
 
   #####
   # glaxnimate
-  CONFIG[13]="cmake -G Ninja -D CMAKE_PREFIX_PATH='$FINAL_INSTALL_DIR,$QTDIR' -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D Python3_FIND_REGISTRY=NEVER"
+  CONFIG[13]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D Python3_FIND_REGISTRY=NEVER"
+  if [ "$TARGET_ARCH" = "clangarm64" ]; then
+    CONFIG[13]="${CONFIG[13]} -D CMAKE_PREFIX_PATH=$FINAL_INSTALL_DIR"
+  else
+    CONFIG[13]="${CONFIG[13]} -D CMAKE_PREFIX_PATH=$QTDIR"
+  fi
   if [ "$DEBUG_BUILD" = "1" ]; then
     CONFIG[13]="${CONFIG[13]} -D CMAKE_BUILD_TYPE=RelWithDebInfo"
   else
