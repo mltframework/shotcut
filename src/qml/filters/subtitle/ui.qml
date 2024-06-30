@@ -22,10 +22,8 @@ import org.shotcut.qml as Shotcut
 
 Shotcut.KeyframableFilter {
     function setControls() {
-        var feedIndex = feedCombo.indexOfValue(filter.get("feed"));
-        if (feedIndex >=0) {
-            feedCombo.currentIndex = feedIndex;
-        }
+        var feedIndex = feedCombo.find(filter.get("feed"));
+        feedCombo.currentIndex = feedIndex;
         textFilterUi.setControls();
     }
 
