@@ -10,6 +10,7 @@ Metadata {
     qml: "ui.qml"
     vui: 'vui.qml'
     icon: 'icon.webp'
+    isOutputOnly: true
 
     keyframes {
         allowAnimateIn: false

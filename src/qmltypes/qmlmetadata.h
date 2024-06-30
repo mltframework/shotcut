@@ -188,6 +188,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool allowMultiple READ allowMultiple WRITE setAllowMultiple NOTIFY changed)
     Q_PROPERTY(bool isClipOnly READ isClipOnly WRITE setIsClipOnly NOTIFY changed)
     Q_PROPERTY(bool isTrackOnly READ isTrackOnly WRITE setIsTrackOnly NOTIFY changed)
+    Q_PROPERTY(bool isOutputOnly READ isOutputOnly WRITE setIsOutputOnly NOTIFY changed)
     Q_PROPERTY(bool isGpuCompatible READ isGpuCompatible() WRITE setIsGpuCompatible NOTIFY changed)
     Q_PROPERTY(QmlKeyframesMetadata *keyframes READ keyframes NOTIFY changed)
     Q_PROPERTY(bool isDeprecated READ isDeprecated WRITE setIsDeprecated NOTIFY changed)
@@ -289,6 +290,11 @@ public:
         return m_isTrackOnly;
     }
     void setIsTrackOnly(bool isTrackOnly);
+    bool isOutputOnly() const
+    {
+        return m_isOutputOnly;
+    }
+    void setIsOutputOnly(bool isOutputOnly);
     bool isGpuCompatible() const
     {
         return m_isGpuCompatible;
@@ -341,6 +347,7 @@ private:
     bool m_allowMultiple;
     bool m_isClipOnly;
     bool m_isTrackOnly;
+    bool m_isOutputOnly;
     bool m_isGpuCompatible;
     QmlKeyframesMetadata m_keyframes;
     bool m_isDeprecated;
