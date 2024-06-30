@@ -401,8 +401,7 @@ void SubtitlesDock::removeSubtitleTrack()
                 if (!filter || !filter->is_valid() || filter->get("mlt_service") != QString("subtitle")) {
                     continue;
                 }
-                QString feed = filter->get("feed");
-                if (m_model->getTrackIndex(feed) > -1) {
+                if (name == filter->get("feed")) {
                     QMessageBox::warning(this, tr("Remove Subtitle Track"),
                                          tr("This track is in use by a subtitle filter.\n"
                                             "Remove the subtitle filter before removing this track."));
