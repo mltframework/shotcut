@@ -39,6 +39,10 @@ public:
         StartRole,
         EndRole,
         DurationRole,
+        SimpleText,
+        StartFrameRole,
+        EndFrameRole,
+        SiblingCountRole,
     };
 
     struct SubtitleTrack {
@@ -56,7 +60,7 @@ public:
 
     // Track Functions
     int trackCount() const;
-    QModelIndex trackModelIndex(int trackIndex) const;
+    Q_INVOKABLE QModelIndex trackModelIndex(int trackIndex) const;
     QList<SubtitlesModel::SubtitleTrack> getTracks() const;
     int getTrackIndex(const QString &name);
     SubtitlesModel::SubtitleTrack getTrack(const QString &name);
@@ -65,7 +69,7 @@ public:
     void removeTrack(QString &name);
 
     // Item Functions
-    int itemCount(int trackIndex) const;
+    Q_INVOKABLE int itemCount(int trackIndex) const;
     int64_t endTime(int trackIndex) const;
     QModelIndex itemModelIndex(int trackIndex, int itemIndex) const;
     int itemIndexAtTime(int trackIndex, int64_t msTime) const;
@@ -80,7 +84,8 @@ public:
     void setItemStart(int trackIndex, int itemIndex, int64_t msTime);
     void setItemEnd(int trackIndex, int itemIndex, int64_t msTime);
     void setText(int trackIndex, int itemIndex, const QString &text);
-    void moveItems(int trackIndex, int firstItemIndex, int lastItemIndex, int64_t msTime);
+    Q_INVOKABLE void moveItems(int trackIndex, int firstItemIndex, int lastItemIndex, int64_t msTime);
+    Q_INVOKABLE bool validateMove(const QModelIndexList &items, int64_t msTime);
 
     // Only to be called by subtitle commands
     void doInsertTrack(const SubtitlesModel::SubtitleTrack &track, int trackIndex);

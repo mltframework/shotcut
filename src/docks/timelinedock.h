@@ -26,6 +26,7 @@
 #include "models/markersmodel.h"
 #include "models/multitrackmodel.h"
 #include "models/subtitlesmodel.h"
+#include "models/subtitlesselectionmodel.h"
 #include "sharedframe.h"
 #include "jobs/ffmpegjob.h"
 
@@ -67,6 +68,10 @@ public:
     SubtitlesModel *subtitlesModel()
     {
         return & m_subtitlesModel;
+    }
+    SubtitlesSelectionModel *subtitlesSelectionModel()
+    {
+        return & m_subtitlesSelectionModel;
     }
     int position() const
     {
@@ -255,6 +260,7 @@ private:
     MultitrackModel m_model;
     MarkersModel m_markersModel;
     SubtitlesModel m_subtitlesModel;
+    SubtitlesSelectionModel m_subtitlesSelectionModel;
     int m_position;
     std::unique_ptr<Timeline::UpdateCommand> m_updateCommand;
     bool m_ignoreNextPositionChange;

@@ -21,6 +21,7 @@
 #include <QDockWidget>
 
 class SubtitlesModel;
+class SubtitlesSelectionModel;
 class QComboBox;
 class QItemSelection;
 class QLabel;
@@ -36,7 +37,7 @@ class SubtitlesDock : public QDockWidget
 public:
     explicit SubtitlesDock(QWidget *parent = 0);
     ~SubtitlesDock();
-    void setModel(SubtitlesModel *model);
+    void setModel(SubtitlesModel *model, SubtitlesSelectionModel *selectionModel);
 
 signals:
     void seekRequested(int pos);
@@ -75,6 +76,7 @@ private:
     bool trackNameExists(const QString &name);
 
     SubtitlesModel *m_model;
+    SubtitlesSelectionModel *m_selectionModel;
     QComboBox *m_trackCombo;
     QTreeView *m_treeView;
     QTextEdit *m_text;

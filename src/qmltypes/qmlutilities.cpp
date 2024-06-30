@@ -36,6 +36,7 @@
 #include "models/metadatamodel.h"
 #include "models/keyframesmodel.h"
 #include "models/subtitlesmodel.h"
+#include "models/subtitlesselectionmodel.h"
 #include <QCoreApplication>
 #include <QSysInfo>
 #include <QCursor>
@@ -58,6 +59,7 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<QmlRichText>("org.shotcut.qml", 1, 0, "RichText");
     qmlRegisterType<KeyframesModel>("org.shotcut.qml", 1, 0, "KeyframesModel");
     qmlRegisterType<SubtitlesModel>("org.shotcut.qml", 1, 0, "SubtitlesModel");
+    qmlRegisterType<SubtitlesSelectionModel>("org.shotcut.qml", 1, 0, "SubtitlesSelectionModel");
     qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
     // MetadataModel is registered to access its MetadataFilter enum.
     qmlRegisterUncreatableType<MetadataModel>("org.shotcut.qml", 1, 0, "MetadataModel",

@@ -23,6 +23,7 @@
 #include "util.h"
 #include "dialogs/subtitletrackdialog.h"
 #include "models/subtitlesmodel.h"
+#include "models/subtitlesselectionmodel.h"
 #include "widgets/docktoolbar.h"
 #include <Logger.h>
 
@@ -84,9 +85,8 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     QHBoxLayout *tracksLayout = new QHBoxLayout();
     m_trackCombo = new QComboBox();
     connect(m_trackCombo, &QComboBox::currentIndexChanged, this, [&](int trackIndex) {
-        if (m_model && m_treeView && trackIndex >= 0) {
-            QModelIndex modelIndex = m_model->trackModelIndex(trackIndex);
-            m_treeView->setRootIndex(modelIndex);
+        if (m_selectionModel) {
+            m_selectionModel->setSelectedTrack(trackIndex);
             selectItemForTime();
         }
     });
@@ -331,10 +331,12 @@ void SubtitlesDock::setupActions()
     Actions.add("subtitleShowPrevNextAction", action, windowTitle());
 }
 
-void SubtitlesDock::setModel(SubtitlesModel *model)
+void SubtitlesDock::setModel(SubtitlesModel *model, SubtitlesSelectionModel *selectionModel)
 {
     m_model = model;
+    m_selectionModel = selectionModel;
     m_treeView->setModel(m_model);
+    m_treeView->setSelectionModel(m_selectionModel);
     m_treeView->header()->setStretchLastSection(false);
     m_treeView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
     m_treeView->setSelectionMode(QAbstractItemView::ContiguousSelection);
@@ -342,8 +344,10 @@ void SubtitlesDock::setModel(SubtitlesModel *model)
     m_treeView->setColumnHidden(2, !Settings.subtitlesShowColumn("start"));
     m_treeView->setColumnHidden(3, !Settings.subtitlesShowColumn("end"));
     m_treeView->setColumnHidden(4, !Settings.subtitlesShowColumn("duration"));
-    connect(m_treeView->selectionModel(), &QItemSelectionModel::currentChanged, this,
+    connect(m_selectionModel, &QItemSelectionModel::currentChanged, this,
             &SubtitlesDock::refreshWidgets);
+    connect(m_selectionModel, &SubtitlesSelectionModel::selectedTrackModelIndexChanged, m_treeView,
+            &QTreeView::setRootIndex);
     connect(m_treeView, &QTreeView::doubleClicked, this, &SubtitlesDock::onItemDoubleClicked);
     connect(m_model, &QAbstractItemModel::modelReset, this, &SubtitlesDock::onModelReset);
     connect(m_model, &SubtitlesModel::tracksChanged, this, &SubtitlesDock::refreshTracksCombo);
@@ -456,10 +460,16 @@ void SubtitlesDock::refreshTracksCombo()
 {
     if (m_model) {
         QList<SubtitlesModel::SubtitleTrack> tracks = m_model->getTracks();
-        LOG_DEBUG() << "tracks" << tracks.size();
         m_trackCombo->clear();
         for (auto &track : tracks) {
             m_trackCombo->addItem(QString("%1 (%2)").arg(track.name).arg(track.lang), track.name);
+        }
+        if (tracks.size() > 0) {
+            m_trackCombo->setCurrentIndex(0);
+            m_selectionModel->setSelectedTrack(0);
+        } else {
+            m_trackCombo->setCurrentIndex(-1);
+            m_selectionModel->setSelectedTrack(-1);
         }
         selectItemForTime();
     }
@@ -505,7 +515,7 @@ void SubtitlesDock::onRemoveRequested()
 {
     LOG_DEBUG();
     int trackIndex = m_trackCombo->currentIndex();
-    QModelIndexList selectedRows = m_treeView->selectionModel()->selectedRows();
+    QModelIndexList selectedRows = m_selectionModel->selectedRows();
     if (selectedRows.size() > 0) {
         int firstItemIndex = selectedRows[0].row();
         int lastItemIndex = selectedRows[selectedRows.size() - 1].row();
@@ -517,7 +527,7 @@ void SubtitlesDock::onSetStartRequested()
 {
     LOG_DEBUG();
     int trackIndex = m_trackCombo->currentIndex();
-    QModelIndexList selectedRows = m_treeView->selectionModel()->selectedRows();
+    QModelIndexList selectedRows = m_selectionModel->selectedRows();
     if (selectedRows.size() > 0) {
         int itemIndex = selectedRows[0].row();
         int64_t msTime = positionToMs(m_pos);
@@ -541,7 +551,7 @@ void SubtitlesDock::onSetEndRequested()
 {
     LOG_DEBUG();
     int trackIndex = m_trackCombo->currentIndex();
-    QModelIndexList selectedRows = m_treeView->selectionModel()->selectedRows();
+    QModelIndexList selectedRows = m_selectionModel->selectedRows();
     if (selectedRows.size() > 0) {
         int itemIndex = selectedRows[0].row();
         int64_t msTime = positionToMs(m_pos);
@@ -564,49 +574,26 @@ void SubtitlesDock::onSetEndRequested()
 
 void SubtitlesDock::onMoveRequested()
 {
-    QModelIndexList selectedRows = m_treeView->selectionModel()->selectedRows();
+    QModelIndexList selectedRows = m_selectionModel->selectedRows();
     if (selectedRows.size() <= 0) {
         return;
     }
-    int trackIndex = m_trackCombo->currentIndex();
     int64_t msTime = positionToMs(m_pos);
-    // Check if there is a big enough gap at this location to move without conflict.
-    int firstItemIndex = selectedRows[0].row();
-    auto firstItem = m_model->getItem(trackIndex, firstItemIndex);
-    int lastItemIndex = selectedRows[selectedRows.size() - 1].row();
-    auto lastItem = m_model->getItem(trackIndex, lastItemIndex);
-    int64_t duration = lastItem.end - firstItem.start;
-    int64_t newEndTime = msTime + duration;
-    int itemCount = m_model->itemCount(trackIndex);
-
-    int gapItemIndex = m_model->itemIndexAtTime(trackIndex, msTime);
-    if (gapItemIndex == - 1) {
-        gapItemIndex = m_model->itemIndexAfterTime(trackIndex, msTime);
+    if (m_model->validateMove(selectedRows, msTime)) {
+        int trackIndex = selectedRows[0].parent().row();
+        int firstItemIndex = selectedRows[0].row();
+        int lastItemIndex = selectedRows[selectedRows.size() - 1].row();
+        m_model->moveItems(trackIndex, firstItemIndex, lastItemIndex, msTime);
+    } else {
+        // This existing item will cause a conflict.
+        MAIN.showStatusMessage(tr("Unable to move. Subtitles already exist at this time."));
     }
-    if (gapItemIndex >= 0) {
-        while (gapItemIndex < itemCount) {
-            if (gapItemIndex < firstItemIndex || gapItemIndex > lastItemIndex) {
-                auto gapItem = m_model->getItem(trackIndex, gapItemIndex);
-                if (gapItem.start >= newEndTime) {
-                    break;
-                } else if ((msTime >= gapItem.start && msTime < gapItem.end) ||
-                           (newEndTime > gapItem.start && newEndTime <= gapItem.end) ||
-                           (gapItem.start <= msTime && gapItem.end >= newEndTime)) {
-                    // This existing item will cause a conflict.
-                    MAIN.showStatusMessage(tr("Unable to move. Subtitles already exist at this time."));
-                    return;
-                }
-            }
-            gapItemIndex++;
-        }
-    }
-    m_model->moveItems(trackIndex, firstItemIndex, lastItemIndex, msTime);
 }
 
 void SubtitlesDock::onTextEdited()
 {
     LOG_DEBUG();
-    QModelIndex currentIndex = m_treeView->selectionModel()->currentIndex();
+    QModelIndex currentIndex = m_selectionModel->currentIndex();
     if (currentIndex.isValid() && currentIndex.parent().isValid()) {
         m_textEditInProgress = true;
         m_model->setText(currentIndex.parent().row(), currentIndex.row(), m_text->toPlainText());
@@ -682,7 +669,7 @@ void SubtitlesDock::updateTextWidgets()
     const QSignalBlocker blocker(m_text);
 
     // First update based on current (selected) item.
-    QModelIndex currentIndex = m_treeView->selectionModel()->currentIndex();
+    QModelIndex currentIndex = m_selectionModel->currentIndex();
     if (currentIndex.isValid() && currentIndex.parent().isValid()) {
         int trackIndex = currentIndex.parent().row();
         int itemIndex = currentIndex.row();
@@ -782,14 +769,14 @@ void SubtitlesDock::updateActionAvailablity()
             Actions["SubtitleImportAction"]->setEnabled(true);
             Actions["SubtitleExportAction"]->setEnabled(true);
             Actions["subtitleAppendItemAction"]->setEnabled(true);
-            if (m_treeView->selectionModel()->selectedRows().size() == 1) {
+            if (m_selectionModel->selectedRows().size() == 1) {
                 Actions["subtitleSetStartAction"]->setEnabled(true);
                 Actions["subtitleSetEndAction"]->setEnabled(true);
             } else {
                 Actions["subtitleSetStartAction"]->setEnabled(false);
                 Actions["subtitleSetEndAction"]->setEnabled(false);
             }
-            if (m_treeView->selectionModel()->selectedRows().size() > 0) {
+            if (m_selectionModel->selectedRows().size() > 0) {
                 Actions["subtitleRemoveItemAction"]->setEnabled(true);
             } else {
                 Actions["subtitleRemoveItemAction"]->setEnabled(false);

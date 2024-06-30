@@ -59,7 +59,9 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_position(-1),
     m_ignoreNextPositionChange(false),
     m_trimDelta(0),
-    m_transitionDelta(0)
+    m_transitionDelta(0),
+    m_subtitlesModel(),
+    m_subtitlesSelectionModel(&m_subtitlesModel)
 {
     LOG_DEBUG() << "begin";
     m_selection.selectedTrack = -1;
@@ -230,6 +232,9 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
     m_quickView.rootContext()->setContextProperty("markers", &m_markersModel);
+    m_quickView.rootContext()->setContextProperty("subtitlesModel", &m_subtitlesModel);
+    m_quickView.rootContext()->setContextProperty("subtitlesSelectionModel",
+                                                  &m_subtitlesSelectionModel);
     m_quickView.setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_quickView.setClearColor(palette().window().color());
     m_quickView.quickWindow()->setPersistentSceneGraph(false);

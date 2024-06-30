@@ -83,6 +83,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   models/resourcemodel.cpp models/resourcemodel.h
   models/subtitles.cpp models/subtitles.h
   models/subtitlesmodel.cpp models/subtitlesmodel.h
+  models/subtitlesselectionmodel.cpp models/subtitlesselectionmodel.h
   openotherdialog.cpp openotherdialog.h
   openotherdialog.ui
   player.cpp player.h

@@ -419,6 +419,45 @@ void SubtitlesModel::moveItems(int trackIndex, int firstItemIndex, int lastItemI
     MAIN.undoStack()->push(command);
 }
 
+bool SubtitlesModel::validateMove(const QModelIndexList &items, int64_t msTime)
+{
+    if (items.size() <= 0) {
+        return false;
+    }
+    if (msTime < 0) {
+        return false;
+    }
+    int trackIndex = items[0].parent().row();
+    // Check if there is a big enough gap at this location to move without conflict.
+    int firstItemIndex = items[0].row();
+    auto firstItem = m_items[trackIndex][firstItemIndex];
+    int lastItemIndex = items[items.size() - 1].row();
+    auto lastItem = m_items[trackIndex][lastItemIndex];
+    int64_t duration = lastItem.end - firstItem.start;
+    int64_t newEndTime = msTime + duration;
+    int itemCount = m_items[trackIndex].size();
+    int gapItemIndex = itemIndexAtTime(trackIndex, msTime);
+    if (gapItemIndex == - 1) {
+        gapItemIndex = itemIndexAfterTime(trackIndex, msTime);
+    }
+    if (gapItemIndex >= 0) {
+        while (gapItemIndex < itemCount) {
+            if (gapItemIndex < firstItemIndex || gapItemIndex > lastItemIndex) {
+                auto gapItem = m_items[trackIndex][gapItemIndex];
+                if (gapItem.start >= newEndTime) {
+                    break;
+                } else if ((msTime >= gapItem.start && msTime < gapItem.end) ||
+                           (newEndTime > gapItem.start && newEndTime <= gapItem.end) ||
+                           (gapItem.start <= msTime && gapItem.end >= newEndTime)) {
+                    return false;
+                }
+            }
+            gapItemIndex++;
+        }
+    }
+    return true;
+}
+
 void SubtitlesModel::doInsertTrack(const SubtitlesModel::SubtitleTrack &track, int trackIndex)
 {
     if (trackIndex < 0 || trackIndex > m_tracks.size()) {
@@ -672,6 +711,18 @@ QVariant SubtitlesModel::data(const QModelIndex &index, int role) const
     case DurationRole:
         result = (qlonglong)(item.end - item.start);
         break;
+    case SimpleText:
+        result = QString::fromStdString(item.text).replace('\n', ' ');
+        break;
+    case StartFrameRole:
+        result = (int)std::round(item.start * MLT.profile().fps() / 1000);
+        break;
+    case EndFrameRole:
+        result = (int)std::round(item.end * MLT.profile().fps() / 1000);
+        break;
+    case SiblingCountRole:
+        result = m_items[index.parent().row()].size();
+        break;
     default:
         LOG_ERROR() << "Invalid Role" << index.row() << index.column() << roleNames()[role] << role;
         break;
@@ -722,9 +773,13 @@ QModelIndex SubtitlesModel::parent(const QModelIndex &index) const
 QHash<int, QByteArray> SubtitlesModel::roleNames() const
 {
     QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
-    roles[TextRole]        = "text";
-    roles[StartRole]       = "start";
-    roles[EndRole]         = "end";
-    roles[DurationRole]    = "duration";
+    roles[TextRole]         = "text";
+    roles[StartRole]        = "start";
+    roles[EndRole]          = "end";
+    roles[DurationRole]     = "duration";
+    roles[SimpleText]       = "simpleText";
+    roles[StartFrameRole]   = "startFrame";
+    roles[EndFrameRole]     = "endFrame";
+    roles[SiblingCountRole] = "siblingCount";
     return roles;
 }

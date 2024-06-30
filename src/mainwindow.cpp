@@ -674,7 +674,8 @@ void MainWindow::setupAndConnectDocks()
     m_subtitlesDock = new SubtitlesDock(this);
     m_subtitlesDock->hide();
     m_subtitlesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_9));
-    m_subtitlesDock->setModel(m_timelineDock->subtitlesModel());
+    m_subtitlesDock->setModel(m_timelineDock->subtitlesModel(),
+                              m_timelineDock->subtitlesSelectionModel());
     ui->menuView->addAction(m_subtitlesDock->toggleViewAction());
     connect(m_subtitlesDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onSubtitlesDockTriggered(bool)));

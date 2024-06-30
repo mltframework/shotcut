@@ -163,7 +163,7 @@ Rectangle {
                 property bool selected: false
 
                 width: headerWidth
-                height: ruler.height
+                height: rulerFlickable.height
                 color: selected ? shotcutBlue : activePalette.window
                 border.color: selected ? 'red' : 'transparent'
                 border.width: selected ? 1 : 0
@@ -314,7 +314,8 @@ Rectangle {
                                     }
 
                                     Behavior on opacity {
-                                        NumberAnimation {}
+                                        NumberAnimation {
+                                        }
                                     }
                                 }
 
@@ -402,7 +403,7 @@ Rectangle {
                 hoverEnabled: true
                 onWheel: wheel => Logic.onMouseWheel(wheel)
                 onPressed: mouse => {
-                    if (mouse.y <= ruler.height || cursorBox.contains(mapToItem(cursorBox, mouse.x, mouse.y)) || (!settings.timelineRectangleSelect === !(mouse.modifiers & Qt.ShiftModifier))) {
+                    if (mouse.y <= rulerFlickable.height || cursorBox.contains(mapToItem(cursorBox, mouse.x, mouse.y)) || (!settings.timelineRectangleSelect === !(mouse.modifiers & Qt.ShiftModifier))) {
                         timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor;
                         scrub = true;
                         bubbleHelp.hide();
@@ -410,7 +411,7 @@ Rectangle {
                         startX = mouse.x;
                         selectionBox.x = startX + tracksFlickable.contentX;
                         startY = mouse.y;
-                        selectionBox.y = startY + tracksFlickable.contentY - ruler.height;
+                        selectionBox.y = startY + tracksFlickable.contentY - rulerFlickable.height;
                         selectionBox.width = selectionBox.height = 0;
                         selectionBox.visible = true;
                     }
@@ -434,7 +435,7 @@ Rectangle {
                             selectionBox.x = mouse.x + tracksFlickable.contentX;
                         }
                         if (mouse.y - startY < 0) {
-                            selectionBox.y = mouse.y + tracksFlickable.contentY - ruler.height;
+                            selectionBox.y = mouse.y + tracksFlickable.contentY - rulerFlickable.height;
                         }
                         selectionBox.width = Math.abs(mouse.x - startX);
                         selectionBox.height = Math.abs(mouse.y - startY);
@@ -463,14 +464,14 @@ Rectangle {
                 // This provides drag-scrolling the timeline with the middle mouse button.
                 anchors.fill: parent
                 acceptedButtons: Qt.MiddleButton
-                cursorShape: drag.active ? Qt.ClosedHandCursor : (scrubMouseArea.mouseY <= ruler.height || cursorBox.contains(scrubMouseArea.mapToItem(cursorBox, scrubMouseArea.mouseX, scrubMouseArea.mouseY))) ? Qt.SizeHorCursor : Qt.ArrowCursor
+                cursorShape: drag.active ? Qt.ClosedHandCursor : (scrubMouseArea.mouseY < ruler.height || cursorBox.contains(scrubMouseArea.mapToItem(cursorBox, scrubMouseArea.mouseX, scrubMouseArea.mouseY))) ? Qt.SizeHorCursor : Qt.ArrowCursor
                 drag.axis: Drag.XAndYAxis
                 drag.filterChildren: true
-                onPressed: {
+                onPressed: mouse => {
                     startX = mouse.x;
                     startY = mouse.y;
                 }
-                onPositionChanged: {
+                onPositionChanged: mouse => {
                     let n = mouse.x - startX;
                     startX = mouse.x;
                     tracksFlickable.contentX = Logic.clamp(tracksFlickable.contentX - n, 0, Logic.scrollMax().x);
@@ -487,7 +488,7 @@ Rectangle {
 
                     contentX: tracksFlickable.contentX
                     width: root.width - headerWidth
-                    height: ruler.height
+                    height: ruler.height + subtitleBar.height
                     interactive: false
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
                     onContentXChanged: {
@@ -507,14 +508,21 @@ Rectangle {
                             timeline.deleteMarker(index);
                         }
                     }
+
+                    SubtitleBar {
+                        id: subtitleBar
+                        anchors.top: ruler.bottom
+                        height: 24
+                        timeScale: multitrack.scaleFactor
+                    }
                 }
 
                 Flickable {
                     id: tracksFlickable
 
-                    y: ruler.height
+                    y: rulerFlickable.height
                     width: root.width - headerWidth - 16
-                    height: root.height - ruler.height - 16
+                    height: root.height - rulerFlickable.height - 16
                     clip: true
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
                     onContentXChanged: rulerFlickable.contentX = contentX
@@ -620,13 +628,13 @@ Rectangle {
             }
 
             CornerSelectionShadow {
-                y: tracksRepeater.count ? tracksRepeater.itemAt(timeline.currentTrack).y + ruler.height - tracksFlickable.contentY : 0
+                y: tracksRepeater.count ? tracksRepeater.itemAt(timeline.currentTrack).y + rulerFlickable.height - tracksFlickable.contentY : 0
                 clipN: timeline.selection.length ? tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x) : null
                 opacity: clipN && clipN.x + clipN.width < tracksFlickable.contentX ? 1 : 0
             }
 
             CornerSelectionShadow {
-                y: tracksRepeater.count ? tracksRepeater.itemAt(timeline.currentTrack).y + ruler.height - tracksFlickable.contentY : 0
+                y: tracksRepeater.count ? tracksRepeater.itemAt(timeline.currentTrack).y + rulerFlickable.height - tracksFlickable.contentY : 0
                 clipN: timeline.selection.length ? tracksRepeater.itemAt(timeline.selection[timeline.selection.length - 1].y).clipAt(timeline.selection[timeline.selection.length - 1].x) : null
                 opacity: clipN && clipN.x > tracksFlickable.contentX + tracksFlickable.width ? 1 : 0
                 anchors.right: parent.right
@@ -640,7 +648,7 @@ Rectangle {
                 color: activePalette.highlight
                 opacity: 0.25
                 width: (timeline.loopEnd - timeline.loopStart) * multitrack.scaleFactor
-                height: ruler.height - 10
+                height: rulerFlickable.height - 10
                 x: timeline.loopStart * multitrack.scaleFactor - tracksFlickable.contentX
                 y: ruler.y + 10
             }
