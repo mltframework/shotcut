@@ -512,7 +512,7 @@ Rectangle {
                     SubtitleBar {
                         id: subtitleBar
                         anchors.top: ruler.bottom
-                        height: 24
+                        height: subtitlesModel.trackCount > 0 ? 24 : 0
                         timeScale: multitrack.scaleFactor
                     }
                 }

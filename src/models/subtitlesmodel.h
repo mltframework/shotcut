@@ -31,6 +31,7 @@
 class SubtitlesModel : public QAbstractItemModel
 {
     Q_OBJECT
+    Q_PROPERTY(int trackCount READ trackCount NOTIFY tracksChanged)
 
 public:
 
@@ -96,7 +97,7 @@ public:
     void doSetTime(int trackIndex, int itemIndex, int64_t startTime, int64_t endTime);
 
 signals:
-    void tracksChanged();
+    void tracksChanged(int count);
 
 protected:
     // Implement QAbstractItemModel
