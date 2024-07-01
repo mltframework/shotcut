@@ -1215,7 +1215,6 @@ function deploy
   cmd cp -p "$QTDIR"/bin/d3dcompiler_47.dll .
 
   log Copying some libs from msys2
-  cmd cp -p /${TARGET_ARCH}/bin/{libcrypto-3,libssl-3}.dll .
   if [ "$TARGET_ARCH" = "clangarm64" ]; then
     cmd cp -p /${TARGET_ARCH}/bin/{libjasper.dll,libjpeg-8.dll,libmng-2.dll,liblcms2-2.dll,libtiff-6.dll,libjbig-0.dll,libdeflate.dll,libLerc.dll,libunwind.dll,libwebpdemux-2.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libxml2-2.dll,libomp.dll,libebur128.dll,libsamplerate-0.dll,librubberband-2.dll,libsox-3.dll,libopencore-amrnb-0.dll,libvo-amrwbenc-0.dll,libFLAC.dll,libltdl-7.dll,libgsm.dll,libmad-0.dll,libao-4.dll,libid3tag-0.dll,libtwolame-0.dll,libvorbisfile-3.dll,libwavpack-1.dll,libsndfile-1.dll,libopencore-amrwb-0.dll,libmpg123-0.dll,libopusfile-0.dll,libmysofa.dll,libvidstab.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libpixman-1-0.dll,libfontconfig-1.dll,libexpat-1.dll,liblz4.dll} .
   fi
@@ -1236,7 +1235,9 @@ function deploy
   cmd mkdir -p lib/qt6/generic
   for plugin in generic iconengines imageformats multimedia platforms sqldrivers styles tls; do
     cmd cp -pr "$QT_SHARE_DIR"/plugins/${plugin} lib/qt6
-    cmd rm lib/qt6/multimedia/ffmpegmediaplugin.dll
+    cmd rm lib/qt6/multimedia/ffmpegmediaplugin.dll 2>/dev/null
+    cmd rm lib/qt6/tls/qcertonlybackend.dll 2>/dev/null
+    cmd rm lib/qt6/tls/qopensslbackend.dll 2>/dev/null
     for lib in lib/qt6/${plugin}/*.dll; do
       bundle_dlls "$lib"
     done
