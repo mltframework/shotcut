@@ -53,8 +53,8 @@ protected:
 
 private:
     void setupActions();
-    void onAppendRequested();
-    void onOverwriteRequested();
+    void onCreateOrEditRequested();
+    void onAddRequested();
     void onRemoveRequested();
     void onSetStartRequested();
     void onSetEndRequested();

@@ -112,8 +112,8 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     mainMenu->addMenu(trackMenu);
     mainMenu->addAction(Actions["SubtitleImportAction"]);
     mainMenu->addAction(Actions["SubtitleExportAction"]);
-    mainMenu->addAction(Actions["subtitleOverwriteItemAction"]);
-    mainMenu->addAction(Actions["subtitleAppendItemAction"]);
+    mainMenu->addAction(Actions["subtitleCreateEditItemAction"]);
+    mainMenu->addAction(Actions["subtitleAddItemAction"]);
     mainMenu->addAction(Actions["subtitleRemoveItemAction"]);
     mainMenu->addAction(Actions["subtitleSetStartAction"]);
     mainMenu->addAction(Actions["subtitleSetEndAction"]);
@@ -153,13 +153,8 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     importItemsButton->setAutoRaise(true);
     toolbar->addWidget(importItemsButton);
 
-    QToolButton *overwriteButton = new QToolButton(this);
-    overwriteButton->setDefaultAction(Actions["subtitleOverwriteItemAction"]);
-    overwriteButton->setAutoRaise(true);
-    toolbar->addWidget(overwriteButton);
-
     QToolButton *addButton = new QToolButton(this);
-    addButton->setDefaultAction(Actions["subtitleAppendItemAction"]);
+    addButton->setDefaultAction(Actions["subtitleAddItemAction"]);
     addButton->setAutoRaise(true);
     toolbar->addWidget(addButton);
 
@@ -202,6 +197,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     m_text = new QTextEdit(this);
     m_text->setMaximumHeight(textHeight);
     m_text->setReadOnly(true);
+    m_text->setTabChangesFocus(true);
     m_text->setLineWrapMode(QTextEdit::NoWrap);
     connect(m_text, &QTextEdit::textChanged, this, &SubtitlesDock::onTextEdited);
     textLayout->addWidget(m_text, 1, 1);
@@ -269,21 +265,24 @@ void SubtitlesDock::setupActions()
     });
     Actions.add("SubtitleExportAction", action);
 
-    action = new QAction(tr("Append Subtitle Item"), this);
+    action = new QAction(tr("Create/Edit Subtitle"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Q));
+    action->setIcon(QIcon::fromTheme("subtitle",
+                                     QIcon(":/icons/oxygen/32x32/actions/subtitle.png")));
+    action->setToolTip(tr("Create or Edit a subtitle at the cursor position."));
+    connect(action, &QAction::triggered, this, &SubtitlesDock::onCreateOrEditRequested);
+    Actions.add("subtitleCreateEditItemAction", action, windowTitle());
+
+    action = new QAction(tr("Add Subtitle Item"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_W));
     action->setIcon(QIcon::fromTheme("list-add",
                                      QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
-    action->setToolTip(tr("Append a subtitle to the end"));
-    connect(action, &QAction::triggered, this, &SubtitlesDock::onAppendRequested);
-    Actions.add("subtitleAppendItemAction", action, windowTitle());
-
-    action = new QAction(tr("Overwrite Subtitle Item"), this);
-    action->setIcon(QIcon::fromTheme("overwrite",
-                                     QIcon(":/icons/oxygen/32x32/actions/overwrite.png")));
-    action->setToolTip(tr("Overwrite subtitle at the cursor position."));
-    connect(action, &QAction::triggered, this, &SubtitlesDock::onOverwriteRequested);
-    Actions.add("subtitleOverwriteItemAction", action, windowTitle());
+    action->setToolTip(tr("Add a subtitle at the cursor position"));
+    connect(action, &QAction::triggered, this, &SubtitlesDock::onAddRequested);
+    Actions.add("subtitleAddItemAction", action, windowTitle());
 
     action = new QAction(tr("Remove Subtitle Item"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_E));
     action->setIcon(QIcon::fromTheme("list-remove",
                                      QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
     action->setToolTip(tr("Remove the selected subtitle item"));
@@ -291,6 +290,7 @@ void SubtitlesDock::setupActions()
     Actions.add("subtitleRemoveItemAction", action, windowTitle());
 
     action = new QAction(tr("Set Subtitle Start"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_R));
     action->setIcon(QIcon::fromTheme("keyframes-filter-in",
                                      QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-in.png")));
     action->setToolTip(tr("Set the selected subtitle to start at the cursor position"));
@@ -298,6 +298,7 @@ void SubtitlesDock::setupActions()
     Actions.add("subtitleSetStartAction", action, windowTitle());
 
     action = new QAction(tr("Set Subtitle End"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_T));
     action->setIcon(QIcon::fromTheme("keyframes-filter-out",
                                      QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-out.png")));
     action->setToolTip(tr("Set the selected subtitle to end at the cursor position"));
@@ -305,6 +306,7 @@ void SubtitlesDock::setupActions()
     Actions.add("subtitleSetEndAction", action, windowTitle());
 
     action = new QAction(tr("Move Subtitles"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Y));
     action->setIcon(QIcon::fromTheme("4-direction",
                                      QIcon(":/icons/oxygen/32x32/actions/4-direction.png")));
     action->setToolTip(tr("Move the selected subtitles to the cursor position"));
@@ -474,40 +476,50 @@ void SubtitlesDock::refreshTracksCombo()
     }
 }
 
-void SubtitlesDock::onAppendRequested()
-{
-    LOG_DEBUG();
-    int trackIndex = m_trackCombo->currentIndex();
-    int count = m_model->itemCount(trackIndex);
-    int64_t appendTime = m_model->endTime(trackIndex);
-    if ((m_model->maxTime() - appendTime) < 500) {
-        MAIN.showStatusMessage(tr("Unable to append subtitles"));
-        return;
-    }
-    Subtitles::SubtitleItem item;
-    item.start = appendTime;
-    item.end = appendTime + DEFAULT_ITEM_DURATION;
-    if (item.end > m_model->maxTime()) {
-        item.end = m_model->maxTime() - appendTime;
-    }
-    m_model->overwriteItem(trackIndex, item);
-    setCurrentItem(trackIndex, count);
-}
-
-void SubtitlesDock::onOverwriteRequested()
+void SubtitlesDock::onCreateOrEditRequested()
 {
     LOG_DEBUG();
     int64_t msTime = positionToMs(m_pos);
     int trackIndex = m_trackCombo->currentIndex();
-    int newItemIndex = m_model->itemIndexAtTime(trackIndex, msTime);
-    if (newItemIndex < 0) {
-        newItemIndex = m_model->itemIndexBeforeTime(trackIndex, msTime) + 1;
+    int currentItemIndex = m_model->itemIndexAtTime(trackIndex, msTime);
+    if (currentItemIndex >= 0) {
+        setCurrentItem(trackIndex, currentItemIndex);
+        m_text->setFocus();
+        m_text->selectAll();
+    } else {
+        onAddRequested();
+    }
+}
+
+void SubtitlesDock::onAddRequested()
+{
+    LOG_DEBUG();
+    int64_t msTime = positionToMs(m_pos);
+    int trackIndex = m_trackCombo->currentIndex();
+    if (m_model->itemIndexAtTime(trackIndex, msTime) >= 0) {
+        MAIN.showStatusMessage(tr("A subtitle already exists at this time."));
+        return;
+    }
+    int64_t maxTime = m_model->maxTime();
+    int nextIndex = m_model->itemIndexAfterTime(trackIndex, msTime);
+    if (nextIndex > -1) {
+        auto nextItem = m_model->getItem(trackIndex, nextIndex);
+        maxTime = nextItem.start;
+    }
+    if ((maxTime - msTime) < 500) {
+        MAIN.showStatusMessage(tr("No enough space to add subtitle."));
+        return;
     }
     Subtitles::SubtitleItem item;
     item.start = msTime;
     item.end = msTime + DEFAULT_ITEM_DURATION;
+    if (item.end > maxTime) {
+        item.end = msTime + (maxTime - msTime);
+    }
     m_model->overwriteItem(trackIndex, item);
-    setCurrentItem(trackIndex, newItemIndex);
+    setCurrentItem(trackIndex, m_model->itemIndexAtTime(trackIndex, msTime));
+    m_text->setFocus();
+    m_text->selectAll();
 }
 
 void SubtitlesDock::onRemoveRequested()
@@ -749,7 +761,7 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["subtitleRemoveTrackAction"]->setEnabled(false);
         Actions["SubtitleImportAction"]->setEnabled(false);
         Actions["SubtitleExportAction"]->setEnabled(false);
-        Actions["subtitleAppendItemAction"]->setEnabled(false);
+        Actions["subtitleAddItemAction"]->setEnabled(false);
         Actions["subtitleRemoveItemAction"]->setEnabled(false);
         Actions["subtitleSetStartAction"]->setEnabled(false);
         Actions["subtitleSetEndAction"]->setEnabled(false);
@@ -759,7 +771,7 @@ void SubtitlesDock::updateActionAvailablity()
             Actions["subtitleRemoveTrackAction"]->setEnabled(false);
             Actions["SubtitleImportAction"]->setEnabled(false);
             Actions["SubtitleExportAction"]->setEnabled(false);
-            Actions["subtitleAppendItemAction"]->setEnabled(false);
+            Actions["subtitleAddItemAction"]->setEnabled(false);
             Actions["subtitleRemoveItemAction"]->setEnabled(false);
             Actions["subtitleSetStartAction"]->setEnabled(false);
             Actions["subtitleSetEndAction"]->setEnabled(false);
@@ -767,7 +779,7 @@ void SubtitlesDock::updateActionAvailablity()
             Actions["subtitleRemoveTrackAction"]->setEnabled(true);
             Actions["SubtitleImportAction"]->setEnabled(true);
             Actions["SubtitleExportAction"]->setEnabled(true);
-            Actions["subtitleAppendItemAction"]->setEnabled(true);
+            Actions["subtitleAddItemAction"]->setEnabled(true);
             if (m_selectionModel->selectedRows().size() == 1) {
                 Actions["subtitleSetStartAction"]->setEnabled(true);
                 Actions["subtitleSetEndAction"]->setEnabled(true);
