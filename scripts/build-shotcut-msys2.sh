@@ -1236,6 +1236,7 @@ function deploy
   cmd mkdir -p lib/qt6/generic
   for plugin in generic iconengines imageformats multimedia platforms sqldrivers styles tls; do
     cmd cp -pr "$QT_SHARE_DIR"/plugins/${plugin} lib/qt6
+    cmd rm lib/qt6/${plugin}/*.debug 2>/dev/null
     cmd rm lib/qt6/multimedia/ffmpegmediaplugin.dll 2>/dev/null
     cmd rm lib/qt6/tls/qcertonlybackend.dll 2>/dev/null
     cmd rm lib/qt6/tls/qopensslbackend.dll 2>/dev/null
