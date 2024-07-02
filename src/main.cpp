@@ -341,6 +341,8 @@ int main(int argc, char **argv)
         qputenv("QT_MEDIA_BACKEND", "darwin");
 #elif defined(Q_OS_WIN)
         qputenv("QT_MEDIA_BACKEND", "windows");
+    if (!qEnvironmentVariableIsSet("QT_QPA_PLATFORM"))
+        qputenv("QT_QPA_PLATFORM", "windows:altgr");
 #else
         ;
 #endif

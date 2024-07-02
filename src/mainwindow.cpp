@@ -2288,23 +2288,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
     bool handled = true;
 
-#if defined(Q_OS_WIN)
-    static auto fixedBrokenCtrlAlt = false;
-    if (!fixedBrokenCtrlAlt && event->nativeScanCode() == 57400 /* AltGr */
-            && event->modifiers() == (Qt::ControlModifier | Qt::AltModifier)) {
-        LOG_INFO() << "Received AltGr keypress, removing Ctrl+Alt shortcuts";
-        fixedBrokenCtrlAlt = true;
-        for (auto &k : Actions.keys()) {
-            auto shortcuts = Actions[k]->shortcuts();
-            for (auto &s : shortcuts) {
-                if (s.toString().startsWith("Ctrl+Alt+"))
-                    shortcuts.removeAll(s);
-            }
-            Actions[k]->setShortcuts(shortcuts);
-        }
-    }
-#endif
-
     switch (event->key()) {
     case Qt::Key_J:
         if (m_isKKeyPressed)
