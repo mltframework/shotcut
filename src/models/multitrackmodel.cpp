@@ -1387,7 +1387,8 @@ static void moveBeforeFirstAudioFilter(Mlt::Producer *producer)
     int index = 0;
     for (; index < n; index++) {
         QScopedPointer<Mlt::Filter> filter(producer->filter(index));
-        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+        if (filter && filter->is_valid() && !filter->get_int("_loader")
+                && !filter->get_int(kShotcutHiddenProperty)) {
             QmlMetadata *meta = MAIN.filterController()->metadataForService(filter.data());
             if (meta && meta->isAudio()) {
                 break;
@@ -2524,7 +2525,8 @@ void MultitrackModel::adjustServiceFilterDurations(Mlt::Service &service, int du
         int n = service.filter_count();
         for (int i = 0; i < n; i++) {
             QScopedPointer<Mlt::Filter> filter(service.filter(i));
-            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+            if (filter && filter->is_valid() && !filter->get_int("_loader")
+                    && !filter->get_int(kShotcutHiddenProperty)) {
                 int in = filter->get_in();
                 int out = filter->get_out();
                 // Only change out if it is pinned (same as old track duration)
@@ -3347,7 +3349,8 @@ bool MultitrackModel::isFiltered(Mlt::Producer *producer) const
         int count = producer->filter_count();
         for (int i = 0; i < count; i++) {
             QScopedPointer<Mlt::Filter> filter(producer->filter(i));
-            if (filter && filter->is_valid() && !filter->get_int("_loader"))
+            if (filter && filter->is_valid() && !filter->get_int("_loader")
+                    && !filter->get_int(kShotcutHiddenProperty))
                 return true;
         }
     }

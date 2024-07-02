@@ -31,6 +31,7 @@ class QmlMetadata;
 class MetadataModel;
 class AttachedFiltersModel;
 class MotionTrackerModel;
+class SubtitlesModel;
 
 class FiltersDock : public QDockWidget
 {
@@ -38,7 +39,8 @@ class FiltersDock : public QDockWidget
 
 public:
     explicit FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *attachedModel,
-                         MotionTrackerModel *motionTrackerModel, QWidget *parent = 0);
+                         MotionTrackerModel *motionTrackerModel, SubtitlesModel *subtitlesModel,
+                         QWidget *parent = 0);
 
     QmlProducer *qmlProducer()
     {

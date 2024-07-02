@@ -51,6 +51,7 @@ class QNetworkReply;
 class KeyframesDock;
 class MarkersDock;
 class NotesDock;
+class SubtitlesDock;
 
 class MainWindow : public QMainWindow
 {
@@ -224,6 +225,7 @@ private:
     QDateTime m_sourceUpdatedAt;
     MarkersDock *m_markersDock;
     NotesDock *m_notesDock;
+    SubtitlesDock *m_subtitlesDock;
     std::unique_ptr<QWidget> m_producerWidget;
 
 public slots:
@@ -268,6 +270,7 @@ private slots:
     void onKeyframesDockTriggered(bool checked = true);
     void onMarkersDockTriggered(bool = true);
     void onNotesDockTriggered(bool = true);
+    void onSubtitlesDockTriggered(bool = true);
     void onPlaylistCreated();
     void onPlaylistLoaded();
     void onPlaylistCleared();

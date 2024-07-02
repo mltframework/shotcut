@@ -44,6 +44,7 @@
 #define kShotcutCaptionProperty "shotcut:caption"
 #define kShotcutDetailProperty "shotcut:detail"
 #define kShotcutHashProperty "shotcut:hash"
+#define kShotcutHiddenProperty "shotcut:hidden"
 #define kShotcutSkipConvertProperty "shotcut:skipConvert"
 #define kShotcutAnimInProperty "shotcut:animIn"
 #define kShotcutAnimOutProperty "shotcut:animOut"

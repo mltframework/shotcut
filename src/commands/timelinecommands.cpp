@@ -1766,7 +1766,8 @@ void DetachAudioCommand::redo()
         // Remove audio filters from the video clip.
         for (int i = 0; i < videoClip.filter_count(); i++) {
             Mlt::Filter *filter = videoClip.filter(i);
-            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+            if (filter && filter->is_valid() && !filter->get_int("_loader")
+                    && !filter->get_int(kShotcutHiddenProperty)) {
                 QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
                 if (newMeta && newMeta->isAudio()) {
                     videoClip.detach(*filter);
@@ -1782,7 +1783,8 @@ void DetachAudioCommand::redo()
         // Remove video filters from the audio clip.
         for (int i = 0; i < audioClip.filter_count(); i++) {
             Mlt::Filter *filter = audioClip.filter(i);
-            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+            if (filter && filter->is_valid() && !filter->get_int("_loader")
+                    && !filter->get_int(kShotcutHiddenProperty)) {
                 QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
                 if (newMeta && !newMeta->isAudio()) {
                     audioClip.detach(*filter);
@@ -2013,7 +2015,8 @@ void ApplyFiltersCommand::redo()
     QList<QmlMetadata *> m_applyMeta;
     for (int i = 0; i < filtersProducer.filter_count(); i++) {
         Mlt::Filter *filter = filtersProducer.filter(i);
-        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+        if (filter && filter->is_valid() && !filter->get_int("_loader")
+                && !filter->get_int(kShotcutHiddenProperty)) {
             m_applyMeta.append(MAIN.filterController()->metadataForService(filter));
         }
         delete filter;
@@ -2025,7 +2028,8 @@ void ApplyFiltersCommand::redo()
             // Remove any filters that would be duplicated by the new filters
             for (int i = 0; i < clipInfo->producer->filter_count(); i++) {
                 Mlt::Filter *filter = clipInfo->producer->filter(i);
-                if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                if (filter && filter->is_valid() && !filter->get_int("_loader")
+                        && !filter->get_int(kShotcutHiddenProperty)) {
                     QmlMetadata *currentMeta = MAIN.filterController()->metadataForService(filter);
                     for (int j = 0; j < m_applyMeta.size(); j++) {
                         if (m_applyMeta[j] == currentMeta) {
@@ -2054,7 +2058,8 @@ void ApplyFiltersCommand::undo()
             // Remove existing filters
             for (int i = 0; i < clipInfo->producer->filter_count(); i++) {
                 Mlt::Filter *filter = clipInfo->producer->filter(i);
-                if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                if (filter && filter->is_valid() && !filter->get_int("_loader")
+                        && !filter->get_int(kShotcutHiddenProperty)) {
                     clipInfo->producer->detach(*filter);
                     i--;
                 }
