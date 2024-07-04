@@ -31,7 +31,6 @@ SUBDIRS=
 ENABLE_MOVIT=1
 MOVIT_HEAD=0
 MOVIT_REVISION="origin/shotcut-opengl3"
-ENABLE_SWH_PLUGINS=0
 FFMPEG_HEAD=0
 FFMPEG_REVISION="origin/release/7.0"
 FFMPEG_ADDITIONAL_OPTIONS=
@@ -61,6 +60,9 @@ OPENCV_REVISION="4.9.0"
 ENABLE_LIBSPATIALAUDIO=1
 LIBSPATIALAUDIO_HEAD=1
 LIBSPATIALAUDIO_REVISION=
+ENABLE_LADSPA=1
+LADSPA_HEAD=0
+LADSPA_REVISION="origin/shotcut"
 MLT_DISABLE_SOX=0
 
 ################################################################################
@@ -146,7 +148,7 @@ function to_key {
     shotcut)
       echo 4
     ;;
-    swh-plugins)
+    ladspa-swh)
       echo 5
     ;;
     nv-codec-headers)
@@ -365,9 +367,6 @@ function set_globals {
     [ "$TARGET_ARCH" = "mingw64" ] && SUBDIRS="AMF nv-codec-headers"
     SUBDIRS="$SUBDIRS aom dav1d FFmpeg"
 
-    if test "$ENABLE_SWH_PLUGINS" = "1"; then
-        SUBDIRS="$SUBDIRS swh-plugins"
-    fi
     if test "$ENABLE_MOVIT" = 1 && test "$MOVIT_HEAD" = 1 -o "$MOVIT_REVISION" != ""; then
         SUBDIRS="$SUBDIRS movit"
     fi
@@ -391,6 +390,9 @@ function set_globals {
     fi
     if test "$ENABLE_LIBSPATIALAUDIO" = 1  && test "$LIBSPATIALAUDIO_HEAD" = 1 -o "$LIBSPATIALAUDIO_REVISION" != ""; then
         SUBDIRS="libspatialaudio $SUBDIRS"
+    fi
+    if test "$ENABLE_LADSPA" = 1 && test "$LADSPA_HEAD" = 1 -o "$LADSPA_REVISION" != ""; then
+        SUBDIRS="$SUBDIRS ladspa-swh"
     fi
     SUBDIRS="$SUBDIRS mlt shotcut"
   fi
@@ -421,7 +423,7 @@ function set_globals {
   REPOLOCS[2]="https://github.com/dyne/frei0r.git"
   REPOLOCS[3]="https://github.com/ddennedy/movit.git"
   REPOLOCS[4]="https://github.com/mltframework/shotcut.git"
-  REPOLOCS[5]="http://ftp.us.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
+  REPOLOCS[5]="https://github.com/ddennedy/ladspa-swh.git"
   REPOLOCS[6]="https://github.com/FFmpeg/nv-codec-headers.git"
   REPOLOCS[7]="https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
 #  REPOLOCS[8]="https://bitbucket.org/dandennedy/bigsh0t.git"
@@ -441,7 +443,7 @@ function set_globals {
   REPOTYPES[2]="git"
   REPOTYPES[3]="git"
   REPOTYPES[4]="git"
-  REPOTYPES[5]="http-tgz"
+  REPOTYPES[5]="git"
   REPOTYPES[6]="git"
   REPOTYPES[7]="git"
   REPOTYPES[8]="git"
@@ -476,7 +478,10 @@ function set_globals {
   if test 0 = "$SHOTCUT_HEAD" -a "$SHOTCUT_REVISION" ; then
     REVISIONS[4]="$SHOTCUT_REVISION"
   fi
-  REVISIONS[5]="swh-plugins-0.4.15+1"
+  REVISIONS[5]=""
+  if test 0 = "$LADSPA_HEAD" -a "$LADSPA_REVISION" ; then
+    REVISIONS[5]="$LADSPA_REVISION"
+  fi
   REVISIONS[6]="sdk/12.0" # nv-codec-headers
   REVISIONS[7]="" # AMF
   REVISIONS[8]=""
@@ -596,10 +601,12 @@ function set_globals {
   INSTALL[4]="install_shotcut"
 
   #####
-  # swh-plugins
-  CONFIG[5]="./configure --prefix=$FINAL_INSTALL_DIR --enable-sse"
+  # ladspa-swh
+  CONFIG[5]="./autogen.sh --prefix=$FINAL_INSTALL_DIR --disable-nls"
   CFLAGS_[5]=$CFLAGS
   LDFLAGS_[5]=$LDFLAGS
+  BUILD[5]="make -j $MAKEJ LDFLAGS=-no-undefined"
+  INSTALL[5]="install_ladspa-swh"
 
   #######
   # nv-codec-headers
@@ -719,6 +726,11 @@ function install_shotcut {
   cmd sed -i "s/YY.MM.DD/$SHOTCUT_VERSION/" "$FINAL_INSTALL_DIR"/../shotcut.iss
   cmd install -d "$FINAL_INSTALL_DIR"/share/translations
   cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
+}
+
+function install_ladspa-swh {
+  cmd install -d "$FINAL_INSTALL_DIR"/lib/ladspa
+  cmd install -p -c .libs/*.dll "$FINAL_INSTALL_DIR"/lib/ladspa
 }
 
 function install_vmaf {
@@ -1184,11 +1196,6 @@ function deploy
     cmd cp -p "$QTDIR"/bin/Qt6{Charts,Core,Core5Compat,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,Widgets,Xml}.dll .
   fi
 
-  if [ "ENABLE_SWH_PLUGINS" != "1" ]; then
-    log Copying LADSPA plugins
-    cmd tar -xJf "$HOME/swh-plugins-win64-0.4.15.tar.xz"
-  fi
-
   for lib in *.dll; do
     bundle_dlls "$lib"
   done
@@ -1217,7 +1224,7 @@ function deploy
   log Copying some libs from msys2
   cmd cp -p /${TARGET_ARCH}/bin/libcrypto-3.dll .
   if [ "$TARGET_ARCH" = "clangarm64" ]; then
-    cmd cp -p /${TARGET_ARCH}/bin/{libjasper.dll,libjpeg-8.dll,libmng-2.dll,liblcms2-2.dll,libtiff-6.dll,libjbig-0.dll,libdeflate.dll,libLerc.dll,libunwind.dll,libwebpdemux-2.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libxml2-2.dll,libomp.dll,libebur128.dll,libsamplerate-0.dll,librubberband-2.dll,libsox-3.dll,libopencore-amrnb-0.dll,libvo-amrwbenc-0.dll,libFLAC.dll,libltdl-7.dll,libgsm.dll,libmad-0.dll,libao-4.dll,libid3tag-0.dll,libtwolame-0.dll,libvorbisfile-3.dll,libwavpack-1.dll,libsndfile-1.dll,libopencore-amrwb-0.dll,libmpg123-0.dll,libopusfile-0.dll,libmysofa.dll,libvidstab.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libpixman-1-0.dll,libfontconfig-1.dll,libexpat-1.dll,liblz4.dll} .
+    cmd cp -p /${TARGET_ARCH}/bin/{libjasper.dll,libjpeg-8.dll,libmng-2.dll,liblcms2-2.dll,libtiff-6.dll,libjbig-0.dll,libdeflate.dll,libLerc.dll,libunwind.dll,libwebpdemux-2.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libxml2-2.dll,libomp.dll,libebur128.dll,libsamplerate-0.dll,librubberband-2.dll,libsox-3.dll,libopencore-amrnb-0.dll,libvo-amrwbenc-0.dll,libFLAC.dll,libltdl-7.dll,libgsm.dll,libmad-0.dll,libao-4.dll,libid3tag-0.dll,libtwolame-0.dll,libvorbisfile-3.dll,libwavpack-1.dll,libsndfile-1.dll,libopencore-amrwb-0.dll,libmpg123-0.dll,libopusfile-0.dll,libmysofa.dll,libvidstab.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libpixman-1-0.dll,libfontconfig-1.dll,libexpat-1.dll,liblz4.dll,libfftw3f-3.dll} .
   fi
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
     cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .

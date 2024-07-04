@@ -76,9 +76,7 @@ jobs:
           echo Extracting Qt
           tar -xJf qt-6.4.2-x64-mingw810.txz
           cd ..
-          echo Downloading prebuilt SWH LADSPA plugins
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
-          echo Downloading a few other prebuilt dependencies
+          echo Downloading a few prebuilt dependencies
           curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v5.txz
           echo Extracting prebuilt dependencies
           tar -xJf mlt-prebuilt-mingw64-v5.txz

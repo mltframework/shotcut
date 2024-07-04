@@ -75,9 +75,7 @@ jobs:
           tar -xJf qt-6.7.1-x64-mingw.txz
           rm qt-6.7.1-x64-mingw.txz
           cd ..
-          echo Downloading prebuilt SWH LADSPA plugins
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
-          echo Downloading a few other prebuilt dependencies
+          echo Downloading a few prebuilt dependencies
           curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v6.txz
           echo Extracting prebuilt dependencies
           tar -xJf mlt-prebuilt-mingw64-v6.txz
@@ -109,8 +107,8 @@ jobs:
           echo Packaging the installer
           PATH="$HOME/bin:$PATH"
           pushd $HOME/bin
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc6.txz
-          tar -xJf iscc6.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/iscc632.txz
+          tar -xJf iscc632.txz
           popd
           echo Extracting installer dependencies
           curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/innosetup-opera-1.txz
