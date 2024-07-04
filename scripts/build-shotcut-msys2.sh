@@ -392,7 +392,7 @@ function set_globals {
         SUBDIRS="libspatialaudio $SUBDIRS"
     fi
     if test "$ENABLE_LADSPA" = 1 && test "$LADSPA_HEAD" = 1 -o "$LADSPA_REVISION" != ""; then
-        SUBDIRS="$SUBDIRS ladspa-swh"
+        SUBDIRS="ladspa-swh $SUBDIRS"
     fi
     SUBDIRS="$SUBDIRS mlt shotcut"
   fi
