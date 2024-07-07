@@ -18,7 +18,7 @@ jobs:
           msystem: MINGW64
           update: true
           install: >-
-            autotools base-devel bzip2 coreutils git gzip python-pip tar xz zip
+            autotools base-devel bzip2 coreutils git gzip tar xz zip
             perl-List-MoreUtils perl-XML-Parser
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-cmake
@@ -54,7 +54,7 @@ jobs:
             mingw-w64-x86_64-libarchive
             mingw-w64-x86_64-potrace
             mingw-w64-x86_64-libimagequant
-            mingw-w64-x86_64-python3.11
+            mingw-w64-x86_64-python-pip
             mingw-w64-x86_64-zimg
 
       - uses: actions/checkout@v4
