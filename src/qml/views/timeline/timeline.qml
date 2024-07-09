@@ -314,8 +314,7 @@ Rectangle {
                                     }
 
                                     Behavior on opacity {
-                                        NumberAnimation {
-                                        }
+                                        NumberAnimation {}
                                     }
                                 }
 

@@ -32,7 +32,7 @@ Shotcut.KeyframableFilter {
     middleValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 1.0]
     endValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.0]
     width: 425
-    height: 455
+    height: 330
     Component.onCompleted: {
         filter.blockSignals = true;
         filter.set(textFilterUi.middleValue, Qt.rect(0, 0, profile.width, profile.height));
@@ -54,7 +54,7 @@ Shotcut.KeyframableFilter {
             filter.set(textFilterUi.valignProperty, 'bottom');
             filter.set(textFilterUi.halignProperty, 'center');
             filter.set('feed', feedCombo.textAt(0));
-            filter.savePreset(presetParams);
+            filter.savePreset(preset.parameters);
         } else {
             if (filter.get('opacity') === null)
                 filter.set('opacity', 1.0);
