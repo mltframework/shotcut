@@ -2801,11 +2801,11 @@ void TimelineDock::initLoad()
     load(false);
 }
 
-void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
+void TimelineDock::handleDrop(int trackIndex, int position, QString xmlOrUrls)
 {
-    if (xml.startsWith(kFileUrlProtocol)) {
+    if (xmlOrUrls.startsWith(kFileUrlProtocol)) {
         QList<QUrl> urls;
-        auto strings = xml.split(kFilesUrlDelimiter);
+        auto strings = xmlOrUrls.split(kFilesUrlDelimiter);
         for (auto &s : strings) {
 #ifdef Q_OS_WIN
             if (!s.startsWith(kFileUrlProtocol)) {
@@ -2814,76 +2814,87 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xml)
 #endif
             urls << s;
         }
-        int i = 0, count = urls.size();
 
-        // Handle drop from file manager to empty project.
-        if (!MLT.producer() || !MLT.producer()->is_valid()) {
-            QUrl url = xml.split(kFilesUrlDelimiter).first();
-            Mlt::Properties properties;
-            properties.set(kShotcutSkipConvertProperty, 1);
-            if (!MAIN.open(Util::removeFileScheme(url), &properties, false /* play */))
-                MAIN.open(Util::removeFileScheme(url, false), &properties, false /* play */);
-        }
+        // Use QTimer to workaround stupid drag from Windows Explorer bug
+        QTimer::singleShot(0, this, [ = ]() {
+            auto xml = xmlOrUrls;
+            int i = 0, count = urls.size();
 
-        LongUiTask longTask(QObject::tr("Drop Files"));
-        Mlt::Playlist playlist(MLT.profile());
-        ResourceDialog dialog(this);
-        for (const auto &path : Util::sortedFileList(urls)) {
-            if (MAIN.isSourceClipMyProject(path, /* withDialog */ false)) continue;
-            if (MLT.checkFile(path)) {
-                MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
-                continue;
+            // Handle drop from file manager to empty project.
+            if (!MLT.producer() || !MLT.producer()->is_valid()) {
+                QUrl url = xml.split(kFilesUrlDelimiter).first();
+                Mlt::Properties properties;
+                properties.set(kShotcutSkipConvertProperty, 1);
+                if (!MAIN.open(Util::removeFileScheme(url), &properties, false /* play */))
+                    MAIN.open(Util::removeFileScheme(url, false), &properties, false /* play */);
             }
-            longTask.reportProgress(Util::baseName(path), i++, count);
-            Mlt::Producer p;
-            if (path.endsWith(".mlt") || path.endsWith(".xml")) {
-                if (Settings.playerGPU() && MLT.profile().is_explicit()) {
-                    Mlt::Profile testProfile;
-                    Mlt::Producer producer(testProfile, path.toUtf8().constData());
-                    if (testProfile.width() != MLT.profile().width()
-                            || testProfile.height() != MLT.profile().height()
-                            || Util::isFpsDifferent(MLT.profile().fps(), testProfile.fps())) {
-                        MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
-                        continue;
-                    }
-                }
-                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
-                if (p.is_valid()) {
-                    p.set(kShotcutVirtualClip, 1);
-                    p.set("resource", path.toUtf8().constData());
-                }
-            } else {
-                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
-            }
-            if (p.is_valid()) {
-                if (!qstrcmp(p.get("mlt_service"), "avformat") && !p.get_int("seekable")) {
-                    MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
+
+            LongUiTask longTask(QObject::tr("Drop Files"));
+            Mlt::Playlist playlist(MLT.profile());
+            ResourceDialog dialog(this);
+            for (const auto &path : Util::sortedFileList(urls)) {
+                if (MAIN.isSourceClipMyProject(path, /* withDialog */ false)) continue;
+                if (MLT.checkFile(path)) {
+                    MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
                     continue;
                 }
-                Mlt::Producer *producer = MLT.setupNewProducer(&p);
-                producer->set(kShotcutSkipConvertProperty, 1);
-                ProxyManager::generateIfNotExists(*producer);
-                playlist.append(*producer);
-                dialog.add(producer);
-                delete producer;
+                longTask.reportProgress(Util::baseName(path), i++, count);
+                Mlt::Producer p;
+                if (path.endsWith(".mlt") || path.endsWith(".xml")) {
+                    if (Settings.playerGPU() && MLT.profile().is_explicit()) {
+                        Mlt::Profile testProfile;
+                        Mlt::Producer producer(testProfile, path.toUtf8().constData());
+                        if (testProfile.width() != MLT.profile().width()
+                                || testProfile.height() != MLT.profile().height()
+                                || Util::isFpsDifferent(MLT.profile().fps(), testProfile.fps())) {
+                            MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
+                            continue;
+                        }
+                    }
+                    p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
+                    if (p.is_valid()) {
+                        p.set(kShotcutVirtualClip, 1);
+                        p.set("resource", path.toUtf8().constData());
+                    }
+                } else {
+                    p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
+                }
+                if (p.is_valid()) {
+                    if (!qstrcmp(p.get("mlt_service"), "avformat") && !p.get_int("seekable")) {
+                        MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
+                        continue;
+                    }
+                    Mlt::Producer *producer = MLT.setupNewProducer(&p);
+                    producer->set(kShotcutSkipConvertProperty, 1);
+                    ProxyManager::generateIfNotExists(*producer);
+                    playlist.append(*producer);
+                    dialog.add(producer);
+                    delete producer;
+                }
             }
-        }
-        xml = MLT.XML(&playlist);
-        if (Settings.showConvertClipDialog() && dialog.producerCount() > 1 && dialog.hasTroubleClips()) {
-            dialog.selectTroubleClips();
-            dialog.setWindowTitle(tr("Dropped Files"));
-            longTask.cancel();
-            dialog.exec();
-        } else if (Settings.showConvertClipDialog() && dialog.producerCount() == 1) {
-            Mlt::Producer producer = dialog.producer(0);
-            QString convertAdvice = Util::getConversionAdvice(&producer);
-            if (!convertAdvice.isEmpty()) {
+            xml = MLT.XML(&playlist);
+            if (Settings.showConvertClipDialog() && dialog.producerCount() > 1 && dialog.hasTroubleClips()) {
+                dialog.selectTroubleClips();
+                dialog.setWindowTitle(tr("Dropped Files"));
                 longTask.cancel();
-                Util::offerSingleFileConversion(convertAdvice, &producer, this);
+                dialog.exec();
+            } else if (Settings.showConvertClipDialog() && dialog.producerCount() == 1) {
+                Mlt::Producer producer = dialog.producer(0);
+                QString convertAdvice = Util::getConversionAdvice(&producer);
+                if (!convertAdvice.isEmpty()) {
+                    longTask.cancel();
+                    Util::offerSingleFileConversion(convertAdvice, &producer, this);
+                }
             }
-        }
+            insertOrOverwriteDrop(trackIndex, position, xml);
+        });
+    } else {
+        insertOrOverwriteDrop(trackIndex, position, xmlOrUrls);
     }
+}
 
+void TimelineDock::insertOrOverwriteDrop(int trackIndex, int position, const QString &xml)
+{
     auto autoAddTracks = Settings.timelineAutoAddTracks();
     Settings.setTimelineAutoAddTracks(false);
     if (Settings.timelineRipple()) {

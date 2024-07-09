@@ -892,6 +892,104 @@ void PlaylistDock::moveClipDown()
     }
 }
 
+void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
+{
+    auto resetIndex = true;
+    ResourceDialog dialog(this);
+    LongUiTask longTask(tr("Add Files"));
+    int insertNextAt = row;
+    bool first = true;
+    QStringList fileNames = Util::sortedFileList(Util::expandDirectories(urls));
+    qsizetype i = 0, count = fileNames.size();
+    for (auto &path : fileNames) {
+        if (MAIN.isSourceClipMyProject(path)) continue;
+        longTask.reportProgress(Util::baseName(path), i++, count);
+        if (MLT.checkFile(path)) {
+            emit showStatusMessage(tr("Failed to open ").append(path));
+            continue;
+        }
+        Mlt::Producer p;
+        if (path.endsWith(".mlt") || path.endsWith(".xml")) {
+            if (Settings.playerGPU() && MLT.profile().is_explicit()) {
+                Mlt::Profile testProfile;
+                Mlt::Producer producer(testProfile, path.toUtf8().constData());
+                if (testProfile.width() != MLT.profile().width()
+                        || testProfile.height() != MLT.profile().height()
+                        || Util::isFpsDifferent(MLT.profile().fps(), testProfile.fps())) {
+                    emit showStatusMessage(tr("Failed to open ").append(path));
+                    continue;
+                }
+            }
+            p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
+            if (p.is_valid()) {
+                // Convert MLT XML to a virtual clip.
+                p.set(kShotcutVirtualClip, 1);
+                p.set("resource", path.toUtf8().constData());
+                first = false;
+            }
+        } else {
+            p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
+        }
+        if (p.is_valid()) {
+            Mlt::Producer *producer = &p;
+            if (first) {
+                first = false;
+                if (!MLT.producer() || !MLT.producer()->is_valid()) {
+                    Mlt::Properties properties;
+                    properties.set(kShotcutSkipConvertProperty, 1);
+                    MAIN.open(path, &properties, false);
+                    if (MLT.producer() && MLT.producer()->is_valid()) {
+                        producer = MLT.producer();
+                        first = true;
+                    }
+                }
+            }
+            producer = MLT.setupNewProducer(producer);
+            producer->set(kShotcutSkipConvertProperty, 1);
+            if (!MLT.isLiveProducer(producer) || producer->get_int(kShotcutVirtualClip)) {
+                ProxyManager::generateIfNotExists(*producer);
+                if (row == -1)
+                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
+                else
+                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
+            } else {
+                LongUiTask::cancel();
+                DurationDialog durationDialog(this);
+                durationDialog.setDuration(MLT.profile().fps() * 5);
+                if (durationDialog.exec() == QDialog::Accepted) {
+                    producer->set_in_and_out(0, durationDialog.duration() - 1);
+                    if (row == -1)
+                        MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
+                    else
+                        MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
+                }
+            }
+            if (first) {
+                first = false;
+                setIndex(0);
+                resetIndex = false;
+            }
+            dialog.add(producer);
+            delete producer;
+        }
+    }
+    if (Settings.showConvertClipDialog() && dialog.producerCount() > 1 && dialog.hasTroubleClips()) {
+        dialog.selectTroubleClips();
+        dialog.setWindowTitle(tr("Dropped Files"));
+        longTask.cancel();
+        dialog.exec();
+    } else if (Settings.showConvertClipDialog() && dialog.producerCount() == 1) {
+        Mlt::Producer producer = dialog.producer(0);
+        QString convertAdvice = Util::getConversionAdvice(&producer);
+        if (!convertAdvice.isEmpty()) {
+            longTask.cancel();
+            Util::offerSingleFileConversion(convertAdvice, &producer, this);
+        }
+    }
+    if (resetIndex)
+        resetPlaylistIndex();
+}
+
 void PlaylistDock::onInsertCutActionTriggered()
 {
     if (MLT.isClip() || MLT.savedProducer()) {
@@ -1158,99 +1256,12 @@ void PlaylistDock::onPlaylistCleared()
 
 void PlaylistDock::onDropped(const QMimeData *data, int row)
 {
-    bool resetIndex = true;
     if (data && data->hasUrls()) {
-        ResourceDialog dialog(this);
-        LongUiTask longTask(tr("Add Files"));
-        int insertNextAt = row;
-        bool first = true;
-        QStringList fileNames = Util::sortedFileList(Util::expandDirectories(data->urls()));
-        qsizetype i = 0, count = fileNames.size();
-        for (auto &path : fileNames) {
-            if (MAIN.isSourceClipMyProject(path)) continue;
-            longTask.reportProgress(Util::baseName(path), i++, count);
-            if (MLT.checkFile(path)) {
-                emit showStatusMessage(tr("Failed to open ").append(path));
-                continue;
-            }
-            Mlt::Producer p;
-            if (path.endsWith(".mlt") || path.endsWith(".xml")) {
-                if (Settings.playerGPU() && MLT.profile().is_explicit()) {
-                    Mlt::Profile testProfile;
-                    Mlt::Producer producer(testProfile, path.toUtf8().constData());
-                    if (testProfile.width() != MLT.profile().width()
-                            || testProfile.height() != MLT.profile().height()
-                            || Util::isFpsDifferent(MLT.profile().fps(), testProfile.fps())) {
-                        emit showStatusMessage(tr("Failed to open ").append(path));
-                        continue;
-                    }
-                }
-                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
-                if (p.is_valid()) {
-                    // Convert MLT XML to a virtual clip.
-                    p.set(kShotcutVirtualClip, 1);
-                    p.set("resource", path.toUtf8().constData());
-                    first = false;
-                }
-            } else {
-                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
-            }
-            if (p.is_valid()) {
-                Mlt::Producer *producer = &p;
-                if (first) {
-                    first = false;
-                    if (!MLT.producer() || !MLT.producer()->is_valid()) {
-                        Mlt::Properties properties;
-                        properties.set(kShotcutSkipConvertProperty, 1);
-                        MAIN.open(path, &properties, false);
-                        if (MLT.producer() && MLT.producer()->is_valid()) {
-                            producer = MLT.producer();
-                            first = true;
-                        }
-                    }
-                }
-                producer = MLT.setupNewProducer(producer);
-                producer->set(kShotcutSkipConvertProperty, 1);
-                if (!MLT.isLiveProducer(producer) || producer->get_int(kShotcutVirtualClip)) {
-                    ProxyManager::generateIfNotExists(*producer);
-                    if (row == -1)
-                        MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
-                    else
-                        MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
-                } else {
-                    LongUiTask::cancel();
-                    DurationDialog durationDialog(this);
-                    durationDialog.setDuration(MLT.profile().fps() * 5);
-                    if (durationDialog.exec() == QDialog::Accepted) {
-                        producer->set_in_and_out(0, durationDialog.duration() - 1);
-                        if (row == -1)
-                            MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
-                        else
-                            MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
-                    }
-                }
-                if (first) {
-                    first = false;
-                    setIndex(0);
-                    resetIndex = false;
-                }
-                dialog.add(producer);
-                delete producer;
-            }
-        }
-        if (Settings.showConvertClipDialog() && dialog.producerCount() > 1 && dialog.hasTroubleClips()) {
-            dialog.selectTroubleClips();
-            dialog.setWindowTitle(tr("Dropped Files"));
-            longTask.cancel();
-            dialog.exec();
-        } else if (Settings.showConvertClipDialog() && dialog.producerCount() == 1) {
-            Mlt::Producer producer = dialog.producer(0);
-            QString convertAdvice = Util::getConversionAdvice(&producer);
-            if (!convertAdvice.isEmpty()) {
-                longTask.cancel();
-                Util::offerSingleFileConversion(convertAdvice, &producer, this);
-            }
-        }
+        // Use QTimer to workaround stupid drag from Windows Explorer bug
+        const auto &urls = data->urls();
+        QTimer::singleShot(0, this, [ = ]() {
+            addFiles(row, urls);
+        });
     } else if (data && data->hasFormat(Mlt::XmlMimeType)) {
         if (MLT.producer() && MLT.producer()->is_valid()) {
             if (MLT.producer()->type() == mlt_service_playlist_type) {
@@ -1284,8 +1295,6 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             }
         }
     }
-    if (resetIndex)
-        resetPlaylistIndex();
 }
 
 void PlaylistDock::onMoveClip(int from, int to)

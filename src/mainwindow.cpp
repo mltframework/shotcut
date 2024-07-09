@@ -2548,7 +2548,11 @@ void MainWindow::dropEvent(QDropEvent *event)
             event->acceptProposedAction();
         }
     } else if (mimeData->hasUrls()) {
-        openMultiple(mimeData->urls());
+        // Use QTimer to workaround stupid drag from Windows Explorer bug
+        const auto &urls = mimeData->urls();
+        QTimer::singleShot(0, this, [ = ]() {
+            openMultiple(urls);
+        });
         event->acceptProposedAction();
     } else if (mimeData->hasFormat(Mlt::XmlMimeType) && MLT.XML() != mimeData->data(Mlt::XmlMimeType)) {
         m_playlistDock->onOpenActionTriggered();

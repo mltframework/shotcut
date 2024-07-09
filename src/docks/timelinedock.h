@@ -245,6 +245,7 @@ private:
     }
     void reportSelectionChange();
     void applyCopiedFiltersToSelectdClips();
+    void insertOrOverwriteDrop(int trackIndex, int position, const QString &xml);
 
     QQuickWidget m_quickView;
     MultitrackModel m_model;

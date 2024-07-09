@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,6 +107,7 @@ private:
     void setIndex(int row);
     void moveClipUp();
     void moveClipDown();
+    void addFiles(int row, const QList<QUrl> &urls);
 
     Ui::PlaylistDock *ui;
     QAbstractItemView *m_view;
