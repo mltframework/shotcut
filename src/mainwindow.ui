@@ -349,6 +349,7 @@
    <addaction name="actionHistory"/>
    <addaction name="actionEncode"/>
    <addaction name="actionJobs"/>
+   <addaction name="actionSubtitles"/>
    <addaction name="dummyAction"/>
    <addaction name="actionLayoutLogging"/>
    <addaction name="actionLayoutEditing"/>
@@ -1132,6 +1133,15 @@
    </property>
    <property name="text">
     <string>Notes</string>
+   </property>
+  </action>
+  <action name="actionSubtitles">
+   <property name="icon">
+    <iconset theme="subtitle" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/subtitle.png</normaloff>:/icons/oxygen/32x32/actions/subtitle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Subtitles</string>
    </property>
   </action>
   <action name="actionPreview540">

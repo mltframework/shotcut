@@ -199,7 +199,7 @@ bool MetadataModel::isVisible(int row) const
 }
 
 void MetadataModel::updateFilterMask(bool isClipProducer, bool isChainProducer,
-                                     bool isTrackProducer)
+                                     bool isTrackProducer, bool isOutputProducer)
 {
     beginResetModel();
     m_isClipProducer = isClipProducer;
@@ -220,6 +220,12 @@ void MetadataModel::updateFilterMask(bool isClipProducer, bool isChainProducer,
     } else {
         m_filterMask |= trackOnlyMaskBit;
     }
+    m_isOutputProducer = isOutputProducer;
+    if (m_isOutputProducer) {
+        m_filterMask &= ~outputOnlyMaskBit;
+    } else {
+        m_filterMask |= outputOnlyMaskBit;
+    }
     endResetModel();
 }
 
@@ -229,6 +235,7 @@ unsigned MetadataModel::computeFilterMask(const QmlMetadata *meta)
     if (meta->isHidden()) mask |= HiddenMaskBit;
     if (meta->isClipOnly()) mask |= clipOnlyMaskBit;
     if (meta->isTrackOnly()) mask |= trackOnlyMaskBit;
+    if (meta->isOutputOnly()) mask |= outputOnlyMaskBit;
     if (!meta->isGpuCompatible()) mask |= gpuIncompatibleMaskBit;
     if (meta->needsGPU()) mask |= needsGPUMaskBit;
     if (meta->type() == QmlMetadata::Link) mask |= linkMaskBit;

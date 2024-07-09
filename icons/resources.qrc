@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
+        <file>dark/32x32/4-direction.png</file>
         <file>dark/32x32/audio-meter.png</file>
         <file>dark/32x32/keyframe-ease-in.png</file>
         <file>dark/32x32/keyframe-ease-inout.png</file>
@@ -46,6 +47,8 @@
         <file>dark/32x32/cpu.png</file>
         <file>dark/32x32/dialog-information.png</file>
         <file>dark/32x32/document-edit.png</file>
+        <file>dark/32x32/document-export.png</file>
+        <file>dark/32x32/document-import.png</file>
         <file>dark/32x32/document-open-recent.png</file>
         <file>dark/32x32/document-open.png</file>
         <file>dark/32x32/document-save.png</file>
@@ -71,6 +74,7 @@
         <file>dark/32x32/view-media-playlist.png</file>
         <file>dark/32x32/window-close.png</file>
         <file>dark/index.theme</file>
+        <file>light/32x32/4-direction.png</file>
         <file>light/32x32/audio-meter.png</file>
         <file>light/32x32/edit-undo.png</file>
         <file>light/32x32/keyframe-ease-in.png</file>
@@ -117,6 +121,8 @@
         <file>light/32x32/cpu.png</file>
         <file>light/32x32/dialog-information.png</file>
         <file>light/32x32/document-edit.png</file>
+        <file>light/32x32/document-export.png</file>
+        <file>light/32x32/document-import.png</file>
         <file>light/32x32/document-open-recent.png</file>
         <file>light/32x32/document-open.png</file>
         <file>light/32x32/document-save.png</file>
@@ -142,6 +148,7 @@
         <file>light/32x32/view-media-playlist.png</file>
         <file>light/32x32/window-close.png</file>
         <file>light/index.theme</file>
+        <file>oxygen/32x32/actions/4-direction.png</file>
         <file>oxygen/32x32/actions/keyframe-ease-in.png</file>
         <file>oxygen/32x32/actions/keyframe-ease-inout.png</file>
         <file>oxygen/32x32/actions/keyframe-ease-out.png</file>
@@ -184,6 +191,8 @@
         <file>oxygen/32x32/actions/list-remove.png</file>
         <file>oxygen/32x32/actions/player-volume.png</file>
         <file>oxygen/32x32/actions/document-edit.png</file>
+        <file>oxygen/32x32/actions/document-export.png</file>
+        <file>oxygen/32x32/actions/document-import.png</file>
         <file>oxygen/32x32/actions/document-open-recent.png</file>
         <file>oxygen/32x32/actions/document-open.png</file>
         <file>oxygen/32x32/actions/document-save.png</file>
@@ -334,7 +343,9 @@
         <file>light/32x32/chronometer.png</file>
         <file>dark/32x32/chronometer.png</file>
         <file>dark/32x32/split.png</file>
+        <file>dark/32x32/subtitle.png</file>
         <file>light/32x32/split.png</file>
+        <file>light/32x32/subtitle.png</file>
         <file>light/32x32/merge.png</file>
         <file>dark/32x32/merge.png</file>
         <file>dark/32x32/layer-visible-on.png</file>
@@ -346,6 +357,7 @@
         <file>light/32x32/layer-visible-off.png</file>
         <file>light/32x32/layer-visible-on.png</file>
         <file>oxygen/32x32/actions/split.png</file>
+        <file>oxygen/32x32/actions/subtitle.png</file>
         <file>oxygen/32x32/actions/merge.png</file>
         <file>oxygen/32x32/actions/layer-visible-off.png</file>
         <file>oxygen/32x32/actions/layer-visible-on.png</file>

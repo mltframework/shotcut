@@ -21,6 +21,7 @@
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
 #include "dialogs/filedatedialog.h"
+#include "dialogs/listselectiondialog.h"
 #include "jobqueue.h"
 #include "jobs/ffprobejob.h"
 #include "jobs/ffmpegjob.h"
@@ -676,6 +677,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegIntegrityCheck);
     menu.addAction(ui->actionFFmpegConvert);
     menu.addAction(ui->actionExtractSubclip);
+    menu.addAction(ui->actionExtractSubtitles);
     menu.addAction(ui->actionSetFileDate);
     if (Util::GetFilenameFromProducer(producer()).toLower().endsWith(".mp4")
             || Util::GetFilenameFromProducer(producer()).toLower().endsWith(".mov")) {
@@ -1054,6 +1056,90 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
     }
 }
 
+void AvformatProducerWidget::on_actionExtractSubtitles_triggered()
+{
+    QStringList subtitles;
+    int nb_streams = m_producer->get_int("meta.media.nb_streams");
+    int subtitleCount = 0;
+    for (int i = 0; i < nb_streams; i++) {
+        QString key = QString("meta.media.%1.codec.name").arg(i);
+        QString codec(m_producer->get(key.toLatin1().constData()));
+        if (codec == "srt") {
+            subtitleCount++;
+            QString langKey = QString("meta.attr.%1.stream.language.markup").arg(i);
+            QString lang(m_producer->get(langKey.toLatin1().constData()));
+            if (lang.isEmpty()) {
+                subtitles << tr("Track %1").arg(subtitleCount);
+            } else {
+                subtitles << tr("Track %1 (%2)").arg(subtitleCount).arg(lang);
+            }
+        }
+    }
+    QString caption = tr("Export Subtitles...");
+    if (subtitles.size() <= 0) {
+        QMessageBox::warning(this, caption, tr("No subtitles found"));
+        return;
+    }
+
+    // Prompt the user to select the subtitle stream
+    ListSelectionDialog dialog(subtitles, this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setWindowTitle(caption);
+    dialog.setSelection(QStringList(subtitles[0]));
+    if (dialog.exec() != QDialog::Accepted || dialog.selection().isEmpty()) {
+        LOG_WARNING() << "No subtitles selected";
+        return;
+    }
+    QStringList subSelection = dialog.selection();
+
+    // Prompt the user for the directory to save the file(s)
+    QString resource = Util::GetFilenameFromProducer(producer());
+    QFileInfo fi(resource);
+    QString pathTemplate = QFileDialog::getExistingDirectory(this, caption, Settings.savePath(),
+                                                             Util::getFileDialogOptions());
+    if (pathTemplate.isEmpty()) {
+        LOG_WARNING() << "No path specified";
+        return;
+    }
+    // Extract the subtitle(s)
+    pathTemplate = QDir::toNativeSeparators(pathTemplate);
+    pathTemplate.append("/%1");
+    pathTemplate = pathTemplate.arg(fi.completeBaseName());
+    pathTemplate.append(" - %1.srt");
+    for (int s = 0; s < subSelection.size(); s++) {
+        int subtitleCount = 0;
+        for (int i = 0; i < nb_streams; i++) {
+            QString key = QString("meta.media.%1.codec.name").arg(i);
+            QString codec(m_producer->get(key.toLatin1().constData()));
+            if (codec == "srt") {
+                subtitleCount++;
+                QString subText;
+                QString langKey = QString("meta.attr.%1.stream.language.markup").arg(i);
+                QString lang(m_producer->get(langKey.toLatin1().constData()));
+                if (lang.isEmpty()) {
+                    subText = tr("Track %1").arg(subtitleCount);
+                } else {
+                    subText = tr("Track %1 (%2)").arg(subtitleCount).arg(lang);
+                }
+                if (subText == subSelection[s]) {
+                    QString path = pathTemplate.arg(subText);
+                    if (Util::warnIfNotWritable(path, this, caption))
+                        return;
+                    // Make an FFMpeg job
+                    QStringList ffmpegArgs;
+                    QString streamSelect = QString("0:s:%1").arg(subtitleCount - 1);
+                    ffmpegArgs << "-loglevel" << "verbose";
+                    ffmpegArgs << "-i" << resource;
+                    ffmpegArgs << "-map" << streamSelect;
+                    ffmpegArgs << "-y" << path;
+                    FfmpegJob *ffmpegJob = new FfmpegJob(path, ffmpegArgs, false);
+                    ffmpegJob->setLabel(tr("Extract subtitles %1").arg(Util::baseName(path)));
+                    JOBS.add(ffmpegJob);
+                }
+            }
+        }
+    }
+}
 
 void AvformatProducerWidget::on_actionSetFileDate_triggered()
 {

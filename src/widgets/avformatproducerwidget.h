@@ -94,6 +94,8 @@ private slots:
 
     void on_actionExtractSubclip_triggered();
 
+    void on_actionExtractSubtitles_triggered();
+
     void on_actionSetFileDate_triggered();
 
     void on_rangeComboBox_activated(int index);

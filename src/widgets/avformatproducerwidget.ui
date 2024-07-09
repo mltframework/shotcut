@@ -1057,6 +1057,11 @@
     <string>Extract Sub-clip...</string>
    </property>
   </action>
+  <action name="actionExtractSubtitles">
+   <property name="text">
+    <string>Extract Subtitles...</string>
+   </property>
+  </action>
   <action name="actionSetFileDate">
    <property name="text">
     <string>Set Creation Time...</string>

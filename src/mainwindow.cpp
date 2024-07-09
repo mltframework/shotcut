@@ -73,6 +73,7 @@
 #include "docks/keyframesdock.h"
 #include "docks/markersdock.h"
 #include "docks/notesdock.h"
+#include "docks/subtitlesdock.h"
 #include "util.h"
 #include "models/keyframesmodel.h"
 #include "dialogs/listselectiondialog.h"
@@ -521,7 +522,9 @@ void MainWindow::setupAndConnectDocks()
     m_filterController = new FilterController(this);
     m_filtersDock = new FiltersDock(m_filterController->metadataModel(),
                                     m_filterController->attachedModel(),
-                                    m_filterController->motionTrackerModel(), this);
+                                    m_filterController->motionTrackerModel(),
+                                    m_timelineDock->subtitlesModel(),
+                                    this);
     m_filtersDock->setMinimumSize(400, 300);
     m_filtersDock->hide();
     m_filtersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_6));
@@ -668,6 +671,19 @@ void MainWindow::setupAndConnectDocks()
     connect(ui->actionNotes, SIGNAL(triggered()), this, SLOT(onNotesDockTriggered()));
     connect(m_notesDock, SIGNAL(modified()), this, SLOT(onNoteModified()));
 
+    m_subtitlesDock = new SubtitlesDock(this);
+    m_subtitlesDock->hide();
+    m_subtitlesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_9));
+    m_subtitlesDock->setModel(m_timelineDock->subtitlesModel(),
+                              m_timelineDock->subtitlesSelectionModel());
+    ui->menuView->addAction(m_subtitlesDock->toggleViewAction());
+    connect(m_subtitlesDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
+            SLOT(onSubtitlesDockTriggered(bool)));
+    connect(ui->actionSubtitles, SIGNAL(triggered()), this, SLOT(onSubtitlesDockTriggered()));
+    connect(m_subtitlesDock, SIGNAL(seekRequested(int)), SLOT(seekTimeline(int)));
+    connect(m_timelineDock, SIGNAL(positionChanged(int)), m_subtitlesDock,
+            SLOT(onPositionChanged(int)));
+
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
@@ -678,11 +694,13 @@ void MainWindow::setupAndConnectDocks()
     addDockWidget(Qt::LeftDockWidgetArea, m_encodeDock);
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_notesDock);
+    addDockWidget(Qt::LeftDockWidgetArea, m_subtitlesDock);
     splitDockWidget(m_timelineDock, m_markersDock, Qt::Horizontal);
     tabifyDockWidget(m_propertiesDock, m_playlistDock);
     tabifyDockWidget(m_playlistDock, m_filtersDock);
     tabifyDockWidget(m_filtersDock, m_encodeDock);
     tabifyDockWidget(m_encodeDock, m_notesDock);
+    tabifyDockWidget(m_notesDock, m_subtitlesDock);
     splitDockWidget(m_recentDock, findChild<QDockWidget *>("AudioWaveformDock"), Qt::Vertical);
     splitDockWidget(audioMeterDock, m_recentDock, Qt::Horizontal);
     tabifyDockWidget(m_recentDock, m_historyDock);
@@ -3010,6 +3028,14 @@ void MainWindow::onNotesDockTriggered(bool checked)
     if (checked) {
         m_notesDock->show();
         m_notesDock->raise();
+    }
+}
+
+void MainWindow::onSubtitlesDockTriggered(bool checked)
+{
+    if (checked) {
+        m_subtitlesDock->show();
+        m_subtitlesDock->raise();
     }
 }
 

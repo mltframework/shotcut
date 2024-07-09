@@ -61,6 +61,7 @@ public:
         needsGPUMaskBit = 1 << 4,
         linkMaskBit = 1 << 5,
         trackOnlyMaskBit = 1 << 6,
+        outputOnlyMaskBit = 1 << 7,
     };
 
     explicit MetadataModel(QObject *parent = 0);
@@ -86,7 +87,8 @@ public:
     }
     void setSearch(const QString &search);
     Q_INVOKABLE bool isVisible(int row) const;
-    void updateFilterMask(bool isClipProducer, bool isChainProducer, bool isTrackProducer);
+    void updateFilterMask(bool isClipProducer, bool isChainProducer, bool isTrackProducer,
+                          bool isOutputProducer);
     Q_INVOKABLE void saveFilterSet(const QString &name);
     Q_INVOKABLE void deleteFilterSet(const QString &name);
 
@@ -101,6 +103,7 @@ private:
     bool m_isClipProducer;
     bool m_isChainProducer;
     bool m_isTrackProducer;
+    bool m_isOutputProducer;
     QString m_search;
     unsigned m_filterMask;
 

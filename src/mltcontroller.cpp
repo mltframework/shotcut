@@ -1067,7 +1067,7 @@ Producer *Controller::setupNewProducer(Producer *newProducer) const
             int i = 0;
             QScopedPointer<Mlt::Filter> filter(newProducer->filter(i));
             while (filter && filter->is_valid()) {
-                if (!filter->get_int("_loader")) {
+                if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)) {
                     newProducer->detach(*filter);
                     chain->Service::attach(*filter);
                 } else {
@@ -1114,6 +1114,7 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
     for (int i = 0; i < count; i++) {
         QScopedPointer<Mlt::Filter> fromFilter(fromProducer.filter(i));
         if (fromFilter && fromFilter->is_valid() && !fromFilter->get_int("_loader")
+                && !fromFilter->get_int(kShotcutHiddenProperty)
                 && fromFilter->get("mlt_service")
                 && (includeDisabled || !fromFilter->get_int("disable"))) {
 
@@ -1214,7 +1215,7 @@ void Controller::adjustFilters(Producer &producer, int index)
                 // Convert legacy fadeIn filters.
                 filter->set(kShotcutAnimOutProperty, filter->get_length());
             }
-            if (!filter->get_int("_loader")) {
+            if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)) {
                 int filterIn = in;
                 int filterOut = out;
                 if (filter->get(kFilterInProperty))
@@ -1393,7 +1394,8 @@ void Controller::adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta,
                 filter->anim_set("level", -60, filter->get_length() - 1);
             }
             emit MAIN.serviceInChanged(inDelta, filter);
-        } else if (!filter->get_int("_loader") && filter->get_in() <= in) {
+        } else if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)
+                   && filter->get_in() <= in) {
             filter->set_in_and_out(in + inDelta, filter->get_out());
             emit MAIN.serviceInChanged(inDelta, filter);
         }
@@ -1422,7 +1424,8 @@ void Controller::adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta,
                 filter->anim_set("level", -60, filter->get_length() - 1);
             }
             emit MAIN.serviceOutChanged(outDelta, filter);
-        } else if (!filter->get_int("_loader")  && filter->get_out() >= out) {
+        } else if (!filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)
+                   && filter->get_out() >= out) {
             filter->set_in_and_out(filter->get_in(), out - outDelta);
             emit MAIN.serviceOutChanged(outDelta, filter);
 

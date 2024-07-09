@@ -25,6 +25,8 @@
 #include <QDateTime>
 #include "models/markersmodel.h"
 #include "models/multitrackmodel.h"
+#include "models/subtitlesmodel.h"
+#include "models/subtitlesselectionmodel.h"
 #include "sharedframe.h"
 #include "jobs/ffmpegjob.h"
 
@@ -62,6 +64,14 @@ public:
     MarkersModel *markersModel()
     {
         return & m_markersModel;
+    }
+    SubtitlesModel *subtitlesModel()
+    {
+        return & m_subtitlesModel;
+    }
+    SubtitlesSelectionModel *subtitlesSelectionModel()
+    {
+        return & m_subtitlesSelectionModel;
     }
     int position() const
     {
@@ -125,7 +135,7 @@ signals:
     void currentTrackChanged();
     void selectionChanged();
     void seeked(int position);
-    void positionChanged();
+    void positionChanged(int position);
     void loopChanged();
     void clipOpened(Mlt::Producer *producer);
     void dragging(const QPointF &pos, int duration);
@@ -250,6 +260,8 @@ private:
     QQuickWidget m_quickView;
     MultitrackModel m_model;
     MarkersModel m_markersModel;
+    SubtitlesModel m_subtitlesModel;
+    SubtitlesSelectionModel m_subtitlesSelectionModel;
     int m_position;
     std::unique_ptr<Timeline::UpdateCommand> m_updateCommand;
     bool m_ignoreNextPositionChange;
@@ -285,7 +297,7 @@ private slots:
     void onTransitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
     void selectClip(int trackIndex, int clipIndex);
     void onMultitrackClosed();
-    void reloadTimelineMarkers();
+    void reloadTimelineModels();
     void onRecordStarted();
     void updateRecording();
     void onRecordFinished(AbstractJob *, bool);
