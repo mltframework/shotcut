@@ -48,7 +48,6 @@ public:
 
     struct SubtitleTrack {
         QString name;
-        QString path;
         QString lang;
     };
 
