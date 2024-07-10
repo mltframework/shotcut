@@ -427,7 +427,7 @@ void SubtitlesDock::importSubtitles()
         MAIN.showStatusMessage(tr("Unable to find srt file."));
         return;
     }
-
+    ensureTrackExists();
     m_model->importSubtitles(srtPath, m_trackCombo->currentIndex(), positionToMs(m_pos));
 }
 
@@ -479,6 +479,7 @@ void SubtitlesDock::refreshTracksCombo()
 void SubtitlesDock::onCreateOrEditRequested()
 {
     LOG_DEBUG();
+    ensureTrackExists();
     int64_t msTime = positionToMs(m_pos);
     int trackIndex = m_trackCombo->currentIndex();
     int currentItemIndex = m_model->itemIndexAtTime(trackIndex, msTime);
@@ -494,6 +495,7 @@ void SubtitlesDock::onCreateOrEditRequested()
 void SubtitlesDock::onAddRequested()
 {
     LOG_DEBUG();
+    ensureTrackExists();
     int64_t msTime = positionToMs(m_pos);
     int trackIndex = m_trackCombo->currentIndex();
     if (m_model->itemIndexAtTime(trackIndex, msTime) >= 0) {
@@ -761,25 +763,26 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["subtitleRemoveTrackAction"]->setEnabled(false);
         Actions["SubtitleImportAction"]->setEnabled(false);
         Actions["SubtitleExportAction"]->setEnabled(false);
+        Actions["subtitleCreateEditItemAction"]->setEnabled(false);
         Actions["subtitleAddItemAction"]->setEnabled(false);
         Actions["subtitleRemoveItemAction"]->setEnabled(false);
         Actions["subtitleSetStartAction"]->setEnabled(false);
         Actions["subtitleSetEndAction"]->setEnabled(false);
     } else {
+        Actions["subtitleCreateEditItemAction"]->setEnabled(true);
         Actions["subtitleAddTrackAction"]->setEnabled(true);
+        Actions["SubtitleImportAction"]->setEnabled(true);
+        Actions["subtitleAddItemAction"]->setEnabled(true);
         if (m_model->trackCount() == 0) {
             Actions["subtitleRemoveTrackAction"]->setEnabled(false);
-            Actions["SubtitleImportAction"]->setEnabled(false);
             Actions["SubtitleExportAction"]->setEnabled(false);
-            Actions["subtitleAddItemAction"]->setEnabled(false);
             Actions["subtitleRemoveItemAction"]->setEnabled(false);
             Actions["subtitleSetStartAction"]->setEnabled(false);
             Actions["subtitleSetEndAction"]->setEnabled(false);
         } else {
             Actions["subtitleRemoveTrackAction"]->setEnabled(true);
-            Actions["SubtitleImportAction"]->setEnabled(true);
             Actions["SubtitleExportAction"]->setEnabled(true);
-            Actions["subtitleAddItemAction"]->setEnabled(true);
+
             if (m_selectionModel->selectedRows().size() == 1) {
                 Actions["subtitleSetStartAction"]->setEnabled(true);
                 Actions["subtitleSetEndAction"]->setEnabled(true);
@@ -836,4 +839,14 @@ bool SubtitlesDock::trackNameExists(const QString &name)
         }
     }
     return false;
+}
+
+bool SubtitlesDock::ensureTrackExists()
+{
+    if (m_model->trackCount() == 0) {
+        SubtitlesModel::SubtitleTrack track;
+        track.name = tr("Subtitle Track %1").arg(1);
+        track.lang = QLocale::languageToCode(QLocale::system().language(), QLocale::ISO639Part2);
+        m_model->addTrack(track);
+    }
 }
