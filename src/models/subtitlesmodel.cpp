@@ -269,7 +269,7 @@ int SubtitlesModel::itemIndexBeforeTime(int trackIndex, int64_t msTime) const
     }
     if (ret == -1 && m_items[trackIndex].size() > 0
             && m_items[trackIndex][itemCount - 1].end < msTime) {
-        ret == itemCount - 1;
+        ret = itemCount - 1;
     }
     return ret;
 }
