@@ -841,7 +841,7 @@ bool SubtitlesDock::trackNameExists(const QString &name)
     return false;
 }
 
-bool SubtitlesDock::ensureTrackExists()
+void SubtitlesDock::ensureTrackExists()
 {
     if (m_model->trackCount() == 0) {
         SubtitlesModel::SubtitleTrack track;

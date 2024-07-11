@@ -74,7 +74,7 @@ private:
     void refreshWidgets();
     void selectItemForTime();
     bool trackNameExists(const QString &name);
-    bool ensureTrackExists();
+    void ensureTrackExists();
 
     SubtitlesModel *m_model;
     SubtitlesSelectionModel *m_selectionModel;
