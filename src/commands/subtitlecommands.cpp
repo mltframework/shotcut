@@ -151,37 +151,6 @@ void RemoveSubtitlesCommand::undo()
     }
 }
 
-ImportSubtitlesCommand::ImportSubtitlesCommand(SubtitlesModel &model, const QString &filePath,
-                                               int trackIndex, int64_t msTime)
-    : OverwriteSubtitlesCommand(model, trackIndex, importSubtitles(filePath, msTime))
-{
-    setText(QObject::tr("Import subtitles: %1").arg(QFileInfo(filePath).fileName()));
-}
-
-QList<Subtitles::SubtitleItem> ImportSubtitlesCommand::importSubtitles(const QString &filePath,
-                                                                       int64_t msTime)
-{
-    // Read the subtitles
-    Subtitles::SubtitleVector srtItems = Subtitles::readFromSrtFile(filePath.toUtf8().toStdString());
-    auto importSubtitles = QList(srtItems.cbegin(), srtItems.cend());
-    // Shift the subtitles to the position
-    for (int i = 0; i < importSubtitles.size(); i++) {
-        importSubtitles[i].start += msTime;
-        importSubtitles[i].end += msTime;
-    }
-    return importSubtitles;
-}
-
-void ImportSubtitlesCommand::redo()
-{
-    OverwriteSubtitlesCommand::redo();
-    if (m_newSubtitles.size() > 0) {
-        MAIN.showStatusMessage(QObject::tr("Imported %1 subtitle items").arg(m_newSubtitles.size()));
-    } else {
-        MAIN.showStatusMessage(QObject::tr("No subtitles found to import"));
-    }
-}
-
 SetTextCommand::SetTextCommand(SubtitlesModel &model, int trackIndex, int itemIndex,
                                const QString &text)
     : QUndoCommand(0)

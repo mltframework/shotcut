@@ -76,7 +76,7 @@ public:
     int itemIndexBeforeTime(int trackIndex, int64_t msTime) const;
     int itemIndexAfterTime(int trackIndex, int64_t msTime) const;
     const Subtitles::SubtitleItem &getItem(int trackIndex, int itemIndex) const;
-    void importSubtitles(const QString &filePath, int trackIndex, int64_t msTime);
+    void importSubtitles(int trackIndex, int64_t msTime, QList<Subtitles::SubtitleItem> &items);
     void exportSubtitles(const QString &filePath, int trackIndex) const;
     void overwriteItem(int trackIndex, const Subtitles::SubtitleItem &item);
     void appendItem(int trackIndex, const Subtitles::SubtitleItem &item);

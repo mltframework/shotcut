@@ -83,16 +83,6 @@ private:
     QList<Subtitles::SubtitleItem> m_items;
 };
 
-class ImportSubtitlesCommand : public OverwriteSubtitlesCommand
-{
-public:
-    ImportSubtitlesCommand(SubtitlesModel &model, const QString &filePath, int trackIndex,
-                           int64_t msTime);
-    void redo();
-private:
-    static QList<Subtitles::SubtitleItem> importSubtitles(const QString &filePath, int64_t msTime);
-};
-
 class SetTextCommand : public QUndoCommand
 {
 public:

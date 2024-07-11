@@ -427,8 +427,23 @@ void SubtitlesDock::importSubtitles()
         MAIN.showStatusMessage(tr("Unable to find srt file."));
         return;
     }
+
+    // Read the subtitles
+    Subtitles::SubtitleVector srtItems = Subtitles::readFromSrtFile(srtPath.toUtf8().toStdString());
+    if (srtItems.size() == 0) {
+        MAIN.showStatusMessage(QObject::tr("No subtitles found to import"));
+        return;
+    }
+    QList<Subtitles::SubtitleItem> items = QList(srtItems.cbegin(), srtItems.cend());
+    int64_t msTime = positionToMs(m_pos);
+    // Shift the subtitles to the position
+    for (int i = 0; i < items.size(); i++) {
+        items[i].start += msTime;
+        items[i].end += msTime;
+    }
     ensureTrackExists();
-    m_model->importSubtitles(srtPath, m_trackCombo->currentIndex(), positionToMs(m_pos));
+    m_model->importSubtitles(m_trackCombo->currentIndex(), msTime, items);
+    MAIN.showStatusMessage(QObject::tr("Imported %1 subtitle items").arg(items.size()));
 }
 
 void SubtitlesDock::exportSubtitles()
