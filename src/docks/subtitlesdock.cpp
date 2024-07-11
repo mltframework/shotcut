@@ -40,6 +40,7 @@
 #include <QLineEdit>
 #include <QMenu>
 #include <QMessageBox>
+#include <QTextDocumentFragment>
 #include <QTextEdit>
 #include <QTreeView>
 #include <QToolButton>
@@ -436,10 +437,20 @@ void SubtitlesDock::importSubtitles()
     }
     QList<Subtitles::SubtitleItem> items = QList(srtItems.cbegin(), srtItems.cend());
     int64_t msTime = positionToMs(m_pos);
-    // Shift the subtitles to the position
     for (int i = 0; i < items.size(); i++) {
+        // Shift the subtitles to the position
         items[i].start += msTime;
         items[i].end += msTime;
+        // Strip out HTML
+        QStringList lines = QString::fromStdString(items[i].text).split('\n');
+        QString text;
+        for (int i = 0; i < lines.size(); i++) {
+            if (i != 0) {
+                text += "\n";
+            }
+            text += QTextDocumentFragment::fromHtml(lines[i]).toPlainText();
+        }
+        items[i].text = text.toUtf8().toStdString();
     }
     ensureTrackExists();
     m_model->importSubtitles(m_trackCombo->currentIndex(), msTime, items);
