@@ -1173,7 +1173,7 @@ function deploy
   if [ "$SDK" = "1" ]; then
     cmd mv bin/*.exe .
     # OpenCV installs binaries to a weird place
-    cmd cp x64/mingw/bin/*.dll .
+    cmd mv {x64,x86}/mingw/bin/*.dll .
   else
     cmd mv bin/ffmpeg.exe .
     cmd mv bin/ffplay.exe .
