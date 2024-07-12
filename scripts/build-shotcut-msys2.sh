@@ -1227,7 +1227,7 @@ function deploy
     cmd cp -p /${TARGET_ARCH}/bin/{libjasper.dll,libjpeg-8.dll,libmng-2.dll,liblcms2-2.dll,libtiff-6.dll,libjbig-0.dll,libdeflate.dll,libLerc.dll,libunwind.dll,libwebpdemux-2.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libxml2-2.dll,libomp.dll,libebur128.dll,libsamplerate-0.dll,librubberband-2.dll,libsox-3.dll,libopencore-amrnb-0.dll,libvo-amrwbenc-0.dll,libFLAC.dll,libltdl-7.dll,libgsm.dll,libmad-0.dll,libao-4.dll,libid3tag-0.dll,libtwolame-0.dll,libvorbisfile-3.dll,libwavpack-1.dll,libsndfile-1.dll,libopencore-amrwb-0.dll,libmpg123-0.dll,libopusfile-0.dll,libmysofa.dll,libvidstab.dll,libcairo-2.dll,libfontconfig-1.dll,libpixman-1-0.dll,libcairo-2.dll,libpixman-1-0.dll,libfontconfig-1.dll,libexpat-1.dll,liblz4.dll,libfftw3f-3.dll} .
   fi
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
-    cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .
+    [ "$TARGET_ARCH" != "clangarm64" ] && cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .
     cmd cp -p /${TARGET_ARCH}/bin/libfftw3*.dll bin/
     cmd cp -p /${TARGET_ARCH}/lib/libfftw3*.a lib/
     cmd cp -p /${TARGET_ARCH}/include/fftw3* include/

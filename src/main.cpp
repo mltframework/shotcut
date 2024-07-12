@@ -36,7 +36,7 @@
 
 #ifdef Q_OS_WIN
 #include <windows.h>
-#ifdef QT_DEBUG
+#if defined(QT_DEBUG) && !defined(__ARM_ARCH)
 #   include <exchndl.h>
 #endif
 extern "C"
@@ -304,7 +304,7 @@ protected:
 
 int main(int argc, char **argv)
 {
-#if defined(Q_OS_WIN) && defined(QT_DEBUG)
+#if defined(Q_OS_WIN) && defined(QT_DEBUG) && !defined(__ARM_ARCH)
     ExcHndlInit();
 #endif
 #ifndef QT_DEBUG
