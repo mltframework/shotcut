@@ -86,6 +86,9 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     QVBoxLayout *vboxLayout = new QVBoxLayout();
     scrollArea->setLayout(vboxLayout);
 
+    m_addToTimelineLabel = new QLabel(tr("Add clips to the Timeline to begin editing subtitles."));
+    vboxLayout->addWidget(m_addToTimelineLabel);
+
     QHBoxLayout *tracksLayout = new QHBoxLayout();
     m_trackCombo = new QComboBox();
     connect(m_trackCombo, &QComboBox::currentIndexChanged, this, [&](int trackIndex) {
@@ -815,6 +818,7 @@ void SubtitlesDock::updateActionAvailablity()
 {
     if (!m_model || !m_model->isValid()) {
         // Disable all actions
+        m_addToTimelineLabel->setVisible(true);
         Actions["subtitleAddTrackAction"]->setEnabled(false);
         Actions["subtitleRemoveTrackAction"]->setEnabled(false);
         Actions["SubtitleImportAction"]->setEnabled(false);
@@ -825,6 +829,7 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["subtitleSetStartAction"]->setEnabled(false);
         Actions["subtitleSetEndAction"]->setEnabled(false);
     } else {
+        m_addToTimelineLabel->setVisible(false);
         Actions["subtitleCreateEditItemAction"]->setEnabled(true);
         Actions["subtitleAddTrackAction"]->setEnabled(true);
         Actions["SubtitleImportAction"]->setEnabled(true);

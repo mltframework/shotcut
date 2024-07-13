@@ -78,6 +78,7 @@ private:
 
     SubtitlesModel *m_model;
     SubtitlesSelectionModel *m_selectionModel;
+    QLabel *m_addToTimelineLabel;
     QComboBox *m_trackCombo;
     QTreeView *m_treeView;
     QTextEdit *m_text;
