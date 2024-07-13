@@ -28,6 +28,7 @@
 #include <Logger.h>
 
 #include <QAction>
+#include <QApplication>
 #include <QComboBox>
 #include <QDebug>
 #include <QGridLayout>
@@ -40,6 +41,8 @@
 #include <QLineEdit>
 #include <QMenu>
 #include <QMessageBox>
+#include <QProcess>
+#include <QStandardPaths>
 #include <QTextDocumentFragment>
 #include <QTextEdit>
 #include <QTreeView>
@@ -418,19 +421,46 @@ void SubtitlesDock::removeSubtitleTrack()
 
 void SubtitlesDock::importSubtitles()
 {
-    QString srtPath = QFileDialog::getOpenFileName(&MAIN, tr("Import SRT File"), Settings.openPath(),
-                                                   tr("SRT Files (*.srt *.SRT)"),
-                                                   nullptr, Util::getFileDialogOptions());
-    if (srtPath.isEmpty()) {
+    // Get the file name from the user.
+    QString subtitlePath = QFileDialog::getOpenFileName(&MAIN, tr("Import Subtitle File"),
+                                                        Settings.openPath(),
+                                                        tr("Subtitle Files (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)"),
+                                                        nullptr, Util::getFileDialogOptions());
+    if (subtitlePath.isEmpty()) {
         return;
     }
-    if (!QFileInfo(srtPath).exists()) {
-        MAIN.showStatusMessage(tr("Unable to find srt file."));
+    QFileInfo subtitleFi(subtitlePath);
+    if (!subtitleFi.exists()) {
+        MAIN.showStatusMessage(tr("Unable to find subtitle file."));
         return;
     }
 
+    MAIN.showStatusMessage(QObject::tr("Importing subtitles..."));
+
+    // Convert the subtitles to SRT using FFMpeg
+    QString tmpLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/";
+    QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(tmpLocation, "XXXXXX.srt"));
+    tmp->open();
+    QString tmpFileName = tmp->fileName();
+    tmp->close();
+    QProcess proc;
+    QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
+    QStringList args;
+    args << "-y" << "-hide_banner" << "-i" << subtitleFi.absoluteFilePath() << tmpFileName;
+    LOG_INFO() << ffmpegPath.absoluteFilePath() << args;
+    MAIN.showStatusMessage(QObject::tr("Importing subtitles..."));
+    proc.setStandardOutputFile(QProcess::nullDevice());
+    proc.setReadChannel(QProcess::StandardError);
+    proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
+    QCoreApplication::processEvents();
+    if (!proc.waitForFinished(8000) || proc.exitStatus() != QProcess::NormalExit || proc.exitCode()) {
+        QString output = proc.readAll();
+        foreach (const QString &line, output.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts))
+            LOG_INFO() << line;
+    }
+
     // Read the subtitles
-    Subtitles::SubtitleVector srtItems = Subtitles::readFromSrtFile(srtPath.toUtf8().toStdString());
+    Subtitles::SubtitleVector srtItems = Subtitles::readFromSrtFile(tmpFileName.toUtf8().toStdString());
     if (srtItems.size() == 0) {
         MAIN.showStatusMessage(QObject::tr("No subtitles found to import"));
         return;
