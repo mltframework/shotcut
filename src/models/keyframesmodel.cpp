@@ -594,7 +594,24 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 emit keyframeAdded(name, position);
             }
             m_filter->endUndoCommand();
-        } else if (parameter->isCurve()) {
+        } else if (parameter->isColor()) {
+            m_filter->startUndoAddKeyframeCommand();
+            // Color values
+            auto value = m_filter->getColor(name, position);
+            Mlt::Animation anim = m_filter->getAnimation(name);
+            if (anim.is_valid() && !anim.is_key(position)) {
+                mlt_keyframe_type keyframeType = m_filter->getKeyframeType(anim, position, mlt_keyframe_type(-1));
+                m_filter->blockSignals(true);
+                m_filter->set(name, value, position, keyframeType);
+                for (auto &key : parameter->gangedProperties()) {
+                    value = m_filter->get(key, position);
+                    m_filter->set(key, value, position, keyframeType);
+                }
+                m_filter->blockSignals(false);
+            }
+            emit keyframeAdded(name, position);
+            m_filter->endUndoCommand();
+        } else {
             m_filter->startUndoAddKeyframeCommand();
             // Get the value from the existing position.
             double value = m_filter->getDouble(name, position);
@@ -620,23 +637,6 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 emit keyframeAdded(name, position);
                 m_filter->endUndoCommand();
             }
-        } else if (parameter->isColor()) {
-            m_filter->startUndoAddKeyframeCommand();
-            // Color values
-            auto value = m_filter->getColor(name, position);
-            Mlt::Animation anim = m_filter->getAnimation(name);
-            if (anim.is_valid() && !anim.is_key(position)) {
-                mlt_keyframe_type keyframeType = m_filter->getKeyframeType(anim, position, mlt_keyframe_type(-1));
-                m_filter->blockSignals(true);
-                m_filter->set(name, value, position, keyframeType);
-                for (auto &key : parameter->gangedProperties()) {
-                    value = m_filter->get(key, position);
-                    m_filter->set(key, value, position, keyframeType);
-                }
-                m_filter->blockSignals(false);
-            }
-            emit keyframeAdded(name, position);
-            m_filter->endUndoCommand();
         }
         onFilterChanged(name);
     }
