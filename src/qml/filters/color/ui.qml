@@ -166,14 +166,14 @@ Item {
             Layout.alignment: Qt.AlignLeft
             onToggled: {
                 filter.startUndoParameterCommand(liftLabel.text);
+                filter.resetProperty('lift_r');
+                filter.resetProperty('lift_g');
+                filter.resetProperty('lift_b');
                 if (checked) {
                     filter.set('lift_r', liftwheel.redF * 2 - 1, getPosition());
                     filter.set('lift_g', liftwheel.greenF * 2 - 1, getPosition());
                     filter.set('lift_b', liftwheel.blueF * 2 - 1, getPosition());
                 } else {
-                    filter.resetProperty('lift_r');
-                    filter.resetProperty('lift_g');
-                    filter.resetProperty('lift_b');
                     filter.set('lift_r', liftwheel.redF * 2 - 1);
                     filter.set('lift_g', liftwheel.greenF * 2 - 1);
                     filter.set('lift_b', liftwheel.blueF * 2 - 1);
@@ -204,14 +204,14 @@ Item {
             Layout.alignment: Qt.AlignLeft
             onToggled: {
                 filter.startUndoParameterCommand(gammaLabel.text);
+                filter.resetProperty('gamma_r');
+                filter.resetProperty('gamma_g');
+                filter.resetProperty('gamma_b');
                 if (checked) {
                     filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, gammaFactor), getPosition());
                     filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor), getPosition());
                     filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, gammaFactor), getPosition());
                 } else {
-                    filter.resetProperty('gamma_r');
-                    filter.resetProperty('gamma_g');
-                    filter.resetProperty('gamma_b');
                     filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, gammaFactor));
                     filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor));
                     filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, gammaFactor));
@@ -242,14 +242,14 @@ Item {
             Layout.alignment: Qt.AlignLeft
             onToggled: {
                 filter.startUndoParameterCommand(gainLabel.text);
+                filter.resetProperty('gain_r');
+                filter.resetProperty('gain_g');
+                filter.resetProperty('gain_b');
                 if (checked) {
                     filter.set('gain_r', scaleWheelToValue(gainwheel.redF, gainFactor), getPosition());
                     filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor), getPosition());
                     filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, gainFactor), getPosition());
                 } else {
-                    filter.resetProperty('gain_r');
-                    filter.resetProperty('gain_g');
-                    filter.resetProperty('gain_b');
                     filter.set('gain_r', scaleWheelToValue(gainwheel.redF, gainFactor));
                     filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor));
                     filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, gainFactor));
