@@ -343,6 +343,12 @@ int main(int argc, char **argv)
         qputenv("QT_MEDIA_BACKEND", "windows");
     if (!qEnvironmentVariableIsSet("QT_QPA_PLATFORM"))
         qputenv("QT_QPA_PLATFORM", "windows:altgr");
+
+    // The modern Windows style adopted in Qt 6.7 changes spinboxes to have
+    // larger arrow buttons side-by-side thus making the numeric area
+    // smaller and incompatible with every other combination of style and OS.
+    if (!qEnvironmentVariableIsSet("QT_STYLE_OVERRIDE"))
+        qputenv("QT_STYLE_OVERRIDE", "windowsvista");
 #else
         ;
 #endif
