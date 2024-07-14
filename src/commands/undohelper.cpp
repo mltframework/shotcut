@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2023 Meltytech, LLC
+ * Copyright (c) 2015-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -335,7 +335,7 @@ void UndoHelper::debugPrintState(const QString &title)
 void UndoHelper::restoreAffectedTracks()
 {
     // Remove everything in the affected tracks.
-    for (const auto &trackIndex : qAsConst(m_affectedTracks)) {
+    for (const auto &trackIndex : std::as_const(m_affectedTracks)) {
         if (trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
             auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
             QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
@@ -349,7 +349,7 @@ void UndoHelper::restoreAffectedTracks()
         }
     }
 
-    for (const auto &uid : qAsConst(m_insertedOrder)) {
+    for (const auto &uid : std::as_const(m_insertedOrder)) {
         const Info &info = m_state[uid];
         if (m_affectedTracks.contains(info.oldTrackIndex)) {
             UNDOLOG << "Handling uid" << uid << "on track" << info.oldTrackIndex << "index" <<
@@ -391,7 +391,7 @@ void UndoHelper::restoreAffectedTracks()
             AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
         }
     }
-    for (const auto &trackIndex : qAsConst(m_affectedTracks)) {
+    for (const auto &trackIndex : std::as_const(m_affectedTracks)) {
         if (trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
             auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
             QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
