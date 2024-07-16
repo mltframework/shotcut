@@ -1145,10 +1145,12 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip, bool seek, 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
+        qDebug() << playlist.count() << "Before blank remove";
         removeBlankPlaceholder(playlist, trackIndex);
         i = playlist.count();
         int in = clip.get_in();
         int out = clip.get_out();
+        qDebug() << playlist.count() << clip.get_length() - 1 << clip.is_blank();
         clip.set_in_and_out(0, clip.get_length() - 1);
         beginInsertRows(index(trackIndex), i, i);
         playlist.append(clip.parent(), in, out);
@@ -3724,9 +3726,13 @@ Mlt::Filter *MultitrackModel::getFilter(const QString &name, Mlt::Service *servi
 void MultitrackModel::removeBlankPlaceholder(Mlt::Playlist &playlist, int trackIndex)
 {
     if (playlist.count() == 1 && playlist.is_blank(0)) {
-        beginRemoveRows(index(trackIndex), 0, 0);
-        playlist.remove(0);
-        endRemoveRows();
-        checkForEmptyTracks(trackIndex);
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(0));
+        if (info->frame_count == 1) {
+            qDebug() << "REMOVE PLACEHOLDER";
+            beginRemoveRows(index(trackIndex), 0, 0);
+            playlist.remove(0);
+            endRemoveRows();
+            checkForEmptyTracks(trackIndex);
+        }
     }
 }

@@ -190,7 +190,7 @@ public slots:
     bool trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple);
     void insert(int trackIndex, int position = -1, const QString &xml = QString(), bool seek = true);
     void overwrite(int trackIndex, int position = -1, const QString &xml = QString(), bool seek = true);
-    void appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy);
+    void appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy, bool emptyTrack);
     void fadeIn(int trackIndex, int clipIndex = -1, int duration = -1);
     void fadeOut(int trackIndex, int clipIndex = -1, int duration = -1);
     void seekPreviousEdit();

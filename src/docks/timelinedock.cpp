@@ -3375,12 +3375,25 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
     }
 }
 
-void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
+void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy, bool emptyTrack)
 {
     int trackIndex = currentTrack();
+    if (trackIndex >= 0 && emptyTrack) {
+        if (trackIndex < m_model.trackList().size()) {
+            int i = m_model.trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(i));
+            if (producer) {
+                Mlt::Playlist track(*producer);
+                if (!(track.count() == 1 && track.is_blank(0))) {
+                    trackIndex = addVideoTrack();
+                }
+            }
+        }
+    }
     if (trackIndex < 0) {
         trackIndex = 0;
     }
+
     if (isTrackLocked(trackIndex)) {
         emit warnTrackLocked(trackIndex);
         return;

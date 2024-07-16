@@ -51,7 +51,7 @@ signals:
     void clipOpened(Mlt::Producer *producer, bool play = false);
     void itemActivated(int start);
     void showStatusMessage(QString);
-    void addAllTimeline(Mlt::Playlist *, bool skipProxy = false);
+    void addAllTimeline(Mlt::Playlist *, bool skipProxy = false, bool emptyTrack = false);
     void producerOpened();
     void selectionChanged();
     void enableUpdate(bool);

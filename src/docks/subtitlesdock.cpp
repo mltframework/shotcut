@@ -20,6 +20,7 @@
 #include "actions.h"
 #include "mainwindow.h"
 #include "settings.h"
+#include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "dialogs/subtitletrackdialog.h"
 #include "models/subtitlesmodel.h"
@@ -27,10 +28,11 @@
 #include "widgets/docktoolbar.h"
 #include <Logger.h>
 
+#include "MltPlaylist.h"
+
 #include <QAction>
 #include <QApplication>
 #include <QComboBox>
-#include <QDebug>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QHeaderView>
@@ -125,6 +127,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     mainMenu->addAction(Actions["subtitleSetStartAction"]);
     mainMenu->addAction(Actions["subtitleSetEndAction"]);
     mainMenu->addAction(Actions["subtitleMoveAction"]);
+    mainMenu->addAction(Actions["subtitleGenerateTextAction"]);
     mainMenu->addAction(Actions["subtitleTrackTimelineAction"]);
     mainMenu->addAction(Actions["subtitleShowPrevNextAction"]);
 
@@ -319,6 +322,12 @@ void SubtitlesDock::setupActions()
     action->setToolTip(tr("Move the selected subtitles to the cursor position"));
     connect(action, &QAction::triggered, this, &SubtitlesDock::onMoveRequested);
     Actions.add("subtitleMoveAction", action, windowTitle());
+
+    action = new QAction(tr("Generate Text on Timeline"), this);
+    action->setToolTip(
+        tr("Create a new video track on the timeline with text showing these subtitles."));
+    connect(action, &QAction::triggered, this, &SubtitlesDock::generateTextOnTimeline);
+    Actions.add("subtitleGenerateTextAction", action, windowTitle());
 
     action = new QAction(tr("Track Timeline Cursor"), this);
     action->setToolTip(tr("Track the timeline cursor"));
@@ -910,4 +919,53 @@ void SubtitlesDock::ensureTrackExists()
         track.lang = QLocale::languageToCode(QLocale::system().language(), QLocale::ISO639Part2);
         m_model->addTrack(track);
     }
+}
+
+void SubtitlesDock::generateTextOnTimeline()
+{
+    int trackIndex = m_trackCombo->currentIndex();
+    int itemCount = m_model->itemCount(trackIndex);
+    if (itemCount == 0) {
+        return;
+    }
+    Mlt::Playlist playlist(MLT.profile());
+    int lastItemFrameEnd = 0;
+    for (int itemIndex = 0; itemIndex < itemCount; itemIndex++) {
+        auto item = m_model->getItem(trackIndex, itemIndex);
+        int frameStart = msToPosition(item.start);
+        int frameEnd = msToPosition(item.end);
+        // Create a transparent color producer
+        Mlt::Producer producer(MLT.profile(), "color:");
+        producer.set("resource", "#00000000");
+        producer.set("mlt_image_format", "rgba");
+        producer.set("in", 0);
+        producer.set("out", frameEnd - frameStart);
+        producer.set("length", producer.frames_to_time(frameEnd - frameStart + 1, mlt_time_clock));
+        // Add a text filter
+        Mlt::Filter filter(MLT.profile(), "dynamictext");
+        filter.set(kShotcutFilterProperty, "dynamicText");
+        filter.set("argument", item.text.c_str());
+#ifdef Q_OS_WIN
+        filter.set("family", "Verdana");
+#endif
+        filter.set("fgcolour", "#ffffffff");
+        filter.set("bgcolour", "#00000000");
+        filter.set("olcolour", "#aa000000");
+        filter.set("outline", 3);
+        filter.set("weight", QFont::Bold);
+        filter.set("style", "normal");
+        filter.set("shotcut:usePointSize", 1);
+        filter.set("size", MLT.profile().height() / 20);
+        filter.set("geometry", "20%/75%:60%x20%");
+        filter.set("valign", "bottom");
+        filter.set("halign", "center");
+        filter.set_in_and_out(producer.get_in(), producer.get_out());
+        producer.attach(filter);
+        if (lastItemFrameEnd < (frameStart - 1)) {
+            playlist.blank(frameStart - lastItemFrameEnd - 1);
+        }
+        playlist.append(producer, 0, frameEnd - frameStart - 1);
+        lastItemFrameEnd = frameEnd;
+    }
+    emit addAllTimeline(&playlist, true, true);
 }

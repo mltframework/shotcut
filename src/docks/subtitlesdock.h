@@ -18,6 +18,8 @@
 #ifndef SUBTITLESDOCK_H
 #define SUBTITLESDOCK_H
 
+#include "MltPlaylist.h"
+
 #include <QDockWidget>
 
 class SubtitlesModel;
@@ -41,6 +43,7 @@ public:
 
 signals:
     void seekRequested(int pos);
+    void addAllTimeline(Mlt::Playlist *, bool skipProxy, bool emptyTrack);
 
 private slots:
     void onPositionChanged(int position);
@@ -75,6 +78,7 @@ private:
     void selectItemForTime();
     bool trackNameExists(const QString &name);
     void ensureTrackExists();
+    void generateTextOnTimeline();
 
     SubtitlesModel *m_model;
     SubtitlesSelectionModel *m_selectionModel;
