@@ -57,17 +57,17 @@
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="230"/>
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Ação</translation>
     </message>
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="232"/>
         <source>Shortcut 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Atalho 1</translation>
     </message>
     <message>
         <location filename="../src/models/actionsmodel.cpp" line="234"/>
         <source>Shortcut 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Atalho 2</translation>
     </message>
 </context>
 <context>
@@ -4274,7 +4274,7 @@ do clipe A (0%) ou do B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="60"/>
         <source>Other Versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Outras Versões</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="114"/>
@@ -4284,7 +4284,7 @@ do clipe A (0%) ou do B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="133"/>
         <source>&amp;Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Configurações</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="207"/>
@@ -4589,12 +4589,12 @@ do clipe A (0%) ou do B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="994"/>
         <source>Actions and Shortcuts...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ações e Atalhos...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1077"/>
         <source>Open Other</source>
-        <translation>Abrir  Outro</translation>
+        <translation>Abrir Outro</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1091"/>
@@ -6387,52 +6387,52 @@ Tente novamente com uma pasta diferente.</translation>
     <message>
         <location filename="../src/player.cpp" line="582"/>
         <source>Next Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Próximo Quadro</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="591"/>
         <source>Previous Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Quadro Anterior</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="600"/>
         <source>Forward One Second</source>
-        <translation type="unfinished"></translation>
+        <translation>Avançar Um Segundo</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="608"/>
         <source>Backward One Second</source>
-        <translation type="unfinished"></translation>
+        <translation>Retroceder Um Segundo</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="616"/>
         <source>Forward Two Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Avançar Dois Segundos</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="624"/>
         <source>Backward Two Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Retroceder Dois Segundos</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="632"/>
         <source>Forward Five Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Avançar Cinco Segundos</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="640"/>
         <source>Backward Five Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Retroceder Cinco Segundos</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="648"/>
         <source>Forward Ten Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Avançar Dez Segundos</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="656"/>
         <source>Backward Ten Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Retroceder Dez Segundos</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="664"/>
