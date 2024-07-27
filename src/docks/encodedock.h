@@ -158,6 +158,7 @@ private:
     void loadPresets();
     Mlt::Properties *collectProperties(int realtime, bool includeProfile = false);
     void collectProperties(QDomElement &node, int realtime);
+    void setSubtitleProperties(QDomElement &node, Mlt::Producer *service);
     MeltJob *createMeltJob(Mlt::Producer *service, const QString &target, int realtime, int pass = 0,
                            const QThread::Priority priority = Settings.jobPriority());
     void runMelt(const QString &target, int realtime = -1);

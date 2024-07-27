@@ -1015,6 +1015,24 @@ void EncodeDock::collectProperties(QDomElement &node, int realtime)
     delete p;
 }
 
+void EncodeDock::setSubtitleProperties(QDomElement &node, Mlt::Producer *service)
+{
+    if (!service) {
+        return;
+    }
+    int subIndex = 0;
+    for (int i = 0; i < service->filter_count(); i++) {
+        QScopedPointer<Mlt::Filter> filter(service->filter(i));
+        if (filter  && filter->is_valid() && filter->get("mlt_service") == QString("subtitle_feed")) {
+            QString key = QString("subtitle.%1.feed").arg(subIndex);
+            node.setAttribute(key, filter->get("feed"));
+            key = QString("subtitle.%1.lang").arg(subIndex);
+            node.setAttribute(key, filter->get("lang"));
+            subIndex++;
+        }
+    }
+}
+
 MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target, int realtime,
                                    int pass, const QThread::Priority priority)
 {
@@ -1124,6 +1142,7 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target
             ui->audioCodecCombo->currentIndex() == 0 &&
             (mytarget.endsWith(".mp4") || mytarget.endsWith(".mov")))
         consumerNode.setAttribute("strict", "experimental");
+    setSubtitleProperties(consumerNode, service);
 
     // Add autoclose to playlists.
     QDomNodeList playlists = dom.elementsByTagName("playlist");
