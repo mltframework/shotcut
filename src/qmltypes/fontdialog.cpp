@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  */
 
 #include "fontdialog.h"
-#include "qmlapplication.h"
 
 #include <QFontDialog>
 
@@ -28,7 +27,10 @@ FontDialog::FontDialog(QObject *parent)
 void FontDialog::open()
 {
     QFontDialog dialog(m_font);
-    dialog.setModal(QmlApplication::dialogModality());
+    dialog.setModal(true);
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    dialog.setOption(QFontDialog::DontUseNativeDialog);
+#endif
     if (dialog.exec() == QDialog::Accepted) {
         setSelectedFont(dialog.currentFont());
         emit accepted();
