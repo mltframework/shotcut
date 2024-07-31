@@ -67,6 +67,7 @@ private:
     void updateActionAvailablity();
     void addSubtitleTrack();
     void removeSubtitleTrack();
+    void editSubtitleTrack();
     void refreshTracksCombo();
     void importSubtitles();
     void exportSubtitles();

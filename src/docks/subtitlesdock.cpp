@@ -108,6 +108,10 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     removeTrackButton->setDefaultAction(Actions["subtitleRemoveTrackAction"]);
     removeTrackButton->setAutoRaise(true);
     tracksLayout->addWidget(removeTrackButton);
+    QToolButton *editTrackButton = new QToolButton(this);
+    editTrackButton->setDefaultAction(Actions["subtitleEditTrackAction"]);
+    editTrackButton->setAutoRaise(true);
+    tracksLayout->addWidget(editTrackButton);
 
     vboxLayout->addLayout(tracksLayout);
 
@@ -118,6 +122,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     QMenu *trackMenu = new QMenu("Tracks", this);
     trackMenu->addAction(Actions["subtitleAddTrackAction"]);
     trackMenu->addAction(Actions["subtitleRemoveTrackAction"]);
+    trackMenu->addAction(Actions["subtitleEditTrackAction"]);
     mainMenu->addMenu(trackMenu);
     mainMenu->addAction(Actions["SubtitleImportAction"]);
     mainMenu->addAction(Actions["SubtitleExportAction"]);
@@ -252,6 +257,17 @@ void SubtitlesDock::setupActions()
         removeSubtitleTrack();
     });
     Actions.add("subtitleRemoveTrackAction", action);
+
+    action = new QAction(tr("Edit Subtitle Track"), this);
+    action->setIcon(QIcon::fromTheme("document-edit",
+                                     QIcon(":/icons/oxygen/32x32/actions/document-edit.png")));
+    action->setToolTip(tr("Edit this subtitle track"));
+    connect(action, &QAction::triggered, this, [&]() {
+        show();
+        raise();
+        editSubtitleTrack();
+    });
+    Actions.add("subtitleEditTrackAction", action);
 
     action = new QAction(tr("Import Subtitles From File"), this);
     action->setIcon(QIcon::fromTheme("document-import",
@@ -394,7 +410,9 @@ void SubtitlesDock::addSubtitleTrack()
     while (trackNameExists(suggestedName)) {
         suggestedName = tr("Subtitle Track %1").arg(i++);
     }
-    SubtitleTrackDialog dialog(suggestedName, this);
+    QString currentLangCode = QLocale::languageToCode(QLocale::system().language(),
+                                                      QLocale::ISO639Part2);
+    SubtitleTrackDialog dialog(suggestedName, currentLangCode, this);
     if (dialog.exec() == QDialog::Accepted) {
         SubtitlesModel::SubtitleTrack track;
         track.name = dialog.getName();
@@ -429,6 +447,37 @@ void SubtitlesDock::removeSubtitleTrack()
         }
         m_model->removeTrack(name);
     }
+}
+
+void SubtitlesDock::editSubtitleTrack()
+{
+    if (m_model->trackCount() == 0) {
+        addSubtitleTrack();
+        return;
+    }
+    int currentIndex = m_selectionModel->selectedTrack();
+    SubtitlesModel::SubtitleTrack track = m_model->getTrack(currentIndex);
+    SubtitleTrackDialog dialog(track.name, track.lang, this);
+    if (dialog.exec() == QDialog::Accepted) {
+        QList<SubtitlesModel::SubtitleTrack> tracks = m_model->getTracks();
+        for (int t = 0; t < tracks.count(); t++) {
+            if (t == currentIndex) {
+                if (dialog.getName() == track.name && dialog.getLanguage() == track.lang) {
+                    // Nothing changed
+                    return;
+                }
+            } else {
+                if (dialog.getName() == track.name) {
+                    MAIN.showStatusMessage(tr("Subtitle track already exists: %1").arg(track.name));
+                    return;
+                }
+            }
+        }
+        track.name = dialog.getName();
+        track.lang = dialog.getLanguage();
+        m_model->editTrack(currentIndex, track);
+    }
+    m_trackCombo->setCurrentIndex(currentIndex);
 }
 
 void SubtitlesDock::importSubtitles()
@@ -830,6 +879,7 @@ void SubtitlesDock::updateActionAvailablity()
         m_addToTimelineLabel->setVisible(true);
         Actions["subtitleAddTrackAction"]->setEnabled(false);
         Actions["subtitleRemoveTrackAction"]->setEnabled(false);
+        Actions["subtitleEditTrackAction"]->setEnabled(false);
         Actions["SubtitleImportAction"]->setEnabled(false);
         Actions["SubtitleExportAction"]->setEnabled(false);
         Actions["subtitleCreateEditItemAction"]->setEnabled(false);
@@ -841,6 +891,7 @@ void SubtitlesDock::updateActionAvailablity()
         m_addToTimelineLabel->setVisible(false);
         Actions["subtitleCreateEditItemAction"]->setEnabled(true);
         Actions["subtitleAddTrackAction"]->setEnabled(true);
+        Actions["subtitleEditTrackAction"]->setEnabled(true);
         Actions["SubtitleImportAction"]->setEnabled(true);
         Actions["subtitleAddItemAction"]->setEnabled(true);
         if (m_model->trackCount() == 0) {

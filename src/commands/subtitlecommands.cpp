@@ -70,6 +70,28 @@ void RemoveTrackCommand::undo()
     m_model.doInsertSubtitleItems(m_trackIndex, m_saveSubtitles);
 }
 
+EditTrackCommand::EditTrackCommand(SubtitlesModel &model,
+                                   const SubtitlesModel::SubtitleTrack &track, int index)
+    : QUndoCommand(0)
+    , m_model(model)
+    , m_newTrack(track)
+    , m_index(index)
+{
+    m_oldTrack = m_model.getTrack(index);
+    setText(QObject::tr("Edit subtitle track: %1").arg(m_newTrack.name));
+}
+
+void EditTrackCommand::redo()
+{
+    LOG_DEBUG() << m_oldTrack.name;
+    m_model.doEditTrack(m_newTrack, m_index);
+}
+
+void EditTrackCommand::undo()
+{
+    m_model.doEditTrack(m_oldTrack, m_index);
+}
+
 OverwriteSubtitlesCommand::OverwriteSubtitlesCommand(SubtitlesModel &model, int trackIndex,
                                                      const QList<Subtitles::SubtitleItem> &items)
     : QUndoCommand(0)

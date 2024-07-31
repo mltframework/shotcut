@@ -28,7 +28,7 @@ class SubtitleTrackDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SubtitleTrackDialog(QString &suggestedName, QWidget *parent);
+    explicit SubtitleTrackDialog(const QString &name, const QString &lang, QWidget *parent);
     QString getName();
     QString getLanguage();
 

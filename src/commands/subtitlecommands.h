@@ -55,6 +55,19 @@ private:
     QList<Subtitles::SubtitleItem> m_saveSubtitles;
 };
 
+class EditTrackCommand : public QUndoCommand
+{
+public:
+    EditTrackCommand(SubtitlesModel &model, const SubtitlesModel::SubtitleTrack &track, int index);
+    void redo();
+    void undo();
+private:
+    SubtitlesModel &m_model;
+    SubtitlesModel::SubtitleTrack m_oldTrack;
+    SubtitlesModel::SubtitleTrack m_newTrack;
+    int m_index;
+};
+
 class OverwriteSubtitlesCommand : public QUndoCommand
 {
 public:

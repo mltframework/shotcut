@@ -219,6 +219,16 @@ void SubtitlesModel::removeTrack(QString &name)
     LOG_ERROR() << "Track not found:" << name;
 }
 
+void SubtitlesModel::editTrack(int trackIndex, SubtitlesModel::SubtitleTrack &track)
+{
+    if (!m_producer) {
+        LOG_DEBUG() << "No producer";
+        return;
+    }
+    Subtitles::EditTrackCommand *command = new Subtitles::EditTrackCommand(*this, track, trackIndex);
+    MAIN.undoStack()->push(command);
+}
+
 int SubtitlesModel::itemCount(int trackIndex) const
 {
     if (trackIndex < 0 || trackIndex >= m_tracks.size()) {
@@ -515,6 +525,33 @@ void SubtitlesModel::doRemoveTrack(int trackIndex)
         }
     }
     endRemoveRows();
+    emit tracksChanged(m_tracks.size());
+}
+
+void SubtitlesModel::doEditTrack(const SubtitlesModel::SubtitleTrack &track, int trackIndex)
+{
+    if (trackIndex < 0 || trackIndex > m_tracks.size()) {
+        LOG_ERROR() << "Invalid index" << trackIndex;
+    }
+    // Feed filters should be after all normalizers and before any user filters
+    int filterIndex = -1;
+    for (int i = 0; i < m_producer->filter_count(); i++) {
+        QScopedPointer<Mlt::Filter> filter(m_producer->filter(i));
+        if (filter && filter->is_valid() && filter->get("mlt_service") == QString("subtitle_feed")) {
+            filterIndex++;
+            if (filterIndex == trackIndex) {
+                filter->set("feed", track.name.toUtf8().constData());
+                filter->set("lang", track.lang.toUtf8().constData());
+                break;
+            }
+        }
+    }
+    if (filterIndex == -1) {
+        LOG_ERROR() << "Subtitle filter not found" << trackIndex;
+        return;
+    }
+    m_tracks[trackIndex] = track;
+    emit dataChanged(index(trackIndex), index(trackIndex));
     emit tracksChanged(m_tracks.size());
 }
 

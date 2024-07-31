@@ -67,6 +67,7 @@ public:
     SubtitlesModel::SubtitleTrack getTrack(int index);
     void addTrack(SubtitlesModel::SubtitleTrack &track);
     void removeTrack(QString &name);
+    void editTrack(int trackIndex, SubtitlesModel::SubtitleTrack &track);
 
     // Item Functions
     Q_INVOKABLE int itemCount(int trackIndex) const;
@@ -90,6 +91,7 @@ public:
     // Only to be called by subtitle commands
     void doInsertTrack(const SubtitlesModel::SubtitleTrack &track, int trackIndex);
     void doRemoveTrack(int trackIndex);
+    void doEditTrack(const SubtitlesModel::SubtitleTrack &track, int trackIndex);
     void doRemoveSubtitleItems(int trackIndex, const QList<Subtitles::SubtitleItem> &subtitles);
     void doInsertSubtitleItems(int trackIndex, const QList<Subtitles::SubtitleItem> &subtitles);
     void doSetText(int trackIndex, int itemIndex, const QString &text);

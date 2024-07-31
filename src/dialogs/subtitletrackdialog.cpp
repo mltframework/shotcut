@@ -42,19 +42,14 @@ static void fillLanguages(QComboBox *combo)
             }
         }
     }
-    QString currentLangCode = QLocale::languageToCode(QLocale::system().language(),
-                                                      QLocale::ISO639Part2);
     for (auto it = iso639_2LanguageCodes.keyValueBegin(); it != iso639_2LanguageCodes.keyValueEnd();
             ++it) {
         QString text = QString("%1 (%2)").arg(it->first).arg(it->second);
         combo->addItem(text, it->second);
-        if (it->second == currentLangCode) {
-            combo->setCurrentIndex(combo->count() - 1);
-        }
     }
 }
 
-SubtitleTrackDialog::SubtitleTrackDialog(QString &suggestedName, QWidget *parent)
+SubtitleTrackDialog::SubtitleTrackDialog(const QString &name, const QString &lang, QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(tr("New Subtitle Track"));
@@ -63,12 +58,18 @@ SubtitleTrackDialog::SubtitleTrackDialog(QString &suggestedName, QWidget *parent
 
     grid->addWidget(new QLabel(tr("Name")), 0, 0, Qt::AlignRight);
     m_name = new QLineEdit(this);
-    m_name->setText(suggestedName);
+    m_name->setText(name);
     grid->addWidget(m_name, 0, 1);
 
     grid->addWidget(new QLabel(tr("Language")), 1, 0, Qt::AlignRight);
     m_lang = new QComboBox(this);
     fillLanguages(m_lang);
+    for (int i = 0; i < m_lang->count(); i++) {
+        if (m_lang->itemData(i).toString() == lang) {
+            m_lang->setCurrentIndex(i);
+            break;
+        }
+    }
     grid->addWidget(m_lang, 1, 1);
 
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
