@@ -60,7 +60,6 @@ public:
     static QString getHash(Mlt::Properties &properties);
     static bool hasDriveLetter(const QString &path);
     static QFileDialog::Options getFileDialogOptions();
-    static bool isMemoryLow();
     static QString removeQueryString(const QString &s);
     static int greatestCommonDivisor(int m, int n);
     static void normalizeFrameRate(double fps, int &numerator, int &denominator);

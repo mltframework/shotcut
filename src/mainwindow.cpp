@@ -1649,6 +1649,76 @@ static void autosaveTask(MainWindow *p)
     p->doAutosave();
 }
 
+static bool isMemoryLow()
+{
+#if defined(Q_OS_WIN)
+    unsigned int availableKB = UINT_MAX;
+    MEMORYSTATUSEX memory_status;
+    ZeroMemory(&memory_status, sizeof(MEMORYSTATUSEX));
+    memory_status.dwLength = sizeof(MEMORYSTATUSEX);
+    if (GlobalMemoryStatusEx(&memory_status)) {
+        availableKB = memory_status.ullAvailPhys / 1024UL;
+    }
+    LOG_INFO() << "available RAM = " << availableKB << "KB";
+    return availableKB < kLowMemoryThresholdKB;
+#elif defined(Q_OS_MAC)
+    QProcess p;
+    p.start("memory_pressure", QStringList());
+    p.waitForFinished();
+    auto lines = p.readAllStandardOutput();
+    p.close();
+    for (auto &line : lines.split('\n')) {
+        if (line.startsWith("System-wide memory free")) {
+            const auto fields = line.split(':');
+            for (auto s : fields) {
+                bool ok = false;
+                auto percentage = s.replace('%', "").toUInt(&ok);
+                if (ok) {
+                    LOG_INFO() << percentage << '%';
+                    return percentage <= kLowMemoryThresholdPercent;
+                }
+            }
+        }
+    }
+    return false;
+#elif defined(__FreeBSD__) || defined(__OpenBSD__)
+    QProcess p;
+    p.start("sysctl -n hw.usermem");
+    p.waitForFinished();
+    auto lines = p.readAllStandardOutput();
+    p.close();
+    bool ok = false;
+    auto availableKB = lines.toUInt(&ok);
+    if (ok) {
+        return availableKB < kLowMemoryThresholdKB;
+    }
+
+    return false;
+#elif defined(Q_OS_LINUX)
+    unsigned int availableKB = UINT_MAX;
+    QFile meminfo("/proc/meminfo");
+    if (meminfo.open(QIODevice::ReadOnly)) {
+        for (auto line = meminfo.readLine(1024); availableKB == UINT_MAX
+                && !line.isEmpty(); line = meminfo.readLine(1024)) {
+            if (line.startsWith("MemAvailable")) {
+                const auto &fields = line.split(' ');
+                for (const auto &s : fields) {
+                    bool ok = false;
+                    auto kB = s.toUInt(&ok);
+                    if (ok) {
+                        availableKB = kB;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    meminfo.close();
+    LOG_INFO() << "available RAM = " << availableKB << "KB";
+    return availableKB < kLowMemoryThresholdKB;
+#endif
+}
+
 void MainWindow::onAutosaveTimeout()
 {
     if (isWindowModified()) {
@@ -1687,7 +1757,7 @@ void MainWindow::onAutosaveTimeout()
         });
     }
     if (Settings.warnLowMemory()) {
-        if (Util::isMemoryLow()) {
+        if (isMemoryLow()) {
             MLT.pause();
             JOBS.pauseCurrent();
             dialog->show();
