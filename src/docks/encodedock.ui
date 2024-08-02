@@ -799,7 +799,7 @@ with parallel processing enabled.</string>
                        <string>YADIF - temporal + spatial (better)</string>
                       </property>
                      </item>
-                    <item>
+                     <item>
                       <property name="text">
                        <string>BWDIF (best)</string>
                       </property>
@@ -1844,6 +1844,13 @@ in temporal compression</string>
                <widget class="QLabel" name="otherTipLabel">
                 <property name="wordWrap">
                  <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QCheckBox" name="disableSubtitlesCheckbox">
+                <property name="text">
+                 <string>Disable subtitles</string>
                 </property>
                </widget>
               </item>

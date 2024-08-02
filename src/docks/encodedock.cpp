@@ -1142,7 +1142,8 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target
             ui->audioCodecCombo->currentIndex() == 0 &&
             (mytarget.endsWith(".mp4") || mytarget.endsWith(".mov")))
         consumerNode.setAttribute("strict", "experimental");
-    setSubtitleProperties(consumerNode, service);
+    if (!ui->disableSubtitlesCheckbox->isChecked())
+        setSubtitleProperties(consumerNode, service);
 
     // Add autoclose to playlists.
     QDomNodeList playlists = dom.elementsByTagName("playlist");
