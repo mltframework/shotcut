@@ -539,29 +539,29 @@ void SubtitlesModel::doEditTrack(const SubtitlesModel::SubtitleTrack &track, int
         QScopedPointer<Mlt::Filter> filter(m_producer->filter(i));
         if (filter && filter->is_valid()) {
             QString mlt_service = filter->get("mlt_service");
-            if (mlt_service == QString("subtitle_feed"))
+            if (mlt_service == QString("subtitle_feed")) {
                 filterIndex++;
-            if (filterIndex == trackIndex) {
-                filter->set("feed", track.name.toUtf8().constData());
-                filter->set("lang", track.lang.toUtf8().constData());
-                break;
-            }
-        } else if (mlt_service == QString("subtitle")) {
-            // Modify subtitle burn-in filter if present
-            if (filter->get("feed") == QString(m_tracks[trackIndex].text)) {
-                filter->set("feed", track.name.toUtf8().constData());
+                if (filterIndex == trackIndex) {
+                    filter->set("feed", track.name.toUtf8().constData());
+                    filter->set("lang", track.lang.toUtf8().constData());
+                    break;
+                }
+            } else if (mlt_service == QString("subtitle")) {
+                // Modify subtitle burn-in filter if present
+                if (filter->get("feed") == QString(m_tracks[trackIndex].name)) {
+                    filter->set("feed", track.name.toUtf8().constData());
+                }
             }
         }
     }
-}
-if (filterIndex == -1)
-{
-    LOG_ERROR() << "Subtitle filter not found" << trackIndex;
-    return;
-}
-m_tracks[trackIndex] = track;
-emit dataChanged(index(trackIndex), index(trackIndex));
-emit tracksChanged(m_tracks.size());
+
+    if (filterIndex == -1) {
+        LOG_ERROR() << "Subtitle filter not found" << trackIndex;
+        return;
+    }
+    m_tracks[trackIndex] = track;
+    emit dataChanged(index(trackIndex), index(trackIndex));
+    emit tracksChanged(m_tracks.size());
 }
 
 void SubtitlesModel::doRemoveSubtitleItems(int trackIndex,
