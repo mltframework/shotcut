@@ -49,9 +49,13 @@ GPLv3. See [COPYING](COPYING).
 
 The fastest way to build and try Shotcut development version is through [Qt Creator](https://www.qt.io/download#qt-creator).
 
-### From command line
+### Install build dependencies
 
-First, check dependencies are satisfied and various paths are correctly set to find different libraries and include files (Qt, MLT, frei0r and so forth).
+To install the dependencies required for compiling Shotcut from source, run the following script:
+
+```bash
+sudo ./scripts/install-linux-dependencies.sh
+```
 
 #### Configure
 
