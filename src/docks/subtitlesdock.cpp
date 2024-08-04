@@ -626,7 +626,7 @@ void SubtitlesDock::onAddRequested()
         maxTime = nextItem.start;
     }
     if ((maxTime - msTime) < 500) {
-        MAIN.showStatusMessage(tr("No enough space to add subtitle."));
+        MAIN.showStatusMessage(tr("Not enough space to add subtitle."));
         return;
     }
     Subtitles::SubtitleItem item;
