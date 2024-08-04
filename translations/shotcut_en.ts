@@ -8967,7 +8967,7 @@ Remove the subtitle filter before removing this track.</source>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="629"/>
-        <source>No enough space to add subtitle.</source>
+        <source>Not enough space to add subtitle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
