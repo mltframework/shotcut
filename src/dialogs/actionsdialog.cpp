@@ -219,7 +219,7 @@ protected:
     {
         if (event->type() == QEvent::KeyPress) {
             auto keyEvent = static_cast<QKeyEvent *>(event);
-            if (!keyEvent->modifiers() && (keyEvent->key() == Qt::Key_Down || keyEvent->key() == Qt::Key_Up)) {
+            if (keyEvent->key() == Qt::Key_Down || keyEvent->key() == Qt::Key_Up) {
                 auto dialog = static_cast<ActionsDialog *>(parent());
                 dialog->focusSearchResults();
                 event->accept();
