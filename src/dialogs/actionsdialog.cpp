@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 20222-2023 Meltytech, LLC
+ * Copyright (c) 20222-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -208,6 +208,28 @@ signals:
     void editRejected();
 };
 
+class SearchKeyPressFilter : public QObject
+{
+    Q_OBJECT
+public:
+    SearchKeyPressFilter(QObject *parent = 0) : QObject(parent) {}
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override
+    {
+        if (event->type() == QEvent::KeyPress) {
+            auto keyEvent = static_cast<QKeyEvent *>(event);
+            if (!keyEvent->modifiers() && (keyEvent->key() == Qt::Key_Down || keyEvent->key() == Qt::Key_Up)) {
+                auto dialog = static_cast<ActionsDialog *>(parent());
+                dialog->focusSearchResults();
+                event->accept();
+            }
+        }
+        return QObject::eventFilter(obj, event);
+    }
+};
+
+
 // Include this so that ShortcutItemDelegate can be declared in the source file.
 #include "actionsdialog.moc"
 
@@ -223,16 +245,14 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     QHBoxLayout *searchLayout = new QHBoxLayout();
     m_searchField = new QLineEdit(this);
     m_searchField->setPlaceholderText(tr("search"));
+    m_searchField->installEventFilter(new SearchKeyPressFilter(this));
     connect(m_searchField, &QLineEdit::textChanged, this, [&](const QString & text) {
         if (m_proxyModel) {
             m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
             m_proxyModel->setFilterFixedString(text);
         }
     });
-    connect(m_searchField, &QLineEdit::returnPressed, this, [&] {
-        m_table->setFocus();
-        m_table->setCurrentIndex(m_proxyModel->index(0, 1));
-    });
+    connect(m_searchField, &QLineEdit::returnPressed, this, &ActionsDialog::focusSearchResults);
     searchLayout->addWidget(m_searchField);
     QToolButton *clearSearchButton = new QToolButton(this);
     clearSearchButton->setIcon(QIcon::fromTheme("edit-clear",
@@ -327,6 +347,12 @@ void ActionsDialog::saveCurrentEditor()
             emit delegate->closeEditor(editor);
         }
     }
+}
+
+void ActionsDialog::focusSearchResults()
+{
+    m_table->setCurrentIndex(m_proxyModel->index(0, 1));
+    m_table->setFocus();
 }
 
 void ActionsDialog::hideEvent(QHideEvent *event)

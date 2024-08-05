@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023 Meltytech, LLC
+ * Copyright (c) 2022-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,9 @@ class ActionsDialog : public QDialog
 public:
     explicit ActionsDialog(QWidget *parent = 0);
     void saveCurrentEditor();
+
+public slots:
+    void focusSearchResults();
 
 protected:
     void hideEvent(QHideEvent *event);

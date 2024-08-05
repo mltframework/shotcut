@@ -88,7 +88,11 @@ Rectangle {
                     }
                 }
                 Keys.onReturnPressed: event => {
-                    menuListView.itemSelected(menuListView.currentIndex);
+                    if (menuListView.currentIndex >= 0) {
+                        menuListView.itemSelected(menuListView.currentIndex);
+                    } else {
+                        menuListView.selectNext();
+                    }
                     event.accepted = true;
                 }
                 Keys.onEnterPressed: event => Keys.onReturnPressed(event)
