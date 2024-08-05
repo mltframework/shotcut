@@ -14,10 +14,12 @@
 ; You should have received a copy of the GNU General Public License
 ; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#define CurrentYear        GetDateTimeString('yyyy','','')
+
 [Setup]
+AppName=Shotcut
 AppVersion=YY.MM.DD
 AppPublisher=Meltytech
-AppName=Shotcut
 WizardStyle=modern
 DefaultDirName={autopf}\Shotcut
 ; Since no icons will be created in "{group}", we don't need the wizard
@@ -40,13 +42,17 @@ ArchitecturesInstallIn64BitMode=x64compatible
 AppMutex="Meltytech Shotcut Running Mutex"
 OutputBaseFilename=shotcut-setup
 UninstallDisplayName=Shotcut
-VersionInfoCopyright="Copyright (c) 2012-2024 Meltytech, LLC"
+VersionInfoDescription=Shotcut installer
+VersionInfoCopyright="(c) 2012-{CurrentYear} Meltytech, LLC"
 WizardSmallImageFile="shotcut-logo-64.bmp"
 WizardImageStretch=yes
-ShowLanguageDialog=no
+ShowLanguageDialog=yes
+UsePreviousLanguage=no
+LanguageDetectionMethod=uilanguage
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"
+Name: "it"; MessagesFile: "compiler:Languages\Italian.isl"
 
 [CustomMessages]
 en.StartMenu=Create Start Menu Shortcut
@@ -55,6 +61,13 @@ en.DesktopIcon=Create Desktop Shortcut (Icon)
 en.ClearShotcutSettings=Remove Shotcut Settings From Registry
 en.InstallingShotcut=Installing Shotcut...
 en.StartShotcut=Start Shotcut
+
+it.StartMenu=Crea collegamenti nel menu Start
+it.AssociateMltXml=Associa file *.mlt con Shotcut
+it.DesktopIcon=Crea collegamento desktop (icona)
+it.ClearShotcutSettings=Rimuovi impostazioni Shotcut dal registro
+it.InstallingShotcut=Installazione Shotcut...
+it.StartShotcut=Esegui Shotcut
 
 [Tasks]
 Name: startMenu; Description: "{cm:StartMenu}"
