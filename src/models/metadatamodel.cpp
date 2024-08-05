@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #include <QSaveFile>
 
 MetadataModel::MetadataModel(QObject *parent)
-    : QAbstractListModel(parent)
+    : QSortFilterProxyModel(parent)
     , m_filter(FavoritesFilter)
     , m_isClipProducer(true)
     , m_filterMask(HiddenMaskBit)
@@ -37,14 +37,21 @@ MetadataModel::MetadataModel(QObject *parent)
     } else {
         m_filterMask |= needsGPUMaskBit;
     }
+    setSourceModel(new InternalMetadataModel(this));
 }
 
-int MetadataModel::rowCount(const QModelIndex &) const
+int MetadataModel::rowCount(const QModelIndex &parent) const
+{
+    return QSortFilterProxyModel::rowCount(parent);
+}
+
+
+int InternalMetadataModel::rowCount(const QModelIndex &) const
 {
     return m_list.size();
 }
 
-QVariant MetadataModel::data(const QModelIndex &index, int role) const
+QVariant InternalMetadataModel::data(const QModelIndex &index, int role) const
 {
     QVariant result;
     QmlMetadata *meta = m_list.at(index.row());
@@ -52,28 +59,25 @@ QVariant MetadataModel::data(const QModelIndex &index, int role) const
     if (meta) {
         switch (role) {
         case Qt::DisplayRole:
-        case NameRole:
+        case MetadataModel::NameRole:
             result = meta->name();
             break;
-        case HiddenRole:
+        case MetadataModel::HiddenRole:
             result = meta->isHidden();
             break;
-        case FavoriteRole:
+        case MetadataModel::FavoriteRole:
             result = meta->isFavorite();
             break;
-        case ServiceRole:
+        case MetadataModel::ServiceRole:
             result = meta->mlt_service();
             break;
-        case IsAudioRole:
+        case MetadataModel::IsAudioRole:
             result = meta->isAudio();
             break;
-        case NeedsGpuRole:
+        case MetadataModel::NeedsGpuRole:
             result = meta->needsGPU();
             break;
-        case VisibleRole:
-            result = isVisible(index.row());
-            break;
-        case PluginTypeRole:
+        case MetadataModel::PluginTypeRole:
             result = meta->type();
             break;
         }
@@ -82,11 +86,11 @@ QVariant MetadataModel::data(const QModelIndex &index, int role) const
     return result;
 }
 
-bool MetadataModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool InternalMetadataModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (!index.isValid()) return false;
     switch (role) {
-    case FavoriteRole: {
+    case MetadataModel::FavoriteRole: {
         QmlMetadata *meta = m_list.at(index.row());
         meta->setIsFavorite(value.value<bool>());
         emit dataChanged(index, index);
@@ -96,21 +100,20 @@ bool MetadataModel::setData(const QModelIndex &index, const QVariant &value, int
     return true;
 }
 
-QHash<int, QByteArray> MetadataModel::roleNames() const
+QHash<int, QByteArray> InternalMetadataModel::roleNames() const
 {
     QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
-    roles[NameRole] = "name";
-    roles[HiddenRole] = "hidden";
-    roles[FavoriteRole] = "favorite";
-    roles[ServiceRole] = "service";
-    roles[IsAudioRole] = "isAudio";
-    roles[NeedsGpuRole] = "needsGpu";
-    roles[VisibleRole] = "isVisible";
-    roles[PluginTypeRole] = "pluginType";
+    roles[MetadataModel::NameRole] = "name";
+    roles[MetadataModel::HiddenRole] = "hidden";
+    roles[MetadataModel::FavoriteRole] = "favorite";
+    roles[MetadataModel::ServiceRole] = "service";
+    roles[MetadataModel::IsAudioRole] = "isAudio";
+    roles[MetadataModel::NeedsGpuRole] = "needsGpu";
+    roles[MetadataModel::PluginTypeRole] = "pluginType";
     return roles;
 }
 
-Qt::ItemFlags MetadataModel::flags(const QModelIndex &index) const
+Qt::ItemFlags InternalMetadataModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return Qt::NoItemFlags;
@@ -118,6 +121,11 @@ Qt::ItemFlags MetadataModel::flags(const QModelIndex &index) const
 }
 
 void MetadataModel::add(QmlMetadata *data)
+{
+    static_cast<InternalMetadataModel *>(sourceModel())->add(data);
+}
+
+void InternalMetadataModel::add(QmlMetadata *data)
 {
     int i = 0;
     for ( i = 0; i < m_list.size(); i++ ) {
@@ -136,6 +144,11 @@ void MetadataModel::add(QmlMetadata *data)
 
 QmlMetadata *MetadataModel::get(int index) const
 {
+    return static_cast<InternalMetadataModel *>(sourceModel())->get(index);
+}
+
+QmlMetadata *InternalMetadataModel::get(int index) const
+{
     if (index >= 0 && index < m_list.size()) {
         return m_list[index];
     }
@@ -144,23 +157,21 @@ QmlMetadata *MetadataModel::get(int index) const
 
 void MetadataModel::setFilter(MetadataFilter filter)
 {
-    beginResetModel();
     m_filter = filter;
     emit filterChanged();
-    endResetModel();
+    invalidateFilter();
 }
 
 void MetadataModel::setSearch(const QString &search)
 {
-    beginResetModel();
     m_search = search;
     emit searchChanged();
-    endResetModel();
+    invalidateFilter();
 }
 
-bool MetadataModel::isVisible(int row) const
+bool MetadataModel::filterAcceptsRow(int row, const QModelIndex &sourceParent) const
 {
-    QmlMetadata *meta = m_list.at(row);
+    auto meta = static_cast<InternalMetadataModel *>(sourceModel())->list().at(row);
     if (meta->filterMask & m_filterMask) {
         return false;
     }
@@ -229,16 +240,16 @@ void MetadataModel::updateFilterMask(bool isClipProducer, bool isChainProducer,
     endResetModel();
 }
 
-unsigned MetadataModel::computeFilterMask(const QmlMetadata *meta)
+unsigned InternalMetadataModel::computeFilterMask(const QmlMetadata *meta)
 {
     unsigned mask = 0;
-    if (meta->isHidden()) mask |= HiddenMaskBit;
-    if (meta->isClipOnly()) mask |= clipOnlyMaskBit;
-    if (meta->isTrackOnly()) mask |= trackOnlyMaskBit;
-    if (meta->isOutputOnly()) mask |= outputOnlyMaskBit;
-    if (!meta->isGpuCompatible()) mask |= gpuIncompatibleMaskBit;
-    if (meta->needsGPU()) mask |= needsGPUMaskBit;
-    if (meta->type() == QmlMetadata::Link) mask |= linkMaskBit;
+    if (meta->isHidden()) mask |= MetadataModel::HiddenMaskBit;
+    if (meta->isClipOnly()) mask |= MetadataModel::clipOnlyMaskBit;
+    if (meta->isTrackOnly()) mask |= MetadataModel::trackOnlyMaskBit;
+    if (meta->isOutputOnly()) mask |= MetadataModel::outputOnlyMaskBit;
+    if (!meta->isGpuCompatible()) mask |= MetadataModel::gpuIncompatibleMaskBit;
+    if (meta->needsGPU()) mask |= MetadataModel::needsGPUMaskBit;
+    if (meta->type() == QmlMetadata::Link) mask |= MetadataModel::linkMaskBit;
     return mask;
 }
 
@@ -274,7 +285,8 @@ void MetadataModel::saveFilterSet(const QString &name)
         auto meta = new QmlMetadata;
         meta->setType(QmlMetadata::FilterSet);
         meta->setName(name);
-        add(meta);
+        auto model = static_cast<InternalMetadataModel *>(sourceModel());
+        model->add(meta);
     }
 }
 
@@ -287,10 +299,11 @@ void MetadataModel::deleteFilterSet(const QString &name)
     auto fileName = QUrl::toPercentEncoding(name.toUtf8());
     if (QFile::remove(dir.filePath(fileName)) || QFile::remove(dir.filePath(name))) {
         auto i = 0;
-        for (const auto &meta : m_list) {
+        auto list = static_cast<InternalMetadataModel *>(sourceModel())->list();
+        for (const auto &meta : list) {
             if (meta->type() == QmlMetadata::FilterSet && meta->name() == name) {
                 beginRemoveRows(QModelIndex(), i, i);
-                m_list.remove(i);
+                list.remove(i);
                 endRemoveRows();
             }
             ++i;

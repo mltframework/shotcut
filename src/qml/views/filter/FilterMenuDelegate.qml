@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@ import org.shotcut.qml as Shotcut
 Rectangle {
     id: wrapper
 
-    visible: isVisible
     height: visible ? Logic.ITEM_HEIGHT : 0
     color: activePalette.base
 

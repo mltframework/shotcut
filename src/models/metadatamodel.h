@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,12 @@
 #ifndef METADATAMODEL_H
 #define METADATAMODEL_H
 
-#include <QAbstractListModel>
+#include <QSortFilterProxyModel>
 #include <QList>
 
 class QmlMetadata;
 
-class MetadataModel : public QAbstractListModel
+class MetadataModel : public QSortFilterProxyModel
 {
     Q_OBJECT
     Q_ENUMS(MetadataFilter)
@@ -39,7 +39,6 @@ public:
         ServiceRole,
         IsAudioRole,
         NeedsGpuRole,
-        VisibleRole,
         PluginTypeRole,
     };
 
@@ -66,8 +65,48 @@ public:
 
     explicit MetadataModel(QObject *parent = 0);
 
-    // Implement QAbstractListModel
     Q_INVOKABLE int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    void add(QmlMetadata *data);
+    Q_INVOKABLE QmlMetadata *get(int index) const;
+    Q_INVOKABLE void saveFilterSet(const QString &name);
+    Q_INVOKABLE void deleteFilterSet(const QString &name);
+    MetadataFilter filter() const
+    {
+        return m_filter;
+    }
+    void setFilter(MetadataFilter);
+    void updateFilterMask(bool isClipProducer, bool isChainProducer, bool isTrackProducer,
+                          bool isOutputProducer);
+    QString search() const
+    {
+        return m_search;
+    }
+    void setSearch(const QString &search);
+
+signals:
+    void filterChanged();
+    void searchChanged();
+
+protected:
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
+
+private:
+    MetadataFilter m_filter;
+    unsigned m_filterMask;
+    QString m_search;
+    bool m_isClipProducer;
+    bool m_isChainProducer;
+    bool m_isTrackProducer;
+    bool m_isOutputProducer;
+};
+
+class InternalMetadataModel : public QAbstractListModel
+{
+public:
+    explicit InternalMetadataModel(QObject *parent = 0) : QAbstractListModel(parent) {};
+
+    // Implement QAbstractListModel
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QHash<int, QByteArray> roleNames() const;
@@ -75,37 +114,15 @@ public:
 
     // Direct access to QmlMetadata
     void add(QmlMetadata *data);
-    Q_INVOKABLE QmlMetadata *get(int index) const;
-    MetadataFilter filter() const
+    QmlMetadata *get(int index) const;
+    QList<QmlMetadata *> &list()
     {
-        return m_filter;
+        return m_list;
     }
-    void setFilter(MetadataFilter);
-    QString search() const
-    {
-        return m_search;
-    }
-    void setSearch(const QString &search);
-    Q_INVOKABLE bool isVisible(int row) const;
-    void updateFilterMask(bool isClipProducer, bool isChainProducer, bool isTrackProducer,
-                          bool isOutputProducer);
-    Q_INVOKABLE void saveFilterSet(const QString &name);
-    Q_INVOKABLE void deleteFilterSet(const QString &name);
-
-signals:
-    void filterChanged();
-    void searchChanged();
 
 private:
     typedef QList<QmlMetadata *> MetadataList;
     MetadataList m_list;
-    MetadataFilter m_filter;
-    bool m_isClipProducer;
-    bool m_isChainProducer;
-    bool m_isTrackProducer;
-    bool m_isOutputProducer;
-    QString m_search;
-    unsigned m_filterMask;
 
     unsigned computeFilterMask(const QmlMetadata *meta);
 };
