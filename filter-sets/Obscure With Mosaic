@@ -19,7 +19,7 @@
       <property name="filter.3">0.1</property>
       <property name="filter.4">0.1</property>
       <property name="filter.5">0.5</property>
-      <property name="filter.6">0.2</property>
+      <property name="filter.6">0.0</property>
     </filter>
     <filter id="filter1" out="00:00:30.030">
       <property name="version">1</property>
