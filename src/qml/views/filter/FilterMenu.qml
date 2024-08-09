@@ -313,8 +313,8 @@ Rectangle {
 
                 function itemSelected(index) {
                     if (index > -1) {
-                        filterWindow.close();
                         filterSelected(index);
+                        filterWindow.close();
                     }
                 }
 

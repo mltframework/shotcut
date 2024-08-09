@@ -45,6 +45,10 @@ int MetadataModel::rowCount(const QModelIndex &parent) const
     return QSortFilterProxyModel::rowCount(parent);
 }
 
+int MetadataModel::sourceRowCount(const QModelIndex &parent) const
+{
+    return static_cast<InternalMetadataModel *>(sourceModel())->rowCount();
+}
 
 int InternalMetadataModel::rowCount(const QModelIndex &) const
 {
@@ -142,7 +146,13 @@ void InternalMetadataModel::add(QmlMetadata *data)
     data->setParent(this);
 }
 
-QmlMetadata *MetadataModel::get(int index) const
+QmlMetadata *MetadataModel::get(int row) const
+{
+    auto sourceIndex = mapToSource(index(row, 0));
+    return getFromSource(sourceIndex.row());
+}
+
+QmlMetadata *MetadataModel::getFromSource(int index) const
 {
     return static_cast<InternalMetadataModel *>(sourceModel())->get(index);
 }
@@ -153,6 +163,13 @@ QmlMetadata *InternalMetadataModel::get(int index) const
         return m_list[index];
     }
     return nullptr;
+}
+
+void InternalMetadataModel::remove(int index)
+{
+    beginRemoveRows(QModelIndex(), index, index);
+    m_list.remove(index);
+    endRemoveRows();
 }
 
 void MetadataModel::setFilter(MetadataFilter filter)
@@ -169,9 +186,9 @@ void MetadataModel::setSearch(const QString &search)
     invalidateFilter();
 }
 
-bool MetadataModel::filterAcceptsRow(int row, const QModelIndex &sourceParent) const
+bool MetadataModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    auto meta = static_cast<InternalMetadataModel *>(sourceModel())->list().at(row);
+    auto meta = getFromSource(sourceRow);
     if (meta->filterMask & m_filterMask) {
         return false;
     }
@@ -299,13 +316,11 @@ void MetadataModel::deleteFilterSet(const QString &name)
     auto fileName = QUrl::toPercentEncoding(name.toUtf8());
     if (QFile::remove(dir.filePath(fileName)) || QFile::remove(dir.filePath(name))) {
         auto i = 0;
-        auto list = static_cast<InternalMetadataModel *>(sourceModel())->list();
+        auto source = static_cast<InternalMetadataModel *>(sourceModel());
+        auto list = source->list();
         for (const auto &meta : list) {
-            if (meta->type() == QmlMetadata::FilterSet && meta->name() == name) {
-                beginRemoveRows(QModelIndex(), i, i);
-                list.remove(i);
-                endRemoveRows();
-            }
+            if (meta->type() == QmlMetadata::FilterSet && meta->name() == name)
+                source->remove(i);
             ++i;
         }
     }

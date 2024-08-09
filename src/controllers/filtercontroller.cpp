@@ -113,10 +113,10 @@ void FilterController::loadFilterMetadata()
 QmlMetadata *FilterController::metadata(const QString &id)
 {
     QmlMetadata *meta = 0;
-    int rowCount = m_metadataModel.rowCount();
+    int rowCount = m_metadataModel.sourceRowCount();
 
     for (int i = 0; i < rowCount; i++) {
-        QmlMetadata *tmpMeta = m_metadataModel.get(i);
+        QmlMetadata *tmpMeta = m_metadataModel.getFromSource(i);
         if (tmpMeta->uniqueId() == id) {
             meta = tmpMeta;
             break;
@@ -129,7 +129,6 @@ QmlMetadata *FilterController::metadata(const QString &id)
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
     QmlMetadata *meta = nullptr;
-    int rowCount = m_metadataModel.rowCount();
     QString uniqueId = service->get(kShotcutFilterProperty);
 
     // Fallback to mlt_service for legacy filters

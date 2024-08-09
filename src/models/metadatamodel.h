@@ -66,8 +66,10 @@ public:
     explicit MetadataModel(QObject *parent = 0);
 
     Q_INVOKABLE int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int sourceRowCount(const QModelIndex &parent = QModelIndex()) const;
     void add(QmlMetadata *data);
-    Q_INVOKABLE QmlMetadata *get(int index) const;
+    Q_INVOKABLE QmlMetadata *get(int row) const;
+    QmlMetadata *getFromSource(int index) const;
     Q_INVOKABLE void saveFilterSet(const QString &name);
     Q_INVOKABLE void deleteFilterSet(const QString &name);
     MetadataFilter filter() const
@@ -119,6 +121,7 @@ public:
     {
         return m_list;
     }
+    void remove(int index);
 
 private:
     typedef QList<QmlMetadata *> MetadataList;
