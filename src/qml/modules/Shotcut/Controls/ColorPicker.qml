@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,8 +39,12 @@ RowLayout {
         onColorPicked: color => {
             value = color;
             pickerButton.checked = false;
+            pickCancelled();
         }
-        onCancelled: pickCancelled()
+        onCancelled: {
+            pickerButton.checked = false;
+            pickCancelled();
+        }
     }
 
     Shotcut.Button {
