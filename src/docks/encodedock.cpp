@@ -2357,8 +2357,10 @@ bool EncodeDock::detectHardwareEncoders()
                  "format=nv12,hwupload";
         else if (codec == "hevc_qsv")
             args << "-load_plugin" << "hevc_hw";
+        else if (codec.endsWith("_videotoolbox"))
+            args << "-pix_fmt" << "nv12";
         args << "-c:v" << codec << "-f" << "rawvideo" << "pipe:";
-        LOG_DEBUG() << ffmpegPath.absoluteFilePath() << args;
+        LOG_DEBUG() << ffmpegPath.absoluteFilePath() + " " + args.join(' ');
         proc.setStandardOutputFile(QProcess::nullDevice());
         proc.setReadChannel(QProcess::StandardError);
         proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
