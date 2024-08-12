@@ -1211,6 +1211,9 @@ void AvformatProducerWidget::on_actionMakeProxy_triggered()
         scan = ui->fieldOrderComboBox->currentIndex() ? ProxyManager::InterlacedTopFieldFirst
                : ProxyManager::InterlacedBottomFieldFirst;
 
+    // If rotation is 90 or 270, swap aspect ratio since auto-rotate is turned off
+    if (ui->rotationComboBox->currentIndex() % 2 == 1)
+        aspectRatio = aspectRatio.transposed();
     ProxyManager::generateVideoProxy(*producer(), fullRange, scan, aspectRatio);
 }
 

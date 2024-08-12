@@ -99,6 +99,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
     file.close();
 
     args << "-loglevel" << "verbose";
+    args << "-noautorotate";
     args << "-i" << resource;
     args << "-max_muxing_queue_size" << "9999";
     // transcode all streams except data, subtitles, and attachments
