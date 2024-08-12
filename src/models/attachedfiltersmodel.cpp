@@ -545,6 +545,40 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
     return insertRow;
 }
 
+int AttachedFiltersModel::addService(Mlt::Service *service)
+{
+    int insertRow = -1;
+    if (!m_producer) return -1;
+
+    QmlMetadata *meta = MAIN.filterController()->metadataForService(service);
+    if (!meta->allowMultiple()) {
+        for (int i = 0; i < m_metaList.count(); i++) {
+            const QmlMetadata *attachedMeta = m_metaList[i];
+            if (attachedMeta && meta->uniqueId() == attachedMeta->uniqueId()) {
+                emit duplicateAddFailed(i);
+                return -1;
+            }
+        }
+    }
+
+    Mlt::Filter filter(*service);
+    if (filter.is_valid()) {
+        insertRow = findInsertRow(meta);
+        if (!meta->objectName().isEmpty())
+            filter.set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
+        filter.set_in_and_out(
+            m_producer->get(kFilterInProperty) ? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
+            m_producer->get(kFilterOutProperty) ? m_producer->get_int(kFilterOutProperty) :
+            m_producer->get_out());
+        if (isSourceClip()) {
+            doAddService(*m_producer, filter, insertRow);
+        } else {
+            MAIN.undoStack()->push(new Filter::AddCommand(*this, meta->name(), filter, insertRow));
+        }
+    }
+    return insertRow;
+}
+
 void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &service, int row)
 {
     LOG_DEBUG() << row;

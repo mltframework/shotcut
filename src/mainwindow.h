@@ -252,6 +252,7 @@ public slots:
     void onShuttle(float x);
     void onPropertiesDockTriggered(bool checked = true);
     bool on_actionSave_triggered();
+    void onCreateOrEditFilterOnOutput(Mlt::Filter *filter, const QStringList &key_properties);
 
 private slots:
     void showUpgradePrompt();

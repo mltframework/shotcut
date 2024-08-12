@@ -55,6 +55,7 @@ public:
     {
         return m_currentFilterIndex;
     }
+    void addOrEditFilter(Mlt::Filter *filter, const QStringList &key_properties);
 
 protected:
     void timerEvent(QTimerEvent *);

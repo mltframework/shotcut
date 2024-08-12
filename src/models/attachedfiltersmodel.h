@@ -82,6 +82,7 @@ signals:
 
 public slots:
     int add(QmlMetadata *meta);
+    int addService(Mlt::Service *service);
     void remove(int row);
     bool move(int fromRow, int toRow);
 

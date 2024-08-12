@@ -132,6 +132,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     mainMenu->addAction(Actions["subtitleSetStartAction"]);
     mainMenu->addAction(Actions["subtitleSetEndAction"]);
     mainMenu->addAction(Actions["subtitleMoveAction"]);
+    mainMenu->addAction(Actions["subtitleBurnInAction"]);
     mainMenu->addAction(Actions["subtitleGenerateTextAction"]);
     mainMenu->addAction(Actions["subtitleTrackTimelineAction"]);
     mainMenu->addAction(Actions["subtitleShowPrevNextAction"]);
@@ -338,6 +339,12 @@ void SubtitlesDock::setupActions()
     action->setToolTip(tr("Move the selected subtitles to the cursor position"));
     connect(action, &QAction::triggered, this, &SubtitlesDock::onMoveRequested);
     Actions.add("subtitleMoveAction", action, windowTitle());
+
+    action = new QAction(tr("Burn In Subtitles on Output"), this);
+    action->setToolTip(
+        tr("Create or edit a Burn In Subtitles filter on the timeline output."));
+    connect(action, &QAction::triggered, this, &SubtitlesDock::burnInOnTimeline);
+    Actions.add("subtitleBurnInAction", action, windowTitle());
 
     action = new QAction(tr("Generate Text on Timeline"), this);
     action->setToolTip(
@@ -874,6 +881,7 @@ void SubtitlesDock::updateTextWidgets()
 
 void SubtitlesDock::updateActionAvailablity()
 {
+
     if (!m_model || !m_model->isValid()) {
         // Disable all actions
         m_addToTimelineLabel->setVisible(true);
@@ -885,8 +893,11 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["subtitleCreateEditItemAction"]->setEnabled(false);
         Actions["subtitleAddItemAction"]->setEnabled(false);
         Actions["subtitleRemoveItemAction"]->setEnabled(false);
+        Actions["subtitleMoveAction"]->setEnabled(false);
         Actions["subtitleSetStartAction"]->setEnabled(false);
         Actions["subtitleSetEndAction"]->setEnabled(false);
+        Actions["subtitleBurnInAction"]->setEnabled(false);
+        Actions["subtitleGenerateTextAction"]->setEnabled(false);
     } else {
         m_addToTimelineLabel->setVisible(false);
         Actions["subtitleCreateEditItemAction"]->setEnabled(true);
@@ -898,11 +909,16 @@ void SubtitlesDock::updateActionAvailablity()
             Actions["subtitleRemoveTrackAction"]->setEnabled(false);
             Actions["SubtitleExportAction"]->setEnabled(false);
             Actions["subtitleRemoveItemAction"]->setEnabled(false);
+            Actions["subtitleMoveAction"]->setEnabled(false);
             Actions["subtitleSetStartAction"]->setEnabled(false);
             Actions["subtitleSetEndAction"]->setEnabled(false);
+            Actions["subtitleBurnInAction"]->setEnabled(false);
+            Actions["subtitleGenerateTextAction"]->setEnabled(false);
         } else {
             Actions["subtitleRemoveTrackAction"]->setEnabled(true);
             Actions["SubtitleExportAction"]->setEnabled(true);
+            Actions["subtitleBurnInAction"]->setEnabled(true);
+            Actions["subtitleGenerateTextAction"]->setEnabled(true);
 
             if (m_selectionModel->selectedRows().size() == 1) {
                 Actions["subtitleSetStartAction"]->setEnabled(true);
@@ -913,8 +929,10 @@ void SubtitlesDock::updateActionAvailablity()
             }
             if (m_selectionModel->selectedRows().size() > 0) {
                 Actions["subtitleRemoveItemAction"]->setEnabled(true);
+                Actions["subtitleMoveAction"]->setEnabled(true);
             } else {
                 Actions["subtitleRemoveItemAction"]->setEnabled(false);
+                Actions["subtitleMoveAction"]->setEnabled(false);
             }
         }
     }
@@ -971,6 +989,31 @@ void SubtitlesDock::ensureTrackExists()
         m_model->addTrack(track);
     }
 }
+
+void SubtitlesDock::burnInOnTimeline()
+{
+    int trackIndex = m_trackCombo->currentIndex();
+    auto track = m_model->getTrack(trackIndex);
+    Mlt::Filter filter(MLT.profile(), "subtitle");
+    filter.set(kShotcutFilterProperty, "subtitles");
+#ifdef Q_OS_WIN
+    filter.set("family", "Verdana");
+#endif
+    filter.set("fgcolour", "#ffffffff");
+    filter.set("bgcolour", "#00000000");
+    filter.set("olcolour", "#aa000000");
+    filter.set("outline", 3);
+    filter.set("weight", QFont::Bold);
+    filter.set("style", "normal");
+    filter.set("shotcut:usePointSize", 0);
+    filter.set("size", MLT.profile().height() / 20);
+    filter.set("geometry", "20%/75%:60%x20%");
+    filter.set("valign", "bottom");
+    filter.set("halign", "center");
+    filter.set("feed", track.name.toUtf8().constData());
+    emit createOrEditFilterOnOutput(&filter, QStringList() << "feed");
+}
+
 
 void SubtitlesDock::generateTextOnTimeline()
 {

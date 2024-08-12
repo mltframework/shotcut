@@ -686,6 +686,8 @@ void MainWindow::setupAndConnectDocks()
     connect(m_subtitlesDock, SIGNAL(addAllTimeline(Mlt::Playlist *)), SLOT(onTimelineDockTriggered()));
     connect(m_subtitlesDock, SIGNAL(addAllTimeline(Mlt::Playlist *, bool, bool)),
             SLOT(onAddAllToTimeline(Mlt::Playlist *, bool, bool)));
+    connect(m_subtitlesDock, SIGNAL(createOrEditFilterOnOutput(Mlt::Filter *, const QStringList &)),
+            SLOT(onCreateOrEditFilterOnOutput(Mlt::Filter *, const QStringList &)));
 
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
@@ -5371,4 +5373,13 @@ void MainWindow::on_actionReset_triggered()
         m_exitCode = EXIT_RESET;
         QApplication::closeAllWindows();
     }
+}
+
+void MainWindow::onCreateOrEditFilterOnOutput(Mlt::Filter *filter,
+                                              const QStringList &key_properties)
+{
+    m_timelineDock->selectMultitrack();
+    onFiltersDockTriggered();
+    m_timelineDock->emitSelectedFromSelection();
+    m_filterController->addOrEditFilter(filter, key_properties);
 }

@@ -356,3 +356,36 @@ void FilterController::handleAttachedRowsAboutToBeRemoved(const QModelIndex &par
     auto filter = m_attachedModel.getService(first);
     m_motionTrackerModel.remove(m_motionTrackerModel.keyForFilter(filter));
 }
+
+void FilterController::addOrEditFilter(Mlt::Filter *filter, const QStringList &key_properties)
+{
+    int rows =  m_attachedModel.rowCount();
+    int serviceIndex = -1;
+    for (int i = 0; i < rows; i++) {
+        QScopedPointer<Mlt::Service> service(m_attachedModel.getService(i));
+        bool servicesMatch = true;
+        if (metadataForService(service.data())->uniqueId() != metadataForService(filter)->uniqueId()) {
+            servicesMatch = false;
+            continue;
+        }
+        for (auto k : key_properties) {
+            const auto keyByteArray = k.toUtf8();
+            const char *key = keyByteArray.constData();
+            if (!service->property_exists(key) || !service->property_exists(key)) {
+                servicesMatch = false;
+                break;
+            } else if (QString(service->get(key)) != QString(filter->get(key))) {
+                servicesMatch = false;
+                break;
+            }
+        }
+        if (servicesMatch) {
+            serviceIndex = i;
+            break;
+        }
+    }
+    if (serviceIndex < 0) {
+        serviceIndex = m_attachedModel.addService(filter);
+    }
+    setCurrentFilter(serviceIndex);
+}

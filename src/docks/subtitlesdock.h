@@ -44,6 +44,7 @@ public:
 signals:
     void seekRequested(int pos);
     void addAllTimeline(Mlt::Playlist *, bool skipProxy, bool emptyTrack);
+    void createOrEditFilterOnOutput(Mlt::Filter *, const QStringList &key_properties);
 
 private slots:
     void onPositionChanged(int position);
@@ -79,6 +80,7 @@ private:
     void selectItemForTime();
     bool trackNameExists(const QString &name);
     void ensureTrackExists();
+    void burnInOnTimeline();
     void generateTextOnTimeline();
 
     SubtitlesModel *m_model;
