@@ -155,44 +155,50 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
 
     DockToolBar *toolbar = new DockToolBar(tr("Subtitle Controls"));
     toolbar->setAreaHint(Qt::BottomToolBarArea);
-    QToolButton *menuButton = new QToolButton(this);
-    menuButton->setIcon(QIcon::fromTheme("show-menu",
-                                         QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
-    menuButton->setToolTip(tr("Subtitles Menu"));
-    menuButton->setAutoRaise(true);
-    menuButton->setMenu(mainMenu);
-    menuButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
-    toolbar->addWidget(menuButton);
 
-    QToolButton *importItemsButton = new QToolButton(this);
-    importItemsButton->setDefaultAction(Actions["SubtitleImportAction"]);
-    importItemsButton->setAutoRaise(true);
-    toolbar->addWidget(importItemsButton);
+    auto button = new QToolButton;
+    button->setIcon(QIcon::fromTheme("show-menu",
+                                     QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
+    button->setToolTip(tr("Subtitles Menu"));
+    button->setAutoRaise(true);
+    button->setMenu(mainMenu);
+    button->setPopupMode(QToolButton::QToolButton::InstantPopup);
+    toolbar->addWidget(button);
 
-    QToolButton *addButton = new QToolButton(this);
-    addButton->setDefaultAction(Actions["subtitleAddItemAction"]);
-    addButton->setAutoRaise(true);
-    toolbar->addWidget(addButton);
+    button = new QToolButton;
+    button->setDefaultAction(Actions["SubtitleImportAction"]);
+    button->setAutoRaise(true);
+    toolbar->addWidget(button);
 
-    QToolButton *removeButton = new QToolButton(this);
-    removeButton->setDefaultAction(Actions["subtitleRemoveItemAction"]);
-    removeButton->setAutoRaise(true);
-    toolbar->addWidget(removeButton);
+    button = new QToolButton;
+    button->setDefaultAction(Actions["subtitleAddItemAction"]);
+    button->setAutoRaise(true);
+    toolbar->addWidget(button);
 
-    QToolButton *setStartButton = new QToolButton(this);
-    setStartButton->setDefaultAction(Actions["subtitleSetStartAction"]);
-    removeButton->setAutoRaise(true);
-    toolbar->addWidget(setStartButton);
+    button = new QToolButton;
+    button->setDefaultAction(Actions["subtitleRemoveItemAction"]);
+    button->setAutoRaise(true);
+    toolbar->addWidget(button);
 
-    QToolButton *setEndButton = new QToolButton(this);
-    setEndButton->setDefaultAction(Actions["subtitleSetEndAction"]);
-    setEndButton->setAutoRaise(true);
-    toolbar->addWidget(setEndButton);
+    button = new QToolButton;
+    button->setDefaultAction(Actions["subtitleSetStartAction"]);
+    button->setAutoRaise(true);
+    toolbar->addWidget(button);
 
-    QToolButton *moveButton = new QToolButton(this);
-    moveButton->setDefaultAction(Actions["subtitleMoveAction"]);
-    moveButton->setAutoRaise(true);
-    toolbar->addWidget(moveButton);
+    button = new QToolButton;
+    button->setDefaultAction(Actions["subtitleSetEndAction"]);
+    button->setAutoRaise(true);
+    toolbar->addWidget(button);
+
+    button = new QToolButton;
+    button->setDefaultAction(Actions["subtitleMoveAction"]);
+    button->setAutoRaise(true);
+    toolbar->addWidget(button);
+
+    button = new QToolButton;
+    button->setDefaultAction(Actions["subtitleBurnInAction"]);
+    button->setAutoRaise(true);
+    toolbar->addWidget(button);
 
     vboxLayout->addWidget(toolbar);
 
@@ -343,6 +349,8 @@ void SubtitlesDock::setupActions()
     action = new QAction(tr("Burn In Subtitles on Output"), this);
     action->setToolTip(
         tr("Create or edit a Burn In Subtitles filter on the timeline output."));
+    action->setIcon(QIcon::fromTheme("font",
+                                     QIcon(":/icons/oxygen/32x32/actions/font.png")));
     connect(action, &QAction::triggered, this, &SubtitlesDock::burnInOnTimeline);
     Actions.add("subtitleBurnInAction", action, windowTitle());
 
