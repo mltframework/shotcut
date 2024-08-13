@@ -491,24 +491,25 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer &producer, bool replace)
         if (ProxyManager::fileExists(producer)) {
             QString service = QString::fromLatin1(producer.get("mlt_service"));
             QDir projectDir(MLT.projectFolder());
-            QString fileName;
+            QString fileName = Util::getHash(producer) + kProxyVideoExtension;
+            QDir proxyDir(Settings.proxyFolder());
             if (service.startsWith("avformat")) {
                 auto gopro = GoProProxyFilePath(producer.get("resource"));
                 auto dji = DJIProxyFilePath(producer.get("resource"));
-                if (QFile::exists(gopro)) {
-                    producer.set(kIsProxyProperty, 1);
-                    producer.set(kMetaProxyProperty, 1);
-                    producer.set(kOriginalResourceProperty, producer.get("resource"));
-                    producer.set("resource", gopro.toUtf8().constData());
-                    return true;
-                } else if (QFile::exists(dji)) {
-                    producer.set(kIsProxyProperty, 1);
-                    producer.set(kMetaProxyProperty, 1);
-                    producer.set(kOriginalResourceProperty, producer.get("resource"));
-                    producer.set("resource", dji.toUtf8().constData());
-                    return true;
-                } else {
-                    fileName = Util::getHash(producer) + kProxyVideoExtension;
+                if (!projectDir.exists(fileName) && !proxyDir.exists(fileName)) {
+                    if (QFile::exists(gopro)) {
+                        producer.set(kIsProxyProperty, 1);
+                        producer.set(kMetaProxyProperty, 1);
+                        producer.set(kOriginalResourceProperty, producer.get("resource"));
+                        producer.set("resource", gopro.toUtf8().constData());
+                        return true;
+                    } else if (QFile::exists(dji)) {
+                        producer.set(kIsProxyProperty, 1);
+                        producer.set(kMetaProxyProperty, 1);
+                        producer.set(kOriginalResourceProperty, producer.get("resource"));
+                        producer.set("resource", dji.toUtf8().constData());
+                        return true;
+                    }
                 }
             } else if (isValidImage(producer)) {
                 fileName = Util::getHash(producer) + kProxyImageExtension;
@@ -522,7 +523,6 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer &producer, bool replace)
                 ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
                 producer.set("resource", projectDir.filePath(fileName).toUtf8().constData());
             } else {
-                QDir proxyDir(Settings.proxyFolder());
                 ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
                 producer.set("resource", proxyDir.filePath(fileName).toUtf8().constData());
             }
