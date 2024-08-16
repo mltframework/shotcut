@@ -17678,7 +17678,7 @@ Values smaller than 1 will zoom into image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="873"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="877"/>
         <source>Extra arguments can be added inside keywords:
 Distance units: m [km|ft|mi].
 Speed units: km/h [mi/h|m/s|ft/s].
@@ -17792,7 +17792,12 @@ Extra keyword: RAW (prints only values from file).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="887"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
+        <source>Power (W)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="891"/>
         <source>&lt;b&gt;Advanced options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17815,53 +17820,53 @@ Extra keyword: RAW (prints only values from file).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="892"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="896"/>
         <source>Update speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="897"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="901"/>
         <source>Set how many text updates to show per second.
 Set to 0 to only print real points (no interpolation).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="915"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="919"/>
         <source>Fractional times are also allowed (0.25 = update every 4 seconds, 5 = 5 updates per second).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="925"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="929"/>
         <source> per second</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1770"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="952"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="956"/>
         <source>Video start time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1775"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="957"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="961"/>
         <source>Detected date-time for the video file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1793"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="975"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="979"/>
         <source>GPS start time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1798"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="980"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="984"/>
         <source>Detected date-time for the GPS file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1809"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="991"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="995"/>
         <source>This time will be used for synchronization.</source>
         <translation type="unfinished"></translation>
     </message>
