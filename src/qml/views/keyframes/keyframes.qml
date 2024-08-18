@@ -177,6 +177,7 @@ Rectangle {
                     width: 1
                     x: parent.x + parent.width
                     anchors.top: parent.top
+                    anchors.topMargin: -rulerFlickable.height
                     anchors.bottom: parent.bottom
                 }
             }
