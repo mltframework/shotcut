@@ -2446,6 +2446,35 @@ void TimelineDock::emitSelectedFromSelection()
         return;
     }
 
+    for (auto &clip : selection()) {
+        // We need to set these special properties so time-based filters
+        // can get information about the cut while still applying filters
+        // to the cut parent.
+        int trackIndex = clip.y();
+        int clipIndex  = clip.x();
+        auto info = m_model.getClipInfo(trackIndex, clipIndex);
+        auto info2 = m_model.getClipInfo(trackIndex, clipIndex - 1);
+        if (info2 && info2->producer && info2->producer->is_valid()
+                && info2->producer->get(kShotcutTransitionProperty)) {
+            // Factor in a transition left of the clip.
+            info->producer->set(kFilterInProperty, info->frame_in - info2->frame_count);
+            info->producer->set(kPlaylistStartProperty, info2->start);
+        } else {
+            info->producer->set(kFilterInProperty, info->frame_in);
+            info->producer->set(kPlaylistStartProperty, info->start);
+        }
+        info2 = m_model.getClipInfo(trackIndex, clipIndex + 1);
+        if (info2 && info2->producer && info2->producer->is_valid()
+                && info2->producer->get(kShotcutTransitionProperty)) {
+            // Factor in a transition right of the clip.
+            info->producer->set(kFilterOutProperty, info->frame_out + info2->frame_count);
+        } else {
+            info->producer->set(kFilterOutProperty, info->frame_out);
+        }
+        info->producer->set(kMultitrackItemProperty,
+                            QString("%1:%2").arg(clipIndex).arg(trackIndex).toLatin1().constData());
+    }
+
     if (selection().size() > 1 || nothingIsSelected()) {
         emit selected(nullptr);
         return;
@@ -2473,32 +2502,10 @@ void TimelineDock::emitSelectedFromSelection()
     auto info = m_model.getClipInfo(trackIndex, clipIndex);
     if (info && info->producer && info->producer->is_valid()) {
         m_updateCommand.reset(new Timeline::UpdateCommand(*this, trackIndex, clipIndex, info->start));
-        // We need to set these special properties so time-based filters
-        // can get information about the cut while still applying filters
-        // to the cut parent.
-        auto info2 = m_model.getClipInfo(trackIndex, clipIndex - 1);
-        if (info2 && info2->producer && info2->producer->is_valid()
-                && info2->producer->get(kShotcutTransitionProperty)) {
-            // Factor in a transition left of the clip.
-            info->producer->set(kFilterInProperty, info->frame_in - info2->frame_count);
-            info->producer->set(kPlaylistStartProperty, info2->start);
-        } else {
-            info->producer->set(kFilterInProperty, info->frame_in);
-            info->producer->set(kPlaylistStartProperty, info->start);
-        }
-        info2 = m_model.getClipInfo(trackIndex, clipIndex + 1);
-        if (info2 && info2->producer && info2->producer->is_valid()
-                && info2->producer->get(kShotcutTransitionProperty)) {
-            // Factor in a transition right of the clip.
-            info->producer->set(kFilterOutProperty, info->frame_out + info2->frame_count);
-        } else {
-            info->producer->set(kFilterOutProperty, info->frame_out);
-        }
-        info->producer->set(kMultitrackItemProperty,
-                            QString("%1:%2").arg(clipIndex).arg(trackIndex).toLatin1().constData());
         m_ignoreNextPositionChange = true;
         emit selected(info->producer);
     }
+
     m_model.tractor()->set(kFilterInProperty, 0);
     m_model.tractor()->set(kFilterOutProperty, m_model.tractor()->get_length() - 1);
 }
