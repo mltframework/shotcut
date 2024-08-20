@@ -282,6 +282,7 @@ private slots:
     void onMultitrackModified();
     void onMultitrackDurationChanged();
     void onNoteModified();
+    void onSubtitleModified();
     void onCutModified();
     void onProducerModified();
     void onFilterModelChanged();

@@ -99,6 +99,7 @@ public:
 
 signals:
     void tracksChanged(int count);
+    void modified();
 
 protected:
     // Implement QAbstractItemModel

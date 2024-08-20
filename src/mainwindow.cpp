@@ -688,6 +688,7 @@ void MainWindow::setupAndConnectDocks()
             SLOT(onAddAllToTimeline(Mlt::Playlist *, bool, bool)));
     connect(m_subtitlesDock, SIGNAL(createOrEditFilterOnOutput(Mlt::Filter *, const QStringList &)),
             SLOT(onCreateOrEditFilterOnOutput(Mlt::Filter *, const QStringList &)));
+    connect(m_timelineDock->subtitlesModel(), SIGNAL(modified()), this, SLOT(onSubtitleModified()));
 
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
@@ -3161,6 +3162,11 @@ void MainWindow::onMultitrackDurationChanged()
 }
 
 void MainWindow::onNoteModified()
+{
+    setWindowModified(true);
+}
+
+void MainWindow::onSubtitleModified()
 {
     setWindowModified(true);
 }

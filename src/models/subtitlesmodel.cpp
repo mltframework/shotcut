@@ -190,6 +190,7 @@ void SubtitlesModel::commitToFeed(int trackIndex)
             feedFilterIndex++;
         }
     }
+    emit modified();
 }
 
 void SubtitlesModel::addTrack(SubtitlesModel::SubtitleTrack &track)
@@ -499,6 +500,7 @@ void SubtitlesModel::doInsertTrack(const SubtitlesModel::SubtitleTrack &track, i
     m_producer->move_filter(m_producer->filter_count() - 1, filterIndex);
     endInsertRows();
     emit tracksChanged(m_tracks.size());
+    emit modified();
 }
 
 void SubtitlesModel::doRemoveTrack(int trackIndex)
@@ -526,6 +528,7 @@ void SubtitlesModel::doRemoveTrack(int trackIndex)
     }
     endRemoveRows();
     emit tracksChanged(m_tracks.size());
+    emit modified();
 }
 
 void SubtitlesModel::doEditTrack(const SubtitlesModel::SubtitleTrack &track, int trackIndex)
@@ -562,6 +565,7 @@ void SubtitlesModel::doEditTrack(const SubtitlesModel::SubtitleTrack &track, int
     m_tracks[trackIndex] = track;
     emit dataChanged(index(trackIndex), index(trackIndex));
     emit tracksChanged(m_tracks.size());
+    emit modified();
 }
 
 void SubtitlesModel::doRemoveSubtitleItems(int trackIndex,
