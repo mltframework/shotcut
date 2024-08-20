@@ -587,6 +587,9 @@ void Util::normalizeFrameRate(double fps, int &numerator, int &denominator)
         // Workaround storing QDoubleSpinBox::value() loses precision.
         numerator = qRound(fps * 1000000.0);
         denominator = 1000000;
+        auto gcd = greatestCommonDivisor(numerator, denominator);
+        numerator /= gcd;
+        denominator /= gcd;
     }
 }
 
