@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2019-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ Shotcut.KeyframableFilter {
             id: colorPicker
 
             onValueChanged: {
-                filter.set(colorParam, value);
+                filter.set(colorParam, String(value));
                 filter.set('disable', 0);
             }
             onPickStarted: filter.set('disable', 1)
