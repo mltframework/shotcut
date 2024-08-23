@@ -683,7 +683,8 @@ void MainWindow::setupAndConnectDocks()
     connect(m_subtitlesDock, SIGNAL(seekRequested(int)), SLOT(seekTimeline(int)));
     connect(m_timelineDock, SIGNAL(positionChanged(int)), m_subtitlesDock,
             SLOT(onPositionChanged(int)));
-    connect(m_subtitlesDock, SIGNAL(addAllTimeline(Mlt::Playlist *)), SLOT(onTimelineDockTriggered()));
+    connect(m_subtitlesDock, SIGNAL(addAllTimeline(Mlt::Playlist *, bool, bool)),
+            SLOT(onTimelineDockTriggered()));
     connect(m_subtitlesDock, SIGNAL(addAllTimeline(Mlt::Playlist *, bool, bool)),
             SLOT(onAddAllToTimeline(Mlt::Playlist *, bool, bool)));
     connect(m_subtitlesDock, SIGNAL(createOrEditFilterOnOutput(Mlt::Filter *, const QStringList &)),

@@ -3506,6 +3506,7 @@ void TimelineDock::dragEnterEvent(QDragEnterEvent *event)
 {
     LOG_DEBUG() << event->mimeData()->hasFormat(Mlt::XmlMimeType);
     if (event->mimeData()->hasFormat(Mlt::XmlMimeType)) {
+        MLT.pause();
         event->acceptProposedAction();
     }
 }
