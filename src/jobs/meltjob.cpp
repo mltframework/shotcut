@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -104,7 +104,9 @@ void MeltJob::start()
 #endif
     setReadChannel(QProcess::StandardError);
     QStringList args;
+#ifndef NDEBUG
     args << "-verbose";
+#endif
     args << "-progress2";
     args << "-abort";
     if (m_args.size() > 0) {
