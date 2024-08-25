@@ -2910,7 +2910,10 @@ void TimelineDock::insertOrOverwriteDrop(int trackIndex, int position, const QSt
         overwrite(trackIndex, position, xml, false);
     }
     Settings.setTimelineAutoAddTracks(autoAddTracks);
-    m_model.checkForEmptyTracks(trackIndex);
+    if (autoAddTracks) {
+        QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+        m_model.checkForEmptyTracks(trackIndex);
+    }
 }
 
 void TimelineDock::onLoopChanged(int start, int end)
