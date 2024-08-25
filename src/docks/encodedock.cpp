@@ -532,8 +532,6 @@ void EncodeDock::loadPresets()
                             name = QString("%1 (%2)").arg(textParts.join('/'), profile);
                     }
                 }
-                if ("alpha/Ut Video" == name)
-                    continue;
                 // Create a category node if the name includes a slash.
                 QStringList nameParts = name.split('/');
                 if (nameParts.count() > 1) {
