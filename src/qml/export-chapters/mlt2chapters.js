@@ -44,7 +44,7 @@ MltXmlParser.prototype.get = function(dict, name, defaultValue) {
 MltXmlParser.prototype.timecode = function(value) {
     if (typeof value === 'string') {
         // Determine if this is a MLT "clock" time string.
-        if (value.length === 12 && (value[8] === '.' || value[8] === ',')) {
+        if (value[8] === '.' || value[8] === ',' || value[8] === ':' || value[8] === ';') {
             if (value.substring(0,3) === '00:') {
                 return value.substring(3, 8);
             } else {
