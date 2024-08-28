@@ -1019,6 +1019,9 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::Arabic), m_languagesGroup);
     a->setCheckable(true);
     a->setData("ar");
+    a = new QAction(QLocale::languageToString(QLocale::Basque), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("eu");
     a = new QAction(QLocale::languageToString(QLocale::Catalan), m_languagesGroup);
     a->setCheckable(true);
     a->setData("ca");

@@ -16,6 +16,7 @@ set(LANGUAGES
     en_GB
     es
     et
+    eu
     fi
     fr
     gd
