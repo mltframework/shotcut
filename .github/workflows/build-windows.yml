@@ -34,8 +34,10 @@ jobs:
             mingw-w64-x86_64-gettext-tools
             mingw-w64-x86_64-harfbuzz
             mingw-w64-x86_64-lame
+            mingw-w64-x86_64-libarchive
             mingw-w64-x86_64-libepoxy
             mingw-w64-x86_64-libexif
+            mingw-w64-x86_64-libimagequant
             mingw-w64-x86_64-libsamplerate
             mingw-w64-x86_64-libtheora
             mingw-w64-x86_64-libvorbis
@@ -45,16 +47,14 @@ jobs:
             mingw-w64-x86_64-onevpl
             mingw-w64-x86_64-openssl
             mingw-w64-x86_64-opus
+            mingw-w64-x86_64-potrace
+            mingw-w64-x86_64-python-pip
             mingw-w64-x86_64-rubberband
             mingw-w64-x86_64-sox
             mingw-w64-x86_64-svt-av1
             mingw-w64-x86_64-vid.stab
             mingw-w64-x86_64-x264
             mingw-w64-x86_64-x265
-            mingw-w64-x86_64-libarchive
-            mingw-w64-x86_64-potrace
-            mingw-w64-x86_64-libimagequant
-            mingw-w64-x86_64-python-pip
             mingw-w64-x86_64-zimg
 
       - uses: actions/checkout@v4
