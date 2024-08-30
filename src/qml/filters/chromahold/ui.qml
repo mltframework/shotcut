@@ -92,7 +92,6 @@ Shotcut.KeyframableFilter {
 
             onValueChanged: {
                 filter.set(colorParam, String(value));
-                filter.set('disable', 0);
             }
             onPickStarted: filter.set('disable', 1)
             onPickCancelled: filter.set('disable', 0)

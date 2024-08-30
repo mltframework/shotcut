@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,6 @@ Item {
 
             onValueChanged: {
                 filter.set(colorParam, value);
-                filter.set('disable', 0);
             }
             onPickStarted: filter.set('disable', 1)
             onPickCancelled: filter.set('disable', 0)

@@ -109,7 +109,6 @@ Shotcut.KeyframableFilter {
             onValueChanged: {
                 if (isReady) {
                     updateFilter('color', Qt.color(value), colorKeyframesButton, getPosition());
-                    filter.set('disable', 0);
                 }
             }
             onPickStarted: filter.set('disable', 1)

@@ -92,7 +92,6 @@ Item {
                 if (isReady) {
                     filter.startUndoParameterCommand(neutralColorLabel.text);
                     filter.set(neutralParam, "" + value);
-                    filter.set("disable", 0);
                     filter.endUndoCommand();
                 }
             }
