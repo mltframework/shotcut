@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,71 @@
  */
 
 #include "notesdock.h"
+#include "actions.h"
+#include "settings.h"
 
 #include <Logger.h>
 
 #include <QAction>
 #include <QIcon>
-#include <QTextEdit>
+#include <QPlainTextEdit>
 #include <QApplication>
+#include <QMenu>
+#include <QWheelEvent>
+
+class TextEditor: public QPlainTextEdit
+{
+public:
+    explicit TextEditor(QWidget *parent = nullptr) : QPlainTextEdit()
+    {
+        zoomIn(Settings.notesZoom());
+        setTabChangesFocus(false);
+        setTabStopDistance(fontMetrics().horizontalAdvance("XXXX")); // Tabstop = 4 spaces
+        setContextMenuPolicy(Qt::CustomContextMenu);
+        auto action = new QAction(tr("Decrease Text Size"), this);
+        action->setShortcut(Qt::CTRL | Qt::ALT | Qt::Key_Minus);
+        addAction(action);
+        Actions.add("notesDecreaseTextSize", action, tr("Notes"));
+        connect(action, &QAction::triggered, this, [ = ]() {
+            setZoom(-4);
+        });
+        action = new QAction(tr("Increase Text Size"), this);
+        action->setShortcut(Qt::CTRL | Qt::ALT | Qt::Key_Equal);
+        addAction(action);
+        Actions.add("notesIncreaseTextSize", action, tr("Notes"));
+        connect(action, &QAction::triggered, this, [ = ]() {
+            setZoom(4);
+        });
+        connect(this, &QWidget::customContextMenuRequested, this, [ = ](const QPoint & pos) {
+            std::unique_ptr<QMenu> menu {createStandardContextMenu()};
+            actions().at(0)->setEnabled(Settings.notesZoom() > 0);
+            menu->addActions(actions());
+            menu->exec(mapToGlobal(pos));
+        });
+    }
+
+    void setZoom(int delta)
+    {
+        auto zoom = Settings.notesZoom();
+        zoomIn((zoom + delta >= 0) ? delta : -zoom);
+        Settings.setNotesZoom(std::max<int>(0, zoom + delta));
+    }
+
+protected:
+    void wheelEvent(QWheelEvent *event) override
+    {
+        if (event->modifiers() & Qt::ControlModifier) {
+            setZoom((event->angleDelta().y() < 0) ? -1 : 1);
+            event->accept();
+        } else {
+            QPlainTextEdit::wheelEvent(event);
+        }
+    }
+};
 
 NotesDock::NotesDock(QWidget *parent) :
     QDockWidget(tr("Notes"), parent),
-    m_textEdit(new QTextEdit(this)),
+    m_textEdit(new TextEditor(this)),
     m_blockUpdate(false)
 {
     LOG_DEBUG() << "begin";
@@ -36,11 +90,6 @@ NotesDock::NotesDock(QWidget *parent) :
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
 
-    m_textEdit->setTabChangesFocus(false);
-    m_textEdit->setTabStopDistance(
-        m_textEdit->fontMetrics().horizontalAdvance("XXXX")); // Tabstop = 4 spaces
-    m_textEdit->setAcceptRichText(false);
-    m_textEdit->setFontPointSize(QApplication::font("QMenu").pointSize());
     QObject::connect(m_textEdit, SIGNAL(textChanged()), SLOT(onTextChanged()));
     QDockWidget::setWidget(m_textEdit);
 

@@ -1305,6 +1305,16 @@ bool ShotcutSettings::subtitlesShowPrevNext() const
     return settings.value("subtitles/showPrevNext", true).toBool();
 }
 
+void ShotcutSettings::setNotesZoom(int zoom)
+{
+    settings.setValue("notes/zoom", zoom);
+}
+
+int ShotcutSettings::notesZoom() const
+{
+    return settings.value("notes/zoom", 0).toInt();
+}
+
 void ShotcutSettings::reset()
 {
     for (auto &key : settings.allKeys()) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #include <QDockWidget>
 #include <QObject>
 
-class QTextEdit;
+class TextEditor;
 
 class NotesDock : public QDockWidget
 {
@@ -39,7 +39,7 @@ private slots:
     void onTextChanged();
 
 private:
-    QTextEdit *m_textEdit;
+    TextEditor *m_textEdit;
     bool m_blockUpdate;
 };
 

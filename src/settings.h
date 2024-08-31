@@ -333,6 +333,10 @@ public:
     void setSubtitlesShowPrevNext(bool b);
     bool subtitlesShowPrevNext() const;
 
+    // Notes
+    void setNotesZoom(int zoom);
+    int notesZoom() const;
+
 public slots:
     void reset();
 
