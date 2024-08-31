@@ -111,6 +111,18 @@ Item {
             filter.savePreset(defaultParameters);
         }
         loadValues();
+        // The color wheel widgets' colorChanged signals are queued between
+        // threads and trigger after loadValues() has set blockUpdate false.
+        // Use a timer to add a signal to the queue that sets blockUpdate
+        // false after the colorChanged signals.
+        blockUpdate = true;
+        unblockUpdateTimer.start();
+    }
+
+    Timer {
+        id: unblockUpdateTimer
+        interval: 1
+        onTriggered: blockUpdate = false
     }
 
     GridLayout {
