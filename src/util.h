@@ -79,6 +79,7 @@ public:
     static QString getConversionAdvice(Mlt::Producer *producer);
     static mlt_color mltColorFromQColor(const QColor &color);
     static void offerSingleFileConversion(QString &message, Mlt::Producer *producer, QWidget *parent);
+    static double getAndroidFrameRate(Mlt::Producer *producer);
 };
 
 #endif // UTIL_H

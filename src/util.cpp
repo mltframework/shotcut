@@ -858,7 +858,18 @@ void Util::offerSingleFileConversion(QString &message, Mlt::Producer *producer, 
                 producer->get_length() - 1;
     dialog.setSubClipChecked(producer->get_in() > 0
                              || producer->get_out() < producer->get_length() - 1);
+    auto fps = Util::getAndroidFrameRate(producer);
+    if (fps > 0.0)
+        dialog.setFrameRate(fps);
     Transcoder transcoder;
     transcoder.addProducer(producer);
     transcoder.convert(dialog);
+}
+
+double Util::getAndroidFrameRate(Mlt::Producer *producer)
+{
+    auto fps = producer->get_double("meta.attr.com.android.capture.fps.markup");
+    if (!qIsFinite(fps))
+        fps = 0.0;
+    return fps;
 }

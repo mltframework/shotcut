@@ -138,6 +138,9 @@ void AvformatProducerWidget::offerConvert(QString message, bool set709Convert, b
                 m_producer->get_length() - 1;
     dialog.setSubClipChecked(setSubClip && (m_producer->get_in() > 0
                                             || m_producer->get_out() < m_producer->get_length() - 1));
+    auto fps = Util::getAndroidFrameRate(m_producer.get());
+    if (fps > 0.0)
+        dialog.setFrameRate(fps);
     Transcoder transcoder;
     transcoder.addProducer(m_producer.data());
     transcoder.convert(dialog);
@@ -741,6 +744,9 @@ void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.set709Convert(ui->videoTableWidget->item(5, 1)->data(Qt::UserRole).toInt() > 7);
     dialog.showSubClipCheckBox();
+    auto fps = Util::getAndroidFrameRate(m_producer.get());
+    if (fps > 0.0)
+        dialog.setFrameRate(fps);
     Transcoder transcoder;
     transcoder.addProducer(m_producer.data());
     transcoder.convert(dialog);

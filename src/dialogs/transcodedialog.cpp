@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2022 Meltytech, LLC
+ * Copyright (c) 2017-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,6 +130,12 @@ bool TranscodeDialog::isSubClip() const
 void TranscodeDialog::setSubClipChecked(bool checked)
 {
     ui->subclipCheckBox->setChecked(checked);
+}
+
+void TranscodeDialog::setFrameRate(double fps)
+{
+    ui->fpsCheckBox->setChecked(true);
+    ui->fpsWidget->setFps(fps);
 }
 
 void TranscodeDialog::on_horizontalSlider_valueChanged(int position)

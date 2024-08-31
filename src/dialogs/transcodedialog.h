@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021 Meltytech, LLC
+ * Copyright (c) 2017-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,6 +50,7 @@ public:
     void showSubClipCheckBox();
     bool isSubClip() const;
     void setSubClipChecked(bool checked);
+    void setFrameRate(double fps);
 
 private slots:
     void on_horizontalSlider_valueChanged(int position);
