@@ -2043,6 +2043,8 @@ void ApplyFiltersCommand::redo()
             }
             // Apply the new filters
             MLT.pasteFilters(clipInfo->producer, &filtersProducer);
+            // Report that the filters have changed.
+            m_model.filterAddedOrRemoved(clipInfo->producer);
         } else {
             LOG_ERROR() << "Unable to find clip" << clip.trackIndex << clip.clipIndex;
         }
@@ -2069,7 +2071,10 @@ void ApplyFiltersCommand::undo()
             Mlt::Producer previousProducer(MLT.profile(), "xml-string",
                                            m_prevFilters[clip].toUtf8().constData());
             if (previousProducer.is_valid()) {
+                // Apply the previous filters
                 MLT.pasteFilters(clipInfo->producer, &previousProducer);
+                // Report that the filters have changed.
+                m_model.filterAddedOrRemoved(clipInfo->producer);
             } else {
                 LOG_ERROR() << "Unable to restore previous producer";
             }
