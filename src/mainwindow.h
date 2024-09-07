@@ -186,6 +186,7 @@ private:
     void restartAfterChangeTheme();
     void backup();
     void backupPeriodically();
+    bool confirmProfileChange();
 
     Ui::MainWindow *ui;
     Player *m_player;

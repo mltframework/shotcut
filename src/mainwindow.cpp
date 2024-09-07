@@ -3881,8 +3881,12 @@ void MainWindow::onKeyerTriggered(QAction *action)
 
 void MainWindow::onProfileTriggered(QAction *action)
 {
-    Settings.setPlayerProfile(action->data().toString());
     if (MLT.producer() && MLT.producer()->is_valid()) {
+        if (!confirmProfileChange())
+            return;
+
+        Settings.setPlayerProfile(action->data().toString());
+
         // Figure out the top-level project producer
         auto producer = MLT.producer();
         if (m_timelineDock->model()->rowCount() > 0) {
@@ -3899,6 +3903,7 @@ void MainWindow::onProfileTriggered(QAction *action)
         MLT.restart(xml);
         emit producerOpened(false);
     } else {
+        Settings.setPlayerProfile(action->data().toString());
         setProfile(action->data().toString());
     }
 }
@@ -3915,6 +3920,9 @@ void MainWindow::on_actionAddCustomProfile_triggered()
 {
     QString xml;
     if (MLT.producer() && MLT.producer()->is_valid()) {
+        if (!confirmProfileChange())
+            return;
+
         // Save the XML to get correct in/out points before profile is changed.
         xml = MLT.XML();
     }
@@ -3973,6 +3981,25 @@ void MainWindow::backupPeriodically()
             && dateTime.secsTo(QDateTime::currentDateTime()) / 60 > Settings.backupPeriod()) {
         backup();
     }
+}
+
+bool MainWindow::confirmProfileChange()
+{
+    if (MLT.isClip())
+        return true;
+
+    QMessageBox dialog(QMessageBox::Warning,
+                       QCoreApplication::applicationName(),
+                       tr("<p>Please review your entire project after making this change.</p>"
+                          "<p>Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.</p"
+                          "<br>The timing of edits and keyframes may be slightly different if you change frame rate.</p>"
+                          "<p>It is a good idea to use <b>File > Backup and Save</b> before or after this operation.</p>"
+                          "<p>Do you want to change the <b>Video Mode</b> now?</p>"),
+                       QMessageBox::No | QMessageBox::Yes, &MAIN);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    return QMessageBox::Yes == dialog.exec();
 }
 
 void MainWindow::on_actionSystemTheme_triggered()
