@@ -28,6 +28,7 @@ Item {
     property real aspectRatio: 0
     property int handleSize: 10
     property int borderSize: 2
+    property bool isReframe: false
     property alias rectangle: rectangle
     property color handleColor: Qt.rgba(1, 1, 1, enabled ? 0.9 : 0.2)
     property int snapMargin: 10
@@ -81,6 +82,9 @@ Item {
     }
 
     function snapX(x) {
+        if (isReframe && (x < 0 || x > profile.width * widthScale)) {
+            return Math.min(Math.max(x, 0), profile.width * widthScale);
+        }
         if (!video.snapToGrid || video.grid === 0)
             return x;
         if (video.grid !== 95 && video.grid !== 8090) {
@@ -104,6 +108,9 @@ Item {
     }
 
     function snapY(y) {
+        if (isReframe && (y < 0 || y > profile.height * widthScale)) {
+            return Math.min(Math.max(y, 0), profile.height * widthScale);
+        }
         if (!video.snapToGrid || video.grid === 0)
             return y;
         if (video.grid !== 95 && video.grid !== 8090) {
@@ -126,6 +133,13 @@ Item {
         return y;
     }
 
+    function coerceReframeEven(handle) {
+        if (isReframe) {
+            handle.x += Math.round(rectangle.width / widthScale) % 2;
+            handle.y += Math.round(rectangle.height / heightScale) % 2;
+        }
+    }
+
     function isRotated() {
         //Math.abs(rotationGroup.rotation - 0) > 0.0001
         return rotationGroup.rotation !== 0 || rotationLine.rotation !== 0;
@@ -134,6 +148,16 @@ Item {
     anchors.fill: parent
     Component.onCompleted: {
         _positionDragLocked = filter.get('_shotcut:positionDragLocked') === '1';
+    }
+
+    Rectangle {
+        // Provides contrasting outline
+        visible: !isRotated()
+        color: 'transparent'
+        border.width: borderSize * 2
+        border.color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0.2)
+        anchors.fill: rectangle
+        anchors.margins: -borderSize
     }
 
     Rectangle {
@@ -159,13 +183,39 @@ Item {
     }
 
     Rectangle {
-        // Provides contrasting thick line to above rectangle.
-        visible: !isRotated()
-        color: 'transparent'
-        border.width: handleSize - borderSize
-        border.color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0.2)
-        anchors.fill: rectangle
-        anchors.margins: borderSize
+        visible: isReframe
+        color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0)
+        anchors.left: parent.left
+        anchors.right: rectangle.left
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+    }
+
+    Rectangle {
+        visible: isReframe
+        color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0)
+        anchors.left: rectangle.left
+        anchors.right: rectangle.right
+        anchors.top: parent.top
+        anchors.bottom: rectangle.top
+    }
+
+    Rectangle {
+        visible: isReframe
+        color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0)
+        anchors.left: rectangle.right
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+    }
+
+    Rectangle {
+        visible: isReframe
+        color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0)
+        anchors.left: rectangle.left
+        anchors.right: rectangle.right
+        anchors.top: rectangle.bottom
+        anchors.bottom: parent.bottom
     }
 
     Item {
@@ -239,6 +289,10 @@ Item {
                 if (!(mouse.modifiers & Qt.AltModifier)) {
                     rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2;
                     rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2;
+                }
+                if (isReframe) {
+                    rectangle.x = Math.min(Math.max(rectangle.x, 0), widthScale * profile.width - rectangle.width);
+                    rectangle.y = Math.min(Math.max(rectangle.y, 0), heightScale * profile.height - rectangle.height);
                 }
                 rectChanged(rectangle);
             }
@@ -370,6 +424,11 @@ Item {
                 }
                 if (aspectRatio !== 0)
                     parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio;
+                if (isReframe) {
+                    parent.x += Math.round(rectangle.width / widthScale) % 2;
+                    parent.y += Math.round(rectangle.height / heightScale) % 2;
+                }
+                coerceReframeEven(parent);
                 parent.x = Math.min(parent.x, bottomRightHandle.x);
                 parent.y = Math.min(parent.y, bottomRightHandle.y);
                 rectChanged(rectangle);
@@ -414,6 +473,7 @@ Item {
                 topHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2);
                 if (!(mouse.modifiers & Qt.AltModifier))
                     topHandle.y = snapY(topHandle.y);
+                coerceReframeEven(parent);
                 parent.x = Math.min(parent.x, bottomHandle.x);
                 parent.y = Math.min(parent.y, bottomHandle.y);
                 rectChanged(rectangle);
@@ -452,6 +512,7 @@ Item {
                 bottomHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2);
                 if (!(mouse.modifiers & Qt.AltModifier))
                     bottomHandle.y = snapY(bottomHandle.y + handleSize) - handleSize;
+                coerceReframeEven(parent);
                 parent.x = Math.max(parent.x, topHandle.x);
                 parent.y = Math.max(parent.y, topHandle.y);
                 rectChanged(rectangle);
@@ -490,6 +551,7 @@ Item {
                 if (!(mouse.modifiers & Qt.AltModifier))
                     leftHandle.x = snapX(leftHandle.x);
                 leftHandle.y = topLeftHandle.y + rectangle.height / 2 - (handleSize / 2);
+                coerceReframeEven(parent);
                 parent.x = Math.min(parent.x, rightHandle.x);
                 parent.y = Math.min(parent.y, rightHandle.y);
                 rectChanged(rectangle);
@@ -528,6 +590,7 @@ Item {
                 if (!(mouse.modifiers & Qt.AltModifier))
                     rightHandle.x = snapX(rightHandle.x + handleSize) - handleSize;
                 rightHandle.y = topLeftHandle.y + rectangle.height / 2 - (handleSize / 2);
+                coerceReframeEven(parent);
                 parent.x = Math.max(parent.x, leftHandle.x);
                 parent.y = Math.max(parent.y, leftHandle.y);
                 rectChanged(rectangle);
@@ -578,6 +641,7 @@ Item {
                 }
                 if (aspectRatio !== 0)
                     parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize;
+                coerceReframeEven(parent);
                 parent.x = Math.max(parent.x, bottomLeftHandle.x);
                 parent.y = Math.min(parent.y, bottomLeftHandle.y);
                 rectChanged(rectangle);
@@ -634,6 +698,7 @@ Item {
                 }
                 if (aspectRatio !== 0)
                     parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio;
+                coerceReframeEven(parent);
                 parent.x = Math.min(parent.x, topRightHandle.x);
                 parent.y = Math.max(parent.y, topRightHandle.y);
                 rectChanged(rectangle);
@@ -688,6 +753,7 @@ Item {
                 }
                 if (aspectRatio !== 0)
                     parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize;
+                coerceReframeEven(parent);
                 parent.x = Math.max(parent.x, topLeftHandle.x);
                 parent.y = Math.max(parent.y, topLeftHandle.y);
                 rectChanged(rectangle);

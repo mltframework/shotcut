@@ -36,6 +36,7 @@ class MeltJob;
 namespace Mlt {
 class Service;
 class Producer;
+class Filter;
 }
 
 class PresetsProxyModel : public QSortFilterProxyModel
@@ -57,6 +58,7 @@ public:
 
 signals:
     void captureStateChanged(bool);
+    void createOrEditFilterOnOutput(Mlt::Filter *, const QStringList & = {});
 
 public slots:
     void onAudioChannelsChanged();
@@ -129,6 +131,10 @@ private slots:
 
     void on_resolutionComboBox_activated(int arg1);
 
+    void on_reframeButton_clicked();
+
+    void on_resampleButton_clicked(bool checked);
+
 private:
     enum {
         RateControlAverage = 0,
@@ -159,6 +165,8 @@ private:
     Mlt::Properties *collectProperties(int realtime, bool includeProfile = false);
     void collectProperties(QDomElement &node, int realtime);
     void setSubtitleProperties(QDomElement &node, Mlt::Producer *service);
+    QPoint addConsumerElement(Mlt::Producer *service, QDomDocument &dom, const QString &target,
+                              int realtime, int pass);
     MeltJob *createMeltJob(Mlt::Producer *service, const QString &target, int realtime, int pass = 0,
                            const QThread::Priority priority = Settings.jobPriority());
     void runMelt(const QString &target, int realtime = -1);
@@ -172,6 +180,7 @@ private:
     bool checkForMissingFiles();
     QString &defaultFormatExtension();
     void initSpecialCodecLists();
+    void setResampleEnabled(bool enabled);
 };
 
 #endif // ENCODEDOCK_H

@@ -365,10 +365,9 @@ void FilterController::addOrEditFilter(Mlt::Filter *filter, const QStringList &k
         QScopedPointer<Mlt::Service> service(m_attachedModel.getService(i));
         bool servicesMatch = true;
         if (metadataForService(service.data())->uniqueId() != metadataForService(filter)->uniqueId()) {
-            servicesMatch = false;
             continue;
         }
-        for (auto k : key_properties) {
+        for (auto &k : key_properties) {
             const auto keyByteArray = k.toUtf8();
             const char *key = keyByteArray.constData();
             if (!service->property_exists(key) || !service->property_exists(key)) {

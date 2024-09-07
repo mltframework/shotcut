@@ -687,8 +687,10 @@ void MainWindow::setupAndConnectDocks()
             SLOT(onTimelineDockTriggered()));
     connect(m_subtitlesDock, SIGNAL(addAllTimeline(Mlt::Playlist *, bool, bool)),
             SLOT(onAddAllToTimeline(Mlt::Playlist *, bool, bool)));
-    connect(m_subtitlesDock, SIGNAL(createOrEditFilterOnOutput(Mlt::Filter *, const QStringList &)),
-            SLOT(onCreateOrEditFilterOnOutput(Mlt::Filter *, const QStringList &)));
+    connect(m_subtitlesDock, &SubtitlesDock::createOrEditFilterOnOutput, this,
+            &MainWindow::onCreateOrEditFilterOnOutput);
+    connect(m_encodeDock, &EncodeDock::createOrEditFilterOnOutput, this,
+            &MainWindow::onCreateOrEditFilterOnOutput);
     connect(m_timelineDock->subtitlesModel(), SIGNAL(modified()), this, SLOT(onSubtitleModified()));
 
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
