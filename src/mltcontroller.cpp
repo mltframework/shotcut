@@ -591,7 +591,8 @@ void Controller::setProfile(const QString &profile_name)
     if (!profile_name.isEmpty()) {
         Mlt::Profile tmp(profile_name.toUtf8().constData());
         m_profile.set_colorspace(tmp.colorspace());
-        m_profile.set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
+        auto gcd = Util::greatestCommonDivisor(tmp.frame_rate_num(), tmp.frame_rate_den());
+        m_profile.set_frame_rate(tmp.frame_rate_num() / gcd, tmp.frame_rate_den() / gcd);
         m_profile.set_height(Util::coerceMultiple(tmp.height()));
         m_profile.set_progressive(tmp.progressive());
         m_profile.set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
