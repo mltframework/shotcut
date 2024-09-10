@@ -651,7 +651,14 @@ void MainWindow::setupAndConnectDocks()
     connect(m_playlistDock->model(), SIGNAL(modified()), m_encodeDock, SLOT(onProducerOpened()));
     connect(m_timelineDock, SIGNAL(clipCopied()), m_encodeDock, SLOT(onProducerOpened()));
     connect(m_timelineDock, SIGNAL(markerRangesChanged()), m_encodeDock, SLOT(onProducerOpened()));
-    m_encodeDock->onProfileChanged();
+    connect(m_timelineDock->model(), &MultitrackModel::filteredChanged, m_encodeDock,
+            &EncodeDock::onProfileChanged);
+    connect(m_filterController, &FilterController::filterChanged, this, [&](Mlt::Service * filter) {
+        if (filter && filter->is_valid() && !::qstrcmp("reframe", filter->get(kShotcutFilterProperty))
+                && (!filter->get_int("disable") == m_encodeDock->isResampleEnabled())) {
+            m_encodeDock->onProfileChanged();
+        }
+    });
 
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();

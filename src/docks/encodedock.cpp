@@ -431,6 +431,11 @@ bool EncodeDock::isExportInProgress() const
     return !m_immediateJob.isNull();
 }
 
+bool EncodeDock::isResampleEnabled() const
+{
+    return ui->resampleButton->isEnabled();
+}
+
 void EncodeDock::onProducerOpened()
 {
     int index = 0;
@@ -1908,7 +1913,7 @@ void EncodeDock::onProfileChanged()
         ui->gopSpinner->setValue(qRound(MLT.profile().fps() * 5.0));
         ui->gopSpinner->blockSignals(false);
     }
-    auto reframe = getReframeFilter(MLT.producer());
+    auto reframe = getReframeFilter(fromProducer());
     if (reframe.is_valid()) {
         auto rect = reframe.anim_get_rect("rect", 0);
         if (rect.w > 0 && rect.h > 0) {

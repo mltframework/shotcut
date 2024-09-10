@@ -55,6 +55,7 @@ public:
 
     void loadPresetFromProperties(Mlt::Properties &);
     bool isExportInProgress() const;
+    bool isResampleEnabled() const;
 
 signals:
     void captureStateChanged(bool);
