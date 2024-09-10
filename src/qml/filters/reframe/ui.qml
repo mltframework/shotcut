@@ -138,7 +138,7 @@ Shotcut.KeyframableFilter {
     height: 100
     Component.onCompleted: {
         filter.blockSignals = true;
-        let width = profile.height * 9/16;
+        let width = profile.height * 9 / 16;
         width += width % 2;
         let rect = Qt.rect(0.5 * (profile.width - width), 0, width, profile.height);
         filter.set(startValueRect, rect);
@@ -146,18 +146,16 @@ Shotcut.KeyframableFilter {
         filter.set(endValueRect, rect);
         filter.set('filter', '0');
         if (filter.isNew) {
-            width = profile.height * 4/3;
+            width = profile.height * 4 / 3;
             width += width % 2;
             rect = Qt.rect(0.5 * (profile.width - width), 0, width, profile.height);
             filter.set(rectProperty, rect);
             filter.savePreset(preset.parameters, qsTr('Horizontal 4:3'));
-
-            width = profile.height * 16/9;
+            width = profile.height * 16 / 9;
             width += width % 2;
             rect = Qt.rect(0.5 * (profile.width - width), 0, width, profile.height);
             filter.set(rectProperty, rect);
             filter.savePreset(preset.parameters, qsTr('Horizontal 16:9'));
-
             width = profile.height;
             width += width % 2;
             rect = Qt.rect(0.5 * (profile.width - width), 0, width, profile.height);
@@ -165,7 +163,7 @@ Shotcut.KeyframableFilter {
             filter.savePreset(preset.parameters, qsTr('Square'));
 
             // Set default parameter values
-            width = profile.height * 9/16;
+            width = profile.height * 9 / 16;
             width += width % 2;
             rect = Qt.rect(0.5 * (profile.width - width), 0, width, profile.height);
             filter.set(rectProperty, rect);
@@ -316,7 +314,7 @@ Shotcut.KeyframableFilter {
                 to: profile.width - filterRect.x
                 onValueModified: {
                     if (filterRect.width !== value) {
-                        value += value % 2 * (value > filterRect.width ? 1 : -1)
+                        value += value % 2 * (value > filterRect.width ? 1 : -1);
                         filterRect.width = value;
                         updateFilterRect(getPosition(), true);
                     }
@@ -340,7 +338,7 @@ Shotcut.KeyframableFilter {
                 to: profile.height - filterRect.y
                 onValueModified: {
                     if (filterRect.height !== value) {
-                        value += value % 2 * (value > filterRect.height ? 1 : -1)
+                        value += value % 2 * (value > filterRect.height ? 1 : -1);
                         filterRect.height = value;
                         updateFilterRect(getPosition(), true);
                     }
