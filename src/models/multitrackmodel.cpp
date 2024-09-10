@@ -3513,6 +3513,7 @@ void MultitrackModel::close()
     m_trackList.clear();
     endResetModel();
     emit closed();
+    emit filteredChanged();
 }
 
 int MultitrackModel::clipIndex(int trackIndex, int position)
