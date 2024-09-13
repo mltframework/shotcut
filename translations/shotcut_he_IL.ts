@@ -815,39 +815,39 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="993"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="812"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="818"/>
         <source>Reverse...</source>
         <translation>היפוך...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1057"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1009"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1015"/>
         <source>Extract Sub-clip...</source>
         <translation>ייצוא תת־קליפ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="333"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="404"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="336"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="407"/>
         <source>None</source>
         <translation>כלום</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="362"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="365"/>
         <source>unknown (%1)</source>
         <translation>לא ידוע (%1)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="435"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="438"/>
         <source>All</source>
         <translation>הכול</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="474"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="477"/>
         <source>(PROXY)</source>
         <translation>(פרוקסי)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="513"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="516"/>
         <source>(variable)</source>
         <translation>(משתנה)</translation>
     </message>
@@ -868,102 +868,102 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="737"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="808"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="740"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="814"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>בחר פורמט מתאים לעריכה למטה ולאחר מכן לחץ על אישור כדי לבחור שם קובץ. לאחר בחירת שם קובץ, נוצר תהליך. בסיום, לחץ פעמיים על ה תהליך כדי לפתוח אותו.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="896"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="902"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="917"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="923"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="927"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="933"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="969"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="975"/>
         <source>Convert %1</source>
         <translation>המרת %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="931"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="937"/>
         <source>Reversed</source>
         <translation>הופך</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="950"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="956"/>
         <source>Reverse canceled</source>
         <translation>היפוך בוטל</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="977"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="983"/>
         <source>Reverse %1</source>
         <translation>הפוך% 1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1311"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1317"/>
         <source>Choose the Other Video</source>
         <translation>בחר ב וידאו אחר</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1351"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1357"/>
         <source>Measure %1</source>
         <translation>מדוד %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1008"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1014"/>
         <source>Sub-clip</source>
         <translation>תת־קליפ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1010"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1016"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1054"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1060"/>
         <source>Extract sub-clip %1</source>
         <translation>ייצוא תת־קליפ %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1072"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1120"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1078"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1126"/>
         <source>Track %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1074"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1122"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1080"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1128"/>
         <source>Track %1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1078"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1084"/>
         <source>Export Subtitles...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1080"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1086"/>
         <source>No subtitles found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1136"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1142"/>
         <source>Extract subtitles %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1248"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1254"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -972,22 +972,22 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1292"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1298"/>
         <source>Set Equirectangular Projection</source>
         <translation>הגדר הקרנה מלבנית</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1302"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1308"/>
         <source>Successfully wrote %1</source>
         <translation>נכתב בהצלחה %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1304"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1310"/>
         <source>An error occurred saving the projection.</source>
         <translation>אירעה שגיאה בשמירת ההקרנה.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1408"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1414"/>
         <source>Bitrate %1</source>
         <translation>קצב סיביות 1%</translation>
     </message>
@@ -1613,107 +1613,107 @@ leave blank to use the clipboard:</source>
         <translation>ווידאו</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="411"/>
+        <location filename="../src/docks/encodedock.ui" line="455"/>
         <source>Interpolation</source>
         <translation>Interpolation</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="465"/>
+        <location filename="../src/docks/encodedock.ui" line="509"/>
         <source>Field order</source>
         <translation>סדר שדה</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="475"/>
+        <location filename="../src/docks/encodedock.ui" line="519"/>
         <source>Aspect ratio</source>
         <translation>יחס גובה־רוחב</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="649"/>
+        <location filename="../src/docks/encodedock.ui" line="693"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="505"/>
+        <location filename="../src/docks/encodedock.ui" line="549"/>
         <source>Scan mode</source>
         <translation>מצב סריקה</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="590"/>
+        <location filename="../src/docks/encodedock.ui" line="634"/>
         <source>Interlaced</source>
         <translation>שלובים</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="595"/>
+        <location filename="../src/docks/encodedock.ui" line="639"/>
         <source>Progressive</source>
         <translation>מתקדם</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="543"/>
+        <location filename="../src/docks/encodedock.ui" line="587"/>
         <source>Resolution</source>
         <translation>רזולוציה</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="495"/>
+        <location filename="../src/docks/encodedock.ui" line="539"/>
         <source>Frames/sec</source>
         <translation>פריימים/שנייה</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="842"/>
+        <location filename="../src/docks/encodedock.ui" line="886"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="750"/>
+        <location filename="../src/docks/encodedock.ui" line="794"/>
         <source>Bottom Field First</source>
         <translation>שדה תחתון ראשון</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="755"/>
+        <location filename="../src/docks/encodedock.ui" line="799"/>
         <source>Top Field First</source>
         <translation>שדה עליון ראשון</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="784"/>
+        <location filename="../src/docks/encodedock.ui" line="828"/>
         <source>One Field (fast)</source>
         <translation>שדה אחד (מהיר)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="789"/>
+        <location filename="../src/docks/encodedock.ui" line="833"/>
         <source>Linear Blend (fast)</source>
         <translation>ערבול ליניארי (מהיר)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="794"/>
+        <location filename="../src/docks/encodedock.ui" line="838"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - זמני בלבד (טוב)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="485"/>
+        <location filename="../src/docks/encodedock.ui" line="529"/>
         <source>Deinterlacer</source>
         <translation>ביטול שזירה</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="427"/>
+        <location filename="../src/docks/encodedock.ui" line="471"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>השכן הקרוב (מהיר)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="432"/>
+        <location filename="../src/docks/encodedock.ui" line="476"/>
         <source>Bilinear (good)</source>
         <translation>ביליניארי (טוב)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="437"/>
+        <location filename="../src/docks/encodedock.ui" line="481"/>
         <source>Bicubic (better)</source>
         <translation>ביקיובי (טוב יותר)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="737"/>
+        <location filename="../src/docks/encodedock.ui" line="781"/>
         <source>Use preview scaling</source>
         <translation>השתמש בקנה מידה תצוגה מקדימה</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="525"/>
+        <location filename="../src/docks/encodedock.ui" line="569"/>
         <source>This enables multiple image processing threads.
 Sometimes, this can be a problem, and you can
 test if turning this off helps. For example, some
@@ -1728,241 +1728,251 @@ AVCHD משולב בשילוב עם ה-YADIF
 כאשר עיבוד מקביל מופעל.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="515"/>
+        <location filename="../src/docks/encodedock.ui" line="330"/>
+        <source>Reframe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="337"/>
+        <source>Resample</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.ui" line="559"/>
         <source>Color range</source>
         <translation>טווח צבע</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="533"/>
+        <location filename="../src/docks/encodedock.ui" line="577"/>
         <source>Parallel processing</source>
         <translation>עיבוד מקבילי</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="556"/>
+        <location filename="../src/docks/encodedock.ui" line="600"/>
         <source>Broadcast Limited (MPEG)</source>
         <translation>שידור מוגבל (MPEG)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="561"/>
+        <location filename="../src/docks/encodedock.ui" line="605"/>
         <source>Full (JPEG)</source>
         <translation>מלאה (JPEG)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="799"/>
+        <location filename="../src/docks/encodedock.ui" line="843"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation>YADIF - זמני + מרחבי (טוב יותר)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="804"/>
+        <location filename="../src/docks/encodedock.ui" line="848"/>
         <source>BWDIF (best)</source>
         <translation>BWDIF (הטוב ביותר)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="881"/>
-        <location filename="../src/docks/encodedock.ui" line="890"/>
-        <location filename="../src/docks/encodedock.ui" line="1573"/>
+        <location filename="../src/docks/encodedock.ui" line="925"/>
+        <location filename="../src/docks/encodedock.ui" line="934"/>
+        <location filename="../src/docks/encodedock.ui" line="1617"/>
         <source>Codec</source>
         <translation>קידוד</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="920"/>
+        <location filename="../src/docks/encodedock.ui" line="964"/>
         <source>GOP</source>
         <translation>GOP</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="932"/>
+        <location filename="../src/docks/encodedock.ui" line="976"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
         <translation>GOP = קבוצת תמונות, שהיא מרווח הפריימים המקסימלי המפתח</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="945"/>
+        <location filename="../src/docks/encodedock.ui" line="989"/>
         <source>frames</source>
         <translation>פריימים</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="965"/>
+        <location filename="../src/docks/encodedock.ui" line="1009"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
         <translation>GOP קבוע אומר שפריימים מפתח 
 לא יוכנסו בשינויי סצנה שזוהו.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="969"/>
+        <location filename="../src/docks/encodedock.ui" line="1013"/>
         <source>Fixed</source>
         <translation>קבוע</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="993"/>
-        <location filename="../src/docks/encodedock.ui" line="1615"/>
+        <location filename="../src/docks/encodedock.ui" line="1037"/>
+        <location filename="../src/docks/encodedock.ui" line="1659"/>
         <source>The average bit rate</source>
         <translation>קצב הסיביות הממוצע</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1146"/>
-        <location filename="../src/docks/encodedock.ui" line="1698"/>
+        <location filename="../src/docks/encodedock.ui" line="1190"/>
+        <location filename="../src/docks/encodedock.ui" line="1742"/>
         <source>b/s</source>
         <translation>b/s</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1168"/>
+        <location filename="../src/docks/encodedock.ui" line="1212"/>
         <source>Disable video</source>
         <translation>השבת את הסרטון</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1175"/>
+        <location filename="../src/docks/encodedock.ui" line="1219"/>
         <source>Dual pass</source>
         <translation>Dual pass</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1182"/>
+        <location filename="../src/docks/encodedock.ui" line="1226"/>
         <source>B frames</source>
         <translation>פריימים B</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1194"/>
+        <location filename="../src/docks/encodedock.ui" line="1238"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
         <translation>פריימים B הן תמונות ה&quot;דלתא&quot; הדו-כיווניות 
 בדחיסה זמנית</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1233"/>
+        <location filename="../src/docks/encodedock.ui" line="1277"/>
         <source>Codec threads</source>
         <translation>שרשורי Codec</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1248"/>
+        <location filename="../src/docks/encodedock.ui" line="1292"/>
         <source>(0 = auto)</source>
         <translation>(0 = אוטומטית)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1270"/>
-        <location filename="../src/docks/encodedock.ui" line="1740"/>
+        <location filename="../src/docks/encodedock.ui" line="1314"/>
+        <location filename="../src/docks/encodedock.ui" line="1784"/>
         <source>Rate control</source>
         <translation>בקרת קצב</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1283"/>
-        <location filename="../src/docks/encodedock.ui" line="1753"/>
+        <location filename="../src/docks/encodedock.ui" line="1327"/>
+        <location filename="../src/docks/encodedock.ui" line="1797"/>
         <source>Average Bitrate</source>
         <translation>קצב סיביות ממוצע</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1288"/>
-        <location filename="../src/docks/encodedock.ui" line="1758"/>
+        <location filename="../src/docks/encodedock.ui" line="1332"/>
+        <location filename="../src/docks/encodedock.ui" line="1802"/>
         <source>Constant Bitrate</source>
         <translation>קצב סיביות קבוע</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1293"/>
-        <location filename="../src/docks/encodedock.ui" line="1763"/>
+        <location filename="../src/docks/encodedock.ui" line="1337"/>
+        <location filename="../src/docks/encodedock.ui" line="1807"/>
         <source>Quality-based VBR</source>
         <translation>VBR מבוסס איכות</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1298"/>
+        <location filename="../src/docks/encodedock.ui" line="1342"/>
         <source>Constrained VBR</source>
         <translation>VBR מוגבל</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1321"/>
+        <location filename="../src/docks/encodedock.ui" line="1365"/>
         <source>Buffer size</source>
         <translation>גודל מטמון</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1343"/>
+        <location filename="../src/docks/encodedock.ui" line="1387"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1365"/>
-        <location filename="../src/docks/encodedock.ui" line="1786"/>
+        <location filename="../src/docks/encodedock.ui" line="1409"/>
+        <location filename="../src/docks/encodedock.ui" line="1830"/>
         <source>Quality</source>
         <translation>איכות</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1377"/>
-        <location filename="../src/docks/encodedock.ui" line="1798"/>
+        <location filename="../src/docks/encodedock.ui" line="1421"/>
+        <location filename="../src/docks/encodedock.ui" line="1842"/>
         <source> %</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1393"/>
-        <location filename="../src/docks/encodedock.ui" line="1814"/>
+        <location filename="../src/docks/encodedock.ui" line="1437"/>
+        <location filename="../src/docks/encodedock.ui" line="1858"/>
         <source>TextLabel</source>
         <translation>תווית־טקסט</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1415"/>
-        <location filename="../src/docks/encodedock.ui" line="1603"/>
+        <location filename="../src/docks/encodedock.ui" line="1459"/>
+        <location filename="../src/docks/encodedock.ui" line="1647"/>
         <source>Bitrate</source>
         <translation>קצב סיביות</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1426"/>
+        <location filename="../src/docks/encodedock.ui" line="1470"/>
         <source>Audio</source>
         <translation>שמע</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1435"/>
+        <location filename="../src/docks/encodedock.ui" line="1479"/>
         <source>Channels</source>
         <translation>ערוצים</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1447"/>
+        <location filename="../src/docks/encodedock.ui" line="1491"/>
         <source>The number of audio channels in the output.</source>
         <translation>מספר ערוצי השמע בפלט.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1451"/>
+        <location filename="../src/docks/encodedock.ui" line="1495"/>
         <source>1 (mono)</source>
         <translation>1 (מונו)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1456"/>
+        <location filename="../src/docks/encodedock.ui" line="1500"/>
         <source>2 (stereo)</source>
         <translation>2 (סטריאו)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1461"/>
+        <location filename="../src/docks/encodedock.ui" line="1505"/>
         <source>4 (quad/Ambisonics)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1466"/>
+        <location filename="../src/docks/encodedock.ui" line="1510"/>
         <source>6 (5.1 surround)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1541"/>
+        <location filename="../src/docks/encodedock.ui" line="1585"/>
         <source>Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1563"/>
+        <location filename="../src/docks/encodedock.ui" line="1607"/>
         <source>Sample rate</source>
         <translation>קצב דגימה</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1720"/>
+        <location filename="../src/docks/encodedock.ui" line="1764"/>
         <source>Disable audio</source>
         <translation>השבתת שמע</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1837"/>
+        <location filename="../src/docks/encodedock.ui" line="1881"/>
         <source>Other</source>
         <translation>אחרים</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1853"/>
+        <location filename="../src/docks/encodedock.ui" line="1897"/>
         <source>Disable subtitles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1886"/>
-        <location filename="../src/docks/encodedock.cpp" line="1037"/>
-        <location filename="../src/docks/encodedock.cpp" line="1686"/>
-        <location filename="../src/docks/encodedock.cpp" line="2121"/>
+        <location filename="../src/docks/encodedock.ui" line="1930"/>
+        <location filename="../src/docks/encodedock.cpp" line="1112"/>
+        <location filename="../src/docks/encodedock.cpp" line="1785"/>
+        <location filename="../src/docks/encodedock.cpp" line="2241"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="934"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1544"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1999"/>
@@ -1970,30 +1980,30 @@ in temporal compression</source>
         <translation>ייצוא הקובץ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1896"/>
+        <location filename="../src/docks/encodedock.ui" line="1940"/>
         <source>Reset options to defaults</source>
         <translation>שחזור האפשרויות לברירות המחדל</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1899"/>
+        <location filename="../src/docks/encodedock.ui" line="1943"/>
         <source>Reset</source>
         <translation>איפוס</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1906"/>
+        <location filename="../src/docks/encodedock.ui" line="1950"/>
         <source>Advanced</source>
         <translation>מתקדם</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1916"/>
+        <location filename="../src/docks/encodedock.ui" line="1960"/>
         <source>Always start in Advanced mode</source>
         <translation>התחל תמיד במצב מתקדם</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1926"/>
-        <location filename="../src/docks/encodedock.cpp" line="1830"/>
-        <location filename="../src/docks/encodedock.cpp" line="1837"/>
-        <location filename="../src/docks/encodedock.cpp" line="1950"/>
+        <location filename="../src/docks/encodedock.ui" line="1970"/>
+        <location filename="../src/docks/encodedock.cpp" line="1947"/>
+        <location filename="../src/docks/encodedock.cpp" line="1954"/>
+        <location filename="../src/docks/encodedock.cpp" line="2067"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1709"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1716"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1829"/>
@@ -2001,10 +2011,10 @@ in temporal compression</source>
         <translation>זרם</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1953"/>
-        <location filename="../src/docks/encodedock.cpp" line="1659"/>
-        <location filename="../src/docks/encodedock.cpp" line="1755"/>
-        <location filename="../src/docks/encodedock.cpp" line="1768"/>
+        <location filename="../src/docks/encodedock.ui" line="1997"/>
+        <location filename="../src/docks/encodedock.cpp" line="1758"/>
+        <location filename="../src/docks/encodedock.cpp" line="1854"/>
+        <location filename="../src/docks/encodedock.cpp" line="1867"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1519"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1634"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1647"/>
@@ -2012,63 +2022,63 @@ in temporal compression</source>
         <translation>עצור לכידת</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="110"/>
+        <location filename="../src/docks/encodedock.cpp" line="121"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="111"/>
         <source>Automatic from extension</source>
         <translation>אוטומטית מתוך הרחבה</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="118"/>
-        <location filename="../src/docks/encodedock.cpp" line="128"/>
+        <location filename="../src/docks/encodedock.cpp" line="129"/>
+        <location filename="../src/docks/encodedock.cpp" line="139"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="119"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="129"/>
         <source>Default for format</source>
         <translation>ברירת מחדל לפורמט</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="429"/>
+        <location filename="../src/docks/encodedock.cpp" line="445"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="417"/>
         <source>Timeline</source>
         <translation>ציר הזמן</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="431"/>
+        <location filename="../src/docks/encodedock.cpp" line="447"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="419"/>
         <source>Playlist</source>
         <translation>רשימת ניגון</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="432"/>
+        <location filename="../src/docks/encodedock.cpp" line="448"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="420"/>
         <source>Each Playlist Item</source>
         <translation>כל פריט ברשימת הניגון</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="435"/>
-        <location filename="../src/docks/encodedock.cpp" line="441"/>
+        <location filename="../src/docks/encodedock.cpp" line="451"/>
+        <location filename="../src/docks/encodedock.cpp" line="457"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="423"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="429"/>
         <source>Source</source>
         <translation>מקור</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="446"/>
-        <location filename="../src/docks/encodedock.cpp" line="453"/>
+        <location filename="../src/docks/encodedock.cpp" line="462"/>
+        <location filename="../src/docks/encodedock.cpp" line="469"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="434"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="441"/>
         <source>Marker</source>
         <translation>סמן</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="464"/>
+        <location filename="../src/docks/encodedock.cpp" line="480"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="452"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>עליך להזין ערכים מספריים באמצעות &apos;%1&apos; בתור הנקודה העשרונית.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="473"/>
-        <location filename="../src/docks/encodedock.cpp" line="1607"/>
-        <location filename="../src/docks/encodedock.cpp" line="1608"/>
+        <location filename="../src/docks/encodedock.cpp" line="489"/>
+        <location filename="../src/docks/encodedock.cpp" line="1706"/>
+        <location filename="../src/docks/encodedock.cpp" line="1707"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="461"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1467"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1468"/>
@@ -2076,19 +2086,19 @@ in temporal compression</source>
         <translation>התאמה אישית</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="509"/>
+        <location filename="../src/docks/encodedock.cpp" line="525"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="497"/>
         <source>Stock</source>
         <translation>מלאי</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="512"/>
+        <location filename="../src/docks/encodedock.cpp" line="528"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="500"/>
         <source>Default</source>
         <translation>ברירת המחדל</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1093"/>
+        <location filename="../src/docks/encodedock.cpp" line="1168"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="990"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
@@ -2096,7 +2106,7 @@ Try again with a different folder or file name.</source>
 נסה שוב עם תיקיה או שם קובץ אחר.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1341"/>
+        <location filename="../src/docks/encodedock.cpp" line="1440"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1219"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
@@ -2104,112 +2114,112 @@ Do you want to run the analysis jobs now?</source>
 האם אתה רוצה להפעיל את עבודות הניתוח עכשיו?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1686"/>
-        <location filename="../src/docks/encodedock.cpp" line="2123"/>
+        <location filename="../src/docks/encodedock.cpp" line="1785"/>
+        <location filename="../src/docks/encodedock.cpp" line="2243"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1544"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2001"/>
         <source>Capture File</source>
         <translation>לכידת קובץ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1688"/>
+        <location filename="../src/docks/encodedock.cpp" line="1787"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1546"/>
         <source>Export Files</source>
         <translation>ייצוא קבצים</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1689"/>
+        <location filename="../src/docks/encodedock.cpp" line="1788"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1547"/>
         <source>Export Each Playlist Item</source>
         <translation>ייצא כל פריט ברשימת השמעה</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1698"/>
+        <location filename="../src/docks/encodedock.cpp" line="1797"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1556"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1700"/>
+        <location filename="../src/docks/encodedock.cpp" line="1799"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1558"/>
         <source>Determined by Export (*)</source>
         <translation>נקבע על ידי ייצוא (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1825"/>
-        <location filename="../src/docks/encodedock.cpp" line="1847"/>
+        <location filename="../src/docks/encodedock.cpp" line="1942"/>
+        <location filename="../src/docks/encodedock.cpp" line="1964"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1704"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1726"/>
         <source>Stop Stream</source>
         <translation>עצור את הזרם</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1839"/>
+        <location filename="../src/docks/encodedock.cpp" line="1956"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1718"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>הזן את ערכת פרוטוקול הרשת, הכתובת, היציאה והפרמטרים ככתובת URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1883"/>
+        <location filename="../src/docks/encodedock.cpp" line="2000"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1762"/>
         <source>Add Export Preset</source>
         <translation>הוסף הגדרה מראש של ייצוא</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1927"/>
+        <location filename="../src/docks/encodedock.cpp" line="2044"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1806"/>
         <source>Delete Preset</source>
         <translation>מחק הגדרה מראש</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1928"/>
+        <location filename="../src/docks/encodedock.cpp" line="2045"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1807"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>האם ברצונך למחוק את %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2056"/>
+        <location filename="../src/docks/encodedock.cpp" line="2173"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1934"/>
         <source>None</source>
         <translation>כלום</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2107"/>
+        <location filename="../src/docks/encodedock.cpp" line="2224"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="1985"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2248"/>
+        <location filename="../src/docks/encodedock.cpp" line="2368"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2085"/>
         <source>Detect</source>
         <translation>זיהוי</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2301"/>
+        <location filename="../src/docks/encodedock.cpp" line="2421"/>
         <source>(auto)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2345"/>
+        <location filename="../src/docks/encodedock.cpp" line="2465"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2176"/>
         <source>Detecting hardware encoders...</source>
         <translation>מזהה מקודדי חומרה...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2381"/>
+        <location filename="../src/docks/encodedock.cpp" line="2501"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2210"/>
         <source>Nothing found</source>
         <translation>לא נמצא כלום</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2383"/>
+        <location filename="../src/docks/encodedock.cpp" line="2503"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2212"/>
         <source>Found %1</source>
         <translation>%1 נמצא</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2604"/>
+        <location filename="../src/docks/encodedock.cpp" line="2724"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2283"/>
         <source>Your project is missing some files.
 
@@ -2221,18 +2231,28 @@ Shotcut will attempt to repair your project.</source>
 Shotcut ינסה לתקן את הפרויקט שלך.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2246"/>
+        <location filename="../src/docks/encodedock.cpp" line="2771"/>
+        <source>Resample Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="2772"/>
+        <source>&lt;p&gt;Reframe is for experts and may not do what you expect.&lt;/p&gt;&lt;p&gt;Do you want to change &lt;b&gt;Video Mode&lt;/b&gt; in the &lt;b&gt;Settings&lt;/b&gt; menu?&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="2366"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2083"/>
         <source>Configure Hardware Encoding</source>
         <translation>הגדר קידוד חומרה</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1718"/>
+        <location filename="../src/docks/encodedock.cpp" line="1817"/>
         <source>Export canceled</source>
         <translation>הייצוא בוטל</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2270"/>
+        <location filename="../src/docks/encodedock.cpp" line="2390"/>
         <location filename="../src/docks/encodedock.cpp.orig" line="2107"/>
         <source>Export Frames/sec</source>
         <translation>ייצוא פריימים/שנייה</translation>
@@ -4044,7 +4064,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="496"/>
-        <location filename="../src/mainwindow.cpp" line="3519"/>
+        <location filename="../src/mainwindow.cpp" line="3528"/>
         <location filename="../src/mainwindow.cpp.orig" line="3079"/>
         <source>Enter Full Screen</source>
         <translation>כניסה למצב מסך מלא</translation>
@@ -4057,7 +4077,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="520"/>
         <location filename="../src/mainwindow.cpp" line="397"/>
-        <location filename="../src/mainwindow.cpp" line="2125"/>
+        <location filename="../src/mainwindow.cpp" line="2134"/>
         <location filename="../src/mainwindow.cpp.orig" line="371"/>
         <location filename="../src/mainwindow.cpp.orig" line="1881"/>
         <source>Properties</source>
@@ -4065,7 +4085,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="529"/>
-        <location filename="../src/mainwindow.cpp" line="2134"/>
+        <location filename="../src/mainwindow.cpp" line="2143"/>
         <location filename="../src/mainwindow.cpp.orig" line="1890"/>
         <source>Recent</source>
         <translation>לאחרונה</translation>
@@ -4200,7 +4220,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="181"/>
         <location filename="../src/mainwindow.ui" line="781"/>
-        <location filename="../src/mainwindow.cpp" line="2144"/>
+        <location filename="../src/mainwindow.cpp" line="2153"/>
         <location filename="../src/mainwindow.cpp.orig" line="1899"/>
         <source>Timeline</source>
         <translation>ציר הזמן</translation>
@@ -4296,7 +4316,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1344"/>
         <location filename="../src/mainwindow.ui" line="1347"/>
-        <location filename="../src/mainwindow.cpp" line="5278"/>
+        <location filename="../src/mainwindow.cpp" line="5314"/>
         <location filename="../src/mainwindow.cpp.orig" line="4747"/>
         <source>Export Chapters</source>
         <translation>ייצוא פרקים</translation>
@@ -4698,148 +4718,148 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 אנא התקן אותו באמצעות מנהל החבילות שלך. זה עשוי להיקרא libsdl2-2.0-0, SDL2 או דומה.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="963"/>
+        <location filename="../src/mainwindow.cpp" line="972"/>
         <location filename="../src/mainwindow.cpp.orig" line="768"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>מסך %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="988"/>
+        <location filename="../src/mainwindow.cpp" line="997"/>
         <location filename="../src/mainwindow.cpp.orig" line="792"/>
         <source>Off</source>
         <translation>כבוי</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="991"/>
+        <location filename="../src/mainwindow.cpp" line="1000"/>
         <location filename="../src/mainwindow.cpp.orig" line="795"/>
         <source>Internal</source>
         <translation>פנימי</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="994"/>
+        <location filename="../src/mainwindow.cpp" line="1003"/>
         <location filename="../src/mainwindow.cpp.orig" line="798"/>
         <source>External</source>
         <translation>חיצוני</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1008"/>
+        <location filename="../src/mainwindow.cpp" line="1017"/>
         <location filename="../src/mainwindow.cpp.orig" line="812"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1298"/>
-        <location filename="../src/mainwindow.cpp" line="1248"/>
+        <location filename="../src/mainwindow.cpp" line="1257"/>
         <location filename="../src/mainwindow.cpp.orig" line="1049"/>
         <source>Color</source>
         <translation>צבע</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1250"/>
+        <location filename="../src/mainwindow.cpp" line="1259"/>
         <location filename="../src/mainwindow.cpp.orig" line="1051"/>
         <source>Text</source>
         <translation>טקסט</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1253"/>
+        <location filename="../src/mainwindow.cpp" line="1262"/>
         <location filename="../src/mainwindow.cpp.orig" line="1054"/>
         <source>Animation</source>
         <translation>אנימציה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1256"/>
+        <location filename="../src/mainwindow.cpp" line="1265"/>
         <location filename="../src/mainwindow.cpp.orig" line="1057"/>
         <source>Noise</source>
         <translation>רעש</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1258"/>
+        <location filename="../src/mainwindow.cpp" line="1267"/>
         <location filename="../src/mainwindow.cpp.orig" line="1059"/>
         <source>Ising</source>
         <translation>איזינג</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1260"/>
+        <location filename="../src/mainwindow.cpp" line="1269"/>
         <location filename="../src/mainwindow.cpp.orig" line="1061"/>
         <source>Lissajous</source>
         <translation>ליסז&apos;ו</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1263"/>
+        <location filename="../src/mainwindow.cpp" line="1272"/>
         <location filename="../src/mainwindow.cpp.orig" line="1064"/>
         <source>Plasma</source>
         <translation>פלזמה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1265"/>
+        <location filename="../src/mainwindow.cpp" line="1274"/>
         <location filename="../src/mainwindow.cpp.orig" line="1066"/>
         <source>Color Bars</source>
         <translation>סרגל צבע</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1268"/>
+        <location filename="../src/mainwindow.cpp" line="1277"/>
         <location filename="../src/mainwindow.cpp.orig" line="1069"/>
         <source>Audio Tone</source>
         <translation>טון שמע</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1270"/>
+        <location filename="../src/mainwindow.cpp" line="1279"/>
         <location filename="../src/mainwindow.cpp.orig" line="1071"/>
         <source>Count</source>
         <translation>ספירה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1272"/>
+        <location filename="../src/mainwindow.cpp" line="1281"/>
         <location filename="../src/mainwindow.cpp.orig" line="1073"/>
         <source>Blip Flash</source>
         <translation>צפצוף הבזק</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1276"/>
+        <location filename="../src/mainwindow.cpp" line="1285"/>
         <location filename="../src/mainwindow.cpp.orig" line="1077"/>
         <source>Video4Linux</source>
         <translation>וידאו 4 Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1277"/>
+        <location filename="../src/mainwindow.cpp" line="1286"/>
         <location filename="../src/mainwindow.cpp.orig" line="1078"/>
         <source>PulseAudio</source>
         <translation>דופק שמע</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1278"/>
+        <location filename="../src/mainwindow.cpp" line="1287"/>
         <location filename="../src/mainwindow.cpp.orig" line="1079"/>
         <source>JACK Audio</source>
         <translation>שמע JACK</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1279"/>
+        <location filename="../src/mainwindow.cpp" line="1288"/>
         <location filename="../src/mainwindow.cpp.orig" line="1080"/>
         <source>ALSA Audio</source>
         <translation>שמע ALSA</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1281"/>
+        <location filename="../src/mainwindow.cpp" line="1290"/>
         <location filename="../src/mainwindow.cpp.orig" line="1082"/>
         <source>Audio/Video Device</source>
         <translation>התקן שמע/וידאו</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1285"/>
+        <location filename="../src/mainwindow.cpp" line="1294"/>
         <location filename="../src/mainwindow.cpp.orig" line="1086"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1307"/>
-        <location filename="../src/mainwindow.cpp" line="1309"/>
-        <location filename="../src/mainwindow.cpp" line="1730"/>
-        <location filename="../src/mainwindow.cpp" line="1738"/>
-        <location filename="../src/mainwindow.cpp" line="1759"/>
-        <location filename="../src/mainwindow.cpp" line="1816"/>
-        <location filename="../src/mainwindow.cpp" line="4129"/>
-        <location filename="../src/mainwindow.cpp" line="4142"/>
-        <location filename="../src/mainwindow.cpp" line="5059"/>
+        <location filename="../src/mainwindow.cpp" line="1316"/>
+        <location filename="../src/mainwindow.cpp" line="1318"/>
+        <location filename="../src/mainwindow.cpp" line="1739"/>
+        <location filename="../src/mainwindow.cpp" line="1747"/>
+        <location filename="../src/mainwindow.cpp" line="1768"/>
+        <location filename="../src/mainwindow.cpp" line="1825"/>
+        <location filename="../src/mainwindow.cpp" line="4165"/>
+        <location filename="../src/mainwindow.cpp" line="4178"/>
+        <location filename="../src/mainwindow.cpp" line="5095"/>
         <location filename="../src/mainwindow.cpp.orig" line="1108"/>
         <location filename="../src/mainwindow.cpp.orig" line="1110"/>
         <location filename="../src/mainwindow.cpp.orig" line="1507"/>
@@ -4853,12 +4873,12 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
         <translation>הפתיחה נכשלה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1341"/>
+        <location filename="../src/mainwindow.cpp" line="1350"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1353"/>
+        <location filename="../src/mainwindow.cpp" line="1362"/>
         <location filename="../src/mainwindow.cpp.orig" line="1151"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
@@ -4866,25 +4886,25 @@ Do you want to disable GPU effects and restart?</source>
 האם ברצונך להשבית את אפקטי ה-GPU ולהפעיל מחדש?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1375"/>
+        <location filename="../src/mainwindow.cpp" line="1384"/>
         <location filename="../src/mainwindow.cpp.orig" line="1174"/>
         <source>Repaired</source>
         <translation>מתוקן</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1377"/>
+        <location filename="../src/mainwindow.cpp" line="1386"/>
         <location filename="../src/mainwindow.cpp.orig" line="1175"/>
         <source>Save Repaired XML</source>
         <translation>שמור XML מתוקן</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1410"/>
+        <location filename="../src/mainwindow.cpp" line="1419"/>
         <location filename="../src/mainwindow.cpp.orig" line="1208"/>
         <source>Repairing the project failed.</source>
         <translation>תיקון הפרויקט נכשל.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1423"/>
+        <location filename="../src/mainwindow.cpp" line="1432"/>
         <location filename="../src/mainwindow.cpp.orig" line="1221"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
@@ -4898,25 +4918,25 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 עם &quot;- Repaired&quot; בשם הקובץ ותפתח אותו.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1458"/>
+        <location filename="../src/mainwindow.cpp" line="1467"/>
         <location filename="../src/mainwindow.cpp.orig" line="1256"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>קיימים קבצים שנשמרו אוטומטית. האם ברצונך לשחזר אותם כעת?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1528"/>
+        <location filename="../src/mainwindow.cpp" line="1537"/>
         <location filename="../src/mainwindow.cpp.orig" line="1326"/>
         <source>You cannot add a project to itself!</source>
         <translation>אין באפשרותך להוסיף מיזם אל עצמו!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1566"/>
+        <location filename="../src/mainwindow.cpp" line="1575"/>
         <location filename="../src/mainwindow.cpp.orig" line="1362"/>
         <source>There was an error saving. Please try again.</source>
         <translation>אירעה שגיאה בשמירה. בבקשה נסה שוב.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1643"/>
+        <location filename="../src/mainwindow.cpp" line="1652"/>
         <location filename="../src/mainwindow.cpp.orig" line="1439"/>
         <source>This project file requires a newer version!
 
@@ -4926,7 +4946,7 @@ It was made with version </source>
 זה נעשה עם גרסה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1672"/>
+        <location filename="../src/mainwindow.cpp" line="1681"/>
         <location filename="../src/mainwindow.cpp.orig" line="1464"/>
         <source>You are running low on available memory!
 
@@ -4938,152 +4958,152 @@ Or save and restart Shotcut.</source>
 או שמור והפעל מחדש את Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1724"/>
+        <location filename="../src/mainwindow.cpp" line="1733"/>
         <location filename="../src/mainwindow.cpp.orig" line="1501"/>
         <source>Opening %1</source>
         <translation>כעת בפתיחת %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1857"/>
-        <location filename="../src/mainwindow.cpp" line="4119"/>
+        <location filename="../src/mainwindow.cpp" line="1866"/>
+        <location filename="../src/mainwindow.cpp" line="4155"/>
         <location filename="../src/mainwindow.cpp.orig" line="1632"/>
         <location filename="../src/mainwindow.cpp.orig" line="3613"/>
         <source>Open File</source>
         <translation>פתיחת קובץ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1858"/>
+        <location filename="../src/mainwindow.cpp" line="1867"/>
         <location filename="../src/mainwindow.cpp.orig" line="1633"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>כל הקבצים (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2105"/>
+        <location filename="../src/mainwindow.cpp" line="2114"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2118"/>
+        <location filename="../src/mainwindow.cpp" line="2127"/>
         <location filename="../src/mainwindow.cpp.orig" line="1874"/>
         <source>Rename Clip</source>
         <translation>שנה את שם הקליפ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2127"/>
+        <location filename="../src/mainwindow.cpp" line="2136"/>
         <location filename="../src/mainwindow.cpp.orig" line="1883"/>
         <source>Find</source>
         <translation>מצא</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2136"/>
+        <location filename="../src/mainwindow.cpp" line="2145"/>
         <location filename="../src/mainwindow.cpp.orig" line="1892"/>
         <source>Reload</source>
         <translation>טען שוב</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2266"/>
+        <location filename="../src/mainwindow.cpp" line="2275"/>
         <location filename="../src/mainwindow.cpp.orig" line="1971"/>
         <source>Untitled</source>
         <translation>ללא שם</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2287"/>
+        <location filename="../src/mainwindow.cpp" line="2296"/>
         <location filename="../src/mainwindow.cpp.orig" line="1992"/>
         <source>About %1</source>
         <translation>בערך %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2407"/>
+        <location filename="../src/mainwindow.cpp" line="2416"/>
         <location filename="../src/mainwindow.cpp.orig" line="2113"/>
         <source>Non-Broadcast</source>
         <translation>לא משודר</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2412"/>
+        <location filename="../src/mainwindow.cpp" line="2421"/>
         <location filename="../src/mainwindow.cpp.orig" line="2118"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD מסך רחב NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2413"/>
+        <location filename="../src/mainwindow.cpp" line="2422"/>
         <location filename="../src/mainwindow.cpp.orig" line="2119"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD מסך רחב PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2424"/>
+        <location filename="../src/mainwindow.cpp" line="2433"/>
         <location filename="../src/mainwindow.cpp.orig" line="2130"/>
         <source>Square 1080p 30 fps</source>
         <translation> 1080p 30 תמונות לשנייה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2425"/>
+        <location filename="../src/mainwindow.cpp" line="2434"/>
         <location filename="../src/mainwindow.cpp.orig" line="2131"/>
         <source>Square 1080p 60 fps</source>
         <translation>1080p 60 פריימים לשנייה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2426"/>
+        <location filename="../src/mainwindow.cpp" line="2435"/>
         <location filename="../src/mainwindow.cpp.orig" line="2132"/>
         <source>Vertical HD 30 fps</source>
         <translation>HD אנכי 30 תמונות לשנייה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2427"/>
+        <location filename="../src/mainwindow.cpp" line="2436"/>
         <location filename="../src/mainwindow.cpp.orig" line="2133"/>
         <source>Vertical HD 60 fps</source>
         <translation>HD אנכי 60 תמונות לשנייה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2428"/>
+        <location filename="../src/mainwindow.cpp" line="2437"/>
         <location filename="../src/mainwindow.cpp.orig" line="2134"/>
         <source>Custom</source>
         <translation>התאמה אישית</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2459"/>
-        <location filename="../src/mainwindow.cpp" line="2751"/>
+        <location filename="../src/mainwindow.cpp" line="2468"/>
+        <location filename="../src/mainwindow.cpp" line="2760"/>
         <location filename="../src/mainwindow.cpp.orig" line="2165"/>
         <location filename="../src/mainwindow.cpp.orig" line="2468"/>
         <source>Saved %1</source>
         <translation>נשמר %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2742"/>
-        <location filename="../src/mainwindow.cpp" line="2765"/>
-        <location filename="../src/mainwindow.cpp" line="3961"/>
+        <location filename="../src/mainwindow.cpp" line="2751"/>
+        <location filename="../src/mainwindow.cpp" line="2774"/>
+        <location filename="../src/mainwindow.cpp" line="3978"/>
         <location filename="../src/mainwindow.cpp.orig" line="2460"/>
         <location filename="../src/mainwindow.cpp.orig" line="2482"/>
         <source>Save XML</source>
         <translation>שמירת XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2850"/>
+        <location filename="../src/mainwindow.cpp" line="2859"/>
         <source>Timeline is not loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2860"/>
+        <location filename="../src/mainwindow.cpp" line="2869"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3963"/>
+        <location filename="../src/mainwindow.cpp" line="3980"/>
         <source>Saved backup %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2818"/>
+        <location filename="../src/mainwindow.cpp" line="2827"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3698"/>
+        <location filename="../src/mainwindow.cpp" line="3707"/>
         <source>Opened Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3778"/>
+        <location filename="../src/mainwindow.cpp" line="3787"/>
         <source>GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.
 At this time, a project created with GPU effects cannot be converted to a CPU-only project later.
 
@@ -5091,36 +5111,36 @@ Do you want to enable GPU effects and restart Shotcut?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4721"/>
+        <location filename="../src/mainwindow.cpp" line="4757"/>
         <source>Add To Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5254"/>
+        <location filename="../src/mainwindow.cpp" line="5290"/>
         <location filename="../src/mainwindow.cpp.orig" line="4723"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>האם לכלול טווחים (משך &gt; מסגרת אחת)?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5265"/>
+        <location filename="../src/mainwindow.cpp" line="5301"/>
         <location filename="../src/mainwindow.cpp.orig" line="4734"/>
         <source>Choose Markers</source>
         <translation>בחר סמנים</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5280"/>
+        <location filename="../src/mainwindow.cpp" line="5316"/>
         <location filename="../src/mainwindow.cpp.orig" line="4749"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>טקסט (*.txt);;כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5334"/>
+        <location filename="../src/mainwindow.cpp" line="5370"/>
         <location filename="../src/mainwindow.cpp.orig" line="4803"/>
         <source>Failed to open export-chapters.js</source>
         <translation>פתיחת export-chapters.js נכשלה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5374"/>
+        <location filename="../src/mainwindow.cpp" line="5410"/>
         <location filename="../src/mainwindow.cpp.orig" line="4843"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
@@ -5128,15 +5148,15 @@ Do you want to reset and restart now?</source>
 האם אתה רוצה לאפס ולהפעיל מחדש עכשיו?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1379"/>
-        <location filename="../src/mainwindow.cpp" line="2767"/>
+        <location filename="../src/mainwindow.cpp" line="1388"/>
+        <location filename="../src/mainwindow.cpp" line="2776"/>
         <location filename="../src/mainwindow.cpp.orig" line="1177"/>
         <location filename="../src/mainwindow.cpp.orig" line="2484"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2887"/>
+        <location filename="../src/mainwindow.cpp" line="2896"/>
         <location filename="../src/mainwindow.cpp.orig" line="2503"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
@@ -5144,7 +5164,7 @@ Do you want to save your changes?</source>
 האם ברצונך לשמור את השינויים?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2916"/>
+        <location filename="../src/mainwindow.cpp" line="2925"/>
         <location filename="../src/mainwindow.cpp.orig" line="2532"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
@@ -5152,7 +5172,7 @@ Do you want to still want to exit?</source>
 האם אתה עדיין רוצה לצאת?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2929"/>
+        <location filename="../src/mainwindow.cpp" line="2938"/>
         <location filename="../src/mainwindow.cpp.orig" line="2545"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
@@ -5160,31 +5180,31 @@ Do you want to still want to exit?</source>
 האם ברצונך לצאת בכל זאת?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3522"/>
+        <location filename="../src/mainwindow.cpp" line="3531"/>
         <location filename="../src/mainwindow.cpp.orig" line="3082"/>
         <source>Exit Full Screen</source>
         <translation>צא ממסך מלא</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5023"/>
+        <location filename="../src/mainwindow.cpp" line="5059"/>
         <location filename="../src/mainwindow.cpp.orig" line="4492"/>
         <source>Turn Proxy On</source>
         <translation>הפעלת פרוקסי</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5023"/>
+        <location filename="../src/mainwindow.cpp" line="5059"/>
         <location filename="../src/mainwindow.cpp.orig" line="4492"/>
         <source>Turn Proxy Off</source>
         <translation>כיבוי פרוקסי</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5027"/>
+        <location filename="../src/mainwindow.cpp" line="5063"/>
         <location filename="../src/mainwindow.cpp.orig" line="4496"/>
         <source>Converting</source>
         <translation>כעת בהמרה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5041"/>
+        <location filename="../src/mainwindow.cpp" line="5077"/>
         <location filename="../src/mainwindow.cpp.orig" line="4510"/>
         <source>Do you want to create missing proxies for every file in this project?
 
@@ -5194,25 +5214,25 @@ You must reopen your project after all proxy jobs are finished.</source>
 עליך לפתוח מחדש את הפרויקט שלך לאחר סיום כל עבודות ה-proxy.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5076"/>
+        <location filename="../src/mainwindow.cpp" line="5112"/>
         <location filename="../src/mainwindow.cpp.orig" line="4545"/>
         <source>Proxy Folder</source>
         <translation>תיקיית פרוקסי</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5092"/>
+        <location filename="../src/mainwindow.cpp" line="5128"/>
         <location filename="../src/mainwindow.cpp.orig" line="4561"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>האם ברצונך להעביר את כל הקבצים מהתיקייה הישנה לתיקיה החדשה?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5099"/>
+        <location filename="../src/mainwindow.cpp" line="5135"/>
         <location filename="../src/mainwindow.cpp.orig" line="4568"/>
         <source>Moving Files</source>
         <translation>כעת בהעברת הקבצים</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3535"/>
+        <location filename="../src/mainwindow.cpp" line="3544"/>
         <location filename="../src/mainwindow.cpp.orig" line="3095"/>
         <source>GPU effects are not supported</source>
         <translation>אפקטי GPU אינם נתמכים</translation>
@@ -5240,17 +5260,17 @@ You must reopen your project after all proxy jobs are finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="849"/>
+        <location filename="../src/mainwindow.cpp" line="858"/>
         <source>Audio API</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="871"/>
+        <location filename="../src/mainwindow.cpp" line="880"/>
         <source>default</source>
         <translation>ברירת המחדל</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="878"/>
+        <location filename="../src/mainwindow.cpp" line="887"/>
         <source>You must restart Shotcut to change the audio API.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
@@ -5261,19 +5281,19 @@ Do you want to restart now?</source>
         <translation>&lt;h1&gt;גרסת Shotcut% 2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt;הוא עורך וידאו חוצה פלטפורמות בחינם, קוד פתוח.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;מורשה תחת %5&lt;/p&gt;&lt;p&gt;תוכנית זו משתמשת בגאווה בפרויקטים הבאים:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt;יישום ומסגרת ממשק משתמש&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt;מסגרת עריכת מולטימדיה&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt;פורמט מולטימדיה וספריות קודקים&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt;מקודד H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt;מקודדי VP8 ו-VP9&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;צוֹלֵעַ&lt;/a&gt;מקודד MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;פריי0ר&lt;/a&gt;תוספי וידאו&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt;תוספי שמע&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;סמל ברירת מחדל&lt;/a&gt;אוסף סמלים מאת&lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;אינטראקטיבמאניה&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;חַמצָן&lt;/a&gt;אוסף אייקונים&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://glaxnimate.mattbas.org/&quot;&gt;גלקסנימט&lt;/a&gt;תוכנית אנימציה וקטורית&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;ניתן להוריד את קוד המקור המשמש לבניית תוכנית זו&lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;תוכנית זו מופצת בתקווה שהיא תהיה שימושית, אך ללא כל אחריות; אפילו ללא האחריות המשתמעת של סחירות או התאמה למטרה מסוימת.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3555"/>
+        <location filename="../src/mainwindow.cpp" line="3564"/>
         <location filename="../src/mainwindow.cpp.orig" line="3115"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>נא ללחוץ כאן כדי לבדוק אם יש גרסה חדשה של Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3671"/>
+        <location filename="../src/mainwindow.cpp" line="3680"/>
         <location filename="../src/mainwindow.cpp.orig" line="3220"/>
         <source>Open Files</source>
         <translation>פתיחת קבצים</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3728"/>
+        <location filename="../src/mainwindow.cpp" line="3737"/>
         <location filename="../src/mainwindow.cpp.orig" line="3254"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
@@ -5281,7 +5301,7 @@ Do you want to restart now?</source>
 האם ברצונך להפעילה מחדש כעת?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3769"/>
+        <location filename="../src/mainwindow.cpp" line="3778"/>
         <location filename="../src/mainwindow.cpp.orig" line="3295"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
@@ -5289,7 +5309,7 @@ Please verify that JACK is installed and running.</source>
 נא לוודא ש־JACK מותקן ומורץ.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3796"/>
+        <location filename="../src/mainwindow.cpp" line="3805"/>
         <location filename="../src/mainwindow.cpp.orig" line="3323"/>
         <source>Shotcut must restart to disable GPU effects.
 
@@ -5299,7 +5319,7 @@ Disable GPU effects and restart?</source>
 להשבית את אפקטי ה-GPU ולהפעיל מחדש?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3941"/>
+        <location filename="../src/mainwindow.cpp" line="3958"/>
         <location filename="../src/mainwindow.cpp.orig" line="3459"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
@@ -5307,26 +5327,31 @@ Do you want to restart now?</source>
 האם אתה רוצה להפעיל מחדש עכשיו?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4096"/>
+        <location filename="../src/mainwindow.cpp" line="4000"/>
+        <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4132"/>
         <location filename="../src/mainwindow.cpp.orig" line="3590"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>האם ברצונך לבדוק באופן אוטומטי אם יש עדכונים בעתיד?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4103"/>
+        <location filename="../src/mainwindow.cpp" line="4139"/>
         <location filename="../src/mainwindow.cpp.orig" line="3597"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>נא לא להציג זאת יותר.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4120"/>
+        <location filename="../src/mainwindow.cpp" line="4156"/>
         <location filename="../src/mainwindow.cpp.orig" line="3614"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4167"/>
+        <location filename="../src/mainwindow.cpp" line="4203"/>
         <location filename="../src/mainwindow.cpp.orig" line="3681"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
@@ -5334,30 +5359,30 @@ Do you want to restart now?</source>
 האם ברצונך להפעילה מחדש כעת?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4197"/>
+        <location filename="../src/mainwindow.cpp" line="4233"/>
         <location filename="../src/mainwindow.cpp.orig" line="3703"/>
         <source>Application Log</source>
         <translation>יומן יישומים</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4200"/>
+        <location filename="../src/mainwindow.cpp" line="4236"/>
         <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4257"/>
+        <location filename="../src/mainwindow.cpp" line="4293"/>
         <location filename="../src/mainwindow.cpp.orig" line="3754"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>גרסת Shotcut% 1 זמינה! לחץ כאן כדי לקבל את זה.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4264"/>
+        <location filename="../src/mainwindow.cpp" line="4300"/>
         <location filename="../src/mainwindow.cpp.orig" line="3761"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>כעת מורצת במחשבך הגרסה העדכנית של Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4278"/>
+        <location filename="../src/mainwindow.cpp" line="4314"/>
         <location filename="../src/mainwindow.cpp.orig" line="3775"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>קריאת version.json נכשלה בעת הבדיקה. לחץ כאן כדי לעבור לאתר האינטרנט.</translation>
@@ -5365,39 +5390,39 @@ Do you want to restart now?</source>
     <message>
         <location filename="../src/mainwindow.ui" line="926"/>
         <location filename="../src/mainwindow.ui" line="929"/>
-        <location filename="../src/mainwindow.cpp" line="4298"/>
+        <location filename="../src/mainwindow.cpp" line="4334"/>
         <location filename="../src/mainwindow.cpp.orig" line="3795"/>
         <source>Export EDL</source>
         <translation>ייצוא EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4300"/>
+        <location filename="../src/mainwindow.cpp" line="4336"/>
         <location filename="../src/mainwindow.cpp.orig" line="3797"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;כל הקבצים (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4346"/>
-        <location filename="../src/mainwindow.cpp" line="5331"/>
+        <location filename="../src/mainwindow.cpp" line="4382"/>
+        <location filename="../src/mainwindow.cpp" line="5367"/>
         <location filename="../src/mainwindow.cpp.orig" line="3843"/>
         <location filename="../src/mainwindow.cpp.orig" line="4800"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>אירעה שגיאת JavaScript במהלך הייצוא.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4349"/>
+        <location filename="../src/mainwindow.cpp" line="4385"/>
         <location filename="../src/mainwindow.cpp.orig" line="3846"/>
         <source>Failed to open export-edl.js</source>
         <translation>נכשלה פתיחת export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4378"/>
+        <location filename="../src/mainwindow.cpp" line="4414"/>
         <location filename="../src/mainwindow.cpp.orig" line="3875"/>
         <source>Export frame from proxy?</source>
         <translation>לייצא מסגרת מ-פרוקסי?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4379"/>
+        <location filename="../src/mainwindow.cpp" line="4415"/>
         <location filename="../src/mainwindow.cpp.orig" line="3876"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
@@ -5409,19 +5434,19 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/mainwindow.ui" line="937"/>
         <location filename="../src/mainwindow.ui" line="940"/>
-        <location filename="../src/mainwindow.cpp" line="4391"/>
+        <location filename="../src/mainwindow.cpp" line="4427"/>
         <location filename="../src/mainwindow.cpp.orig" line="3888"/>
         <source>Export Frame</source>
         <translation>ייצוא פריים</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4397"/>
+        <location filename="../src/mainwindow.cpp" line="4433"/>
         <location filename="../src/mainwindow.cpp.orig" line="3894"/>
         <source>Unable to export frame.</source>
         <translation>לא ניתן לייצא תמונה.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4405"/>
+        <location filename="../src/mainwindow.cpp" line="4441"/>
         <location filename="../src/mainwindow.cpp.orig" line="3902"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
@@ -5429,37 +5454,37 @@ Do you want to continue?</source>
 האם ברצונך להפעילה מחדש כעת?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4414"/>
+        <location filename="../src/mainwindow.cpp" line="4450"/>
         <location filename="../src/mainwindow.cpp.orig" line="3911"/>
         <source>Data Directory</source>
         <translation>ספריית נתונים</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4614"/>
+        <location filename="../src/mainwindow.cpp" line="4650"/>
         <location filename="../src/mainwindow.cpp.orig" line="4107"/>
         <source>Add Custom Layout</source>
         <translation>הוסף פריסה מותאמת אישית</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4615"/>
+        <location filename="../src/mainwindow.cpp" line="4651"/>
         <location filename="../src/mainwindow.cpp.orig" line="4108"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4653"/>
+        <location filename="../src/mainwindow.cpp" line="4689"/>
         <location filename="../src/mainwindow.cpp.orig" line="4146"/>
         <source>Remove Video Mode</source>
         <translation>הסר את מצב וידאו</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4667"/>
+        <location filename="../src/mainwindow.cpp" line="4703"/>
         <location filename="../src/mainwindow.cpp.orig" line="4160"/>
         <source>Remove Layout</source>
         <translation>הסר פריסה</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4831"/>
+        <location filename="../src/mainwindow.cpp" line="4867"/>
         <location filename="../src/mainwindow.cpp.orig" line="4300"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
@@ -5986,7 +6011,7 @@ Try again with a different folder.</source>
 <context>
     <name>NotesDock</name>
     <message>
-        <location filename="../src/docks/notesdock.cpp" line="28"/>
+        <location filename="../src/docks/notesdock.cpp" line="82"/>
         <source>Notes</source>
         <translation>הערות</translation>
     </message>
@@ -7456,7 +7481,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3682"/>
+        <location filename="../src/mainwindow.cpp" line="3691"/>
         <location filename="../src/mainwindow.cpp.orig" line="3230"/>
         <source>You cannot add a project to itself!</source>
         <translation>אין באפשרותך להוסיף מיזם אל עצמו!</translation>
@@ -7469,8 +7494,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/transcoder.cpp" line="91"/>
         <location filename="../src/util.cpp" line="144"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="940"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1017"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="946"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1023"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -7566,18 +7591,18 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>שקוף</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2839"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2846"/>
         <source>Drop Files</source>
         <translation>שחרר קבצים</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2845"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2857"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2852"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2864"/>
         <source>Failed to open </source>
         <translation>הפתיחה נכשלה</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2871"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2878"/>
         <source>Not adding non-seekable file: </source>
         <translation>לא מוסיף קובץ שאינו ניתן לחיפוש:</translation>
     </message>
@@ -9162,6 +9187,25 @@ Remove the subtitle filter before removing this track.</source>
     </message>
 </context>
 <context>
+    <name>TextEditor</name>
+    <message>
+        <location filename="../src/docks/notesdock.cpp" line="40"/>
+        <source>Decrease Text Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/notesdock.cpp" line="43"/>
+        <location filename="../src/docks/notesdock.cpp" line="50"/>
+        <source>Notes</source>
+        <translation>הערות</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/notesdock.cpp" line="47"/>
+        <source>Increase Text Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TextFilterUi</name>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="78"/>
@@ -9847,42 +9891,42 @@ Remove the subtitle filter before removing this track.</source>
         <translation>הרם את %1 מציר הזמן</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2656"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2663"/>
         <source>There is nothing in the Source player.</source>
         <translation>אין שום דבר בנגן המקור.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2671"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2678"/>
         <source>You cannot replace a transition.</source>
         <translation>אתה לא יכול להחליף מעבר.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2701"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2708"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation>בחר קליפ בציר הזמן כדי ליצור סמן סביבו</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2722"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2729"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation>סמן נוסף: &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2742"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2749"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation>סמן נוסף: &quot;%1&quot;. החזק את% 2 וגרור כדי ליצור טווח</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2885"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2892"/>
         <source>Dropped Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3229"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3236"/>
         <source>Insert multiple into timeline</source>
         <translation>הכנס מרובים לציר הזמן</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3338"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3345"/>
         <source>Overwrite multiple onto timeline</source>
         <translation>החלף מרובים על ציר הזמן</translation>
     </message>
@@ -9893,7 +9937,7 @@ Remove the subtitle filter before removing this track.</source>
         <translation>אתה לא יכול לפצל מעבר.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="3718"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3725"/>
         <source>Replace %n timeline clips</source>
         <translation>
             <numerusform>החלף %n קטעי ציר זמן</numerusform>
@@ -9901,39 +9945,39 @@ Remove the subtitle filter before removing this track.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3769"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3776"/>
         <source>voiceover</source>
         <translation>קריינות</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3770"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3777"/>
         <source>Opus (*.opus);;All Files (*)</source>
         <translation>Opus (*.opus);;כל הקבצים (*)</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1208"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3771"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3869"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3778"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3876"/>
         <source>Record Audio</source>
         <translation>הקלט אודיו</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3782"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3789"/>
         <source>Record Audio: %1</source>
         <translation>הקלט אודיו: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3846"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3853"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation>שגיאת הקלטת אודיו: בדוק את הגדרות PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3848"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3855"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation>שגיאת הקלטת שמע: בחר קובץ &gt; פתח אחר &gt; התקן שמע/וידאו</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3875"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3882"/>
         <source>Saving audio recording...</source>
         <translation>שומר הקלטת אודיו...</translation>
     </message>
@@ -10360,17 +10404,17 @@ Blend: Blend מסגרות.
         <translation>מתקדם</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="139"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="145"/>
         <source>Lossy: I-frame–only %1</source>
         <translation>אובדן: I-תמונה–רק %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="142"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="148"/>
         <source>Intermediate: %1</source>
         <translation>בינוני: %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="146"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="152"/>
         <source>Lossless: %1</source>
         <translation>ללא אובדן: %1</translation>
     </message>
@@ -11237,6 +11281,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="19"/>
         <location filename="../src/qml/filters/audio_pan/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/reframe/meta.qml" line="21"/>
         <source>Position</source>
         <translation>אזור</translation>
     </message>
@@ -13194,6 +13239,17 @@ Most users do not need to change this.</source>
         <comment>search keywords for the Subtitle Burn In video filter</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/reframe/meta.qml" line="7"/>
+        <source>Reframe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/reframe/meta.qml" line="8"/>
+        <source>crop trim remove square vertical portrait</source>
+        <comment>search keywords for the Reframe video filter</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_affine</name>
@@ -13803,7 +13859,7 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="117"/>
-        <location filename="../src/qml/filters/dropshadow/ui.qml" line="130"/>
+        <location filename="../src/qml/filters/dropshadow/ui.qml" line="129"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="287"/>
         <source>Blur</source>
         <translation>טשטוש</translation>
@@ -13829,7 +13885,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="164"/>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="171"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="445"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="406"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="405"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="124"/>
         <source>Invert</source>
         <translation>Invert</translation>
@@ -13934,7 +13990,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/brightness/ui.qml" line="138"/>
         <location filename="../src/qml/filters/choppy/ui.qml" line="62"/>
         <location filename="../src/qml/filters/chromahold/ui.qml" line="69"/>
-        <location filename="../src/qml/filters/color/ui.qml" line="123"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="135"/>
         <location filename="../src/qml/filters/contrast/ui.qml" line="144"/>
         <location filename="../src/qml/filters/corners/ui.qml" line="304"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="99"/>
@@ -13976,6 +14032,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/opacity/ui.qml" line="106"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="129"/>
         <location filename="../src/qml/filters/posterize/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/reframe/ui.qml" line="192"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="70"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="271"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="136"/>
@@ -14611,24 +14668,24 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation>צבע מפתח</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="87"/>
-        <location filename="../src/qml/filters/chromahold/ui.qml" line="111"/>
-        <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="89"/>
+        <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="86"/>
+        <location filename="../src/qml/filters/chromahold/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="88"/>
         <source>Distance</source>
         <translation>מרחק</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="149"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="161"/>
         <source>Shadows (Lift)</source>
         <translation>צללים (הרמה)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="199"/>
         <source>Midtones (Gamma)</source>
         <translation>גווני ביניים (גמא)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="237"/>
         <source>Highlights (Gain)</source>
         <translation>הבהרה (רווח)</translation>
     </message>
@@ -14657,6 +14714,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/gradient/ui.qml" line="370"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="471"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="231"/>
+        <location filename="../src/qml/filters/reframe/ui.qml" line="301"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="265"/>
         <location filename="../src/qml/filters/tracker/ui.qml" line="204"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="187"/>
@@ -14921,6 +14979,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/gradient/ui.qml" line="313"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="390"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="156"/>
+        <location filename="../src/qml/filters/reframe/ui.qml" line="222"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="310"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="188"/>
         <location filename="../src/qml/filters/tracker/ui.qml" line="144"/>
@@ -14996,37 +15055,37 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation>רוויה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="136"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="135"/>
         <source>Target color</source>
         <translation>צבע יעד</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="163"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="162"/>
         <source>Mask type</source>
         <translation>סוג מסכה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="171"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="170"/>
         <source>Color Distance</source>
         <translation>מרחק צבע</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="171"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="170"/>
         <source>Transparency</source>
         <translation>שקיפות</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="171"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="170"/>
         <source>Edge Inwards</source>
         <translation>קצה פנימה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="171"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="170"/>
         <source>Edge Outwards</source>
         <translation>קצה החוצה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="183"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="182"/>
         <source>Tolerance</source>
         <translation>סובלנות</translation>
     </message>
@@ -15047,9 +15106,9 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="228"/>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="539"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="203"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="316"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="330"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="202"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="315"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="329"/>
         <source>Slope</source>
         <translation>הדרגתי</translation>
     </message>
@@ -15089,17 +15148,17 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation>&lt;b&gt;מדף גבוה&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="223"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="222"/>
         <source>Hue gate</source>
         <translation>Hue gate</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="242"/>
         <source>Saturation threshold</source>
         <translation>סף רוויה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="263"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="262"/>
         <source>Operation 1</source>
         <translation>מבצע 1</translation>
     </message>
@@ -15118,8 +15177,8 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="447"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="271"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="270"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="310"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="205"/>
         <source>None</source>
         <translation>כלום</translation>
@@ -15215,45 +15274,45 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation>בהירות HSL</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="271"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="270"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="310"/>
         <source>De-Key</source>
         <translation>De-Key</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="271"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="270"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="310"/>
         <source>Desaturate</source>
         <translation>חסר רוויה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="271"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="270"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="310"/>
         <source>Adjust Luma</source>
         <translation>התאם את Luma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="283"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="282"/>
         <source>Amount 1</source>
         <translation>כמות 1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="303"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="302"/>
         <source>Operation 2</source>
         <translation>מבצע 2</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="323"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="322"/>
         <source>Amount 2</source>
         <translation>כמות 2</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="347"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="346"/>
         <source>Show mask</source>
         <translation>הצג מסכה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="360"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="359"/>
         <source>Send mask to alpha channel</source>
         <translation>שלח מסכה לערוץ אלפא</translation>
     </message>
@@ -15427,7 +15486,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask/ui.qml" line="173"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="348"/>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="202"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="350"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="349"/>
         <source>Operation</source>
         <translation>מבצע</translation>
     </message>
@@ -15505,7 +15564,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="356"/>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="226"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="533"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="370"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="369"/>
         <source>Maximum</source>
         <translation>מַקסִימוּם</translation>
     </message>
@@ -15515,7 +15574,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="356"/>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="231"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="538"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="375"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="374"/>
         <source>Minimum</source>
         <translation>מִינִימוּם</translation>
     </message>
@@ -15530,7 +15589,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="356"/>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="221"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="528"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="365"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="364"/>
         <source>Overwrite</source>
         <translation>החלף</translation>
     </message>
@@ -15548,7 +15607,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="356"/>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="236"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="543"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="380"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="379"/>
         <source>Add</source>
         <translation>הוספה</translation>
     </message>
@@ -15558,14 +15617,14 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="356"/>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="241"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="548"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="385"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="384"/>
         <source>Subtract</source>
         <translation>להחסיר</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="194"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="369"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="242"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="241"/>
         <source>Shape</source>
         <translation>צורה</translation>
     </message>
@@ -15590,7 +15649,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="202"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="377"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="267"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="266"/>
         <source>Diamond</source>
         <translation>יהלום</translation>
     </message>
@@ -15699,7 +15758,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1078"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1215"/>
-        <location filename="../src/qml/filters/dropshadow/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/dropshadow/ui.qml" line="157"/>
         <source>X</source>
         <translation>X</translation>
     </message>
@@ -15711,7 +15770,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/corners/ui.qml" line="509"/>
         <location filename="../src/qml/filters/corners/ui.qml" line="561"/>
         <location filename="../src/qml/filters/corners/ui.qml" line="616"/>
-        <location filename="../src/qml/filters/dropshadow/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/dropshadow/ui.qml" line="185"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="768"/>
         <source>Y</source>
         <translation>Y</translation>
@@ -16082,83 +16141,83 @@ Change top/side distortion bias</source>
         <translation>מוסתר</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="144"/>
         <source>Color space</source>
         <translation>מרחב צבע</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="157"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="156"/>
         <source>Red-Green-Blue</source>
         <translation>אדום-ירוק-כחול</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="168"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="167"/>
         <source>Hue-Chroma-Intensity</source>
         <translation>Hue-Chroma-Intensity</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="182"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="181"/>
         <source>Red delta</source>
         <translation>דלתא אדומה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="182"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="181"/>
         <source>Hue delta</source>
         <translation>דלתא גוון</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="202"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="201"/>
         <source>Green delta</source>
         <translation>דלתא ירוקה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="202"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="201"/>
         <source>Chroma delta</source>
         <translation>Chroma delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="222"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="221"/>
         <source>Blue delta</source>
         <translation>דלתא כחולה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="222"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="221"/>
         <source>Intensity delta</source>
         <translation>דלתא אינטנסיביות</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="257"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="256"/>
         <source>Box</source>
         <translation>קופסא</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="262"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="261"/>
         <source>Ellipsoid</source>
         <translation>Ellipsoid</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="281"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="280"/>
         <source>Edge</source>
         <translation>קָצֶה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="296"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="295"/>
         <source>Hard</source>
         <comment>Chroma Key Advanced filter</comment>
         <translation>קָשֶׁה</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="301"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="300"/>
         <source>Fat</source>
         <translation>שמן</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="306"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="305"/>
         <source>Normal</source>
         <translation>רגיל</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="310"/>
         <source>Thin</source>
         <translation>רזה</translation>
     </message>
@@ -16591,12 +16650,12 @@ Change top/side distortion bias</source>
         <translation>צבע טבעי</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/white/ui.qml" line="112"/>
+        <location filename="../src/qml/filters/white/ui.qml" line="111"/>
         <source>Color temperature</source>
         <translation>טמפרטורת צבע</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/white/ui.qml" line="184"/>
+        <location filename="../src/qml/filters/white/ui.qml" line="183"/>
         <source>degrees</source>
         <translation>מעלות</translation>
     </message>
@@ -18042,7 +18101,7 @@ Set to 0 to only print real points (no interpolation).</source>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="599"/>
-        <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="112"/>
+        <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="111"/>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="259"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="622"/>
         <source>Tip: Mask other video filters by adding filters after this one followed by &lt;b&gt;Mask: Apply&lt;/b&gt;</source>
@@ -18286,6 +18345,26 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="110"/>
         <source>Subtitle Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/reframe/ui.qml" line="153"/>
+        <source>Horizontal 4:3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/reframe/ui.qml" line="158"/>
+        <source>Horizontal 16:9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/reframe/ui.qml" line="163"/>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/reframe/ui.qml" line="170"/>
+        <source>Vertical 9:16</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -18956,6 +19035,7 @@ Set to 0 to only print real points (no interpolation).</source>
         <location filename="../src/qml/filters/lightshow/vui.qml" line="26"/>
         <location filename="../src/qml/filters/mask_alphaspot/vui.qml" line="108"/>
         <location filename="../src/qml/filters/pillar_echo/vui.qml" line="82"/>
+        <location filename="../src/qml/filters/reframe/vui.qml" line="82"/>
         <location filename="../src/qml/filters/spot_remover/vui.qml" line="82"/>
         <location filename="../src/qml/filters/tracker/vui.qml" line="48"/>
         <location filename="../src/qml/filters/waveform/vui.qml" line="26"/>
