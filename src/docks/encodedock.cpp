@@ -1580,7 +1580,7 @@ Mlt::Producer *EncodeDock::fromProducer() const
     else if (from == "timeline" || from.startsWith("marker:"))
         return MAIN.multitrack();
     else
-        return 0;
+        return nullptr;
 }
 
 void EncodeDock::filterCodecParams(const QString &vcodec, QStringList &other)
@@ -1913,7 +1913,9 @@ void EncodeDock::onProfileChanged()
         ui->gopSpinner->setValue(qRound(MLT.profile().fps() * 5.0));
         ui->gopSpinner->blockSignals(false);
     }
-    auto reframe = getReframeFilter(fromProducer());
+    auto producer = fromProducer();
+    ui->reframeButton->setEnabled(producer && producer == MAIN.multitrack());
+    auto reframe = getReframeFilter(producer);
     if (reframe.is_valid()) {
         auto rect = reframe.anim_get_rect("rect", 0);
         if (rect.w > 0 && rect.h > 0) {
@@ -1925,7 +1927,7 @@ void EncodeDock::onProfileChanged()
             ui->resampleButton->setDisabled(true);
         }
     } else {
-        ui->resampleButton->setEnabled(true);
+        ui->resampleButton->setEnabled(producer && producer->is_valid());
     }
     ui->resampleButton->setChecked(false);
     setResampleEnabled(false);
@@ -2232,7 +2234,10 @@ void EncodeDock::on_gopSpinner_valueChanged(int value)
 void EncodeDock::on_fromCombo_currentIndexChanged(int index)
 {
     Q_UNUSED(index)
-    if (MLT.isSeekable(fromProducer()))
+    auto producer = fromProducer();
+    ui->reframeButton->setEnabled(producer && producer == MAIN.multitrack());
+    ui->resampleButton->setEnabled(!getReframeFilter(producer).is_valid());
+    if (MLT.isSeekable(producer))
         ui->encodeButton->setText(tr("Export File"));
     else
         ui->encodeButton->setText(tr("Capture File"));
