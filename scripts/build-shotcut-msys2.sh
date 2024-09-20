@@ -336,7 +336,7 @@ function set_globals {
     QT_LIB_DIR="$QTDIR/lib"
     QT_SHARE_DIR="$QTDIR/share/qt6"
   else
-    export QTDIR="$HOME/Qt/6.7.1/mingw_64"
+    export QTDIR="$HOME/Qt/6.7.2/mingw_64"
     QT_INCLUDE_DIR="$QTDIR/include"
     QT_LIB_DIR="$QTDIR/lib"
     QT_SHARE_DIR="$QTDIR"
