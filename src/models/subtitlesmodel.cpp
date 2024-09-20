@@ -76,15 +76,18 @@ void SubtitlesModel::load(Mlt::Producer *producer)
     m_tracks.clear();
     if (m_producer) {
         for (int i = 0; i < producer->filter_count(); i++) {
-            Mlt::Filter filter(producer->filter(i));
-            if (filter.is_valid() && !::qstrcmp(filter.get("mlt_service"), "subtitle_feed")
-                    && filter.property_exists("text")) {
+            QScopedPointer<Mlt::Filter> filter(producer->filter(i));
+            if (!filter || !filter->is_valid()) {
+                continue;
+            }
+            if (!::qstrcmp(filter->get("mlt_service"), "subtitle_feed")
+                    && filter->property_exists("text")) {
                 SubtitleTrack track;
-                track.name = QString::fromUtf8(filter.get("feed"));
-                track.lang = QString::fromUtf8(filter.get("lang"));
+                track.name = QString::fromUtf8(filter->get("feed"));
+                track.lang = QString::fromUtf8(filter->get("lang"));
                 m_tracks.push_back(track);
                 m_items.resize(m_tracks.size());
-                Subtitles::SubtitleVector items = Subtitles::readFromSrtString(filter.get("text"));
+                Subtitles::SubtitleVector items = Subtitles::readFromSrtString(filter->get("text"));
                 m_items[m_items.size() - 1] = QList(items.cbegin(), items.cend());
             }
         }
