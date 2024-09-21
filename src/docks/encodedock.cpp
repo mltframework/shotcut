@@ -2780,7 +2780,7 @@ void EncodeDock::on_resampleButton_clicked(bool checked)
             setResampleEnabled(checked);
         } else {
             ui->resampleButton->setChecked(false);
-            MAIN.onShowSettingsMenu();
+            MAIN.showSettingsMenu();
         }
     } else {
         setResampleEnabled(false);

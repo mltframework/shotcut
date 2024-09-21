@@ -134,11 +134,11 @@ MainWindow::MainWindow()
     , m_keyerGroup(0)
     , m_previewScaleGroup(0)
     , m_keyerMenu(0)
+    , m_multipleFilesLoading(false)
     , m_isPlaylistLoaded(false)
     , m_exitCode(EXIT_SUCCESS)
     , m_upgradeUrl("https://www.shotcut.org/download/")
     , m_keyframesDock(0)
-    , m_multipleFilesLoading(false)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     QLibrary libJack("libjack.so.0");
@@ -5427,7 +5427,7 @@ void MainWindow::onCreateOrEditFilterOnOutput(Mlt::Filter *filter,
     m_filterController->addOrEditFilter(filter, key_properties);
 }
 
-void MainWindow::onShowSettingsMenu() const
+void MainWindow::showSettingsMenu() const
 {
     QPoint point(140 * devicePixelRatioF(), ui->menuBar->height());
 #if !defined(Q_OS_MAC)
