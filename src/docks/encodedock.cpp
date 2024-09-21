@@ -2769,7 +2769,7 @@ void EncodeDock::on_resampleButton_clicked(bool checked)
     if (checked) {
         QMessageBox dialog(QMessageBox::Warning,
                            tr("Resample Export"),
-                           tr("<p>Reframe is for experts and may not do what you expect.</p>"
+                           tr("<p>Resample is for experts and may not do what you expect.</p>"
                               "<p>Do you want to change <b>Video Mode</b> in the <b>Settings</b> menu?</p>"),
                            QMessageBox::No | QMessageBox::Yes,
                            this);
