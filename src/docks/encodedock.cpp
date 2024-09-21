@@ -2776,10 +2776,12 @@ void EncodeDock::on_resampleButton_clicked(bool checked)
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::Yes);
         dialog.setWindowModality(QmlApplication::dialogModality());
-        if (QMessageBox::No == dialog.exec())
+        if (QMessageBox::No == dialog.exec()) {
             setResampleEnabled(checked);
-        else
+        } else {
             ui->resampleButton->setChecked(false);
+            MAIN.onShowSettingsMenu();
+        }
     } else {
         setResampleEnabled(false);
     }

@@ -254,6 +254,7 @@ public slots:
     void onPropertiesDockTriggered(bool checked = true);
     bool on_actionSave_triggered();
     void onCreateOrEditFilterOnOutput(Mlt::Filter *filter, const QStringList &key_properties);
+    void onShowSettingsMenu() const;
 
 private slots:
     void showUpgradePrompt();

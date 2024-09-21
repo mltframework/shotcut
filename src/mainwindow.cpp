@@ -2113,10 +2113,7 @@ void MainWindow::setupActions()
 
     action = new QAction(tr("Preferences"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Comma));
-    connect(action, &QAction::triggered, this, [&]() {
-        ui->menuSettings->popup(QPoint(145 * devicePixelRatioF(), ui->menuBar->height()),
-                                ui->menuSettings->defaultAction());
-    });
+    connect(action, &QAction::triggered, this, &MainWindow::showSettingsMenu);
     ui->menuEdit->addAction(action);
 #else
     fullScreenShortcuts << QKeySequence(Qt::Key_F11);
@@ -5428,4 +5425,14 @@ void MainWindow::onCreateOrEditFilterOnOutput(Mlt::Filter *filter,
     onFiltersDockTriggered();
     m_timelineDock->emitSelectedFromSelection();
     m_filterController->addOrEditFilter(filter, key_properties);
+}
+
+void MainWindow::onShowSettingsMenu() const
+{
+    QPoint point(140 * devicePixelRatioF(), ui->menuBar->height());
+#if !defined(Q_OS_MAC)
+    point = ui->menuBar->mapToGlobal(point);
+#endif
+    ui->menuSettings->popup(point, ui->menuSettings->defaultAction());
+
 }
