@@ -2766,22 +2766,36 @@ void EncodeDock::on_reframeButton_clicked()
 
 void EncodeDock::on_resampleButton_clicked(bool checked)
 {
-    if (checked) {
-        QMessageBox dialog(QMessageBox::Warning,
+    if (!Settings.askResample() || ("clip" == ui->fromCombo->currentData().toString() && !MLT.profile().is_explicit())) {
+        setResampleEnabled(checked);
+    } else if (checked) {
+        QMessageBox dialog(QMessageBox::Question,
                            tr("Resample Export"),
-                           tr("<p>Resample is for experts and may not do what you expect.</p>"
-                              "<p>Do you want to change <b>Video Mode</b> in the <b>Settings</b> menu?</p>"),
+                           tr("<p>Are you sure you want to resample instead of change the <b>Video Mode</b>?</p>"
+                              "<p>Changing the aspect ratio adds black bars.</p>"
+                              "<p>Increasing resolution or frame rate is limited by <b>Video Mode</b>.</p>"),
                            QMessageBox::No | QMessageBox::Yes,
                            this);
+        dialog.addButton(tr("Open Settings > Video Mode"), QMessageBox::ResetRole);
         dialog.setDefaultButton(QMessageBox::Yes);
-        dialog.setEscapeButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::Cancel);
         dialog.setWindowModality(QmlApplication::dialogModality());
-        if (QMessageBox::No == dialog.exec()) {
+        dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.",
+                                            "Resample export warning dialog")));
+        switch (dialog.exec()) {
+        case QMessageBox::Accepted:
             setResampleEnabled(checked);
-        } else {
+            break;
+        case QMessageBox::No:
+            ui->resampleButton->setChecked(false);
+            break;
+        default:
             ui->resampleButton->setChecked(false);
             MAIN.showSettingsMenu();
+            break;
         }
+        if (dialog.checkBox()->isChecked())
+            Settings.setAskResample(false);
     } else {
         setResampleEnabled(false);
     }

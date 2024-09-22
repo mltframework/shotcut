@@ -3989,7 +3989,7 @@ void MainWindow::backupPeriodically()
 
 bool MainWindow::confirmProfileChange()
 {
-    if (MLT.isClip())
+    if (MLT.isClip() || !Settings.askChangeVideoMode())
         return true;
 
     QMessageBox dialog(QMessageBox::Warning,
@@ -4003,7 +4003,12 @@ bool MainWindow::confirmProfileChange()
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.setDefaultButton(QMessageBox::Yes);
     dialog.setEscapeButton(QMessageBox::No);
-    return QMessageBox::Yes == dialog.exec();
+    dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.",
+                                        "Change video mode warning dialog")));
+    auto result = QMessageBox::Yes == dialog.exec();
+    if (dialog.checkBox()->isChecked())
+        Settings.setAskChangeVideoMode(false);
+    return result;
 }
 
 void MainWindow::on_actionSystemTheme_triggered()
@@ -5434,5 +5439,4 @@ void MainWindow::showSettingsMenu() const
     point = ui->menuBar->mapToGlobal(point);
 #endif
     ui->menuSettings->popup(point, ui->menuSettings->defaultAction());
-
 }

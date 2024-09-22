@@ -389,6 +389,16 @@ void ShotcutSettings::setEncodeParallelProcessing(bool b)
     settings.setValue("encode/parallelProcessing", b);
 }
 
+bool ShotcutSettings::askResample() const
+{
+    return settings.value("encode/askResample", true).toBool();
+}
+
+void ShotcutSettings::setAskResample(bool b)
+{
+    settings.setValue("encode/askResample", b);
+}
+
 int ShotcutSettings::playerAudioChannels() const
 {
     return settings.value("player/audioChannels", 2).toInt();
@@ -953,6 +963,16 @@ bool ShotcutSettings::askUpgradeAutomatic()
 void ShotcutSettings::setAskUpgradeAutomatic(bool b)
 {
     settings.setValue("askUpgradeAutmatic", b);
+}
+
+bool ShotcutSettings::askChangeVideoMode()
+{
+    return settings.value("askChangeVideoMode", true).toBool();
+}
+
+void ShotcutSettings::setAskChangeVideoMode(bool b)
+{
+    settings.setValue("askChangeVideoMode", b);
 }
 
 void ShotcutSettings::sync()
