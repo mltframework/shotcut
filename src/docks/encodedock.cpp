@@ -2766,7 +2766,8 @@ void EncodeDock::on_reframeButton_clicked()
 
 void EncodeDock::on_resampleButton_clicked(bool checked)
 {
-    if (!Settings.askResample() || ("clip" == ui->fromCombo->currentData().toString() && !MLT.profile().is_explicit())) {
+    if (!Settings.askResample() || ("clip" == ui->fromCombo->currentData().toString()
+                                    && !MLT.profile().is_explicit())) {
         setResampleEnabled(checked);
     } else if (checked) {
         QMessageBox dialog(QMessageBox::Question,
