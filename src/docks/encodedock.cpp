@@ -76,6 +76,13 @@ EncodeDock::EncodeDock(QWidget *parent) :
     LOG_DEBUG() << "begin";
     initSpecialCodecLists();
     ui->setupUi(this);
+    auto tip = ui->widthSpinner->toolTip();
+    ui->heightSpinner->setToolTip(tip);
+    ui->resolutionComboBox->setToolTip(tip);
+    ui->aspectNumSpinner->setToolTip(tip);
+    ui->aspectDenSpinner->setToolTip(tip);
+    ui->fpsSpinner->setToolTip(tip);
+    ui->fpsComboBox->setToolTip(tip);
     ui->stopCaptureButton->hide();
     ui->advancedButton->setChecked(Settings.encodeAdvanced());
     ui->advancedCheckBox->setChecked(Settings.encodeAdvanced());
