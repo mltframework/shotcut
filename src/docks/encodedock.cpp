@@ -2791,7 +2791,7 @@ void EncodeDock::on_resampleButton_clicked(bool checked)
         dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.",
                                             "Resample export warning dialog")));
         switch (dialog.exec()) {
-        case QMessageBox::Accepted:
+        case QMessageBox::Yes:
             setResampleEnabled(checked);
             break;
         case QMessageBox::No:
