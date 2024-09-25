@@ -1103,6 +1103,30 @@ QUuid Controller::ensureHasUuid(Mlt::Properties &properties) const
     return newUid;
 }
 
+static int indexOfFirstNonGpu(Producer &toProducer)
+{
+    for (int i = 0; i < toProducer.filter_count(); i++) {
+        QScopedPointer<Mlt::Filter> filter(toProducer.filter(i));
+        if (filter && filter->is_valid() && !filter->get_int("_loader")
+                && !filter->get_int(kShotcutHiddenProperty)
+                && filter->get("mlt_service")) {
+            if (!QString::fromLatin1(filter->get("mlt_service")).startsWith("movit."))
+                return i;
+        }
+    }
+    Mlt::Chain toChain(toProducer);
+    for (int i = 0; i < toChain.link_count(); i++) {
+        QScopedPointer<Mlt::Link> link(toChain.link(i));
+        if (link && link->is_valid() && !link->get_int("_loader")
+                && !link->get_int(kShotcutHiddenProperty)
+                && link->get("mlt_service")) {
+            if (!QString::fromLatin1(link->get("mlt_service")).startsWith("movit."))
+                return i;
+        }
+    }
+    return -1;
+}
+
 void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool fromClipboard,
                              bool includeDisabled)
 {
@@ -1111,6 +1135,9 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
     int out = fromProducer.get(kFilterOutProperty) ? fromProducer.get_int(
                   kFilterOutProperty) : fromProducer.get_out();
     int count = fromProducer.filter_count();
+
+    // Get the index of the first non-GPU filter or link in toProducer
+    int firstNonGpuService = fromClipboard ? indexOfFirstNonGpu(toProducer) : -1;
 
     for (int i = 0; i < count; i++) {
         QScopedPointer<Mlt::Filter> fromFilter(fromProducer.filter(i));
@@ -1140,6 +1167,8 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
                 // Force any 2-pass filters to require re-analysis
                 toFilter.clear("results");
                 toProducer.attach(toFilter);
+                if (firstNonGpuService >= 0 && metadata->needsGPU())
+                    toProducer.move_filter(toProducer.filter_count(), firstNonGpuService++);
 
                 if (!fromClipboard) {
                     toFilter.set(kFilterInProperty, fromFilter->get_in() - in);
@@ -1163,6 +1192,9 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
                 if (toLink.is_valid()) {
                     toLink.inherit(*fromLink);
                     toChain.attach(toLink);
+                    if (firstNonGpuService >= 0
+                            && QString::fromLatin1(fromLink->get("mlt_service")).startsWith("movit."))
+                        toChain.move_link(toChain.link_count(), firstNonGpuService++);
                 }
             }
         }
