@@ -70,6 +70,8 @@
     <addaction name="actionSave_As"/>
     <addaction name="actionBackupSave"/>
     <addaction name="menuOtherVersions"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowProjectFolder"/>
     <addaction name="menuExport"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
@@ -316,7 +318,7 @@
     <bool>false</bool>
    </property>
    <property name="toolButtonStyle">
-    <enum>Qt::ToolButtonFollowStyle</enum>
+    <enum>Qt::ToolButtonStyle::ToolButtonFollowStyle</enum>
    </property>
    <property name="floatable">
     <bool>false</bool>
@@ -393,7 +395,7 @@
     <string>&amp;About Shotcut</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::AboutRole</enum>
+    <enum>QAction::MenuRole::AboutRole</enum>
    </property>
   </action>
   <action name="actionAbout_Qt">
@@ -401,7 +403,7 @@
     <string>About Qt</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::AboutQtRole</enum>
+    <enum>QAction::MenuRole::AboutQtRole</enum>
    </property>
   </action>
   <action name="actionOpenOther">
@@ -905,8 +907,7 @@
   </action>
   <action name="actionClose">
    <property name="icon">
-    <iconset theme="window-close">
-     <normaloff>.</normaloff>.</iconset>
+    <iconset theme="window-close"/>
    </property>
    <property name="text">
     <string>Close</string>
@@ -1401,6 +1402,11 @@
    </property>
    <property name="text">
     <string>Weekly</string>
+   </property>
+  </action>
+  <action name="actionShowProjectFolder">
+   <property name="text">
+    <string>Show Project in Folder</string>
    </property>
   </action>
  </widget>

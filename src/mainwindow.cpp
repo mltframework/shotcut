@@ -2281,6 +2281,7 @@ void MainWindow::setCurrentFile(const QString &filename)
 #else
     setWindowTitle(QString("%1[*] - %2").arg(shownName).arg(qApp->applicationName()));
 #endif
+    ui->actionShowProjectFolder->setDisabled(m_currentFile.isEmpty());
 }
 
 void MainWindow::on_actionAbout_Shotcut_triggered()
@@ -4181,6 +4182,11 @@ void MainWindow::on_actionOpenXML_triggered()
             emit openFailed(url);
         }
     }
+}
+
+void MainWindow::on_actionShowProjectFolder_triggered()
+{
+    Util::showInFolder(m_currentFile);
 }
 
 void MainWindow::onFocusChanged(QWidget *, QWidget * ) const

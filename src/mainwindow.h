@@ -333,6 +333,7 @@ private slots:
     void on_menuExternal_aboutToShow();
     void on_actionUpgrade_triggered();
     void on_actionOpenXML_triggered();
+    void on_actionShowProjectFolder_triggered();
     void onAutosaveTimeout();
     void onFocusChanged(QWidget *old, QWidget *now) const;
     void onFocusObjectChanged(QObject *obj) const;
