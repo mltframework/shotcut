@@ -39,6 +39,12 @@ install_manifest.txt
 share/
 src/shotcut_autogen/
 .qt
+MLT*
+Qt*
+fftw*
+ffmpeg*
+Frei0r*
+SDL*
 translations/.lupdate/shotcut_project.cmake
 .DS_Store
 scripts/build-shotcut.conf
