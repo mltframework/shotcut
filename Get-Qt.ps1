@@ -15,4 +15,4 @@ if (!(Test-Path $python_exe_path)) {
 
 & $python_exe_path -m pip install aqtinstall==3.1.*;
 
-& $python_exe_path -m aqt install-qt windows desktop 6.4.0 win64_msvc2019_64 --outputdir "$($PSScriptRoot)\src\Qt";
+& $python_exe_path -m aqt install-qt windows desktop 6.7 win64_msvc2019_64 --outputdir "$($PSScriptRoot)\src\Qt";

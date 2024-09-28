@@ -16,7 +16,7 @@ try {
         }
     
         if($missing) {
-            & install.ps1;
+            & $PSScriptRoot\install.ps1;
         } else {
             # build
 

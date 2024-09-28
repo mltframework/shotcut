@@ -1,22 +1,23 @@
 
-$mltoutfile = "mlt-tarball";
+$mltoutfile = "mlt-tarball.tar.gz";
 $mlttarballurl = "https://github.com/mltframework/mlt/releases/download/v7.28.0/mlt-7.28.0.tar.gz";
 $mltunpackpath = "./src/mlt";
 
 $fftwurl = "https://fftw.org/fftw-3.3.10.tar.gz";
-$fftwoutfile = "fftw-tarball";
+$fftwoutfile = "fftw-tarball.tar.gz";
 $fftwunpackpath = "./src/fftw"
 
 $ffmpegurl = "https://ffmpeg.org/releases/ffmpeg-7.0.2.tar.xz";
-$ffmpegoutfile = "ffmpeg-tarball";
+$ffmpegoutfilexz = "ffmpeg-tarball.tar.xz";
+$ffmpegoutfiletar = "ffmpeg-tarball.tar";
 $ffmpegunpackpath = "./src/ffmpeg"
 
 $Frei0rurl = "https://github.com/dyne/frei0r/releases/download/v2.3.3/frei0r-v2.3.3_win64.zip";
-$Frei0routfile = "Frei0r-zip";
+$Frei0routfile = "Frei0r.zip";
 $Frei0runpackpath = "./src/Frei0r"
 
 $SDLurl = "https://github.com/libsdl-org/SDL/releases/download/release-2.30.7/SDL2-2.30.7-win32-x64.zip";
-$SDLoutfile = "SDL-zip";
+$SDLoutfile = "SDL.zip";
 $SDLunpackpath = "./src/SDL"
 
 
@@ -45,13 +46,11 @@ function unpacktarball {
         [string]$unpackpath
     )   
     & {
-        Get-ChildItem -Path $PSScriptRoot -Filter $outputfile | `
-        Foreach-Object {
-            tar -xvzf $_.FullName -C $unpackpath;
-        }
+        tar -C $unpackpath --extract --file="$($outputfile)" --verbose;
     }
     
 }
+
 function deletetarball {
     [OutputType([Void])]
     param(
@@ -65,81 +64,127 @@ function deletetarball {
 #EndRegion
 
 
-
-
 try {
     
     
     #Region MLT
-    if (-not (Test-Path $mltunpackpath)) {
-        downloadtarball -url $mlttarballurl -outpath $mltoutfile; 
-        unpacktarball -outputfile $mltoutfile -unpackpath $mltunpackpath;
-        deletetarball -outputfile $mltoutfile;
+    Write-Host -ForegroundColor Cyan "[INFO]: checking MLT"
+    
+    function getmlt {
+        if (-not (Test-Path $mltunpackpath)) {
+            Write-Host -ForegroundColor Cyan "[INFO]: MLT not found. installing to => $mltunpackpath"
+            New-Item -ItemType Directory -Path $mltunpackpath;
+
+            downloadtarball -url $mlttarballurl -outpath $mltoutfile; 
+            unpacktarball -outputfile $mltoutfile -unpackpath $mltunpackpath;
+            deletetarball -outputfile $mltoutfile;
+        }
     }
     #EndRegion
     
     #Region QT
-    Write-Host -ForegroundColor Cyan "[INFO]: checking QT"
-    
-    if (-not (Test-Path "./src/Qt*")) {
-        Write-Host -ForegroundColor Cyan "[INFO]: QT not installed - installing to => ./src/Qt"
-        & "$($PSScriptRoot)/Get-Qt.ps1";
+    function getqt {
+        Write-Host -ForegroundColor Cyan "[INFO]: checking QT"
+        
+        if (-not (Test-Path "./src/Qt*")) {
+            Write-Host -ForegroundColor Cyan "[INFO]: QT not installed - installing to => ./src/Qt"
+            & "$($PSScriptRoot)/Get-Qt.ps1";
+        }
     }
+
     #EndRegion
     
     
     # FFTW
     #Region FFTW
-    
-    Write-Host -ForegroundColor Cyan "[INFO]: checking FFTW"
-    
-    if (-not (Test-Path $fftwunpackpath)) {
-        Write-Host -ForegroundColor Cyan "[INFO]: FFTW not found... installing to this project to => $fftwunpackpath"
-        downloadtarball -url $fftwurl -outpath $fftwoutfile;
-        unpacktarball -outputfile $fftwoutfile -unpackpath $fftwunpackpath;
-        deletetarball $fftwoutfile;
+    function getfftw {
+        Write-Host -ForegroundColor Cyan "[INFO]: checking FFTW"
+        
+        if (-not (Test-Path $fftwunpackpath)) {
+            New-Item -ItemType Directory -Path $fftwunpackpath;
+
+            Write-Host -ForegroundColor Cyan "[INFO]: FFTW not found... installing to this project to => $fftwunpackpath"
+            downloadtarball -url $fftwurl -outpath $fftwoutfile;
+            unpacktarball -outputfile $fftwoutfile -unpackpath $fftwunpackpath
+            deletetarball $fftwoutfile;
+        }
     }
+    
     
     #EndRegion
     
     
     # FFmpeg: multimedia format and codec libraries
-    Write-Host -ForegroundColor Cyan "[INFO]: checking FFmpeg: multimedia format and codec libraries"
     #Region FFMPEG
-    if (-not (Test-Path $ffmpegunpackpath)) {
-        Write-Host -ForegroundColor Cyan "[INFO]: FFMPEG not found, installing to this project to => $($ffmpegunpackpath)..."
-        downloadtarball -url $ffmpegurl -outpath $ffmpegoutfile;
-        unpacktarball -outputfile $ffmpegoutfile -unpackpath $ffmpegunpackpath;
-        deletetarball $ffmpegoutfile;
-    
+    function getffmpeg {
+        Write-Host -ForegroundColor Cyan "[INFO]: checking FFmpeg: multimedia format and codec libraries"
+        if (-not (Test-Path $ffmpegunpackpath)) {
+            New-Item -ItemType Directory -Path $ffmpegunpackpath;
+
+            Write-Host -ForegroundColor Cyan "[INFO]: FFMPEG not found, installing to this project to => $($ffmpegunpackpath)..."
+            
+            downloadtarball -url $ffmpegurl -outpath $ffmpegoutfilexz;
+            
+            xz.exe -d -v $ffmpegoutfilexz;
+            unpacktarball -outputfile $ffmpegoutfiletar -unpackpath $ffmpegunpackpath;
+            
+            Remove-Item $ffmpegoutfiletar -Force -Recurse -Verbose;
+        
+        }
     }
+    
     #EndRegion
     
     
     # Frei0r: video plugins
-    Write-Host -ForegroundColor Cyan "[INFO]: checking Frei0r: video plugins"
     #Region Frei0r
-    if (-not (Test-Path $Frei0runpackpath)) {
-        Write-Host -ForegroundColor Cyan "[INFO]: Frei0r not found, installing to this project to => $Frei0runpackpath..."
-        Invoke-WebRequest $Frei0rurl -OutFile $Frei0routfile;
-        Expand-Archive -Path $Frei0routfile -DestinationPath $Frei0runpackpath;
-        Remove-Item $Frei0routfile -Force -Recurse -Verbose;
+    function getfrei0r {
+        Write-Host -ForegroundColor Cyan "[INFO]: checking Frei0r: video plugins"
+        if (-not (Test-Path $Frei0runpackpath)) {
+
+            New-Item -ItemType Directory -Path $Frei0runpackpath;
+
+            Write-Host -ForegroundColor Cyan "[INFO]: Frei0r not found, installing to this project to => $Frei0runpackpath..."
+
+            Invoke-WebRequest $Frei0rurl -OutFile $Frei0routfile;
+            
+            Expand-Archive -Path $Frei0routfile -DestinationPath $Frei0runpackpath;
+            
+            Remove-Item $Frei0routfile -Force -Recurse -Verbose;
+        }
     }
+
     #EndRegion
     
     
     # SDL: cross-platform audio playback
     #Region SDL
-    Write-Host -ForegroundColor Cyan "[INFO]: checking SDL: cross-platform audio playback..."
-    if (-not (Test-Path $SDLunpackpath)) {
-        Write-Host -ForegroundColor Cyan "[INFO]: SDL not found, installing to this project to => $SDLunpackpath..."
-        # not tarball zip file for win64
-        Invoke-WebRequest $SDLurl -OutFile $SDLoutfile;
-        Expand-Archive -Path $SDLoutfile -DestinationPath $SDLunpackpath;
-        Remove-Item $SDLoutfile -Force -Recurse -Verbose;
+    function getsdl {
+        Write-Host -ForegroundColor Cyan "[INFO]: checking SDL: cross-platform audio playback..."
+        if (-not (Test-Path $SDLunpackpath)) {
+            New-Item -ItemType Directory -Path $SDLunpackpath;
+            
+            Write-Host -ForegroundColor Cyan "[INFO]: SDL not found, installing to this project to => $SDLunpackpath..."
+            
+            Invoke-WebRequest $SDLurl -OutFile $SDLoutfile;
+            
+            Expand-Archive -Path $SDLoutfile -DestinationPath $SDLunpackpath;
+            
+            Remove-Item $SDLoutfile -Force -Recurse -Verbose;
+        }
     }
+
     #EndRegion
 }
 catch {
     throw $_;
 }
+
+getmlt;
+
+# this wont work - just cloned from git anyways in C:\qt6
+# getqt;
+getfftw;
+getffmpeg;
+getfrei0r;
+getsdl;
