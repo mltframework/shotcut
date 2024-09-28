@@ -183,6 +183,10 @@ catch {
 getmlt;
 
 # this wont work - just cloned from git anyways in C:\qt6
+
+# best I can do for qt6 at the moment is something like 
+# local installation of qt6
+# New-Item -Itemtype Junction -Path ./src/Qt -Target "$home\projects\qt6"
 # getqt;
 getfftw;
 getffmpeg;
