@@ -47,8 +47,12 @@ Shotcut.VuiBase {
         var rect = rectangle.rectangle;
         filterRect.x = Math.round(rect.x / rectangle.widthScale);
         filterRect.y = Math.round(rect.y / rectangle.heightScale);
-        filterRect.width = Math.round(rect.width / rectangle.widthScale);
-        filterRect.height = Math.round(rect.height / rectangle.heightScale);
+        let w = Math.round(rect.width / rectangle.widthScale);
+        w += w % 2 * (w > filterRect.width ? 1 : -1);
+        filterRect.width = w;
+        let h = Math.round(rect.height / rectangle.heightScale);
+        h += h % 2 * (h > filterRect.height ? 1 : -1);
+        filterRect.height = h;
         if (position !== null) {
             filter.blockSignals = true;
             if (position <= 0 && filter.animateIn > 0)
