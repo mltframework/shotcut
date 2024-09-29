@@ -55,7 +55,6 @@ public:
 
     void loadPresetFromProperties(Mlt::Properties &);
     bool isExportInProgress() const;
-    bool isResampleEnabled() const;
 
 signals:
     void captureStateChanged(bool);
@@ -134,7 +133,9 @@ private slots:
 
     void on_reframeButton_clicked();
 
-    void on_resampleButton_clicked(bool checked);
+    void on_aspectNumSpinner_valueChanged(int value);
+
+    void on_aspectDenSpinner_valueChanged(int value);
 
 private:
     enum {
@@ -181,7 +182,10 @@ private:
     bool checkForMissingFiles();
     QString &defaultFormatExtension();
     void initSpecialCodecLists();
-    void setResampleEnabled(bool enabled);
+    void setReframeEnabled(bool enabled);
+    void showResampleWarning(const QString &message);
+    void hideResampleWarning(bool hide = true);
+    void checkFrameRate();
 };
 
 #endif // ENCODEDOCK_H

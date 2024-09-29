@@ -76,13 +76,8 @@ EncodeDock::EncodeDock(QWidget *parent) :
     LOG_DEBUG() << "begin";
     initSpecialCodecLists();
     ui->setupUi(this);
-    auto tip = ui->widthSpinner->toolTip();
-    ui->heightSpinner->setToolTip(tip);
-    ui->resolutionComboBox->setToolTip(tip);
-    ui->aspectNumSpinner->setToolTip(tip);
-    ui->aspectDenSpinner->setToolTip(tip);
-    ui->fpsSpinner->setToolTip(tip);
-    ui->fpsComboBox->setToolTip(tip);
+    Util::setColorsToHighlight(ui->resampleWarningLabel);
+    hideResampleWarning(true);
     ui->stopCaptureButton->hide();
     ui->advancedButton->setChecked(Settings.encodeAdvanced());
     ui->advancedCheckBox->setChecked(Settings.encodeAdvanced());
@@ -436,11 +431,6 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
 bool EncodeDock::isExportInProgress() const
 {
     return !m_immediateJob.isNull();
-}
-
-bool EncodeDock::isResampleEnabled() const
-{
-    return ui->resampleButton->isEnabled();
 }
 
 void EncodeDock::onProducerOpened()
@@ -1923,6 +1913,7 @@ void EncodeDock::onProfileChanged()
     auto producer = fromProducer();
     ui->reframeButton->setEnabled(producer && producer == MAIN.multitrack());
     auto reframe = getReframeFilter(producer);
+    setReframeEnabled(false);
     if (reframe.is_valid()) {
         auto rect = reframe.anim_get_rect("rect", 0);
         if (rect.w > 0 && rect.h > 0) {
@@ -1931,13 +1922,10 @@ void EncodeDock::onProfileChanged()
             auto gcd = Util::greatestCommonDivisor(rect.w, rect.h);
             ui->aspectNumSpinner->setValue(rect.w / gcd);
             ui->aspectDenSpinner->setValue(rect.h / gcd);
-            ui->resampleButton->setDisabled(true);
+            setReframeEnabled(true);
+            hideResampleWarning();
         }
-    } else {
-        ui->resampleButton->setEnabled(producer && producer->is_valid());
     }
-    ui->resampleButton->setChecked(false);
-    setResampleEnabled(false);
 }
 
 void EncodeDock::on_streamButton_clicked()
@@ -2243,7 +2231,6 @@ void EncodeDock::on_fromCombo_currentIndexChanged(int index)
     Q_UNUSED(index)
     auto producer = fromProducer();
     ui->reframeButton->setEnabled(producer && producer == MAIN.multitrack());
-    ui->resampleButton->setEnabled(!getReframeFilter(producer).is_valid());
     if (MLT.isSeekable(producer))
         ui->encodeButton->setText(tr("Export File"));
     else
@@ -2405,13 +2392,16 @@ void EncodeDock::on_fpsSpinner_editingFinished()
             Util::showFrameRateDialog(caption, 60000, ui->fpsSpinner, this);
         }
         m_fps = ui->fpsSpinner->value();
+        checkFrameRate();
     }
 }
 
 void EncodeDock::on_fpsComboBox_activated(int arg1)
 {
-    if (!ui->fpsComboBox->itemText(arg1).isEmpty())
+    if (!ui->fpsComboBox->itemText(arg1).isEmpty()) {
         ui->fpsSpinner->setValue(ui->fpsComboBox->itemText(arg1).toDouble());
+        checkFrameRate();
+    }
 }
 
 void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
@@ -2770,53 +2760,51 @@ void EncodeDock::on_reframeButton_clicked()
     emit createOrEditFilterOnOutput(&filter);
 }
 
-
-void EncodeDock::on_resampleButton_clicked(bool checked)
+void EncodeDock::on_aspectNumSpinner_valueChanged(int value)
 {
-    if (!Settings.askResample() || ("clip" == ui->fromCombo->currentData().toString()
-                                    && !MLT.profile().is_explicit())) {
-        setResampleEnabled(checked);
-    } else if (checked) {
-        QMessageBox dialog(QMessageBox::Question,
-                           tr("Resample Export"),
-                           tr("<p>Are you sure you want to resample instead of change the <b>Video Mode</b>?</p>"
-                              "<p>Changing the aspect ratio adds black bars.</p>"
-                              "<p>Increasing resolution or frame rate is limited by <b>Video Mode</b>.</p>"),
-                           QMessageBox::No | QMessageBox::Yes,
-                           this);
-        dialog.addButton(tr("Open Settings > Video Mode"), QMessageBox::ResetRole);
-        dialog.setDefaultButton(QMessageBox::Yes);
-        dialog.setEscapeButton(QMessageBox::Cancel);
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.",
-                                            "Resample export warning dialog")));
-        switch (dialog.exec()) {
-        case QMessageBox::Yes:
-            setResampleEnabled(checked);
-            break;
-        case QMessageBox::No:
-            ui->resampleButton->setChecked(false);
-            break;
-        default:
-            ui->resampleButton->setChecked(false);
-            MAIN.showSettingsMenu();
-            break;
-        }
-        if (dialog.checkBox()->isChecked())
-            Settings.setAskResample(false);
-    } else {
-        setResampleEnabled(false);
-    }
+    if (!ui->reframeButton->isChecked()
+            && double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()) !=
+            MLT.profile().dar())
+        showResampleWarning(tr("Aspect ratio does not match project Video Mode, which causes black bars."));
+    else
+        hideResampleWarning();
 }
 
-void EncodeDock::setResampleEnabled(bool enabled)
+void EncodeDock::on_aspectDenSpinner_valueChanged(int value)
 {
-    ui->widthSpinner->setEnabled(enabled);
-    ui->heightSpinner->setEnabled(enabled);
-    ui->resolutionComboBox->setEnabled(enabled);
-    ui->aspectNumSpinner->setEnabled(enabled);
-    ui->aspectDenSpinner->setEnabled(enabled);
-    ui->fpsSpinner->setEnabled(enabled);
-    ui->fpsComboBox->setEnabled(enabled);
+    on_aspectNumSpinner_valueChanged(value);
+}
 
+
+void EncodeDock::setReframeEnabled(bool enabled)
+{
+    ui->widthSpinner->setDisabled(enabled);
+    ui->heightSpinner->setDisabled(enabled);
+    ui->resolutionComboBox->setDisabled(enabled);
+    ui->aspectNumSpinner->setDisabled(enabled);
+    ui->aspectDenSpinner->setDisabled(enabled);
+    ui->fpsSpinner->setDisabled(enabled);
+    ui->fpsComboBox->setDisabled(enabled);
+}
+
+void EncodeDock::showResampleWarning(const QString &message)
+{
+    ui->resampleWarningLabel->setText(message);
+    hideResampleWarning(false);
+}
+
+void EncodeDock::hideResampleWarning(bool hide)
+{
+    ui->resampleWarningIcon->setVisible(!hide);
+    ui->resampleWarningLabel->setVisible(!hide);
+}
+
+void EncodeDock::checkFrameRate()
+{
+    if (ui->fromCombo->currentData().toString() != "clip"
+            && qFloor(ui->fpsSpinner->value() * 10000.0) > qFloor(MLT.profile().fps() * 10000.0))
+        showResampleWarning(
+            tr("Frame rate is higher than project Video Mode, which causes frames to simply repeat."));
+    else
+        hideResampleWarning();
 }

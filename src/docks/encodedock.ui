@@ -332,16 +332,6 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="resampleButton">
-                     <property name="text">
-                      <string>Resample</string>
-                     </property>
-                     <property name="checkable">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
                     <spacer name="horizontalSpacer_26">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -356,7 +346,47 @@
                    </item>
                   </layout>
                  </item>
-                 <item row="3" column="1">
+                 <item row="3" column="0" colspan="2">
+                  <layout class="QHBoxLayout" name="resampleWarningLayout" stretch="0,10">
+                   <property name="leftMargin">
+                    <number>8</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>8</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="resampleWarningIcon">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../../icons/resources.qrc">
+                       <normaloff>:/icons/oxygen/32x32/status/task-attempt.png</normaloff>:/icons/oxygen/32x32/status/task-attempt.png</iconset>
+                     </property>
+                     <property name="flat">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="resampleWarningLabel">
+                     <property name="text">
+                      <string></string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignmentFlag::AlignCenter</set>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
+                     <property name="margin">
+                      <number>2</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="1">
                   <layout class="QHBoxLayout" name="horizontalLayout_16">
                    <item>
                     <widget class="QDoubleSpinBox" name="fpsSpinner">
@@ -449,7 +479,7 @@
                    </item>
                   </layout>
                  </item>
-                 <item row="8" column="0">
+                 <item row="9" column="0">
                   <widget class="QLabel" name="label_4">
                    <property name="text">
                     <string>Interpolation</string>
@@ -459,7 +489,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="8" column="1">
+                 <item row="9" column="1">
                   <layout class="QHBoxLayout" name="horizontalLayout_18">
                    <item>
                     <widget class="QComboBox" name="interpolationCombo">
@@ -503,7 +533,7 @@
                    </item>
                   </layout>
                  </item>
-                 <item row="6" column="0">
+                 <item row="7" column="0">
                   <widget class="QLabel" name="label_15">
                    <property name="text">
                     <string>Field order</string>
@@ -523,7 +553,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="7" column="0">
+                 <item row="8" column="0">
                   <widget class="QLabel" name="label_2">
                    <property name="text">
                     <string>Deinterlacer</string>
@@ -533,7 +563,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="0">
+                 <item row="4" column="0">
                   <widget class="QLabel" name="label_10">
                    <property name="text">
                     <string>Frames/sec</string>
@@ -543,7 +573,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="5" column="0">
+                 <item row="6" column="0">
                   <widget class="QLabel" name="label_14">
                    <property name="text">
                     <string>Scan mode</string>
@@ -553,7 +583,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="0">
+                 <item row="5" column="0">
                   <widget class="QLabel" name="label_24">
                    <property name="text">
                     <string>Color range</string>
@@ -563,7 +593,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="10" column="1">
+                 <item row="11" column="1">
                   <widget class="QCheckBox" name="parallelCheckbox">
                    <property name="toolTip">
                     <string>This enables multiple image processing threads.
@@ -591,7 +621,7 @@ with parallel processing enabled.</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="1">
+                 <item row="5" column="1">
                   <layout class="QHBoxLayout" name="horizontalLayout_23">
                    <item>
                     <widget class="QComboBox" name="rangeComboBox">
@@ -622,7 +652,7 @@ with parallel processing enabled.</string>
                    </item>
                   </layout>
                  </item>
-                 <item row="5" column="1">
+                 <item row="6" column="1">
                   <layout class="QHBoxLayout" name="horizontalLayout_9">
                    <item>
                     <widget class="QComboBox" name="scanModeCombo">
@@ -656,7 +686,7 @@ with parallel processing enabled.</string>
                    </item>
                   </layout>
                  </item>
-                 <item row="11" column="1">
+                 <item row="12" column="1">
                   <spacer name="verticalSpacer_4">
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
@@ -778,14 +808,14 @@ with parallel processing enabled.</string>
                    </item>
                   </layout>
                  </item>
-                 <item row="9" column="1">
+                 <item row="10" column="1">
                   <widget class="QCheckBox" name="previewScaleCheckBox">
                    <property name="text">
                     <string>Use preview scaling</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="1">
+                 <item row="7" column="1">
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
                    <item>
                     <widget class="QComboBox" name="fieldOrderCombo">
@@ -819,7 +849,7 @@ with parallel processing enabled.</string>
                    </item>
                   </layout>
                  </item>
-                 <item row="7" column="1">
+                 <item row="8" column="1">
                   <layout class="QHBoxLayout" name="horizontalLayout_3">
                    <item>
                     <widget class="QComboBox" name="deinterlacerCombo">
