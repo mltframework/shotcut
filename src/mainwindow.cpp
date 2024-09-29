@@ -654,8 +654,7 @@ void MainWindow::setupAndConnectDocks()
     connect(m_timelineDock->model(), &MultitrackModel::filteredChanged, m_encodeDock,
             &EncodeDock::onProfileChanged);
     connect(m_filterController, &FilterController::filterChanged, this, [&](Mlt::Service * filter) {
-        if (filter && filter->is_valid() && !::qstrcmp("reframe", filter->get(kShotcutFilterProperty))
-                && (!filter->get_int("disable") == m_encodeDock->isResampleEnabled())) {
+        if (filter && filter->is_valid() && !::qstrcmp("reframe", filter->get(kShotcutFilterProperty))) {
             m_encodeDock->onProfileChanged();
         }
     });
