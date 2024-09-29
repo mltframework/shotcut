@@ -138,7 +138,7 @@ Shotcut.KeyframableFilter {
     height: 100
     Component.onCompleted: {
         filter.blockSignals = true;
-        let width = profile.height * 9 / 16;
+        let width = Math.floor(profile.height * 9 / 16);
         width += width % 2;
         let rect = Qt.rect(0.5 * (profile.width - width), 0, width, profile.height);
         filter.set(startValueRect, rect);
@@ -146,12 +146,12 @@ Shotcut.KeyframableFilter {
         filter.set(endValueRect, rect);
         filter.set('filter', '0');
         if (filter.isNew) {
-            width = profile.height * 4 / 3;
+            width = Math.floor(profile.height * 4 / 3);
             width += width % 2;
             rect = Qt.rect(0.5 * (profile.width - width), 0, width, profile.height);
             filter.set(rectProperty, rect);
             filter.savePreset(preset.parameters, qsTr('Horizontal 4:3'));
-            width = profile.height * 16 / 9;
+            width = Math.floor(profile.height * 16 / 9);
             width += width % 2;
             rect = Qt.rect(0.5 * (profile.width - width), 0, width, profile.height);
             filter.set(rectProperty, rect);
@@ -163,7 +163,7 @@ Shotcut.KeyframableFilter {
             filter.savePreset(preset.parameters, qsTr('Square'));
 
             // Set default parameter values
-            width = profile.height * 9 / 16;
+            width = Math.floor(profile.height * 9 / 16);
             width += width % 2;
             rect = Qt.rect(0.5 * (profile.width - width), 0, width, profile.height);
             filter.set(rectProperty, rect);
@@ -267,7 +267,7 @@ Shotcut.KeyframableFilter {
 
         Shotcut.UndoButton {
             onClicked: {
-                let width = profile.height * 9 / 16;
+                let width = Math.floor(profile.height * 9 / 16);
                 width += width % 2;
                 rectX.value = 0.5 * (profile.width - width);
                 rectY.value = 0;
@@ -348,7 +348,7 @@ Shotcut.KeyframableFilter {
 
         Shotcut.UndoButton {
             onClicked: {
-                let width = profile.height * 9 / 16;
+                let width = Math.floor(profile.height * 9 / 16);
                 width += width % 2;
                 rectW.value = width;
                 rectH.value = profile.height;
