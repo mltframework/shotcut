@@ -389,16 +389,6 @@ void ShotcutSettings::setEncodeParallelProcessing(bool b)
     settings.setValue("encode/parallelProcessing", b);
 }
 
-bool ShotcutSettings::askResample() const
-{
-    return settings.value("encode/askResample", true).toBool();
-}
-
-void ShotcutSettings::setAskResample(bool b)
-{
-    settings.setValue("encode/askResample", b);
-}
-
 int ShotcutSettings::playerAudioChannels() const
 {
     return settings.value("player/audioChannels", 2).toInt();

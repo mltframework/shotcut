@@ -139,8 +139,6 @@ public:
     void setShowConvertClipDialog(bool);
     bool encodeParallelProcessing() const;
     void setEncodeParallelProcessing(bool);
-    bool askResample() const;
-    void setAskResample(bool);
 
     // player
     int playerAudioChannels() const;
