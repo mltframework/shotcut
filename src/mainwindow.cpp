@@ -655,7 +655,7 @@ void MainWindow::setupAndConnectDocks()
             &EncodeDock::onProfileChanged);
     connect(m_filterController, &FilterController::filterChanged, this, [&](Mlt::Service * filter) {
         if (filter && filter->is_valid() && !::qstrcmp("reframe", filter->get(kShotcutFilterProperty))) {
-            m_encodeDock->onProfileChanged();
+            m_encodeDock->onReframeChanged();
         }
     });
 

@@ -57,9 +57,9 @@ static Mlt::Filter getReframeFilter(Mlt::Service *service)
 {
     if (service && service->is_valid())
         for (auto i = 0; i < service->filter_count(); ++i) {
-            Mlt::Filter filter(service->filter(i));
-            if (!::qstrcmp("reframe", filter.get(kShotcutFilterProperty)) && !filter.get_int("disable"))
-                return filter;
+            std::unique_ptr<Mlt::Filter> filter(service->filter(i));
+            if (filter && filter->is_valid() && !::qstrcmp("reframe", filter->get(kShotcutFilterProperty)))
+                return Mlt::Filter(filter->get_filter());
         }
     return Mlt::Filter();
 }
@@ -1873,7 +1873,7 @@ void EncodeDock::onAudioChannelsChanged()
     setAudioChannels(MLT.audioChannels());
 }
 
-void EncodeDock::onProfileChanged()
+void EncodeDock::setResolutionAspectFromProfile()
 {
     int width = MLT.profile().width();
     int height = MLT.profile().height();
@@ -1901,6 +1901,11 @@ void EncodeDock::onProfileChanged()
     ui->heightSpinner->setValue(height);
     ui->aspectNumSpinner->setValue(dar_numerator);
     ui->aspectDenSpinner->setValue(dar_denominator);
+}
+
+void EncodeDock::onProfileChanged()
+{
+    setResolutionAspectFromProfile();
     ui->scanModeCombo->setCurrentIndex(MLT.profile().progressive());
     on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
     ui->fpsSpinner->setValue(MLT.profile().fps());
@@ -1910,20 +1915,37 @@ void EncodeDock::onProfileChanged()
         ui->gopSpinner->setValue(qRound(MLT.profile().fps() * 5.0));
         ui->gopSpinner->blockSignals(false);
     }
+    onReframeChanged();
+}
+
+void EncodeDock::onReframeChanged()
+{
     auto producer = fromProducer();
     ui->reframeButton->setEnabled(producer && producer == MAIN.multitrack());
+
     auto reframe = getReframeFilter(producer);
-    setReframeEnabled(false);
     if (reframe.is_valid()) {
-        auto rect = reframe.anim_get_rect("rect", 0);
-        if (rect.w > 0 && rect.h > 0) {
-            ui->widthSpinner->setValue(rect.w);
-            ui->heightSpinner->setValue(rect.h);
-            auto gcd = Util::greatestCommonDivisor(rect.w, rect.h);
-            ui->aspectNumSpinner->setValue(rect.w / gcd);
-            ui->aspectDenSpinner->setValue(rect.h / gcd);
-            setReframeEnabled(true);
-            hideResampleWarning();
+        // If reframe's disable property changed
+        auto enabled = !reframe.get_int("disable");
+        if (enabled == ui->widthSpinner->isEnabled()) {
+            setReframeEnabled(enabled);
+            if (enabled)
+                hideResampleWarning();
+            else
+                setResolutionAspectFromProfile();
+        }
+
+        // If reframe is on and its resolution changed
+        if (enabled) {
+            auto rect = reframe.anim_get_rect("rect", 0);
+            if (rect.w > 0 && rect.h > 0 && (rect.w != ui->widthSpinner->value()
+                                             || rect.h != ui->heightSpinner->value())) {
+                ui->widthSpinner->setValue(rect.w);
+                ui->heightSpinner->setValue(rect.h);
+                auto gcd = Util::greatestCommonDivisor(rect.w, rect.h);
+                ui->aspectNumSpinner->setValue(rect.w / gcd);
+                ui->aspectDenSpinner->setValue(rect.h / gcd);
+            }
         }
     }
 }
@@ -2762,7 +2784,7 @@ void EncodeDock::on_reframeButton_clicked()
 
 void EncodeDock::on_aspectNumSpinner_valueChanged(int value)
 {
-    if (!ui->reframeButton->isChecked()
+    if (ui->widthSpinner->isEnabled()
             && double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()) !=
             MLT.profile().dar())
         showResampleWarning(tr("Aspect ratio does not match project Video Mode, which causes black bars."));
@@ -2804,7 +2826,7 @@ void EncodeDock::checkFrameRate()
     if (ui->fromCombo->currentData().toString() != "clip"
             && qFloor(ui->fpsSpinner->value() * 10000.0) > qFloor(MLT.profile().fps() * 10000.0))
         showResampleWarning(
-            tr("Frame rate is higher than project Video Mode, which causes frames to simply repeat."));
+            tr("Frame rate is higher than project Video Mode, which causes frames to repeat."));
     else
         hideResampleWarning();
 }

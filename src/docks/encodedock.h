@@ -64,6 +64,7 @@ public slots:
     void onAudioChannelsChanged();
     void onProducerOpened();
     void onProfileChanged();
+    void onReframeChanged();
     void on_hwencodeButton_clicked();
     bool detectHardwareEncoders();
 
@@ -186,6 +187,7 @@ private:
     void showResampleWarning(const QString &message);
     void hideResampleWarning(bool hide = true);
     void checkFrameRate();
+    void setResolutionAspectFromProfile();
 };
 
 #endif // ENCODEDOCK_H
