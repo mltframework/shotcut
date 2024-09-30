@@ -715,9 +715,6 @@ with parallel processing enabled.</string>
                      <property name="value">
                       <number>1280</number>
                      </property>
-                     <property name="toolTip">
-                      <string>&lt;p&gt;Click &lt;b&gt;Resample&lt;/b&gt; to enable this&lt;/p&gt;</string>
-                     </property>
                     </widget>
                    </item>
                    <item>
