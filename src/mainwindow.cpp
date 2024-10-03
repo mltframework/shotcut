@@ -2920,7 +2920,7 @@ bool MainWindow::continueJobsRunning()
         QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
                            tr("There are incomplete jobs.\n"
-                              "Do you want to still want to exit?"),
+                              "Do you still want to exit?"),
                            QMessageBox::No |
                            QMessageBox::Yes,
                            this);
@@ -2933,7 +2933,7 @@ bool MainWindow::continueJobsRunning()
         QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
                            tr("An export is in progress.\n"
-                              "Do you want to still want to exit?"),
+                              "Do you still want to exit?"),
                            QMessageBox::No |
                            QMessageBox::Yes,
                            this);
