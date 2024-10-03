@@ -2246,11 +2246,28 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
         emit warnTrackLocked(trackIndex);
         return;
     }
-    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    Mlt::Producer clip = producerForClip(trackIndex, clipIndex);
-    if (clip.is_valid()) {
+    if (trackIndex < 0 || clipIndex < 0) return;
+
+    if (isTransition(trackIndex, clipIndex)) {
+        MAIN.undoStack()->beginMacro(tr("Ripple delete transition"));
+        auto info = m_model.getClipInfo(trackIndex, clipIndex);
         MAIN.undoStack()->push(
             new Timeline::RemoveCommand(m_model, m_markersModel, trackIndex, clipIndex));
+        if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex))) {
+            MAIN.undoStack()->push(
+                new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex,
+                                                    -info->frame_count, true));
+            MAIN.undoStack()->push(
+                new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
+                                                     -info->frame_count, true));
+        }
+        MAIN.undoStack()->endMacro();
+    } else {
+        Mlt::Producer clip = producerForClip(trackIndex, clipIndex);
+        if (clip.is_valid()) {
+            MAIN.undoStack()->push(
+                new Timeline::RemoveCommand(m_model, m_markersModel, trackIndex, clipIndex));
+        }
     }
 }
 
@@ -2263,13 +2280,30 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         return;
     }
     if (trackIndex < 0 || clipIndex < 0) return;
-    Mlt::Producer clip(producerForClip(trackIndex, clipIndex));
-    if (clip.is_valid()) {
-        if (clip.is_blank())
-            return;
+
+    if (isTransition(trackIndex, clipIndex)) {
+        MAIN.undoStack()->beginMacro(tr("Lift transition"));
+        auto info = m_model.getClipInfo(trackIndex, clipIndex);
         MAIN.undoStack()->push(
-            new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
-        setSelection();
+                new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
+        if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex))) {
+            MAIN.undoStack()->push(
+                new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex + 1,
+                                                    -info->frame_count / 2, false));
+            MAIN.undoStack()->push(
+                new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
+                                                     -info->frame_count / 2 - info->frame_count % 2, false));
+        }
+        MAIN.undoStack()->endMacro();
+    } else {
+        Mlt::Producer clip(producerForClip(trackIndex, clipIndex));
+        if (clip.is_valid()) {
+            if (clip.is_blank())
+                return;
+            MAIN.undoStack()->push(
+                new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
+            setSelection();
+        }
     }
 }
 
