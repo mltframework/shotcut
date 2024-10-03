@@ -2238,7 +2238,7 @@ void TimelineDock::append(int trackIndex)
     }
 }
 
-void TimelineDock::remove(int trackIndex, int clipIndex)
+void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
 {
     if (!m_model.trackList().count())
         return;
@@ -2248,18 +2248,27 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
     }
     if (trackIndex < 0 || clipIndex < 0) return;
 
-    if (isTransition(trackIndex, clipIndex)) {
+    if (!ignoreTransition && isTransition(trackIndex, clipIndex)) {
         MAIN.undoStack()->beginMacro(tr("Ripple delete transition"));
         auto info = m_model.getClipInfo(trackIndex, clipIndex);
         MAIN.undoStack()->push(
             new Timeline::RemoveCommand(m_model, m_markersModel, trackIndex, clipIndex));
-        if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex))) {
-            MAIN.undoStack()->push(
-                new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex,
-                                                -info->frame_count, true));
-            MAIN.undoStack()->push(
-                new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
-                                                 -info->frame_count, true));
+        if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex)) && info->producer
+                && info->producer->is_valid()) {
+            // verify the clip after belongs to transition
+            Mlt::Producer transitionClip(static_cast<mlt_producer>(info->producer->get_data("mix_out")));
+            auto neighborClip = producerForClip(trackIndex, clipIndex);
+            if (neighborClip.is_valid() && neighborClip.same_clip(transitionClip))
+                MAIN.undoStack()->push(
+                    new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex,
+                                                    -info->frame_count, true));
+            // verify the clip before belongs to transition
+            transitionClip = Mlt::Producer(static_cast<mlt_producer>(info->producer->get_data("mix_in")));
+            neighborClip = producerForClip(trackIndex, clipIndex - 1);
+            if (neighborClip.is_valid() && neighborClip.same_clip(transitionClip))
+                MAIN.undoStack()->push(
+                    new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
+                                                     -info->frame_count, true));
         }
         MAIN.undoStack()->endMacro();
     } else {
@@ -2271,7 +2280,7 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
     }
 }
 
-void TimelineDock::lift(int trackIndex, int clipIndex)
+void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
 {
     if (!m_model.trackList().count())
         return;
@@ -2281,18 +2290,32 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
     }
     if (trackIndex < 0 || clipIndex < 0) return;
 
-    if (isTransition(trackIndex, clipIndex)) {
+    if (!ignoreTransition && isTransition(trackIndex, clipIndex)) {
         MAIN.undoStack()->beginMacro(tr("Lift transition"));
         auto info = m_model.getClipInfo(trackIndex, clipIndex);
         MAIN.undoStack()->push(
             new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
-        if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex))) {
-            MAIN.undoStack()->push(
-                new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex + 1,
-                                                -info->frame_count / 2, false));
-            MAIN.undoStack()->push(
-                new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
-                                                 -info->frame_count / 2 - info->frame_count % 2, false));
+        if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex)) && info->producer
+                && info->producer->is_valid()) {
+            // verify the clip after belongs to transition
+            Mlt::Producer transitionClip(static_cast<mlt_producer>(info->producer->get_data("mix_out")));
+            auto clipBefore = producerForClip(trackIndex, clipIndex - 1);
+            auto clipAfter = producerForClip(trackIndex, clipIndex + 1);
+            auto duration = -info->frame_count;
+            if (clipBefore.is_valid() && clipAfter.is_valid())
+                duration /= 2;
+            if (clipAfter.is_valid() && clipAfter.same_clip(transitionClip))
+                MAIN.undoStack()->push(
+                    new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex + 1,
+                                                    duration, false));
+            // verify the clip before belongs to transition
+            transitionClip = Mlt::Producer(static_cast<mlt_producer>(info->producer->get_data("mix_in")));
+            if (clipBefore.is_valid() && clipAfter.is_valid())
+                duration -= duration % 2;
+            if (clipBefore.is_valid() && clipBefore.same_clip(transitionClip))
+                MAIN.undoStack()->push(
+                    new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
+                                                     duration, false));
         }
         MAIN.undoStack()->endMacro();
     } else {
@@ -2323,7 +2346,7 @@ void TimelineDock::removeSelection(bool withCopy)
         auto clip = selection().first();
         copy(clip.y(), clip.x());
         if (selection().size() < 2) {
-            remove(clip.y(), clip.x());
+            remove(clip.y(), clip.x(), false);
             return;
         }
     }
@@ -2339,7 +2362,7 @@ void TimelineDock::removeSelection(bool withCopy)
     int trackIndex, clipIndex;
     for (const auto &uuid : selectionUuids()) {
         m_model.findClipByUuid(uuid, trackIndex, clipIndex);
-        remove(trackIndex, clipIndex);
+        remove(trackIndex, clipIndex, n > 1);
     }
     if (n > 1)
         MAIN.undoStack()->endMacro();
@@ -2361,7 +2384,7 @@ void TimelineDock::liftSelection()
     int trackIndex, clipIndex;
     for (const auto &uuid : selectionUuids()) {
         m_model.findClipByUuid(uuid, trackIndex, clipIndex);
-        lift(trackIndex, clipIndex);
+        lift(trackIndex, clipIndex, n > 1);
     }
     if (n > 1)
         MAIN.undoStack()->endMacro();
@@ -3920,7 +3943,7 @@ void TimelineDock::stopRecording()
         auto info = m_model.getClipInfo(m_recordingTrackIndex, m_recordingClipIndex);
         if (info && info->producer && info->producer->is_valid()) {
             Mlt::Producer clip(MLT.profile(), info->producer->get(kShotcutDetailProperty));
-            lift(m_recordingTrackIndex, m_recordingClipIndex);
+            lift(m_recordingTrackIndex, m_recordingClipIndex, true);
             if (clip.is_valid()) {
                 overwrite(m_recordingTrackIndex, info->start, MLT.XML(&clip), false);
             }

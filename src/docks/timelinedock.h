@@ -170,9 +170,9 @@ public slots:
     void onShowFrame(const SharedFrame &frame);
     void onSeeked(int position);
     void append(int trackIndex);
-    void remove(int trackIndex, int clipIndex);
+    void remove(int trackIndex, int clipIndex, bool ignoreTransition = false);
     bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
-    void lift(int trackIndex, int clipIndex);
+    void lift(int trackIndex, int clipIndex, bool ignoreTransition = false);
     void removeSelection(bool withCopy = false);
     void liftSelection();
     void incrementCurrentTrack(int by);
