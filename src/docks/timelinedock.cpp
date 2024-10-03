@@ -2256,10 +2256,10 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
         if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex))) {
             MAIN.undoStack()->push(
                 new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex,
-                                                    -info->frame_count, true));
+                                                -info->frame_count, true));
             MAIN.undoStack()->push(
                 new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
-                                                     -info->frame_count, true));
+                                                 -info->frame_count, true));
         }
         MAIN.undoStack()->endMacro();
     } else {
@@ -2285,14 +2285,14 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         MAIN.undoStack()->beginMacro(tr("Lift transition"));
         auto info = m_model.getClipInfo(trackIndex, clipIndex);
         MAIN.undoStack()->push(
-                new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
+            new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
         if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex))) {
             MAIN.undoStack()->push(
                 new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex + 1,
-                                                    -info->frame_count / 2, false));
+                                                -info->frame_count / 2, false));
             MAIN.undoStack()->push(
                 new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
-                                                     -info->frame_count / 2 - info->frame_count % 2, false));
+                                                 -info->frame_count / 2 - info->frame_count % 2, false));
         }
         MAIN.undoStack()->endMacro();
     } else {
