@@ -479,7 +479,7 @@ void SlideshowGeneratorWidget::on_parameterChanged()
     }
 
     m_preview->stop();
-    m_preview->showText(Settings.playerGPU() ? tr("Preview Not Available") :
+    m_preview->showText(Settings.playerGPU() ? tr("Preview is not available with GPU Effects") :
                         tr("Generating Preview..."));
     m_mutex.lock();
     m_refreshPreview = true;

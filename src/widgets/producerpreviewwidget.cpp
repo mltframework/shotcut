@@ -41,7 +41,13 @@ ProducerPreviewWidget::ProducerPreviewWidget(double dar, int width)
     LOG_DEBUG() << "begin";
     int height = lrint((double)width / dar);
     height -= height % 2;
-    m_previewSize.setHeight( height );
+    if (height > width) {
+        height = width;
+        width = lrint(height * dar);
+        width -= width % 2;
+        m_previewSize.setWidth(width);
+    }
+    m_previewSize.setHeight(height);
 
     QVBoxLayout *layout = new QVBoxLayout();
     layout->setContentsMargins(0, 0, 0, 0);
