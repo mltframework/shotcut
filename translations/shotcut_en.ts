@@ -5128,14 +5128,14 @@ Do you want to save your changes?</source>
         <location filename="../src/mainwindow.cpp" line="2922"/>
         <location filename="../src/mainwindow.cpp.orig" line="2532"/>
         <source>There are incomplete jobs.
-Do you want to still want to exit?</source>
+Do you still want to exit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2935"/>
         <location filename="../src/mainwindow.cpp.orig" line="2545"/>
         <source>An export is in progress.
-Do you want to still want to exit?</source>
+Do you still want to exit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
