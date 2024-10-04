@@ -545,6 +545,14 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
                 endInsertRows();
                 ++result;
             }
+        } else if (isTransition(playlist, clipIndex - 1)) {
+            // Adjust a transition on the left
+            std::unique_ptr<Mlt::Producer> producer(playlist.get_clip(clipIndex - 1));
+            Mlt::Tractor tractor(producer->parent());
+            std::unique_ptr<Mlt::Producer> track_b(tractor.track(1));
+            playlist.block();
+            track_b->set_in_and_out(track_b->get_in() + delta, track_b->get_out() + delta);
+            playlist.unblock();
         }
         emit modified();
     }
@@ -691,6 +699,14 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
                 playlist.insert_blank(newIndex, delta - 1);
                 endInsertRows();
             }
+        } else if (isTransition(playlist, clipIndex + 1)) {
+            // Adjust a transition on the right
+            std::unique_ptr<Mlt::Producer> producer(playlist.get_clip(clipIndex + 1));
+            Mlt::Tractor tractor(producer->parent());
+            std::unique_ptr<Mlt::Producer> track_a(tractor.track(0));
+            playlist.block();
+            track_a->set_in_and_out(track_a->get_in() - delta, track_a->get_out() - delta);
+            playlist.unblock();
         }
         playlist.resize_clip(clipIndex, info->frame_in, info->frame_out - delta);
 
@@ -2971,7 +2987,8 @@ void MultitrackModel::removeRegion(int trackIndex, int position, int length)
 bool MultitrackModel::isTransition(Mlt::Playlist &playlist, int clipIndex) const
 {
     QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
-    if (producer && producer->parent().get(kShotcutTransitionProperty))
+    if (producer && producer->is_valid() && producer->parent().is_valid()
+            && producer->parent().get(kShotcutTransitionProperty))
         return true;
     return false;
 }
