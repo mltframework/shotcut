@@ -599,18 +599,25 @@ void MoveClipCommand::redo()
     }
     QList<QPoint> selection;
     if (m_ripple && !m_trackDelta && m_clips.size() == 1) {
-        auto mlt_index = m_model.trackList().at(m_clips.first().trackIndex).mlt_index;
+        auto trackIndex = m_clips.first().trackIndex;
+        auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
         if (track) {
             Mlt::Playlist playlist(*track);
             int newStart = m_clips.first().start + m_positionDelta;
             auto targetIndex = playlist.get_clip_index_at(newStart);
-            if (targetIndex >= m_clips.first().clipIndex || // pushing clips on same track
+            auto clipIndex = m_clips.first().clipIndex;
+            if (targetIndex >= clipIndex || // pushing clips on same track
                     // pulling clips on same track
-                    (playlist.is_blank_at(newStart) && targetIndex == m_clips.first().clipIndex - 1)) {
-                // Use old behavior to push or pull clips on the same track.
-                m_model.moveClip(m_clips.first().trackIndex, m_clips.first().trackIndex, m_clips.first().clipIndex,
-                                 newStart, m_ripple, m_rippleAllTracks);
+                    (playlist.is_blank_at(newStart) && targetIndex == clipIndex - 1)) {
+                if (targetIndex >= clipIndex && m_model.isTransition(playlist, clipIndex - 1)) {
+                    // Increase duration of transition
+                    m_model.trimTransitionOut(trackIndex, clipIndex, m_positionDelta, true);
+                } else {
+                    // Push or pull clips on the same track.
+                    m_model.moveClip(trackIndex, trackIndex, clipIndex, newStart, m_ripple,
+                                     m_rippleAllTracks);
+                }
                 if (!m_redo) {
                     m_redo = true;
                     m_undoHelper.recordAfterState();

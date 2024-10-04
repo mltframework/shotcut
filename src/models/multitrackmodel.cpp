@@ -1943,7 +1943,7 @@ bool MultitrackModel::trimTransitionOutValid(int trackIndex, int clipIndex, int 
     return result;
 }
 
-void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta)
+void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta, bool slip)
 {
 //    LOG_DEBUG() << "clipIndex" << clipIndex << "delta" << delta;
     int i = m_trackList.at(trackIndex).mlt_index;
@@ -1982,7 +1982,7 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         // Adjust clip entry being trimmed.
         Mlt::ClipInfo info;
         playlist.clip_info(clipIndex, &info);
-        playlist.resize_clip(clipIndex, info.frame_in + delta, info.frame_out);
+        playlist.resize_clip(clipIndex, info.frame_in + delta, info.frame_out + (slip ? delta : 0));
 
         // Adjust filters.
         playlist.clip_info(clipIndex - 2, &info);
@@ -1995,6 +1995,7 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
                          createIndex(clipIndex - 1, 0, trackIndex), roles);
         roles.clear();
         roles << InPointRole;
+        roles << OutPointRole;
         roles << DurationRole;
         emit dataChanged(createIndex(clipIndex, 0, trackIndex),
                          createIndex(clipIndex, 0, trackIndex), roles);
