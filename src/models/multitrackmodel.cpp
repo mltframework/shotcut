@@ -1861,7 +1861,7 @@ bool MultitrackModel::trimTransitionInValid(int trackIndex, int clipIndex, int d
     return result;
 }
 
-void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
+void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta, bool slip)
 {
 //    LOG_DEBUG() << "clipIndex" << clipIndex << "delta" << delta;
     int i = m_trackList.at(trackIndex).mlt_index;
@@ -1900,13 +1900,14 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
         // Adjust clip entry being trimmed.
         Mlt::ClipInfo info;
         playlist.clip_info(clipIndex, &info);
-        playlist.resize_clip(clipIndex, info.frame_in, info.frame_out - delta);
+        playlist.resize_clip(clipIndex, info.frame_in - (slip ? delta : 0), info.frame_out - delta);
 
         // Adjust filters.
         playlist.clip_info(clipIndex + 2, &info);
         MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, -(out + 1), 0, -delta);
 
         QVector<int> roles;
+        roles << InPointRole;
         roles << OutPointRole;
         roles << DurationRole;
         emit dataChanged(createIndex(clipIndex, 0, trackIndex),

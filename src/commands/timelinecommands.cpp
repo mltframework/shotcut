@@ -598,7 +598,7 @@ void MoveClipCommand::redo()
             setText(QObject::tr("Move timeline clip"));
     }
     QList<QPoint> selection;
-    if (m_ripple && !m_trackDelta && m_clips.size() == 1) {
+    if (!m_trackDelta && m_clips.size() == 1) {
         auto trackIndex = m_clips.first().trackIndex;
         auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
@@ -610,22 +610,33 @@ void MoveClipCommand::redo()
             if (targetIndex >= clipIndex || // pushing clips on same track
                     // pulling clips on same track
                     (playlist.is_blank_at(newStart) && targetIndex == clipIndex - 1)) {
+                bool done = true;
                 if (targetIndex >= clipIndex && m_model.isTransition(playlist, clipIndex - 1)) {
                     // Increase duration of transition
                     m_model.trimTransitionOut(trackIndex, clipIndex, m_positionDelta, true);
-                } else {
-                    // Push or pull clips on the same track.
+                    if (!m_ripple)
+                        m_model.trimClipIn(trackIndex, clipIndex + 1, m_positionDelta, true, false);
+                } else if (m_ripple) {
+                    // Push or pull clips on the same track
                     m_model.moveClip(trackIndex, trackIndex, clipIndex, newStart, m_ripple,
                                      m_rippleAllTracks);
+                } else if (m_model.isTransition(playlist, clipIndex + 1)) {
+                    // Increase duration of transition
+                    m_model.trimTransitionIn(trackIndex, clipIndex, -m_positionDelta, true);
+                    m_model.trimClipOut(trackIndex, clipIndex - 1, -m_positionDelta, true, false);
+                } else {
+                    done = false;
                 }
-                if (!m_redo) {
-                    m_redo = true;
-                    m_undoHelper.recordAfterState();
+                if (done) {
+                    if (!m_redo) {
+                        m_redo = true;
+                        m_undoHelper.recordAfterState();
+                    }
+                    redoMarkers();
+                    selection = m_timeline.uuidsToSelection(QVector<QUuid>() << m_clips.first().uuid);
+                    m_timeline.setSelection(selection);
+                    return;
                 }
-                redoMarkers();
-                selection = m_timeline.uuidsToSelection(QVector<QUuid>() << m_clips.first().uuid);
-                m_timeline.setSelection(selection);
-                return;
             }
         }
     }
