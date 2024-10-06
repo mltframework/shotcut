@@ -2539,12 +2539,11 @@ void TimelineDock::emitSelectedFromSelection()
 
     if (selection().isEmpty() && m_selection.selectedTrack > -1) {
         int i = m_model.trackList().at(m_selection.selectedTrack).mlt_index;
-        Mlt::Producer *producer = m_model.tractor()->track(i);
+        std::unique_ptr<Mlt::Producer>producer(m_model.tractor()->track(i));
         if (producer && producer->is_valid()) {
             producer->set(kTrackIndexProperty, m_selection.selectedTrack);
-            emit selected(producer);
+            emit selected(producer.get());
         }
-        delete producer;
         return;
     }
 

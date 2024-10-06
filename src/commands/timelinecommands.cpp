@@ -1493,12 +1493,15 @@ void AddTrackCommand::redo()
     else
         m_trackIndex = m_model.addAudioTrack();
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
-    Mlt::Producer producer(m_model.tractor()->multitrack()->track(mlt_index));
-    if (producer.is_valid()) {
+    std::unique_ptr<Mlt::Multitrack> multitrack(m_model.tractor()->multitrack());
+    if (!multitrack || !multitrack->is_valid())
+        return;
+    std::unique_ptr<Mlt::Producer> producer(multitrack->track(mlt_index));
+    if (producer && producer->is_valid()) {
         if (m_uuid.isNull()) {
-            m_uuid = MLT.ensureHasUuid(producer);
+            m_uuid = MLT.ensureHasUuid(*producer);
         } else {
-            MLT.setUuid(producer, m_uuid);
+            MLT.setUuid(*producer, m_uuid);
         }
     }
 }
@@ -1532,12 +1535,15 @@ void InsertTrackCommand::redo()
                                                               "video");
     m_model.insertTrack(m_trackIndex, m_trackType);
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
-    Mlt::Producer producer(m_model.tractor()->multitrack()->track(mlt_index));
-    if (producer.is_valid()) {
+    std::unique_ptr<Mlt::Multitrack> multitrack(m_model.tractor()->multitrack());
+    if (!multitrack || !multitrack->is_valid())
+        return;
+    std::unique_ptr<Mlt::Producer> producer(multitrack->track(mlt_index));
+    if (producer && producer->is_valid()) {
         if (m_uuid.isNull()) {
-            m_uuid = MLT.ensureHasUuid(producer);
+            m_uuid = MLT.ensureHasUuid(*producer);
         } else {
-            MLT.setUuid(producer, m_uuid);
+            MLT.setUuid(*producer, m_uuid);
         }
     }
 }
@@ -1839,12 +1845,15 @@ void DetachAudioCommand::redo()
         if (m_targetTrackIndex > -1) {
             // Set the producer UUID on the new track.
             int mlt_index = model->trackList().at(m_targetTrackIndex).mlt_index;
-            Mlt::Producer producer(model->tractor()->multitrack()->track(mlt_index));
-            if (producer.is_valid()) {
-                if (m_uuid.isNull()) {
-                    m_uuid = MLT.ensureHasUuid(producer);
-                } else {
-                    MLT.setUuid(producer, m_uuid);
+            std::unique_ptr<Mlt::Multitrack> multitrack(model->tractor()->multitrack());
+            if (multitrack && !multitrack->is_valid()) {
+                std::unique_ptr<Mlt::Producer> producer(multitrack->track(mlt_index));
+                if (producer && producer->is_valid()) {
+                    if (m_uuid.isNull()) {
+                        m_uuid = MLT.ensureHasUuid(*producer);
+                    } else {
+                        MLT.setUuid(*producer, m_uuid);
+                    }
                 }
             }
             m_undoHelper.recordBeforeState();

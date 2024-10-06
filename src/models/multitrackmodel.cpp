@@ -2467,12 +2467,11 @@ void MultitrackModel::consolidateBlanksAllTracks()
     if (!m_tractor) return;
     int i = 0;
     foreach (Track t, m_trackList) {
-        Mlt::Producer *track = m_tractor->track(t.mlt_index);
-        if (track) {
+        std::unique_ptr<Mlt::Producer> track(m_tractor->track(t.mlt_index));
+        if (track && track->is_valid()) {
             Mlt::Playlist playlist(*track);
             consolidateBlanks(playlist, i);
         }
-        delete track;
         ++i;
     }
 }
@@ -2518,11 +2517,11 @@ void MultitrackModel::adjustBackgroundDuration()
 {
     if (!m_tractor) return;
     int duration = getDuration();
-    Mlt::Producer *track = m_tractor->track(0);
-    if (track) {
+    std::unique_ptr<Mlt::Producer> track(m_tractor->track(0));
+    if (track && track->is_valid()) {
         Mlt::Playlist playlist(*track);
-        Mlt::Producer *clip = playlist.get_clip(0);
-        if (clip) {
+        std::unique_ptr<Mlt::Producer> clip(playlist.get_clip(0));
+        if (clip && clip->is_valid()) {
             if (duration != clip->parent().get_length()) {
                 clip->parent().set("length", clip->parent().frames_to_time(duration, mlt_time_clock));
                 clip->parent().set_in_and_out(0, duration - 1);
@@ -2531,9 +2530,7 @@ void MultitrackModel::adjustBackgroundDuration()
                 playlist.resize_clip(0, 0, duration - 1);
                 emit durationChanged();
             }
-            delete clip;
         }
-        delete track;
     }
 }
 
@@ -3651,10 +3648,9 @@ void MultitrackModel::addBlackTrackIfNeeded()
     if (!found) {
         // Move all existing tracks down by 1.
         for (int i = n; i > 0; i++) {
-            Mlt::Producer *producer = m_tractor->track(n - 1);
-            if (producer)
+            std::unique_ptr<Mlt::Producer> producer(m_tractor->track(n - 1));
+            if (producer && producer->is_valid())
                 m_tractor->set_track(*producer, n);
-            delete producer;
         }
         Mlt::Producer producer(MLT.profile(), "color:0");
         producer.set("mlt_image_format", "rgba");
