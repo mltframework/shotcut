@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,9 @@ protected:
 public slots:
     void updateRecentProjects();
 
+signals:
+    void deletedProject(const QString &);
+
 private slots:
     void on_projectsFolderButton_clicked();
 
@@ -65,6 +68,10 @@ private slots:
     void on_recentListView_clicked(const QModelIndex &index);
 
     void on_recentListView_doubleClicked(const QModelIndex &index);
+
+    void on_recentListView_customContextMenuRequested(const QPoint &pos);
+
+    void on_actionRecentRemove_triggered();
 
 private:
     void setColors();

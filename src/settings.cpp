@@ -33,6 +33,7 @@ static QScopedPointer<ShotcutSettings> instance;
 static QString appDataForSession;
 static const int kMaximumTrackHeight = 125;
 static const QString kRecentKey("recent");
+static const QString kProjectsKey("projects");
 
 ShotcutSettings &ShotcutSettings::singleton()
 {
@@ -177,6 +178,30 @@ void ShotcutSettings::setRecent(const QStringList &ls)
         m_recent.remove(kRecentKey);
     else if (!clearRecent())
         m_recent.setValue(kRecentKey, ls);
+}
+
+QStringList ShotcutSettings::projects()
+{
+    auto ls = m_recent.value(kProjectsKey).toStringList();
+    if (ls.isEmpty()) {
+        for (auto &r : recent()) {
+            if (r.endsWith(".mlt"))
+                ls << r;
+        }
+        // Prevent entering this block repeatedly
+        if (ls.isEmpty())
+            ls << QString();
+        setProjects(ls);
+    }
+    return ls;
+}
+
+void ShotcutSettings::setProjects(const QStringList &ls)
+{
+    if (ls.isEmpty())
+        m_recent.remove(kProjectsKey);
+    else if (!clearRecent())
+        m_recent.setValue(kProjectsKey, ls);
 }
 
 QString ShotcutSettings::theme() const

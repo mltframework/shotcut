@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022 Meltytech, LLC
+ * Copyright (c) 2018-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -111,8 +111,8 @@ bool NewProjectFolder::event(QEvent *event)
 void NewProjectFolder::updateRecentProjects()
 {
     m_model.clear();
-    foreach (QString s, Settings.recent()) {
-        if (s.endsWith(".mlt")) {
+    for (auto &s : Settings.projects()) {
+        if (!s.isEmpty()) {
             QStandardItem *item = new QStandardItem(Util::baseName(s));
             item->setToolTip(QDir::toNativeSeparators(s));
             m_model.appendRow(item);
@@ -293,3 +293,32 @@ void NewProjectFolder::on_recentListView_doubleClicked(const QModelIndex &index)
 {
     on_recentListView_clicked(index);
 }
+
+void NewProjectFolder::on_recentListView_customContextMenuRequested(const QPoint &pos)
+{
+    if (ui->recentListView->currentIndex().isValid()) {
+        QMenu menu(this);
+        menu.addAction(ui->actionRecentRemove);
+        menu.exec(ui->recentListView->mapToGlobal(pos));
+    }
+}
+
+
+void NewProjectFolder::on_actionRecentRemove_triggered()
+{
+    if (ui->recentListView->currentIndex().isValid()) {
+        auto index = ui->recentListView->currentIndex();
+        auto data = m_model.itemData(index);
+        auto projects = Settings.projects();
+        auto url = data[Qt::ToolTipRole].toString();
+        url = QDir::fromNativeSeparators(url);
+        if (projects.removeAll(url) > 0) {
+            m_model.removeRow(index.row());
+            Settings.setProjects(projects);
+            emit deletedProject(url);
+        } else {
+            LOG_WARNING() << "Failed to remove project" << url;
+        }
+    }
+}
+

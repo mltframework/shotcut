@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 #include <QMenu>
 #include <Logger.h>
 
-static const int MaxItems = 100;
+static const int MaxItems = 200;
 
 RecentDock::RecentDock(QWidget *parent) :
     QDockWidget(parent),
@@ -89,6 +89,11 @@ void RecentDock::add(const QString &s)
     while (m_recent.count() > MaxItems)
         m_recent.removeLast();
     Settings.setRecent(m_recent);
+    if (filePath.endsWith(".mlt")) {
+        auto projects = Settings.projects();
+        projects.prepend(filePath);
+        Settings.setProjects(projects);
+    }
 }
 
 void RecentDock::on_listWidget_activated(const QModelIndex &i)
@@ -138,6 +143,11 @@ void RecentDock::on_actionDelete_triggered()
         m_recent.removeAt(row);
         Settings.setRecent(m_recent);
         m_model.removeRow(row);
+        if (url.endsWith(".mlt")) {
+            auto ls = Settings.projects();
+            if (ls.removeAll(url) > 0)
+                Settings.setProjects(ls);
+        }
         emit deleted(url);
     }
 }

@@ -97,6 +97,8 @@ public:
     void setSavePath(const QString &);
     QStringList recent() const;
     void setRecent(const QStringList &);
+    QStringList projects();
+    void setProjects(const QStringList &);
     QString theme() const;
     void setTheme(const QString &);
     QThread::Priority jobPriority() const;
