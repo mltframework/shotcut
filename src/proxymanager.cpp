@@ -106,7 +106,13 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
     auto audioIndex = producer.property_exists(kDefaultAudioIndexProperty) ? producer.get_int(
                           kDefaultAudioIndexProperty) : producer.get_int("audio_index");
     if (producer.get_int("video_index") < audioIndex) {
-        args << "-map" << "0:V?" << "-map" << "0:a?";
+        // iPhone 16 Pro has a 4 channel (spatial) audio stream with codec "apac" that causes failure.
+        // This is not limited to only iPhone 16 Pro, but I think most iPhones only record one usable audio track.
+        if (!::qstrcmp(producer.get("meta.media.1.stream.type"), "audio")
+                && QString(producer.get("meta.attr.com.apple.quicktime.model.markup")).contains("iPhone"))
+            args << "-map" << "0:V?" << "-map" << "0:a:0";
+        else
+            args << "-map" << "0:V?" << "-map" << "0:a?";
     } else {
         args << "-map" << "0:a?" << "-map" << "0:V?";
     }
