@@ -23,6 +23,10 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "dialogs/subtitletrackdialog.h"
+#include "dialogs/transcribeaudiodialog.h"
+#include "jobqueue.h"
+#include "jobs/meltjob.h"
+#include "jobs/whisperjob.h"
 #include "models/subtitlesmodel.h"
 #include "models/subtitlesselectionmodel.h"
 #include "widgets/docktoolbar.h"
@@ -62,6 +66,55 @@ static int64_t positionToMs(mlt_position position)
 static mlt_position msToPosition(int64_t ms)
 {
     return ms * MLT.profile().frame_rate_num() / MLT.profile().frame_rate_den() / 1000;
+}
+
+static QList<Subtitles::SubtitleItem> readSrtFile(const QString &path, int64_t timeOffset,
+                                                  bool includeNonspoken)
+{
+    QList<Subtitles::SubtitleItem> items;
+
+    // Read the subtitles
+    Subtitles::SubtitleVector srtItems = Subtitles::readFromSrtFile(path.toUtf8().toStdString());
+    if (srtItems.size() == 0) {
+        return items;
+    }
+
+    // Convert the items to the return list
+    Subtitles::SubtitleItem item;
+    for (int i = 0; i < srtItems.size(); i++) {
+        // Clean up the lines
+        QStringList lines = QString::fromStdString(srtItems[i].text).split('\n');
+        QString text;
+        for (int i = 0; i < lines.size(); i++) {
+            // Remove HTML
+            QString line = QTextDocumentFragment::fromHtml(lines[i]).toPlainText();
+            // Remove unnecessary space
+            line = line.simplified();
+            // Remove leading "-"
+            if (line.startsWith("-")) {
+                line = line.remove(0, 1).simplified();
+            }
+            // Remove unspoken sounds if requested
+            if (!includeNonspoken &&
+                    ((line.startsWith("[") && line.endsWith("]")) ||
+                     (line.startsWith("(") && line.endsWith(")")))) {
+                continue;
+            }
+            if (i != 0) {
+                text += "\n";
+            }
+            text += line;
+        }
+        text = text.trimmed();
+        if (!text.isEmpty()) {
+            // Shift the subtitles to the position
+            item.start = srtItems[i].start + timeOffset;
+            item.end = srtItems[i].end + timeOffset;
+            item.text = text.toUtf8().toStdString();
+            items.append(item);
+        }
+    }
+    return items;
 }
 
 SubtitlesDock::SubtitlesDock(QWidget *parent) :
@@ -134,6 +187,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     mainMenu->addAction(Actions["subtitleMoveAction"]);
     mainMenu->addAction(Actions["subtitleBurnInAction"]);
     mainMenu->addAction(Actions["subtitleGenerateTextAction"]);
+    mainMenu->addAction(Actions["subtitleTranscribeAudioAction"]);
     mainMenu->addAction(Actions["subtitleTrackTimelineAction"]);
     mainMenu->addAction(Actions["subtitleShowPrevNextAction"]);
 
@@ -360,6 +414,12 @@ void SubtitlesDock::setupActions()
     connect(action, &QAction::triggered, this, &SubtitlesDock::generateTextOnTimeline);
     Actions.add("subtitleGenerateTextAction", action, windowTitle());
 
+    action = new QAction(tr("Transcribe Audio..."), this);
+    action->setToolTip(
+        tr("Detect speech and transcribe to a new subtitle track."));
+    connect(action, &QAction::triggered, this, &SubtitlesDock::transcribeAudio);
+    Actions.add("subtitleTranscribeAudioAction", action, windowTitle());
+
     action = new QAction(tr("Track Timeline Cursor"), this);
     action->setToolTip(tr("Track the timeline cursor"));
     action->setCheckable(true);
@@ -413,6 +473,24 @@ void SubtitlesDock::setModel(SubtitlesModel *model, SubtitlesSelectionModel *sel
     refreshWidgets();
 }
 
+void SubtitlesDock::importSrtFromFile(const QString &srtPath, const QString &trackName,
+                                      const QString &lang, bool includeNonspoken)
+{
+    QList<Subtitles::SubtitleItem> items = readSrtFile(srtPath, 0, includeNonspoken);
+    if (items.size() == 0) {
+        MAIN.showStatusMessage(QObject::tr("No subtitles found to import"));
+        return;
+    }
+
+    SubtitlesModel::SubtitleTrack track;
+    track.name = trackName;
+    track.lang = lang;
+
+    m_model->importSubtitlesToNewTrack(track, items);
+
+    MAIN.showStatusMessage(QObject::tr("Imported %1 subtitle items").arg(items.size()));
+}
+
 void SubtitlesDock::addSubtitleTrack()
 {
     int newIndex = m_model->trackCount();
@@ -420,14 +498,9 @@ void SubtitlesDock::addSubtitleTrack()
         MAIN.showStatusMessage(tr("Add a clip to the timeline to create subtitles."));
         return;
     }
-    int i = 1;
-    QString suggestedName = tr("Subtitle Track %1").arg(i);
-    while (trackNameExists(suggestedName)) {
-        suggestedName = tr("Subtitle Track %1").arg(i++);
-    }
     QString currentLangCode = QLocale::languageToCode(QLocale::system().language(),
                                                       QLocale::ISO639Part2);
-    SubtitleTrackDialog dialog(suggestedName, currentLangCode, this);
+    SubtitleTrackDialog dialog(availableTrackName(), currentLangCode, this);
     if (dialog.exec() == QDialog::Accepted) {
         SubtitlesModel::SubtitleTrack track;
         track.name = dialog.getName();
@@ -536,27 +609,11 @@ void SubtitlesDock::importSubtitles()
     }
 
     // Read the subtitles
-    Subtitles::SubtitleVector srtItems = Subtitles::readFromSrtFile(tmpFileName.toUtf8().toStdString());
-    if (srtItems.size() == 0) {
+    int64_t msTime = positionToMs(m_pos);
+    QList<Subtitles::SubtitleItem> items = readSrtFile(tmpFileName, msTime, true);
+    if (items.size() == 0) {
         MAIN.showStatusMessage(QObject::tr("No subtitles found to import"));
         return;
-    }
-    QList<Subtitles::SubtitleItem> items = QList(srtItems.cbegin(), srtItems.cend());
-    int64_t msTime = positionToMs(m_pos);
-    for (int i = 0; i < items.size(); i++) {
-        // Shift the subtitles to the position
-        items[i].start += msTime;
-        items[i].end += msTime;
-        // Strip out HTML
-        QStringList lines = QString::fromStdString(items[i].text).split('\n');
-        QString text;
-        for (int i = 0; i < lines.size(); i++) {
-            if (i != 0) {
-                text += "\n";
-            }
-            text += QTextDocumentFragment::fromHtml(lines[i]).toPlainText();
-        }
-        items[i].text = text.toUtf8().toStdString();
     }
     ensureTrackExists();
     m_model->importSubtitles(m_trackCombo->currentIndex(), msTime, items);
@@ -906,6 +963,7 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["subtitleSetEndAction"]->setEnabled(false);
         Actions["subtitleBurnInAction"]->setEnabled(false);
         Actions["subtitleGenerateTextAction"]->setEnabled(false);
+        Actions["subtitleTranscribeAudioAction"]->setEnabled(false);
     } else {
         m_addToTimelineLabel->setVisible(false);
         Actions["subtitleCreateEditItemAction"]->setEnabled(true);
@@ -913,6 +971,7 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["subtitleEditTrackAction"]->setEnabled(true);
         Actions["SubtitleImportAction"]->setEnabled(true);
         Actions["subtitleAddItemAction"]->setEnabled(true);
+        Actions["subtitleTranscribeAudioAction"]->setEnabled(true);
         if (m_model->trackCount() == 0) {
             Actions["subtitleRemoveTrackAction"]->setEnabled(false);
             Actions["SubtitleExportAction"]->setEnabled(false);
@@ -977,6 +1036,16 @@ void SubtitlesDock::selectItemForTime()
     }
 }
 
+QString SubtitlesDock::availableTrackName()
+{
+    int i = 1;
+    QString suggestedName = tr("Subtitle Track %1").arg(i);
+    while (trackNameExists(suggestedName)) {
+        suggestedName = tr("Subtitle Track %1").arg(i++);
+    }
+    return suggestedName;
+}
+
 bool SubtitlesDock::trackNameExists(const QString &name)
 {
     QList<SubtitlesModel::SubtitleTrack> tracks = m_model->getTracks();
@@ -1021,7 +1090,6 @@ void SubtitlesDock::burnInOnTimeline()
     filter.set("feed", track.name.toUtf8().constData());
     emit createOrEditFilterOnOutput(&filter, QStringList() << "feed");
 }
-
 
 void SubtitlesDock::generateTextOnTimeline()
 {
@@ -1070,4 +1138,90 @@ void SubtitlesDock::generateTextOnTimeline()
         lastItemFrameEnd = frameEnd;
     }
     emit addAllTimeline(&playlist, true, true);
+}
+
+void SubtitlesDock::transcribeAudio()
+{
+    TranscribeAudioDialog dialog(availableTrackName(), this);
+    if (dialog.exec() != QDialog::Accepted) {
+        return;
+    }
+    if (trackNameExists(dialog.name())) {
+        MAIN.showStatusMessage(tr("Subtitle track already exists: %1").arg(dialog.name()));
+        return;
+    }
+
+    QString tmpLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/";
+
+    // Make a copy of the timeline producer
+    QString xml = MLT.XML(MAIN.multitrack());
+    std::unique_ptr<Mlt::Producer> tempProducer(new Mlt::Producer(MLT.profile(), "xml-string",
+                                                                  xml.toUtf8().constData()));
+
+    // Mute tracks as requested
+    Mlt::Tractor tractor(*tempProducer.get());
+    if (!tractor.is_valid()) {
+        LOG_ERROR() << "Invalid tractor";
+        return;
+    }
+    int trackCount = tractor.count();
+    if (trackCount <= 0) {
+        LOG_ERROR() << "No tracks";
+        return;
+    }
+    QList<int> tracks = dialog.tracks();
+    for (int trackIndex = 0; trackIndex < trackCount; trackIndex++) {
+        std::unique_ptr<Mlt::Producer> track(tractor.track(trackIndex));
+        if (track) {
+            if (tracks.contains(trackIndex)) {
+                track->set("hide", 0);
+            } else {
+                track->set("hide", 2);
+            }
+        }
+    }
+
+    // Convert to XML
+    QString wavXml = MLT.XML(tempProducer.get());
+
+    // Create a temporary wav file
+    QTemporaryFile *tmpWav = Util::writableTemporaryFile(tmpLocation, "shotcut-XXXXXX.wav");
+    if (!tmpWav->open()) {
+        LOG_ERROR() << "Failed to open temporary file" << tmpWav->fileName();
+        return;
+    }
+    tmpWav->close();
+
+    // Make the wav file from the timeline
+    QStringList args;
+    args << "-consumer" << "avformat:" + tmpWav->fileName() << "video_off=1" << "ar=16000" << "ac=1";
+    QString jobName = tr("Transcribe Audio Step 1: Extract Audio");
+    MeltJob *wavJob = new MeltJob(jobName, wavXml, args, MLT.profile().frame_rate_num(),
+                                  MLT.profile().frame_rate_den());
+    tmpWav->setParent(wavJob);
+    JOBS.add(wavJob);
+
+
+    // Create a temporary srt file
+    QTemporaryFile *tmpSrt = Util::writableTemporaryFile(tmpLocation, "shotcut-XXXXXX.srt");
+    if (!tmpSrt->open()) {
+        LOG_ERROR() << "Failed to open temporary file" << tmpSrt->fileName();
+        return;
+    }
+    tmpWav->close();
+
+    // Run speech transcription on the wav file
+    jobName = tr("Transcribe Audio Step 2: Transcribe Audio");
+    WhisperJob *whisperJob = new WhisperJob(jobName, tmpWav->fileName(), tmpSrt->fileName(),
+                                            dialog.language(), dialog.translate(), dialog.maxLineLength());
+    // Ensure the language code is 3 character (part 2)
+    QString langCode = dialog.language();
+    QLocale::Language lang = QLocale::codeToLanguage(langCode);
+    if (lang != QLocale::AnyLanguage) {
+        langCode = QLocale::languageToCode(lang, QLocale::ISO639Part2);
+    }
+    whisperJob->setPostJobAction(new ImportSrtPostJobAction(tmpSrt->fileName(), dialog.name(), langCode,
+                                                            dialog.includeNonspoken(), this));
+    tmpSrt->setParent(whisperJob);
+    JOBS.add(whisperJob);
 }

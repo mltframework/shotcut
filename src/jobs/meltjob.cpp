@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,6 +74,13 @@ void MeltJob::onShowFolderTriggered()
     Util::showInFolder(objectName());
 }
 
+MeltJob::MeltJob(const QString &name, const QString &xml, const QStringList &args, int frameRateNum,
+                 int frameRateDen)
+    : MeltJob(name, xml, frameRateNum, frameRateDen)
+{
+    m_args = args;
+}
+
 MeltJob::MeltJob(const QString &name, const QStringList &args, int frameRateNum, int frameRateDen)
     : MeltJob(name, QString(), frameRateNum, frameRateDen)
 {
@@ -107,12 +114,15 @@ void MeltJob::start()
     args << "-verbose";
     args << "-progress2";
     args << "-abort";
+    if (!m_xml.isNull()) {
+        if (m_useMultiConsumer) {
+            args << "xml:" + QUrl::toPercentEncoding(xmlPath()) + "?multi:1";
+        } else {
+            args << "xml:" + QUrl::toPercentEncoding(xmlPath());
+        }
+    }
     if (m_args.size() > 0) {
         args.append(m_args);
-    } else if (m_useMultiConsumer) {
-        args << "xml:" + QUrl::toPercentEncoding(xmlPath()) + "?multi:1";
-    } else {
-        args << "xml:" + QUrl::toPercentEncoding(xmlPath());
     }
     if (m_in > -1) {
         args << QString("in=%1").arg(m_in);
