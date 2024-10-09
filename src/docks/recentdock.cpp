@@ -91,6 +91,7 @@ void RecentDock::add(const QString &s)
     Settings.setRecent(m_recent);
     if (filePath.endsWith(".mlt")) {
         auto projects = Settings.projects();
+        projects.removeOne(filePath);
         projects.prepend(filePath);
         Settings.setProjects(projects);
     }
