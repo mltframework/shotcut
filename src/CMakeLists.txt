@@ -37,6 +37,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/textviewerdialog.ui
   dialogs/transcodedialog.cpp dialogs/transcodedialog.h
   dialogs/transcodedialog.ui
+  dialogs/transcribeaudiodialog.cpp dialogs/transcribeaudiodialog.h
   dialogs/unlinkedfilesdialog.cpp dialogs/unlinkedfilesdialog.h
   dialogs/unlinkedfilesdialog.ui
   docks/encodedock.cpp docks/encodedock.h
@@ -65,6 +66,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   jobs/postjobaction.cpp jobs/postjobaction.h
   jobs/qimagejob.cpp jobs/qimagejob.h
   jobs/videoqualityjob.cpp jobs/videoqualityjob.h
+  jobs/whisperjob.cpp jobs/whisperjob.h
   main.cpp
   mainwindow.cpp mainwindow.h
   mainwindow.ui

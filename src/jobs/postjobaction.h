@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 Meltytech, LLC
+ * Copyright (c) 2018-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -115,6 +115,30 @@ public:
 
 private:
     QString m_dstFile;
+};
+
+class SubtitlesDock;
+
+class ImportSrtPostJobAction : public PostJobAction
+{
+public:
+    ImportSrtPostJobAction(const QString &srtFile, const QString &trackName, const QString &lang,
+                           bool includeNonspoken, SubtitlesDock *dock)
+        : m_srtFile(srtFile)
+        , m_trackName(trackName)
+        , m_lang(lang)
+        , m_includeNonspoken(includeNonspoken)
+        , m_dock(dock)
+    {}
+    virtual ~ImportSrtPostJobAction() {}
+    void doAction();
+
+protected:
+    const QString m_srtFile;
+    const QString m_trackName;
+    const QString m_lang;
+    const bool m_includeNonspoken;
+    SubtitlesDock *m_dock;
 };
 
 #endif // POSTJOBACTION_H

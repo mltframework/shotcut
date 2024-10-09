@@ -80,6 +80,10 @@ public:
     {
         return m_playlistDock;
     }
+    TimelineDock *timelineDock() const
+    {
+        return m_timelineDock;
+    }
     FilterController *filterController() const
     {
         return m_filterController;

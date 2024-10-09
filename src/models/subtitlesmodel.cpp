@@ -318,6 +318,29 @@ void SubtitlesModel::importSubtitles(int trackIndex, int64_t msTime,
     MAIN.undoStack()->push(command);
 }
 
+void SubtitlesModel::importSubtitlesToNewTrack(SubtitlesModel::SubtitleTrack &track,
+                                               QList<Subtitles::SubtitleItem> &items)
+{
+    if (!m_producer) {
+        LOG_DEBUG() << "No producer";
+        return;
+    }
+
+    int trackIndex = m_tracks.size();
+
+    MAIN.undoStack()->beginMacro(QObject::tr("Import %1 subtitle items").arg(items.size()));
+
+    Subtitles::InsertTrackCommand *trackCommand = new Subtitles::InsertTrackCommand(*this, track,
+                                                                                    trackIndex);
+    MAIN.undoStack()->push(trackCommand);
+
+    Subtitles::OverwriteSubtitlesCommand *overwriteCommand = new Subtitles::OverwriteSubtitlesCommand(
+        *this, trackIndex, items);
+    MAIN.undoStack()->push(overwriteCommand);
+
+    MAIN.undoStack()->endMacro();
+}
+
 void SubtitlesModel::exportSubtitles(const QString &filePath, int trackIndex) const
 {
     if (!m_producer) {
