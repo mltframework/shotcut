@@ -30,6 +30,7 @@
 #include "models/subtitlesmodel.h"
 #include "models/subtitlesselectionmodel.h"
 #include "widgets/docktoolbar.h"
+#include "qmltypes/qmlapplication.h"
 #include <Logger.h>
 
 #include "MltPlaylist.h"
@@ -1142,6 +1143,9 @@ void SubtitlesDock::generateTextOnTimeline()
 
 void SubtitlesDock::transcribeAudio()
 {
+    if (!findWhisperExe()) {
+        return;
+    }
     TranscribeAudioDialog dialog(availableTrackName(), this);
     if (dialog.exec() != QDialog::Accepted) {
         return;
@@ -1224,4 +1228,33 @@ void SubtitlesDock::transcribeAudio()
                                                             dialog.includeNonspoken(), this));
     tmpSrt->setParent(whisperJob);
     JOBS.add(whisperJob);
+}
+
+bool SubtitlesDock::findWhisperExe()
+{
+    if (!QFileInfo(Settings.whisperExe()).isExecutable()) {
+        QMessageBox dialog(QMessageBox::Information,
+                           qApp->applicationName(),
+                           tr("The Whisper.cpp program was not found.\n\n"
+                              "Click OK to open a file dialog to choose its location.\n"
+                              "Click Cancel if you do not have Glaxnimate."),
+                           QMessageBox::Ok | QMessageBox::Cancel,
+                           MAIN.window());
+        dialog.setDefaultButton(QMessageBox::Ok);
+        dialog.setEscapeButton(QMessageBox::Cancel);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        if (dialog.exec() == QMessageBox::Ok) {
+            auto path = QFileDialog::getOpenFileName(MAIN.window(), tr("Find Whisper.cpp"), QString(),
+                                                     QString(),
+                                                     nullptr, Util::getFileDialogOptions());
+            if (QFileInfo(path).isExecutable()) {
+                Settings.setWhisperExe(path);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    return true;
 }

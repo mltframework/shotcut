@@ -86,6 +86,7 @@ private:
     void burnInOnTimeline();
     void generateTextOnTimeline();
     void transcribeAudio();
+    bool findWhisperExe();
 
     SubtitlesModel *m_model;
     SubtitlesSelectionModel *m_selectionModel;
