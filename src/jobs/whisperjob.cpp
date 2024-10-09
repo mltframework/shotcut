@@ -47,7 +47,10 @@ WhisperJob::~WhisperJob()
 void WhisperJob::start()
 {
     QString whisperPath = Settings.whisperExe();
-    QString modelPath = Settings.whisperModel();
+    auto modelPath = QDir(Settings.appDataLocation()).filePath("models/whisper/ggml");
+
+    if (!QFile::exists(modelPath))
+        modelPath = Settings.whisperModel();
 
     setReadChannel(QProcess::StandardOutput);
     setProcessChannelMode(QProcess::MergedChannels);
