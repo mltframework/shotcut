@@ -2510,6 +2510,8 @@ void TimelineDock::emitSelectedFromSelection()
         int trackIndex = clip.y();
         int clipIndex  = clip.x();
         auto info = m_model.getClipInfo(trackIndex, clipIndex);
+        if (!info)
+            continue;
         auto info2 = m_model.getClipInfo(trackIndex, clipIndex - 1);
         if (info2 && info2->producer && info2->producer->is_valid()
                 && info2->producer->get(kShotcutTransitionProperty)) {
