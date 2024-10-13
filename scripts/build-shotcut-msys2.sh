@@ -64,6 +64,9 @@ ENABLE_LADSPA=1
 LADSPA_HEAD=0
 LADSPA_REVISION="origin/shotcut"
 MLT_DISABLE_SOX=0
+ENABLE_WHISPERCPP=1
+WHISPERCPP_HEAD=1
+WHISPERCPP_REVISION=
 
 ################################################################################
 # Location of config file - if not overridden on command line
@@ -159,6 +162,9 @@ function to_key {
     ;;
     bigsh0t)
       echo 8
+    ;;
+    whisper.cpp)
+      echo 9
     ;;
     dav1d)
       echo 10
@@ -394,6 +400,9 @@ function set_globals {
     if test "$ENABLE_LADSPA" = 1 && test "$LADSPA_HEAD" = 1 -o "$LADSPA_REVISION" != ""; then
         SUBDIRS="ladspa-swh $SUBDIRS"
     fi
+    if test "$ENABLE_WHISPERCPP" = 1  && test "$WHISPERCPP_HEAD" = 1 -o "$WHISPERCPP_REVISION" != ""; then
+        SUBDIRS="whisper.cpp $SUBDIRS"
+    fi
     SUBDIRS="$SUBDIRS mlt shotcut"
   fi
 
@@ -428,6 +437,7 @@ function set_globals {
   REPOLOCS[7]="https://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
 #  REPOLOCS[8]="https://bitbucket.org/dandennedy/bigsh0t.git"
   REPOLOCS[8]="https://bitbucket.org/leo_sutic/bigsh0t.git"
+  REPOLOCS[9]="https://github.com/ggerganov/whisper.cpp.git"
   REPOLOCS[10]="https://code.videolan.org/videolan/dav1d.git"
   REPOLOCS[11]="https://aomedia.googlesource.com/aom"
   REPOLOCS[12]="https://github.com/Netflix/vmaf.git"
@@ -626,6 +636,14 @@ function set_globals {
   INSTALL[8]="install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1"
 
   #####
+  # whisper.cpp
+  CONFIG[9]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D GGML_NATIVE=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF"
+  CFLAGS_[9]=$CFLAGS
+  LDFLAGS_[9]=$LDFLAGS
+  BUILD[9]="ninja -C build -j $MAKEJ"
+  INSTALL[9]="install_whispercpp"
+
+  #####
   # dav1d
   CONFIG[10]="meson setup builddir --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -744,6 +762,12 @@ function install_spatialaudio {
   cmd sed -i "s,-I/${TARGET_ARCH}/include,," "$FINAL_INSTALL_DIR"/lib/pkgconfig/spatialaudio.pc
 }
 
+function install_whispercpp {
+  cmd ninja -C build install
+  cmd install -p -c build/bin/main.exe $FINAL_INSTALL_DIR/bin/whisper.cpp-main.exe
+  cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/whisper_models
+  cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/whisper_models
+}
 
 ######################################################################
 # FEEDBACK FUNCTIONS
@@ -948,6 +972,10 @@ function get_subproject {
       fi
       cmd cd $1 || die "Unable to change to directory $1"
   fi # git/svn
+
+  if [ "$1" = "whisper.cpp" ]; then
+    cmd sh ./models/download-ggml-model.sh base-q5_1
+  fi
 
   feedback_status Done getting or updating source for $1
   cmd popd
@@ -1179,6 +1207,7 @@ function deploy
     cmd mv bin/ffplay.exe .
     cmd mv bin/ffprobe.exe .
     cmd mv bin/glaxnimate.exe .
+    cmd mv bin/whisper.cpp-main.exe .
     cmd rm -rf bin include etc man manifest src *.txt
     cmd rm lib/*
     cmd rm -rf lib/cmake lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0

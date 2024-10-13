@@ -1362,7 +1362,7 @@ void ShotcutSettings::setWhisperModel(const QString &path)
 QString ShotcutSettings::whisperModel()
 {
     QDir dataPath = QmlApplication::dataDir();
-    dataPath.cd("shotcut/models/whisper/ggml");
+    dataPath.cd("shotcut/whisper_models");
     return settings.value("subtitles/whisperModel",
                           dataPath.absoluteFilePath("ggml-base-q5_1.bin")).toString();
 }

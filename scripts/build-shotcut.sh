@@ -1223,8 +1223,8 @@ EOF
 function install_whispercpp {
   cmd ninja -C build install
   cmd install -p -c build/bin/main $FINAL_INSTALL_DIR/bin/whisper.cpp-main
-  cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/models/whisper/ggml
-  cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/models/whisper/ggml
+  cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/whisper_models
+  cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/whisper_models
 }
 
 ######################################################################
@@ -1438,7 +1438,7 @@ function get_subproject {
   fi # git/svn
 
   if [ "$1" = "whisper.cpp" ]; then
-    cmd bash ./models/download-ggml-model.sh base-q5_1.bin  
+    cmd sh ./models/download-ggml-model.sh base-q5_1
   fi
 
   feedback_status Done getting or updating source for $1
@@ -2057,7 +2057,7 @@ End-of-environment-setup-template
   cp $TMPFILE "$FINAL_INSTALL_DIR/source-me" || die "Unable to create environment script - cp failed"
 
   log Creating wrapper scripts in $TMPFILE
-  for exe in melt ffmpeg ffplay ffprobe glaxnimate whisper_main; do
+  for exe in melt ffmpeg ffplay ffprobe glaxnimate whisper.cpp-main; do
     cat > $TMPFILE <<End-of-exe-wrapper
 #!/bin/sh
 # Set up environment
