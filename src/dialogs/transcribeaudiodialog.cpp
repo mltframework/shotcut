@@ -17,20 +17,22 @@
 
 #include "transcribeaudiodialog.h"
 
+#include "docks/timelinedock.h"
 #include "Logger.h"
 #include "mainwindow.h"
 #include "shotcut_mlt_properties.h"
-#include "docks/timelinedock.h"
+#include "util.h"
 
 #include <MltProducer.h>
 #include <QCheckBox>
 #include <QComboBox>
-#include <QDebug>
 #include <QDialogButtonBox>
+#include <QFileDialog>
 #include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
+#include <QPushButton>
 #include <QSpinBox>
 
 // List of supported languages from whispercpp
@@ -70,7 +72,7 @@ static void fillLanguages(QComboBox *combo)
 TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(tr("Transcribe Audio"));
+    setWindowTitle(tr("Speech to Text"));
 
     Mlt::Producer *multitrack = MAIN.multitrack();
 
@@ -162,8 +164,86 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     }
     grid->addWidget(m_trackList, 5, 1, Qt::AlignLeft);
 
+    // The config section is a single widget with a unique grid layout inside of it.
+    // The config section is hidden by hiding the config widget (and the layout it contains)
+    static const int maxPathWidth = 350;
+    m_configWidget = new QWidget(this);
+    QGridLayout *configLayout = new QGridLayout(this);
+    m_configWidget->setLayout(configLayout);
+
+    // Horizontal separator line
+    QFrame *line = new QFrame(m_configWidget);
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+    configLayout->addWidget(line, 0, 0, 1, 2);
+
+    // Whisper.cpp exe
+    configLayout->addWidget(new QLabel(tr("Whisper.cpp executable")), 1, 0, Qt::AlignRight);
+    m_exeLabel = new QLineEdit(this);
+    m_exeLabel->setFixedWidth(maxPathWidth);
+    m_exeLabel->setReadOnly(true);
+    configLayout->addWidget(m_exeLabel, 1, 1, Qt::AlignLeft);
+    QPushButton *exeBrowseButton = new QPushButton(this);
+    exeBrowseButton->setIcon(QIcon::fromTheme("document-open",
+                                              QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
+    connect(exeBrowseButton, &QAbstractButton::clicked, this, [&] {
+        auto path = QFileDialog::getOpenFileName(this, tr("Find Whisper.cpp"), Settings.whisperExe(),
+                                                 QString(),
+                                                 nullptr, Util::getFileDialogOptions());
+        if (QFileInfo(path).isExecutable())
+        {
+            Settings.setWhisperExe(path);
+            updateWhisperStatus();
+        }
+    });
+    configLayout->addWidget(exeBrowseButton, 1, 2, Qt::AlignLeft);
+
+    // Whisper.cpp model
+    configLayout->addWidget(new QLabel(tr("GGML Model")), 2, 0, Qt::AlignRight);
+    m_modelLabel = new QLineEdit(this);
+    m_modelLabel->setFixedWidth(maxPathWidth);
+    m_modelLabel->setReadOnly(true);
+    configLayout->addWidget(m_modelLabel, 2, 1, Qt::AlignLeft);
+    QPushButton *modelBrowseButton = new QPushButton(this);
+    modelBrowseButton->setIcon(QIcon::fromTheme("document-open",
+                                                QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
+    connect(modelBrowseButton, &QAbstractButton::clicked, this, [&] {
+        auto path = QFileDialog::getOpenFileName(this, tr("Find Whisper.cpp"), Settings.whisperModel(),
+                                                 "*.bin",
+                                                 nullptr, Util::getFileDialogOptions());
+        if (QFileInfo(path).exists())
+        {
+            LOG_INFO() << "Model found" << path;
+            Settings.setWhisperModel(path);
+            updateWhisperStatus();
+        } else
+        {
+            LOG_INFO() << "Model not found" << path;
+        }
+    });
+    configLayout->addWidget(modelBrowseButton, 2, 2, Qt::AlignLeft);
+
+    grid->addWidget(m_configWidget, 6, 0, 1, 2);
+
+    // Add a button box to the dialog
     m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    grid->addWidget(m_buttonBox, 6, 0, 1, 2);
+    QPushButton *configButton = new QPushButton(tr("Configuration"));
+    configButton->setCheckable(true);
+    connect(configButton, &QPushButton::toggled, this, [&](bool checked) {
+        m_configWidget->setVisible(checked);
+    });
+    updateWhisperStatus();
+    QPushButton *okButton = m_buttonBox->button(QDialogButtonBox::Ok);
+    if (!m_buttonBox->button(QDialogButtonBox::Ok)->isEnabled()) {
+        // Show the config section
+        configButton->setChecked(true);
+        m_configWidget->setVisible(true);
+    } else {
+        configButton->setChecked(false);
+        m_configWidget->setVisible(false);
+    }
+    m_buttonBox->addButton(configButton, QDialogButtonBox::ActionRole);
+    grid->addWidget(m_buttonBox, 7, 0, 1, 2);
     connect(m_buttonBox, SIGNAL(clicked(QAbstractButton *)), this, SLOT(clicked(QAbstractButton *)));
 
     setLayout(grid);
@@ -221,4 +301,43 @@ int TranscribeAudioDialog::maxLineLength()
 bool TranscribeAudioDialog::includeNonspoken()
 {
     return m_nonspoken->checkState() == Qt::Checked;
+}
+
+void TranscribeAudioDialog::updateWhisperStatus()
+{
+    bool exeFound = QFileInfo(Settings.whisperExe()).isExecutable();
+    bool modelFound = QFileInfo(Settings.whisperModel()).exists();
+
+    m_exeLabel->setText(Settings.whisperExe());
+    m_modelLabel->setText(Settings.whisperModel());
+
+    QPushButton *okButton = m_buttonBox->button(QDialogButtonBox::Ok);
+    if (!exeFound || !modelFound) {
+        // Disable the OK button;
+        okButton->setDisabled(true);
+    } else {
+        okButton->setDisabled(false);
+    }
+
+    if (exeFound) {
+        QPalette palette;
+        m_exeLabel->setPalette(palette);
+        m_exeLabel->setToolTip(tr("Path to Whisper.cpp executable"));
+    } else {
+        QPalette palette;
+        palette.setColor(QPalette::Text, Qt::red);
+        m_exeLabel->setPalette(palette);
+        m_exeLabel->setToolTip(tr("Whisper.cpp executable not found"));
+    }
+
+    if (modelFound) {
+        QPalette palette;
+        m_modelLabel->setPalette(palette);
+        m_modelLabel->setToolTip(tr("Path to GGML model"));
+    } else {
+        QPalette palette;
+        palette.setColor(QPalette::Text, Qt::red);
+        m_modelLabel->setPalette(palette);
+        m_modelLabel->setToolTip(tr("GGML model not found"));
+    }
 }

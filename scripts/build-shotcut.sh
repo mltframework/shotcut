@@ -1108,7 +1108,7 @@ function set_globals {
   CFLAGS_[30]=$CFLAGS
   LDFLAGS_[30]=$LDFLAGS
   BUILD[30]="ninja -C build -j $MAKEJ"
-  INSTALL[30]="install_whisper"
+  INSTALL[30]="install_whispercpp"
 }
 
 function build_ffmpeg_darwin {
@@ -1220,11 +1220,11 @@ EOF
   cmd ninja install
 }
 
-function install_whisper {
+function install_whispercpp {
   cmd ninja -C build install
-  cmd install -p -c build/bin/main $FINAL_INSTALL_DIR/bin/whisper_main
-  cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/whisper_models
-  cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/whisper_models
+  cmd install -p -c build/bin/main $FINAL_INSTALL_DIR/bin/whisper.cpp-main
+  cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/models/whisper/ggml
+  cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/models/whisper/ggml
 }
 
 ######################################################################

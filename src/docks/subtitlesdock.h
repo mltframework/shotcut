@@ -27,9 +27,7 @@ class SubtitlesSelectionModel;
 class QComboBox;
 class QItemSelection;
 class QLabel;
-class QLineEdit;
 class QTextEdit;
-class QToolButton;
 class QTreeView;
 
 class SubtitlesDock : public QDockWidget
@@ -85,7 +83,7 @@ private:
     void ensureTrackExists();
     void burnInOnTimeline();
     void generateTextOnTimeline();
-    void transcribeAudio();
+    void speechToText();
     bool findWhisperExe();
 
     SubtitlesModel *m_model;

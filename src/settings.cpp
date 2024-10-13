@@ -1350,13 +1350,8 @@ void ShotcutSettings::setWhisperExe(const QString &path)
 
 QString ShotcutSettings::whisperExe()
 {
-    QString path = settings.value("subtitles/whisperExe", "").toString();
-    if (path.isEmpty()) {
-        QDir shotcutPath = qApp->applicationDirPath();
-        QFileInfo whisperPath(shotcutPath, QString("whisper_main"));
-        path = whisperPath.absoluteFilePath();
-    }
-    return path;
+    QDir dir(qApp->applicationDirPath());
+    return settings.value("subtitles/whisperExe", dir.absoluteFilePath("whisper.cpp-main")).toString();
 }
 
 void ShotcutSettings::setWhisperModel(const QString &path)
@@ -1366,15 +1361,10 @@ void ShotcutSettings::setWhisperModel(const QString &path)
 
 QString ShotcutSettings::whisperModel()
 {
-    QString path = settings.value("subtitles/whisperModel", "").toString();
-    if (path.isEmpty()) {
-        QDir dataPath = QmlApplication::dataDir();
-        dataPath.cd("shotcut");
-        dataPath.cd("whisper_models");
-        QFileInfo modelPath(dataPath, QString("ggml-base-q5_1.bin"));
-        path = modelPath.absoluteFilePath();
-    }
-    return path;
+    QDir dataPath = QmlApplication::dataDir();
+    dataPath.cd("shotcut/models/whisper/ggml");
+    return settings.value("subtitles/whisperModel",
+                          dataPath.absoluteFilePath("ggml-base-q5_1.bin")).toString();
 }
 
 void ShotcutSettings::setNotesZoom(int zoom)

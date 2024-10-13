@@ -45,7 +45,6 @@
 #include <QItemSelection>
 #include <QItemSelectionModel>
 #include <QLabel>
-#include <QLineEdit>
 #include <QMenu>
 #include <QMessageBox>
 #include <QProcess>
@@ -188,7 +187,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     mainMenu->addAction(Actions["subtitleMoveAction"]);
     mainMenu->addAction(Actions["subtitleBurnInAction"]);
     mainMenu->addAction(Actions["subtitleGenerateTextAction"]);
-    mainMenu->addAction(Actions["subtitleTranscribeAudioAction"]);
+    mainMenu->addAction(Actions["subtitleSpeechToTextAction"]);
     mainMenu->addAction(Actions["subtitleTrackTimelineAction"]);
     mainMenu->addAction(Actions["subtitleShowPrevNextAction"]);
 
@@ -415,11 +414,11 @@ void SubtitlesDock::setupActions()
     connect(action, &QAction::triggered, this, &SubtitlesDock::generateTextOnTimeline);
     Actions.add("subtitleGenerateTextAction", action, windowTitle());
 
-    action = new QAction(tr("Transcribe Audio..."), this);
+    action = new QAction(tr("Speech to Text..."), this);
     action->setToolTip(
         tr("Detect speech and transcribe to a new subtitle track."));
-    connect(action, &QAction::triggered, this, &SubtitlesDock::transcribeAudio);
-    Actions.add("subtitleTranscribeAudioAction", action, windowTitle());
+    connect(action, &QAction::triggered, this, &SubtitlesDock::speechToText);
+    Actions.add("subtitleSpeechToTextAction", action, windowTitle());
 
     action = new QAction(tr("Track Timeline Cursor"), this);
     action->setToolTip(tr("Track the timeline cursor"));
@@ -964,7 +963,7 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["subtitleSetEndAction"]->setEnabled(false);
         Actions["subtitleBurnInAction"]->setEnabled(false);
         Actions["subtitleGenerateTextAction"]->setEnabled(false);
-        Actions["subtitleTranscribeAudioAction"]->setEnabled(false);
+        Actions["subtitleSpeechToTextAction"]->setEnabled(false);
     } else {
         m_addToTimelineLabel->setVisible(false);
         Actions["subtitleCreateEditItemAction"]->setEnabled(true);
@@ -972,7 +971,7 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["subtitleEditTrackAction"]->setEnabled(true);
         Actions["SubtitleImportAction"]->setEnabled(true);
         Actions["subtitleAddItemAction"]->setEnabled(true);
-        Actions["subtitleTranscribeAudioAction"]->setEnabled(true);
+        Actions["subtitleSpeechToTextAction"]->setEnabled(true);
         if (m_model->trackCount() == 0) {
             Actions["subtitleRemoveTrackAction"]->setEnabled(false);
             Actions["SubtitleExportAction"]->setEnabled(false);
@@ -1141,11 +1140,8 @@ void SubtitlesDock::generateTextOnTimeline()
     emit addAllTimeline(&playlist, true, true);
 }
 
-void SubtitlesDock::transcribeAudio()
+void SubtitlesDock::speechToText()
 {
-    if (!findWhisperExe()) {
-        return;
-    }
     TranscribeAudioDialog dialog(availableTrackName(), this);
     if (dialog.exec() != QDialog::Accepted) {
         return;
@@ -1205,7 +1201,6 @@ void SubtitlesDock::transcribeAudio()
     tmpWav->setParent(wavJob);
     JOBS.add(wavJob);
 
-
     // Create a temporary srt file
     QTemporaryFile *tmpSrt = Util::writableTemporaryFile(tmpLocation, "shotcut-XXXXXX.srt");
     if (!tmpSrt->open()) {
@@ -1228,33 +1223,4 @@ void SubtitlesDock::transcribeAudio()
                                                             dialog.includeNonspoken(), this));
     tmpSrt->setParent(whisperJob);
     JOBS.add(whisperJob);
-}
-
-bool SubtitlesDock::findWhisperExe()
-{
-    if (!QFileInfo(Settings.whisperExe()).isExecutable()) {
-        QMessageBox dialog(QMessageBox::Information,
-                           qApp->applicationName(),
-                           tr("The Whisper.cpp program was not found.\n\n"
-                              "Click OK to open a file dialog to choose its location.\n"
-                              "Click Cancel if you do not have Glaxnimate."),
-                           QMessageBox::Ok | QMessageBox::Cancel,
-                           MAIN.window());
-        dialog.setDefaultButton(QMessageBox::Ok);
-        dialog.setEscapeButton(QMessageBox::Cancel);
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        if (dialog.exec() == QMessageBox::Ok) {
-            auto path = QFileDialog::getOpenFileName(MAIN.window(), tr("Find Whisper.cpp"), QString(),
-                                                     QString(),
-                                                     nullptr, Util::getFileDialogOptions());
-            if (QFileInfo(path).isExecutable()) {
-                Settings.setWhisperExe(path);
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-    return true;
 }

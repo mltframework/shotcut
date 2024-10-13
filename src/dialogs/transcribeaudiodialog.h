@@ -45,12 +45,16 @@ private slots:
     void clicked(QAbstractButton *button);
 
 private:
+    void updateWhisperStatus();
     QLineEdit *m_name;
     QComboBox *m_lang;
     QCheckBox *m_translate;
     QSpinBox *m_maxLength;
     QCheckBox *m_nonspoken;
     QListWidget *m_trackList;
+    QWidget *m_configWidget;
+    QLineEdit *m_exeLabel;
+    QLineEdit *m_modelLabel;
     QDialogButtonBox *m_buttonBox;
 };
 
