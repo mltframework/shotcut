@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ public:
     MeltJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen,
             QThread::Priority priority = Settings.jobPriority());
     MeltJob(const QString &name, const QStringList &args, int frameRateNum, int frameRateDen);
+    MeltJob(const QString &name, const QString &xml, const QStringList &args, int frameRateNum,
+            int frameRateDen);
     virtual ~MeltJob();
     QString xml();
     QString xmlPath() const

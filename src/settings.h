@@ -336,6 +336,10 @@ public:
     bool subtitlesTrackTimeline() const;
     void setSubtitlesShowPrevNext(bool b);
     bool subtitlesShowPrevNext() const;
+    void setWhisperExe(const QString &path);
+    QString whisperExe();
+    void setWhisperModel(const QString &path);
+    QString whisperModel();
 
     // Notes
     void setNotesZoom(int zoom);

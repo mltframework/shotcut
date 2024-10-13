@@ -27,9 +27,7 @@ class SubtitlesSelectionModel;
 class QComboBox;
 class QItemSelection;
 class QLabel;
-class QLineEdit;
 class QTextEdit;
-class QToolButton;
 class QTreeView;
 
 class SubtitlesDock : public QDockWidget
@@ -40,6 +38,8 @@ public:
     explicit SubtitlesDock(QWidget *parent = 0);
     ~SubtitlesDock();
     void setModel(SubtitlesModel *model, SubtitlesSelectionModel *selectionModel);
+    void importSrtFromFile(const QString &srtPath, const QString &trackName, const QString &lang,
+                           bool includeNonspoken);
 
 signals:
     void seekRequested(int pos);
@@ -78,10 +78,13 @@ private:
     void setCurrentItem(int trackIndex, int itemIndex);
     void refreshWidgets();
     void selectItemForTime();
+    QString availableTrackName();
     bool trackNameExists(const QString &name);
     void ensureTrackExists();
     void burnInOnTimeline();
     void generateTextOnTimeline();
+    void speechToText();
+    bool findWhisperExe();
 
     SubtitlesModel *m_model;
     SubtitlesSelectionModel *m_selectionModel;

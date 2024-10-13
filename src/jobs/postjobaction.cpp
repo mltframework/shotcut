@@ -18,6 +18,7 @@
 #include "postjobaction.h"
 #include "mainwindow.h"
 #include "docks/playlistdock.h"
+#include "docks/subtitlesdock.h"
 #include "shotcut_mlt_properties.h"
 #include <Logger.h>
 
@@ -116,4 +117,10 @@ void ProxyFinalizePostJobAction::doAction()
         LOG_WARNING() << "failed to rename" << m_dstFile << "as" << newFileName;
         QFile::remove(m_dstFile);
     }
+}
+
+
+void ImportSrtPostJobAction::doAction()
+{
+    m_dock->importSrtFromFile(m_srtFile, m_trackName, m_lang, m_includeNonspoken);
 }

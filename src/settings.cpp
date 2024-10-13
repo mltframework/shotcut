@@ -16,6 +16,9 @@
  */
 
 #include "settings.h"
+
+#include "qmltypes/qmlapplication.h"
+
 #include <QApplication>
 #include <QColor>
 #include <QLocale>
@@ -1338,6 +1341,35 @@ void ShotcutSettings::setSubtitlesShowPrevNext(bool b)
 bool ShotcutSettings::subtitlesShowPrevNext() const
 {
     return settings.value("subtitles/showPrevNext", true).toBool();
+}
+
+void ShotcutSettings::setWhisperExe(const QString &path)
+{
+    settings.setValue("subtitles/whisperExe", path);
+}
+
+QString ShotcutSettings::whisperExe()
+{
+    QDir dir(qApp->applicationDirPath());
+#if defined(Q_OS_WIN)
+    auto exe = "whisper.cpp-main.exe";
+#else
+    auto exe = "whisper.cpp-main";
+#endif
+    return settings.value("subtitles/whisperExe", dir.absoluteFilePath(exe)).toString();
+}
+
+void ShotcutSettings::setWhisperModel(const QString &path)
+{
+    settings.setValue("subtitles/whisperModel", path);
+}
+
+QString ShotcutSettings::whisperModel()
+{
+    QDir dataPath = QmlApplication::dataDir();
+    dataPath.cd("shotcut/whisper_models");
+    return settings.value("subtitles/whisperModel",
+                          dataPath.absoluteFilePath("ggml-base-q5_1.bin")).toString();
 }
 
 void ShotcutSettings::setNotesZoom(int zoom)

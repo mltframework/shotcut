@@ -101,6 +101,9 @@ LIBWEBP_REVISION="v1.3.2"
 ENABLE_LIBSPATIALAUDIO=1
 LIBSPATIALAUDIO_HEAD=1
 LIBSPATIALAUDIO_REVISION=
+ENABLE_WHISPERCPP=1
+WHISPERCPP_HEAD=1
+WHISPERCPP_REVISION=
 
 PYTHON_VERSION_DEFAULT=3.8
 PYTHON_VERSION_DARWIN=3.11
@@ -267,6 +270,9 @@ function to_key {
     ;;
     SVT-AV1)
       echo 29
+    ;;
+    whisper.cpp)
+      echo 30
     ;;
     *)
       echo UNKNOWN
@@ -514,6 +520,9 @@ function set_globals {
     if test "$ENABLE_LIBSPATIALAUDIO" = 1  && test "$LIBSPATIALAUDIO_HEAD" = 1 -o "$LIBSPATIALAUDIO_REVISION" != ""; then
         SUBDIRS="libspatialaudio $SUBDIRS"
     fi
+    if test "$ENABLE_WHISPERCPP" = 1  && test "$WHISPERCPP_HEAD" = 1 -o "$WHISPERCPP_REVISION" != ""; then
+        SUBDIRS="whisper.cpp $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -566,6 +575,7 @@ function set_globals {
   REPOLOCS[27]="https://github.com/opencv/opencv_contrib.git"
   REPOLOCS[28]="https://github.com/webmproject/libwebp.git"
   REPOLOCS[29]="https://gitlab.com/AOMediaCodec/SVT-AV1.git"
+  REPOLOCS[30]="https://github.com/ggerganov/whisper.cpp.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -596,6 +606,7 @@ function set_globals {
   REPOTYPES[27]="git"
   REPOTYPES[28]="git"
   REPOTYPES[29]="git"
+  REPOTYPES[30]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -1089,6 +1100,21 @@ function set_globals {
   LDFLAGS_[29]=$LDFLAGS
   BUILD[29]="ninja -C build -j $MAKEJ"
   INSTALL[29]="ninja -C build install"
+  
+  #####
+  # whisper.cpp
+  CONFIG[30]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D GGML_NATIVE=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF"
+  [ "$TARGET_OS" = "Darwin" ] && CONFIG[30]="${CONFIG[30]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
+  if test "$TARGET_OS" = "Darwin" ; then
+    CONFIG[30]="${CONFIG[30]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
+    CONFIG[30]="${CONFIG[30]} -D OpenMP_C_FLAGS=-I/opt/local/include/libomp -D OpenMP_CXX_FLAGS=-I/opt/local/include/libomp -D OpenMP_C_LIB_NAMES=libomp -D OpenMP_CXX_LIB_NAMES=libomp -D OpenMP_libomp_LIBRARY=omp"
+    LDFLAGS_[30]="$LDFLAGS -L /opt/local/lib/libomp"
+  else
+    CFLAGS_[30]=$CFLAGS
+    LDFLAGS_[30]=$LDFLAGS
+  fi
+  BUILD[30]="ninja -C build -j $MAKEJ"
+  INSTALL[30]="install_whispercpp"
 }
 
 function build_ffmpeg_darwin {
@@ -1198,6 +1224,13 @@ SAVE
 END
 EOF
   cmd ninja install
+}
+
+function install_whispercpp {
+  cmd ninja -C build install
+  cmd install -p -c build/bin/main $FINAL_INSTALL_DIR/bin/whisper.cpp-main
+  cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/whisper_models
+  cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/whisper_models
 }
 
 ######################################################################
@@ -1409,6 +1442,10 @@ function get_subproject {
       fi
       cmd cd $1 || die "Unable to change to directory $1"
   fi # git/svn
+
+  if [ "$1" = "whisper.cpp" ]; then
+    cmd sh ./models/download-ggml-model.sh base-q5_1
+  fi
 
   feedback_status Done getting or updating source for $1
   cmd popd
@@ -1832,10 +1869,10 @@ function deploy_mac
 
   log Copying supplementary executables
   cmd mkdir -p MacOS 2>/dev/null
-  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx} MacOS
+  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx,whisper.cpp-main} MacOS
   cmd mkdir -p Frameworks 2>/dev/null
   cmd cp -p ../../lib/libCuteLogger.dylib Frameworks
-  for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe MacOS/glaxnimate; do
+  for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe MacOS/glaxnimate MacOS/whisper.cpp-main; do
     fixlibs "$exe"
     log fixing rpath of executable "$exe"
     cmd install_name_tool -delete_rpath "$FINAL_INSTALL_DIR/lib" "$exe" 2> /dev/null
@@ -1912,6 +1949,10 @@ function deploy_mac
   cmd install -d lib
   cmd cp -pLR /opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/lib/python${PYTHON_VERSION_DARWIN} lib
 
+  # Whisper.cpp models
+  log Copying Whisper.cpp models
+  cmd cp -a "$FINAL_INSTALL_DIR"/share/shotcut/whisper_models Resources/shotcut
+
   log Fixing rpath in libraries
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/opt/local/lib/libomp\" {} 2> /dev/null" \;
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"$FINAL_INSTALL_DIR/lib\" {} 2> /dev/null" \;
@@ -1941,7 +1982,7 @@ function deploy_mac
     cmd cp -a "$FINAL_INSTALL_DIR"/lib/pkgconfig Shotcut/Contents/Frameworks/lib
     log Symlinking libs
     pushd Shotcut/Contents/Frameworks
-    for lib in avcodec avdevice avfilter avformat avutil epoxy mlt++-7 mlt-7 movit mp3lame opus postproc swresample swscale vidstab x264 x265; do
+    for lib in avcodec avdevice avfilter avformat avutil epoxy mlt++-7 mlt-7 movit mp3lame opus postproc swresample swscale vidstab whisper x264 x265; do
       dylib=$(ls lib$lib.*.dylib | head -n 1)
       cmd ln -sf $dylib lib$lib.dylib
     done
@@ -2026,7 +2067,7 @@ End-of-environment-setup-template
   cp $TMPFILE "$FINAL_INSTALL_DIR/source-me" || die "Unable to create environment script - cp failed"
 
   log Creating wrapper scripts in $TMPFILE
-  for exe in melt ffmpeg ffplay ffprobe glaxnimate; do
+  for exe in melt ffmpeg ffplay ffprobe glaxnimate whisper.cpp-main; do
     cat > $TMPFILE <<End-of-exe-wrapper
 #!/bin/sh
 # Set up environment
