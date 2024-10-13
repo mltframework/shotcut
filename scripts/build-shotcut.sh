@@ -1105,8 +1105,14 @@ function set_globals {
   # whisper.cpp
   CONFIG[30]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D GGML_NATIVE=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF"
   [ "$TARGET_OS" = "Darwin" ] && CONFIG[30]="${CONFIG[30]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
-  CFLAGS_[30]=$CFLAGS
-  LDFLAGS_[30]=$LDFLAGS
+  if test "$TARGET_OS" = "Darwin" ; then
+    CONFIG[30]="${CONFIG[30]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
+    CONFIG[30]="${CONFIG[30]} -D OpenMP_C_FLAGS=-I/opt/local/include/libomp -D OpenMP_CXX_FLAGS=-I/opt/local/include/libomp -D OpenMP_C_LIB_NAMES=libomp -D OpenMP_CXX_LIB_NAMES=libomp -D OpenMP_libomp_LIBRARY=omp"
+    LDFLAGS_[30]="$LDFLAGS -L /opt/local/lib/libomp"
+  else
+    CFLAGS_[30]=$CFLAGS
+    LDFLAGS_[30]=$LDFLAGS
+  fi
   BUILD[30]="ninja -C build -j $MAKEJ"
   INSTALL[30]="install_whispercpp"
 }
@@ -1863,10 +1869,10 @@ function deploy_mac
 
   log Copying supplementary executables
   cmd mkdir -p MacOS 2>/dev/null
-  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx} MacOS
+  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx,whisper.cpp-main} MacOS
   cmd mkdir -p Frameworks 2>/dev/null
   cmd cp -p ../../lib/libCuteLogger.dylib Frameworks
-  for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe MacOS/glaxnimate; do
+  for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe MacOS/glaxnimate MacOS/whisper.cpp-main; do
     fixlibs "$exe"
     log fixing rpath of executable "$exe"
     cmd install_name_tool -delete_rpath "$FINAL_INSTALL_DIR/lib" "$exe" 2> /dev/null
@@ -1942,6 +1948,10 @@ function deploy_mac
   cmd cp -a "$FINAL_INSTALL_DIR"/share/glaxnimate Resources
   cmd install -d lib
   cmd cp -pLR /opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/lib/python${PYTHON_VERSION_DARWIN} lib
+
+  # Whisper.cpp models
+  log Copying Whisper.cpp models
+  cmd cp -a "$FINAL_INSTALL_DIR"/share/shotcut/whisper_models Resources/shotcut
 
   log Fixing rpath in libraries
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/opt/local/lib/libomp\" {} 2> /dev/null" \;

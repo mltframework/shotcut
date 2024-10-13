@@ -22,6 +22,7 @@
 #include "mainwindow.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include "qmltypes/qmlapplication.h"
 
 #include <MltProducer.h>
 #include <QCheckBox>
@@ -73,6 +74,7 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     : QDialog(parent)
 {
     setWindowTitle(tr("Speech to Text"));
+    setWindowModality(QmlApplication::dialogModality());
 
     Mlt::Producer *multitrack = MAIN.multitrack();
 
