@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QTimer>
+#include <QThread>
 
 WhisperJob::WhisperJob(const QString &name, const QString &iWavFile, const QString &oSrtFile,
                        const QString &lang, bool translate, int maxLength,
@@ -65,6 +66,14 @@ void WhisperJob::start()
     args << "-pp";
     args << "-ml" << QString::number(m_maxLength);
     args << "-sow";
+
+#if QT_POINTER_SIZE == 4
+        // Limit to 1 rendering thread on 32-bit process to reduce memory usage.
+    auto threadCount = 1;
+#else
+    auto threadCount = qMax(1, QThread::idealThreadCount() - 1);
+#endif
+    args << "-t" << QString::number(threadCount);
 
     LOG_DEBUG() << whisperPath  + " " + args.join(' ');
     AbstractJob::start(whisperPath, args);
