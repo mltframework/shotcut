@@ -68,7 +68,7 @@ void WhisperJob::start()
     args << "-sow";
 
 #if QT_POINTER_SIZE == 4
-        // Limit to 1 rendering thread on 32-bit process to reduce memory usage.
+    // Limit to 1 rendering thread on 32-bit process to reduce memory usage.
     auto threadCount = 1;
 #else
     auto threadCount = qMax(1, QThread::idealThreadCount() - 1);
