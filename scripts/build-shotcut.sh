@@ -1616,7 +1616,7 @@ function configure_compile_install_subproject {
     elif [ "libspatialaudio" = "$1" ]; then
       replace_rpath spatialaudio
     elif [ "SVT-AV1" = "$1" ]; then
-    replace_rpath SvtAv1Enc
+      replace_rpath SvtAv1Enc
     elif [ "vid.stab" = "$1" ]; then
       cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
     fi
@@ -1872,14 +1872,23 @@ function deploy_mac
   cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx,whisper.cpp-main} MacOS
   cmd mkdir -p Frameworks 2>/dev/null
   cmd cp -p ../../lib/libCuteLogger.dylib Frameworks
-  for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe MacOS/glaxnimate MacOS/whisper.cpp-main; do
+  for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe MacOS/glaxnimate; do
     fixlibs "$exe"
     log fixing rpath of executable "$exe"
     cmd install_name_tool -delete_rpath "$FINAL_INSTALL_DIR/lib" "$exe" 2> /dev/null
     cmd install_name_tool -delete_rpath "$QTDIR/lib" "$exe" 2> /dev/null
     cmd install_name_tool -add_rpath "@executable_path/../Frameworks" "$exe"
   done
-  cmd cp -p "$FINAL_INSTALL_DIR"/lib/libaom.2.dylib Frameworks
+  cmd cp -p /opt/local/lib/libaom.3.dylib Frameworks
+
+  # whisper.cpp
+  cmd cp -p "$FINAL_INSTALL_DIR"/lib/libwhisper.1.dylib Frameworks
+  cmd cp -p "$FINAL_INSTALL_DIR"/lib/libggml.dylib Frameworks
+  fixlibs MacOS/whisper.cpp-main
+  log fixing rpath of executable "whisper.cpp-main"
+  cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/src MacOS/whisper.cpp-main 2> /dev/null
+  cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/ggml/src MacOS/whisper.cpp-main 2> /dev/null
+  cmd install_name_tool -add_rpath "@executable_path/../Frameworks" MacOS/whisper.cpp-main
 
   # MLT plugins
   log Copying MLT plugins
