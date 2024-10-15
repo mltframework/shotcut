@@ -178,7 +178,13 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
                        "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
                        "p, li { white-space: pre-wrap; }"
                        "</style></head><body style=\" font-family:'Verdana'; font-size:11pt; font-weight:normal; font-style:normal;\">"
-                       "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'sans-serif'; font-size:72pt; font-weight:normal; color:#ffffff;\">%1</span></p></body></html>";
+#if defined(Q_OS_WIN)
+                       "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\"font-family:Verdana; font-size:72pt; font-weight:normal; color:#ffffff;\">%1</span></p></body></html>";
+#elif defined(Q_OS_MAC)
+                       "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\"font-family:Helvetica; font-size:72pt; font-weight:normal; color:#ffffff;\">%1</span></p></body></html>";
+#else
+                       "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\"font-family:'sans-serif'; font-size:72pt; font-weight:normal; color:#ffffff;\">%1</span></p></body></html>";
+#endif
         html = html.arg(text);
         filter->set("html", html.toUtf8().constData());
     } else {
@@ -189,8 +195,10 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
         else
             filter->set("argument", tr("Edit your text using the Filters panel.").toUtf8().constData());
     }
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
     filter->set("family", "Verdana");
+#elif defined(Q_OS_MAC)
+    filter->set("family", "Helvetica");
 #endif
     filter->set("fgcolour", "#ffffffff");
     filter->set("bgcolour", "#00000000");

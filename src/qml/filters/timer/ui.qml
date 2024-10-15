@@ -71,6 +71,8 @@ Shotcut.KeyframableFilter {
             filter.set("speed", _defaultSpeed);
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana');
+            else if (application.OS === 'macOS')
+                filter.set('family', 'Helvetica');
             filter.set('fgcolour', '#ffffffff');
             filter.set('bgcolour', '#00000000');
             filter.set('olcolour', '#ff000000');

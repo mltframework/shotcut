@@ -1073,8 +1073,10 @@ void SubtitlesDock::burnInOnTimeline()
     auto track = m_model->getTrack(trackIndex);
     Mlt::Filter filter(MLT.profile(), "subtitle");
     filter.set(kShotcutFilterProperty, "subtitles");
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
     filter.set("family", "Verdana");
+#elif defined(Q_OS_MAC)
+    filter.set("family", "Helvetica");
 #endif
     filter.set("fgcolour", "#ffffffff");
     filter.set("bgcolour", "#00000000");
@@ -1082,7 +1084,7 @@ void SubtitlesDock::burnInOnTimeline()
     filter.set("outline", 3);
     filter.set("weight", QFont::Bold);
     filter.set("style", "normal");
-    filter.set("shotcut:usePointSize", 0);
+    filter.set("shotcut:usePointSize", 1);
     filter.set("size", MLT.profile().height() / 20);
     filter.set("geometry", "20%/75%:60%x20%");
     filter.set("valign", "bottom");
@@ -1117,6 +1119,8 @@ void SubtitlesDock::generateTextOnTimeline()
         filter.set("argument", item.text.c_str());
 #ifdef Q_OS_WIN
         filter.set("family", "Verdana");
+#elif defined(Q_OS_MAC)
+        filter.set("family", "Helvetica");
 #endif
         filter.set("fgcolour", "#ffffffff");
         filter.set("bgcolour", "#00000000");

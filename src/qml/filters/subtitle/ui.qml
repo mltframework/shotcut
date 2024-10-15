@@ -41,6 +41,8 @@ Shotcut.KeyframableFilter {
         if (filter.isNew) {
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana');
+            else if (application.OS === 'macOS')
+                filter.set('family', 'Helvetica');
             filter.set('fgcolour', '#ffffffff');
             filter.set('bgcolour', '#00000000');
             filter.set('olcolour', '#aa000000');
@@ -48,7 +50,7 @@ Shotcut.KeyframableFilter {
             filter.set('outline', 3);
             filter.set('weight', 700);
             filter.set('style', 'normal');
-            filter.set(textFilterUi.useFontSizeProperty, false);
+            filter.set(textFilterUi.useFontSizeProperty, 1);
             filter.set('size', profile.height / 20);
             filter.set(textFilterUi.rectProperty, '20%/75%:60%x20%');
             filter.set(textFilterUi.valignProperty, 'bottom');

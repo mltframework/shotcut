@@ -199,7 +199,7 @@ Shotcut.KeyframableFilter {
 p, li { white-space: pre-wrap; }
 body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; color:#ffffff; }
 </style></head><body></body></html>
-'.arg(application.OS === 'Windows' ? 'Verdana' : 'sans-serif'));
+'.arg(application.OS === 'Windows' ? 'Verdana' : application.OS === 'macOS' ? 'Helvetica' : 'sans-serif'));
             filter.set('argument', '');
             filter.set('bgcolour', Qt.rgba(0, 0, 0, 0));
             filter.set(rectProperty, '5%/66.66%:90%x28.34%');

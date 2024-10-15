@@ -89,8 +89,10 @@ void QmlRichText::setFileUrl(const QUrl &arg)
                     setText(QStringLiteral("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
                                            "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
                                            "p, li { white-space: pre-wrap; }"
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
                                            "body { font-family:Verdana; font-size:72pt; font-weight:normal; font-style:normal; color:#ffffff; }"
+#elif defined(Q_OS_MAC)
+                                           "body { font-family:Helvetica; font-size:72pt; font-weight:normal; font-style:normal; color:#ffffff; }"
 #else
                                            "body { font-family:sans-serif; font-size:72pt; font-weight:normal; font-style:normal; color:#ffffff; }"
 #endif
