@@ -37,6 +37,14 @@
 #define SEEK_INACTIVE (-1)
 #define VOLUME_SLIDER_HEIGHT (300)
 
+class NoWheelTabBar : public QTabBar
+{
+    void wheelEvent(QWheelEvent *event)
+    {
+        event->ignore();
+    };
+};
+
 QString blankTime()
 {
     switch (Settings.timeFormat()) {
@@ -80,7 +88,7 @@ Player::Player(QWidget *parent)
     vlayout->setSpacing(4);
 
     // Add tab bar to indicate/select what is playing: clip, playlist, timeline.
-    m_tabs = new QTabBar;
+    m_tabs = new NoWheelTabBar;
     m_tabs->setShape(QTabBar::RoundedSouth);
     m_tabs->setUsesScrollButtons(false);
     m_tabs->addTab(tr("Source"));
@@ -90,7 +98,7 @@ Player::Player(QWidget *parent)
     QHBoxLayout *tabLayout = new QHBoxLayout;
     tabLayout->setSpacing(8);
     tabLayout->addWidget(m_tabs);
-    connect(m_tabs, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)));
+    connect(m_tabs, &QTabBar::tabBarClicked, this, &Player::onTabBarClicked);
 
     // Add status bar.
     m_statusLabel = new StatusLabelWidget();
