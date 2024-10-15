@@ -1199,7 +1199,7 @@ void SubtitlesDock::speechToText()
     // Make the wav file from the timeline
     QStringList args;
     args << "-consumer" << "avformat:" + tmpWav->fileName() << "video_off=1" << "ar=16000" << "ac=1";
-    QString jobName = tr("Transcribe Audio Step 1: Extract Audio");
+    QString jobName = tr("Extracting Audio");
     MeltJob *wavJob = new MeltJob(jobName, wavXml, args, MLT.profile().frame_rate_num(),
                                   MLT.profile().frame_rate_den());
     tmpWav->setParent(wavJob);
@@ -1214,7 +1214,7 @@ void SubtitlesDock::speechToText()
     tmpWav->close();
 
     // Run speech transcription on the wav file
-    jobName = tr("Transcribe Audio Step 2: Transcribe Audio");
+    jobName = tr("Speech to Text");
     WhisperJob *whisperJob = new WhisperJob(jobName, tmpWav->fileName(), tmpSrt->fileName(),
                                             dialog.language(), dialog.translate(), dialog.maxLineLength());
     // Ensure the language code is 3 character (part 2)

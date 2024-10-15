@@ -6195,430 +6195,430 @@ Try again with a different folder.</source>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="86"/>
+        <location filename="../src/player.cpp" line="94"/>
         <source>Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="87"/>
+        <location filename="../src/player.cpp" line="95"/>
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="149"/>
+        <location filename="../src/player.cpp" line="157"/>
         <source>Adjust the audio volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="170"/>
+        <location filename="../src/player.cpp" line="178"/>
         <source>Silence the audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="189"/>
+        <location filename="../src/player.cpp" line="197"/>
         <source>Current position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="195"/>
+        <location filename="../src/player.cpp" line="203"/>
         <source>Total Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="338"/>
+        <location filename="../src/player.cpp" line="346"/>
         <source>In Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="346"/>
+        <location filename="../src/player.cpp" line="354"/>
         <source>Selected Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="234"/>
+        <location filename="../src/player.cpp" line="242"/>
         <source>Zoom Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="184"/>
+        <location filename="../src/player.cpp" line="192"/>
         <source>Current/Total Times</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="203"/>
+        <location filename="../src/player.cpp" line="211"/>
         <source>Player Controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="214"/>
-        <location filename="../src/player.cpp" line="333"/>
+        <location filename="../src/player.cpp" line="222"/>
+        <location filename="../src/player.cpp" line="341"/>
         <source>Player Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="237"/>
+        <location filename="../src/player.cpp" line="245"/>
         <source>Zoom 10%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="240"/>
+        <location filename="../src/player.cpp" line="248"/>
         <source>Zoom 25%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="243"/>
+        <location filename="../src/player.cpp" line="251"/>
         <source>Zoom 50%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="246"/>
+        <location filename="../src/player.cpp" line="254"/>
         <source>Zoom 100%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="249"/>
+        <location filename="../src/player.cpp" line="257"/>
         <source>Zoom 200%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="269"/>
+        <location filename="../src/player.cpp" line="277"/>
         <source>Toggle zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="276"/>
+        <location filename="../src/player.cpp" line="284"/>
         <source>2x2 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="281"/>
+        <location filename="../src/player.cpp" line="289"/>
         <source>3x3 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="285"/>
+        <location filename="../src/player.cpp" line="293"/>
         <source>4x4 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="289"/>
+        <location filename="../src/player.cpp" line="297"/>
         <source>16x16 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="297"/>
+        <location filename="../src/player.cpp" line="305"/>
         <source>10 Pixel Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="415"/>
+        <location filename="../src/player.cpp" line="423"/>
         <source>Play/Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="419"/>
+        <location filename="../src/player.cpp" line="427"/>
         <source>Toggle play or pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="430"/>
+        <location filename="../src/player.cpp" line="438"/>
         <source>Loop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="435"/>
+        <location filename="../src/player.cpp" line="443"/>
         <source>Toggle player looping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="441"/>
+        <location filename="../src/player.cpp" line="449"/>
         <source>Loop All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="442"/>
+        <location filename="../src/player.cpp" line="450"/>
         <source>Loop back to the beginning when the end is reached</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="449"/>
+        <location filename="../src/player.cpp" line="457"/>
         <source>Loop Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="450"/>
+        <location filename="../src/player.cpp" line="458"/>
         <source>Loop around the marker under the cursor in the timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="461"/>
+        <location filename="../src/player.cpp" line="469"/>
         <source>Loop Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="462"/>
+        <location filename="../src/player.cpp" line="470"/>
         <source>Loop around the selected clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="470"/>
+        <location filename="../src/player.cpp" line="478"/>
         <source>Nothing selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="475"/>
+        <location filename="../src/player.cpp" line="483"/>
         <source>Loop Around Cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="476"/>
+        <location filename="../src/player.cpp" line="484"/>
         <source>Loop around the current cursor position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="505"/>
+        <location filename="../src/player.cpp" line="513"/>
         <source>Skip to the next point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="528"/>
+        <location filename="../src/player.cpp" line="536"/>
         <source>Skip to the previous point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="553"/>
+        <location filename="../src/player.cpp" line="561"/>
         <source>Play quickly backwards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="563"/>
+        <location filename="../src/player.cpp" line="571"/>
         <source>Play quickly forwards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="567"/>
+        <location filename="../src/player.cpp" line="575"/>
         <source>Seek Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="574"/>
+        <location filename="../src/player.cpp" line="582"/>
         <source>Seek End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="582"/>
+        <location filename="../src/player.cpp" line="590"/>
         <source>Next Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="591"/>
+        <location filename="../src/player.cpp" line="599"/>
         <source>Previous Frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="600"/>
+        <location filename="../src/player.cpp" line="608"/>
         <source>Forward One Second</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="608"/>
+        <location filename="../src/player.cpp" line="616"/>
         <source>Backward One Second</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="616"/>
+        <location filename="../src/player.cpp" line="624"/>
         <source>Forward Two Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="624"/>
+        <location filename="../src/player.cpp" line="632"/>
         <source>Backward Two Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="632"/>
+        <location filename="../src/player.cpp" line="640"/>
         <source>Forward Five Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="640"/>
+        <location filename="../src/player.cpp" line="648"/>
         <source>Backward Five Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="648"/>
+        <location filename="../src/player.cpp" line="656"/>
         <source>Forward Ten Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="656"/>
+        <location filename="../src/player.cpp" line="664"/>
         <source>Backward Ten Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="664"/>
+        <location filename="../src/player.cpp" line="672"/>
         <source>Forward Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="672"/>
+        <location filename="../src/player.cpp" line="680"/>
         <source>Backward Jump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="680"/>
+        <location filename="../src/player.cpp" line="688"/>
         <source>Set Jump Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="691"/>
+        <location filename="../src/player.cpp" line="699"/>
         <source>Trim Clip In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="704"/>
+        <location filename="../src/player.cpp" line="712"/>
         <source>Trim Clip Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="717"/>
+        <location filename="../src/player.cpp" line="725"/>
         <source>Set Time Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="747"/>
+        <location filename="../src/player.cpp" line="755"/>
         <source>Pause playback</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="749"/>
-        <location filename="../src/player.cpp" line="756"/>
+        <location filename="../src/player.cpp" line="757"/>
+        <location filename="../src/player.cpp" line="764"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="751"/>
+        <location filename="../src/player.cpp" line="759"/>
         <source>Focus Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="905"/>
+        <location filename="../src/player.cpp" line="913"/>
         <source>Not Seekable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="293"/>
+        <location filename="../src/player.cpp" line="301"/>
         <source>20 Pixel Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="252"/>
+        <location filename="../src/player.cpp" line="260"/>
         <source>Zoom 300%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="255"/>
+        <location filename="../src/player.cpp" line="263"/>
         <source>Zoom 400%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="258"/>
+        <location filename="../src/player.cpp" line="266"/>
         <source>Zoom 500%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="261"/>
+        <location filename="../src/player.cpp" line="269"/>
         <source>Zoom 750%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="264"/>
+        <location filename="../src/player.cpp" line="272"/>
         <source>Zoom 1000%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="301"/>
+        <location filename="../src/player.cpp" line="309"/>
         <source>80/90% Safe Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="305"/>
+        <location filename="../src/player.cpp" line="313"/>
         <source>EBU R95 Safe Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="310"/>
+        <location filename="../src/player.cpp" line="318"/>
         <source>Snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="320"/>
+        <location filename="../src/player.cpp" line="328"/>
         <source>Toggle grid display on the player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="724"/>
+        <location filename="../src/player.cpp" line="732"/>
         <source>Switch Source/Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="744"/>
+        <location filename="../src/player.cpp" line="752"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="499"/>
+        <location filename="../src/player.cpp" line="507"/>
         <source>Skip Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="522"/>
+        <location filename="../src/player.cpp" line="530"/>
         <source>Skip Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="547"/>
+        <location filename="../src/player.cpp" line="555"/>
         <source>Rewind</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="557"/>
+        <location filename="../src/player.cpp" line="565"/>
         <source>Fast Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="327"/>
+        <location filename="../src/player.cpp" line="335"/>
         <source>Volume</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="328"/>
+        <location filename="../src/player.cpp" line="336"/>
         <source>Show the volume control</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1282"/>
+        <location filename="../src/player.cpp" line="1290"/>
         <source>Proxy and preview scaling are ON at %1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1285"/>
+        <location filename="../src/player.cpp" line="1293"/>
         <source>Proxy is ON at %1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1288"/>
+        <location filename="../src/player.cpp" line="1296"/>
         <source>Preview scaling is ON at %1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1396"/>
+        <location filename="../src/player.cpp" line="1404"/>
         <source>Unmute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1367"/>
-        <location filename="../src/player.cpp" line="1403"/>
+        <location filename="../src/player.cpp" line="1375"/>
+        <location filename="../src/player.cpp" line="1411"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7864,17 +7864,17 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 <context>
     <name>QmlRichText</name>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="135"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="137"/>
         <source>Cannot save: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="165"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="167"/>
         <source>Row</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="167"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="169"/>
         <source>Column</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8993,19 +8993,19 @@ If the duration is 0, no transition will be created.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1198"/>
-        <source>Transcribe Audio Step 1: Extract Audio</source>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1202"/>
+        <source>Extracting Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1213"/>
-        <source>Transcribe Audio Step 2: Transcribe Audio</source>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1217"/>
+        <source>Speech to Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="509"/>
         <location filename="../src/docks/subtitlesdock.cpp" line="559"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1150"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1154"/>
         <source>Subtitle track already exists: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9312,7 +9312,7 @@ Remove the subtitle filter before removing this track.</source>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.cpp" line="175"/>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="190"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="196"/>
         <source>Edit your text using the Filters panel.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14032,7 +14032,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/dither/ui.qml" line="67"/>
         <location filename="../src/qml/filters/dropshadow/ui.qml" line="81"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="47"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="157"/>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="83"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="432"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="720"/>
@@ -14040,7 +14040,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/fspp/ui.qml" line="52"/>
         <location filename="../src/qml/filters/glitch/ui.qml" line="82"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="482"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="676"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="678"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="196"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="48"/>
         <location filename="../src/qml/filters/grid/ui.qml" line="137"/>
@@ -14073,11 +14073,11 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/sketch/ui.qml" line="52"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="55"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="161"/>
-        <location filename="../src/qml/filters/subtitle/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/subtitle/ui.qml" line="83"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="47"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="70"/>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="290"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="117"/>
         <location filename="../src/qml/filters/tracker/ui.qml" line="109"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="50"/>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="108"/>
@@ -14386,7 +14386,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/fadein_movit/ui.qml" line="62"/>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="70"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="67"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="268"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="270"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14750,231 +14750,231 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="59"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="61"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="205"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="87"/>
         <source>Bottom Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="63"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="65"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="205"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="89"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="91"/>
         <source>Bottom Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="69"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="205"/>
         <source>Top Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="73"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="205"/>
         <source>Top Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="77"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="206"/>
         <source>Lower Third</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="81"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="222"/>
         <source>Slide In From Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="224"/>
         <source>Slide In From Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="85"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="226"/>
         <source>Slide In From Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="87"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="228"/>
         <source>Slide In From Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="89"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="91"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="232"/>
         <source>Slide Out Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="91"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="93"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="234"/>
         <source>Slide Out Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="95"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="236"/>
         <source>Slide Out Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="95"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="97"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="238"/>
         <source>Slide Out Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="101"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="242"/>
         <source>Slow Zoom In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="103"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="244"/>
         <source>Slow Zoom Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="105"/>
         <source>Slow Pan Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="106"/>
         <source>Slow Move Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="106"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="108"/>
         <source>Slow Pan Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="107"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="109"/>
         <source>Slow Move Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="109"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="111"/>
         <source>Slow Pan Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="112"/>
         <source>Slow Move Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="112"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="114"/>
         <source>Slow Pan Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="115"/>
         <source>Slow Move Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="117"/>
         <source>Slow Zoom In, Pan Up Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="118"/>
         <source>Slow Zoom In, Move Up Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="120"/>
         <source>Slow Zoom In, Pan Down Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="119"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="121"/>
         <source>Slow Zoom In, Move Down Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="123"/>
         <source>Slow Zoom Out, Pan Up Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="122"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="124"/>
         <source>Slow Zoom Out, Move Up Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="124"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="126"/>
         <source>Slow Zoom Out, Pan Down Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="127"/>
         <source>Slow Zoom Out, Move Down Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="184"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="705"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="707"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="276"/>
         <source>Insert field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="296"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="298"/>
         <source># (Hash sign)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="301"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="303"/>
         <source>Timecode (drop frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="306"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="308"/>
         <source>Timecode (non-drop frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="336"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="338"/>
         <source>File base name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="313"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="316"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="318"/>
         <source>File date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="321"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="323"/>
         <source>Creation date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="326"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="328"/>
         <source>File name and path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="331"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="333"/>
         <source>File name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16623,7 +16623,7 @@ Change top/side distortion bias</source>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="907"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="335"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="337"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="89"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="78"/>
         <source>Speed</source>
@@ -16680,68 +16680,68 @@ Change top/side distortion bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="144"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="146"/>
         <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="160"/>
         <source>HH:MM:SS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="163"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="165"/>
         <source>HH:MM:SS.S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="168"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="170"/>
         <source>MM:SS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="175"/>
         <source>MM:SS.SS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="178"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="180"/>
         <source>MM:SS.SSS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="183"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="185"/>
         <source>SS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="188"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="190"/>
         <source>SS.S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="193"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="195"/>
         <source>SS.SS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="200"/>
         <source>SS.SSS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="287"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="289"/>
         <source>A value of 0 will run the timer to the end of the filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="329"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="331"/>
         <source>When the direction is Down, the timer will count down to Offset.
 When the direction is Up, the timer will count up starting from Offset.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="356"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="358"/>
         <source>Timer seconds per playback second. Scales Duration but does not affect Start Delay or Offset.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16838,7 +16838,7 @@ Blue in RGB mode</source>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="357"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="205"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="207"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16879,37 +16879,37 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1164"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1301"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="219"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="221"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="224"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="226"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="231"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="233"/>
         <source>Start Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="250"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="252"/>
         <source>The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="262"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="264"/>
         <source>Set start to begin at the current position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="287"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="289"/>
         <source>The timer will be frozen after the Duration has elapsed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="304"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="306"/>
         <source>Set duration to end at the current position</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16917,7 +16917,7 @@ All = 360° + Randomize</source>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="500"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="258"/>
         <location filename="../src/qml/filters/nosync/ui.qml" line="83"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="310"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="312"/>
         <source>Offset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17417,91 +17417,91 @@ Click &quot;Open&quot; to load a file.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="463"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="215"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="217"/>
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="218"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="220"/>
         <source>Open GPS File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="503"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="235"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="237"/>
         <source>&lt;b&gt;GPS options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="510"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="242"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="244"/>
         <source>GPS offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="514"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="246"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="248"/>
         <source>This is added to video time to sync with gps time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="533"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="263"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="265"/>
         <source>+ : Adds time to video (use if GPS is ahead).
  - : Subtracts time from video (use if video is ahead).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="574"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="304"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="306"/>
         <source>Number of days to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="613"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="343"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="345"/>
         <source>Number of hours to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="652"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="382"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="384"/>
         <source>Number of minutes to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="691"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="421"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="423"/>
         <source>Number of seconds to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="710"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="440"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="442"/>
         <source>Sync start of GPS to start of video file.
 Tip: use this if you started GPS and video recording at the same time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="749"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="479"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="481"/>
         <source>Sync start of GPS to current video time.
 Tip: use this if you recorded the moment of the first GPS fix.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="759"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="489"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="491"/>
         <source>GPS smoothing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="763"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="493"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="495"/>
         <source>Average nearby GPS points to smooth out errors.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -17854,37 +17854,37 @@ Values smaller than 1 will zoom into image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="581"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="583"/>
         <source>Processing start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="586"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="588"/>
         <source>Distances are calculated since the start of the gps file, use this field to reset them (GPS time).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="603"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="605"/>
         <source>Insert date and time formatted exactly as: YYYY-MM-DD HH:MM:SS (GPS time).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="618"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="620"/>
         <source>Set start of GPS processing to current video time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="671"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="673"/>
         <source>&lt;b&gt;Text options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="788"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="790"/>
         <source>Insert GPS field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="877"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="879"/>
         <source>Extra arguments can be added inside keywords:
 Distance units: m [km|ft|mi].
 Speed units: km/h [mi/h|m/s|ft/s].
@@ -17893,186 +17893,186 @@ Extra keyword: RAW (prints only values from file).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>GPS latitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>GPS longitude</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Elevation (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Speed (km/h)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Distance (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>GPS date-time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Video file date-time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Heart-rate (bpm)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Bearing (degrees)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Bearing (compass)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Elevation gain (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Elevation loss (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Distance uphill (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Distance downhill (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="797"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
         <source>Distance flat (m)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="798"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
         <source>Cadence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="798"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
         <source>Temperature (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="798"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
         <source>Grade (%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="798"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
         <source>Grade (degrees)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="798"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
         <source>Vertical speed (m/s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="798"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
         <source>3D Speed (km/h)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="799"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Power (W)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="891"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="893"/>
         <source>&lt;b&gt;Advanced options&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="848"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="631"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="633"/>
         <source>Video speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="852"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="636"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="638"/>
         <source>If the current video is sped up (timelapse) or slowed down use this field to set the speed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="875"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="657"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="659"/>
         <source>Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="896"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="898"/>
         <source>Update speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="901"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="903"/>
         <source>Set how many text updates to show per second.
 Set to 0 to only print real points (no interpolation).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="919"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="921"/>
         <source>Fractional times are also allowed (0.25 = update every 4 seconds, 5 = 5 updates per second).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="929"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="931"/>
         <source> per second</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1770"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="956"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="958"/>
         <source>Video start time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1775"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="961"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="963"/>
         <source>Detected date-time for the video file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1793"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="979"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="981"/>
         <source>GPS start time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1798"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="984"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="986"/>
         <source>Detected date-time for the GPS file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1809"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="995"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="997"/>
         <source>This time will be used for synchronization.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -18320,7 +18320,7 @@ Set to 0 to only print real points (no interpolation).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/subtitle/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/subtitle/ui.qml" line="112"/>
         <source>Subtitle Track</source>
         <translation type="unfinished"></translation>
     </message>
