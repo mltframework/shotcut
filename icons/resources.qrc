@@ -408,5 +408,8 @@
         <file>oxygen/32x32/places/server-database.png</file>
         <file>light/32x32/server-database.png</file>
         <file>dark/32x32/server-database.png</file>
+        <file>oxygen/32x32/actions/speech-to-text.png</file>
+        <file>light/32x32/speech-to-text.png</file>
+        <file>dark/32x32/speech-to-text.png</file>
     </qresource>
 </RCC>

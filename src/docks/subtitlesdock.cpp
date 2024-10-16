@@ -254,6 +254,11 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     button->setAutoRaise(true);
     toolbar->addWidget(button);
 
+    button = new QToolButton;
+    button->setDefaultAction(Actions["subtitleSpeechToTextAction"]);
+    button->setAutoRaise(true);
+    toolbar->addWidget(button);
+
     vboxLayout->addWidget(toolbar);
 
     QFontMetrics fm(font());
@@ -417,6 +422,8 @@ void SubtitlesDock::setupActions()
     action = new QAction(tr("Speech to Text..."), this);
     action->setToolTip(
         tr("Detect speech and transcribe to a new subtitle track."));
+    action->setIcon(QIcon::fromTheme("speech-to-text",
+                                     QIcon(":/icons/oxygen/32x32/actions/speech-to-text.png")));
     connect(action, &QAction::triggered, this, &SubtitlesDock::speechToText);
     Actions.add("subtitleSpeechToTextAction", action, windowTitle());
 
