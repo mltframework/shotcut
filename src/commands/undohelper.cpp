@@ -426,7 +426,11 @@ void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Prod
                     UNDOLOG << "Fixing transition at clip index" << currentIndex << "transition index" <<
                             transitionIndex;
                     transitionClip.reset(clip.cut(transitionClip->get_in(), transitionClip->get_out()));
-                    transition.set_track(*transitionClip.data(), transitionIndex);
+                    if (transitionClip) {
+                        transition.set_track(*transitionClip.data(), transitionIndex);
+                        transitionClip->set(transitionIndex ? "mix_in" : "mix_out", transition.get_tractor(), 0);
+                        transition.set(transitionIndex ? "mix_out" : "mix_in", transitionClip->get_producer(), 0);
+                    }
                 }
             }
         }
