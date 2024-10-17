@@ -2301,21 +2301,21 @@ void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
             Mlt::Producer transitionClip(static_cast<mlt_producer>(info->producer->get_data("mix_out")));
             auto clipBefore = producerForClip(trackIndex, clipIndex - 1);
             auto clipAfter = producerForClip(trackIndex, clipIndex + 1);
-            auto duration = info->frame_count;
+            auto duration = -info->frame_count;
             if (clipBefore.is_valid() && clipAfter.is_valid())
                 duration /= 2;
             if (clipAfter.is_valid() && clipAfter.same_clip(transitionClip))
                 MAIN.undoStack()->push(
                     new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex + 1,
-                                                    -duration, false));
+                                                    duration, false));
             // verify the clip before belongs to transition
             transitionClip = Mlt::Producer(static_cast<mlt_producer>(info->producer->get_data("mix_in")));
             if (clipBefore.is_valid() && clipAfter.is_valid())
-                duration += duration % 2;
+                duration -= duration % 2;
             if (clipBefore.is_valid() && clipBefore.same_clip(transitionClip))
                 MAIN.undoStack()->push(
                     new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
-                                                     -duration, false));
+                                                     duration, false));
         }
         MAIN.undoStack()->endMacro();
     } else {
