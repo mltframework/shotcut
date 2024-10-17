@@ -2256,16 +2256,17 @@ void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
         if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex)) && info->producer
                 && info->producer->is_valid()) {
             // verify the clip after belongs to transition
-            Mlt::Producer transitionClip(static_cast<mlt_producer>(info->producer->get_data("mix_out")));
+            Mlt::Tractor transition(*info->producer);
+            std::unique_ptr<Mlt::Producer> transitionClip(transition.track(1));
             auto neighborClip = producerForClip(trackIndex, clipIndex);
-            if (neighborClip.is_valid() && neighborClip.same_clip(transitionClip))
+            if (neighborClip.is_valid() && transitionClip && neighborClip.same_clip(*transitionClip))
                 MAIN.undoStack()->push(
                     new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex,
                                                     -info->frame_count, true));
             // verify the clip before belongs to transition
-            transitionClip = Mlt::Producer(static_cast<mlt_producer>(info->producer->get_data("mix_in")));
+            transitionClip.reset(transition.track(0));
             neighborClip = producerForClip(trackIndex, clipIndex - 1);
-            if (neighborClip.is_valid() && neighborClip.same_clip(transitionClip))
+            if (neighborClip.is_valid() && transitionClip && neighborClip.same_clip(*transitionClip))
                 MAIN.undoStack()->push(
                     new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
                                                      -info->frame_count, true));
@@ -2298,24 +2299,25 @@ void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
         if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex)) && info->producer
                 && info->producer->is_valid()) {
             // verify the clip after belongs to transition
-            Mlt::Producer transitionClip(static_cast<mlt_producer>(info->producer->get_data("mix_out")));
+            Mlt::Tractor transition(*info->producer);
+            std::unique_ptr<Mlt::Producer> transitionClip(transition.track(1));
             auto clipBefore = producerForClip(trackIndex, clipIndex - 1);
             auto clipAfter = producerForClip(trackIndex, clipIndex + 1);
-            auto duration = -info->frame_count;
+            auto duration = info->frame_count;
             if (clipBefore.is_valid() && clipAfter.is_valid())
                 duration /= 2;
-            if (clipAfter.is_valid() && clipAfter.same_clip(transitionClip))
+            if (clipAfter.is_valid() && transitionClip && clipAfter.same_clip(*transitionClip))
                 MAIN.undoStack()->push(
                     new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex + 1,
-                                                    duration, false));
+                                                    -duration, false));
             // verify the clip before belongs to transition
-            transitionClip = Mlt::Producer(static_cast<mlt_producer>(info->producer->get_data("mix_in")));
+            transitionClip.reset(transition.track(0));
             if (clipBefore.is_valid() && clipAfter.is_valid())
-                duration -= duration % 2;
-            if (clipBefore.is_valid() && clipBefore.same_clip(transitionClip))
+                duration += info->frame_count % 2;
+            if (clipBefore.is_valid() && transitionClip && clipBefore.same_clip(*transitionClip))
                 MAIN.undoStack()->push(
                     new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
-                                                     duration, false));
+                                                     -duration, false));
         }
         MAIN.undoStack()->endMacro();
     } else {
