@@ -198,6 +198,7 @@ Shotcut.KeyframableFilter {
                 gpsFinishParseTimer.stop();
                 calls = 0;
                 filter.set('gps_processing_start_time', filter.get('gps_start_text'));
+                filter.set('time_offset', filter.get('auto_gps_offset_start'));
                 setControls();
             }
         }
