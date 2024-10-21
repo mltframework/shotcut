@@ -132,7 +132,6 @@ void AbstractJob::start(const QString &program, const QStringList &arguments)
         prog = "nice";
     }
 #endif
-    appendToLog(prog + " " + args.join(" ") + "\n");
     QProcess::start(prog, args);
     AbstractJob::start();
     m_actionPause->setEnabled(true);

@@ -57,7 +57,7 @@ void BitrateViewerJob::onFinished(int exitCode, ExitStatus exitStatus)
                 onOpenTriggered();
             }
         } else {
-            LOG_DEBUG() << error.errorString();
+            LOG_ERROR() << "JSON parsing error:" << error.errorString();
         }
     }
 }
