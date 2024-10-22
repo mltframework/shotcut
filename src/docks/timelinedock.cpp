@@ -2253,8 +2253,7 @@ void TimelineDock::remove(int trackIndex, int clipIndex, bool ignoreTransition)
         auto info = m_model.getClipInfo(trackIndex, clipIndex);
         MAIN.undoStack()->push(
             new Timeline::RemoveCommand(m_model, m_markersModel, trackIndex, clipIndex));
-        if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex)) && info->producer
-                && info->producer->is_valid()) {
+        if (clipIndex > 0 && info->producer && info->producer->is_valid()) {
             // verify the clip after belongs to transition
             Mlt::Tractor transition(*info->producer);
             std::unique_ptr<Mlt::Producer> transitionClip(transition.track(1));
