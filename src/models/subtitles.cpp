@@ -178,8 +178,10 @@ Subtitles::SubtitleVector Subtitles::readFromSrtString(const std::string &text)
 
 bool Subtitles::writeToSrtString(std::string &text, const Subtitles::SubtitleVector &items)
 {
-    std::ostringstream textStream(text);
-    return writeToSrtStream(textStream, items);
+    std::ostringstream textStream;
+    bool result = writeToSrtStream(textStream, items);
+    text = textStream.str();
+    return result;
 }
 
 int Subtitles::indexForTime(const Subtitles::SubtitleVector &items,
