@@ -43,6 +43,7 @@ jobs:
             mingw-w64-x86_64-libvpx
             mingw-w64-x86_64-libwebp
             mingw-w64-x86_64-libxml2
+            mingw-w64-x86_64-openblas
             mingw-w64-x86_64-onevpl
             mingw-w64-x86_64-openssl
             mingw-w64-x86_64-opus
