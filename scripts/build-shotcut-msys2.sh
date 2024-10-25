@@ -638,7 +638,7 @@ function set_globals {
   #####
   # whisper.cpp
   CONFIG[9]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D GGML_AVX2=OFF -D GGML_BLAS=ON -D GGML_BLAS_VENDOR=OpenBLAS -D BUILD_SHARED_LIBS=ON -D GGML_NATIVE=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF"
-  CFLAGS_[9]="$CFLAGS $(pkgconf.exe --cflags openblas)"
+  CFLAGS_[9]=$CFLAGS
   LDFLAGS_[9]=$LDFLAGS
   BUILD[9]="ninja -C build -j $MAKEJ"
   INSTALL[9]="install_whispercpp"
