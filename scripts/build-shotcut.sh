@@ -217,6 +217,9 @@ function to_key {
     ladspa)
       echo 8
     ;;
+    OpenBLAS)
+      echo 9
+    ;;
     vid.stab)
       echo 10
     ;;
@@ -522,6 +525,7 @@ function set_globals {
     fi
     if test "$ENABLE_WHISPERCPP" = 1  && test "$WHISPERCPP_HEAD" = 1 -o "$WHISPERCPP_REVISION" != ""; then
         SUBDIRS="whisper.cpp $SUBDIRS"
+        [ "$TARGET_OS" != "Darwin" ] && SUBDIRS="OpenBLAS $SUBDIRS"
     fi
   fi
 
@@ -557,6 +561,7 @@ function set_globals {
   REPOLOCS[6]="https://github.com/videolabs/libspatialaudio.git"
   REPOLOCS[7]="https://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="https://github.com/swh/ladspa.git"
+  REPOLOCS[9]="https://github.com/OpenMathLib/OpenBLAS.git"
   REPOLOCS[10]="https://github.com/georgmartius/vid.stab.git"
   REPOLOCS[12]="https://github.com/xiph/opus.git"
   REPOLOCS[13]="https://github.com/videolan/x265"
@@ -643,6 +648,7 @@ function set_globals {
     REVISIONS[7]="$SHOTCUT_REVISION"
   fi
   REVISIONS[8]=""
+  REVISIONS[9]=""
   REVISIONS[10]=""
   if test 0 = "$VIDSTAB_HEAD" -a "$VIDSTAB_REVISION" ; then
     REVISIONS[10]="$VIDSTAB_REVISION"
@@ -932,6 +938,14 @@ function set_globals {
   INSTALL[8]="install_ladspa"
 
   #####
+  # OpenBLAS
+  CONFIG[9]="cmake -G Ninja -B builddir -D BUILD_SHARED_LIBS=ON -D USE_THREAD=ON -D NUM_THREADS=64 -D USE_OPENMP=ON -D TARGET=CORE2 -D DYNAMIC_ARCH=ON -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  CFLAGS_[9]="$ASAN_CFLAGS $CFLAGS"
+  LDFLAGS_[9]="$ASAN_LDFLAGS $LDFLAGS"
+  BUILD[9]="ninja -C builddir -j $MAKEJ"
+  INSTALL[9]="ninja -C builddir install"
+
+  #####
   # vid.stab
   CONFIG[10]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_INSTALL_LIBDIR=lib $CMAKE_DEBUG_FLAG"
   if test "$TARGET_OS" = "Darwin" ; then
@@ -1103,13 +1117,14 @@ function set_globals {
   
   #####
   # whisper.cpp
-  CONFIG[30]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D GGML_NATIVE=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF"
+  CONFIG[30]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D GGML_NATIVE=OFF -D GGML_AVX2=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF"
   [ "$TARGET_OS" = "Darwin" ] && CONFIG[30]="${CONFIG[30]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
   if test "$TARGET_OS" = "Darwin" ; then
     CONFIG[30]="${CONFIG[30]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
     CONFIG[30]="${CONFIG[30]} -D OpenMP_C_FLAGS=-I/opt/local/include/libomp -D OpenMP_CXX_FLAGS=-I/opt/local/include/libomp -D OpenMP_C_LIB_NAMES=libomp -D OpenMP_CXX_LIB_NAMES=libomp -D OpenMP_libomp_LIBRARY=omp"
     LDFLAGS_[30]="$LDFLAGS -L /opt/local/lib/libomp"
   else
+    CONFIG[30]="${CONFIG[30]} -D GGML_BLAS=ON -D GGML_BLAS_VENDOR=OpenBLAS"
     CFLAGS_[30]=$CFLAGS
     LDFLAGS_[30]=$LDFLAGS
   fi
@@ -1228,6 +1243,7 @@ EOF
 
 function install_whispercpp {
   cmd ninja -C build install
+  cmd mkdir -p $FINAL_INSTALL_DIR/bin
   cmd install -p -c build/bin/main $FINAL_INSTALL_DIR/bin/whisper.cpp-main
   cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/whisper_models
   cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/whisper_models
