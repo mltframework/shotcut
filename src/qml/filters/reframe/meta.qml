@@ -11,6 +11,7 @@ Metadata {
     vui: 'vui.qml'
     icon: 'icon.webp'
     isOutputOnly: true
+    isGpuCompatible: false
 
     keyframes {
         allowAnimateIn: true

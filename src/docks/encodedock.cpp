@@ -78,6 +78,12 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->resampleWarningLabel);
     hideResampleWarning(true);
+    // TODO: Reframe does not work--even affine filter
+    if (Settings.playerGPU()) {
+        ui->reframeLabel->hide();
+        ui->reframeButton->hide();
+        delete ui->horizontalLayout_22;
+    }
     ui->stopCaptureButton->hide();
     ui->advancedButton->setChecked(Settings.encodeAdvanced());
     ui->advancedCheckBox->setChecked(Settings.encodeAdvanced());
@@ -1103,6 +1109,93 @@ QPoint EncodeDock::addConsumerElement(Mlt::Producer *service, QDomDocument &dom,
                   consumerNode.attribute("frame_rate_den").toInt() : MLT.profile().frame_rate_den());
 }
 
+MeltJob *EncodeDock::convertReframe(Mlt::Producer *service, QTemporaryFile *tmp,
+                                    const QString &target, int realtime, int pass, const QThread::Priority priority)
+{
+    MeltJob *job = nullptr;
+
+    // Look for the reframe filter
+    for (auto i = 0; !job && i < service->filter_count(); ++i) {
+        Mlt::Filter filter(service->filter(i));
+        if (!::qstrcmp("reframe", filter.get(kShotcutFilterProperty)) && !filter.get_int("disable")) {
+            // If it exists, make another XML with new profile based on reframe rect width and height
+            auto rect = filter.anim_get_rect("rect", 0);
+            LOG_DEBUG() << "Found Reframe" << rect.w << "x" << rect.h << tmp->fileName();
+            Mlt::Profile reframeProfile;
+            reframeProfile.set_explicit(1);
+            reframeProfile.set_colorspace(MLT.profile().colorspace());
+            reframeProfile.set_frame_rate(MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den());
+            reframeProfile.set_sample_aspect(1, 1);
+            reframeProfile.set_width(rect.w);
+            reframeProfile.set_height(rect.h);
+            auto gcd = Util::greatestCommonDivisor(rect.w, rect.h);
+            reframeProfile.set_display_aspect(rect.w / gcd, rect.h / gcd);
+            LOG_DEBUG() << "reframe profile" << reframeProfile.width() << "x" << reframeProfile.height();
+            Mlt::Producer producer(reframeProfile, "consumer",
+                                   (QString("xml:%1").arg(tmp->fileName())).toUtf8().constData());
+            Mlt::Filter filter;
+            auto rectPropertyName("rect");
+            // TODO: GPU filters on the tractor do not work yet
+            if (Settings.playerGPU()) {
+                filter = Mlt::Filter(reframeProfile, "movit.rect");
+                filter.set("valign", "middle");
+                filter.set("halign", "center");
+            } else {
+                filter = Mlt::Filter(reframeProfile, "affine");
+                filter.set("transition.valign", "middle");
+                filter.set("transition.halign", "center");
+                rectPropertyName = "transition.rect";
+            }
+            producer.attach(filter);
+
+            // set affine rect width and height same as video mode
+            // compute (negate) new affine rect X and Y for each reframe rect keyframe
+            // melt .mlt -attach affine transition.rect='-250 0 1280 720' -consumer avformat:test.mp4 width=404 height=720 display_aspect_num=404 display_aspect_den=720 sample_aspect_num=1 sample_aspect_den=1 an=1
+            auto anim = filter.get_anim("rect");
+            if (anim->key_count() > 0) {
+                // Handle keyframes
+                for (auto k = 0; k < anim->key_count(); ++k) {
+                    auto frameNum = anim->key_get_frame(k);
+                    if (frameNum >= 0) {
+                        rect = filter.anim_get_rect("rect", frameNum);
+                        rect.x = -rect.x;
+                        rect.y = -rect.y;
+                        rect.w = MLT.profile().width();
+                        rect.h = MLT.profile().height();
+                        filter.anim_set(rectPropertyName, rect, frameNum, 0, anim->key_get_type(k));
+                        if (k + 1 == anim->key_count())
+                            filter.anim_set(rectPropertyName, rect, service->get_out());
+                    }
+                }
+            } else {
+                // No keyframes
+                rect.x = -rect.x;
+                rect.y = -rect.y;
+                rect.w = MLT.profile().width();
+                rect.h = MLT.profile().height();
+                filter.set(rectPropertyName, rect);
+            }
+
+            // Serialize
+            Mlt::Consumer consumer(reframeProfile, "xml", "string");
+            consumer.set("root", "");
+            consumer.connect(producer);
+            consumer.start();
+
+            // Parse XML to add consumer element
+            QXmlStreamReader xmlReader(consumer.get("string"));
+            QDomDocument dom;
+            dom.setContent(&xmlReader, false);
+
+            auto fps = addConsumerElement(service, dom, target, realtime, pass);
+            job = new EncodeJob(QDir::toNativeSeparators(target), dom.toString(2), fps.x(), fps.y(),
+                                priority);
+            tmp->setParent(job); // job gets ownership to delete object and temp file
+        }
+    }
+    return job;
+}
+
 MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target, int realtime,
                                    int pass, const QThread::Priority priority)
 {
@@ -1172,78 +1265,8 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target
     for (auto i = 0; i < playlists.length(); ++i)
         playlists.item(i).toElement().setAttribute("autoclose", 1);
 
-    MeltJob *job = nullptr;
+    MeltJob *job = convertReframe(service, tmp, mytarget, realtime, pass, priority);
 
-    // Look for the reframe filter
-    for (auto i = 0; !job && i < service->filter_count(); ++i) {
-        Mlt::Filter filter(service->filter(i));
-        if (!::qstrcmp("reframe", filter.get(kShotcutFilterProperty)) && !filter.get_int("disable")) {
-            // If it exists, make another XML with new profile based on reframe rect width and height
-            auto rect = filter.anim_get_rect("rect", 0);
-            LOG_DEBUG() << "FOUND REFRAME" << rect.w << "x" << rect.h << fileName;
-            Mlt::Profile reframeProfile;
-            reframeProfile.set_explicit(1);
-            reframeProfile.set_colorspace(MLT.profile().colorspace());
-            reframeProfile.set_frame_rate(MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den());
-            reframeProfile.set_sample_aspect(1, 1);
-            reframeProfile.set_width(rect.w);
-            reframeProfile.set_height(rect.h);
-            auto gcd = Util::greatestCommonDivisor(rect.w, rect.h);
-            reframeProfile.set_display_aspect(rect.w / gcd, rect.h / gcd);
-            LOG_DEBUG() << "REFRAME profile" << reframeProfile.width() << "x" << reframeProfile.height();
-            Mlt::Producer producer(reframeProfile, "consumer",
-                                   (QString("xml:%1").arg(fileName)).toUtf8().constData());
-            // producer.set("autoprofile", 1);
-            Mlt::Filter affine(reframeProfile, "affine");
-            producer.attach(affine);
-            affine.set("transition.valign", "middle");
-            affine.set("transition.halign", "center");
-
-            // set affine rect width and height same as video mode
-            // compute (negate) new affine rect X and Y for each reframe rect keyframe
-            // melt .mlt -attach affine transition.rect='-250 0 1280 720' -consumer avformat:test.mp4 width=404 height=720 display_aspect_num=404 display_aspect_den=720 sample_aspect_num=1 sample_aspect_den=1 an=1
-            auto anim = filter.get_anim("rect");
-            if (anim->key_count() > 0) {
-                // Handle keyframes
-                for (auto k = 0; k < anim->key_count(); ++k) {
-                    auto frameNum = anim->key_get_frame(k);
-                    if (frameNum >= 0) {
-                        rect = filter.anim_get_rect("rect", frameNum);
-                        rect.x = -rect.x;
-                        rect.y = -rect.y;
-                        rect.w = MLT.profile().width();
-                        rect.h = MLT.profile().height();
-                        affine.anim_set("transition.rect", rect, frameNum, 0, anim->key_get_type(k));
-                        if (k + 1 == anim->key_count())
-                            affine.anim_set("transition.rect", rect, service->get_out());
-                    }
-                }
-            } else {
-                // No keyframes
-                rect.x = -rect.x;
-                rect.y = -rect.y;
-                rect.w = MLT.profile().width();
-                rect.h = MLT.profile().height();
-                affine.set("transition.rect", rect);
-            }
-
-            // Serialize
-            Mlt::Consumer consumer(reframeProfile, "xml", "string");
-            consumer.set("root", "");
-            consumer.connect(producer);
-            consumer.start();
-
-            // Parse XML to add consumer element
-            QXmlStreamReader xmlReader(consumer.get("string"));
-            QDomDocument dom;
-            dom.setContent(&xmlReader, false);
-
-            auto fps = addConsumerElement(service, dom, mytarget, realtime, pass);
-            job = new EncodeJob(QDir::toNativeSeparators(target), dom.toString(2), fps.x(), fps.y(),
-                                priority);
-            tmp->setParent(job); // job gets ownership to delete object and temp file
-        }
-    }
     if (!job) {
         auto fps = addConsumerElement(service, dom, mytarget, realtime, pass);
         job = new EncodeJob(QDir::toNativeSeparators(target), dom.toString(2), fps.x(), fps.y(),

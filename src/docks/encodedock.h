@@ -28,6 +28,7 @@
 #include <MltProperties.h>
 
 class QTreeWidgetItem;
+class QTemporaryFile;
 namespace Ui {
 class EncodeDock;
 }
@@ -170,6 +171,8 @@ private:
     void setSubtitleProperties(QDomElement &node, Mlt::Producer *service);
     QPoint addConsumerElement(Mlt::Producer *service, QDomDocument &dom, const QString &target,
                               int realtime, int pass);
+    MeltJob *convertReframe(Mlt::Producer *service, QTemporaryFile *tmp, const QString &target,
+                            int realtime, int pass, const QThread::Priority priority);
     MeltJob *createMeltJob(Mlt::Producer *service, const QString &target, int realtime, int pass = 0,
                            const QThread::Priority priority = Settings.jobPriority());
     void runMelt(const QString &target, int realtime = -1);
