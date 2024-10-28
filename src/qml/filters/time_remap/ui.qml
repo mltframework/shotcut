@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2023 Meltytech, LLC
+ * Copyright (c) 2020-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@ Item {
             var currPosition = getPosition();
             var maxPosition = producer.out - producer.in;
             var currValue = filter.getDouble("map", currPosition);
-            var maxValue = (producer.length - producer.in) / profile.fps;
+            var maxValue = (producer.length - producer.in - 1) / profile.fps;
             var newValue = currValue;
             var newPosition = currPosition;
             var lock = lockCombo.getLock();
@@ -319,7 +319,7 @@ Item {
                 id: mapSpinner
 
                 minimumValue: 0
-                maximumValue: producer.length - producer.in
+                maximumValue: producer.length - producer.in - 1
                 saveButtonVisible: false
                 undoButtonVisible: false
                 onValueChanged: {
@@ -368,7 +368,7 @@ Item {
                 filter.blockSignals = true;
                 filter.resetProperty('map');
                 filter.set('map', 0, 0);
-                filter.set('map', filter.duration / profile.fps, filter.duration);
+                filter.set('map', (filter.duration - 1) / profile.fps, filter.duration - 1);
                 filter.blockSignals = false;
                 filter.changed('map');
                 timer.restart();
