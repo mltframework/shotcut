@@ -1901,6 +1901,8 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta,
         Mlt::ClipInfo info;
         playlist.clip_info(clipIndex, &info);
         playlist.resize_clip(clipIndex, info.frame_in - (slip ? delta : 0), info.frame_out - delta);
+        if (slip)
+            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, -delta, 0, 0);
 
         // Adjust filters.
         playlist.clip_info(clipIndex + 2, &info);
@@ -1984,6 +1986,8 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         Mlt::ClipInfo info;
         playlist.clip_info(clipIndex, &info);
         playlist.resize_clip(clipIndex, info.frame_in + delta, info.frame_out + (slip ? delta : 0));
+        if (slip)
+            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, -delta, 0);
 
         // Adjust filters.
         playlist.clip_info(clipIndex - 2, &info);
