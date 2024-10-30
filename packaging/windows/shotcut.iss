@@ -15,15 +15,21 @@
 ; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 [Setup]
+AppName=Shotcut
 AppVersion=YY.MM.DD
 AppPublisher=Meltytech
-AppName=Shotcut
+
+VersionInfoCopyright="Copyright (c) 2012-2024 Meltytech, LLC"
+
+UninstallDisplayName=Shotcut
+UninstallDisplayIcon={app}\shotcut.exe
+ShowLanguageDialog=no
 WizardStyle=modern
+
 DefaultDirName={autopf}\Shotcut
 ; Since no icons will be created in "{group}", we don't need the wizard
 ; to ask for a Start Menu folder name:
 DisableProgramGroupPage=yes
-UninstallDisplayIcon={app}\shotcut.exe
 LicenseFile=Shotcut\COPYING.txt
 Compression=lzma2
 SolidCompression=no
@@ -39,14 +45,12 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 AppMutex="Meltytech Shotcut Running Mutex"
 OutputBaseFilename=shotcut-setup
-UninstallDisplayName=Shotcut
-VersionInfoCopyright="Copyright (c) 2012-2024 Meltytech, LLC"
 WizardSmallImageFile="shotcut-logo-64.bmp"
 WizardImageStretch=yes
-ShowLanguageDialog=no
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl"
+Name: "it"; MessagesFile: "compiler:Language\Italian.isl"
 
 [CustomMessages]
 en.StartMenu=Create Start Menu Shortcut
@@ -54,7 +58,14 @@ en.AssociateMltXml=Associate *.mlt files with Shotcut
 en.DesktopIcon=Create Desktop Shortcut (Icon)
 en.ClearShotcutSettings=Remove Shotcut Settings From Registry
 en.InstallingShotcut=Installing Shotcut...
-en.StartShotcut=Start Shotcut
+
+it.StartShotcut=Avvia Shotcut
+it.StartMenu=Crea collegamento menu Start
+it.AssociateMltXml=Associa file *.mlt a Shotcut
+it.DesktopIcon=Crea collegamento (icona) desktop
+it.ClearShotcutSettings=Rimuovi impostazioni Shotcut dal registro
+it.InstallingShotcut=Installazione Shotcut...
+it.StartShotcut=Avvia Shotcut
 
 [Tasks]
 Name: startMenu; Description: "{cm:StartMenu}"
