@@ -3867,7 +3867,7 @@ void TimelineDock::recordAudio()
 #elif defined(Q_OS_WIN)
     QStringList args {"-f", "dshow", "-i", "audio=" + Settings.audioInput()};
 #else
-    QStringList args {"-f", "pulse", "-name", "Shotuct", "-i", Settings.audioInput()};
+    QStringList args {"-f", "pulse", "-name", "Shotcut", "-i", Settings.audioInput()};
 #endif
     args << "-flush_packets" << "1" << "-y" << filename;
     m_recordJob.reset(new FfmpegJob("vo", args, false, priority));
