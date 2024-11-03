@@ -611,7 +611,7 @@ void MoveClipCommand::redo()
                     // pulling clips on same track
                     (playlist.is_blank_at(newStart) && targetIndex == clipIndex - 1)) {
                 bool done = true;
-                if (targetIndex >= clipIndex && m_model.isTransition(playlist, clipIndex - 1)) {
+                if (targetIndex == clipIndex && m_model.isTransition(playlist, clipIndex - 1)) {
                     // Increase duration of transition
                     m_model.trimTransitionOut(trackIndex, clipIndex, m_positionDelta, true);
                     if (!m_ripple)
