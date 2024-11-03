@@ -873,3 +873,18 @@ double Util::getAndroidFrameRate(Mlt::Producer *producer)
         fps = 0.0;
     return fps;
 }
+
+double Util::getSuggestedFrameRate(Mlt::Producer *producer)
+{
+    auto fps = producer->get_double("meta.attr.com.android.capture.fps.markup");
+    if (!qIsFinite(fps))
+        fps = 0.0;
+    if (fps <= 0.0) {
+        fps = producer->get_double("meta.media.frame_rate_num");
+        if (producer->get_double("meta.media.frame_rate_den") > 0)
+            fps /= producer->get_double("meta.media.frame_rate_den");
+        if (producer->get("force_fps"))
+            fps = producer->get_double("fps");
+    }
+    return fps;
+}

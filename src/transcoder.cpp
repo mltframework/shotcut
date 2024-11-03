@@ -216,18 +216,17 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
     filterString = filterString +
                    QString("scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=%1:out_range=%2").arg(
                        color_range).arg(color_range);
-    if (dialog.fpsOverride()) {
-        auto fps = QString("%1").arg(dialog.fps(), 0, 'f', 6);
-        int numerator, denominator;
-        Util::normalizeFrameRate(dialog.fps(), numerator, denominator);
-        if (denominator == 1001) {
-            fps = QString("%1/%2").arg(numerator).arg(denominator);
-        }
-        QString minterpFilter =
-            QString(",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'").arg(
-                dialog.frc()).arg(fps);
-        filterString = filterString + minterpFilter;
+    auto fps = dialog.fpsOverride() ? dialog.fps() : Util::getSuggestedFrameRate(producer);
+    auto fpsStr = QString("%1").arg(fps, 0, 'f', 6);
+    int numerator, denominator;
+    Util::normalizeFrameRate(fps, numerator, denominator);
+    if (denominator == 1001) {
+        fpsStr = QString("%1/%2").arg(numerator).arg(denominator);
     }
+    QString minterpFilter =
+        QString(",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'").arg(dialog.frc(),
+                                                                                             fpsStr);
+    filterString = filterString + minterpFilter;
     args << filterString;
 
     // Specify color range
