@@ -1133,20 +1133,20 @@ MeltJob *EncodeDock::convertReframe(Mlt::Producer *service, QTemporaryFile *tmp,
             LOG_DEBUG() << "reframe profile" << reframeProfile.width() << "x" << reframeProfile.height();
             Mlt::Producer producer(reframeProfile, "consumer",
                                    (QString("xml:%1").arg(tmp->fileName())).toUtf8().constData());
-            Mlt::Filter filter;
+            Mlt::Filter affine;
             auto rectPropertyName("rect");
             // TODO: GPU filters on the tractor do not work yet
             if (Settings.playerGPU()) {
-                filter = Mlt::Filter(reframeProfile, "movit.rect");
-                filter.set("valign", "middle");
+                affine = Mlt::Filter(reframeProfile, "movit.rect");
+                affine.set("valign", "middle");
                 filter.set("halign", "center");
             } else {
-                filter = Mlt::Filter(reframeProfile, "affine");
-                filter.set("transition.valign", "middle");
-                filter.set("transition.halign", "center");
+                affine = Mlt::Filter(reframeProfile, "affine");
+                affine.set("transition.valign", "middle");
+                affine.set("transition.halign", "center");
                 rectPropertyName = "transition.rect";
             }
-            producer.attach(filter);
+            producer.attach(affine);
 
             // set affine rect width and height same as video mode
             // compute (negate) new affine rect X and Y for each reframe rect keyframe
@@ -1162,9 +1162,9 @@ MeltJob *EncodeDock::convertReframe(Mlt::Producer *service, QTemporaryFile *tmp,
                         rect.y = -rect.y;
                         rect.w = MLT.profile().width();
                         rect.h = MLT.profile().height();
-                        filter.anim_set(rectPropertyName, rect, frameNum, 0, anim->key_get_type(k));
+                        affine.anim_set(rectPropertyName, rect, frameNum, 0, anim->key_get_type(k));
                         if (k + 1 == anim->key_count())
-                            filter.anim_set(rectPropertyName, rect, service->get_out());
+                            affine.anim_set(rectPropertyName, rect, service->get_out());
                     }
                 }
             } else {
@@ -1173,7 +1173,7 @@ MeltJob *EncodeDock::convertReframe(Mlt::Producer *service, QTemporaryFile *tmp,
                 rect.y = -rect.y;
                 rect.w = MLT.profile().width();
                 rect.h = MLT.profile().height();
-                filter.set(rectPropertyName, rect);
+                affine.set(rectPropertyName, rect);
             }
 
             // Serialize
