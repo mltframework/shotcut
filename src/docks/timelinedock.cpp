@@ -2293,8 +2293,6 @@ void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
     if (!ignoreTransition && isTransition(trackIndex, clipIndex)) {
         MAIN.undoStack()->beginMacro(tr("Lift transition"));
         auto info = m_model.getClipInfo(trackIndex, clipIndex);
-        MAIN.undoStack()->push(
-            new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
         if (clipIndex > 0 && clipIndex + 1 < m_model.rowCount(m_model.index(trackIndex)) && info->producer
                 && info->producer->is_valid()) {
             // verify the clip after belongs to transition
@@ -2303,20 +2301,28 @@ void TimelineDock::lift(int trackIndex, int clipIndex, bool ignoreTransition)
             auto clipBefore = producerForClip(trackIndex, clipIndex - 1);
             auto clipAfter = producerForClip(trackIndex, clipIndex + 1);
             auto duration = info->frame_count;
-            if (clipBefore.is_valid() && clipAfter.is_valid())
+
+            MAIN.undoStack()->push(
+                new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
+
+            if (clipBefore.is_valid() && clipAfter.is_valid()
+                    && !clipBefore.is_blank() && !clipAfter.is_blank())
                 duration /= 2;
             if (clipAfter.is_valid() && transitionClip && clipAfter.same_clip(*transitionClip))
                 MAIN.undoStack()->push(
-                    new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex + 1,
-                                                    -duration, false));
+                    new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex,
+                                                    clipIndex + (clipBefore.is_blank() ? 0 : 1), -duration, false));
             // verify the clip before belongs to transition
             transitionClip.reset(transition.track(0));
-            if (clipBefore.is_valid() && clipAfter.is_valid())
+            if (duration < info->frame_count)
                 duration += info->frame_count % 2;
             if (clipBefore.is_valid() && transitionClip && clipBefore.same_clip(*transitionClip))
                 MAIN.undoStack()->push(
                     new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex - 1,
                                                      -duration, false));
+        } else {
+            MAIN.undoStack()->push(
+                new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
         }
         MAIN.undoStack()->endMacro();
     } else {
