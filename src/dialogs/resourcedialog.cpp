@@ -106,7 +106,6 @@ void ResourceDialog::convert()
         MLT.profile().progressive(), this);
     dialog.setWindowTitle(tr("Convert..."));
     dialog.setWindowModality(QmlApplication::dialogModality());
-    dialog.set709Convert(true);
     Transcoder transcoder;
     transcoder.setProducers(producers);
     transcoder.convert(dialog);
