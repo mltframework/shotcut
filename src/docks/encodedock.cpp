@@ -269,10 +269,13 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->aspectNumSpinner->setValue(9);
                 ui->aspectDenSpinner->setValue(16);
                 break;
-            default:
-                ui->aspectNumSpinner->setValue(dar * 1000);
-                ui->aspectDenSpinner->setValue(1000);
+            default: {
+                const auto p = QPoint(preset.get_int("width"), preset.get_int("height"));
+                auto gcd = Util::greatestCommonDivisor(p.x(), p.y());
+                ui->aspectNumSpinner->setValue(p.x() / gcd);
+                ui->aspectDenSpinner->setValue(p.y() / gcd);
                 break;
+            }
             }
         } else if (name == "r") {
             ui->fpsSpinner->setValue(preset.get_double("r"));
