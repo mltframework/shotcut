@@ -91,7 +91,7 @@ void JobQueue::onProgressUpdated(QStandardItem *standardItem, int percent)
                 auto time = job->estimateRemaining(percent);
                 if (percent > 2 && QTime(0, 0).secsTo(time) > 0)
                     remaining = time.toString();
-                remaining = QString("%1% (%2)").arg(percent).arg(remaining);
+                remaining = QStringLiteral("%1% (%2)").arg(percent).arg(remaining);
             }
             standardItem->setText(remaining);
             standardItem = JOBS.item(standardItem->row(), JobQueue::COLUMN_ICON);

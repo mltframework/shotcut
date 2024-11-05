@@ -33,7 +33,7 @@ public:
 
     int on_start_producer(Mlt::Producer *producer)
     {
-        if (!m_isBackgroundTrack && producer->parent().get("resource") != QString("<tractor>")) {
+        if (!m_isBackgroundTrack && producer->parent().get("resource") != QStringLiteral("<tractor>")) {
             if (!m_isTransition)
                 m_clipIndex++;
             if (!producer->is_blank()) {
@@ -63,7 +63,7 @@ public:
     }
     int on_start_playlist(Mlt::Playlist *playlist)
     {
-        if (playlist->get("id") == QString("background")) {
+        if (playlist->get("id") == QStringLiteral("background")) {
             m_isBackgroundTrack = true;
         } else {
             m_trackName = playlist->get(kTrackNameProperty);
@@ -278,7 +278,7 @@ QVariant ResourceModel::data(const QModelIndex &index, int role) const
         return result;
     }
 
-    Mlt::Producer *producer = const_cast<Mlt::Producer *>( &m_producers[index.row()] );
+    Mlt::Producer *producer = const_cast<Mlt::Producer *>(&m_producers[index.row()] );
     switch (role) {
     case Qt::DisplayRole:
         switch (index.column()) {
@@ -306,7 +306,7 @@ QVariant ResourceModel::data(const QModelIndex &index, int role) const
                 if ( width && height && frame_rate_num && frame_rate_den
                         && (frame_rate_num / frame_rate_den) < 1000) {
                     int index = producer->get_int("video_index");
-                    QString key = QString("meta.media.%1.codec.name").arg(index);
+                    QString key = QStringLiteral("meta.media.%1.codec.name").arg(index);
                     QString codec(producer->get(key.toLatin1().constData()));
                     double frame_rate = frame_rate_num / frame_rate_den;
                     result = QString(tr("%1 %2x%3 %4fps"))
@@ -326,14 +326,14 @@ QVariant ResourceModel::data(const QModelIndex &index, int role) const
         case COLUMN_AUD_DESCRIPTION: {
             if (producer->get_int("audio_index") >= 0) {
                 int index = producer->get_int("audio_index");
-                QString key = QString("meta.media.%1.codec.name").arg(index);
+                QString key = QStringLiteral("meta.media.%1.codec.name").arg(index);
                 QString codec(producer->get(key.toLatin1().constData()));
                 if (!codec.isEmpty()) {
-                    key = QString("meta.media.%1.codec.channels").arg(index);
+                    key = QStringLiteral("meta.media.%1.codec.channels").arg(index);
                     int channels(producer->get_int(key.toLatin1().constData()));
-                    key = QString("meta.media.%1.codec.sample_rate").arg(index);
+                    key = QStringLiteral("meta.media.%1.codec.sample_rate").arg(index);
                     QString sampleRate(producer->get(key.toLatin1().constData()));
-                    result = QString("%1 %2ch %3KHz")
+                    result = QStringLiteral("%1 %2ch %3KHz")
                              .arg(codec)
                              .arg(channels)
                              .arg(sampleRate.toDouble() / 1000);

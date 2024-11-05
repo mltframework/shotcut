@@ -176,7 +176,7 @@ bool AttachedFiltersModel::isProducerSelected() const
 
 bool AttachedFiltersModel::supportsLinks() const
 {
-    if ( !m_producer.isNull() && m_producer->is_valid()
+    if (!m_producer.isNull() && m_producer->is_valid()
             && m_producer->type() == mlt_service_chain_type ) {
         return true;
     }
@@ -216,7 +216,7 @@ Qt::ItemFlags AttachedFiltersModel::flags(const QModelIndex &index) const
 
 QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
 {
-    if ( !m_producer || !m_producer->is_valid()
+    if (!m_producer || !m_producer->is_valid()
             || index.row() >= m_metaList.size())
         return QVariant();
     switch (role ) {

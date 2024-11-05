@@ -38,7 +38,7 @@ class Filter;
 class RenderThread;
 class FrameRenderer;
 
-typedef void *( *thread_function_t )( void * );
+typedef void *(*thread_function_t )( void * );
 
 class VideoWidget : public QQuickWidget, public Controller
 {

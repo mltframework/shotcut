@@ -445,8 +445,8 @@ void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition *lu
         luma->set("resource", "");
         luma->set("softness", 0);
     } else if (index <= 24) {
-        luma->set("resource", QString("%luma%1.pgm").arg(index - 2, 2, 10,
-                                                         QChar('0')).toLatin1().constData());
+        luma->set("resource", QStringLiteral("%luma%1.pgm").arg(index - 2, 2, 10,
+                                                                QChar('0')).toLatin1().constData());
         luma->set("softness", config.transitionSoftness / 100.0);
     } else {
         luma->set("resource", m_transitionStyleCombo->itemData(index).toString().toUtf8().constData());

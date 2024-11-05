@@ -148,8 +148,8 @@ void VideoHistogramScopeWidget::drawHistogram(QPainter &p, QString title, QColor
     p.setPen(pen);
     QString text;
     if (maxLevel > minValue)
-        text = QString("%1\tMin: %2\tMax: %3").arg(title, QString::number(minValue),
-                                                   QString::number(maxValue));
+        text = QStringLiteral("%1\tMin: %2\tMax: %3").arg(title, QString::number(minValue),
+                                                          QString::number(maxValue));
     else
         text = title;
     p.drawText(textpad, rect.y() + fm.height() + textpad, text);

@@ -103,7 +103,7 @@ void GlaxnimateProducerWidget::on_colorButton_clicked()
             newColor.setAlpha(255);
         }
         ui->colorLabel->setText(colorToString(newColor));
-        ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+        ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                       .arg(Util::textColor(newColor), newColor.name()));
         if (m_producer) {
             m_producer->set("background", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
@@ -213,7 +213,7 @@ Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
     GlaxnimateIpcServer::instance().newFile(filename, ui->durationSpinBox->value());
 
     Mlt::Producer *p = new Mlt::Producer(profile,
-                                         QString("glaxnimate:").append(filename).toUtf8().constData());
+                                         QStringLiteral("glaxnimate:").append(filename).toUtf8().constData());
     p->set("background", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
 
     m_title = info.fileName();
@@ -262,7 +262,7 @@ void GlaxnimateProducerWidget::loadPreset(Mlt::Properties &p)
 {
     QColor color(QFileInfo(p.get("background")).baseName());
     ui->colorLabel->setText(colorToString(color));
-    ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+    ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                   .arg(Util::textColor(color), color.name()));
     if (m_producer) {
         m_producer->set("background", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
@@ -437,7 +437,7 @@ void GlaxnimateIpcServer::onConnect()
     connect(m_socket.data(), &QLocalSocket::errorOccurred, this, &GlaxnimateIpcServer::onSocketError);
     m_stream.reset(new QDataStream(m_socket.data()));
     m_stream->setVersion(QDataStream::Qt_5_15);
-    *m_stream << QString("hello");
+    *m_stream << QStringLiteral("hello");
     m_socket->flush();
     m_server->close();
     m_isProtocolValid = false;
@@ -458,7 +458,7 @@ void GlaxnimateIpcServer::onReadyRead()
         *m_stream >> message;
         LOG_DEBUG() << message;
         if (message.startsWith("version ") && message != "version 1") {
-            *m_stream << QString("bye");
+            *m_stream << QStringLiteral("bye");
             m_socket->flush();
             m_server->close();
         } else {
@@ -581,7 +581,7 @@ void GlaxnimateIpcServer::newFile(const QString &filename, int duration)
 void GlaxnimateIpcServer::reset()
 {
     if (m_stream && m_socket && m_stream && QLocalSocket::ConnectedState == m_socket->state()) {
-        *m_stream << QString("clear");
+        *m_stream << QStringLiteral("clear");
         m_socket->flush();
     }
     parent.reset();
@@ -610,7 +610,7 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
     }
 
     if (m_server && m_socket && m_stream && QLocalSocket::ConnectedState == m_socket->state()) {
-        auto s = QString("open ").append(filename);
+        auto s = QStringLiteral("open ").append(filename);
         LOG_DEBUG() << s;
         *m_stream << s;
         m_socket->flush();
@@ -742,7 +742,7 @@ bool GlaxnimateIpcServer::copyToShared(const QImage &image)
 
         m_sharedMemory->unlock();
         if (m_stream && m_socket) {
-            *m_stream << QString("redraw");
+            *m_stream << QStringLiteral("redraw");
             m_socket->flush();
         }
         return true;

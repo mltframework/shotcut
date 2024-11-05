@@ -47,7 +47,7 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
     }
 #if ENABLE_SCREEN_CAPTURE
     for (int i = 0; i < QGuiApplication::screens().size(); i++)
-        ui->videoCombo->addItem(QString("Capture screen %1").arg(i));
+        ui->videoCombo->addItem(QStringLiteral("Capture screen %1").arg(i));
 #endif
     auto currentAudio = 1;
     for (const auto &deviceInfo : QMediaDevices::audioInputs()) {
@@ -76,20 +76,21 @@ Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile &profile)
     QSize size {1280, 720};
     Util::cameraFrameRateSize(ui->videoCombo->currentData().toByteArray(), frameRate, size);
     if (ui->videoCombo->currentIndex()) {
-        resource = QString("avfoundation:%1:%2?pixel_format=yuyv422&framerate=%3&video_size=%4x%5")
+        resource = QStringLiteral("avfoundation:%1:%2?pixel_format=yuyv422&framerate=%3&video_size=%4x%5")
                    .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
                    .arg(ui->audioCombo->currentText().replace(tr("None"), "none"))
                    .arg(frameRate).arg(size.width()).arg(size.height());
     } else {
-        resource = QString("avfoundation:none:%1").arg(ui->audioCombo->currentText().replace(tr("None"),
-                                                                                             "none"));
+        resource = QStringLiteral("avfoundation:none:%1").arg(ui->audioCombo->currentText().replace(
+                                                                  tr("None"),
+                                                                  "none"));
     }
     LOG_DEBUG() << resource;
     Mlt::Producer *p = new Mlt::Producer(profile, resource.toUtf8().constData());
     if (!p || !p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
-        p->set("resource", QString("avfoundation:%1:%2")
+        p->set("resource", QStringLiteral("avfoundation:%1:%2")
                .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
                .arg(ui->audioCombo->currentText())
                .toUtf8().constData());

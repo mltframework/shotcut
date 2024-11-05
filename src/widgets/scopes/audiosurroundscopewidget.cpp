@@ -102,7 +102,7 @@ void AudioSurroundScopeWidget::refreshScope(const QSize &size, bool full)
             int16_t peak = 0;
             const int16_t *p = audio + c;
             for ( int s = 0; s < samples; s++ ) {
-                int16_t sample = abs( *p );
+                int16_t sample = abs(*p );
                 if (sample > peak) peak = sample;
                 p += channels;
             }

@@ -1364,7 +1364,7 @@ static inline float IEC_dB ( float fScale )
 void Player::onVolumeChanged(int volume)
 {
     const double gain = setVolume(volume);
-    emit showStatusMessage(QString("%L1 dB").arg(IEC_dB(gain)));
+    emit showStatusMessage(QStringLiteral("%L1 dB").arg(IEC_dB(gain)));
     Settings.setPlayerVolume(volume);
     Settings.setPlayerMuted(false);
     m_muteButton->setChecked(false);

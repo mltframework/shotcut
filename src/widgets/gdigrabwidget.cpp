@@ -65,7 +65,7 @@ QString GDIgrabWidget::URL(Mlt::Profile &profile) const
         MLT.setPreviewScale(Settings.playerPreviewScale());
     }
     QString s =
-        QString("gdigrab:desktop?offset_x=%1&offset_y=%2&video_size=%3x%4&framerate=%5&show_region=%6&draw_mouse=%7")
+        QStringLiteral("gdigrab:desktop?offset_x=%1&offset_y=%2&video_size=%3x%4&framerate=%5&show_region=%6&draw_mouse=%7")
         .arg(ui->xSpinBox->value())
         .arg(ui->ySpinBox->value())
         .arg(ui->widthSpinBox->value())
@@ -85,7 +85,7 @@ Mlt::Producer *GDIgrabWidget::newProducer(Mlt::Profile &profile)
         p->set("error", 1);
     } else if (ui->audioComboBox->currentIndex() > 0) {
         Mlt::Producer *audio = new Mlt::Producer(profile,
-                                                 QString("dshow:audio=%1").arg(ui->audioComboBox->currentText())
+                                                 QStringLiteral("dshow:audio=%1").arg(ui->audioComboBox->currentText())
                                                  .toLatin1().constData());
         Mlt::Tractor *tractor = new Mlt::Tractor;
         tractor->set("_profile", profile.get_profile(), 0);

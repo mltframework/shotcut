@@ -83,11 +83,11 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
         if (!resource || resource[0] != '<' || resource[strlen(resource) - 1] != '>')
             mlt_type = mlt_properties_get(properties, "mlt_type" );
         if (service_name)
-            message = QString("[%1 %2] ").arg(mlt_type, service_name);
+            message = QStringLiteral("[%1 %2] ").arg(mlt_type, service_name);
         else
             message = QString::asprintf("[%s %p] ", mlt_type, service);
         if (resource)
-            message.append(QString("\"%1\" ").arg(resource));
+            message.append(QStringLiteral("\"%1\" ").arg(resource));
         message.append(QString::vasprintf(format, args));
         message.replace('\n', "");
     } else {

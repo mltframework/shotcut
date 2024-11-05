@@ -47,7 +47,7 @@ Mlt::Producer *AlsaWidget::newProducer(Mlt::Profile &profile)
     else
         s = s.arg(ui->lineEdit->text());
     if (ui->alsaChannelsSpinBox->value() > 0)
-        s += QString("?channels=%1").arg(ui->alsaChannelsSpinBox->value());
+        s += QStringLiteral("?channels=%1").arg(ui->alsaChannelsSpinBox->value());
     Mlt::Producer *p = new Mlt::Producer(profile, s.toUtf8().constData());
     p->set(kBackgroundCaptureProperty, 1);
     p->set(kShotcutCaptionProperty, "ALSA");

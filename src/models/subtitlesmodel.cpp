@@ -180,7 +180,7 @@ void SubtitlesModel::commitToFeed(int trackIndex)
         if (!filter || !filter->is_valid()) {
             continue;
         }
-        if (filter->get("mlt_service") == QString("subtitle_feed")) {
+        if (filter->get("mlt_service") == QStringLiteral("subtitle_feed")) {
             if (feedFilterIndex == trackIndex) {
                 Subtitles::SubtitleVector items(m_items[trackIndex].constBegin(), m_items[trackIndex].constEnd());
                 std::string text;
@@ -542,7 +542,7 @@ void SubtitlesModel::doRemoveTrack(int trackIndex)
         if (!filter || !filter->is_valid()) {
             continue;
         }
-        if (filter->get("mlt_service") == QString("subtitle_feed")) {
+        if (filter->get("mlt_service") == QStringLiteral("subtitle_feed")) {
             if (feedFilterIndex == trackIndex) {
                 m_producer->detach(*filter);
                 break;
@@ -566,14 +566,14 @@ void SubtitlesModel::doEditTrack(const SubtitlesModel::SubtitleTrack &track, int
         QScopedPointer<Mlt::Filter> filter(m_producer->filter(i));
         if (filter && filter->is_valid()) {
             QString mlt_service = filter->get("mlt_service");
-            if (mlt_service == QString("subtitle_feed")) {
+            if (mlt_service == QStringLiteral("subtitle_feed")) {
                 filterIndex++;
                 if (filterIndex == trackIndex) {
                     filter->set("feed", track.name.toUtf8().constData());
                     filter->set("lang", track.lang.toUtf8().constData());
                     break;
                 }
-            } else if (mlt_service == QString("subtitle")) {
+            } else if (mlt_service == QStringLiteral("subtitle")) {
                 // Modify subtitle burn-in filter if present
                 if (filter->get("feed") == QString(m_tracks[trackIndex].name)) {
                     filter->set("feed", track.name.toUtf8().constData());

@@ -28,7 +28,7 @@
 static QString suffixFromFilter(const QString &filterText)
 {
     QString suffix = filterText.section("*", 1, 1).section(")", 0, 0).section(" ", 0, 0);
-    if ( !suffix.startsWith(".") ) {
+    if (!suffix.startsWith(".") ) {
         suffix.clear();
     }
     return suffix;
@@ -60,7 +60,8 @@ SaveImageDialog::SaveImageDialog(QWidget *parent, const QString &caption, QImage
     selectNameFilter(selectedNameFilter);
 
     // Use the current player time as a suggested file name
-    QString nameSuggestion = QString("Shotcut_%1").arg(MLT.producer()->frame_time(mlt_time_clock));
+    QString nameSuggestion = QStringLiteral("Shotcut_%1").arg(MLT.producer()->frame_time(
+                                                                  mlt_time_clock));
     nameSuggestion = nameSuggestion.replace(":", "_");
     nameSuggestion = nameSuggestion.replace(".", "_");
     nameSuggestion += suffix;
@@ -125,5 +126,5 @@ void SaveImageDialog::onFileSelected(const QString &file)
     }
     m_image.save(m_saveFile, Q_NULLPTR, (fi.suffix() == "webp") ? 80 : -1);
     Settings.setSavePath(fi.path());
-    Settings.setExportFrameSuffix(QString(".") + fi.suffix());
+    Settings.setExportFrameSuffix(QStringLiteral(".") + fi.suffix());
 }

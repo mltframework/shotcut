@@ -1022,7 +1022,7 @@ void Logger::write(LogLevel logLevel, const char* file, int line, const char* fu
  */
 void Logger::writeAssert(const char* file, int line, const char* function, const char* condition)
 {
-  write(Logger::Fatal, file, line, function, nullptr, QString("ASSERT: \"%1\"").arg(condition));
+  write(Logger::Fatal, file, line, function, nullptr, QStringLiteral("ASSERT: \"%1\"").arg(condition));
 }
 
 

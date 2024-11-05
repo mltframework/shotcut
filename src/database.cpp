@@ -75,7 +75,7 @@ QDir Database::thumbnailsDir()
                     n = query.value(0).toInt();
                 }
                 query.exec(
-                    QString("SELECT hash, accessed, image FROM thumbnails ORDER BY accessed DESC LIMIT %1").arg(
+                    QStringLiteral("SELECT hash, accessed, image FROM thumbnails ORDER BY accessed DESC LIMIT %1").arg(
                         kMaxThumbnailCount));
                 for (int i = 0; query.next(); i++) {
                     QString fileName = toFileName(query.value(0).toString());

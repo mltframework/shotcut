@@ -155,7 +155,7 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
 
 bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if ( !index.isValid() )
+    if (!index.isValid() )
         return false;
 
     if (role != Qt::EditRole)

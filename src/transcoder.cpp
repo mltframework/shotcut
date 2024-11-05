@@ -176,7 +176,7 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
     args << "-map_metadata" << "0" << "-ignore_unknown";
 
     // Set Sample rate if different than source
-    if ( !dialog.sampleRate().isEmpty() ) {
+    if (!dialog.sampleRate().isEmpty() ) {
         args << "-ar" << dialog.sampleRate();
     }
 
@@ -184,7 +184,7 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
     args << "-vf";
     QString filterString;
     if (dialog.deinterlace()) {
-        QString deinterlaceFilter = QString("bwdif,");
+        QString deinterlaceFilter = QStringLiteral("bwdif,");
         filterString = filterString + deinterlaceFilter;
     }
 
@@ -210,22 +210,23 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
 
     if (dialog.get709Convert()) {
         QString convertFilter =
-            QString("zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv422p,");
+            QStringLiteral("zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv422p,");
         filterString = filterString + convertFilter;
     }
     filterString = filterString +
-                   QString("scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=%1:out_range=%2").arg(
+                   QStringLiteral("scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=%1:out_range=%2").arg(
                        color_range).arg(color_range);
     auto fps = dialog.fpsOverride() ? dialog.fps() : Util::getSuggestedFrameRate(producer);
-    auto fpsStr = QString("%1").arg(fps, 0, 'f', 6);
+    auto fpsStr = QStringLiteral("%1").arg(fps, 0, 'f', 6);
     int numerator, denominator;
     Util::normalizeFrameRate(fps, numerator, denominator);
     if (denominator == 1001) {
-        fpsStr = QString("%1/%2").arg(numerator).arg(denominator);
+        fpsStr = QStringLiteral("%1/%2").arg(numerator).arg(denominator);
     }
     QString minterpFilter =
-        QString(",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'").arg(dialog.frc(),
-                                                                                             fpsStr);
+        QStringLiteral(",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'").arg(
+            dialog.frc(),
+            fpsStr);
     filterString = filterString + minterpFilter;
     args << filterString;
 

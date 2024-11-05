@@ -50,7 +50,7 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString &text, const Q
     connect(m_colorButton, SIGNAL(clicked()), SLOT(on_colorButton_clicked()));
     grid->addWidget(m_colorButton, 1, 0, Qt::AlignRight);
     m_colorLabel = new QLabel(color.name(QColor::HexRgb));
-    m_colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+    m_colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                 .arg(Util::textColor(color), color.name()));
     grid->addWidget(m_colorLabel, 1, 1);
 
@@ -111,7 +111,7 @@ void EditMarkerWidget::setValues(const QString &text, const QColor &color, int s
     QSignalBlocker endBlocker(m_endSpinner);
     m_textField->setText(text);
     m_colorLabel->setText(color.name(QColor::HexRgb));
-    m_colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+    m_colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                 .arg(Util::textColor(color), color.name()));
     m_startSpinner->setMinimum(0);
     m_startSpinner->setMaximum(end);
@@ -134,7 +134,7 @@ void EditMarkerWidget::on_colorButton_clicked()
     if (dialog.exec() == QDialog::Accepted) {
         auto newColor = dialog.currentColor();
         m_colorLabel->setText(newColor.name(QColor::HexRgb));
-        m_colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+        m_colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                     .arg(Util::textColor(newColor), newColor.name()));
     }
     emit valuesChanged();

@@ -30,7 +30,7 @@ GoPro2GpxJob::GoPro2GpxJob(const QString &name, const QStringList &args)
     : AbstractJob(name)
 {
     m_args.append(args);
-    setLabel(QString("%1 %2").arg(tr("Export GPX"), Util::baseName(name)));
+    setLabel(QStringLiteral("%1 %2").arg(tr("Export GPX"), Util::baseName(name)));
 }
 
 void GoPro2GpxJob::start()

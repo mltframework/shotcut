@@ -44,7 +44,7 @@ static void fillLanguages(QComboBox *combo)
     }
     for (auto it = iso639_2LanguageCodes.keyValueBegin(); it != iso639_2LanguageCodes.keyValueEnd();
             ++it) {
-        QString text = QString("%1 (%2)").arg(it->first).arg(it->second);
+        QString text = QStringLiteral("%1 (%2)").arg(it->first).arg(it->second);
         combo->addItem(text, it->second);
     }
 }

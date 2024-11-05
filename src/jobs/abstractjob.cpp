@@ -192,16 +192,16 @@ void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
             m_postJobAction->doAction();
         }
         LOG_INFO() << "job succeeeded";
-        m_log.append(QString("Completed successfully in %1\n").arg(time.toString()));
+        m_log.append(QStringLiteral("Completed successfully in %1\n").arg(time.toString()));
         emit progressUpdated(m_item, 100);
         emit finished(this, true);
     } else if (m_killed) {
         LOG_INFO() << "job stopped";
-        m_log.append(QString("Stopped by user at %1\n").arg(time.toString()));
+        m_log.append(QStringLiteral("Stopped by user at %1\n").arg(time.toString()));
         emit finished(this, false);
     } else {
         LOG_INFO() << "job failed with" << exitCode;
-        m_log.append(QString("Failed with exit code %1\n").arg(exitCode));
+        m_log.append(QStringLiteral("Failed with exit code %1\n").arg(exitCode));
         emit finished(this, false);
     }
 }

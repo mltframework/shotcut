@@ -105,7 +105,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                             result = Util::baseName(ProxyManager::resource(*info->producer));
                             if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
                                 double speed = ::fabs(info->producer->get_double("warp_speed"));
-                                result = QString("%1 (%2x)").arg(result).arg(speed);
+                                result = QStringLiteral("%1 (%2x)").arg(result).arg(speed);
                             }
                         }
                         if (result == "<producer>") {
@@ -2773,7 +2773,7 @@ int MultitrackModel::addAudioTrack()
     t.mlt_index = i;
     t.type = AudioTrackType;
     t.number = a++;
-    QString trackName = QString("A%1").arg(a);
+    QString trackName = QStringLiteral("A%1").arg(a);
     playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
     beginInsertRows(QModelIndex(), m_trackList.count(), m_trackList.count());
     m_trackList.append(t);
@@ -2840,7 +2840,7 @@ int MultitrackModel::addVideoTrack()
     t.mlt_index = i;
     t.type = VideoTrackType;
     t.number = v++;
-    QString trackName = QString("V%1").arg(v);
+    QString trackName = QStringLiteral("V%1").arg(v);
     playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
     beginInsertRows(QModelIndex(), 0, 0);
     m_trackList.prepend(t);
@@ -2902,7 +2902,8 @@ void MultitrackModel::removeTrack(int trackIndex)
 
                 // Rename default track names.
                 QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(m_trackList[row].mlt_index));
-                QString trackNameTemplate = (t.type == VideoTrackType) ? QString("V%1") : QString("A%1");
+                QString trackNameTemplate = (t.type == VideoTrackType) ? QStringLiteral("V%1") :
+                                            QStringLiteral("A%1");
                 QString trackName = trackNameTemplate.arg(t.number + 1);
                 if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
                     trackName = trackNameTemplate.arg(m_trackList[row].number + 1);
@@ -2925,7 +2926,7 @@ void MultitrackModel::retainPlaylist()
         MAIN.playlistDock()->model()->createIfNeeded();
     Mlt::Playlist playlist(*MAIN.playlist());
     playlist.set("id", kPlaylistTrackId);
-    QString retain = QString("xml_retain %1").arg(kPlaylistTrackId);
+    QString retain = QStringLiteral("xml_retain %1").arg(kPlaylistTrackId);
     m_tractor->set(retain.toUtf8().constData(), playlist.get_service(), 0);
 }
 
@@ -3049,7 +3050,8 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
                     (t.type == AudioTrackType && t.number >= currentTrackNumber)) {
                 // Rename default track names.
                 QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(t.mlt_index));
-                QString trackNameTemplate = (t.type == VideoTrackType) ? QString("V%1") : QString("A%1");
+                QString trackNameTemplate = (t.type == VideoTrackType) ? QStringLiteral("V%1") :
+                                            QStringLiteral("A%1");
                 QString trackName = trackNameTemplate.arg(++t.number);
                 if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
                     trackName = trackNameTemplate.arg(t.number + 1);
@@ -3141,10 +3143,10 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     QString trackName;
     if (t.type == VideoTrackType) {
         t.number = videoTrackCount - trackIndex;
-        trackName = QString("V%1");
+        trackName = QStringLiteral("V%1");
     } else if (t.type == AudioTrackType) {
         t.number = trackIndex - videoTrackCount;
-        trackName = QString("A%1");
+        trackName = QStringLiteral("A%1");
     }
     trackName = trackName.arg(t.number + 1);
     playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
@@ -3195,7 +3197,7 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
                     newBTrack++;
                 }
             }
-            if (service->get("mlt_service") != QString("mix") ) {
+            if (service->get("mlt_service") != QStringLiteral("mix") ) {
                 videoTransitions[newBTrack] = *service;
             } else {
                 audioTransitions[newBTrack] = *service;
@@ -3214,7 +3216,8 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
     // Clear all default track names (will regenerate in refreshTrackList)
     foreach (const Track &t, m_trackList) {
         QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(t.mlt_index));
-        QString trackNameTemplate = (t.type == VideoTrackType) ? QString("V%1") : QString("A%1");
+        QString trackNameTemplate = (t.type == VideoTrackType) ? QStringLiteral("V%1") :
+                                    QStringLiteral("A%1");
         QString trackName = trackNameTemplate.arg(t.number + 1);
         if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
             mltTrack->Mlt::Properties::clear(kTrackNameProperty);
@@ -3574,7 +3577,7 @@ void MultitrackModel::refreshTrackList()
                 t.number = v++;
                 QString trackName = track->get(kTrackNameProperty);
                 if (trackName.isEmpty())
-                    trackName = QString("V%1").arg(v);
+                    trackName = QStringLiteral("V%1").arg(v);
                 track->set(kTrackNameProperty, trackName.toUtf8().constData());
                 m_trackList.prepend(t);
 
@@ -3611,7 +3614,7 @@ void MultitrackModel::refreshTrackList()
                 t.number = a++;
                 QString trackName = track->get(kTrackNameProperty);
                 if (trackName.isEmpty())
-                    trackName = QString("A%1").arg(a);
+                    trackName = QStringLiteral("A%1").arg(a);
                 track->set(kTrackNameProperty, trackName.toUtf8().constData());
                 m_trackList.append(t);
 //                LOG_DEBUG() << __FUNCTION__ << QString(track->get("id")) << i;

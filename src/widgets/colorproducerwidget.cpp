@@ -86,7 +86,7 @@ void ColorProducerWidget::on_colorButton_clicked()
             newColor.setAlpha(255);
         }
         ui->colorLabel->setText(colorToString(newColor));
-        ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+        ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                       .arg(Util::textColor(newColor), newColor.name()));
         if (m_producer) {
             m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
@@ -128,7 +128,7 @@ void ColorProducerWidget::loadPreset(Mlt::Properties &p)
 {
     QColor color(QFileInfo(p.get("resource")).baseName());
     ui->colorLabel->setText(colorToString(color));
-    ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+    ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                   .arg(Util::textColor(color), color.name()));
     QString caption, detail;
     if (m_producer) {

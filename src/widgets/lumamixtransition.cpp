@@ -136,7 +136,7 @@ static void setColor(Mlt::Transition *transition, int value)
 {
     qreal r = qreal(value) / 100.0;
     QColor color = QColor::fromRgbF(r, r, r);
-    QString resource = QString("color:%1").arg(color.name());
+    QString resource = QStringLiteral("color:%1").arg(color.name());
     transition->set("resource", resource.toLatin1().constData());
 }
 
@@ -190,7 +190,7 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
             Mlt::Transition transition(*service);
             if (name == transition.get("mlt_service"))
                 return new Mlt::Transition(transition);
-            else if (name == "luma" && QString("movit.luma_mix") == transition.get("mlt_service"))
+            else if (name == "luma" && QStringLiteral("movit.luma_mix") == transition.get("mlt_service"))
                 return new Mlt::Transition(transition);
         }
         service.reset(service->producer());
@@ -256,8 +256,8 @@ void LumaMixTransition::on_lumaCombo_currentRowChanged(int index)
             Util::getHash(*transition);
         } else {
             ui->softnessLabel->setText(tr("Softness"));
-            transition->set("resource", QString("%luma%1.pgm").arg(index - 2, 2, 10,
-                                                                   QChar('0')).toLatin1().constData());
+            transition->set("resource", QStringLiteral("%luma%1.pgm").arg(index - 2, 2, 10,
+                                                                          QChar('0')).toLatin1().constData());
         }
         if (qstrcmp(transition->get("resource"), "")) {
             transition->set("progressive", 1);

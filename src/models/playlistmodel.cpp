@@ -106,7 +106,7 @@ public:
         QString key;
         QString resource = m_producer.get(kShotcutHashProperty);
         if (resource.isEmpty()) {
-            key = QString("%1 %2 %3")
+            key = QStringLiteral("%1 %2 %3")
                   .arg(m_producer.get("mlt_service"))
                   .arg(m_producer.get("resource"))
                   .arg(time);
@@ -114,7 +114,7 @@ public:
             hash.addData(key.toUtf8());
             key = hash.result().toHex();
         } else {
-            key = QString("%1 %2").arg(resource).arg(time);
+            key = QStringLiteral("%1 %2").arg(resource).arg(time);
         }
         return key;
     }
@@ -241,7 +241,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                         result = Util::baseName(ProxyManager::resource(*info->producer));
                         if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
                             double speed = ::qAbs(info->producer->get_double("warp_speed"));
-                            result = QString("%1 (%2x)").arg(result).arg(speed);
+                            result = QStringLiteral("%1 (%2x)").arg(result).arg(speed);
                         }
                     }
                     if (result == "<producer>") {
@@ -550,7 +550,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
     else if (data->hasFormat("application/x-qabstractitemmodeldatalist")) {
         QByteArray encoded = data->data("application/x-qabstractitemmodeldatalist");
         QDataStream stream(&encoded, QIODevice::ReadOnly);
-        QMap<int,  QVariant> roleDataMap;
+        QMap<int, QVariant> roleDataMap;
         while (!stream.atEnd()) {
             int row, col;
             stream >> row >> col >> roleDataMap;

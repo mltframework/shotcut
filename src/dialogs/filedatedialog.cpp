@@ -46,7 +46,7 @@ FileDateDialog::FileDateDialog(QString title, Mlt::Producer *producer, QWidget *
     setWindowTitle(tr("%1 File Date").arg(title));
     int64_t milliseconds = producer->get_creation_time();
     QDateTime creation_time;
-    if ( !milliseconds ) {
+    if (!milliseconds ) {
         creation_time = QDateTime::currentDateTime();
     } else {
         // Set the date to the current producer date.

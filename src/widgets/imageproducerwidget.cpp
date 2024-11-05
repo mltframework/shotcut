@@ -52,7 +52,7 @@ Mlt::Producer *ImageProducerWidget::newProducer(Mlt::Profile &profile)
 {
     QString resource = QString::fromUtf8(m_producer->get("resource"));
     if (!resource.contains("?begin=") && m_producer->get("begin")) {
-        resource.append(QString("?begin=%1").arg(m_producer->get("begin")));
+        resource.append(QStringLiteral("?begin=%1").arg(m_producer->get("begin")));
     }
     LOG_DEBUG() << resource;
     Mlt::Producer *p = new Mlt::Producer(profile, resource.toUtf8().constData());
@@ -90,7 +90,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer *p)
     resource = QDir::toNativeSeparators(resource);
     ui->filenameLabel->setToolTip(resource);
     bool isProxy = m_producer->get_int(kIsProxyProperty) && m_producer->get(kOriginalResourceProperty);
-    ui->resolutionLabel->setText(QString("%1x%2 %3").arg(p->get("meta.media.width")).arg(
+    ui->resolutionLabel->setText(QStringLiteral("%1x%2 %3").arg(p->get("meta.media.width")).arg(
                                      p->get("meta.media.height"))
                                  .arg(isProxy ? tr("(PROXY)") : ""));
     ui->aspectNumSpinBox->blockSignals(true);
@@ -266,7 +266,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
             begin.prepend(name[i - 1]);
         if (count) {
             m_producer->set("begin", begin.toLatin1().constData());
-            name.replace(i, count, QString("0%1d").arg(count).prepend('%'));
+            name.replace(i, count, QStringLiteral("0%1d").arg(count).prepend('%'));
             QString serviceName = m_producer->get("mlt_service");
             if (!serviceName.isEmpty())
                 resource = serviceName + ":" + info.path() + "/" + name;

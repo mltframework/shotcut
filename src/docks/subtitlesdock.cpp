@@ -529,7 +529,7 @@ void SubtitlesDock::removeSubtitleTrack()
         if (multitrack && multitrack->is_valid()) {
             for (int i = 0; i < multitrack->filter_count(); i++) {
                 QScopedPointer<Mlt::Filter> filter(multitrack->filter(i));
-                if (!filter || !filter->is_valid() || filter->get("mlt_service") != QString("subtitle")) {
+                if (!filter || !filter->is_valid() || filter->get("mlt_service") != QStringLiteral("subtitle")) {
                     continue;
                 }
                 if (name == filter->get("feed")) {
@@ -630,7 +630,7 @@ void SubtitlesDock::importSubtitles()
 void SubtitlesDock::exportSubtitles()
 {
     auto track = m_model->getTrack(m_trackCombo->currentIndex());
-    QString suggestedPath = QString("%1/%2.srt").arg(Settings.savePath()).arg(track.name);
+    QString suggestedPath = QStringLiteral("%1/%2.srt").arg(Settings.savePath()).arg(track.name);
     QString srtPath = QFileDialog::getSaveFileName(&MAIN, tr("Export SRT File"), suggestedPath,
                                                    tr("SRT Files (*.srt *.SRT)"),
                                                    nullptr, Util::getFileDialogOptions());
@@ -659,7 +659,7 @@ void SubtitlesDock::refreshTracksCombo()
         QList<SubtitlesModel::SubtitleTrack> tracks = m_model->getTracks();
         m_trackCombo->clear();
         for (auto &track : tracks) {
-            m_trackCombo->addItem(QString("%1 (%2)").arg(track.name).arg(track.lang), track.name);
+            m_trackCombo->addItem(QStringLiteral("%1 (%2)").arg(track.name).arg(track.lang), track.name);
         }
         if (tracks.size() > 0) {
             m_trackCombo->setCurrentIndex(0);

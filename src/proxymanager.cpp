@@ -120,11 +120,12 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
     args << "-vf";
 
     if (scanMode == Automatic) {
-        filters = QString("yadif=deint=interlaced,");
+        filters = QStringLiteral("yadif=deint=interlaced,");
     } else if (scanMode != Progressive) {
-        filters = QString("yadif=parity=%1,").arg(scanMode == InterlacedTopFieldFirst ? "tff" : "bff");
+        filters = QStringLiteral("yadif=parity=%1,").arg(scanMode == InterlacedTopFieldFirst ? "tff" :
+                                                         "bff");
     }
-    filters += QString("scale=width=-2:height=%1").arg(resolution());
+    filters += QStringLiteral("scale=width=-2:height=%1").arg(resolution());
     if (Settings.proxyUseHardware() && (hwCodecs.contains("hevc_vaapi")
                                         || hwCodecs.contains("h264_vaapi"))) {
         hwFilters = ",format=nv12,hwupload";
@@ -170,7 +171,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
         break;
     }
     if (!aspectRatio.isNull()) {
-        args << "-aspect" << QString("%1:%2").arg(aspectRatio.x()).arg(aspectRatio.y());
+        args << "-aspect" << QStringLiteral("%1:%2").arg(aspectRatio.x()).arg(aspectRatio.y());
     }
     args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "256k";
     args << "-pix_fmt" << "yuv420p";
@@ -302,7 +303,7 @@ static void processProperties(QXmlStreamWriter &newXml, QVector<MltProperty> &pr
                     newResource = newResource.mid(root.size());
                 }
                 if (service == "timewarp") {
-                    newProperties << MltProperty(p.first, QString("%1:%2").arg(speed, newResource));
+                    newProperties << MltProperty(p.first, QStringLiteral("%1:%2").arg(speed, newResource));
                 } else {
                     newProperties << MltProperty(p.first, newResource);
                 }
@@ -472,15 +473,15 @@ bool ProxyManager::isValidVideo(Mlt::Producer producer)
         producer.set("video_index", video_index);
     }
     if (service == "avformat") {
-        QString key = QString("meta.media.%1.codec.pix_fmt").arg(video_index);
+        QString key = QStringLiteral("meta.media.%1.codec.pix_fmt").arg(video_index);
         QString pix_fmt = QString::fromLatin1(producer.get(key.toLatin1().constData()));
         // Cover art is usually 90000 fps and should not be proxied
-        key = QString("meta.media.%1.codec.frame_rate").arg(video_index);
+        key = QStringLiteral("meta.media.%1.codec.frame_rate").arg(video_index);
         QString frame_rate = producer.get(key.toLatin1().constData());
-        key = QString("meta.media.%1.codec.name").arg(video_index);
+        key = QStringLiteral("meta.media.%1.codec.name").arg(video_index);
         QString codec_name = producer.get(key.toLatin1().constData());
         bool coverArt = codec_name == "mjpeg" && frame_rate == "90000";
-        key = QString("meta.attr.%1.stream.alpha_mode.markup").arg(video_index);
+        key = QStringLiteral("meta.attr.%1.stream.alpha_mode.markup").arg(video_index);
         bool alpha_mode = producer.get_int(key.toLatin1().constData());
         LOG_DEBUG() << "pix_fmt =" << pix_fmt << " codec.frame_rate =" << frame_rate << " alpha_mode =" <<
                     alpha_mode;
