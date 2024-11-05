@@ -75,7 +75,7 @@ QString X11grabWidget::URL(Mlt::Profile &profile) const
         profile.set_frame_rate(25, 1);
     }
     QString s =
-        QString("x11grab:%1+%2,%3?width=%4&height=%5&framerate=%6&show_region=%7&draw_mouse=%8&follow_mouse=%9")
+        QStringLiteral("x11grab:%1+%2,%3?width=%4&height=%5&framerate=%6&show_region=%7&draw_mouse=%8&follow_mouse=%9")
         .arg(ui->lineEdit->text())
         .arg(ui->xSpinBox->value())
         .arg(ui->ySpinBox->value())

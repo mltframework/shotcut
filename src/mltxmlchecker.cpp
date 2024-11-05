@@ -678,7 +678,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
                 if (p.first == "resource") {
                     p.second = ProxyManager::GoProProxyFilePath(resource);
                     if (isTimewarp) {
-                        p.second = QString("%1:%2").arg(speed, p.second);
+                        p.second = QStringLiteral("%1:%2").arg(speed, p.second);
                     }
                     properties << MltProperty(kIsProxyProperty, "1");
                     properties << MltProperty(kMetaProxyProperty, "1");
@@ -696,7 +696,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
                 if (p.first == "resource") {
                     p.second = ProxyManager::DJIProxyFilePath(resource);
                     if (isTimewarp) {
-                        p.second = QString("%1:%2").arg(speed, p.second);
+                        p.second = QStringLiteral("%1:%2").arg(speed, p.second);
                     }
                     properties << MltProperty(kIsProxyProperty, "1");
                     properties << MltProperty(kMetaProxyProperty, "1");
@@ -723,7 +723,7 @@ void MltXmlChecker::checkForProxy(const QString &mlt_service,
                         p.second = proxyDir.filePath(fileName);
                     }
                     if (isTimewarp) {
-                        p.second = QString("%1:%2").arg(speed, p.second);
+                        p.second = QStringLiteral("%1:%2").arg(speed, p.second);
                     }
                     break;
                 }

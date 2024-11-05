@@ -85,7 +85,7 @@ void TextProducerWidget::on_colorButton_clicked()
             newColor.setAlpha(255);
         }
         ui->colorLabel->setText(colorToString(newColor));
-        ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+        ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                       .arg(Util::textColor(newColor), newColor.name()));
         if (m_producer) {
             m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
@@ -126,7 +126,7 @@ void TextProducerWidget::loadPreset(Mlt::Properties &p)
 {
     QColor color(QFileInfo(p.get("resource")).baseName());
     ui->colorLabel->setText(colorToString(color));
-    ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+    ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                   .arg(Util::textColor(color), color.name()));
     if (qstrcmp("", p.get("html"))) {
         ui->plainTextEdit->setPlainText(QString::fromUtf8(p.get("html")));
@@ -210,7 +210,7 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
     filter->set("shotcut:pointSize", kPointSize);
     QFont font(filter->get("family"), kPointSize, filter->get_int("weight"));
     filter->set("size", QFontInfo(font).pixelSize());
-    filter->set("geometry", QString("0 %1 %2 %3 1")
+    filter->set("geometry", QStringLiteral("0 %1 %2 %3 1")
                 .arg(qRound(0.75 * profile.height()))
                 .arg(profile.width())
                 .arg(profile.height() * 0.25)

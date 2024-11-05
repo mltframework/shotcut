@@ -342,7 +342,7 @@ QTemporaryFile *Util::writableTemporaryFile(const QString &filePath, const QStri
     // filePath should already be checked writable.
     QFileInfo info(filePath);
     QString templateFileName = templateName.isEmpty() ?
-                               QString("%1.XXXXXX").arg(QCoreApplication::applicationName()) : templateName;
+                               QStringLiteral("%1.XXXXXX").arg(QCoreApplication::applicationName()) : templateName;
 
     // First, try the system temp dir.
     QString templateFilePath = QDir(QDir::tempPath()).filePath(templateFileName);
@@ -396,12 +396,12 @@ void Util::applyCustomProperties(Mlt::Producer &destination, Mlt::Producer &sour
     QString resource = ProxyManager::resource(destination);
     if (!qstrcmp("timewarp", source.get("mlt_service"))) {
         auto speed = qAbs(source.get_double("warp_speed"));
-        auto caption = QString("%1 (%2x)").arg(Util::baseName(resource, true)).arg(speed);
+        auto caption = QStringLiteral("%1 (%2x)").arg(Util::baseName(resource, true)).arg(speed);
         destination.set(kShotcutCaptionProperty, caption.toUtf8().constData());
 
         resource = destination.get("_shotcut:resource");
         destination.set("warp_resource", resource.toUtf8().constData());
-        resource = QString("%1:%2:%3").arg("timewarp", source.get("warp_speed"), resource);
+        resource = QStringLiteral("%1:%2:%3").arg("timewarp", source.get("warp_speed"), resource);
         destination.set("resource", resource.toUtf8().constData());
         double speedRatio = 1.0 / speed;
         int length = qRound(destination.get_length() * speedRatio);
@@ -681,7 +681,7 @@ QString Util::updateCaption(Mlt::Producer *producer)
     if (caption.isEmpty() || caption.startsWith(name)) {
         // compute the caption
         if (warpSpeed != 1.0)
-            caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
+            caption = QStringLiteral("%1 (%2x)").arg(name).arg(warpSpeed);
         else
             caption = name;
         producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());

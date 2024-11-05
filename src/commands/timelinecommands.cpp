@@ -1969,7 +1969,7 @@ void AlignClipsCommand::redo()
         if (alignment.speed != 1.0) {
             double warpspeed = Util::GetSpeedFromProducer(info->producer) * alignment.speed;
             QString filename = Util::GetFilenameFromProducer(info->producer, false);
-            QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
+            QString s = QStringLiteral("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
             item.clip = new Mlt::Producer(MLT.profile(), s.toUtf8().constData());
             if (!item.clip || !item.clip->is_valid()) {
                 delete item.clip;

@@ -1054,20 +1054,20 @@ bool ShotcutSettings::setLayout(const QString &name, const QByteArray &geometry,
         layouts.append(name);
         settings.setValue("layout/layouts", layouts);
     }
-    settings.setValue(QString("layout/%1_%2").arg(name, "geometry"), geometry);
-    settings.setValue(QString("layout/%1_%2").arg(name, "state"), state);
+    settings.setValue(QStringLiteral("layout/%1_%2").arg(name, "geometry"), geometry);
+    settings.setValue(QStringLiteral("layout/%1_%2").arg(name, "state"), state);
     return isNew;
 }
 
 QByteArray ShotcutSettings::layoutGeometry(const QString &name)
 {
-    QString key = QString("layout/%1_geometry").arg(name);
+    QString key = QStringLiteral("layout/%1_geometry").arg(name);
     return settings.value(key).toByteArray();
 }
 
 QByteArray ShotcutSettings::layoutState(const QString &name)
 {
-    QString key = QString("layout/%1_state").arg(name);
+    QString key = QStringLiteral("layout/%1_state").arg(name);
     return settings.value(key).toByteArray();
 }
 
@@ -1081,8 +1081,8 @@ bool ShotcutSettings::removeLayout(const QString &name)
             settings.remove("layout/layouts");
         else
             settings.setValue("layout/layouts", list);
-        settings.remove(QString("layout/%1_%2").arg(name, "geometry"));
-        settings.remove(QString("layout/%1_%2").arg(name, "state"));
+        settings.remove(QStringLiteral("layout/%1_%2").arg(name, "geometry"));
+        settings.remove(QStringLiteral("layout/%1_%2").arg(name, "state"));
         return true;
     }
     return false;

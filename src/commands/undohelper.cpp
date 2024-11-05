@@ -313,7 +313,7 @@ void UndoHelper::debugPrintState(const QString &title)
     LOG_DEBUG() << "timeline state:" << title << "{";
     for (int i = 0; i < m_model.trackList().count(); ++i) {
         int mltIndex = m_model.trackList()[i].mlt_index;
-        QString trackStr = QString("   track %1 (mlt-idx %2):").arg(i).arg(mltIndex);
+        QString trackStr = QStringLiteral("   track %1 (mlt-idx %2):").arg(i).arg(mltIndex);
         QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
         Mlt::Playlist playlist(*trackProducer);
 
@@ -324,7 +324,8 @@ void UndoHelper::debugPrintState(const QString &title)
             if (info.producer->is_blank() && info.cut) {
                 uid = MLT.uuid(*info.cut);
             }
-            trackStr += QString(" [ %5 %1 -> %2 (%3 frames) %4]").arg(info.frame_in).arg(info.frame_out).arg(
+            trackStr += QStringLiteral(" [ %5 %1 -> %2 (%3 frames) %4]").arg(info.frame_in).arg(
+                            info.frame_out).arg(
                             info.frame_count).arg(info.cut->is_blank() ? "blank " : "clip").arg(uid.toString());
         }
         LOG_DEBUG() << qPrintable(trackStr);

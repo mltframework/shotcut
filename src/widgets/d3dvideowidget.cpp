@@ -133,8 +133,8 @@ void D3DVideoWidget::beforeRendering()
     float width = rect().width() * devicePixelRatioF() / 2.0f;
     float height = rect().height() * devicePixelRatioF() / 2.0f;
     float vertexData[] = { // x,y plus u,v texture coordinates
-        width,  -height, 1.f, 1.f, // bottom left
-        -width,  -height, 0.f, 1.f, // bottom right
+        width, -height, 1.f, 1.f, // bottom left
+        -width, -height, 0.f, 1.f, // bottom right
         width,  height, 1.f, 0.f, // top left
         -width,  height, 0.f, 0.f   // top right
     };

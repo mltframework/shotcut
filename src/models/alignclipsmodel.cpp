@@ -154,7 +154,7 @@ QVariant AlignClipsModel::data(const QModelIndex &index, int role) const
                 if (clip.offset >= 0) {
                     result = QString::fromLatin1(MLT.producer()->frames_to_time(clip.offset, Settings.timeFormat()));
                 } else {
-                    result = QString("-") + MLT.producer()->frames_to_time(-clip.offset, Settings.timeFormat());
+                    result = QStringLiteral("-") + MLT.producer()->frames_to_time(-clip.offset, Settings.timeFormat());
                 }
             }
             break;

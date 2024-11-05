@@ -322,14 +322,14 @@ void AudioMeterWidget::updateToolTip()
         if (m_levels[chan] < -90) {
             text = "-inf dB";
         } else {
-            text = QString("%1dBFS").arg(m_levels[chan], 0, 'f', 1);
+            text = QStringLiteral("%1dBFS").arg(m_levels[chan], 0, 'f', 1);
         }
 
         if (m_chanLabels.size() > chan) {
             if (!m_chanLabelUnits.isEmpty()) {
-                text = QString("%1%2: %3").arg(m_chanLabels[chan], m_chanLabelUnits, text);
+                text = QStringLiteral("%1%2: %3").arg(m_chanLabels[chan], m_chanLabelUnits, text);
             } else {
-                text = QString("%1: %2").arg(m_chanLabels[chan], text);
+                text = QStringLiteral("%1: %2").arg(m_chanLabels[chan], text);
             }
         }
     }

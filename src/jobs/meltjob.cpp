@@ -125,10 +125,10 @@ void MeltJob::start()
         args.append(m_args);
     }
     if (m_in > -1) {
-        args << QString("in=%1").arg(m_in);
+        args << QStringLiteral("in=%1").arg(m_in);
     }
     if (m_out > -1) {
-        args << QString("out=%1").arg(m_out);
+        args << QStringLiteral("out=%1").arg(m_out);
     }
     LOG_DEBUG() << meltPath.absoluteFilePath()  + " " + args.join(' ');
 #ifndef Q_OS_MAC

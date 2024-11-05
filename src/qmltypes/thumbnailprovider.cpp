@@ -96,7 +96,7 @@ QString ThumbnailProvider::cacheKey(Mlt::Properties &properties, const QString &
     time = time.left(time.size() - 1);
     QString key;
     if (hash.isEmpty()) {
-        key = QString("%1 %2 %3")
+        key = QStringLiteral("%1 %2 %3")
               .arg(service)
               .arg(resource)
               .arg(time);
@@ -104,7 +104,7 @@ QString ThumbnailProvider::cacheKey(Mlt::Properties &properties, const QString &
         hash.addData(key.toUtf8());
         key = hash.result().toHex();
     } else {
-        key = QString("%1 %2").arg(hash).arg(time);
+        key = QStringLiteral("%1 %2").arg(hash).arg(time);
     }
     return key;
 }

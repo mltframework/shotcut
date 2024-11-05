@@ -250,13 +250,13 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel *model,
     glayout->addWidget(new QLabel(tr("Speed adjustment range")), row, 0, Qt::AlignRight);
     m_speedCombo = new QComboBox();
     m_speedCombo->setToolTip("Larger speed adjustment ranges take longer to process.");
-    m_speedCombo->addItem(tr("None") + QString(" (%L1%)").arg(0), QVariant(0));
-    m_speedCombo->addItem(tr("Narrow") + QString(" (%L1%)").arg((double)0.1, 0, 'g', 2),
+    m_speedCombo->addItem(tr("None") + QStringLiteral(" (%L1%)").arg(0), QVariant(0));
+    m_speedCombo->addItem(tr("Narrow") + QStringLiteral(" (%L1%)").arg((double)0.1, 0, 'g', 2),
                           QVariant(0.001));
-    m_speedCombo->addItem(tr("Normal") + QString(" (%L1%)").arg((double)0.5, 0, 'g', 2),
+    m_speedCombo->addItem(tr("Normal") + QStringLiteral(" (%L1%)").arg((double)0.5, 0, 'g', 2),
                           QVariant(0.005));
-    m_speedCombo->addItem(tr("Wide") + QString(" (%L1%)").arg(1), QVariant(0.01));
-    m_speedCombo->addItem(tr("Very wide") + QString(" (%L1%)").arg(5), QVariant(0.05));
+    m_speedCombo->addItem(tr("Wide") + QStringLiteral(" (%L1%)").arg(1), QVariant(0.01));
+    m_speedCombo->addItem(tr("Very wide") + QStringLiteral(" (%L1%)").arg(5), QVariant(0.05));
     double defaultRange = Settings.audioReferenceSpeedRange();
     for (int i = 0; i < m_speedCombo->count(); i++) {
         if (m_speedCombo->itemData(i).toDouble() == defaultRange) {

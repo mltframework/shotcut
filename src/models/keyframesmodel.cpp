@@ -184,7 +184,8 @@ QVariant KeyframesModel::data(const QModelIndex &index, int role) const
                         }
                         double value = m_filter->getDouble(name, position);
                         QString units = m_metadata->keyframes()->parameter(m_metadataIndex[index.internalId()])->units();
-                        return QString("%1 - %2\n%3%4").arg(QmlApplication::singleton().timeFromFrames(position)).arg(
+                        return QStringLiteral("%1 - %2\n%3%4").arg(QmlApplication::singleton().timeFromFrames(
+                                                                       position)).arg(
                                    type).arg(value).arg(units);
                     }
                     case FrameNumberRole:

@@ -77,7 +77,7 @@ void StatusLabelWidget::showText(const QString &text, int timeoutSeconds, QActio
                                  QPalette::ColorRole role)
 {
     auto width = m_width ? m_width : m_layout->maximumSize().width();
-    QString s = QString("  %1  ").arg(
+    QString s = QStringLiteral("  %1  ").arg(
                     m_label->fontMetrics().elidedText(text, Qt::ElideRight, width - 30));
     m_label->setText(s);
     m_label->setToolTip(text);

@@ -77,7 +77,7 @@ Mlt::Producer *AvformatProducerWidget::newProducer(Mlt::Profile &profile)
         QString warpspeed = QString::fromLatin1(tempProps.get("speed"));
 
         QString filename = Util::GetFilenameFromProducer(producer(), false);
-        QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
+        QString s = QStringLiteral("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
     }
@@ -317,16 +317,16 @@ void AvformatProducerWidget::reloadProducerValues()
     int color_range = !qstrcmp(m_producer->get("meta.media.color_range"), "full");
 
     for (int i = 0; i < n; i++) {
-        QString key = QString("meta.media.%1.stream.type").arg(i);
+        QString key = QStringLiteral("meta.media.%1.stream.type").arg(i);
         QString streamType(m_producer->get(key.toLatin1().constData()));
         if (streamType == "video") {
-            key = QString("meta.media.%1.codec.name").arg(i);
+            key = QStringLiteral("meta.media.%1.codec.name").arg(i);
             QString codec(m_producer->get(key.toLatin1().constData()));
-            key = QString("meta.media.%1.codec.width").arg(i);
+            key = QStringLiteral("meta.media.%1.codec.width").arg(i);
             QString width(m_producer->get(key.toLatin1().constData()));
-            key = QString("meta.media.%1.codec.height").arg(i);
+            key = QStringLiteral("meta.media.%1.codec.height").arg(i);
             QString height(m_producer->get(key.toLatin1().constData()));
-            QString name = QString("%1: %2x%3 %4")
+            QString name = QStringLiteral("%1: %2x%3 %4")
                            .arg(videoIndex + 1)
                            .arg(width)
                            .arg(height)
@@ -343,10 +343,10 @@ void AvformatProducerWidget::reloadProducerValues()
             }
             if (i == m_producer->get_int(kVideoIndexProperty)) {
 #endif
-                key = QString("meta.media.%1.codec.long_name").arg(i);
+                key = QStringLiteral("meta.media.%1.codec.long_name").arg(i);
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->videoTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
-                key = QString("meta.media.%1.codec.pix_fmt").arg(i);
+                key = QStringLiteral("meta.media.%1.codec.pix_fmt").arg(i);
                 QString pix_fmt = QString::fromLatin1(m_producer->get(key.toLatin1().constData()));
                 if (pix_fmt.startsWith("yuvj")) {
                     color_range = 1;
@@ -354,13 +354,13 @@ void AvformatProducerWidget::reloadProducerValues()
                     color_range = 1;
                     ui->rangeComboBox->setEnabled(false);
                 }
-                key = QString("meta.media.%1.codec.rotate").arg(i);
+                key = QStringLiteral("meta.media.%1.codec.rotate").arg(i);
                 int rotation = m_producer->property_exists("rotate") ?
                                m_producer->get_int("rotate") :
                                m_producer->get_int(key.toLatin1().constData());
                 ui->rotationComboBox->setCurrentIndex(rotation / 90);
                 ui->videoTableWidget->setItem(3, 1, new QTableWidgetItem(pix_fmt));
-                key = QString("meta.media.%1.codec.colorspace").arg(i);
+                key = QStringLiteral("meta.media.%1.codec.colorspace").arg(i);
                 int colorspace = m_producer->get_int(key.toLatin1().constData());
                 QString csString = tr("unknown (%1)").arg(colorspace);
                 switch (colorspace) {
@@ -379,7 +379,7 @@ void AvformatProducerWidget::reloadProducerValues()
                     break;
                 }
                 ui->videoTableWidget->setItem(4, 1, new QTableWidgetItem(csString));
-                key = QString("meta.media.%1.codec.color_trc").arg(i);
+                key = QStringLiteral("meta.media.%1.codec.color_trc").arg(i);
                 int trc = m_producer->get_int(key.toLatin1().constData());
                 QString trcString = Util::trcString(trc);
                 QTableWidgetItem *trcItem = new QTableWidgetItem(trcString);
@@ -390,14 +390,14 @@ void AvformatProducerWidget::reloadProducerValues()
             ui->tabWidget->setTabEnabled(0, true);
             videoIndex++;
         } else if (streamType == "audio") {
-            key = QString("meta.media.%1.codec.name").arg(i);
+            key = QStringLiteral("meta.media.%1.codec.name").arg(i);
             QString codec(m_producer->get(key.toLatin1().constData()));
-            key = QString("meta.media.%1.codec.channels").arg(i);
+            key = QStringLiteral("meta.media.%1.codec.channels").arg(i);
             int channels(m_producer->get_int(key.toLatin1().constData()));
             totalAudioChannels += channels;
-            key = QString("meta.media.%1.codec.sample_rate").arg(i);
+            key = QStringLiteral("meta.media.%1.codec.sample_rate").arg(i);
             QString sampleRate(m_producer->get(key.toLatin1().constData()));
-            QString name = QString("%1: %2 ch %3 KHz %4")
+            QString name = QStringLiteral("%1: %2 ch %3 KHz %4")
                            .arg(audioIndex + 1)
                            .arg(channels)
                            .arg(sampleRate.toDouble() / 1000)
@@ -414,18 +414,18 @@ void AvformatProducerWidget::reloadProducerValues()
             }
             if (QString::number(i) == m_producer->get(kAudioIndexProperty)) {
 #endif
-                key = QString("meta.media.%1.codec.long_name").arg(i);
+                key = QStringLiteral("meta.media.%1.codec.long_name").arg(i);
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
-                key = QString("meta.media.%1.codec.layout").arg(i);
+                key = QStringLiteral("meta.media.%1.codec.layout").arg(i);
                 QString layout(m_producer->get(key.toLatin1().constData()));
                 if (layout.isEmpty()) {
                     layout = mlt_audio_channel_layout_name(mlt_audio_channel_layout_default(channels));
                 }
-                QString channelsStr = QString("%1 (%2)").arg(channels).arg(layout);
+                QString channelsStr = QStringLiteral("%1 (%2)").arg(channels).arg(layout);
                 ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem(channelsStr));
                 ui->audioTableWidget->setItem(2, 1, new QTableWidgetItem(sampleRate));
-                key = QString("meta.media.%1.codec.sample_fmt").arg(i);
+                key = QStringLiteral("meta.media.%1.codec.sample_fmt").arg(i);
                 ui->audioTableWidget->setItem(3, 1, new QTableWidgetItem(
                                                   m_producer->get(key.toLatin1().constData())));
                 ui->audioTrackComboBox->setCurrentIndex(audioIndex + 1);
@@ -437,20 +437,20 @@ void AvformatProducerWidget::reloadProducerValues()
     if (populateTrackCombos && ui->audioTrackComboBox->count() > 2)
         ui->audioTrackComboBox->addItem(tr("All"), "all");
 
-    if (m_producer->get("audio_index") == QString("-1")) {
+    if (m_producer->get("audio_index") == QStringLiteral("-1")) {
         ui->audioTrackComboBox->setCurrentIndex(0);
         ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(""));
         ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem("0"));
         ui->audioTableWidget->setItem(2, 1, new QTableWidgetItem(""));
         ui->audioTableWidget->setItem(3, 1, new QTableWidgetItem(""));
-    } else if (m_producer->get("audio_index") == QString("all")) {
+    } else if (m_producer->get("audio_index") == QStringLiteral("all")) {
         ui->audioTrackComboBox->setCurrentIndex(ui->audioTrackComboBox->count() - 1);
         ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(""));
         ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem(QString::number(totalAudioChannels)));
         ui->audioTableWidget->setItem(2, 1, new QTableWidgetItem(""));
         ui->audioTableWidget->setItem(3, 1, new QTableWidgetItem(""));
     }
-    if (m_producer->get("video_index") == QString("-1")) {
+    if (m_producer->get("video_index") == QStringLiteral("-1")) {
         ui->videoTrackComboBox->setCurrentIndex(0);
         ui->videoTableWidget->setItem(0, 1, new QTableWidgetItem(""));
         ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(""));
@@ -473,8 +473,9 @@ void AvformatProducerWidget::reloadProducerValues()
     int height = m_producer->get_int("meta.media.height");
     if (width || height) {
         bool isProxy = m_producer->get_int(kIsProxyProperty) && m_producer->get(kOriginalResourceProperty);
-        ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(QString("%1x%2 %3").arg(width).arg(height)
-                                                                 .arg(isProxy ? tr("(PROXY)") : "")));
+        ui->videoTableWidget->setItem(1, 1,
+                                      new QTableWidgetItem(QStringLiteral("%1x%2 %3").arg(width).arg(height)
+                                                           .arg(isProxy ? tr("(PROXY)") : "")));
     }
 
     double sar = m_producer->get_double("meta.media.sample_aspect_num");
@@ -512,7 +513,8 @@ void AvformatProducerWidget::reloadProducerValues()
 
     bool isVariableFrameRate = m_producer->get_int("meta.media.variable_frame_rate");
     if (fps() != 0.0 ) {
-        ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1 %2").arg(fps(), 0, 'f', 6)
+        ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QStringLiteral("%L1 %2").arg(fps(), 0, 'f',
+                                                                                              6)
                                                                  .arg(isVariableFrameRate ? tr("(variable)") : "")));
     }
 
@@ -887,9 +889,9 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             meltArgs << "an=1" << "audio_off=1";
         } else if (qstrcmp(m_producer->get("audio_index"), "all")) {
             int index = m_producer->get_int("audio_index");
-            QString key = QString("meta.media.%1.codec.channels").arg(index);
+            QString key = QStringLiteral("meta.media.%1.codec.channels").arg(index);
             const char *channels = m_producer->get(key.toLatin1().constData());
-            meltArgs << QString("channels=").append(channels);
+            meltArgs << QStringLiteral("channels=").append(channels);
         }
         if (m_producer->get_int("video_index") == -1)
             meltArgs << "vn=1" << "video_off=1";
@@ -961,7 +963,8 @@ void AvformatProducerWidget::on_reverseButton_clicked()
 
             // Make a temporary file name for the ffmpeg job.
             QFileInfo fi(filename);
-            QString tmpFileName = QString("%1/%2 - XXXXXX.%3").arg(fi.path()).arg(fi.completeBaseName()).arg(
+            QString tmpFileName = QStringLiteral("%1/%2 - XXXXXX.%3").arg(fi.path()).arg(
+                                      fi.completeBaseName()).arg(
                                       ffmpegSuffix);
             QTemporaryFile tmp(tmpFileName);
             tmp.setAutoRemove(false);
@@ -976,8 +979,8 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             JOBS.add(ffmpegJob);
 
             // Run the melt job to convert the intermediate file to the reversed clip.
-            meltArgs.prepend(QString("timewarp:-1.0:").append(tmpFileName));
-            meltArgs << QString("target=").append(filename);
+            meltArgs.prepend(QStringLiteral("timewarp:-1.0:").append(tmpFileName));
+            meltArgs << QStringLiteral("target=").append(filename);
             MeltJob *meltJob = new MeltJob(filename, meltArgs,
                                            m_producer->get_int("meta.media.frame_rate_num"), m_producer->get_int("meta.media.frame_rate_den"));
             meltJob->setLabel(tr("Reverse %1").arg(Util::baseName(resource)));
@@ -1068,11 +1071,11 @@ void AvformatProducerWidget::on_actionExtractSubtitles_triggered()
     int nb_streams = m_producer->get_int("meta.media.nb_streams");
     int subtitleCount = 0;
     for (int i = 0; i < nb_streams; i++) {
-        QString key = QString("meta.media.%1.codec.name").arg(i);
+        QString key = QStringLiteral("meta.media.%1.codec.name").arg(i);
         QString codec(m_producer->get(key.toLatin1().constData()));
         if (codec == "srt") {
             subtitleCount++;
-            QString langKey = QString("meta.attr.%1.stream.language.markup").arg(i);
+            QString langKey = QStringLiteral("meta.attr.%1.stream.language.markup").arg(i);
             QString lang(m_producer->get(langKey.toLatin1().constData()));
             if (lang.isEmpty()) {
                 subtitles << tr("Track %1").arg(subtitleCount);
@@ -1115,12 +1118,12 @@ void AvformatProducerWidget::on_actionExtractSubtitles_triggered()
     for (int s = 0; s < subSelection.size(); s++) {
         int subtitleCount = 0;
         for (int i = 0; i < nb_streams; i++) {
-            QString key = QString("meta.media.%1.codec.name").arg(i);
+            QString key = QStringLiteral("meta.media.%1.codec.name").arg(i);
             QString codec(m_producer->get(key.toLatin1().constData()));
             if (codec == "srt") {
                 subtitleCount++;
                 QString subText;
-                QString langKey = QString("meta.attr.%1.stream.language.markup").arg(i);
+                QString langKey = QStringLiteral("meta.attr.%1.stream.language.markup").arg(i);
                 QString lang(m_producer->get(langKey.toLatin1().constData()));
                 if (lang.isEmpty()) {
                     subText = tr("Track %1").arg(subtitleCount);
@@ -1133,7 +1136,7 @@ void AvformatProducerWidget::on_actionExtractSubtitles_triggered()
                         return;
                     // Make an FFMpeg job
                     QStringList ffmpegArgs;
-                    QString streamSelect = QString("0:s:%1").arg(subtitleCount - 1);
+                    QString streamSelect = QStringLiteral("0:s:%1").arg(subtitleCount - 1);
                     ffmpegArgs << "-loglevel" << "verbose";
                     ffmpegArgs << "-i" << resource;
                     ffmpegArgs << "-map" << streamSelect;
@@ -1172,7 +1175,7 @@ void AvformatProducerWidget::on_filenameLabel_editingFinished()
             QString resource = Util::GetFilenameFromProducer(producer());
             QString caption = Util::baseName(resource, true);
             if (warpSpeed != 1.0)
-                caption = QString("%1 (%2x)").arg(caption).arg(warpSpeed);
+                caption = QStringLiteral("%1 (%2x)").arg(caption).arg(warpSpeed);
             m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
             ui->filenameLabel->setText(caption);
         } else {
@@ -1297,7 +1300,7 @@ void AvformatProducerWidget::on_actionSetEquirectangular_triggered()
     // Get the location and file name for the report.
     QString caption = tr("Set Equirectangular Projection");
     QFileInfo info(Util::GetFilenameFromProducer(producer()));
-    QString directory = QString("%1/%2 - ERP.%3")
+    QString directory = QStringLiteral("%1/%2 - ERP.%3")
                         .arg(info.path())
                         .arg(info.completeBaseName())
                         .arg(info.suffix());
@@ -1316,8 +1319,8 @@ void AvformatProducerWidget::on_actionFFmpegVideoQuality_triggered()
 {
     QString caption = tr("Choose the Other Video");
     QFileInfo info(Util::GetFilenameFromProducer(producer()));
-    QString directory = QString("%1/%2 - ERP.%3").arg(info.path(), info.completeBaseName(),
-                                                      info.suffix());
+    QString directory = QStringLiteral("%1/%2 - ERP.%3").arg(info.path(), info.completeBaseName(),
+                                                             info.suffix());
     QString filePath = QFileDialog::getOpenFileName(&MAIN, caption, directory, QString(),
                                                     nullptr, Util::getFileDialogOptions());
     if (!filePath.isEmpty()) {
@@ -1344,7 +1347,7 @@ void AvformatProducerWidget::on_actionFFmpegVideoQuality_triggered()
         auto modelPath = (width < 3840
                           && height < 2160) ? dir.filePath("vmaf_v0.6.1.json") : dir.filePath("vmaf_4k_v0.6.1.json");
 #endif
-        args << QString("[0:v]scale=out_range=%6,fps=%4/%5,setpts=PTS-STARTPTS[reference];[1:v]scale=%1:%2:out_range=%6:flags=bicubic,fps=%4/%5,setpts=PTS-STARTPTS[distorted];[distorted][reference]libvmaf=log_fmt=csv:log_path='%8':feature='name=psnr|name=float_ssim':shortest=true:n_threads=%7:model='path=%3'")
+        args << QStringLiteral("[0:v]scale=out_range=%6,fps=%4/%5,setpts=PTS-STARTPTS[reference];[1:v]scale=%1:%2:out_range=%6:flags=bicubic,fps=%4/%5,setpts=PTS-STARTPTS[distorted];[distorted][reference]libvmaf=log_fmt=csv:log_path='%8':feature='name=psnr|name=float_ssim':shortest=true:n_threads=%7:model='path=%3'")
              .arg(width).arg(height)
              .arg(modelPath)
              .arg(frameRateNum).arg(frameRateDen)

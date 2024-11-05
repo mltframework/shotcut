@@ -163,7 +163,7 @@ QString MultiFileExportDialog::appendField(QString text, QComboBox *combo, int c
     }
     case NAME_FIELD_INDEX: {
         int digits = QString::number(m_playlist->count()).size();
-        field = QString("%1").arg(clipIndex + 1, digits, 10, QChar('0'));
+        field = QStringLiteral("%1").arg(clipIndex + 1, digits, 10, QChar('0'));
         break;
     }
     case NAME_FIELD_DATE: {

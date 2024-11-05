@@ -49,7 +49,7 @@ QString CustomProfileDialog::profileName() const
     // Replace characters that are not allowed in Windows file names
     QString filename = ui->nameEdit->text();
     static QRegularExpression re("[" + QRegularExpression::escape( "\\/:*?\"<>|" ) + "]");
-    filename = filename.replace(re, QString( "_" ));
+    filename = filename.replace(re, QStringLiteral( "_" ));
     return filename;
 }
 

@@ -742,8 +742,7 @@ void MainWindow::setupMenuFile()
             filters << match.captured(1) + "*.mlt";
         else
             filters << QFileInfo(m_currentFile).baseName().split(" - ").first() + "*.mlt";
-        for (auto &fileInfo : dir.entryInfoList(filters, QDir::Files, QDir::Time))
-        {
+        for (auto &fileInfo : dir.entryInfoList(filters, QDir::Files, QDir::Time)) {
             auto filename = fileInfo.fileName();
             if (filename != name) {
                 auto text = filename;
@@ -984,11 +983,11 @@ void MainWindow::setupSettingsMenu()
         decklink.set("list_devices", 1);
         int n = decklink.get_int("devices");
         for (int i = 0; i < n; ++i) {
-            QString device(decklink.get(QString("device.%1").arg(i).toLatin1().constData()));
+            QString device(decklink.get(QStringLiteral("device.%1").arg(i).toLatin1().constData()));
             if (!device.isEmpty()) {
                 QAction *action = new QAction(device, this);
                 action->setCheckable(true);
-                action->setData(QString("decklink:%1").arg(i));
+                action->setData(QStringLiteral("decklink:%1").arg(i));
                 m_externalGroup->addAction(action);
 
                 if (!m_keyerGroup) {
@@ -1380,8 +1379,9 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker)
 bool MainWindow::saveRepairedXmlFile(MltXmlChecker &checker, QString &fileName)
 {
     QFileInfo fi(fileName);
-    auto filename = QString("%1/%2 - %3.%4").arg(fi.path(), fi.completeBaseName(), tr("Repaired"),
-                                                 fi.suffix());
+    auto filename = QStringLiteral("%1/%2 - %3.%4").arg(fi.path(), fi.completeBaseName(),
+                                                        tr("Repaired"),
+                                                        fi.suffix());
     auto caption = tr("Save Repaired XML");
     filename = QFileDialog::getSaveFileName(this, caption, filename,
                                             tr("MLT XML (*.mlt)"), nullptr, Util::getFileDialogOptions());
@@ -2276,9 +2276,9 @@ void MainWindow::setCurrentFile(const QString &filename)
     if (!m_currentFile.isEmpty())
         shownName = QFileInfo(m_currentFile).fileName();
 #ifdef Q_OS_MAC
-    setWindowTitle(QString("%1 - %2").arg(shownName).arg(qApp->applicationName()));
+    setWindowTitle(QStringLiteral("%1 - %2").arg(shownName).arg(qApp->applicationName()));
 #else
-    setWindowTitle(QString("%1[*] - %2").arg(shownName).arg(qApp->applicationName()));
+    setWindowTitle(QStringLiteral("%1[*] - %2").arg(shownName).arg(qApp->applicationName()));
 #endif
     ui->actionShowProjectFolder->setDisabled(m_currentFile.isEmpty());
 }
@@ -2384,7 +2384,7 @@ QAction *MainWindow::actionProfileRemove() const
     return ui->actionProfileRemove;
 }
 
-void MainWindow::buildVideoModeMenu(QMenu *topMenu, QMenu *&customMenu, QActionGroup *group,
+void MainWindow::buildVideoModeMenu(QMenu *topMenu, QMenu * &customMenu, QActionGroup *group,
                                     QAction *addAction, QAction *removeAction)
 {
     topMenu->addAction(addProfile(group, "HD 720p 50 fps", "atsc_720p_50"));
@@ -2571,7 +2571,7 @@ void MainWindow::dropEvent(QDropEvent *event)
     if (mimeData->hasFormat("application/x-qabstractitemmodeldatalist")) {
         QByteArray encoded = mimeData->data("application/x-qabstractitemmodeldatalist");
         QDataStream stream(&encoded, QIODevice::ReadOnly);
-        QMap<int,  QVariant> roleDataMap;
+        QMap<int, QVariant> roleDataMap;
         while (!stream.atEnd()) {
             int row, col;
             stream >> row >> col >> roleDataMap;
@@ -3970,8 +3970,8 @@ void MainWindow::backup()
     QFileInfo info(m_currentFile);
     auto dateTime = info.lastModified().toString(Qt::ISODate);
     dateTime.replace(':', '-');
-    auto filename = QString("%1/%2 %3.mlt").arg(info.canonicalPath(), info.completeBaseName(),
-                                                dateTime);
+    auto filename = QStringLiteral("%1/%2 %3.mlt").arg(info.canonicalPath(), info.completeBaseName(),
+                                                       dateTime);
     if (!QFile::exists(filename) && !Util::warnIfNotWritable(filename, this, tr("Save XML"))
             && QFile::copy(m_currentFile, filename)) {
         showStatusMessage(tr("Saved backup %1").arg(filename));
@@ -5005,7 +5005,7 @@ void MainWindow::replaceAllByHash(const QString &hash, Mlt::Producer &producer, 
             // Append to playlist
             producer.set(kPlaylistIndexProperty, playlist()->count());
             MAIN.undoStack()->push(
-                new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&producer)));
+                    new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&producer)));
         }
     }
     if (isMultitrackValid()) {

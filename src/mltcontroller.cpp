@@ -431,7 +431,7 @@ void Controller::setVolume(double volume, bool muteOnPause)
     }
 
     if (m_consumer) {
-        if (m_consumer->get("mlt_service") == QString("multi")) {
+        if (m_consumer->get("mlt_service") == QStringLiteral("multi")) {
             m_consumer->set("0.volume", volume);
         } else {
             m_consumer->set("volume", volume);
@@ -507,7 +507,7 @@ bool Controller::saveXML(const QString &filename, Service *service, bool withRel
         c.set("store", "shotcut");
         c.set("root", root.toUtf8().constData());
         c.set("no_root", 1);
-        c.set("title", QString("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
+        c.set("title", QStringLiteral("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
         c.connect(s);
         c.start();
         if (ignore)
@@ -1642,11 +1642,11 @@ bool Controller::fullRange(Producer &producer)
 {
     bool full = !qstrcmp(producer.get("meta.media.color_range"), "full");
     for (int i = 0; !full && i < producer.get_int("meta.media.nb_streams"); i++) {
-        QString key = QString("meta.media.%1.stream.type").arg(i);
+        QString key = QStringLiteral("meta.media.%1.stream.type").arg(i);
         QString streamType(producer.get(key.toLatin1().constData()));
         if (streamType == "video") {
             if (i == producer.get_int("video_index")) {
-                key = QString("meta.media.%1.codec.pix_fmt").arg(i);
+                key = QStringLiteral("meta.media.%1.codec.pix_fmt").arg(i);
                 QString pix_fmt = QString::fromLatin1(producer.get(key.toLatin1().constData()));
                 if (pix_fmt.startsWith("yuvj")) {
                     full = true;

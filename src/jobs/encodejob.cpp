@@ -120,7 +120,7 @@ void EncodeJob::onSpatialMediaTriggered()
     // Get the location and file name for the report.
     QString caption = tr("Set Equirectangular Projection");
     QFileInfo info(objectName());
-    QString directory = QString("%1/%2 - ERP.%3")
+    QString directory = QStringLiteral("%1/%2 - ERP.%3")
                         .arg(Settings.encodePath())
                         .arg(info.completeBaseName())
                         .arg(info.suffix());
@@ -139,7 +139,7 @@ void EncodeJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     if (exitStatus != QProcess::NormalExit && exitCode != 0 && !stopped()) {
         LOG_INFO() << "job failed with" << exitCode;
-        appendToLog(QString("Failed with exit code %1\n").arg(exitCode));
+        appendToLog(QStringLiteral("Failed with exit code %1\n").arg(exitCode));
         bool isParallel = false;
         // Parse the XML.
         m_xml->open();

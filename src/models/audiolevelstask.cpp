@@ -142,7 +142,7 @@ Mlt::Producer *AudioLevelsTask::tempProducer()
 
 QString AudioLevelsTask::cacheKey()
 {
-    QString key = QString("%1 audiolevels");
+    QString key = QStringLiteral("%1 audiolevels");
     Mlt::Producer *producer = m_producers.first().first;
     if (producer->get(kShotcutHashProperty)) {
         key = key.arg(producer->get(kShotcutHashProperty));
@@ -156,7 +156,7 @@ QString AudioLevelsTask::cacheKey()
         // Add the audio index only if different than default to avoid cache miss.
         if (m_isForce || (producer->get(kDefaultAudioIndexProperty) &&
                           producer->get_int("audio_index") != producer->get_int(kDefaultAudioIndexProperty))) {
-            key += QString(" %1").arg(producer->get("audio_index"));
+            key += QStringLiteral(" %1").arg(producer->get("audio_index"));
         }
     }
     return key;
@@ -174,8 +174,8 @@ void AudioLevelsTask::run()
         // TODO: use project channel count
         int channels = 2;
 
-        auto message = QString("%1 %2").arg(QObject::tr("generating audio waveforms for"),
-                                            Util::baseName(tempProducer()->get("resource"), true));
+        auto message = QStringLiteral("%1 %2").arg(QObject::tr("generating audio waveforms for"),
+                                                   Util::baseName(tempProducer()->get("resource"), true));
         if (tempProducer()->get("audio_index")) {
             LOG_DEBUG() << message << " with audio_index =" << tempProducer()->get("audio_index");
         } else {
@@ -246,7 +246,7 @@ void AudioLevelsTask::run()
                 DB.putThumbnail(cacheKey(), image);
             }
         }
-        message = QString("%1 %2").arg(QObject::tr("Done"), message);
+        message = QStringLiteral("%1 %2").arg(QObject::tr("Done"), message);
         QMetaObject::invokeMethod(&MAIN, "showStatusMessage",  Qt::QueuedConnection,
                                   Q_ARG(QString, message));
     } else if (!m_isCanceled && !image.isNull()) {

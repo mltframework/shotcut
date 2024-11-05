@@ -105,13 +105,13 @@ Mlt::Producer *DirectShowVideoWidget::newProducer(Mlt::Profile &profile)
     Mlt::Producer *p = 0;
     if (ui->videoCombo->currentIndex() > 0) {
         LOG_DEBUG() << ui->videoCombo->currentData().toString();
-        p = new Mlt::Producer(profile, QString("dshow:video=%1")
+        p = new Mlt::Producer(profile, QStringLiteral("dshow:video=%1")
                               .arg(ui->videoCombo->currentData().toString())
                               .toUtf8().constData());
     }
     if (ui->audioCombo->currentIndex() > 0) {
         Mlt::Producer *audio = new Mlt::Producer(profile,
-                                                 QString("dshow:audio=%1").arg(ui->audioCombo->currentData().toString())
+                                                 QStringLiteral("dshow:audio=%1").arg(ui->audioCombo->currentData().toString())
                                                  .toLatin1().constData());
         if (p && p->is_valid() && audio->is_valid()) {
             Mlt::Tractor *tractor = new Mlt::Tractor;
@@ -131,12 +131,12 @@ Mlt::Producer *DirectShowVideoWidget::newProducer(Mlt::Profile &profile)
         delete p;
         p = new Mlt::Producer(profile, "color:");
         if (ui->videoCombo->currentIndex() > 0) {
-            p->set("resource", QString("dshow:video=%1")
+            p->set("resource", QStringLiteral("dshow:video=%1")
                    .arg(ui->videoCombo->currentData().toString())
                    .toUtf8().constData());
         }
         if (ui->audioCombo->currentIndex() > 0) {
-            QString resource = QString("dshow:audio=%1").arg(ui->audioCombo->currentData().toString());
+            QString resource = QStringLiteral("dshow:audio=%1").arg(ui->audioCombo->currentData().toString());
             if (ui->videoCombo->currentIndex() > 0) {
                 p->set("resource2", resource.toUtf8().constData());
             } else {

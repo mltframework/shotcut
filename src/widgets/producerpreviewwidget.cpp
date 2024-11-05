@@ -164,7 +164,7 @@ void ProducerPreviewWidget::timerEvent(QTimerEvent *)
         m_posLabel->setText(item.positionText);
     } else if (!m_generateFrames && m_timerId) {
         stop(false);
-        m_posLabel->setText(QString("<p><b><a href=\"restart\">%1</a></b></p>").arg(tr("Play")));
+        m_posLabel->setText(QStringLiteral("<p><b><a href=\"restart\">%1</a></b></p>").arg(tr("Play")));
     }
 }
 
@@ -201,7 +201,7 @@ void ProducerPreviewWidget::generateFrame()
     QueueItem item;
     item.pixmap.convertFromImage(image);
     item.position = position;
-    item.positionText = QString::fromLatin1(m_producer.frame_time()) + QString(" / ") +
+    item.positionText = QString::fromLatin1(m_producer.frame_time()) + QStringLiteral(" / ") +
                         QString::fromLatin1(m_producer.get_length_time());
     m_queue.push(item);
 

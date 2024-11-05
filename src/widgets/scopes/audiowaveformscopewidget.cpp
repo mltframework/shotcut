@@ -200,7 +200,7 @@ void AudioWaveformScopeWidget::createGrid(const QSize &size)
 
         y = graphBottomY(size, c, m_channels, m_graphTopPadding);
         textLoc.setY(y + labelHeight / 2);
-        textLoc.setX( (m_graphLeftPadding - fm.horizontalAdvance(zeroLabel)) / 2);
+        textLoc.setX((m_graphLeftPadding - fm.horizontalAdvance(zeroLabel)) / 2);
         p.drawText( textLoc, zeroLabel );
         lineBegin.setY(y);
         lineEnd.setY(y);
@@ -208,7 +208,7 @@ void AudioWaveformScopeWidget::createGrid(const QSize &size)
 
         y = graphCenterY(size, c, m_channels, m_graphTopPadding);
         textLoc.setY(y + labelHeight / 2);
-        textLoc.setX( (m_graphLeftPadding - fm.horizontalAdvance(infinityLabel)) / 2);
+        textLoc.setX((m_graphLeftPadding - fm.horizontalAdvance(infinityLabel)) / 2);
         p.drawText( textLoc, infinityLabel );
         lineBegin.setY(y);
         lineEnd.setY(y);
@@ -216,7 +216,7 @@ void AudioWaveformScopeWidget::createGrid(const QSize &size)
 
         y = graphTopY(size, c, m_channels, m_graphTopPadding);
         textLoc.setY(y + labelHeight / 2);
-        textLoc.setX( (m_graphLeftPadding - fm.horizontalAdvance(zeroLabel)) / 2);
+        textLoc.setX((m_graphLeftPadding - fm.horizontalAdvance(zeroLabel)) / 2);
         p.drawText( textLoc, zeroLabel );
         lineBegin.setY(y);
         lineEnd.setY(y);

@@ -46,16 +46,16 @@ Video4LinuxWidget::~Video4LinuxWidget()
 
 QString Video4LinuxWidget::URL() const
 {
-    QString s = QString("video4linux2:%1?width=%2&height=%3")
+    QString s = QStringLiteral("video4linux2:%1?width=%2&height=%3")
                 .arg(ui->v4lLineEdit->text())
                 .arg(ui->v4lWidthSpinBox->value())
                 .arg(ui->v4lHeightSpinBox->value());
     if (ui->v4lFramerateSpinBox->value() > 0)
-        s += QString("&framerate=%1").arg(ui->v4lFramerateSpinBox->value());
+        s += QStringLiteral("&framerate=%1").arg(ui->v4lFramerateSpinBox->value());
     if (ui->v4lStandardCombo->currentIndex() > 0)
-        s += QString("&standard=") + ui->v4lStandardCombo->currentText();
+        s += QStringLiteral("&standard=") + ui->v4lStandardCombo->currentText();
     if (ui->v4lChannelSpinBox->value() > 0)
-        s += QString("&channel=%1").arg(ui->v4lChannelSpinBox->value());
+        s += QStringLiteral("&channel=%1").arg(ui->v4lChannelSpinBox->value());
     return s;
 }
 
@@ -91,7 +91,7 @@ Mlt::Producer *Video4LinuxWidget::newProducer(Mlt::Profile &profile)
     if (!p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
-        p->set("resource1", QString("video4linux2:%1")
+        p->set("resource1", QStringLiteral("video4linux2:%1")
                .arg(ui->v4lLineEdit->text()).toLatin1().constData());
         p->set("error", 1);
     } else if (m_audioWidget) {
@@ -104,7 +104,7 @@ Mlt::Producer *Video4LinuxWidget::newProducer(Mlt::Profile &profile)
         delete audio;
         p = new Mlt::Producer(tractor->get_producer());
         delete tractor;
-        p->set("resource1", QString("video4linux2:%1")
+        p->set("resource1", QStringLiteral("video4linux2:%1")
                .arg(ui->v4lLineEdit->text()).toLatin1().constData());
     }
     p->set("device", ui->v4lLineEdit->text().toLatin1().constData());

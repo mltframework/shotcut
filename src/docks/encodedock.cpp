@@ -301,7 +301,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 }
             }
             if (!value.isEmpty())
-                other.append(QString("%1=%2").arg(name, value));
+                other.append(QStringLiteral("%1=%2").arg(name, value));
         } else if (name == "pass")
             ui->dualPassCheckbox->setChecked(true);
         else if (name == "v2pass")
@@ -376,7 +376,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         } else if (name != "an" && name != "vn" && name != "threads"
                    && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
                    && !name.startsWith('_') && !name.startsWith("qp_") && !name.startsWith("meta.preset.")) {
-            other.append(QString("%1=%2").arg(name, value));
+            other.append(QStringLiteral("%1=%2").arg(name, value));
         }
     }
     filterCodecParams(vcodec, other);
@@ -472,10 +472,10 @@ void EncodeDock::onProducerOpened()
             if (i.value().startsWith(markerStr)) {
                 comboText = i.value();
             } else {
-                comboText = QString("%1: %2").arg(tr("Marker"), i.value());
+                comboText = QStringLiteral("%1: %2").arg(tr("Marker"), i.value());
             }
             comboText = ui->fromCombo->fontMetrics().elidedText(comboText, Qt::ElideRight, 400);
-            ui->fromCombo->addItem(comboText, QString("marker:%1").arg(i.key()));
+            ui->fromCombo->addItem(comboText, QStringLiteral("marker:%1").arg(i.key()));
         }
     }
     ui->fromCombo->blockSignals(false);
@@ -551,7 +551,7 @@ void EncodeDock::loadPresets()
                         QString profile = textParts.at(0);
                         textParts.removeFirst();
                         if (m_profiles->get_data(profile.toLatin1().constData()))
-                            name = QString("%1 (%2)").arg(textParts.join('/'), profile);
+                            name = QStringLiteral("%1 (%2)").arg(textParts.join('/'), profile);
                     }
                 }
                 // Create a category node if the name includes a slash.
@@ -579,7 +579,8 @@ void EncodeDock::loadPresets()
                 QStandardItem *item = new QStandardItem(nameParts.join('/'));
                 item->setData(QString(m_presets->get_name(j)));
                 if (preset.get("meta.preset.note"))
-                    item->setToolTip(QString("<p>%1</p>").arg(QString::fromUtf8(preset.get("meta.preset.note"))));
+                    item->setToolTip(QStringLiteral("<p>%1</p>").arg(QString::fromUtf8(
+                                                                         preset.get("meta.preset.note"))));
                 parentItem->appendRow(item);
             }
         }
@@ -680,14 +681,14 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                     QString b = ui->videoBitrateCombo->currentText();
                     // x265 does not expect bitrate suffixes and requires Kb/s
                     b.replace('k', "").replace('M', "000");
-                    x265params = QString("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
+                    x265params = QStringLiteral("bitrate=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
                                  .arg(b).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(x265params);
                     setIfNotSet(p, "vb", b.toLatin1().constData());
                     setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
                     break;
                 }
                 case RateControlQuality: {
-                    x265params = QString("crf=%1:%2").arg(TO_ABSOLUTE(51, 0, vq)).arg(x265params);
+                    x265params = QStringLiteral("crf=%1:%2").arg(TO_ABSOLUTE(51, 0, vq)).arg(x265params);
                     // Also set crf property so that custom presets can be interpreted properly.
                     setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     break;
@@ -696,7 +697,7 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                     QString b = ui->videoBitrateCombo->currentText();
                     // x265 does not expect bitrate suffixes and requires Kb/s
                     b.replace('k', "").replace('M', "000");
-                    x265params = QString("crf=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
+                    x265params = QStringLiteral("crf=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
                                  .arg(TO_ABSOLUTE(51, 0, vq)).arg(int(ui->videoBufferSizeSpinner->value() * 8)).arg(b).arg(
                                      x265params);
                     // Also set properties so that custom presets can be interpreted properly.
@@ -706,14 +707,14 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                     break;
                 }
                 }
-                x265params = QString("keyint=%1:bframes=%2:%3").arg(ui->gopSpinner->value())
+                x265params = QStringLiteral("keyint=%1:bframes=%2:%3").arg(ui->gopSpinner->value())
                              .arg(ui->bFramesSpinner->value()).arg(x265params);
                 if (ui->strictGopCheckBox->isChecked()) {
-                    x265params = QString("scenecut=0:%1").arg(x265params);
+                    x265params = QStringLiteral("scenecut=0:%1").arg(x265params);
                     setIfNotSet(p, "sc_threshold", 0);
                 }
                 if (ui->scanModeCombo->currentIndex() == 0 && !x265params.contains("interlace=")) {
-                    x265params = QString("interlace=%1:%2").arg(
+                    x265params = QStringLiteral("interlace=%1:%2").arg(
                                      ui->fieldOrderCombo->currentIndex() ? "tff" : "bff", x265params);
                 }
                 // Also set some properties so that custom presets can be interpreted properly.
@@ -733,9 +734,9 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                     break;
                 }
                 case RateControlConstant: {
-                    encParams << QString("rc=2");
-                    encParams << QString("tbr=%1").arg(bitrate_text);
-                    encParams << QString("buf-sz=%1").arg(buffer_ms);
+                    encParams << QStringLiteral("rc=2");
+                    encParams << QStringLiteral("tbr=%1").arg(bitrate_text);
+                    encParams << QStringLiteral("buf-sz=%1").arg(buffer_ms);
                     setIfNotSet(p, "vb", bitrate_text.toLatin1().constData());
                     setIfNotSet(p, "vbufsize", buffer_bits);
                     break;
@@ -755,12 +756,12 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 setIfNotSet(p, "g", ui->gopSpinner->value());
 
                 if (ui->strictGopCheckBox->isChecked()) {
-                    encParams << QString("scd=0");
-                    encParams << QString("enable-dg=0");
+                    encParams << QStringLiteral("scd=0");
+                    encParams << QStringLiteral("enable-dg=0");
                     setIfNotSet(p, "sc_threshold", 0);
                 } else {
-                    encParams << QString("scd=1");
-                    encParams << QString("enable-dg=1");
+                    encParams << QStringLiteral("scd=1");
+                    encParams << QStringLiteral("enable-dg=1");
                     setIfNotSet(p, "sc_threshold", 1);
                 }
 
@@ -768,12 +769,12 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 // B-frame count, but we can control whether
                 // delta frames are bi-directional or not.
                 if (ui->bFramesSpinner->value() == 0)
-                    encParams << QString("pred-struct=1");
+                    encParams << QStringLiteral("pred-struct=1");
                 else
-                    encParams << QString("pred-struct=2");
+                    encParams << QStringLiteral("pred-struct=2");
                 setIfNotSet(p, "bf", ui->bFramesSpinner->value());
 
-                encParams << QString("lp=%1").arg(ui->videoCodecThreadsSpinner->value());
+                encParams << QStringLiteral("lp=%1").arg(ui->videoCodecThreadsSpinner->value());
 
                 // AV1 spec does not support interlacing.
                 setIfNotSet(p, "progressive", 1);
@@ -1046,10 +1047,11 @@ void EncodeDock::setSubtitleProperties(QDomElement &node, Mlt::Producer *service
     int subIndex = 0;
     for (int i = 0; i < service->filter_count(); i++) {
         QScopedPointer<Mlt::Filter> filter(service->filter(i));
-        if (filter  && filter->is_valid() && filter->get("mlt_service") == QString("subtitle_feed")) {
-            QString key = QString("subtitle.%1.feed").arg(subIndex);
+        if (filter  && filter->is_valid()
+                && filter->get("mlt_service") == QStringLiteral("subtitle_feed")) {
+            QString key = QStringLiteral("subtitle.%1.feed").arg(subIndex);
             node.setAttribute(key, filter->get("feed"));
-            key = QString("subtitle.%1.lang").arg(subIndex);
+            key = QStringLiteral("subtitle.%1.lang").arg(subIndex);
             node.setAttribute(key, filter->get("lang"));
             subIndex++;
         }
@@ -1071,16 +1073,16 @@ QPoint EncodeDock::addConsumerElement(Mlt::Producer *service, QDomDocument &dom,
     if ("libx265" == ui->videoCodecCombo->currentText()) {
         if (pass == 1 || pass == 2) {
             QString x265params = consumerNode.attribute("x265-params");
-            x265params = QString("pass=%1:stats=%2:%3")
+            x265params = QStringLiteral("pass=%1:stats=%2:%3")
                          .arg(pass).arg(QString(target).replace(":", "\\:") + "_2pass.log").arg(x265params);
             consumerNode.setAttribute("x265-params", x265params);
         }
     } else if ("libsvtav1" == ui->videoCodecCombo->currentText()) {
         if (pass == 1 || pass == 2) {
             QStringList encParams;
-            encParams << QString("passes=2");
-            encParams << QString("pass=%1").arg(pass);
-            encParams << QString("stats=%1").arg(QString(target).replace(":", "\\:") + "_2pass.log");
+            encParams << QStringLiteral("passes=2");
+            encParams << QStringLiteral("pass=%1").arg(pass);
+            encParams << QStringLiteral("stats=%1").arg(QString(target).replace(":", "\\:") + "_2pass.log");
             QString origParams = consumerNode.attribute("svtav1-params");
             if (!origParams.isEmpty())
                 encParams << origParams;
@@ -1135,7 +1137,7 @@ MeltJob *EncodeDock::convertReframe(Mlt::Producer *service, QTemporaryFile *tmp,
             reframeProfile.set_display_aspect(rect.w / gcd, rect.h / gcd);
             LOG_DEBUG() << "reframe profile" << reframeProfile.width() << "x" << reframeProfile.height();
             Mlt::Producer producer(reframeProfile, "consumer",
-                                   (QString("xml:%1").arg(tmp->fileName())).toUtf8().constData());
+                                   (QStringLiteral("xml:%1").arg(tmp->fileName())).toUtf8().constData());
             Mlt::Filter affine;
             auto rectPropertyName("rect");
             // TODO: GPU filters on the tractor do not work yet
@@ -1215,7 +1217,7 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target
                 codec == "targa" || codec == "tiff" || (codec == "mjpeg"
                                                         && ui->formatCombo->currentText() == "image2")) {
             QFileInfo fi(mytarget);
-            mytarget = QString("%1/%2-%05d.%3").arg(fi.path(), fi.baseName(), fi.completeSuffix());
+            mytarget = QStringLiteral("%1/%2-%05d.%3").arg(fi.path(), fi.baseName(), fi.completeSuffix());
         }
     }
 
@@ -1539,7 +1541,7 @@ void EncodeDock::encode(const QString &target)
     Mlt::Properties *p = collectProperties(-1);
     if (p && p->is_valid()) {
         for (int i = 0; i < p->count(); i++)
-            MLT.consumer()->set(QString("1.%1").arg(p->get_name(i)).toLatin1().constData(), p->get(i));
+            MLT.consumer()->set(QStringLiteral("1.%1").arg(p->get_name(i)).toLatin1().constData(), p->get(i));
     }
     delete p;
     if (ui->formatCombo->currentIndex() == 0 &&
@@ -1797,7 +1799,7 @@ void EncodeDock::on_encodeButton_clicked()
     auto projectBaseName = QFileInfo(MAIN.fileName()).completeBaseName();
     if (!m_extension.isEmpty()) {
         if (!MAIN.fileName().isEmpty()) {
-            directory += QString("/%1.%2").arg(projectBaseName, m_extension);
+            directory += QStringLiteral("/%1.%2").arg(projectBaseName, m_extension);
         }
     } else {
         if (!MAIN.fileName().isEmpty()) {
@@ -2037,7 +2039,7 @@ void EncodeDock::on_addPresetButton_clicked()
 
         for (int i = 0; i < data->count(); i++)
             if (strlen(data->get_name(i)) > 0)
-                ls << QString("%1=%2").arg(data->get_name(i), data->get(i));
+                ls << QStringLiteral("%1=%2").arg(data->get_name(i), data->get(i));
     }
 
     dialog.setWindowTitle(tr("Add Export Preset"));
@@ -2457,27 +2459,27 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
     const QString &vcodec = ui->videoCodecCombo->currentText();
     QString s;
     if (vcodec.startsWith("libx264") || vcodec == "libx265") {
-        s = QString("crf=%1").arg(TO_ABSOLUTE(51, 0, vq));
+        s = QStringLiteral("crf=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-") || vcodec == "libsvtav1") {
-        s = QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
+        s = QStringLiteral("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
     } else if (vcodec.contains("nvenc")) {
         vq = TO_ABSOLUTE(51, 0, vq);
         if (ui->videoRateControlCombo->currentIndex() == RateControlQuality)
-            s = QString("cq=%1 %2").arg(vq).arg(vq == 0 ? tr("(auto)") : "");
+            s = QStringLiteral("cq=%1 %2").arg(vq).arg(vq == 0 ? tr("(auto)") : "");
         else
-            s = QString("qmin=%1").arg(TO_ABSOLUTE(51, 0, vq));
+            s = QStringLiteral("qmin=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_amf")) {
-        s = QString("qp_i=qp_p=qp_b=%1").arg(TO_ABSOLUTE(51, 0, vq));
+        s = QStringLiteral("qp_i=qp_p=qp_b=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_vaapi")) {
-        s = QString("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 0, vq));
+        s = QStringLiteral("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_qsv")) {
-        s = QString("qscale=%1").arg(TO_ABSOLUTE(51, 1, vq));
+        s = QStringLiteral("qscale=%1").arg(TO_ABSOLUTE(51, 1, vq));
     } else if (vcodec.endsWith("_videotoolbox")) {
-        s = QString("qscale=%1").arg(vq);
+        s = QStringLiteral("qscale=%1").arg(vq);
     } else if (vcodec.startsWith("libwebp")) {
-        s = QString("qscale=%1").arg(TO_ABSOLUTE(0, 100, vq));
+        s = QStringLiteral("qscale=%1").arg(TO_ABSOLUTE(0, 100, vq));
     } else {
-        s = QString("qscale=%1").arg(TO_ABSOLUTE(31, 1, vq));
+        s = QStringLiteral("qscale=%1").arg(TO_ABSOLUTE(31, 1, vq));
     }
     ui->videoQualitySuffixLabel->setText(s);
 }
@@ -2752,7 +2754,7 @@ bool EncodeDock::checkForMissingFiles()
                                                   QStandardPaths::AppDataLocation) + "/"));
     } else {
         QFileInfo info(MAIN.fileName());
-        QString templateFileName = QString("%1.XXXXXX").arg(QCoreApplication::applicationName());
+        QString templateFileName = QStringLiteral("%1.XXXXXX").arg(QCoreApplication::applicationName());
         tmp.reset(new QTemporaryFile(info.dir().filePath(templateFileName)));
     }
     tmp->open();
