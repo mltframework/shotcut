@@ -116,7 +116,7 @@ public:
     {
         return m_profileGroup;
     }
-    void buildVideoModeMenu(QMenu *topMenu, QMenu * &customMenu, QActionGroup *group,
+    void buildVideoModeMenu(QMenu *topMenu, QMenu *&customMenu, QActionGroup *group,
                             QAction *addAction,
                             QAction *removeAction);
     void newProject(const QString &filename, bool isProjectFolder = false);

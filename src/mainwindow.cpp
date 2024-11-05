@@ -742,7 +742,8 @@ void MainWindow::setupMenuFile()
             filters << match.captured(1) + "*.mlt";
         else
             filters << QFileInfo(m_currentFile).baseName().split(" - ").first() + "*.mlt";
-        for (auto &fileInfo : dir.entryInfoList(filters, QDir::Files, QDir::Time)) {
+        for (auto &fileInfo : dir.entryInfoList(filters, QDir::Files, QDir::Time))
+        {
             auto filename = fileInfo.fileName();
             if (filename != name) {
                 auto text = filename;
@@ -2384,7 +2385,7 @@ QAction *MainWindow::actionProfileRemove() const
     return ui->actionProfileRemove;
 }
 
-void MainWindow::buildVideoModeMenu(QMenu *topMenu, QMenu * &customMenu, QActionGroup *group,
+void MainWindow::buildVideoModeMenu(QMenu *topMenu, QMenu *&customMenu, QActionGroup *group,
                                     QAction *addAction, QAction *removeAction)
 {
     topMenu->addAction(addProfile(group, "HD 720p 50 fps", "atsc_720p_50"));
@@ -5005,7 +5006,7 @@ void MainWindow::replaceAllByHash(const QString &hash, Mlt::Producer &producer, 
             // Append to playlist
             producer.set(kPlaylistIndexProperty, playlist()->count());
             MAIN.undoStack()->push(
-                    new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&producer)));
+                new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&producer)));
         }
     }
     if (isMultitrackValid()) {

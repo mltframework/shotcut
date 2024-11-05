@@ -816,8 +816,8 @@ void PlaylistDock::replaceClipsWithHash(const QString &hash, Mlt::Producer &prod
     for (auto &clip : producers) {
         Util::applyCustomProperties(producer, clip.parent(), clip.get_in(), clip.get_out());
         MAIN.undoStack()->push(
-                new Playlist::ReplaceCommand(m_model, MLT.XML(&producer),
-                                             clip.get_int(kPlaylistIndexProperty) - 1));
+            new Playlist::ReplaceCommand(m_model, MLT.XML(&producer),
+                                         clip.get_int(kPlaylistIndexProperty) - 1));
     }
     if (n > 1) {
         MAIN.undoStack()->endMacro();
@@ -1009,7 +1009,7 @@ void PlaylistDock::onAppendCutActionTriggered()
         if (!MLT.isLiveProducer(&producer)) {
             ProxyManager::generateIfNotExists(producer);
             MAIN.undoStack()->push(
-                    new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
+                new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
             setPlaylistIndex(&producer, m_model.playlist()->count() - 1);
             emit enableUpdate(true);
         } else {
