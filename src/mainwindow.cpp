@@ -1905,11 +1905,11 @@ void MainWindow::hideProducer()
 
 void MainWindow::closeProducer()
 {
+    QCoreApplication::processEvents();
     hideProducer();
     m_filterController->motionTrackerModel()->load();
-    MLT.stop();
     MLT.close();
-    MLT.setSavedProducer(0);
+    MLT.setSavedProducer(nullptr);
 }
 
 void MainWindow::showStatusMessage(QAction *action, int timeoutSeconds)
@@ -4265,6 +4265,8 @@ void MainWindow::on_actionClose_triggered()
         MLT.setProjectFolder(QString());
         ui->actionSave->setEnabled(false);
         MLT.stop();
+        MLT.consumer()->purge();
+        QCoreApplication::processEvents();
         if (multitrack())
             m_timelineDock->model()->close();
         if (playlist())
