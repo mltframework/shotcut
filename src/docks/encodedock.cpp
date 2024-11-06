@@ -2266,7 +2266,7 @@ void EncodeDock::on_videoBufferDurationChanged()
     QString vb = ui->videoBitrateCombo->currentText();
     vb.replace('k', "").replace('M', "000");
     double duration = (double)ui->videoBufferSizeSpinner->value() * 8.0 / vb.toDouble();
-    QString label = QString(tr("KiB (%1s)")).arg(duration);
+    QString label = tr("KiB (%1s)").arg(duration);
     ui->videoBufferSizeSuffixLabel->setText(label);
 }
 

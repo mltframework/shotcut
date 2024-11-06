@@ -202,7 +202,7 @@ void VideoZoomWidget::mouseMoveEvent(QMouseEvent *event)
     /*
         // Create a tool tip to display pixel information
         PixelValues values = pixelToValues(currMousePixel);
-        QString text =  QString(tr("Zoom: %1x\nPixel: %2,%3\nRGB: %4 %5 %6\nYUV: %7 %8 %9")).arg(
+        QString text =  tr("Zoom: %1x\nPixel: %2,%3\nRGB: %4 %5 %6\nYUV: %7 %8 %9").arg(
                             QString::number(m_zoom)).arg(
                             QString::number(currMousePixel.x() + 1)).arg(
                             QString::number(currMousePixel.y() + 1)).arg(

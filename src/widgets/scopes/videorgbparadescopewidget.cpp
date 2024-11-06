@@ -169,10 +169,10 @@ void VideoRgbParadeScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (frameWidth != 0) {
         int pixel = frameWidth * channelX / channelWidth;
-        text =  QString(tr("Channel: %1\nPixel: %2\nValue: %3")).arg(channelLabel).arg(QString::number(
-                                                                                           pixel)).arg(QString::number(value));
+        text =  tr("Channel: %1\nPixel: %2\nValue: %3").arg(channelLabel).arg(QString::number(
+                                                                                  pixel)).arg(QString::number(value));
     } else {
-        text =  QString(tr("Channel: %1\nValue: %2")).arg(channelLabel).arg(QString::number(value));
+        text =  tr("Channel: %1\nValue: %2").arg(channelLabel).arg(QString::number(value));
     }
     QToolTip::showText(event->globalPosition().toPoint(), text);
 }

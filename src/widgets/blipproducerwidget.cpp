@@ -84,5 +84,5 @@ void BlipProducerWidget::on_preset_saveClicked()
 
 QString BlipProducerWidget::detail() const
 {
-    return QString(tr("Period: %1s")).arg(ui->periodSpinBox->value());
+    return tr("Period: %1s").arg(ui->periodSpinBox->value());
 }

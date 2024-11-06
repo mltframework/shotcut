@@ -219,6 +219,6 @@ void CountProducerWidget::on_preset_saveClicked()
 
 QString CountProducerWidget::detail() const
 {
-    return QString(tr("Count: %1 %2")).arg(ui->directionCombo->currentText()).arg(
+    return tr("Count: %1 %2").arg(ui->directionCombo->currentText()).arg(
                ui->styleCombo->currentText());
 }
