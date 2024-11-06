@@ -93,6 +93,6 @@ void ToneProducerWidget::on_preset_saveClicked()
 
 QString ToneProducerWidget::detail() const
 {
-    return QString(tr("Tone: %1Hz %2dB")).arg(ui->frequencySpinBox->value()).arg(
+    return tr("Tone: %1Hz %2dB").arg(ui->frequencySpinBox->value()).arg(
                ui->levelSpinBox->value());
 }

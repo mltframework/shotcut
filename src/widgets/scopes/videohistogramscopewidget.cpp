@@ -196,9 +196,9 @@ void VideoHistogramScopeWidget::mouseMoveEvent(QMouseEvent *event)
         qreal ire0x = width() * IRE0 / 256;
         qreal ireStep = (ire0x - ire100x) / 100.0;
         int ire = (ire0x - event->pos().x()) / ireStep;
-        text = QString(tr("Value: %1\nIRE: %2")).arg(QString::number(value), QString::number(ire));
+        text = tr("Value: %1\nIRE: %2").arg(QString::number(value), QString::number(ire));
     } else {
-        text = QString(tr("Value: %1")).arg(QString::number(value));
+        text = tr("Value: %1").arg(QString::number(value));
     }
 
     QToolTip::showText(event->globalPosition().toPoint(), text);

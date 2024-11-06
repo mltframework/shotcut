@@ -241,8 +241,8 @@ void VideoVectorScopeWidget::mouseMoveEvent(QMouseEvent *event)
     qreal realY = (qreal)event->pos().y() - ((qreal)height() - squareRect.height()) / 2;
     qreal u = realX * 255.0 / squareRect.width();
     qreal v = (squareRect.height() - realY) * 255.0 / squareRect.height();
-    QString text =  QString(tr("U: %1\nV: %2")).arg(QString::number(qRound(u)),
-                                                    QString::number(qRound(v)));
+    QString text =  tr("U: %1\nV: %2").arg(QString::number(qRound(u)),
+                                           QString::number(qRound(v)));
     QToolTip::showText(event->globalPosition().toPoint(), text);
 }
 

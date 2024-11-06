@@ -294,7 +294,7 @@ QVariant ResourceModel::data(const QModelIndex &index, int role) const
             QString path = Util::GetFilenameFromProducer(producer, true);
             QFileInfo info(path);
             double size = (double)info.size() / (double)(1024 * 1024);
-            result = QString(tr("%1MB")).arg(QLocale().toString(size, 'f', 2));
+            result = tr("%1MB").arg(QLocale().toString(size, 'f', 2));
             break;
         }
         case COLUMN_VID_DESCRIPTION: {
@@ -309,7 +309,7 @@ QVariant ResourceModel::data(const QModelIndex &index, int role) const
                     QString key = QStringLiteral("meta.media.%1.codec.name").arg(index);
                     QString codec(producer->get(key.toLatin1().constData()));
                     double frame_rate = frame_rate_num / frame_rate_den;
-                    result = QString(tr("%1 %2x%3 %4fps"))
+                    result = tr("%1 %2x%3 %4fps")
                              .arg(codec)
                              .arg(width)
                              .arg(height)
