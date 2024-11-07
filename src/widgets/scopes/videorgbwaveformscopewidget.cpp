@@ -155,9 +155,9 @@ void VideoRgbWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (frameWidth != 0) {
         int pixel = frameWidth * event->pos().x() / width();
-        text =  tr("Pixel: %1\nValue: %2").arg(QString::number(pixel)).arg(QString::number(value));
+        text =  tr("Pixel: %1\nValue: %2").arg(pixel).arg(value);
     } else {
-        text =  tr("Value: %1").arg(QString::number(value));
+        text =  tr("Value: %1").arg(value);
     }
     QToolTip::showText(event->globalPosition().toPoint(), text);
 }

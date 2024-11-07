@@ -259,15 +259,15 @@ void AudioWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
     qreal position = (qreal)event->pos().x() / (qreal)width();
     int sample = (qreal)samples * position;
-    QString text = tr("Sample: %1\n").arg(QString::number(sample + 1));
+    QString text = tr("Sample: %1\n").arg(sample + 1);
 
     for (int c = 0; c < channels; c++) {
         const int16_t *q = audio + (channels * sample) + c;
         qreal scaledValue = (qreal) * q / MAX_AMPLITUDE;
         qreal dbValue = 20 * log(fabs(scaledValue));
         if (dbValue < 0.01 && dbValue > -0.01) dbValue = 0.0;
-        text += tr("Ch: %1: %2 (%3 dBFS)").arg(QString::number(c + 1), QString::number(scaledValue, 'f', 2),
-                                               QString::number(dbValue, 'f', 2));
+        text += tr("Ch: %1: %2 (%3 dBFS)").arg(c + 1).arg(scaledValue, 0, 'f', 2)
+                .arg(dbValue, 0, 'f', 2);
         if ( c != channels - 1 ) {
             text += "\n";
         }

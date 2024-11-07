@@ -148,8 +148,7 @@ void VideoHistogramScopeWidget::drawHistogram(QPainter &p, QString title, QColor
     p.setPen(pen);
     QString text;
     if (maxLevel > minValue)
-        text = QStringLiteral("%1\tMin: %2\tMax: %3").arg(title, QString::number(minValue),
-                                                          QString::number(maxValue));
+        text = QStringLiteral("%1\tMin: %2\tMax: %3").arg(title).arg(minValue).arg(maxValue);
     else
         text = title;
     p.drawText(textpad, rect.y() + fm.height() + textpad, text);
@@ -196,9 +195,9 @@ void VideoHistogramScopeWidget::mouseMoveEvent(QMouseEvent *event)
         qreal ire0x = width() * IRE0 / 256;
         qreal ireStep = (ire0x - ire100x) / 100.0;
         int ire = (ire0x - event->pos().x()) / ireStep;
-        text = tr("Value: %1\nIRE: %2").arg(QString::number(value), QString::number(ire));
+        text = tr("Value: %1\nIRE: %2").arg(value).arg(ire);
     } else {
-        text = tr("Value: %1").arg(QString::number(value));
+        text = tr("Value: %1").arg(value);
     }
 
     QToolTip::showText(event->globalPosition().toPoint(), text);
