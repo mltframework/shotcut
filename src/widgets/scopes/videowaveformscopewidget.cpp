@@ -140,9 +140,9 @@ void VideoWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (frameWidth != 0) {
         int pixel = frameWidth * event->pos().x() / width();
-        text =  tr("Pixel: %1\nIRE: %2").arg(QString::number(pixel), QString::number(ire));
+        text =  tr("Pixel: %1\nIRE: %2").arg(pixel).arg(ire);
     } else {
-        text =  tr("IRE: %1").arg(QString::number(ire));
+        text =  tr("IRE: %1").arg(ire);
     }
     QToolTip::showText(event->globalPosition().toPoint(), text);
 }
