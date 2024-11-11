@@ -3252,13 +3252,14 @@ bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
     QString notes = m_notesDock->getText();
     if (m_timelineDock->model()->rowCount() > 0) {
         result = MLT.saveXML(filename, multitrack(), withRelativePaths, nullptr, false, notes);
-    } else if (m_playlistDock->model()->rowCount() > 0) {
+    } else if (m_playlistDock->model()->rowCount() > 0 && MLT.producer()
+               && MLT.producer()->is_valid()) {
         int in = MLT.producer()->get_in();
         int out = MLT.producer()->get_out();
         MLT.producer()->set_in_and_out(0, MLT.producer()->get_length() - 1);
         result = MLT.saveXML(filename, playlist(), withRelativePaths, nullptr, false, notes);
         MLT.producer()->set_in_and_out(in, out);
-    } else if (MLT.producer()) {
+    } else if (MLT.producer() && MLT.producer()->is_valid()) {
         result = MLT.saveXML(filename, (MLT.isMultitrack()
                                         || MLT.isPlaylist()) ? MLT.savedProducer() : 0, withRelativePaths, nullptr, false, notes);
     } else {
@@ -4266,7 +4267,8 @@ void MainWindow::on_actionClose_triggered()
         MLT.setProjectFolder(QString());
         ui->actionSave->setEnabled(false);
         MLT.stop();
-        MLT.consumer()->purge();
+        if (MLT.consumer() && MLT.consumer()->is_valid())
+            MLT.consumer()->purge();
         QCoreApplication::processEvents();
         if (multitrack())
             m_timelineDock->model()->close();
