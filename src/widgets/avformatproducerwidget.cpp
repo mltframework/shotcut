@@ -42,6 +42,7 @@
 #include <limits>
 
 static const auto kHandleSeconds = 15.0;
+static const auto kAbsoluteAudioIndex = "audio_index";
 
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
@@ -437,13 +438,13 @@ void AvformatProducerWidget::reloadProducerValues()
     if (populateTrackCombos && ui->audioTrackComboBox->count() > 2)
         ui->audioTrackComboBox->addItem(tr("All"), "all");
 
-    if (m_producer->get("audio_index") == QStringLiteral("-1")) {
+    if (m_producer->get(kAbsoluteAudioIndex) == QStringLiteral("-1")) {
         ui->audioTrackComboBox->setCurrentIndex(0);
         ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(""));
         ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem("0"));
         ui->audioTableWidget->setItem(2, 1, new QTableWidgetItem(""));
         ui->audioTableWidget->setItem(3, 1, new QTableWidgetItem(""));
-    } else if (m_producer->get("audio_index") == QStringLiteral("all")) {
+    } else if (m_producer->get(kAbsoluteAudioIndex) == QStringLiteral("all")) {
         ui->audioTrackComboBox->setCurrentIndex(ui->audioTrackComboBox->count() - 1);
         ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(""));
         ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem(QString::number(totalAudioChannels)));
@@ -567,8 +568,10 @@ void AvformatProducerWidget::on_audioTrackComboBox_activated(int index)
     if (m_producer) {
         // Save the default audio index for AudioLevelsTask.
         if (!m_producer->get(kDefaultAudioIndexProperty)) {
-            m_producer->set(kDefaultAudioIndexProperty, m_producer->get_int("audio_index"));
+            m_producer->set(kDefaultAudioIndexProperty, m_producer->get_int(kAbsoluteAudioIndex));
         }
+        if (!qstrcmp(m_producer->get(kAbsoluteAudioIndex), "all"))
+            m_producer->Mlt::Properties::clear(kAbsoluteAudioIndex);
         m_producer->set(kAudioIndexProperty,
                         ui->audioTrackComboBox->itemData(index).toString().toUtf8().constData());
         recreateProducer(true);
@@ -885,10 +888,10 @@ void AvformatProducerWidget::on_reverseButton_clicked()
                            ui->fieldOrderComboBox->currentIndex());
 
         meltArgs << "-consumer" << "avformat";
-        if (m_producer->get_int("audio_index") == -1) {
+        if (m_producer->get_int(kAbsoluteAudioIndex) == -1) {
             meltArgs << "an=1" << "audio_off=1";
-        } else if (qstrcmp(m_producer->get("audio_index"), "all")) {
-            int index = m_producer->get_int("audio_index");
+        } else if (qstrcmp(m_producer->get(kAbsoluteAudioIndex), "all")) {
+            int index = m_producer->get_int(kAbsoluteAudioIndex);
             QString key = QStringLiteral("meta.media.%1.codec.channels").arg(index);
             const char *channels = m_producer->get(key.toLatin1().constData());
             meltArgs << QStringLiteral("channels=").append(channels);
