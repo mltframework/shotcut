@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2023 Meltytech, LLC
+ * Copyright (c) 2011-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 #include "scrubbar.h"
 #include "mltcontroller.h"
+#include "settings.h"
 
 #include <QToolTip>
 #include <QtWidgets>
@@ -171,7 +172,7 @@ void ScrubBar::mouseMoveEvent(QMouseEvent *event)
         }
         emit seeked(pos);
     } else if (event->buttons() == Qt::NoButton && MLT.producer()) {
-        QString text = QString::fromLatin1(MLT.producer()->frames_to_time(pos));
+        QString text = QString::fromLatin1(MLT.producer()->frames_to_time(pos, Settings.timeFormat()));
         QToolTip::showText(event->globalPosition().toPoint(), text);
     }
 }
@@ -305,12 +306,13 @@ void ScrubBar::updatePixmap()
     }
 
     // draw timecode
+    const auto timeFormat = Settings.timeFormat();
     if (l_interval > l_timecodeWidth && MLT.producer()) {
         int x = l_margin;
         for (int i = 0; x < l_width - l_margin - l_timecodeWidth; i++, x += l_interval) {
             int y = l_selectionSize + fontMetrics().ascent() - 2 * ratio;
             int frames = qRound(i * m_fps * m_secondsPerTick);
-            p.drawText(x + 2 * ratio, y, QString(MLT.producer()->frames_to_time(frames)).left(8));
+            p.drawText(x + 2 * ratio, y, QString(MLT.producer()->frames_to_time(frames, timeFormat)).left(8));
         }
     }
 

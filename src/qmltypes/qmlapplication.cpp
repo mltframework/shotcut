@@ -142,7 +142,7 @@ void QmlApplication::pasteFilters()
 QString QmlApplication::clockFromFrames(int frames)
 {
     if (MLT.producer()) {
-        return MLT.producer()->frames_to_time(frames, mlt_time_clock);
+        return MLT.producer()->frames_to_time(frames, Settings.timeFormat());
     }
     return QString();
 }
