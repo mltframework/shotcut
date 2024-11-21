@@ -101,8 +101,8 @@ jobs:
           aws s3 cp s3://misc.meltymedia/shotcut-build/CodeSignCertificates.pass ./ --no-progress
           for EXE in Shotcut/*.exe; do
             echo Signing ${EXE}
-            osslsigncode sign -pkcs12 CodeSignCertificates2023.p12 -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in ${EXE}.exe -out ${EXE}-signed.exe
-            mv ${EXE}-signed.exe ${EXE}.exe
+            osslsigncode sign -pkcs12 CodeSignCertificates2023.p12 -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in ${EXE} -out signed-${EXE}
+            mv signed-${EXE} ${EXE}
           done
           echo Packaging the portable zip
           zip -gr shotcut-win64-$FILENAME_VERSION.zip Shotcut
