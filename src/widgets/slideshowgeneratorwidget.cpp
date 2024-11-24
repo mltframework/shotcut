@@ -183,9 +183,12 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
     // Copy clips
     for (int i = 0; i < count; i++) {
         Mlt::ClipInfo *c = m_clips->clip_info(i, &info);
-        if (c) {
+        if (c && c->producer && c->producer->is_valid()) {
+            auto out = c->frame_in + framesPerClip - 1;
+            if (QString::fromLatin1(c->producer->get("mlt_service")).startsWith("avformat"))
+                out = qMin(c->frame_out, out);
             Mlt::Producer producer(MLT.profile(), "xml-string", MLT.XML(c->producer).toUtf8().constData());
-            slideshow->append(producer, c->frame_in, c->frame_in + framesPerClip - 1);
+            slideshow->append(producer, c->frame_in, out);
         }
     }
 
