@@ -74,7 +74,9 @@ public:
         const QImage thumb = index.data(Qt::DecorationRole).value<QImage>();
         const QString setting = Settings.playlistThumbnails();
         const int lineHeight = painter->fontMetrics().height();
-        const bool roomEnoughForAllDetails = lineHeight * 3 < thumb.height() + kTilePaddingPx;
+        const QStringList nameParts = index.data(Qt::DisplayRole).toString().split('\n');
+        const bool roomEnoughForAllDetails = nameParts.size() == 1
+                                             && lineHeight * 3 < thumb.height() + kTilePaddingPx;
         const QFont oldFont = painter->font();
         QFont boldFont(oldFont);
         boldFont.setBold(true);
@@ -110,7 +112,6 @@ public:
         QPoint textPoint = textRect.topLeft();
         textPoint.setY(textPoint.y() + lineHeight);
         painter->setFont(boldFont);
-        QStringList nameParts = index.data(Qt::DisplayRole).toString().split('\n');
         painter->drawText(textPoint,
                           painter->fontMetrics().elidedText(nameParts.first(), Qt::ElideMiddle, textRect.width()));
         painter->setFont(oldFont);
