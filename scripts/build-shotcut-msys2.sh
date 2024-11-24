@@ -68,6 +68,11 @@ ENABLE_WHISPERCPP=1
 WHISPERCPP_HEAD=1
 WHISPERCPP_REVISION=
 
+PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
+PYTHON_VERSION_DLL=$(python3 --version | awk '{split($2, parts, "."); print parts[1]parts[2]}')
+
+QT_VERSION_X64="6.7.2"
+
 ################################################################################
 # Location of config file - if not overridden on command line
 CONFIGFILE=build-shotcut.conf
@@ -342,7 +347,7 @@ function set_globals {
     QT_LIB_DIR="$QTDIR/lib"
     QT_SHARE_DIR="$QTDIR/share/qt6"
   else
-    export QTDIR="$HOME/Qt/6.7.2/mingw_64"
+    export QTDIR="$HOME/Qt/$QT_VERSION_X64/mingw_64"
     QT_INCLUDE_DIR="$QTDIR/include"
     QT_LIB_DIR="$QTDIR/lib"
     QT_SHARE_DIR="$QTDIR"
@@ -1238,12 +1243,12 @@ function deploy
   done
 
   log Copying some DLLs and python libraries for Glaxnimate
-  cmd cp -p /${TARGET_ARCH}/bin/libpython3.11.dll python311.dll
+  cmd cp -p /${TARGET_ARCH}/bin/libpython${PYTHON_VERSION}.dll python${PYTHON_VERSION_DLL}.dll
   cmd cp -p "$SOURCE_DIR"/glaxnimate/external/Qt-Color-Widgets/libQtColorWidgets.dll .
   cmd mkdir -p share/glaxnimate/glaxnimate/pythonhome/lib/python
-  cmd cp -r /${TARGET_ARCH}/lib/python3.11/*.py \
-            /${TARGET_ARCH}/lib/python3.11/lib-dynload/* \
-            /${TARGET_ARCH}/lib/python3.11/{json,collections,encodings,logging,urllib} \
+  cmd cp -r /${TARGET_ARCH}/lib/python${PYTHON_VERSION}/*.py \
+            /${TARGET_ARCH}/lib/python${PYTHON_VERSION}/lib-dynload/* \
+            /${TARGET_ARCH}/lib/python${PYTHON_VERSION}/{json,collections,encodings,logging,urllib} \
       share/glaxnimate/glaxnimate/pythonhome/lib/python
 
   log Copying some libs from mlt-prebuilt

@@ -107,6 +107,7 @@ WHISPERCPP_REVISION=
 
 PYTHON_VERSION_DEFAULT=3.8
 PYTHON_VERSION_DARWIN=3.11
+PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
 
 QT_VERSION_DEFAULT=6.4.3
 QT_VERSION_DARWIN=6.7.2
@@ -1072,7 +1073,7 @@ function set_globals {
   CONFIG[24]="cmake -G Ninja -DCMAKE_PREFIX_PATH='$FINAL_INSTALL_DIR;$QTDIR' -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[24]="${CONFIG[24]} -DCMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
-    CONFIG[24]="${CONFIG[24]} -DPython3_EXECUTABLE=/opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/bin/python${PYTHON_VERSION_DARWIN}"
+    CONFIG[24]="${CONFIG[24]} -DPython3_EXECUTABLE=/opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION}/bin/python${PYTHON_VERSION_DARWIN}"
   fi
   CFLAGS_[24]="$ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[24]="$ASAN_LDFLAGS $LDFLAGS"
