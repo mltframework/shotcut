@@ -658,6 +658,10 @@ void MainWindow::setupAndConnectDocks()
             m_encodeDock->onReframeChanged();
         }
     });
+    connect(m_filterController->attachedModel(), &AttachedFiltersModel::addedOrRemoved,
+    this, [&](Mlt::Producer * producer) {
+        m_encodeDock->onReframeChanged();
+    });
 
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();

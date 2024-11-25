@@ -1975,6 +1975,8 @@ void EncodeDock::onReframeChanged()
                 ui->aspectDenSpinner->setValue(rect.h / gcd);
             }
         }
+    } else {
+        setReframeEnabled(false);
     }
 }
 
