@@ -86,7 +86,8 @@ QDir Database::thumbnailsDir()
                         auto accessed = query.value(1).toDateTime();
                         auto offset = accessed.timeZone().offsetFromUtc(accessed);
                         struct utimbuf utimes {
-                            accessed.toSecsSinceEpoch() + offset, accessed.toSecsSinceEpoch() + offset
+                            static_cast<time_t>(accessed.toSecsSinceEpoch() + offset),
+                                        static_cast<time_t>(accessed.toSecsSinceEpoch() + offset)
                         };
                         ::utime(dir.filePath(fileName).toUtf8().constData(), &utimes);
                     }
