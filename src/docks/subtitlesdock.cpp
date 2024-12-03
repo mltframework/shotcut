@@ -60,7 +60,8 @@
 
 static int64_t positionToMs(mlt_position position)
 {
-    return position * 1000 * MLT.profile().frame_rate_den() / MLT.profile().frame_rate_num();
+    auto seconds = position / MLT.profile().fps();
+    return 1000 * seconds;
 }
 
 static mlt_position msToPosition(int64_t ms)
