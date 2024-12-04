@@ -152,7 +152,7 @@
       </item>
       <item>
        <widget class="QWidget" name="widget" native="true">
-        <layout class="QGridLayout" name="gridLayout">
+        <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,100">
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
@@ -171,7 +171,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
-             <height>40</height>
+             <height>20</height>
             </size>
            </property>
           </spacer>
@@ -340,7 +340,7 @@ a project file with the same name.</string>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>95</height>
+       <height>20</height>
       </size>
      </property>
     </spacer>
