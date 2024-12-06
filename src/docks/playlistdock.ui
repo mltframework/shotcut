@@ -37,7 +37,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -71,6 +71,9 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="page_2">
        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -83,6 +86,16 @@ p, li { white-space: pre-wrap; }
         <property name="bottomMargin">
          <number>0</number>
         </property>
+        <item>
+         <widget class="LineEditClear" name="lineEdit">
+          <property name="toolTip">
+           <string>Show only files with name matching text</string>
+          </property>
+          <property name="placeholderText">
+           <string>search</string>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="PlaylistTable" name="tableView">
           <property name="contextMenuPolicy">
@@ -144,6 +157,11 @@ p, li { white-space: pre-wrap; }
    <class>PlaylistListView</class>
    <extends>QListView</extends>
    <header>widgets/playlistlistview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LineEditClear</class>
+   <extends>QLineEdit</extends>
+   <header>widgets/lineeditclear.h</header>
   </customwidget>
  </customwidgets>
  <resources>

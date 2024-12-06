@@ -48,6 +48,7 @@
 #include <QGuiApplication>
 #include <QClipboard>
 #include <QActionGroup>
+#include <QSortFilterProxyModel>
 
 static const auto kInOutChangedTimeoutMs = 100;
 static const auto kTilePaddingPx = 10;
@@ -92,16 +93,6 @@ public:
         thumbRect.moveCenter(option.rect.center());
         thumbRect.moveLeft(0);
         painter->drawImage(thumbRect, thumb);
-
-        const QPoint indexPos = option.rect.topLeft() + QPoint(5, 20);
-        const QString indexStr = "#" + index.data(PlaylistModel::FIELD_INDEX).toString();
-        painter->setFont(boldFont);
-        painter->setPen(option.palette.color(QPalette::Dark).darker());
-        painter->drawText(indexPos, indexStr);
-        painter->setPen(option.palette.color(QPalette::WindowText));
-        painter->drawText(indexPos - QPoint(1, 1), indexStr);
-        painter->setFont(oldFont);
-
         QRect centeredTextRect = option.rect;
         centeredTextRect.setHeight(lineHeight * (roomEnoughForAllDetails ? 3 : 2) + kTilePaddingPx);
         centeredTextRect.moveCenter(option.rect.center());
@@ -160,7 +151,12 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
 
-    m_selectionModel = new QItemSelectionModel(&m_model, this);
+    m_proxyModel = new QSortFilterProxyModel(this);
+    m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    m_proxyModel->setSourceModel(&m_model);
+    m_proxyModel->setFilterKeyColumn(-1);
+
+    m_selectionModel = new QItemSelectionModel(m_proxyModel, this);
     connect(m_selectionModel, &QItemSelectionModel::selectionChanged, this,
             &PlaylistDock::selectionChanged);
 
@@ -245,7 +241,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     views << ui->tableView;
     views << ui->listView;
     views << m_iconsView;
-    foreach (QAbstractItemView *view, views) {
+    for (auto view : views) {
         view->setDragDropMode(QAbstractItemView::DragDrop);
         view->setDropIndicatorShown(true);
         view->setDragDropOverwriteMode(false);
@@ -429,7 +425,7 @@ void PlaylistDock::setupActions()
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &PlaylistDock::onUpdateThumbnailsActionTriggered);
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 0);
+        action->setEnabled(m_proxyModel->rowCount() > 0);
     });
     Actions.add("playlistUpdateThumbnailsAction", action);
 
@@ -450,7 +446,7 @@ void PlaylistDock::setupActions()
     action = new QAction(tr("Select All"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_A));
     connect(action, &QAction::triggered, this, &PlaylistDock::onSelectAllActionTriggered);
-    action->setEnabled(m_model.rowCount() > 0);
+    action->setEnabled(m_proxyModel->rowCount() > 0);
     Actions.add("playlistSelectAllAction", action);
 
     action = new QAction(tr("Select None"), this);
@@ -632,7 +628,7 @@ void PlaylistDock::setupActions()
         setIndex(0);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 0);
+        action->setEnabled(m_proxyModel->rowCount() > 0);
     });
     Actions.add("playlistSelectClip1Action", action);
     \
@@ -645,7 +641,7 @@ void PlaylistDock::setupActions()
         setIndex(1);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 1);
+        action->setEnabled(m_proxyModel->rowCount() > 1);
     });
     Actions.add("playlistSelectClip2Action", action);
 
@@ -657,7 +653,7 @@ void PlaylistDock::setupActions()
         setIndex(2);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 2);
+        action->setEnabled(m_proxyModel->rowCount() > 2);
     });
     Actions.add("playlistSelectClip3Action", action);
 
@@ -669,7 +665,7 @@ void PlaylistDock::setupActions()
         setIndex(3);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 3);
+        action->setEnabled(m_proxyModel->rowCount() > 3);
     });
     Actions.add("playlistSelectClip4Action", action);
 
@@ -681,7 +677,7 @@ void PlaylistDock::setupActions()
         setIndex(4);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 4);
+        action->setEnabled(m_proxyModel->rowCount() > 4);
     });
     Actions.add("playlistSelectClip5Action", action);
 
@@ -693,7 +689,7 @@ void PlaylistDock::setupActions()
         setIndex(5);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 5);
+        action->setEnabled(m_proxyModel->rowCount() > 5);
     });
     Actions.add("playlistSelectClip6Action", action);
 
@@ -705,7 +701,7 @@ void PlaylistDock::setupActions()
         setIndex(6);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 6);
+        action->setEnabled(m_proxyModel->rowCount() > 6);
     });
     Actions.add("playlistSelectClip7Action", action);
 
@@ -717,7 +713,7 @@ void PlaylistDock::setupActions()
         setIndex(7);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 7);
+        action->setEnabled(m_proxyModel->rowCount() > 7);
     });
     Actions.add("playlistSelectClip8Action", action);
 
@@ -729,7 +725,7 @@ void PlaylistDock::setupActions()
         setIndex(8);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_model.rowCount() > 8);
+        action->setEnabled(m_proxyModel->rowCount() > 8);
     });
     Actions.add("playlistSelectClip9Action", action);
 
@@ -791,7 +787,7 @@ void PlaylistDock::setupActions()
 int PlaylistDock::position()
 {
     int result = -1;
-    QModelIndex index = m_view->currentIndex();
+    QModelIndex index = m_proxyModel->mapToSource(m_view->currentIndex());
     if (index.isValid() && m_model.playlist()) {
         Mlt::ClipInfo *i = m_model.playlist()->clip_info(index.row());
         if (i) result = i->start;
@@ -837,8 +833,8 @@ void PlaylistDock::getSelectionRange(int *start, int *end)
     // Find the earliest start and the latest end in the selection
     *start = std::numeric_limits<int>::max();
     *end = -1;
-    foreach (auto index, m_view->selectionModel()->selectedIndexes()) {
-        int row = index.row();
+    for (const auto &index : m_view->selectionModel()->selectedIndexes()) {
+        int row = m_proxyModel->mapToSource(index).row();
         int clipStart = playlist->clip_start(row);
         int clipEnd = clipStart + playlist->clip_length(row);
         *start = qMin(*start, clipStart);
@@ -848,7 +844,7 @@ void PlaylistDock::getSelectionRange(int *start, int *end)
 
 void PlaylistDock::incrementIndex()
 {
-    QModelIndex index = m_view->currentIndex();
+    QModelIndex index = m_proxyModel->mapToSource(m_view->currentIndex());
     if (!index.isValid())
         index = m_model.createIndex(0, 0);
     else
@@ -859,7 +855,7 @@ void PlaylistDock::incrementIndex()
 
 void PlaylistDock::decrementIndex()
 {
-    QModelIndex index = m_view->currentIndex();
+    QModelIndex index = m_proxyModel->mapToSource(m_view->currentIndex());
     if (!index.isValid())
         index = m_model.createIndex(0, 0);
     else
@@ -870,14 +866,14 @@ void PlaylistDock::decrementIndex()
 
 void PlaylistDock::setIndex(int row)
 {
-    QModelIndex index = m_model.createIndex(row, 0);
+    const auto index = m_proxyModel->index(row, 0);
     if (index.isValid())
         m_view->setCurrentIndex(index);
 }
 
 void PlaylistDock::moveClipUp()
 {
-    int row = m_view->currentIndex().row();
+    int row = m_proxyModel->mapToSource(m_view->currentIndex()).row();
     if (row > 0) {
         MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, row, row - 1));
         resetPlaylistIndex();
@@ -886,7 +882,7 @@ void PlaylistDock::moveClipUp()
 
 void PlaylistDock::moveClipDown()
 {
-    int row = m_view->currentIndex().row();
+    int row = m_proxyModel->mapToSource(m_view->currentIndex()).row();
     if (row + 1 < m_model.rowCount()) {
         MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, row, row + 1));
         resetPlaylistIndex();
@@ -999,7 +995,8 @@ void PlaylistDock::onInsertCutActionTriggered()
         QMimeData mimeData;
         mimeData.setData(Mlt::XmlMimeType, MLT.XML(
                              MLT.isClip() ? nullptr : MLT.savedProducer()).toUtf8());
-        onDropped(&mimeData, m_view->currentIndex().row());
+        auto index = m_proxyModel->mapToSource(m_view->currentIndex());
+        onDropped(&mimeData, index.row());
     }
 }
 
@@ -1030,7 +1027,7 @@ void PlaylistDock::onAppendCutActionTriggered()
 
 void PlaylistDock::onUpdateActionTriggered()
 {
-    QModelIndex index = m_view->currentIndex();
+    QModelIndex index = m_proxyModel->mapToSource(m_view->currentIndex());
     if (!index.isValid() || !m_model.playlist() || MAIN.isSourceClipMyProject()) return;
     QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
     Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
@@ -1071,16 +1068,16 @@ void PlaylistDock::onRemoveActionTriggered()
     int n = m_view->selectionModel()->selectedIndexes().size();
     if (n > 1)
         MAIN.undoStack()->beginMacro(tr("Remove %n playlist items", nullptr, n));
-    foreach (auto index, m_view->selectionModel()->selectedIndexes()) {
-        int row = index.row();
+    for (const auto &index : m_view->selectionModel()->selectedIndexes()) {
+        int row = m_proxyModel->mapToSource(index).row();
         if (!rowsRemoved.contains(row)) {
             int adjustment = 0;
-            foreach (int i, rowsRemoved) {
+            for (const int i : rowsRemoved) {
                 if (row > i)
                     --adjustment;
             }
+            rowsRemoved << row;
             row += adjustment;
-            rowsRemoved << index.row();
             if (m_model.playlist()->clip_length(row) > 0)
                 MAIN.undoStack()->push(new Playlist::RemoveCommand(m_model, row));
         }
@@ -1096,7 +1093,7 @@ void PlaylistDock::onRemoveActionTriggered()
 
 void PlaylistDock::onSetFileDateActionTriggered()
 {
-    QModelIndex index = m_view->currentIndex();
+    QModelIndex index = m_proxyModel->mapToSource(m_view->currentIndex());
     if (!index.isValid() || !m_model.playlist()) return;
     int count = m_model.playlist()->count();
     if (count == 0) return;
@@ -1119,7 +1116,7 @@ void PlaylistDock::onSetFileDateActionTriggered()
 
 void PlaylistDock::onProducerOpened()
 {
-    if (MLT.producer() && MLT.producer()->is_valid()) {
+    if (MLT.producer() && MLT.producer()->is_valid() && m_proxyModel) {
         auto row = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
         if (row < 0 && m_model.rowCount() > 0) {
             resetPlaylistIndex();
@@ -1153,7 +1150,7 @@ void PlaylistDock::onOutChanged()
 
 void PlaylistDock::onOpenActionTriggered()
 {
-    QModelIndex index = m_view->currentIndex();
+    QModelIndex index = m_proxyModel->mapToSource(m_view->currentIndex());
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo *i = m_model.playlist()->clip_info(index.row());
     if (i) {
@@ -1188,14 +1185,15 @@ void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
 void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
 {
     if (!m_model.playlist()) return;
-    Mlt::ClipInfo *i = m_model.playlist()->clip_info(index.row());
+    auto index2 = m_proxyModel->mapToSource(index);
+    Mlt::ClipInfo *i = m_model.playlist()->clip_info(index2.row());
     if (i) {
         if (qApp->keyboardModifiers() == Qt::ShiftModifier) {
             emit itemActivated(i->start);
         } else {
             Mlt::Producer *p = new Mlt::Producer(i->producer);
             p->set_in_and_out(i->frame_in, i->frame_out);
-            setPlaylistIndex(p, index.row());
+            setPlaylistIndex(p, index2.row());
             emit clipOpened(p, Settings.playlistAutoplay());
         }
         delete i;
@@ -1205,7 +1203,7 @@ void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
 
 void PlaylistDock::onGotoActionTriggered()
 {
-    QModelIndex index = m_view->currentIndex();
+    QModelIndex index = m_proxyModel->mapToSource(m_view->currentIndex());
     Mlt::ClipInfo *i = m_model.playlist()->clip_info(index.row());
     if (i) {
         emit itemActivated(i->start);
@@ -1315,9 +1313,10 @@ void PlaylistDock::onAddToTimelineActionTriggered()
 {
     const QModelIndexList &indexes = m_view->selectionModel()->selectedIndexes();
     Mlt::Playlist playlist(MLT.profile());
-    foreach (auto index, indexes) {
+    for (const auto &index : indexes) {
         if (index.column()) continue;
-        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
+        auto row = m_proxyModel->mapToSource(index).row();
+        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(row));
         if (info && info->producer) {
             playlist.append(*info->producer, info->frame_in, info->frame_out);
         }
@@ -1330,9 +1329,10 @@ void PlaylistDock::onAddToSlideshowActionTriggered()
     MLT.pause();
     const QModelIndexList &indexes = m_view->selectionModel()->selectedIndexes();
     Mlt::Playlist playlist(MLT.profile());
-    foreach (auto index, indexes) {
+    for (const auto &index : indexes) {
         if (index.column()) continue;
-        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
+        auto row = m_proxyModel->mapToSource(index).row();
+        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(row));
         if (info && info->producer) {
             playlist.append(*info->producer, info->frame_in, info->frame_out);
         }
@@ -1387,8 +1387,8 @@ void PlaylistDock::updateViewMode()
     if (mode == kDetailedMode) {
         m_model.setViewMode(PlaylistModel::Detailed);
         m_view = ui->tableView;
-        ui->tableView->setModel(&m_model);
-
+        ui->tableView->setModel(m_proxyModel);
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_INDEX, true);
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL,
                                        !Settings.playlistShowColumn("thumbnails"));
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_RESOURCE,
@@ -1398,28 +1398,26 @@ void PlaylistDock::updateViewMode()
                                        !Settings.playlistShowColumn("duration"));
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_START, !Settings.playlistShowColumn("start"));
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DATE, !Settings.playlistShowColumn("date"));
-
         ui->tableView->resizeColumnsToContents();
         ui->tableView->show();
-
         ui->tableView->resizeColumnsToContents();
     } else if (mode == kTiledMode) {
         m_model.setViewMode(PlaylistModel::Tiled);
         m_view = ui->listView;
         ui->listView->setDragEnabled(true);
         ui->listView->setItemDelegate(new TiledItemDelegate(ui->listView));
-        ui->listView->setModel(&m_model);
+        ui->listView->setModel(m_proxyModel);
         ui->listView->show();
-
     } else { /* if (mode == kIconsMode) */
-        m_model.setViewMode(PlaylistModel::Icons);
         m_view = m_iconsView;
-        m_iconsView->setModel(&m_model);
+        m_iconsView->setModel(m_proxyModel);
+        m_model.setViewMode(PlaylistModel::Icons);
         m_iconsView->show();
-
     }
     m_view->setSelectionModel(m_selectionModel);
-    emit selectionChanged();
+    QTimer::singleShot(0, this, [ = ]() {
+        emit selectionChanged();
+    });
     m_model.refreshThumbnails();
 }
 
@@ -1459,7 +1457,8 @@ void PlaylistDock::setPlaylistIndex(Mlt::Producer *producer, int row)
 
 void PlaylistDock::onMovedToEnd()
 {
-    onMoveClip(m_view->currentIndex().row(), model()->rowCount());
+    auto index = m_proxyModel->mapToSource(m_view->currentIndex());
+    onMoveClip(index.row(), model()->rowCount());
 }
 
 void PlaylistDock::onInTimerFired()
@@ -1508,7 +1507,7 @@ void PlaylistDock::keyReleaseEvent(QKeyEvent *event)
 
 void PlaylistDock::onCopyActionTriggered()
 {
-    QModelIndex index = m_view->currentIndex();
+    QModelIndex index = m_proxyModel->mapToSource(m_view->currentIndex());
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo *i = m_model.playlist()->clip_info(index.row());
     if (i) {
@@ -1530,8 +1529,8 @@ void PlaylistDock::onSelectAllActionTriggered()
     show();
     raise();
     m_view->selectionModel()->clearSelection();
-    for (int i = 0; i < m_model.rowCount(); i++) {
-        m_view->selectionModel()->select(m_model.index(i, 0),
+    for (int i = 0; i < m_proxyModel->rowCount(); i++) {
+        m_view->selectionModel()->select(m_proxyModel->index(i, 0),
                                          QItemSelectionModel::Select | QItemSelectionModel::Rows);
     }
 }
@@ -1569,10 +1568,16 @@ void PlaylistDock::onAddFilesActionTriggered()
 
     if (filenames.length() > 0) {
         Settings.setOpenPath(QFileInfo(filenames.first()).path());
-        foreach (const QString &s, filenames) {
+        for (const auto &s : filenames) {
             urls << s;
         }
         mimeData.setUrls(urls);
-        onDropped(&mimeData, m_view->currentIndex().row() + 1);
+        auto index = m_proxyModel->mapToSource(m_view->currentIndex());
+        onDropped(&mimeData, index.row() + 1);
     }
+}
+
+void PlaylistDock::on_lineEdit_textChanged(const QString &search)
+{
+    m_proxyModel->setFilterFixedString(search);
 }

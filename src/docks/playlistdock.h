@@ -30,6 +30,7 @@ class PlaylistDock;
 class QAbstractItemView;
 class QItemSelectionModel;
 class QMenu;
+class QSortFilterProxyModel;
 class PlaylistIconView;
 
 class PlaylistDock : public QDockWidget
@@ -79,6 +80,7 @@ private slots:
     void onMovedToEnd();
     void onInTimerFired();
     void onOutTimerFired();
+    void on_lineEdit_textChanged(const QString &search);
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -119,6 +121,7 @@ private:
     QTimer m_outChangedTimer;
     QMenu *m_mainMenu;
     bool m_blockResizeColumnsToContents;
+    QSortFilterProxyModel *m_proxyModel;
 };
 
 #endif // PLAYLISTDOCK_H

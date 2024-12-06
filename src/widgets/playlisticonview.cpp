@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2023 Meltytech, LLC
+ * Copyright (c) 2016-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include <QMouseEvent>
 #include <QtMath>
 #include <QScrollBar>
+#include <QSortFilterProxyModel>
 
 PlaylistIconView::PlaylistIconView(QWidget *parent)
     : QAbstractItemView(parent)
@@ -41,6 +42,8 @@ PlaylistIconView::PlaylistIconView(QWidget *parent)
 
 QRect PlaylistIconView::visualRect(const QModelIndex &index) const
 {
+    if (!index.isValid())
+        return QRect();
     int row = index.row() / m_itemsPerRow;
     int col = index.row() % m_itemsPerRow;
     return QRect(col * m_gridSize.width(), row * m_gridSize.height(),
@@ -51,14 +54,12 @@ void PlaylistIconView::rowsInserted(const QModelIndex &parent, int start, int en
 {
     QAbstractItemView::rowsInserted(parent, start, end);
     updateSizes();
-    viewport()->update();
 }
 
 void PlaylistIconView::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
 {
     QAbstractItemView::rowsAboutToBeRemoved(parent, start, end);
     updateSizes();
-    viewport()->update();
 }
 
 void PlaylistIconView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight,
@@ -66,7 +67,6 @@ void PlaylistIconView::dataChanged(const QModelIndex &topLeft, const QModelIndex
 {
     QAbstractItemView::dataChanged(topLeft, bottomRight, roles);
     updateSizes();
-    viewport()->update();
 }
 
 void PlaylistIconView::selectionChanged(const QItemSelection &selected,
@@ -167,14 +167,14 @@ void PlaylistIconView::paintEvent(QPaintEvent *)
     if (!model())
         return;
 
-    QAbstractItemModel *m = model();
+    auto proxyModel = static_cast<QSortFilterProxyModel *>(model());
     QRect dragIndicator;
 
-    for (int row = 0; row <= m->rowCount() / m_itemsPerRow; row++) {
+    for (int row = 0; row <= proxyModel->rowCount() / m_itemsPerRow; row++) {
         for (int col = 0; col < m_itemsPerRow; col++) {
             const int rowIdx = row * m_itemsPerRow + col;
 
-            QModelIndex idx = m->index(rowIdx, 0);
+            QModelIndex idx = proxyModel->index(rowIdx, 0);
             if (!idx.isValid())
                 break;
 
@@ -185,7 +185,7 @@ void PlaylistIconView::paintEvent(QPaintEvent *)
                 continue;
 
             const bool selected = selectedIndexes().contains(idx);
-            const QImage thumb = idx.data(Qt::DecorationRole).value<QImage>();
+            const QImage thumb = proxyModel->mapToSource(idx).data(Qt::DecorationRole).value<QImage>();
 
             QRect imageBoundingRect = itemRect;
             imageBoundingRect.setHeight(0.7 * imageBoundingRect.height());
@@ -215,7 +215,7 @@ void PlaylistIconView::paintEvent(QPaintEvent *)
             }
 
             painter.drawImage(imageRect, thumb);
-            QStringList nameParts = idx.data(Qt::DisplayRole).toString().split('\n');
+            QStringList nameParts = proxyModel->mapToSource(idx).data(Qt::DisplayRole).toString().split('\n');
             if (nameParts.size() > 1) {
                 const auto indexPos = imageRect.topLeft() + QPoint(5, 15);
                 painter.setFont(boldFont);
@@ -301,7 +301,6 @@ void PlaylistIconView::setModel(QAbstractItemModel *model)
 {
     QAbstractItemView::setModel(model);
     updateSizes();
-    viewport()->update();
 }
 
 void PlaylistIconView::keyPressEvent(QKeyEvent *event)
