@@ -71,7 +71,7 @@ WHISPERCPP_REVISION=
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
 PYTHON_VERSION_DLL=$(python3 --version | awk '{split($2, parts, "."); print parts[1]parts[2]}')
 
-QT_VERSION_X64="6.7.2"
+QT_VERSION_X64="6.8.1"
 
 ################################################################################
 # Location of config file - if not overridden on command line
