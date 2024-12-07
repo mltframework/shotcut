@@ -1,6 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (c) 2007 Trolltech ASA <info@trolltech.com>
+** Copyright (c) 2024 Meltytech, LLC
 **
 ** Use, modification and distribution is allowed without limitation,
 ** warranty, liability or support of any kind.
@@ -10,6 +11,7 @@
 #include "lineeditclear.h"
 #include <QToolButton>
 #include <QStyle>
+#include <QKeyEvent>
 
 LineEditClear::LineEditClear(QWidget *parent)
     : QLineEdit(parent)
@@ -28,6 +30,7 @@ LineEditClear::LineEditClear(QWidget *parent)
     QSize msz = minimumSizeHint();
     setMinimumSize(qMax(msz.width(), clearButton->sizeHint().height() + frameWidth * 2 + 2),
                    qMax(msz.height(), clearButton->sizeHint().height() + frameWidth * 2 + 2));
+    installEventFilter(this);
 }
 
 void LineEditClear::resizeEvent(QResizeEvent *)
@@ -36,6 +39,14 @@ void LineEditClear::resizeEvent(QResizeEvent *)
     int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
     clearButton->move(rect().right() - frameWidth - sz.width(),
                       (rect().bottom() + 1 - sz.height()) / 2);
+}
+
+bool LineEditClear::eventFilter(QObject *target, QEvent *event)
+{
+    if (QEvent::KeyPress == event->type() && Qt::Key_Escape == static_cast<QKeyEvent *>(event)->key()) {
+        clear();
+    }
+    return QLineEdit::eventFilter(target, event);
 }
 
 void LineEditClear::updateCloseButton(const QString &text)

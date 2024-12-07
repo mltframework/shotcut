@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,13 @@ public:
         Icons,
     };
 
+    enum MediaType {
+        Video,
+        Image,
+        Audio,
+        Other
+    };
+
     enum Columns {
         COLUMN_INDEX = 0,
         COLUMN_THUMBNAIL,
@@ -44,6 +51,8 @@ public:
         COLUMN_DURATION,
         COLUMN_START,
         COLUMN_DATE,
+        COLUMN_MEDIA_TYPE,
+        COLUMN_COMMENT,
         COLUMN_COUNT
     };
 
@@ -55,6 +64,8 @@ public:
         FIELD_DURATION,
         FIELD_START,
         FIELD_DATE,
+        FIELD_MEDIA_TYPE,
+        FIELD_COMMENT
     };
 
     static const int THUMBNAIL_WIDTH = 80;

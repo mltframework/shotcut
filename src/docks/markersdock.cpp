@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2022 Meltytech, LLC
+ * Copyright (c) 2021-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -166,8 +166,6 @@ MarkersDock::MarkersDock(QWidget *parent) :
     mainMenu->addAction(tr("Remove All Markers"), this, SLOT(onRemoveAllRequested()));
     QAction *action;
     QMenu *columnsMenu = new QMenu(tr("Columns"), this);
-    action = columnsMenu->addAction(tr("Columns"));
-    action->setEnabled(false);
     action = columnsMenu->addAction(tr("Color"), this, SLOT(onColorColumnToggled(bool)));
     action->setCheckable(true);
     action->setChecked(Settings.markersShowColumn("color"));

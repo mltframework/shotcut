@@ -2208,6 +2208,10 @@ void MainWindow::setupActions()
     addAction(Actions["keyframesTypeEaseInOutElasAction"]);
     addAction(Actions["keyframesTypeEaseInOutBounAction"]);
     addAction(Actions["keyframesRemoveAction"]);
+    addAction(Actions["playlistFiltersVideo"]);
+    addAction(Actions["playlistFiltersAudio"]);
+    addAction(Actions["playlistFiltersImage"]);
+    addAction(Actions["playlistFiltersOther"]);
 
     Actions.initializeShortcuts();
 }

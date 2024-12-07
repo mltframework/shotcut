@@ -34,6 +34,7 @@
 #include "commands/playlistcommands.h"
 #include "proxymanager.h"
 #include "qmltypes/qmlapplication.h"
+#include "widgets/lineeditclear.h"
 #include <Logger.h>
 
 #include <QItemSelectionModel>
@@ -49,6 +50,7 @@
 #include <QClipboard>
 #include <QActionGroup>
 #include <QSortFilterProxyModel>
+#include <qpushbutton.h>
 
 static const auto kInOutChangedTimeoutMs = 100;
 static const auto kTilePaddingPx = 10;
@@ -142,6 +144,47 @@ private:
 
 };
 
+class PlaylistProxyModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+
+public:
+    explicit PlaylistProxyModel(QObject *parent = nullptr)
+        : QSortFilterProxyModel(parent)
+    {}
+
+    void setMediaTypes(QList<PlaylistModel::MediaType> types)
+    {
+        m_mediaTypes = types;
+        invalidateFilter();
+    }
+
+protected:
+    bool filterAcceptsRow(int row, const QModelIndex &parent) const
+    {
+        if (m_mediaTypes.size()) {
+            auto index = sourceModel()->index(row, PlaylistModel::COLUMN_MEDIA_TYPE, parent);
+            if (!m_mediaTypes.contains(index.data(Qt::StatusTipRole)))
+                return false;
+        }
+        auto filter = filterRegularExpression();
+        auto index = sourceModel()->index(row, PlaylistModel::COLUMN_RESOURCE, parent);
+        if (index.data(Qt::DisplayRole).toString().contains(filter))
+            return true;
+        index = sourceModel()->index(row, PlaylistModel::COLUMN_RESOURCE, parent);
+        if (index.data(Qt::ToolTipRole).toString().contains(filter))
+            return true;
+        index = sourceModel()->index(row, PlaylistModel::COLUMN_COMMENT, parent);
+        if (index.data(Qt::DisplayRole).toString().contains(filter))
+            return true;
+        return false;
+    }
+
+private:
+    QList<PlaylistModel::MediaType> m_mediaTypes {PlaylistModel::Video, PlaylistModel::Audio, PlaylistModel::Image};
+};
+
+
 PlaylistDock::PlaylistDock(QWidget *parent) :
     QDockWidget(parent),
     ui(new Ui::PlaylistDock),
@@ -150,8 +193,9 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
+    ui->treeWidget->setVisible(false);
 
-    m_proxyModel = new QSortFilterProxyModel(this);
+    m_proxyModel = new PlaylistProxyModel(this);
     m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     m_proxyModel->setSourceModel(&m_model);
     m_proxyModel->setFilterKeyColumn(-1);
@@ -227,9 +271,22 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     toolbar->addAction(Actions["playlistViewTilesAction"]);
     toolbar->addAction(Actions["playlistViewIconsAction"]);
     toolbar->addSeparator();
-
     ui->verticalLayout->addWidget(toolbar);
     ui->verticalLayout->addSpacing(2);
+
+    auto toolbar2 = new QToolBar(tr("Playlist Filters"));
+    toolbar2->setStyleSheet(
+        QStringLiteral("QToolButton:checked { color:palette(highlighted-text); background-color:palette(highlight);}"));
+    ui->filtersLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    toolbar2->addActions({Actions["playlistFiltersVideo"], Actions["playlistFiltersAudio"], Actions["playlistFiltersImage"], Actions["playlistFiltersOther"]});
+    ui->filtersLayout->addWidget(toolbar2);
+    auto lineEdit = new LineEditClear(this);
+    lineEdit->setToolTip(tr("Only show files whose name, path, or comment contains some text"));
+    lineEdit->setPlaceholderText(tr("search"));
+    connect(lineEdit, &QLineEdit::textChanged, this, [ = ](const QString & search) {
+        m_proxyModel->setFilterFixedString(search);
+    });
+    ui->filtersLayout->addWidget(lineEdit, 1);
 
     ui->stackedWidget->setCurrentIndex(0);
 
@@ -782,6 +839,34 @@ void PlaylistDock::setupActions()
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DATE, !checked);
     });
     Actions.add("playlistColumnsToggleDateAction", action);
+
+    action = new QAction(tr("Video"), this);
+    action->setToolTip(tr("Show or hide video files"));
+    action->setCheckable(true);
+    action->setChecked(true);
+    connect(action, &QAction::triggered, this, &PlaylistDock::onMediaTypeClicked);
+    Actions.add("playlistFiltersVideo", action, this->windowTitle());
+
+    action = new QAction(tr("Audio"), this);
+    action->setToolTip(tr("Show or hide audio files"));
+    action->setCheckable(true);
+    action->setChecked(true);
+    connect(action, &QAction::triggered, this, &PlaylistDock::onMediaTypeClicked);
+    Actions.add("playlistFiltersAudio", action, this->windowTitle());
+
+    action = new QAction(tr("Image"), this);
+    action->setToolTip(tr("Show or hide image files"));
+    action->setCheckable(true);
+    action->setChecked(true);
+    connect(action, &QAction::triggered, this, &PlaylistDock::onMediaTypeClicked);
+    Actions.add("playlistFiltersImage", action, this->windowTitle());
+
+    action = new QAction(tr("Other"), this);
+    action->setToolTip(tr("Show or hide other kinds of files"));
+    action->setCheckable(true);
+    action->setChecked(true);
+    connect(action, &QAction::triggered, this, &PlaylistDock::onMediaTypeClicked);
+    Actions.add("playlistFiltersOther", action, this->windowTitle());
 }
 
 int PlaylistDock::position()
@@ -1389,6 +1474,7 @@ void PlaylistDock::updateViewMode()
         m_view = ui->tableView;
         ui->tableView->setModel(m_proxyModel);
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_INDEX, true);
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_COMMENT, true);
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL,
                                        !Settings.playlistShowColumn("thumbnails"));
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_RESOURCE,
@@ -1577,7 +1663,16 @@ void PlaylistDock::onAddFilesActionTriggered()
     }
 }
 
-void PlaylistDock::on_lineEdit_textChanged(const QString &search)
+void PlaylistDock::onMediaTypeClicked()
 {
-    m_proxyModel->setFilterFixedString(search);
+    QList<PlaylistModel::MediaType> types;
+    if (Actions["playlistFiltersVideo"]->isChecked())
+        types << PlaylistModel::Video;
+    if (Actions["playlistFiltersAudio"]->isChecked())
+        types << PlaylistModel::Audio;
+    if (Actions["playlistFiltersImage"]->isChecked())
+        types << PlaylistModel::Image;
+    if (Actions["playlistFiltersOther"]->isChecked())
+        types << PlaylistModel::Other;
+    m_proxyModel->setMediaTypes(types);
 }

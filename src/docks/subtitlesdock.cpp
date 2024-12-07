@@ -172,8 +172,8 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     m_treeView = new QTreeView();
     vboxLayout->addWidget(m_treeView, 1);
 
-    QMenu *mainMenu = new QMenu("Subtitles", this);
-    QMenu *trackMenu = new QMenu("Tracks", this);
+    QMenu *mainMenu = new QMenu(tr("Subtitles"), this);
+    QMenu *trackMenu = new QMenu(tr("Tracks"), this);
     trackMenu->addAction(Actions["subtitleAddTrackAction"]);
     trackMenu->addAction(Actions["subtitleRemoveTrackAction"]);
     trackMenu->addAction(Actions["subtitleEditTrackAction"]);
@@ -194,8 +194,6 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
 
     QAction *action;
     QMenu *columnsMenu = new QMenu(tr("Columns"), this);
-    action = columnsMenu->addAction(tr("Columns"));
-    action->setEnabled(false);
     action = columnsMenu->addAction(tr("Start"), this, SLOT(onStartColumnToggled(bool)));
     action->setCheckable(true);
     action->setChecked(Settings.subtitlesShowColumn("start"));
@@ -206,7 +204,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     action->setCheckable(true);
     action->setChecked(Settings.subtitlesShowColumn("duration"));
     mainMenu->addMenu(columnsMenu);
-    Actions.loadFromMenu(columnsMenu);
+    Actions.loadFromMenu(mainMenu);
 
     DockToolBar *toolbar = new DockToolBar(tr("Subtitle Controls"));
     toolbar->setAreaHint(Qt::BottomToolBarArea);

@@ -192,15 +192,7 @@ int PlaylistModel::rowCount(const QModelIndex & /*parent*/) const
 
 int PlaylistModel::columnCount(const QModelIndex & /*parent*/) const
 {
-    switch (m_mode) {
-    case Detailed:
-        return COLUMN_COUNT;
-    case Tiled:
-    case Icons:
-    case Invalid:
-        return 1;
-    }
-    return 0;
+    return COLUMN_COUNT;
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
@@ -222,12 +214,15 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             if (m_mode == Detailed && index.column() != COLUMN_THUMBNAIL)
                 return QVariant();
             field = FIELD_THUMBNAIL;
-        } else
+        } else if (role == Qt::StatusTipRole) {
+            field = FIELD_INDEX + index.column();
+        } else {
             return QVariant();
+        }
     }
 
     QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(index.row()));
-    if (info)
+    if (info) {
         switch (field) {
         case FIELD_INDEX:
             return QString::number(index.row() + 1);
@@ -366,7 +361,42 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             }
             return image;
         }
+        case FIELD_MEDIA_TYPE:
+            if (info->producer && info->producer->is_valid()) {
+                auto type = Other;
+                if (MLT.isImageProducer(info->producer)) {
+                    type = Image;
+                } else {
+                    auto service = QString::fromLatin1(info->producer->get("mlt_service"));
+                    if (service.startsWith("avformat")) {
+                        if (info->producer->get_int("video_index") > -1
+                                && Util::getSuggestedFrameRate(info->producer) != 90000)
+                            type = Video;
+                        else if (info->producer->get_int("audio_index") > -1)
+                            type = Audio;
+                    }
+                }
+                if (Qt::DisplayRole == role) {
+                    switch (type) {
+                    case Video:
+                        return tr("Video");
+                    case Image:
+                        return tr("Image");
+                    case Audio:
+                        return tr("Audio");
+                    default:
+                        return tr("Other");
+                    }
+                }
+                return type;
+            }
+            break;
+        case FIELD_COMMENT:
+            if (info->producer && info->producer->is_valid())
+                return QString::fromUtf8(info->producer->get(kCommentProperty));
+            break;
         }
+    }
     return QVariant();
 }
 
@@ -403,6 +433,10 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
             return tr("Start");
         case COLUMN_DATE:
             return tr("Date");
+        case COLUMN_MEDIA_TYPE:
+            return tr("Type");
+        case COLUMN_COMMENT:
+            return tr("Comment");
         default:
             break;
         }
