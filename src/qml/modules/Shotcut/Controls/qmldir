@@ -4,6 +4,7 @@ ColorPicker 1.0 ColorPicker.qml
 DoubleSpinBox 1.0 DoubleSpinBox.qml
 Gauge 1.0 Gauge.qml
 GradientControl 1.0 GradientControl.qml
+GradientMapControl 1.0 GradientMapControl.qml
 Preset 1.0 Preset.qml
 UndoButton 1.0 UndoButton.qml
 KeyframesButton 1.0 KeyframesButton.qml
