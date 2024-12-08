@@ -20,7 +20,7 @@ import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 
 Item {
-    property var defaultParameters: ['stop.1', 'stop.2']
+    property var defaultParameters: ['stop.1', 'stop.2', 'stop.3', 'stop.4', 'stop.5', 'stop.6', 'stop.7', 'stop.8', 'stop.9', 'stop.10', 'stop.11']
     property bool _disableUpdate: true
     property var stops: []
     property alias spinnerVisible: stopSpinner.visible
@@ -122,8 +122,25 @@ Item {
     height: 180
     Component.onCompleted: {
         if (filter.isNew) {
+            filter.set('stop.1', '#170400 0.0');
+            filter.set('stop.2', '#6b4e3b 0.25');
+            filter.set('stop.3', '#c5a989 0.65');
+            filter.set('stop.4', '#dfcebf 0.85');
+            filter.set('stop.5', '#f6e5d5 1.0');
+            filter.savePreset(defaultParameters, qsTr('Sepia'));
+
+            filter.set('stop.1', '#15222a 0.0');
+            filter.set('stop.2', '#121121 0.15');
+            filter.set('stop.3', '#0a46f2 0.35');
+            filter.set('stop.4', '#f41397 0.53');
+            filter.set('stop.5', '#ffa351 1.0');
+            filter.savePreset(defaultParameters, qsTr('Thermal'));
+
             filter.set('stop.1', '#000000 0.0');
             filter.set('stop.2', '#ffffff 1.0');
+            filter.resetProperty('stop.3');
+            filter.resetProperty('stop.4');
+            filter.resetProperty('stop.5');
             filter.savePreset(defaultParameters);
         }
         setControls();
