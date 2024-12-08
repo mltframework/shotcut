@@ -164,6 +164,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/lissajouswidget.ui
   widgets/lumamixtransition.cpp widgets/lumamixtransition.h
   widgets/lumamixtransition.ui
+  widgets/mltclipproducerwidget.cpp widgets/mltclipproducerwidget.h
   widgets/networkproducerwidget.cpp widgets/networkproducerwidget.h
   widgets/networkproducerwidget.ui
   widgets/newprojectfolder.cpp widgets/newprojectfolder.h
