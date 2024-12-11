@@ -1226,9 +1226,8 @@ function deploy
   cmd mv COPYING COPYING.txt
 
   log Copying some libs from Qt
-  cmd cp -p "$QTDIR"/bin/Qt6{QmlMeta}.dll .
   if [ "$DEBUG_BUILD" != "1" -o "$SDK" = "1" ]; then
-    cmd cp -p "$QTDIR"/bin/Qt6{Charts,Core,Core5Compat,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,Widgets,Xml}.dll .
+    cmd cp -p "$QTDIR"/bin/Qt6{Charts,Core,Core5Compat,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,Widgets,Xml}.dll .
   fi
 
   for lib in *.dll; do
