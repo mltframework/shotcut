@@ -4,7 +4,7 @@
 # Requires optipng and advpng
 # In Ubuntu: "sudo apt-get install advancecomp optipng"
 
-files=`find . -name '*.PNG' -o -name '*.png'`
+files=`find icons/ -name '*.PNG' -o -name '*.png'`
 
 optipng -o 7 $files
 advpng -z -4 -i 25 $files
