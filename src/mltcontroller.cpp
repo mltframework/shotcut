@@ -601,12 +601,7 @@ void Controller::setProfile(const QString &profile_name)
         m_profile.set_explicit(true);
     } else {
         m_profile.set_explicit(false);
-        if (m_producer && m_producer->is_valid()
-                && (qstrcmp(m_producer->get("mlt_service"), "color")
-                    || qstrcmp(m_producer->get("resource"), "_hide"))) {
-            m_profile.from_producer(*m_producer);
-            m_profile.set_width(Util::coerceMultiple(m_profile.width()));
-        } else {
+        if (!m_producer || !m_producer->is_valid() && isClosedClip()) {
             // Use a default profile with the dummy hidden color producer.
             Mlt::Profile tmp(kDefaultMltProfile);
             m_profile.set_colorspace(tmp.colorspace());
@@ -616,6 +611,9 @@ void Controller::setProfile(const QString &profile_name)
             m_profile.set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
             m_profile.set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
             m_profile.set_width(Util::coerceMultiple(tmp.width()));
+        } else {
+            m_profile.from_producer(*m_producer);
+            m_profile.set_width(Util::coerceMultiple(m_profile.width()));
         }
     }
     updatePreviewProfile();
@@ -676,6 +674,15 @@ bool Controller::isLiveProducer(Producer *p) const
 bool Controller::isClip() const
 {
     return producer() && producer()->is_valid() && !isPlaylist() && !isMultitrack();
+}
+
+bool Controller::isClosedClip(Producer *producer) const
+{
+    if (!producer)
+        producer = m_producer.data();
+    return producer && producer->is_valid() &&
+           !qstrcmp(producer->get("mlt_service"), "color") &&
+           !qstrcmp(producer->get("resource"), "_hide");
 }
 
 bool Controller::isSeekableClip()

@@ -734,7 +734,7 @@ void AttachedFiltersModel::reset(Mlt::Producer *producer)
     m_event.reset();
     if (producer && producer->is_valid())
         m_producer.reset(new Mlt::Producer(producer));
-    else if (MLT.isClip() && qstrcmp("_hide", MLT.producer()->get("resource")))
+    else if (MLT.isClip() && MLT.isClosedClip())
         m_producer.reset(new Mlt::Producer(MLT.producer()));
     else
         m_producer.reset();

@@ -102,6 +102,7 @@ public:
     bool isSeekable(Mlt::Producer *p = nullptr) const;
     bool isLiveProducer(Mlt::Producer *p = nullptr) const;
     bool isClip() const;
+    bool isClosedClip(Producer *producer = nullptr) const;
     bool isSeekableClip();
     bool isPlaylist() const;
     bool isMultitrack() const;
