@@ -583,8 +583,10 @@ void Player::setupActions()
     action = new QAction(tr("Seek End"), this);
     action->setShortcut(QKeySequence(Qt::Key_End));
     connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
+        if (MLT.producer()) {
+            pause(MLT.producer()->get_length());
             seek(MLT.producer()->get_length());
+        }
     });
     Actions.add("playerSeekEndAction", action);
 
@@ -592,8 +594,10 @@ void Player::setupActions()
     action->setProperty(Actions.hardKeyProperty, "K+L");
     action->setShortcut(QKeySequence(Qt::Key_Right));
     connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
+        if (MLT.producer()) {
             pause(position() + 1);
+            seek(position() + 1);
+        }
     });
     Actions.add("playerNextFrameAction", action);
 
@@ -601,8 +605,10 @@ void Player::setupActions()
     action->setProperty(Actions.hardKeyProperty, "K+J");
     action->setShortcut(QKeySequence(Qt::Key_Left));
     connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
+        if (MLT.producer()) {
             pause(position() - 1);
+            seek(position() - 1);
+        }
     });
     Actions.add("playerPreviousFrameAction", action);
 
