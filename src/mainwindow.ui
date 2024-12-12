@@ -260,6 +260,7 @@
       </property>
       <addaction name="actionExternalNone"/>
      </widget>
+     <addaction name="actionPauseAfterSeek"/>
      <addaction name="actionScrubAudio"/>
      <addaction name="actionJack"/>
      <addaction name="actionRealtime"/>
@@ -1407,6 +1408,17 @@
   <action name="actionShowProjectFolder">
    <property name="text">
     <string>Show Project in Folder</string>
+   </property>
+  </action>
+  <action name="actionPauseAfterSeek">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Pause After Seek</string>
    </property>
   </action>
  </widget>

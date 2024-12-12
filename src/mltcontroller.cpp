@@ -262,12 +262,13 @@ static void fire_jack_seek_event(mlt_properties jack, int position)
     mlt_events_fire(jack, "jack-seek", mlt_event_data_from_int(position));
 }
 
-void Controller::pause()
+void Controller::pause(int position)
 {
     if (m_producer && !isPaused()) {
         m_producer->set_speed(0);
         if (m_consumer && m_consumer->is_valid()) {
-            m_producer->seek(m_consumer->position() + 1);
+            position = position > -1 ? position : m_consumer->position() + 1;
+            m_producer->seek(position);
             m_consumer->purge();
             m_consumer->start();
             // The following fixes a bug with frame-dropping. It is possible a video frame rendering
@@ -456,7 +457,8 @@ void Controller::seek(int position)
     setVolume(m_volume, false);
     if (m_producer) {
         // Always pause before seeking (if not already paused).
-        m_producer->set_speed(0);
+        if (Settings.playerPauseAfterSeek())
+            m_producer->set_speed(0);
         m_producer->seek(position);
         if (m_consumer && m_consumer->is_valid()) {
             if (m_consumer->is_stopped()) {
@@ -468,7 +470,8 @@ void Controller::seek(int position)
         }
     }
     if (m_jackFilter) {
-        stopJack();
+        if (Settings.playerPauseAfterSeek())
+            stopJack();
         ++m_skipJackEvents;
         fire_jack_seek_event(m_jackFilter->get_properties(), position);
     }
@@ -1705,9 +1708,9 @@ void TransportControl::play(double speed)
     MLT.play(speed);
 }
 
-void TransportControl::pause()
+void TransportControl::pause(int position)
 {
-    MLT.pause();
+    MLT.pause(position);
 }
 
 void TransportControl::stop()

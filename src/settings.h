@@ -180,6 +180,8 @@ public:
     void setPlayerJumpSeconds(double);
     QString playerAudioDriver() const;
     void setPlayerAudioDriver(const QString &s);
+    bool playerPauseAfterSeek() const;
+    void setPlayerPauseAfterSeek(bool);
 
     // playlist
     QString playlistThumbnails() const;

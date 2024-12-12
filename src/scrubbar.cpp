@@ -143,6 +143,8 @@ void ScrubBar::mousePressEvent(QMouseEvent *event)
             update(m_margin + x - offset, 0, w + 2 * offset, height());
         }
     }
+    if (m_activeControl >= CONTROL_IN && !Settings.playerPauseAfterSeek())
+        emit paused(pos);
     emit seeked(pos);
 }
 
@@ -170,6 +172,8 @@ void ScrubBar::mouseMoveEvent(QMouseEvent *event)
             update(m_margin + x - offset, 0, w + 2 * offset, height());
             m_head = pos;
         }
+        if (m_activeControl >= CONTROL_IN && !Settings.playerPauseAfterSeek())
+            emit paused(pos);
         emit seeked(pos);
     } else if (event->buttons() == Qt::NoButton && MLT.producer()) {
         QString text = QString::fromLatin1(MLT.producer()->frames_to_time(pos, Settings.timeFormat()));

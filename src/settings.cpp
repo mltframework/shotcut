@@ -619,6 +619,16 @@ void ShotcutSettings::setPlayerAudioDriver(const QString &s)
     settings.setValue("player/audioDriver", s);
 }
 
+bool ShotcutSettings::playerPauseAfterSeek() const
+{
+    return settings.value("player/pauseAfterSeek", true).toBool();
+}
+
+void ShotcutSettings::setPlayerPauseAfterSeek(bool b)
+{
+    settings.setValue("player/pauseAfterSeek", b);
+}
+
 QString ShotcutSettings::playlistThumbnails() const
 {
     return settings.value("playlist/thumbnails", "small").toString();

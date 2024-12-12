@@ -51,7 +51,7 @@ class TransportControl : public TransportControllable
     Q_OBJECT
 public slots:
     void play(double speed = 1.0) override;
-    void pause() override;
+    void pause(int position = -1) override;
     void stop() override;
     void seek(int position) override;
     void rewind(bool forceChangeDirection) override;
@@ -84,7 +84,7 @@ public:
     void closeConsumer();
     virtual void play(double speed = 1.0);
     bool isPaused() const;
-    virtual void pause();
+    virtual void pause(int position = -1);
     void stop();
     bool enableJack(bool enable = true);
     void setVolume(double volume, bool muteOnPause = true);

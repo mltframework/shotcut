@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2011-2023 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2011-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,6 +54,7 @@ public:
     void setLoopRange(int start, int end);
 
 signals:
+    void paused(int);
     void seeked(int);
     void inChanged(int);
     void outChanged(int);

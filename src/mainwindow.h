@@ -406,6 +406,7 @@ private slots:
     void on_actionAudioVideoDevice_triggered();
     void on_actionReset_triggered();
     void on_actionBackupSave_triggered();
+    void on_actionPauseAfterSeek_triggered(bool checked);
 };
 
 #define MAIN MainWindow::singleton()

@@ -371,6 +371,7 @@ Player::Player(QWidget *parent)
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
             SLOT(onFrameDisplayed(const SharedFrame &)));
     connect(m_scrubber, SIGNAL(seeked(int)), this, SLOT(seek(int)));
+    connect(m_scrubber, SIGNAL(paused(int)), this, SLOT(pause(int)));
     connect(m_scrubber, SIGNAL(inChanged(int)), this, SLOT(onInChanged(int)));
     connect(m_scrubber, SIGNAL(outChanged(int)), this, SLOT(onOutChanged(int)));
     connect(m_positionSpinner, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
@@ -399,7 +400,7 @@ void Player::connectTransport(const TransportControllable *receiver)
         disconnect(m_currentTransport);
     m_currentTransport = receiver;
     connect(this, SIGNAL(played(double)), receiver, SLOT(play(double)));
-    connect(this, SIGNAL(paused()), receiver, SLOT(pause()));
+    connect(this, SIGNAL(paused(int)), receiver, SLOT(pause(int)));
     connect(this, SIGNAL(stopped()), receiver, SLOT(stop()));
     connect(this, SIGNAL(seeked(int)), receiver, SLOT(seek(int)));
     connect(this, SIGNAL(rewound(bool)), receiver, SLOT(rewind(bool)));
@@ -592,7 +593,7 @@ void Player::setupActions()
     action->setShortcut(QKeySequence(Qt::Key_Right));
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.producer())
-            seek(position() + 1);
+            pause(position() + 1);
     });
     Actions.add("playerNextFrameAction", action);
 
@@ -601,7 +602,7 @@ void Player::setupActions()
     action->setShortcut(QKeySequence(Qt::Key_Left));
     connect(action, &QAction::triggered, this, [&]() {
         if (MLT.producer())
-            seek(position() - 1);
+            pause(position() - 1);
     });
     Actions.add("playerPreviousFrameAction", action);
 
@@ -843,9 +844,9 @@ void Player::play(double speed)
     m_playPosition = m_position;
 }
 
-void Player::pause()
+void Player::pause(int position)
 {
-    emit paused();
+    emit paused(position);
     showPaused();
 }
 
@@ -862,9 +863,10 @@ void Player::seek(int position)
             emit seeked(qMin(position, MLT.isMultitrack() ? m_duration : m_duration - 1));
         }
     }
-    // Seek implies pause.
-    Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
-    m_playPosition = std::numeric_limits<int>::max();
+    if (Settings.playerPauseAfterSeek()) {
+        Actions["playerPlayPauseAction"]->setIcon(m_playIcon);
+        m_playPosition = std::numeric_limits<int>::max();
+    }
 }
 
 void Player::reset()
@@ -940,9 +942,9 @@ void Player::onProducerOpened(bool play)
     // pause purging to complete.
     if (play) {
         if (m_pauseAfterOpen) {
-            m_pauseAfterOpen = false;
-            QTimer::singleShot(500, this, SLOT(postProducerOpened()));
-            if (!MLT.isClip()) {
+            if (MLT.isClip()) {
+                pause();
+            } else {
                 MLT.producer()->seek(0);
             }
         } else {
@@ -954,13 +956,15 @@ void Player::onProducerOpened(bool play)
                 QTimer::singleShot(500, this, SLOT(play()));
             }
         }
+    } else {
+        pause(0);
     }
 }
 
 void Player::postProducerOpened()
 {
     if (MLT.producer())
-        seek(MLT.producer()->position());
+        pause(MLT.producer()->position());
 }
 
 void Player::onMeltedUnitOpened()
@@ -1007,7 +1011,7 @@ void Player::onDurationChanged()
     if (MLT.producer()->get_speed() == 0)
         seek(m_position);
     else if (m_position >= m_duration)
-        seek(m_duration - 1);
+        pause(m_duration - 1);
 }
 
 void Player::onFrameDisplayed(const SharedFrame &frame)
@@ -1031,7 +1035,7 @@ void Player::onFrameDisplayed(const SharedFrame &frame)
         m_positionSpinner->blockSignals(false);
         m_scrubber->onSeek(position);
         if (m_playPosition < m_previousOut && m_position >= m_previousOut && !loop) {
-            seek(m_previousOut);
+            pause(m_previousOut);
         }
     }
     if (loop) {

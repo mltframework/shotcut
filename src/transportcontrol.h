@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ class TransportControllable : public QObject
     Q_OBJECT
 public slots:
     virtual void play(double speed = 1.0) = 0;
-    virtual void pause() = 0;
+    virtual void pause(int position = -1) = 0;
     virtual void stop() = 0;
     virtual void seek(int position) = 0;
     virtual void rewind(bool forceChangeDirection) = 0;

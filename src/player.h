@@ -77,7 +77,7 @@ signals:
     void inChanged(int delta);
     void outChanged(int delta);
     void played(double speed);
-    void paused();
+    void paused(int position);
     void stopped();
     void seeked(int position);
     void rewound(bool forceChangeDirection);
@@ -97,7 +97,7 @@ signals:
 
 public slots:
     void play(double speed = 1.0);
-    void pause();
+    void pause(int position = -1);
     void stop();
     void seek(int position);
     void reset();

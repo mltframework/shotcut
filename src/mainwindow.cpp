@@ -302,7 +302,7 @@ void MainWindow::setupAndConnectPlayerWidget()
     connect(m_player, SIGNAL(tabIndexChanged(int)), SLOT(onPlayerTabIndexChanged(int)));
     connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
     connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processSingleFile()));
-    connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
+    // connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
     connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
     connect(MLT.videoWidget(), SIGNAL(toggleZoom(bool)), m_player, SLOT(toggleZoom(bool)));
     ui->menuPlayer->addAction(Actions["playerPlayPauseAction"]);
@@ -1329,7 +1329,8 @@ void MainWindow::open(Mlt::Producer *producer)
 
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer)) {
-        emit producerOpened();
+        auto play = MLT.isClip() && !MLT.isClosedClip();
+        emit producerOpened(play);
         if (MLT.URL().endsWith(".mlt") || MLT.URL().endsWith(".xml")) {
             m_filterController->motionTrackerModel()->load();
             emit profileChanged();
@@ -1993,6 +1994,7 @@ void MainWindow::seekKeyframes(int position)
 void MainWindow::readPlayerSettings()
 {
     LOG_DEBUG() << "begin";
+    ui->actionPauseAfterSeek->setChecked(Settings.playerPauseAfterSeek());
     ui->actionRealtime->setChecked(Settings.playerRealtime());
     ui->actionProgressive->setChecked(Settings.playerProgressive());
     ui->actionScrubAudio->setChecked(Settings.playerScrubAudio());
@@ -2803,6 +2805,11 @@ void MainWindow::on_actionBackupSave_triggered()
         if (isWindowModified())
             on_actionSave_triggered();
     }
+}
+
+void MainWindow::on_actionPauseAfterSeek_triggered(bool checked)
+{
+    Settings.setPlayerPauseAfterSeek(checked);
 }
 
 void MainWindow::cropSource(const QRectF &rect)
