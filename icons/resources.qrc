@@ -411,5 +411,20 @@
         <file>oxygen/32x32/actions/speech-to-text.png</file>
         <file>light/32x32/speech-to-text.png</file>
         <file>dark/32x32/speech-to-text.png</file>
+        <file>oxygen/32x32/actions/folder-new.png</file>
+        <file>light/32x32/folder-new.png</file>
+        <file>dark/32x32/folder-new.png</file>
+        <file>oxygen/32x32/actions/quickopen.png</file>
+        <file>light/32x32/quickopen.png</file>
+        <file>dark/32x32/quickopen.png</file>
+        <file>oxygen/32x32/actions/view-choose.png</file>
+        <file>light/32x32/view-choose.png</file>
+        <file>dark/32x32/view-choose.png</file>
+        <file>oxygen/32x32/places/folder.png</file>
+        <file>light/32x32/folder.png</file>
+        <file>dark/32x32/folder.png</file>
+        <file>oxygen/32x32/apps/system-file-manager.png</file>
+        <file>light/32x32/system-file-manager.png</file>
+        <file>dark/32x32/system-file-manager.png</file>
     </qresource>
 </RCC>
