@@ -66,6 +66,7 @@ public:
         FIELD_START,
         FIELD_DATE,
         FIELD_MEDIA_TYPE,
+        FIELD_MEDIA_TYPE_ENUM,
         FIELD_COMMENT,
         FIELD_BIN
     };

@@ -192,7 +192,15 @@ int PlaylistModel::rowCount(const QModelIndex & /*parent*/) const
 
 int PlaylistModel::columnCount(const QModelIndex & /*parent*/) const
 {
-    return COLUMN_COUNT;
+    switch (m_mode) {
+    case Detailed:
+        return COLUMN_COUNT;
+    case Tiled:
+    case Icons:
+    case Invalid:
+        return 1;
+    }
+    return 0;
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const
@@ -362,6 +370,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             return image;
         }
         case FIELD_MEDIA_TYPE:
+        case FIELD_MEDIA_TYPE_ENUM:
             if (info->producer && info->producer->is_valid()) {
                 auto type = Other;
                 if (MLT.isImageProducer(info->producer)) {
@@ -376,7 +385,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                             type = Audio;
                     }
                 }
-                if (Qt::DisplayRole == role) {
+                if (FIELD_MEDIA_TYPE == field) {
                     switch (type) {
                     case Video:
                         return tr("Video");

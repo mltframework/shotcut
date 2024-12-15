@@ -169,33 +169,25 @@ public:
 protected:
     bool filterAcceptsRow(int row, const QModelIndex &parent) const
     {
+        auto index = sourceModel()->index(row, 0, parent);
         if (m_mediaTypes.size() > 0 && m_mediaTypes.size() < 4) {
-            auto index = sourceModel()->index(row, PlaylistModel::COLUMN_MEDIA_TYPE, parent);
-            if (!m_mediaTypes.contains(index.data(Qt::StatusTipRole)))
+            if (!m_mediaTypes.contains(index.data(PlaylistModel::FIELD_MEDIA_TYPE_ENUM)))
                 return false;
         }
 
         if (!m_bin.isEmpty()) {
-            auto index = sourceModel()->index(row, PlaylistModel::COLUMN_BIN, parent);
-            if (index.data(Qt::DisplayRole).toString() != m_bin)
+            if (index.data(PlaylistModel::FIELD_BIN).toString() != m_bin)
                 return false;
         }
 
         auto filter = filterRegularExpression();
-        auto index = sourceModel()->index(row, PlaylistModel::COLUMN_RESOURCE, parent);
-        if (index.data(Qt::DisplayRole).toString().contains(filter))
-            return true;
-        index = sourceModel()->index(row, PlaylistModel::COLUMN_RESOURCE, parent);
-        if (index.data(Qt::ToolTipRole).toString().contains(filter))
-            return true;
-        index = sourceModel()->index(row, PlaylistModel::COLUMN_COMMENT, parent);
-        if (index.data(Qt::DisplayRole).toString().contains(filter))
-            return true;
-        return false;
+        return index.data(Qt::DisplayRole).toString().contains(filter) ||
+               index.data(Qt::ToolTipRole).toString().contains(filter) ||
+               index.data(PlaylistModel::FIELD_COMMENT).toString().contains(filter);
     }
 
 private:
-    QList<PlaylistModel::MediaType> m_mediaTypes {PlaylistModel::Video, PlaylistModel::Audio, PlaylistModel::Image};
+    QList<PlaylistModel::MediaType> m_mediaTypes {PlaylistModel::Video, PlaylistModel::Audio, PlaylistModel::Image, PlaylistModel::Other};
     QString m_bin;
 };
 
