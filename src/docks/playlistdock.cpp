@@ -1165,6 +1165,7 @@ void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
             }
             if (!MLT.isLiveProducer(producer) || producer->get_int(kShotcutVirtualClip)) {
                 ProxyManager::generateIfNotExists(*producer);
+                assignToBin(*producer);
                 if (row == -1)
                     MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
                 else
@@ -1175,6 +1176,7 @@ void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
                 durationDialog.setDuration(MLT.profile().fps() * 5);
                 if (durationDialog.exec() == QDialog::Accepted) {
                     producer->set_in_and_out(0, durationDialog.duration() - 1);
+                    assignToBin(*producer);
                     if (row == -1)
                         MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
                     else
@@ -1241,6 +1243,19 @@ void PlaylistDock::sortBins()
     ui->treeWidget->insertTopLevelItem(0, all);
 }
 
+void PlaylistDock::assignToBin(Mlt::Properties &properties, QString bin)
+{
+    if (bin.isEmpty()) {
+        // Get current bin
+        auto items = ui->treeWidget->selectedItems();
+        // Skip if ALL is selected
+        if (items.isEmpty() || !items.first()->data(0, Qt::UserRole).isNull())
+            return;
+        bin = items.first()->text(0);
+    }
+    properties.set(kShotcutBinsProperty, bin.toUtf8().constData());
+}
+
 void PlaylistDock::onInsertCutActionTriggered()
 {
     if (MLT.isClip() || MLT.savedProducer()) {
@@ -1260,6 +1275,7 @@ void PlaylistDock::onAppendCutActionTriggered()
     if (producer.is_valid() && !MAIN.isSourceClipMyProject()) {
         if (!MLT.isLiveProducer(&producer)) {
             ProxyManager::generateIfNotExists(producer);
+            assignToBin(producer);
             MAIN.undoStack()->push(
                 new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
             setPlaylistIndex(&producer, m_model.playlist()->count() - 1);
@@ -1271,6 +1287,7 @@ void PlaylistDock::onAppendCutActionTriggered()
                 producer.set_in_and_out(0, dialog.duration() - 1);
                 if (producer.get("mlt_service") && !strcmp(producer.get("mlt_service"), "avformat"))
                     producer.set("mlt_service", "avformat-novalidate");
+                assignToBin(producer);
                 MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
                 setPlaylistIndex(&producer, m_model.playlist()->count() - 1);
                 emit enableUpdate(true);
@@ -1528,6 +1545,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 return;
             } else if (!MLT.isLiveProducer()) {
                 Mlt::Producer p(MLT.profile(), "xml-string", data->data(Mlt::XmlMimeType).constData());
+                assignToBin(p);
                 ProxyManager::generateIfNotExists(p);
                 if (row == -1) {
                     MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&p)));
@@ -1545,6 +1563,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
                     if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
                         MLT.producer()->set("mlt_service", "avformat-novalidate");
+                    assignToBin(*MLT.producer());
                     if (row == -1)
                         MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
                     else
@@ -1645,6 +1664,7 @@ void PlaylistDock::updateViewMode()
         m_view = ui->tableView;
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_INDEX, true);
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_COMMENT, true);
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_BIN, true);
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL,
                                        !Settings.playlistShowColumn("thumbnails"));
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_RESOURCE,

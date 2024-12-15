@@ -131,6 +131,7 @@ private:
     void addFiles(int row, const QList<QUrl> &urls);
     void loadBins();
     void sortBins();
+    void assignToBin(Mlt::Properties &properties, QString bin = QString());
 
     Ui::PlaylistDock *ui;
     QAbstractItemView *m_view;
