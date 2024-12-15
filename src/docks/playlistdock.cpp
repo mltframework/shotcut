@@ -992,22 +992,12 @@ void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
         }
         Mlt::Producer p;
         if (path.endsWith(".mlt") || path.endsWith(".xml")) {
-            if (Settings.playerGPU() && MLT.profile().is_explicit()) {
-                Mlt::Profile testProfile;
-                Mlt::Producer producer(testProfile, path.toUtf8().constData());
-                if (testProfile.width() != MLT.profile().width()
-                        || testProfile.height() != MLT.profile().height()
-                        || Util::isFpsDifferent(MLT.profile().fps(), testProfile.fps())) {
-                    emit showStatusMessage(tr("Failed to open ").append(path));
-                    continue;
-                }
-            }
-            p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
+            p = Util::openMltVirtualClip(path);
             if (p.is_valid()) {
-                // Convert MLT XML to a virtual clip.
-                p.set(kShotcutVirtualClip, 1);
-                p.set("resource", path.toUtf8().constData());
                 first = false;
+            } else {
+                emit showStatusMessage(tr("Failed to open ").append(path));
+                continue;
             }
         } else {
             p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());

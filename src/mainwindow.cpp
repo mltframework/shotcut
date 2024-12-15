@@ -58,6 +58,7 @@
 #include "database.h"
 #include "docks/timelinedock.h"
 #include "widgets/lumamixtransition.h"
+#include "widgets/mltclipproducerwidget.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlapplication.h"
 #include "autosavefile.h"
@@ -3472,6 +3473,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         w = new CountProducerWidget(this);
     else if (service == "blipflash")
         w = new BlipProducerWidget(this);
+    else if (service == "xml-clip")
+        w = new MltClipProducerWidget(this);
     else if (producer->parent().get(kShotcutTransitionProperty)) {
         w = new LumaMixTransition(producer->parent(), this);
         scrollArea->setWidget(w);
@@ -3498,7 +3501,13 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         return w;
     }
     if (w) {
-        dynamic_cast<AbstractProducerWidget *>(w)->setProducer(producer);
+        AbstractProducerWidget *pw = dynamic_cast<AbstractProducerWidget *>(w);
+        if (pw) {
+            pw->setProducer(producer);
+        } else {
+            LOG_ERROR() << "Widget is not a producer widget.";
+            return w;
+        }
         if (-1 != w->metaObject()->indexOfSignal("producerChanged(Mlt::Producer*)")) {
             connect(w, SIGNAL(producerChanged(Mlt::Producer *)), SLOT(onProducerChanged()));
             connect(w, SIGNAL(producerChanged(Mlt::Producer *)), m_filterController,

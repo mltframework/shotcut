@@ -888,3 +888,25 @@ double Util::getSuggestedFrameRate(Mlt::Producer *producer)
     }
     return fps;
 }
+
+Mlt::Producer Util::openMltVirtualClip(const QString &path)
+{
+    Mlt::Producer xmlProducer(nullptr, "xml-clip", path.toUtf8().constData());
+    QScopedPointer<Mlt::Profile> testProfile(xmlProducer.profile());
+    if (Settings.playerGPU() && MLT.profile().is_explicit()) {
+        if (testProfile->width() != MLT.profile().width() || testProfile->height() != MLT.profile().height()
+                || Util::isFpsDifferent(MLT.profile().fps(), testProfile->fps())) {
+            return Mlt::Producer();
+        }
+    }
+    if (xmlProducer.is_valid()) {
+        Mlt::Chain chain(MLT.profile());
+        chain.set_source(xmlProducer);
+        chain.attach_normalizers();
+        chain.get_length_time(mlt_time_clock);
+        chain.set(kShotcutVirtualClip, 1);
+        chain.set("resource", path.toUtf8().constData());
+        return chain;
+    }
+    return Mlt::Producer();
+}

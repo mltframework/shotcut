@@ -184,31 +184,10 @@ bool Controller::openXML(const QString &filename)
 {
     bool error = true;
     close();
-    if (Settings.playerGPU() && profile().is_explicit()) {
-        Profile testProfile;
-        Producer producer(testProfile, filename.toUtf8().constData());
-        if (testProfile.width() != profile().width() || testProfile.height() != profile().height()
-                || Util::isFpsDifferent(profile().fps(), testProfile.fps())) {
-            return error;
-        }
-    }
-    Producer producer(profile(), filename.toUtf8().constData());
-    if (producer.is_valid()) {
-        double fps = profile().fps();
-        if (!profile().is_explicit()) {
-            profile().from_producer(producer);
-            profile().set_width(Util::coerceMultiple(profile().width()));
-            profile().set_height(Util::coerceMultiple(profile().height()));
-        }
-        updatePreviewProfile();
-        setPreviewScale(Settings.playerPreviewScale());
-        if (Util::isFpsDifferent(profile().fps(), fps)) {
-            // reopen with the correct fps
-            producer = Producer(profile(), filename.toUtf8().constData());
-        }
-        producer.set(kShotcutVirtualClip, 1);
-        producer.set("resource", filename.toUtf8().constData());
-        setProducer(new Producer(producer));
+
+    Mlt::Producer xmlProducer = Util::openMltVirtualClip(filename);
+    if (xmlProducer.is_valid()) {
+        setProducer(new Producer(xmlProducer));
         error = false;
     }
     return error;
