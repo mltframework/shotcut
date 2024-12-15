@@ -50,14 +50,15 @@
 #include <QClipboard>
 #include <QActionGroup>
 #include <QSortFilterProxyModel>
-#include <qpushbutton.h>
+#include <QPushButton>
+#include <QInputDialog>
 
 static const auto kInOutChangedTimeoutMs = 100;
 static const auto kTilePaddingPx = 10;
-
-#define kDetailedMode "detailed"
-#define kIconsMode "icons"
-#define kTiledMode "tiled"
+static const auto kSpecialBinDataAll = QLatin1String("all");
+static const auto kDetailedMode = QLatin1String("detailed");
+static const auto kIconsMode = QLatin1String("icons");
+static const auto kTiledMode = QLatin1String("tiled");
 
 class TiledItemDelegate : public QStyledItemDelegate
 {
@@ -159,14 +160,27 @@ public:
         invalidateFilter();
     }
 
+    void setBin(const QString &name = QString())
+    {
+        m_bin = name;
+        invalidateFilter();
+    }
+
 protected:
     bool filterAcceptsRow(int row, const QModelIndex &parent) const
     {
-        if (m_mediaTypes.size()) {
+        if (m_mediaTypes.size() > 0 && m_mediaTypes.size() < 4) {
             auto index = sourceModel()->index(row, PlaylistModel::COLUMN_MEDIA_TYPE, parent);
             if (!m_mediaTypes.contains(index.data(Qt::StatusTipRole)))
                 return false;
         }
+
+        if (!m_bin.isEmpty()) {
+            auto index = sourceModel()->index(row, PlaylistModel::COLUMN_BIN, parent);
+            if (index.data(Qt::DisplayRole).toString() != m_bin)
+                return false;
+        }
+
         auto filter = filterRegularExpression();
         auto index = sourceModel()->index(row, PlaylistModel::COLUMN_RESOURCE, parent);
         if (index.data(Qt::DisplayRole).toString().contains(filter))
@@ -182,6 +196,7 @@ protected:
 
 private:
     QList<PlaylistModel::MediaType> m_mediaTypes {PlaylistModel::Video, PlaylistModel::Audio, PlaylistModel::Image};
+    QString m_bin;
 };
 
 
@@ -193,7 +208,42 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
+
+    int width = qRound(150 * devicePixelRatio());
+    ui->splitter->setSizes({width, this->width() - width});
+    ui->splitter->setStretchFactor(0, 0);
+    ui->splitter->setStretchFactor(1, 1);
     ui->treeWidget->setVisible(false);
+    ui->treeWidget->viewport()->setAcceptDrops(true);
+    ui->treeWidget->setDragDropMode(QAbstractItemView::DropOnly);
+    ui->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->treeWidget, &QWidget::customContextMenuRequested, this, [ = ](const QPoint & pos) {
+        QMenu menu(this);
+        menu.addAction(Actions["playlistNewBin"]);
+        menu.exec(mapToGlobal(pos));
+    });
+    connect(ui->treeWidget, &BinTree::copied, this, [ = ](const QString & filePath) {
+        addFiles(-1, {filePath});
+    });
+    connect(ui->treeWidget, &BinTree::moved, this, [ = ](const QList<int> &rows,
+    const QPointF & point) {
+        auto item = ui->treeWidget->itemAt(point.x(), point.y());
+        auto bin = item->text(0);
+        if (item->data(0, Qt::UserRole).toString() == kSpecialBinDataAll)
+            bin = QString();
+        MAIN.undoStack()->push(new Playlist::MoveToBinCommand(m_model, ui->treeWidget, bin, rows));
+        m_view->selectionModel()->clearSelection();
+    });
+    auto item = new QTreeWidgetItem(ui->treeWidget, {tr("ALL")});
+    item->setData(0, Qt::UserRole, kSpecialBinDataAll);
+    item->setSelected(true);
+    item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDropEnabled);
+    QFont font;
+    font.setItalic(true);
+    item->setFont(0, font);
+    auto icon = QIcon::fromTheme("quickopen",
+                                 QIcon(":/icons/oxygen/32x32/actions/quickopen.png"));
+    item->setIcon(0, icon);
 
     m_proxyModel = new PlaylistProxyModel(this);
     m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -239,6 +289,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     m_mainMenu->addAction(Actions["playlistAddToTimelineAction"]);
     m_mainMenu->addAction(Actions["playlistAddToSlideshowAction"]);
     m_mainMenu->addSeparator();
+    m_mainMenu->addAction(Actions["playlistNewBin"]);
     QMenu *sortByMenu = m_mainMenu->addMenu(tr("Sort"));
     sortByMenu->addAction(Actions["playlistSortByNameAction"]);
     sortByMenu->addAction(Actions["playlistSortByDateAction"]);
@@ -274,10 +325,14 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui->verticalLayout->addWidget(toolbar);
     ui->verticalLayout->addSpacing(2);
 
+    toolbar = new DockToolBar(tr("Playlist Filters"));
+    toolbar->addAction(Actions["playlistBinView"]);
+    ui->filtersLayout->addWidget(toolbar);
+
     auto toolbar2 = new QToolBar(tr("Playlist Filters"));
     toolbar2->setStyleSheet(
         QStringLiteral("QToolButton:checked { color:palette(highlighted-text); background-color:palette(highlight);}"));
-    ui->filtersLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    ui->filtersLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
     toolbar2->addActions({Actions["playlistFiltersVideo"], Actions["playlistFiltersAudio"], Actions["playlistFiltersImage"], Actions["playlistFiltersOther"]});
     ui->filtersLayout->addWidget(toolbar2);
     auto lineEdit = new LineEditClear(this);
@@ -293,6 +348,12 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     m_iconsView = new PlaylistIconView(this);
     ui->listView->parentWidget()->layout()->addWidget(m_iconsView);
     m_iconsView->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tableView->setModel(m_proxyModel);
+    ui->listView->setModel(m_proxyModel);
+    m_iconsView->setModel(m_proxyModel);
+    ui->tableView->setSelectionModel(m_selectionModel);
+    ui->listView->setSelectionModel(m_selectionModel);
+    m_iconsView->setSelectionModel(m_selectionModel);
 
     QList<QAbstractItemView *> views;
     views << ui->tableView;
@@ -867,6 +928,39 @@ void PlaylistDock::setupActions()
     action->setChecked(true);
     connect(action, &QAction::triggered, this, &PlaylistDock::onMediaTypeClicked);
     Actions.add("playlistFiltersOther", action, this->windowTitle());
+
+    action = new QAction(tr("New Bin"), this);
+    action->setToolTip(tr("New Bin"));
+    icon = QIcon::fromTheme("folder-new",
+                            QIcon(":/icons/oxygen/32x32/actions/folder-new.png"));
+    action->setIcon(icon);
+    action->setDisabled(true);
+    Actions.add("playlistNewBin", action, windowTitle());
+    connect(action, &QAction::triggered, this, [ = ]() {
+        QInputDialog dialog(this);
+        dialog.setInputMode(QInputDialog::TextInput);
+        dialog.setWindowTitle(action->text());
+        dialog.setLabelText(tr("Name"));
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        auto result = dialog.exec();
+        auto name = dialog.textValue();
+        if (result == QDialog::Accepted && !name.isEmpty()) {
+            if (ui->treeWidget->findItems(name, Qt::MatchExactly).isEmpty())
+                MAIN.undoStack()->push(new Playlist::NewBinCommand(m_model, ui->treeWidget, name));
+        }
+    });
+
+    action = new QAction(tr("Bins"), this);
+    action->setToolTip(tr("Show or hide the list of bins"));
+    icon = QIcon::fromTheme("view-choose",
+                            QIcon(":/icons/oxygen/32x32/actions/view-choose.png"));
+    action->setIcon(icon);
+    action->setCheckable(true);
+    connect(action, &QAction::triggered, this, [ = ](bool checked) {
+        ui->treeWidget->setVisible(checked);
+        Actions["playlistNewBin"]->setEnabled(checked);
+    });
+    Actions.add("playlistBinView", action, windowTitle());
 }
 
 int PlaylistDock::position()
@@ -1028,6 +1122,10 @@ void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
             }
             producer = MLT.setupNewProducer(producer);
             producer->set(kShotcutSkipConvertProperty, 1);
+            if (ui->treeWidget->topLevelItemCount() > 1) {
+                auto bin = ui->treeWidget->selectedItems().first()->text(0);
+                producer->set(kShotcutBinsProperty, bin.toUtf8().constData());
+            }
             if (!MLT.isLiveProducer(producer) || producer->get_int(kShotcutVirtualClip)) {
                 ProxyManager::generateIfNotExists(*producer);
                 if (row == -1)
@@ -1070,6 +1168,39 @@ void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
     }
     if (resetIndex)
         resetPlaylistIndex();
+}
+
+void PlaylistDock::loadBins()
+{
+    // clear the tree view except top item
+    while (ui->treeWidget->topLevelItemCount() > 1)
+        delete ui->treeWidget->takeTopLevelItem(1);
+
+    auto props = m_model.playlist()->get_props(kShotcutBinsProperty);
+    if (props && props->is_valid()) {
+        for (int i = 0; i < props->count(); ++i) {
+            auto name = QString::fromUtf8(props->get_name(i));
+            if (!name.startsWith('_') && !name.startsWith('.')) {
+                name = QString::fromUtf8(props->get(i));
+                auto item = new QTreeWidgetItem(ui->treeWidget, {name});
+                auto icon = QIcon::fromTheme("folder",
+                                             QIcon(":/icons/oxygen/32x32/places/folder.png"));
+                item->setIcon(0, icon);
+            }
+        }
+        if (ui->treeWidget->topLevelItemCount() > 1 && !ui->treeWidget->isVisible()) {
+            Actions["playlistBinView"]->trigger();
+            ui->treeWidget->topLevelItem(0)->setSelected(true);
+            sortBins();
+        }
+    }
+}
+
+void PlaylistDock::sortBins()
+{
+    auto all = ui->treeWidget->takeTopLevelItem(0);
+    ui->treeWidget->sortItems(0, Qt::AscendingOrder);
+    ui->treeWidget->insertTopLevelItem(0, all);
 }
 
 void PlaylistDock::onInsertCutActionTriggered()
@@ -1208,6 +1339,7 @@ void PlaylistDock::onProducerOpened()
             emit m_model.dataChanged(m_model.createIndex(0, PlaylistModel::COLUMN_THUMBNAIL),
                                      m_model.createIndex(m_model.playlist()->count() - 1, PlaylistModel::COLUMN_THUMBNAIL),
                                      QVector<int>() << PlaylistModel::COLUMN_THUMBNAIL);
+            loadBins();
         }
     }
     emit producerOpened();
@@ -1331,6 +1463,10 @@ void PlaylistDock::onPlaylistModified()
 
 void PlaylistDock::onPlaylistCleared()
 {
+    auto all = ui->treeWidget->takeTopLevelItem(0);
+    ui->treeWidget->clear();
+    ui->treeWidget->addTopLevelItem(all);
+
     emit enableUpdate(false);
     m_blockResizeColumnsToContents = false;
     bool nonEmptyModel = m_model.rowCount() > 0;
@@ -1455,9 +1591,6 @@ void PlaylistDock::onProducerChanged(Mlt::Producer *producer)
 
 void PlaylistDock::updateViewMode()
 {
-    ui->listView->setModel(nullptr);
-    ui->tableView->setModel(nullptr);
-    m_iconsView->setModel(nullptr);
     ui->listView->hide();
     ui->tableView->hide();
     m_iconsView->hide();
@@ -1472,7 +1605,6 @@ void PlaylistDock::updateViewMode()
     if (mode == kDetailedMode) {
         m_model.setViewMode(PlaylistModel::Detailed);
         m_view = ui->tableView;
-        ui->tableView->setModel(m_proxyModel);
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_INDEX, true);
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_COMMENT, true);
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_THUMBNAIL,
@@ -1492,19 +1624,12 @@ void PlaylistDock::updateViewMode()
         m_view = ui->listView;
         ui->listView->setDragEnabled(true);
         ui->listView->setItemDelegate(new TiledItemDelegate(ui->listView));
-        ui->listView->setModel(m_proxyModel);
         ui->listView->show();
     } else { /* if (mode == kIconsMode) */
         m_view = m_iconsView;
-        m_iconsView->setModel(m_proxyModel);
         m_model.setViewMode(PlaylistModel::Icons);
         m_iconsView->show();
     }
-    m_view->setSelectionModel(m_selectionModel);
-    QTimer::singleShot(0, this, [ = ]() {
-        emit selectionChanged();
-    });
-    m_model.refreshThumbnails();
 }
 
 void PlaylistDock::resetPlaylistIndex()
@@ -1675,4 +1800,63 @@ void PlaylistDock::onMediaTypeClicked()
     if (Actions["playlistFiltersOther"]->isChecked())
         types << PlaylistModel::Other;
     m_proxyModel->setMediaTypes(types);
+}
+
+void PlaylistDock::on_treeWidget_itemPressed(QTreeWidgetItem *item, int column)
+{
+    auto data = item->data(0, Qt::UserRole).toString();
+    if (data == kSpecialBinDataAll) {
+        m_proxyModel->setBin();
+    } else {
+        m_proxyModel->setBin(item->text(0));
+    }
+}
+
+void PlaylistDock::on_treeWidget_itemSelectionChanged()
+{
+    // select ALL if a bin is deselected
+    if (ui->treeWidget->selectedItems().size() < 1) {
+        ui->treeWidget->topLevelItem(0)->setSelected(true);
+        m_proxyModel->setBin();
+    }
+}
+
+void BinTree::dropEvent(QDropEvent *event)
+{
+    auto position = dropIndicatorPosition();
+    if (position == QAbstractItemView::BelowItem || position == QAbstractItemView::AboveItem)
+        return;
+
+    const auto mimeType = QLatin1String("application/x-qabstractitemmodeldatalist");
+
+    if (event->mimeData()->hasFormat(mimeType)) {
+        if (Qt::CopyAction == event->dropAction()) {
+            auto encoded = event->mimeData()->data(mimeType);
+            QDataStream stream(&encoded, QIODevice::ReadOnly);
+            QMap<int, QVariant> roleDataMap;
+            while (!stream.atEnd()) {
+                int row, col;
+                stream >> row >> col >> roleDataMap;
+            }
+            if (roleDataMap.contains(Qt::ToolTipRole)) {
+                emit copied(roleDataMap[Qt::ToolTipRole].toString());
+                event->acceptProposedAction();
+            }
+        } else if (Qt::MoveAction == event->dropAction()) {
+            auto encoded = event->mimeData()->data(mimeType);
+            QDataStream stream(&encoded, QIODevice::ReadOnly);
+            QMap<int, QVariant> roleDataMap;
+            QList<int> rows;
+            while (!stream.atEnd()) {
+                int row, col;
+                stream >> row >> col >> roleDataMap;
+                rows << row;
+            }
+            if (rows.size() > 0) {
+                emit moved(rows, event->position());
+                event->acceptProposedAction();
+            }
+        }
+    }
+    return QTreeWidget::dropEvent(event);
 }

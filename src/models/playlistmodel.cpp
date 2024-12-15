@@ -395,6 +395,10 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             if (info->producer && info->producer->is_valid())
                 return QString::fromUtf8(info->producer->get(kCommentProperty));
             break;
+        case FIELD_BIN:
+            if (info->producer && info->producer->is_valid())
+                return QString::fromUtf8(info->producer->get(kShotcutBinsProperty));
+            break;
         }
     }
     return QVariant();
@@ -413,6 +417,17 @@ void PlaylistModel::setViewMode(ViewMode mode)
     beginResetModel();
     m_mode = mode;
     endResetModel();
+}
+
+void PlaylistModel::setBin(int row, const QString &name)
+{
+    auto producer = m_playlist->get_clip(row);
+    if (producer && producer->is_valid()) {
+        producer->parent().set(kShotcutBinsProperty, name.toUtf8().constData());
+        emit dataChanged(createIndex(row, PlaylistModel::COLUMN_BIN), createIndex(row,
+                                                                                  PlaylistModel::COLUMN_BIN));
+        emit modified();
+    }
 }
 
 QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -561,6 +576,8 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
     }
     mimeData->setData(Mlt::XmlMimeType, MLT.XML(&playlist).toUtf8());
     mimeData->setText(QString::number(count));
+    auto mimeType = QLatin1String("application/x-qabstractitemmodeldatalist");
+    mimeData->setData(mimeType, QAbstractItemModel::mimeData(indexes)->data(mimeType));
     return mimeData;
 }
 

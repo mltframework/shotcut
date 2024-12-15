@@ -19,7 +19,7 @@
 #define PLAYLISTMODEL_H
 
 #include <QAbstractTableModel>
-#include <qmimedata.h>
+#include <QMimeData>
 #include <QStringList>
 #include "MltPlaylist.h"
 
@@ -53,6 +53,7 @@ public:
         COLUMN_DATE,
         COLUMN_MEDIA_TYPE,
         COLUMN_COMMENT,
+        COLUMN_BIN,
         COLUMN_COUNT
     };
 
@@ -65,7 +66,8 @@ public:
         FIELD_START,
         FIELD_DATE,
         FIELD_MEDIA_TYPE,
-        FIELD_COMMENT
+        FIELD_COMMENT,
+        FIELD_BIN
     };
 
     static const int THUMBNAIL_WIDTH = 80;
@@ -103,6 +105,7 @@ public:
 
     ViewMode viewMode() const;
     void setViewMode(ViewMode mode);
+    void setBin(int row, const QString &name);
 
 signals:
     void created();

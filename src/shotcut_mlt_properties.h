@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,6 +62,7 @@
 // "shotcut:proxy" is internal only because older versions do not know to hide it.
 // "shotcut:metaProxy" indicates whether the "meta." properties reflect source or proxy.
 #define kMetaProxyProperty "shotcut:proxy.meta"
+#define kShotcutBinsProperty "shotcut:bins"
 
 /* Project specific properties */
 #define kShotcutProjectAudioChannels "shotcut:projectAudioChannels"

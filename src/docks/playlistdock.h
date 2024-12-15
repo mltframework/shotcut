@@ -21,6 +21,7 @@
 #include <QDockWidget>
 #include <QUndoCommand>
 #include <QTimer>
+#include <QTreeWidget>
 #include "models/playlistmodel.h"
 
 namespace Ui {
@@ -32,6 +33,23 @@ class QItemSelectionModel;
 class QMenu;
 class PlaylistIconView;
 class PlaylistProxyModel;
+
+class BinTree : public QTreeWidget
+{
+    Q_OBJECT
+
+public:
+    explicit BinTree(QWidget *parent = nullptr)
+        : QTreeWidget(parent)
+    {}
+
+signals:
+    void copied(QString);
+    void moved(QList<int>, QPointF);
+
+protected:
+    void dropEvent(QDropEvent *event);
+};
 
 class PlaylistDock : public QDockWidget
 {
@@ -81,6 +99,8 @@ private slots:
     void onInTimerFired();
     void onOutTimerFired();
     void onMediaTypeClicked();
+    void on_treeWidget_itemPressed(QTreeWidgetItem *item, int column);
+    void on_treeWidget_itemSelectionChanged();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -110,6 +130,8 @@ private:
     void moveClipUp();
     void moveClipDown();
     void addFiles(int row, const QList<QUrl> &urls);
+    void loadBins();
+    void sortBins();
 
     Ui::PlaylistDock *ui;
     QAbstractItemView *m_view;

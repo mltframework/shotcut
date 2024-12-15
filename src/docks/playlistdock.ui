@@ -94,7 +94,19 @@ p, li { white-space: pre-wrap; }
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="QTreeWidget" name="treeWidget">
+          <widget class="BinTree" name="treeWidget">
+           <property name="acceptDrops">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QTreeWidget::item { padding: 10px }</string>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="rootIsDecorated">
+            <bool>false</bool>
+           </property>
            <attribute name="headerVisible">
             <bool>false</bool>
            </attribute>
@@ -171,6 +183,11 @@ p, li { white-space: pre-wrap; }
    <class>PlaylistListView</class>
    <extends>QListView</extends>
    <header>widgets/playlistlistview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BinTree</class>
+   <extends>QTreeWidget</extends>
+   <header>docks/playlistdock.h</header>
   </customwidget>
  </customwidgets>
  <resources>

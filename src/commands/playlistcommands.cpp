@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,9 @@
 #include "playlistcommands.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
+#include "shotcut_mlt_properties.h"
 #include <Logger.h>
+#include <QTreeWidget>
 
 namespace Playlist {
 
@@ -360,6 +362,81 @@ void ReplaceCommand::undo()
     Mlt::Producer producer(MLT.profile(), "xml-string", m_oldXml.toUtf8().constData());
     m_model.update(m_row, producer, true);
     MLT.setUuid(producer, m_uuid);
+}
+
+NewBinCommand::NewBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
+                             QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_binTree(tree)
+    , m_bin(bin)
+{
+    setText(QObject::tr("Add new bin: %1").arg(bin));
+    auto props = m_model.playlist()->get_props(kShotcutBinsProperty);
+    if (props && props->is_valid()) {
+        m_oldBins.copy(*props, "");
+    }
+}
+
+void NewBinCommand::redo()
+{
+    auto item = new QTreeWidgetItem(m_binTree, {m_bin});
+    auto icon = QIcon::fromTheme("folder",
+                                 QIcon(":/icons/oxygen/32x32/places/folder.png"));
+    item->setIcon(0, icon);
+
+    auto all = m_binTree->takeTopLevelItem(0);
+    m_binTree->sortItems(0, Qt::AscendingOrder);
+    m_binTree->insertTopLevelItem(0, all);
+
+    Mlt::Properties *props = m_model.playlist()->get_props(kShotcutBinsProperty);
+    if (!props || !props->is_valid()) {
+        delete props;
+        props = new Mlt::Properties;
+        m_model.playlist()->set(kShotcutBinsProperty, *props);
+    }
+    for (int i = 1; i < m_binTree->topLevelItemCount(); ++i) {
+        auto name = m_binTree->topLevelItem(i)->text(0);
+        props->set(QString::number(i).toLatin1().constData(), name.toUtf8().constData());
+    }
+    m_model.playlist()->set(kShotcutBinsProperty, *props);
+}
+
+void NewBinCommand::undo()
+{
+    m_model.playlist()->set(kShotcutBinsProperty, m_oldBins);
+    auto items = m_binTree->findItems(m_bin, Qt::MatchExactly);
+    delete items.first();
+}
+
+MoveToBinCommand::MoveToBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
+                                   const QList<int> &rows, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_binTree(tree)
+    , m_bin(bin)
+{
+    setText(QObject::tr("Move %n item(s) to bin: %1", "", rows.size()).arg(bin));
+    for (const auto row : rows) {
+        auto clip = m_model.playlist()->get_clip(row);
+        if (clip && clip->is_valid() && clip->parent().is_valid()) {
+            m_oldData.append({row, clip->parent().get(kShotcutBinsProperty)});
+        }
+    }
+}
+
+void MoveToBinCommand::redo()
+{
+    for (auto &old : m_oldData) {
+        m_model.setBin(old.row, m_bin);
+    }
+}
+
+void MoveToBinCommand::undo()
+{
+    for (auto &old : m_oldData) {
+        m_model.setBin(old.row, old.bin);
+    }
 }
 
 } // namespace Playlist

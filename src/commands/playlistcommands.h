@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 #include <QUndoCommand>
 #include <QString>
 #include <QUuid>
+
+class QTreeWidget;
 
 namespace Playlist {
 
@@ -181,6 +183,39 @@ private:
     QString m_oldXml;
     int m_row;
     QUuid m_uuid;
+};
+
+class NewBinCommand : public QUndoCommand
+{
+public:
+    NewBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
+                  QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+private:
+    PlaylistModel &m_model;
+    QTreeWidget *m_binTree;
+    QString m_bin;
+    Mlt::Properties m_oldBins;
+};
+
+class MoveToBinCommand : public QUndoCommand
+{
+public:
+    MoveToBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
+                     const QList<int> &rows, QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+private:
+    PlaylistModel &m_model;
+    QTreeWidget *m_binTree;
+    QString m_bin;
+
+    typedef struct {
+        int row;
+        QString bin;
+    } oldData;
+    QList<oldData> m_oldData;
 };
 
 }
