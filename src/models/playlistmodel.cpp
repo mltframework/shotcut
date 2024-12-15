@@ -424,10 +424,39 @@ void PlaylistModel::setBin(int row, const QString &name)
     auto producer = m_playlist->get_clip(row);
     if (producer && producer->is_valid()) {
         producer->parent().set(kShotcutBinsProperty, name.toUtf8().constData());
-        emit dataChanged(createIndex(row, PlaylistModel::COLUMN_BIN), createIndex(row,
-                                                                                  PlaylistModel::COLUMN_BIN));
+        emit dataChanged(createIndex(row, PlaylistModel::COLUMN_BIN),
+                         createIndex(row, PlaylistModel::COLUMN_BIN));
         emit modified();
     }
+}
+
+void PlaylistModel::renameBin(const QString &bin, const QString &newName)
+{
+    if (newName.isEmpty()) {
+        emit dataChanged(createIndex(0, PlaylistModel::COLUMN_BIN),
+                         createIndex(rowCount(), PlaylistModel::COLUMN_BIN));
+        emit modified();
+        return;
+    }
+
+    auto n = rowCount();
+    auto modified = false;
+    for (int row = 0; row < n; ++row) {
+        auto clip = m_playlist->get_clip(row);
+        if (clip && clip->is_valid()) {
+            if (bin == clip->parent().get(kShotcutBinsProperty)) {
+                if (newName.isEmpty())
+                    clip->parent().Mlt::Properties::clear(kShotcutBinsProperty);
+                else
+                    clip->parent().set(kShotcutBinsProperty, newName.toUtf8().constData());
+                emit dataChanged(createIndex(row, PlaylistModel::COLUMN_BIN),
+                                 createIndex(row, PlaylistModel::COLUMN_BIN));
+                modified = true;
+            }
+        }
+    }
+    if (modified)
+        emit this->modified();
 }
 
 QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int role) const

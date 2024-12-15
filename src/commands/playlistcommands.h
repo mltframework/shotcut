@@ -206,6 +206,7 @@ public:
                      const QList<int> &rows, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     PlaylistModel &m_model;
     QTreeWidget *m_binTree;
@@ -216,6 +217,24 @@ private:
         QString bin;
     } oldData;
     QList<oldData> m_oldData;
+};
+
+class RenameBinCommand : public QUndoCommand
+{
+public:
+    RenameBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
+                     const QString &newName = QString(), QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+    static void rebuildBinList(PlaylistModel &model, QTreeWidget *binTree);
+
+private:
+    PlaylistModel &m_model;
+    QTreeWidget *m_binTree;
+    QString m_bin;
+    QString m_newName;
+    QList<int> m_removedRows;
+
 };
 
 }

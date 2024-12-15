@@ -106,6 +106,7 @@ public:
     ViewMode viewMode() const;
     void setViewMode(ViewMode mode);
     void setBin(int row, const QString &name);
+    void renameBin(const QString &bin, const QString &newName = QString());
 
 signals:
     void created();

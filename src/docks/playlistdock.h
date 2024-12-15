@@ -99,7 +99,6 @@ private slots:
     void onInTimerFired();
     void onOutTimerFired();
     void onMediaTypeClicked();
-    void on_treeWidget_itemPressed(QTreeWidgetItem *item, int column);
     void on_treeWidget_itemSelectionChanged();
 
 protected:

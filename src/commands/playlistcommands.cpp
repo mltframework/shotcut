@@ -389,24 +389,24 @@ void NewBinCommand::redo()
     m_binTree->sortItems(0, Qt::AscendingOrder);
     m_binTree->insertTopLevelItem(0, all);
 
-    Mlt::Properties *props = m_model.playlist()->get_props(kShotcutBinsProperty);
+    std::unique_ptr<Mlt::Properties> props(m_model.playlist()->get_props(kShotcutBinsProperty));
     if (!props || !props->is_valid()) {
-        delete props;
-        props = new Mlt::Properties;
+        props.reset(new Mlt::Properties);
         m_model.playlist()->set(kShotcutBinsProperty, *props);
     }
     for (int i = 1; i < m_binTree->topLevelItemCount(); ++i) {
         auto name = m_binTree->topLevelItem(i)->text(0);
         props->set(QString::number(i).toLatin1().constData(), name.toUtf8().constData());
     }
-    m_model.playlist()->set(kShotcutBinsProperty, *props);
 }
 
 void NewBinCommand::undo()
 {
     m_model.playlist()->set(kShotcutBinsProperty, m_oldBins);
     auto items = m_binTree->findItems(m_bin, Qt::MatchExactly);
-    delete items.first();
+    if (!items.isEmpty())
+        delete items.first();
+    RenameBinCommand::rebuildBinList(m_model, m_binTree);
 }
 
 MoveToBinCommand::MoveToBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
@@ -436,6 +436,112 @@ void MoveToBinCommand::undo()
 {
     for (auto &old : m_oldData) {
         m_model.setBin(old.row, old.bin);
+    }
+}
+
+RenameBinCommand::RenameBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
+                                   const QString &newName, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_binTree(tree)
+    , m_bin(bin)
+    , m_newName(newName)
+{
+    if (newName.isEmpty()) {
+        setText(QObject::tr("Remove bin: %1").arg(bin));
+    } else {
+        setText(QObject::tr("Rename bin: %1").arg(newName));
+    }
+}
+
+void RenameBinCommand::redo()
+{
+    auto items = m_binTree->findItems(m_bin, Qt::MatchExactly);
+    if (!items.isEmpty()) {
+        m_binTree->blockSignals(true);
+        items.first()->setSelected(false);
+        m_binTree->blockSignals(false);
+        if (m_newName.isEmpty()) {
+            // Remove
+            delete items.first();
+
+            // Remove bin property from playlist items
+            for (int i = 0; i < m_model.playlist()->count(); ++i) {
+                auto clip = m_model.playlist()->get_clip(i);
+                if (clip && clip->is_valid() && m_bin == clip->parent().get(kShotcutBinsProperty)) {
+                    clip->parent().Mlt::Properties::clear(kShotcutBinsProperty);
+                    m_removedRows << i;
+                }
+            }
+            m_model.renameBin(m_bin);
+            rebuildBinList(m_model, m_binTree);
+
+            // Select ALL bin
+            m_binTree->clearSelection();
+        } else {
+            // Rename
+            items.first()->setText(0, m_newName);
+            items.first()->setSelected(true);
+            m_model.renameBin(m_bin, m_newName);
+            rebuildBinList(m_model, m_binTree);
+
+            // Reselect bin
+            auto all = m_binTree->takeTopLevelItem(0);
+            m_binTree->sortItems(0, Qt::AscendingOrder);
+            m_binTree->insertTopLevelItem(0, all);
+        }
+    }
+}
+
+void RenameBinCommand::undo()
+{
+    auto items = m_binTree->findItems(m_newName, Qt::MatchExactly);
+    if (m_newName.isEmpty()) {
+        // Undo remove
+        auto item = new QTreeWidgetItem(m_binTree, {m_bin});
+        auto icon = QIcon::fromTheme("folder",
+                                     QIcon(":/icons/oxygen/32x32/places/folder.png"));
+        item->setIcon(0, icon);
+
+        auto all = m_binTree->takeTopLevelItem(0);
+        m_binTree->sortItems(0, Qt::AscendingOrder);
+        m_binTree->insertTopLevelItem(0, all);
+
+        // Restore bin property on playlist items
+        for (auto row : m_removedRows) {
+            m_model.playlist()->get_clip(row)->parent().set(kShotcutBinsProperty, m_bin.toUtf8().constData());
+        }
+        m_model.renameBin(m_bin);
+        rebuildBinList(m_model, m_binTree);
+    } else if (!items.isEmpty()) {
+        // Undo rename
+        m_binTree->blockSignals(true);
+        m_binTree->clearSelection();
+        m_binTree->blockSignals(false);
+        items.first()->setText(0, m_bin);
+        items.first()->setSelected(true);
+        m_model.renameBin(m_newName, m_bin);
+        rebuildBinList(m_model, m_binTree);
+
+        // Reselect bin
+        auto all = m_binTree->takeTopLevelItem(0);
+        m_binTree->sortItems(0, Qt::AscendingOrder);
+        m_binTree->insertTopLevelItem(0, all);
+    }
+}
+
+void RenameBinCommand::rebuildBinList(PlaylistModel &model, QTreeWidget *binTree)
+{
+    // Rebuild list of bins
+    std::unique_ptr<Mlt::Properties> props(model.playlist()->get_props(kShotcutBinsProperty));
+    for (int i = 0; i < props->count(); ++i) {
+        const auto name = QString::fromLatin1(props->get_name(i));
+        if (!name.startsWith('_') && !name.startsWith('.'))
+            props->clear(name.toLatin1().constData());
+    }
+    for (int i = 1; i < binTree->topLevelItemCount(); ++i) {
+        auto name = binTree->topLevelItem(i)->text(0);
+        props->set(QString::number(i).toLatin1().constData(), name.toUtf8().constData());
     }
 }
 

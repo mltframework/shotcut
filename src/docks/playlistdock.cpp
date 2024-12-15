@@ -209,6 +209,15 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
 
+    m_proxyModel = new PlaylistProxyModel(this);
+    m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    m_proxyModel->setSourceModel(&m_model);
+    m_proxyModel->setFilterKeyColumn(-1);
+
+    m_selectionModel = new QItemSelectionModel(m_proxyModel, this);
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, this,
+            &PlaylistDock::selectionChanged);
+
     int width = qRound(150 * devicePixelRatio());
     ui->splitter->setSizes({width, this->width() - width});
     ui->splitter->setStretchFactor(0, 0);
@@ -220,6 +229,8 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     connect(ui->treeWidget, &QWidget::customContextMenuRequested, this, [ = ](const QPoint & pos) {
         QMenu menu(this);
         menu.addAction(Actions["playlistNewBin"]);
+        menu.addAction(Actions["playlistRemoveBin"]);
+        menu.addAction(Actions["playlistRenameBin"]);
         menu.exec(mapToGlobal(pos));
     });
     connect(ui->treeWidget, &BinTree::copied, this, [ = ](const QString & filePath) {
@@ -237,22 +248,12 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     auto item = new QTreeWidgetItem(ui->treeWidget, {tr("ALL")});
     item->setData(0, Qt::UserRole, kSpecialBinDataAll);
     item->setSelected(true);
-    item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDropEnabled);
     QFont font;
     font.setItalic(true);
     item->setFont(0, font);
     auto icon = QIcon::fromTheme("quickopen",
                                  QIcon(":/icons/oxygen/32x32/actions/quickopen.png"));
     item->setIcon(0, icon);
-
-    m_proxyModel = new PlaylistProxyModel(this);
-    m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    m_proxyModel->setSourceModel(&m_model);
-    m_proxyModel->setFilterKeyColumn(-1);
-
-    m_selectionModel = new QItemSelectionModel(m_proxyModel, this);
-    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, this,
-            &PlaylistDock::selectionChanged);
 
     setupActions();
 
@@ -289,7 +290,10 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     m_mainMenu->addAction(Actions["playlistAddToTimelineAction"]);
     m_mainMenu->addAction(Actions["playlistAddToSlideshowAction"]);
     m_mainMenu->addSeparator();
-    m_mainMenu->addAction(Actions["playlistNewBin"]);
+    QMenu *binsMenu = m_mainMenu->addMenu(tr("Bins"));
+    binsMenu->addAction(Actions["playlistNewBin"]);
+    binsMenu->addAction(Actions["playlistRemoveBin"]);
+    binsMenu->addAction(Actions["playlistRenameBin"]);
     QMenu *sortByMenu = m_mainMenu->addMenu(tr("Sort"));
     sortByMenu->addAction(Actions["playlistSortByNameAction"]);
     sortByMenu->addAction(Actions["playlistSortByDateAction"]);
@@ -312,6 +316,8 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     menuButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
     menuButton->setMenu(m_mainMenu);
     toolbar->addWidget(menuButton);
+    toolbar->addSeparator();
+    toolbar->addAction(Actions["playlistNewBin"]);
     toolbar->addSeparator();
     toolbar->addAction(Actions["playlistAppendCutAction"]);
     toolbar->addAction(Actions["playlistRemoveCutAction"]);
@@ -961,6 +967,45 @@ void PlaylistDock::setupActions()
         Actions["playlistNewBin"]->setEnabled(checked);
     });
     Actions.add("playlistBinView", action, windowTitle());
+
+    action = new QAction(tr("Remove Bin"), this);
+    action->setToolTip(tr("Remove Bin"));
+    action->setDisabled(true);
+    Actions.add("playlistRemoveBin", action, windowTitle());
+    connect(ui->treeWidget, &QTreeWidget::itemSelectionChanged, action, [ = ]() {
+        action->setEnabled(!ui->treeWidget->topLevelItem(0)->isSelected());
+    });
+    connect(action, &QAction::triggered, this, [ = ]() {
+        auto items = ui->treeWidget->selectedItems();
+        if (!items.isEmpty() && items.first()->data(0, Qt::UserRole).toString() != kSpecialBinDataAll) {
+            auto bin = ui->treeWidget->selectedItems().first()->text(0);
+            MAIN.undoStack()->push(new Playlist::RenameBinCommand(m_model, ui->treeWidget, bin));
+        }
+    });
+
+    action = new QAction(tr("Rename Bin"), this);
+    action->setToolTip(tr("Rename Bin"));
+    action->setDisabled(true);
+    Actions.add("playlistRenameBin", action, windowTitle());
+    connect(ui->treeWidget, &QTreeWidget::itemSelectionChanged, action, [ = ]() {
+        action->setEnabled(!ui->treeWidget->topLevelItem(0)->isSelected());
+    });
+    connect(action, &QAction::triggered, this, [ = ]() {
+        QInputDialog dialog(this);
+        dialog.setInputMode(QInputDialog::TextInput);
+        dialog.setWindowTitle(action->text());
+        dialog.setLabelText(tr("Name"));
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        auto result = dialog.exec();
+        auto name = dialog.textValue();
+        if (result == QDialog::Accepted && !name.isEmpty()) {
+            auto items = ui->treeWidget->selectedItems();
+            if (!items.isEmpty() && items.first()->data(0, Qt::UserRole).toString() != kSpecialBinDataAll) {
+                auto bin = ui->treeWidget->selectedItems().first()->text(0);
+                MAIN.undoStack()->push(new Playlist::RenameBinCommand(m_model, ui->treeWidget, bin, name));
+            }
+        }
+    });
 }
 
 int PlaylistDock::position()
@@ -1188,12 +1233,13 @@ void PlaylistDock::loadBins()
                 item->setIcon(0, icon);
             }
         }
-        if (ui->treeWidget->topLevelItemCount() > 1 && !ui->treeWidget->isVisible()) {
-            Actions["playlistBinView"]->trigger();
-            ui->treeWidget->topLevelItem(0)->setSelected(true);
+        if (ui->treeWidget->topLevelItemCount() > 1) {
             sortBins();
+            if (!ui->treeWidget->isVisible())
+                Actions["playlistBinView"]->trigger();
         }
     }
+    ui->treeWidget->topLevelItem(0)->setSelected(true);
 }
 
 void PlaylistDock::sortBins()
@@ -1802,22 +1848,17 @@ void PlaylistDock::onMediaTypeClicked()
     m_proxyModel->setMediaTypes(types);
 }
 
-void PlaylistDock::on_treeWidget_itemPressed(QTreeWidgetItem *item, int column)
-{
-    auto data = item->data(0, Qt::UserRole).toString();
-    if (data == kSpecialBinDataAll) {
-        m_proxyModel->setBin();
-    } else {
-        m_proxyModel->setBin(item->text(0));
-    }
-}
-
 void PlaylistDock::on_treeWidget_itemSelectionChanged()
 {
-    // select ALL if a bin is deselected
-    if (ui->treeWidget->selectedItems().size() < 1) {
+    auto items = ui->treeWidget->selectedItems();
+    if (items.isEmpty()) {
+        // select ALL if a bin is deselected
         ui->treeWidget->topLevelItem(0)->setSelected(true);
+    } else if (ui->treeWidget->topLevelItem(0)->isSelected()) {
         m_proxyModel->setBin();
+    } else {
+        auto item = ui->treeWidget->selectedItems().first();
+        m_proxyModel->setBin(item->text(0));
     }
 }
 
