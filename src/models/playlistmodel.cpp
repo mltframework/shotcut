@@ -606,7 +606,7 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
     }
     Mlt::Playlist playlist(MLT.profile());
     foreach (auto index, indexes) {
-        if (index.column()) continue;
+        if (m_mode == Detailed && index.column() != COLUMN_RESOURCE) continue;
         QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(index.row()));
         if (info && info->producer) {
             playlist.append(*info->producer, info->frame_in, info->frame_out);
