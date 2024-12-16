@@ -1394,7 +1394,6 @@ void PlaylistDock::onProducerOpened()
             emit m_model.dataChanged(m_model.createIndex(0, PlaylistModel::COLUMN_THUMBNAIL),
                                      m_model.createIndex(m_model.playlist()->count() - 1, PlaylistModel::COLUMN_THUMBNAIL),
                                      QVector<int>() << PlaylistModel::COLUMN_THUMBNAIL);
-            loadBins();
         }
     }
     emit producerOpened();
@@ -1499,6 +1498,7 @@ void PlaylistDock::onPlaylistCreated()
 
 void PlaylistDock::onPlaylistLoaded()
 {
+    loadBins();
     onPlaylistCreated();
     bool nonEmptyModel = m_model.rowCount() > 0;
     Actions["playlistRemoveAllAction"]->setEnabled(nonEmptyModel);
@@ -1521,6 +1521,7 @@ void PlaylistDock::onPlaylistCleared()
     auto all = ui->treeWidget->takeTopLevelItem(0);
     ui->treeWidget->clear();
     ui->treeWidget->addTopLevelItem(all);
+    all->setSelected(true);
 
     emit enableUpdate(false);
     m_blockResizeColumnsToContents = false;
