@@ -4882,8 +4882,10 @@ void MainWindow::onOpenOtherTriggered()
 void MainWindow::on_actionClearRecentOnExit_toggled(bool arg1)
 {
     Settings.setClearRecent(arg1);
-    if (arg1)
+    if (arg1) {
         Settings.setRecent(QStringList());
+        Settings.setProjects(QStringList());
+    }
 }
 
 void MainWindow::onSceneGraphInitialized()
