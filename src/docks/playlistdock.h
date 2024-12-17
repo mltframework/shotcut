@@ -65,6 +65,7 @@ public:
     int position();
     void replaceClipsWithHash(const QString &hash, Mlt::Producer &producer);
     void getSelectionRange(int *start, int *end);
+    Mlt::Playlist *binPlaylist();
 
 signals:
     void clipOpened(Mlt::Producer *producer, bool play = false);
@@ -144,6 +145,7 @@ private:
     QMenu *m_mainMenu;
     bool m_blockResizeColumnsToContents;
     PlaylistProxyModel *m_proxyModel;
+    Mlt::Playlist m_binPlaylist;
 };
 
 #endif // PLAYLISTDOCK_H

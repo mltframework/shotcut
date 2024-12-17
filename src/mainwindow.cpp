@@ -2901,6 +2901,11 @@ void MainWindow::getSelectionRange(int *start, int *end)
     }
 }
 
+Mlt::Playlist *MainWindow::binPlaylist()
+{
+    return m_playlistDock->binPlaylist();
+}
+
 bool MainWindow::continueModified()
 {
     if (isWindowModified()) {

@@ -16,6 +16,7 @@
  */
 
 #include "encodedock.h"
+#include "docks/timelinedock.h"
 #include "ui_encodedock.h"
 #include "dialogs/addencodepresetdialog.h"
 #include "dialogs/multifileexportdialog.h"
@@ -449,9 +450,10 @@ void EncodeDock::onProducerOpened()
     ui->fromCombo->clear();
     if (MAIN.isMultitrackValid())
         ui->fromCombo->addItem(tr("Timeline"), "timeline");
-    if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
-        ui->fromCombo->addItem(tr("Playlist"), "playlist");
-        ui->fromCombo->addItem(tr("Each Playlist Item"), "batch");
+    auto playlist = MAIN.playlist();
+    if (playlist && playlist->is_valid() && playlist->count() > 0) {
+        ui->fromCombo->addItem(tr("Current Playlist Bin"), "playlist");
+        ui->fromCombo->addItem(tr("Each Playlist Bin Item"), "batch");
     }
     if (MLT.isClip() && !MLT.isClosedClip()) {
         ui->fromCombo->addItem(tr("Source"), "clip");
@@ -1307,9 +1309,10 @@ void EncodeDock::runMelt(const QString &target, int realtime)
     Mlt::Producer *service = fromProducer();
     if (!service) {
         // For each playlist item.
-        if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
+        auto playlist = MAIN.binPlaylist();
+        if (playlist && playlist->is_valid() && playlist->count() > 0) {
             // Use the first playlist item.
-            QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(0));
+            QScopedPointer<Mlt::ClipInfo> info(playlist->clip_info(0));
             if (!info) return;
             QString xml = MLT.XML(info->producer);
             QScopedPointer<Mlt::Producer> producer(
@@ -1494,10 +1497,11 @@ void EncodeDock::enqueueMelt(const QStringList &targets, int realtime)
                 &&  ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked()) ? 1 : 0;
     if (!service) {
         // For each playlist item.
-        if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
-            int n = MAIN.playlist()->count();
+        auto playlist = MAIN.binPlaylist();
+        if (playlist && playlist->is_valid() && playlist->count() > 0) {
+            int n = playlist->count();
             for (int i = 0; i < n; i++) {
-                QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(i));
+                QScopedPointer<Mlt::ClipInfo> info(playlist->clip_info(i));
                 if (!info) continue;
                 QString xml = MLT.XML(info->producer);
                 QScopedPointer<Mlt::Producer> producer(
@@ -1601,7 +1605,7 @@ Mlt::Producer *EncodeDock::fromProducer() const
     if (from == "clip")
         return MLT.isClip() ? MLT.producer() : MLT.savedProducer();
     else if (from == "playlist")
-        return MAIN.playlist();
+        return MAIN.binPlaylist();
     else if (from == "timeline" || from.startsWith("marker:"))
         return MAIN.multitrack();
     else
@@ -1797,20 +1801,10 @@ void EncodeDock::on_encodeButton_clicked()
 
     QString directory = Settings.encodePath();
     auto projectBaseName = QFileInfo(MAIN.fileName()).completeBaseName();
-    if (!m_extension.isEmpty()) {
-        if (!MAIN.fileName().isEmpty()) {
-            directory += QStringLiteral("/%1.%2").arg(projectBaseName, m_extension);
-        }
-    } else {
-        if (!MAIN.fileName().isEmpty()) {
-            directory += "/" + projectBaseName;
-        }
-    }
-
     QString caption = seekable ? tr("Export File") : tr("Capture File");
     if (ui->fromCombo->currentData().toString() == "batch") {
         caption = tr("Export Files");
-        MultiFileExportDialog dialog(tr("Export Each Playlist Item"), MAIN.playlist(),
+        MultiFileExportDialog dialog(tr("Export Each Playlist Bin Item"), MAIN.binPlaylist(),
                                      directory, projectBaseName, m_extension, this);
         if (dialog.exec() != QDialog::Accepted) {
             return;
@@ -1822,6 +1816,13 @@ void EncodeDock::on_encodeButton_clicked()
             nameFilter = tr("%1 (*.%2);;All Files (*)").arg(ui->formatCombo->currentText(), m_extension);
         else
             nameFilter = tr("Determined by Export (*)");
+        if (!m_extension.isEmpty()) {
+            if (!MAIN.fileName().isEmpty()) {
+                directory += QStringLiteral("/%1.%2").arg(projectBaseName, m_extension);
+            }
+        } else if (!MAIN.fileName().isEmpty()) {
+            directory += "/" + projectBaseName;
+        }
         QString newName = QFileDialog::getSaveFileName(this, caption, directory, nameFilter,
                                                        nullptr, Util::getFileDialogOptions());
         if (!newName.isEmpty() && !m_extension.isEmpty()) {
@@ -2744,7 +2745,7 @@ bool EncodeDock::checkForMissingFiles()
 {
     Mlt::Producer *service = fromProducer();
     if (!service) {
-        service = MAIN.playlist();
+        service = MAIN.binPlaylist();
     }
     if (!service) {
         LOG_ERROR() << "Encode: No service to encode";
