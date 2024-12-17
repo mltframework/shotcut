@@ -832,9 +832,9 @@ void PlaylistModel::close()
 void PlaylistModel::move(int from, int to)
 {
     if (!m_playlist) return;
+    beginResetModel();
     m_playlist->move(from, to);
-    emit dataChanged(createIndex(from, 0), createIndex(from, columnCount()));
-    emit dataChanged(createIndex(to, 0), createIndex(to, columnCount()));
+    endResetModel();
     emit modified();
 }
 
