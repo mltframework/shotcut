@@ -81,6 +81,7 @@ public:
     static void offerSingleFileConversion(QString &message, Mlt::Producer *producer, QWidget *parent);
     static double getAndroidFrameRate(Mlt::Producer *producer);
     static double getSuggestedFrameRate(Mlt::Producer *producer);
+    static Mlt::Producer openMltVirtualClip(const QString &path);
 };
 
 #endif // UTIL_H

@@ -2920,20 +2920,10 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xmlOrUrls)
                 longTask.reportProgress(Util::baseName(path), i++, count);
                 Mlt::Producer p;
                 if (path.endsWith(".mlt") || path.endsWith(".xml")) {
-                    if (Settings.playerGPU() && MLT.profile().is_explicit()) {
-                        Mlt::Profile testProfile;
-                        Mlt::Producer producer(testProfile, path.toUtf8().constData());
-                        if (testProfile.width() != MLT.profile().width()
-                                || testProfile.height() != MLT.profile().height()
-                                || Util::isFpsDifferent(MLT.profile().fps(), testProfile.fps())) {
-                            MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
-                            continue;
-                        }
-                    }
-                    p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
-                    if (p.is_valid()) {
-                        p.set(kShotcutVirtualClip, 1);
-                        p.set("resource", path.toUtf8().constData());
+                    p = Util::openMltVirtualClip(path);
+                    if (!p.is_valid()) {
+                        MAIN.showStatusMessage(tr("Failed to open ").append(path));
+                        continue;
                     }
                 } else {
                     p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
