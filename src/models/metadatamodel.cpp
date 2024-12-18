@@ -227,7 +227,8 @@ bool MetadataModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourcePar
 }
 
 void MetadataModel::updateFilterMask(bool isClipProducer, bool isChainProducer,
-                                     bool isTrackProducer, bool isOutputProducer)
+                                     bool isTrackProducer, bool isOutputProducer,
+                                     bool isReverseSupported)
 {
     beginResetModel();
     m_isClipProducer = isClipProducer;
@@ -254,6 +255,12 @@ void MetadataModel::updateFilterMask(bool isClipProducer, bool isChainProducer,
     } else {
         m_filterMask |= outputOnlyMaskBit;
     }
+    m_isReverseSupported = isReverseSupported;
+    if (m_isReverseSupported) {
+        m_filterMask &= ~reverseMaskBit;
+    } else {
+        m_filterMask |= reverseMaskBit;
+    }
     endResetModel();
 }
 
@@ -267,6 +274,7 @@ unsigned InternalMetadataModel::computeFilterMask(const QmlMetadata *meta)
     if (!meta->isGpuCompatible()) mask |= MetadataModel::gpuIncompatibleMaskBit;
     if (meta->needsGPU()) mask |= MetadataModel::needsGPUMaskBit;
     if (meta->type() == QmlMetadata::Link) mask |= MetadataModel::linkMaskBit;
+    if (meta->seekReverse()) mask |= MetadataModel::reverseMaskBit;
     return mask;
 }
 

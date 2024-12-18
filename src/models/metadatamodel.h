@@ -61,6 +61,7 @@ public:
         linkMaskBit = 1 << 5,
         trackOnlyMaskBit = 1 << 6,
         outputOnlyMaskBit = 1 << 7,
+        reverseMaskBit = 1 << 8,
     };
 
     explicit MetadataModel(QObject *parent = 0);
@@ -78,7 +79,7 @@ public:
     }
     void setFilter(MetadataFilter);
     void updateFilterMask(bool isClipProducer, bool isChainProducer, bool isTrackProducer,
-                          bool isOutputProducer);
+                          bool isOutputProducer, bool isReverseSupported);
     QString search() const
     {
         return m_search;
@@ -100,6 +101,7 @@ private:
     bool m_isChainProducer;
     bool m_isTrackProducer;
     bool m_isOutputProducer;
+    bool m_isReverseSupported;
 };
 
 class InternalMetadataModel : public QAbstractListModel
