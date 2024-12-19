@@ -180,7 +180,7 @@ private:
     void enqueueMelt(const QStringList &targets, int realtime);
     void encode(const QString &target);
     void resetOptions();
-    Mlt::Producer *fromProducer() const;
+    Mlt::Producer *fromProducer(bool usePlaylistBin = false) const;
     static void filterCodecParams(const QString &vcodec, QStringList &other);
     void onVideoCodecComboChanged(int index, bool ignorePreset = false, bool resetBframes = true);
     bool checkForMissingFiles();

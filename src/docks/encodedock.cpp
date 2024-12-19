@@ -1456,7 +1456,7 @@ public:
 
 void EncodeDock::enqueueAnalysis()
 {
-    Mlt::Producer *producer = fromProducer();
+    Mlt::Producer *producer = fromProducer(true);
     if (producer && producer->is_valid()) {
         // Look in the producer for all filters requiring analysis.
         FindAnalysisFilterParser parser;
@@ -1487,7 +1487,7 @@ void EncodeDock::enqueueAnalysis()
 
 void EncodeDock::enqueueMelt(const QStringList &targets, int realtime)
 {
-    Mlt::Producer *service = fromProducer();
+    Mlt::Producer *service = fromProducer(true);
     int pass = (ui->videoRateControlCombo->currentIndex() != RateControlQuality
                 && !ui->videoCodecCombo->currentText().contains("nvenc")
                 && !ui->videoCodecCombo->currentText().endsWith("_amf")
@@ -1599,13 +1599,13 @@ void EncodeDock::resetOptions()
     loadPresetFromProperties(preset);
 }
 
-Mlt::Producer *EncodeDock::fromProducer() const
+Mlt::Producer *EncodeDock::fromProducer(bool usePlaylistBin) const
 {
     QString from = ui->fromCombo->currentData().toString();
     if (from == "clip")
         return MLT.isClip() ? MLT.producer() : MLT.savedProducer();
     else if (from == "playlist")
-        return MAIN.binPlaylist();
+        return usePlaylistBin ? MAIN.binPlaylist() : MAIN.playlist();
     else if (from == "timeline" || from.startsWith("marker:"))
         return MAIN.multitrack();
     else
@@ -2745,7 +2745,7 @@ bool EncodeDock::checkForMissingFiles()
 {
     Mlt::Producer *service = fromProducer();
     if (!service) {
-        service = MAIN.binPlaylist();
+        service = MAIN.playlist();
     }
     if (!service) {
         LOG_ERROR() << "Encode: No service to encode";
