@@ -52,6 +52,7 @@
 #include <QSortFilterProxyModel>
 #include <QPushButton>
 #include <QInputDialog>
+#include <set>
 
 static const auto kInOutChangedTimeoutMs = 100;
 static const auto kTilePaddingPx = 10;
@@ -145,14 +146,144 @@ private:
 
 };
 
+
+class ProducerHashesParser: public Mlt::Parser
+{
+private:
+    std::vector<std::string> m_hashes;
+
+public:
+    ProducerHashesParser()
+        : Mlt::Parser()
+    {}
+
+    std::vector<std::string> &hashes()
+    {
+        std::sort(m_hashes.begin(), m_hashes.end());
+        std::set<std::string> unique(m_hashes.begin(), m_hashes.end());
+        std::copy(unique.begin(), unique.end(), std::back_inserter(m_hashes));
+        return m_hashes;
+    }
+
+    int on_start_filter(Mlt::Filter *)
+    {
+        return 0;
+    }
+    int on_start_producer(Mlt::Producer *producer)
+    {
+        if (producer->is_cut())
+            m_hashes.push_back(Util::getHash(producer->parent()).toStdString());
+        return 0;
+    }
+    int on_end_producer(Mlt::Producer *)
+    {
+        return 0;
+    }
+    int on_start_playlist(Mlt::Playlist *)
+    {
+        return 0;
+    }
+    int on_end_playlist(Mlt::Playlist *)
+    {
+        return 0;
+    }
+    int on_start_tractor(Mlt::Tractor *)
+    {
+        return 0;
+    }
+    int on_end_tractor(Mlt::Tractor *)
+    {
+        return 0;
+    }
+    int on_start_multitrack(Mlt::Multitrack *)
+    {
+        return 0;
+    }
+    int on_end_multitrack(Mlt::Multitrack *)
+    {
+        return 0;
+    }
+    int on_start_track()
+    {
+        return 0;
+    }
+    int on_end_track()
+    {
+        return 0;
+    }
+    int on_end_filter(Mlt::Filter *)
+    {
+        return 0;
+    }
+    int on_start_transition(Mlt::Transition *)
+    {
+        return 0;
+    }
+    int on_end_transition(Mlt::Transition *)
+    {
+        return 0;
+    }
+    int on_start_chain(Mlt::Chain *)
+    {
+        return 0;
+    }
+    int on_end_chain(Mlt::Chain *)
+    {
+        return 0;
+    }
+    int on_start_link(Mlt::Link *)
+    {
+        return 0;
+    }
+    int on_end_link(Mlt::Link *)
+    {
+        return 0;
+    }
+};
+
 class PlaylistProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 
 public:
+    enum SmartBin {
+        SmartBinNone = -1,
+        SmartBinAll,
+        SmartBinDuplicates,
+        SmartBinNotInTimeline,
+        SmartBinCount
+    };
+
     explicit PlaylistProxyModel(QObject *parent = nullptr)
         : QSortFilterProxyModel(parent)
-    {}
+    {
+        // All
+        m_functors.push_back([](int row, const QModelIndex & index) {
+            return true;
+        });
+
+        // Duplicates
+        m_functors.push_back([this](int row, const QModelIndex & index) {
+            // m_hashes contains the duplicates
+            auto clip = MAIN.playlist()->get_clip(row);
+            if (clip && clip->is_valid()) {
+                auto hash = Util::getHash(clip->parent()).toStdString();
+                return std::find(m_hashes.begin(), m_hashes.end(), hash) != m_hashes.end();
+            }
+            return false;
+        });
+
+        // Not In Timeline
+        m_functors.push_back([this](int row, const QModelIndex & index) {
+            // m_hashes contains the unique hashes in the timeline
+            auto clip = MAIN.playlist()->get_clip(row);
+            if (clip && clip->is_valid()) {
+                auto hash = Util::getHash(clip->parent()).toStdString();
+                return std::find(m_hashes.begin(), m_hashes.end(), hash) == m_hashes.end();
+            }
+            return false;
+        });
+    }
 
     void setMediaTypes(QList<PlaylistModel::MediaType> types)
     {
@@ -163,7 +294,60 @@ public:
     void setBin(const QString &name = QString())
     {
         m_bin = name;
+        m_smartBin = SmartBinNone;
         invalidateFilter();
+    }
+
+    void setSmartBin(int bin)
+    {
+        m_bin.clear();
+        m_smartBin = static_cast<enum SmartBin>(bin);
+
+        switch (bin) {
+        case SmartBinDuplicates: {
+            int n = MAIN.playlist()->count();
+            std::vector<std::string> hashes;
+            for (int i = 0; i < n; ++i) {
+                auto clip = MAIN.playlist()->get_clip(i);
+                if (clip && clip->is_valid())
+                    hashes.push_back(Util::getHash(clip->parent()).toStdString());
+            }
+            std::sort(hashes.begin(), hashes.end());
+            std::set<std::string> unique(hashes.begin(), hashes.end());
+            std::set_difference(hashes.begin(), hashes.end(), unique.begin(), unique.end(),
+                                std::back_inserter(m_hashes));
+            LOG_INFO() << "Duplicates smart bin found" << m_hashes.size() << "items";
+            break;
+        }
+        case SmartBinNotInTimeline: {
+            if (MAIN.isMultitrackValid()) {
+                ProducerHashesParser parser;
+                parser.start(*MAIN.multitrack());
+                m_hashes = parser.hashes();
+                LOG_INFO() << "Not In Timeline smart bin found" << m_hashes.size() << "items";
+            }
+            break;
+        }
+        default:
+            break;
+        }
+
+        invalidateFilter();
+    }
+
+    enum SmartBin smartBin() const
+    {
+        return m_smartBin;
+    }
+
+    static QString smartBinName(int index)
+    {
+        QString names[] = {
+            tr("All"),
+            tr("Duplicates"),
+            tr("Not In Timeline")
+        };
+        return names[index];
     }
 
 protected:
@@ -180,6 +364,11 @@ protected:
                 return false;
         }
 
+        if (m_smartBin > SmartBinAll) {
+            if (!m_functors[m_smartBin](row, index))
+                return false;
+        }
+
         auto filter = filterRegularExpression();
         return index.data(Qt::DisplayRole).toString().contains(filter) ||
                index.data(Qt::ToolTipRole).toString().contains(filter) ||
@@ -187,8 +376,12 @@ protected:
     }
 
 private:
-    QList<PlaylistModel::MediaType> m_mediaTypes {PlaylistModel::Video, PlaylistModel::Audio, PlaylistModel::Image, PlaylistModel::Other};
+    QList<PlaylistModel::MediaType> m_mediaTypes {
+        PlaylistModel::Video, PlaylistModel::Audio, PlaylistModel::Image, PlaylistModel::Other};
     QString m_bin;
+    enum SmartBin m_smartBin { SmartBinNone };
+    std::vector<std::function<bool(int row, const QModelIndex &index)>> m_functors;
+    std::vector<std::string> m_hashes;
 };
 
 
@@ -232,22 +425,25 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     const QPointF & point) {
         auto item = ui->treeWidget->itemAt(point.x(), point.y());
         auto bin = item->text(0);
-        if (item->data(0, Qt::UserRole).toString() == kSpecialBinDataAll)
+        if (item->data(0, Qt::UserRole).toInt() == PlaylistProxyModel::SmartBinAll)
             bin = QString();
         MAIN.undoStack()->push(new Playlist::MoveToBinCommand(m_model, ui->treeWidget, bin, rows));
         m_view->selectionModel()->clearSelection();
     });
-    auto item = new QTreeWidgetItem(ui->treeWidget, {tr("ALL")});
-    item->setData(0, Qt::UserRole, kSpecialBinDataAll);
-    item->setSelected(true);
-    QFont font;
-    font.setItalic(true);
-    item->setFont(0, font);
-    auto icon = QIcon::fromTheme("quickopen",
-                                 QIcon(":/icons/oxygen/32x32/actions/quickopen.png"));
-    item->setIcon(0, icon);
 
     setupActions();
+
+    for (int i = 0; i < PlaylistProxyModel::SmartBinCount; ++i) {
+        auto item = new QTreeWidgetItem(ui->treeWidget, {PlaylistProxyModel::smartBinName(i)});
+        item->setData(0, Qt::UserRole, i);
+        QFont font;
+        font.setItalic(true);
+        item->setFont(0, font);
+        auto icon = QIcon::fromTheme("quickopen",
+                                     QIcon(":/icons/oxygen/32x32/actions/quickopen.png"));
+        item->setIcon(0, icon);
+    }
+    ui->treeWidget->topLevelItem(0)->setSelected(true);
 
     m_mainMenu = new QMenu(tr("Playlist"), this);
     m_mainMenu->addAction(Actions["playlistOpenAction"]);
@@ -964,12 +1160,10 @@ void PlaylistDock::setupActions()
     action->setToolTip(tr("Remove Bin"));
     action->setDisabled(true);
     Actions.add("playlistRemoveBin", action, windowTitle());
-    connect(ui->treeWidget, &QTreeWidget::itemSelectionChanged, action, [ = ]() {
-        action->setEnabled(!ui->treeWidget->topLevelItem(0)->isSelected());
-    });
     connect(action, &QAction::triggered, this, [ = ]() {
         auto items = ui->treeWidget->selectedItems();
-        if (!items.isEmpty() && items.first()->data(0, Qt::UserRole).toString() != kSpecialBinDataAll) {
+        if (!items.isEmpty()
+                && items.first()->data(0, Qt::UserRole).toInt() != PlaylistProxyModel::SmartBinAll) {
             auto bin = ui->treeWidget->selectedItems().first()->text(0);
             MAIN.undoStack()->push(new Playlist::RenameBinCommand(m_model, ui->treeWidget, bin));
         }
@@ -979,9 +1173,6 @@ void PlaylistDock::setupActions()
     action->setToolTip(tr("Rename Bin"));
     action->setDisabled(true);
     Actions.add("playlistRenameBin", action, windowTitle());
-    connect(ui->treeWidget, &QTreeWidget::itemSelectionChanged, action, [ = ]() {
-        action->setEnabled(!ui->treeWidget->topLevelItem(0)->isSelected());
-    });
     connect(action, &QAction::triggered, this, [ = ]() {
         QInputDialog dialog(this);
         dialog.setInputMode(QInputDialog::TextInput);
@@ -992,7 +1183,8 @@ void PlaylistDock::setupActions()
         auto name = dialog.textValue();
         if (result == QDialog::Accepted && !name.isEmpty()) {
             auto items = ui->treeWidget->selectedItems();
-            if (!items.isEmpty() && items.first()->data(0, Qt::UserRole).toString() != kSpecialBinDataAll) {
+            if (!items.isEmpty()
+                    && items.first()->data(0, Qt::UserRole).toInt() != PlaylistProxyModel::SmartBinAll) {
                 auto bin = ui->treeWidget->selectedItems().first()->text(0);
                 MAIN.undoStack()->push(new Playlist::RenameBinCommand(m_model, ui->treeWidget, bin, name));
             }
@@ -1224,8 +1416,8 @@ void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
 void PlaylistDock::loadBins()
 {
     // clear the tree view except top item
-    while (ui->treeWidget->topLevelItemCount() > 1)
-        delete ui->treeWidget->takeTopLevelItem(1);
+    while (ui->treeWidget->topLevelItemCount() > PlaylistProxyModel::SmartBinCount)
+        delete ui->treeWidget->takeTopLevelItem(PlaylistProxyModel::SmartBinCount);
 
     auto props = m_model.playlist()->get_props(kShotcutBinsProperty);
     if (props && props->is_valid()) {
@@ -1239,7 +1431,7 @@ void PlaylistDock::loadBins()
                 item->setIcon(0, icon);
             }
         }
-        if (ui->treeWidget->topLevelItemCount() > 1) {
+        if (ui->treeWidget->topLevelItemCount() > PlaylistProxyModel::SmartBinCount) {
             sortBins();
             if (!ui->treeWidget->isVisible())
                 Actions["playlistBinView"]->trigger();
@@ -1250,9 +1442,12 @@ void PlaylistDock::loadBins()
 
 void PlaylistDock::sortBins()
 {
-    auto all = ui->treeWidget->takeTopLevelItem(0);
+    QList<QTreeWidgetItem *> smartBins;
+    for (int i = 0; i < PlaylistProxyModel::SmartBinCount; ++i) {
+        smartBins << ui->treeWidget->takeTopLevelItem(0);
+    }
     ui->treeWidget->sortItems(0, Qt::AscendingOrder);
-    ui->treeWidget->insertTopLevelItem(0, all);
+    ui->treeWidget->insertTopLevelItems(0, smartBins);
 }
 
 void PlaylistDock::assignToBin(Mlt::Properties &properties, QString bin)
@@ -1530,10 +1725,13 @@ void PlaylistDock::onPlaylistModified()
 
 void PlaylistDock::onPlaylistCleared()
 {
-    auto all = ui->treeWidget->takeTopLevelItem(0);
+    QList<QTreeWidgetItem *> smartBins;
+    for (int i = 0; i < PlaylistProxyModel::SmartBinCount; ++i) {
+        smartBins << ui->treeWidget->takeTopLevelItem(0);
+    }
     ui->treeWidget->clear();
-    ui->treeWidget->addTopLevelItem(all);
-    all->setSelected(true);
+    ui->treeWidget->addTopLevelItems(smartBins);
+    ui->treeWidget->topLevelItem(0)->setSelected(true);
 
     emit enableUpdate(false);
     m_blockResizeColumnsToContents = false;
@@ -1879,12 +2077,23 @@ void PlaylistDock::on_treeWidget_itemSelectionChanged()
     if (items.isEmpty()) {
         // select ALL if a bin is deselected
         ui->treeWidget->topLevelItem(0)->setSelected(true);
-    } else if (ui->treeWidget->topLevelItem(0)->isSelected()) {
-        m_proxyModel->setBin();
+    } else if (!items.first()->data(0, Qt::UserRole).isNull()) {
+        m_proxyModel->setSmartBin(items.first()->data(0, Qt::UserRole).toInt());
     } else {
-        auto item = ui->treeWidget->selectedItems().first();
-        m_proxyModel->setBin(item->text(0));
+        m_proxyModel->setBin(items.first()->text(0));
     }
+    if (ui->treeWidget->topLevelItemCount() >= PlaylistProxyModel::SmartBinCount)
+        for (auto action : {
+                    Actions["playlistRemoveBin"], Actions["playlistRenameBin"]
+                }) {
+            action->setEnabled(false);
+            for (int i = 0; i < PlaylistProxyModel::SmartBinCount; ++i) {
+                if (ui->treeWidget->topLevelItem(i)->isSelected()) {
+                    action->setEnabled(false);
+                    break;
+                }
+            }
+        }
 }
 
 void BinTree::dropEvent(QDropEvent *event)
