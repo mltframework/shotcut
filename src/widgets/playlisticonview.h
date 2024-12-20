@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021 Meltytech, LLC
+ * Copyright (c) 2016-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ class PlaylistIconView : public QAbstractItemView
 public:
     PlaylistIconView(QWidget *parent);
     void resetMultiSelect();
+    void setIconRole(int role);
 
     QRect visualRect(const QModelIndex &index) const Q_DECL_OVERRIDE;
     void scrollTo(const QModelIndex &index, ScrollHint hint = EnsureVisible) Q_DECL_OVERRIDE;
@@ -71,6 +72,7 @@ private:
     bool m_isToggleSelect {false};
     bool m_isRangeSelect {false};
     QModelIndex m_pendingSelect;
+    int m_iconRole;
 };
 
 #endif

@@ -44,6 +44,7 @@ class QUndoStack;
 class QActionGroup;
 class FilterController;
 class ScopeController;
+class FilesDock;
 class FiltersDock;
 class TimelineDock;
 class AutoSaveFile;
@@ -234,6 +235,7 @@ private:
     NotesDock *m_notesDock;
     SubtitlesDock *m_subtitlesDock;
     std::unique_ptr<QWidget> m_producerWidget;
+    FilesDock *m_filesDock;
 
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker &checker);
@@ -280,6 +282,7 @@ private slots:
     void onMarkersDockTriggered(bool = true);
     void onNotesDockTriggered(bool = true);
     void onSubtitlesDockTriggered(bool = true);
+    void onFilesDockTriggered(bool = true);
     void onPlaylistCreated();
     void onPlaylistLoaded();
     void onPlaylistCleared();
