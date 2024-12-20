@@ -56,7 +56,6 @@
 
 static const auto kInOutChangedTimeoutMs = 100;
 static const auto kTilePaddingPx = 10;
-static const auto kSpecialBinDataAll = QLatin1String("all");
 static const auto kDetailedMode = QLatin1String("detailed");
 static const auto kIconsMode = QLatin1String("icons");
 static const auto kTiledMode = QLatin1String("tiled");
@@ -1652,7 +1651,6 @@ void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
         menu.addAction(Actions["playlistCopyAction"]);
         menu.addAction(Actions["playlistInsertCutAction"]);
         menu.addAction(Actions["playlistUpdateAction"]);
-        menu.addAction(Actions["playlistUpdateThumbnailsAction"]);
         menu.addAction(Actions["playlistUpdateThumbnailsAction"]);
         menu.addAction(Actions["playlistSetFileDateAction"]);
         menu.exec(mapToGlobal(pos));
