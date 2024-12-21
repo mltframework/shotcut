@@ -60,7 +60,7 @@ static const QSet<QString> kAudioExtensions {
     QLatin1String("wav"),
     QLatin1String("mp3"),
     QLatin1String("ac3"),
-    QLatin1String("faac"),
+    QLatin1String("flac"),
     QLatin1String("oga"),
     QLatin1String("opus"),
 };
@@ -254,8 +254,8 @@ public:
         case ThumbnailRole: {
             int width = PlaylistModel::THUMBNAIL_WIDTH;
             QImage image;
-            auto path = filePath(index);
-            auto thumbnailKey = FilesThumbnailTask::cacheKey(path);
+            const auto path = filePath(index);
+            const auto thumbnailKey = FilesThumbnailTask::cacheKey(path);
             image = DB.getThumbnail(thumbnailKey);
             if (image.isNull()) {
                 ::cacheThumbnail(const_cast<FilesModel *>(this), path, image, QModelIndex());
@@ -269,6 +269,14 @@ public:
             break;
         }
         return QFileSystemModel::data(index, role);
+    }
+
+    void updateThumbnails(const QModelIndex &index)
+    {
+        const auto path = filePath(index);
+        if (!path.endsWith(QStringLiteral(".mlt"), Qt::CaseInsensitive))
+            QThreadPool::globalInstance()->start(
+                new FilesThumbnailTask(const_cast<FilesModel *>(this), path, index));
     }
 
 private:
@@ -881,9 +889,10 @@ void FilesDock::onSelectAllActionTriggered()
 
 void FilesDock::onUpdateThumbnailsActionTriggered()
 {
-    m_view->selectionModel()->clearSelection();
-    for (auto i = 0; i < m_dirsModel.rowCount(); i++) {
-        // m_model.updateThumbnails(i);
+    for (const auto &index : m_view->selectionModel()->selectedIndexes()) {
+        auto sourceIndex = m_filesProxyModel->mapToSource(index);
+        if (sourceIndex.isValid())
+            m_filesModel->updateThumbnails(sourceIndex);
     }
 }
 
