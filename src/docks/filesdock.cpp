@@ -55,7 +55,58 @@ static const auto kTilePaddingPx = 10;
 static const auto kDetailedMode = QLatin1String("detailed");
 static const auto kIconsMode = QLatin1String("icons");
 static const auto kTiledMode = QLatin1String("tiled");
-
+static const QSet<QString> kAudioExtensions {
+    QLatin1String("m4a"),
+    QLatin1String("wav"),
+    QLatin1String("mp3"),
+    QLatin1String("ac3"),
+    QLatin1String("faac"),
+    QLatin1String("oga"),
+    QLatin1String("opus"),
+};
+static const QSet<QString> kImageExtensions {
+    QLatin1String("jpg"),
+    QLatin1String("jpeg"),
+    QLatin1String("png"),
+    QLatin1String("bmp"),
+    QLatin1String("tif"),
+    QLatin1String("tiff"),
+    QLatin1String("svg"),
+    QLatin1String("webp"),
+    QLatin1String("gif"),
+};
+static const QSet<QString> kOtherExtensions {
+    QLatin1String("mlt"),
+    QLatin1String("xml"),
+    QLatin1String("txt"),
+    QLatin1String("pdf"),
+    QLatin1String("doc"),
+    QLatin1String("gpx"),
+    QLatin1String("rawr"),
+    QLatin1String("stab"),
+    QLatin1String("srt"),
+    QLatin1String("so"),
+    QLatin1String("dll"),
+    QLatin1String("exe"),
+    QLatin1String("zip"),
+};
+static const QSet<QString> kVideoExtensions {
+    QLatin1String("mp4"),
+    QLatin1String("m4v"),
+    QLatin1String("mov"),
+    QLatin1String("avi"),
+    QLatin1String("mpg"),
+    QLatin1String("mpeg"),
+    QLatin1String("ts"),
+    QLatin1String("mts"),
+    QLatin1String("m2t"),
+    QLatin1String("mkv"),
+    QLatin1String("ogv"),
+    QLatin1String("webm"),
+    QLatin1String("dv"),
+    QLatin1String("lrv"),
+    QLatin1String("360"),
+};
 
 static void cacheMediaType(FilesModel *model, const QString &filePath, int mediaType,
                            const QModelIndex &index);
@@ -229,9 +280,23 @@ private:
         auto mediaType = m_dock->getCacheMediaType(path);
 
         if (mediaType < 0) {
-            if (path.endsWith(QStringLiteral(".mlt"), Qt::CaseInsensitive)) {
+            const auto info = QFileInfo(path);
+            const auto ext = info.suffix().toLower();
+            if (info.isDir() || kOtherExtensions.contains(ext)) {
                 m_dock->setCacheMediaType(path, mediaType);
                 return PlaylistModel::Other;
+            }
+            if (kAudioExtensions.contains(ext)) {
+                m_dock->setCacheMediaType(path, mediaType);
+                return PlaylistModel::Audio;
+            }
+            if (kImageExtensions.contains(ext)) {
+                m_dock->setCacheMediaType(path, mediaType);
+                return PlaylistModel::Image;
+            }
+            if (kVideoExtensions.contains(ext)) {
+                m_dock->setCacheMediaType(path, mediaType);
+                return PlaylistModel::Video;
             }
             mediaType = PlaylistModel::Pending;
             m_dock->setCacheMediaType(path, mediaType);
