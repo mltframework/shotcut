@@ -47,13 +47,10 @@ public:
 
     struct CacheItem {
         int mediaType {-1}; // -1 = unknown
-        QString thumbnailKey;
     };
 
     int getCacheMediaType(const QString &key);
-    QString getCacheThumbnailKey(const QString &key);
     void setCacheMediaType(const QString &key, int mediaType);
-    void setCacheThumbnailKey(const QString &key, const QString &thumbnailKey);
 
 signals:
     void clipOpened(QString);

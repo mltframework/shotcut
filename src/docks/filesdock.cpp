@@ -59,8 +59,8 @@ static const auto kTiledMode = QLatin1String("tiled");
 
 static void cacheMediaType(FilesModel *model, const QString &filePath, int mediaType,
                            const QModelIndex &index);
-static void cacheThumbnail(FilesModel *model, const QString &filePath, const QString &cacheKey,
-                           const QImage &image, const QModelIndex &index);
+static void cacheThumbnail(FilesModel *model, const QString &filePath, const QImage &image,
+                           const QModelIndex &index);
 
 class FilesMediaTypeTask : public QRunnable
 {
@@ -120,26 +120,14 @@ public:
     {
     }
 
-private:
-    QString cacheKey(Mlt::Producer producer, int frameNumber) const
+    static QString cacheKey(const QString &filePath)
     {
-        QString time = producer.frames_to_time(frameNumber, mlt_time_clock);
-        // Reduce the precision to centiseconds to increase chance for cache hit
-        // without much loss of accuracy.
-        time = time.left(time.size() - 1);
-        QString key;
-        QString resource = Util::getHash(producer);
-        if (resource.isEmpty()) {
-            key = QStringLiteral("%1 %2 %3").arg(producer.get("mlt_service"), producer.get("resource"), time);
-            QCryptographicHash hash(QCryptographicHash::Sha1);
-            hash.addData(key.toUtf8());
-            key = hash.result().toHex();
-        } else {
-            key = QStringLiteral("%1 %2").arg(resource, time);
-        }
-        return key;
+        QCryptographicHash hash(QCryptographicHash::Sha1);
+        hash.addData(filePath.toUtf8());
+        return hash.result().toHex();
     }
 
+private:
     bool isValidService(Mlt::Producer &producer) const
     {
         if (producer.is_valid()) {
@@ -157,14 +145,9 @@ public:
     {
         LOG_DEBUG() << "Mlt::Producer" << m_filePath;
         QImage image;
-        auto key = QStringLiteral("X");
         static Mlt::Profile profile {"atsc_720p_60"};
         Mlt::Producer producer(profile, "abnormal", m_filePath.toUtf8().constData());
-        int frame = 0;
-        if (producer.is_valid())
-            key = cacheKey(producer, frame);
-        image = DB.getThumbnail(key);
-        if (image.isNull() && isValidService(producer)) {
+        if (isValidService(producer)) {
             Mlt::Filter scaler(profile, "swscale");
             Mlt::Filter padder(profile, "resize");
             Mlt::Filter converter(profile, "avcolor_space");
@@ -174,9 +157,9 @@ public:
 
             auto width = PlaylistModel::THUMBNAIL_WIDTH * 2;
             auto height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
-            image = MLT.image(producer, frame, width, height);
+            image = MLT.image(producer, 0, width, height);
         }
-        cacheThumbnail(m_model, m_filePath, key, image, m_index);
+        cacheThumbnail(m_model, m_filePath, image, m_index);
     }
 };
 
@@ -199,12 +182,12 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override
     {
         if (MediaTypeStringRole == role || (index.column() == 2 && Qt::DisplayRole == role)) {
-            static QString names[] = {
+            QString names[] = {
                 tr("Video"),
                 tr("Image"),
                 tr("Audio"),
                 tr("Other"),
-                tr(""),
+                QStringLiteral(""),
             };
             return names[mediaType(index)];
         }
@@ -221,17 +204,13 @@ public:
             int width = PlaylistModel::THUMBNAIL_WIDTH;
             QImage image;
             auto path = filePath(index);
-            auto thumbnailKey = m_dock->getCacheThumbnailKey(path);
-
-            if (!thumbnailKey.isEmpty())
-                image = DB.getThumbnail(thumbnailKey);
-
+            auto thumbnailKey = FilesThumbnailTask::cacheKey(path);
+            image = DB.getThumbnail(thumbnailKey);
             if (image.isNull()) {
-                image = QImage(width, width, QImage::Format_ARGB32);
-                image.fill(Qt::transparent);
-                m_dock->setCacheThumbnailKey(path, QStringLiteral("X"));
-                QThreadPool::globalInstance()->start(
-                    new FilesThumbnailTask(const_cast<FilesModel *>(this), path, index));
+                ::cacheThumbnail(const_cast<FilesModel *>(this), path, image, QModelIndex());
+                if (!path.endsWith(QStringLiteral(".mlt"), Qt::CaseInsensitive))
+                    QThreadPool::globalInstance()->start(
+                        new FilesThumbnailTask(const_cast<FilesModel *>(this), path, index));
             }
             return image;
         }
@@ -250,6 +229,10 @@ private:
         auto mediaType = m_dock->getCacheMediaType(path);
 
         if (mediaType < 0) {
+            if (path.endsWith(QStringLiteral(".mlt"), Qt::CaseInsensitive)) {
+                m_dock->setCacheMediaType(path, mediaType);
+                return PlaylistModel::Other;
+            }
             mediaType = PlaylistModel::Pending;
             m_dock->setCacheMediaType(path, mediaType);
             QThreadPool::globalInstance()->start(
@@ -266,19 +249,17 @@ public:
         emit dataChanged(index, index);
     }
 
-    void cacheThumbnail(const QString &filePath, const QString &key, QImage image,
-                        const QModelIndex &index)
+    void cacheThumbnail(const QString &filePath, QImage image, const QModelIndex &index)
     {
-        bool save = !image.isNull();
         if (image.isNull()) {
             image = QImage(PlaylistModel::THUMBNAIL_WIDTH, PlaylistModel::THUMBNAIL_WIDTH,
                            QImage::Format_ARGB32);
             image.fill(Qt::transparent);
         }
-        if (save)
-            DB.putThumbnail(key, image);
-        m_dock->setCacheThumbnailKey(filePath, key);
-        emit dataChanged(index, index);
+        auto key = FilesThumbnailTask::cacheKey(filePath);
+        DB.putThumbnail(key, image);
+        if (index.isValid())
+            emit dataChanged(index, index);
     }
 };
 
@@ -288,10 +269,10 @@ static void cacheMediaType(FilesModel *model, const QString &filePath, int media
     model->cacheMediaType(filePath, mediaType, index);
 }
 
-static void cacheThumbnail(FilesModel *model, const QString &filePath, const QString &cacheKey,
-                           const QImage &image, const QModelIndex &index)
+static void cacheThumbnail(FilesModel *model, const QString &filePath, const QImage &image,
+                           const QModelIndex &index)
 {
-    model->cacheThumbnail(filePath, cacheKey, image, index);
+    model->cacheThumbnail(filePath, image, index);
 }
 
 
@@ -593,25 +574,10 @@ int FilesDock::getCacheMediaType(const QString &key)
     return x.value().mediaType;
 }
 
-QString FilesDock::getCacheThumbnailKey(const QString &key)
-{
-    QMutexLocker<QMutex> m_lock(&m_cacheMutex);
-    auto x = m_cache.find(key);
-    if (x == m_cache.end())
-        return QString();
-    return x.value().thumbnailKey;
-}
-
 void FilesDock::setCacheMediaType(const QString &key, int mediaType)
 {
     QMutexLocker<QMutex> m_lock(&m_cacheMutex);
     m_cache[key].mediaType = mediaType;
-}
-
-void FilesDock::setCacheThumbnailKey(const QString &key, const QString &thumbnailKey)
-{
-    QMutexLocker<QMutex> m_lock(&m_cacheMutex);
-    m_cache[key].thumbnailKey = thumbnailKey;
 }
 
 void FilesDock::setupActions()
