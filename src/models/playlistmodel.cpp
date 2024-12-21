@@ -99,7 +99,7 @@ public:
 
     QString cacheKey(int frameNumber)
     {
-        QString time = m_producer.frames_to_time(frameNumber, Settings.timeFormat());
+        QString time = m_producer.frames_to_time(frameNumber, mlt_time_clock);
         // Reduce the precision to centiseconds to increase chance for cache hit
         // without much loss of accuracy.
         time = time.left(time.size() - 1);
@@ -163,9 +163,6 @@ public:
             return QImage();
         }
     }
-
-signals:
-    void thumbnailUpdated(int row);
 };
 
 PlaylistModel::PlaylistModel(QObject *parent)
