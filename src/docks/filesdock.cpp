@@ -57,8 +57,50 @@ static const auto kIconsMode = QLatin1String("icons");
 static const auto kTiledMode = QLatin1String("tiled");
 
 
+static void cacheMediaType(FilesModel *model, const QString &filePath, int mediaType,
+                           const QModelIndex &index);
 static void cacheThumbnail(FilesModel *model, const QString &filePath, const QString &cacheKey,
                            const QImage &image, const QModelIndex &index);
+
+class FilesMediaTypeTask : public QRunnable
+{
+    FilesModel *m_model;
+    QString m_filePath;
+    QModelIndex m_index;
+
+public:
+    FilesMediaTypeTask(FilesModel *model, const QString &filePath, const QModelIndex &index)
+        : QRunnable()
+        , m_model(model)
+        , m_filePath(filePath)
+        , m_index(index)
+    {
+    }
+
+public:
+    void run()
+    {
+        static Mlt::Profile profile {"atsc_720p_60"};
+        Mlt::Producer producer(profile, m_filePath.toUtf8().constData());
+        auto mediaType = PlaylistModel::Other;
+        if (producer.is_valid()) {
+            if (MLT.isImageProducer(&producer)) {
+                mediaType = PlaylistModel::Image;
+            } else {
+                auto service = QString::fromLatin1(producer.get("mlt_service"));
+                if (service.startsWith(QLatin1String("avformat"))) {
+                    if (producer.get_int("video_index") > -1
+                            && Util::getSuggestedFrameRate(&producer) != 90000)
+                        mediaType = PlaylistModel::Video;
+                    else if (producer.get_int("audio_index") > -1)
+                        mediaType = PlaylistModel::Audio;
+                }
+            }
+        }
+        LOG_DEBUG() << "Mlt::Producer" << m_filePath << mediaType;
+        cacheMediaType(m_model, m_filePath, mediaType, m_index);
+    }
+};
 
 class FilesThumbnailTask : public QRunnable
 {
@@ -162,6 +204,7 @@ public:
                 tr("Image"),
                 tr("Audio"),
                 tr("Other"),
+                tr(""),
             };
             return names[mediaType(index)];
         }
@@ -184,10 +227,11 @@ public:
                 image = DB.getThumbnail(thumbnailKey);
 
             if (image.isNull()) {
-                QThreadPool::globalInstance()->start(
-                    new FilesThumbnailTask(const_cast<FilesModel *>(this), path, index));
                 image = QImage(width, width, QImage::Format_ARGB32);
                 image.fill(Qt::transparent);
+                m_dock->setCacheThumbnailKey(path, QStringLiteral("X"));
+                QThreadPool::globalInstance()->start(
+                    new FilesThumbnailTask(const_cast<FilesModel *>(this), path, index));
             }
             return image;
         }
@@ -205,31 +249,22 @@ private:
         auto path = filePath(index);
         auto mediaType = m_dock->getCacheMediaType(path);
 
-        if (mediaType > -1)
-            return mediaType;
-
-        Mlt::Producer producer(MLT.profile(), path.toUtf8().constData());
-        mediaType = PlaylistModel::Other;
-        if (producer.is_valid()) {
-            if (MLT.isImageProducer(&producer)) {
-                mediaType = PlaylistModel::Image;
-            } else {
-                auto service = QString::fromLatin1(producer.get("mlt_service"));
-                if (service.startsWith(QLatin1String("avformat"))) {
-                    if (producer.get_int("video_index") > -1
-                            && Util::getSuggestedFrameRate(&producer) != 90000)
-                        mediaType = PlaylistModel::Video;
-                    else if (producer.get_int("audio_index") > -1)
-                        mediaType = PlaylistModel::Audio;
-                }
-            }
+        if (mediaType < 0) {
+            mediaType = PlaylistModel::Pending;
+            m_dock->setCacheMediaType(path, mediaType);
+            QThreadPool::globalInstance()->start(
+                new FilesMediaTypeTask(const_cast<FilesModel *>(this), path, index));
         }
-        LOG_DEBUG() << "Mlt::Producer" << path << mediaType;
-        m_dock->setCacheMediaType(path, mediaType);
+
         return mediaType;
     }
 
 public:
+    void cacheMediaType(const QString &filePath, int mediaType, const QModelIndex &index)
+    {
+        m_dock->setCacheMediaType(filePath, mediaType);
+        emit dataChanged(index, index);
+    }
 
     void cacheThumbnail(const QString &filePath, const QString &key, QImage image,
                         const QModelIndex &index)
@@ -246,6 +281,12 @@ public:
         emit dataChanged(index, index);
     }
 };
+
+static void cacheMediaType(FilesModel *model, const QString &filePath, int mediaType,
+                           const QModelIndex &index)
+{
+    model->cacheMediaType(filePath, mediaType, index);
+}
 
 static void cacheThumbnail(FilesModel *model, const QString &filePath, const QString &cacheKey,
                            const QImage &image, const QModelIndex &index)
