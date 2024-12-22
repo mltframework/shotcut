@@ -523,8 +523,22 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui->filtersLayout->addWidget(toolbar);
 
     auto toolbar2 = new QToolBar(tr("Playlist Filters"));
-    toolbar2->setStyleSheet(
-        QStringLiteral("QToolButton:checked { color:palette(highlighted-text); background-color:palette(highlight);}"));
+    QString styleSheet = QStringLiteral(
+                             "QToolButton {"
+                             "    background-color: palette(background);"
+                             "    border-style: solid;"
+                             "    border-width: 1px;"
+                             "    border-radius: 3px;"
+                             "    border-color: palette(shadow);"
+                             "    color: palette(button-text);"
+                             "}"
+                             "QToolButton:checked {"
+                             "    color:palette(highlighted-text);"
+                             "    background-color:palette(highlight);"
+                             "    border-color: palette(highlight);"
+                             "}"
+                         );
+    toolbar2->setStyleSheet(styleSheet);
     ui->filtersLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
     toolbar2->addActions({Actions["playlistFiltersVideo"], Actions["playlistFiltersAudio"], Actions["playlistFiltersImage"], Actions["playlistFiltersOther"]});
     ui->filtersLayout->addWidget(toolbar2);
