@@ -29,7 +29,7 @@
 #include <QSortFilterProxyModel>
 
 static const auto kPaddingPx = 2;
-static const auto kFilesSizeFactor = 2;
+static const auto kFilesSizeFactor = 1.5f;
 
 PlaylistIconView::PlaylistIconView(QWidget *parent)
     : QAbstractItemView(parent)

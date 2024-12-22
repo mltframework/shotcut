@@ -497,6 +497,7 @@ FilesDock::FilesDock(QWidget *parent)
     m_filesProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     m_filesProxyModel->setSourceModel(m_filesModel);
     m_filesProxyModel->setFilterRole(QFileSystemModel::FileNameRole);
+    m_filesProxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     m_filesProxyModel->setRecursiveFilteringEnabled(true);
     m_filesProxyModel->setCurrentPath(home);
     m_selectionModel = new QItemSelectionModel(m_filesProxyModel, this);
@@ -605,7 +606,6 @@ FilesDock::FilesDock(QWidget *parent)
 
     m_iconsView = new PlaylistIconView(this);
     ui->listView->parentWidget()->layout()->addWidget(m_iconsView);
-    // m_iconsView->setSelectionMode(QAbstractItemView::SingleSelection);
     m_iconsView->setIconRole(FilesModel::ThumbnailRole);
     ui->tableView->setModel(m_filesProxyModel);
     ui->listView->setModel(m_filesProxyModel);
@@ -613,6 +613,7 @@ FilesDock::FilesDock(QWidget *parent)
     ui->tableView->setSelectionModel(m_selectionModel);
     ui->listView->setSelectionModel(m_selectionModel);
     m_iconsView->setSelectionModel(m_selectionModel);
+    ui->tableView->sortByColumn(0, Qt::AscendingOrder);
     ui->tableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     connect(ui->tableView, &QAbstractItemView::activated, this, [ = ] (const QModelIndex & index) {
         auto sourceIndex = m_filesProxyModel->mapToSource(index);
@@ -620,6 +621,10 @@ FilesDock::FilesDock(QWidget *parent)
         m_view->setCurrentIndex(index);
         LOG_DEBUG() << "activated" << filePath;
         emit clipOpened(filePath);
+    });
+    connect(ui->tableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged,
+    this, [ = ](int column, Qt::SortOrder order) {
+        ui->tableView->sortByColumn(column, order);
     });
     connect(ui->listView, &QAbstractItemView::activated, ui->tableView, &QAbstractItemView::activated);
     connect(m_iconsView, &QAbstractItemView::activated, ui->tableView, &QAbstractItemView::activated);
