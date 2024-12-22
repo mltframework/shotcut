@@ -616,6 +616,7 @@ FilesDock::FilesDock(QWidget *parent)
     ui->tableView->setColumnHidden(2, true);
     ui->tableView->sortByColumn(0, Qt::AscendingOrder);
     ui->tableView->horizontalHeader()->setSectionsMovable(true);
+    ui->tableView->setColumnWidth(1, 100);
     connect(ui->tableView, &QAbstractItemView::activated, this, [ = ] (const QModelIndex & index) {
         auto sourceIndex = m_filesProxyModel->mapToSource(index);
         auto filePath = m_filesModel->filePath(sourceIndex);
@@ -865,19 +866,16 @@ void FilesDock::updateViewMode()
     QString mode = Settings.viewMode();
     if (mode == kDetailedMode) {
         m_view = ui->tableView;
-        ui->tableView->show();
     } else if (mode == kTiledMode) {
         m_view = ui->listView;
-        ui->listView->setDragEnabled(true);
-        ui->listView->setItemDelegate(new FilesTileDelegate(ui->listView));
-        ui->listView->show();
+        if (!ui->listView->itemDelegate())
+            ui->listView->setItemDelegate(new FilesTileDelegate(ui->listView));
     } else {
         m_view = m_iconsView;
-        m_iconsView->show();
     }
-    m_view->scrollToTop();
     m_view->setRootIndex(m_filesProxyModel->mapFromSource(m_filesModel->index(
                                                               m_filesModel->rootPath())));
+    m_view->show();
 }
 
 void FilesDock::keyPressEvent(QKeyEvent *event)
