@@ -28,7 +28,7 @@
 #include <QScrollBar>
 #include <QSortFilterProxyModel>
 
-static const auto kPaddingPx = 2;
+static const auto kPaddingPx = 10;
 static const auto kFilesSizeFactor = 1.5f;
 
 PlaylistIconView::PlaylistIconView(QWidget *parent)
@@ -165,6 +165,8 @@ void PlaylistIconView::paintEvent(QPaintEvent *)
     const auto proxy = tr("P", "The first letter or symbol of \"proxy\"");
     const auto oldFont = painter.font();
     auto boldFont(oldFont);
+
+    painter.setRenderHints(QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
     boldFont.setBold(true);
     painter.fillRect(rect(), pal.base());
 
