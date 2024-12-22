@@ -323,6 +323,17 @@ void ShotcutSettings::setViewMode(const QString &viewMode)
     emit viewModeChanged();
 }
 
+QString ShotcutSettings::filesViewMode() const
+{
+    return settings.value("files/viewMode", QLatin1String("tiled")).toString();
+}
+
+void ShotcutSettings::setFilesViewMode(const QString &viewMode)
+{
+    settings.setValue("files/viewMode", viewMode);
+    emit filesViewModeChanged();
+}
+
 QString ShotcutSettings::exportFrameSuffix() const
 {
     return settings.value("exportFrameSuffix", ".png").toString();

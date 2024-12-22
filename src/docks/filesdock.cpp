@@ -688,7 +688,7 @@ void FilesDock::setupActions()
     action->setIcon(icon);
     action->setCheckable(true);
     connect(action, &QAction::triggered, this, [&](bool checked) {
-        Settings.setViewMode(kTiledMode);
+        Settings.setFilesViewMode(kTiledMode);
         updateViewMode();
     });
     modeGroup->addAction(action);
@@ -701,7 +701,7 @@ void FilesDock::setupActions()
     action->setIcon(icon);
     action->setCheckable(true);
     connect(action, &QAction::triggered, this, [&](bool checked) {
-        Settings.setViewMode(kIconsMode);
+        Settings.setFilesViewMode(kIconsMode);
         updateViewMode();
     });
     modeGroup->addAction(action);
@@ -714,7 +714,7 @@ void FilesDock::setupActions()
     action->setIcon(icon);
     action->setCheckable(true);
     connect(action, &QAction::triggered, this, [&](bool checked) {
-        Settings.setViewMode(kDetailedMode);
+        Settings.setFilesViewMode(kDetailedMode);
         updateViewMode();
     });
     modeGroup->addAction(action);
@@ -863,7 +863,7 @@ void FilesDock::updateViewMode()
         delete delegate;
     }
 
-    QString mode = Settings.viewMode();
+    QString mode = Settings.filesViewMode();
     if (mode == kDetailedMode) {
         m_view = ui->tableView;
     } else if (mode == kTiledMode) {

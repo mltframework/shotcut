@@ -121,6 +121,8 @@ public:
     void setWindowStateDefault(const QByteArray &);
     QString viewMode() const;
     void setViewMode(const QString &viewMode);
+    QString filesViewMode() const;
+    void setFilesViewMode(const QString &viewMode);
     QString exportFrameSuffix() const;
     void setExportFrameSuffix(const QString &suffix);
     bool convertAdvanced() const;
@@ -370,6 +372,7 @@ signals:
     void videoOutDurationChanged();
     void playlistThumbnailsChanged();
     void viewModeChanged();
+    void filesViewModeChanged();
     void smallIconsChanged();
     void askOutputFilterChanged();
     void timelineScrollingChanged();
