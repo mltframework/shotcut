@@ -244,6 +244,7 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override
     {
+        const auto isDir = fileInfo(index).isDir();
         if (MediaTypeStringRole == role || (index.column() == 2 && Qt::DisplayRole == role)) {
             QString names[] = {
                 tr("Video"),
@@ -252,18 +253,26 @@ public:
                 tr("Other"),
                 QStringLiteral(""),
             };
-            return names[mediaType(index)];
+            auto i = isDir ? 4 : mediaType(index);
+            return names[i];
         }
         switch (role) {
         case Qt::ToolTipRole:
-            return filePath(index);
-        case DateRole: {
-            QFileInfo info(filePath(index));
-            return info.lastModified();
-        }
+            return QDir::toNativeSeparators(filePath(index));
+        case DateRole:
+            return fileInfo(index).lastModified();
         case MediaTypeRole:
-            return mediaType(index);
+            return isDir ? PlaylistModel::Other : mediaType(index);
         case ThumbnailRole: {
+            if (isDir) {
+                QImage image(64, 64, QImage::Format_ARGB32);
+                QPainter painter(&image);
+                const auto icon = QIcon::fromTheme("folder",
+                                                   QIcon(":/icons/oxygen/32x32/places/folder.png"));
+                image.fill(Qt::transparent);
+                icon.paint(&painter, image.rect());
+                return image;
+            }
             int width = PlaylistModel::THUMBNAIL_WIDTH;
             QImage image;
             const auto path = filePath(index);
@@ -280,6 +289,7 @@ public:
         default:
             break;
         }
+
         return QFileSystemModel::data(index, role);
     }
 
@@ -378,7 +388,7 @@ public:
     {
         const QImage thumb = index.data(FilesModel::ThumbnailRole).value<QImage>();
         const int lineHeight = painter->fontMetrics().height();
-        const QStringList nameParts = index.data(Qt::DisplayRole).toString().split('\n');
+        const auto fileInfo = QFileInfo(index.data(Qt::ToolTipRole).toString());
         const QFont oldFont = painter->font();
         QFont boldFont(oldFont);
         boldFont.setBold(true);
@@ -405,20 +415,19 @@ public:
         textPoint.setY(textPoint.y() + lineHeight);
         painter->setFont(boldFont);
         painter->drawText(textPoint,
-                          painter->fontMetrics().elidedText(nameParts.first(), Qt::ElideMiddle, textRect.width()));
+                          painter->fontMetrics().elidedText(fileInfo.fileName(), Qt::ElideMiddle, textRect.width()));
         painter->setFont(oldFont);
-        if (nameParts.size() > 1) {
-            textPoint.setY(textPoint.y() + lineHeight);
-            painter->drawText(textPoint, nameParts.last());
-        }
 
         textPoint.setY(textPoint.y() + lineHeight);
         painter->drawText(textPoint, tr("Date: %1").arg(
                               index.data(FilesModel::DateRole).toDateTime().toString("yyyy-MM-dd HH:mm:ss")));
         textPoint.setY(textPoint.y() + lineHeight);
-        auto myindex = index.model()->index(index.row(), 1, index.parent());
-        auto mediaType = myindex.data(Qt::DisplayRole).toString();
-        painter->drawText(textPoint, tr("Size: %1").arg(mediaType));
+        if (!fileInfo.isDir()) {
+            // Get the text of the second (size) column
+            auto myindex = index.model()->index(index.row(), 1, index.parent());
+            auto mediaType = myindex.data(Qt::DisplayRole).toString();
+            painter->drawText(textPoint, tr("Size: %1").arg(mediaType));
+        }
     }
 
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -453,30 +462,14 @@ public:
         invalidateFilter();
     }
 
-    void setCurrentPath(const QString path)
-    {
-        m_currentPath = path;
-    }
-
 protected:
-    bool filterAcceptsRow(int row, const QModelIndex &parent) const
+    bool filterAcceptsRow(int row, const QModelIndex &parent) const override
     {
-        // QCoreApplication::processEvents();
         const auto index = sourceModel()->index(row, 0, parent);
-
-        // For some reason sometimes folders appear
-        if (!index.isValid())
-            return false;
-
-        // auto filePath = index.data(QFileSystemModel::FilePathRole).toString();
-        // if (static_cast<QFileSystemModel *>(sourceModel())->isDir(index)
-        //         && filePath != m_currentPath && filePath.startsWith(m_currentPath)) {
-        //     LOG_DEBUG() << filePath << m_currentPath;
-        //     return false;
-        // }
+        const auto model = qobject_cast<const QFileSystemModel *>(sourceModel());
 
         // Media types
-        if (m_mediaTypes.size() > 0 && m_mediaTypes.size() < 4) {
+        if (m_mediaTypes.size() > 0 && m_mediaTypes.size() < 4 && !model->isDir(index)) {
             if (!m_mediaTypes.contains(index.data(FilesModel::MediaTypeRole)))
                 return false;
         }
@@ -485,10 +478,20 @@ protected:
         return index.data(QFileSystemModel::FileNameRole).toString().contains(filterRegularExpression());
     }
 
+    bool lessThan(const QModelIndex &left, const QModelIndex &right) const override
+    {
+        const auto model = qobject_cast<const QFileSystemModel *>(sourceModel());
+        if (model->isDir(left) && model->isDir(right)) {
+            return left.data().toString().toLower() < right.data().toString().toLower();
+        } else if (model->isDir(left) || model->isDir(right)) {
+            return model->isDir(left);
+        }
+        return QSortFilterProxyModel::lessThan(left, right);
+    }
+
 private:
     QList<PlaylistModel::MediaType> m_mediaTypes {
         PlaylistModel::Video, PlaylistModel::Audio, PlaylistModel::Image, PlaylistModel::Other};
-    QString m_currentPath;
 };
 
 FilesDock::FilesDock(QWidget *parent)
@@ -503,7 +506,7 @@ FilesDock::FilesDock(QWidget *parent)
     const auto home = ls.first();
     m_filesModel = new FilesModel(this);
     m_filesModel->setOption(QFileSystemModel::DontUseCustomDirectoryIcons);
-    m_filesModel->setFilter(QDir::Files);
+    m_filesModel->setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     m_filesModel->setReadOnly(true);
     m_filesModel->setRootPath(home);
     m_filesProxyModel = new FilesProxyModel(this);
@@ -512,7 +515,6 @@ FilesDock::FilesDock(QWidget *parent)
     m_filesProxyModel->setFilterRole(QFileSystemModel::FileNameRole);
     m_filesProxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     m_filesProxyModel->setRecursiveFilteringEnabled(true);
-    m_filesProxyModel->setCurrentPath(home);
     m_selectionModel = new QItemSelectionModel(m_filesProxyModel, this);
     connect(m_selectionModel, &QItemSelectionModel::selectionChanged, this,
             &FilesDock::selectionChanged);
@@ -546,13 +548,13 @@ FilesDock::FilesDock(QWidget *parent)
         m_filesModel->setRootPath(filePath);
         m_view->setRootIndex(m_filesProxyModel->mapFromSource(m_filesModel->index(filePath)));
         m_view->scrollToTop();
-        m_filesProxyModel->setCurrentPath(m_dirsModel.filePath(index));
     });
 
     setupActions();
 
     m_mainMenu = new QMenu(tr("Files"), this);
     m_mainMenu->addAction(Actions["filesOpenAction"]);
+    m_mainMenu->addAction(Actions["filesGoUp"]);
     m_mainMenu->addAction(Actions["filesOpenPreviousAction"]);
     m_mainMenu->addAction(Actions["filesOpenNextAction"]);
     m_mainMenu->addAction(Actions["filesUpdateThumbnailsAction"]);
@@ -572,6 +574,7 @@ FilesDock::FilesDock(QWidget *parent)
     menuButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
     menuButton->setMenu(m_mainMenu);
     toolbar->addWidget(menuButton);
+    toolbar->addAction(Actions["filesGoUp"]);
     toolbar->addSeparator();
     toolbar->addAction(Actions["filesViewDetailsAction"]);
     toolbar->addAction(Actions["filesViewTilesAction"]);
@@ -633,8 +636,19 @@ FilesDock::FilesDock(QWidget *parent)
     connect(ui->tableView, &QAbstractItemView::activated, this, [ = ] (const QModelIndex & index) {
         auto sourceIndex = m_filesProxyModel->mapToSource(index);
         auto filePath = m_filesModel->filePath(sourceIndex);
-        m_view->setCurrentIndex(index);
+
         LOG_DEBUG() << "activated" << filePath;
+        if (m_filesModel->isDir(sourceIndex)) {
+            m_filesModel->setRootPath(filePath);
+            m_view->setRootIndex(index);
+            m_view->scrollToTop();
+            const auto dirsIndex = m_dirsModel.index(filePath);
+            ui->treeView->setExpanded(dirsIndex, true);
+            ui->treeView->scrollTo(dirsIndex);
+            ui->treeView->setCurrentIndex(dirsIndex);
+            return;
+        }
+        m_view->setCurrentIndex(index);
         emit clipOpened(filePath);
     });
     connect(ui->tableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged,
@@ -829,6 +843,26 @@ void FilesDock::setupActions()
         ui->treeView->setVisible(checked);
     });
     Actions.add("filesFoldersView", action, windowTitle());
+
+    action = new QAction(tr("Go Up"), this);
+    action->setToolTip(tr("Show the parent folder"));
+    action->setShortcut({Qt::ALT | Qt::Key_Backspace});
+    icon = QIcon::fromTheme("lift",
+                            QIcon(":/icons/oxygen/32x32/actions/lift.png"));
+    action->setIcon(icon);
+    connect(action, &QAction::triggered, this, [ = ]() {
+        auto dir = QDir(m_filesModel->rootPath());
+        dir.cdUp();
+        const auto filePath = dir.absolutePath();
+        const auto index = m_filesModel->setRootPath(filePath);
+        m_view->setRootIndex(m_filesProxyModel->mapFromSource(index));
+        m_view->scrollToTop();
+        const auto dirsIndex = m_dirsModel.index(filePath);
+        ui->treeView->setExpanded(dirsIndex, true);
+        ui->treeView->scrollTo(dirsIndex);
+        ui->treeView->setCurrentIndex(dirsIndex);
+    });
+    Actions.add("filesGoUp", action);
 }
 
 void FilesDock::incrementIndex(int step)
