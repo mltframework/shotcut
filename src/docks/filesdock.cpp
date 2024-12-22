@@ -404,8 +404,9 @@ public:
         painter->drawText(textPoint, tr("Date: %1").arg(
                               index.data(FilesModel::DateRole).toDateTime().toString("yyyy-MM-dd HH:mm:ss")));
         textPoint.setY(textPoint.y() + lineHeight);
-        auto mediaType = index.data(FilesModel::MediaTypeStringRole).toString();
-        painter->drawText(textPoint, tr("Type: %1").arg(mediaType));
+        auto myindex = index.model()->index(index.row(), 1, index.parent());
+        auto mediaType = myindex.data(Qt::DisplayRole).toString();
+        painter->drawText(textPoint, tr("Size: %1").arg(mediaType));
     }
 
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
