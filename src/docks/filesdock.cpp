@@ -613,8 +613,9 @@ FilesDock::FilesDock(QWidget *parent)
     ui->tableView->setSelectionModel(m_selectionModel);
     ui->listView->setSelectionModel(m_selectionModel);
     m_iconsView->setSelectionModel(m_selectionModel);
+    ui->tableView->setColumnHidden(2, true);
     ui->tableView->sortByColumn(0, Qt::AscendingOrder);
-    ui->tableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    ui->tableView->horizontalHeader()->setSectionsMovable(true);
     connect(ui->tableView, &QAbstractItemView::activated, this, [ = ] (const QModelIndex & index) {
         auto sourceIndex = m_filesProxyModel->mapToSource(index);
         auto filePath = m_filesModel->filePath(sourceIndex);
