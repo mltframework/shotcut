@@ -31,7 +31,10 @@ Item {
     function _parseStop(stop) {
         const exp = /^(#|0[xX])?([\da-fA-F]+).(.+)$/;
         let tokens = stop.match(exp);
-        return {"color": (tokens[1] ?? "") + (tokens[2] ?? ""), "position": parseFloat(tokens[3] ?? "")};
+        return {
+            "color": (tokens[1] ?? "") + (tokens[2] ?? ""),
+            "position": parseFloat(tokens[3] ?? "")
+        };
     }
 
     function _compareStop(prev, next) {
@@ -66,7 +69,9 @@ Item {
             return;
         }
         stops.sort(_compareStop);
-        let newStops = Array.from(stops, function (stop) { return stopComponent.createObject(gradientView, stop); });
+        let newStops = Array.from(stops, function (stop) {
+            return stopComponent.createObject(gradientView, stop);
+        });
         gradientView.stops = newStops;
         for (let idx = 0; idx < _stopHandles.length; idx++) {
             _stopHandles[idx].destroy();
@@ -128,14 +133,12 @@ Item {
             filter.set('stop.4', '#dfcebf 0.85');
             filter.set('stop.5', '#f6e5d5 1.0');
             filter.savePreset(defaultParameters, qsTr('Sepia'));
-
             filter.set('stop.1', '#15222a 0.0');
             filter.set('stop.2', '#121121 0.15');
             filter.set('stop.3', '#0a46f2 0.35');
             filter.set('stop.4', '#f41397 0.53');
             filter.set('stop.5', '#ffa351 1.0');
             filter.savePreset(defaultParameters, qsTr('Thermal'));
-
             filter.set('stop.1', '#000000 0.0');
             filter.set('stop.2', '#ffffff 1.0');
             filter.resetProperty('stop.3');
@@ -283,7 +286,10 @@ Item {
                 implicitHeight: 20
                 onClicked: {
                     if (stops.length < 1) {
-                        _insertStop(0, {"color": "#000000", "position": 0.5});
+                        _insertStop(0, {
+                            "color": "#000000",
+                            "position": 0.5
+                        });
                         return;
                     }
                     let index = stopSpinner.value - 1;
@@ -295,18 +301,27 @@ Item {
                             ++index;
                             next = stops[index];
                         } else {
-                            _insertStop(0, {"color": prev.color, "position": 0.0});
+                            _insertStop(0, {
+                                "color": prev.color,
+                                "position": 0.0
+                            });
                             return;
                         }
-                    } else  {
+                    } else {
                         prev = stops[index - 1];
                         next = stops[index];
                     }
                     if (typeof next === 'undefined') {
-                        _insertStop(index, {"color": prev.color, "position": 1.0});
+                        _insertStop(index, {
+                            "color": prev.color,
+                            "position": 1.0
+                        });
                         return;
                     }
-                    _insertStop(index, {"color": next.color, "position": (prev.position + next.position) / 2.0});
+                    _insertStop(index, {
+                        "color": next.color,
+                        "position": (prev.position + next.position) / 2.0
+                    });
                 }
             }
 
@@ -379,5 +394,4 @@ Item {
             Layout.fillHeight: true
         }
     }
-
 }
