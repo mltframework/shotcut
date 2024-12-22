@@ -63,6 +63,8 @@ static const QSet<QString> kAudioExtensions {
     QLatin1String("flac"),
     QLatin1String("oga"),
     QLatin1String("opus"),
+    QLatin1String("wma"),
+    QLatin1String("mka"),
 };
 static const QSet<QString> kImageExtensions {
     QLatin1String("jpg"),
@@ -74,6 +76,7 @@ static const QSet<QString> kImageExtensions {
     QLatin1String("svg"),
     QLatin1String("webp"),
     QLatin1String("gif"),
+    QLatin1String("tga"),
 };
 static const QSet<QString> kOtherExtensions {
     QLatin1String("mlt"),
@@ -89,6 +92,13 @@ static const QSet<QString> kOtherExtensions {
     QLatin1String("dll"),
     QLatin1String("exe"),
     QLatin1String("zip"),
+    QLatin1String("edl"),
+    QLatin1String("kdenlive"),
+    QLatin1String("osp"),
+    QLatin1String("blend"),
+    QLatin1String("swf"),
+    QLatin1String("cube"),
+    QLatin1String("json"),
 };
 static const QSet<QString> kVideoExtensions {
     QLatin1String("mp4"),
@@ -99,13 +109,15 @@ static const QSet<QString> kVideoExtensions {
     QLatin1String("mpeg"),
     QLatin1String("ts"),
     QLatin1String("mts"),
-    QLatin1String("m2t"),
+    QLatin1String("m2ts"),
     QLatin1String("mkv"),
     QLatin1String("ogv"),
     QLatin1String("webm"),
     QLatin1String("dv"),
     QLatin1String("lrv"),
     QLatin1String("360"),
+    QLatin1String("flv"),
+    QLatin1String("wmv"),
 };
 
 static void cacheMediaType(FilesModel *model, const QString &filePath, int mediaType,
