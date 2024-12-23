@@ -679,6 +679,8 @@ void AvformatProducerWidget::on_menuButton_clicked()
     QMenu menu;
     menu.addAction(ui->actionReset);
     if (!MLT.resource().contains("://")) // not a network stream
+        menu.addAction(ui->actionShowInFiles);
+    if (!MLT.resource().contains("://")) // not a network stream
         menu.addAction(ui->actionOpenFolder);
     menu.addAction(ui->actionCopyFullFilePath);
     menu.addAction(ui->actionFFmpegInfo);
@@ -1419,4 +1421,9 @@ void AvformatProducerWidget::on_actionBitrateViewer_triggered()
     auto job = new BitrateViewerJob(args.last(), args, fps());
     job->setLabel(tr("Bitrate %1").arg(Util::baseName(args.last())));
     JOBS.add(job);
+}
+
+void AvformatProducerWidget::on_actionShowInFiles_triggered()
+{
+    emit showInFiles(Util::GetFilenameFromProducer(producer()));
 }

@@ -931,8 +931,11 @@ void FilesDock::changeDirectory(const QString &filePath)
     if (info.isDir()) {
         m_view->scrollToTop();
     } else {
-        const auto index = m_filesModel->index(filePath);
-        m_view->scrollTo(m_filesProxyModel->mapFromSource(index));
+        QTimer::singleShot(2000, this, [ = ]() {
+            const auto index = m_filesProxyModel->mapFromSource(m_filesModel->index(filePath));
+            m_view->scrollTo(index);
+            m_view->setCurrentIndex(index);
+        });
     }
 }
 

@@ -49,6 +49,7 @@ protected slots:
     virtual void onOpenTiggered();
     virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
     void onShowFolderTriggered();
+    void onShowInFilesTriggered();
     void onReadyRead();
 
 protected:

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@
 #include <QDesktopServices>
 #include "mainwindow.h"
 #include "dialogs/textviewerdialog.h"
-#include "util.h"
 
 VideoQualityJob::VideoQualityJob(const QString &name, const QString &xml,
                                  const QString &reportPath, int frameRateNum, int frameRateDen)
@@ -40,6 +39,10 @@ VideoQualityJob::VideoQualityJob(const QString &name, const QString &xml,
 
     action = new QAction(tr("View Report"), this);
     connect(action, SIGNAL(triggered()), this, SLOT(onViewReportTriggered()));
+    m_successActions << action;
+
+    action = new QAction(tr("Show In Files"), this);
+    connect(action, SIGNAL(triggered()), this, SLOT(onShowInFilesTriggered()));
     m_successActions << action;
 
     action = new QAction(tr("Show In Folder"), this);

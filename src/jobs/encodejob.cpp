@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,6 +42,11 @@ EncodeJob::EncodeJob(const QString &name, const QString &xml, int frameRateNum, 
     action->setData("Open");
     action->setToolTip(tr("Open the output file in the Shotcut player"));
     connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
+    m_successActions << action;
+
+    action = new QAction(tr("Show In Files"), this);
+    action->setToolTip(tr("Show In Files"));
+    connect(action, SIGNAL(triggered()), this, SLOT(onShowInFilesTriggered()));
     m_successActions << action;
 
     action = new QAction(tr("Show In Folder"), this);

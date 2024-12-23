@@ -2923,6 +2923,12 @@ Mlt::Playlist *MainWindow::binPlaylist()
     return m_playlistDock->binPlaylist();
 }
 
+void MainWindow::showInFiles(const QString &filePath)
+{
+    onFilesDockTriggered();
+    m_filesDock->changeDirectory(filePath);
+}
+
 bool MainWindow::continueModified()
 {
     if (isWindowModified()) {
@@ -3553,6 +3559,10 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
             connect(w, SIGNAL(modified()), m_timelineDock, SLOT(onProducerModified()));
             connect(w, SIGNAL(modified()), m_keyframesDock, SLOT(onProducerModified()));
             connect(w, SIGNAL(modified()), m_filterController, SLOT(onProducerChanged()));
+        }
+        if (-1 != w->metaObject()->indexOfSignal("showInFiles(QString)")) {
+            connect(w, SIGNAL(showInFiles(QString)), this, SLOT(onFilesDockTriggered()));
+            connect(w, SIGNAL(showInFiles(QString)), m_filesDock, SLOT(changeDirectory(QString)));
         }
         if (-1 != w->metaObject()->indexOfSlot("updateDuration()")) {
             connect(m_timelineDock, SIGNAL(durationChanged()), w, SLOT(updateDuration()));

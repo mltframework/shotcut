@@ -56,6 +56,11 @@ MeltJob::MeltJob(const QString &name, const QString &xml, int frameRateNum, int 
         m_successActions << action;
 
         action = new QAction(tr("Show In Folder"), this);
+        action->setToolTip(tr("Show In Files"));
+        connect(action, SIGNAL(triggered()), this, SLOT(onShowInFilesTriggered()));
+        m_successActions << action;
+
+        action = new QAction(tr("Show In Folder"), this);
         action->setToolTip(tr("Show In Folder"));
         connect(action, SIGNAL(triggered()), this, SLOT(onShowFolderTriggered()));
         m_successActions << action;
@@ -72,6 +77,11 @@ void MeltJob::onOpenTiggered()
 void MeltJob::onShowFolderTriggered()
 {
     Util::showInFolder(objectName());
+}
+
+void MeltJob::onShowInFilesTriggered()
+{
+    MAIN.showInFiles(objectName());
 }
 
 MeltJob::MeltJob(const QString &name, const QString &xml, const QStringList &args, int frameRateNum,

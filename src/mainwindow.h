@@ -136,6 +136,7 @@ public:
     void getMarkerRange(int position, int *start, int *end);
     void getSelectionRange(int *start, int *end);
     Mlt::Playlist *binPlaylist();
+    void showInFiles(const QString &filePath);
 
 signals:
     void audioChannelsChanged();
