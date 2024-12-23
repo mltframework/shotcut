@@ -29,6 +29,7 @@
 #include "widgets/lineeditclear.h"
 #include "models/playlistmodel.h"
 #include "database.h"
+// #include "dialogs/listselectiondialog.h"
 #include <Logger.h>
 
 #include <QItemSelectionModel>
@@ -49,6 +50,7 @@
 #include <QRunnable>
 #include <QThreadPool>
 #include <QMutexLocker>
+#include <QMessageBox>
 
 static const auto kInOutChangedTimeoutMs = 100;
 static const auto kTilePaddingPx = 10;
@@ -504,6 +506,30 @@ FilesDock::FilesDock(QWidget *parent)
 
     const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     const auto home = ls.first();
+    ui->locationsCombo->addItem(QString(), QString());
+    ui->locationsCombo->addItem(tr("Current Project",
+                                   "The current project's folder in the file system"), "");
+    ui->locationsCombo->addItem(tr("Home", "The user's home folder in the file system"), home);
+#if defined(Q_OS_MAC)
+    ui->locationsCombo->addItem(tr("Movies",
+                                   "The system-provided videos folder called Movies on macOS"),
+                                QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
+#else
+    ui->locationsCombo->addItem(tr("Videos", "The system-provided videos folder"),
+                                QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
+#endif
+    ui->locationsCombo->addItem(tr("Music", "The system-provided music folder"),
+                                QStandardPaths::standardLocations(QStandardPaths::MusicLocation).first());
+    ui->locationsCombo->addItem(tr("Pictures", "The system-provided photos folder"),
+                                QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
+
+    // Add from Settings
+    auto locations = Settings.filesLocations();
+    for (const auto &name : locations) {
+        auto path = Settings.filesLocationPath(name);
+        ui->locationsCombo->addItem(name, path);
+    }
+
     m_filesModel = new FilesModel(this);
     m_filesModel->setOption(QFileSystemModel::DontUseCustomDirectoryIcons);
     m_filesModel->setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
@@ -545,8 +571,8 @@ FilesDock::FilesDock(QWidget *parent)
     connect(ui->treeView, &QAbstractItemView::clicked, this, [ = ](const QModelIndex & index) {
         auto filePath = m_dirsModel.filePath(index);
         LOG_DEBUG() << "clicked" << filePath;
-        m_filesModel->setRootPath(filePath);
-        m_view->setRootIndex(m_filesProxyModel->mapFromSource(m_filesModel->index(filePath)));
+        auto sourceIndex = m_filesModel->setRootPath(filePath);
+        m_view->setRootIndex(m_filesProxyModel->mapFromSource(sourceIndex));
         m_view->scrollToTop();
     });
 
@@ -974,6 +1000,80 @@ void FilesDock::onMediaTypeClicked()
         types << PlaylistModel::Other;
     m_filesProxyModel->setMediaTypes(types);
     m_view->scrollToTop();
+}
+
+void FilesDock::on_locationsCombo_activated(int)
+{
+    auto path = ui->locationsCombo->currentData().toString();
+    if (path.isEmpty() && !MAIN.fileName().isEmpty())
+        path = QFileInfo(MAIN.fileName()).absolutePath();
+    if (path.isEmpty())
+        return;
+#if defined(Q_OS_WINDOWS)
+    if (QLatin1String("/") == path)
+        path = QStringLiteral("C:/");
+#endif
+    LOG_DEBUG() << path;
+    const auto index = m_dirsModel.index(path);
+    ui->treeView->setExpanded(index, true);
+    ui->treeView->scrollTo(index);
+    ui->treeView->setCurrentIndex(index);
+    auto sourceIndex = m_filesModel->setRootPath(path);
+    m_view->setRootIndex(m_filesProxyModel->mapFromSource(sourceIndex));
+    m_view->scrollToTop();
+}
+
+void FilesDock::on_addLocationButton_clicked()
+{
+    const auto path = m_filesProxyModel->mapToSource(m_view->rootIndex()).data(
+                          QFileSystemModel::FilePathRole).toString();
+    if (path.isEmpty())
+        return;
+    QInputDialog dialog(this);
+    dialog.setInputMode(QInputDialog::TextInput);
+    dialog.setWindowTitle(tr("Add Location"));
+    dialog.setLabelText(tr("Name") + QStringLiteral(" ").repeated(80));
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setTextValue(QDir::toNativeSeparators(path));
+    if (QDialog::Accepted == dialog.exec()) {
+        auto name = dialog.textValue();
+        if (name.isEmpty())
+            name = path;
+        Settings.setFilesLocation(name, path);
+        ui->locationsCombo->addItem(name, path);
+    }
+}
+
+void FilesDock::on_removeLocationButton_clicked()
+{
+    const auto &location = ui->locationsCombo->currentText();
+    if (location.isEmpty())
+        return;
+    QMessageBox dialog(QMessageBox::Question,
+                       tr("Delete Location"),
+                       tr("Are you sure you want to remove %1?").arg(location),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (QMessageBox::Yes == dialog.exec()) {
+        Settings.removeFilesLocation(location);
+        const auto index = ui->locationsCombo->findText(location);
+        if (index > -1)
+            ui->locationsCombo->removeItem(index);
+    }
+    // ListSelectionDialog dialog(locations, this);
+    // dialog.setWindowModality(QmlApplication::dialogModality());
+    // dialog.setWindowTitle(tr("Remove Files Location"));
+    // if (QDialog::Accepted == dialog.exec()) {
+    //     for (const auto &location : dialog.selection()) {
+    //         Settings.removeFilesLocation(location);
+    //         const auto index = ui->locationsCombo->findText(location);
+    //         if (index > -1)
+    //             ui->locationsCombo->removeItem(index);
+    //     }
+    // }
 }
 
 #include "filesdock.moc"

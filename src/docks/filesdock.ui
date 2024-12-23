@@ -35,12 +35,92 @@
      <number>0</number>
     </property>
     <item>
+     <layout class="QHBoxLayout" name="locationsLayout">
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>5</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Locations</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="locationsCombo">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="addLocationButton">
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Add the current folder to the saved locations</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="QIcon::ThemeIcon::ListAdd" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/oxygen/32x32/actions/list-add.png</normaloff>:/icons/oxygen/32x32/actions/list-add.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="removeLocationButton">
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Remove the selected location</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="QIcon::ThemeIcon::ListRemove" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/oxygen/32x32/actions/list-remove.png</normaloff>:/icons/oxygen/32x32/actions/list-remove.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="filtersLayout"/>
     </item>
     <item>
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
       <widget class="QTreeView" name="treeView">
        <property name="acceptDrops">
@@ -58,7 +138,7 @@
         <item>
          <widget class="PlaylistTable" name="tableView">
           <property name="contextMenuPolicy">
-           <enum>Qt::CustomContextMenu</enum>
+           <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
           </property>
           <property name="toolTip">
            <string/>
@@ -70,13 +150,13 @@
            <bool>true</bool>
           </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::ExtendedSelection</enum>
+           <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
           </property>
           <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
+           <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
           </property>
           <property name="horizontalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
+           <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
            <number>200</number>
@@ -92,13 +172,13 @@
         <item>
          <widget class="PlaylistListView" name="listView">
           <property name="contextMenuPolicy">
-           <enum>Qt::CustomContextMenu</enum>
+           <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
           </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::ExtendedSelection</enum>
+           <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
           </property>
           <property name="movement">
-           <enum>QListView::Static</enum>
+           <enum>QListView::Movement::Static</enum>
           </property>
          </widget>
         </item>

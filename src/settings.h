@@ -121,8 +121,6 @@ public:
     void setWindowStateDefault(const QByteArray &);
     QString viewMode() const;
     void setViewMode(const QString &viewMode);
-    QString filesViewMode() const;
-    void setFilesViewMode(const QString &viewMode);
     QString exportFrameSuffix() const;
     void setExportFrameSuffix(const QString &suffix);
     bool convertAdvanced() const;
@@ -348,6 +346,14 @@ public:
     // Notes
     void setNotesZoom(int zoom);
     int notesZoom() const;
+
+    // Files
+    QString filesViewMode() const;
+    void setFilesViewMode(const QString &viewMode);
+    QStringList filesLocations() const;
+    QString filesLocationPath(const QString &name) const;
+    bool setFilesLocation(const QString &name, const QString &path);
+    bool removeFilesLocation(const QString &name);
 
 public slots:
     void reset();

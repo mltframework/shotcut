@@ -63,6 +63,12 @@ private slots:
     void viewCustomContextMenuRequested(const QPoint &pos);
     void onMediaTypeClicked();
 
+    void on_locationsCombo_activated(int index);
+
+    void on_addLocationButton_clicked();
+
+    void on_removeLocationButton_clicked();
+
 protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);

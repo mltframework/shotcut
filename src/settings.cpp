@@ -334,6 +334,51 @@ void ShotcutSettings::setFilesViewMode(const QString &viewMode)
     emit filesViewModeChanged();
 }
 
+QStringList ShotcutSettings::filesLocations() const
+{
+    QStringList result;
+    for (const auto &s : settings.value("files/locations").toStringList()) {
+        if (!s.startsWith("__"))
+            result << s;
+    }
+    return result;
+}
+
+QString ShotcutSettings::filesLocationPath(const QString &name) const
+{
+    QString key = QStringLiteral("files/location/%1").arg(name);
+    return settings.value(key).toString();
+}
+
+bool ShotcutSettings::setFilesLocation(const QString &name, const QString &path)
+{
+    bool isNew = false;
+    QStringList locations = filesLocations();
+    if (!locations.contains(name)) {
+        isNew = true;
+        locations.append(name);
+        settings.setValue("files/locations", locations);
+    }
+    settings.setValue("files/location/" + name, path);
+    return isNew;
+}
+
+bool ShotcutSettings::removeFilesLocation(const QString &name)
+{
+    QStringList list = filesLocations();
+    int index = list.indexOf(name);
+    if (index > -1) {
+        list.removeAt(index);
+        if (list.isEmpty())
+            settings.remove("files/locations");
+        else
+            settings.setValue("files/locations", list);
+        settings.remove("files/location/" + name);
+        return true;
+    }
+    return false;
+}
+
 QString ShotcutSettings::exportFrameSuffix() const
 {
     return settings.value("exportFrameSuffix", ".png").toString();
