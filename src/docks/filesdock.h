@@ -58,6 +58,7 @@ signals:
 
 public slots:
     void onOpenActionTriggered();
+    void changeDirectory(const QString &path);
 
 private slots:
     void viewCustomContextMenuRequested(const QPoint &pos);

@@ -506,22 +506,26 @@ FilesDock::FilesDock(QWidget *parent)
 
     const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     const auto home = ls.first();
-    ui->locationsCombo->addItem(QString(), QString());
-    ui->locationsCombo->addItem(tr("Current Project",
-                                   "The current project's folder in the file system"), "");
     ui->locationsCombo->addItem(tr("Home", "The user's home folder in the file system"), home);
+    ui->locationsCombo->addItem(tr("Current Project"), "");
+    ui->locationsCombo->addItem(tr("Documents"),
+                                QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first());
 #if defined(Q_OS_MAC)
     ui->locationsCombo->addItem(tr("Movies",
                                    "The system-provided videos folder called Movies on macOS"),
                                 QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
 #else
-    ui->locationsCombo->addItem(tr("Videos", "The system-provided videos folder"),
+    ui->locationsCombo->addItem(tr("Videos"),
                                 QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
 #endif
-    ui->locationsCombo->addItem(tr("Music", "The system-provided music folder"),
+    ui->locationsCombo->addItem(tr("Music"),
                                 QStandardPaths::standardLocations(QStandardPaths::MusicLocation).first());
     ui->locationsCombo->addItem(tr("Pictures", "The system-provided photos folder"),
                                 QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
+    ui->removeLocationButton->setDisabled(true);
+    connect(ui->locationsCombo, &QComboBox::currentIndexChanged, this, [ = ](int index) {
+        ui->removeLocationButton->setEnabled(index > 5);
+    });
 
     // Add from Settings
     auto locations = Settings.filesLocations();
@@ -913,6 +917,25 @@ void FilesDock::onOpenActionTriggered()
     emit clipOpened(filePath);
 }
 
+void FilesDock::changeDirectory(const QString &filePath)
+{
+    LOG_DEBUG() << filePath;
+    QFileInfo info(filePath);
+    auto path = info.isDir() ? filePath : info.path();
+    auto index = m_dirsModel.index(path);
+    ui->treeView->setExpanded(index, true);
+    ui->treeView->scrollTo(index);
+    ui->treeView->setCurrentIndex(index);
+    index = m_filesModel->setRootPath(path);
+    m_view->setRootIndex(m_filesProxyModel->mapFromSource(index));
+    if (info.isDir()) {
+        m_view->scrollToTop();
+    } else {
+        const auto index = m_filesModel->index(filePath);
+        m_view->scrollTo(m_filesProxyModel->mapFromSource(index));
+    }
+}
+
 void FilesDock::viewCustomContextMenuRequested(const QPoint &pos)
 {
     QModelIndex index = m_view->currentIndex();
@@ -1013,14 +1036,7 @@ void FilesDock::on_locationsCombo_activated(int)
     if (QLatin1String("/") == path)
         path = QStringLiteral("C:/");
 #endif
-    LOG_DEBUG() << path;
-    const auto index = m_dirsModel.index(path);
-    ui->treeView->setExpanded(index, true);
-    ui->treeView->scrollTo(index);
-    ui->treeView->setCurrentIndex(index);
-    auto sourceIndex = m_filesModel->setRootPath(path);
-    m_view->setRootIndex(m_filesProxyModel->mapFromSource(sourceIndex));
-    m_view->scrollToTop();
+    changeDirectory(path);
 }
 
 void FilesDock::on_addLocationButton_clicked()
