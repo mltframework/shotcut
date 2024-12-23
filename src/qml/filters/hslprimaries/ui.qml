@@ -67,7 +67,6 @@ Shotcut.KeyframableFilter {
     }
 
     function enableControls(enabled) {
-    
         overlapSlider.enabled = enabled;
         hRedSlider.enabled = sRedSlider.enabled = lRedSlider.value.enabled = enabled;
         hYellowSlider.enabled = sYellowSlider.enabled = lYellowSlider.enabled = enabled;
@@ -507,7 +506,6 @@ Shotcut.KeyframableFilter {
                 toggleKeyframes(checked, 's_scale_magenta', sMagentaSlider.value);
             }
         }
-
 
         // Lightness
         Label {

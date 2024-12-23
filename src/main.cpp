@@ -223,11 +223,14 @@ public:
         // Startup logging.
         dir.setPath(Settings.appDataLocation());
         if (!dir.exists()) dir.mkpath(dir.path());
-        auto previousLogName = dir.filePath("shotcut-log.bak");
-        QFile::remove(previousLogName);
-        QFile::copy(dir.filePath("shotcut-log.txt"), previousLogName);
-        const QString logFileName = dir.filePath("shotcut-log.txt");
-        QFile::remove(logFileName);
+        const auto logFileName = dir.filePath("shotcut-log.txt");
+        if (QFile::exists(logFileName)) {
+            const auto previousLogName = dir.filePath("shotcut-log.bak");
+            if (QFile::exists(previousLogName))
+                QFile::remove(previousLogName);
+            if (!QFile::rename(logFileName, previousLogName))
+                LOG_WARNING() << "Failed to rename backup log file" << previousLogName;
+        }
         FileAppender *fileAppender = new FileAppender(logFileName);
         fileAppender->setFormat("[%{type:-7}] <%{function}> %{message}\n");
         cuteLogger->registerAppender(fileAppender);
