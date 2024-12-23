@@ -588,6 +588,7 @@ FilesDock::FilesDock(QWidget *parent)
     m_mainMenu->addAction(Actions["filesOpenPreviousAction"]);
     m_mainMenu->addAction(Actions["filesOpenNextAction"]);
     m_mainMenu->addAction(Actions["filesUpdateThumbnailsAction"]);
+    m_mainMenu->addAction(Actions["filesShowInFolder"]);
     m_mainMenu->addSeparator();
     QMenu *selectMenu = m_mainMenu->addMenu(tr("Select"));
     selectMenu->addAction(Actions["filesSelectAllAction"]);
@@ -786,6 +787,20 @@ void FilesDock::setupActions()
     });
     Actions.add("filesOpenAction", action);
 
+    action = new QAction(tr("Show In File Manager"), this);
+    connect(action, &QAction::triggered, this, [ = ]() {
+        auto filePath = m_filesModel->rootPath();
+        if (!m_view->selectionModel()->selectedIndexes().isEmpty()) {
+            const auto index = m_view->selectionModel()->selectedIndexes().first();
+            if (!index.isValid()) return;
+            auto sourceIndex = m_filesProxyModel->mapToSource(index);
+            filePath = m_filesModel->filePath(sourceIndex);
+        }
+        LOG_DEBUG() << filePath;
+        Util::showInFolder(filePath);
+    });
+    Actions.add("filesShowInFolder", action);
+
     action = new QAction(tr("Update Thumbnails"), this);
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &FilesDock::onUpdateThumbnailsActionTriggered);
@@ -909,6 +924,7 @@ void FilesDock::incrementIndex(int step)
 
 void FilesDock::onOpenActionTriggered()
 {
+    if (m_view->selectionModel()->selectedIndexes().isEmpty()) return;
     auto index = m_view->selectionModel()->selectedIndexes().first();
     if (!index.isValid()) return;
     auto sourceIndex = m_filesProxyModel->mapToSource(index);
@@ -946,6 +962,7 @@ void FilesDock::viewCustomContextMenuRequested(const QPoint &pos)
         QMenu menu(this);
         menu.addAction(Actions["filesOpenAction"]);
         menu.addAction(Actions["filesUpdateThumbnailsAction"]);
+        menu.addAction(Actions["filesShowInFolder"]);
         menu.exec(mapToGlobal(pos));
     }
 }
