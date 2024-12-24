@@ -1088,7 +1088,6 @@ void FilesDock::updateViewMode()
 
 void FilesDock::keyPressEvent(QKeyEvent *event)
 {
-    LOG_DEBUG() << event;
 #if defined(Q_OS_MAC)
     if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
         if (!m_view->selectionModel()->selectedIndexes().isEmpty()) {
