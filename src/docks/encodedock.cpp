@@ -803,6 +803,8 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 case RateControlQuality: {
                     setIfNotSet(p, "rc", "vbr");
                     setIfNotSet(p, "cq", TO_ABSOLUTE(51, 0, vq));
+                    if (TO_ABSOLUTE(51, 0, vq) == 0)
+                        setIfNotSet(p, "vtune", "lossless");
                     break;
                 }
                 case RateControlConstrained: {
