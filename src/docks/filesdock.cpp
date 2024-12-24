@@ -1088,6 +1088,31 @@ void FilesDock::updateViewMode()
 
 void FilesDock::keyPressEvent(QKeyEvent *event)
 {
+    LOG_DEBUG() << event;
+#if defined(Q_OS_MAC)
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+        if (!m_view->selectionModel()->selectedIndexes().isEmpty()) {
+            const auto index = m_view->selectionModel()->selectedIndexes().first();
+            if (index.isValid()) {
+                const auto sourceIndex = m_filesProxyModel->mapToSource(index);
+                const auto filePath = m_filesModel->filePath(sourceIndex);
+                if (m_filesModel->isDir(sourceIndex)) {
+                    m_filesModel->setRootPath(filePath);
+                    m_view->setRootIndex(index);
+                    m_view->scrollToTop();
+                    const auto dirsIndex = m_dirsModel.index(filePath);
+                    ui->treeView->setExpanded(dirsIndex, true);
+                    ui->treeView->scrollTo(dirsIndex);
+                    ui->treeView->setCurrentIndex(dirsIndex);
+                    return;
+                }
+                emit clipOpened(filePath);
+            }
+        }
+        event->accept();
+        return;
+    }
+#endif
     QDockWidget::keyPressEvent(event);
     if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down)
         event->accept();
