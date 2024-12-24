@@ -54,7 +54,6 @@
 #include <QDesktopServices>
 #include <QProcess>
 
-static const auto kInOutChangedTimeoutMs = 100;
 static const auto kTilePaddingPx = 10;
 static const auto kDetailedMode = QLatin1String("detailed");
 static const auto kIconsMode = QLatin1String("icons");
@@ -174,16 +173,13 @@ class FilesThumbnailTask : public QRunnable
     FilesModel *m_model;
     QString m_filePath;
     QModelIndex m_index;
-    bool m_force;
 
 public:
-    FilesThumbnailTask(FilesModel *model, const QString &filePath, const QModelIndex &index,
-                       bool force = false)
+    FilesThumbnailTask(FilesModel *model, const QString &filePath, const QModelIndex &index)
         : QRunnable()
         , m_model(model)
         , m_filePath(filePath)
         , m_index(index)
-        , m_force(force)
     {
     }
 
@@ -277,7 +273,6 @@ public:
                 icon.paint(&painter, image.rect());
                 return image;
             }
-            int width = PlaylistModel::THUMBNAIL_WIDTH;
             QImage image;
             const auto path = filePath(index);
             const auto thumbnailKey = FilesThumbnailTask::cacheKey(path);
@@ -748,7 +743,7 @@ void FilesDock::setupActions()
                             QIcon(":/icons/oxygen/32x32/actions/view-list-details.png"));
     action->setIcon(icon);
     action->setCheckable(true);
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         Settings.setFilesViewMode(kTiledMode);
         updateViewMode();
     });
@@ -761,7 +756,7 @@ void FilesDock::setupActions()
                             QIcon(":/icons/oxygen/32x32/actions/view-list-icons.png"));
     action->setIcon(icon);
     action->setCheckable(true);
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         Settings.setFilesViewMode(kIconsMode);
         updateViewMode();
     });
@@ -774,7 +769,7 @@ void FilesDock::setupActions()
                             QIcon(":/icons/oxygen/32x32/actions/view-list-text.png"));
     action->setIcon(icon);
     action->setCheckable(true);
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         Settings.setFilesViewMode(kDetailedMode);
         updateViewMode();
     });
@@ -800,7 +795,7 @@ void FilesDock::setupActions()
 #if defined(Q_OS_WIN)
         const auto scheme = QLatin1String("file:///");
 #else
-        QLatin1String("file://");
+        const auto scheme = QLatin1String("file://");
 #endif
         QDesktopServices::openUrl({scheme + filePath, QUrl::TolerantMode});
     });
