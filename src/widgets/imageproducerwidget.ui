@@ -17,7 +17,7 @@
    <item>
     <widget class="QLineEdit" name="filenameLabel">
      <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -37,7 +37,7 @@
       </size>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::FocusPolicy::StrongFocus</enum>
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="tabChangesFocus">
       <bool>true</bool>
@@ -50,10 +50,10 @@
    <item>
     <layout class="QFormLayout" name="formLayout">
      <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::FieldGrowthPolicy::FieldsStayAtSizeHint</enum>
+      <enum>QFormLayout::FieldsStayAtSizeHint</enum>
      </property>
      <property name="formAlignment">
-      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
      </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label">
@@ -70,7 +70,7 @@
           <string>x</string>
          </property>
          <property name="textInteractionFlags">
-          <set>Qt::TextInteractionFlag::TextSelectableByKeyboard|Qt::TextInteractionFlag::TextSelectableByMouse</set>
+          <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>
@@ -82,7 +82,7 @@
         <string>Duration</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -97,10 +97,10 @@
           </size>
          </property>
          <property name="focusPolicy">
-          <enum>Qt::FocusPolicy::ClickFocus</enum>
+          <enum>Qt::ClickFocus</enum>
          </property>
          <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="accelerated">
           <bool>true</bool>
@@ -134,7 +134,7 @@
         <string>Pixel aspect ratio</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -143,7 +143,7 @@
        <item>
         <widget class="QSpinBox" name="aspectNumSpinBox">
          <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="keyboardTracking">
           <bool>false</bool>
@@ -169,7 +169,7 @@
        <item>
         <widget class="QSpinBox" name="aspectDenSpinBox">
          <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="keyboardTracking">
           <bool>false</bool>
@@ -209,7 +209,7 @@
           <bool>false</bool>
          </property>
          <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="keyboardTracking">
           <bool>false</bool>
@@ -272,7 +272,7 @@
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
+        <enum>Qt::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -287,7 +287,7 @@
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -305,9 +305,6 @@
   </action>
   <action name="actionOpenFolder">
    <property name="text">
-    <string>Show In Folder</string>
-   </property>
-   <property name="toolTip">
     <string>Show In Folder</string>
    </property>
   </action>
@@ -341,12 +338,6 @@
   </action>
   <action name="actionShowInFiles">
    <property name="text">
-    <string>Show In Files</string>
-   </property>
-   <property name="iconText">
-    <string>Show in Files</string>
-   </property>
-   <property name="toolTip">
     <string>Show In Files</string>
    </property>
   </action>
