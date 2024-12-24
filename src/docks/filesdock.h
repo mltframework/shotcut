@@ -63,6 +63,8 @@ public slots:
 private slots:
     void viewCustomContextMenuRequested(const QPoint &pos);
     void onMediaTypeClicked();
+    void onOpenOtherAdd();
+    void onOpenOtherRemove();
 
     void on_locationsCombo_activated(int index);
 
@@ -81,6 +83,9 @@ private:
     void onUpdateThumbnailsActionTriggered();
     void onSelectAllActionTriggered();
     void incrementIndex(int step);
+    void addOpenWithMenu(QMenu *menu);
+    QString firstSelectedFilePath();
+    QString firstSelectedMediaType();
 
     Ui::FilesDock *ui;
     QAbstractItemView *m_view;

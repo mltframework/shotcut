@@ -379,6 +379,34 @@ bool ShotcutSettings::removeFilesLocation(const QString &name)
     return false;
 }
 
+QStringList ShotcutSettings::filesOpenOther(const QString &type) const
+{
+    return settings.value("files/openOther/" + type).toStringList();
+}
+
+void ShotcutSettings::setFilesOpenOther(const QString &type, const QString &filePath)
+{
+    QStringList filePaths = filesOpenOther(type);
+    filePaths.removeAll(filePath);
+    filePaths.append(filePath);
+    settings.setValue("files/openOther/" + type, filePaths);
+}
+
+bool ShotcutSettings::removeFilesOpenOther(const QString &type, const QString &filePath)
+{
+    QStringList list = filesOpenOther(type);
+    int index = list.indexOf(filePath);
+    if (index > -1) {
+        list.removeAt(index);
+        if (list.isEmpty())
+            settings.remove("files/openOther/" + type);
+        else
+            settings.setValue("files/openOther/" + type, list);
+        return true;
+    }
+    return false;
+}
+
 QString ShotcutSettings::exportFrameSuffix() const
 {
     return settings.value("exportFrameSuffix", ".png").toString();

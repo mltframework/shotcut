@@ -354,6 +354,9 @@ public:
     QString filesLocationPath(const QString &name) const;
     bool setFilesLocation(const QString &name, const QString &path);
     bool removeFilesLocation(const QString &name);
+    QStringList filesOpenOther(const QString &type) const;
+    void setFilesOpenOther(const QString &type, const QString &filePath);
+    bool removeFilesOpenOther(const QString &type, const QString &filePath);
 
 public slots:
     void reset();

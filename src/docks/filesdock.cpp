@@ -29,7 +29,7 @@
 #include "widgets/lineeditclear.h"
 #include "models/playlistmodel.h"
 #include "database.h"
-// #include "dialogs/listselectiondialog.h"
+#include "dialogs/listselectiondialog.h"
 #include <Logger.h>
 
 #include <QItemSelectionModel>
@@ -51,6 +51,8 @@
 #include <QThreadPool>
 #include <QMutexLocker>
 #include <QMessageBox>
+#include <QDesktopServices>
+#include <QProcess>
 
 static const auto kInOutChangedTimeoutMs = 100;
 static const auto kTilePaddingPx = 10;
@@ -708,6 +710,7 @@ FilesDock::FilesDock(QWidget *parent)
     } else { /* if (Settings.viewMode() == kIconsMode) */
         Actions["filesViewIconsAction"]->trigger();
     }
+    addOpenWithMenu(m_mainMenu);
 
     LOG_DEBUG() << "end";
 }
@@ -778,7 +781,7 @@ void FilesDock::setupActions()
     modeGroup->addAction(action);
     Actions.add("filesViewDetailsAction", action);
 
-    action = new QAction(tr("Open"), this);
+    action = new QAction(tr("Open In Shotcut"), this);
     action->setToolTip(tr("Open the clip in the Source player"));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &FilesDock::onOpenActionTriggered);
@@ -787,15 +790,46 @@ void FilesDock::setupActions()
     });
     Actions.add("filesOpenAction", action);
 
+    action = new QAction(tr("System Default"), this);
+    action->setEnabled(false);
+    connect(action, &QAction::triggered, this, [ = ]() {
+        auto filePath = firstSelectedFilePath();
+        if (filePath.isEmpty())
+            filePath = m_filesModel->rootPath();
+        LOG_DEBUG() << filePath;
+#if defined(Q_OS_WIN)
+        const auto scheme = QLatin1String("file:///");
+#else
+        QLatin1String("file://");
+#endif
+        QDesktopServices::openUrl({scheme + filePath, QUrl::TolerantMode});
+    });
+    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
+        action->setEnabled(m_view->currentIndex().isValid());
+    });
+    Actions.add("filesOpenDefaultAction", action);
+
+    action = new QAction(tr("Other..."), this);
+    action->setEnabled(false);
+    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
+        action->setEnabled(m_view->currentIndex().isValid());
+    });
+    connect(action, &QAction::triggered, this, &FilesDock::onOpenOtherAdd);
+    Actions.add("filesOpenWithOtherAction", action);
+
+    action = new QAction(tr("Remove..."), this);
+    action->setEnabled(false);
+    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
+        action->setEnabled(m_view->currentIndex().isValid());
+    });
+    connect(action, &QAction::triggered, this, &FilesDock::onOpenOtherRemove);
+    Actions.add("filesOpenWithRemoveAction", action);
+
     action = new QAction(tr("Show In File Manager"), this);
     connect(action, &QAction::triggered, this, [ = ]() {
-        auto filePath = m_filesModel->rootPath();
-        if (!m_view->selectionModel()->selectedIndexes().isEmpty()) {
-            const auto index = m_view->selectionModel()->selectedIndexes().first();
-            if (!index.isValid()) return;
-            auto sourceIndex = m_filesProxyModel->mapToSource(index);
-            filePath = m_filesModel->filePath(sourceIndex);
-        }
+        auto filePath = firstSelectedFilePath();
+        if (filePath.isEmpty())
+            filePath = m_filesModel->rootPath();
         LOG_DEBUG() << filePath;
         Util::showInFolder(filePath);
     });
@@ -817,7 +851,10 @@ void FilesDock::setupActions()
 
     action = new QAction(tr("Select None"), this);
     // action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_D));
-    connect(action, &QAction::triggered, m_selectionModel, &QItemSelectionModel::clearSelection);
+    connect(action, &QAction::triggered, this, [ = ]() {
+        m_view->setCurrentIndex({});
+        m_selectionModel->clearSelection();
+    });
     connect(this, &FilesDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_selectionModel->selection().size() > 0);
     });
@@ -922,15 +959,74 @@ void FilesDock::incrementIndex(int step)
     }
 }
 
+void FilesDock::addOpenWithMenu(QMenu *menu)
+{
+    auto subMenu = menu->addMenu(tr("Open With"));
+    subMenu->addAction(Actions["filesOpenDefaultAction"]);
+    subMenu->addSeparator();
+    // custom options
+    auto programs = Settings.filesOpenOther(firstSelectedMediaType());
+    for (const auto &program : programs) {
+        auto action = subMenu->addAction(QFileInfo(program).baseName(), this, [ = ]() {
+            const auto filePath = firstSelectedFilePath();
+            LOG_DEBUG() << program << filePath;
+            QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)});
+        });
+        action->setObjectName(program);
+    }
+    subMenu->addSeparator();
+    // custom options actions
+    subMenu->addAction(Actions["filesOpenWithOtherAction"]);
+    subMenu->addAction(Actions["filesOpenWithRemoveAction"]);
+}
+
+QString FilesDock::firstSelectedFilePath()
+{
+    QString result;
+    if (!m_view->selectionModel()->selectedIndexes().isEmpty()) {
+        const auto index = m_view->selectionModel()->selectedIndexes().first();
+        if (index.isValid()) {
+            auto sourceIndex = m_filesProxyModel->mapToSource(index);
+            result = m_filesModel->filePath(sourceIndex);
+        }
+    }
+    return result;
+}
+
+QString FilesDock::firstSelectedMediaType()
+{
+    QString result;
+    if (!m_view->selectionModel()->selectedIndexes().isEmpty()) {
+        const auto index = m_view->selectionModel()->selectedIndexes().first();
+        if (index.isValid()) {
+            auto sourceIndex = m_filesProxyModel->mapToSource(index);
+            switch (sourceIndex.data(FilesModel::MediaTypeRole).toInt()) {
+            case PlaylistModel::Audio:
+                result = QLatin1String("audio");
+                break;
+            case PlaylistModel::Image:
+                result = QLatin1String("image");
+                break;
+            case PlaylistModel::Video:
+                result = QLatin1String("video");
+                break;
+            default:
+                result = QLatin1String("other");
+                break;
+            }
+        }
+    }
+    return result;
+}
+
 void FilesDock::onOpenActionTriggered()
 {
-    if (m_view->selectionModel()->selectedIndexes().isEmpty()) return;
-    auto index = m_view->selectionModel()->selectedIndexes().first();
-    if (!index.isValid()) return;
-    auto sourceIndex = m_filesProxyModel->mapToSource(index);
-    auto filePath = m_filesModel->filePath(sourceIndex);
-    m_view->setCurrentIndex(index);
-    emit clipOpened(filePath);
+    const auto filePath = firstSelectedFilePath();
+    if (!filePath.isEmpty()) {
+        const auto index = m_filesProxyModel->mapFromSource(m_filesModel->index(filePath));
+        m_view->setCurrentIndex(index);
+        emit clipOpened(filePath);
+    }
 }
 
 void FilesDock::changeDirectory(const QString &filePath)
@@ -963,6 +1059,7 @@ void FilesDock::viewCustomContextMenuRequested(const QPoint &pos)
         menu.addAction(Actions["filesOpenAction"]);
         menu.addAction(Actions["filesUpdateThumbnailsAction"]);
         menu.addAction(Actions["filesShowInFolder"]);
+        addOpenWithMenu(&menu);
         menu.exec(mapToGlobal(pos));
     }
 }
@@ -1045,6 +1142,53 @@ void FilesDock::onMediaTypeClicked()
     m_view->scrollToTop();
 }
 
+void FilesDock::onOpenOtherAdd()
+{
+    LOG_DEBUG();
+    const auto filePath = firstSelectedFilePath();
+    if (filePath.isEmpty()) return;
+
+    QString dir("/usr/bin");
+    QString filter;
+#if defined(Q_OS_WIN)
+    dir = QStringLiteral("C:/Program Files");
+    filter = tr("Executable Files (*.exe);;All Files (*)");
+#elif defined(Q_OS_MAC)
+    dir = QStringLiteral("/Applications");
+#endif
+    const auto program = QFileDialog::getOpenFileName(MAIN.window(), tr("Choose Executable"), dir,
+                                                      filter,
+                                                      nullptr, Util::getFileDialogOptions());
+    if (!program.isEmpty()) {
+        if (QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
+            Settings.setFilesOpenOther(firstSelectedMediaType(), program);
+        }
+    }
+}
+
+void FilesDock::onOpenOtherRemove()
+{
+    const auto mediaType = firstSelectedMediaType();
+    LOG_DEBUG() << mediaType;
+    auto ls = Settings.filesOpenOther(mediaType);
+    ls.sort(Qt::CaseInsensitive);
+    QStringList programs;
+    std::for_each(ls.begin(), ls.end(), [&](const QString & s) {
+        programs << QDir::toNativeSeparators(s);
+    });
+    ListSelectionDialog dialog(programs, this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setWindowTitle(tr("Remove From Open Other"));
+    if (QDialog::Accepted == dialog.exec()) {
+        for (auto program : dialog.selection()) {
+            program = QDir::fromNativeSeparators(program);
+            Settings.removeFilesOpenOther(mediaType, program);
+            // Remove menu item
+            delete m_mainMenu->findChild<QAction *>(program);
+        }
+    }
+}
+
 void FilesDock::on_locationsCombo_activated(int)
 {
     auto path = ui->locationsCombo->currentData().toString();
@@ -1052,7 +1196,7 @@ void FilesDock::on_locationsCombo_activated(int)
         path = QFileInfo(MAIN.fileName()).absolutePath();
     if (path.isEmpty())
         return;
-#if defined(Q_OS_WINDOWS)
+#if defined(Q_OS_WIN)
     if (QLatin1String("/") == path)
         path = QStringLiteral("C:/");
 #endif
@@ -1099,17 +1243,6 @@ void FilesDock::on_removeLocationButton_clicked()
         if (index > -1)
             ui->locationsCombo->removeItem(index);
     }
-    // ListSelectionDialog dialog(locations, this);
-    // dialog.setWindowModality(QmlApplication::dialogModality());
-    // dialog.setWindowTitle(tr("Remove Files Location"));
-    // if (QDialog::Accepted == dialog.exec()) {
-    //     for (const auto &location : dialog.selection()) {
-    //         Settings.removeFilesLocation(location);
-    //         const auto index = ui->locationsCombo->findText(location);
-    //         if (index > -1)
-    //             ui->locationsCombo->removeItem(index);
-    //     }
-    // }
 }
 
 #include "filesdock.moc"
