@@ -462,7 +462,7 @@ void MainWindow::setupAndConnectDocks()
 
     m_filesDock = new FilesDock(this);
     m_filesDock->hide();
-    m_filesDock->toggleViewAction()->setShortcuts({QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_9), QKeySequence(Qt::Key_F10)});
+    m_filesDock->toggleViewAction()->setShortcuts({QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_4), QKeySequence(Qt::Key_F10)});
     ui->menuView->addAction(m_filesDock->toggleViewAction());
     // connect(m_filesDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
     connect(m_filesDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
