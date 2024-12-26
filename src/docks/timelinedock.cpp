@@ -48,6 +48,8 @@
 #include <QGuiApplication>
 #include <QClipboard>
 #include <Logger.h>
+#include <qprogressbar.h>
+#include <qwidgetaction.h>
 
 static const char *kFileUrlProtocol = "file://";
 static const char *kFilesUrlDelimiter = ",file://";
@@ -3889,13 +3891,17 @@ void TimelineDock::onRecordStarted()
 
 void TimelineDock::updateRecording()
 {
-    int out = qRound(MLT.profile().fps() * m_recordingTime.secsTo(QDateTime::currentDateTime()));
-    auto info = m_model.getClipInfo(m_recordingTrackIndex, m_recordingClipIndex);
+    const auto seconds = m_recordingTime.secsTo(QDateTime::currentDateTime());
+    const auto out = qRound(MLT.profile().fps() * seconds);
+    const auto info = m_model.getClipInfo(m_recordingTrackIndex, m_recordingClipIndex);
     if (info) {
         auto delta = info->frame_out - out;
         if (delta < 0) {
             m_model.trimClipOut(m_recordingTrackIndex, m_recordingClipIndex, delta, false, false);
         }
+    }
+    if (seconds % 3 == 1) {
+        MAIN.showStatusMessage(tr("Audio Recording In Progress"), 2);
     }
 }
 
