@@ -106,7 +106,6 @@ static const QSet<QString> kOtherExtensions {
 static const QSet<QString> kVideoExtensions {
     QLatin1String("mp4"),
     QLatin1String("m4v"),
-    QLatin1String("mov"),
     QLatin1String("avi"),
     QLatin1String("mpg"),
     QLatin1String("mpeg"),
