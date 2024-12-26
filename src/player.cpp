@@ -942,11 +942,7 @@ void Player::onProducerOpened(bool play)
 
     connectTransport(MLT.transportControl());
 
-    // Closing the previous producer might call pause() milliseconds before
-    // calling play() here. Delays while purging the consumer on pause can
-    // interfere with the play() call. So, we delay play a little to let
-    // pause purging to complete.
-    if (play) {
+    if (play || (MLT.isClip() && !MLT.isClosedClip())) {
         if (m_pauseAfterOpen) {
             if (MLT.isClip()) {
                 pause();
@@ -954,13 +950,15 @@ void Player::onProducerOpened(bool play)
                 MLT.producer()->seek(0);
             }
         } else {
-            if (MLT.consumer()->is_stopped()) {
-                QTimer::singleShot(500, this, SLOT(play()));
-            } else {
+            // Closing the previous producer might call pause() milliseconds before
+            // calling play() here. Delays while purging the consumer on pause can
+            // interfere with the play() call. So, we delay play a little to let
+            // pause purging to complete.
+            if (!MLT.consumer()->is_stopped()) {
                 // This seek purges the consumer to prevent latent end-of-stream detection.
                 seek(0);
-                QTimer::singleShot(500, this, SLOT(play()));
             }
+            QTimer::singleShot(500, this, SLOT(play()));
         }
     } else {
         pause(0);

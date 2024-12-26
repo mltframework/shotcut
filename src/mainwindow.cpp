@@ -1346,8 +1346,7 @@ void MainWindow::open(Mlt::Producer *producer)
 
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer)) {
-        auto play = MLT.isClip() && !MLT.isClosedClip();
-        emit producerOpened(play);
+        emit producerOpened();
         if (MLT.URL().endsWith(".mlt") || MLT.URL().endsWith(".xml")) {
             m_filterController->motionTrackerModel()->load();
             emit profileChanged();
