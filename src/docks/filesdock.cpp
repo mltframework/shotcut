@@ -55,6 +55,7 @@
 #include <QProcess>
 
 static const auto kTilePaddingPx = 10;
+static const auto kTreeViewWidthPx = 150;
 static const auto kDetailedMode = QLatin1String("detailed");
 static const auto kIconsMode = QLatin1String("icons");
 static const auto kTiledMode = QLatin1String("tiled");
@@ -557,7 +558,7 @@ FilesDock::FilesDock(QWidget *parent)
     m_dirsModel.setOption(QFileSystemModel::DontWatchForChanges);
     m_dirsModel.setFilter(QDir::Drives | QDir::Dirs | QDir::NoDotAndDotDot);
 
-    int width = qRound(150 * devicePixelRatio());
+    const int width = qRound(kTreeViewWidthPx * devicePixelRatio());
     ui->splitter->setSizes({width, this->width() - width});
     ui->splitter->setStretchFactor(0, 0);
     ui->splitter->setStretchFactor(1, 1);

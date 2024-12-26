@@ -56,6 +56,7 @@
 
 static const auto kInOutChangedTimeoutMs = 100;
 static const auto kTilePaddingPx = 10;
+static const auto kTreeViewWidthPx = 150;
 static const auto kDetailedMode = QLatin1String("detailed");
 static const auto kIconsMode = QLatin1String("icons");
 static const auto kTiledMode = QLatin1String("tiled");
@@ -402,8 +403,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     connect(m_selectionModel, &QItemSelectionModel::selectionChanged, this,
             &PlaylistDock::selectionChanged);
 
-    int width = qRound(150 * devicePixelRatio());
-    ui->splitter->setSizes({width, this->width() - width});
+    ui->splitter->setSizes({kTreeViewWidthPx, this->width() - kTreeViewWidthPx});
     ui->splitter->setStretchFactor(0, 0);
     ui->splitter->setStretchFactor(1, 1);
     ui->treeWidget->setVisible(false);
