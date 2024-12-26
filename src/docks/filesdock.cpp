@@ -338,7 +338,8 @@ public:
         if (image.isNull()) {
             image = QImage(64, 64, QImage::Format_ARGB32);
             image.fill(Qt::transparent);
-            const auto pixmap = QFileSystemModel::data(index, Qt::DecorationRole).value<QIcon>().pixmap({16, 16}, m_dock->devicePixelRatioF());
+            const auto pixmap = QFileSystemModel::data(index, Qt::DecorationRole).value<QIcon>().pixmap({16, 16},
+                                                                                                        m_dock->devicePixelRatioF());
             QPainter painter(&image);
             QIcon(pixmap).paint(&painter, image.rect());
         }
@@ -510,7 +511,7 @@ FilesDock::FilesDock(QWidget *parent)
                                 QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
 #if defined(Q_OS_MAC)
     ui->locationsCombo->addItem(tr("Volumes",
-                                "The macOS file system location where external drives and network shares are mounted"),
+                                   "The macOS file system location where external drives and network shares are mounted"),
                                 "/Volumes");
 #else
     ui->locationsCombo->addItem(tr("Videos"),
