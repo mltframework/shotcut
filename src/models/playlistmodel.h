@@ -40,7 +40,8 @@ public:
         Video,
         Image,
         Audio,
-        Other
+        Other,
+        Pending
     };
 
     enum Columns {

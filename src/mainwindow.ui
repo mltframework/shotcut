@@ -343,11 +343,10 @@
    <addaction name="actionAudioMeter"/>
    <addaction name="actionProperties"/>
    <addaction name="actionRecent"/>
-   <addaction name="actionNotes"/>
    <addaction name="actionPlaylist"/>
+   <addaction name="actionFiles"/>
    <addaction name="actionTimeline"/>
    <addaction name="actionFilters"/>
-   <addaction name="actionMarkers"/>
    <addaction name="actionKeyframes"/>
    <addaction name="actionHistory"/>
    <addaction name="actionEncode"/>
@@ -1419,6 +1418,15 @@
    </property>
    <property name="text">
     <string>Pause After Seek</string>
+   </property>
+  </action>
+  <action name="actionFiles">
+   <property name="icon">
+    <iconset theme="system-file-manager" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/apps/system-file-manager.png</normaloff>:/icons/oxygen/32x32/apps/system-file-manager.png</iconset>
+   </property>
+   <property name="text">
+    <string>Files</string>
    </property>
   </action>
  </widget>

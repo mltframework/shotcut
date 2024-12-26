@@ -28,11 +28,15 @@
 #include <QScrollBar>
 #include <QSortFilterProxyModel>
 
+static const auto kPaddingPx = 10;
+static const auto kFilesSizeFactor = 1.5f;
+
 PlaylistIconView::PlaylistIconView(QWidget *parent)
     : QAbstractItemView(parent)
     , m_gridSize(170, 100)
     , m_draggingOverPos(QPoint())
     , m_itemsPerRow(3)
+    , m_iconRole(Qt::DecorationRole)
 {
     verticalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setPageStep(400);
@@ -92,7 +96,7 @@ QModelIndex PlaylistIconView::indexAt(const QPoint &point) const
 
     int row = (point.y() + verticalScrollBar()->value()) / m_gridSize.height();
     int col = (point.x() / m_gridSize.width()) % m_itemsPerRow;
-    return model()->index(row * m_itemsPerRow + col, 0);
+    return model()->index(row * m_itemsPerRow + col, 0, rootIndex());
 }
 
 QModelIndex PlaylistIconView::moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers)
@@ -161,6 +165,8 @@ void PlaylistIconView::paintEvent(QPaintEvent *)
     const auto proxy = tr("P", "The first letter or symbol of \"proxy\"");
     const auto oldFont = painter.font();
     auto boldFont(oldFont);
+
+    painter.setRenderHints(QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
     boldFont.setBold(true);
     painter.fillRect(rect(), pal.base());
 
@@ -170,11 +176,11 @@ void PlaylistIconView::paintEvent(QPaintEvent *)
     auto proxyModel = static_cast<QSortFilterProxyModel *>(model());
     QRect dragIndicator;
 
-    for (int row = 0; row <= proxyModel->rowCount() / m_itemsPerRow; row++) {
+    for (int row = 0; row <= proxyModel->rowCount(rootIndex()) / m_itemsPerRow; row++) {
         for (int col = 0; col < m_itemsPerRow; col++) {
             const int rowIdx = row * m_itemsPerRow + col;
 
-            QModelIndex idx = proxyModel->index(rowIdx, 0);
+            QModelIndex idx = proxyModel->index(rowIdx, 0, rootIndex());
             if (!idx.isValid())
                 break;
 
@@ -185,11 +191,17 @@ void PlaylistIconView::paintEvent(QPaintEvent *)
                 continue;
 
             const bool selected = selectedIndexes().contains(idx);
-            const QImage thumb = proxyModel->mapToSource(idx).data(Qt::DecorationRole).value<QImage>();
+            QImage thumb = proxyModel->mapToSource(idx).data(m_iconRole).value<QImage>();
+
+            if (m_iconRole != Qt::DecorationRole) { // Files
+                thumb = thumb.scaled(PlaylistModel::THUMBNAIL_WIDTH * kFilesSizeFactor,
+                                     PlaylistModel::THUMBNAIL_HEIGHT * kFilesSizeFactor,
+                                     Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            }
 
             QRect imageBoundingRect = itemRect;
             imageBoundingRect.setHeight(0.7 * imageBoundingRect.height());
-            imageBoundingRect.adjust(0, 10, 0, 0);
+            imageBoundingRect.adjust(0, kPaddingPx, 0, 0);
 
             QRect imageRect(QPoint(), thumb.size());
             imageRect.moveCenter(imageBoundingRect.center());
@@ -282,7 +294,7 @@ void PlaylistIconView::dropEvent(QDropEvent *event)
         index = index.sibling(index.row() + 1, index.column());
 
     const Qt::DropAction action = event->dropAction();
-    int row = (index.row() != -1) ? index.row() : model()->rowCount();
+    int row = (index.row() != -1) ? index.row() : model()->rowCount(rootIndex());
     if (model()->dropMimeData(event->mimeData(), action, row, index.column(), index))
         event->acceptProposedAction();
 
@@ -330,13 +342,16 @@ QAbstractItemView::DropIndicatorPosition PlaylistIconView::position(const QPoint
 
 void PlaylistIconView::updateSizes()
 {
-    if (!model() || !model()->rowCount()) {
+    if (!model() || !model()->rowCount(rootIndex())) {
         verticalScrollBar()->setRange(0, 0);
         return;
     }
 
     QSize size;
-    if (Settings.playlistThumbnails() == "tall")
+    if (m_iconRole != Qt::DecorationRole) // Files
+        size = QSize(PlaylistModel::THUMBNAIL_WIDTH * kFilesSizeFactor,
+                     PlaylistModel::THUMBNAIL_HEIGHT * kFilesSizeFactor);
+    else if (Settings.playlistThumbnails() == "tall")
         size = QSize(PlaylistModel::THUMBNAIL_WIDTH, PlaylistModel::THUMBNAIL_HEIGHT * 2);
     else if (Settings.playlistThumbnails() == "large")
         size = QSize(PlaylistModel::THUMBNAIL_WIDTH * 2, PlaylistModel::THUMBNAIL_HEIGHT * 2);
@@ -345,7 +360,7 @@ void PlaylistIconView::updateSizes()
     else
         size = QSize(PlaylistModel::THUMBNAIL_WIDTH, PlaylistModel::THUMBNAIL_HEIGHT);
 
-    size.setWidth(size.width() + 10);
+    size.setWidth(size.width() + kPaddingPx);
 
     m_itemsPerRow = qMax(1, viewport()->width() / size.width());
     m_gridSize = QSize(viewport()->width() / m_itemsPerRow, size.height() + 40);
@@ -354,7 +369,8 @@ void PlaylistIconView::updateSizes()
         return;
 
     verticalScrollBar()->setRange(0,
-                                  m_gridSize.height() * model()->rowCount() / m_itemsPerRow - height() + m_gridSize.height());
+                                  m_gridSize.height() * model()->rowCount(rootIndex()) / m_itemsPerRow - height() +
+                                  m_gridSize.height());
     viewport()->update();
 }
 
@@ -362,4 +378,9 @@ void PlaylistIconView::resetMultiSelect()
 {
     m_isToggleSelect = false;
     m_isRangeSelect = false;
+}
+
+void PlaylistIconView::setIconRole(int role)
+{
+    m_iconRole = role;
 }

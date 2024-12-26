@@ -48,6 +48,7 @@ signals:
     void producerChanged(Mlt::Producer *);
     void producerReopened(bool play);
     void modified();
+    void showInFiles(QString);
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -141,6 +142,7 @@ private:
 private slots:
     void reloadProducerValues();
     void on_actionBitrateViewer_triggered();
+    void on_actionShowInFiles_triggered();
 };
 
 class ProbeTask : public QObject, public QRunnable

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -341,6 +341,8 @@ void ImageProducerWidget::on_menuButton_clicked()
 {
     QMenu menu;
     if (!MLT.resource().contains("://")) // not a network stream
+        menu.addAction(ui->actionShowInFiles);
+    if (!MLT.resource().contains("://")) // not a network stream
         menu.addAction(ui->actionOpenFolder);
     menu.addAction(ui->actionCopyFullFilePath);
     menu.addAction(ui->actionSetFileDate);
@@ -468,4 +470,9 @@ void ImageProducerWidget::on_proxyButton_clicked()
     ui->actionMakeProxy->setDisabled(proxyDisabled);
     ui->actionDisableProxy->setChecked(proxyDisabled);
     menu.exec(ui->proxyButton->mapToGlobal(QPoint(0, 0)));
+}
+
+void ImageProducerWidget::on_actionShowInFiles_triggered()
+{
+    emit showInFiles(GetFilenameFromProducer(producer()));
 }

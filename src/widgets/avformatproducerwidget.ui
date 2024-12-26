@@ -1029,7 +1029,7 @@
   </layout>
   <action name="actionOpenFolder">
    <property name="text">
-    <string>Show in Folder</string>
+    <string>Show In Folder</string>
    </property>
   </action>
   <action name="actionCopyFullFilePath">
@@ -1122,6 +1122,11 @@
    </property>
    <property name="toolTip">
     <string>View Bitrate</string>
+   </property>
+  </action>
+  <action name="actionShowInFiles">
+   <property name="text">
+    <string>Show In Files</string>
    </property>
   </action>
  </widget>

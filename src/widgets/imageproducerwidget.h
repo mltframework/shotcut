@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 
 #include <QWidget>
 #include "abstractproducerwidget.h"
-#include "mltcontroller.h"
 
 namespace Ui {
 class ImageProducerWidget;
@@ -42,6 +41,7 @@ signals:
     void producerChanged(Mlt::Producer *);
     void producerReopened(bool play);
     void modified();
+    void showInFiles(QString);
 
 public slots:
     void updateDuration();
@@ -83,6 +83,8 @@ private slots:
     void on_actionCopyHashCode_triggered();
 
     void on_proxyButton_clicked();
+
+    void on_actionShowInFiles_triggered();
 
 private:
     Ui::ImageProducerWidget *ui;

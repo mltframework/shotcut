@@ -347,6 +347,17 @@ public:
     void setNotesZoom(int zoom);
     int notesZoom() const;
 
+    // Files
+    QString filesViewMode() const;
+    void setFilesViewMode(const QString &viewMode);
+    QStringList filesLocations() const;
+    QString filesLocationPath(const QString &name) const;
+    bool setFilesLocation(const QString &name, const QString &path);
+    bool removeFilesLocation(const QString &name);
+    QStringList filesOpenOther(const QString &type) const;
+    void setFilesOpenOther(const QString &type, const QString &filePath);
+    bool removeFilesOpenOther(const QString &type, const QString &filePath);
+
 public slots:
     void reset();
 
@@ -370,6 +381,7 @@ signals:
     void videoOutDurationChanged();
     void playlistThumbnailsChanged();
     void viewModeChanged();
+    void filesViewModeChanged();
     void smallIconsChanged();
     void askOutputFilterChanged();
     void timelineScrollingChanged();

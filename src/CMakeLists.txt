@@ -42,6 +42,8 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/unlinkedfilesdialog.ui
   docks/encodedock.cpp docks/encodedock.h
   docks/encodedock.ui
+  docks/filesdock.cpp docks/filesdock.h
+  docks/filesdock.ui
   docks/filtersdock.cpp docks/filtersdock.h
   docks/jobsdock.cpp docks/jobsdock.h
   docks/jobsdock.ui

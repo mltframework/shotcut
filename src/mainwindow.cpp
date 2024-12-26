@@ -72,6 +72,7 @@
 #include "widgets/timelinepropertieswidget.h"
 #include "dialogs/unlinkedfilesdialog.h"
 #include "docks/keyframesdock.h"
+#include "docks/filesdock.h"
 #include "docks/markersdock.h"
 #include "docks/notesdock.h"
 #include "docks/subtitlesdock.h"
@@ -230,6 +231,7 @@ MainWindow::MainWindow()
 
     QThreadPool::globalInstance()->setMaxThreadCount(qMin(4,
                                                           QThreadPool::globalInstance()->maxThreadCount()));
+    QThreadPool::globalInstance()->setThreadPriority(QThread::LowPriority);
     QImageReader::setAllocationLimit(1024);
 
     ProxyManager::removePending();
@@ -457,6 +459,18 @@ void MainWindow::setupAndConnectDocks()
     subMenu->addAction(Actions["playlistThumbnailsInOnlySmallAction"]);
     subMenu->addAction(Actions["playlistThumbnailsInOnlyLargeAction"]);
     ui->menuPlaylist->addAction(Actions["playlistPlayAfterOpenAction"]);
+
+    m_filesDock = new FilesDock(this);
+    m_filesDock->hide();
+    m_filesDock->toggleViewAction()->setShortcuts({QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_4), QKeySequence(Qt::Key_F10)});
+    ui->menuView->addAction(m_filesDock->toggleViewAction());
+    // connect(m_filesDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
+    connect(m_filesDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
+            SLOT(onFilesDockTriggered(bool)));
+    connect(ui->actionFiles, SIGNAL(triggered()), this, SLOT(onFilesDockTriggered()));
+    connect(m_filesDock, &FilesDock::clipOpened, this, [ = ] (const QString & url) {
+        open(url);
+    });
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
@@ -715,6 +729,7 @@ void MainWindow::setupAndConnectDocks()
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_notesDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_subtitlesDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_filesDock);
     splitDockWidget(m_timelineDock, m_markersDock, Qt::Horizontal);
     tabifyDockWidget(m_propertiesDock, m_playlistDock);
     tabifyDockWidget(m_playlistDock, m_filtersDock);
@@ -723,7 +738,8 @@ void MainWindow::setupAndConnectDocks()
     tabifyDockWidget(m_notesDock, m_subtitlesDock);
     splitDockWidget(m_recentDock, findChild<QDockWidget *>("AudioWaveformDock"), Qt::Vertical);
     splitDockWidget(audioMeterDock, m_recentDock, Qt::Horizontal);
-    tabifyDockWidget(m_recentDock, m_historyDock);
+    tabifyDockWidget(m_recentDock, m_filesDock);
+    tabifyDockWidget(m_filesDock, m_historyDock);
     tabifyDockWidget(m_historyDock, m_jobsDock);
     tabifyDockWidget(m_keyframesDock, m_timelineDock);
     m_recentDock->raise();
@@ -2907,6 +2923,12 @@ Mlt::Playlist *MainWindow::binPlaylist()
     return m_playlistDock->binPlaylist();
 }
 
+void MainWindow::showInFiles(const QString &filePath)
+{
+    onFilesDockTriggered();
+    m_filesDock->changeDirectory(filePath);
+}
+
 bool MainWindow::continueModified()
 {
     if (isWindowModified()) {
@@ -3074,6 +3096,14 @@ void MainWindow::onSubtitlesDockTriggered(bool checked)
     if (checked) {
         m_subtitlesDock->show();
         m_subtitlesDock->raise();
+    }
+}
+
+void MainWindow::onFilesDockTriggered(bool checked)
+{
+    if (checked) {
+        m_filesDock->show();
+        m_filesDock->raise();
     }
 }
 
@@ -3529,6 +3559,10 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
             connect(w, SIGNAL(modified()), m_timelineDock, SLOT(onProducerModified()));
             connect(w, SIGNAL(modified()), m_keyframesDock, SLOT(onProducerModified()));
             connect(w, SIGNAL(modified()), m_filterController, SLOT(onProducerChanged()));
+        }
+        if (-1 != w->metaObject()->indexOfSignal("showInFiles(QString)")) {
+            connect(w, SIGNAL(showInFiles(QString)), this, SLOT(onFilesDockTriggered()));
+            connect(w, SIGNAL(showInFiles(QString)), m_filesDock, SLOT(changeDirectory(QString)));
         }
         if (-1 != w->metaObject()->indexOfSlot("updateDuration()")) {
             connect(m_timelineDock, SIGNAL(durationChanged()), w, SLOT(updateDuration()));
