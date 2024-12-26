@@ -264,19 +264,9 @@ public:
         case MediaTypeRole:
             return isDir ? PlaylistModel::Other : mediaType(index);
         case ThumbnailRole: {
-            if (isDir) {
-                QImage image(64, 64, QImage::Format_ARGB32);
-                QPainter painter(&image);
-                const auto icon = QIcon::fromTheme("folder",
-                                                   QIcon(":/icons/oxygen/32x32/places/folder.png"));
-                image.fill(Qt::transparent);
-                icon.paint(&painter, image.rect());
-                return image;
-            }
-            QImage image;
             const auto path = filePath(index);
             const auto thumbnailKey = FilesThumbnailTask::cacheKey(path);
-            image = DB.getThumbnail(thumbnailKey);
+            const auto image = DB.getThumbnail(thumbnailKey);
             if (image.isNull()) {
                 ::cacheThumbnail(const_cast<FilesModel *>(this), path, image, QModelIndex());
                 if (!path.endsWith(QStringLiteral(".mlt"), Qt::CaseInsensitive))
@@ -346,9 +336,11 @@ public:
     void cacheThumbnail(const QString &filePath, QImage image, const QModelIndex &index)
     {
         if (image.isNull()) {
-            image = QImage(PlaylistModel::THUMBNAIL_WIDTH, PlaylistModel::THUMBNAIL_WIDTH,
-                           QImage::Format_ARGB32);
+            image = QImage(64, 64, QImage::Format_ARGB32);
             image.fill(Qt::transparent);
+            const auto pixmap = QFileSystemModel::data(index, Qt::DecorationRole).value<QIcon>().pixmap({16, 16}, m_dock->devicePixelRatioF());
+            QPainter painter(&image);
+            QIcon(pixmap).paint(&painter, image.rect());
         }
         auto key = FilesThumbnailTask::cacheKey(filePath);
         DB.putThumbnail(key, image);
