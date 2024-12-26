@@ -87,7 +87,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="QIcon::ThemeIcon::ListAdd" resource="../../icons/resources.qrc">
+         <iconset theme="list-add" resource="../../icons/resources.qrc">
           <normaloff>:/icons/oxygen/32x32/actions/list-add.png</normaloff>:/icons/oxygen/32x32/actions/list-add.png</iconset>
         </property>
        </widget>
@@ -107,7 +107,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="QIcon::ThemeIcon::ListRemove" resource="../../icons/resources.qrc">
+         <iconset theme="list-remove" resource="../../icons/resources.qrc">
           <normaloff>:/icons/oxygen/32x32/actions/list-remove.png</normaloff>:/icons/oxygen/32x32/actions/list-remove.png</iconset>
         </property>
        </widget>
