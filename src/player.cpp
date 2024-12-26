@@ -69,7 +69,6 @@ Player::Player(QWidget *parent)
     , m_previousOut(-1)
     , m_duration(0)
     , m_isSeekable(false)
-    , m_isMeltedPlaying(-1)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f ? 1.0f : Settings.playerZoom())
     , m_pauseAfterOpen(false)
     , m_monitorScreen(-1)
@@ -963,44 +962,6 @@ void Player::onProducerOpened(bool play)
     } else {
         pause(0);
     }
-}
-
-void Player::postProducerOpened()
-{
-    if (MLT.producer())
-        pause(MLT.producer()->position());
-}
-
-void Player::onMeltedUnitOpened()
-{
-    m_isMeltedPlaying = -1; // unknown
-    m_duration = MLT.producer()->get_length();
-    m_isSeekable = true;
-    MLT.producer()->set("ignore_points", 1);
-    m_scrubber->setFramerate(MLT.profile().fps());
-    m_scrubber->setScale(m_duration);
-    m_scrubber->setMarkers(QList<int>());
-    m_inPointLabel->setText(blankTime());
-    m_selectedLabel->setText(blankTime());
-    m_durationLabel->setText(QString(MLT.producer()->get_length_time(Settings.timeFormat())));
-    MLT.producer()->get_length_time(mlt_time_clock);
-    m_previousIn = MLT.producer()->get_in();
-    m_scrubber->setEnabled(true);
-    m_scrubber->setInPoint(m_previousIn);
-    m_previousOut = MLT.producer()->get_out();
-    m_scrubber->setOutPoint(m_previousOut);
-    m_positionSpinner->setEnabled(m_isSeekable);
-    setVolume(m_volumeSlider->value());
-    m_savedVolume = MLT.volume();
-    onMuteButtonToggled(Settings.playerMuted());
-    Actions["playerPlayPauseAction"]->setEnabled(true);
-    Actions["playerSkipPreviousAction"]->setEnabled(m_isSeekable);
-    Actions["playerSkipNextAction"]->setEnabled(m_isSeekable);
-    Actions["playerRewindAction"]->setEnabled(m_isSeekable);
-    Actions["playerFastForwardAction"]->setEnabled(m_isSeekable);
-    setIn(-1);
-    setOut(-1);
-    setFocus();
 }
 
 void Player::onDurationChanged()

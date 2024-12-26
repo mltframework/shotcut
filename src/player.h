@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2024 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,8 +102,6 @@ public slots:
     void seek(int position);
     void reset();
     void onProducerOpened(bool play = true);
-    void postProducerOpened();
-    void onMeltedUnitOpened();
     void onDurationChanged();
     void onFrameDisplayed(const SharedFrame &frame);
     void onVolumeChanged(int);
@@ -152,7 +150,6 @@ private:
     double m_savedVolume;
     int m_duration;
     bool m_isSeekable;
-    int m_isMeltedPlaying;
     QScrollBar *m_horizontalScroll;
     QScrollBar *m_verticalScroll;
     QToolButton *m_zoomButton;
