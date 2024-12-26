@@ -510,17 +510,23 @@ FilesDock::FilesDock(QWidget *parent)
     ui->locationsCombo->addItem(tr("Movies",
                                    "The system-provided videos folder called Movies on macOS"),
                                 QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
-#else
-    ui->locationsCombo->addItem(tr("Videos"),
-                                QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
 #endif
     ui->locationsCombo->addItem(tr("Music"),
                                 QStandardPaths::standardLocations(QStandardPaths::MusicLocation).first());
     ui->locationsCombo->addItem(tr("Pictures", "The system-provided photos folder"),
                                 QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
+#if defined(Q_OS_MAC)
+    ui->locationsCombo->addItem(tr("Volumes",
+                                "The macOS file system location where external drives and network shares are mounted"),
+                                "/Volumes");
+#else
+    ui->locationsCombo->addItem(tr("Videos"),
+                                QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
+#endif
     ui->removeLocationButton->setDisabled(true);
+    auto n = ui->locationsCombo->count();
     connect(ui->locationsCombo, &QComboBox::currentIndexChanged, this, [ = ](int index) {
-        ui->removeLocationButton->setEnabled(index > 5);
+        ui->removeLocationButton->setEnabled(index >= n);
     });
 
     // Add from Settings
