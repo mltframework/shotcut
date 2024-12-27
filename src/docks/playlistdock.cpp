@@ -787,7 +787,7 @@ void PlaylistDock::setupActions()
     connect(action, &QAction::triggered, m_selectionModel, [ = ]() {
         raise();
         moveClipUp();
-        decrementIndex();
+        incrementIndex(-1);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
@@ -799,7 +799,7 @@ void PlaylistDock::setupActions()
     connect(action, &QAction::triggered, m_selectionModel, [ = ]() {
         raise();
         moveClipDown();
-        incrementIndex();
+        incrementIndex(1);
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
         action->setEnabled(m_view->currentIndex().isValid() && m_model.playlist());
@@ -924,7 +924,7 @@ void PlaylistDock::setupActions()
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
         raise();
-        decrementIndex();
+        incrementIndex(-1);
         onOpenActionTriggered();
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
@@ -937,7 +937,7 @@ void PlaylistDock::setupActions()
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [ = ]() {
         raise();
-        incrementIndex();
+        incrementIndex(1);
         onOpenActionTriggered();
     });
     connect(this, &PlaylistDock::selectionChanged, action, [ = ]() {
@@ -1285,26 +1285,16 @@ Mlt::Playlist *PlaylistDock::binPlaylist()
     return &m_binPlaylist;
 }
 
-void PlaylistDock::incrementIndex()
+void PlaylistDock::incrementIndex(int step)
 {
-    QModelIndex index = m_proxyModel->mapToSource(m_view->currentIndex());
+    QModelIndex index = m_view->currentIndex();
     if (!index.isValid())
         index = m_model.createIndex(0, 0);
-    else
-        index = m_model.incrementIndex(index);
-    if (index.isValid())
+    if (index.isValid()) {
+        auto row = qBound(0, index.row() + step, m_proxyModel->rowCount(index.parent()) - 1);
+        index = m_proxyModel->index(row, index.column(), index.parent());
         m_view->setCurrentIndex(index);
-}
-
-void PlaylistDock::decrementIndex()
-{
-    QModelIndex index = m_proxyModel->mapToSource(m_view->currentIndex());
-    if (!index.isValid())
-        index = m_model.createIndex(0, 0);
-    else
-        index = m_model.decrementIndex(index);
-    if (index.isValid())
-        m_view->setCurrentIndex(index);
+    }
 }
 
 void PlaylistDock::setIndex(int row)
@@ -1675,15 +1665,16 @@ void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
 void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
 {
     if (!m_model.playlist()) return;
-    auto index2 = m_proxyModel->mapToSource(index);
-    Mlt::ClipInfo *i = m_model.playlist()->clip_info(index2.row());
+    auto sourceIndex = m_proxyModel->mapToSource(index);
+    Mlt::ClipInfo *i = m_model.playlist()->clip_info(sourceIndex.row());
     if (i) {
         if (qApp->keyboardModifiers() == Qt::ShiftModifier) {
             emit itemActivated(i->start);
         } else {
             Mlt::Producer *p = new Mlt::Producer(i->producer);
             p->set_in_and_out(i->frame_in, i->frame_out);
-            setPlaylistIndex(p, index2.row());
+            setPlaylistIndex(p, sourceIndex.row());
+            setIndex(sourceIndex.row());
             emit clipOpened(p, Settings.playlistAutoplay());
         }
         delete i;

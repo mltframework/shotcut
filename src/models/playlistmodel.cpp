@@ -663,22 +663,6 @@ Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaults;
 }
 
-QModelIndex PlaylistModel::incrementIndex(const QModelIndex &index) const
-{
-    if (index.row() + 1 < rowCount())
-        return createIndex(index.row() + 1, index.column());
-    else
-        return QModelIndex();
-}
-
-QModelIndex PlaylistModel::decrementIndex(const QModelIndex &index) const
-{
-    if (index.row() > 0)
-        return createIndex(index.row() - 1, index.column());
-    else
-        return QModelIndex();
-}
-
 QModelIndex PlaylistModel::createIndex(int row, int column) const
 {
     return QAbstractTableModel::createIndex(row, column);

@@ -124,8 +124,7 @@ private:
     void onInsertCutActionTriggered();
     void onUpdateActionTriggered();
     void onRemoveActionTriggered();
-    void incrementIndex();
-    void decrementIndex();
+    void incrementIndex(int step);
     void setIndex(int row);
     void moveClipUp();
     void moveClipDown();
