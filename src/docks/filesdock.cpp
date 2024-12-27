@@ -337,6 +337,7 @@ public:
 
     void cacheThumbnail(const QString &filePath, QImage &image, const QModelIndex &index)
     {
+        bool updateModel = !image.isNull();
         if (image.isNull()) {
             image = QImage(64, 64, QImage::Format_ARGB32);
             image.fill(Qt::transparent);
@@ -350,7 +351,7 @@ public:
         }
         auto key = FilesThumbnailTask::cacheKey(filePath);
         DB.putThumbnail(key, image);
-        if (index.isValid())
+        if (updateModel)
             emit dataChanged(index, index);
     }
 };
