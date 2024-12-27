@@ -125,7 +125,7 @@ static const QSet<QString> kVideoExtensions {
 
 static void cacheMediaType(FilesModel *model, const QString &filePath, int mediaType,
                            const QModelIndex &index);
-static void cacheThumbnail(FilesModel *model, const QString &filePath, const QImage &image,
+static void cacheThumbnail(FilesModel *model, const QString &filePath, QImage &image,
                            const QModelIndex &index);
 
 class FilesMediaTypeTask : public QRunnable
@@ -222,7 +222,9 @@ public:
             auto height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
             image = MLT.image(producer, 0, width, height);
         }
-        cacheThumbnail(m_model, m_filePath, image, m_index);
+        if (!image.isNull()) {
+            cacheThumbnail(m_model, m_filePath, image, m_index);
+        }
     }
 };
 
@@ -266,9 +268,9 @@ public:
         case ThumbnailRole: {
             const auto path = filePath(index);
             const auto thumbnailKey = FilesThumbnailTask::cacheKey(path);
-            const auto image = DB.getThumbnail(thumbnailKey);
+            auto image = DB.getThumbnail(thumbnailKey);
             if (image.isNull()) {
-                ::cacheThumbnail(const_cast<FilesModel *>(this), path, image, QModelIndex());
+                ::cacheThumbnail(const_cast<FilesModel *>(this), path, image, index);
                 if (!path.endsWith(QStringLiteral(".mlt"), Qt::CaseInsensitive))
                     QThreadPool::globalInstance()->start(
                         new FilesThumbnailTask(const_cast<FilesModel *>(this), path, index));
@@ -333,15 +335,18 @@ public:
         emit dataChanged(index, index);
     }
 
-    void cacheThumbnail(const QString &filePath, QImage image, const QModelIndex &index)
+    void cacheThumbnail(const QString &filePath, QImage &image, const QModelIndex &index)
     {
         if (image.isNull()) {
             image = QImage(64, 64, QImage::Format_ARGB32);
             image.fill(Qt::transparent);
-            const auto pixmap = QFileSystemModel::data(index, Qt::DecorationRole).value<QIcon>().pixmap({16, 16},
-                                                                                                        m_dock->devicePixelRatioF());
-            QPainter painter(&image);
-            QIcon(pixmap).paint(&painter, image.rect());
+            if (index.isValid()) {
+                const auto pixmap = QFileSystemModel::data(index,
+                                                           Qt::DecorationRole).value<QIcon>().pixmap({16, 16},
+                                                                                                     m_dock->devicePixelRatioF());
+                QPainter painter(&image);
+                QIcon(pixmap).paint(&painter, image.rect());
+            }
         }
         auto key = FilesThumbnailTask::cacheKey(filePath);
         DB.putThumbnail(key, image);
@@ -356,7 +361,7 @@ static void cacheMediaType(FilesModel *model, const QString &filePath, int media
     model->cacheMediaType(filePath, mediaType, index);
 }
 
-static void cacheThumbnail(FilesModel *model, const QString &filePath, const QImage &image,
+static void cacheThumbnail(FilesModel *model, const QString &filePath, QImage &image,
                            const QModelIndex &index)
 {
     model->cacheThumbnail(filePath, image, index);
