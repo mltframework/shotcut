@@ -607,12 +607,12 @@ FilesDock::FilesDock(QWidget *parent)
     menuButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
     menuButton->setMenu(m_mainMenu);
     toolbar->addWidget(menuButton);
-    toolbar->addAction(Actions["filesGoUp"]);
     toolbar->addSeparator();
     toolbar->addAction(Actions["filesViewDetailsAction"]);
     toolbar->addAction(Actions["filesViewTilesAction"]);
     toolbar->addAction(Actions["filesViewIconsAction"]);
     toolbar->addSeparator();
+    toolbar->addAction(Actions["filesGoUp"]);
     ui->verticalLayout->addWidget(toolbar);
     ui->verticalLayout->addSpacing(2);
 
@@ -674,6 +674,7 @@ FilesDock::FilesDock(QWidget *parent)
         if (m_filesModel->isDir(sourceIndex)) {
             m_filesModel->setRootPath(filePath);
             m_view->setRootIndex(index);
+            m_view->setCurrentIndex(QModelIndex());
             m_view->scrollToTop();
             const auto dirsIndex = m_dirsModel.index(filePath);
             ui->treeView->setExpanded(dirsIndex, true);
@@ -681,7 +682,7 @@ FilesDock::FilesDock(QWidget *parent)
             ui->treeView->setCurrentIndex(dirsIndex);
             return;
         }
-        m_view->setCurrentIndex(index);
+        m_selectionModel->setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
         emit clipOpened(filePath);
     });
     connect(ui->tableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged,
@@ -785,8 +786,8 @@ void FilesDock::setupActions()
     action->setToolTip(tr("Open the clip in the Source player"));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &FilesDock::onOpenActionTriggered);
-    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_view->currentIndex().isValid());
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+        action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesOpenAction", action);
 
@@ -804,23 +805,23 @@ void FilesDock::setupActions()
 #endif
         QDesktopServices::openUrl({scheme + filePath, QUrl::TolerantMode});
     });
-    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_view->currentIndex().isValid());
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+        action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesOpenDefaultAction", action);
 
     action = new QAction(tr("Other..."), this);
     action->setEnabled(false);
-    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_view->currentIndex().isValid());
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+        action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     connect(action, &QAction::triggered, this, &FilesDock::onOpenOtherAdd);
     Actions.add("filesOpenWithOtherAction", action);
 
     action = new QAction(tr("Remove..."), this);
     action->setEnabled(false);
-    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_view->currentIndex().isValid());
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+        action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     connect(action, &QAction::triggered, this, &FilesDock::onOpenOtherRemove);
     Actions.add("filesOpenWithRemoveAction", action);
@@ -838,25 +839,30 @@ void FilesDock::setupActions()
     action = new QAction(tr("Update Thumbnails"), this);
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &FilesDock::onUpdateThumbnailsActionTriggered);
-    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_filesProxyModel->rowCount() > 0);
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+        action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesUpdateThumbnailsAction", action);
 
     action = new QAction(tr("Select All"), this);
     // action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_A));
     connect(action, &QAction::triggered, this, &FilesDock::onSelectAllActionTriggered);
-    action->setEnabled(m_filesProxyModel->rowCount() > 0);
+    connect(m_filesProxyModel, &QAbstractItemModel::rowsInserted, this, [ = ]() {
+        action->setEnabled(m_filesProxyModel->rowCount() > 0);
+    });
+    connect(m_filesProxyModel, &QAbstractItemModel::rowsRemoved, this, [ = ]() {
+        action->setEnabled(m_filesProxyModel->rowCount() > 0);
+    });
     Actions.add("filesSelectAllAction", action);
 
     action = new QAction(tr("Select None"), this);
     // action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_D));
     connect(action, &QAction::triggered, this, [ = ]() {
-        m_view->setCurrentIndex({});
+        m_view->setCurrentIndex(QModelIndex());
         m_selectionModel->clearSelection();
     });
-    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_selectionModel->selection().size() > 0);
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+        action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesSelectNoneAction", action);
 
@@ -866,10 +872,9 @@ void FilesDock::setupActions()
     connect(action, &QAction::triggered, this, [ = ]() {
         raise();
         incrementIndex(-1);
-        onOpenActionTriggered();
     });
-    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_view->currentIndex().isValid());
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+        action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesOpenPreviousAction", action);
 
@@ -879,10 +884,9 @@ void FilesDock::setupActions()
     connect(action, &QAction::triggered, this, [ = ]() {
         raise();
         incrementIndex(1);
-        onOpenActionTriggered();
     });
-    connect(this, &FilesDock::selectionChanged, action, [ = ]() {
-        action->setEnabled(m_view->currentIndex().isValid());
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+        action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesOpenNextAction", action);
 
@@ -955,7 +959,7 @@ void FilesDock::incrementIndex(int step)
     if (index.isValid()) {
         auto row = qBound(0, index.row() + step, m_filesProxyModel->rowCount(index.parent()) - 1);
         index = m_filesProxyModel->index(row, index.column(), index.parent());
-        m_view->setCurrentIndex(index);
+        emit m_view->activated(index);
     }
 }
 
