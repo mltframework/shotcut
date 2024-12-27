@@ -90,7 +90,7 @@ private:
     Ui::FilesDock *ui;
     QAbstractItemView *m_view;
     PlaylistIconView *m_iconsView;
-    QFileSystemModel m_dirsModel;
+    std::unique_ptr<QFileSystemModel> m_dirsModel;
     FilesModel *m_filesModel;
     QItemSelectionModel *m_selectionModel;
     QMenu *m_mainMenu;

@@ -551,22 +551,23 @@ FilesDock::FilesDock(QWidget *parent)
     connect(m_selectionModel, &QItemSelectionModel::selectionChanged, this,
             &FilesDock::selectionChanged);
 
-    m_dirsModel.setReadOnly(true);
-    m_dirsModel.setRootPath(QString());
-    m_dirsModel.setOption(QFileSystemModel::DontUseCustomDirectoryIcons);
-    m_dirsModel.setOption(QFileSystemModel::DontWatchForChanges);
-    m_dirsModel.setFilter(QDir::Drives | QDir::Dirs | QDir::NoDotAndDotDot);
+    m_dirsModel.reset(new QFileSystemModel);
+    m_dirsModel->setReadOnly(true);
+    m_dirsModel->setRootPath(QString());
+    m_dirsModel->setOption(QFileSystemModel::DontUseCustomDirectoryIcons);
+    m_dirsModel->setOption(QFileSystemModel::DontWatchForChanges);
+    m_dirsModel->setFilter(QDir::Drives | QDir::Dirs | QDir::NoDotAndDotDot);
 
     const int width = qRound(kTreeViewWidthPx * devicePixelRatio());
     ui->splitter->setSizes({width, this->width() - width});
     ui->splitter->setStretchFactor(0, 0);
     ui->splitter->setStretchFactor(1, 1);
-    ui->treeView->setModel(&m_dirsModel);
+    ui->treeView->setModel(m_dirsModel.get());
     ui->treeView->setSelectionMode(QAbstractItemView::SingleSelection);
-    for (int i = 1; i < m_dirsModel.columnCount(); ++i)
+    for (int i = 1; i < m_dirsModel->columnCount(); ++i)
         ui->treeView->hideColumn(i);
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
-    const auto homeIndex = m_dirsModel.index(home);
+    const auto homeIndex = m_dirsModel->index(home);
     ui->treeView->setExpanded(homeIndex, true);
     ui->treeView->scrollTo(homeIndex);
     ui->treeView->setCurrentIndex(homeIndex);
@@ -575,7 +576,7 @@ FilesDock::FilesDock(QWidget *parent)
         menu.exec(mapToGlobal(pos));
     });
     connect(ui->treeView, &QAbstractItemView::clicked, this, [ = ](const QModelIndex & index) {
-        auto filePath = m_dirsModel.filePath(index);
+        auto filePath = m_dirsModel->filePath(index);
         LOG_DEBUG() << "clicked" << filePath;
         auto sourceIndex = m_filesModel->setRootPath(filePath);
         m_view->setRootIndex(m_filesProxyModel->mapFromSource(sourceIndex));
@@ -591,7 +592,7 @@ FilesDock::FilesDock(QWidget *parent)
     m_mainMenu->addAction(Actions["filesOpenNextAction"]);
     m_mainMenu->addAction(Actions["filesUpdateThumbnailsAction"]);
     m_mainMenu->addAction(Actions["filesShowInFolder"]);
-    m_mainMenu->addSeparator();
+    m_mainMenu->addAction(Actions["filesRefreshFolders"]);
     QMenu *selectMenu = m_mainMenu->addMenu(tr("Select"));
     selectMenu->addAction(Actions["filesSelectAllAction"]);
     selectMenu->addAction(Actions["filesSelectNoneAction"]);
@@ -676,7 +677,7 @@ FilesDock::FilesDock(QWidget *parent)
             m_view->setRootIndex(index);
             m_view->setCurrentIndex(QModelIndex());
             m_view->scrollToTop();
-            const auto dirsIndex = m_dirsModel.index(filePath);
+            const auto dirsIndex = m_dirsModel->index(filePath);
             ui->treeView->setExpanded(dirsIndex, true);
             ui->treeView->scrollTo(dirsIndex);
             ui->treeView->setCurrentIndex(dirsIndex);
@@ -943,12 +944,34 @@ void FilesDock::setupActions()
         const auto index = m_filesModel->setRootPath(filePath);
         m_view->setRootIndex(m_filesProxyModel->mapFromSource(index));
         m_view->scrollToTop();
-        const auto dirsIndex = m_dirsModel.index(filePath);
+        const auto dirsIndex = m_dirsModel->index(filePath);
         ui->treeView->setExpanded(dirsIndex, true);
         ui->treeView->scrollTo(dirsIndex);
         ui->treeView->setCurrentIndex(dirsIndex);
     });
     Actions.add("filesGoUp", action);
+
+    action = new QAction(tr("Refresh Folders"), this);
+    icon = QIcon::fromTheme("view-refresh",
+                            QIcon(":/icons/oxygen/32x32/actions/view-refresh.png"));
+    action->setIcon(icon);
+    connect(action, &QAction::triggered, this, [ = ]() {
+        const auto cd = m_dirsModel->filePath(ui->treeView->currentIndex());
+        m_dirsModel.reset(new QFileSystemModel);
+        m_dirsModel->setReadOnly(true);
+        m_dirsModel->setRootPath(QString());
+        m_dirsModel->setOption(QFileSystemModel::DontUseCustomDirectoryIcons);
+        m_dirsModel->setOption(QFileSystemModel::DontWatchForChanges);
+        m_dirsModel->setFilter(QDir::Drives | QDir::Dirs | QDir::NoDotAndDotDot);
+        ui->treeView->setModel(m_dirsModel.get());
+        for (int i = 1; i < m_dirsModel->columnCount(); ++i)
+            ui->treeView->hideColumn(i);
+        const auto index = m_dirsModel->index(cd);
+        ui->treeView->setExpanded(index, true);
+        ui->treeView->scrollTo(index);
+        ui->treeView->setCurrentIndex(index);
+    });
+    Actions.add("filesRefreshFolders", action);
 }
 
 void FilesDock::incrementIndex(int step)
@@ -1038,7 +1061,7 @@ void FilesDock::changeDirectory(const QString &filePath)
     LOG_DEBUG() << filePath;
     QFileInfo info(filePath);
     auto path = info.isDir() ? filePath : info.path();
-    auto index = m_dirsModel.index(path);
+    auto index = m_dirsModel->index(path);
     ui->treeView->setExpanded(index, true);
     ui->treeView->scrollTo(index);
     ui->treeView->setCurrentIndex(index);
@@ -1108,7 +1131,7 @@ void FilesDock::keyPressEvent(QKeyEvent *event)
                     m_filesModel->setRootPath(filePath);
                     m_view->setRootIndex(index);
                     m_view->scrollToTop();
-                    const auto dirsIndex = m_dirsModel.index(filePath);
+                    const auto dirsIndex = m_dirsModel->index(filePath);
                     ui->treeView->setExpanded(dirsIndex, true);
                     ui->treeView->scrollTo(dirsIndex);
                     ui->treeView->setCurrentIndex(dirsIndex);

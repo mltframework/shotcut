@@ -426,5 +426,8 @@
         <file>oxygen/32x32/apps/system-file-manager.png</file>
         <file>light/32x32/system-file-manager.png</file>
         <file>dark/32x32/system-file-manager.png</file>
+        <file>oxygen/32x32/actions/view-refresh.png</file>
+        <file>light/32x32/view-refresh.png</file>
+        <file>dark/32x32/view-refresh.png</file>
     </qresource>
 </RCC>
