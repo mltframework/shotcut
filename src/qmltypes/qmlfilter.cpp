@@ -900,6 +900,18 @@ mlt_keyframe_type QmlFilter::getKeyframeType(Mlt::Animation &animation, int posi
     return result;
 }
 
+int QmlFilter::getKeyFrameType(const QString &name, int keyIndex)
+{
+    Mlt::Animation animation = getAnimation(name);
+    return (int)animation.key_get_type(keyIndex);
+}
+
+void QmlFilter::setKeyFrameType(const QString &name, int keyIndex, int type)
+{
+    Mlt::Animation animation = getAnimation(name);
+    animation.key_set_type(keyIndex, (mlt_keyframe_type)type);
+}
+
 int QmlFilter::getNextKeyframePosition(const QString &name, int position)
 {
     int result = -1;

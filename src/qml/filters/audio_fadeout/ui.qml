@@ -27,14 +27,19 @@ Item {
         filter.resetProperty('level');
         filter.set('level', 0, Math.max(filter.duration - duration, 0));
         filter.set('level', -60, filter.duration - 1);
+        filter.setKeyFrameType('level', 0, curveCombo.currentValue);
     }
 
     width: 100
     height: 50
     objectName: 'fadeOut'
     Component.onCompleted: {
+        _blockUpdate = true;
         if (filter.isNew) {
             duration = Math.ceil(settings.audioOutDuration * profile.fps);
+            filter.animateOut = duration;
+            curveCombo.setCurrentValue(settings.audioOutCurve);
+            updateFilter();
         } else if (filter.animateOut === 0) {
             // Convert legacy filter.
             duration = filter.duration;
@@ -43,6 +48,8 @@ Item {
         } else {
             duration = filter.animateOut;
         }
+        curveCombo.setCurrentValue(filter.getKeyFrameType('level', 0));
+        _blockUpdate = false;
     }
 
     Connections {
@@ -55,36 +62,80 @@ Item {
         target: filter
     }
 
-    ColumnLayout {
+    GridLayout {
         anchors.fill: parent
-        anchors.margins: 8
+        columns: 5
 
-        RowLayout {
-            Label {
-                id: durationLabel
-                text: qsTr('Duration')
+        Label {
+            id: durationLabel
+
+            text: qsTr('Duration')
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Shotcut.TimeSpinner {
+            id: timeSpinner
+
+            undoButtonVisible: false
+            saveButtonVisible: false
+            minimumValue: 2
+            maximumValue: 5000
+            onValueChanged: {
+                if (_blockUpdate)
+                    return;
+                filter.startUndoParameterCommand(durationLabel.text);
+                filter.animateOut = duration;
+                updateFilter();
+                filter.endUndoCommand();
             }
+        }
 
-            Shotcut.TimeSpinner {
-                id: timeSpinner
+        Shotcut.UndoButton {
+            onClicked: duration = Math.ceil(settings.audioOutDuration * profile.fps)
+        }
 
-                minimumValue: 2
-                maximumValue: 5000
-                onValueChanged: {
-                    if (_blockUpdate)
-                        return;
-                    filter.startUndoParameterCommand(durationLabel.text);
-                    filter.animateOut = duration;
-                    updateFilter();
-                    filter.endUndoCommand();
-                }
-                onSetDefaultClicked: {
-                    duration = Math.ceil(settings.audioOutDuration * profile.fps);
-                }
-                onSaveDefaultClicked: {
-                    settings.audioOutDuration = duration / profile.fps;
-                }
+        Shotcut.SaveDefaultButton {
+            onClicked: settings.audioOutDuration = duration / profile.fps
+        }
+
+        Item {
+            Layout.fillWidth: true
+        }
+
+        Label {
+            id: curveLabel
+
+            text: qsTr('Curve')
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Shotcut.CurveComboBox {
+            id: curveCombo
+
+            implicitContentWidthPolicy: ComboBox.WidestText
+            onActivated: {
+                if (_blockUpdate)
+                    return;
+                filter.startUndoParameterCommand(curveLabel.text);
+                filter.setKeyFrameType('level', 0, curveCombo.currentValue);
+                filter.endUndoCommand();
             }
+        }
+
+        Shotcut.UndoButton {
+            id: undoButton
+
+            onClicked: curveCombo.setCurrentValue(settings.audioOutCurve)
+        }
+
+        Shotcut.SaveDefaultButton {
+            id: saveButton
+
+            onClicked: settings.audioOutCurve = curveCombo.currentValue
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
 
         Item {

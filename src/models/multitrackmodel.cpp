@@ -1497,6 +1497,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                 filter.reset(getFilter("fadeInVolume", info->producer));
 
                 if (duration > 0) {
+                    mlt_keyframe_type type = (mlt_keyframe_type)Settings.audioInCurve();
                     // Add audio filter if needed.
                     if (!filter) {
                         Mlt::Filter f(MLT.profile(), "volume");
@@ -1504,12 +1505,19 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                         filter->set_in_and_out(info->frame_in, info->frame_out);
+                    } else {
+                        Mlt::Animation animation(filter->get_animation("level"));
+                        if (animation.is_valid()) {
+                            type = animation.key_get_type(0);
+                        }
                     }
 
                     // Adjust audio filter.
                     filter->clear("level");
                     filter->anim_set("level", -60, 0);
                     filter->anim_set("level", 0, duration - 1);
+                    Mlt::Animation animation(filter->get_animation("level"));
+                    animation.key_set_type(0, type);
                     filter->set(kShotcutAnimInProperty, duration);
                     isChanged = true;
                 } else if (filter) {
@@ -1614,6 +1622,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                 filter.reset(getFilter("fadeOutVolume", info->producer));
 
                 if (duration > 0) {
+                    mlt_keyframe_type type = (mlt_keyframe_type)Settings.audioOutCurve();
                     // Add audio filter if needed.
                     if (!filter) {
                         Mlt::Filter f(MLT.profile(), "volume");
@@ -1621,12 +1630,19 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                         filter->set_in_and_out(info->frame_in, info->frame_out);
+                    } else {
+                        Mlt::Animation animation(filter->get_animation("level"));
+                        if (animation.is_valid()) {
+                            type = animation.key_get_type(0);
+                        }
                     }
 
                     // Adjust audio filter.
                     filter->clear("level");
                     filter->anim_set("level", 0, info->frame_count - duration);
                     filter->anim_set("level", -60, info->frame_count - 1);
+                    Mlt::Animation animation(filter->get_animation("level"));
+                    animation.key_set_type(0, type);
                     filter->set(kShotcutAnimOutProperty, duration);
                     isChanged = true;
                 } else if (filter) {
