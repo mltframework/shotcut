@@ -105,7 +105,7 @@ Item {
         Label {
             id: curveLabel
 
-            text: qsTr('Curve')
+            text: qsTr('Type')
             Layout.alignment: Qt.AlignRight
         }
 

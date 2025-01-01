@@ -33,84 +33,20 @@ Shotcut.ComboBox {
     model: ListModel {
         id: curveModel
         ListElement {
-            text: qsTr('Linear')
+            text: qsTr('Natural')
             value: 1
         }
         ListElement {
-            text: qsTr('Smooth')
-            value: 4
-        }
-        ListElement {
-            text: qsTr('Ease In Sinusoidal')
-            value: 5
-        }
-        ListElement {
-            text: qsTr('Ease Out Sinusoidal')
-            value: 6
-        }
-        ListElement {
-            text: qsTr('Ease In/Out Sinusoidal')
-            value: 7
-        }
-        ListElement {
-            text: qsTr('Ease In Quadratic')
-            value: 8
-        }
-        ListElement {
-            text: qsTr('Ease Out Quadratic')
-            value: 9
-        }
-        ListElement {
-            text: qsTr('Ease In/Out Quadratic')
-            value: 10
-        }
-        ListElement {
-            text: qsTr('Ease In Cubic')
-            value: 11
-        }
-        ListElement {
-            text: qsTr('Ease Out Cubic')
-            value: 12
-        }
-        ListElement {
-            text: qsTr('Ease In/Out Cubic')
-            value: 13
-        }
-        ListElement {
-            text: qsTr('Ease In Quartic')
-            value: 14
-        }
-        ListElement {
-            text: qsTr('Ease Out Quartic')
-            value: 15
-        }
-        ListElement {
-            text: qsTr('Ease In/Out Quartic')
+            text: qsTr('S-Curve')
             value: 16
         }
         ListElement {
-            text: qsTr('Ease In Exponential')
-            value: 17
+            text: qsTr('Fast-Slow')
+            value: 15
         }
         ListElement {
-            text: qsTr('Ease Out Exponential')
-            value: 18
-        }
-        ListElement {
-            text: qsTr('Ease In/Out Exponential')
-            value: 19
-        }
-        ListElement {
-            text: qsTr('Ease In Circular')
-            value: 20
-        }
-        ListElement {
-            text: qsTr('Ease Out Circular')
-            value: 21
-        }
-        ListElement {
-            text: qsTr('Ease In/Out Circular')
-            value: 22
+            text: qsTr('Slow-Fast')
+            value: 14
         }
     }
 
