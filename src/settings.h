@@ -62,6 +62,10 @@ class ShotcutSettings : public QObject
                videoInDurationChanged)
     Q_PROPERTY(double videoOutDuration READ videoOutDuration WRITE setVideoOutDuration NOTIFY
                videoOutDurationChanged)
+    Q_PROPERTY(double audioInCurve READ audioInCurve WRITE setAudioInCurve NOTIFY
+               audioInCurveChanged)
+    Q_PROPERTY(double audioOutCurve READ audioOutCurve WRITE setAudioOutCurve NOTIFY
+               audioOutCurveChanged)
     Q_PROPERTY(bool smallIcons READ smallIcons WRITE setSmallIcons NOTIFY smallIconsChanged)
     Q_PROPERTY(bool askOutputFilter READ askOutputFilter WRITE setAskOutputFilter NOTIFY
                askOutputFilterChanged)
@@ -236,6 +240,10 @@ public:
     void setVideoInDuration(double);
     double videoOutDuration() const;
     void setVideoOutDuration(double);
+    int audioInCurve() const;
+    void setAudioInCurve(int);
+    int audioOutCurve() const;
+    void setAudioOutCurve(int);
     bool askOutputFilter() const;
     void setAskOutputFilter(bool);
 
@@ -379,6 +387,8 @@ signals:
     void audioOutDurationChanged();
     void videoInDurationChanged();
     void videoOutDurationChanged();
+    void audioInCurveChanged();
+    void audioOutCurveChanged();
     void playlistThumbnailsChanged();
     void viewModeChanged();
     void filesViewModeChanged();

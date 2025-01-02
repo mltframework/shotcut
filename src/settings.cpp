@@ -976,6 +976,28 @@ void ShotcutSettings::setVideoOutDuration(double d)
     emit videoOutDurationChanged();
 }
 
+int ShotcutSettings::audioInCurve() const
+{
+    return settings.value("filter/audioInCurve", mlt_keyframe_linear).toInt();
+}
+
+void ShotcutSettings::setAudioInCurve(int c)
+{
+    settings.setValue("filter/audioInCurve", c);
+    emit audioInCurveChanged();
+}
+
+int ShotcutSettings::audioOutCurve() const
+{
+    return settings.value("filter/audioOutCurve", mlt_keyframe_linear).toInt();
+}
+
+void ShotcutSettings::setAudioOutCurve(int c)
+{
+    settings.setValue("filter/audioOutCurve", c);
+    emit audioOutCurveChanged();
+}
+
 bool ShotcutSettings::askOutputFilter() const
 {
     return settings.value("filter/askOutput", true).toBool();
