@@ -193,6 +193,11 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
             args << "-init_hw_device" << "vaapi=vaapi0:" << "-filter_hw_device" << "vaapi0";
             args << "-codec:v" << "hevc_vaapi";
             args << "-qp" << "37";
+        } else if (hwCodecs.contains("hevc_mf")) {
+            args << "-codec:v" << "hevc_mf";
+            args << "-rate_control" << "quality";
+            args << "-quality" << "27";
+            args << "-hw_encoding" << "true" << "-pix_fmt" << "nv12";
         } else if (hwCodecs.contains("h264_nvenc")) {
             args << "-codec:v" << "h264_nvenc";
             args << "-rc" << "constqp";
@@ -224,6 +229,11 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
             args << "-codec:v" << "h264_amf";
             args << "-rc" << "1";
             args << "-qp_i" << "32" << "-qp_p" << "32";
+        } else if (hwCodecs.contains("h264_mf")) {
+            args << "-codec:v" << "h264_mf";
+            args << "-rate_control" << "quality";
+            args << "-quality" << "41";
+            args << "-hw_encoding" << "true" << "-pix_fmt" << "nv12";
         }
     }
     if (!args.contains("-codec:v")) {

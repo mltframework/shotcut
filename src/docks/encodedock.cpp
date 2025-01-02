@@ -16,7 +16,6 @@
  */
 
 #include "encodedock.h"
-#include "docks/timelinedock.h"
 #include "ui_encodedock.h"
 #include "dialogs/addencodepresetdialog.h"
 #include "dialogs/multifileexportdialog.h"
@@ -404,8 +403,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         if (vcodec.startsWith("libx264") || vcodec == "libx265" || vcodec.contains("nvenc")
                 || vcodec.endsWith("_amf") || vcodec.endsWith("_vaapi")) {
             // 0 (best, 100%) - 51 (worst)
-            const auto qmax = QString::fromLatin1(preset.get("vcodec")) == "libsvtav1" ? 63 : 51;
-            ui->videoQualitySpinner->setValue(TO_RELATIVE(qmax, 0, videoQuality));
+            ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
         } else if (vcodec.endsWith("_videotoolbox")) {
 #if defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM)
             ui->videoQualitySpinner->setValue(ui->hwencodeCheckBox->isChecked() ? videoQuality * 55.0 / 23.0 :
@@ -419,7 +417,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-") || vcodec == "libsvtav1") {
             // 0 (best, 100%) - 63 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
-        } else if (vcodec.startsWith("libwebp")) {
+        } else if (vcodec.startsWith("libwebp") || vcodec.endsWith("_mf")) {
             // 100 (best) - 0 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(0, 100, videoQuality));
         } else {
@@ -865,6 +863,56 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                 // Also set some properties so that custom presets can be interpreted properly.
                 setIfNotSet(p, "g", ui->gopSpinner->value());
                 setIfNotSet(p, "bf", ui->bFramesSpinner->value());
+            } else if (vcodec.endsWith("_mf")) {
+                switch (ui->videoRateControlCombo->currentIndex()) {
+                case RateControlAverage:
+                    setIfNotSet(p, "rate_control", "vbr");
+                    setIfNotSet(p, "vb", ui->videoBitrateCombo->currentText().toLatin1().constData());
+                    break;
+                case RateControlConstant: {
+                    const QString &b = ui->videoBitrateCombo->currentText();
+                    setIfNotSet(p, "rate_control", "cbr");
+                    setIfNotSet(p, "vb", b.toLatin1().constData());
+                    setIfNotSet(p, "vminrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vmaxrate", b.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    break;
+                }
+                case RateControlQuality: {
+                    setIfNotSet(p, "rate_control", "quality");
+                    setIfNotSet(p, "vquality", TO_ABSOLUTE(0, 100, vq));
+                    setIfNotSet(p, "vq", TO_ABSOLUTE(0, 100, vq));
+                    break;
+                }
+                case RateControlConstrained: {
+                    setIfNotSet(p, "rate_control", "pc_vbr");
+                    setIfNotSet(p, "vquality", TO_ABSOLUTE(0, 100, vq));
+                    setIfNotSet(p, "vq", TO_ABSOLUTE(0, 100, vq));
+                    setIfNotSet(p, "vb", qRound(cvbr));
+                    setIfNotSet(p, "vmaxrate", vbitrate.toLatin1().constData());
+                    setIfNotSet(p, "vbufsize", int(ui->videoBufferSizeSpinner->value() * 8 * 1024));
+                    break;
+                }
+                }
+                if (ui->strictGopCheckBox->isChecked()) {
+                    setIfNotSet(p, "sc_threshold", 0);
+                    setIfNotSet(p, "strict_gop", 1);
+                }
+                setIfNotSet(p, "g", ui->gopSpinner->value());
+                setIfNotSet(p, "bf", ui->bFramesSpinner->value());
+                setIfNotSet(p, "hw_encoding", "true");
+                if (vcodec == "h264_mf") {
+                    auto profile = QLatin1String(p->get("vprofile"));
+                    if (profile.isEmpty())
+                        profile = QLatin1String(p->get("profile"));
+                    if (!profile.isEmpty()) {
+                        p->clear("profile");
+                        if (profile == "high")
+                            p->set("vprofile", 100);
+                        else if (profile == "main")
+                            p->set("vprofile", 77);
+                    }
+                }
             } else {
                 switch (ui->videoRateControlCombo->currentIndex()) {
                 case RateControlAverage:
@@ -1493,6 +1541,7 @@ void EncodeDock::enqueueMelt(const QStringList &targets, int realtime)
     int pass = (ui->videoRateControlCombo->currentIndex() != RateControlQuality
                 && !ui->videoCodecCombo->currentText().contains("nvenc")
                 && !ui->videoCodecCombo->currentText().endsWith("_amf")
+                && !ui->videoCodecCombo->currentText().endsWith("_mf")
                 && !ui->videoCodecCombo->currentText().endsWith("_qsv")
                 && !ui->videoCodecCombo->currentText().endsWith("_videotoolbox")
                 && !ui->videoCodecCombo->currentText().endsWith("_vaapi")
@@ -1707,7 +1756,9 @@ void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset, bool res
 #endif
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
-    } else if (vcodec.endsWith("_vaapi")) {
+    } else if (vcodec.endsWith("_vaapi") || vcodec.endsWith("_mf")) {
+        if (resetBframes)
+            ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
     } else {
@@ -2358,6 +2409,10 @@ static QStringList codecs()
 {
     QStringList codecs;
 #if defined(Q_OS_WIN)
+#if defined(Q_PROCESSOR_ARM)
+    codecs << "h264_mf";
+    codecs << "hevc_mf";
+#else
     codecs << "h264_nvenc";
     codecs << "hevc_nvenc";
     codecs << "av1_nvenc";
@@ -2368,6 +2423,7 @@ static QStringList codecs()
     codecs << "hevc_qsv";
     codecs << "vp9_qsv";
     codecs << "av1_qsv";
+#endif
 #elif defined(Q_OS_MAC)
     codecs << "h264_videotoolbox";
     codecs << "hevc_videotoolbox";
@@ -2483,6 +2539,8 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
         s = QStringLiteral("qscale=%1").arg(vq);
     } else if (vcodec.startsWith("libwebp")) {
         s = QStringLiteral("qscale=%1").arg(TO_ABSOLUTE(0, 100, vq));
+    } else if (vcodec.endsWith("_mf")) {
+        s = QStringLiteral("quality=%1").arg(vq);
     } else {
         s = QStringLiteral("qscale=%1").arg(TO_ABSOLUTE(31, 1, vq));
     }
@@ -2517,7 +2575,7 @@ bool EncodeDock::detectHardwareEncoders()
     MAIN.showStatusMessage(tr("Detecting hardware encoders..."));
     QStringList hwlist;
     QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
-    foreach (const QString &codec, codecs()) {
+    for (const QString &codec : codecs()) {
         LOG_INFO() << "checking for" << codec;
         QProcess proc;
         QStringList args;
@@ -2529,6 +2587,8 @@ bool EncodeDock::detectHardwareEncoders()
             args << "-load_plugin" << "hevc_hw";
         else if (codec.endsWith("_videotoolbox"))
             args << "-pix_fmt" << "nv12";
+        else if (codec.endsWith("_mf"))
+            args << "-pix_fmt" << "nv12" << "-hw_encoding" << "true";
         args << "-c:v" << codec << "-f" << "rawvideo" << "pipe:";
         LOG_DEBUG() << ffmpegPath.absoluteFilePath() + " " + args.join(' ');
         proc.setStandardOutputFile(QProcess::nullDevice());
