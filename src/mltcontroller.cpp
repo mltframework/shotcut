@@ -1452,8 +1452,9 @@ void Controller::adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta,
             emit MAIN.serviceOutChanged(outDelta, filter);
 
             // Update simple keyframes
-            if (filter->get_int(kShotcutAnimOutProperty) && meta && meta->keyframes()) {
-                foreach (QString name, meta->keyframes()->simpleProperties()) {
+            if ((filter->get_int(kShotcutAnimInProperty) || filter->get_int(kShotcutAnimOutProperty)) && meta
+                    && meta->keyframes()) {
+                for (const QString &name : meta->keyframes()->simpleProperties()) {
                     if (!filter->get_animation(name.toUtf8().constData())) {
                         // Cause a string property to be interpreted as animated value.
                         if (meta->keyframes()->parameter(name)->isColor())
@@ -1466,8 +1467,12 @@ void Controller::adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta,
                         int n = animation.key_count();
                         if (n > 1) {
                             animation.set_length(filter->get_length());
-                            animation.key_set_frame(n - 2, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
-                            animation.key_set_frame(n - 1, filter->get_length() - 1);
+                            if (filter->get_int(kShotcutAnimInProperty) > filter->get_length() - 1) {
+                                animation.key_set_frame(n - 1, filter->get_length() - 1);
+                            } else if (filter->get_int(kShotcutAnimOutProperty)) {
+                                animation.key_set_frame(n - 2, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                                animation.key_set_frame(n - 1, filter->get_length() - 1);
+                            }
                         }
                     }
                 }

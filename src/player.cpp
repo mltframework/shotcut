@@ -944,7 +944,7 @@ void Player::onProducerOpened(bool play)
     if (play || (MLT.isClip() && !MLT.isClosedClip())) {
         if (m_pauseAfterOpen) {
             m_pauseAfterOpen = false;
-            QTimer::singleShot(500, this, [=](){
+            QTimer::singleShot(500, this, [ = ]() {
                 if (MLT.producer())
                     pause(MLT.producer()->position());
             });

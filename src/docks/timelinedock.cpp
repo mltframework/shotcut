@@ -2030,17 +2030,8 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                 }
                 after->set_in_and_out(in, out);
                 // Adjust filters.
-                int n = after->filter_count();
-                for (int j = 0; j < n; j++) {
-                    QScopedPointer<Mlt::Filter> filter(after->filter(j));
-                    if (filter && filter->is_valid() && !filter->get_int("_loader")
-                            && !filter->get_int(kShotcutHiddenProperty)) {
-                        in = qMin(qRound(filter->get_in() * speedRatio), length - 1);
-                        out = qMin(qRound(filter->get_out() * speedRatio), length - 1);
-                        filter->set_in_and_out(in, out);
-                        //TODO: keyframes
-                    }
-                }
+                MLT.adjustClipFilters(*after, info->frame_in, info->frame_out, in - info->frame_in,
+                                      info->frame_out - out, 0);
                 resetRippleAll = false;
             } else if (newServiceName == "qimage" || newServiceName == "pixbuf") {
                 int oldLength = info->frame_out - info->frame_in;
@@ -2059,17 +2050,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer *after)
                     }
                     after->set_in_and_out(in, out);
                     // Adjust filters.
-                    int n = after->filter_count();
-                    for (int j = 0; j < n; j++) {
-                        QScopedPointer<Mlt::Filter> filter(after->filter(j));
-                        if (filter && filter->is_valid() && !filter->get_int("_loader")
-                                && !filter->get_int(kShotcutHiddenProperty)) {
-                            in = qMin(filter->get_in(), newLength - 1);
-                            out = qMin(filter->get_out() + lengthDelta, newLength - 1);
-                            filter->set_in_and_out(in, out);
-                            //TODO: keyframes
-                        }
-                    }
+                    MLT.adjustClipFilters(*after, info->frame_in, info->frame_out, 0, -lengthDelta, 0);
                 }
             } else {
                 after->set_in_and_out(info->frame_in, info->frame_out);
