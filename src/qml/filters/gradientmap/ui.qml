@@ -26,7 +26,11 @@ Item {
     property alias spinnerVisible: stopSpinner.visible
     property var _stopHandles: []
 
-    signal gradientChanged
+    function setStops() {
+        if (_disableUpdate)
+            return;
+        filter.setGradient('stop', stringizeStops());
+    }
 
     function _parseStop(stop) {
         const exp = /^(#|0[xX])?([\da-fA-F]+).(.+)$/;
@@ -95,7 +99,7 @@ Item {
             stopSpinner.value = index + 1;
         }
         _updateColorDisplay();
-        gradientChanged();
+        setStops();
     }
 
     function _setStopPosition(index, position) {
@@ -107,7 +111,7 @@ Item {
         newStops.splice(index, 0, stop);
         stops = newStops;
         _updateColorDisplay();
-        gradientChanged();
+        setStops();
     }
 
     function _removeStop(index) {
@@ -115,7 +119,7 @@ Item {
         newStops.splice(index, 1);
         stops = newStops;
         _updateColorDisplay();
-        gradientChanged();
+        setStops();
     }
     function setControls() {
         _disableUpdate = true;
