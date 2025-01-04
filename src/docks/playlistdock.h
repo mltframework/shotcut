@@ -56,6 +56,14 @@ class PlaylistDock : public QDockWidget
     Q_OBJECT
 
 public:
+    enum SmartBin {
+        SmartBinNone = -1,
+        SmartBinAll,
+        SmartBinDuplicates,
+        SmartBinNotInTimeline,
+        SmartBinCount
+    };
+
     explicit PlaylistDock(QWidget *parent = 0);
     ~PlaylistDock();
     PlaylistModel *model()
@@ -66,6 +74,7 @@ public:
     void replaceClipsWithHash(const QString &hash, Mlt::Producer &producer);
     void getSelectionRange(int *start, int *end);
     Mlt::Playlist *binPlaylist();
+    static void sortBins(QTreeWidget *treeWidget);
 
 signals:
     void clipOpened(Mlt::Producer *producer, bool play = false);

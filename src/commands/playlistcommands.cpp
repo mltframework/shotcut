@@ -16,6 +16,7 @@
  */
 
 #include "playlistcommands.h"
+#include "docks/playlistdock.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
 #include "shotcut_mlt_properties.h"
@@ -385,16 +386,15 @@ void NewBinCommand::redo()
                                  QIcon(":/icons/oxygen/32x32/places/folder.png"));
     item->setIcon(0, icon);
 
-    auto all = m_binTree->takeTopLevelItem(0);
-    m_binTree->sortItems(0, Qt::AscendingOrder);
-    m_binTree->insertTopLevelItem(0, all);
+    PlaylistDock::sortBins(m_binTree);
+    emit m_binTree->itemSelectionChanged();
 
     std::unique_ptr<Mlt::Properties> props(m_model.playlist()->get_props(kShotcutBinsProperty));
     if (!props || !props->is_valid()) {
         props.reset(new Mlt::Properties);
         m_model.playlist()->set(kShotcutBinsProperty, *props);
     }
-    for (int i = 1; i < m_binTree->topLevelItemCount(); ++i) {
+    for (int i = PlaylistDock::SmartBinCount; i < m_binTree->topLevelItemCount(); ++i) {
         auto name = m_binTree->topLevelItem(i)->text(0);
         props->set(QString::number(i).toLatin1().constData(), name.toUtf8().constData());
     }
@@ -486,9 +486,8 @@ void RenameBinCommand::redo()
             rebuildBinList(m_model, m_binTree);
 
             // Reselect bin
-            auto all = m_binTree->takeTopLevelItem(0);
-            m_binTree->sortItems(0, Qt::AscendingOrder);
-            m_binTree->insertTopLevelItem(0, all);
+            PlaylistDock::sortBins(m_binTree);
+            emit m_binTree->itemSelectionChanged();
         }
     }
 }
@@ -503,9 +502,7 @@ void RenameBinCommand::undo()
                                      QIcon(":/icons/oxygen/32x32/places/folder.png"));
         item->setIcon(0, icon);
 
-        auto all = m_binTree->takeTopLevelItem(0);
-        m_binTree->sortItems(0, Qt::AscendingOrder);
-        m_binTree->insertTopLevelItem(0, all);
+        PlaylistDock::sortBins(m_binTree);
 
         // Restore bin property on playlist items
         for (auto row : m_removedRows) {
@@ -524,10 +521,9 @@ void RenameBinCommand::undo()
         rebuildBinList(m_model, m_binTree);
 
         // Reselect bin
-        auto all = m_binTree->takeTopLevelItem(0);
-        m_binTree->sortItems(0, Qt::AscendingOrder);
-        m_binTree->insertTopLevelItem(0, all);
+        PlaylistDock::sortBins(m_binTree);
     }
+    emit m_binTree->itemSelectionChanged();
 }
 
 void RenameBinCommand::rebuildBinList(PlaylistModel &model, QTreeWidget *binTree)
@@ -539,7 +535,7 @@ void RenameBinCommand::rebuildBinList(PlaylistModel &model, QTreeWidget *binTree
         if (!name.startsWith('_') && !name.startsWith('.'))
             props->clear(name.toLatin1().constData());
     }
-    for (int i = 1; i < binTree->topLevelItemCount(); ++i) {
+    for (int i = PlaylistDock::SmartBinCount; i < binTree->topLevelItemCount(); ++i) {
         auto name = binTree->topLevelItem(i)->text(0);
         props->set(QString::number(i).toLatin1().constData(), name.toUtf8().constData());
     }
