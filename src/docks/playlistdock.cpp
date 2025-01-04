@@ -294,6 +294,7 @@ public:
     {
         m_bin.clear();
         m_smartBin = static_cast<enum PlaylistDock::SmartBin>(bin);
+        LOG_DEBUG() << m_smartBin;
 
         switch (bin) {
         case PlaylistDock::SmartBinDuplicates: {
@@ -1749,6 +1750,15 @@ void PlaylistDock::onPlaylistCleared()
     bool nonEmptyModel = m_model.rowCount() > 0;
     Actions["playlistRemoveAllAction"]->setEnabled(nonEmptyModel);
     Actions["playlistSelectAllAction"]->setEnabled(nonEmptyModel);
+}
+
+void PlaylistDock::refreshTimelineSmartBins()
+{
+    auto items = ui->treeWidget->selectedItems();
+    if (!items.isEmpty() && SmartBinNotInTimeline == items.first()->data(0, Qt::UserRole).toInt()
+            && m_proxyModel->rowCount() > 0) {
+        m_proxyModel->setSmartBin(SmartBinNotInTimeline);
+    }
 }
 
 void PlaylistDock::onDropped(const QMimeData *data, int row)

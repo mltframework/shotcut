@@ -98,6 +98,7 @@ public slots:
     void onPlaylistCreated();
     void onPlaylistLoaded();
     void onPlaylistCleared();
+    void refreshTimelineSmartBins();
 
 private slots:
 

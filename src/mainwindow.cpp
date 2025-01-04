@@ -488,6 +488,8 @@ void MainWindow::setupAndConnectDocks()
     connect(m_timelineDock->model(), SIGNAL(created()), SLOT(onMultitrackCreated()));
     connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
+    connect(m_timelineDock->model(), &MultitrackModel::modified, m_playlistDock,
+            &PlaylistDock::refreshTimelineSmartBins);
     connect(m_timelineDock->model(), SIGNAL(durationChanged()), SLOT(onMultitrackDurationChanged()));
     connect(m_timelineDock, SIGNAL(clipOpened(Mlt::Producer *)), SLOT(openCut(Mlt::Producer *)));
     connect(m_timelineDock->model(), &MultitrackModel::seeked, this, &MainWindow::seekTimeline);
