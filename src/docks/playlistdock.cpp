@@ -307,6 +307,7 @@ public:
             }
             std::sort(hashes.begin(), hashes.end());
             std::set<std::string> unique(hashes.begin(), hashes.end());
+            m_hashes.clear();
             std::set_difference(hashes.begin(), hashes.end(), unique.begin(), unique.end(),
                                 std::back_inserter(m_hashes));
             LOG_INFO() << "Duplicates smart bin found" << m_hashes.size() << "items";
@@ -1147,9 +1148,9 @@ void PlaylistDock::setupActions()
     icon = QIcon::fromTheme("folder-new",
                             QIcon(":/icons/oxygen/32x32/actions/folder-new.png"));
     action->setIcon(icon);
-    action->setDisabled(true);
     Actions.add("playlistNewBin", action, windowTitle());
     connect(action, &QAction::triggered, this, [ = ]() {
+        ui->treeWidget->setVisible(true);
         QInputDialog dialog(this);
         dialog.setInputMode(QInputDialog::TextInput);
         dialog.setWindowTitle(action->text());
@@ -1171,7 +1172,6 @@ void PlaylistDock::setupActions()
     action->setCheckable(true);
     connect(action, &QAction::triggered, this, [ = ](bool checked) {
         ui->treeWidget->setVisible(checked);
-        Actions["playlistNewBin"]->setEnabled(checked);
     });
     Actions.add("playlistBinView", action, windowTitle());
 
