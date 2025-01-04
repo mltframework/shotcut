@@ -486,6 +486,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     columnsMenu->addAction(Actions["playlistColumnsToggleDurationAction"]);
     columnsMenu->addAction(Actions["playlistColumnsToggleStartAction"]);
     columnsMenu->addAction(Actions["playlistColumnsToggleDateAction"]);
+    columnsMenu->addAction(Actions["playlistColumnsToggleTypeAction"]);
     Actions.loadFromMenu(m_mainMenu);
 
     DockToolBar *toolbar = new DockToolBar(tr("Playlist Controls"));
@@ -1102,6 +1103,15 @@ void PlaylistDock::setupActions()
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DATE, !checked);
     });
     Actions.add("playlistColumnsToggleDateAction", action);
+
+    action = new QAction(tr("Type"), this);
+    action->setChecked(Settings.playlistShowColumn("type"));
+    action->setCheckable(true);
+    connect(action, &QAction::triggered, this, [ = ](bool checked) {
+        Settings.setPlaylistShowColumn("type", checked);
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_MEDIA_TYPE, !checked);
+    });
+    Actions.add("playlistColumnsToggleTypeAction", action);
 
     action = new QAction(tr("Video"), this);
     action->setToolTip(tr("Show or hide video files"));
@@ -1886,6 +1896,8 @@ void PlaylistDock::updateViewMode()
                                        !Settings.playlistShowColumn("duration"));
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_START, !Settings.playlistShowColumn("start"));
         ui->tableView->setColumnHidden(PlaylistModel::COLUMN_DATE, !Settings.playlistShowColumn("date"));
+        ui->tableView->setColumnHidden(PlaylistModel::COLUMN_MEDIA_TYPE,
+                                       !Settings.playlistShowColumn("type"));
         ui->tableView->resizeColumnsToContents();
         ui->tableView->show();
         ui->tableView->resizeColumnsToContents();
