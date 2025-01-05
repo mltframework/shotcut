@@ -1150,6 +1150,8 @@ void PlaylistDock::setupActions()
     action->setIcon(icon);
     Actions.add("playlistNewBin", action, windowTitle());
     connect(action, &QAction::triggered, this, [ = ]() {
+        if (!m_model.playlist() || !m_model.playlist()->is_valid())
+            return;
         ui->treeWidget->setVisible(true);
         QInputDialog dialog(this);
         dialog.setInputMode(QInputDialog::TextInput);
