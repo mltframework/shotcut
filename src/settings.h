@@ -365,6 +365,10 @@ public:
     QStringList filesOpenOther(const QString &type) const;
     void setFilesOpenOther(const QString &type, const QString &filePath);
     bool removeFilesOpenOther(const QString &type, const QString &filePath);
+    QString filesCurrentDir() const;
+    void setFilesCurrentDir(const QString &s);
+    bool filesFoldersOpen() const;
+    void setFilesFoldersOpen(bool b);
 
 public slots:
     void reset();

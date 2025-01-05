@@ -28,6 +28,7 @@
 #include <QMediaDevices>
 #include <QAudioDevice>
 #include <Logger.h>
+#include <qdesktopservices.h>
 
 static const QString APP_DATA_DIR_KEY("appdatadir");
 static const QString SHOTCUT_INI_FILENAME("/shotcut.ini");
@@ -405,6 +406,27 @@ bool ShotcutSettings::removeFilesOpenOther(const QString &type, const QString &f
         return true;
     }
     return false;
+}
+
+QString ShotcutSettings::filesCurrentDir() const
+{
+    const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+    return settings.value("files/currentDir", ls.first()).toString();
+}
+
+void ShotcutSettings::setFilesCurrentDir(const QString &s)
+{
+    settings.setValue("files/currentDir", s);
+}
+
+bool ShotcutSettings::filesFoldersOpen() const
+{
+    return settings.value("files/foldersOpen", true).toBool();
+}
+
+void ShotcutSettings::setFilesFoldersOpen(bool b)
+{
+    settings.setValue("files/foldersOpen", b);
 }
 
 QString ShotcutSettings::exportFrameSuffix() const
