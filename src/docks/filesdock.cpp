@@ -688,7 +688,8 @@ FilesDock::FilesDock(QWidget *parent)
             return;
         }
         m_selectionModel->setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
-        emit clipOpened(filePath);
+        if (!MAIN.open(filePath))
+            openClip(filePath);
     });
     connect(ui->tableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged,
     this, [ = ](int column, Qt::SortOrder order) {
@@ -803,12 +804,7 @@ void FilesDock::setupActions()
         if (filePath.isEmpty())
             filePath = m_filesModel->rootPath();
         LOG_DEBUG() << filePath;
-#if defined(Q_OS_WIN)
-        const auto scheme = QLatin1String("file:///");
-#else
-        const auto scheme = QLatin1String("file://");
-#endif
-        QDesktopServices::openUrl({scheme + filePath, QUrl::TolerantMode});
+        openClip(filePath);
     });
     connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
         action->setEnabled(!m_selectionModel->selection().isEmpty());
@@ -1052,13 +1048,23 @@ QString FilesDock::firstSelectedMediaType()
     return result;
 }
 
+void FilesDock::openClip(const QString &filePath)
+{
+#if defined(Q_OS_WIN)
+    const auto scheme = QLatin1String("file:///");
+#else
+    const auto scheme = QLatin1String("file://");
+#endif
+    QDesktopServices::openUrl({scheme + filePath, QUrl::TolerantMode});
+}
+
 void FilesDock::onOpenActionTriggered()
 {
     const auto filePath = firstSelectedFilePath();
     if (!filePath.isEmpty()) {
         const auto index = m_filesProxyModel->mapFromSource(m_filesModel->index(filePath));
         m_view->setCurrentIndex(index);
-        emit clipOpened(filePath);
+        MAIN.open(filePath);
     }
 }
 
@@ -1145,7 +1151,7 @@ void FilesDock::keyPressEvent(QKeyEvent *event)
                     ui->treeView->setCurrentIndex(dirsIndex);
                     return;
                 }
-                emit clipOpened(filePath);
+                openClip(filePath);
             }
         }
         event->accept();

@@ -53,7 +53,6 @@ public:
     void setCacheMediaType(const QString &key, int mediaType);
 
 signals:
-    void clipOpened(QString);
     void selectionChanged();
 
 public slots:
@@ -86,6 +85,7 @@ private:
     void addOpenWithMenu(QMenu *menu);
     QString firstSelectedFilePath();
     QString firstSelectedMediaType();
+    void openClip(const QString &filePath);
 
     Ui::FilesDock *ui;
     QAbstractItemView *m_view;

@@ -468,9 +468,6 @@ void MainWindow::setupAndConnectDocks()
     connect(m_filesDock->toggleViewAction(), SIGNAL(triggered(bool)), this,
             SLOT(onFilesDockTriggered(bool)));
     connect(ui->actionFiles, SIGNAL(triggered()), this, SLOT(onFilesDockTriggered()));
-    connect(m_filesDock, &FilesDock::clipOpened, this, [ = ] (const QString & url) {
-        open(url);
-    });
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
