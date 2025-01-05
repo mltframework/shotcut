@@ -501,6 +501,7 @@ FilesDock::FilesDock(QWidget *parent)
     toggleViewAction()->setIcon(windowIcon());
 
     const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+    ui->locationsCombo->addItem(QString());
     ui->locationsCombo->addItem(tr("Home", "The user's home folder in the file system"), ls.first());
     ui->locationsCombo->addItem(tr("Current Project"), "");
     ui->locationsCombo->addItem(tr("Documents"),
@@ -582,8 +583,7 @@ FilesDock::FilesDock(QWidget *parent)
         LOG_DEBUG() << "clicked" << filePath;
         auto sourceIndex = m_filesModel->setRootPath(filePath);
         Settings.setFilesCurrentDir(m_filesModel->rootPath());
-        m_view->setRootIndex(m_filesProxyModel->mapFromSource(sourceIndex));
-        m_view->scrollToTop();
+        changeFilesDirectory(m_filesProxyModel->mapFromSource(sourceIndex));
     });
 
     setupActions();
@@ -650,7 +650,7 @@ FilesDock::FilesDock(QWidget *parent)
     connect(lineEdit, &QLineEdit::textChanged, this, [ = ](const QString & search) {
         m_filesProxyModel->setFilterFixedString(search);
         if (search.isEmpty()) {
-            m_view->setRootIndex(m_filesProxyModel->mapFromSource(m_filesModel->index(
+            changeFilesDirectory(m_filesProxyModel->mapFromSource(m_filesModel->index(
                                                                       m_filesModel->rootPath())));
         }
         m_view->scrollToTop();
@@ -678,9 +678,8 @@ FilesDock::FilesDock(QWidget *parent)
         if (m_filesModel->isDir(sourceIndex)) {
             m_filesModel->setRootPath(filePath);
             Settings.setFilesCurrentDir(filePath);
-            m_view->setRootIndex(index);
+            changeFilesDirectory(index);
             m_view->setCurrentIndex(QModelIndex());
-            m_view->scrollToTop();
             const auto dirsIndex = m_dirsModel->index(filePath);
             ui->treeView->setExpanded(dirsIndex, true);
             ui->treeView->scrollTo(dirsIndex);
@@ -944,8 +943,7 @@ void FilesDock::setupActions()
         const auto filePath = dir.absolutePath();
         const auto index = m_filesModel->setRootPath(filePath);
         Settings.setFilesCurrentDir(filePath);
-        m_view->setRootIndex(m_filesProxyModel->mapFromSource(index));
-        m_view->scrollToTop();
+        changeFilesDirectory(m_filesProxyModel->mapFromSource(index));
         const auto dirsIndex = m_dirsModel->index(filePath);
         ui->treeView->setExpanded(dirsIndex, true);
         ui->treeView->scrollTo(dirsIndex);
@@ -1068,7 +1066,7 @@ void FilesDock::onOpenActionTriggered()
     }
 }
 
-void FilesDock::changeDirectory(const QString &filePath)
+void FilesDock::changeDirectory(const QString &filePath, bool resetLocations)
 {
     LOG_DEBUG() << filePath;
     QFileInfo info(filePath);
@@ -1080,6 +1078,9 @@ void FilesDock::changeDirectory(const QString &filePath)
     index = m_filesModel->setRootPath(path);
     Settings.setFilesCurrentDir(path);
     m_view->setRootIndex(m_filesProxyModel->mapFromSource(index));
+    m_iconsView->updateSizes();
+    if (resetLocations)
+        ui->locationsCombo->setCurrentIndex(0);
     if (info.isDir()) {
         m_view->scrollToTop();
     } else {
@@ -1089,6 +1090,14 @@ void FilesDock::changeDirectory(const QString &filePath)
             m_view->setCurrentIndex(index);
         });
     }
+}
+
+void FilesDock::changeFilesDirectory(const QModelIndex &index)
+{
+    m_view->setRootIndex(index);
+    m_iconsView->updateSizes();
+    ui->locationsCombo->setCurrentIndex(0);
+    m_view->scrollToTop();
 }
 
 void FilesDock::viewCustomContextMenuRequested(const QPoint &pos)
@@ -1128,6 +1137,7 @@ void FilesDock::updateViewMode()
     }
     m_view->setRootIndex(m_filesProxyModel->mapFromSource(m_filesModel->index(
                                                               m_filesModel->rootPath())));
+    m_iconsView->updateSizes();
     m_view->show();
 }
 
@@ -1143,8 +1153,7 @@ void FilesDock::keyPressEvent(QKeyEvent *event)
                 if (m_filesModel->isDir(sourceIndex)) {
                     m_filesModel->setRootPath(filePath);
                     Settings.setFilesCurrentDir(filePath);
-                    m_view->setRootIndex(index);
-                    m_view->scrollToTop();
+                    changeFilesDirectory(index);
                     const auto dirsIndex = m_dirsModel->index(filePath);
                     ui->treeView->setExpanded(dirsIndex, true);
                     ui->treeView->scrollTo(dirsIndex);
@@ -1254,8 +1263,10 @@ void FilesDock::onOpenOtherRemove()
     }
 }
 
-void FilesDock::on_locationsCombo_activated(int)
+void FilesDock::on_locationsCombo_activated(int index)
 {
+    if (0 == index)
+        return;
     auto path = ui->locationsCombo->currentData().toString();
     if (path.isEmpty() && !MAIN.fileName().isEmpty())
         path = QFileInfo(MAIN.fileName()).absolutePath();
@@ -1265,7 +1276,7 @@ void FilesDock::on_locationsCombo_activated(int)
     if (QLatin1String("/") == path)
         path = QStringLiteral("C:/");
 #endif
-    changeDirectory(path);
+    changeDirectory(path, false);
 }
 
 void FilesDock::on_addLocationButton_clicked()

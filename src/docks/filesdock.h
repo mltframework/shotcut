@@ -57,7 +57,8 @@ signals:
 
 public slots:
     void onOpenActionTriggered();
-    void changeDirectory(const QString &path);
+    void changeDirectory(const QString &path, bool resetLocations = true);
+    void changeFilesDirectory(const QModelIndex &index);
 
 private slots:
     void viewCustomContextMenuRequested(const QPoint &pos);

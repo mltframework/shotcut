@@ -27,6 +27,7 @@ public:
     PlaylistIconView(QWidget *parent);
     void resetMultiSelect();
     void setIconRole(int role);
+    void updateSizes();
 
     QRect visualRect(const QModelIndex &index) const Q_DECL_OVERRIDE;
     void scrollTo(const QModelIndex &index, ScrollHint hint = EnsureVisible) Q_DECL_OVERRIDE;
@@ -57,9 +58,6 @@ public:
 protected slots:
     void selectionChanged(const QItemSelection &selected,
                           const QItemSelection &deselected) Q_DECL_OVERRIDE;
-
-private slots:
-    void updateSizes();
 
 private:
     int rowWidth() const;
