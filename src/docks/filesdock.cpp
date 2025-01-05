@@ -1160,7 +1160,8 @@ void FilesDock::keyPressEvent(QKeyEvent *event)
                     ui->treeView->setCurrentIndex(dirsIndex);
                     return;
                 }
-                openClip(filePath);
+                if (!MAIN.open(filePath))
+                    openClip(filePath);
             }
         }
         event->accept();
