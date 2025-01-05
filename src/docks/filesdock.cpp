@@ -570,7 +570,7 @@ FilesDock::FilesDock(QWidget *parent)
     ui->treeView->setExpanded(homeIndex, true);
     ui->treeView->scrollTo(homeIndex);
     ui->treeView->setCurrentIndex(homeIndex);
-    QTimer::singleShot(0, this, [=](){
+    QTimer::singleShot(0, this, [ = ]() {
         ui->treeView->setVisible(Settings.filesFoldersOpen());
     });
     connect(ui->treeView, &QWidget::customContextMenuRequested, this, [ = ](const QPoint & pos) {

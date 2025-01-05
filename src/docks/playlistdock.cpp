@@ -1755,8 +1755,7 @@ void PlaylistDock::onPlaylistCleared()
 void PlaylistDock::refreshTimelineSmartBins()
 {
     auto items = ui->treeWidget->selectedItems();
-    if (!items.isEmpty() && SmartBinNotInTimeline == items.first()->data(0, Qt::UserRole).toInt()
-            && m_proxyModel->rowCount() > 0) {
+    if (!items.isEmpty() && SmartBinNotInTimeline == items.first()->data(0, Qt::UserRole).toInt()) {
         m_proxyModel->setSmartBin(SmartBinNotInTimeline);
     }
 }
