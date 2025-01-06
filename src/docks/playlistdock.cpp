@@ -427,6 +427,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
         m_view->selectionModel()->clearSelection();
     });
 
+    m_mainMenu = new QMenu(tr("Playlist"), this);
     setupActions();
 
     for (int i = 0; i < SmartBinCount; ++i) {
@@ -441,7 +442,6 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     }
     ui->treeWidget->topLevelItem(0)->setSelected(true);
 
-    m_mainMenu = new QMenu(tr("Playlist"), this);
     m_mainMenu->addAction(Actions["playlistOpenAction"]);
     m_mainMenu->addAction(Actions["playlistOpenPreviousAction"]);
     m_mainMenu->addAction(Actions["playlistOpenNextAction"]);
@@ -540,13 +540,13 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     ui->filtersLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
     toolbar2->addActions({Actions["playlistFiltersVideo"], Actions["playlistFiltersAudio"], Actions["playlistFiltersImage"], Actions["playlistFiltersOther"]});
     ui->filtersLayout->addWidget(toolbar2);
-    auto lineEdit = new LineEditClear(this);
-    lineEdit->setToolTip(tr("Only show files whose name, path, or comment contains some text"));
-    lineEdit->setPlaceholderText(tr("search"));
-    connect(lineEdit, &QLineEdit::textChanged, this, [ = ](const QString & search) {
+    m_searchField = new LineEditClear(this);
+    m_searchField->setToolTip(tr("Only show files whose name, path, or comment contains some text"));
+    m_searchField->setPlaceholderText(tr("search"));
+    connect(m_searchField, &QLineEdit::textChanged, this, [ = ](const QString & search) {
         m_proxyModel->setFilterFixedString(search);
     });
-    ui->filtersLayout->addWidget(lineEdit, 1);
+    ui->filtersLayout->addWidget(m_searchField, 1);
 
     ui->stackedWidget->setCurrentIndex(0);
 
@@ -1209,6 +1209,15 @@ void PlaylistDock::setupActions()
             }
         }
     });
+
+    action = new QAction(tr("Search"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_F));
+    connect(action, &QAction::triggered, this, [ = ]() {
+        setVisible(true);
+        raise();
+        m_searchField->setFocus();
+    });
+    Actions.add("playlistSearch", action, m_mainMenu->title());
 }
 
 int PlaylistDock::position()

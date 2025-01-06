@@ -33,6 +33,7 @@ class QItemSelectionModel;
 class QMenu;
 class PlaylistIconView;
 class PlaylistProxyModel;
+class LineEditClear;
 
 class BinTree : public QTreeWidget
 {
@@ -155,6 +156,7 @@ private:
     bool m_blockResizeColumnsToContents;
     PlaylistProxyModel *m_proxyModel;
     Mlt::Playlist m_binPlaylist;
+    LineEditClear *m_searchField;
 };
 
 #endif // PLAYLISTDOCK_H

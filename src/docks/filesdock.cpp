@@ -586,9 +586,9 @@ FilesDock::FilesDock(QWidget *parent)
         changeFilesDirectory(m_filesProxyModel->mapFromSource(sourceIndex));
     });
 
+    m_mainMenu = new QMenu(tr("Files"), this);
     setupActions();
 
-    m_mainMenu = new QMenu(tr("Files"), this);
     m_mainMenu->addAction(Actions["filesOpenAction"]);
     m_mainMenu->addAction(Actions["filesGoUp"]);
     m_mainMenu->addAction(Actions["filesOpenPreviousAction"]);
@@ -599,7 +599,6 @@ FilesDock::FilesDock(QWidget *parent)
     QMenu *selectMenu = m_mainMenu->addMenu(tr("Select"));
     selectMenu->addAction(Actions["filesSelectAllAction"]);
     selectMenu->addAction(Actions["filesSelectNoneAction"]);
-    Actions.loadFromMenu(m_mainMenu);
 
     DockToolBar *toolbar = new DockToolBar(tr("Files Controls"));
     toolbar->setAreaHint(Qt::BottomToolBarArea);
@@ -644,10 +643,10 @@ FilesDock::FilesDock(QWidget *parent)
     ui->filtersLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
     toolbar2->addActions({Actions["filesFiltersVideo"], Actions["filesFiltersAudio"], Actions["filesFiltersImage"], Actions["filesFiltersOther"]});
     ui->filtersLayout->addWidget(toolbar2);
-    auto lineEdit = new LineEditClear(this);
-    lineEdit->setToolTip(tr("Only show files whose name contains some text"));
-    lineEdit->setPlaceholderText(tr("search"));
-    connect(lineEdit, &QLineEdit::textChanged, this, [ = ](const QString & search) {
+    m_searchField = new LineEditClear(this);
+    m_searchField->setToolTip(tr("Only show files whose name contains some text"));
+    m_searchField->setPlaceholderText(tr("search"));
+    connect(m_searchField, &QLineEdit::textChanged, this, [ = ](const QString & search) {
         m_filesProxyModel->setFilterFixedString(search);
         if (search.isEmpty()) {
             changeFilesDirectory(m_filesProxyModel->mapFromSource(m_filesModel->index(
@@ -655,7 +654,7 @@ FilesDock::FilesDock(QWidget *parent)
         }
         m_view->scrollToTop();
     });
-    ui->filtersLayout->addWidget(lineEdit, 1);
+    ui->filtersLayout->addWidget(m_searchField, 1);
 
     m_iconsView = new PlaylistIconView(this);
     ui->listView->parentWidget()->layout()->addWidget(m_iconsView);
@@ -717,6 +716,7 @@ FilesDock::FilesDock(QWidget *parent)
         Actions["filesViewIconsAction"]->trigger();
     }
     addOpenWithMenu(m_mainMenu);
+    Actions.loadFromMenu(m_mainMenu);
 
     LOG_DEBUG() << "end";
 }
@@ -759,7 +759,7 @@ void FilesDock::setupActions()
         updateViewMode();
     });
     modeGroup->addAction(action);
-    Actions.add("filesViewTilesAction", action);
+    Actions.add("filesViewTilesAction", action, m_mainMenu->title());
 
     action = new QAction(tr("Icons"), this);
     action->setToolTip(tr("View as icons"));
@@ -772,7 +772,7 @@ void FilesDock::setupActions()
         updateViewMode();
     });
     modeGroup->addAction(action);
-    Actions.add("filesViewIconsAction", action);
+    Actions.add("filesViewIconsAction", action, m_mainMenu->title());
 
     action = new QAction(tr("Details"), this);
     action->setToolTip(tr("View as details"));
@@ -785,7 +785,7 @@ void FilesDock::setupActions()
         updateViewMode();
     });
     modeGroup->addAction(action);
-    Actions.add("filesViewDetailsAction", action);
+    Actions.add("filesViewDetailsAction", action, m_mainMenu->title());
 
     action = new QAction(tr("Open In Shotcut"), this);
     action->setToolTip(tr("Open the clip in the Source player"));
@@ -972,6 +972,15 @@ void FilesDock::setupActions()
         ui->treeView->setCurrentIndex(index);
     });
     Actions.add("filesRefreshFolders", action);
+
+    action = new QAction(tr("Search"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_F));
+    connect(action, &QAction::triggered, this, [ = ]() {
+        setVisible(true);
+        raise();
+        m_searchField->setFocus();
+    });
+    Actions.add("filesSearch", action, m_mainMenu->title());
 }
 
 void FilesDock::incrementIndex(int step)

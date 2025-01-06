@@ -36,6 +36,7 @@ class PlaylistIconView;
 class FilesModel;
 class FilesProxyModel;
 class QSortFilterProxyModel;
+class LineEditClear;
 
 class FilesDock : public QDockWidget
 {
@@ -98,6 +99,7 @@ private:
     FilesProxyModel *m_filesProxyModel;
     QHash<QString, CacheItem> m_cache;
     QMutex m_cacheMutex;
+    LineEditClear *m_searchField;
 };
 
 #endif // FILESDOCK_H
