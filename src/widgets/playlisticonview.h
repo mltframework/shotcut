@@ -27,7 +27,6 @@ public:
     PlaylistIconView(QWidget *parent);
     void resetMultiSelect();
     void setIconRole(int role);
-    void updateSizes();
 
     QRect visualRect(const QModelIndex &index) const Q_DECL_OVERRIDE;
     void scrollTo(const QModelIndex &index, ScrollHint hint = EnsureVisible) Q_DECL_OVERRIDE;
@@ -54,6 +53,9 @@ public:
     void rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end) Q_DECL_OVERRIDE;
     void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight,
                      const QVector<int> &roles = QVector<int>()) Q_DECL_OVERRIDE;
+
+public slots:
+    void updateSizes();
 
 protected slots:
     void selectionChanged(const QItemSelection &selected,
