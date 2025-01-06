@@ -480,10 +480,18 @@ protected:
     {
         const auto model = qobject_cast<const QFileSystemModel *>(sourceModel());
         if (model->isDir(left) && model->isDir(right)) {
+            if (left.column() == 3)
+                return model->lastModified(left) < model->lastModified(right);
             return left.data().toString().toLower() < right.data().toString().toLower();
-        } else if (model->isDir(left) || model->isDir(right)) {
-            return model->isDir(left);
         }
+        if (model->isDir(left) || model->isDir(right))
+            return model->isDir(left);
+        // file size
+        if (left.column() == 1)
+            return model->size(left) < model->size(right);
+        // file date
+        if (left.column() == 3)
+            return model->lastModified(left) < model->lastModified(right);
         return QSortFilterProxyModel::lessThan(left, right);
     }
 
@@ -691,6 +699,7 @@ FilesDock::FilesDock(QWidget *parent)
     });
     connect(ui->tableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged,
     this, [ = ](int column, Qt::SortOrder order) {
+        LOG_DEBUG() << "sort by column" << column;
         ui->tableView->sortByColumn(column, order);
     });
     connect(ui->listView, &QAbstractItemView::activated, ui->tableView, &QAbstractItemView::activated);
