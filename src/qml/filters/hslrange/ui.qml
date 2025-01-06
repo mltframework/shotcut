@@ -265,7 +265,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Blend')
             Layout.alignment: Qt.AlignRight
             Shotcut.HoverTip {
-                text: qsTr('The amount of blending to apply to the edged of the color range.')
+                text: qsTr('The amount of blending to apply to the edges of the color range.')
             }
         }
         Shotcut.SliderSpinner {
