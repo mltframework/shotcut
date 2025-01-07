@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Meltytech, LLC
+ * Copyright (c) 2024-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QIcon>
+#include <QInputDialog>
 #include <QItemSelection>
 #include <QItemSelectionModel>
 #include <QLabel>
@@ -1106,6 +1107,69 @@ void SubtitlesDock::generateTextOnTimeline()
     if (itemCount == 0) {
         return;
     }
+
+    QInputDialog dialog(this);
+    dialog.setInputMode(QInputDialog::TextInput);
+    dialog.setWindowTitle(tr("Generate subtitle text on timeline"));
+    dialog.setLabelText(tr("Text style preset"));
+    QStringList presets;
+    presets << tr("Default subtitle style");
+    QDir dir(Settings.appDataLocation());
+    if (dir.cd("presets") && dir.cd("dynamicText")) {
+        QStringList entries = dir.entryList(QDir::Files | QDir::Readable);
+        foreach (QString s, entries) {
+            presets << QUrl::fromPercentEncoding(s.toUtf8());
+        }
+    }
+    dialog.setComboBoxItems(presets);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    int r = dialog.exec();
+    if (r != QDialog::Accepted) {
+        return;
+    }
+    QString preset = dialog.textValue();
+    Mlt::Properties filterProperties;
+    bool isYaml = false;
+    dir.setCurrent(Settings.appDataLocation());
+    dir.cd("presets");
+    dir.cd("dynamicText");
+    QString presetFilePath = dir.filePath(QUrl::toPercentEncoding(preset.toUtf8()));
+    QFile presetFile(presetFilePath);
+    if (presetFile.open(QIODevice::ReadOnly)) {
+        bool isYaml = (presetFile.readLine(4) == "---");
+        presetFile.close();
+        if (isYaml) {
+            // Load from YAML file.
+            Mlt::Properties *properties = Mlt::Properties::parse_yaml(presetFilePath.toUtf8().constData());
+            filterProperties = *properties;
+            delete properties;
+        } else {
+            // Load from legacy preset file.
+            filterProperties.load(dir.filePath(preset).toUtf8().constData());
+        }
+    }
+
+    if (!filterProperties.count()) {
+        // Default preset was chosen
+#ifdef Q_OS_WIN
+        filterProperties.set("family", "Verdana");
+#elif defined(Q_OS_MAC)
+        filterProperties.set("family", "Helvetica");
+#endif
+        filterProperties.set("fgcolour", "#ffffffff");
+        filterProperties.set("bgcolour", "#00000000");
+        filterProperties.set("olcolour", "#aa000000");
+        filterProperties.set("outline", 3);
+        filterProperties.set("weight", QFont::Bold);
+        filterProperties.set("style", "normal");
+        filterProperties.set("shotcut:usePointSize", 1);
+        filterProperties.set("size", MLT.profile().height() / 20);
+        filterProperties.set("geometry", "20%/75%:60%x20%");
+        filterProperties.set("valign", "bottom");
+        filterProperties.set("halign", "center");
+    }
+    filterProperties.set(kShotcutFilterProperty, "dynamicText");
+
     Mlt::Playlist playlist(MLT.profile());
     int lastItemFrameEnd = 0;
     for (int itemIndex = 0; itemIndex < itemCount; itemIndex++) {
@@ -1121,24 +1185,8 @@ void SubtitlesDock::generateTextOnTimeline()
         producer.set("length", producer.frames_to_time(frameEnd - frameStart + 1, mlt_time_clock));
         // Add a text filter
         Mlt::Filter filter(MLT.profile(), "dynamictext");
-        filter.set(kShotcutFilterProperty, "dynamicText");
+        filter.inherit(filterProperties);
         filter.set("argument", item.text.c_str());
-#ifdef Q_OS_WIN
-        filter.set("family", "Verdana");
-#elif defined(Q_OS_MAC)
-        filter.set("family", "Helvetica");
-#endif
-        filter.set("fgcolour", "#ffffffff");
-        filter.set("bgcolour", "#00000000");
-        filter.set("olcolour", "#aa000000");
-        filter.set("outline", 3);
-        filter.set("weight", QFont::Bold);
-        filter.set("style", "normal");
-        filter.set("shotcut:usePointSize", 1);
-        filter.set("size", MLT.profile().height() / 20);
-        filter.set("geometry", "20%/75%:60%x20%");
-        filter.set("valign", "bottom");
-        filter.set("halign", "center");
         filter.set_in_and_out(producer.get_in(), producer.get_out());
         producer.attach(filter);
         if (lastItemFrameEnd < (frameStart - 1)) {
