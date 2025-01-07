@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -164,6 +164,7 @@ Shotcut.KeyframableFilter {
             parameters: textFilterUi.parameterList.concat(['argument'])
             onBeforePresetLoaded: {
                 filter.resetProperty(textFilterUi.rectProperty);
+                filter.set(textFilterUi.pointSizeProperty, 0);
                 resetSimpleKeyframes();
             }
             onPresetSelected: {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ GridLayout {
         var pointSize = parseInt(filter.get(pointSizeProperty));
         if (!pointSize) {
             var ratio = fontDialog.selectedFont.pointSize / fontDialog.selectedFont.pixelSize;
-            pointSize = filter.get('size') * ratio;
+            pointSize = Math.round(filter.get('size') * ratio);
         }
         return pointSize;
     }
