@@ -509,7 +509,6 @@ FilesDock::FilesDock(QWidget *parent)
     toggleViewAction()->setIcon(windowIcon());
 
     const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-    ui->locationsCombo->addItem(QString());
     ui->locationsCombo->addItem(tr("Home", "The user's home folder in the file system"), ls.first());
     ui->locationsCombo->addItem(tr("Current Project"), "");
     ui->locationsCombo->addItem(tr("Documents"),
@@ -543,6 +542,8 @@ FilesDock::FilesDock(QWidget *parent)
         auto path = Settings.filesLocationPath(name);
         ui->locationsCombo->addItem(name, path);
     }
+    ui->locationsCombo->setEditText(QDir::toNativeSeparators(Settings.filesCurrentDir()));
+    connect(ui->locationsCombo->lineEdit(), &QLineEdit::editingFinished, this, &FilesDock::onLocationsEditingFinished);
 
     m_filesModel = new FilesModel(this);
     m_filesModel->setOption(QFileSystemModel::DontUseCustomDirectoryIcons);
@@ -624,6 +625,11 @@ FilesDock::FilesDock(QWidget *parent)
     toolbar->addAction(Actions["filesViewIconsAction"]);
     toolbar->addSeparator();
     toolbar->addAction(Actions["filesGoUp"]);
+    toolbar->addSeparator();
+    m_label = new QLabel(toolbar);
+    toolbar->addWidget(m_label);
+    connect(m_filesModel, &QAbstractItemModel::rowsInserted, this, &FilesDock::updateStatus);
+    connect(m_filesModel, &QFileSystemModel::directoryLoaded, this, &FilesDock::updateStatus);
     ui->verticalLayout->addWidget(toolbar);
     ui->verticalLayout->addSpacing(2);
 
@@ -1114,8 +1120,10 @@ void FilesDock::changeFilesDirectory(const QModelIndex &index)
 {
     m_view->setRootIndex(index);
     m_iconsView->updateSizes();
-    ui->locationsCombo->setCurrentIndex(0);
+    auto path = QDir::toNativeSeparators(m_filesModel->rootPath());
+    ui->locationsCombo->setCurrentText(path);
     m_view->scrollToTop();
+    clearStatus();
 }
 
 void FilesDock::viewCustomContextMenuRequested(const QPoint &pos)
@@ -1282,14 +1290,40 @@ void FilesDock::onOpenOtherRemove()
     }
 }
 
+void FilesDock::clearStatus()
+{
+    m_label->setText("...");
+}
+
+void FilesDock::updateStatus()
+{
+    auto n = m_filesModel->rowCount(m_filesModel->index(m_filesModel->rootPath()));
+    m_label->setText(tr("%n item(s)", nullptr, n));
+    QCoreApplication::processEvents();
+}
+
+void FilesDock::onLocationsEditingFinished()
+{
+    auto path = ui->locationsCombo->currentText();
+    LOG_DEBUG() << path;
+    if (!QFile::exists(path))
+        return;
+#if defined(Q_OS_WIN)
+    if (QLatin1String("/") == path)
+        path = QStringLiteral("C:/");
+#endif
+    changeDirectory(path, false);
+}
+
 void FilesDock::on_locationsCombo_activated(int index)
 {
-    if (0 == index)
-        return;
     auto path = ui->locationsCombo->currentData().toString();
     if (path.isEmpty() && !MAIN.fileName().isEmpty())
         path = QFileInfo(MAIN.fileName()).absolutePath();
     if (path.isEmpty())
+        return;
+    ui->locationsCombo->clearFocus();
+    if (!QFile::exists(path))
         return;
 #if defined(Q_OS_WIN)
     if (QLatin1String("/") == path)

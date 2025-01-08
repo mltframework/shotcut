@@ -37,6 +37,7 @@ class FilesModel;
 class FilesProxyModel;
 class QSortFilterProxyModel;
 class LineEditClear;
+class QLabel;
 
 class FilesDock : public QDockWidget
 {
@@ -66,6 +67,9 @@ private slots:
     void onMediaTypeClicked();
     void onOpenOtherAdd();
     void onOpenOtherRemove();
+    void clearStatus();
+    void updateStatus();
+    void onLocationsEditingFinished();
 
     void on_locationsCombo_activated(int index);
 
@@ -100,6 +104,7 @@ private:
     QHash<QString, CacheItem> m_cache;
     QMutex m_cacheMutex;
     LineEditClear *m_searchField;
+    QLabel *m_label;
 };
 
 #endif // FILESDOCK_H
