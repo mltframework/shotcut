@@ -42,6 +42,9 @@ find_package(Qt6 6.4 REQUIRED
   Widgets
   Xml
 )
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  find_package(Qt6 6.4 REQUIRED COMPONENTS DBus)
+endif()
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(mlt++ REQUIRED IMPORTED_TARGET mlt++-7>=7.22.0)

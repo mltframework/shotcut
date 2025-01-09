@@ -266,6 +266,9 @@ target_link_libraries(shotcut
   Qt6::Widgets
   Qt6::Xml
 )
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  target_link_libraries(shotcut PRIVATE Qt6::DBus)
+endif()
 
 file(GLOB_RECURSE QML_SRC "qml/*")
 target_sources(shotcut PRIVATE ${QML_SRC})

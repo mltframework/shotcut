@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  * Inspiration: KDENLIVE colorpickerwidget.cpp by Till Theato (root@ttill.de)
  * Inspiration: QColorDialog.cpp
  *
@@ -31,6 +31,7 @@ ScreenSelector::ScreenSelector(QWidget *parent)
     , m_selectionPoint(-1, -1)
     , m_fixedSize(-1, -1)
     , m_boundingRect(-1, -1, -1, -1)
+    , m_useDBus(false)
 {
     setFrameStyle(QFrame::Box | QFrame::Plain);
     setWindowOpacity(0.5);
@@ -57,6 +58,20 @@ void ScreenSelector::setSelectedRect(const QRect &rect)
 
 void ScreenSelector::startSelection(QPoint initialPos)
 {
+#ifdef Q_OS_LINUX
+    const auto p = MAIN.geometry().center();
+    const auto id = MAIN.window()->winId();
+    for (auto screen : QGuiApplication::screens()) {
+        if (screen->geometry().contains(p)) {
+            m_useDBus = screen->grabWindow(id, p.x(), p.y(), 1, 1).isNull();
+            if (m_useDBus) {
+                emit screenSelected(m_selectionRect);
+                return;
+            }
+            break;
+        }
+    }
+#endif
     m_selectionInProgress = false;
     grabMouse();
     grabKeyboard();

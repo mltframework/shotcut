@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,10 @@ public:
     void setFixedSize(const QSize &size);
     void setBoundingRect(const QRect &rect);
     void setSelectedRect(const QRect &rect);
+    bool useDBus() const
+    {
+        return m_useDBus;
+    }
 
 public slots:
     void startSelection(QPoint initialPos = QPoint(-1, -1));
@@ -55,6 +59,7 @@ private:
     QPoint m_selectionPoint;
     QSize m_fixedSize;
     QRect m_boundingRect;
+    bool m_useDBus;
 };
 
 #endif // SCREENSELECTOR_H

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,13 +30,17 @@ public:
     explicit ColorPickerItem(QObject *parent = 0);
 
 signals:
-    void pickColor();
+    void pickColor(QPoint initialPos = QPoint(-1, -1));
     void colorPicked(const QColor &color);
     void cancelled();
 
 private slots:
     void screenSelected(const QRect &rect);
     void grabColor();
+#ifdef Q_OS_LINUX
+    void grabColorDBus();
+    void gotColorResponse(uint response, const QVariantMap &results);
+#endif
 
 private:
     ScreenSelector m_selector;
