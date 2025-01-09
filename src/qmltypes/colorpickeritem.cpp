@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2024 Meltytech, LLC
  * Inspiration: KDENLIVE colorpickerwidget.cpp by Till Theato (root@ttill.de)
  * Inspiration: QColorDialog.cpp
  *
@@ -48,7 +48,7 @@ void ColorPickerItem::grabColor()
     QPixmap screenGrab = screen->grabWindow(0, m_selectedRect.x(), m_selectedRect.y(),
                                             m_selectedRect.width(), m_selectedRect.height());
     QImage image = screenGrab.toImage();
-    int numPixel = image.width() * image.height();
+    int numPixel = qMax(image.width() * image.height(), 1);
     int sumR = 0;
     int sumG = 0;
     int sumB = 0;

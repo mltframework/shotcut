@@ -543,7 +543,8 @@ FilesDock::FilesDock(QWidget *parent)
         ui->locationsCombo->addItem(name, path);
     }
     ui->locationsCombo->setEditText(QDir::toNativeSeparators(Settings.filesCurrentDir()));
-    connect(ui->locationsCombo->lineEdit(), &QLineEdit::editingFinished, this, &FilesDock::onLocationsEditingFinished);
+    connect(ui->locationsCombo->lineEdit(), &QLineEdit::editingFinished, this,
+            &FilesDock::onLocationsEditingFinished);
 
     m_filesModel = new FilesModel(this);
     m_filesModel->setOption(QFileSystemModel::DontUseCustomDirectoryIcons);
