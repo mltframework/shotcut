@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 Meltytech, LLC
+ * Copyright (c) 2011-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -199,7 +199,7 @@ void VideoWidget::mouseMoveEvent(QMouseEvent *event)
         drag->setPixmap(QPixmap::fromImage(displayImage));
     }
     drag->setHotSpot(QPoint(0, 0));
-    drag->exec(Qt::LinkAction);
+    drag->exec(Qt::CopyAction);
 }
 
 void VideoWidget::keyPressEvent(QKeyEvent *event)

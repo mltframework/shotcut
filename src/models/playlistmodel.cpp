@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -496,7 +496,7 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
 
 Qt::DropActions PlaylistModel::supportedDropActions() const
 {
-    return Qt::CopyAction | Qt::MoveAction | Qt::LinkAction;
+    return Qt::CopyAction | Qt::MoveAction;
 }
 
 bool PlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
