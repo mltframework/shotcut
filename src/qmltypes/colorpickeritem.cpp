@@ -51,9 +51,11 @@ ColorPickerItem::ColorPickerItem(QObject *parent)
 void ColorPickerItem::screenSelected(const QRect &rect)
 {
     m_selectedRect = rect;
+#ifdef Q_OS_LINUX
     if (m_selector.useDBus())
         QTimer::singleShot(0, this, &ColorPickerItem::grabColorDBus);
     else
+#endif
         // Give the frame buffer time to clear the selector window before
         // grabbing the color.
         QTimer::singleShot(200, this, &ColorPickerItem::grabColor);
