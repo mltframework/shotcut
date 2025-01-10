@@ -90,6 +90,7 @@ Item {
             }));
         }
         _stopHandles = newHandles;
+        stopColor.color = stops[stopSpinner.value - 1].color;
     }
 
     function _setStopColor(index, color, position) {
@@ -356,7 +357,10 @@ Item {
                 from: 1
                 to: stops.length
                 stepSize: 1
-                onValueChanged: stopPosition.value = stops[value - 1].position * 100
+                onValueChanged: {
+                    stopPosition.value = stops[value - 1].position * 100
+                    stopColor.color = stops[stopSpinner.value - 1].color;
+                }
             }
 
             Label {
