@@ -233,6 +233,21 @@ Rectangle {
         }
 
         Shotcut.Button {
+            id: copySelectedButton
+
+            implicitWidth: height
+            icon.name: 'edit-select'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-select.png'
+            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
+            opacity: enabled ? 1 : 0.5
+            onClicked: application.copyCurrentFilter()
+
+            Shotcut.HoverTip {
+                text: qsTr('Copy current filter')
+            }
+        }
+
+        Shotcut.Button {
             id: pasteButton
 
             implicitWidth: height

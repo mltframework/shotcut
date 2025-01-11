@@ -130,8 +130,9 @@ public:
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties &properties) const;
     static void copyFilters(Mlt::Producer &fromProducer, Mlt::Producer &toProducer,
-                            bool fromClipboard = false, bool includeDisabled = true);
-    void copyFilters(Mlt::Producer *producer = nullptr);
+                            bool fromClipboard = false, bool includeDisabled = true,
+                            int filterIndex = -1);
+    void copyFilters(Mlt::Producer *producer = nullptr, int filterIndex = -1);
     void pasteFilters(Mlt::Producer *producer = nullptr, Mlt::Producer *fromProducer = nullptr);
     static void adjustFilters(Mlt::Producer &producer, int startIndex = 0);
     static void adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta, int outDelta,

@@ -228,6 +228,17 @@ void FiltersDock::setupActions()
     addAction(action);
     Actions.add("filtersCopyFiltersAction", action, windowTitle());
 
+    action = new QAction(tr("Copy Current Filter"), this);
+    action->setToolTip(tr("Copy current filter to the clipboard"));
+    icon = QIcon::fromTheme("edit-copy",
+                            QIcon(":/icons/oxygen/32x32/actions/edit-select.png"));
+    action->setIcon(icon);
+    connect(action, &QAction::triggered, this, [ = ]() {
+        QmlApplication::singleton().copyCurrentFilter();
+    });
+    addAction(action);
+    Actions.add("filtersCopyCurrentFilterAction", action, windowTitle());
+
     action = new QAction(tr("Paste Filters"), this);
     action->setToolTip(tr("Paste the filters from the clipboard"));
     icon = QIcon::fromTheme("edit-paste",
