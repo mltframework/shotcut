@@ -370,8 +370,7 @@ protected:
     }
 
 private:
-    QList<PlaylistModel::MediaType> m_mediaTypes {
-        PlaylistModel::Video, PlaylistModel::Audio, PlaylistModel::Image, PlaylistModel::Other};
+    QList<PlaylistModel::MediaType> m_mediaTypes;
     QString m_bin;
     enum PlaylistDock::SmartBin m_smartBin { PlaylistDock::SmartBinNone };
     std::vector<std::function<bool(int row, const QModelIndex &index)>> m_functors;
@@ -1118,28 +1117,24 @@ void PlaylistDock::setupActions()
     action = new QAction(tr("Video"), this);
     action->setToolTip(tr("Show or hide video files"));
     action->setCheckable(true);
-    action->setChecked(true);
     connect(action, &QAction::triggered, this, &PlaylistDock::onMediaTypeClicked);
     Actions.add("playlistFiltersVideo", action, this->windowTitle());
 
     action = new QAction(tr("Audio"), this);
     action->setToolTip(tr("Show or hide audio files"));
     action->setCheckable(true);
-    action->setChecked(true);
     connect(action, &QAction::triggered, this, &PlaylistDock::onMediaTypeClicked);
     Actions.add("playlistFiltersAudio", action, this->windowTitle());
 
     action = new QAction(tr("Image"), this);
     action->setToolTip(tr("Show or hide image files"));
     action->setCheckable(true);
-    action->setChecked(true);
     connect(action, &QAction::triggered, this, &PlaylistDock::onMediaTypeClicked);
     Actions.add("playlistFiltersImage", action, this->windowTitle());
 
     action = new QAction(tr("Other"), this);
     action->setToolTip(tr("Show or hide other kinds of files"));
     action->setCheckable(true);
-    action->setChecked(true);
     connect(action, &QAction::triggered, this, &PlaylistDock::onMediaTypeClicked);
     Actions.add("playlistFiltersOther", action, this->windowTitle());
 
