@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ AbstractJob::AbstractJob(const QString &name, QThread::Priority priority)
     , m_label(name)
     , m_startingPercent(0)
     , m_priority(priority)
+    , m_isPaused(false)
 {
     setObjectName(name);
     connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int,
@@ -118,7 +119,7 @@ void AbstractJob::setPostJobAction(PostJobAction *action)
 
 bool AbstractJob::paused() const
 {
-    return !m_actionPause->isEnabled();
+    return m_isPaused;
 }
 
 void AbstractJob::start(const QString &program, const QStringList &arguments)
@@ -137,6 +138,7 @@ void AbstractJob::start(const QString &program, const QStringList &arguments)
     AbstractJob::start();
     m_actionPause->setEnabled(true);
     m_actionResume->setEnabled(false);
+    m_isPaused = false;
 }
 
 void AbstractJob::stop()
@@ -158,6 +160,7 @@ void AbstractJob::stop()
 
 void AbstractJob::pause()
 {
+    m_isPaused = true;
     m_actionPause->setEnabled(false);
     m_actionResume->setEnabled(true);
 
@@ -179,6 +182,7 @@ void AbstractJob::resume()
 #else
     ::kill(QProcess::processId(), SIGCONT);
 #endif
+    m_isPaused = false;
     emit progressUpdated(m_item, 0);
 }
 
@@ -207,6 +211,7 @@ void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
     }
     m_actionPause->setEnabled(false);
     m_actionResume->setEnabled(false);
+    m_isPaused = false;
 }
 
 void AbstractJob::onReadyRead()
