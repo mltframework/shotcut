@@ -1566,11 +1566,13 @@ void PlaylistDock::onRemoveActionTriggered()
     show();
     raise();
     QList<int> rowsRemoved;
-    int n = m_view->selectionModel()->selectedIndexes().size();
+    QList<int> selected;
+    for (const auto &index : m_view->selectionModel()->selectedIndexes())
+        selected << m_proxyModel->mapToSource(index).row();
+    int n = selected.size();
     if (n > 1)
         MAIN.undoStack()->beginMacro(tr("Remove %n playlist items", nullptr, n));
-    for (const auto &index : m_view->selectionModel()->selectedIndexes()) {
-        int row = m_proxyModel->mapToSource(index).row();
+    for (int row : selected) {
         if (!rowsRemoved.contains(row)) {
             int adjustment = 0;
             for (const int i : rowsRemoved) {
