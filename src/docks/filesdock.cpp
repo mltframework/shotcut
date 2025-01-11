@@ -550,6 +550,7 @@ FilesDock::FilesDock(QWidget *parent)
     m_filesModel->setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     m_filesModel->setReadOnly(true);
     m_filesModel->setRootPath(Settings.filesCurrentDir());
+    ui->locationsCombo->setToolTip(Settings.filesCurrentDir());
     m_filesProxyModel = new FilesProxyModel(this);
     m_filesProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     m_filesProxyModel->setSourceModel(m_filesModel);
@@ -1097,6 +1098,7 @@ void FilesDock::changeDirectory(const QString &filePath, bool resetLocations)
     ui->treeView->setCurrentIndex(index);
     index = m_filesModel->setRootPath(path);
     Settings.setFilesCurrentDir(path);
+    ui->locationsCombo->setToolTip(path);
     m_view->setRootIndex(m_filesProxyModel->mapFromSource(index));
     m_iconsView->updateSizes();
     if (resetLocations)
@@ -1118,6 +1120,7 @@ void FilesDock::changeFilesDirectory(const QModelIndex &index)
     m_iconsView->updateSizes();
     auto path = QDir::toNativeSeparators(m_filesModel->rootPath());
     ui->locationsCombo->setCurrentText(path);
+    ui->locationsCombo->setToolTip(path);
     m_view->scrollToTop();
     clearStatus();
 }
