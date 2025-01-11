@@ -4,12 +4,12 @@
 <context>
     <name>AbstractJob</name>
     <message>
-        <location filename="../src/jobs/abstractjob.cpp" line="47"/>
+        <location filename="../src/jobs/abstractjob.cpp" line="48"/>
         <source>Pause This Job</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/jobs/abstractjob.cpp" line="50"/>
+        <location filename="../src/jobs/abstractjob.cpp" line="51"/>
         <source>Resume This Job</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2347,12 +2347,13 @@ Shotcut will attempt to repair your project.</source>
     <message>
         <location filename="../src/docks/filesdock.ui" line="18"/>
         <location filename="../src/docks/filesdock.cpp" line="598"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="597"/>
         <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.ui" line="61"/>
-        <source>Locations</source>
+        <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2366,257 +2367,307 @@ Shotcut will attempt to repair your project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="512"/>
+        <location filename="../src/docks/filesdock.cpp" line="511"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="513"/>
         <source>Home</source>
         <comment>The user&apos;s home folder in the file system</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="513"/>
+        <location filename="../src/docks/filesdock.cpp" line="512"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="514"/>
         <source>Current Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="514"/>
+        <location filename="../src/docks/filesdock.cpp" line="513"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="515"/>
         <source>Documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="517"/>
+        <location filename="../src/docks/filesdock.cpp" line="516"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="518"/>
         <source>Movies</source>
         <comment>The system-provided videos folder called Movies on macOS</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="521"/>
+        <location filename="../src/docks/filesdock.cpp" line="520"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="522"/>
         <source>Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="523"/>
+        <location filename="../src/docks/filesdock.cpp" line="522"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="524"/>
         <source>Pictures</source>
         <comment>The system-provided photos folder</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="526"/>
+        <location filename="../src/docks/filesdock.cpp" line="525"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="527"/>
         <source>Volumes</source>
         <comment>The macOS file system location where external drives and network shares are mounted</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="530"/>
+        <location filename="../src/docks/filesdock.cpp" line="529"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="531"/>
         <source>Videos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="608"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="607"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="612"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="611"/>
         <source>Files Controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="617"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="616"/>
         <source>Files Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="636"/>
         <location filename="../src/docks/filesdock.cpp" line="640"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="634"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="638"/>
         <source>Files Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="661"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="659"/>
         <source>Only show files whose name contains some text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="662"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="660"/>
         <source>search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="766"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="764"/>
         <source>Tiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="767"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="765"/>
         <source>View as tiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="779"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="777"/>
         <source>Icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="780"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="778"/>
         <source>View as icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="792"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="790"/>
         <source>Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="793"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="791"/>
         <source>View as details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="805"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="803"/>
         <source>Open In Shotcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="806"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="804"/>
         <source>Open the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="814"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="812"/>
         <source>System Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="828"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="826"/>
         <source>Other...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="836"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="834"/>
         <source>Remove...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="844"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="842"/>
         <source>Show In File Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="854"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="852"/>
         <source>Update Thumbnails</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="862"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="860"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="873"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="871"/>
         <source>Select None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="884"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="882"/>
         <source>Open Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="896"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="894"/>
         <source>Open Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="908"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="906"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="909"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="907"/>
         <source>Show or hide video files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="915"/>
+        <location filename="../src/docks/filesdock.cpp" line="914"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="913"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="916"/>
+        <location filename="../src/docks/filesdock.cpp" line="915"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="914"/>
         <source>Show or hide audio files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="922"/>
+        <location filename="../src/docks/filesdock.cpp" line="920"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="920"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="923"/>
+        <location filename="../src/docks/filesdock.cpp" line="921"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="921"/>
         <source>Show or hide image files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="929"/>
+        <location filename="../src/docks/filesdock.cpp" line="926"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="927"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="930"/>
+        <location filename="../src/docks/filesdock.cpp" line="927"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="928"/>
         <source>Show or hide other kinds of files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="936"/>
+        <location filename="../src/docks/filesdock.cpp" line="932"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="934"/>
         <source>Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="937"/>
+        <location filename="../src/docks/filesdock.cpp" line="933"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="935"/>
         <source>Hide or show the list of folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="949"/>
+        <location filename="../src/docks/filesdock.cpp" line="945"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="947"/>
         <source>Go Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="950"/>
+        <location filename="../src/docks/filesdock.cpp" line="946"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="948"/>
         <source>Show the parent folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="969"/>
+        <location filename="../src/docks/filesdock.cpp" line="965"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="967"/>
         <source>Refresh Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="991"/>
+        <location filename="../src/docks/filesdock.cpp" line="987"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="989"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1015"/>
+        <location filename="../src/docks/filesdock.cpp" line="1011"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="1013"/>
         <source>Open With</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1256"/>
+        <location filename="../src/docks/filesdock.cpp" line="1252"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="1253"/>
         <source>Executable Files (*.exe);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1260"/>
+        <location filename="../src/docks/filesdock.cpp" line="1256"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="1257"/>
         <source>Choose Executable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1282"/>
+        <location filename="../src/docks/filesdock.cpp" line="1278"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="1279"/>
         <source>Remove From Open Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/filesdock.cpp" line="1301"/>
+        <location filename="../src/docks/filesdock.cpp" line="1297"/>
         <source>%n item(s)</source>
         <translation type="unfinished">
             <numerusform>%n item</numerusform>
@@ -2624,45 +2675,62 @@ Shotcut will attempt to repair your project.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1343"/>
+        <location filename="../src/docks/filesdock.cpp" line="1339"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="1326"/>
         <source>Add Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1344"/>
+        <location filename="../src/docks/filesdock.cpp" line="1340"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="1327"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1362"/>
+        <location filename="../src/docks/filesdock.cpp" line="1358"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="1345"/>
         <source>Delete Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1363"/>
+        <location filename="../src/docks/filesdock.cpp" line="1359"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="1346"/>
         <source>Are you sure you want to remove %1?</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/docks/filesdock.cpp.orig" line="1298"/>
+        <source>%1: %n item(s)</source>
+        <comment>Files view</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
     <name>FilesModel</name>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="252"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="252"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="253"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="253"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="254"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="254"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="255"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="255"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2671,11 +2739,13 @@ Shotcut will attempt to repair your project.</source>
     <name>FilesTileDelegate</name>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="420"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="420"/>
         <source>Date: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="427"/>
+        <location filename="../src/docks/filesdock.cpp.orig" line="427"/>
         <source>Size: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6854,7 +6924,7 @@ Try again with a different folder.</source>
     <name>PlaylistDock</name>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="18"/>
-        <location filename="../src/docks/playlistdock.cpp" line="430"/>
+        <location filename="../src/docks/playlistdock.cpp" line="429"/>
         <source>Playlist</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6876,399 +6946,399 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="633"/>
+        <location filename="../src/docks/playlistdock.cpp" line="632"/>
         <source>Add the Source to the playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="645"/>
+        <location filename="../src/docks/playlistdock.cpp" line="644"/>
         <source>Remove cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="664"/>
+        <location filename="../src/docks/playlistdock.cpp" line="663"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="677"/>
+        <location filename="../src/docks/playlistdock.cpp" line="676"/>
         <source>View as tiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="690"/>
+        <location filename="../src/docks/playlistdock.cpp" line="689"/>
         <source>View as icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="703"/>
+        <location filename="../src/docks/playlistdock.cpp" line="702"/>
         <source>View as details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="640"/>
+        <location filename="../src/docks/playlistdock.cpp" line="639"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="755"/>
+        <location filename="../src/docks/playlistdock.cpp" line="754"/>
         <source>Set Creation Time...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/docks/playlistdock.cpp" line="740"/>
         <location filename="../src/docks/playlistdock.cpp" line="741"/>
-        <location filename="../src/docks/playlistdock.cpp" line="742"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="499"/>
+        <location filename="../src/docks/playlistdock.cpp" line="498"/>
         <source>Playlist Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="631"/>
+        <location filename="../src/docks/playlistdock.cpp" line="630"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="716"/>
+        <location filename="../src/docks/playlistdock.cpp" line="715"/>
         <source>Open the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="726"/>
+        <location filename="../src/docks/playlistdock.cpp" line="725"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="763"/>
+        <location filename="../src/docks/playlistdock.cpp" line="762"/>
         <source>Remove All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="764"/>
+        <location filename="../src/docks/playlistdock.cpp" line="763"/>
         <source>Remove all items from the playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="840"/>
+        <location filename="../src/docks/playlistdock.cpp" line="839"/>
         <source>Hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="852"/>
+        <location filename="../src/docks/playlistdock.cpp" line="851"/>
         <source>In and Out - Left/Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="867"/>
+        <location filename="../src/docks/playlistdock.cpp" line="866"/>
         <source>In and Out - Top/Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="882"/>
+        <location filename="../src/docks/playlistdock.cpp" line="881"/>
         <source>In Only - Small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="897"/>
+        <location filename="../src/docks/playlistdock.cpp" line="896"/>
         <source>In Only - Large</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="807"/>
+        <location filename="../src/docks/playlistdock.cpp" line="806"/>
         <source>Add Selected to Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="814"/>
+        <location filename="../src/docks/playlistdock.cpp" line="813"/>
         <source>Add Selected to Slideshow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="912"/>
+        <location filename="../src/docks/playlistdock.cpp" line="911"/>
         <source>Play After Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="769"/>
+        <location filename="../src/docks/playlistdock.cpp" line="768"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="775"/>
+        <location filename="../src/docks/playlistdock.cpp" line="774"/>
         <source>Select None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="747"/>
+        <location filename="../src/docks/playlistdock.cpp" line="746"/>
         <source>Update Thumbnails</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="821"/>
+        <location filename="../src/docks/playlistdock.cpp" line="820"/>
         <source>Sort By Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="829"/>
+        <location filename="../src/docks/playlistdock.cpp" line="828"/>
         <source>Sort By Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="702"/>
+        <location filename="../src/docks/playlistdock.cpp" line="701"/>
         <source>Details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="460"/>
+        <location filename="../src/docks/playlistdock.cpp" line="459"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="477"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1169"/>
+        <location filename="../src/docks/playlistdock.cpp" line="476"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1164"/>
         <source>Bins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="484"/>
+        <location filename="../src/docks/playlistdock.cpp" line="483"/>
         <source>Columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="494"/>
+        <location filename="../src/docks/playlistdock.cpp" line="493"/>
         <source>Playlist Controls</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="519"/>
-        <location filename="../src/docks/playlistdock.cpp" line="523"/>
+        <location filename="../src/docks/playlistdock.cpp" line="518"/>
+        <location filename="../src/docks/playlistdock.cpp" line="522"/>
         <source>Playlist Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="544"/>
+        <location filename="../src/docks/playlistdock.cpp" line="543"/>
         <source>Only show files whose name, path, or comment contains some text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="545"/>
+        <location filename="../src/docks/playlistdock.cpp" line="544"/>
         <source>search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="657"/>
+        <location filename="../src/docks/playlistdock.cpp" line="656"/>
         <source>Add files to playlist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="676"/>
+        <location filename="../src/docks/playlistdock.cpp" line="675"/>
         <source>Tiles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="689"/>
+        <location filename="../src/docks/playlistdock.cpp" line="688"/>
         <source>Icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="715"/>
+        <location filename="../src/docks/playlistdock.cpp" line="714"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="725"/>
+        <location filename="../src/docks/playlistdock.cpp" line="724"/>
         <source>GoTo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="731"/>
+        <location filename="../src/docks/playlistdock.cpp" line="730"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="732"/>
+        <location filename="../src/docks/playlistdock.cpp" line="731"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="783"/>
+        <location filename="../src/docks/playlistdock.cpp" line="782"/>
         <source>Move Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="795"/>
+        <location filename="../src/docks/playlistdock.cpp" line="794"/>
         <source>Move Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="920"/>
+        <location filename="../src/docks/playlistdock.cpp" line="919"/>
         <source>Open Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="933"/>
+        <location filename="../src/docks/playlistdock.cpp" line="932"/>
         <source>Open Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="946"/>
+        <location filename="../src/docks/playlistdock.cpp" line="945"/>
         <source>Select Clip 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="959"/>
+        <location filename="../src/docks/playlistdock.cpp" line="958"/>
         <source>Select Clip 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="971"/>
+        <location filename="../src/docks/playlistdock.cpp" line="970"/>
         <source>Select Clip 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="983"/>
+        <location filename="../src/docks/playlistdock.cpp" line="982"/>
         <source>Select Clip 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="995"/>
+        <location filename="../src/docks/playlistdock.cpp" line="994"/>
         <source>Select Clip 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1007"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1006"/>
         <source>Select Clip 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1019"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1018"/>
         <source>Select Clip 7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1031"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1030"/>
         <source>Select Clip 8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1043"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1042"/>
         <source>Select Clip 9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1055"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1054"/>
         <source>Thumbnails</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1064"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1063"/>
         <source>Clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1073"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1072"/>
         <source>In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1082"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1081"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1091"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1090"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1100"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1099"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1109"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1108"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1118"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1117"/>
         <source>Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1119"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1118"/>
         <source>Show or hide video files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1125"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1123"/>
         <source>Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1126"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1124"/>
         <source>Show or hide audio files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1132"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1129"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1133"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1130"/>
         <source>Show or hide image files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1139"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1135"/>
         <source>Other</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1140"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1136"/>
         <source>Show or hide other kinds of files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1146"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1147"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1141"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1142"/>
         <source>New Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1159"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1200"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1154"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1195"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1170"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1165"/>
         <source>Show or hide the list of bins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1180"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1181"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1175"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1176"/>
         <source>Remove Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1192"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1193"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1187"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1188"/>
         <source>Rename Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1213"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1208"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1247"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1242"/>
         <source>Replace %n playlist items</source>
         <translation type="unfinished">
             <numerusform>Replace %n playlist item</numerusform>
@@ -7276,18 +7346,18 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="481"/>
+        <location filename="../src/docks/playlistdock.cpp" line="480"/>
         <source>Sort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1558"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1785"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1553"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1782"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1571"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1569"/>
         <source>Remove %n playlist items</source>
         <translation type="unfinished">
             <numerusform>Remove %n playlist item</numerusform>
@@ -7295,39 +7365,39 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="656"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1344"/>
+        <location filename="../src/docks/playlistdock.cpp" line="655"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1339"/>
         <source>Add Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1298"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1293"/>
         <source>Appending</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1353"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1362"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1348"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1357"/>
         <source>Failed to open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1419"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1414"/>
         <source>Dropped Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1868"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1865"/>
         <source>Generating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2079"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2076"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2080"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2077"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7935,12 +8005,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1283"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1278"/>
         <source>Generating Playlist for Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1867"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1864"/>
         <source>Generate Slideshow</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14627,7 +14697,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="482"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="679"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="196"/>
-        <location filename="../src/qml/filters/gradientmap/ui.qml" line="245"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="246"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="48"/>
         <location filename="../src/qml/filters/grid/ui.qml" line="137"/>
         <location filename="../src/qml/filters/halftone/ui.qml" line="82"/>
@@ -15593,7 +15663,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="216"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1529"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="313"/>
-        <location filename="../src/qml/filters/gradientmap/ui.qml" line="363"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="367"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="390"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="156"/>
         <location filename="../src/qml/filters/reframe/ui.qml" line="222"/>
@@ -16864,7 +16934,7 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/dropshadow/ui.qml" line="98"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1302"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1366"/>
-        <location filename="../src/qml/filters/gradientmap/ui.qml" line="379"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="383"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="126"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
@@ -18983,28 +19053,28 @@ Set to 0 to only print real points (no interpolation).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gradientmap/ui.qml" line="139"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="140"/>
         <source>Sepia</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gradientmap/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="146"/>
         <source>Thermal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gradientmap/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="205"/>
         <source>Color #%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gradientmap/ui.qml" line="210"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="211"/>
         <source>Color: %1
 Click to select, drag to change position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gradientmap/ui.qml" line="343"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="344"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
