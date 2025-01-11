@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Meltytech, LLC
+ * Copyright (c) 2024-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -496,8 +496,7 @@ protected:
     }
 
 private:
-    QList<PlaylistModel::MediaType> m_mediaTypes {
-        PlaylistModel::Video, PlaylistModel::Audio, PlaylistModel::Image, PlaylistModel::Other};
+    QList<PlaylistModel::MediaType> m_mediaTypes;
 };
 
 FilesDock::FilesDock(QWidget *parent)
@@ -909,28 +908,24 @@ void FilesDock::setupActions()
     action = new QAction(tr("Video"), this);
     action->setToolTip(tr("Show or hide video files"));
     action->setCheckable(true);
-    action->setChecked(true);
     connect(action, &QAction::triggered, this, &FilesDock::onMediaTypeClicked);
     Actions.add("filesFiltersVideo", action, this->windowTitle());
 
     action = new QAction(tr("Audio"), this);
     action->setToolTip(tr("Show or hide audio files"));
     action->setCheckable(true);
-    action->setChecked(true);
     connect(action, &QAction::triggered, this, &FilesDock::onMediaTypeClicked);
     Actions.add("filesFiltersAudio", action, this->windowTitle());
 
     action = new QAction(tr("Image"), this);
     action->setToolTip(tr("Show or hide image files"));
     action->setCheckable(true);
-    action->setChecked(true);
     connect(action, &QAction::triggered, this, &FilesDock::onMediaTypeClicked);
     Actions.add("filesFiltersImage", action, this->windowTitle());
 
     action = new QAction(tr("Other"), this);
     action->setToolTip(tr("Show or hide other kinds of files"));
     action->setCheckable(true);
-    action->setChecked(true);
     connect(action, &QAction::triggered, this, &FilesDock::onMediaTypeClicked);
     Actions.add("filesFiltersOther", action, this->windowTitle());
 
