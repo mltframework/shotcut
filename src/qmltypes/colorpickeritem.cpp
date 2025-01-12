@@ -64,7 +64,8 @@ void ColorPickerItem::screenSelected(const QRect &rect)
 void ColorPickerItem::grabColor()
 {
     QScreen *screen = QGuiApplication::screenAt(m_selectedRect.topLeft());
-    QPixmap screenGrab = screen->grabWindow(0, m_selectedRect.x(), m_selectedRect.y(),
+    QPixmap screenGrab = screen->grabWindow(0, m_selectedRect.x() - screen->geometry().x(),
+                                            m_selectedRect.y() - screen->geometry().y(),
                                             m_selectedRect.width(), m_selectedRect.height());
     QImage image = screenGrab.toImage();
     int numPixel = qMax(image.width() * image.height(), 1);
