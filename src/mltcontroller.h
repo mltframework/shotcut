@@ -69,6 +69,11 @@ protected:
     virtual int reconfigure(bool isMulti) = 0;
 
 public:
+    enum {
+        FILTER_INDEX_ALL = -1,
+        FILTER_INDEX_ENABLED = -2,
+    };
+
     static Controller &singleton(QObject *parent = nullptr);
     virtual ~Controller();
     static void destroy();
@@ -130,9 +135,8 @@ public:
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties &properties) const;
     static void copyFilters(Mlt::Producer &fromProducer, Mlt::Producer &toProducer,
-                            bool fromClipboard = false, bool includeDisabled = true,
-                            int filterIndex = -1);
-    void copyFilters(Mlt::Producer *producer = nullptr, int filterIndex = -1);
+                            bool fromClipboard = false, int filterIndex = FILTER_INDEX_ENABLED);
+    void copyFilters(Mlt::Producer *producer = nullptr, int filterIndex = FILTER_INDEX_ENABLED);
     void pasteFilters(Mlt::Producer *producer = nullptr, Mlt::Producer *fromProducer = nullptr);
     static void adjustFilters(Mlt::Producer &producer, int startIndex = 0);
     static void adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta, int outDelta,

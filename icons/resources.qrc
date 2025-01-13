@@ -227,12 +227,10 @@
         <file>oxygen/32x32/actions/edit-copy.png</file>
         <file>oxygen/32x32/actions/edit-cut.png</file>
         <file>oxygen/32x32/actions/edit-paste.png</file>
-        <file>oxygen/32x32/actions/edit-select.png</file>
         <file>oxygen/32x32/actions/edit-select-all.png</file>
         <file>light/32x32/edit-copy.png</file>
         <file>light/32x32/edit-cut.png</file>
         <file>light/32x32/edit-paste.png</file>
-        <file>light/32x32/edit-select.png</file>
         <file>light/32x32/edit-select-all.png</file>
         <file>oxygen/32x32/actions/format-indent-less.png</file>
         <file>oxygen/32x32/actions/format-indent-more.png</file>
@@ -269,7 +267,6 @@
         <file>dark/32x32/edit-copy.png</file>
         <file>dark/32x32/edit-cut.png</file>
         <file>dark/32x32/edit-paste.png</file>
-        <file>dark/32x32/edit-select.png</file>
         <file>dark/32x32/edit-select-all.png</file>
         <file>dark/32x32/format-indent-less.png</file>
         <file>dark/32x32/format-indent-more.png</file>

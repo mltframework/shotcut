@@ -1117,7 +1117,7 @@ static int indexOfFirstNonGpu(Producer &toProducer)
 }
 
 void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool fromClipboard,
-                             bool includeDisabled, int filterIndex)
+                             int filterIndex)
 {
     int in = fromProducer.get(kFilterInProperty) ? fromProducer.get_int(kFilterInProperty) :
              fromProducer.get_in();
@@ -1136,11 +1136,11 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
                 && fromFilter->get("mlt_service")) {
 
             filterCount++;
-            if (filterIndex != -1 && filterIndex != (filterCount - 1)) {
+            if (filterIndex >= 0 && filterIndex != (filterCount - 1)) {
                 continue;
             }
 
-            if (!includeDisabled && fromFilter->get_int("disable")) {
+            if (filterIndex == FILTER_INDEX_ENABLED && fromFilter->get_int("disable")) {
                 continue;
             }
 
@@ -1205,13 +1205,12 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
 
 void Controller::copyFilters(Mlt::Producer *producer, int filterIndex)
 {
-    bool includeDisabled = filterIndex >= 0;
     if (producer && producer->is_valid()) {
         initFiltersClipboard();
-        copyFilters(*producer, *m_filtersClipboard, false, includeDisabled, filterIndex);
+        copyFilters(*producer, *m_filtersClipboard, false, filterIndex);
     } else if (m_producer && m_producer->is_valid()) {
         initFiltersClipboard();
-        copyFilters(*m_producer, *m_filtersClipboard, false, includeDisabled, filterIndex);
+        copyFilters(*m_producer, *m_filtersClipboard, false, filterIndex);
     }
 }
 
