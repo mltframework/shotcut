@@ -229,33 +229,24 @@ void FiltersDock::setupActions()
     addAction(action);
     Actions.add("filtersRemoveFilterAction", action, windowTitle());
 
-    action = new QAction(tr("Copy Enabled Filters"), this);
+    action = new QAction(tr("Copy Enabled"), this);
     action->setToolTip(tr("Copy checked filters to the clipboard"));
-    icon = QIcon::fromTheme("edit-copy",
-                            QIcon(":/icons/oxygen/32x32/actions/edit-copy.png"));
-    action->setIcon(icon);
     connect(action, &QAction::triggered, this, [ = ]() {
         QmlApplication::singleton().copyEnabledFilters();
     });
     addAction(action);
     Actions.add("filtersCopyFiltersAction", action, windowTitle());
 
-    action = new QAction(tr("Copy Current Filter"), this);
+    action = new QAction(tr("Copy Current"), this);
     action->setToolTip(tr("Copy current filter to the clipboard"));
-    icon = QIcon::fromTheme("edit-copy",
-                            QIcon(":/icons/oxygen/32x32/actions/edit-copy.png"));
-    action->setIcon(icon);
     connect(action, &QAction::triggered, this, [ = ]() {
         QmlApplication::singleton().copyCurrentFilter();
     });
     addAction(action);
     Actions.add("filtersCopyCurrentFilterAction", action, windowTitle());
 
-    action = new QAction(tr("Copy All Filters"), this);
+    action = new QAction(tr("Copy All"), this);
     action->setToolTip(tr("Copy all filters to the clipboard"));
-    icon = QIcon::fromTheme("edit-copy",
-                            QIcon(":/icons/oxygen/32x32/actions/edit-copy.png"));
-    action->setIcon(icon);
     connect(action, &QAction::triggered, this, [ = ]() {
         QmlApplication::singleton().copyAllFilters();
     });
