@@ -1118,7 +1118,6 @@ void SubtitlesDock::generateTextOnTimeline()
         producer.set("mlt_image_format", "rgba");
         producer.set("in", 0);
         producer.set("out", frameEnd - frameStart);
-        producer.set("length", producer.frames_to_time(frameEnd - frameStart + 1, mlt_time_clock));
         // Add a text filter
         Mlt::Filter filter(MLT.profile(), "dynamictext");
         filter.set(kShotcutFilterProperty, "dynamicText");
