@@ -224,25 +224,25 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             for (int j = 0; j < ui->videoCodecCombo->count(); j++)
                 if (ui->videoCodecCombo->itemText(j) == vcodec)
                     ui->videoCodecCombo->setCurrentIndex(j);
-        } else if (name == "channels")
+        } else if (name == "channels") {
             setAudioChannels( preset.get_int("channels") );
-        else if (name == "ar")
+        } else if (name == "ar") {
             ui->sampleRateCombo->lineEdit()->setText(value);
-        else if (name == "ab")
+        } else if (name == "ab") {
             ui->audioBitrateCombo->lineEdit()->setText(value);
-        else if (name == "vb") {
+        } else if (name == "vb") {
             ui->videoRateControlCombo->setCurrentIndex((preset.get_int("vb") > 0) ? RateControlAverage :
                                                        RateControlQuality);
             ui->videoBitrateCombo->lineEdit()->setText(value);
-        } else if (name == "g")
+        } else if (name == "g") {
             ui->gopSpinner->setValue(preset.get_int("g"));
-        else if (name == "sc_threshold" && !preset.get_int("sc_threshold"))
+        } else if (name == "sc_threshold" && !preset.get_int("sc_threshold")) {
             ui->strictGopCheckBox->setChecked(true);
-        else if (name == "keyint_min" && preset.get_int("keyint_min") == preset.get_int("g"))
+        } else if (name == "keyint_min" && preset.get_int("keyint_min") == preset.get_int("g")) {
             ui->strictGopCheckBox->setChecked(true);
-        else if (name == "bf")
+        } else if (name == "bf") {
             ui->bFramesSpinner->setValue(preset.get_int("bf"));
-        else if (name == "deinterlace") {
+        } else if (name == "deinterlace") {
             ui->scanModeCombo->setCurrentIndex(preset.get_int("deinterlace"));
             on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
         } else if (name == "progressive") {
@@ -302,11 +302,11 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             }
             if (!value.isEmpty())
                 other.append(QStringLiteral("%1=%2").arg(name, value));
-        } else if (name == "pass")
+        } else if (name == "pass") {
             ui->dualPassCheckbox->setChecked(true);
-        else if (name == "v2pass")
+        } else if (name == "v2pass") {
             ui->dualPassCheckbox->setChecked(preset.get_int("v2pass"));
-        else if (name == "aq") {
+        } else if (name == "aq") {
             ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
             audioQuality = preset.get_int("aq");
         } else if (name == "compression_level") {
@@ -324,7 +324,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             if (preset.get_int("abr"))
                 ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
         } else if (name == "vq" || name == "vqp" || name == "vglobal_quality" || name == "qscale"
-                   || qmin_nvenc_amf || name == "cq" || name == "crf") {
+                   || (name == "qmin" && qmin_nvenc_amf) || name == "cq" || name == "crf") {
             // On macOS videotoolbox, constant quality is only on Apple Silicon
 #if defined(Q_OS_MAC) && !defined(Q_PROCESSOR_ARM)
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize") ? RateControlConstrained
@@ -373,10 +373,12 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->interpolationCombo->setCurrentIndex(3);
         } else if (name == "color_range" && (value == "pc" || value == "jpeg")) {
             ui->rangeComboBox->setCurrentIndex(1);
-        } else if (name != "an" && name != "vn" && name != "threads"
-                   && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
-                   && !name.startsWith('_') && !name.startsWith("qp_") && !name.startsWith("meta.preset.")) {
-            other.append(QStringLiteral("%1=%2").arg(name, value));
+        } else {
+            if (name != "an" && name != "vn" && name != "threads"
+                    && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
+                    && !name.startsWith('_') && !name.startsWith("qp_") && !name.startsWith("meta.preset.")) {
+                other.append(QStringLiteral("%1=%2").arg(name, value));
+            }
         }
     }
     filterCodecParams(vcodec, other);

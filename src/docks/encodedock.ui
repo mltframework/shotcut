@@ -1404,7 +1404,7 @@ in temporal compression</string>
                 <item>
                  <widget class="QDoubleSpinBox" name="videoBufferSizeSpinner">
                   <property name="maximum">
-                   <double>9999.000000000000000</double>
+                   <double>99999.000000000000000</double>
                   </property>
                   <property name="value">
                    <double>224.000000000000000</double>
