@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,10 @@ import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 
 Item {
-
-    // For a = 0, the function is linear
-    // The solution to the quadratic formula reduces to:
     property var defaultParameters: ['lift_r', 'lift_g', 'lift_b', 'gamma_r', 'gamma_g', 'gamma_b', 'gain_r', 'gain_g', 'gain_b']
-    property double gammaFactor: 2
-    property double gainFactor: 4
+    property double _gammaFactorV0: 2
+    property double _gainFactorV0: 4
+    property int _filterVersion: 1
     property bool blockUpdate: true
 
     function loadValues() {
@@ -38,12 +36,12 @@ Item {
         liftRedSpinner.value = filter.getDouble("lift_r", position) * 100;
         liftGreenSpinner.value = filter.getDouble("lift_g", position) * 100;
         liftBlueSpinner.value = filter.getDouble("lift_b", position) * 100;
-        gammaRedSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gamma_r", position), gammaFactor));
-        gammaGreenSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gamma_g", position), gammaFactor));
-        gammaBlueSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gamma_b", position), gammaFactor));
-        gainRedSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_r", position), gainFactor));
-        gainGreenSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_g", position), gainFactor));
-        gainBlueSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_b", position), gainFactor));
+        gammaRedSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gamma_r", position), _gammaFactorV0));
+        gammaGreenSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gamma_g", position), _gammaFactorV0));
+        gammaBlueSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gamma_b", position), _gammaFactorV0));
+        gainRedSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_r", position), _gainFactorV0));
+        gainGreenSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_g", position), _gainFactorV0));
+        gainBlueSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_b", position), _gainFactorV0));
         liftKeyframesButton.checked = filter.keyframeCount('lift_r') > 0;
         gammaKeyframesButton.checked = filter.keyframeCount('gamma_r') > 0;
         gainKeyframesButton.checked = filter.keyframeCount('gain_r') > 0;
@@ -55,6 +53,47 @@ Item {
     }
 
     function scaleWheelToValue(w, f) {
+        if (_filterVersion == 0)
+            return scaleWheelToValueV0(w, f);
+        else
+            return scaleWheelToValueV1(w);
+    }
+
+    function scaleValueToWheel(v, f) {
+        if (_filterVersion == 0)
+            return scaleValueToWheelV0(v, f);
+        else
+            return scaleValueToWheelV1(v);
+    }
+
+    function scaleWheelToValueV1(w) {
+        // Scaling function for filter version 1
+        // The color wheel value (w) range is [0.0 - 1.0]. For the gamma and gain
+        // parameters, we want to scale that to [0.5 - 2]
+        // With the following point mappings:
+        //    f(0) = 0.5
+        //    f(0.5) = 1.0 (no change)
+        //    f(1) = 2
+        if (w < 0.5)
+            return 0.5 + w;
+        if (w == 0.5)
+            return 1.0;
+        return w * 2
+    }
+
+    function scaleValueToWheelV1(v) {
+        // Scaling function for filter version 1
+        // Do the opposite of scaleWheelToValueV1
+        if (v < 1.0)
+            return v - 0.5;
+        if (v == 1.0)
+            return 0.5;
+        if (v > 1.0)
+            return v / 2.0
+    }
+
+    function scaleWheelToValueV0(w, f) {
+        // Scaling function for filter version 0
         // The color wheel value (w) range is [0.0 - 1.0]. For the gamma and gain
         // gain parameters, we want to scale that to [0.0 - f] where (f) is the
         // maximum scaling factor. The middle of the wheel (0.5) needs to map to
@@ -74,8 +113,9 @@ Item {
         return a * (w * w) + b * w;
     }
 
-    function scaleValueToWheel(v, f) {
-        // Do the opposite of scaleWheelToValue
+    function scaleValueToWheelV0(v, f) {
+        // Scaling function for filter version 0
+        // Do the opposite of scaleWheelToValueV0
         var a = (2 * f) - 4;
         var b = f - a;
         if (a == 0)
@@ -108,8 +148,10 @@ Item {
             filter.set("gain_r", 1);
             filter.set("gain_g", 1);
             filter.set("gain_b", 1);
+            filter.set("shotcut:filter_version", 1);
             filter.savePreset(defaultParameters);
         }
+        _filterVersion = filter.getDouble("shotcut:filter_version");
         loadValues();
         // The color wheel widgets' colorChanged signals are queued between
         // threads and trigger after loadValues() has set blockUpdate false.
@@ -220,13 +262,13 @@ Item {
                 filter.resetProperty('gamma_g');
                 filter.resetProperty('gamma_b');
                 if (checked) {
-                    filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, gammaFactor), getPosition());
-                    filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor), getPosition());
-                    filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, gammaFactor), getPosition());
+                    filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, _gammaFactorV0), getPosition());
+                    filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, _gammaFactorV0), getPosition());
+                    filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, _gammaFactorV0), getPosition());
                 } else {
-                    filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, gammaFactor));
-                    filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor));
-                    filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, gammaFactor));
+                    filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, _gammaFactorV0));
+                    filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, _gammaFactorV0));
+                    filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, _gammaFactorV0));
                 }
                 filter.endUndoCommand();
             }
@@ -258,13 +300,13 @@ Item {
                 filter.resetProperty('gain_g');
                 filter.resetProperty('gain_b');
                 if (checked) {
-                    filter.set('gain_r', scaleWheelToValue(gainwheel.redF, gainFactor), getPosition());
-                    filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor), getPosition());
-                    filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, gainFactor), getPosition());
+                    filter.set('gain_r', scaleWheelToValue(gainwheel.redF, _gainFactorV0), getPosition());
+                    filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, _gainFactorV0), getPosition());
+                    filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, _gainFactorV0), getPosition());
                 } else {
-                    filter.set('gain_r', scaleWheelToValue(gainwheel.redF, gainFactor));
-                    filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor));
-                    filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, gainFactor));
+                    filter.set('gain_r', scaleWheelToValue(gainwheel.redF, _gainFactorV0));
+                    filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, _gainFactorV0));
+                    filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, _gainFactorV0));
                 }
                 filter.endUndoCommand();
             }
@@ -331,14 +373,14 @@ Item {
                         filter.resetProperty('gamma_r');
                         filter.resetProperty('gamma_g');
                         filter.resetProperty('gamma_b');
-                        filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, gammaFactor));
-                        filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor));
-                        filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, gammaFactor));
+                        filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, _gammaFactorV0));
+                        filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, _gammaFactorV0));
+                        filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, _gammaFactorV0));
                     } else {
                         var position = getPosition();
-                        filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, gammaFactor), position);
-                        filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor), position);
-                        filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, gammaFactor), position);
+                        filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, _gammaFactorV0), position);
+                        filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, _gammaFactorV0), position);
+                        filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, _gammaFactorV0), position);
                     }
                     filter.endUndoCommand();
                 }
@@ -368,14 +410,14 @@ Item {
                         filter.resetProperty('gain_r');
                         filter.resetProperty('gain_g');
                         filter.resetProperty('gain_b');
-                        filter.set('gain_r', scaleWheelToValue(gainwheel.redF, gainFactor));
-                        filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor));
-                        filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, gainFactor));
+                        filter.set('gain_r', scaleWheelToValue(gainwheel.redF, _gainFactorV0));
+                        filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, _gainFactorV0));
+                        filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, _gainFactorV0));
                     } else {
                         var position = getPosition();
-                        filter.set('gain_r', scaleWheelToValue(gainwheel.redF, gainFactor), position);
-                        filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor), position);
-                        filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, gainFactor), position);
+                        filter.set('gain_r', scaleWheelToValue(gainwheel.redF, _gainFactorV0), position);
+                        filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, _gainFactorV0), position);
+                        filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, _gainFactorV0), position);
                     }
                     filter.endUndoCommand();
                 }
@@ -632,14 +674,14 @@ Item {
                 filter.set('lift_b', liftwheel.blueF * 2 - 1, position);
                 break;
             case 'gamma_r':
-                filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, gammaFactor), position);
-                filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor), position);
-                filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, gammaFactor), position);
+                filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, _gammaFactorV0), position);
+                filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, _gammaFactorV0), position);
+                filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, _gammaFactorV0), position);
                 break;
             case 'gain_r':
-                filter.set('gain_r', scaleWheelToValue(gainwheel.redF, gainFactor), position);
-                filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor), position);
-                filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, gainFactor), position);
+                filter.set('gain_r', scaleWheelToValue(gainwheel.redF, _gainFactorV0), position);
+                filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, _gainFactorV0), position);
+                filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, _gainFactorV0), position);
                 break;
             }
         }
