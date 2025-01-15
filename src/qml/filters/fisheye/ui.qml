@@ -621,7 +621,7 @@ Item {
                     }
 
                     ListElement {
-                        text: qsTr('Ortographic')
+                        text: qsTr('Orthographic')
                         value: 0.333
                     }
 
