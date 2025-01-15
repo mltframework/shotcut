@@ -358,7 +358,7 @@ Item {
                 to: stops.length
                 stepSize: 1
                 onValueChanged: {
-                    stopPosition.value = stops[value - 1].position * 100
+                    stopPosition.value = stops[value - 1].position * 100;
                     stopColor.color = stops[stopSpinner.value - 1].color;
                 }
             }
