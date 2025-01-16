@@ -494,7 +494,7 @@ void SubtitlesDock::importSrtFromFile(const QString &srtPath, const QString &tra
 
     m_model->importSubtitlesToNewTrack(track, items);
 
-    MAIN.showStatusMessage(QObject::tr("Imported %1 subtitle items").arg(items.size()));
+    MAIN.showStatusMessage(QObject::tr("Imported %1 subtitle item(s)", nullptr, items.size()));
 }
 
 void SubtitlesDock::addSubtitleTrack()
@@ -623,7 +623,7 @@ void SubtitlesDock::importSubtitles()
     }
     ensureTrackExists();
     m_model->importSubtitles(m_trackCombo->currentIndex(), msTime, items);
-    MAIN.showStatusMessage(QObject::tr("Imported %1 subtitle items").arg(items.size()));
+    MAIN.showStatusMessage(QObject::tr("Imported %n subtitle item(s)", nullptr, items.size()));
 }
 
 void SubtitlesDock::exportSubtitles()

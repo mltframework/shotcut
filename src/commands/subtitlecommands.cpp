@@ -102,7 +102,7 @@ OverwriteSubtitlesCommand::OverwriteSubtitlesCommand(SubtitlesModel &model, int 
     if (m_newSubtitles.size() == 1) {
         setText(QObject::tr("Add subtitle"));
     } else {
-        setText(QObject::tr("Add %1 subtitles").arg(m_newSubtitles.size()));
+        setText(QObject::tr("Add %n subtitles", nullptr, m_newSubtitles.size()));
     }
 
     if (m_newSubtitles.size() <= 0) {
@@ -155,7 +155,7 @@ RemoveSubtitlesCommand::RemoveSubtitlesCommand(SubtitlesModel &model, int trackI
     if (m_items.size() == 1) {
         setText(QObject::tr("Remove subtitle"));
     } else {
-        setText(QObject::tr("Remove %1 subtitles").arg(m_items.size()));
+        setText(QObject::tr("Remove %n subtitles", nullptr, m_items.size()));
     }
 }
 
@@ -288,7 +288,7 @@ MoveSubtitlesCommand::MoveSubtitlesCommand(SubtitlesModel &model, int trackIndex
     if (m_oldSubtitles.size() == 1) {
         setText(QObject::tr("Move subtitle"));
     } else {
-        setText(QObject::tr("Move %1 subtitles").arg(m_oldSubtitles.size()));
+        setText(QObject::tr("Move %n subtitles", nullptr, m_oldSubtitles.size()));
     }
     // Create a list of subtitles with the new times
     int64_t delta = msTime - m_oldSubtitles[0].start;
