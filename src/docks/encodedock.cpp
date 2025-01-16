@@ -2530,7 +2530,7 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
         if (ui->videoRateControlCombo->currentIndex() == RateControlQuality)
             s = QStringLiteral("cq=%1 %2").arg(vq).arg(vq == 0 ? tr("(auto)") : "");
         else
-            s = QStringLiteral("qmin=%1").arg(TO_ABSOLUTE(51, 0, vq));
+            s = QStringLiteral("qmin=%1").arg(vq);
     } else if (vcodec.endsWith("_amf")) {
         s = QStringLiteral("qp_i=qp_p=qp_b=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_vaapi")) {
