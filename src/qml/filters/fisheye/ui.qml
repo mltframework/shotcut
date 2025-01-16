@@ -854,7 +854,7 @@ Item {
             visible: scaleYShowSlider
 
             Shotcut.HoverTip {
-                text: qsTr('Seperate Y scale')
+                text: qsTr('Separate Y scale')
             }
         }
 
