@@ -28,11 +28,12 @@
 #include <QRegularExpression>
 #include <Logger.h>
 
+#include <cstdio>
+
 FfmpegJob::FfmpegJob(const QString &name, const QStringList &args, bool isOpenLog,
                      QThread::Priority priority)
     : AbstractJob(name, priority)
-    , m_outputMsgRead(false)
-    , m_totalFrames(0)
+    , m_duration(0.0)
     , m_previousPercent(0)
     , m_isOpenLog(isOpenLog)
 {
@@ -80,6 +81,17 @@ void FfmpegJob::onOpenTriggered()
     }
 }
 
+static double timeToSeconds(QString time)
+{
+    int h, m, s, mil;
+    const int ret = std::sscanf(time.toLatin1().constData(), "%d:%d:%d.%d", &h, &m, &s, &mil);
+    if (ret != 4) {
+        LOG_ERROR() << "unable to parse time:" << time;
+        return -1.0;
+    }
+    return (h * 60.0 * 60.0) + (m * 60.0) + s + (mil / 100.0);
+}
+
 void FfmpegJob::onReadyRead()
 {
     QString msg;
@@ -88,34 +100,16 @@ void FfmpegJob::onReadyRead()
         if (!msg.startsWith("frame=") && (!msg.trimmed().isEmpty())) {
             appendToLog(msg);
         }
-        if (msg.contains("Duration:")) {
-            m_duration = msg.mid(msg.indexOf("Duration:") + 9);
-            m_duration = m_duration.left(m_duration.indexOf(','));
+        if (m_duration == 0 && msg.contains("Duration:")) {
+            msg = msg.mid(msg.indexOf("Duration:") + 9);
+            msg = msg.left(msg.indexOf(','));
+            m_duration = timeToSeconds(msg);
             emit progressUpdated(m_item, 0);
-        } else if (!m_outputMsgRead) {
-            // Wait for the "Output" then read the output fps to calculate number of frames.
-            if (msg.contains("Output ")) {
-                m_outputMsgRead = true;
-            }
-        }
-        if (!m_totalFrames && msg.contains(" fps")) {
-            Mlt::Profile profile;
-            QRegularExpression re("(\\d+|\\d+.\\d+) fps");
-            QRegularExpressionMatch match = re.match(msg);
-            if (match.hasMatch()) {
-                QString fps = match.captured(1);
-                profile.set_frame_rate(qRound(fps.toFloat() * 1000), 1000);
-            } else {
-                profile.set_frame_rate(25, 1);
-            }
-            Mlt::Properties props;
-            props.set("_profile", profile.get_profile(), 0);
-            m_totalFrames = props.time_to_frames(m_duration.toLatin1().constData());
-        } else if (msg.startsWith("frame=") && m_totalFrames > 0) {
-            msg = msg.mid(msg.indexOf("frame=") + 6);
-            msg = msg.left(msg.indexOf(" fps"));
-            int frame = msg.toInt();
-            int percent = qRound(frame * 100.0 / m_totalFrames);
+        } else if (m_duration != 0 && msg.startsWith("frame=")) {
+            msg = msg.mid(msg.indexOf("time=") + 6);
+            msg = msg.left(msg.indexOf(" bitrate"));
+            double time = timeToSeconds(msg);
+            int percent = qRound(time * 100.0 / m_duration);
             if (percent != m_previousPercent) {
                 emit progressUpdated(m_item, percent);
                 m_previousPercent = percent;
