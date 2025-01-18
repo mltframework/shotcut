@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 Meltytech, LLC
+ * Copyright (c) 2011-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,14 +29,12 @@
 #include "widgets/directshowvideowidget.h"
 #include "widgets/glaxnimateproducerwidget.h"
 #include "widgets/isingwidget.h"
-#include "widgets/jackproducerwidget.h"
 #include "widgets/toneproducerwidget.h"
 #include "widgets/lissajouswidget.h"
 #include "widgets/noisewidget.h"
 #include "widgets/plasmawidget.h"
 #include "widgets/pulseaudiowidget.h"
 #include "widgets/video4linuxwidget.h"
-#include "widgets/x11grabwidget.h"
 #include "widgets/avformatproducerwidget.h"
 #include "widgets/imageproducerwidget.h"
 #include "widgets/blipproducerwidget.h"
@@ -66,7 +64,6 @@
 #include "shotcut_mlt_properties.h"
 #include "widgets/avfoundationproducerwidget.h"
 #include "dialogs/textviewerdialog.h"
-#include "widgets/gdigrabwidget.h"
 #include "models/audiolevelstask.h"
 #include "widgets/trackpropertieswidget.h"
 #include "widgets/timelinepropertieswidget.h"
@@ -84,7 +81,6 @@
 #include "dialogs/longuitask.h"
 #include "dialogs/systemsyncdialog.h"
 #include "proxymanager.h"
-#include "transcoder.h"
 #include "models/motiontrackermodel.h"
 #if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
 #include "windowstools.h"
@@ -143,14 +139,6 @@ MainWindow::MainWindow()
     , m_keyframesDock(0)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    QLibrary libJack("libjack.so.0");
-    if (!libJack.load()) {
-        QMessageBox::critical(this, qApp->applicationName(),
-                              tr("Error: This program requires the JACK 1 library.\n\nPlease install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar."));
-        ::exit(EXIT_FAILURE);
-    } else {
-        libJack.unload();
-    }
     QLibrary libSDL("libSDL2-2.0.so.0");
     if (!libSDL.load()) {
         QMessageBox::critical(this, qApp->applicationName(),
@@ -1195,7 +1183,13 @@ void MainWindow::setupSettingsMenu()
     // then Shotcut crashes inside MLT's call to jack_client_open().
     // Therefore, the JACK option for Shotcut is banned on Windows.
     delete ui->actionJack;
-    ui->actionJack = 0;
+    ui->actionJack = nullptr;
+#else
+    std::unique_ptr<Mlt::Properties> filters(MLT.repository()->filters());
+    if (filters && !filters->get_data("jack")) {
+        delete ui->actionJack;
+        ui->actionJack = nullptr;
+    }
 #endif
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     // Setup the display method actions.
@@ -1305,7 +1299,6 @@ void MainWindow::setupOpenOtherMenu()
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     otherMenu->addAction(tr("Video4Linux"), this, SLOT(onOpenOtherTriggered()))->setObjectName("v4l2");
     otherMenu->addAction(tr("PulseAudio"), this, SLOT(onOpenOtherTriggered()))->setObjectName("pulse");
-    otherMenu->addAction(tr("JACK Audio"), this, SLOT(onOpenOtherTriggered()))->setObjectName("jack");
     otherMenu->addAction(tr("ALSA Audio"), this, SLOT(onOpenOtherTriggered()))->setObjectName("alsa");
 #elif defined(Q_OS_WIN) || defined(Q_OS_MAC)
     otherMenu->addAction(tr("Audio/Video Device"), this,
@@ -3002,9 +2995,7 @@ void MainWindow::onEncodeTriggered(bool checked)
 
 void MainWindow::onCaptureStateChanged(bool started)
 {
-    if (started && (MLT.resource().startsWith("x11grab:") ||
-                    MLT.resource().startsWith("gdigrab:") ||
-                    MLT.resource().startsWith("avfoundation"))
+    if (started && MLT.resource().startsWith("avfoundation")
             && !MLT.producer()->get_int(kBackgroundCaptureProperty))
         showMinimized();
 }
@@ -3466,8 +3457,6 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         w = new Video4LinuxWidget(this);
     else if (resource.startsWith("pulse:"))
         w = new PulseAudioWidget(this);
-    else if (resource.startsWith("jack:"))
-        w = new JackProducerWidget(this);
     else if (resource.startsWith("alsa:"))
         w = new AlsaWidget(this);
     else if (resource.startsWith("dshow:")
@@ -3475,10 +3464,6 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         w = new DirectShowVideoWidget(this);
     else if (resource.startsWith("avfoundation:"))
         w = new AvfoundationProducerWidget(this);
-    else if (resource.startsWith("x11grab:"))
-        w = new X11grabWidget(this);
-    else if (resource.startsWith("gdigrab:"))
-        w = new GDIgrabWidget(this);
     else if (service.startsWith("avformat") || shotcutProducer == "avformat")
         w = new AvformatProducerWidget(this);
     else if (MLT.isImageProducer(producer)) {
@@ -4910,8 +4895,6 @@ void MainWindow::onOpenOtherTriggered()
         onOpenOtherTriggered(new Video4LinuxWidget(this));
     else if (sender()->objectName() == "pulse")
         onOpenOtherTriggered(new PulseAudioWidget(this));
-    else if (sender()->objectName() == "jack")
-        onOpenOtherTriggered(new JackProducerWidget(this));
     else if (sender()->objectName() == "alsa")
         onOpenOtherTriggered(new AlsaWidget(this));
 #if defined(Q_OS_MAC)

@@ -170,31 +170,10 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="jackTab">
-       <layout class="QVBoxLayout" name="verticalLayout_9">
-        <item>
-         <widget class="JackProducerWidget" name="jackWidget" native="true"/>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="alsaTab">
        <layout class="QVBoxLayout" name="verticalLayout_10">
         <item>
          <widget class="AlsaWidget" name="alsaWidget" native="true"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="x11grabTab">
-       <layout class="QVBoxLayout" name="verticalLayout_11">
-        <item>
-         <widget class="X11grabWidget" name="x11grabWidget" native="true"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="gdigrabTab">
-       <layout class="QVBoxLayout" name="verticalLayout_16">
-        <item>
-         <widget class="GDIgrabWidget" name="gdigrabWidget" native="true"/>
         </item>
        </layout>
       </widget>
@@ -296,27 +275,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>JackProducerWidget</class>
-   <extends>QWidget</extends>
-   <header>widgets/jackproducerwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>AlsaWidget</class>
    <extends>QWidget</extends>
    <header>widgets/alsawidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>X11grabWidget</class>
-   <extends>QWidget</extends>
-   <header>widgets/x11grabwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>GDIgrabWidget</class>
-   <extends>QWidget</extends>
-   <header>widgets/gdigrabwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

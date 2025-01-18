@@ -264,11 +264,6 @@
      </item>
      <item>
       <property name="text">
-       <string>JACK</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
        <string>ALSA</string>
       </property>
      </item>

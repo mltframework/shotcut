@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1929,14 +1929,8 @@ void EncodeDock::on_encodeButton_clicked()
             connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob *, bool, QString)), this,
                     SLOT(onFinished(AbstractJob *, bool)));
 
-            if (MLT.resource().startsWith("gdigrab:") || MLT.resource().startsWith("x11grab:")) {
-                ui->stopCaptureButton->show();
-            } else {
-                ui->encodeButton->setText(tr("Stop Capture"));
-                ui->fromCombo->setDisabled(true);
-            }
-            if (MLT.resource().startsWith("gdigrab:"))
-                MAIN.showMinimized();
+            ui->encodeButton->setText(tr("Stop Capture"));
+            ui->fromCombo->setDisabled(true);
 
             int msec = MLT.producer()->get_int(kBackgroundCaptureProperty) * 1000;
             QTimer::singleShot(msec, m_immediateJob.data(), SLOT(start()));

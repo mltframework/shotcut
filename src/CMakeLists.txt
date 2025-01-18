@@ -151,16 +151,12 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/editmarkerwidget.cpp widgets/editmarkerwidget.h
   widgets/exportpresetstreeview.cpp widgets/exportpresetstreeview.h
   widgets/frameratewidget.cpp widgets/frameratewidget.h
-  widgets/gdigrabwidget.cpp widgets/gdigrabwidget.h
-  widgets/gdigrabwidget.ui
   widgets/glaxnimateproducerwidget.cpp widgets/glaxnimateproducerwidget.h
   widgets/glaxnimateproducerwidget.ui
   widgets/imageproducerwidget.cpp widgets/imageproducerwidget.h
   widgets/imageproducerwidget.ui
   widgets/isingwidget.cpp widgets/isingwidget.h
   widgets/isingwidget.ui
-  widgets/jackproducerwidget.cpp widgets/jackproducerwidget.h
-  widgets/jackproducerwidget.ui
   widgets/lineeditclear.cpp widgets/lineeditclear.h
   widgets/lissajouswidget.cpp widgets/lissajouswidget.h
   widgets/lissajouswidget.ui
@@ -212,8 +208,6 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/trackpropertieswidget.ui
   widgets/video4linuxwidget.cpp widgets/video4linuxwidget.h
   widgets/video4linuxwidget.ui
-  widgets/x11grabwidget.cpp widgets/x11grabwidget.h
-  widgets/x11grabwidget.ui
   ../icons/resources.qrc
 )
 

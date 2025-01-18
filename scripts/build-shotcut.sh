@@ -46,7 +46,7 @@ FFMPEG_HEAD=0
 FFMPEG_REVISION="origin/release/7.1"
 FFMPEG_SUPPORT_H264=1
 FFMPEG_SUPPORT_H265=1
-FFMPEG_SUPPORT_JACK=1
+FFMPEG_SUPPORT_JACK=0
 FFMPEG_SUPPORT_LIBVPX=1
 FFMPEG_SUPPORT_THEORA=1
 FFMPEG_SUPPORT_MP3=1
@@ -820,7 +820,7 @@ function set_globals {
     BUILD[0]="build_ffmpeg_darwin"
     INSTALL[0]="install_ffmpeg_darwin"
   elif test "$TARGET_OS" = "Linux" ; then
-    CONFIG[0]="${CONFIG[0]} --enable-libxcb --enable-libpulse --prefix=$FINAL_INSTALL_DIR"
+    CONFIG[0]="${CONFIG[0]} --enable-libpulse --prefix=$FINAL_INSTALL_DIR"
     BUILD[0]="make -j$MAKEJ"
     INSTALL[0]="make install"
   fi

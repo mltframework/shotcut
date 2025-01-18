@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2022 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 #include "video4linuxwidget.h"
 #include "ui_video4linuxwidget.h"
 #include "pulseaudiowidget.h"
-#include "jackproducerwidget.h"
 #include "alsawidget.h"
 #include "mltcontroller.h"
 #include "util.h"
@@ -160,8 +159,6 @@ void Video4LinuxWidget::on_v4lAudioComboBox_activated(int index)
     m_audioWidget = 0;
     if (index == 1)
         m_audioWidget = new PulseAudioWidget(this);
-    else if (index == 2)
-        m_audioWidget = new JackProducerWidget(this);
     else if (index == 3)
         m_audioWidget = new AlsaWidget(this);
     if (m_audioWidget)

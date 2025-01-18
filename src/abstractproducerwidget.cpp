@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,8 +43,6 @@ bool AbstractProducerWidget::isDevice(const QWidget *widget)
            || "AvfoundationProducerWidget" == name || "avfoundationWidget" == name
            || "DecklinkProducerWidget" == name || "decklinkWidget" == name
            || "DirectShowVideoWidget" == name || "dshowVideoWidget" == name
-           || "GDIgrabWidget" == name || "gdigrabWidget" == name
            || "PulseAudioWidget" == name || "pulseWidget" == name
-           || "Video4LinuxWidget" == name || "v4lWidget" == name
-           || "X11grabWidget" == name || "x11grabWidget" == name;
+           || "Video4LinuxWidget" == name || "v4lWidget" == name;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@
 #include "mltcontroller.h"
 #include <Mlt.h>
 #include <QtWidgets>
-
-#define ENABLE_SCREEN_CAPTURE (0)
 
 OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     QDialog(parent),
@@ -51,21 +49,11 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
     item->setData(0, Qt::UserRole, ui->v4lTab->objectName());
     item = new QTreeWidgetItem(group, QStringList(tr("PulseAudio")));
     item->setData(0, Qt::UserRole, ui->pulseTab->objectName());
-    item = new QTreeWidgetItem(group, QStringList(tr("JACK Audio")));
-    item->setData(0, Qt::UserRole, ui->jackTab->objectName());
     item = new QTreeWidgetItem(group, QStringList(tr("ALSA Audio")));
     item->setData(0, Qt::UserRole, ui->alsaTab->objectName());
-#if ENABLE_SCREEN_CAPTURE
-    item = new QTreeWidgetItem(group, QStringList(tr("Screen")));
-    item->setData(0, Qt::UserRole, ui->x11grabTab->objectName());
-#endif
 #elif defined(Q_OS_WIN)
     QTreeWidgetItem *item = new QTreeWidgetItem(group, QStringList(tr("Audio/Video Device")));
     item->setData(0, Qt::UserRole, ui->dshowVideoTab->objectName());
-#if ENABLE_SCREEN_CAPTURE
-    item = new QTreeWidgetItem(group, QStringList(tr("Screen")));
-    item->setData(0, Qt::UserRole, ui->gdigrabTab->objectName());
-#endif
 #elif defined(Q_OS_MAC)
     QTreeWidgetItem *item = new QTreeWidgetItem(group, QStringList(tr("Audio/Video Device")));
     item->setData(0, Qt::UserRole, ui->avfoundationTab->objectName());
@@ -145,14 +133,10 @@ void OpenOtherDialog::load(Mlt::Producer *producer)
             selectTreeWidget(tr("Video4Linux"));
         else if (resource.startsWith("pulse:"))
             selectTreeWidget(tr("PulseAudio"));
-        else if (resource.startsWith("jack:"))
-            selectTreeWidget(tr("JACK Audio"));
         else if (resource.startsWith("alsa:"))
             selectTreeWidget(tr("ALSA Audio"));
         else if (resource.startsWith("dshow:"))
             selectTreeWidget(tr("Audio/Video Device"));
-        else if (resource.startsWith("x11grab:") || resource.startsWith("gdigrab:"))
-            selectTreeWidget(tr("Screen"));
         else if (service.startsWith("avformat"))
             selectTreeWidget(tr("Network"));
         else if (service == "decklink" || resource.contains("decklink"))
@@ -232,17 +216,8 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
                 } else if (w == ui->pulseTab) {
                     m_current = ui->pulseWidget;
                     m_addTimelineButton->setVisible(false);
-                } else if (w == ui->jackTab) {
-                    m_current = ui->jackWidget;
-                    m_addTimelineButton->setVisible(false);
                 } else if (w == ui->alsaTab) {
                     m_current = ui->alsaWidget;
-                    m_addTimelineButton->setVisible(false);
-                } else if (w == ui->x11grabTab) {
-                    m_current = ui->x11grabWidget;
-                    m_addTimelineButton->setVisible(false);
-                } else if (w == ui->gdigrabTab) {
-                    m_current = ui->gdigrabWidget;
                     m_addTimelineButton->setVisible(false);
                 } else if (w == ui->dshowVideoTab) {
                     m_current = ui->dshowVideoWidget;
