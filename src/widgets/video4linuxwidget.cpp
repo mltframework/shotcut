@@ -159,7 +159,7 @@ void Video4LinuxWidget::on_v4lAudioComboBox_activated(int index)
     m_audioWidget = 0;
     if (index == 1)
         m_audioWidget = new PulseAudioWidget(this);
-    else if (index == 3)
+    else if (index == 2)
         m_audioWidget = new AlsaWidget(this);
     if (m_audioWidget)
         ui->audioLayout->addWidget(m_audioWidget);
