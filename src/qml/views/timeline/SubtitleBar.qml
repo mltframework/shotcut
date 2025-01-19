@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Meltytech, LLC
+ * Copyright (c) 2024-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,6 +79,10 @@ Item {
             subtitlesDelegateModel.rootIndex = subtitlesSelectionModel.selectedTrackModelIndex;
         }
 
+        function onSelectedItemsChanged() {
+            subtitlesSelectionRepeater.model = subtitlesSelectionModel.selectedItems;
+        }
+
         target: subtitlesSelectionModel
     }
 
@@ -110,8 +114,6 @@ Item {
 
     Repeater {
         id: subtitlesSelectionRepeater
-
-        model: subtitlesSelectionModel.selectedItems
 
         Rectangle {
             property var subtitle: subtitlesRepeater.itemAt(modelData)

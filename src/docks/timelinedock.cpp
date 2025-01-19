@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -301,6 +301,19 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
     connect(this, SIGNAL(warnTrackLocked(int)), SLOT(onWarnTrackLocked()));
     connect(&m_markersModel, SIGNAL(rangesChanged()), this, SIGNAL(markerRangesChanged()));
+
+    connect(this, &QDockWidget::visibilityChanged, this, [&](bool visible) {
+        if (visible) {
+            // Workaround for QML items going blank when moving the dock
+            // Emit some signals to trigger some QML items to redraw
+            emit m_model.scaleFactorChanged();
+            emit currentTrackChanged();
+            emit selectionChanged();
+            emit m_subtitlesSelectionModel.selectedTrackModelIndexChanged(
+                m_subtitlesSelectionModel.selectedTrackModelIndex());
+            emit m_subtitlesSelectionModel.selectedItemsChanged();
+        }
+    });
 
     QWidget *dockContentsWidget = new QWidget();
     dockContentsWidget->setLayout(vboxLayout);
