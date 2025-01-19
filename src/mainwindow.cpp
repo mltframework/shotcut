@@ -252,6 +252,9 @@ void MainWindow::connectUISignals()
     connect(this, &MainWindow::producerOpened, this, &MainWindow::onProducerOpened);
     connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
     ui->actionSave->setEnabled(false);
+    connect(this, &MainWindow::audioChannelsChanged, this, &MainWindow::updateWindowTitle);
+    connect(this, &MainWindow::producerOpened, this, &MainWindow::updateWindowTitle);
+    connect(this, &MainWindow::profileChanged, this, &MainWindow::updateWindowTitle);
 }
 
 void MainWindow::setupAndConnectUndoStack()
@@ -2287,19 +2290,31 @@ void MainWindow::configureVideoWidget()
 
 void MainWindow::setCurrentFile(const QString &filename)
 {
-    QString shownName = tr("Untitled");
     if (filename == untitledFileName())
         m_currentFile.clear();
     else
         m_currentFile = filename;
+    updateWindowTitle();
+    ui->actionShowProjectFolder->setDisabled(m_currentFile.isEmpty());
+}
+
+void MainWindow::updateWindowTitle()
+{
+    QString shownName = tr("Untitled");
     if (!m_currentFile.isEmpty())
         shownName = QFileInfo(m_currentFile).fileName();
+    QString profileText = tr("%1x%2 %3fps %4ch").arg(
+                              QString::number(MLT.profile().width(), 'f', 0),
+                              QString::number(MLT.profile().height(), 'f', 0),
+                              QString::number(MLT.profile().fps(), 'g', 2),
+                              QString::number(Settings.playerAudioChannels(), 'f', 0));
 #ifdef Q_OS_MAC
-    setWindowTitle(QStringLiteral("%1 - %2").arg(shownName).arg(qApp->applicationName()));
+    setWindowTitle(QStringLiteral("%1 - %2 - %3").arg(shownName).arg(profileText).arg(
+                       qApp->applicationName()));
 #else
-    setWindowTitle(QStringLiteral("%1[*] - %2").arg(shownName).arg(qApp->applicationName()));
+    setWindowTitle(QStringLiteral("%1[*] - %2 - %3").arg(shownName).arg(profileText).arg(
+                       qApp->applicationName()));
 #endif
-    ui->actionShowProjectFolder->setDisabled(m_currentFile.isEmpty());
 }
 
 void MainWindow::on_actionAbout_Shotcut_triggered()
