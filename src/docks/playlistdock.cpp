@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -580,6 +580,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     connect(ui->tableView, SIGNAL(movedToEnd()), SLOT(onMovedToEnd()));
     connect(ui->listView, SIGNAL(movedToEnd()), SLOT(onMovedToEnd()));
     connect(&m_model, SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
+    connect(&m_model, &PlaylistModel::closed, this, &PlaylistDock::onPlaylistClosed);
     connect(&m_model, SIGNAL(created()), this, SLOT(onPlaylistCreated()));
     connect(&m_model, SIGNAL(loaded()), this, SLOT(onPlaylistLoaded()));
     connect(&m_model, SIGNAL(modified()), this, SLOT(onPlaylistModified()));
@@ -1747,6 +1748,15 @@ void PlaylistDock::onPlaylistModified()
 
 void PlaylistDock::onPlaylistCleared()
 {
+    emit enableUpdate(false);
+    m_blockResizeColumnsToContents = false;
+    bool nonEmptyModel = m_model.rowCount() > 0;
+    Actions["playlistRemoveAllAction"]->setEnabled(nonEmptyModel);
+    Actions["playlistSelectAllAction"]->setEnabled(nonEmptyModel);
+}
+
+void PlaylistDock::onPlaylistClosed()
+{
     QList<QTreeWidgetItem *> smartBins;
     for (int i = 0; i < SmartBinCount; ++i) {
         smartBins << ui->treeWidget->takeTopLevelItem(0);
@@ -1754,12 +1764,6 @@ void PlaylistDock::onPlaylistCleared()
     ui->treeWidget->clear();
     ui->treeWidget->addTopLevelItems(smartBins);
     ui->treeWidget->topLevelItem(0)->setSelected(true);
-
-    emit enableUpdate(false);
-    m_blockResizeColumnsToContents = false;
-    bool nonEmptyModel = m_model.rowCount() > 0;
-    Actions["playlistRemoveAllAction"]->setEnabled(nonEmptyModel);
-    Actions["playlistSelectAllAction"]->setEnabled(nonEmptyModel);
 }
 
 void PlaylistDock::refreshTimelineSmartBins()

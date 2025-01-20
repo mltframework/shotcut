@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,6 +99,7 @@ public slots:
     void onPlaylistCreated();
     void onPlaylistLoaded();
     void onPlaylistCleared();
+    void onPlaylistClosed();
     void refreshTimelineSmartBins();
 
 private slots:
