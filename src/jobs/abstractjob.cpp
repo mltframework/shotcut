@@ -54,6 +54,10 @@ AbstractJob::AbstractJob(const QString &name, QThread::Priority priority)
 
     connect(m_actionPause, &QAction::triggered, this, &AbstractJob::pause);
     connect(m_actionResume, &QAction::triggered, this, &AbstractJob::resume);
+    connect(this, &AbstractJob::finished, this, [this]() {
+        m_actionPause->setEnabled(false);
+        m_actionResume->setEnabled(false);
+    });
 }
 
 void AbstractJob::start()
@@ -209,8 +213,6 @@ void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
         m_log.append(QStringLiteral("Failed with exit code %1\n").arg(exitCode));
         emit finished(this, false);
     }
-    m_actionPause->setEnabled(false);
-    m_actionResume->setEnabled(false);
     m_isPaused = false;
 }
 
