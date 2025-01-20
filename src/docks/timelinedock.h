@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -271,8 +271,8 @@ private:
         bool isMultitrackSelected;
     };
     Selection m_selection;
-    int m_savedSelectedTrack;
-    bool m_savedIsMultitrackSelected;
+    int m_savedSelectedTrack {-1};
+    bool m_savedIsMultitrackSelected {false};
     QVector<QUuid> m_savedSelectionUuids;
     QTimer m_selectionSignalTimer;
     std::unique_ptr<Timeline::TrimCommand> m_trimCommand;
@@ -283,13 +283,13 @@ private:
     std::unique_ptr<AbstractJob> m_recordJob;
     QTimer m_recordingTimer;
     QDateTime m_recordingTime;
-    int m_recordingTrackIndex;
-    int m_recordingClipIndex;
+    int m_recordingTrackIndex {-1};
+    int m_recordingClipIndex {-1};
     int m_currentTrack {0};
-    QMenu *m_mainMenu;
-    QMenu *m_clipMenu;
-    int m_loopStart;
-    int m_loopEnd;
+    QMenu *m_mainMenu {nullptr};
+    QMenu *m_clipMenu {nullptr};
+    int m_loopStart {-1};
+    int m_loopEnd {-1};
 
 private slots:
     void load(bool force);

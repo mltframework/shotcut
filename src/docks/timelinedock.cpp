@@ -2542,7 +2542,8 @@ void TimelineDock::emitSelectedFromSelection()
         return;
     }
 
-    if (selection().isEmpty() && m_selection.selectedTrack > -1) {
+    if (selection().isEmpty() && m_selection.selectedTrack > -1
+            && m_selection.selectedTrack < m_model.trackList().count()) {
         int i = m_model.trackList().at(m_selection.selectedTrack).mlt_index;
         std::unique_ptr<Mlt::Producer>producer(m_model.tractor()->track(i));
         if (producer && producer->is_valid()) {
