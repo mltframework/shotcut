@@ -416,6 +416,8 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     connect(ui->treeWidget, &BinTree::moved, this, [ = ](const QList<int> &rows,
     const QPointF & point) {
         auto item = ui->treeWidget->itemAt(point.x(), point.y());
+        if (!item)
+            return;
         auto bin = item->text(0);
         auto ok = false;
         auto i = item->data(0, Qt::UserRole).toInt(&ok);
