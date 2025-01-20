@@ -1898,7 +1898,8 @@ void MainWindow::openCut(Mlt::Producer *producer, bool play)
 {
     m_player->setPauseAfterOpen(!play);
     open(producer);
-    MLT.seek(producer->get_in());
+    if (!MLT.isClosedClip(producer))
+        MLT.seek(producer->get_in());
 }
 
 void MainWindow::hideProducer()
