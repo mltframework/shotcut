@@ -2301,8 +2301,10 @@ void MainWindow::setCurrentFile(const QString &filename)
 void MainWindow::updateWindowTitle()
 {
     QString shownName = tr("Untitled");
-    if (!m_currentFile.isEmpty())
-        shownName = QFileInfo(m_currentFile).fileName();
+    if (!m_currentFile.isEmpty()) {
+        shownName = QFileInfo(m_currentFile).filePath();
+        shownName = fontMetrics().elidedText(shownName, Qt::ElideLeft, width() / 4);
+    }
     QString profileText = tr("%1x%2 %3fps %4ch").arg(
                               QString::number(MLT.profile().width(), 'f', 0),
                               QString::number(MLT.profile().height(), 'f', 0),
