@@ -1247,7 +1247,7 @@ EOF
 function install_whispercpp {
   cmd ninja -C build install
   cmd mkdir -p $FINAL_INSTALL_DIR/bin
-  cmd install -p -c build/bin/main $FINAL_INSTALL_DIR/bin/whisper-cli
+  cmd install -p -c build/bin/whisper-cli $FINAL_INSTALL_DIR/bin
   cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/whisper_models
   cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/whisper_models
 }

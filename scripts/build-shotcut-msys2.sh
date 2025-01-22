@@ -770,7 +770,7 @@ function install_spatialaudio {
 
 function install_whispercpp {
   cmd ninja -C build install
-  cmd install -p -c build/bin/main.exe $FINAL_INSTALL_DIR/bin/whisper-cli.exe
+  cmd install -p -c build/bin/whisper-cli.exe $FINAL_INSTALL_DIR/bin
   cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/whisper_models
   cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/whisper_models
 }
