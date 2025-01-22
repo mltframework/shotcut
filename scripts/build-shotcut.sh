@@ -1247,7 +1247,7 @@ EOF
 function install_whispercpp {
   cmd ninja -C build install
   cmd mkdir -p $FINAL_INSTALL_DIR/bin
-  cmd install -p -c build/bin/main $FINAL_INSTALL_DIR/bin/whisper.cpp-main
+  cmd install -p -c build/bin/main $FINAL_INSTALL_DIR/bin/whisper-cli
   cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/whisper_models
   cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/whisper_models
 }
@@ -1888,7 +1888,7 @@ function deploy_mac
 
   log Copying supplementary executables
   cmd mkdir -p MacOS 2>/dev/null
-  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx,whisper.cpp-main} MacOS
+  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx,whisper-cli} MacOS
   cmd mkdir -p Frameworks 2>/dev/null
   cmd cp -p ../../lib/libCuteLogger.dylib Frameworks
   for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe MacOS/glaxnimate; do
@@ -1903,11 +1903,11 @@ function deploy_mac
   # whisper.cpp
   cmd cp -p "$FINAL_INSTALL_DIR"/lib/libwhisper.1.dylib Frameworks
   cmd cp -p "$FINAL_INSTALL_DIR"/lib/libggml.dylib Frameworks
-  fixlibs MacOS/whisper.cpp-main
-  log fixing rpath of executable "whisper.cpp-main"
-  cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/src MacOS/whisper.cpp-main 2> /dev/null
-  cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/ggml/src MacOS/whisper.cpp-main 2> /dev/null
-  cmd install_name_tool -add_rpath "@executable_path/../Frameworks" MacOS/whisper.cpp-main
+  fixlibs MacOS/whisper-cli
+  log fixing rpath of executable "whisper-cli"
+  cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/src MacOS/whisper-cli 2> /dev/null
+  cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/ggml/src MacOS/whisper-cli 2> /dev/null
+  cmd install_name_tool -add_rpath "@executable_path/../Frameworks" MacOS/whisper-cli
 
   # MLT plugins
   log Copying MLT plugins
@@ -2095,7 +2095,7 @@ End-of-environment-setup-template
   cp $TMPFILE "$FINAL_INSTALL_DIR/source-me" || die "Unable to create environment script - cp failed"
 
   log Creating wrapper scripts in $TMPFILE
-  for exe in melt ffmpeg ffplay ffprobe glaxnimate whisper.cpp-main; do
+  for exe in melt ffmpeg ffplay ffprobe glaxnimate whisper-cli; do
     cat > $TMPFILE <<End-of-exe-wrapper
 #!/bin/sh
 # Set up environment

@@ -770,7 +770,7 @@ function install_spatialaudio {
 
 function install_whispercpp {
   cmd ninja -C build install
-  cmd install -p -c build/bin/main.exe $FINAL_INSTALL_DIR/bin/whisper.cpp-main.exe
+  cmd install -p -c build/bin/main.exe $FINAL_INSTALL_DIR/bin/whisper-cli.exe
   cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/whisper_models
   cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/whisper_models
 }
@@ -1213,7 +1213,7 @@ function deploy
     cmd mv bin/ffplay.exe .
     cmd mv bin/ffprobe.exe .
     cmd mv bin/glaxnimate.exe .
-    cmd mv bin/whisper.cpp-main.exe .
+    cmd mv bin/whisper-cli.exe .
     cmd rm -rf bin include etc man manifest src *.txt
     cmd rm lib/*
     cmd rm -rf lib/cmake lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0

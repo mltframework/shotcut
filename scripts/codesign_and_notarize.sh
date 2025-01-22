@@ -12,7 +12,7 @@ find ~/Desktop/Shotcut.app/Contents/Resources -type f -exec codesign --options=r
 xattr -cr ~/Desktop/Shotcut.app
 codesign --options=runtime --force --verbose --sign "$SIGNER" \
   --entitlements ./notarization.entitlements \
-  ~/Desktop/Shotcut.app/Contents/MacOS/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx,whisper.cpp-main}
+  ~/Desktop/Shotcut.app/Contents/MacOS/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx,whisper-cli}
 codesign --options=runtime --force --verbose --sign "$SIGNER" \
   --entitlements ./notarization.entitlements \
   ~/Desktop/Shotcut.app

@@ -1495,9 +1495,9 @@ QString ShotcutSettings::whisperExe()
 {
     QDir dir(qApp->applicationDirPath());
 #if defined(Q_OS_WIN)
-    auto exe = "whisper.cpp-main.exe";
+    auto exe = "whisper-cli.exe";
 #else
-    auto exe = "whisper.cpp-main";
+    auto exe = "whisper-cli";
 #endif
     return settings.value("subtitles/whisperExe", dir.absoluteFilePath(exe)).toString();
 }
