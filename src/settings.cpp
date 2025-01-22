@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -411,7 +411,12 @@ bool ShotcutSettings::removeFilesOpenOther(const QString &type, const QString &f
 QString ShotcutSettings::filesCurrentDir() const
 {
     const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-    return settings.value("files/currentDir", ls.first()).toString();
+    auto path = settings.value("files/currentDir", ls.first()).toString();
+    if (!QFile::exists(path)) {
+        LOG_DEBUG() << "dir does not exist:" << QDir::toNativeSeparators(path);
+        path = ls.first();
+    }
+    return path;
 }
 
 void ShotcutSettings::setFilesCurrentDir(const QString &s)

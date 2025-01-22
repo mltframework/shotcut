@@ -1096,6 +1096,11 @@ void FilesDock::changeDirectory(const QString &filePath)
     ui->treeView->setExpanded(index, true);
     ui->treeView->scrollTo(index);
     ui->treeView->setCurrentIndex(index);
+    if (!QFile::exists(path)) {
+        MAIN.showStatusMessage("!? " + QDir::toNativeSeparators(path));
+        const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        path = ls.first();
+    }
     index = m_filesModel->setRootPath(path);
     Settings.setFilesCurrentDir(path);
     ui->locationsCombo->setToolTip(path);
