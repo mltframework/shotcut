@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Meltytech, LLC
+ * Copyright (c) 2024-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ signals:
 
 public slots:
     void onOpenActionTriggered();
-    void changeDirectory(const QString &path, bool resetLocations = true);
+    void changeDirectory(const QString &path);
     void changeFilesDirectory(const QModelIndex &index);
 
 private slots:

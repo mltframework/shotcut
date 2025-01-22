@@ -1087,7 +1087,7 @@ void FilesDock::onOpenActionTriggered()
     }
 }
 
-void FilesDock::changeDirectory(const QString &filePath, bool resetLocations)
+void FilesDock::changeDirectory(const QString &filePath)
 {
     LOG_DEBUG() << filePath;
     QFileInfo info(filePath);
@@ -1099,10 +1099,10 @@ void FilesDock::changeDirectory(const QString &filePath, bool resetLocations)
     index = m_filesModel->setRootPath(path);
     Settings.setFilesCurrentDir(path);
     ui->locationsCombo->setToolTip(path);
+    if (path != ui->locationsCombo->currentText())
+        ui->locationsCombo->setCurrentText(path);
     m_view->setRootIndex(m_filesProxyModel->mapFromSource(index));
     m_iconsView->updateSizes();
-    if (resetLocations)
-        ui->locationsCombo->setCurrentIndex(0);
     if (info.isDir()) {
         m_view->scrollToTop();
     } else {
@@ -1311,7 +1311,7 @@ void FilesDock::onLocationsEditingFinished()
     if (QLatin1String("/") == path)
         path = QStringLiteral("C:/");
 #endif
-    changeDirectory(path, false);
+    changeDirectory(path);
 }
 
 void FilesDock::on_locationsCombo_activated(int index)
@@ -1328,7 +1328,7 @@ void FilesDock::on_locationsCombo_activated(int index)
     if (QLatin1String("/") == path)
         path = QStringLiteral("C:/");
 #endif
-    changeDirectory(path, false);
+    changeDirectory(path);
 }
 
 void FilesDock::on_addLocationButton_clicked()
