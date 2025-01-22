@@ -59,7 +59,7 @@ signals:
 
 public slots:
     void onOpenActionTriggered();
-    void changeDirectory(const QString &path);
+    void changeDirectory(const QString &path, bool updateLocation = true);
     void changeFilesDirectory(const QModelIndex &index);
 
 private slots:
