@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2024 Meltytech, LLC
+ * Copyright (c) 2020-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -542,11 +542,11 @@ Shotcut.VuiBase {
             document.pastePlain();
         }
         onDeleteTriggered: {
-            textArea.remove(control.selectionStart, control.selectionEnd);
+            textArea.remove(document.selectionStart, document.selectionEnd);
         }
         onClearTriggered: {
             textArea.selectAll();
-            textArea.remove(control.selectionStart, control.selectionEnd);
+            textArea.remove(document.selectionStart, document.selectionEnd);
         }
         onSelectAllTriggered: {
             textArea.selectAll();
