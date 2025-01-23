@@ -1103,7 +1103,7 @@ void FilesDock::changeDirectory(const QString &filePath, bool updateLocation)
     }
     index = m_filesModel->setRootPath(path);
     Settings.setFilesCurrentDir(path);
-    ui->locationsCombo->setToolTip(path);
+    ui->locationsCombo->setToolTip(QDir::toNativeSeparators(path));
     if (updateLocation && path != ui->locationsCombo->currentText())
         ui->locationsCombo->setCurrentText(path);
     m_view->setRootIndex(m_filesProxyModel->mapFromSource(index));
