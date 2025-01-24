@@ -43,4 +43,3 @@ translations/.lupdate/shotcut_project.cmake
 .DS_Store
 scripts/build-shotcut.conf
 *~
-/translations/

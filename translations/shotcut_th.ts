@@ -4,12 +4,12 @@
 <context>
     <name>AbstractJob</name>
     <message>
-        <location filename="../src/jobs/abstractjob.cpp" line="47"/>
+        <location filename="../src/jobs/abstractjob.cpp" line="48"/>
         <source>Pause This Job</source>
         <translation>พักงานนี้</translation>
     </message>
     <message>
-        <location filename="../src/jobs/abstractjob.cpp" line="49"/>
+        <location filename="../src/jobs/abstractjob.cpp" line="51"/>
         <source>Resume This Job</source>
         <translation>ทำงานต่อไป</translation>
     </message>
@@ -75,7 +75,7 @@
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="17"/>
         <source>Dialog</source>
-        <translation>บทตอบโต้</translation>
+        <translation>บทสนทนา</translation>
     </message>
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="25"/>
@@ -713,9 +713,14 @@
         <translation>รายการคุณสมบัติ</translation>
     </message>
     <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1032"/>
+        <source>Show In Folder</source>
+        <translation>แสดงในโฟลเดอร์</translation>
+    </message>
+    <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1062"/>
         <source>Extract Subtitles...</source>
-        <translation type="unfinished"></translation>
+        <translation>สกัดแยกคำบรรยาย...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1095"/>
@@ -749,6 +754,11 @@
         <translation>ดูอัตราบิต</translation>
     </message>
     <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1129"/>
+        <source>Show In Files</source>
+        <translation>แสดงในไฟล์</translation>
+    </message>
+    <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1000"/>
         <source>Convert to Edit-friendly</source>
         <translation>แปลงให้แก้ไขได้สะดวก</translation>
@@ -762,11 +772,6 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1003"/>
         <source>Convert...</source>
         <translation>แปลง…</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1032"/>
-        <source>Show in Folder</source>
-        <translation>แสดงในโฟลเดอร์</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1037"/>
@@ -815,13 +820,13 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="993"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="823"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="825"/>
         <source>Reverse...</source>
         <translation>ถอยหลัง...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1057"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1021"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1023"/>
         <source>Extract Sub-clip...</source>
         <translation>สกัดแยกคลิปย่อย</translation>
     </message>
@@ -867,102 +872,102 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 หากต้องการ ให้เลือกแบบแผนด้านล่างแล้วคลิกตกลงเพื่อตั้งชื่อไฟล์ หลังจากนั้นงานจะถูกสร้างขึ้น เมื่อเสร็จเรียบร้อยจะแทนที่คลิปโดยอัตโนมัติ หรือคุณสามารถคลิกงานสองครั้งเพื่อเปิดได้</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="745"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="819"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="747"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="821"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>เลือกแบบแผนการแก้ไขที่สะดวกด้านล่าง จากนั้นคลิกตกลงเพื่อเลือกชื่อไฟล์ หลังจากเลือกชื่อไฟล์งานจะถูกสร้างขึ้น เมื่อเสร็จแล้วให้คลิกสองครั้งที่งานเพื่อเปิด
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="907"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="909"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="928"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="930"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="938"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="940"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="981"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="983"/>
         <source>Convert %1</source>
         <translation>แปลงค่า %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="942"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="944"/>
         <source>Reversed</source>
         <translation>ย้อนกลับ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="961"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="963"/>
         <source>Reverse canceled</source>
         <translation>ยกเลิกการย้อนกลับแล้ว</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="989"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="991"/>
         <source>Reverse %1</source>
         <translation>ย้อนกลับ %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1323"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1325"/>
         <source>Choose the Other Video</source>
         <translation>เลือกวิดีโออื่นๆ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1363"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1365"/>
         <source>Measure %1</source>
         <translation>ตรวจวัด %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1020"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1022"/>
         <source>Sub-clip</source>
         <translation>คลิปย่อย</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1022"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1024"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1066"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1068"/>
         <source>Extract sub-clip %1</source>
         <translation>สกัดแยกคลิปย่อย %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1084"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1132"/>
-        <source>Track %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1086"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1134"/>
-        <source>Track %1 (%2)</source>
-        <translation type="unfinished"></translation>
+        <source>Track %1</source>
+        <translation>ราง %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1090"/>
-        <source>Export Subtitles...</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1088"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1136"/>
+        <source>Track %1 (%2)</source>
+        <translation>ราง %1 (%2)</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1092"/>
+        <source>Export Subtitles...</source>
+        <translation>ส่งออกคำบรรยาย...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1094"/>
         <source>No subtitles found</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่พบคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1148"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1150"/>
         <source>Extract subtitles %1</source>
-        <translation type="unfinished"></translation>
+        <translation>สกัดแยกคำบรรยาย %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1260"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1262"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -971,22 +976,22 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1304"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1306"/>
         <source>Set Equirectangular Projection</source>
         <translation>ตั้งการฉายสี่เหลี่ยมด้านเท่า</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1314"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1316"/>
         <source>Successfully wrote %1</source>
         <translation>บันทึกสำเร็จ %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1316"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1318"/>
         <source>An error occurred saving the projection.</source>
         <translation>เกิดความผิดผลาดระหว่างการบันทึก</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1420"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1422"/>
         <source>Bitrate %1</source>
         <translation>บิตเรท %1</translation>
     </message>
@@ -1362,6 +1367,29 @@ leave blank to use the clipboard:</source>
     </message>
 </context>
 <context>
+    <name>CurveComboBox</name>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/CurveComboBox.qml" line="36"/>
+        <source>Natural</source>
+        <translation>เป็นธรรมชาติ</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/CurveComboBox.qml" line="40"/>
+        <source>S-Curve</source>
+        <translation>โค้งตัว S</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/CurveComboBox.qml" line="44"/>
+        <source>Fast-Slow</source>
+        <translation>เร็ว-ช้า</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/CurveComboBox.qml" line="48"/>
+        <source>Slow-Fast</source>
+        <translation>ช้า-เร็ว</translation>
+    </message>
+</context>
+<context>
     <name>CustomProfileDialog</name>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="14"/>
@@ -1727,7 +1755,7 @@ deinterlacer ถูกรายงานว่าเป็นปัญหา
     <message>
         <location filename="../src/docks/encodedock.ui" line="330"/>
         <source>Reframe</source>
-        <translation type="unfinished"></translation>
+        <translation>รีเฟรม</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="589"/>
@@ -1957,16 +1985,13 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1927"/>
         <source>Disable subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่ใช้งานคำบรรยาย</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <location filename="../src/docks/encodedock.cpp" line="1207"/>
-        <location filename="../src/docks/encodedock.cpp" line="1810"/>
-        <location filename="../src/docks/encodedock.cpp" line="2285"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="934"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1544"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1999"/>
+        <location filename="../src/docks/encodedock.cpp" line="1261"/>
+        <location filename="../src/docks/encodedock.cpp" line="1859"/>
+        <location filename="../src/docks/encodedock.cpp" line="2337"/>
         <source>Export File</source>
         <translation>ไฟล์ส่งออก</translation>
     </message>
@@ -1992,224 +2017,166 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="1992"/>
-        <location filename="../src/docks/encodedock.cpp" line="1999"/>
-        <location filename="../src/docks/encodedock.cpp" line="2112"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1709"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1716"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1829"/>
+        <location filename="../src/docks/encodedock.cpp" line="2044"/>
+        <location filename="../src/docks/encodedock.cpp" line="2051"/>
+        <location filename="../src/docks/encodedock.cpp" line="2164"/>
         <source>Stream</source>
         <translation>กระแสไหลเวียน</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1783"/>
-        <location filename="../src/docks/encodedock.cpp" line="1879"/>
-        <location filename="../src/docks/encodedock.cpp" line="1892"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1519"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1634"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1647"/>
+        <location filename="../src/docks/encodedock.cpp" line="1842"/>
+        <location filename="../src/docks/encodedock.cpp" line="1932"/>
+        <location filename="../src/docks/encodedock.cpp" line="1942"/>
         <source>Stop Capture</source>
         <translation>หยุดการจับ</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="129"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="111"/>
         <source>Automatic from extension</source>
         <translation>อัตโนมัติจากส่วนขยาย</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="137"/>
         <location filename="../src/docks/encodedock.cpp" line="147"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="119"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="129"/>
         <source>Default for format</source>
         <translation>รูปแบบเริ่มต้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="451"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="417"/>
+        <location filename="../src/docks/encodedock.cpp" line="452"/>
         <source>Timeline</source>
         <translation>ไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="453"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="419"/>
-        <source>Playlist</source>
-        <translation>รายการเพลย์ลิส</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="454"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="420"/>
-        <source>Each Playlist Item</source>
-        <translation>แต่ละรายการเพลง</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="457"/>
-        <location filename="../src/docks/encodedock.cpp" line="463"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="423"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="429"/>
+        <location filename="../src/docks/encodedock.cpp" line="459"/>
+        <location filename="../src/docks/encodedock.cpp" line="465"/>
         <source>Source</source>
         <translation>แหล่งกำเนิดต้นตอ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="468"/>
-        <location filename="../src/docks/encodedock.cpp" line="475"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="434"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="441"/>
+        <location filename="../src/docks/encodedock.cpp" line="470"/>
+        <location filename="../src/docks/encodedock.cpp" line="477"/>
         <source>Marker</source>
         <translation>เครื่องหมายกำกับ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="486"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="452"/>
+        <location filename="../src/docks/encodedock.cpp" line="488"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>คุณต้องป้อนค่าตัวเลข &apos;%1&apos; โดยใช้เป็นจุดทศนิยม</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="495"/>
-        <location filename="../src/docks/encodedock.cpp" line="1731"/>
-        <location filename="../src/docks/encodedock.cpp" line="1732"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="461"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1467"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1468"/>
+        <location filename="../src/docks/encodedock.cpp" line="497"/>
+        <location filename="../src/docks/encodedock.cpp" line="1790"/>
+        <location filename="../src/docks/encodedock.cpp" line="1791"/>
         <source>Custom</source>
         <translation>กำหนดเอง</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="531"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="497"/>
+        <location filename="../src/docks/encodedock.cpp" line="533"/>
         <source>Stock</source>
         <translation>ที่สะสมไว้</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="534"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="500"/>
+        <location filename="../src/docks/encodedock.cpp" line="536"/>
         <source>Default</source>
         <translation>ค่าเริ่มต้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1263"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="990"/>
+        <location filename="../src/docks/encodedock.cpp" line="1317"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>คุณไม่สามารถเขียนข้อมูลไปยังไฟล์ที่อยู่ในโครงการของคุณ  ลองอีกครั้งด้วยชื่ออื่นหรือไฟล์อื่น</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1465"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1219"/>
+        <location filename="../src/docks/encodedock.cpp" line="1520"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut พบตัวกรองที่ต้องการงานการวิคราะห์ที่ไม่ได้ทำงาน  คูณต้องการที่จะเริ่มงานการวิเคราะห์ทันทีหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1810"/>
-        <location filename="../src/docks/encodedock.cpp" line="2287"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1544"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="2001"/>
+        <location filename="../src/docks/encodedock.cpp" line="1859"/>
+        <location filename="../src/docks/encodedock.cpp" line="2339"/>
         <source>Capture File</source>
         <translation>การรวบตัว ไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1812"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1546"/>
+        <location filename="../src/docks/encodedock.cpp" line="1861"/>
         <source>Export Files</source>
         <translation>แปลงไฟล์ออก</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1813"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1547"/>
-        <source>Export Each Playlist Item</source>
-        <translation>ส่งออกรายการเล่นแต่ละรายการ</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp" line="1822"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1556"/>
+        <location filename="../src/docks/encodedock.cpp" line="1871"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1824"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1558"/>
+        <location filename="../src/docks/encodedock.cpp" line="1873"/>
         <source>Determined by Export (*)</source>
         <translation>กำหนดโดยการส่งออก</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1987"/>
-        <location filename="../src/docks/encodedock.cpp" line="2009"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1704"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1726"/>
+        <location filename="../src/docks/encodedock.cpp" line="2039"/>
+        <location filename="../src/docks/encodedock.cpp" line="2061"/>
         <source>Stop Stream</source>
         <translation>หยุดสตรีม</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2001"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1718"/>
+        <location filename="../src/docks/encodedock.cpp" line="2053"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>เข้าสู่โครงร่างรูปแบบโปรโตคอล, ที่อยู่, ช่อง และ พารามิเตอร์เป็น  URL;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2045"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1762"/>
+        <location filename="../src/docks/encodedock.cpp" line="2097"/>
         <source>Add Export Preset</source>
         <translation>เพิ่มการส่งออกที่ตั้งไว้ล่วงหน้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2089"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1806"/>
+        <location filename="../src/docks/encodedock.cpp" line="2141"/>
         <source>Delete Preset</source>
         <translation>ลบที่ตั้งไว้ล่วงหน้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2090"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1807"/>
+        <location filename="../src/docks/encodedock.cpp" line="2142"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>คุณแน่ใจหรือว่าต้องการลบ %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2218"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1934"/>
+        <location filename="../src/docks/encodedock.cpp" line="2270"/>
         <source>None</source>
         <translation>ไม่มี</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2269"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1985"/>
+        <location filename="../src/docks/encodedock.cpp" line="2321"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2412"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="2085"/>
+        <location filename="../src/docks/encodedock.cpp" line="2469"/>
         <source>Detect</source>
         <translation>ตรวจจับ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2468"/>
+        <location filename="../src/docks/encodedock.cpp" line="2525"/>
         <source>(auto)</source>
         <translation>(อัตโนมัติ)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2512"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="2176"/>
+        <location filename="../src/docks/encodedock.cpp" line="2571"/>
         <source>Detecting hardware encoders...</source>
         <translation>ตรวจจับตัวเข้ารหัสฮาร์ดแวร์</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2548"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="2210"/>
+        <location filename="../src/docks/encodedock.cpp" line="2609"/>
         <source>Nothing found</source>
         <translation>ไม่พบอะไรเลย</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2550"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="2212"/>
+        <location filename="../src/docks/encodedock.cpp" line="2611"/>
         <source>Found %1</source>
         <translation>ตรวจพบ %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2771"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="2283"/>
+        <location filename="../src/docks/encodedock.cpp" line="2832"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2219,49 +2186,44 @@ Shotcut will attempt to repair your project.</source>
 บันทึกโครงการของคุณ ปิดแล้วเปิดอีกครั้ง Shotcut จะพยายามซ่อมแซมโครงการของคุณ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2818"/>
+        <location filename="../src/docks/encodedock.cpp" line="2879"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราส่วนภาพไม่ตรงกับโหมดวิดีโอของโครงการ ซึ่งทำให้เกิดแถบสีดำ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2857"/>
+        <location filename="../src/docks/encodedock.cpp" line="2918"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราลำดับภาพสูงกว่าโหมดวิดีโอของโครงการ ซึ่งทำให้เกิดลำดับภาพซ้ำ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2410"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="2083"/>
+        <location filename="../src/docks/encodedock.cpp" line="2467"/>
         <source>Configure Hardware Encoding</source>
         <translation>กำหนดค่าการเข้ารหัสฮาร์ดแวร์</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1842"/>
+        <location filename="../src/docks/encodedock.cpp" line="455"/>
+        <source>Current Playlist Bin</source>
+        <translation>ถังรายการเล่นขณะนี้</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="456"/>
+        <source>Each Playlist Bin Item</source>
+        <translation>แต่ละถังรายการเล่น</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1862"/>
+        <source>Export Each Playlist Bin Item</source>
+        <translation>ส่งออกแต่ละถังรายการเล่น</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1898"/>
         <source>Export canceled</source>
         <translation>ยกเลิกการส่งออกแล้ว</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2434"/>
-        <location filename="../src/docks/encodedock.cpp.orig" line="2107"/>
+        <location filename="../src/docks/encodedock.cpp" line="2491"/>
         <source>Export Frames/sec</source>
         <translation>ส่งออก เฟรม/วินาที</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1585"/>
-        <source>The drive you chose only has %1 MiB of free space.
-Do you still want to continue?</source>
-        <translation>ไดร์ที่คุณเลือกมีพื้นที่ว่าง %1 MiB เท่านั้น
-คุณยังต้องการดำเนินการต่อหรือไม่</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1592"/>
-        <source>Do not show this anymore.</source>
-        <comment>Export free disk space warning dialog</comment>
-        <translation>ไม่ต้องแสดงสิ่งนี้อีกต่อไป</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.cpp.orig" line="1598"/>
-        <source>Export canceled.</source>
-        <translation>การส่งออกถูกยกเลิก</translation>
     </message>
 </context>
 <context>
@@ -2279,46 +2241,52 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="47"/>
         <location filename="../src/jobs/encodejob.cpp" line="48"/>
+        <source>Show In Files</source>
+        <translation>แสดงในไฟล์</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="52"/>
+        <location filename="../src/jobs/encodejob.cpp" line="53"/>
         <source>Show In Folder</source>
         <translation>แสดงในโฟลเดอร์</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="52"/>
+        <location filename="../src/jobs/encodejob.cpp" line="57"/>
         <source>Measure Video Quality...</source>
         <translation>วัดคุณภาพวีดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="56"/>
+        <location filename="../src/jobs/encodejob.cpp" line="61"/>
         <source>Set Equirectangular...</source>
         <translation>ตั้งสี่เหลี่ยมด้านเท่า</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="65"/>
+        <location filename="../src/jobs/encodejob.cpp" line="70"/>
         <source>Video Quality Report</source>
         <translation>รายงานคุณภาพวีดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="66"/>
+        <location filename="../src/jobs/encodejob.cpp" line="71"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
         <translation>เอกสารข้อความ (*.txt);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="121"/>
+        <location filename="../src/jobs/encodejob.cpp" line="126"/>
         <source>Set Equirectangular Projection</source>
         <translation>ตั้งการฉายสี่เหลี่ยมด้านเท่า</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="131"/>
+        <location filename="../src/jobs/encodejob.cpp" line="136"/>
         <source>Successfully wrote %1</source>
         <translation>บันทึกสำเร็จ %1</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="133"/>
+        <location filename="../src/jobs/encodejob.cpp" line="138"/>
         <source>An error occurred saving the projection.</source>
         <translation>เกิดความผิดผลาดระหว่างการบันทึก</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="161"/>
+        <location filename="../src/jobs/encodejob.cpp" line="166"/>
         <source>Export job failed; trying again without Parallel processing.</source>
         <translation>งานส่งออกล้มเหลว; ลองอีกครั้งโดยไม่มีการประมวลผลแบบขนาน</translation>
     </message>
@@ -2326,17 +2294,17 @@ Do you still want to continue?</source>
 <context>
     <name>FfmpegJob</name>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="39"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="40"/>
         <source>Open</source>
         <translation>เปิด</translation>
     </message>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="44"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="45"/>
         <source>Check %1</source>
         <translation>ตรวจสอบ %1</translation>
     </message>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="75"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="76"/>
         <source>FFmpeg Log</source>
         <translation>ไฟล์จดรายการ FFmpeg </translation>
     </message>
@@ -2388,6 +2356,343 @@ Do you still want to continue?</source>
     </message>
 </context>
 <context>
+    <name>FilesDock</name>
+    <message>
+        <location filename="../src/docks/filesdock.ui" line="18"/>
+        <location filename="../src/docks/filesdock.cpp" line="599"/>
+        <source>Files</source>
+        <translation>ไฟล์</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.ui" line="61"/>
+        <source>Location</source>
+        <translation>ตำแหน่ง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.ui" line="90"/>
+        <source>Add the current folder to the saved locations</source>
+        <translation>เพิ่มโฟลเดอร์ปัจจุบันไปยังตำแหน่งที่บันทึก</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.ui" line="110"/>
+        <source>Remove the selected location</source>
+        <translation>ล้างตำแหน่งที่เลือก</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="511"/>
+        <source>Home</source>
+        <comment>The user&apos;s home folder in the file system</comment>
+        <translation>บ้าน</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="512"/>
+        <source>Current Project</source>
+        <translation>โครงการปัจจุบัน</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="513"/>
+        <source>Documents</source>
+        <translation>เอกสาร</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="516"/>
+        <source>Movies</source>
+        <comment>The system-provided videos folder called Movies on macOS</comment>
+        <translation>ภาพยนตร์</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="520"/>
+        <source>Music</source>
+        <translation>ดนตรี</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="522"/>
+        <source>Pictures</source>
+        <comment>The system-provided photos folder</comment>
+        <translation>รูปภาพ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="525"/>
+        <source>Volumes</source>
+        <comment>The macOS file system location where external drives and network shares are mounted</comment>
+        <translation>ปริมาณ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="529"/>
+        <source>Videos</source>
+        <translation>วิดีโอ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="609"/>
+        <source>Select</source>
+        <translation>เลือก</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="613"/>
+        <source>Files Controls</source>
+        <translation>การควบคุมไฟล์</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="618"/>
+        <source>Files Menu</source>
+        <translation>เมนูไฟล์</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="637"/>
+        <location filename="../src/docks/filesdock.cpp" line="641"/>
+        <source>Files Filters</source>
+        <translation>ตัวกรองไฟล์</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="662"/>
+        <source>Only show files whose name contains some text</source>
+        <translation>แสดงเฉพาะไฟล์ที่มีชื่อซึ่งมีข้อความบางส่วนเท่านั้น</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="663"/>
+        <source>search</source>
+        <translation>ค้นหา</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="767"/>
+        <source>Tiles</source>
+        <translation>กระเบื้อง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="768"/>
+        <source>View as tiles</source>
+        <translation>ดูแบบเรียงต่อกัน</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="780"/>
+        <source>Icons</source>
+        <translation>ไอคอน</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="781"/>
+        <source>View as icons</source>
+        <translation>ดูแบบไอคอน</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="793"/>
+        <source>Details</source>
+        <translation>รายละเอียด</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="794"/>
+        <source>View as details</source>
+        <translation>ดูเป็นรายละเอียด</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="806"/>
+        <source>Open In Shotcut</source>
+        <translation>เปิดด้วย Shotcut</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="807"/>
+        <source>Open the clip in the Source player</source>
+        <translation>เปิดคลิปในโปรแกรมเล่นต้นฉบับ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="815"/>
+        <source>System Default</source>
+        <translation>ค่าเริ่มต้นระบบ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="829"/>
+        <source>Other...</source>
+        <translation>อื่นๆ...</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="837"/>
+        <source>Remove...</source>
+        <translation>เอาออก</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="845"/>
+        <source>Show In File Manager</source>
+        <translation>แสดงในตัวจัดการไฟล์</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="855"/>
+        <source>Update Thumbnails</source>
+        <translation>อัปเดตภาพขนาดย่อ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="863"/>
+        <source>Select All</source>
+        <translation>เลือกทั้งหมด</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="874"/>
+        <source>Select None</source>
+        <translation>ไม่เลือกเลย</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="885"/>
+        <source>Open Previous</source>
+        <translation>เปิดอันก่อนหน้า</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="897"/>
+        <source>Open Next</source>
+        <translation>เปิดอันถัดไป</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="909"/>
+        <source>Video</source>
+        <translation>ทัศนพัสดุ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="910"/>
+        <source>Show or hide video files</source>
+        <translation>แสดงหรือซ่อนไฟล์วิดีโอ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="915"/>
+        <source>Audio</source>
+        <translation>โสตพัสดุ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="916"/>
+        <source>Show or hide audio files</source>
+        <translation>แสดงหรือซ่อนไฟล์เสียง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="921"/>
+        <source>Image</source>
+        <translation>รูปภาพ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="922"/>
+        <source>Show or hide image files</source>
+        <translation>แสดงหรือซ่อนไฟล์รูปภาพ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="927"/>
+        <source>Other</source>
+        <translation>อื่นๆ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="928"/>
+        <source>Show or hide other kinds of files</source>
+        <translation>แสดงหรือซ่อนไฟล์ประเภทอื่น</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="933"/>
+        <source>Folders</source>
+        <translation>โฟลเดอร์</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="934"/>
+        <source>Hide or show the list of folders</source>
+        <translation>ซ่อนหรือแสดงรายการโฟลเดอร์</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="946"/>
+        <source>Go Up</source>
+        <translation>ขึ้นไป</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="947"/>
+        <source>Show the parent folder</source>
+        <translation>แสดงโฟลเดอร์หลัก</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="966"/>
+        <source>Refresh Folders</source>
+        <translation>รีเฟรชโฟลเดอร์</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="988"/>
+        <source>Search</source>
+        <translation>ค้นหา</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="1012"/>
+        <source>Open With</source>
+        <translation>เปิดด้วย</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="1260"/>
+        <source>Executable Files (*.exe);;All Files (*)</source>
+        <translation>ไฟล์ที่ปฏิบัติการได้ (*.exe);;ไฟล์ทั้งหมด (*)</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="1264"/>
+        <source>Choose Executable</source>
+        <translation>เลือกไฟล์ที่สามารถดำเนินการได้</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="1286"/>
+        <source>Remove From Open Other</source>
+        <translation>ล้างออกจากเปิดอื่น ๆ</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/docks/filesdock.cpp" line="1305"/>
+        <source>%n item(s)</source>
+        <translation>
+            <numerusform>%n รายการ</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="1347"/>
+        <source>Add Location</source>
+        <translation>เพิ่มตำแหน่ง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="1348"/>
+        <source>Name</source>
+        <translation>ชื่อ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="1366"/>
+        <source>Delete Location</source>
+        <translation>ลบตำแหน่ง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="1367"/>
+        <source>Are you sure you want to remove %1?</source>
+        <translation>คุณแน่ใจว่าต้องการลบ %1 หรือไม่?</translation>
+    </message>
+</context>
+<context>
+    <name>FilesModel</name>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="252"/>
+        <source>Video</source>
+        <translation>ทัศนพัสดุ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="253"/>
+        <source>Image</source>
+        <translation>รูปภาพ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="254"/>
+        <source>Audio</source>
+        <translation>โสตพัสดุ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="255"/>
+        <source>Other</source>
+        <translation>อื่นๆ</translation>
+    </message>
+</context>
+<context>
+    <name>FilesTileDelegate</name>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="420"/>
+        <source>Date: %1</source>
+        <translation>วันที่: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/filesdock.cpp" line="427"/>
+        <source>Size: %1</source>
+        <translation>ขนาด: %1</translation>
+    </message>
+</context>
+<context>
     <name>FilterController</name>
     <message>
         <location filename="../src/controllers/filtercontroller.cpp" line="105"/>
@@ -2395,7 +2700,7 @@ Do you still want to continue?</source>
         <translation>(ล้าสมัย)</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="324"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="325"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>อนุญาตให้ใช้ตัวกรอง 1% เดียวเท่านั้น</translation>
     </message>
@@ -2557,95 +2862,6 @@ Do you still want to continue?</source>
         <location filename="../src/widgets/frameratewidget.cpp" line="72"/>
         <source>Convert Frames/sec</source>
         <translation>แปลงเฟรม/วินาที</translation>
-    </message>
-</context>
-<context>
-    <name>GDIgrabWidget</name>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation>แบบ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="33"/>
-        <source>The vertical coordinate from the top edge when using a fixed capture region.</source>
-        <translation>พิกัดแนวตั้งจากขอบบนเมื่อใช้ขอบเขตการจับภาพแบบคงที่</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="49"/>
-        <source>Screen</source>
-        <translation>จอภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="59"/>
-        <source>X</source>
-        <translation>X</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="69"/>
-        <source>Audio Input</source>
-        <translation>โสตพัสดุขาเข้า</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="79"/>
-        <source>Width of the capture region</source>
-        <translation>ความกว้างของขอบเขตการจับภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="92"/>
-        <source>Draw the mouse cursor</source>
-        <translation>ลากเคอร์เซอร์ของเมาส์</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="105"/>
-        <source>Choose an audio input method to use during capture.</source>
-        <translation>จงเลือกกระบวนวิธีของโสตพัสดุขาเข้าที่ใช้ระหว่างจับภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="109"/>
-        <source>None</source>
-        <translation>ไม่มี</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="117"/>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="191"/>
-        <source>pixels</source>
-        <translation>พิกเซล</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="124"/>
-        <source>Y</source>
-        <translation>Y</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="131"/>
-        <source>Show the capture region</source>
-        <translation>แสดงขอบเขตการจับภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="138"/>
-        <source>Resolution</source>
-        <translation>ความละเอียด</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="148"/>
-        <source>Height of the capture region</source>
-        <translation>ความสูงของพื้นที่การจับภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="161"/>
-        <source>The horizontal coordinate from the left edge when using a fixed capture region.</source>
-        <translation>พิกัดแนวนอนจากขอบซ้ายเมื่อใช้ขอบเขตการจับภาพแบบคงที่</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="177"/>
-        <source>x</source>
-        <translation>x</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/gdigrabwidget.ui" line="184"/>
-        <source>Apply</source>
-        <translation>ใช้</translation>
     </message>
 </context>
 <context>
@@ -2838,8 +3054,13 @@ Click to change</source>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="308"/>
-        <source>Show in Folder</source>
+        <source>Show In Folder</source>
         <translation>แสดงในโฟลเดอร์</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="341"/>
+        <source>Show In Files</source>
+        <translation>แสดงในไฟล์</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="313"/>
@@ -2898,7 +3119,7 @@ Click to change</source>
         <translation>โหลดภาพลำดับ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="451"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="453"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -2941,24 +3162,6 @@ Click to change</source>
     </message>
 </context>
 <context>
-    <name>JackProducerWidget</name>
-    <message>
-        <location filename="../src/widgets/jackproducerwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation>แบบ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/jackproducerwidget.ui" line="26"/>
-        <source>JACK Audio</source>
-        <translation>แจ็คโสตพัสดุ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/jackproducerwidget.ui" line="36"/>
-        <source>You need to manually connect the JACK input ports.</source>
-        <translation>คุณต้องเชื่อมต่อพอร์ตอินพุต Jack ด้วยตนเอง</translation>
-    </message>
-</context>
-<context>
     <name>JobQueue</name>
     <message>
         <location filename="../src/jobqueue.cpp" line="58"/>
@@ -2976,17 +3179,17 @@ Click to change</source>
         <translation>พัก</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="115"/>
+        <location filename="../src/jobqueue.cpp" line="117"/>
         <source>Elapsed Hours:Minutes:Seconds</source>
         <translation>ที่ล่วงเลยไปโดยชั่วโมง:นาที:วินาที</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="118"/>
+        <location filename="../src/jobqueue.cpp" line="120"/>
         <source>stopped</source>
         <translation>หยุด</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="121"/>
+        <location filename="../src/jobqueue.cpp" line="123"/>
         <source>failed</source>
         <translation>ล้มเหลว</translation>
     </message>
@@ -3201,7 +3404,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="298"/>
         <source>Scrub While Dragging</source>
-        <translation type="unfinished"></translation>
+        <translation>การขัดขณะลาก</translation>
     </message>
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="312"/>
@@ -3958,7 +4161,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>ที่จัดเก็บ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="312"/>
+        <location filename="../src/mainwindow.ui" line="313"/>
         <source>Toolbar</source>
         <translation>แถบเครื่องมือ</translation>
     </message>
@@ -4052,8 +4255,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="498"/>
-        <location filename="../src/mainwindow.cpp" line="3527"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3079"/>
+        <location filename="../src/mainwindow.cpp" line="3574"/>
         <source>Enter Full Screen</source>
         <translation>เข้าสู่โหมดเต็มหน้าจอ</translation>
     </message>
@@ -4064,17 +4266,14 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="522"/>
-        <location filename="../src/mainwindow.cpp" line="397"/>
-        <location filename="../src/mainwindow.cpp" line="2131"/>
-        <location filename="../src/mainwindow.cpp.orig" line="371"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1881"/>
+        <location filename="../src/mainwindow.cpp" line="388"/>
+        <location filename="../src/mainwindow.cpp" line="2148"/>
         <source>Properties</source>
         <translation>คุณสมบัติ</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="531"/>
-        <location filename="../src/mainwindow.cpp" line="2140"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1890"/>
+        <location filename="../src/mainwindow.cpp" line="2157"/>
         <source>Recent</source>
         <translation>เมื่อเร็วๆ นี้</translation>
     </message>
@@ -4086,8 +4285,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="549"/>
-        <location filename="../src/mainwindow.cpp" line="607"/>
-        <location filename="../src/mainwindow.cpp.orig" line="559"/>
+        <location filename="../src/mainwindow.cpp" line="611"/>
         <source>History</source>
         <translation>ประวัติการ</translation>
     </message>
@@ -4208,8 +4406,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="183"/>
         <location filename="../src/mainwindow.ui" line="783"/>
-        <location filename="../src/mainwindow.cpp" line="2150"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1899"/>
+        <location filename="../src/mainwindow.cpp" line="2167"/>
         <source>Timeline</source>
         <translation>ไทม์ไลน์</translation>
     </message>
@@ -4304,8 +4501,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1345"/>
         <location filename="../src/mainwindow.ui" line="1348"/>
-        <location filename="../src/mainwindow.cpp" line="5326"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4747"/>
+        <location filename="../src/mainwindow.cpp" line="5373"/>
         <source>Export Chapters</source>
         <translation>ส่งออกตอนที่แบ่งไว้</translation>
     </message>
@@ -4341,7 +4537,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>รูปแบบเวลา</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="274"/>
+        <location filename="../src/mainwindow.ui" line="275"/>
         <source>Backup</source>
         <translation>สำรอง</translation>
     </message>
@@ -4470,7 +4666,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1145"/>
         <source>Subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>คำบรรยายใต้ภาพ</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1197"/>
@@ -4611,7 +4807,17 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1409"/>
         <source>Show Project in Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>แสดงโครงการในโฟลเดอร์</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1420"/>
+        <source>Pause After Seek</source>
+        <translation>หยุดพักหลังหา</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1429"/>
+        <source>Files</source>
+        <translation>ไฟล์</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1065"/>
@@ -4691,18 +4897,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>360p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="147"/>
-        <location filename="../src/mainwindow.cpp.orig" line="138"/>
-        <source>Error: This program requires the JACK 1 library.
-
-Please install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar.</source>
-        <translation>ข้อผิดพลาด: โปรแกรมนี้ต้องการคลังแจ็ค 1
-
-กรุณาติดตั้งผ่านตัวจัดการพัสดุของคุณ อาจมีชื่อว่า libjack0 jack-audio-connection-kit  jack หรือที่คล้ายกัน</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="155"/>
-        <location filename="../src/mainwindow.cpp.orig" line="146"/>
+        <location filename="../src/mainwindow.cpp" line="145"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
@@ -4711,194 +4906,153 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 กรุณาติดตั้งโดยใช้ผู้จัดการแพคเกจของคุณ มันอาจจะชื่อ  libsdl2-2.0-0, SDL2,หรือคล้ายกัน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="971"/>
-        <location filename="../src/mainwindow.cpp.orig" line="768"/>
+        <location filename="../src/mainwindow.cpp" line="981"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>จอภาพ %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="996"/>
-        <location filename="../src/mainwindow.cpp.orig" line="792"/>
+        <location filename="../src/mainwindow.cpp" line="1006"/>
         <source>Off</source>
         <translation>ปิด</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="999"/>
-        <location filename="../src/mainwindow.cpp.orig" line="795"/>
+        <location filename="../src/mainwindow.cpp" line="1009"/>
         <source>Internal</source>
         <translation>ภายใน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1002"/>
-        <location filename="../src/mainwindow.cpp.orig" line="798"/>
+        <location filename="../src/mainwindow.cpp" line="1012"/>
         <source>External</source>
         <translation>ภายนอก</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1016"/>
-        <location filename="../src/mainwindow.cpp.orig" line="812"/>
+        <location filename="../src/mainwindow.cpp" line="1026"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1299"/>
-        <location filename="../src/mainwindow.cpp" line="1256"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1049"/>
+        <location filename="../src/mainwindow.cpp" line="1272"/>
         <source>Color</source>
         <translation>สี</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1258"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1051"/>
+        <location filename="../src/mainwindow.cpp" line="1274"/>
         <source>Text</source>
         <translation>ข้อความ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1261"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1054"/>
+        <location filename="../src/mainwindow.cpp" line="1277"/>
         <source>Animation</source>
         <translation>แอนิเมชั่น</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1264"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1057"/>
+        <location filename="../src/mainwindow.cpp" line="1280"/>
         <source>Noise</source>
         <translation>สัณญาณรบกวน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1266"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1059"/>
+        <location filename="../src/mainwindow.cpp" line="1282"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1268"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1061"/>
+        <location filename="../src/mainwindow.cpp" line="1284"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1271"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1064"/>
+        <location filename="../src/mainwindow.cpp" line="1287"/>
         <source>Plasma</source>
         <translation>พลาสมา</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1273"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1066"/>
+        <location filename="../src/mainwindow.cpp" line="1289"/>
         <source>Color Bars</source>
         <translation>แถบสี</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1276"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1069"/>
+        <location filename="../src/mainwindow.cpp" line="1292"/>
         <source>Audio Tone</source>
         <translation>ระดับเสียงโสตพัสดุ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1278"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1071"/>
+        <location filename="../src/mainwindow.cpp" line="1294"/>
         <source>Count</source>
         <translation>การนับ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1280"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1073"/>
+        <location filename="../src/mainwindow.cpp" line="1296"/>
         <source>Blip Flash</source>
         <translation>แสงกระพริบรุนแรง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1284"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1077"/>
+        <location filename="../src/mainwindow.cpp" line="1300"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1285"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1078"/>
+        <location filename="../src/mainwindow.cpp" line="1301"/>
         <source>PulseAudio</source>
         <translation>ชีพจรโสตพัสดุ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1286"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1079"/>
-        <source>JACK Audio</source>
-        <translation>แจ็คเสียง</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1287"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1080"/>
+        <location filename="../src/mainwindow.cpp" line="1302"/>
         <source>ALSA Audio</source>
         <translation>ALSA เสียง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1289"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1082"/>
+        <location filename="../src/mainwindow.cpp" line="1304"/>
         <source>Audio/Video Device</source>
         <translation>อุปกรณืเสียง/วีดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1293"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1086"/>
+        <location filename="../src/mainwindow.cpp" line="1308"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1315"/>
-        <location filename="../src/mainwindow.cpp" line="1317"/>
-        <location filename="../src/mainwindow.cpp" line="1739"/>
-        <location filename="../src/mainwindow.cpp" line="1747"/>
-        <location filename="../src/mainwindow.cpp" line="1768"/>
-        <location filename="../src/mainwindow.cpp" line="1825"/>
-        <location filename="../src/mainwindow.cpp" line="4169"/>
-        <location filename="../src/mainwindow.cpp" line="4182"/>
-        <location filename="../src/mainwindow.cpp" line="5107"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1108"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1110"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1507"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1515"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1536"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1591"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3643"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3656"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4528"/>
+        <location filename="../src/mainwindow.cpp" line="1330"/>
+        <location filename="../src/mainwindow.cpp" line="1332"/>
+        <location filename="../src/mainwindow.cpp" line="1754"/>
+        <location filename="../src/mainwindow.cpp" line="1762"/>
+        <location filename="../src/mainwindow.cpp" line="1783"/>
+        <location filename="../src/mainwindow.cpp" line="1840"/>
+        <location filename="../src/mainwindow.cpp" line="4216"/>
+        <location filename="../src/mainwindow.cpp" line="4229"/>
+        <location filename="../src/mainwindow.cpp" line="5154"/>
         <source>Failed to open </source>
         <translation>ไม่สามารถเปิดได้</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1349"/>
+        <location filename="../src/mainwindow.cpp" line="1364"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.</source>
         <translation>ไฟล์ที่คุณเปิดใช้ผลภาพหน่วยประมวลผลกราฟิก แต่ผลภาพหน่วยประมวลผลกราฟิกไม่ได้เปิดใช้</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1361"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1151"/>
+        <location filename="../src/mainwindow.cpp" line="1376"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>ไฟล์ที่คุณเปิดใช้เอฟเฟกต์ CPU เข้ากันไม่ได้กับ เอฟเฟกต์ GPU แต่เอฟเฟกต์ GPU ใช้งานได้
 คุณต้องการปิดใช้งานเอฟเฟกต์ GPUและรีสตาร์ทหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1384"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1174"/>
+        <location filename="../src/mainwindow.cpp" line="1399"/>
         <source>Repaired</source>
         <translation>การซ่อมแซม</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1386"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1175"/>
+        <location filename="../src/mainwindow.cpp" line="1401"/>
         <source>Save Repaired XML</source>
         <translation>บันทึก XML ที่ซ่อมแซมแล้ว</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1419"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1208"/>
+        <location filename="../src/mainwindow.cpp" line="1434"/>
         <source>Repairing the project failed.</source>
         <translation>การซ่อมแซมโครงการล้มเหลว</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1432"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1221"/>
+        <location filename="../src/mainwindow.cpp" line="1447"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -4911,26 +5065,22 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 ด้วย &quot;การซ่อมแซม&quot; ในชื่อไฟล์และเปิดมัน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1467"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1256"/>
+        <location filename="../src/mainwindow.cpp" line="1482"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>ไฟล์ที่บันทึกอัตโนมัติมีอยู่ คุณต้องการกู้คืนทันทีหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1537"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1326"/>
+        <location filename="../src/mainwindow.cpp" line="1552"/>
         <source>You cannot add a project to itself!</source>
         <translation>คุณไม่สามารถเพิ่มโครงการให้กับตัวเอง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1575"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1362"/>
+        <location filename="../src/mainwindow.cpp" line="1590"/>
         <source>There was an error saving. Please try again.</source>
         <translation>เกิดข้อผิดพลาดในการบันทึก กรุณาลองอีกครั้ง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1652"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1439"/>
+        <location filename="../src/mainwindow.cpp" line="1667"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -4939,8 +5089,7 @@ It was made with version </source>
 ถูกสร้างด้วยรุ่น</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1681"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1464"/>
+        <location filename="../src/mainwindow.cpp" line="1696"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -4951,164 +5100,145 @@ Or save and restart Shotcut.</source>
 หรือบันทึกแล้วเปิด Shotcut ใหม่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1733"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1501"/>
+        <location filename="../src/mainwindow.cpp" line="1748"/>
         <source>Opening %1</source>
         <translation>การเปิด %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1866"/>
-        <location filename="../src/mainwindow.cpp" line="4159"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1632"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3613"/>
+        <location filename="../src/mainwindow.cpp" line="1881"/>
+        <location filename="../src/mainwindow.cpp" line="4206"/>
         <source>Open File</source>
         <translation>เปิดไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1867"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1633"/>
+        <location filename="../src/mainwindow.cpp" line="1882"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>ไฟล์ทั้งหมด (*);; MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2114"/>
+        <location filename="../src/mainwindow.cpp" line="2131"/>
         <source>Preferences</source>
         <translation>ค่าที่ปรับได้</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2124"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1874"/>
+        <location filename="../src/mainwindow.cpp" line="2141"/>
         <source>Rename Clip</source>
         <translation>เปลี่ยนชื่อคลิป</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2133"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1883"/>
+        <location filename="../src/mainwindow.cpp" line="2150"/>
         <source>Find</source>
         <translation>หา</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2142"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1892"/>
+        <location filename="../src/mainwindow.cpp" line="2159"/>
         <source>Reload</source>
         <translation>บรรจุใหม่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2272"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1971"/>
+        <location filename="../src/mainwindow.cpp" line="2291"/>
         <source>Untitled</source>
         <translation>ไม่ได้ตั้งชื่อ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2294"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1992"/>
+        <location filename="../src/mainwindow.cpp" line="2313"/>
         <source>About %1</source>
         <translation>เกี่ยวกับ %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2414"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2113"/>
+        <location filename="../src/mainwindow.cpp" line="2433"/>
         <source>Non-Broadcast</source>
         <translation>ไม่ใช่การออกอากาศ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2419"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2118"/>
+        <location filename="../src/mainwindow.cpp" line="2438"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2420"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2119"/>
+        <location filename="../src/mainwindow.cpp" line="2439"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2431"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2130"/>
+        <location filename="../src/mainwindow.cpp" line="2450"/>
         <source>Square 1080p 30 fps</source>
         <translation>สี่เหลี่ยมจัตุรัส 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2432"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2131"/>
+        <location filename="../src/mainwindow.cpp" line="2451"/>
         <source>Square 1080p 60 fps</source>
         <translation>สี่เหลี่ยมจัตุรัส 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2433"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2132"/>
+        <location filename="../src/mainwindow.cpp" line="2452"/>
         <source>Vertical HD 30 fps</source>
         <translation>แนวตั้ง HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2434"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2133"/>
+        <location filename="../src/mainwindow.cpp" line="2453"/>
         <source>Vertical HD 60 fps</source>
         <translation>แนวตั้ง HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2435"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2134"/>
+        <location filename="../src/mainwindow.cpp" line="2454"/>
         <source>Custom</source>
         <translation>กำหนดเอง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2466"/>
-        <location filename="../src/mainwindow.cpp" line="2758"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2165"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2468"/>
+        <location filename="../src/mainwindow.cpp" line="2485"/>
+        <location filename="../src/mainwindow.cpp" line="2777"/>
         <source>Saved %1</source>
         <translation>บันทึก %1แล้ว</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2749"/>
-        <location filename="../src/mainwindow.cpp" line="2772"/>
-        <location filename="../src/mainwindow.cpp" line="3977"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2460"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2482"/>
+        <location filename="../src/mainwindow.cpp" line="2768"/>
+        <location filename="../src/mainwindow.cpp" line="2791"/>
+        <location filename="../src/mainwindow.cpp" line="4024"/>
         <source>Save XML</source>
         <translation>บันทึก XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2857"/>
+        <location filename="../src/mainwindow.cpp" line="2881"/>
         <source>Timeline is not loaded</source>
         <translation>เส้นเวลาไม่ถูกโหลด</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2867"/>
+        <location filename="../src/mainwindow.cpp" line="2891"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation>ไม่พบเครื่องหมายกำกับพิสัยอยู่ใต้เคอร์เซอร์เส้นเวลา</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2923"/>
+        <location filename="../src/mainwindow.cpp" line="2958"/>
         <source>There are incomplete jobs.
 Do you still want to exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>มีงานไม่เสร็จ
+ยังต้องการออกอยู่ไหม?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2936"/>
+        <location filename="../src/mainwindow.cpp" line="2971"/>
         <source>An export is in progress.
 Do you still want to exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>การส่งออกกำลังดำเนินการอยู่
+คุณยังต้องการออกหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3979"/>
+        <location filename="../src/mainwindow.cpp" line="4026"/>
         <source>Saved backup %1</source>
         <translation>บันทึกสำรอง %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2825"/>
+        <location filename="../src/mainwindow.cpp" line="2849"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation>คุณยังต้องการเปลี่ยนโหมดวิดีโอเป็น %1 x %2 ใช่หรือไม่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3706"/>
+        <location filename="../src/mainwindow.cpp" line="3753"/>
         <source>Opened Files</source>
         <translation>ไฟล์ที่เปิด</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3786"/>
+        <location filename="../src/mainwindow.cpp" line="3833"/>
         <source>GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.
 At this time, a project created with GPU effects cannot be converted to a CPU-only project later.
 
@@ -5119,99 +5249,72 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 คุณยังต้องการเปิดใช้งานผลภาพหน่วยประมวลผลกราฟิกและเปิด Shotcut อีกครั้งหรือไม่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4769"/>
+        <location filename="../src/mainwindow.cpp" line="4816"/>
         <source>Add To Timeline</source>
         <translation>เพิ่มไปยังเส้นเวลา</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5302"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4723"/>
+        <location filename="../src/mainwindow.cpp" line="5349"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>ผนวกพิสัยหรือไม่ (ระยะเวลามากกว่า 1 เฟรม)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5313"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4734"/>
+        <location filename="../src/mainwindow.cpp" line="5360"/>
         <source>Choose Markers</source>
         <translation>เลือกเครื่องหมายกำกับ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5328"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4749"/>
+        <location filename="../src/mainwindow.cpp" line="5375"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Text (*.txt);;ไฟล์ทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5382"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4803"/>
+        <location filename="../src/mainwindow.cpp" line="5429"/>
         <source>Failed to open export-chapters.js</source>
         <translation>เปิด export-chapters.js แล้วล้มเหลว</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5422"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4843"/>
+        <location filename="../src/mainwindow.cpp" line="5469"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation>สิ่งนี้จะคืนการตั้งค่ากลับทั้งหมด และ Shotcut จะต้องเริ่มขึ้นใหม่หลังจากนั้น
 คุณต้องการคืนค่าและเริ่มขึ้นใหม่ตอนนี้หรือไม่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1388"/>
-        <location filename="../src/mainwindow.cpp" line="2774"/>
-        <location filename="../src/mainwindow.cpp.orig" line="1177"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2484"/>
+        <location filename="../src/mainwindow.cpp" line="1403"/>
+        <location filename="../src/mainwindow.cpp" line="2793"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2894"/>
-        <location filename="../src/mainwindow.cpp.orig" line="2503"/>
+        <location filename="../src/mainwindow.cpp" line="2929"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>โครงการได้รับการแก้ไข 
 คุณต้องการบันทึกการเปลี่ยนแปลงของคุณหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp.orig" line="2532"/>
-        <source>There are incomplete jobs.
-Do you want to still want to exit?</source>
-        <translation>มีงานที่ยังไม่สมบูรณ์
-คุณยังต้องการที่จะออกหรือไม่?</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp.orig" line="2545"/>
-        <source>An export is in progress.
-Do you want to still want to exit?</source>
-        <translation>การส่งออกอยู่ในระหว่างดำเนินการ 
-คุณยังต้องการที่จะออกหรือไม่?</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="3530"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3082"/>
+        <location filename="../src/mainwindow.cpp" line="3577"/>
         <source>Exit Full Screen</source>
         <translation>ออกจากหน้าจอเต็ม</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5071"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4492"/>
+        <location filename="../src/mainwindow.cpp" line="5118"/>
         <source>Turn Proxy On</source>
         <translation>เปิดพร็อกซี่ขึ้น</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5071"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4492"/>
+        <location filename="../src/mainwindow.cpp" line="5118"/>
         <source>Turn Proxy Off</source>
         <translation>ปิดพร็อกซี่ลง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5075"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4496"/>
+        <location filename="../src/mainwindow.cpp" line="5122"/>
         <source>Converting</source>
         <translation>การแปลง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5089"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4510"/>
+        <location filename="../src/mainwindow.cpp" line="5136"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -5220,103 +5323,87 @@ You must reopen your project after all proxy jobs are finished.</source>
 คุณต้องเปิดโครงการของคุณอีกครั้งหลังจากงานพร็อกซี่ทั้งหมดเสร็จแล้ว</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5124"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4545"/>
+        <location filename="../src/mainwindow.cpp" line="5171"/>
         <source>Proxy Folder</source>
         <translation>โฟล์เดอร์พร็อกซี่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5140"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4561"/>
+        <location filename="../src/mainwindow.cpp" line="5187"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>คุณต้องการย้ายไฟล์ทั้งหมดจากโฟล์เดอร์เก่าไปยังโฟล์เดอร์ใหม่หรือไม่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5147"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4568"/>
+        <location filename="../src/mainwindow.cpp" line="5194"/>
         <source>Moving Files</source>
         <translation>ไฟล์ที่ย้าย</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3543"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3095"/>
+        <location filename="../src/mainwindow.cpp" line="3590"/>
         <source>GPU effects are not supported</source>
         <translation>ไม่รองรับเอฟเฟกต์ GPU</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="310"/>
+        <location filename="../src/mainwindow.cpp" line="301"/>
         <source>Set Loop Range</source>
         <translation>ตั้งพิสัยการวน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="448"/>
-        <location filename="../src/mainwindow.cpp.orig" line="422"/>
+        <location filename="../src/mainwindow.cpp" line="439"/>
         <source>View mode</source>
         <translation>โหมดดู</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="452"/>
-        <location filename="../src/mainwindow.cpp.orig" line="426"/>
+        <location filename="../src/mainwindow.cpp" line="443"/>
         <source>Thumbnails</source>
         <translation>รูปขนาดย่อ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="510"/>
+        <location filename="../src/mainwindow.cpp" line="514"/>
         <source>Scrolling</source>
         <translation>การกรอ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="857"/>
+        <location filename="../src/mainwindow.cpp" line="867"/>
         <source>Audio API</source>
         <translation>ส่วนต่อประสานการโปรแกรมประยุกต์ทางเสียง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="879"/>
+        <location filename="../src/mainwindow.cpp" line="889"/>
         <source>default</source>
         <translation>ค่าเริ่มต้น</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="886"/>
+        <location filename="../src/mainwindow.cpp" line="896"/>
         <source>You must restart Shotcut to change the audio API.
 Do you want to restart now?</source>
         <translation>คุณต้องเริ่ม Shotcut ใหม่เพื่อเปลี่ยนส่วนต่อประสานการโปรแกรมประยุกต์ทางเสียง
 คุณต้องการเริ่มใหม่ตอนนี้หรือไม่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp.orig" line="1993"/>
-        <source>&lt;h1&gt;Shotcut version %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Licensed under the %5&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://glaxnimate.mattbas.org/&quot;&gt;Glaxnimate&lt;/a&gt; vector animation program&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation>&lt;h1&gt;เวอร์ชัน %2 ของ Shotcut&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; เป็นโปรแกรมตัดต่อวิดีโอฟรีและเปิดต้นทาง ที่รองรับหลายแพลตฟอร์ม&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;ได้รับอนุญาตภายใต้ %5&lt;/p&gt;&lt;p&gt;โปรแกรมนี้ใช้โครงการต่อไปนี้อย่างภรรยาบางตัวอย่าง:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; โครงสร้างและเฟรมเวิร์กของแอปพลิเคชัน&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; โครงสร้างการสร้างมัลติมีเดีย&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; ไลบรารีรูปแบบและรหัสความหมายของมัลติมีเดีย&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; เครื่องมือเข้ารหัส H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; เครื่องมือเข้ารหัส VP8 และ VP9&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; เครื่องมือเข้ารหัส MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; ปลั๊กอินวิดีโอ&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; ปลั๊กอินเสียง&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; คอลเลคชันไอคอนโดย &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; คอลเลคชันไอคอน&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://glaxnimate.mattbas.org/&quot;&gt;Glaxnimate&lt;/a&gt; โปรแกรมแอนิเมชันเวกเตอร์&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;โค้ดต้นฉบับที่ใช้สร้างโปรแกรมนี้สามารถดาวน์โหลดได้ที่ &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;&lt;/p&gt;โปรแกรมนี้ถูกแจกจ่ายในหวังว่าจะมีประโยชน์ แต่ไม่มีการรับประกันใด ๆ; โดยไม่มีการรับประกันแม้กระทั่งรับประกันแบบระบุหรือเหมาะสมสำหรับวัตถุประสงค์ใด ๆ&lt;/small&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="3563"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3115"/>
+        <location filename="../src/mainwindow.cpp" line="3610"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>คลิกที่นี่เพื่อตรวจสอบ shotcut รุ่นใหม่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3679"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3220"/>
+        <location filename="../src/mainwindow.cpp" line="3726"/>
         <source>Open Files</source>
         <translation>เปิดไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3736"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3254"/>
+        <location filename="../src/mainwindow.cpp" line="3783"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>คุณต้องรีสตาร์ท shotcut เพื่อเปลี่ยนเป็นภาษาใหม่
 คุณต้องการเริ่มต้นการตั้งค่าใหม่ตอนนี้หรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3777"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3295"/>
+        <location filename="../src/mainwindow.cpp" line="3824"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>ไม่สามารถเชื่อมต่อกับแจ็ค โปรดตรวจสอบว่าแจ็คติดตั้งและทำงานอยู่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3804"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3323"/>
+        <location filename="../src/mainwindow.cpp" line="3851"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -5325,211 +5412,159 @@ Disable GPU effects and restart?</source>
 ปิดใช้งานเอฟเฟกต์GPU แล้วรีสตาร์ท?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3957"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3459"/>
+        <location filename="../src/mainwindow.cpp" line="4004"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>คุณต้องรีสตาร์ท %1 เพื่อเปลี่ยนเป็นภาษาใหม่
 คุณต้องการเริ่มต้นการตั้งค่าใหม่ตอนนี้หรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3999"/>
+        <location filename="../src/mainwindow.cpp" line="4046"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;โปรดตรวจสอบทั้งโครงการของคุณหลังจากทำการเปลี่ยนแปลงนี้&lt;/p&gt;&lt;p&gt;Shotcut จะไม่ปรับสิ่งที่ไวต่อขนาดและตำแหน่งโดยอัตโนมัติหากคุณเปลี่ยนความละเอียดหรืออัตราส่วนภาพ&lt;/p&lt;br&gt;ระยะเวลาของการแก้ไขและคีย์เฟรมอาจแตกต่างกันเล็กน้อยหากคุณเปลี่ยนอัตราเฟรม&lt;/p&gt;&lt;p&gt;เป็นความคิดที่ดีที่จะใช้&lt;b&gt;ไฟล์ &gt; สำรองข้อมูลและบันทึก&lt;/b&gt; ก่อนหรือหลังการดำเนินการนี้&lt;/p&gt;&lt;p&gt;คุณต้องการเปลี่ยนโหมด &lt;b&gt;โหมดวิดีโอ&lt;/b&gt; ทันทีหรือไม่?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4008"/>
+        <location filename="../src/mainwindow.cpp" line="4055"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>ไม่ต้องแสดงสิ่งนี้อีกต่อไป</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4136"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3590"/>
+        <location filename="../src/mainwindow.cpp" line="4183"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>คุณต้องการตรวจสอบการอัปเดตโดยอัตโนมัติในอนาคตหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4143"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3597"/>
+        <location filename="../src/mainwindow.cpp" line="4190"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>ไม่ต้องแสดงสิ่งนี้อีกต่อไป</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4160"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3614"/>
+        <location filename="../src/mainwindow.cpp" line="4207"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4212"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3681"/>
+        <location filename="../src/mainwindow.cpp" line="4259"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>คุณต้องรีสตาร์ท shotcut เพื่อเปลี่ยนวิธีการแสดง
 คุณต้องการเริ่มต้นใหม่ตอนนี้หรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4242"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3703"/>
+        <location filename="../src/mainwindow.cpp" line="4289"/>
         <source>Application Log</source>
         <translation>แอปพลิเคชันบันทึก</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4245"/>
+        <location filename="../src/mainwindow.cpp" line="4292"/>
         <source>Previous</source>
         <translation>ก่อนหน้า</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4305"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3754"/>
+        <location filename="../src/mainwindow.cpp" line="4352"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>มี shotcut  เวอร์ชั่น %1 แล้ว!  คลิกที่นี่พื่อรับมัน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4312"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3761"/>
+        <location filename="../src/mainwindow.cpp" line="4359"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>คุณกำลังเรียกใช้ shotcut รุ่นล่าสุด</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4326"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3775"/>
+        <location filename="../src/mainwindow.cpp" line="4373"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>ไม่สามารถอ่าน เวอร์ชัน.json เมื่อตรวจสอบ  คลิกที่นี่เพื่อไปที่เว็ปไซต์</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="927"/>
         <location filename="../src/mainwindow.ui" line="930"/>
-        <location filename="../src/mainwindow.cpp" line="4346"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3795"/>
+        <location filename="../src/mainwindow.cpp" line="4393"/>
         <source>Export EDL</source>
         <translation>ส่งออก EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4348"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3797"/>
+        <location filename="../src/mainwindow.cpp" line="4395"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4394"/>
-        <location filename="../src/mainwindow.cpp" line="5379"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3843"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4800"/>
+        <location filename="../src/mainwindow.cpp" line="4441"/>
+        <location filename="../src/mainwindow.cpp" line="5426"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>เกิดข้อผิดพลาดกับ Javascript ระหว่างการส่งออก</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4397"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3846"/>
+        <location filename="../src/mainwindow.cpp" line="4444"/>
         <source>Failed to open export-edl.js</source>
         <translation>ไม่สามารถเปิด export-eel.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4426"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3875"/>
+        <location filename="../src/mainwindow.cpp" line="4473"/>
         <source>Export frame from proxy?</source>
         <translation>ส่งออกเฟรมจากพร็อกซี่หรือไม่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4427"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3876"/>
+        <location filename="../src/mainwindow.cpp" line="4474"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>เฟรมนี้อาจมาจากพร็อกซีที่มีความละเอียดต่ำกว่าแทนที่จะเป็นแหล่งที่มาเดิม
+คุณยังต้องการดำเนินการต่อหรือไม่</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="938"/>
         <location filename="../src/mainwindow.ui" line="941"/>
-        <location filename="../src/mainwindow.cpp" line="4439"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3888"/>
+        <location filename="../src/mainwindow.cpp" line="4486"/>
         <source>Export Frame</source>
         <translation>กรอบการส่งออก</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4445"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3894"/>
+        <location filename="../src/mainwindow.cpp" line="4492"/>
         <source>Unable to export frame.</source>
         <translation>ไม่สามรถส่งออกเฟรม</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4453"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3902"/>
+        <location filename="../src/mainwindow.cpp" line="4500"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>คุณต้องรีสตาร์ท Shotcut เพื่อเปลี่ยนไดเรกทอรีข้อมูล
 คุณต้องการที่จะดำเนินการต่อไปหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4462"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3911"/>
+        <location filename="../src/mainwindow.cpp" line="4509"/>
         <source>Data Directory</source>
         <translation>ไดเรกทอรีข้อมูล</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4662"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4107"/>
+        <location filename="../src/mainwindow.cpp" line="4709"/>
         <source>Add Custom Layout</source>
         <translation>เพิ่มเลย์เอาต์ที่กำหนดเอง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4663"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4108"/>
+        <location filename="../src/mainwindow.cpp" line="4710"/>
         <source>Name</source>
         <translation>ชื่อ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4701"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4146"/>
+        <location filename="../src/mainwindow.cpp" line="4748"/>
         <source>Remove Video Mode</source>
         <translation>ลบโหมดวีดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4715"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4160"/>
+        <location filename="../src/mainwindow.cpp" line="4762"/>
         <source>Remove Layout</source>
         <translation>ลบโครงการ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4879"/>
-        <location filename="../src/mainwindow.cpp.orig" line="4300"/>
+        <location filename="../src/mainwindow.cpp" line="4926"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
         <translation>เอฟเฟกต์ GPU เป็นแบบทดลองไม่เสถียรและไม่รองรับ! หมายถึงไม่ได้รับการสนับสนุน อย่ารายงานข้อผิดพลาดเกี่ยวกับเรื่องนี้
 
 คุณต้องการปิดใช้งานเอฟเฟกต์ GPUและรีสตาร์ท  Shotcut หรือไม่?</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp.orig" line="1138"/>
-        <source>The file you opened uses GPU effects, but GPU effects are not enabled.
-
-GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.</source>
-        <translation>ไฟล์ที่คุณเปิดใช้เอฟเฟกต์ GPU แต่ เอฟเฟกต์ GPU ไม่ได้เปิดใช้งาน
-
-เอฟเฟกต์ GPU เป็นแบบทดลองไม่เสถียรและไม่รองรับ! หมายถึงไม่ได้รับการสนับสนุน อย่ารายงานข้อผิดพลาดเกี่ยวกับเรื่องนี้
-คุณต้องการเปิดใช้งานเอฟเฟกต์ GPUและรีสตาร์ทหรือไม่?</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp.orig" line="3304"/>
-        <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
-
-Do you want to enable GPU effects and restart Shotcut?</source>
-        <translation>ผลของ GPU เป็นการทดลองและอาจทำให้เกิดความไม่แน่นอนในบางระบบ เอฟเฟกต์ของCPU บางอย่างเข้ากันไม่ได้กับเอฟเฟกต์ GPU และจะถูกปิดการใช้งาน โครงการที่สร้างด้วยเอฟเฟกต์ GPU ไม่สามารถแปลงเป็นโครงการ CPU ได้ในภายหลังเท่านั้น</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp.orig" line="3631"/>
-        <source>The decimal point of the MLT XML file
-you want to open is incompatible.
-
-Do you want to continue to open this MLT XML file?</source>
-        <translation>จุดทศนิยมของไฟล์ MLT XML
-ที่คุณต้องการเปิดไม่เข้ากัน
-
-คุณต้องการเปิดไฟล์ MLT XML ต่อไปหรือไม่?</translation>
     </message>
 </context>
 <context>
@@ -5540,22 +5575,22 @@ Do you want to continue to open this MLT XML file?</source>
         <translation>เครื่องหมายกำกับ</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="203"/>
+        <location filename="../src/docks/markersdock.cpp" line="201"/>
         <source>Add a marker at the current time</source>
         <translation>เพิ่มเครื่องหมายกำกับที่เวลาขณะนี้</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="212"/>
+        <location filename="../src/docks/markersdock.cpp" line="210"/>
         <source>Remove the selected marker</source>
         <translation>ล้างเครื่องหมายกำกับที่เลือก</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="221"/>
+        <location filename="../src/docks/markersdock.cpp" line="219"/>
         <source>Deselect the marker</source>
         <translation>ไม่เลือกเครื่องหมายกำกับ</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="194"/>
+        <location filename="../src/docks/markersdock.cpp" line="192"/>
         <source>Markers Menu</source>
         <translation>รายการเครื่องหมายกำกับ</translation>
     </message>
@@ -5566,47 +5601,46 @@ Do you want to continue to open this MLT XML file?</source>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="168"/>
-        <location filename="../src/docks/markersdock.cpp" line="169"/>
         <source>Columns</source>
         <translation>สดมภ์</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="171"/>
+        <location filename="../src/docks/markersdock.cpp" line="169"/>
         <source>Color</source>
         <translation>สี</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="174"/>
+        <location filename="../src/docks/markersdock.cpp" line="172"/>
         <source>Name</source>
         <translation>ชื่อ</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="177"/>
+        <location filename="../src/docks/markersdock.cpp" line="175"/>
         <source>Start</source>
         <translation>เริ่มต้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="180"/>
+        <location filename="../src/docks/markersdock.cpp" line="178"/>
         <source>End</source>
         <translation>สิ้นสุด</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="183"/>
+        <location filename="../src/docks/markersdock.cpp" line="181"/>
         <source>Duration</source>
         <translation>ระยะเวลา</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="189"/>
+        <location filename="../src/docks/markersdock.cpp" line="187"/>
         <source>Markers Controls</source>
         <translation>ควบคุมเครื่องหมายกำกับ</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="229"/>
+        <location filename="../src/docks/markersdock.cpp" line="227"/>
         <source>search</source>
         <translation>ค้นหา</translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="237"/>
+        <location filename="../src/docks/markersdock.cpp" line="235"/>
         <source>Clear search</source>
         <translation>ค้นหาที่ชัดเจน</translation>
     </message>
@@ -5663,12 +5697,18 @@ Do you want to continue to open this MLT XML file?</source>
     </message>
     <message>
         <location filename="../src/jobs/meltjob.cpp" line="58"/>
-        <location filename="../src/jobs/meltjob.cpp" line="59"/>
+        <location filename="../src/jobs/meltjob.cpp" line="63"/>
+        <location filename="../src/jobs/meltjob.cpp" line="64"/>
         <source>Show In Folder</source>
         <translation>แสดงในโฟลเดอร์</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="175"/>
+        <location filename="../src/jobs/meltjob.cpp" line="59"/>
+        <source>Show In Files</source>
+        <translation>แสดงในไฟล์</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/meltjob.cpp" line="185"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -5684,6 +5724,65 @@ Do you want to continue to open this MLT XML file?</source>
         <location filename="../src/videowidget.cpp" line="187"/>
         <source>You cannot drag a non-seekable source</source>
         <translation>คุณไม่สามารถลากแหล่งที่ไม่สามารถหาได้</translation>
+    </message>
+</context>
+<context>
+    <name>MltClipProducerWidget</name>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="47"/>
+        <source>Resolution</source>
+        <translation>ความละเอียด</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="53"/>
+        <source>Aspect ratio</source>
+        <translation>อัตราส่วนมอง</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="59"/>
+        <source>Frame rate</source>
+        <translation>อัตรากรอบภาพ</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="65"/>
+        <source>Scan mode</source>
+        <translation>โหมดสแกน</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="71"/>
+        <source>Colorspace</source>
+        <translation>ปริภูมิสี</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="77"/>
+        <source>Duration</source>
+        <translation>ระยะเวลา</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="152"/>
+        <source>%L1 fps</source>
+        <translation>%L1 fps</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="155"/>
+        <source>Progressive</source>
+        <translation>ความก้าวหน้า</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="157"/>
+        <source>Interlaced</source>
+        <translation>ร้อยเข้าด้วยกัน </translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="204"/>
+        <source>Subclip profile does not match project profile.
+This may provide unexpected results</source>
+        <translation>โปรไฟล์คลิปย่อยไม่ตรงกับโปรไฟล์โครงการ ซึ่งอาจให้ผลลัพธ์ที่ไม่คาดคิด</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/mltclipproducerwidget.cpp" line="208"/>
+        <source>Subclip profile matches project profile.</source>
+        <translation>โปรไฟล์คลิปย่อยตรงกับโปรไฟล์โครงการ</translation>
     </message>
 </context>
 <context>
@@ -5858,11 +5957,12 @@ Do you want to continue to open this MLT XML file?</source>
         <translation>(พร็อกซี่)</translation>
     </message>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="2571"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="2587"/>
         <source>Error: Shotcut could not find the %1 plugin on your system.
 
 Please install the %2 plugins.</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อผิดพลาด: Shotcut ไม่พบปลั๊กอิน %1 บนระบบของคุณ
+โปรดติดตั้งปลั๊กอิน %2</translation>
     </message>
 </context>
 <context>
@@ -5898,7 +5998,7 @@ Please install the %2 plugins.</source>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="61"/>
         <source>Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>โครงการ</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="188"/>
@@ -6041,132 +6141,119 @@ Try again with a different folder.</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="32"/>
+        <location filename="../src/openotherdialog.cpp" line="30"/>
         <source>Add To Timeline</source>
         <translation>เพิ่มไปยังเส้นเวลา</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="39"/>
-        <location filename="../src/openotherdialog.cpp" line="157"/>
+        <location filename="../src/openotherdialog.cpp" line="37"/>
+        <location filename="../src/openotherdialog.cpp" line="141"/>
         <source>Network</source>
         <translation>เครือข่าย</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="44"/>
+        <location filename="../src/openotherdialog.cpp" line="42"/>
         <source>Device</source>
         <translation>เครื่อง</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="46"/>
-        <location filename="../src/openotherdialog.cpp" line="159"/>
+        <location filename="../src/openotherdialog.cpp" line="44"/>
+        <location filename="../src/openotherdialog.cpp" line="143"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="50"/>
-        <location filename="../src/openotherdialog.cpp" line="145"/>
+        <location filename="../src/openotherdialog.cpp" line="48"/>
+        <location filename="../src/openotherdialog.cpp" line="133"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="52"/>
-        <location filename="../src/openotherdialog.cpp" line="147"/>
+        <location filename="../src/openotherdialog.cpp" line="50"/>
+        <location filename="../src/openotherdialog.cpp" line="135"/>
         <source>PulseAudio</source>
         <translation>ชีพจรเสียง</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="54"/>
-        <location filename="../src/openotherdialog.cpp" line="149"/>
-        <source>JACK Audio</source>
-        <translation>แจ็คเสียง</translation>
-    </message>
-    <message>
-        <location filename="../src/openotherdialog.cpp" line="56"/>
-        <location filename="../src/openotherdialog.cpp" line="151"/>
+        <location filename="../src/openotherdialog.cpp" line="52"/>
+        <location filename="../src/openotherdialog.cpp" line="137"/>
         <source>ALSA Audio</source>
         <translation>ALSA เสียง</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="59"/>
-        <location filename="../src/openotherdialog.cpp" line="66"/>
-        <location filename="../src/openotherdialog.cpp" line="155"/>
-        <source>Screen</source>
-        <translation>จอภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/openotherdialog.cpp" line="63"/>
-        <location filename="../src/openotherdialog.cpp" line="70"/>
-        <location filename="../src/openotherdialog.cpp" line="153"/>
+        <location filename="../src/openotherdialog.cpp" line="55"/>
+        <location filename="../src/openotherdialog.cpp" line="58"/>
+        <location filename="../src/openotherdialog.cpp" line="139"/>
         <source>Audio/Video Device</source>
         <translation>อุปกรณืเสียง/วีดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="75"/>
+        <location filename="../src/openotherdialog.cpp" line="63"/>
         <source>Generator</source>
         <translation>เครื่องกำเนิดไฟฟ้า</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="77"/>
-        <location filename="../src/openotherdialog.cpp" line="161"/>
+        <location filename="../src/openotherdialog.cpp" line="65"/>
+        <location filename="../src/openotherdialog.cpp" line="145"/>
         <source>Color</source>
         <translation>สี</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="80"/>
+        <location filename="../src/openotherdialog.cpp" line="68"/>
         <source>Text</source>
         <translation>ข้อความ</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="85"/>
-        <location filename="../src/openotherdialog.cpp" line="163"/>
+        <location filename="../src/openotherdialog.cpp" line="73"/>
+        <location filename="../src/openotherdialog.cpp" line="147"/>
         <source>Animation</source>
         <translation>แอนิเมชั่น</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="89"/>
-        <location filename="../src/openotherdialog.cpp" line="165"/>
+        <location filename="../src/openotherdialog.cpp" line="77"/>
+        <location filename="../src/openotherdialog.cpp" line="149"/>
         <source>Noise</source>
         <translation>สัณญาณรบกวน</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="93"/>
-        <location filename="../src/openotherdialog.cpp" line="167"/>
+        <location filename="../src/openotherdialog.cpp" line="81"/>
+        <location filename="../src/openotherdialog.cpp" line="151"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="97"/>
-        <location filename="../src/openotherdialog.cpp" line="169"/>
+        <location filename="../src/openotherdialog.cpp" line="85"/>
+        <location filename="../src/openotherdialog.cpp" line="153"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="101"/>
-        <location filename="../src/openotherdialog.cpp" line="171"/>
+        <location filename="../src/openotherdialog.cpp" line="89"/>
+        <location filename="../src/openotherdialog.cpp" line="155"/>
         <source>Plasma</source>
         <translation>พลาสมา</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="105"/>
-        <location filename="../src/openotherdialog.cpp" line="173"/>
+        <location filename="../src/openotherdialog.cpp" line="93"/>
+        <location filename="../src/openotherdialog.cpp" line="157"/>
         <source>Color Bars</source>
         <translation>แถบสี</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="109"/>
-        <location filename="../src/openotherdialog.cpp" line="175"/>
+        <location filename="../src/openotherdialog.cpp" line="97"/>
+        <location filename="../src/openotherdialog.cpp" line="159"/>
         <source>Audio Tone</source>
         <translation>เสียง</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="113"/>
-        <location filename="../src/openotherdialog.cpp" line="177"/>
+        <location filename="../src/openotherdialog.cpp" line="101"/>
+        <location filename="../src/openotherdialog.cpp" line="161"/>
         <source>Count</source>
         <translation>การนับ</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="117"/>
-        <location filename="../src/openotherdialog.cpp" line="179"/>
+        <location filename="../src/openotherdialog.cpp" line="105"/>
+        <location filename="../src/openotherdialog.cpp" line="163"/>
         <source>Blip Flash</source>
         <translation>แสงกระพริบรุนแรง</translation>
     </message>
@@ -6265,118 +6352,118 @@ Try again with a different folder.</source>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="94"/>
+        <location filename="../src/player.cpp" line="93"/>
         <source>Source</source>
         <translation>แหล่งกำเนิดต้นตอ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="95"/>
+        <location filename="../src/player.cpp" line="94"/>
         <source>Project</source>
         <translation>โครงการ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="157"/>
+        <location filename="../src/player.cpp" line="156"/>
         <source>Adjust the audio volume</source>
         <translation>ปรับระดับเสียง</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="178"/>
+        <location filename="../src/player.cpp" line="177"/>
         <source>Silence the audio</source>
         <translation>ปิดเสียง</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="197"/>
+        <location filename="../src/player.cpp" line="196"/>
         <source>Current position</source>
         <translation>ตำแหน่งปัจจุบัน</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="203"/>
+        <location filename="../src/player.cpp" line="202"/>
         <source>Total Duration</source>
         <translation>ระยะเวลารวม</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="346"/>
+        <location filename="../src/player.cpp" line="345"/>
         <source>In Point</source>
         <translation>ในจุด</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="354"/>
+        <location filename="../src/player.cpp" line="353"/>
         <source>Selected Duration</source>
         <translation>ระยะเวลาที่เลือก</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="242"/>
+        <location filename="../src/player.cpp" line="241"/>
         <source>Zoom Fit</source>
         <translation>พอดีกับการซูม</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="192"/>
+        <location filename="../src/player.cpp" line="191"/>
         <source>Current/Total Times</source>
         <translation>ขณะปัจจุบัน/เวลารวม</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="211"/>
+        <location filename="../src/player.cpp" line="210"/>
         <source>Player Controls</source>
         <translation>ควบคุมตัวเล่น</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="222"/>
-        <location filename="../src/player.cpp" line="341"/>
+        <location filename="../src/player.cpp" line="221"/>
+        <location filename="../src/player.cpp" line="340"/>
         <source>Player Options</source>
         <translation>ตัวเลือกตัวเล่น</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="245"/>
+        <location filename="../src/player.cpp" line="244"/>
         <source>Zoom 10%</source>
         <translation>การซูม 10%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="248"/>
+        <location filename="../src/player.cpp" line="247"/>
         <source>Zoom 25%</source>
         <translation>การซูม 25%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="251"/>
+        <location filename="../src/player.cpp" line="250"/>
         <source>Zoom 50%</source>
         <translation>การซูม 50%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="254"/>
+        <location filename="../src/player.cpp" line="253"/>
         <source>Zoom 100%</source>
         <translation>การซูม 100%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="257"/>
+        <location filename="../src/player.cpp" line="256"/>
         <source>Zoom 200%</source>
         <translation>การซูม 200%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="277"/>
+        <location filename="../src/player.cpp" line="276"/>
         <source>Toggle zoom</source>
         <translation>สลับการซูม</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="284"/>
+        <location filename="../src/player.cpp" line="283"/>
         <source>2x2 Grid</source>
         <translation>ตะแกรง 2x2 </translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="289"/>
+        <location filename="../src/player.cpp" line="288"/>
         <source>3x3 Grid</source>
         <translation>ตะแกรง 3x3 </translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="293"/>
+        <location filename="../src/player.cpp" line="292"/>
         <source>4x4 Grid</source>
         <translation>ตะแกรง 4x4 </translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="297"/>
+        <location filename="../src/player.cpp" line="296"/>
         <source>16x16 Grid</source>
         <translation>ตะแกรง 16x16 </translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="305"/>
+        <location filename="../src/player.cpp" line="304"/>
         <source>10 Pixel Grid</source>
         <translation>ตะแกรง 10 Pixel </translation>
     </message>
@@ -6408,7 +6495,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="450"/>
         <source>Loop back to the beginning when the end is reached</source>
-        <translation type="unfinished"></translation>
+        <translation>วนกลับมาที่จุดเริ่มต้นเมื่อถึงจุดสิ้นสุด</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="457"/>
@@ -6418,7 +6505,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="458"/>
         <source>Loop around the marker under the cursor in the timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>วนรอบเครื่องหมายกำกับใต้เคอร์เซอร์ในเส้นเวลา</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="469"/>
@@ -6428,7 +6515,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="470"/>
         <source>Loop around the selected clips</source>
-        <translation type="unfinished"></translation>
+        <translation>วนรอบคลิปที่เลือก</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="478"/>
@@ -6443,7 +6530,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="484"/>
         <source>Loop around the current cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>วนรอบตำแหน่งเคอร์เซอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="513"/>
@@ -6476,163 +6563,163 @@ Try again with a different folder.</source>
         <translation>ไปหาจุดจบ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="590"/>
+        <location filename="../src/player.cpp" line="592"/>
         <source>Next Frame</source>
         <translation>เฟรมต่อไป</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="599"/>
+        <location filename="../src/player.cpp" line="603"/>
         <source>Previous Frame</source>
         <translation>เฟรมก่อนหน้า</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="608"/>
+        <location filename="../src/player.cpp" line="614"/>
         <source>Forward One Second</source>
         <translation>ไปข้างหน้าหนึ่งวินาที</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="616"/>
+        <location filename="../src/player.cpp" line="622"/>
         <source>Backward One Second</source>
         <translation>กลับข้างหลังหนึ่งวินาที</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="624"/>
+        <location filename="../src/player.cpp" line="630"/>
         <source>Forward Two Seconds</source>
         <translation>ไปข้างหน้าสองวินาที</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="632"/>
+        <location filename="../src/player.cpp" line="638"/>
         <source>Backward Two Seconds</source>
         <translation>กลับข้างหลังสองวินาที</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="640"/>
+        <location filename="../src/player.cpp" line="646"/>
         <source>Forward Five Seconds</source>
         <translation>ไปข้างหน้าห้าวินาที</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="648"/>
+        <location filename="../src/player.cpp" line="654"/>
         <source>Backward Five Seconds</source>
         <translation>กลับข้างหลังห้าวินาที</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="656"/>
+        <location filename="../src/player.cpp" line="662"/>
         <source>Forward Ten Seconds</source>
         <translation>ไปข้างหน้าสิบวินาที</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="664"/>
+        <location filename="../src/player.cpp" line="670"/>
         <source>Backward Ten Seconds</source>
         <translation>กลับข้างหลังสิบวินาที</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="672"/>
+        <location filename="../src/player.cpp" line="678"/>
         <source>Forward Jump</source>
         <translation>กระโดดไปข้างหน้า</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="680"/>
+        <location filename="../src/player.cpp" line="686"/>
         <source>Backward Jump</source>
         <translation>กระโดดกลับข้างหลัง</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="688"/>
+        <location filename="../src/player.cpp" line="694"/>
         <source>Set Jump Time</source>
         <translation>ตั้งเวลากระโดด</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="699"/>
+        <location filename="../src/player.cpp" line="705"/>
         <source>Trim Clip In</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัดแต่งคลิปจากด้านเข้า</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="712"/>
+        <location filename="../src/player.cpp" line="718"/>
         <source>Trim Clip Out</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัดแต่งคลิปจากด้านออก</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="725"/>
+        <location filename="../src/player.cpp" line="731"/>
         <source>Set Time Position</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าตำแหน่งเวลา</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="755"/>
+        <location filename="../src/player.cpp" line="761"/>
         <source>Pause playback</source>
-        <translation type="unfinished"></translation>
+        <translation>หยุดการเล่นชั่วคราว</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="757"/>
-        <location filename="../src/player.cpp" line="764"/>
+        <location filename="../src/player.cpp" line="763"/>
+        <location filename="../src/player.cpp" line="770"/>
         <source>Player</source>
         <translation>ผู้เล่น</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="759"/>
+        <location filename="../src/player.cpp" line="765"/>
         <source>Focus Player</source>
-        <translation type="unfinished"></translation>
+        <translation>เพ่งที่ตัวเล่น</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="913"/>
+        <location filename="../src/player.cpp" line="920"/>
         <source>Not Seekable</source>
         <translation>หาไม่ได้</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="301"/>
+        <location filename="../src/player.cpp" line="300"/>
         <source>20 Pixel Grid</source>
         <translation>ตะแกรง 20 พิกเซล</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="260"/>
+        <location filename="../src/player.cpp" line="259"/>
         <source>Zoom 300%</source>
         <translation>การซูม 300%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="263"/>
+        <location filename="../src/player.cpp" line="262"/>
         <source>Zoom 400%</source>
         <translation>การซูม 400%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="266"/>
+        <location filename="../src/player.cpp" line="265"/>
         <source>Zoom 500%</source>
         <translation>การซูม 500%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="269"/>
+        <location filename="../src/player.cpp" line="268"/>
         <source>Zoom 750%</source>
         <translation>การซูม 750%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="272"/>
+        <location filename="../src/player.cpp" line="271"/>
         <source>Zoom 1000%</source>
         <translation>การซูม 1000%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="309"/>
+        <location filename="../src/player.cpp" line="308"/>
         <source>80/90% Safe Areas</source>
         <translation>พื้นที่ปลอดภัย80/90% </translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="313"/>
+        <location filename="../src/player.cpp" line="312"/>
         <source>EBU R95 Safe Areas</source>
         <translation>พื้นที่ปลอดภัยEBU R95 </translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="318"/>
+        <location filename="../src/player.cpp" line="317"/>
         <source>Snapping</source>
         <translation>ตระครุบ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="328"/>
+        <location filename="../src/player.cpp" line="327"/>
         <source>Toggle grid display on the player</source>
         <translation>สลับตารางแสดงผลบนเครื่องเล่น</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="732"/>
+        <location filename="../src/player.cpp" line="738"/>
         <source>Switch Source/Project</source>
-        <translation type="unfinished"></translation>
+        <translation>สลับแหล่งที่มา/โครงการ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="752"/>
+        <location filename="../src/player.cpp" line="758"/>
         <source>Pause</source>
         <translation>หยุด</translation>
     </message>
@@ -6657,38 +6744,38 @@ Try again with a different folder.</source>
         <translation>กรอไปข้างหน้า</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="335"/>
+        <location filename="../src/player.cpp" line="334"/>
         <source>Volume</source>
         <translation>ปริมาตร</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="336"/>
+        <location filename="../src/player.cpp" line="335"/>
         <source>Show the volume control</source>
         <translation>แสดงการควบคุมระดับเสียง</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1290"/>
+        <location filename="../src/player.cpp" line="1264"/>
         <source>Proxy and preview scaling are ON at %1p</source>
-        <translation type="unfinished"></translation>
+        <translation>การปรับขนาดพร็อกซีและการดูตัวอย่าง&lt;b&gt;เปิด&lt;/b&gt;อยู่ที่ %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1293"/>
+        <location filename="../src/player.cpp" line="1267"/>
         <source>Proxy is ON at %1p</source>
-        <translation type="unfinished"></translation>
+        <translation>พร็อกซี&lt;b&gt;เปิด&lt;/b&gt;อยู่ที่ %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1296"/>
+        <location filename="../src/player.cpp" line="1270"/>
         <source>Preview scaling is ON at %1p</source>
-        <translation type="unfinished"></translation>
+        <translation>การปรับขนาดการแสดงตัวอย่าง&lt;b&gt;เปิด&lt;/b&gt;อยู่ที่ %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1404"/>
+        <location filename="../src/player.cpp" line="1378"/>
         <source>Unmute</source>
         <translation>เปิดเสียง</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1375"/>
-        <location filename="../src/player.cpp" line="1411"/>
+        <location filename="../src/player.cpp" line="1349"/>
+        <location filename="../src/player.cpp" line="1385"/>
         <source>Mute</source>
         <translation>เงียบ</translation>
     </message>
@@ -6697,7 +6784,7 @@ Try again with a different folder.</source>
     <name>PlaylistDock</name>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="18"/>
-        <location filename="../src/docks/playlistdock.cpp" line="168"/>
+        <location filename="../src/docks/playlistdock.cpp" line="431"/>
         <source>Playlist</source>
         <translation>เพลย์ลิส</translation>
     </message>
@@ -6711,358 +6798,471 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;You can freely preview clips without necessarily adding them to the playlist or closing it.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;To trim or adjust a playlist item &lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; to open it, make the changes, and click the &lt;span style=&quot; font-weight:600;&quot;&gt;Update&lt;/span&gt; icon.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; to rearrange the items.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;คลิกสองครั้ง&lt;/span&gt;ที่รายการเพลย์ลิสต์เพื่อเปิดในเครื่องเล่น&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;คุณสามารถดูตัวอย่างคลิปได้อย่างอิสระโดยไม่จำเป็นต้องเพิ่มคลิปเหล่านั้นลงในรายการเล่นหรือปิดรายการเล่น&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;การตัดแต่งหรือปรับแต่งรายการเล่น &lt;span style=&quot; font-weight:600;&quot;&gt;คลิกสองครั้ง&lt;/span&gt; เพื่อเปิดทำการเปลี่ยนแปลงและคลิกที่สัญลักษณ์ &lt;span style=&quot; font-weight:600;&quot;&gt;อัพเดต&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;ลากแล้ววาง&lt;/span&gt;เพื่อจัดเรียงรายการใหม่&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="92"/>
+        <location filename="../src/docks/playlistdock.ui" line="127"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double-click a playlist item to open it in the player.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;คลิกสองครั้งที่รายการเพลย์ลิสเพื่อเปิดในเครื่องเล่น&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="313"/>
+        <location filename="../src/docks/playlistdock.cpp" line="635"/>
         <source>Add the Source to the playlist</source>
         <translation>เพิ่มแหล่งที่มาลงในเพลย์ลิสต์</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="325"/>
+        <location filename="../src/docks/playlistdock.cpp" line="647"/>
         <source>Remove cut</source>
         <translation>ลบตัด</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="344"/>
+        <location filename="../src/docks/playlistdock.cpp" line="666"/>
         <source>Update</source>
         <translation>ปรับปรุง</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="357"/>
+        <location filename="../src/docks/playlistdock.cpp" line="679"/>
         <source>View as tiles</source>
         <translation>ดูแบบเรียงต่อกัน</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="370"/>
+        <location filename="../src/docks/playlistdock.cpp" line="692"/>
         <source>View as icons</source>
         <translation>ดูแบบไอคอน</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="383"/>
+        <location filename="../src/docks/playlistdock.cpp" line="705"/>
         <source>View as details</source>
         <translation>ดูเป็นรายละเอียด</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="320"/>
+        <location filename="../src/docks/playlistdock.cpp" line="642"/>
         <source>Remove</source>
         <translation>เอาออก</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="435"/>
+        <location filename="../src/docks/playlistdock.cpp" line="757"/>
         <source>Set Creation Time...</source>
         <translation>ตั้งเวลาการสร้าง</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="421"/>
-        <location filename="../src/docks/playlistdock.cpp" line="422"/>
+        <location filename="../src/docks/playlistdock.cpp" line="743"/>
+        <location filename="../src/docks/playlistdock.cpp" line="744"/>
         <source>Insert</source>
         <translation>แทรก</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="218"/>
+        <location filename="../src/docks/playlistdock.cpp" line="500"/>
         <source>Playlist Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>เมนูรายการเล่น</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="311"/>
+        <location filename="../src/docks/playlistdock.cpp" line="633"/>
         <source>Append</source>
         <translation>พ่วงท้าย</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="396"/>
+        <location filename="../src/docks/playlistdock.cpp" line="718"/>
         <source>Open the clip in the Source player</source>
         <translation>เปิดคลิปในโปรแกรมเล่นต้นฉบับ</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="406"/>
+        <location filename="../src/docks/playlistdock.cpp" line="728"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation>ไปที่จุดเริ่มต้นของคลิปนี้ในตัวเล่นโปรเจ็กต์</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="443"/>
+        <location filename="../src/docks/playlistdock.cpp" line="765"/>
         <source>Remove All</source>
         <translation>ลบทั่งหมด</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="444"/>
+        <location filename="../src/docks/playlistdock.cpp" line="766"/>
         <source>Remove all items from the playlist</source>
         <translation>ลบรายการทั้งหมดออกจากเพย์ลิสต์</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="520"/>
+        <location filename="../src/docks/playlistdock.cpp" line="842"/>
         <source>Hidden</source>
         <translation>ซ่อนเร้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="532"/>
+        <location filename="../src/docks/playlistdock.cpp" line="854"/>
         <source>In and Out - Left/Right</source>
         <translation>เข้าและออก - ซ้าย/ขวา</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="547"/>
+        <location filename="../src/docks/playlistdock.cpp" line="869"/>
         <source>In and Out - Top/Bottom</source>
         <translation>เข้าและออก - บน/ล่าง</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="562"/>
+        <location filename="../src/docks/playlistdock.cpp" line="884"/>
         <source>In Only - Small</source>
         <translation>ในเท่านั้น - เล็ก</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="577"/>
+        <location filename="../src/docks/playlistdock.cpp" line="899"/>
         <source>In Only - Large</source>
         <translation>ในเท่านั้น - ใหญ่</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="487"/>
+        <location filename="../src/docks/playlistdock.cpp" line="809"/>
         <source>Add Selected to Timeline</source>
         <translation>เพิ่มที่เลือกลงในไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="494"/>
+        <location filename="../src/docks/playlistdock.cpp" line="816"/>
         <source>Add Selected to Slideshow</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มรายการที่เลือกลงในการแสดงภาพเลื่อน</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="592"/>
+        <location filename="../src/docks/playlistdock.cpp" line="914"/>
         <source>Play After Open</source>
         <translation>เล่นหลังจากเปิด</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="449"/>
+        <location filename="../src/docks/playlistdock.cpp" line="771"/>
         <source>Select All</source>
         <translation>เลือกทั้งหมด</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="455"/>
+        <location filename="../src/docks/playlistdock.cpp" line="777"/>
         <source>Select None</source>
         <translation>ไม่เลือกเลย</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="427"/>
+        <location filename="../src/docks/playlistdock.cpp" line="749"/>
         <source>Update Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>อัปเดตภาพขนาดย่อ</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="501"/>
+        <location filename="../src/docks/playlistdock.cpp" line="823"/>
         <source>Sort By Name</source>
         <translation>เรียงตามชื่อ</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="509"/>
+        <location filename="../src/docks/playlistdock.cpp" line="831"/>
         <source>Sort By Date</source>
         <translation>เรียงตามวันที่</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="382"/>
+        <location filename="../src/docks/playlistdock.cpp" line="704"/>
         <source>Details</source>
         <translation>รายละเอียด</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="184"/>
+        <location filename="../src/docks/playlistdock.cpp" line="461"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือก</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="204"/>
+        <location filename="../src/docks/playlistdock.cpp" line="478"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1167"/>
+        <source>Bins</source>
+        <translation>ถัง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="485"/>
         <source>Columns</source>
         <translation>สดมภ์</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="213"/>
+        <location filename="../src/docks/playlistdock.cpp" line="495"/>
         <source>Playlist Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>ควบคุมรายการเล่น</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="337"/>
+        <location filename="../src/docks/playlistdock.cpp" line="520"/>
+        <location filename="../src/docks/playlistdock.cpp" line="524"/>
+        <source>Playlist Filters</source>
+        <translation>ตัวกรองรายการเล่น</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="545"/>
+        <source>Only show files whose name, path, or comment contains some text</source>
+        <translation>แสดงเฉพาะไฟล์ที่มีชื่อ เส้นทาง หรือความคิดเห็นที่มีข้อความบางส่วนเท่านั้น</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="546"/>
+        <source>search</source>
+        <translation>ค้นหา</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="659"/>
         <source>Add files to playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มไฟล์ลงในรายการเล่น</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="356"/>
+        <location filename="../src/docks/playlistdock.cpp" line="678"/>
         <source>Tiles</source>
         <translation>กระเบื้อง</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="369"/>
+        <location filename="../src/docks/playlistdock.cpp" line="691"/>
         <source>Icons</source>
         <translation>ไอคอน</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="395"/>
+        <location filename="../src/docks/playlistdock.cpp" line="717"/>
         <source>Open</source>
         <translation>เปิด</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="405"/>
+        <location filename="../src/docks/playlistdock.cpp" line="727"/>
         <source>GoTo</source>
         <translation>ไปที่</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="411"/>
+        <location filename="../src/docks/playlistdock.cpp" line="733"/>
         <source>Copy</source>
         <translation>คัดลอก</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="412"/>
+        <location filename="../src/docks/playlistdock.cpp" line="734"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation>เปิดสำเนาของคลิปในแหล่งที่มาของเพลย์ลิสต์</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="463"/>
+        <location filename="../src/docks/playlistdock.cpp" line="785"/>
         <source>Move Up</source>
         <translation>ย้ายขึ้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="475"/>
+        <location filename="../src/docks/playlistdock.cpp" line="797"/>
         <source>Move Down</source>
         <translation>ย้ายลง</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="600"/>
+        <location filename="../src/docks/playlistdock.cpp" line="922"/>
         <source>Open Previous</source>
         <translation>เปิดอันก่อนหน้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="613"/>
+        <location filename="../src/docks/playlistdock.cpp" line="935"/>
         <source>Open Next</source>
         <translation>เปิดอันถัดไป</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="626"/>
+        <location filename="../src/docks/playlistdock.cpp" line="948"/>
         <source>Select Clip 1</source>
         <translation>เลือกคลิป 1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="639"/>
+        <location filename="../src/docks/playlistdock.cpp" line="961"/>
         <source>Select Clip 2</source>
         <translation>เลือกคลิป 2</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="651"/>
+        <location filename="../src/docks/playlistdock.cpp" line="973"/>
         <source>Select Clip 3</source>
         <translation>เลือกคลิป 3</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="663"/>
+        <location filename="../src/docks/playlistdock.cpp" line="985"/>
         <source>Select Clip 4</source>
         <translation>เลือกคลิป 4</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="675"/>
+        <location filename="../src/docks/playlistdock.cpp" line="997"/>
         <source>Select Clip 5</source>
         <translation>เลือกคลิป 5</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="687"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1009"/>
         <source>Select Clip 6</source>
         <translation>เลือกคลิป 6</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="699"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1021"/>
         <source>Select Clip 7</source>
         <translation>เลือกคลิป 7</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="711"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1033"/>
         <source>Select Clip 8</source>
         <translation>เลือกคลิป 8</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="723"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1045"/>
         <source>Select Clip 9</source>
         <translation>เลือกคลิป 9</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="735"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1057"/>
         <source>Thumbnails</source>
         <translation>รูปขนาดย่อ</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="744"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1066"/>
         <source>Clip</source>
         <translation>คลิป</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="753"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1075"/>
         <source>In</source>
         <translation>ใน</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="762"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1084"/>
         <source>Duration</source>
         <translation>ระยะเวลา</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="771"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1093"/>
         <source>Start</source>
         <translation>เริ่มต้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="780"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1102"/>
         <source>Date</source>
         <translation>วันที่</translation>
     </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1111"/>
+        <source>Type</source>
+        <translation>ชนิด</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1120"/>
+        <source>Video</source>
+        <translation>ทัศนพัสดุ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1121"/>
+        <source>Show or hide video files</source>
+        <translation>แสดงหรือซ่อนไฟล์วิดีโอ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1126"/>
+        <source>Audio</source>
+        <translation>โสตพัสดุ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1127"/>
+        <source>Show or hide audio files</source>
+        <translation>แสดงหรือซ่อนไฟล์เสียง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1132"/>
+        <source>Image</source>
+        <translation>รูปภาพ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1133"/>
+        <source>Show or hide image files</source>
+        <translation>แสดงหรือซ่อนไฟล์รูปภาพ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1138"/>
+        <source>Other</source>
+        <translation>อื่นๆ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1139"/>
+        <source>Show or hide other kinds of files</source>
+        <translation>แสดงหรือซ่อนไฟล์ประเภทอื่น</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1144"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1145"/>
+        <source>New Bin</source>
+        <translation>ถังใหม่</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1157"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1198"/>
+        <source>Name</source>
+        <translation>ชื่อ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1168"/>
+        <source>Show or hide the list of bins</source>
+        <translation>แสดงหรือซ่อนรายการถัง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1178"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1179"/>
+        <source>Remove Bin</source>
+        <translation>ล้างถัง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1190"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1191"/>
+        <source>Rename Bin</source>
+        <translation>เปลี่ยนชื่อถัง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1211"/>
+        <source>Search</source>
+        <translation>ค้นหา</translation>
+    </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="814"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1245"/>
         <source>Replace %n playlist items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>แทนที่รายการเล่น %n รายการ</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="201"/>
+        <location filename="../src/docks/playlistdock.cpp" line="482"/>
         <source>Sort</source>
         <translation>ประเภท</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1059"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1268"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1556"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1788"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>คุณไม่สามารถแทรกเพลย์ลิสต์ลงในเพลย์ลิสต์</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1072"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1572"/>
         <source>Remove %n playlist items</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>ล้างรายการเล่น %n รายการ</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="336"/>
-        <location filename="../src/docks/playlistdock.cpp" line="899"/>
+        <location filename="../src/docks/playlistdock.cpp" line="658"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1342"/>
         <source>Add Files</source>
         <translation>เพิ่มไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="908"/>
-        <location filename="../src/docks/playlistdock.cpp" line="919"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1296"/>
+        <source>Appending</source>
+        <translation>การต่อท้าย</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1351"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1360"/>
         <source>Failed to open </source>
         <translation>ไม่สามารถเปิดได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="978"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1417"/>
         <source>Dropped Files</source>
         <translation>ไฟล์ที่ปล่อยไว้</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1347"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1871"/>
         <source>Generating</source>
         <translation>การกำเนิดใหม่</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1566"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2082"/>
         <source>Open File</source>
         <translation>เปิดไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1567"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2083"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>All Files (*);; MLT XML (*.mlt)</translation>
     </message>
@@ -7070,7 +7270,7 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PlaylistIconView</name>
     <message>
-        <location filename="../src/widgets/playlisticonview.cpp" line="161"/>
+        <location filename="../src/widgets/playlisticonview.cpp" line="165"/>
         <source>P</source>
         <comment>The first letter or symbol of &quot;proxy&quot;</comment>
         <translation>P</translation>
@@ -7084,39 +7284,87 @@ p, li { white-space: pre-wrap; }
         <translation>(พร็อกซี่)</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="393"/>
+        <location filename="../src/models/playlistmodel.cpp" line="388"/>
+        <source>Video</source>
+        <translation>ทัศนพัสดุ</translation>
+    </message>
+    <message>
+        <location filename="../src/models/playlistmodel.cpp" line="390"/>
+        <source>Image</source>
+        <translation>รูปภาพ</translation>
+    </message>
+    <message>
+        <location filename="../src/models/playlistmodel.cpp" line="392"/>
+        <source>Audio</source>
+        <translation>โสตพัสดุ</translation>
+    </message>
+    <message>
+        <location filename="../src/models/playlistmodel.cpp" line="394"/>
+        <source>Other</source>
+        <translation>อื่นๆ</translation>
+    </message>
+    <message>
+        <location filename="../src/models/playlistmodel.cpp" line="473"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="395"/>
+        <location filename="../src/models/playlistmodel.cpp" line="475"/>
         <source>Thumbnails</source>
         <translation>รูปขนาดย่อ</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="397"/>
+        <location filename="../src/models/playlistmodel.cpp" line="477"/>
         <source>Clip</source>
         <translation>คลิป</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="399"/>
+        <location filename="../src/models/playlistmodel.cpp" line="479"/>
         <source>In</source>
         <translation>ใน</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="401"/>
+        <location filename="../src/models/playlistmodel.cpp" line="481"/>
         <source>Duration</source>
         <translation>ระยะเวลา</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="403"/>
+        <location filename="../src/models/playlistmodel.cpp" line="483"/>
         <source>Start</source>
         <translation>เริ่มต้น</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="405"/>
+        <location filename="../src/models/playlistmodel.cpp" line="485"/>
         <source>Date</source>
         <translation>วันที่</translation>
+    </message>
+    <message>
+        <location filename="../src/models/playlistmodel.cpp" line="487"/>
+        <source>Type</source>
+        <translation>ชนิด</translation>
+    </message>
+    <message>
+        <location filename="../src/models/playlistmodel.cpp" line="489"/>
+        <source>Comment</source>
+        <translation>ความคิดเห็น</translation>
+    </message>
+</context>
+<context>
+    <name>PlaylistProxyModel</name>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="340"/>
+        <source>All</source>
+        <translation>ทั้งหมด</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="341"/>
+        <source>Duplicates</source>
+        <translation>รายการที่ซ้ำกัน</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="342"/>
+        <source>Not In Timeline</source>
+        <translation>ไม่อยู่ในไทม์ไลน์</translation>
     </message>
 </context>
 <context>
@@ -7195,60 +7443,82 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/jobs/qimagejob.cpp" line="32"/>
         <source>Make proxy for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>สร้างพร็อกซีสำหรับ %1</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="32"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="35"/>
         <source>Append playlist item %1</source>
         <translation>ผนวกรายการที่จะเล่น %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="60"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="63"/>
         <source>Insert playist item %1</source>
         <translation>แทรกรายการที่จะเล่น %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="88"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="91"/>
         <source>Update playlist item %1</source>
         <translation>อัปเดตรายการที่จะเล่น %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="131"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="134"/>
         <source>Remove playlist item %1</source>
         <translation>ลบรายการที่จะเล่น %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="154"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="157"/>
         <source>Clear playlist</source>
         <translation>เพลย์ลิสที่ชัดเจน</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="198"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="201"/>
         <source>Move item from %1 to %2</source>
         <translation>ย้ายรายการจาก %1 ไปยัง %2</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="222"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="225"/>
         <source>Sort playlist by %1</source>
         <translation>จัดเรียงเพลย์ลิสโดย %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="268"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="271"/>
         <source>Trim playlist item %1 in</source>
         <translation>ตัดแต่งรายการที่จะเล่น ใน%1</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="306"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="309"/>
         <source>Trim playlist item %1 out</source>
         <translation>ตัดแต่งรายการที่จะเล่น ออก %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="343"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="346"/>
         <source>Replace playlist item %1</source>
-        <translation type="unfinished"></translation>
+        <translation>แทนที่รายการเล่น %1</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/playlistcommands.cpp" line="375"/>
+        <source>Add new bin: %1</source>
+        <translation>เพิ่มถังใหม่: %1</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/commands/playlistcommands.cpp" line="419"/>
+        <source>Move %n item(s) to bin: %1</source>
+        <translation>
+            <numerusform>ย้าย %n รายการไปยังถัง: %1</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/commands/playlistcommands.cpp" line="451"/>
+        <source>Remove bin: %1</source>
+        <translation>ล้างถัง: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/playlistcommands.cpp" line="453"/>
+        <source>Rename bin: %1</source>
+        <translation>เปลี่ยนชื่อถัง: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="77"/>
@@ -7258,7 +7528,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="83"/>
         <source>Append to Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>ผนวกเข้ากับเส้นเวลา</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="85"/>
@@ -7348,14 +7618,14 @@ p, li { white-space: pre-wrap; }
     <message numerus="yes">
         <location filename="../src/commands/timelinecommands.cpp" line="596"/>
         <source>Move %n timeline clips</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>ย้ายคลิปในเส้นเวลาไป %n รายการ</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="598"/>
         <source>Move timeline clip</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้ายคลิปในเส้นเวลา</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="800"/>
@@ -7375,7 +7645,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1000"/>
         <source>Split clips</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัดแยกคลิป</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1033"/>
@@ -7443,12 +7713,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1634"/>
         <source>Move track down</source>
-        <translation type="unfinished"></translation>
+        <translation>เลื่อนแนวรางลง</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1636"/>
         <source>Move track up</source>
-        <translation type="unfinished"></translation>
+        <translation>เลื่อนแนวรางขึ้น</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1658"/>
@@ -7468,21 +7738,20 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1910"/>
         <source>Replace timeline clip</source>
-        <translation type="unfinished"></translation>
+        <translation>แทนที่คลิปในเส้นเวลา</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1939"/>
         <source>Align clips to reference track</source>
-        <translation type="unfinished"></translation>
+        <translation>จัดแนววางคลิปให้ตรงกับแนวรางอ้างอิง</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="2018"/>
         <source>Apply copied filters</source>
-        <translation type="unfinished"></translation>
+        <translation>นำตัวกรองที่คัดลอกมาไปใช้</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3690"/>
-        <location filename="../src/mainwindow.cpp.orig" line="3230"/>
+        <location filename="../src/mainwindow.cpp" line="3737"/>
         <source>You cannot add a project to itself!</source>
         <translation>คุณไม่สามารถเพิ่มโครงการให้กับตัวเอง</translation>
     </message>
@@ -7494,8 +7763,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/transcoder.cpp" line="91"/>
         <location filename="../src/util.cpp" line="144"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="951"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1029"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="953"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1031"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -7516,7 +7785,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/util.cpp" line="164"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>เอาต์พุต</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="326"/>
@@ -7555,22 +7824,22 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/util.cpp" line="820"/>
         <source>This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์นี้ใช้ลักษณะการถ่ายโอนสี %1 ซึ่งอาจส่งผลให้สีหรือความสว่างใน Shotcut ไม่ถูกต้อง</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="824"/>
         <source>This file is variable frame rate, which is not reliable for editing.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์นี้มีอัตราเฟรมที่แปรผันซึ่งไม่น่าเชื่อถือสำหรับการแก้ไข</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="827"/>
         <source>This file does not support seeking and cannot be used for editing.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์นี้ไม่รองรับการค้นหาและไม่สามารถใช้แก้ไขได้</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="830"/>
         <source>This file format (HDV) is not reliable for editing.</source>
-        <translation type="unfinished"></translation>
+        <translation>รูปแบบไฟล์นี้ (HDV) ไม่น่าเชื่อถือสำหรับการแก้ไข</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="848"/>
@@ -7590,65 +7859,69 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>โปร่งใส</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2911"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2908"/>
         <source>Drop Files</source>
-        <translation type="unfinished"></translation>
+        <translation>วางไฟล์ลง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2917"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2929"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2914"/>
         <source>Failed to open </source>
         <translation>ไม่สามารถเปิดได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2943"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2930"/>
         <source>Not adding non-seekable file: </source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่เพิ่มไฟล์ที่ไม่สามารถค้นหาได้:</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1346"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1281"/>
+        <source>Generating Playlist for Bin</source>
+        <translation>กำลังสร้างรายการเล่นสำหรับถัง</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="1870"/>
         <source>Generate Slideshow</source>
-        <translation type="unfinished"></translation>
+        <translation>กำเนิดภาพเลื่อนแสดง</translation>
     </message>
     <message>
-        <location filename="../src/proxymanager.cpp" line="240"/>
+        <location filename="../src/proxymanager.cpp" line="250"/>
         <source>Make proxy for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>สร้างพร็อกซีสำหรับ %1</translation>
     </message>
     <message>
         <location filename="../src/database.cpp" line="64"/>
         <source>Converting Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>การแปลงภาพขนาดย่อ</translation>
     </message>
     <message>
         <location filename="../src/database.cpp" line="83"/>
         <source>Please wait for this one-time update to the thumbnail cache...</source>
-        <translation type="unfinished"></translation>
+        <translation>กรุณารอการอัปเดตครั้งเดียวในแคชรูปขนาดย่อนี้...</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="29"/>
         <source>Delete marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ลบตัวบ่งจุด: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="48"/>
         <source>Add marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มตัวบ่งจุด: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="71"/>
         <source>Move marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้ายตัวบ่งจุด: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="73"/>
         <source>Edit marker: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขตัวบ่งจุด: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="113"/>
         <source>Clear markers</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้างตัวบ่งจุด</translation>
     </message>
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="41"/>
@@ -7659,181 +7932,181 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="600"/>
         <source>Edit With Glaxnimate</source>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขด้วย Glaxnimate</translation>
     </message>
     <message>
         <location filename="../src/models/resourcemodel.cpp" line="42"/>
         <source>Playlist Clip: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>คลิปรายการเล่น: %1</translation>
     </message>
     <message>
         <location filename="../src/models/resourcemodel.cpp" line="45"/>
         <source>Track: %1, Clip: %2 (transition)</source>
-        <translation type="unfinished"></translation>
+        <translation>แนวราง: %1, คลิป: %2 (การเปลี่ยนแปลง)</translation>
     </message>
     <message>
         <location filename="../src/models/resourcemodel.cpp" line="47"/>
         <source>Track: %1, Clip: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>แนวราง: %1, คลิป: %2</translation>
     </message>
     <message>
         <location filename="../src/models/resourcemodel.cpp" line="320"/>
         <source>%1x%2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1x%2</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.cpp" line="156"/>
         <source>Add %1 filter</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่ม %1 ตัวกรอง</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.cpp" line="158"/>
         <source>Add %1 filter set</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่ม %1 ชุดตัวกรอง</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.cpp" line="216"/>
         <source>Remove %1 filter</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้าง %1 ตัวกรอง</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.cpp" line="250"/>
         <source>Move %1 filter</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้าย %1 ตัวกรอง</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.cpp" line="290"/>
         <source>Disable %1 filter</source>
-        <translation type="unfinished"></translation>
+        <translation>ยุติ %1 ตัวกรอง</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.cpp" line="292"/>
         <source>Enable %1 filter</source>
-        <translation type="unfinished"></translation>
+        <translation>ดำเนิน %1 ตัวกรอง</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.cpp" line="349"/>
         <source>Change %1 filter</source>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยน %1 ตัวกรอง</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.cpp" line="351"/>
         <source>Change %1 filter: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยน %1 ตัวกรอง: %2</translation>
     </message>
     <message>
         <location filename="../src/models/audiolevelstask.cpp" line="177"/>
         <source>generating audio waveforms for</source>
-        <translation type="unfinished"></translation>
+        <translation>กำเนิดรูปคลื่นเสียงสำหรับ</translation>
     </message>
     <message>
         <location filename="../src/models/audiolevelstask.cpp" line="249"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>เสร็จสิ้น</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.h" line="155"/>
         <source>add keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มกุญแจกรอบภาพ</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.h" line="173"/>
         <source>remove keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้างกุญแจกรอบภาพ</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.h" line="191"/>
         <source>modify keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับแต่งกุญแจกรอบภาพ</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="34"/>
         <source>Add subtitle track: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มแนวรางข้อความใต้ภาพ: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="54"/>
         <source>Remove subtitle track: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้างแนวรางข้อความใต้ภาพ: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="81"/>
         <source>Edit subtitle track: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขแนวรางข้อความใต้ภาพ: %1</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="103"/>
         <source>Add subtitle</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มข้อความใต้ภาพ</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="105"/>
         <source>Add %1 subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่ม %1 ข้อความใต้ภาพ</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="156"/>
         <source>Remove subtitle</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้างข้อความใต้ภาพ</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="158"/>
         <source>Remove %1 subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้าง %1 ข้อความใต้ภาพ</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="184"/>
         <source>Edit subtitle text</source>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขข้อความใต้ภาพ</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="217"/>
         <source>Change subtitle start</source>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยนข้อความใต้ภาพเมื่อเริ่ม</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="251"/>
         <source>Change subtitle end</source>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยนข้อความใต้ภาพเมื่อจบ</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="289"/>
         <source>Move subtitle</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้ายข้อความใต้ภาพ</translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="291"/>
         <source>Move %1 subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้าย %1 ข้อความใต้ภาพ</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="594"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="607"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="593"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="606"/>
         <source>Importing subtitles...</source>
-        <translation type="unfinished"></translation>
+        <translation>กำลังนำเข้าข้อความใต้ภาพ...</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="488"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="622"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="487"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="621"/>
         <source>No subtitles found to import</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่พบคำบรรยายที่จะนำเข้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="498"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="627"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="497"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="626"/>
         <source>Imported %1 subtitle items</source>
-        <translation type="unfinished"></translation>
+        <translation>นำเข้า %1 รายการคำบรรยายแล้ว</translation>
     </message>
     <message>
         <location filename="../src/models/subtitlesmodel.cpp" line="316"/>
         <location filename="../src/models/subtitlesmodel.cpp" line="331"/>
         <source>Import %1 subtitle items</source>
-        <translation type="unfinished"></translation>
+        <translation>นำเข้ารายการคำบรรยาย %1</translation>
     </message>
     <message>
         <location filename="../src/models/subtitlesmodel.cpp" line="369"/>
         <source>Append subtitle</source>
-        <translation type="unfinished"></translation>
+        <translation>ผนวกคำบรรยาย</translation>
     </message>
 </context>
 <context>
@@ -7841,7 +8114,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qmltypes/qmlapplication.cpp" line="211"/>
         <source>&lt;p&gt;Do you really want to add filters to &lt;b&gt;Output&lt;/b&gt;?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Timeline &gt; Output&lt;/b&gt; is currently selected. Adding filters to &lt;b&gt;Output&lt;/b&gt; affects ALL clips in the timeline including new ones that will be added.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;คุณต้องการเพิ่มฟิลเตอร์ลงใน &lt;b&gt;Output&lt;/b&gt; จริงหรือไม่&lt;/p&gt;&lt;p&gt;&lt;b&gt;Timeline &gt; Output&lt;/b&gt; ถูกเลือกอยู่ในขณะนี้ การเพิ่มฟิลเตอร์ลงใน &lt;b&gt;Output&lt;/b&gt; จะมีผลกับคลิปทั้งหมดในไทม์ไลน์ รวมถึงคลิปใหม่ที่จะถูกเพิ่มด้วย&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlapplication.cpp" line="219"/>
@@ -7926,12 +8199,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="77"/>
         <source>Choose Color...</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกสี...</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="91"/>
         <source>Choose Recent Color</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกสีล่าสุด</translation>
     </message>
 </context>
 <context>
@@ -7939,17 +8212,17 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qmltypes/qmlrichtext.cpp" line="137"/>
         <source>Cannot save: </source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถบันทึกได้:</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlrichtext.cpp" line="167"/>
         <source>Row</source>
-        <translation type="unfinished"></translation>
+        <translation>แถว</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlrichtext.cpp" line="169"/>
         <source>Column</source>
-        <translation type="unfinished"></translation>
+        <translation>สดมภ์</translation>
     </message>
 </context>
 <context>
@@ -7967,7 +8240,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qmltypes/qmlrichtextmenu.cpp" line="37"/>
         <source>Save As...</source>
-        <translation type="unfinished"></translation>
+        <translation>บันทึกเป็น...</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlrichtextmenu.cpp" line="41"/>
@@ -8044,17 +8317,17 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/dialogs/resourcedialog.cpp" line="35"/>
         <source>Resources</source>
-        <translation type="unfinished"></translation>
+        <translation>ทรัพยากร</translation>
     </message>
     <message>
         <location filename="../src/dialogs/resourcedialog.cpp" line="47"/>
         <source>Convert Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>แปลงที่เลือก</translation>
     </message>
     <message>
         <location filename="../src/dialogs/resourcedialog.cpp" line="98"/>
         <source>No resources to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีทรัพยากรที่จะแปลง</translation>
     </message>
     <message>
         <location filename="../src/dialogs/resourcedialog.cpp" line="103"/>
@@ -8074,12 +8347,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/models/resourcemodel.cpp" line="297"/>
         <source>%1MB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1MB</translation>
     </message>
     <message>
         <location filename="../src/models/resourcemodel.cpp" line="312"/>
         <source>%1 %2x%3 %4fps</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2x%3 %4fps</translation>
     </message>
     <message>
         <location filename="../src/models/resourcemodel.cpp" line="425"/>
@@ -8186,13 +8459,13 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <location filename="../src/dialogs/actionsdialog.cpp" line="68"/>
         <location filename="../src/dialogs/actionsdialog.cpp" line="69"/>
         <source>Set to default</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งเป็นค่าเริ่มต้น</translation>
     </message>
     <message>
         <location filename="../src/dialogs/actionsdialog.cpp" line="78"/>
         <location filename="../src/dialogs/actionsdialog.cpp" line="79"/>
         <source>Clear shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้างทางลัด</translation>
     </message>
 </context>
 <context>
@@ -8206,9 +8479,9 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 <context>
     <name>ShotcutSettings</name>
     <message>
-        <location filename="../src/settings.cpp" line="101"/>
+        <location filename="../src/settings.cpp" line="102"/>
         <source>Old (before v23) Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>เก่า (ก่อน v23) เค้าโครง</translation>
     </message>
 </context>
 <context>
@@ -8377,42 +8650,42 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="405"/>
         <source>Slow Zoom In, Hold Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>ขยายเข้าอย่างช้า ค้างที่ข้างใต้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="407"/>
         <source>Slow Zoom In, Hold Top</source>
-        <translation type="unfinished"></translation>
+        <translation>ขยายเข้าอย่างช้า ค้างที่ข้างบน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="409"/>
         <source>Slow Zoom In, Hold Left</source>
-        <translation type="unfinished"></translation>
+        <translation>ขยายเข้าอย่างช้า ค้างที่ข้างซ้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="411"/>
         <source>Slow Zoom In, Hold Right</source>
-        <translation type="unfinished"></translation>
+        <translation>ขยายเข้าอย่างช้า ค้างที่ข้างขวา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="413"/>
         <source>Slow Zoom Out, Hold Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>ขยายออกอย่างช้า ค้างที่ข้างใต้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="415"/>
         <source>Slow Zoom Out, Hold Top</source>
-        <translation type="unfinished"></translation>
+        <translation>ขยายออกอย่างช้า ค้างที่ข้างบน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="417"/>
         <source>Slow Zoom Out, Hold Left</source>
-        <translation type="unfinished"></translation>
+        <translation>ขยายออกอย่างช้า ค้างที่ข้างซ้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="419"/>
         <source>Slow Zoom Out, Hold Right</source>
-        <translation type="unfinished"></translation>
+        <translation>ขยายออกอย่างช้า ค้างที่ข้างขวา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="487"/>
@@ -8504,12 +8777,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="947"/>
         <source> °</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation> °</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="974"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีพื้นหลัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="425"/>
@@ -8529,7 +8802,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionVUI.qml" line="156"/>
         <source>Click in rectangle + hold Shift to drag, Wheel to zoom, or %1+Wheel to rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>คลิกในสี่เหลี่ยมผืนผ้า + กด Shift ค้างไว้เพื่อลาก ล้อเพื่อซูม หรือ %1+ล้อเพื่อหมุน</translation>
     </message>
 </context>
 <context>
@@ -8537,8 +8810,8 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message numerus="yes">
         <location filename="../src/dialogs/slideshowgeneratordialog.cpp" line="33"/>
         <source>Slideshow Generator - %n Clips</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>ตัวสร้างภาพเลื่อนแสดง - %n คลิป</numerusform>
         </translation>
     </message>
 </context>
@@ -8547,75 +8820,78 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="58"/>
         <source>Clip duration</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะเวลาคลิป</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="60"/>
         <source>Set the duration of each clip in the slideshow.</source>
-        <translation type="unfinished"></translation>
+        <translation>กำหนดระยะเวลาของแต่ละคลิปในการแสดงสไลด์โชว์</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="69"/>
         <source>Aspect ratio conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>การแปลงอัตราส่วนภาพ</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="71"/>
         <source>Pad Black</source>
-        <translation type="unfinished"></translation>
+        <translation>แผ่นดำ</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="72"/>
         <source>Crop Center</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัดศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="73"/>
         <source>Crop and Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัดและส่าย</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="77"/>
         <source>Pad Blur</source>
-        <translation type="unfinished"></translation>
+        <translation>แผ่นเบลอ</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="80"/>
         <source>Choose an aspect ratio conversion method.</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกวิธีการแปลงอัตราส่วนภาพ</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="87"/>
         <source>Zoom effect</source>
-        <translation type="unfinished"></translation>
+        <translation>เอฟเฟกต์การซูม</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="90"/>
         <source>Set the percentage of the zoom-in effect.
 0% will result in no zoom effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าเปอร์เซ็นต์ของเอฟเฟกต์การซูมเข้า
+0% จะไม่เกิดเอฟเฟกต์การซูม</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="98"/>
         <source>Transition duration</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะเวลาเปลี่ยนผ่าน</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="101"/>
         <source>Set the duration of the transition.
 May not be longer than half the duration of the clip.
 If the duration is 0, no transition will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>กำหนดระยะเวลาของการเปลี่ยนฉาก
+ไม่ควรยาวเกินครึ่งหนึ่งของระยะเวลาคลิป
+หากระยะเวลาเป็น 0 จะไม่มีการสร้างการเปลี่ยนฉาก</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="111"/>
         <source>Transition type</source>
-        <translation type="unfinished"></translation>
+        <translation>ประเภทการเปลี่ยนผ่าน</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="114"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>สุ่ม</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="115"/>
@@ -8740,27 +9016,27 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="142"/>
         <source>Choose a transition effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกเอฟเฟ็กต์การเปลี่ยนผ่าน</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="148"/>
         <source>Transition softness</source>
-        <translation type="unfinished"></translation>
+        <translation>ความนุ่มนวลในการเปลี่ยนผ่าน</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="150"/>
         <source>Change the softness of the edge of the wipe.</source>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยนความนุ่มขอบแผ่น</translation>
     </message>
     <message>
-        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="482"/>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="485"/>
         <source>Preview is not available with GPU Effects</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถดูตัวอย่างได้โดยใช้เอฟเฟกต์ GPU</translation>
     </message>
     <message>
-        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="483"/>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="486"/>
         <source>Generating Preview...</source>
-        <translation type="unfinished"></translation>
+        <translation>กำลังกำเนิดตัวอย่าง...</translation>
     </message>
 </context>
 <context>
@@ -8783,17 +9059,17 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="133"/>
         <source>Map the specified speed to the current time. Use keyframes to vary the speed mappings over time.</source>
-        <translation type="unfinished"></translation>
+        <translation>แมปความเร็วที่ระบุกับเวลาปัจจุบัน ใช้คีย์เฟรมเพื่อเปลี่ยนการแมปความเร็วในแต่ละช่วงเวลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="157"/>
         <source>Image mode</source>
-        <translation type="unfinished"></translation>
+        <translation>โหมดภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="161"/>
         <source>Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.</source>
-        <translation type="unfinished"></translation>
+        <translation>ใช้โหมดการเลือกภาพที่ระบุ โหมด Nearest จะแสดงผลภาพที่ใกล้เคียงกับเวลาที่แมปมากที่สุด โหมด Blend จะผสมภาพทั้งหมดที่เกิดขึ้นระหว่างเวลาที่แมป</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="180"/>
@@ -8803,12 +9079,12 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="185"/>
         <source>Blend</source>
-        <translation type="unfinished"></translation>
+        <translation>ผสมผสาน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="200"/>
         <source>Enable pitch compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิดใช้งานการชดเชยระดับเสียง</translation>
     </message>
 </context>
 <context>
@@ -8816,7 +9092,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/qml/views/timeline/SubtitleBar.qml" line="73"/>
         <source>Unable to move. Subtitles already exist at this time.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถย้ายได้ คำบรรยายมีอยู่แล้วในขณะนี้</translation>
     </message>
 </context>
 <context>
@@ -8824,7 +9100,7 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/dialogs/subtitletrackdialog.cpp" line="55"/>
         <source>New Subtitle Track</source>
-        <translation type="unfinished"></translation>
+        <translation>แทร็กคำบรรยายใหม่</translation>
     </message>
     <message>
         <location filename="../src/dialogs/subtitletrackdialog.cpp" line="59"/>
@@ -8840,316 +9116,322 @@ If the duration is 0, no transition will be created.</source>
 <context>
     <name>SubtitlesDock</name>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="129"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="130"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="175"/>
         <source>Subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>คำบรรยายใต้ภาพ</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="144"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="145"/>
         <source>Add clips to the Timeline to begin editing subtitles.</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มคลิปลงในไทม์ไลน์เพื่อเริ่มแก้ไขคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="195"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="176"/>
+        <source>Tracks</source>
+        <translation>แนวราง</translation>
+    </message>
+    <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="196"/>
         <source>Columns</source>
         <translation>สดมภ์</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="198"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="197"/>
         <source>Start</source>
         <translation>เริ่มต้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="201"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="200"/>
         <source>End</source>
         <translation>สิ้นสุด</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="204"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="203"/>
         <source>Duration</source>
         <translation>ระยะเวลา</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="210"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="209"/>
         <source>Subtitle Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>การควบคุมคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="216"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="215"/>
         <source>Subtitles Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>เมนูคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="267"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="266"/>
         <source>Previous</source>
         <translation>ก่อนหน้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="269"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="268"/>
         <source>Current</source>
-        <translation type="unfinished"></translation>
+        <translation>ขณะนี้</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="271"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="270"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>ถัดไป</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="305"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="304"/>
         <source>Add Subtitle Track</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มแทร็กคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="308"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="307"/>
         <source>Add a subtitle track</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มแทร็กคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="316"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="536"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="315"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="535"/>
         <source>Remove Subtitle Track</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้างแทร็กคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="319"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="318"/>
         <source>Remove this subtitle track</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้างแทร็กคำบรรยายนี้</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="327"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="326"/>
         <source>Edit Subtitle Track</source>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขแทร็กคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="330"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="329"/>
         <source>Edit this subtitle track</source>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขแทร็กคำบรรยายนี้</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="338"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="337"/>
         <source>Import Subtitles From File</source>
-        <translation type="unfinished"></translation>
+        <translation>นำเข้าคำบรรยายจากไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="341"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="340"/>
         <source>Import subtitles from an srt file at the current position</source>
-        <translation type="unfinished"></translation>
+        <translation>นำเข้าคำบรรยายจากไฟล์ SRT ในตำแหน่งปัจจุบัน</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="349"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="348"/>
         <source>Export Subtitles To File</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่งออกคำบรรยายไปยังไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="352"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="351"/>
         <source>Export the current subtitle track to an SRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่งออกแทร็กคำบรรยายปัจจุบันไปยังไฟล์ SRT</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="360"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="359"/>
         <source>Create/Edit Subtitle</source>
-        <translation type="unfinished"></translation>
+        <translation>สร้าง/แก้ไขคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="364"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="363"/>
         <source>Create or Edit a subtitle at the cursor position.</source>
-        <translation type="unfinished"></translation>
+        <translation>สร้างหรือแก้ไขคำบรรยายที่ตำแหน่งเคอร์เซอร์</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="368"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="367"/>
         <source>Add Subtitle Item</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มรายการคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="372"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="371"/>
         <source>Add a subtitle at the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มคำบรรยายที่ตำแหน่งเคอร์เซอร์</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="376"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="375"/>
         <source>Remove Subtitle Item</source>
-        <translation type="unfinished"></translation>
+        <translation>ลบรายการคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="380"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="379"/>
         <source>Remove the selected subtitle item</source>
-        <translation type="unfinished"></translation>
+        <translation>ลบรายการคำบรรยายที่เลือก</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="384"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="383"/>
         <source>Set Subtitle Start</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าเริ่มคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="388"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="387"/>
         <source>Set the selected subtitle to start at the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าคำบรรยายที่เลือกให้เริ่มต้นที่ตำแหน่งเคอร์เซอร์</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="392"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="391"/>
         <source>Set Subtitle End</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าการสิ้นสุดคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="396"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="395"/>
         <source>Set the selected subtitle to end at the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าคำบรรยายที่เลือกให้สิ้นสุดที่ตำแหน่งเคอร์เซอร์</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="400"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="399"/>
         <source>Move Subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้ายคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="404"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="403"/>
         <source>Move the selected subtitles to the cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้ายคำบรรยายที่เลือกไปยังตำแหน่งเคอร์เซอร์</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="408"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="407"/>
         <source>Burn In Subtitles on Output</source>
-        <translation type="unfinished"></translation>
+        <translation>บันทึกคำบรรยายลงในเอาต์พุต</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="410"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="409"/>
         <source>Create or edit a Burn In Subtitles filter on the timeline output.</source>
-        <translation type="unfinished"></translation>
+        <translation>สร้างหรือแก้ไขฟิลเตอร์เบิร์นอินคำบรรยายบนเอาท์พุตไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="416"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="415"/>
         <source>Generate Text on Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>สร้างข้อความบนไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="418"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="417"/>
         <source>Create a new video track on the timeline with text showing these subtitles.</source>
-        <translation type="unfinished"></translation>
+        <translation>สร้างแทร็กวิดีโอใหม่บนไทม์ไลน์พร้อมข้อความที่แสดงคำบรรยายเหล่านี้</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="422"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="421"/>
         <source>Speech to Text...</source>
-        <translation type="unfinished"></translation>
+        <translation>เสียงพูดเป็นข้อความ...</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="424"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="423"/>
         <source>Detect speech and transcribe to a new subtitle track.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตรวจจับคำพูดและถอดเสียงไปยังแทร็กคำบรรยายใหม่</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/subtitlesdock.cpp" line="429"/>
+        <source>Track Timeline Cursor</source>
+        <translation>ติดตามเคอร์เซอร์เส้นเวลา</translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="430"/>
-        <source>Track Timeline Cursor</source>
-        <translation type="unfinished"></translation>
+        <source>Track the timeline cursor</source>
+        <translation>ติดตามเคอร์เซอร์เส้นเวลา</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="431"/>
-        <source>Track the timeline cursor</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/docks/subtitlesdock.cpp" line="438"/>
+        <source>Show Previous/Next</source>
+        <translation>แสดงก่อนหน้า/ถัดไป</translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="439"/>
-        <source>Show Previous/Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="440"/>
         <source>Show the previous and next subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>แสดงคำบรรยายก่อนหน้าและถัดไป</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="505"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="504"/>
         <source>Add a clip to the timeline to create subtitles.</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มคลิปลงในไทม์ไลน์เพื่อสร้างคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1049"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1051"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1071"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1048"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1050"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1070"/>
         <source>Subtitle Track %1</source>
-        <translation type="unfinished"></translation>
+        <translation>แทร็กคำบรรยาย %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1209"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1207"/>
         <source>Extracting Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>การแยกเสียง</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1224"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1222"/>
         <source>Speech to Text</source>
-        <translation type="unfinished"></translation>
+        <translation>คำพูดเป็นข้อความ</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="516"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="566"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1161"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="515"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="565"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1159"/>
         <source>Subtitle track already exists: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>แทร็กคำบรรยายมีอยู่แล้ว: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="537"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="536"/>
         <source>This track is in use by a subtitle filter.
 Remove the subtitle filter before removing this track.</source>
-        <translation type="unfinished"></translation>
+        <translation>แทร็กนี้ใช้ตัวกรองคำบรรยาย
+ลบตัวกรองคำบรรยายออกก่อนลบแทร็กนี้</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="581"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="580"/>
         <source>Import Subtitle File</source>
-        <translation type="unfinished"></translation>
+        <translation>นำเข้าไฟล์คำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="583"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="582"/>
         <source>Subtitle Files (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ข้อความใต้ภาพ (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="590"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="589"/>
         <source>Unable to find subtitle file.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่พบไฟล์คำบรรยาย</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/subtitlesdock.cpp" line="633"/>
+        <source>Export SRT File</source>
+        <translation>ส่งออกไฟล์ SRT</translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="634"/>
-        <source>Export SRT File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="635"/>
         <source>SRT Files (*.srt *.SRT)</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ SRT (*.srt *.SRT)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="698"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="697"/>
         <source>A subtitle already exists at this time.</source>
-        <translation type="unfinished"></translation>
+        <translation>มีคำบรรยายอยู่แล้วในขณะนี้</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="708"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="707"/>
         <source>Not enough space to add subtitle.</source>
-        <translation type="unfinished"></translation>
+        <translation>พื้นที่ไม่เพียงพอสำหรับการเพิ่มคำบรรยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="745"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="744"/>
         <source>Start time can not be after end time.</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาเริ่มต้นไม่สามารถอยู่หลังเวลาสิ้นสุดได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="751"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="750"/>
         <source>Start time can not be before previous subtitle.</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาเริ่มต้นไม่สามารถอยู่ก่อนคำบรรยายก่อนหน้าได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="769"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="768"/>
         <source>End time can not be before start time.</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาสิ้นสุดไม่สามารถอยู่ก่อนเวลาเริ่มต้นได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="776"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="775"/>
         <source>End time can not be after next subtitle.</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาสิ้นสุดไม่สามารถอยู่หลังคำบรรยายถัดไปได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="798"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="797"/>
         <source>Unable to move. Subtitles already exist at this time.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถย้ายได้ คำบรรยายมีอยู่แล้วในขณะนี้</translation>
     </message>
 </context>
 <context>
@@ -9180,22 +9462,22 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="14"/>
         <source>Player Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>การซิงโครไนซ์ผู้เล่น</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="20"/>
         <source>Adjust your playback audio/video synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับการซิงโครไนซ์เสียง/วิดีโอที่เล่นของคุณ</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="48"/>
         <source>Reset to default value 0</source>
-        <translation type="unfinished"></translation>
+        <translation>รีเซ็ตเป็นค่าเริ่มต้น 0</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="65"/>
         <source>Video offset</source>
-        <translation type="unfinished"></translation>
+        <translation>การชดเชยวิดีโอ</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="75"/>
@@ -9213,7 +9495,7 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/docks/notesdock.cpp" line="40"/>
         <source>Decrease Text Size</source>
-        <translation type="unfinished"></translation>
+        <translation>ลดขนาดตัวอักษร</translation>
     </message>
     <message>
         <location filename="../src/docks/notesdock.cpp" line="43"/>
@@ -9224,7 +9506,7 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/docks/notesdock.cpp" line="47"/>
         <source>Increase Text Size</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มขนาดตัวอักษร</translation>
     </message>
 </context>
 <context>
@@ -9331,7 +9613,7 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterVui.qml" line="85"/>
         <source>Click in rectangle + hold Shift to drag</source>
-        <translation type="unfinished"></translation>
+        <translation>คลิกในสี่เหลี่ยมผืนผ้า + กด Shift ค้างไว้เพื่อลาก</translation>
     </message>
 </context>
 <context>
@@ -9364,12 +9646,12 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="88"/>
         <source>Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>ง่าย</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="98"/>
         <source>Rich</source>
-        <translation type="unfinished"></translation>
+        <translation>รวย</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="120"/>
@@ -9424,14 +9706,14 @@ Remove the subtitle filter before removing this track.</source>
 <context>
     <name>TiledItemDelegate</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="123"/>
+        <location filename="../src/docks/playlistdock.cpp" line="119"/>
         <source>Duration: %1</source>
         <translation>ระยะเวลา: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="127"/>
+        <location filename="../src/docks/playlistdock.cpp" line="123"/>
         <source>Date: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>วันที่: %1</translation>
     </message>
 </context>
 <context>
@@ -9450,567 +9732,577 @@ Remove the subtitle filter before removing this track.</source>
 <context>
     <name>TimelineDock</name>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="71"/>
-        <location filename="../src/docks/timelinedock.cpp" line="82"/>
+        <location filename="../src/docks/timelinedock.cpp" line="73"/>
+        <location filename="../src/docks/timelinedock.cpp" line="84"/>
         <source>Timeline</source>
         <translation>ไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1543"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1558"/>
         <source>This track is locked</source>
         <translation>แทร็กนี้ถูกล็อค</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1548"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1563"/>
         <source>You cannot add a non-seekable source.</source>
         <translation>คุณไม่สามารถเพิ่มแหล่งที่ไม่สามารถหาได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1939"/>
-        <location filename="../src/docks/timelinedock.cpp" line="1972"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1954"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1987"/>
         <source>Track %1 was not moved</source>
-        <translation type="unfinished"></translation>
+        <translation>แทร็ก %1 ไม่ถูกย้าย</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1944"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1959"/>
         <source>Can not move audio track above video track</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถย้ายแทร็กเสียงไปเหนือแทร็กวิดีโอได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1960"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1975"/>
         <source>Can not move video track below audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถย้ายแทร็กวิดีโอไปไว้ด้านล่างแทร็กเสียงได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1277"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2107"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1292"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2103"/>
         <source>Align To Reference Track</source>
-        <translation type="unfinished"></translation>
+        <translation>จัดแนวให้ตรงกับแทร็กอ้างอิง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="83"/>
+        <location filename="../src/docks/timelinedock.cpp" line="85"/>
         <source>Track Operations</source>
-        <translation type="unfinished"></translation>
+        <translation>ติดตามการดำเนินงาน</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="95"/>
+        <location filename="../src/docks/timelinedock.cpp" line="97"/>
         <source>Track Height</source>
-        <translation type="unfinished"></translation>
+        <translation>ความสูงของราง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="100"/>
+        <location filename="../src/docks/timelinedock.cpp" line="102"/>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>ที่เลือกไว้</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="113"/>
+        <location filename="../src/docks/timelinedock.cpp" line="115"/>
         <source>Edit</source>
         <translation>แก้ไข</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="129"/>
+        <location filename="../src/docks/timelinedock.cpp" line="131"/>
         <source>View</source>
         <translation>มุมมอง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="135"/>
+        <location filename="../src/docks/timelinedock.cpp" line="137"/>
         <source>Marker</source>
         <translation>เครื่องหมายกำกับ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="145"/>
+        <location filename="../src/docks/timelinedock.cpp" line="147"/>
         <source>Timeline Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>คลิปไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="168"/>
+        <location filename="../src/docks/timelinedock.cpp" line="170"/>
         <source>Timeline Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>การควบคุมเส้นเวลา</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="172"/>
+        <location filename="../src/docks/timelinedock.cpp" line="174"/>
         <source>Timeline Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>เมนูเส้นเวลา</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="318"/>
+        <location filename="../src/docks/timelinedock.cpp" line="333"/>
         <source>Add Audio Track</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มแทร็กเสียง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="327"/>
+        <location filename="../src/docks/timelinedock.cpp" line="342"/>
         <source>Add Video Track</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มแทร็กวิดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="336"/>
+        <location filename="../src/docks/timelinedock.cpp" line="351"/>
         <source>Insert Track</source>
-        <translation type="unfinished"></translation>
+        <translation>แทรกแนวราง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="345"/>
+        <location filename="../src/docks/timelinedock.cpp" line="360"/>
         <source>Remove Track</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้างแนวราง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="355"/>
+        <location filename="../src/docks/timelinedock.cpp" line="370"/>
         <source>Move Track Up</source>
-        <translation type="unfinished"></translation>
+        <translation>เลื่อนแนวรางขึ้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="365"/>
+        <location filename="../src/docks/timelinedock.cpp" line="380"/>
         <source>Move Track Down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/timelinedock.cpp" line="375"/>
-        <source>Show/Hide Selected Track</source>
-        <translation type="unfinished"></translation>
+        <translation>เลื่อนแนวรางลง</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="390"/>
-        <source>Lock/Unlock Selected Track</source>
-        <translation type="unfinished"></translation>
+        <source>Show/Hide Selected Track</source>
+        <translation>แสดง/ซ่อนแทร็กที่เลือก</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="408"/>
-        <source>Mute/Unmute Selected Track</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/docks/timelinedock.cpp" line="405"/>
+        <source>Lock/Unlock Selected Track</source>
+        <translation>ล็อค/ปลดล็อคแทร็กที่เลือก</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="423"/>
-        <source>Blend/Unblend Selected Track</source>
-        <translation type="unfinished"></translation>
+        <source>Mute/Unmute Selected Track</source>
+        <translation>ปิดเสียง/เปิดเสียงแทร็กที่เลือก</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="438"/>
+        <source>Blend/Unblend Selected Track</source>
+        <translation>ผสม/แยกการผสมแทร็กที่เลือก</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="453"/>
         <source>Make Tracks Shorter</source>
-        <translation type="unfinished"></translation>
+        <translation>ทำให้แทร็กสั้นลง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="446"/>
+        <location filename="../src/docks/timelinedock.cpp" line="461"/>
         <source>Make Tracks Taller</source>
-        <translation type="unfinished"></translation>
+        <translation>ทำให้แทร็กสูงขึ้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="454"/>
+        <location filename="../src/docks/timelinedock.cpp" line="469"/>
         <source>Reset Track Height</source>
-        <translation type="unfinished"></translation>
+        <translation>รีเซ็ตความสูงของแทร็ก</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="462"/>
+        <location filename="../src/docks/timelinedock.cpp" line="477"/>
         <source>Select All</source>
         <translation>เลือกทั้งหมด</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="472"/>
+        <location filename="../src/docks/timelinedock.cpp" line="487"/>
         <source>Select All On Current Track</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกทั้งหมดบนแทร็กปัจจุบัน</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="482"/>
+        <location filename="../src/docks/timelinedock.cpp" line="497"/>
         <source>Select None</source>
         <translation>ไม่เลือกเลย</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="493"/>
+        <location filename="../src/docks/timelinedock.cpp" line="508"/>
         <source>Select Next Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกคลิปถัดไป</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="507"/>
+        <location filename="../src/docks/timelinedock.cpp" line="522"/>
         <source>Select Previous Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกคลิปก่อนหน้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="521"/>
+        <location filename="../src/docks/timelinedock.cpp" line="536"/>
         <source>Select Clip Above</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกคลิปด้านบน</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="542"/>
+        <location filename="../src/docks/timelinedock.cpp" line="557"/>
         <source>Select Clip Below</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกคลิปด้านล่าง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="563"/>
+        <location filename="../src/docks/timelinedock.cpp" line="578"/>
         <source>Set Current Track Above</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าแทร็กปัจจุบันด้านบน</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="571"/>
+        <location filename="../src/docks/timelinedock.cpp" line="586"/>
         <source>Set Current Track Below</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าแทร็กปัจจุบันด้านล่าง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="579"/>
+        <location filename="../src/docks/timelinedock.cpp" line="594"/>
         <source>Select Clip Under Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกคลิปภายใต้หัวเล่น</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="593"/>
+        <location filename="../src/docks/timelinedock.cpp" line="608"/>
         <source>Cu&amp;t</source>
         <translation>ตัด</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="615"/>
+        <location filename="../src/docks/timelinedock.cpp" line="630"/>
         <source>&amp;Copy</source>
         <translation>คัดลอก</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="645"/>
+        <location filename="../src/docks/timelinedock.cpp" line="660"/>
         <source>&amp;Paste</source>
         <translation>แปะ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="660"/>
+        <location filename="../src/docks/timelinedock.cpp" line="675"/>
         <source>Nudge Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>ผลักไปข้างหน้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="674"/>
+        <location filename="../src/docks/timelinedock.cpp" line="689"/>
         <source>Nudge Forward is not available</source>
-        <translation type="unfinished"></translation>
+        <translation>ผลักไปข้างหน้า ไม่สามารถใช้งานได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="692"/>
+        <location filename="../src/docks/timelinedock.cpp" line="707"/>
         <source>Nudge Backward</source>
-        <translation type="unfinished"></translation>
+        <translation>ดันถอยหลัง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="702"/>
+        <location filename="../src/docks/timelinedock.cpp" line="717"/>
         <source>Nudge Backward is not available</source>
-        <translation type="unfinished"></translation>
+        <translation>ดันถอยหลัง ไม่สามารถใช้งานได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="720"/>
+        <location filename="../src/docks/timelinedock.cpp" line="735"/>
         <source>Append</source>
         <translation>พ่วงท้าย</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="732"/>
+        <location filename="../src/docks/timelinedock.cpp" line="747"/>
         <source>Ripple Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>ลบแบบกระเพื่อม</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="749"/>
+        <location filename="../src/docks/timelinedock.cpp" line="764"/>
         <source>Lift</source>
         <translation>ยกชึ้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="767"/>
+        <location filename="../src/docks/timelinedock.cpp" line="782"/>
         <source>Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>เขียนทับ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="780"/>
+        <location filename="../src/docks/timelinedock.cpp" line="795"/>
         <source>Split At Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัดแยกที่หัวเล่น</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="836"/>
+        <location filename="../src/docks/timelinedock.cpp" line="851"/>
         <source>Split All Tracks At Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>แยกแทร็กทั้งหมดที่หัวเล่น</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="866"/>
+        <location filename="../src/docks/timelinedock.cpp" line="881"/>
         <source>Replace</source>
         <translation>แทนที่</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="884"/>
+        <location filename="../src/docks/timelinedock.cpp" line="899"/>
         <source>Create/Edit Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>สร้าง/แก้ไขเครื่องหมาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="897"/>
+        <location filename="../src/docks/timelinedock.cpp" line="912"/>
         <source>Previous Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>เครื่องหมายก่อนหน้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="910"/>
+        <location filename="../src/docks/timelinedock.cpp" line="925"/>
         <source>Next Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>เครื่องหมายถัดไป</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="923"/>
+        <location filename="../src/docks/timelinedock.cpp" line="938"/>
         <source>Delete Marker</source>
-        <translation type="unfinished"></translation>
+        <translation>ลบเครื่องหมาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="933"/>
+        <location filename="../src/docks/timelinedock.cpp" line="948"/>
         <source>Cycle Marker Color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีตัวบ่งจุดวนรอบ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="949"/>
+        <location filename="../src/docks/timelinedock.cpp" line="964"/>
         <source>Create Marker Around Selected Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>สร้างเครื่องหมายรอบคลิปที่เลือก</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="959"/>
+        <location filename="../src/docks/timelinedock.cpp" line="974"/>
         <source>Rectangle Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>การเลือกรูปสี่เหลี่ยมผืนผ้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="970"/>
+        <location filename="../src/docks/timelinedock.cpp" line="985"/>
         <source>Automatically Add Tracks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/timelinedock.cpp" line="981"/>
-        <source>Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มแทร็กโดยอัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="996"/>
-        <source>Scrub While Dragging</source>
-        <translation type="unfinished"></translation>
+        <source>Snap</source>
+        <translation>จับภาพ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1010"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1011"/>
+        <source>Scrub While Dragging</source>
+        <translation>การขัดขณะลาก</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1025"/>
         <source>Ripple</source>
         <translation>ระลอกเสียงคลื่นเล็กๆ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1025"/>
-        <source>Ripple All Tracks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/docks/timelinedock.cpp" line="1040"/>
-        <source>Ripple Markers</source>
-        <translation type="unfinished"></translation>
+        <source>Ripple All Tracks</source>
+        <translation>กระเพื่อมทุกแนวราง</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1055"/>
+        <source>Ripple Markers</source>
+        <translation>กระเพื่อมตัวบ่งจุด</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1070"/>
         <source>Toggle Ripple And All Tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>สลับแบบกระเพื่อมและแทร็กทั้งหมด</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1063"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1078"/>
         <source>Toggle Ripple, All Tracks, And Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>สลับแบบกระเพื่อม แทร็กทั้งหมด และเครื่องหมาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1072"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1087"/>
         <source>Show Audio Waveforms</source>
         <translation>แสดงรูปคลื่นเสียง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1085"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1100"/>
         <source>Use Higher Performance Waveforms</source>
-        <translation type="unfinished"></translation>
+        <translation>ใช้คลื่นประสิทธิภาพสูงกว่า</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1100"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1115"/>
         <source>Show Video Thumbnails</source>
         <translation>แสดงภาพขนาดย่อของวีดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1111"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1126"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1123"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1138"/>
         <source>Page</source>
-        <translation type="unfinished"></translation>
+        <translation>หน้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1136"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1151"/>
         <source>Smooth</source>
         <translation>ราบเรียบ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1149"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1164"/>
         <source>Center the Playhead</source>
         <translation>กึ่งกลางของหัวเล่น</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1163"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1178"/>
         <source>Scroll to Playhead on Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>เลื่อนไปที่หัวเล่นบนการขยาย</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1175"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1190"/>
         <source>Zoom Timeline Out</source>
-        <translation type="unfinished"></translation>
+        <translation>ซูมไทม์ไลน์ออก</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1186"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1201"/>
         <source>Zoom Timeline In</source>
-        <translation type="unfinished"></translation>
+        <translation>ซูมไทม์ไลน์เข้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1197"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1212"/>
         <source>Zoom Timeline To Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>ซูมไทม์ไลน์ให้พอดี</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1225"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1240"/>
         <source>Properties</source>
         <translation>คุณสมบัติ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1234"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1249"/>
         <source>Rejoin With Next Clip</source>
-        <translation type="unfinished"></translation>
+        <translation>เชื่อมกันกับคลิปต่อไป</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1250"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1265"/>
         <source>Detach Audio</source>
         <translation>ถอดเสียง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1297"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1312"/>
         <source>Apply Copied Filters</source>
-        <translation type="unfinished"></translation>
+        <translation>ใช้ตัวกรองที่คัดลอกมา</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1321"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1336"/>
         <source>Update Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>อัปเดตภาพขนาดย่อ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1345"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1360"/>
         <source>Rebuild Audio Waveform</source>
         <translation>สร้างรูปคลื่นเสียงใหม่</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1369"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1384"/>
         <source>Ripple Trim Clip In</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัดคลิปจากด้านเข้าแบบกระเพื่อม</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1376"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1391"/>
         <source>Ripple Trim Clip Out</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัดคลิปจากด้านออกแบบกระเพื่อม</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1383"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1398"/>
         <source>Group/Ungroup</source>
-        <translation type="unfinished"></translation>
+        <translation>จัดกลุ่ม/ไม่จัดกลุ่ม</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2196"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2192"/>
         <source>Append multiple to timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>ผนวกหลาย ๆ รายการลงในไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2252"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2248"/>
         <source>Ripple delete transition</source>
-        <translation type="unfinished"></translation>
+        <translation>ลบการเปลี่ยนผ่านแบบริปเปิล</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2294"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2290"/>
         <source>Lift transition</source>
-        <translation type="unfinished"></translation>
+        <translation>การเปลี่ยนลิฟต์</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2365"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2361"/>
         <source>Cut %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัด %1 ออกจากไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2367"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2363"/>
         <source>Remove %1 from timeline</source>
         <translation>ลบ %1 จากไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2390"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2386"/>
         <source>Lift %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>ยก %1 ขึ้นจากไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2728"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2725"/>
         <source>There is nothing in the Source player.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีอะไรอยู่ในตัวเล่นต้นทาง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2743"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2740"/>
         <source>You cannot replace a transition.</source>
-        <translation type="unfinished"></translation>
+        <translation>คุณไม่สามารถแทนที่การเปลี่ยนแปลงได้</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2773"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2770"/>
         <source>Select a clip in the timeline to create a marker around it</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกคลิปในไทม์ไลน์เพื่อสร้างเครื่องหมายรอบๆ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2794"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2791"/>
         <source>Added marker: &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มเครื่องหมาย: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2814"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2811"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มเครื่องหมาย: &quot;%1&quot; กด %2 ค้างไว้แล้วลากเพื่อสร้างช่วง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2957"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2922"/>
+        <source>Failed to open </source>
+        <translation>ไม่สามารถเปิดได้</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="2944"/>
         <source>Dropped Files</source>
         <translation>ไฟล์ที่ปล่อยไว้</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3301"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3288"/>
         <source>Insert multiple into timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>แทรกหลายรายการลงในไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3410"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3397"/>
         <source>Overwrite multiple onto timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>เขียนทับหลายรายการบนไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="819"/>
-        <location filename="../src/docks/timelinedock.cpp" line="850"/>
+        <location filename="../src/docks/timelinedock.cpp" line="834"/>
+        <location filename="../src/docks/timelinedock.cpp" line="865"/>
         <source>You cannot split a transition.</source>
         <translation>คุณไม่สามารถแยกการเปลี่ยนแปลงได้</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="3790"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3777"/>
         <source>Replace %n timeline clips</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>แทนที่ %n คลิปเส้นเวลา</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3841"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3828"/>
         <source>voiceover</source>
-        <translation type="unfinished"></translation>
+        <translation>เสียงพากย์</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3842"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3829"/>
         <source>Opus (*.opus);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Opus (*.opus);;All Files (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1208"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3843"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3941"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1223"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3830"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3932"/>
         <source>Record Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>บันทึกเสียง</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3854"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3841"/>
         <source>Record Audio: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>บันทึกเสียง : %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3918"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3899"/>
+        <source>Audio Recording In Progress</source>
+        <translation>กำลังบันทึกเสียงอยู่</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3909"/>
         <source>Record Audio error: check PulseAudio settings</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อผิดพลาดในการบันทึกเสียง: ตรวจสอบการตั้งค่า PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3920"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3911"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อผิดพลาดการบันทึกเสียง: เลือกไฟล์ &gt; เปิดอื่น ๆ &gt; อุปกรณ์เสียง/วิดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3947"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3938"/>
         <source>Saving audio recording...</source>
-        <translation type="unfinished"></translation>
+        <translation>กำลังบันทึกการบันทึกเสียง...</translation>
     </message>
 </context>
 <context>
@@ -10255,17 +10547,17 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
         <source>HSL Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>ความอิ่มตัวของ HSL</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
         <source>HSL Color</source>
-        <translation type="unfinished"></translation>
+        <translation>สี HSL</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
         <source>HSL Luminosity</source>
-        <translation type="unfinished"></translation>
+        <translation>ความส่องสว่าง HSL</translation>
     </message>
 </context>
 <context>
@@ -10309,13 +10601,13 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="206"/>
         <source>Change the frame rate from its source.</source>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยนอัตราเฟรมจากแหล่งที่มา</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="262"/>
         <location filename="../src/dialogs/transcodedialog.ui" line="266"/>
         <source>Same as original</source>
-        <translation type="unfinished"></translation>
+        <translation>เหมือนเดิม</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="271"/>
@@ -10330,12 +10622,12 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="155"/>
         <source>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</source>
-        <translation type="unfinished"></translation>
+        <translation>สิ่งนี้มีประโยชน์เมื่อวิดีโอต้นฉบับเป็น HDR (High Dynamic Range:ช่วงไดนามิคสูง) ซึ่งต้องใช้การแมปโทนสีให้เป็นช่วงมาตรฐานเก่า</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="249"/>
         <source>Frame rate conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>การแปลงอัตราเฟรม</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="165"/>
@@ -10343,12 +10635,15 @@ Remove the subtitle filter before removing this track.</source>
 clip plus a little instead of the entire clip. When this option is
 used not all of the matching source clips are replaced, instead
 only the currently selected one.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวเลือกนี้จะแปลงเฉพาะส่วนที่ถูกตัดของคลิปต้นฉบับ
+และเพิ่มอีกเล็กน้อยแทนที่จะเป็นคลิปทั้งหมด เมื่อใช้ตัวเลือกนี้
+คลิปต้นฉบับที่ตรงกันทั้งหมดจะไม่ถูกแทนที่ แต่จะ
+แทนที่เฉพาะคลิปที่เลือกในปัจจุบันเท่านั้น</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="171"/>
         <source>Use sub-clip</source>
-        <translation type="unfinished"></translation>
+        <translation>ใช้คลิปย่อย</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="219"/>
@@ -10358,27 +10653,27 @@ only the currently selected one.</source>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="239"/>
         <source>If the source is interlaced, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
-        <translation type="unfinished"></translation>
+        <translation>หากแหล่งข้อมูลเป็นแบบอินเตอร์เลซ ฟิลด์ที่อินเตอร์เลซแต่ละฟิลด์จะถูกแปลงเป็นเฟรมแบบโปรเกรสซีฟ ส่งผลให้มีอัตราเฟรมเป็นสองเท่า</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="242"/>
         <source>Deinterlace</source>
-        <translation type="unfinished"></translation>
+        <translation>ดีอินเทอร์เลซ</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="178"/>
         <source>Enable this to keep the Advanced section open for the next time this dialog appears.</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิดใช้งานตัวเลือกนี้เพื่อเปิดส่วนขั้นสูงไว้ในครั้งถัดไปที่กล่องโต้ตอบนี้ปรากฏขึ้น</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="181"/>
         <source>Keep Advanced open</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิดขั้นสูงไว้</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="148"/>
         <source>Override the frame rate to a specific value.</source>
-        <translation type="unfinished"></translation>
+        <translation>การแทนที่อัตราเฟรมเป็นค่าที่ระบุ</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="188"/>
@@ -10387,12 +10682,16 @@ only the currently selected one.</source>
 Duplicate: Duplicate frames.
 Blend: Blend frames.
 Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</source>
-        <translation type="unfinished"></translation>
+        <translation>วิธีการแปลงอัตราเฟรม
+
+การทำซ้ำ: ทำซ้ำเฟรม
+การผสมผสาน: การผสมผสานเฟรม
+การชดเชยการเคลื่อนไหว: แทรกเฟรมใหม่โดยใช้การชดเชยการเคลื่อนไหว วิธีนี้ช้ามากและอาจส่งผลให้เกิดสิ่งแปลกปลอม</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
         <source>Override frame rate</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราเฟรมการแทนที่</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="229"/>
@@ -10402,7 +10701,7 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="158"/>
         <source>Convert to BT.709 colorspace</source>
-        <translation type="unfinished"></translation>
+        <translation>แปลงเป็นปริภูมิสี BT.709</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="33"/>
@@ -10412,17 +10711,17 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="50"/>
         <source>Duplicate (fast)</source>
-        <translation type="unfinished"></translation>
+        <translation>ทำซ้ำ (รวดเร็ว)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="51"/>
         <source>Blend</source>
-        <translation type="unfinished"></translation>
+        <translation>ผสมผสาน</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="52"/>
         <source>Motion Compensation (slow)</source>
-        <translation type="unfinished"></translation>
+        <translation>การชดเชยการเคลื่อนไหว (ช้า)</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="55"/>
@@ -10432,17 +10731,17 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="145"/>
         <source>Lossy: I-frame–only %1</source>
-        <translation type="unfinished"></translation>
+        <translation>สูญเสีย: I-frame–เพียง %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="148"/>
         <source>Intermediate: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ระดับกลาง : %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="152"/>
         <source>Lossless: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ไร้การสูญเสีย: %1</translation>
     </message>
 </context>
 <context>
@@ -10477,7 +10776,7 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
         <location filename="../src/transcoder.cpp" line="110"/>
         <location filename="../src/transcoder.cpp" line="117"/>
         <source>Convert canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>แปลงถูกยกเลิก</translation>
     </message>
     <message>
         <location filename="../src/transcoder.cpp" line="276"/>
@@ -10490,7 +10789,7 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="76"/>
         <source>Speech to Text</source>
-        <translation type="unfinished"></translation>
+        <translation>คำพูดเป็นข้อความ</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="88"/>
@@ -10505,68 +10804,68 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="119"/>
         <source>Translate to English</source>
-        <translation type="unfinished"></translation>
+        <translation>แปลเป็นภาษาอังกฤษ</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="121"/>
         <source>Maximum line length</source>
-        <translation type="unfinished"></translation>
+        <translation>ความยาวสายสูงสุด</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="131"/>
         <source>Include non-spoken sounds</source>
-        <translation type="unfinished"></translation>
+        <translation>รวมเสียงที่ไม่พูดออกมา</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="133"/>
         <source>Tracks with speech</source>
-        <translation type="unfinished"></translation>
+        <translation>แทร็กที่มีคำพูด</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="134"/>
         <source>Select tracks that contain speech to be transcribed.</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกแทร็กที่มีคำพูดที่ต้องการถอดความ</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="183"/>
         <source>Whisper.cpp executable</source>
-        <translation type="unfinished"></translation>
+        <translation>ปฏิบัติการไฟล์ Whisper.cpp</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="192"/>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="213"/>
         <source>Find Whisper.cpp</source>
-        <translation type="unfinished"></translation>
+        <translation>ค้นหา Whisper.cpp</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="204"/>
         <source>GGML Model</source>
-        <translation type="unfinished"></translation>
+        <translation>แบบจำลอง GGML</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="232"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>การกำหนดค่า</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="327"/>
         <source>Path to Whisper.cpp executable</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นทางไปยังไฟล์ปฏิบัติการ Whisper.cpp</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="332"/>
         <source>Whisper.cpp executable not found</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่พบไฟล์ปฏิบัติการ Whisper.cpp</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="338"/>
         <source>Path to GGML model</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นทางสู่โมเดล GGML</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcribeaudiodialog.cpp" line="343"/>
         <source>GGML model not found</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่พบโมเดล GGML</translation>
     </message>
 </context>
 <context>
@@ -10635,7 +10934,7 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="46"/>
         <source>/dev/video0</source>
-        <translation type="unfinished"></translation>
+        <translation>/dev/video0</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="72"/>
@@ -10740,11 +11039,6 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="267"/>
-        <source>JACK</source>
-        <translation>ช่องเสียบ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/video4linuxwidget.ui" line="272"/>
         <source>ALSA</source>
         <translation>ALSA</translation>
     </message>
@@ -10786,38 +11080,43 @@ IRE: %2</translation>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="208"/>
         <source>Video Histogram</source>
-        <translation type="unfinished"></translation>
+        <translation>ฮิสโทแกรมวิดีโอ</translation>
     </message>
 </context>
 <context>
     <name>VideoQualityJob</name>
     <message>
-        <location filename="../src/jobs/videoqualityjob.cpp" line="35"/>
+        <location filename="../src/jobs/videoqualityjob.cpp" line="34"/>
         <source>Open</source>
         <translation>เปิด</translation>
     </message>
     <message>
-        <location filename="../src/jobs/videoqualityjob.cpp" line="37"/>
+        <location filename="../src/jobs/videoqualityjob.cpp" line="36"/>
         <source>Open original and encoded side-by-side in the Shotcut player</source>
         <translation>เปิดต้นฉบับและการเข้ารหัสแบบเคียงข้างกันในโปรแกรมเล่น Shotcut&#xa0;</translation>
     </message>
     <message>
-        <location filename="../src/jobs/videoqualityjob.cpp" line="41"/>
+        <location filename="../src/jobs/videoqualityjob.cpp" line="40"/>
         <source>View Report</source>
         <translation>ดูรายงาน</translation>
     </message>
     <message>
-        <location filename="../src/jobs/videoqualityjob.cpp" line="45"/>
+        <location filename="../src/jobs/videoqualityjob.cpp" line="44"/>
+        <source>Show In Files</source>
+        <translation>แสดงในไฟล์</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/videoqualityjob.cpp" line="48"/>
         <source>Show In Folder</source>
         <translation>แสดงในโฟลเดอร์</translation>
     </message>
     <message>
-        <location filename="../src/jobs/videoqualityjob.cpp" line="49"/>
+        <location filename="../src/jobs/videoqualityjob.cpp" line="52"/>
         <source>Measure %1</source>
         <translation>การวัด %1</translation>
     </message>
     <message>
-        <location filename="../src/jobs/videoqualityjob.cpp" line="88"/>
+        <location filename="../src/jobs/videoqualityjob.cpp" line="91"/>
         <source>Video Quality Measurement</source>
         <translation>การวัดคุณภาพวีดีโอ</translation>
     </message>
@@ -10827,22 +11126,22 @@ IRE: %2</translation>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="131"/>
         <source>255</source>
-        <translation type="unfinished">255</translation>
+        <translation>255</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="135"/>
         <source>191</source>
-        <translation type="unfinished">191</translation>
+        <translation>191</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="139"/>
         <source>127</source>
-        <translation type="unfinished">127</translation>
+        <translation>127</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="143"/>
         <source>64</source>
-        <translation type="unfinished">64</translation>
+        <translation>64</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="147"/>
@@ -10869,18 +11168,21 @@ IRE: %2</translation>
         <source>Channel: %1
 Pixel: %2
 Value: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>ช่อง: %1
+พิกเซล: %2
+ค่า: %3</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="174"/>
         <source>Channel: %1
 Value: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>ช่อง: %1
+ค่า: %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="181"/>
         <source>Video RGB Parade</source>
-        <translation type="unfinished"></translation>
+        <translation>วิดีโอ RGB Parade</translation>
     </message>
 </context>
 <context>
@@ -10888,22 +11190,22 @@ Value: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="127"/>
         <source>255</source>
-        <translation type="unfinished">255</translation>
+        <translation>255</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="131"/>
         <source>191</source>
-        <translation type="unfinished">191</translation>
+        <translation>191</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="135"/>
         <source>127</source>
-        <translation type="unfinished">127</translation>
+        <translation>127</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="139"/>
         <source>64</source>
-        <translation type="unfinished">64</translation>
+        <translation>64</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="143"/>
@@ -10914,7 +11216,8 @@ Value: %2</source>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="158"/>
         <source>Pixel: %1
 Value: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>พิกเซล: %1
+ค่า: %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="160"/>
@@ -10924,7 +11227,7 @@ Value: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="167"/>
         <source>Video RGB Waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>รูปคลื่นวิดีโอ RGB</translation>
     </message>
 </context>
 <context>
@@ -10932,13 +11235,14 @@ Value: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="53"/>
         <source>Video Vector</source>
-        <translation type="unfinished"></translation>
+        <translation>วีดีโอเวกเตอร์</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="244"/>
         <source>U: %1
 V: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>U: %1
+V: %2</translation>
     </message>
 </context>
 <context>
@@ -10982,7 +11286,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="121"/>
         <source>y</source>
-        <translation type="unfinished"></translation>
+        <translation>y</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="124"/>
@@ -10992,7 +11296,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="126"/>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="128"/>
@@ -11007,32 +11311,32 @@ IRE: %2</translation>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="133"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="135"/>
         <source>V</source>
-        <translation type="unfinished"></translation>
+        <translation>V</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="149"/>
         <source>Pick a pixel from the source player</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกพิกเซลจากเครื่องเล่นต้นฉบับ</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="156"/>
         <source>Lock/Unlock the selected pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>ล็อค/ปลดล็อคพิกเซลที่เลือก</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="256"/>
         <source>%1x</source>
-        <translation type="unfinished"></translation>
+        <translation>%1x</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="304"/>
         <source>Video Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>การซูมวิดีโอ</translation>
     </message>
 </context>
 <context>
@@ -11040,147 +11344,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/jobs/whisperjob.cpp" line="89"/>
         <source>SRT</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>X11grabWidget</name>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation>แบบ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="20"/>
-        <source>Resolution</source>
-        <translation>ความละเอียด</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="30"/>
-        <source>Display</source>
-        <translation>แสดง</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="46"/>
-        <source>Screen</source>
-        <translation>จอภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="56"/>
-        <source>Apply</source>
-        <translation>ใช้</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="66"/>
-        <source>The horizontal coordinate from the left edge when using a fixed capture region.</source>
-        <translation>พิกัดแนวนอนจากขอบซ้ายเมื่อใช้ขอบเขตการจับภาพแบบคงที่</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="82"/>
-        <source>The vertical coordinate from the top edge when using a fixed capture region.</source>
-        <translation>พิกัดแนวตั้งจากขอบบนเมื่อใช้ขอบเขตการจับภาพแบบคงที่</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="92"/>
-        <location filename="../src/widgets/x11grabwidget.ui" line="199"/>
-        <source>pixels</source>
-        <translation>พิกเซล</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="103"/>
-        <source>Center Under Mouse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="108"/>
-        <source>Fixed</source>
-        <translation>คงที่</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="113"/>
-        <source>Follow Mouse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="121"/>
-        <source>An X11 display name of the form hostname:displaynumber.screennumber
-Most users do not need to change this.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="125"/>
-        <source>:0.0</source>
-        <translation>:0.0</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="132"/>
-        <source>X</source>
-        <translation>X</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="142"/>
-        <source>Show the capture region</source>
-        <translation>แสดงขอบเขตการจับภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="149"/>
-        <source>Audio Input</source>
-        <translation>การนำเข้าเสียง</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="172"/>
-        <source>Choose an audio input method to use during capture.</source>
-        <translation>เลือกวิธีการอินพสุตเสียงที่จะใช้ระหว่างการจับภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="176"/>
-        <source>None</source>
-        <translation>ไม่มี</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="181"/>
-        <source>PulseAudio</source>
-        <translation>ชีพจรเสียง</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="186"/>
-        <source>JACK</source>
-        <translation>ช่องเสียบ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="191"/>
-        <source>ALSA</source>
-        <translation>ALSA</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="206"/>
-        <source>Draw the mouse cursor</source>
-        <translation>ลากเคอร์เซอร์ของเมาส์</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="216"/>
-        <source>Y</source>
-        <translation>Y</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="245"/>
-        <source>x</source>
-        <translation>x</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="252"/>
-        <source>Width of the capture region</source>
-        <translation>ความกว้างของขอบเขตการจับภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="265"/>
-        <source>Height of the capture region</source>
-        <translation>ความสูงของพื้นที่การจับภาพ</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/x11grabwidget.ui" line="278"/>
-        <source>Position</source>
-        <translation>ตำหน่ง</translation>
+        <translation>SRT</translation>
     </message>
 </context>
 <context>
@@ -11221,7 +11385,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="172"/>
         <source>Select a clip</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกคลิป</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="192"/>
@@ -11236,7 +11400,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="231"/>
         <source>Copy checked filters</source>
-        <translation type="unfinished"></translation>
+        <translation>คัดลอกตัวกรองที่ถูกตรวจสอบ</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="246"/>
@@ -11246,22 +11410,22 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="261"/>
         <source>Save a filter set</source>
-        <translation type="unfinished"></translation>
+        <translation>บันทึกชุดตัวกรอง</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="283"/>
         <source>Move filter up</source>
-        <translation type="unfinished"></translation>
+        <translation>เลื่อนตัวกรองขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="298"/>
         <source>Move filter down</source>
-        <translation type="unfinished"></translation>
+        <translation>เลื่อนตัวกรองลง</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="325"/>
         <source>Deselect the filter</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่เลือกตัวกรอง</translation>
     </message>
 </context>
 <context>
@@ -11279,7 +11443,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/main.cpp" line="156"/>
         <source>Run Glaxnimate instead of Shotcut.</source>
-        <translation type="unfinished"></translation>
+        <translation>เรียกใช้ Glaxnimate แทน Shotcut</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="159"/>
@@ -11314,7 +11478,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/main.cpp" line="173"/>
         <source>A semicolon-separated list of scale factors for each screen</source>
-        <translation type="unfinished"></translation>
+        <translation>รายการปัจจัยมาตราส่วนที่คั่นด้วยเครื่องหมายอัฒภาคสำหรับแต่ละหน้าจอ</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="174"/>
@@ -11324,35 +11488,35 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/main.cpp" line="177"/>
         <source>How to handle a fractional display scale: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>วิธีจัดการมาตราส่วนการแสดงผลแบบเศษส่วน: %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="179"/>
         <location filename="../src/main.cpp" line="185"/>
         <location filename="../src/main.cpp" line="191"/>
         <source>string</source>
-        <translation type="unfinished"></translation>
+        <translation>string</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="183"/>
         <location filename="../src/main.cpp" line="189"/>
         <source>Which operating system audio API to use: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ควรใช้ API เสียงของระบบปฏิบัติการใด: %1</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="195"/>
         <source>Zero or more files or folders to open</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์หรือโฟลเดอร์ที่จะเปิดอย่างน้อย 0 ไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="429"/>
+        <location filename="../src/main.cpp" line="432"/>
         <source>Loading plugins...</source>
-        <translation type="unfinished"></translation>
+        <translation>กำลังโหลดปลั๊กอิน...</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="408"/>
+        <location filename="../src/main.cpp" line="411"/>
         <source>Expiring cache...</source>
-        <translation type="unfinished"></translation>
+        <translation>แคชกำลังจะหมดอายุ...</translation>
     </message>
 </context>
 <context>
@@ -11360,24 +11524,24 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="22"/>
         <source>Alpha Channel: Adjust</source>
-        <translation type="unfinished"></translation>
+        <translation>ช่องอัลฟา: ปรับแต่ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="23"/>
         <source>transparency shave shrink grow soft feather</source>
         <comment>search keywords for the Alpha Channel: Adjust video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความโปร่งใส โกน หด เติบโต ขนนุ่ม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/meta.qml" line="22"/>
         <source>Alpha Channel: View</source>
-        <translation type="unfinished"></translation>
+        <translation>ช่องอัลฟา: มุมมอง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/meta.qml" line="23"/>
         <source>transparency</source>
         <comment>search keywords for the Alpha Channel: View video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความโปร่งใส</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="7"/>
@@ -11388,7 +11552,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="8"/>
         <source>pan channel mixer</source>
         <comment>search keywords for the Balance audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เครื่องผสมแบบช่องแพน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="19"/>
@@ -11400,30 +11564,30 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="7"/>
         <source>Band Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>แบนด์พาส</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="8"/>
         <source>frequency</source>
         <comment>search keywords for the Band Pass audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="18"/>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="18"/>
         <source>Center Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่ศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="26"/>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="26"/>
         <source>Bandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>แบนด์วิธ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/meta.qml" line="8"/>
         <source>Bass &amp; Treble</source>
-        <translation type="unfinished"></translation>
+        <translation>เบส &amp; แหลม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/meta.qml" line="7"/>
@@ -11434,7 +11598,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_channelcopy/meta.qml" line="8"/>
         <source>duplicate</source>
         <comment>search keywords for the Copy Channel audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ทำซ้ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/meta.qml" line="7"/>
@@ -11445,7 +11609,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_compressor/meta.qml" line="8"/>
         <source>loudness dynamics range</source>
         <comment>search keywords for the Compressor audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ช่วงไดนามิกของความดัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/meta.qml" line="7"/>
@@ -11456,7 +11620,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_delay/meta.qml" line="8"/>
         <source>time echo</source>
         <comment>search keywords for the Delay audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สะท้อนเวลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/meta.qml" line="7"/>
@@ -11467,18 +11631,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_expander/meta.qml" line="8"/>
         <source>dynamics range</source>
         <comment>search keywords for the Expander audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ช่วงไดนามิค</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadein/meta.qml" line="8"/>
         <source>Fade In Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>เสียงค่อยดังขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadein/meta.qml" line="9"/>
         <source>loudness</source>
         <comment>search keywords for the Fade In audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความดัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadeout/meta.qml" line="8"/>
@@ -11489,18 +11653,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_fadeout/meta.qml" line="9"/>
         <source>loudness</source>
         <comment>search keywords for the Fade Out audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความดัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="7"/>
         <source>Gain / Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่ม/ปริมาณเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="9"/>
         <source>loudness</source>
         <comment>search keywords for the Gain/Volume audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความดัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="20"/>
@@ -11515,19 +11679,19 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="7"/>
         <source>High Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฮพาส</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="8"/>
         <source>frequency</source>
         <comment>search keywords for the High Pass audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="18"/>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="18"/>
         <source>Cutoff</source>
-        <translation type="unfinished"></translation>
+        <translation>จุดตัด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="34"/>
@@ -11535,7 +11699,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="26"/>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="34"/>
         <source>Rolloff rate</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราการโรลออฟ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="41"/>
@@ -11544,40 +11708,40 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="25"/>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="41"/>
         <source>Wetness</source>
-        <translation type="unfinished"></translation>
+        <translation>ความชื้นแฉะ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="7"/>
         <source>Limiter</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวจำกัด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="8"/>
         <source>dynamics range loudness</source>
         <comment>search keywords for the Limiter audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความดังของช่วงไดนามิค</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="7"/>
         <source>Low Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>โลว์พาส</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="8"/>
         <source>frequency</source>
         <comment>search keywords for the Low Pass audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_mono/meta.qml" line="7"/>
         <source>Downmix</source>
-        <translation type="unfinished"></translation>
+        <translation>ดาวน์มิกซ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_mono/meta.qml" line="8"/>
         <source>stereo mixdown channel</source>
         <comment>search keywords for the Downmix audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ช่องมิกซ์ดาวน์สเตอริโอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_mute/meta.qml" line="8"/>
@@ -11588,29 +11752,29 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_mute/meta.qml" line="9"/>
         <source>silent silence volume</source>
         <comment>search keywords for the Mute audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ระดับเสียงเงียบงัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/meta.qml" line="7"/>
         <source>Normalize: One Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>ทำให้เป็นปกติ: ผ่านหนึ่งรอบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/meta.qml" line="8"/>
         <source>volume loudness gain dynamics</source>
         <comment>search keywords for the Normalize: One Pass audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ระดับเสียง ความดัง ไดนามิกที่เพิ่มขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/meta.qml" line="7"/>
         <source>Normalize: Two Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>ทำให้เป็นปกติ: ผ่านสองรอบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/meta.qml" line="9"/>
         <source>volume loudness gain dynamics</source>
         <comment>search keywords for the Normalize: Two Pass audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ระดับเสียง ความดัง ไดนามิกที่เพิ่มขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="7"/>
@@ -11621,18 +11785,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="8"/>
         <source>frequency pass</source>
         <comment>search keywords for the Notch audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่ผ่าน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/meta.qml" line="7"/>
         <source>Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>แพน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/meta.qml" line="8"/>
         <source>stereo balance channel mixer</source>
         <comment>search keywords for the Pan audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>มิกเซอร์ช่องสมดุลสเตอริโอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="7"/>
@@ -11643,42 +11807,42 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="9"/>
         <source>delay time echo</source>
         <comment>search keywords for the Reverb audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>การหน่วงเวลาสะท้อน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="18"/>
         <source>Room size</source>
-        <translation type="unfinished"></translation>
+        <translation>ขนาดห้อง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="26"/>
         <source>Reverb time</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาสะท้อนเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="34"/>
         <source>Damping</source>
-        <translation type="unfinished"></translation>
+        <translation>การลดแรงสั่นสะเทือน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="42"/>
         <source>Input bandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>แบนด์วิดท์อินพุต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="50"/>
         <source>Dry signal level</source>
-        <translation type="unfinished"></translation>
+        <translation>ระดับสัญญาณแห้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="58"/>
         <source>Early reflection level</source>
-        <translation type="unfinished"></translation>
+        <translation>ระดับการสะท้อนกลับในระยะเริ่มต้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="66"/>
         <source>Tail level</source>
-        <translation type="unfinished"></translation>
+        <translation>ระดับหาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/meta.qml" line="7"/>
@@ -11689,18 +11853,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_swapchannels/meta.qml" line="9"/>
         <source>switch stereo</source>
         <comment>search keywords for the Swap Channels audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สวิตช์สเตอริโอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/meta.qml" line="23"/>
         <source>Chroma Key: Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Chroma Key: เรียบง่าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/meta.qml" line="24"/>
         <source>green blue screen</source>
         <comment>search keywords for the Chroma Key: Simple video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>จอสีเขียวน้ำเงิน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/brightness/meta.qml" line="6"/>
@@ -11711,33 +11875,33 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/brightness/meta.qml" line="8"/>
         <source>lightness value exposure</source>
         <comment>search keywords for the Brightness video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ค่าความสว่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="6"/>
         <source>Color Grading</source>
-        <translation type="unfinished"></translation>
+        <translation>การจัดระดับสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="7"/>
         <source>correct shadows lift midtones gamma highlights gain hue lightness brightness value</source>
         <comment>search keywords for the Color Grading video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขเงา ยกโทนกลาง แกมมา ไฮไลท์ เพิ่มเฉดสี ความสว่าง ค่าความสว่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="17"/>
         <source>Shadows (Lift)</source>
-        <translation type="unfinished"></translation>
+        <translation>เงา (ลิฟต์)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="22"/>
         <source>Midtones (Gamma)</source>
-        <translation type="unfinished"></translation>
+        <translation>มิดโทน (แกมมา)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="27"/>
         <source>Highlights (Gain)</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฮไลท์ (กำไร)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/contrast/meta.qml" line="6"/>
@@ -11748,29 +11912,29 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/contrast/meta.qml" line="7"/>
         <source>variation value</source>
         <comment>search keywords for the Contrast video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ค่าความแปรปรวน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/meta.qml" line="6"/>
         <source>Old Film: Dust</source>
-        <translation type="unfinished"></translation>
+        <translation>หนังเก่า : ฝุ่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/meta.qml" line="7"/>
         <source>noise dirt hair fiber</source>
         <comment>search keywords for the Old Film: Dust video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เสียงรบกวน สิ่งสกปรก เส้นใยผม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="7"/>
         <source>Text: Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อความ : เรียบง่าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="8"/>
         <source>type font timecode timestamp date filename</source>
         <comment>search keywords for the Text: Simple video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ชนิดฟอนต์ รหัสเวลา ประทับเวลา วันที่ ชื่อไฟล์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="25"/>
@@ -11778,7 +11942,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="26"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="25"/>
         <source>Font color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีตัวอักษร</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="31"/>
@@ -11813,14 +11977,14 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/fadein_brightness/meta.qml" line="7"/>
         <location filename="../src/qml/filters/fadein_movit/meta.qml" line="7"/>
         <source>Fade In Video</source>
-        <translation type="unfinished"></translation>
+        <translation>การเฟดอินวิดีโอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/meta.qml" line="8"/>
         <location filename="../src/qml/filters/fadein_movit/meta.qml" line="8"/>
         <source>brightness lightness opacity alpha</source>
         <comment>search keywords for the Fade In video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความสว่าง ความทึบ อัลฟา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadeout_brightness/meta.qml" line="7"/>
@@ -11833,39 +11997,39 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/fadeout_movit/meta.qml" line="8"/>
         <source>brightness lightness opacity alpha</source>
         <comment>search keywords for the Fade Out video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความสว่าง ความทึบ อัลฟา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/meta.qml" line="6"/>
         <source>Old Film: Grain</source>
-        <translation type="unfinished"></translation>
+        <translation>ฟิล์มเก่า : เกรน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/meta.qml" line="7"/>
         <source>dots particles noise dirt</source>
         <comment>search keywords for the Old Film: Grain video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>จุด อนุภาค สิ่งรบกวน สิ่งสกปรก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="22"/>
         <source>Hue/Lightness/Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>เฉดสี/ความสว่าง/ความอิ่มตัว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="23"/>
         <source>color value desaturate grayscale</source>
         <comment>search keywords for the Hue/Lightness/Saturation video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สี ค่า ลดความอิ่มตัว ไล่สีเทา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="34"/>
         <source>Hue</source>
-        <translation type="unfinished"></translation>
+        <translation>เฉดสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="41"/>
         <source>Lightness</source>
-        <translation type="unfinished"></translation>
+        <translation>ความสว่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="48"/>
@@ -11875,24 +12039,24 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/invert/meta.qml" line="6"/>
         <source>Invert Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>สลับสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/invert/meta.qml" line="7"/>
         <source>reverse opposite negative</source>
         <comment>search keywords for the Invert Colors video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ย้อนกลับ ตรงกันข้าม เชิงลบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/meta.qml" line="22"/>
         <source>Key Spill: Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>การรั่วไหลของกุญแจ: ขั้นสูง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/meta.qml" line="23"/>
         <source>chroma alpha clean suppress</source>
         <comment>search keywords for the Key Spill: Advanced video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เกี่ยวกับสี อัลฟา สะอาด ยับยั้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="22"/>
@@ -11903,17 +12067,17 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="23"/>
         <source>deform lens distort wide angle panoramic hemispherical fisheye</source>
         <comment>search keywords for the Lens Correction video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เบี้ยว เลนส์ บิดเบือน กว้าง มุม พาโนรามา ครึ่งวงกลม ตาปลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="34"/>
         <source>X Center</source>
-        <translation type="unfinished"></translation>
+        <translation>X ศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="41"/>
         <source>Y Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Y ศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="48"/>
@@ -11928,65 +12092,65 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/lines/meta.qml" line="6"/>
         <source>Old Film: Scratches</source>
-        <translation type="unfinished"></translation>
+        <translation>ฟิล์มเก่า : รอยขีดข่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lines/meta.qml" line="7"/>
         <source>noise projector lines defect</source>
         <comment>search keywords for the Old Film: Scratches video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สิ่งรบกวน การฉาย เส้น ข้อบกพร่อง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/meta.qml" line="22"/>
         <source>LUT (3D)</source>
-        <translation type="unfinished"></translation>
+        <translation>LUT (3D)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/meta.qml" line="23"/>
         <source>lookup table color</source>
         <comment>search keywords for the LUT (3D) video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สีตารางการค้นหา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="6"/>
         <source>Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>หน้ากาก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="7"/>
         <source>360: Rectilinear to Equirectangular</source>
-        <translation type="unfinished"></translation>
+        <translation>360: เส้นตรงถึงรูปสี่เหลี่ยมผืนผ้าเท่ากัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="8"/>
         <source>spherical projection</source>
         <comment>search keywords for the 360: Rectilinear to Equirectangular video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ทรงกลมฉาย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="20"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="17"/>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="41"/>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>แนวนอน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="27"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="24"/>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="34"/>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>แนวตั้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="7"/>
         <source>Mid-Side Matrix</source>
-        <translation type="unfinished"></translation>
+        <translation>เมทริกซ์ด้านกลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="8"/>
         <source>middle stereo microphone</source>
         <comment>search keywords for the Mid-Side Matrix audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ไมโครโฟนสเตอริโอกลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_matrix_ms/meta.qml" line="18"/>
@@ -12004,46 +12168,46 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/mirror/meta.qml" line="6"/>
         <source>Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>กระจก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mirror/meta.qml" line="7"/>
         <source>horizontal flip transpose flop</source>
         <comment>search keywords for the Mirror video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ฟล็อปทรานสโพสแนวนอน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mosaic/meta.qml" line="22"/>
         <source>Mosaic</source>
-        <translation type="unfinished"></translation>
+        <translation>โมเสก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mosaic/meta.qml" line="23"/>
         <source>pixelize pixelate</source>
         <comment>search keywords for the Mosaic video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ทำให้เป็นพิกเซล</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/meta.qml" line="6"/>
         <source>Diffusion</source>
-        <translation type="unfinished"></translation>
+        <translation>การแพร่กระจาย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/meta.qml" line="7"/>
         <source>blur smooth clean beauty</source>
         <comment>search keywords for the Diffusion video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เบลอ เรียบเนียน สะอาด สวยงาม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/meta.qml" line="6"/>
         <source>Old Film: Projector</source>
-        <translation type="unfinished"></translation>
+        <translation>ฟิล์มเก่า : โปรเจ็คเตอร์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/meta.qml" line="7"/>
         <source>glitch flashing brightness vertical slip</source>
         <comment>search keywords for the Old Film: Projector video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>จุดรวน กระพริบวูบวาบ ความสว่าง แนวตั้ง ลื่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="43"/>
@@ -12058,7 +12222,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/opacity/meta.qml" line="8"/>
         <source>alpha transparent translucent</source>
         <comment>search keywords for the Opacity video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>อัลฟ่า โปร่งใส โปร่งแสง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="7"/>
@@ -12069,12 +12233,12 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="7"/>
         <source>matte stencil alpha rectangle ellipse circle triangle diamond</source>
         <comment>search keywords for the Mask: Simple Shape video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เคลือบ ลายฉลุ อัลฟ่า สี่เหลี่ยมผืนผ้า วงรี วงกลม สามเหลี่ยม เพชร</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="20"/>
         <source>Size &amp; Position</source>
-        <translation type="unfinished"></translation>
+        <translation>ขนาดและตำแหน่ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="26"/>
@@ -12090,23 +12254,23 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="33"/>
         <source>X offset</source>
-        <translation type="unfinished"></translation>
+        <translation>ชดเชย X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="37"/>
         <source>Y offset</source>
-        <translation type="unfinished"></translation>
+        <translation>ชดเชย Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/meta.qml" line="22"/>
         <source>Chroma Key: Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Chroma Key: ขั้นสูง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/meta.qml" line="23"/>
         <source>green blue screen</source>
         <comment>search keywords for the Chroma Key: Advanced video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>จอสีเขียวน้ำเงิน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/meta.qml" line="6"/>
@@ -12117,7 +12281,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/sepia/meta.qml" line="7"/>
         <source>color old photograph print</source>
         <comment>search keywords for the Sepia Tone video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สี เก่า ภาพถ่าย พิมพ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/meta.qml" line="6"/>
@@ -12128,51 +12292,51 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/sketch/meta.qml" line="7"/>
         <source>drawing painting cartoon</source>
         <comment>search keywords for the Sketch video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>วาด ระบาย การ์ตูน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spillsuppress/meta.qml" line="23"/>
         <source>Key Spill: Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>การรั่วไหลของกุญแจ: ง่าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spillsuppress/meta.qml" line="24"/>
         <source>chroma alpha clean suppress</source>
         <comment>search keywords for the Key Spill: Simple video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ระงับการทำงานของโครมาอัลฟ่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/meta.qml" line="6"/>
         <source>Stabilize</source>
-        <translation type="unfinished"></translation>
+        <translation>ทำให้เสถียร</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/meta.qml" line="7"/>
         <source>smooth deshake</source>
         <comment>search keywords for the Stabilize video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เรียบ ไม่สั่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/meta.qml" line="6"/>
         <source>Old Film: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ฟิล์มเก่า : %1</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/meta.qml" line="7"/>
         <source>projector movie</source>
         <comment>search keywords for the Old Film: Technocolor video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เครื่องฉายภาพยนตร์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/unpremultiply/meta.qml" line="22"/>
         <source>Unpremultiply Alpha</source>
-        <translation type="unfinished"></translation>
+        <translation>การไม่คูณล่วงหน้าอัลฟ่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/unpremultiply/meta.qml" line="23"/>
         <source>disassociate associated straight</source>
         <comment>search keywords for the Unpremultiply Alpha video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>แยกออกจากกัน เกี่ยวข้อง ตรง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/meta.qml" line="6"/>
@@ -12183,18 +12347,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/wave/meta.qml" line="7"/>
         <source>distort deform frequency water warp bend</source>
         <comment>search keywords for the Wave video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>บิดเบือน เบี้ยว ความถี่ น้ำ บิดโค้ง โค้งงอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_circle/meta.qml" line="7"/>
         <source>Crop: Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัด: วงกลม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_circle/meta.qml" line="8"/>
         <source>trim remove oval ellipse</source>
         <comment>search keywords for the Crop: Circle video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ตัดแต่ง ล้าง รูปไข่ วงรี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_circle/meta.qml" line="26"/>
@@ -12210,13 +12374,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="7"/>
         <source>360: Hemispherical to Equirectangular</source>
-        <translation type="unfinished"></translation>
+        <translation>360: ครึ่งซีกถึงทรงแปดเหลี่ยมเท่ากัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="9"/>
         <source>spherical projection dual fisheye</source>
         <comment>search keywords for the 360: Hemispherical to Equirectangular video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ทรงกลม การฉาย เข้าคู่ ตาปลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="48"/>
@@ -12229,48 +12393,48 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="55"/>
         <source>Front X</source>
-        <translation type="unfinished"></translation>
+        <translation>ด้านหน้า X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="62"/>
         <source>Front Y</source>
-        <translation type="unfinished"></translation>
+        <translation>ด้านหน้า Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="69"/>
         <source>Front Up</source>
-        <translation type="unfinished"></translation>
+        <translation>ขึ้นด้านหน้า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="76"/>
         <source>Back X</source>
-        <translation type="unfinished"></translation>
+        <translation>หลัง X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="83"/>
         <source>Back Y</source>
-        <translation type="unfinished"></translation>
+        <translation>หลัง Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="90"/>
         <source>Back Up</source>
-        <translation type="unfinished"></translation>
+        <translation>ขึ้นด้านหลัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
         <source>Nadir Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีนาดีร์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="104"/>
         <source>Nadir Start</source>
-        <translation type="unfinished"></translation>
+        <translation>เริ่มนาดีร์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="7"/>
         <source>noise dots newsprint</source>
         <comment>search keywords for the Halftone video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สิ่งรบกวน จุด กระดาษหนังสือพิมพ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="26"/>
@@ -12296,7 +12460,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="8"/>
         <source>delogo dirt clean watermark</source>
         <comment>search keywords for the Spot Remover video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>การล่อลวง สิ่งสกปรก สะอาด ลายน้ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/meta.qml" line="7"/>
@@ -12307,7 +12471,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/timer/meta.qml" line="8"/>
         <source>text seconds timestamp</source>
         <comment>search keywords for the Timer video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ข้อความ วินาที ประทับเวลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="6"/>
@@ -12319,17 +12483,17 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/levels/meta.qml" line="7"/>
         <source>gamma value black white</source>
         <comment>search keywords for the Levels video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>แกมมา ค่า ดำ ขาว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="18"/>
         <source>Input Black</source>
-        <translation type="unfinished"></translation>
+        <translation>อินพุตสีดำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="25"/>
         <source>Input White</source>
-        <translation type="unfinished"></translation>
+        <translation>อินพุตสีขาว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="32"/>
@@ -12339,50 +12503,50 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="6"/>
         <source>Mask: Simple Shape</source>
-        <translation type="unfinished"></translation>
+        <translation>หน้ากาก : รูปทรงเรียบง่าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_apply/meta.qml" line="6"/>
         <source>Mask: Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>หน้ากาก: ปรับใช้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_apply/meta.qml" line="7"/>
         <source>matte stencil alpha confine composite bounce</source>
         <comment>search keywords for the Mask: Apply video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เคลือบ ลายฉลุ อัลฟ่า จำกัด คอมโพสิต เด้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/meta.qml" line="6"/>
         <source>Mask: From File</source>
-        <translation type="unfinished"></translation>
+        <translation>หน้ากาก: จากไฟล์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/meta.qml" line="7"/>
         <source>matte stencil alpha luma wipe custom</source>
         <comment>search keywords for the Mask: From File video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เคลือบ สเตนซิล อัลฟ่า ลูม่า เช็ด กำหนดเอง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="7"/>
         <source>Noise Gate</source>
-        <translation type="unfinished"></translation>
+        <translation>ประตูกันเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="8"/>
         <source>hum hiss distortion clean</source>
         <comment>search keywords for the Noise Gate audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เสียงฮัม เสียงฟ่อ เสียงผิดเพี้ยน เสียงสะอาด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="18"/>
         <source>Key Filter: Low Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวกรองหลัก: ความถี่ต่ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="25"/>
         <source>Key Filter: High Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวกรองหลัก: ความถี่สูง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="32"/>
@@ -12394,7 +12558,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="39"/>
         <source>Attack</source>
-        <translation type="unfinished"></translation>
+        <translation>ปะทะ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="46"/>
@@ -12404,39 +12568,39 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="53"/>
         <source>Decay</source>
-        <translation type="unfinished"></translation>
+        <translation>สลายตัว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="60"/>
         <source>Range</source>
-        <translation type="unfinished"></translation>
+        <translation>พิสัย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/meta.qml" line="7"/>
         <source>Audio Waveform Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>การสร้างภาพคลื่นเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/meta.qml" line="8"/>
         <source>music visualizer reactive</source>
         <comment>search keywords for the Audio Waveform Visualization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ดนตรี เครื่องมือสร้างภาพ ปฏิกิริยา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/chromahold/meta.qml" line="22"/>
         <source>Chroma Hold</source>
-        <translation type="unfinished"></translation>
+        <translation>โครมาโฮลด์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/chromahold/meta.qml" line="23"/>
         <source>color hue select choose pick</source>
         <comment>search keywords for the Chroma Hold video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สีสัน เลือก </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/chromahold/meta.qml" line="34"/>
         <source>Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะทาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="6"/>
@@ -12447,7 +12611,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/grid/meta.qml" line="7"/>
         <source>repeat</source>
         <comment>search keywords for the Grid video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ซ้ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="18"/>
@@ -12468,12 +12632,12 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/distort/meta.qml" line="23"/>
         <source>deform wiggle wave</source>
         <comment>search keywords for the Distort video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ผิดรูป กระดิก คลื่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="34"/>
         <source>Amplitude</source>
-        <translation type="unfinished"></translation>
+        <translation>แอมพลิจูด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="41"/>
@@ -12489,13 +12653,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="22"/>
         <source>Glitch</source>
-        <translation type="unfinished"></translation>
+        <translation>จุดรวน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="23"/>
         <source>defect broken distort</source>
         <comment>search keywords for the Glitch video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>จุดด่างพร้อย แตกหัก บิดเบือน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="41"/>
@@ -12505,7 +12669,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="48"/>
         <source>Shift intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>การเปลี่ยนแปลงความเข้มข้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="55"/>
@@ -12515,35 +12679,35 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="22"/>
         <source>RGB Shift</source>
-        <translation type="unfinished"></translation>
+        <translation>การเลื่อน RGB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="23"/>
         <source>glitch chroma analog split</source>
         <comment>search keywords for the RGB Shift video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>จุดรวน สีสัน อนาล็อก ตัดแยก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_exponential/meta.qml" line="22"/>
         <source>Blur: Exponential</source>
-        <translation type="unfinished"></translation>
+        <translation>เบลอ: เลขชี้กำลัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_exponential/meta.qml" line="23"/>
         <source>soften obscure hide</source>
         <comment>search keywords for the Blur: Exponential video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>อ่อนลง คลุมเคลือ ซ่อน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="7"/>
         <source>360: Equirectangular to Stereographic</source>
-        <translation type="unfinished"></translation>
+        <translation>360: รูปทรงสี่เหลี่ยมจัตุรัสถึงรูปทรงสามมิติ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="8"/>
         <source>spherical projection tiny small planet</source>
         <comment>search keywords for the 360: Equirectangular to Stereographic video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ทรงกลม การฉายภาพ เล็ก ดาวเคราะห์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="49"/>
@@ -12557,29 +12721,29 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/meta.qml" line="22"/>
         <source>Blur: Gaussian</source>
-        <translation type="unfinished"></translation>
+        <translation>เบลอ: เกาส์เซียน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="22"/>
         <source>Blur: Low Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>เบลอ: ลอดต่ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="23"/>
         <source>soften obscure hide</source>
         <comment>search keywords for the Blur: Low Pass video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>อ่อนลง คลุมเคลือ ซ่อน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop: Source</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัต: แหล่งที่มา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="7"/>
         <source>trim remove edges</source>
         <comment>search keywords for the Crop: Source video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ตัดแต่ง ล้าง ขอบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/flip/meta.qml" line="6"/>
@@ -12590,18 +12754,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/flip/meta.qml" line="7"/>
         <source>vertical flop transpose rotate</source>
         <comment>search keywords for the Flip video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>แนวตั้ง ล้ม ไขว้ หมุน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="22"/>
         <source>Reduce Noise: HQDN3D</source>
-        <translation type="unfinished"></translation>
+        <translation>ลดสิ่งรบกวน: HQDN3D</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="23"/>
         <source>denoise artifact dirt smooth</source>
         <comment>search keywords for the Reduce Noise: HQDN3D video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ลดสิ่งรบกวน สิ่งประดิษฐ์ ฝุ่น เรียบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="34"/>
@@ -12616,46 +12780,46 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/noise_fast/meta.qml" line="22"/>
         <source>Noise: Fast</source>
-        <translation type="unfinished"></translation>
+        <translation>สิ่งรบกวน: เร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/noise_fast/meta.qml" line="23"/>
         <source>dirt grunge</source>
         <comment>search keywords for the Noise: Fast video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ฝุ่น กรันจ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="22"/>
         <source>Noise: Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>สิ่งรบกวน: คีย์เฟรม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="23"/>
         <source>dirt grunge</source>
         <comment>search keywords for the Noise: Keyframes video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ฝุ่น กรันจ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/meta.qml" line="22"/>
         <source>Reduce Noise: Smart Blur</source>
-        <translation type="unfinished"></translation>
+        <translation>ลดสิ่งรบกวน: เบลออย่างชาญฉลาด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/meta.qml" line="23"/>
         <source>denoise artifact clean</source>
         <comment>search keywords for the Reduce Noise: Smart Blur video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ลดสิ่งรบกวน สิ่งประดิษฐ์ สะอาด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="7"/>
         <source>Crop: Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัด: สี่เหลี่ยมผืนผ้า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="8"/>
         <source>trim remove square</source>
         <comment>search keywords for the Crop: Rectangle video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ตัดแต่ง ล้าง สี่เหลี่ยมจตุรัส</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="25"/>
@@ -12665,40 +12829,40 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="32"/>
         <source>Padding color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีเว้นระยะ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/meta.qml" line="6"/>
         <source>Blend Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>โหมดผสมผสาน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/meta.qml" line="7"/>
         <source>blending composite porter duff</source>
         <comment>search keywords for the Blend Mode video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>การผสมผสาน องค์ประกอบ ตัวส่ง ดัฟฟ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/meta.qml" line="6"/>
         <source>Dither</source>
-        <translation type="unfinished"></translation>
+        <translation>ดิเธอร์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/meta.qml" line="7"/>
         <source>noise dots</source>
         <comment>search keywords for the Dither video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สิ่งรบกวน จุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="22"/>
         <source>Elastic Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>มาตราส่วนยืดหยุ่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="23"/>
         <source>stretch nonlinear</source>
         <comment>search keywords for the Elastic Scale video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ยืด ไม่เชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="35"/>
@@ -12718,18 +12882,18 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="56"/>
         <source>Non-Linear scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวประกอบมาตราส่วนแบบไม่เชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/posterize/meta.qml" line="6"/>
         <source>Posterize</source>
-        <translation type="unfinished"></translation>
+        <translation>ทำให้เป็นโปสเตอร์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/posterize/meta.qml" line="7"/>
         <source>reduce colors banding cartoon</source>
         <comment>search keywords for the Posterize video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ลด สี การมัด การ์ตูน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/posterize/meta.qml" line="19"/>
@@ -12740,24 +12904,24 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/nervous/meta.qml" line="6"/>
         <source>Nervous</source>
-        <translation type="unfinished"></translation>
+        <translation>ประหม่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nervous/meta.qml" line="7"/>
         <source>random shake twitch glitch</source>
         <comment>search keywords for the Nervous video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สุ่ม เขย่า การชัก จุดรวน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nosync/meta.qml" line="6"/>
         <source>No Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สอดประสานกัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nosync/meta.qml" line="7"/>
         <source>vertical synchronization slip analog</source>
         <comment>search keywords for the No Sync video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>แนวตั้ง การทำให้สอดประสานกัน ไถล อนาล็อก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nosync/meta.qml" line="19"/>
@@ -12773,18 +12937,18 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/trails/meta.qml" line="7"/>
         <source>temporal mix psychedelic motion blur</source>
         <comment>search keywords for the Trails video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เป็นการชั่วคราว ผสมรวม ซึ่งเพลิดเพลิน การเคลื่อนไหว เบลอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="22"/>
         <source>Vertigo</source>
-        <translation type="unfinished"></translation>
+        <translation>อาการเวียนศีรษะ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="23"/>
         <source>temporal mix dizzy psychedelic</source>
         <comment>search keywords for the Vertigo video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เป็นการชั่วคราว ผสมรวม วิงเวียน ซึ่งเพลิดเพลิน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="35"/>
@@ -12800,13 +12964,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/choppy/meta.qml" line="6"/>
         <source>Choppy</source>
-        <translation type="unfinished"></translation>
+        <translation>สับๆ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/choppy/meta.qml" line="7"/>
         <source>fps framerate</source>
         <comment>search keywords for the Choppy video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>อัตรากรอบภาพ ต่อวินาที</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/choppy/meta.qml" line="19"/>
@@ -12816,77 +12980,77 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/gradient/meta.qml" line="7"/>
         <source>Gradient</source>
-        <translation type="unfinished"></translation>
+        <translation>การไล่ระดับ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/meta.qml" line="8"/>
         <source>graduated color spectrum</source>
         <comment>search keywords for the Gradient video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ที่ได้สำเร็จ สี แถบแสงสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/scanlines/meta.qml" line="6"/>
         <source>Scan Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นกวาดตรวจ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/scanlines/meta.qml" line="7"/>
         <source>analog horizontal television</source>
         <comment>search keywords for the Scan Lines video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>อนาล็อก แนวนอน โทรทัศน์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="7"/>
         <source>360: Equirectangular Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>360: หน้ากากทรงสี่เหลี่ยมผืนผ้า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="9"/>
         <source>spherical matte stencil</source>
         <comment>search keywords for the 360: Equirectangular Mask video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ทรงกลม เคลือบ ฉลุ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="20"/>
         <source>Horizontal Start</source>
-        <translation type="unfinished"></translation>
+        <translation>เริ่มต้นในแนวนอน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="27"/>
         <source>Horizontal End</source>
-        <translation type="unfinished"></translation>
+        <translation>ปลายแนวนอน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="34"/>
         <source>Vertical Start</source>
-        <translation type="unfinished"></translation>
+        <translation>เริ่มต้นในแนวตั้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="41"/>
         <source>Vertical End</source>
-        <translation type="unfinished"></translation>
+        <translation>ปลายแนวตั้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="7"/>
         <source>360: Equirectangular to Rectilinear</source>
-        <translation type="unfinished"></translation>
+        <translation>360: รูปทรงสี่เหลี่ยมผืนผ้าถึงรูปทรงเส้นตรง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="9"/>
         <source>spherical projection</source>
         <comment>search keywords for the 360: Equirectangular to Rectilinear video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ทรงกลมฉาย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="7"/>
         <source>Ambisonic Decoder</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวถอดรหัสแอมบิโซนิก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="9"/>
         <source>spatial surround binaural</source>
         <comment>search keywords for the Ambisonic Decoder audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เชิงพื้นที่ ล้อมรอบ การได้ยินแบบสองข้าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="20"/>
@@ -12895,7 +13059,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="20"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="21"/>
         <source>Yaw</source>
-        <translation type="unfinished"></translation>
+        <translation>หันเห</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="27"/>
@@ -12905,7 +13069,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="28"/>
         <source>Pitch</source>
         <comment>rotation around the side-to-side axis (roll, pitch, yaw)</comment>
-        <translation type="unfinished"></translation>
+        <translation>ระดับ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/meta.qml" line="34"/>
@@ -12914,7 +13078,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="34"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="35"/>
         <source>Roll</source>
-        <translation type="unfinished"></translation>
+        <translation>ม้วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="42"/>
@@ -12922,39 +13086,39 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
         <source>FOV</source>
         <comment>field of view</comment>
-        <translation type="unfinished"></translation>
+        <translation>FOV</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="49"/>
         <location filename="../src/qml/filters/fisheye/meta.qml" line="22"/>
         <source>Fisheye</source>
-        <translation type="unfinished"></translation>
+        <translation>ตาปลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="22"/>
         <source>Corner Pin</source>
-        <translation type="unfinished"></translation>
+        <translation>หมุดที่ขอบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="23"/>
         <source>stretch distort pinch twist deform</source>
         <comment>search keywords for the Corner Pin video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ยืด บิดเบือน หยิก บิด เบี้ยว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="35"/>
         <source>Corners</source>
-        <translation type="unfinished"></translation>
+        <translation>ขอบมุม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="40"/>
         <source>Stretch X</source>
-        <translation type="unfinished"></translation>
+        <translation>ยืด X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="47"/>
         <source>Stretch Y</source>
-        <translation type="unfinished"></translation>
+        <translation>ยืด Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="54"/>
@@ -12964,95 +13128,95 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="7"/>
         <source>360: Stabilize</source>
-        <translation type="unfinished"></translation>
+        <translation>360: เสถียรภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="8"/>
         <source>spherical smooth deshake</source>
         <comment>search keywords for the 360: Stabilize video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ทรงกลม เรียบ ไม่เขย่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="7"/>
         <source>360: Transform</source>
-        <translation type="unfinished"></translation>
+        <translation>360: เปลี่ยนรูป</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="9"/>
         <source>spherical yaw pitch roll</source>
         <comment>search keywords for the 360: Transform video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ทรงกลม หันเห ระดับ ม้วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="23"/>
         <source>Reduce Noise: Wavelet</source>
-        <translation type="unfinished"></translation>
+        <translation>ลดสิ่งรบกวน: เวฟเล็ต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="24"/>
         <source>vague denoise artifact dirt</source>
         <comment>search keywords for the Reduce Noise: Wavelet video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>คลุมเครือ ลดสิ่งรบกวน สิ่งประดิษฐ์ ฝุ่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="7"/>
         <source>Text: Rich</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อความ : รวย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="8"/>
         <source>type font format overlay</source>
         <comment>search keywords for the Text: Rich video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ชนิด แบบอักษร รูปแบบ ซ้อนทับ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="26"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีพื้นหลัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/pillar_echo/meta.qml" line="7"/>
         <source>Blur: Pad</source>
-        <translation type="unfinished"></translation>
+        <translation>เบลอ : แผ่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/pillar_echo/meta.qml" line="8"/>
         <source>pillar echo fill</source>
         <comment>search keywords for the Blur: Pad video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เสา สะท้อน เติมเต็ม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_invert/meta.qml" line="7"/>
         <source>Invert</source>
-        <translation type="unfinished"></translation>
+        <translation>กลับด้าน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_invert/meta.qml" line="8"/>
         <source>phase</source>
         <comment>search keywords for the Invert audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ช่วง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fspp/meta.qml" line="22"/>
         <source>Reduce Noise: Quantization</source>
-        <translation type="unfinished"></translation>
+        <translation>ลดสิ่งรบกวน: การวัดปริมาณ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fspp/meta.qml" line="23"/>
         <source>denoise artifact postprocess compress</source>
         <comment>search keywords for the Reduce Noise: Quantization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ลดสิ่งรบกวน สิ่งประดิษฐ์ กระบวนการภายหลัง บีบอัด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/meta.qml" line="7"/>
         <source>Time Remap</source>
-        <translation type="unfinished"></translation>
+        <translation>รีแมปเวลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/meta.qml" line="8"/>
         <source>temporal speed ramp reverse fast slow motion</source>
         <comment>search keywords for the Time: Remap filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เป็นการชั่วคราว ความเร็ว ทางลาด ย้อนกลับ เร็ว ช้า การเคลื่อนไหว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/meta.qml" line="21"/>
@@ -13062,236 +13226,236 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/deband/meta.qml" line="23"/>
         <source>Deband</source>
-        <translation type="unfinished"></translation>
+        <translation>ดีแบนด์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/meta.qml" line="24"/>
         <source>mean average median contour</source>
         <comment>search keywords for the Deband video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ค่าเฉลี่ย เฉลี่ย มัธยฐาน บริเวณสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="22"/>
         <source>GPS Text</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อความ GPS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="23"/>
         <source>gpx</source>
         <comment>search keywords for the GPS Text video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>gpx</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reflect/meta.qml" line="6"/>
         <source>Reflect</source>
-        <translation type="unfinished"></translation>
+        <translation>สะท้อน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reflect/meta.qml" line="7"/>
         <source>mirror repeat</source>
         <comment>search keywords for the Reflect video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>กระจกซ้ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="22"/>
         <source>Mask: Chroma Key</source>
-        <translation type="unfinished"></translation>
+        <translation>หน้ากาก: กุญแจสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="23"/>
         <source>matte stencil alpha color</source>
         <comment>search keywords for the Mask: Chroma Key video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เคลือบ ฉลุ แอลฟา สี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="7"/>
         <source>Equalizer: 15-Band</source>
-        <translation type="unfinished"></translation>
+        <translation>อีควอไลเซอร์: 15 แบนด์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="8"/>
         <source>tone frequency</source>
         <comment>search keywords for the Equalizer: 15-Band audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่โทนเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="19"/>
         <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="19"/>
         <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="19"/>
         <source>Equalizer</source>
-        <translation type="unfinished"></translation>
+        <translation>อีควอไลเซอร์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="7"/>
         <source>Equalizer: Parametric</source>
-        <translation type="unfinished"></translation>
+        <translation>อีควอไลเซอร์: พาราเมตริก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/meta.qml" line="8"/>
         <source>tone frequency</source>
         <comment>search keywords for the Equalizer: Parametric audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่โทนเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/meta.qml" line="7"/>
         <source>Audio Level Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>การแสดงภาพระดับเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/meta.qml" line="8"/>
         <source>music visualizer reactive</source>
         <comment>search keywords for the Audio Level Visualization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ดนตรี เครื่องมือสร้างภาพ ปฏิกิริยา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="7"/>
         <source>Equalizer: 3-Band (Bass &amp; Treble)</source>
-        <translation type="unfinished"></translation>
+        <translation>อีควอไลเซอร์: 3 แบนด์ (ทุ้ม &amp; แหลม)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/meta.qml" line="8"/>
         <source>tone frequency</source>
         <comment>search keywords for the Equalizer: 3-Band audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่โทนเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="7"/>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="19"/>
         <source>Pitch</source>
         <comment>audio pitch or tone</comment>
-        <translation type="unfinished"></translation>
+        <translation>ระดับ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="9"/>
         <source>frequency tone</source>
         <comment>search keywords for the Pitch audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่โทนเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/meta.qml" line="7"/>
         <source>Stereo Enhancer</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวปรับเพิ่มเสียงสเตอริโอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/meta.qml" line="9"/>
         <source>channel spatial delay</source>
         <comment>search keywords for the Stereo Enhancer audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ช่อง เชิงพื้นที่ หน่วงเวลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/meta.qml" line="6"/>
         <source>Mask: Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>หน้ากาก: วาด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/meta.qml" line="7"/>
         <source>rotoscope matte stencil alpha</source>
         <comment>search keywords for the Mask: Draw video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>โรโตสโคป เคลือบ ฉลุ แอลฟา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/meta.qml" line="23"/>
         <source>deform lens distort wide angle panoramic hemispherical</source>
         <comment>search keywords for the Fisheye video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่เป็นรูป เลนส์ บิดเบือน กว้าง มุม พาโนรามิก ครึ่งวงกลม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/meta.qml" line="22"/>
         <source>GPS Graphic</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS กราฟิก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/meta.qml" line="23"/>
         <source>gpx sticker decal gauge map graph speedometer</source>
         <comment>search keywords for the GPS Graphic video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>gpx สติกเกอร์ รูปลอก เกจ์ แผนที่ กราฟ มาตรวัดความเร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/threshold/meta.qml" line="7"/>
         <source>black white luma</source>
         <comment>search keywords for the Threshold video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ดำ ขาว ลูมา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tracker/meta.qml" line="6"/>
         <source>Motion Tracker</source>
-        <translation type="unfinished"></translation>
+        <translation>ติดตามการเคลื่อนไหว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tracker/meta.qml" line="8"/>
         <source>tracking</source>
         <comment>search keywords for the Motion Tracker video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ติดตาม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_autofade/meta.qml" line="7"/>
         <source>Track Auto Fade Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>ติดตามการเฟดเสียงอัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_autofade/meta.qml" line="8"/>
         <source>click splice fade</source>
         <comment>search keywords for the Auto Fade audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>คลิก ต่อกัน จาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_seam/meta.qml" line="7"/>
         <source>Track Seam</source>
-        <translation type="unfinished"></translation>
+        <translation>ติดตามตะเข็บ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_seam/meta.qml" line="8"/>
         <source>click splice seam</source>
         <comment>search keywords for the Seam audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>คลิก ต่อกัน ตะเข็บ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_adeclick/meta.qml" line="6"/>
         <source>Declick Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่คลิก เชิงโสต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_adeclick/meta.qml" line="8"/>
         <source>declick crackle pop</source>
         <comment>search keywords for the Declick audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ไม่คลิก เสียงแตก ป๊อป</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/video_autofade/meta.qml" line="7"/>
         <source>Track Auto Fade Video</source>
-        <translation type="unfinished"></translation>
+        <translation>ติดตามวิดีโอการเฟดอัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/video_autofade/meta.qml" line="8"/>
         <source>splice fade dip</source>
         <comment>search keywords for the Track Auto Fade Video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ต่อกัน จาง จุ่ม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="7"/>
         <source>Ambisonic Encoder</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวเข้ารหัสแอมบิโซนิค</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="9"/>
         <source>spatial surround panner</source>
         <comment>search keywords for the Ambisonic Encoder audio filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เชิงพื้นที่ โดยรอบ แพนเนอร์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="20"/>
         <source>Azimuth</source>
-        <translation type="unfinished"></translation>
+        <translation>ทิศดาว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_encoder/meta.qml" line="27"/>
         <source>Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกระดับ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dropshadow/meta.qml" line="6"/>
         <source>Drop Shadow</source>
-        <translation type="unfinished"></translation>
+        <translation>เงาตกกระทบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dropshadow/meta.qml" line="7"/>
@@ -13312,18 +13476,18 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/vibrance/meta.qml" line="22"/>
         <source>Vibrance</source>
-        <translation type="unfinished"></translation>
+        <translation>ความสั่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vibrance/meta.qml" line="23"/>
         <source>color intensity saturation vibe</source>
         <comment>search keywords for the Vibrance video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สี ความเข้มข้น ความอิ่มตัว บรรยากาศ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vibrance/meta.qml" line="34"/>
         <source>Intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเข้มข้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vibrance/meta.qml" line="41"/>
@@ -13343,24 +13507,182 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="7"/>
         <source>Subtitle Burn In</source>
-        <translation type="unfinished"></translation>
+        <translation>เผาคำบรรยายเข้า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="8"/>
         <source>subtitle overlay burn</source>
         <comment>search keywords for the Subtitle Burn In video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>รองพาดหัว ซ้อนทับ เผา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reframe/meta.qml" line="7"/>
         <source>Reframe</source>
-        <translation type="unfinished"></translation>
+        <translation>รีเฟรม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reframe/meta.qml" line="8"/>
         <source>crop trim remove square vertical portrait</source>
         <comment>search keywords for the Reframe video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัด ตัดแต่ง ล้าง สี่เหลี่ยมจตุรัส แนวตั้ง ภาพเหมือน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gradientmap/meta.qml" line="7"/>
+        <source>Gradient Map</source>
+        <translation>แผนที่ไล่ระดับ</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gradientmap/meta.qml" line="8"/>
+        <source>color mapping intensity</source>
+        <comment>search keywords for the Gradient Map video filter</comment>
+        <translation>สี การทำแผนที่ ความเข้มข้น</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="6"/>
+        <source>HSL Primaries</source>
+        <translation>HSL ตัวหลัก</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="8"/>
+        <source>hue saturation lightness color</source>
+        <comment>search keywords for the HSL Primaries video filter</comment>
+        <translation>สีสัน ความอิ่มตัว ความสว่าง สี</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="18"/>
+        <source>Overlap</source>
+        <translation>ทับซ้อน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="25"/>
+        <source>Red Hue</source>
+        <translation>สีแดง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="32"/>
+        <source>Red Saturation</source>
+        <translation>ความอิ่มตัวของสีแดง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="39"/>
+        <source>Red Lightness</source>
+        <translation>ความสว่างสีแดง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="46"/>
+        <source>Yellow Hue</source>
+        <translation>สีเหลือง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="53"/>
+        <source>Yellow Saturation</source>
+        <translation>ความอิ่มตัวของสีเหลือง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="60"/>
+        <source>Yellow Lightness</source>
+        <translation>ความสว่างของสีเหลือง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="67"/>
+        <source>Green Hue</source>
+        <translation>สีเขียว</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="74"/>
+        <source>Green Saturation</source>
+        <translation>ความอิ่มตัวของสีเขียว</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="81"/>
+        <source>Green Lightness</source>
+        <translation>ความสว่างสีเขียว</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="88"/>
+        <source>Cyan Hue</source>
+        <translation>สีคราม</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="95"/>
+        <source>Cyan Saturation</source>
+        <translation>ความอิ่มตัวของสีคราม</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="102"/>
+        <source>Cyan Lightness</source>
+        <translation>ความสว่างสีคราม</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="109"/>
+        <source>Blue Hue</source>
+        <translation>สีน้ำเงิน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="116"/>
+        <source>Blue Saturation</source>
+        <translation>ความอิ่มตัวของสีน้ำเงิน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="123"/>
+        <source>Blue Lightness</source>
+        <translation>ความสว่างสีน้ำเงิน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="130"/>
+        <source>Magenta Hue</source>
+        <translation>สีม่วงแดง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="137"/>
+        <source>Magenta Saturation</source>
+        <translation>ความอิ่มตัวของสีม่วงแดง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/meta.qml" line="144"/>
+        <source>Magenta Lightness</source>
+        <translation>ความสว่างสีม่วงแดง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="6"/>
+        <source>HSL Range</source>
+        <translation>พิสัย HSL</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="8"/>
+        <source>hue saturation lightness color primaries</source>
+        <comment>search keywords for the HSL Range video filter</comment>
+        <translation>สีสัน ความอิ่มตัว ความสว่าง สี ตัวหลัก</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="18"/>
+        <source>Blend</source>
+        <translation>ผสมผสาน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="25"/>
+        <source>Hue Shift</source>
+        <translation>เลื่อนสีสัน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="32"/>
+        <source>Saturation Scale</source>
+        <translation>ระดับความอิ่มตัว</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="39"/>
+        <source>Lightness Scale</source>
+        <translation>ระดับความสว่าง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="46"/>
+        <source>Hue Center</source>
+        <translation>จุดกลางสีสัน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/meta.qml" line="53"/>
+        <source>Hue Range</source>
+        <translation>พิสัยสีสัน</translation>
     </message>
 </context>
 <context>
@@ -13368,18 +13690,18 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="7"/>
         <source>Size, Position &amp; Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>ขนาด ตำแหน่ง และการหมุน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="8"/>
         <source>transform zoom rotation distort fill move</source>
         <comment>search keywords for the Size, Position &amp; Rotate video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยนรูป ขยาย การหมุน บิดเบือน เติม ย้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="21"/>
         <source>Size &amp; Position</source>
-        <translation type="unfinished"></translation>
+        <translation>ขนาดและตำแหน่ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="26"/>
@@ -13392,13 +13714,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="22"/>
         <source>Blur: Gaussian</source>
-        <translation type="unfinished"></translation>
+        <translation>เบลอ: เกาส์เซียน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="23"/>
         <source>soften obscure hide</source>
         <comment>search keywords for the Blur: Box video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>อ่อนลง คลุมเคลือ ซ่อน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/meta_av.qml" line="35"/>
@@ -13411,13 +13733,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="6"/>
         <source>Blur: Box</source>
-        <translation type="unfinished"></translation>
+        <translation>เบลอ: กล่อง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="7"/>
         <source>soften obscure hide directional</source>
         <comment>search keywords for the Blur: Box video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>อ่อนลง คลุมเครือ ซ่อน เชิงทิศทาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_box_blur.qml" line="18"/>
@@ -13435,7 +13757,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
         <source>Blur: Box</source>
-        <translation type="unfinished"></translation>
+        <translation>เบลอ: กล่อง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="17"/>
@@ -13453,13 +13775,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/dance/meta_dance.qml" line="7"/>
         <source>Audio Dance Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>การแสดงภาพการเต้นรำด้วยเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/meta_dance.qml" line="8"/>
         <source>music visualizer reactive transform move size position rotate rotation</source>
         <comment>search keywords for the Audio Dance Visualization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ดนตรี ตัวสร้างภาพ ปฏิกิริยา เปลี่ยนรูป ย้าย ขนาด ตำแหน่ง หมุน การหมุน</translation>
     </message>
 </context>
 <context>
@@ -13467,13 +13789,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/speed/meta_forward.qml" line="8"/>
         <source>Speed: Forward Only</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเร็ว: เดินหน้าเท่านั้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/meta_forward.qml" line="9"/>
         <source>temporal speed ramp fast slow motion</source>
         <comment>search keywords for the Speed filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ชั่วคราว ความเร็ว ทางลาด เร็ว ช้า การเคลื่อนไหว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/meta_forward.qml" line="23"/>
@@ -13486,13 +13808,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/speed/meta_forward_reverse.qml" line="8"/>
         <source>Speed: Forward &amp; Reverse</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเร็ว: เดินหน้าและถอยหลัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/meta_forward_reverse.qml" line="9"/>
         <source>temporal speed ramp fast slow motion reverse</source>
         <comment>search keywords for the Speed filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ชั่วคราว ความเร็ว ทางลาด เร็ว ช้า การเคลื่อนไหว ย้อนกลับ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/speed/meta_forward_reverse.qml" line="24"/>
@@ -13511,7 +13833,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="7"/>
         <source>shine blur</source>
         <comment>search keywords for the Glow video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เบลอส่องสว่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="19"/>
@@ -13527,7 +13849,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="7"/>
         <source>color desaturate grayscale chroma</source>
         <comment>search keywords for the Saturation video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สี ความไม่อิ่มตัว โทนสีเทา เชิงสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="19"/>
@@ -13543,7 +13865,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="7"/>
         <source>sharpness focus clear crisp</source>
         <comment>search keywords for the Sharpen video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความคม เพ่ง ล้าง กรอบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_frei0r.qml" line="19"/>
@@ -13558,13 +13880,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished"></translation>
+        <translation>สมดุลแสงขาว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="7"/>
         <source>color correct light temperature neutral</source>
         <comment>search keywords for the White Balance video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สี ถูกต้อง แสง อุณหภูมิ เป็นกลาง</translation>
     </message>
 </context>
 <context>
@@ -13572,7 +13894,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/color/meta_frei0r_coloradj.qml" line="7"/>
         <source>Color Grading</source>
-        <translation type="unfinished"></translation>
+        <translation>การจัดระดับสี</translation>
     </message>
 </context>
 <context>
@@ -13580,13 +13902,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/lightshow/meta_lightshow.qml" line="7"/>
         <source>Audio Light Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>เชิงโสต แสง การทำให้เห็นภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/meta_lightshow.qml" line="8"/>
         <source>music visualizer reactive color</source>
         <comment>search keywords for the Audio Light Visualization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เพลง ตัวทำให้เห็นภาพ ปฏิกิริยา สี</translation>
     </message>
 </context>
 <context>
@@ -13600,7 +13922,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="7"/>
         <source>soften obscure hide</source>
         <comment>search keywords for the Blur video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>อ่อนลง คลุมเคลือ ซ่อน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="19"/>
@@ -13617,7 +13939,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/brightness/meta_movit.qml" line="7"/>
         <source>lightness value</source>
         <comment>search keywords for the Brightness video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความสว่าง ค่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/brightness/meta_movit.qml" line="21"/>
@@ -13630,28 +13952,28 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="6"/>
         <source>Color Grading</source>
-        <translation type="unfinished"></translation>
+        <translation>การจัดระดับสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="7"/>
         <source>correct shadows lift midtones gamma highlights gain hue lightness brightness value</source>
         <comment>search keywords for the Color Grading video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขเงา ยกโทนกลาง แกมมา ไฮไลท์ เพิ่มเฉดสี ความสว่าง ค่าความสว่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="17"/>
         <source>Shadows (Lift)</source>
-        <translation type="unfinished"></translation>
+        <translation>เงา (ลิฟต์)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="22"/>
         <source>Midtones (Gamma)</source>
-        <translation type="unfinished"></translation>
+        <translation>มิดโทน (แกมมา)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="27"/>
         <source>Highlights (Gain)</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฮไลท์ (กำไร)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/contrast/meta_movit.qml" line="6"/>
@@ -13662,7 +13984,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/contrast/meta_movit.qml" line="7"/>
         <source>variation value</source>
         <comment>search keywords for the Contrast video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>variation valueค่าความแปรปรวน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="6"/>
@@ -13673,28 +13995,28 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="7"/>
         <source>shne blur</source>
         <comment>search keywords for the Glow video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เบลอส่องสว่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="26"/>
         <source>Highlight blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation>เน้นความเบลอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="33"/>
         <source>Highlight cutoff</source>
-        <translation type="unfinished"></translation>
+        <translation>เน้นการตัดออก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mirror/meta_movit.qml" line="6"/>
         <source>Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>กระจก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mirror/meta_movit.qml" line="7"/>
         <source>horizontal flip transpose flop</source>
         <comment>search keywords for the Mirror video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ฟล็อปทรานสโพสแนวนอน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/opacity/meta_movit.qml" line="7"/>
@@ -13705,7 +14027,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/opacity/meta_movit.qml" line="8"/>
         <source>alpha transparent translucent</source>
         <comment>search keywords for the Opacity video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>อัลฟ่า โปร่งใส โปร่งแสง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/meta_movit.qml" line="6"/>
@@ -13716,7 +14038,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/saturation/meta_movit.qml" line="7"/>
         <source>color desaturate grayscale chroma</source>
         <comment>search keywords for the Saturation video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สี ความไม่อิ่มตัว โทนสีเทา เชิงสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
@@ -13727,17 +14049,17 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="7"/>
         <source>sharpness focus clear crisp</source>
         <comment>search keywords for the Sharpen video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ความคม เพ่ง ล้าง กรอบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="19"/>
         <source>Circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีวงกลม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="26"/>
         <source>Gaussian radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีเกาส์เซียน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="33"/>
@@ -13752,34 +14074,34 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="6"/>
         <source>Vignette</source>
-        <translation type="unfinished"></translation>
+        <translation>บทความสั้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="7"/>
         <source>dark edges fade</source>
         <comment>search keywords for the Vignette video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>มืด ขอบ จาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="19"/>
         <source>Outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีนอก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="26"/>
         <source>Inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีใน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
         <source>White Balance</source>
-        <translation type="unfinished"></translation>
+        <translation>สมดุลแสงขาว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="7"/>
         <source>color correct light temperature neutral</source>
         <comment>search keywords for the White Balance video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>สี ถูกต้อง แสง อุณหภูมิ เป็นกลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/flip/meta_movit.qml" line="6"/>
@@ -13790,30 +14112,30 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/flip/meta_movit.qml" line="7"/>
         <source>vertical flop transpose rotate</source>
         <comment>search keywords for the Flip video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>แนวตั้ง ล้ม ไขว้ หมุน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta_movit.qml" line="6"/>
         <source>Crop: Source</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัต: แหล่งที่มา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta_movit.qml" line="7"/>
         <source>trim remove edges</source>
         <comment>search keywords for the Crop: Source video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>ตัดแต่ง ล้าง ขอบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="7"/>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="24"/>
         <source>Size &amp; Position</source>
-        <translation type="unfinished"></translation>
+        <translation>ขนาดและตำแหน่ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="8"/>
         <source>transform zoom distort fill move</source>
         <comment>search keywords for the Size and Position filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เปลี่ยนรูป ขยาย บิดเบือน เติม ย้าย</translation>
     </message>
 </context>
 <context>
@@ -13821,13 +14143,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="6"/>
         <source>Vignette</source>
-        <translation type="unfinished"></translation>
+        <translation>บทความสั้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="7"/>
         <source>dark edges fade</source>
         <comment>search keywords for the Vignette video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>มืด ขอบ จาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="18"/>
@@ -13850,13 +14172,13 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/spectrum/meta_spectrum.qml" line="7"/>
         <source>Audio Spectrum Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>เชิงโสต สเปกตรัม การทำให้เห็นภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/meta_spectrum.qml" line="8"/>
         <source>music visualizer reactive frequency</source>
         <comment>search keywords for the Audio Spectrum Visualization video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>เพลง ตัวทำให้เห็นภาพ ปฏิกิริยา ความถี่</translation>
     </message>
 </context>
 <context>
@@ -13864,7 +14186,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="174"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>เอาต์พุด</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="203"/>
@@ -13874,22 +14196,22 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="308"/>
         <source>Move %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้าย %1</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="350"/>
         <source>Can not move audio track above video track</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถย้ายแทร็กเสียงไปเหนือแทร็กวิดีโอได้</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="352"/>
         <source>Can not move video track below audio track</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่สามารถย้ายแทร็กวิดีโอไปไว้ด้านล่างแทร็กเสียงได้</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="354"/>
         <source>Track %1 was not moved</source>
-        <translation type="unfinished"></translation>
+        <translation>แทร็ก %1 ไม่ถูกย้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="689"/>
@@ -13899,12 +14221,12 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="689"/>
         <source>Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>เขียนทับ</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="1011"/>
         <source>Do you want to insert an audio or video track?</source>
-        <translation type="unfinished"></translation>
+        <translation>คุณต้องการแทรกรางเสียงหรือวิดีโอหรือไม่?</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="1021"/>
@@ -13930,32 +14252,32 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="82"/>
         <source>No Change</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่เปลี่ยน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="87"/>
         <source>Shave</source>
-        <translation type="unfinished"></translation>
+        <translation>โกน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="92"/>
         <source>Shrink Hard</source>
-        <translation type="unfinished"></translation>
+        <translation>หดตัวอย่างหนัก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="97"/>
         <source>Shrink Soft</source>
-        <translation type="unfinished"></translation>
+        <translation>หดตัวอย่างนุ่มนวล</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="102"/>
         <source>Grow Hard</source>
-        <translation type="unfinished"></translation>
+        <translation>เติบโตอย่างหนัก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="107"/>
         <source>Grow Soft</source>
-        <translation type="unfinished"></translation>
+        <translation>เติบโตอย่างนุ่มนวล</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="112"/>
@@ -14000,7 +14322,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/select0r/ui.qml" line="405"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="124"/>
         <source>Invert</source>
-        <translation type="unfinished"></translation>
+        <translation>กลับด้าน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="50"/>
@@ -14010,32 +14332,32 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="66"/>
         <source>Gray Alpha</source>
-        <translation type="unfinished"></translation>
+        <translation>อัลฟ่าสีเทา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="71"/>
         <source>Red &amp; Gray Alpha</source>
-        <translation type="unfinished"></translation>
+        <translation>อัลฟ่าสีแดงและสีเทา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="76"/>
         <source>Checkered Background</source>
-        <translation type="unfinished"></translation>
+        <translation>พื้นหลังลายตารางหมากรุก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="81"/>
         <source>Black Background</source>
-        <translation type="unfinished"></translation>
+        <translation>พื้นหลังสีดำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="86"/>
         <source>Gray Background</source>
-        <translation type="unfinished"></translation>
+        <translation>พื้นหลังสีเทา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="91"/>
         <source>White Background</source>
-        <translation type="unfinished"></translation>
+        <translation>พื้นหลังสีขาว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="122"/>
@@ -14122,10 +14444,13 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="482"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="679"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="196"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="246"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="48"/>
         <location filename="../src/qml/filters/grid/ui.qml" line="137"/>
         <location filename="../src/qml/filters/halftone/ui.qml" line="82"/>
         <location filename="../src/qml/filters/hqdn3d/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="140"/>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="109"/>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="75"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="96"/>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="82"/>
@@ -14173,75 +14498,75 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_adeclick/ui.qml" line="72"/>
         <source>The size of the window, in milliseconds, which will be processed at once.</source>
-        <translation type="unfinished"></translation>
+        <translation>ขนาดของหน้าต่างเป็นมิลลิวินาทีซึ่งจะถูกประมวลผลทันที</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_adeclick/ui.qml" line="101"/>
         <source>The strength of impulsive noise which is going to be removed. The lower value, the more samples will be detected as impulsive noise.</source>
-        <translation type="unfinished"></translation>
+        <translation>ความแรงของสัญญาณรบกวนแบบแรงกระตุ้นที่จะถูกกำจัด ยิ่งค่าต่ำลงเท่าไร ก็จะยิ่งตรวจพบสัญญาณรบกวนแบบแรงกระตุ้นได้มากขึ้นเท่านั้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_adeclick/ui.qml" line="126"/>
         <source>Burst Fusion</source>
-        <translation type="unfinished"></translation>
+        <translation>ฟิวชั่นเบิร์สต์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_adeclick/ui.qml" line="129"/>
         <source>Treat small bursts that are close together as one large burst. Units are percent of the window size. A higher percent will combine bursts that are farther apart.</source>
-        <translation type="unfinished"></translation>
+        <translation>ถือว่าการระเบิดขนาดเล็กที่อยู่ใกล้กันเป็นการระเบิดขนาดใหญ่ครั้งเดียว หน่วยเป็นเปอร์เซ็นต์ของขนาดหน้าต่าง เปอร์เซ็นต์ที่สูงกว่าจะรวมการระเบิดที่อยู่ห่างกันมากขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_autofade/ui.qml" line="32"/>
         <source>Fast Fade</source>
-        <translation type="unfinished"></translation>
+        <translation>จางเร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_autofade/ui.qml" line="93"/>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="98"/>
         <source>Fade duration</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะเวลาจาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_autofade/ui.qml" line="97"/>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="102"/>
         <source>The duration of fade to apply at the begining and end of each clip</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะเวลาในการเฟดที่จะใช้ในตอนเริ่มต้นและตอนจบของแต่ละคลิป</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_autofade/ui.qml" line="133"/>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="168"/>
         <source>Fade in</source>
-        <translation type="unfinished"></translation>
+        <translation>จางขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_autofade/ui.qml" line="137"/>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="172"/>
         <source>Status indicator showing when a fade in has occured.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวแสดงสถานะจะแสดงเมื่อเกิดการจางขี้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_autofade/ui.qml" line="163"/>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="198"/>
         <source>Fade out</source>
-        <translation type="unfinished"></translation>
+        <translation>จางลง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_autofade/ui.qml" line="167"/>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="202"/>
         <source>Status indicator showing when a fade out has occured.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวแสดงสถานะจะแสดงเมื่อเกิดการจางลง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="98"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="97"/>
         <source>Center frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่ศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="125"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="124"/>
         <source>Bandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>แบนด์วิธ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="152"/>
@@ -14249,7 +14574,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="120"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="151"/>
         <source>Rolloff rate</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราการโรลออฟ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="178"/>
@@ -14259,7 +14584,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_matrix_ms/ui.qml" line="114"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="177"/>
         <source>Dry</source>
-        <translation type="unfinished"></translation>
+        <translation>แห้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="188"/>
@@ -14269,12 +14594,12 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_matrix_ms/ui.qml" line="124"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="187"/>
         <source>Wet</source>
-        <translation type="unfinished"></translation>
+        <translation>เปียก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="215"/>
         <source>Bass</source>
-        <translation type="unfinished"></translation>
+        <translation>ทุ้ม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="245"/>
@@ -14285,19 +14610,19 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="275"/>
         <source>Treble</source>
-        <translation type="unfinished"></translation>
+        <translation>เสียงแหลม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="33"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="33"/>
         <source>Front left</source>
-        <translation type="unfinished"></translation>
+        <translation>ด้านหน้าซ้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="33"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="33"/>
         <source>Front right</source>
-        <translation type="unfinished"></translation>
+        <translation>ด้านหน้าขวา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="33"/>
@@ -14311,40 +14636,40 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="33"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="33"/>
         <source>Low frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่ต่ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="33"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="33"/>
         <source>Left surround</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้อมรอบด้านซ้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="33"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="33"/>
         <source>Right surround</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้อมรอบด้านขวา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="54"/>
         <source>Copy from</source>
-        <translation type="unfinished"></translation>
+        <translation>คัดลอกจาก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="65"/>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>ถึง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="81"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="69"/>
         <source>RMS</source>
-        <translation type="unfinished"></translation>
+        <translation>RMS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="85"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
-        <translation type="unfinished"></translation>
+        <translation>ความสมดุลระหว่าง RMS และ Peak Envelope Follower โดยทั่วไปแล้ว RMS จะดีกว่าสำหรับการบีบอัดเสียงแบบละเอียดและแบบดนตรี ส่วน Peak จะดีกว่าสำหรับการบีบอัดและเสียงเครื่องเคาะที่หนักและรวดเร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="95"/>
@@ -14357,72 +14682,72 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="96"/>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="218"/>
         <source>Attack</source>
-        <translation type="unfinished"></translation>
+        <translation>ปะทะ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="129"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="117"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="125"/>
         <source>Release</source>
-        <translation type="unfinished"></translation>
+        <translation>ปลดปล่อย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="154"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="142"/>
         <source>The point at which the compressor will start to kick in.</source>
-        <translation type="unfinished"></translation>
+        <translation>จุดที่ตัวบีบอัดจะเริ่มทำงาน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="176"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="164"/>
         <source>Ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราส่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="180"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="168"/>
         <source>The gain reduction ratio used when the signal level exceeds the threshold.</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราส่วนการลดรอยไหม้ที่ใช้เมื่อระดับสัญญาณเกินเกณฑ์ขั้นต่ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="201"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="189"/>
         <source>Knee radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีหัวเข่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="205"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="193"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="315"/>
         <source>The distance from the threshold where the knee curve starts.</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะห่างจากจุดเริ่มโค้งเข่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="227"/>
         <source>Makeup gain</source>
-        <translation type="unfinished"></translation>
+        <translation>ทำรอยไหม้ขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="231"/>
         <source>The gain of the makeup input signal.</source>
-        <translation type="unfinished"></translation>
+        <translation>ค่ารอยไหม้ของสัญญาณอินพุตการทำขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="270"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="166"/>
         <source>Gain Reduction</source>
-        <translation type="unfinished"></translation>
+        <translation>การลดรอยไหม้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="274"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="170"/>
         <source>Status indicator showing the gain reduction applied by the compressor.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวแสดงสถานะแสดงการลดรอยไหม้ที่ใช้โดยตัวบีบอัด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="294"/>
         <source>About dynamic range compression</source>
-        <translation type="unfinished"></translation>
+        <translation>เกี่ยวกับการบีบอัดช่วงไดนามิค</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="62"/>
@@ -14434,39 +14759,44 @@ Most users do not need to change this.</source>
         <source>The neutral delay time is 2 seconds.
 Times above 2 seconds will have reduced quality.
 Times below will have increased CPU usage.</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาหน่วงที่เป็นกลางคือ 2 วินาที 
+เวลาหน่วงที่เกิน 2 วินาทีจะทำให้คุณภาพลดลง 
+เวลาด้านล่างจะทำให้มีการใช้งาน CPU เพิ่มขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="88"/>
         <source>Feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>ผลสะท้อนกลับ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="73"/>
         <source>The balance between the RMS and peak envelope followers.
 RMS is generally better for subtle, musical compression.
 Peak is better for heavier, fast compression and percussion.</source>
-        <translation type="unfinished"></translation>
+        <translation>ความสมดุลระหว่าง RMS และ Peak Envelope Follower 
+RMS มักจะดีกว่าสำหรับการบีบอัดเสียงแบบละเอียดและดนตรี 
+Peak จะดีกว่าสำหรับการบีบอัดเสียงที่หนักกว่าและรวดเร็วและเครื่องเคาะ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="215"/>
         <source>Attenuation</source>
-        <translation type="unfinished"></translation>
+        <translation>การลดทอน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="219"/>
         <source>The gain of the output signal.
 Used to correct for excessive amplitude caused by the extra dynamic range.</source>
-        <translation type="unfinished"></translation>
+        <translation>ค่ารอยไหม้ของสัญญาณเอาท์พุต 
+ใช้เพื่อแก้ไขแอมพลิจูดที่มากเกินไปอันเกิดจากช่วงไดนามิกพิเศษ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_fadein/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/audio_fadeout/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/audio_fadein/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/audio_fadeout/ui.qml" line="72"/>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="70"/>
         <location filename="../src/qml/filters/fadein_movit/ui.qml" line="62"/>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="70"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="67"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="270"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="271"/>
         <source>Duration</source>
         <translation>ระยะเวลา</translation>
     </message>
@@ -14483,113 +14813,113 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="93"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="93"/>
         <source>Cutoff frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่ตัดออก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="73"/>
         <source>Input gain</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราขยายอินพุต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="77"/>
         <source>Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.</source>
-        <translation type="unfinished"></translation>
+        <translation>ค่ารอยไหม้ที่ใช้กับขั้นตอนอินพุต สามารถใช้เพื่อปรับค่าเกนให้ต่ำกว่าขีดจำกัดโดยประมาณ หรือเพื่อดันสัญญาณให้เกินขีดจำกัด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="99"/>
         <source>Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>จำกัด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="103"/>
         <source>The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.</source>
-        <translation type="unfinished"></translation>
+        <translation>แอมพลิจูดเอาต์พุตสูงสุด พีคที่เกินระดับนี้จะถูกลดทอนอย่างราบรื่นที่สุดเพื่อให้ใกล้เคียงกับระดับนี้มากที่สุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="129"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาที่ใช้ในการลดทอนของตัวจำกัดเพื่อกลับสู่ 0 dB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="100"/>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="67"/>
         <source>Target Loudness</source>
-        <translation type="unfinished"></translation>
+        <translation>ความดังเป้าหมาย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="104"/>
         <source>The target loudness of the output in LUFS.</source>
-        <translation type="unfinished"></translation>
+        <translation>ความดังเป้าหมายของเอาต์พุตใน LUFS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="125"/>
         <source>Analysis Window</source>
-        <translation type="unfinished"></translation>
+        <translation>หน้าต่างการวิเคราะห์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="129"/>
         <source>The amount of history to use to calculate the input loudness.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนประวัติที่จะใช้ในการคำนวณความดังของอินพุต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="150"/>
         <source>Maximum Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วนเกินสูงสุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="154"/>
         <source>The maximum that the gain can be increased.</source>
-        <translation type="unfinished"></translation>
+        <translation>สูงสุดที่สามารถเพิ่มรอยไหม้ได้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="175"/>
         <source>Minimum Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วนเกินต่ำสุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="179"/>
         <source>The maximum that the gain can be decreased.</source>
-        <translation type="unfinished"></translation>
+        <translation>สูงสุดที่สามารถลดรอยไหม้ได้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="200"/>
         <source>Maximum Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราสูงสุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="204"/>
         <source>The maximum rate that the gain can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราสูงสุดที่สามารถเปลี่ยนแปลงค่าส่วนเกินได้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="230"/>
         <source>Reset on discontinuity</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าใหม่เมื่อไม่มีความต่อเนื่อง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="234"/>
         <source>Reset the measurement if a discontinuity is detected - such as seeking or clip change.</source>
-        <translation type="unfinished"></translation>
+        <translation>รีเซ็ตการวัดหากตรวจพบความไม่ต่อเนื่อง เช่น การค้นหาหรือการเปลี่ยนแปลงคลิป</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="260"/>
         <source>Input Loudness</source>
-        <translation type="unfinished"></translation>
+        <translation>ความดังของอินพุต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="264"/>
         <source>Status indicator showing the loudness measured on the input.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวบ่งชี้แสดงความดังที่วัดได้บนอินพุต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="283"/>
         <source>Output Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วนเกินของเอาต์พุต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="287"/>
         <source>Status indicator showing the gain being applied.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวบ่งชี้สถานะแสดงค่าเกินที่กำลังถูกใช้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="122"/>
@@ -14600,37 +14930,37 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="308"/>
         <source>Status indicator showing when the loudness measurement is reset.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวแสดงสถานะจะแสดงเมื่อการวัดความดังถูกรีเซ็ต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="26"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="35"/>
         <location filename="../src/qml/filters/tracker/ui.qml" line="30"/>
         <source>Analyzing...</source>
-        <translation type="unfinished"></translation>
+        <translation>กำลังวิเคราะห์...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="30"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="38"/>
         <location filename="../src/qml/filters/tracker/ui.qml" line="32"/>
         <source>Analysis complete.</source>
-        <translation type="unfinished"></translation>
+        <translation>การวิเคราะห์เสร็จสมบูรณ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="33"/>
         <source>%1 LUFS</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 LUFS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="36"/>
         <source>%1 dB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 dB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="38"/>
         <location filename="../src/qml/filters/tracker/ui.qml" line="34"/>
         <source>Click &quot;Analyze&quot; to use this filter.</source>
-        <translation type="unfinished"></translation>
+        <translation>คลิก “วิเคราะห์” เพื่อใช้ตัวกรองนี้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="97"/>
@@ -14638,27 +14968,27 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/stabilize/ui.qml" line="165"/>
         <location filename="../src/qml/filters/tracker/ui.qml" line="376"/>
         <source>Analyze</source>
-        <translation type="unfinished"></translation>
+        <translation>วิเคราะห์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="128"/>
         <source>Detected Loudness:</source>
-        <translation type="unfinished"></translation>
+        <translation>ตรวจพบความดัง:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="132"/>
         <source>The loudness calculated by the analysis.</source>
-        <translation type="unfinished"></translation>
+        <translation>ความดังที่คำนวณได้จากการวิเคราะห์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="143"/>
         <source>Normalization Gain:</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วนเกินจากการทำให้เป็นปกติ:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="147"/>
         <source>The gain applied to normalize to the Target Loudness.</source>
-        <translation type="unfinished"></translation>
+        <translation>ค่าเกรียมที่ใช้เพื่อปรับให้เป็นมาตรฐานตามระดับความดังเป้าหมาย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="126"/>
@@ -14670,102 +15000,102 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="83"/>
         <source>Quick fix</source>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขด่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="91"/>
         <source>Small hall</source>
-        <translation type="unfinished"></translation>
+        <translation>ห้องโถงเล็ก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="99"/>
         <source>Large hall</source>
-        <translation type="unfinished"></translation>
+        <translation>ห้องโถงใหญ่</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="107"/>
         <source>Sewer</source>
-        <translation type="unfinished"></translation>
+        <translation>ท่อระบายน้ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="115"/>
         <source>Church</source>
-        <translation type="unfinished"></translation>
+        <translation>โบสถ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="156"/>
         <source>Room size</source>
-        <translation type="unfinished"></translation>
+        <translation>ขนาดห้อง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="160"/>
         <source>The size of the room, in meters. Excessively large, and excessively small values will make it sound a bit unrealistic. Values of around 30 sound good.</source>
-        <translation type="unfinished"></translation>
+        <translation>ขนาดของห้องเป็นเมตร ถ้าใหญ่เกินไปและเล็กเกินไปก็จะดูไม่สมจริง ค่าประมาณ 30 ก็ถือว่าดี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="187"/>
         <source>Reverb time</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาสะท้อนเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="215"/>
         <source>Damping</source>
-        <translation type="unfinished"></translation>
+        <translation>การลดแรงสั่นสะเทือน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="219"/>
         <source>This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.</source>
-        <translation type="unfinished"></translation>
+        <translation>นี่จะเป็นการควบคุมการหน่วงความถี่สูง (ตัวกรองความถี่ต่ำ) โดยค่าที่ใกล้ 1 จะทำให้เสียงมีความสว่างมาก ค่าที่ใกล้ 0 จะทำให้เสียงมีความมืดมาก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="247"/>
         <source>Input bandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>แบนด์วิดท์อินพุต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="251"/>
         <source>This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.</source>
-        <translation type="unfinished"></translation>
+        <translation>สิ่งนี้เป็นเหมือนการควบคุมการหน่วงสำหรับอินพุต ซึ่งจะให้ผลคล้ายกับการควบคุมการหน่วง แต่ก็มีความแตกต่างกันเล็กน้อย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="279"/>
         <source>Dry signal level</source>
-        <translation type="unfinished"></translation>
+        <translation>ระดับสัญญาณแห้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="283"/>
         <source>The amount of dry signal to be mixed with the reverberated signal.</source>
-        <translation type="unfinished"></translation>
+        <translation>ปริมาณของสัญญาณแห้งที่ต้องผสมกับสัญญาณสะท้อน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="311"/>
         <source>Early reflection level</source>
-        <translation type="unfinished"></translation>
+        <translation>ระดับการสะท้อนกลับในระยะเริ่มต้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="342"/>
         <source>Tail level</source>
-        <translation type="unfinished"></translation>
+        <translation>ระดับหาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="346"/>
         <source>The quantity of early reflections (scatter reflections directly from the source).</source>
-        <translation type="unfinished"></translation>
+        <translation>ปริมาณการสะท้อนในระยะแรก (การสะท้อนแบบกระจัดกระจายจากแหล่งกำเนิดโดยตรง)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="375"/>
         <source>About reverb</source>
-        <translation type="unfinished"></translation>
+        <translation>เกี่ยวกับรีเวิร์บ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="55"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>สับเปลี่ยน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="66"/>
         <source>with</source>
-        <translation type="unfinished"></translation>
+        <translation>ด้วย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="66"/>
@@ -14773,34 +15103,34 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="68"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="118"/>
         <source>Key color</source>
-        <translation type="unfinished"></translation>
+        <translation>แม่สี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="86"/>
         <location filename="../src/qml/filters/chromahold/ui.qml" line="110"/>
         <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="88"/>
         <source>Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะทาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="161"/>
         <source>Shadows (Lift)</source>
-        <translation type="unfinished"></translation>
+        <translation>เงา (ลิฟต์)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="199"/>
         <source>Midtones (Gamma)</source>
-        <translation type="unfinished"></translation>
+        <translation>มิดโทน (แกมมา)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="237"/>
         <source>Highlights (Gain)</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฮไลท์ (กำไร)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="140"/>
         <source>Center bias</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเอียงตรงกลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="160"/>
@@ -14859,7 +15189,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="77"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="206"/>
         <source>Lower Third</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วนล่างที่สาม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="81"/>
@@ -15003,61 +15333,61 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation>ซูมออกช้าๆ ,เลื่อนลงไปทางซ้าย</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="186"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="708"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="709"/>
         <source>Text</source>
         <translation>ข้อความ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="276"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="277"/>
         <source>Insert field</source>
-        <translation type="unfinished"></translation>
+        <translation>แทรกลาน</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="298"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="299"/>
         <source># (Hash sign)</source>
-        <translation type="unfinished"></translation>
+        <translation># (เครื่องหมายสี่เหลี่ยม)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="303"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="304"/>
         <source>Timecode (drop frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>รหัสเวลา (ตกเฟรม)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="308"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="309"/>
         <source>Timecode (non-drop frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>รหัสเวลา (ไม่ตกเฟรม)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="338"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="339"/>
         <source>File base name</source>
-        <translation type="unfinished"></translation>
+        <translation>ชื่อฐานไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="313"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="314"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
-        <translation type="unfinished"></translation>
+        <translation>เฟรม #</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="318"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="319"/>
         <source>File date</source>
-        <translation type="unfinished"></translation>
+        <translation>วันที่ไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="323"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="324"/>
         <source>Creation date</source>
-        <translation type="unfinished"></translation>
+        <translation>วันที่สร้าง</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="328"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="329"/>
         <source>File name and path</source>
-        <translation type="unfinished"></translation>
+        <translation>ชื่อไฟล์และเส้นทาง</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="333"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="334"/>
         <source>File name</source>
-        <translation type="unfinished"></translation>
+        <translation>ชื่อไฟล์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="130"/>
@@ -15067,12 +15397,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="130"/>
         <source>Segment</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="138"/>
         <source>Graph Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>สีกราฟ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="168"/>
@@ -15086,6 +15416,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="216"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1529"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="313"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="367"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="390"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="156"/>
         <location filename="../src/qml/filters/reframe/ui.qml" line="222"/>
@@ -15099,12 +15430,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="293"/>
         <source>Mirror the levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>สะท้อนระดับชั้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="305"/>
         <source>Reverse the levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้อนกลับระดับชั้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="314"/>
@@ -15114,12 +15445,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="337"/>
         <source>Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="360"/>
         <source>Segment Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>ช่องว่างระหว่างส่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="98"/>
@@ -15127,7 +15458,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="98"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="95"/>
         <source>Adjust opacity instead of fade with black</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับความทึบแทนการจางด้วยสีดำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/ui.qml" line="61"/>
@@ -15143,20 +15474,20 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="92"/>
         <source>Hue</source>
-        <translation type="unfinished"></translation>
+        <translation>เฉดสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1428"/>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="101"/>
         <source> °</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation> °</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="119"/>
         <location filename="../src/qml/filters/lines/ui.qml" line="118"/>
         <source>Lightness</source>
-        <translation type="unfinished"></translation>
+        <translation>ความสว่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="146"/>
@@ -15166,42 +15497,42 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="135"/>
         <source>Target color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีเป้าหมาย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="162"/>
         <source>Mask type</source>
-        <translation type="unfinished"></translation>
+        <translation>ประเภทของหน้ากาก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="170"/>
         <source>Color Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะห่างของสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="170"/>
         <source>Transparency</source>
-        <translation type="unfinished"></translation>
+        <translation>ความโปร่งใส</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="170"/>
         <source>Edge Inwards</source>
-        <translation type="unfinished"></translation>
+        <translation>ขอบเข้าด้านใน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="170"/>
         <source>Edge Outwards</source>
-        <translation type="unfinished"></translation>
+        <translation>ขอบออกด้านนอก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="182"/>
         <source>Tolerance</source>
-        <translation type="unfinished"></translation>
+        <translation>ความอดทน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="128"/>
         <source>&lt;b&gt;Low Shelf&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ชั้นวางของต่ำ&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="204"/>
@@ -15210,7 +15541,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="437"/>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="515"/>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วนเกิน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="228"/>
@@ -15219,12 +15550,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/select0r/ui.qml" line="315"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="329"/>
         <source>Slope</source>
-        <translation type="unfinished"></translation>
+        <translation>ความลาดชัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="251"/>
         <source>&lt;b&gt;Band 1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;แบนด์ 1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="305"/>
@@ -15232,44 +15563,44 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="461"/>
         <source>Bandwidth</source>
         <comment>Parametric equalizer bandwidth</comment>
-        <translation type="unfinished"></translation>
+        <translation>แบนด์วิธ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="316"/>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="394"/>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="472"/>
         <source> octaves</source>
-        <translation type="unfinished"></translation>
+        <translation>ระดับแปดเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="329"/>
         <source>&lt;b&gt;Band 2&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;แบนด์ 2&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="407"/>
         <source>&lt;b&gt;Band 3&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;แบนด์ 3&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="485"/>
         <source>&lt;b&gt;High Shelf&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ชั้นวางสูง&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="222"/>
         <source>Hue gate</source>
-        <translation type="unfinished"></translation>
+        <translation>ประตูสีสัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="242"/>
         <source>Saturation threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>เกณฑ์ความอิ่มตัว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="262"/>
         <source>Operation 1</source>
-        <translation type="unfinished"></translation>
+        <translation>ปฏิบัติการ 1</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="50"/>
@@ -15368,72 +15699,72 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="140"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="517"/>
         <source>HSL Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>ความอิ่มตัวของ HSL</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="145"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="522"/>
         <source>HSL Color</source>
-        <translation type="unfinished"></translation>
+        <translation>สี HSL</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="150"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="527"/>
         <source>HSL Luminosity</source>
-        <translation type="unfinished"></translation>
+        <translation>ความส่องสว่าง HSL</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="270"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="310"/>
         <source>De-Key</source>
-        <translation type="unfinished"></translation>
+        <translation>แก้-กุญแจ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="270"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="310"/>
         <source>Desaturate</source>
-        <translation type="unfinished"></translation>
+        <translation>แก้ความอิ่มตัว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="270"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="310"/>
         <source>Adjust Luma</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับค่าลูม่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="282"/>
         <source>Amount 1</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวน 1</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="302"/>
         <source>Operation 2</source>
-        <translation type="unfinished"></translation>
+        <translation>ปฏิบัติการ 2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="322"/>
         <source>Amount 2</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวน 2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="346"/>
         <source>Show mask</source>
-        <translation type="unfinished"></translation>
+        <translation>แสดงหน้ากาก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="359"/>
         <source>Send mask to alpha channel</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่งหน้ากากไปยังช่องอัลฟา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="101"/>
         <source>X Center</source>
-        <translation type="unfinished"></translation>
+        <translation>X ศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="130"/>
         <source>Y Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Y ศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="159"/>
@@ -15456,18 +15787,19 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/lines/ui.qml" line="100"/>
         <source>Darkness</source>
-        <translation type="unfinished"></translation>
+        <translation>ความมืด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="43"/>
         <source>No File Loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีไฟล์ที่โหลด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="45"/>
         <source>No 3D LUT file loaded.
 Click &quot;Open&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีไฟล์ 3D LUT โหลดอยู่
+คลิก &quot;เปิด&quot; เพื่อโหลดไฟล์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="81"/>
@@ -15478,7 +15810,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="84"/>
         <source>Open 3D LUT File</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิดไฟล์ 3D LUT</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="343"/>
@@ -15494,17 +15826,17 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/ui.qml" line="305"/>
         <source>Stereo</source>
-        <translation type="unfinished"></translation>
+        <translation>สเตอริโอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/ui.qml" line="314"/>
         <source>Binaural</source>
-        <translation type="unfinished"></translation>
+        <translation>มาเป็นคู่</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/ui.qml" line="323"/>
         <source>Quad</source>
-        <translation type="unfinished"></translation>
+        <translation>เชิงสี่</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/ui.qml" line="354"/>
@@ -15514,7 +15846,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="537"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="271"/>
         <source>Yaw</source>
-        <translation type="unfinished"></translation>
+        <translation>หันเห</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/ui.qml" line="400"/>
@@ -15525,7 +15857,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="315"/>
         <source>Pitch</source>
         <comment>rotation around the side-to-side axis (roll, pitch, yaw)</comment>
-        <translation type="unfinished"></translation>
+        <translation>ระดับ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/ui.qml" line="446"/>
@@ -15535,44 +15867,44 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="687"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="359"/>
         <source>Roll</source>
-        <translation type="unfinished"></translation>
+        <translation>ม้วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_decoder/ui.qml" line="541"/>
         <source>Paste Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>วางพารามิเตอร์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="498"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="499"/>
         <source>FOV</source>
         <comment>field of view</comment>
-        <translation type="unfinished"></translation>
+        <translation>FOV</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="501"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="502"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="985"/>
         <source>Field of view</source>
-        <translation type="unfinished"></translation>
+        <translation>ลานสายตา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="590"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="591"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="414"/>
         <source>Copy Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>คัดลอกพารามิเตอร์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="982"/>
         <source>FOV</source>
-        <translation type="unfinished"></translation>
+        <translation>FOV</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="545"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="450"/>
         <source>Fisheye</source>
-        <translation type="unfinished"></translation>
+        <translation>ตาปลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="122"/>
@@ -15583,12 +15915,12 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="122"/>
         <source>Trilinear</source>
-        <translation type="unfinished"></translation>
+        <translation>สามเส้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="122"/>
         <source>Tetrahedral</source>
-        <translation type="unfinished"></translation>
+        <translation>เตตระเฮดรีล</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="173"/>
@@ -15601,70 +15933,70 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="336"/>
         <source>Corner 1 X</source>
-        <translation type="unfinished"></translation>
+        <translation>มุม 1 X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="431"/>
         <source>Corner 2 X</source>
-        <translation type="unfinished"></translation>
+        <translation>มุม 2 X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="483"/>
         <source>Corner 3 X</source>
-        <translation type="unfinished"></translation>
+        <translation>มุม 3 X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="535"/>
         <source>Corner 4 X</source>
-        <translation type="unfinished"></translation>
+        <translation>มุม 4 X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="587"/>
         <source>Stretch X</source>
-        <translation type="unfinished"></translation>
+        <translation>ยืด X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="645"/>
         <source>Interpolator</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวระหว่างขั้ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="653"/>
         <source>Nearest Neighbor</source>
-        <translation type="unfinished"></translation>
+        <translation>เพื่อนบ้านที่ใกล้ที่สุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="653"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="557"/>
         <source>Bilinear</source>
-        <translation type="unfinished"></translation>
+        <translation>สองเส้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="653"/>
         <source>Bicubic Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>เรียบแบบทวิบาศ์ก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="653"/>
         <source>Bicubic Sharp</source>
-        <translation type="unfinished"></translation>
+        <translation>หยาบแบบทวิบาศ์ก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="653"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="572"/>
         <source>Spline 4x4</source>
-        <translation type="unfinished"></translation>
+        <translation>สไพลน์ 4x4</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="653"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="577"/>
         <source>Spline 6x6</source>
-        <translation type="unfinished"></translation>
+        <translation>สไพลน์ 6x6</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="667"/>
         <source>Alpha Operation</source>
-        <translation type="unfinished"></translation>
+        <translation>ปฏิบัติการอัลฟ่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="675"/>
@@ -15674,7 +16006,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="533"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="369"/>
         <source>Maximum</source>
-        <translation type="unfinished"></translation>
+        <translation>สูงสุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="675"/>
@@ -15689,7 +16021,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="675"/>
         <source>Opaque</source>
-        <translation type="unfinished"></translation>
+        <translation>ทึบแสง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="675"/>
@@ -15699,7 +16031,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="528"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="364"/>
         <source>Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>เขียนทับ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="694"/>
@@ -15727,39 +16059,39 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="548"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="384"/>
         <source>Subtract</source>
-        <translation type="unfinished"></translation>
+        <translation>ลบออก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="194"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="369"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="241"/>
         <source>Shape</source>
-        <translation type="unfinished"></translation>
+        <translation>รูปร่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="202"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="377"/>
         <source>Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>สี่เหลี่ยมผืนผ้า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="202"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="377"/>
         <source>Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>วงรี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="202"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="377"/>
         <source>Triangle</source>
-        <translation type="unfinished"></translation>
+        <translation>สามเหลี่ยม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="202"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="377"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="266"/>
         <source>Diamond</source>
-        <translation type="unfinished"></translation>
+        <translation>เพชร</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="273"/>
@@ -15768,7 +16100,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask/ui.qml" line="215"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="116"/>
         <source>Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>แนวนอน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="279"/>
@@ -15784,6 +16116,8 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>สิ้นสุด</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/audio_fadein/ui.qml" line="105"/>
+        <location filename="../src/qml/filters/audio_fadeout/ui.qml" line="108"/>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="109"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="222"/>
         <source>Type</source>
@@ -15797,12 +16131,12 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="241"/>
         <source>Radial</source>
-        <translation type="unfinished"></translation>
+        <translation>เรเดียล</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="277"/>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>สีสัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="367"/>
@@ -15810,7 +16144,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask/ui.qml" line="240"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="87"/>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>แนวตั้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="290"/>
@@ -15836,18 +16170,18 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="814"/>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>การวางแนว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="953"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="597"/>
         <source>Lens</source>
-        <translation type="unfinished"></translation>
+        <translation>เลนส์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="959"/>
         <source>Projection</source>
-        <translation type="unfinished"></translation>
+        <translation>การฉาย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1029"/>
@@ -15861,7 +16195,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1072"/>
         <source>Front</source>
-        <translation type="unfinished"></translation>
+        <translation>ด้านหน้า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1078"/>
@@ -15886,12 +16220,12 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1209"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>ด้านหลัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1346"/>
         <source>Nadir</source>
-        <translation type="unfinished"></translation>
+        <translation>ขีดตกต่ำสุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/ui.qml" line="133"/>
@@ -15906,47 +16240,47 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="54"/>
         <source>Blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation>ความพร่ามัว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="72"/>
         <source>Vertical amount</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนแนวตั้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="90"/>
         <source>Vertical frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่แนวตั้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="109"/>
         <source>Brightness up</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มความสว่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="127"/>
         <source>Brightness down</source>
-        <translation type="unfinished"></translation>
+        <translation>ลดความสว่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="145"/>
         <source>Brightness frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>ความถี่ความสว่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="164"/>
         <source>Uneven develop up</source>
-        <translation type="unfinished"></translation>
+        <translation>พัฒนาไม่สม่ำเสมอขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="182"/>
         <source>Uneven develop down</source>
-        <translation type="unfinished"></translation>
+        <translation>พัฒนาไม่สม่ำเสมอลง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="200"/>
         <source>Uneven develop duration</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะเวลาพัฒนาไม่สม่ำเสมอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="326"/>
@@ -15954,12 +16288,12 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/rotate/ui.qml" line="169"/>
         <source> deg</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation>องศา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="454"/>
         <source>Add or remove fisheye effect</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มหรือลบเอฟเฟ็กต์ตาปลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="466"/>
@@ -15969,12 +16303,12 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="501"/>
         <source>Focal ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราส่วนโฟกัส</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="506"/>
         <source>The amount of lens distortion</source>
-        <translation type="unfinished"></translation>
+        <translation>ปริมาณความบิดเบือนของเลนส์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="531"/>
@@ -15984,63 +16318,64 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="535"/>
         <source>Resample quality</source>
-        <translation type="unfinished"></translation>
+        <translation>คุณภาพการสุ่มตัวอย่างใหม่</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="552"/>
         <source>Nearest neighbor</source>
-        <translation type="unfinished"></translation>
+        <translation>เพื่อนบ้านที่ใกล้ที่สุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="562"/>
         <source>Bicubic smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเรียบทวิบาศ์ก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="567"/>
         <source>Bicubic sharp</source>
-        <translation type="unfinished"></translation>
+        <translation>ความหยาบทวิบาศ์ก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="582"/>
         <source>Lanczos 16x16</source>
-        <translation type="unfinished"></translation>
+        <translation>ลานซอส 16x16</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="601"/>
         <source>Select a lens distortion pattern that best matches your camera</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกรูปแบบการบิดเบือนเลนส์ที่เหมาะกับกล้องของคุณมากที่สุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="619"/>
         <source>Equidistant</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะห่างเท่ากัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="624"/>
         <source>Ortographic</source>
-        <translation type="unfinished"></translation>
+        <translation>ออร์โตกราฟิก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="629"/>
         <source>Equiarea</source>
-        <translation type="unfinished"></translation>
+        <translation>พื้นที่เทียบเท่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="634"/>
         <source>Stereographic</source>
-        <translation type="unfinished"></translation>
+        <translation>สเตอริโอกราฟิก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="643"/>
         <source>Non-Linear scale</source>
-        <translation type="unfinished"></translation>
+        <translation>มาตราส่วนไม่เชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="657"/>
         <source>The image will be stretched/squished to fix camera scaling between 4:3 and 16:9
 Like used in GoPro&apos;s superview</source>
-        <translation type="unfinished"></translation>
+        <translation>รูปภาพจะถูกยืดหรือบิดเพื่อแก้ไขการปรับขนาดกล้องระหว่าง 4:3 และ 16:9
+เช่นเดียวกับที่ใช้ใน Superview ของ GoPro</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="673"/>
@@ -16054,112 +16389,117 @@ Like used in GoPro&apos;s superview</source>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="677"/>
         <source>Use negative values for up-scaled videos
 Use positive values for down-scaled videos</source>
-        <translation type="unfinished"></translation>
+        <translation>ใช้ค่าลบสำหรับวิดีโอที่ปรับขนาดขึ้นแล้ว
+ใช้ค่าบวกสำหรับวิดีโอที่ปรับขนาดลงแล้ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="724"/>
         <source>Preset scale methods
 Lock pixels at specific locations</source>
-        <translation type="unfinished"></translation>
+        <translation>วิธีการปรับขนาดที่ตั้งไว้ล่วงหน้า
+ล็อคพิกเซลในตำแหน่งเฉพาะ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="744"/>
         <source>Scale to Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับขนาดให้เติมเต็ม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="749"/>
         <source>Keep Center Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>รักษามาตราส่วนกลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="754"/>
         <source>Scale to Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับขนาดให้พอดี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="759"/>
         <source>Manual Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>มาตราส่วนปรับมือ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="782"/>
         <source>Scale Y separately
 This changes video aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับขนาด Y แยกกัน
+การเปลี่ยนแปลงนี้จะเปลี่ยนอัตราส่วนภาพวิดีโอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="789"/>
         <source>Crop</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="801"/>
         <source>Remove distorted edges</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้างขอบที่บิดเบือน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="820"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="962"/>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับมือ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="825"/>
         <source>User set zoom/scale
 Sides of image are not fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>ผู้ใช้ตั้งค่าการซูม/มาตราส่วน
+ด้านของภาพไม่คงที่</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="852"/>
         <source>Y ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราส่วน Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="857"/>
         <source>Seperate Y scale</source>
-        <translation type="unfinished"></translation>
+        <translation>แยกมาตราส่วน Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="887"/>
         <source>Aspect</source>
-        <translation type="unfinished"></translation>
+        <translation>มุมด้าน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="904"/>
         <source>Preset pixel aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราส่วนพิกเซลที่ตั้งไว้ล่วงหน้า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="944"/>
         <source>Manual Aspect</source>
-        <translation type="unfinished"></translation>
+        <translation>มุมด้านปรับมือ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="967"/>
         <source>User set pixel aspect ratios
 Change top/side distortion bias</source>
-        <translation type="unfinished"></translation>
+        <translation>ผู้ใช้ตั้งค่าอัตราส่วนพิกเซล
+เปลี่ยนค่าความบิดเบือนจากด้านบน/ด้านข้าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="998"/>
         <source>Cameras</source>
-        <translation type="unfinished"></translation>
+        <translation>กล้องถ่ายรูป</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1012"/>
         <source>Camera</source>
-        <translation type="unfinished"></translation>
+        <translation>กล้องถ่ายรูป</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1032"/>
         <source>Record mode</source>
-        <translation type="unfinished"></translation>
+        <translation>โหมดการบันทึก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1053"/>
         <source>Result</source>
-        <translation type="unfinished"></translation>
+        <translation>ผลลัพธ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="1073"/>
@@ -16169,12 +16509,12 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/rotate/ui.qml" line="234"/>
         <source>X offset</source>
-        <translation type="unfinished"></translation>
+        <translation>ชดเชย X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/ui.qml" line="272"/>
         <source>Y offset</source>
-        <translation type="unfinished"></translation>
+        <translation>ชดเชย Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="208"/>
@@ -16184,32 +16524,32 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="212"/>
         <source>Scroll Down</source>
-        <translation type="unfinished"></translation>
+        <translation>ปัดม้วนลง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="214"/>
         <source>Scroll Up</source>
-        <translation type="unfinished"></translation>
+        <translation>ปัดม้วนขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="216"/>
         <source>Scroll Right</source>
-        <translation type="unfinished"></translation>
+        <translation>ปัดม้วนไปทางขวา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="218"/>
         <source>Scroll Left</source>
-        <translation type="unfinished"></translation>
+        <translation>ปัดม้วนไปทางซ้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="305"/>
         <source>Click in the rectangle atop the video to edit the text.</source>
-        <translation type="unfinished"></translation>
+        <translation>คลิกที่สี่เหลี่ยมผืนผ้าที่ด้านบนของวิดีโอเพื่อแก้ไขข้อความ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="396"/>
         <source>Background size</source>
-        <translation type="unfinished"></translation>
+        <translation>ขนาดพื้นหลัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="459"/>
@@ -16220,12 +16560,12 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/richtext/ui.qml" line="524"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="310"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีพื้นหลัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="556"/>
         <source>Overflow</source>
-        <translation type="unfinished"></translation>
+        <translation>ล้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="570"/>
@@ -16235,7 +16575,7 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="583"/>
         <source>Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>มองเห็นได้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/ui.qml" line="595"/>
@@ -16250,68 +16590,68 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="156"/>
         <source>Red-Green-Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>แดง-เขียว-น้ำเงิน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="167"/>
         <source>Hue-Chroma-Intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>สีสัน-เชิงสี-ความเข้มข้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="181"/>
         <source>Red delta</source>
-        <translation type="unfinished"></translation>
+        <translation>ผลต่างสีแดง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="181"/>
         <source>Hue delta</source>
-        <translation type="unfinished"></translation>
+        <translation>ผลต่างสีสัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="201"/>
         <source>Green delta</source>
-        <translation type="unfinished"></translation>
+        <translation>ผลต่างสีเขียว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="201"/>
         <source>Chroma delta</source>
-        <translation type="unfinished"></translation>
+        <translation>ผลต่างเชิงสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="221"/>
         <source>Blue delta</source>
-        <translation type="unfinished"></translation>
+        <translation>ผลต่างสีน้ำเงิน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="221"/>
         <source>Intensity delta</source>
-        <translation type="unfinished"></translation>
+        <translation>ผลต่างความเข้มข้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="256"/>
         <source>Box</source>
-        <translation type="unfinished"></translation>
+        <translation>กล่อง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="261"/>
         <source>Ellipsoid</source>
-        <translation type="unfinished"></translation>
+        <translation>ทรงรี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="280"/>
         <source>Edge</source>
-        <translation type="unfinished"></translation>
+        <translation>ขอบ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="295"/>
         <source>Hard</source>
         <comment>Chroma Key Advanced filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>แข็ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="300"/>
         <source>Fat</source>
-        <translation type="unfinished"></translation>
+        <translation>อ้วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="305"/>
@@ -16321,27 +16661,27 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="310"/>
         <source>Thin</source>
-        <translation type="unfinished"></translation>
+        <translation>บาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/ui.qml" line="53"/>
         <source>Yellow-Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>เหลือง-น้ำเงิน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/ui.qml" line="71"/>
         <source>Cyan-Red</source>
-        <translation type="unfinished"></translation>
+        <translation>ฟ้า-แดง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/ui.qml" line="65"/>
         <source>Line Width</source>
-        <translation type="unfinished"></translation>
+        <translation>ความกว้างของเส้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/ui.qml" line="85"/>
         <source>Line Height</source>
-        <translation type="unfinished"></translation>
+        <translation>ความสูงของเส้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/ui.qml" line="105"/>
@@ -16354,6 +16694,7 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/dropshadow/ui.qml" line="98"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1302"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1366"/>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="383"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="126"/>
         <source>Color</source>
         <translation>สี</translation>
@@ -16361,27 +16702,27 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="68"/>
         <source>Blur Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีความพร่ามัว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="72"/>
         <source>The radius of the gaussian blur.</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีความพร่ามัวเกาส์เซียน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="93"/>
         <source>Blur Strength</source>
-        <translation type="unfinished"></translation>
+        <translation>ความแข็งแกร่งของความพร่ามัว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="97"/>
         <source>The strength of the gaussian blur.</source>
-        <translation type="unfinished"></translation>
+        <translation>ความแข็งแกร่งของความพร่ามัวเกาส์เซียน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="122"/>
         <source>If the difference between the original pixel and the blurred pixel is less than threshold, the pixel will be replaced with the blurred pixel.</source>
-        <translation type="unfinished"></translation>
+        <translation>หากความแตกต่างระหว่างพิกเซลดั้งเดิมและพิกเซลพร่ามัวมีค่าน้อยกว่าเกณฑ์ พิกเซลนั้นจะถูกแทนที่ด้วยพิกเซลพร่ามัว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="182"/>
@@ -16418,12 +16759,12 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="227"/>
         <source>Input Black</source>
-        <translation type="unfinished"></translation>
+        <translation>อินพุตสีดำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="251"/>
         <source>Input White</source>
-        <translation type="unfinished"></translation>
+        <translation>อินพุตสีขาว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="275"/>
@@ -16433,17 +16774,17 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="299"/>
         <source>Output Black</source>
-        <translation type="unfinished"></translation>
+        <translation>เอาท์พุตสีดำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="320"/>
         <source>Output White</source>
-        <translation type="unfinished"></translation>
+        <translation>เอาท์พุตสีขาว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="27"/>
         <source>Click Analyze to use this filter.</source>
-        <translation type="unfinished"></translation>
+        <translation>คลิกวิเคราะห์เพื่อใช้ตัวกรองนี้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="90"/>
@@ -16480,12 +16821,12 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="248"/>
         <source>Stabilization file:</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์ความเสถียร:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="252"/>
         <source>The stabilization file generated by the analysis.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์เสถียรภาพที่สร้างขึ้นจากการวิเคราะห์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="189"/>
@@ -16495,17 +16836,17 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="291"/>
         <source>File for motion analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฟล์สำหรับวิเคราะห์การเคลื่อนที่</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="390"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกดู...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="395"/>
         <source>Start Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>ค่าล่วงเริ่มต้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="407"/>
@@ -16515,32 +16856,32 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="438"/>
         <source>Analysis</source>
-        <translation type="unfinished"></translation>
+        <translation>การวิเคราะห์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="448"/>
         <source>Apply transform</source>
-        <translation type="unfinished"></translation>
+        <translation>ใช้การเปลี่ยนรูป</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="454"/>
         <source>Sample Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีตัวอย่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="477"/>
         <source>Search Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีการค้นหา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="523"/>
         <source>Track Points</source>
-        <translation type="unfinished"></translation>
+        <translation>จุดติดตาม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="530"/>
         <source>Use backwards-facing track points</source>
-        <translation type="unfinished"></translation>
+        <translation>ใช้จุดติดตามที่หันไปทางด้านหลัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="566"/>
@@ -16555,7 +16896,7 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="664"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="739"/>
         <source>Time Bias</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเอียงเวลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="70"/>
@@ -16572,7 +16913,7 @@ Change top/side distortion bias</source>
         <location filename="../src/qml/filters/distort/ui.qml" line="96"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="60"/>
         <source>Amplitude</source>
-        <translation type="unfinished"></translation>
+        <translation>แอมพลิจูด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eqparametric/ui.qml" line="180"/>
@@ -16598,44 +16939,45 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="50"/>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>ไปข้างหน้า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="52"/>
         <source>Freeze</source>
-        <translation type="unfinished"></translation>
+        <translation>แข็ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="53"/>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="54"/>
         <source>%L1s</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1s</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="205"/>
         <source>Set Speed After</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าความเร็วหลังจาก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="205"/>
         <source>Set Speed Before</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าความเร็วก่อน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="242"/>
         <source>Modify current mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับเปลี่ยนการทำแผนที่ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="247"/>
         <source>Lock current mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>ล็อคการทำแผนที่ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="257"/>
         <source>&quot;Modify current mapping&quot; will modify the input time at the current position.
 &quot;Lock current mapping&quot; will lock the input time at the current position and modify the value of an adjacent keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>“แก้ไขการแมปปัจจุบัน” จะแก้ไขเวลาอินพุตที่ตำแหน่งปัจจุบัน 
+“ล็อกการแมปปัจจุบัน” จะล็อกเวลาอินพุตที่ตำแหน่งปัจจุบันและแก้ไขค่าของคีย์เฟรมที่อยู่ติดกัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="265"/>
@@ -16655,56 +16997,102 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="313"/>
         <source>Map the specified input time to the current time. Use keyframes to vary the time mappings over time.</source>
-        <translation type="unfinished"></translation>
+        <translation>แมปเวลาอินพุตที่ระบุกับเวลาปัจจุบัน ใช้คีย์เฟรมเพื่อเปลี่ยนการแมปเวลาในแต่ละช่วงเวลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="345"/>
         <source>Set the input time to achieve a desired speed before the current frame.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าเวลาอินพุตเพื่อให้ได้ความเร็วที่ต้องการก่อนเฟรมปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="361"/>
         <source>Set the input time to achieve a desired speed after the current frame.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าเวลาอินพุตเพื่อให้ได้ความเร็วที่ต้องการหลังจากเฟรมปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="379"/>
         <source>Image mode</source>
-        <translation type="unfinished"></translation>
+        <translation>โหมดภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="383"/>
         <source>Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.</source>
-        <translation type="unfinished"></translation>
+        <translation>ใช้โหมดการเลือกภาพที่ระบุ โหมด Nearest จะแสดงผลภาพที่ใกล้เคียงกับเวลาที่แมปมากที่สุด โหมด Blend จะผสมภาพทั้งหมดที่เกิดขึ้นระหว่างเวลาที่แมป</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="128"/>
+        <source>Hue Center</source>
+        <translation>จุดกลางสีสัน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="131"/>
+        <source>The center of the color range to be changed.</source>
+        <translation>ศูนย์กลางของช่วงสีที่ถูกเปลี่ยนแปลง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="157"/>
+        <source>Hue Range</source>
+        <translation>พิสัยสีสัน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="160"/>
+        <source>The width of the color range to be changed.</source>
+        <translation>ความกว้างของช่วงสีที่ถูกเปลี่ยนแปลง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="260"/>
+        <source>Pick the center hue from a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
+        <translation>เลือกเฉดสีกลางจากสีบนหน้าจอ โดยการกดปุ่มเมาส์แล้วเลื่อนเมาส์ คุณสามารถเลือกส่วนของหน้าจอที่ต้องการรับสีเฉลี่ยได้</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="265"/>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="408"/>
         <source>Blend</source>
-        <translation type="unfinished"></translation>
+        <translation>ผสมผสาน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="268"/>
+        <source>The amount of blending to apply to the edges of the color range.</source>
+        <translation>ปริมาณการผสมที่จะใช้กับขอบของช่วงสี</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="297"/>
+        <source>The amount to shift the Hue of the color range.</source>
+        <translation>จำนวนการเลื่อนย้ายโทนสีของช่วงสี</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="326"/>
+        <source>The amount to scale the saturation of the color range.</source>
+        <translation>ปริมาณที่จะปรับขนาดความอิ่มตัวของช่วงสี</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="355"/>
+        <source>The amount to scale the lightness of the color range.</source>
+        <translation>ปริมาณที่จะปรับขนาดความสว่างของช่วงสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="424"/>
         <source>Enable pitch compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิดใช้งานการชดเชยระดับเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="452"/>
         <source>Speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเร็ว:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="482"/>
         <source>Input Time:</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาการป้อนข้อมูล:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="497"/>
         <source>Output Time:</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาส่งออก:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="907"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="337"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="338"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="89"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="78"/>
         <source>Speed</source>
@@ -16713,213 +17101,220 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="456"/>
         <source>The instantaneous speed of the last frame that was processed.</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเร็วทันทีของเฟรมสุดท้ายที่ได้รับการประมวลผล</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="467"/>
         <source>Direction:</source>
-        <translation type="unfinished"></translation>
+        <translation>ทิศทาง:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="471"/>
         <source>The instantaneous direction of the last frame that was processed.</source>
-        <translation type="unfinished"></translation>
+        <translation>ทิศทางทันทีของเฟรมสุดท้ายที่ได้รับการประมวลผล</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="486"/>
         <source>The original clip time of the frame.</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาคลิปต้นฉบับของเฟรม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="501"/>
         <source>The mapped output time for the input frame.</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาเอาต์พุตที่แมปสำหรับเฟรมอินพุต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="102"/>
         <source>Deform horizontally?</source>
-        <translation type="unfinished"></translation>
+        <translation>ผิดรูปแนวนอน?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="119"/>
         <source>Deform vertically?</source>
-        <translation type="unfinished"></translation>
+        <translation>ผิดรูปแนวตั้ง?</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="81"/>
         <source>Neutral color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีที่เป็นกลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="111"/>
         <source>Color temperature</source>
-        <translation type="unfinished"></translation>
+        <translation>อุณหภูมิสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/ui.qml" line="183"/>
         <source>degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>องศา</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="146"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="147"/>
         <source>Format</source>
         <translation>รูปแบบ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="160"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="161"/>
         <source>HH:MM:SS</source>
         <translation>HH:MM:SS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="165"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="166"/>
         <source>HH:MM:SS.S</source>
         <translation>HH:MM:SS.S</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="170"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="171"/>
         <source>MM:SS</source>
         <translation>MM:SS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="175"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="176"/>
         <source>MM:SS.SS</source>
         <translation>MM:SS.SS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="180"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="181"/>
         <source>MM:SS.SSS</source>
-        <translation type="unfinished"></translation>
+        <translation>นน:วว.ววว</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="185"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="186"/>
         <source>SS</source>
         <translation>SS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="191"/>
         <source>SS.S</source>
         <translation>SS.S</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="195"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="196"/>
         <source>SS.SS</source>
         <translation>SS.SS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="200"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="201"/>
         <source>SS.SSS</source>
-        <translation type="unfinished"></translation>
+        <translation>วว.ววว</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="289"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="290"/>
         <source>A value of 0 will run the timer to the end of the filter</source>
-        <translation type="unfinished"></translation>
+        <translation>ค่า 0 จะทำให้ตัวจับเวลาทำงานจนสิ้นสุดตัวกรอง</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="331"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="332"/>
         <source>When the direction is Down, the timer will count down to Offset.
 When the direction is Up, the timer will count up starting from Offset.</source>
-        <translation type="unfinished"></translation>
+        <translation>เมื่อทิศทางเป็นขาลง ตัวจับเวลาจะนับถอยหลังจนถึงออฟเซ็ต
+เมื่อทิศทางเป็นขาขึ้น ตัวจับเวลาจะนับถอยหลังเริ่มจากออฟเซ็ต</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="358"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="359"/>
         <source>Timer seconds per playback second. Scales Duration but does not affect Start Delay or Offset.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวจับเวลาต่อวินาทีในการเล่น ปรับระยะเวลาแต่ไม่ส่งผลต่อการหน่วงเวลาเริ่มต้นหรือออฟเซ็ต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="122"/>
         <source>Minimal strength</source>
-        <translation type="unfinished"></translation>
+        <translation>ความแข็งแกร่งขั้นต่ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="133"/>
         <source>Average strength</source>
-        <translation type="unfinished"></translation>
+        <translation>ความแข็งแกร่งเฉลี่ย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="144"/>
         <source>Blue sky</source>
-        <translation type="unfinished"></translation>
+        <translation>ท้องฟ้าสีฟ้า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="155"/>
         <source>Red sky</source>
-        <translation type="unfinished"></translation>
+        <translation>ท้องฟ้าสีแดง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="166"/>
         <source>Full range to limited range</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งแต่ช่วงเต็มจนถึงช่วงจำกัด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="210"/>
         <source>Contrast threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>เกณฑ์ความคมชัด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="214"/>
         <source>Banding similarity within first component
 Y (luma) in YCbCr mode
 Red in RGB mode</source>
-        <translation type="unfinished"></translation>
+        <translation>ความคล้ายคลึงของแถบสีภายในองค์ประกอบแรก
+Y (luma) ในโหมด YCbCr 
+สีแดงในโหมด RGB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="233"/>
         <source>Blue threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>เกณฑ์สีฟ้า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="237"/>
         <source>Banding similarity within second component
 Cb (blue) in YCbCr mode
 Green in RGB mode</source>
-        <translation type="unfinished"></translation>
+        <translation>ความคล้ายคลึงของแถบสีภายในองค์ประกอบที่สอง
+Cb (สีน้ำเงิน) ในโหมด YCbCr 
+สีเขียวในโหมด RGB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="256"/>
         <source>Red threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>เกณฑ์สีแดง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="260"/>
         <source>Banding similarity within third component
 Cr (red) in YCbCr mode
 Blue in RGB mode</source>
-        <translation type="unfinished"></translation>
+        <translation>ความคล้ายคลึงของแถบสีภายในองค์ประกอบที่สาม
+Cr (สีแดง) ในโหมด YCbCr
+สีน้ำเงินในโหมด RGB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="279"/>
         <source>Alpha threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>เกณฑ์อัลฟ่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="283"/>
         <source>Banding similarity within fourth component</source>
-        <translation type="unfinished"></translation>
+        <translation>ความคล้ายคลึงกันของแถบสีภายในองค์ประกอบที่สี่</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="308"/>
         <source>Link thresholds</source>
-        <translation type="unfinished"></translation>
+        <translation>เกณฑ์การเชื่อมโยง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="317"/>
         <source>Pixel range</source>
-        <translation type="unfinished"></translation>
+        <translation>พิสัยพิกเซล</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="321"/>
         <source>The size of bands being targeted</source>
-        <translation type="unfinished"></translation>
+        <translation>ขนาดของแบนด์ที่ถูกกำหนดเป้าหมาย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="348"/>
         <source>Randomize pixel range between zero and value</source>
-        <translation type="unfinished"></translation>
+        <translation>สุ่มช่วงพิกเซลระหว่างศูนย์และค่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="357"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="207"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="208"/>
         <source>Direction</source>
         <translation>ทิศทาง</translation>
     </message>
@@ -16930,75 +17325,79 @@ Down = 90°
 Left = 180°
 Right = 0° or 360°
 All = 360° + Randomize</source>
-        <translation type="unfinished"></translation>
+        <translation>ขึ้น = 270°
+ลง = 90°
+ซ้าย = 180°
+ขวา = 0° หรือ 360°
+ทั้งหมด = 360° + สุ่ม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="388"/>
         <source>Randomize direction between zero degrees and value</source>
-        <translation type="unfinished"></translation>
+        <translation>สุ่มทิศทางระหว่างศูนย์องศาและค่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="403"/>
         <source>Measure similarity using average of neighbors</source>
-        <translation type="unfinished"></translation>
+        <translation>วัดความคล้ายคลึงกันโดยใช้ค่าเฉลี่ยของเพื่อนบ้าน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="407"/>
         <source>Compare to thresholds using average versus exact neighbor values</source>
-        <translation type="unfinished"></translation>
+        <translation>เปรียบเทียบกับเกณฑ์ที่ใช้ค่าเฉลี่ยเทียบกับค่าเพื่อนบ้านที่แน่นอน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="425"/>
         <source>All components required to trigger deband</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วนประกอบทั้งหมดที่จำเป็นในการกระตุ้นการปลดแบนด์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="429"/>
         <source>Deband only if all pixel components (including alpha) are within thresholds</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิกแบนด์เฉพาะเมื่อส่วนประกอบพิกเซลทั้งหมด (รวมถึงอัลฟ่า) อยู่ในเกณฑ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1164"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="1301"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="221"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="222"/>
         <source>Up</source>
         <translation>ขึ้น</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="226"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="227"/>
         <source>Down</source>
         <translation>ลง</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="233"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="234"/>
         <source>Start Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>การหน่วงเวลาเริ่มต้น</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="252"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="253"/>
         <source>The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวจับเวลาจะถูกหยุดตั้งแต่เริ่มต้นตัวกรองจนกว่าเวลาหน่วงการเริ่มต้นจะผ่านไป</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="264"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="265"/>
         <source>Set start to begin at the current position</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าเริ่มต้นให้เริ่มต้นที่ตำแหน่งปัจจุบัน</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="289"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="290"/>
         <source>The timer will be frozen after the Duration has elapsed.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวจับเวลาจะถูกหยุดเมื่อระยะเวลาผ่านไป</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="306"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="307"/>
         <source>Set duration to end at the current position</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งระยะเวลาให้สิ้นสุดที่ตำแหน่งปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="500"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="258"/>
         <location filename="../src/qml/filters/nosync/ui.qml" line="83"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="312"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="313"/>
         <source>Offset</source>
         <translation>สิ่งชดเชย</translation>
     </message>
@@ -17126,12 +17525,12 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="262"/>
         <source>Set a mask from another file&apos;s brightness or alpha.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าหน้ากากจากความสว่างหรืออัลฟ่าของไฟล์อื่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="238"/>
         <source>Open Mask File</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิดไฟล์หน้ากาก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="189"/>
@@ -17143,12 +17542,12 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="511"/>
         <source>Alpha</source>
-        <translation type="unfinished"></translation>
+        <translation>อัลฟา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/ui.qml" line="96"/>
         <source>Waveform Color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีของรูปคลื่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="154"/>
@@ -17159,12 +17558,12 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/waveform/ui.qml" line="235"/>
         <source>Fill the area under the waveform.</source>
-        <translation type="unfinished"></translation>
+        <translation>เติมพื้นที่ด้านใต้รูปคลื่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/ui.qml" line="247"/>
         <source>Combine all channels into one waveform.</source>
-        <translation type="unfinished"></translation>
+        <translation>รวมช่องสัญญาณทั้งหมดไว้เป็นรูปคลื่นเดียว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_adeclick/ui.qml" line="69"/>
@@ -17190,7 +17589,7 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/glitch/ui.qml" line="159"/>
         <source>Shift intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>การเปลี่ยนแปลงความเข้มข้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/ui.qml" line="188"/>
@@ -17210,7 +17609,7 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="353"/>
         <source>Apply to Source</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับใช้กับแหล่งที่มา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="379"/>
@@ -17220,7 +17619,7 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="407"/>
         <source>Padding color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีเว้นระยะ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="86"/>
@@ -17236,57 +17635,57 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="123"/>
         <source>2x2 Magic Square</source>
-        <translation type="unfinished"></translation>
+        <translation>จตุรัสวิเศษ 2x2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="123"/>
         <source>4x4 Magic Square</source>
-        <translation type="unfinished"></translation>
+        <translation>จตุรัสวิเศษ 4x4</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="123"/>
         <source>4x4 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>สั่ง 4x4 แล้ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="123"/>
         <source>4x4 Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้น 4x4</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="123"/>
         <source>6x6 90 Degree Halftone</source>
-        <translation type="unfinished"></translation>
+        <translation>6x6 90 องศาแบบครึ่งโทน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="123"/>
         <source>6x6 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>สั่ง 6x6 แล้ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="123"/>
         <source>8x8 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>สั่ง 8x8 แล้ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="123"/>
         <source>Order-3 Clustered</source>
-        <translation type="unfinished"></translation>
+        <translation>ลำดับ-3 แบบเป็นหย่อม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="123"/>
         <source>Order-4 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>ลำดับ-4 สั่งแล้ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="123"/>
         <source>Order-8 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>ลำดับ-8 สั่งแล้ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="106"/>
         <source>Horizontal center position of the linear area.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตำแหน่งกึ่งกลางแนวนอนของพื้นที่เชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="135"/>
@@ -17296,7 +17695,7 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="139"/>
         <source>Width of the linear area.</source>
-        <translation type="unfinished"></translation>
+        <translation>ความกว้างของพื้นที่เชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="168"/>
@@ -17306,22 +17705,22 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="172"/>
         <source>Amount the linear area is scaled.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนพื้นที่เชิงเส้นที่ถูกปรับขนาด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="201"/>
         <source>Non-Linear scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวประกอบมาตราส่วนแบบไม่เชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="205"/>
         <source>Amount the outer left and outer right areas are scaled non linearly.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนพื้นที่ด้านนอกซ้ายและขวาถูกปรับขนาดแบบไม่เป็นเส้นตรง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/threshold/ui.qml" line="141"/>
         <source>Compare with alpha channel</source>
-        <translation type="unfinished"></translation>
+        <translation>เปรียบเทียบกับช่องอัลฟา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/choppy/ui.qml" line="91"/>
@@ -17338,17 +17737,17 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="121"/>
         <source>Key Filter: Low Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวกรองหลัก: ความถี่ต่ำ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="150"/>
         <source>Key Filter: High Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวกรองหลัก: ความถี่สูง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="184"/>
         <source>Output key only</source>
-        <translation type="unfinished"></translation>
+        <translation>คีย์เอาท์พุตเท่านั้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="246"/>
@@ -17358,17 +17757,17 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="274"/>
         <source>Decay</source>
-        <translation type="unfinished"></translation>
+        <translation>สลายตัว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="302"/>
         <source>Range</source>
-        <translation type="unfinished"></translation>
+        <translation>พิสัย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="161"/>
         <source>Octave Shift</source>
-        <translation type="unfinished"></translation>
+        <translation>การเปลี่ยนอ็อกเทฟ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="165"/>
@@ -17376,18 +17775,22 @@ All = 360° + Randomize</source>
 -1 shifts down an octave.
 +1 shifts up an octave.
 0 is unchanged.</source>
-        <translation type="unfinished"></translation>
+        <translation>ระบุการเลื่อนระดับเสียงเป็นอ็อกเทฟ
+-1 เลื่อนลงหนึ่งอ็อกเทฟ 
++1 เลื่อนขึ้นหนึ่งอ็อกเทฟ
+0 ไม่เปลี่ยนแปลง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="205"/>
         <source>Specify the speed change that should be compensated for.
 2x will halve the pitch to compensate for the speed being doubled.</source>
-        <translation type="unfinished"></translation>
+        <translation>ระบุการเปลี่ยนแปลงความเร็วที่ควรได้รับการชดเชย
+2x จะทำให้ระดับเสียงลดลงครึ่งหนึ่งเพื่อชดเชยความเร็วที่เพิ่มขึ้นเป็นสองเท่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="201"/>
         <source>Speed Compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>การชดเชยความเร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="69"/>
@@ -17407,43 +17810,43 @@ All = 360° + Randomize</source>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="121"/>
         <source>Method</source>
-        <translation type="unfinished"></translation>
+        <translation>วิธีการ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="129"/>
         <source>Soft</source>
-        <translation type="unfinished"></translation>
+        <translation>นุ่ม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="129"/>
         <source>Garrote</source>
-        <translation type="unfinished"></translation>
+        <translation>การ์โรต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="129"/>
         <source>Hard</source>
         <comment>Remove Noise Wavelet filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>แข็ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="141"/>
         <source>Decompose</source>
-        <translation type="unfinished"></translation>
+        <translation>สลายชิ้นส่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="175"/>
         <source>Percent</source>
-        <translation type="unfinished"></translation>
+        <translation>ร้อยละ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="193"/>
         <source>Max decompositions for the current video mode</source>
-        <translation type="unfinished"></translation>
+        <translation>การสลายตัวสูงสุดสำหรับโหมดวิดีโอปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="199"/>
         <source>More information</source>
-        <translation type="unfinished"></translation>
+        <translation>สารสนเทศเพิ่มเติม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/posterize/ui.qml" line="84"/>
@@ -17456,175 +17859,183 @@ All = 360° + Randomize</source>
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="430"/>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="143"/>
         <source>Transparent</source>
-        <translation type="unfinished"></translation>
+        <translation>ความโปร่งใส</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="408"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>แสดงกริด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fspp/ui.qml" line="65"/>
         <source>Quantization</source>
-        <translation type="unfinished"></translation>
+        <translation>การทำให้เป็นปริมาณ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fspp/ui.qml" line="83"/>
         <source>Strength</source>
-        <translation type="unfinished"></translation>
+        <translation>ความแข็งแกร่ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="105"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="40"/>
         <source>No File Loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีไฟล์โหลด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="107"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="42"/>
         <source>No GPS file loaded.
 Click &quot;Open&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีไฟล์ GPS โหลด 
+คลิก &quot;เปิด&quot; เพื่อโหลดไฟล์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="401"/>
         <source>Select GPS File</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกไฟล์ GPS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="443"/>
         <source>Select Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกภาพพื้นหลัง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="463"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="218"/>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิดไฟล์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="221"/>
         <source>Open GPS File</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิดไฟล์ GPS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="503"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="238"/>
         <source>&lt;b&gt;GPS options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ตัวเลือก GPS&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="510"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="245"/>
         <source>GPS offset</source>
-        <translation type="unfinished"></translation>
+        <translation>ค่าเกินจีพีเอส</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="514"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="249"/>
         <source>This is added to video time to sync with gps time.</source>
-        <translation type="unfinished"></translation>
+        <translation>สิ่งนี่จะถูกเพิ่มลงในเวลาของวิดีโอเพื่อซิงค์กับเวลา GPS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="533"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="266"/>
         <source>+ : Adds time to video (use if GPS is ahead).
  - : Subtracts time from video (use if video is ahead).</source>
-        <translation type="unfinished"></translation>
+        <translation>+ : เพิ่มเวลาให้กับวิดีโอ (ใช้หาก GPS อยู่ข้างหน้า)
+- : ลบเวลาออกจากวิดีโอ (ใช้หากวิดีโออยู่ข้างหน้า)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="574"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="307"/>
         <source>Number of days to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนวันในการเพิ่มหรือลบเวลาการบันทึกวิดีโอเพื่อซิงค์
+เคล็ดลับ: คุณสามารถใช้เมาส์เลื่อนเพื่อเปลี่ยนค่าได้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="613"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="346"/>
         <source>Number of hours to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนชั่วโมงที่ต้องเพิ่มหรือลบออกจากเวลาการดูวิดีโอเพื่อซิงค์
+เคล็ดลับ: คุณสามารถใช้เมาส์เลื่อนเพื่อเปลี่ยนค่าได้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="652"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="385"/>
         <source>Number of minutes to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนนาทีที่ต้องเพิ่มหรือลบออกจากเวลาของวิดีโอเพื่อซิงค์ 
+เคล็ดลับ: คุณสามารถใช้เมาส์เลื่อนเพื่อเปลี่ยนค่าได้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="691"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="424"/>
         <source>Number of seconds to add/subtract to video time to sync them.
 Tip: you can use mousewheel to change values.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนวินาทีที่ต้องเพิ่มหรือลบออกจากเวลาของวิดีโอเพื่อซิงค์ 
+เคล็ดลับ: คุณสามารถใช้เมาส์เลื่อนเพื่อเปลี่ยนค่าได้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="710"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="443"/>
         <source>Sync start of GPS to start of video file.
 Tip: use this if you started GPS and video recording at the same time.</source>
-        <translation type="unfinished"></translation>
+        <translation>ซิงค์จุดเริ่มต้น GPS กับจุดเริ่มต้นของไฟล์วิดีโอ 
+เคล็ดลับ: ใช้สิ่งนี้หากคุณเริ่ม GPS และบันทึกวิดีโอในเวลาเดียวกัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="749"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="482"/>
         <source>Sync start of GPS to current video time.
 Tip: use this if you recorded the moment of the first GPS fix.</source>
-        <translation type="unfinished"></translation>
+        <translation>ซิงค์เวลาเริ่มต้นของ GPS กับเวลาวิดีโอปัจจุบัน 
+เคล็ดลับ: ใช้สิ่งนี้หากคุณบันทึกช่วงเวลาของการแก้ไข GPS ครั้งแรก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="759"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="492"/>
         <source>GPS smoothing</source>
-        <translation type="unfinished"></translation>
+        <translation>การปรับเรียบ GPS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="763"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="496"/>
         <source>Average nearby GPS points to smooth out errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>เฉลี่ยคะแนน GPS ใกล้เคียงเพื่อแก้ไขข้อผิดพลาด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="889"/>
         <source>&lt;b&gt;Graph data&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ข้อมูลกราฟ&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="894"/>
         <source>Data source</source>
-        <translation type="unfinished"></translation>
+        <translation>แหล่งที่มาของข้อมูล</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="898"/>
         <source>Choose which data type is used for graph drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกชนิดข้อมูลที่จะใช้สำหรับการวาดกราฟ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="907"/>
         <source>Location (2D map)</source>
-        <translation type="unfinished"></translation>
+        <translation>ตำแหน่งที่ตั้ง (แผนที่ 2 มิติ)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="907"/>
         <source>Altitude</source>
-        <translation type="unfinished"></translation>
+        <translation>ระดับความสูง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="907"/>
         <source>Heart rate</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราการเต้นของหัวใจ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="919"/>
         <source>Graph type</source>
-        <translation type="unfinished"></translation>
+        <translation>ประเภทกราฟ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="923"/>
         <source>Graph types can add advanced interactions.</source>
-        <translation type="unfinished"></translation>
+        <translation>ประเภทกราฟสามารถเพิ่มการโต้ตอบขั้นสูงได้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="932"/>
@@ -17634,305 +18045,318 @@ Tip: use this if you recorded the moment of the first GPS fix.</source>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="932"/>
         <source>Follow dot (cropped)</source>
-        <translation type="unfinished"></translation>
+        <translation>ติดตามจุด (ครอบตัด)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="932"/>
         <source>Speedometer</source>
-        <translation type="unfinished"></translation>
+        <translation>มาตรวัดความเร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="941"/>
         <source>Standard = just a static map.
 Follow dot = centers on the current location.
 Speedometer = draws a simple speedometer.</source>
-        <translation type="unfinished"></translation>
+        <translation>มาตรฐาน = แผนที่คงที่
+จุดติดตาม = ศูนย์กลางที่ตำแหน่งปัจจุบัน
+มาตรวัดความเร็ว = วาดมาตรวัดความเร็วแบบง่าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="947"/>
         <source>Trim time</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="951"/>
         <source>Hides part of the graph at beginning or end.
 This does not recompute min/max for any field.</source>
-        <translation type="unfinished"></translation>
+        <translation>ซ่อนส่วนหนึ่งของกราฟที่จุดเริ่มต้นหรือจุดสิ้นสุด
+การดำเนินการนี้จะไม่คำนวณค่าต่ำสุด/สูงสุดสำหรับฟิลด์ใดๆ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="978"/>
         <source>Hides part of the beginning of the graph.</source>
-        <translation type="unfinished"></translation>
+        <translation>ซ่อนส่วนหนึ่งของจุดเริ่มต้นของกราฟ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1022"/>
         <source>Hides part of the end of the graph.</source>
-        <translation type="unfinished"></translation>
+        <translation>ซ่อนส่วนหนึ่งของตอนท้ายของกราฟ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1039"/>
         <source>Crop horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัดแนวนอน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1043"/>
         <source>Zooms in on the graph on the horizontal axis (longitude if map, time if simple graph).
 The number is either a percentage or a numeric value interpreted as the legend type.
 This field is not applicable for Speedometer type.</source>
-        <translation type="unfinished"></translation>
+        <translation>ซูมเข้าที่กราฟบนแกนแนวนอน (ลองจิจูดหากเป็นแผนที่ เวลาหากเป็นกราฟธรรมดา)
+ตัวเลขเป็นเปอร์เซ็นต์หรือค่าตัวเลขที่ตีความได้ว่าเป็นประเภทคำอธิบาย
+ฟิลด์นี้ใช้ไม่ได้กับประเภทมาตรวัดความเร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1065"/>
         <source>Crops the graph from the left side.</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัดกราฟจากด้านซ้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1108"/>
         <source>Crops the graph from the right side. This value is ignored if mode is Follow dot.</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัดกราฟจากด้านขวา ค่านี้จะถูกละเว้นหากโหมดเป็นติดตามจุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1116"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1225"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1116"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1225"/>
         <source>value</source>
-        <translation type="unfinished"></translation>
+        <translation>ค่า</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1126"/>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1235"/>
         <source>The crop values are interpreted as a percentage of total or as an absolute value (in legend unit).</source>
-        <translation type="unfinished"></translation>
+        <translation>ค่าครอบตัดจะถูกตีความว่าเป็นร้อยละของทั้งหมดหรือเป็นค่าสัมบูรณ์ (ในหน่วยที่แสดงไว้)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1130"/>
         <source>Input for horizontal crops can be a percentage or an absolute value.</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อมูลอินพุตสำหรับครอบตัดแนวนอนสามารถเป็นร้อยละหรือค่าสัมบูรณ์ก็ได้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1147"/>
         <source>Crop vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัดแนวตั้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1151"/>
         <source>Zooms in on the graph on the vertical axis (latitude if map, value if simple graph).
 The number is either a percentage or a numeric value interpreted as the legend type.
 This field affects min/max values on the Speedometer type.</source>
-        <translation type="unfinished"></translation>
+        <translation>ซูมเข้าที่กราฟบนแกนตั้ง (ละติจูดหากเป็นแผนที่ ค่าหากเป็นกราฟธรรมดา)
+ตัวเลขเป็นเปอร์เซ็นต์หรือค่าตัวเลขที่ตีความได้ว่าเป็นประเภทคำอธิบาย
+ฟิลด์นี้มีผลต่อค่าต่ำสุด/สูงสุดของประเภทมาตรวัดความเร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1174"/>
         <source>Crops the graph from the bottom side.</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัดกราฟจากด้านล่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1217"/>
         <source>Crops the graph from the top side. This value is ignored if mode is Follow dot.</source>
-        <translation type="unfinished"></translation>
+        <translation>ครอบตัดกราฟจากด้านบน ค่านี้จะถูกละเว้นหากโหมดเป็นติดตามจุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1239"/>
         <source>Input for vertical crops can be a percentage or an absolute value.</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อมูลอินพุตสำหรับครอบตัดแนวตั้งสามารถเป็นร้อยละหรือค่าสัมบูรณ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1257"/>
         <source>&lt;b&gt;Graph design&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;การออกแบบกราฟ&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1262"/>
         <source>Color style</source>
-        <translation type="unfinished"></translation>
+        <translation>รูปลักษณ์สี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1266"/>
         <source>Choose how you want to color the graph line.</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกวิธีการระบายสีเส้นกราฟที่คุณต้องการ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1285"/>
         <source>One color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีเดียว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1285"/>
         <source>Two colors</source>
-        <translation type="unfinished"></translation>
+        <translation>สองสี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1285"/>
         <source>Solid past, thin future</source>
-        <translation type="unfinished"></translation>
+        <translation>อดีตที่มั่นคง อนาคตอันเลือนลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1285"/>
         <source>Solid future, thin past</source>
-        <translation type="unfinished"></translation>
+        <translation>อนาคตที่มั่นคง อดีตอันบางเบา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1285"/>
         <source>Vertical gradient</source>
-        <translation type="unfinished"></translation>
+        <translation>การไล่ระดับแนวตั้ง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1285"/>
         <source>Horizontal gradient</source>
-        <translation type="unfinished"></translation>
+        <translation>การไล่ระดับแนวนอน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1285"/>
         <source>Color by duration</source>
-        <translation type="unfinished"></translation>
+        <translation>สีตามระยะเวลา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1285"/>
         <source>Color by altitude</source>
-        <translation type="unfinished"></translation>
+        <translation>สีตามระดับความสูง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1285"/>
         <source>Color by heart rate</source>
-        <translation type="unfinished"></translation>
+        <translation>สีตามอัตราการเต้นของหัวใจ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1285"/>
         <source>Color by speed</source>
-        <translation type="unfinished"></translation>
+        <translation>สีตามความเร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1287"/>
         <source>Color by speed (max 100km/h)</source>
-        <translation type="unfinished"></translation>
+        <translation>สีตามความเร็ว (สูงสุด 100กม./ชม.)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1287"/>
         <source>Color by grade (max 90°)</source>
-        <translation type="unfinished"></translation>
+        <translation>สีตามเกรด (สูงสุด 90°)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1287"/>
         <source>Color by grade (max 20°)</source>
-        <translation type="unfinished"></translation>
+        <translation>สีตามเกรด (สูงสุด 20°)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1306"/>
         <source>Color by Altitude/HR only work if there are recorded values in the gps file.
 For speedometer type, only first 2 colors are used.</source>
-        <translation type="unfinished"></translation>
+        <translation>การระบายสีตามระดับความสูง/HR จะใช้ได้เฉพาะในกรณีที่มีค่าที่บันทึกไว้ในไฟล์ GPS เท่านั้น สำหรับประเภทมาตรวัดความเร็ว จะใช้ 2 สีแรกเท่านั้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1348"/>
         <source>Now dot</source>
-        <translation type="unfinished"></translation>
+        <translation>จุดตอนนี้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1352"/>
         <source>Draw a dot showing current position on the graph.
 For speedometer type, this is the needle.</source>
-        <translation type="unfinished"></translation>
+        <translation>วาดจุดแสดงตำแหน่งปัจจุบันบนกราฟ 
+สำหรับประเภทมาตรวัดความเร็ว นี่คือเข็ม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1370"/>
         <source>Set the color of the inside of the now dot (or needle).</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าสีภายในจุดปัจจุบัน (หรือเข็ม)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1394"/>
         <source>Now text</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อความตอนนี้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1399"/>
         <source>Draw a large white text showing the current value.
 The legend unit (if present) will be appended at the end.</source>
-        <translation type="unfinished"></translation>
+        <translation>วาดข้อความสีขาวขนาดใหญ่เพื่อแสดงค่าปัจจุบัน
+หน่วยคำอธิบาย (ถ้ามี) จะถูกเพิ่มที่ท้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1417"/>
         <source>Rotate the entire graph. Speedometer also rotates internal text.</source>
-        <translation type="unfinished"></translation>
+        <translation>หมุนทั้งกราฟ มาตรวัดความเร็วยังหมุนข้อความภายในด้วย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1451"/>
         <source>Set the thickness of the graph line. Does not affect speedometer.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าความหนาของเส้นกราฟ ไม่ส่งผลต่อมาตรวัดความเร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1481"/>
         <source>Draw legend</source>
-        <translation type="unfinished"></translation>
+        <translation>วาดสัญลักษณ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1485"/>
         <source>Draw 5 horizontal white lines with individual values for graph readability. 2D map also draws vertical (longitude) lines.
 For speedometer this draws text for divisions.</source>
-        <translation type="unfinished"></translation>
+        <translation>วาดเส้นแนวนอนสีขาว 5 เส้นพร้อมค่าแยกกันเพื่อให้กราฟอ่านได้ง่าย แผนที่ 2 มิติยังวาดเส้นแนวตั้ง (ลองจิจูด) ได้ด้วย 
+สำหรับมาตรวัดความเร็ว จะวาดข้อความสำหรับการแบ่งส่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1498"/>
         <source>Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>หน่วย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1502"/>
         <source>This will be used in legend text if active and in absolute value math.</source>
-        <translation type="unfinished"></translation>
+        <translation>สิ่งนี้จะใช้ในข้อความคำอธิบายหากมีการใช้งานอยู่ และในคณิตศาสตร์ค่าสัมบูรณ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1514"/>
         <source>Defaults are km/h (speed) and meters (altitude).
  Available options: km/h, mi/h, nm/h (kn), m/s, ft/s.</source>
-        <translation type="unfinished"></translation>
+        <translation>ค่าเริ่มต้นคือ กม./ชม. (ความเร็ว) และ เมตร (ความสูง) ตัวเลือกที่มี: กม./ชม. ไมล์/ชม. นาโนเมตร/ชม. (กิโลนิวตัน) ม./วินาที ฟุต/วินาที</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1648"/>
         <source>Sets the height to the correct map aspect ratio or 1:1.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าความสูงเป็นอัตราส่วนภาพแผนที่ที่ถูกต้องหรือ 1:1</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1655"/>
         <source>&lt;b&gt;Background options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ตัวเลือกพื้นหลัง&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1660"/>
         <source>Image path</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นทางภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1664"/>
         <source>Choose an image to overlay behind the graph. Tip: you can use an actual map image to make the GPS track more interesting.</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกภาพที่จะซ้อนทับด้านหลังกราฟ เคล็ดลับ: คุณสามารถใช้ภาพแผนที่จริงเพื่อทำให้เส้นทาง GPS น่าสนใจยิ่งขึ้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1696"/>
         <source>GPS file center is: </source>
-        <translation type="unfinished"></translation>
+        <translation>ศูนย์กลางไฟล์ GPS คือ:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1699"/>
         <source>Get the center coordinate of GPS map. This does not change with trim or crop.
 TIP:OpenStreetMap website can save the current standard map centered on searched location (but only at screen resolution).
 Google Earth for desktop can center on a coordinate and save a 4K image of it. Disable the Terrain layer for best results.</source>
-        <translation type="unfinished"></translation>
+        <translation>รับพิกัดศูนย์กลางของแผนที่ GPS ซึ่งจะไม่เปลี่ยนแปลงแม้จะตัดแต่งหรือครอบตัด
+เคล็ดลับ: เว็บไซต์ OpenStreetMap สามารถบันทึกแผนที่มาตรฐานปัจจุบันโดยให้ศูนย์กลางอยู่ที่ตำแหน่งที่ค้นหา (แต่จะอยู่ที่ความละเอียดหน้าจอเท่านั้น)
+Google Earth สำหรับเดสก์ท็อปสามารถให้ศูนย์กลางอยู่ที่พิกัดและบันทึกภาพขนาด 4K ของพิกัดนั้นได้ ปิดใช้งานเลเยอร์ภูมิประเทศเพื่อผลลัพธ์ที่ดีที่สุด</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1710"/>
         <source>Browse for an image file to be assigned as graph background.</source>
-        <translation type="unfinished"></translation>
+        <translation>เรียกดูไฟล์รูปภาพเพื่อกำหนดเป็นพื้นหลังกราฟ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1727"/>
         <source>Increase or decrease the size of the background image.
 Values smaller than 1 will zoom into image.</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มหรือลดขนาดรูปภาพพื้นหลัง
+ค่าที่น้อยกว่า 1 จะซูมเข้าไปในรูปภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="584"/>
@@ -17942,151 +18366,156 @@ Values smaller than 1 will zoom into image.</source>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="589"/>
         <source>Distances are calculated since the start of the gps file, use this field to reset them (GPS time).</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะทางจะถูกคำนวณตั้งแต่เริ่มต้นไฟล์ GPS ใช้ฟิลด์นี้เพื่อรีเซ็ตระยะทาง (เวลา GPS)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="606"/>
         <source>Insert date and time formatted exactly as: YYYY-MM-DD HH:MM:SS (GPS time).</source>
-        <translation type="unfinished"></translation>
+        <translation>แทรกวันที่และเวลาในรูปแบบที่แน่นอนเป็น: ปปปป-ดด-วว ชช:นน:วว (เวลา GPS)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="621"/>
         <source>Set start of GPS processing to current video time.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าการเริ่มประมวลผล GPS เป็นเวลาวิดีโอปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="674"/>
         <source>&lt;b&gt;Text options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ตัวเลือกข้อความ&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="791"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="792"/>
         <source>Insert GPS field</source>
-        <translation type="unfinished"></translation>
+        <translation>แทรกช่อง GPS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="880"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="881"/>
         <source>Extra arguments can be added inside keywords:
 Distance units: m [km|ft|mi].
 Speed units: km/h [mi/h|m/s|ft/s].
 Time default: %Y-%m-%d %H:%M:%S, extra offset can be added as +/-seconds (+3600).
 Extra keyword: RAW (prints only values from file).</source>
-        <translation type="unfinished"></translation>
+        <translation>สามารถเพิ่มอาร์กิวเมนต์เพิ่มเติมในคีย์เวิร์ดได้:
+หน่วยระยะทาง: ม. [กม.|ฟุต|ไมล์].
+หน่วยความเร็ว: กม./ชม. [ไมล์/ชม.|ม./วินาที|ฟุต/วินาที].
+ค่าเริ่มต้นของเวลา: %Y-%m-%d %H:%M:%S
+สามารถเพิ่มออฟเซ็ตเพิ่มเติมเป็น +/-วินาที (+3600) ได้ 
+คีย์เวิร์ดเพิ่มเติม: RAW (พิมพ์เฉพาะค่าจากไฟล์)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>GPS latitude</source>
-        <translation type="unfinished"></translation>
+        <translation>ละติจูด GPS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>GPS longitude</source>
-        <translation type="unfinished"></translation>
+        <translation>ลองจิจูด GPS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Elevation (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>ความสูง (ม.)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Speed (km/h)</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเร็ว (กม./ชม.)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Distance (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะทาง (ม.)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>GPS date-time</source>
-        <translation type="unfinished"></translation>
+        <translation>วันที่-เวลา GPS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Video file date-time</source>
-        <translation type="unfinished"></translation>
+        <translation>วันที่-เวลาของไฟล์วีดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Heart-rate (bpm)</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราการเต้นของหัวใจ (ครั้งต่อนาที)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Bearing (degrees)</source>
-        <translation type="unfinished"></translation>
+        <translation>ทิศทาง (องศา)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Bearing (compass)</source>
-        <translation type="unfinished"></translation>
+        <translation>ทิศทาง (เข็มทิศ)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Elevation gain (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>ความสูงที่เพิ่มขึ้น (ม.)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Elevation loss (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>การสูญเสียระดับความสูง (ม.)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Distance uphill (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะทางขึ้นเขา (ม.)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Distance downhill (m)</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะทางลงเขา (ม.)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="800"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
         <source>Distance flat (m)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
-        <source>Cadence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
-        <source>Temperature (C)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
-        <source>Grade (%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
-        <source>Grade (degrees)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
-        <source>Vertical speed (m/s)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="801"/>
-        <source>3D Speed (km/h)</source>
-        <translation type="unfinished"></translation>
+        <translation>ระยะทางราบ (ม.)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
-        <source>Power (W)</source>
-        <translation type="unfinished"></translation>
+        <source>Cadence</source>
+        <translation>จังหวะจะโคน</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="894"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <source>Temperature (C)</source>
+        <translation>อุณหภูมิ (องศาเซลเซียส)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <source>Grade (%)</source>
+        <translation>เกรดภูเขา (%)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <source>Grade (degrees)</source>
+        <translation>เกรด (องศา)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <source>Vertical speed (m/s)</source>
+        <translation>ความเร็วแนวตั้ง (ม./วินาที)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
+        <source>3D Speed (km/h)</source>
+        <translation>ความเร็ว 3 มิติ (กม./ชม.)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
+        <source>Power (W)</source>
+        <translation>กำลังไฟฟ้า (วัตต์)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="895"/>
         <source>&lt;b&gt;Advanced options&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ตัวเลือกขั้นสูง&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="848"/>
@@ -18098,64 +18527,65 @@ Extra keyword: RAW (prints only values from file).</source>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="852"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="639"/>
         <source>If the current video is sped up (timelapse) or slowed down use this field to set the speed.</source>
-        <translation type="unfinished"></translation>
+        <translation>หากวิดีโอปัจจุบันถูกเร่งความเร็ว (Timelapse) หรือช้าลง ให้ใช้ฟิลด์นี้เพื่อตั้งค่าความเร็ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="875"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="660"/>
         <source>Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).</source>
-        <translation type="unfinished"></translation>
+        <translation>นอกจากนี้ ยังอนุญาตให้ใช้เวลาเป็นเศษส่วนได้ (0.25 = สโลว์โมชั่น 4x, 5 = ไทม์แลปส์ 5x)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="899"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="900"/>
         <source>Update speed</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเร็วในการอัปเดต</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="904"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="905"/>
         <source>Set how many text updates to show per second.
 Set to 0 to only print real points (no interpolation).</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าจำนวนการอัปเดตข้อความที่จะแสดงต่อวินาที
+ตั้งค่าเป็น 0 เพื่อพิมพ์เฉพาะจุดจริง (ไม่มีการสอดแทรก)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="922"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="923"/>
         <source>Fractional times are also allowed (0.25 = update every 4 seconds, 5 = 5 updates per second).</source>
-        <translation type="unfinished"></translation>
+        <translation>นอกจากนี้ยังอนุญาตให้มีเวลาเป็นเศษส่วน (0.25 = อัปเดตทุก 4 วินาที, 5 = อัปเดต 5 ครั้งต่อวินาที)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="932"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="933"/>
         <source> per second</source>
         <translation>ต่อวินาที</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1770"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="959"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="960"/>
         <source>Video start time:</source>
         <translation>เวลาเริ่มของวิดิโอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1775"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="964"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="965"/>
         <source>Detected date-time for the video file.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตรวจพบวันที่-เวลาสำหรับไฟล์วิดีโอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1793"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="982"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="983"/>
         <source>GPS start time:</source>
-        <translation type="unfinished"></translation>
+        <translation>เวลาเริ่มต้น GPS:</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1798"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="987"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="988"/>
         <source>Detected date-time for the GPS file.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตรวจพบวันที่-เวลาสำหรับไฟล์ GPS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpsgraphic/ui.qml" line="1809"/>
-        <location filename="../src/qml/filters/gpstext/ui.qml" line="998"/>
+        <location filename="../src/qml/filters/gpstext/ui.qml" line="999"/>
         <source>This time will be used for synchronization.</source>
-        <translation type="unfinished"></translation>
+        <translation>ครั้งนี้จะใช้สำหรับการซิงโครไนซ์</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="599"/>
@@ -18163,82 +18593,82 @@ Set to 0 to only print real points (no interpolation).</source>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="259"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="622"/>
         <source>Tip: Mask other video filters by adding filters after this one followed by &lt;b&gt;Mask: Apply&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>เคล็ดลับ: หน้ากากตัวกรองวิดีโออื่น ๆ โดยเพิ่มตัวกรองหลังจากนี้ ตามด้วย &lt;b&gt;หน้ากาก: ใช้&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="128"/>
         <source>50 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>50 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="198"/>
         <source>100 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>100 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="222"/>
         <source>156 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>156 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="246"/>
         <source>220 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>220 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="270"/>
         <source>311 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>311 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="294"/>
         <source>440 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>440 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="318"/>
         <source>622 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>622 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="342"/>
         <source>880 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>880 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="366"/>
         <source>1250 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>1250 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="390"/>
         <source>1750 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>1750 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="414"/>
         <source>2500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>2500 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="438"/>
         <source>3500 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>3500 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="462"/>
         <source>5000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>5000 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="486"/>
         <source>10000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>10000 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/ui.qml" line="510"/>
         <source>20000 Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>20000 Hz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="130"/>
@@ -18248,12 +18678,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="188"/>
         <source>Mid</source>
-        <translation type="unfinished"></translation>
+        <translation>ปานกลาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq3band/ui.qml" line="212"/>
         <source>High</source>
-        <translation type="unfinished"></translation>
+        <translation>สูง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="87"/>
@@ -18263,37 +18693,37 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="108"/>
         <source>Middle (L+R)</source>
-        <translation type="unfinished"></translation>
+        <translation>ตรงกลาง (L+R)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="108"/>
         <source>Side (L-R)</source>
-        <translation type="unfinished"></translation>
+        <translation>ด้านข้าง (L-R)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="117"/>
         <source>Left delay</source>
-        <translation type="unfinished"></translation>
+        <translation>ความล่าช้าซ้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="143"/>
         <source>Left delay gain</source>
-        <translation type="unfinished"></translation>
+        <translation>การเพิ่มค่าหน่วงเวลาด้านซ้าย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="169"/>
         <source>Right delay</source>
-        <translation type="unfinished"></translation>
+        <translation>ความล่าช้าขวา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="195"/>
         <source>Right delay gain</source>
-        <translation type="unfinished"></translation>
+        <translation>การเพิ่มค่าหน่วงเวลาด้านขวา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="221"/>
         <source>Output gain</source>
-        <translation type="unfinished"></translation>
+        <translation>อัตราขยายเอาท์พุต</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="103"/>
@@ -18313,7 +18743,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="134"/>
         <source>Click &lt;b&gt;New...&lt;/b&gt; or &lt;b&gt;Open...&lt;/b&gt; to use this filter</source>
-        <translation type="unfinished"></translation>
+        <translation>คลิก &lt;b&gt;ใหม่...&lt;/b&gt; หรือ &lt;b&gt;เปิด...&lt;/b&gt; เพื่อใช้ตัวกรองนี้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/ui.qml" line="149"/>
@@ -18333,97 +18763,189 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/tracker/ui.qml" line="139"/>
         <source>Region To Track</source>
-        <translation type="unfinished"></translation>
+        <translation>ภูมิภาคที่จะติดตาม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tracker/ui.qml" line="148"/>
         <source>Set the region of interest to track.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตั้งค่าภูมิภาคที่สนใจที่จะติดตาม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tracker/ui.qml" line="267"/>
         <source>Algorithm</source>
-        <translation type="unfinished"></translation>
+        <translation>ลำดับขั้นตอนวิธี</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tracker/ui.qml" line="270"/>
         <source>Chooses the way (rules) the tracking is calculated.</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกวิธี(กฏ)ที่จะคำนวณการติดตาม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tracker/ui.qml" line="348"/>
         <source>Show preview</source>
-        <translation type="unfinished"></translation>
+        <translation>แสดงตัวอย่าง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_seam/ui.qml" line="88"/>
         <source>Discontinuity threshold</source>
-        <translation type="unfinished"></translation>
+        <translation>เกณฑ์ความไม่ต่อเนื่อง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_seam/ui.qml" line="92"/>
         <source>The threshold to apply a seam to splices</source>
-        <translation type="unfinished"></translation>
+        <translation>เกณฑ์ในการใช้ตะเข็บกับรอยต่อ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_seam/ui.qml" line="128"/>
         <source>Seam applied</source>
-        <translation type="unfinished"></translation>
+        <translation>ตะเข็บที่ใช้</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_seam/ui.qml" line="132"/>
         <source>Status indicator showing when a splice has been seamed.</source>
-        <translation type="unfinished"></translation>
+        <translation>ตัวชี้วัดจะแสดงเมื่อการต่อรอยได้รับการเชื่อมแล้ว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="36"/>
         <source>Fade to White</source>
-        <translation type="unfinished"></translation>
+        <translation>จางเป็นสีขาว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/video_autofade/ui.qml" line="123"/>
         <source>Fade color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีจาง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_encoder/ui.qml" line="181"/>
         <source>Azimuth</source>
-        <translation type="unfinished"></translation>
+        <translation>ทิศดาว</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/ambisonic_encoder/ui.qml" line="225"/>
         <source>Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกระดับ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vibrance/ui.qml" line="98"/>
         <source>Intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>ความเข้มข้น</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/subtitle/ui.qml" line="112"/>
+        <location filename="../src/qml/filters/subtitle/ui.qml" line="113"/>
         <source>Subtitle Track</source>
-        <translation type="unfinished"></translation>
+        <translation>รางคำบรรยาย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reframe/ui.qml" line="153"/>
         <source>Horizontal 4:3</source>
-        <translation type="unfinished"></translation>
+        <translation>แนวนอน 4:3</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reframe/ui.qml" line="158"/>
         <source>Horizontal 16:9</source>
-        <translation type="unfinished"></translation>
+        <translation>แนวนอน 16:9</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reframe/ui.qml" line="163"/>
         <source>Square</source>
-        <translation type="unfinished"></translation>
+        <translation>สี่เหลี่ยมจัตุรัส</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/reframe/ui.qml" line="170"/>
         <source>Vertical 9:16</source>
-        <translation type="unfinished"></translation>
+        <translation>แนวตั้ง 9:16</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="140"/>
+        <source>Sepia</source>
+        <translation>ซีเปีย</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="146"/>
+        <source>Thermal</source>
+        <translation>เกี่ยวกับความร้อน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="205"/>
+        <source>Color #%1</source>
+        <translation>สี #%1</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="211"/>
+        <source>Color: %1
+Click to select, drag to change position</source>
+        <translation>สี: %1
+คลิกเพื่อเลือก ลากเพื่อเปลี่ยนตำแหน่ง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gradientmap/ui.qml" line="344"/>
+        <source>Stop</source>
+        <translation>หยุด</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="159"/>
+        <source>Overlap</source>
+        <translation>ทับซ้อน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="294"/>
+        <source>Hue Shift</source>
+        <translation>เลื่อนสีสัน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="355"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="518"/>
+        <source>Reds</source>
+        <translation>สีแดง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="218"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="381"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="544"/>
+        <source>Yellows</source>
+        <translation>สีเหลือง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="244"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="407"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="570"/>
+        <source>Greens</source>
+        <translation>สีเขียว</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="270"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="433"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="596"/>
+        <source>Cyans</source>
+        <translation>สีฟ้า</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="296"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="459"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="622"/>
+        <source>Blues</source>
+        <translation>สีน้ำเงิน</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="322"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="485"/>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="648"/>
+        <source>Magentas</source>
+        <translation>สีม่วงแดง</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="349"/>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="323"/>
+        <source>Saturation Scale</source>
+        <translation>ระดับความอิ่มตัว</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hslprimaries/ui.qml" line="512"/>
+        <location filename="../src/qml/filters/hslrange/ui.qml" line="352"/>
+        <source>Lightness Scale</source>
+        <translation>ระดับความสว่าง</translation>
     </message>
 </context>
 <context>
@@ -18441,7 +18963,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/ui_av.qml" line="126"/>
         <source>Blur alpha</source>
-        <translation type="unfinished"></translation>
+        <translation>เบลออัลฟ่า</translation>
     </message>
 </context>
 <context>
@@ -18464,7 +18986,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/blur/ui_box_blur.qml" line="152"/>
         <source>Blur alpha</source>
-        <translation type="unfinished"></translation>
+        <translation>เบลออัลฟ่า</translation>
     </message>
 </context>
 <context>
@@ -18495,12 +19017,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="84"/>
         <source>Initial Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>การซูมเบื้องต้น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="88"/>
         <source>The amount to zoom the image before any motion occurs.</source>
-        <translation type="unfinished"></translation>
+        <translation>ปริมาณการซูมภาพก่อนที่จะเกิดการเคลื่อนไหวใดๆ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="108"/>
@@ -18510,7 +19032,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="112"/>
         <source>Oscillation can be useful to make the image move back and forth during long periods of sound.</source>
-        <translation type="unfinished"></translation>
+        <translation>การแกว่งสามารถเป็นประโยชน์ในการทำให้ภาพเคลื่อนไปมาในช่วงเวลาที่ยาวนานของเสียง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="132"/>
@@ -18520,7 +19042,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="136"/>
         <source>The amount that the audio affects the zoom of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>ปริมาณที่เสียงส่งผลต่อการซูมของภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="156"/>
@@ -18530,7 +19052,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="160"/>
         <source>The amount that the audio affects the upward offset of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนที่เสียงส่งผลต่อการชดเชยด้านบนของภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="180"/>
@@ -18540,7 +19062,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="184"/>
         <source>The amount that the audio affects the downward offset of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนที่เสียงส่งผลต่อการลดค่าออฟเซ็ตของภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="204"/>
@@ -18550,7 +19072,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="208"/>
         <source>The amount that the audio affects the left offset of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนที่เสียงส่งผลต่อออฟเซ็ตด้านซ้ายของภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="228"/>
@@ -18560,33 +19082,33 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="232"/>
         <source>The amount that the audio affects the right offset of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนที่เสียงส่งผลต่อออฟเซ็ตด้านขวาของภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="252"/>
         <source>Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>ตามเข็มนาฬิกา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="256"/>
         <source>The amount that the audio affects the clockwise rotation of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนที่เสียงส่งผลต่อการหมุนภาพตามเข็มนาฬิกา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="267"/>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="291"/>
         <source> deg</source>
-        <translation type="unfinished"></translation>
+        <translation>องศา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="276"/>
         <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>ทวนเข็มนาฬิกา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="280"/>
         <source>The amount that the audio affects the counterclockwise rotation of the image.</source>
-        <translation type="unfinished"></translation>
+        <translation>จำนวนที่เสียงส่งผลต่อการหมุนภาพทวนเข็มนาฬิกา</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="300"/>
@@ -18596,7 +19118,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="304"/>
         <source>The low end of the frequency range to be used to influence the image motion.</source>
-        <translation type="unfinished"></translation>
+        <translation>ช่วงความถี่ต่ำที่จะใช้ในการกำหนดการเคลื่อนไหวของภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="328"/>
@@ -18606,7 +19128,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="332"/>
         <source>The high end of the frequency range to be used to influence the image motion.</source>
-        <translation type="unfinished"></translation>
+        <translation>ช่วงความถี่สูงที่จะใช้ในการกำหนดการเคลื่อนไหวของภาพ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="356"/>
@@ -18616,7 +19138,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="360"/>
         <source>The minimum amplitude of sound that must occur within the frequency range to cause the image to move.</source>
-        <translation type="unfinished"></translation>
+        <translation>แอมพลิจูดเสียงขั้นต่ำที่ต้องเกิดขึ้นภายในช่วงความถี่เพื่อทำให้ภาพเคลื่อนที่</translation>
     </message>
 </context>
 <context>
@@ -18666,17 +19188,17 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Shadows (Lift)</source>
-        <translation type="unfinished"></translation>
+        <translation>เงา (ลิฟต์)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Midtones (Gamma)</source>
-        <translation type="unfinished"></translation>
+        <translation>มิดโทน (แกมมา)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Highlights (Gain)</source>
-        <translation type="unfinished"></translation>
+        <translation>ไฮไลท์ (กำไร)</translation>
     </message>
 </context>
 <context>
@@ -18689,7 +19211,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="96"/>
         <source>Waveform Color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีของคลื่น</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="112"/>
@@ -18709,7 +19231,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="198"/>
         <source>Oscillation can be useful to make the light blink during long periods of sound.</source>
-        <translation type="unfinished"></translation>
+        <translation>การแกว่งอาจเป็นประโยชน์ในการทำให้แสงกระพริบในระหว่างช่วงเวลาที่มีเสียงเป็นเวลานาน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="218"/>
@@ -18719,7 +19241,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="222"/>
         <source>The low end of the frequency range to be used to influence the light.</source>
-        <translation type="unfinished"></translation>
+        <translation>ช่วงความถี่ต่ำที่จะใช้ในการส่งผลต่อแสง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="246"/>
@@ -18729,7 +19251,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="250"/>
         <source>The high end of the frequency range to be used to influence the light.</source>
-        <translation type="unfinished"></translation>
+        <translation>ช่วงความถี่สูงที่จะใช้ในการรับอิทธิพลของแสง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="274"/>
@@ -18739,7 +19261,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="278"/>
         <source>The minimum amplitude of sound that must occur within the frequency range to cause the light to change.</source>
-        <translation type="unfinished"></translation>
+        <translation>แอมพลิจูดขั้นต่ำของเสียงที่จะต้องเกิดขึ้นภายในช่วงความถี่เพื่อทำให้แสงเปลี่ยนแปลง</translation>
     </message>
 </context>
 <context>
@@ -18769,12 +19291,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="175"/>
         <source>Highlight blurriness</source>
-        <translation type="unfinished"></translation>
+        <translation>เน้นความเบลอ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="201"/>
         <source>Highlight cutoff</source>
-        <translation type="unfinished"></translation>
+        <translation>เน้นการตัดออก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="79"/>
@@ -18784,12 +19306,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="155"/>
         <source>Circle radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีวงกลม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="181"/>
         <source>Gaussian radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีเกาส์เซียน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="207"/>
@@ -18804,12 +19326,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="147"/>
         <source>Outer radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีนอก</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="171"/>
         <source>Inner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>รัศมีใน</translation>
     </message>
 </context>
 <context>
@@ -18832,7 +19354,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="212"/>
         <source>Non-linear feathering</source>
-        <translation type="unfinished"></translation>
+        <translation>การเรียงขนแบบไม่เป็นเส้นตรง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="222"/>
@@ -18865,12 +19387,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="141"/>
         <source>Segment</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="149"/>
         <source>Spectrum Color</source>
-        <translation type="unfinished"></translation>
+        <translation>สีสเปกตรัม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="165"/>
@@ -18895,17 +19417,17 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="300"/>
         <source>Fill the area under the spectrum.</source>
-        <translation type="unfinished"></translation>
+        <translation>เติมพื้นที่ใต้สเปกตรัม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="312"/>
         <source>Mirror the spectrum.</source>
-        <translation type="unfinished"></translation>
+        <translation>กระจกสะท้อนสเปกตรัม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="324"/>
         <source>Reverse the spectrum.</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้อนกลับสเปกตรัม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="329"/>
@@ -18915,17 +19437,17 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="348"/>
         <source>Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="371"/>
         <source>Segment Gap</source>
-        <translation type="unfinished"></translation>
+        <translation>ช่องว่างระหว่างส่วน</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="394"/>
         <source>Bands</source>
-        <translation type="unfinished"></translation>
+        <translation>แถบสาย</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="413"/>
@@ -18935,7 +19457,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="417"/>
         <source>The low end of the frequency range of the spectrum.</source>
-        <translation type="unfinished"></translation>
+        <translation>ปลายต่ำของช่วงความถี่ของสเปกตรัม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="441"/>
@@ -18945,7 +19467,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="445"/>
         <source>The high end of the frequency range of the spectrum.</source>
-        <translation type="unfinished"></translation>
+        <translation>ปลายสูงของช่วงความถี่ของสเปกตรัม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="469"/>
@@ -18958,7 +19480,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="213"/>
         <source>Hold Shift while dragging any corner to drag all corners</source>
-        <translation type="unfinished"></translation>
+        <translation>กด Shift ค้างไว้ขณะลากมุมใด ๆ เพื่อลากทุกมุม</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="276"/>
@@ -18968,17 +19490,17 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="318"/>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="360"/>
         <source>3</source>
-        <translation type="unfinished">3</translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="402"/>
         <source>4</source>
-        <translation type="unfinished">4</translation>
+        <translation>4</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="366"/>
@@ -18993,12 +19515,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="487"/>
         <source>Collapse Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ยุบแถบเครื่องมือ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="487"/>
         <source>Expand Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ขยายแถบเครื่องมือ</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="270"/>
@@ -19023,7 +19545,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="629"/>
         <source>Justify</source>
-        <translation type="unfinished"></translation>
+        <translation>การจัดเหตุผล</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="640"/>
@@ -19064,12 +19586,12 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="686"/>
         <source>Decrease Indent</source>
-        <translation type="unfinished"></translation>
+        <translation>ลดการเยื้อง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="695"/>
         <source>Insert Indent</source>
-        <translation type="unfinished"></translation>
+        <translation>แทรกการเยื้อง</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="758"/>
@@ -19098,7 +19620,7 @@ Set to 0 to only print real points (no interpolation).</source>
         <location filename="../src/qml/filters/tracker/vui.qml" line="48"/>
         <location filename="../src/qml/filters/waveform/vui.qml" line="26"/>
         <source>Click in rectangle + hold Shift to drag</source>
-        <translation type="unfinished"></translation>
+        <translation>คลิกในสี่เหลี่ยมผืนผ้า + กด Shift ค้างไว้เพื่อลาก</translation>
     </message>
 </context>
 <context>
@@ -19106,7 +19628,7 @@ Set to 0 to only print real points (no interpolation).</source>
     <message>
         <location filename="../src/qml/filters/spectrum/vui_spectrum.qml" line="26"/>
         <source>Click in rectangle + hold Shift to drag</source>
-        <translation type="unfinished"></translation>
+        <translation>คลิกในสี่เหลี่ยมผืนผ้า + กด Shift ค้างไว้เพื่อลาก</translation>
     </message>
 </context>
 </TS>
