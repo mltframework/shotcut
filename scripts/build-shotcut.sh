@@ -1902,7 +1902,7 @@ function deploy_mac
 
   # whisper.cpp
   cmd cp -p "$FINAL_INSTALL_DIR"/lib/libwhisper.1.dylib Frameworks
-  cmd cp -p "$FINAL_INSTALL_DIR"/lib/libggml.dylib Frameworks
+  cmd cp -p "$FINAL_INSTALL_DIR"/lib/libggml*.dylib Frameworks
   fixlibs MacOS/whisper-cli
   log fixing rpath of executable "whisper-cli"
   cmd install_name_tool -delete_rpath "$SOURCE_DIR"/whisper.cpp/build/src MacOS/whisper-cli 2> /dev/null
