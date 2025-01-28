@@ -692,7 +692,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string notr="true">Lanczos (best)</string>
+    <string>Lanczos (best)</string>
    </property>
   </action>
   <action name="actionProfileAutomatic">

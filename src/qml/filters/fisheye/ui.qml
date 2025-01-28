@@ -621,7 +621,7 @@ Item {
                     }
 
                     ListElement {
-                        text: qsTr('Ortographic')
+                        text: qsTr('Orthographic')
                         value: 0.333
                     }
 
@@ -854,7 +854,7 @@ Item {
             visible: scaleYShowSlider
 
             Shotcut.HoverTip {
-                text: qsTr('Seperate Y scale')
+                text: qsTr('Separate Y scale')
             }
         }
 
