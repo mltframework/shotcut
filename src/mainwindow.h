@@ -179,6 +179,7 @@ private:
     void writeSettings();
     void configureVideoWidget();
     void setCurrentFile(const QString &filename);
+    void updateWindowTitle();
     void changeAudioChannels(bool checked, int channels);
     void changeDeinterlacer(bool checked, const char *method);
     void changeInterpolation(bool checked, const char *method);
