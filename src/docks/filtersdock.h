@@ -59,6 +59,7 @@ public slots:
     void onSeeked(int position);
     void onShowFrame(const SharedFrame &frame);
     void openFilterMenu() const;
+    void showCopyFilterMenu();
     void onServiceInChanged(int delta, Mlt::Service *service);
     void load();
 

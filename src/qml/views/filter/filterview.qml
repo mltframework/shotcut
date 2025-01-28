@@ -26,6 +26,7 @@ Rectangle {
     property int selectedIndex: Shotcut.Filter.NoCurrentFilter
 
     signal currentFilterRequested(int attachedIndex)
+    signal copyFilterRequested()
 
     function clearCurrentFilter() {
         if (filterConfig.item) {
@@ -225,10 +226,10 @@ Rectangle {
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
             enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
             opacity: enabled ? 1 : 0.5
-            onClicked: application.copyFilters()
+            onClicked: root.copyFilterRequested()
 
             Shotcut.HoverTip {
-                text: qsTr('Copy checked filters')
+                text: qsTr('Copy filters')
             }
         }
 

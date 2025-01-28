@@ -21,6 +21,7 @@
 #include <QtWidgets/QScrollArea>
 #include <QQmlEngine>
 #include <QDir>
+#include <QMenu>
 #include <QUrl>
 #include <QQmlContext>
 #include <QAction>
@@ -148,6 +149,15 @@ void FiltersDock::openFilterMenu() const
     QMetaObject::invokeMethod(m_qview.rootObject(), "openFilterMenu");
 }
 
+void FiltersDock::showCopyFilterMenu()
+{
+    QMenu menu;
+    menu.addAction(Actions["filtersCopyCurrentFilterAction"]);
+    menu.addAction(Actions["filtersCopyFiltersAction"]);
+    menu.addAction(Actions["filtersCopyAllFilterAction"]);
+    menu.exec(QCursor::pos());
+}
+
 void FiltersDock::onServiceInChanged(int delta, Mlt::Service *service)
 {
     if (delta && service && m_producer.producer().is_valid()
@@ -183,6 +193,8 @@ void FiltersDock::load()
 
     QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
                      SIGNAL(currentFilterRequested(int)));
+    QObject::connect(m_qview.rootObject(), SIGNAL(copyFilterRequested()),
+                     SLOT(showCopyFilterMenu()));
 }
 
 void FiltersDock::setupActions()
@@ -217,16 +229,29 @@ void FiltersDock::setupActions()
     addAction(action);
     Actions.add("filtersRemoveFilterAction", action, windowTitle());
 
-    action = new QAction(tr("Copy Filters"), this);
+    action = new QAction(tr("Copy Enabled"), this);
     action->setToolTip(tr("Copy checked filters to the clipboard"));
-    icon = QIcon::fromTheme("edit-copy",
-                            QIcon(":/icons/oxygen/32x32/actions/edit-copy.png"));
-    action->setIcon(icon);
     connect(action, &QAction::triggered, this, [ = ]() {
-        QmlApplication::singleton().copyFilters();
+        QmlApplication::singleton().copyEnabledFilters();
     });
     addAction(action);
     Actions.add("filtersCopyFiltersAction", action, windowTitle());
+
+    action = new QAction(tr("Copy Current"), this);
+    action->setToolTip(tr("Copy current filter to the clipboard"));
+    connect(action, &QAction::triggered, this, [ = ]() {
+        QmlApplication::singleton().copyCurrentFilter();
+    });
+    addAction(action);
+    Actions.add("filtersCopyCurrentFilterAction", action, windowTitle());
+
+    action = new QAction(tr("Copy All"), this);
+    action->setToolTip(tr("Copy all filters to the clipboard"));
+    connect(action, &QAction::triggered, this, [ = ]() {
+        QmlApplication::singleton().copyAllFilters();
+    });
+    addAction(action);
+    Actions.add("filtersCopyAllFilterAction", action, windowTitle());
 
     action = new QAction(tr("Paste Filters"), this);
     action->setToolTip(tr("Paste the filters from the clipboard"));

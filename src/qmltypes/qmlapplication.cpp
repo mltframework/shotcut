@@ -107,11 +107,34 @@ bool QmlApplication::hasFiltersOnClipboard()
     return MLT.hasFiltersOnClipboard();
 }
 
-void QmlApplication::copyFilters()
+void QmlApplication::copyEnabledFilters()
 {
     QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
                                                MAIN.filterController()->attachedModel()->producer()));
-    MLT.copyFilters(producer.data());
+    MLT.copyFilters(producer.data(), MLT.FILTER_INDEX_ENABLED);
+    QGuiApplication::clipboard()->setText(MLT.filtersClipboardXML());
+    emit QmlApplication::singleton().filtersCopied();
+}
+
+void QmlApplication::copyAllFilters()
+{
+    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
+                                               MAIN.filterController()->attachedModel()->producer()));
+    MLT.copyFilters(producer.data(), MLT.FILTER_INDEX_ENABLED);
+    QGuiApplication::clipboard()->setText(MLT.filtersClipboardXML());
+    emit QmlApplication::singleton().filtersCopied();
+}
+
+void QmlApplication::copyCurrentFilter()
+{
+    int currentIndex = MAIN.filterController()->currentIndex();
+    if (currentIndex < 0) {
+        MAIN.showStatusMessage(tr("Select a filter to copy"));
+        return;
+    }
+    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
+                                               MAIN.filterController()->attachedModel()->producer()));
+    MLT.copyFilters(producer.data(), currentIndex);
     QGuiApplication::clipboard()->setText(MLT.filtersClipboardXML());
     emit QmlApplication::singleton().filtersCopied();
 }

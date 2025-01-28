@@ -24,7 +24,7 @@ Window {
     id: nameDialog
 
     function acceptName() {
-        application.copyFilters();
+        application.copyEnabledFilters();
         let name = nameField.text.trim();
         if (name.length) {
             metadatamodel.saveFilterSet(name);

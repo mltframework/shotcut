@@ -1117,13 +1117,14 @@ static int indexOfFirstNonGpu(Producer &toProducer)
 }
 
 void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool fromClipboard,
-                             bool includeDisabled)
+                             int filterIndex)
 {
     int in = fromProducer.get(kFilterInProperty) ? fromProducer.get_int(kFilterInProperty) :
              fromProducer.get_in();
     int out = fromProducer.get(kFilterOutProperty) ? fromProducer.get_int(
                   kFilterOutProperty) : fromProducer.get_out();
     int count = fromProducer.filter_count();
+    int filterCount = 0;
 
     // Get the index of the first non-GPU filter or link in toProducer
     int firstNonGpuService = fromClipboard ? indexOfFirstNonGpu(toProducer) : -1;
@@ -1132,8 +1133,16 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
         QScopedPointer<Mlt::Filter> fromFilter(fromProducer.filter(i));
         if (fromFilter && fromFilter->is_valid() && !fromFilter->get_int("_loader")
                 && !fromFilter->get_int(kShotcutHiddenProperty)
-                && fromFilter->get("mlt_service")
-                && (includeDisabled || !fromFilter->get_int("disable"))) {
+                && fromFilter->get("mlt_service")) {
+
+            filterCount++;
+            if (filterIndex >= 0 && filterIndex != (filterCount - 1)) {
+                continue;
+            }
+
+            if (filterIndex == FILTER_INDEX_ENABLED && fromFilter->get_int("disable")) {
+                continue;
+            }
 
             // Determine if filter can be added
             auto metadata = MAIN.filterController()->metadataForService(fromFilter.data());
@@ -1177,6 +1186,10 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
             QScopedPointer<Mlt::Link> fromLink(fromChain.link(i));
             if (fromLink && fromLink->is_valid() && fromLink->get("mlt_service")
                     && !fromLink->get_int("_loader")) {
+                filterCount++;
+                if (filterIndex != -1 && filterIndex != (filterCount - 1)) {
+                    continue;
+                }
                 Mlt::Link toLink(fromLink->get("mlt_service"));
                 if (toLink.is_valid()) {
                     toLink.inherit(*fromLink);
@@ -1190,14 +1203,14 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
     }
 }
 
-void Controller::copyFilters(Mlt::Producer *producer)
+void Controller::copyFilters(Mlt::Producer *producer, int filterIndex)
 {
     if (producer && producer->is_valid()) {
         initFiltersClipboard();
-        copyFilters(*producer, *m_filtersClipboard, false, false);
+        copyFilters(*producer, *m_filtersClipboard, false, filterIndex);
     } else if (m_producer && m_producer->is_valid()) {
         initFiltersClipboard();
-        copyFilters(*m_producer, *m_filtersClipboard, false, false);
+        copyFilters(*m_producer, *m_filtersClipboard, false, filterIndex);
     }
 }
 

@@ -51,7 +51,9 @@ public:
     static QString OS();
     static QRect mainWinRect();
     static bool hasFiltersOnClipboard();
-    Q_INVOKABLE static void copyFilters();
+    Q_INVOKABLE static void copyAllFilters();
+    Q_INVOKABLE static void copyEnabledFilters();
+    Q_INVOKABLE static void copyCurrentFilter();
     Q_INVOKABLE static void pasteFilters();
     Q_INVOKABLE static QString clockFromFrames(int frames);
     Q_INVOKABLE static QString timeFromFrames(int frames);
