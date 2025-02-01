@@ -2873,7 +2873,7 @@ void EncodeDock::on_reframeButton_clicked()
 
 void EncodeDock::on_aspectNumSpinner_valueChanged(int value)
 {
-    if (ui->widthSpinner->isEnabled()
+    if (!MLT.isClosedClip() && ui->widthSpinner->isEnabled()
             && double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()) !=
             MLT.profile().dar())
         showResampleWarning(tr("Aspect ratio does not match project Video Mode, which causes black bars."));
@@ -2912,7 +2912,7 @@ void EncodeDock::hideResampleWarning(bool hide)
 
 void EncodeDock::checkFrameRate()
 {
-    if (ui->fromCombo->currentData().toString() != "clip"
+    if (!MLT.isClosedClip() && ui->fromCombo->currentData().toString() != "clip"
             && qFloor(ui->fpsSpinner->value() * 10000.0) > qFloor(MLT.profile().fps() * 10000.0))
         showResampleWarning(
             tr("Frame rate is higher than project Video Mode, which causes frames to repeat."));

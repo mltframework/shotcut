@@ -755,8 +755,7 @@ void MainWindow::setupMenuFile()
             filters << match.captured(1) + "*.mlt";
         else
             filters << QFileInfo(m_currentFile).baseName().split(" - ").first() + "*.mlt";
-        for (auto &fileInfo : dir.entryInfoList(filters, QDir::Files, QDir::Time))
-        {
+        for (auto &fileInfo : dir.entryInfoList(filters, QDir::Files, QDir::Time)) {
             auto filename = fileInfo.fileName();
             if (filename != name) {
                 auto text = filename;
@@ -1904,7 +1903,7 @@ void MainWindow::openCut(Mlt::Producer *producer, bool play)
 {
     m_player->setPauseAfterOpen(!play);
     open(producer);
-    if (!MLT.isClosedClip(producer))
+    if (producer && producer->is_valid() && !MLT.isClosedClip(producer))
         MLT.seek(producer->get_in());
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 Meltytech, LLC
+ * Copyright (c) 2011-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -583,7 +583,7 @@ void Controller::setProfile(const QString &profile_name)
         m_profile.set_explicit(true);
     } else {
         m_profile.set_explicit(false);
-        if (!m_producer || !m_producer->is_valid() && isClosedClip()) {
+        if (isClosedClip()) {
             // Use a default profile with the dummy hidden color producer.
             Mlt::Profile tmp(kDefaultMltProfile);
             m_profile.set_colorspace(tmp.colorspace());
@@ -662,9 +662,9 @@ bool Controller::isClosedClip(Producer *producer) const
 {
     if (!producer)
         producer = m_producer.data();
-    return producer && producer->is_valid() &&
-           !qstrcmp(producer->get("mlt_service"), "color") &&
-           !qstrcmp(producer->get("resource"), "_hide");
+    return (!producer || !producer->is_valid() ||
+            (!qstrcmp(producer->get("mlt_service"), "color") &&
+             !qstrcmp(producer->get("resource"), "_hide")));
 }
 
 bool Controller::isSeekableClip()
