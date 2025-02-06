@@ -88,7 +88,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Vertical Offset')
+            text: qsTr('Vertical')
             Layout.alignment: Qt.AlignRight
         }
 
@@ -117,7 +117,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Horizontal Offset')
+            text: qsTr('Horizontal')
             Layout.alignment: Qt.AlignRight
         }
 

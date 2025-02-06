@@ -16,14 +16,14 @@ Metadata {
         simpleProperties: ['0', '1']
         parameters: [
             Parameter {
-                name: qsTr('V Offset')
+                name: qsTr('Vertical')
                 property: '0'
                 isCurve: true
                 minimum: 0
                 maximum: 1
             },
             Parameter {
-                name: qsTr('H Offset')
+                name: qsTr('Horizontal')
                 property: '1'
                 isCurve: true
                 minimum: 0
