@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -782,9 +782,9 @@ Item {
                 updateAspectRatio();
                 // enforce the aspect ratio
                 if (producer.displayAspectRatio > profile.aspectRatio)
-                    filterRect.height = rectH.value = filterRect.width / producer.displayAspectRatio;
+                    filterRect.height = rectH.value = filterRect.width * profile.sar / producer.displayAspectRatio;
                 else
-                    filterRect.width = rectW.value = filterRect.height * producer.displayAspectRatio;
+                    filterRect.width = rectW.value = filterRect.height / profile.sar * producer.displayAspectRatio;
                 setFilter(getPosition());
                 filter.endUndoCommand();
             }
