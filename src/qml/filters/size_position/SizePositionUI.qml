@@ -227,7 +227,7 @@ Item {
             filterRect.x = rectX.value = rightX - filterRect.width;
         var middleY = filterRect.y + filterRect.height / 2;
         var bottomY = filterRect.y + filterRect.height;
-        filterRect.height = rectH.value = value / Math.max(aspectRatio, 1e-06);
+        filterRect.height = rectH.value = value * profile.sar / Math.max(aspectRatio, 1e-06);
         if (middleRadioButton.checked)
             filterRect.y = rectY.value = middleY - filterRect.height / 2;
         else if (bottomRadioButton.checked)
@@ -246,7 +246,7 @@ Item {
             filterRect.y = rectY.value = bottomY - filterRect.height;
         var centerX = filterRect.x + filterRect.width / 2;
         var rightX = filterRect.x + filterRect.width;
-        filterRect.width = rectW.value = value * aspectRatio;
+        filterRect.width = rectW.value = value / profile.sar * aspectRatio;
         if (centerRadioButton.checked)
             filterRect.x = rectX.value = centerX - filterRect.width / 2;
         else if (rightRadioButton.checked)
@@ -734,7 +734,7 @@ Item {
                         filterRect.x = rectX.value = rightX - filterRect.width;
                     var middleY = filterRect.y + filterRect.height / 2;
                     var bottomY = filterRect.y + filterRect.height;
-                    filterRect.height = rectH.value = Math.round(filterRect.width / Math.max(aspectRatio, 1e-06));
+                    filterRect.height = rectH.value = Math.round(filterRect.width * profile.sar / Math.max(aspectRatio, 1e-06));
                     if (middleRadioButton.checked)
                         filterRect.y = rectY.value = middleY - filterRect.height / 2;
                     else if (bottomRadioButton.checked)
