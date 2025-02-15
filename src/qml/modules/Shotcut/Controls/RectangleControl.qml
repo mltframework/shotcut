@@ -259,6 +259,8 @@ Item {
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeAllCursor
             drag.target: rectangle
+            property var startX;
+            property var startY;
             onDoubleClicked: {
                 _positionDragLocked = !_positionDragLocked;
                 filter.set('_shotcut:positionDragLocked', _positionDragLocked);
@@ -284,16 +286,33 @@ Item {
                 leftHandle.anchors.left = rectangle.left;
                 rightHandle.anchors.verticalCenter = rectangle.verticalCenter;
                 rightHandle.anchors.right = rectangle.right;
+                startX = rectangle.x;
+                startY = rectangle.y;
             }
             onPositionChanged: mouse => {
+                var newX;
+                var newY;
                 if (!(mouse.modifiers & Qt.AltModifier)) {
-                    rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2;
-                    rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2;
+                    newX = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2;
+                    newY = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2;
                 }
                 if (isReframe) {
-                    rectangle.x = Math.min(Math.max(rectangle.x, 0), widthScale * profile.width - rectangle.width);
-                    rectangle.y = Math.min(Math.max(rectangle.y, 0), heightScale * profile.height - rectangle.height);
+                    newX = Math.min(Math.max(rectangle.x, 0), widthScale * profile.width - rectangle.width);
+                    newY = Math.min(Math.max(rectangle.y, 0), heightScale * profile.height - rectangle.height);
                 }
+                if (mouse.modifiers & Qt.ShiftModifier) {
+                    var deltaX = Math.abs(startX - newX);
+                    var deltaY = Math.abs(startY - newY);
+                    if (deltaX < deltaY) {
+                        // Constrain the move to only vertical
+                        newX = startX;
+                    } else {
+                        // Constrain the move to only horizontal
+                        newY = startY;
+                    }
+                }
+                rectangle.x = newX;
+                rectangle.y = newY;
                 rectChanged(rectangle);
             }
             onReleased: {
