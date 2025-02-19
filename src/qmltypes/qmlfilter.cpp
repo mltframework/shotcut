@@ -847,22 +847,19 @@ void QmlFilter::updateUndoCommand(const QString &name)
 //        LOG_DEBUG() << "Undo tracking has not started yet";
         return;
     }
-    if (m_changeInProgress) {
-        const QUndoCommand *lastCommand = MAIN.undoStack()->command(MAIN.undoStack()->count() - 1);
-        Filter::UndoParameterCommand *command = dynamic_cast<Filter::UndoParameterCommand *>
-                                                (const_cast<QUndoCommand *>(lastCommand));
-        if (command) {
-            // Update the change that is already in progress
-            command->update(name);
-        } else {
-            LOG_ERROR() << "Unable to find command in progress";
-            return;
-        }
+    if (!m_changeInProgress) {
+        startUndoParameterCommand(QStringLiteral());
+    }
+
+    const QUndoCommand *lastCommand = MAIN.undoStack()->command(MAIN.undoStack()->count() - 1);
+    Filter::UndoParameterCommand *command = dynamic_cast<Filter::UndoParameterCommand *>
+                                            (const_cast<QUndoCommand *>(lastCommand));
+    if (command) {
+        // Update the change that is already in progress
+        command->update(name);
     } else {
-        // Nothing in progress... make a generic command for this update
-        auto command = new Filter::UndoParameterCommand(m_metadata->name(), MAIN.filterController(),
-                                                        MAIN.filterController()->currentIndex(), m_previousState);
-        MAIN.undoStack()->push(command);
+        LOG_ERROR() << "Unable to find command in progress";
+        return;
     }
     m_previousState.pass_property(m_service, name.toUtf8().constData());
 }
