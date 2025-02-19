@@ -755,7 +755,8 @@ void MainWindow::setupMenuFile()
             filters << match.captured(1) + "*.mlt";
         else
             filters << QFileInfo(m_currentFile).baseName().split(" - ").first() + "*.mlt";
-        for (auto &fileInfo : dir.entryInfoList(filters, QDir::Files, QDir::Time)) {
+        for (auto &fileInfo : dir.entryInfoList(filters, QDir::Files, QDir::Time))
+        {
             auto filename = fileInfo.fileName();
             if (filename != name) {
                 auto text = filename;

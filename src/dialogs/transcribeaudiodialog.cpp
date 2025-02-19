@@ -192,7 +192,8 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
         auto path = QFileDialog::getOpenFileName(this, tr("Find Whisper.cpp"), Settings.whisperExe(),
                                                  QString(),
                                                  nullptr, Util::getFileDialogOptions());
-        if (QFileInfo(path).isExecutable()) {
+        if (QFileInfo(path).isExecutable())
+        {
             Settings.setWhisperExe(path);
             updateWhisperStatus();
         }
@@ -212,11 +213,13 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
         auto path = QFileDialog::getOpenFileName(this, tr("Find Whisper.cpp"), Settings.whisperModel(),
                                                  "*.bin",
                                                  nullptr, Util::getFileDialogOptions());
-        if (QFileInfo(path).exists()) {
+        if (QFileInfo(path).exists())
+        {
             LOG_INFO() << "Model found" << path;
             Settings.setWhisperModel(path);
             updateWhisperStatus();
-        } else {
+        } else
+        {
             LOG_INFO() << "Model not found" << path;
         }
     });

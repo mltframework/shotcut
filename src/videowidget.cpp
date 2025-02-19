@@ -550,7 +550,7 @@ RenderThread::RenderThread(thread_function_t function, void *data)
     , m_function{function}
     , m_data{data}
     , m_context{new QOpenGLContext}
-    , m_surface{new QOffscreenSurface}
+, m_surface{new QOffscreenSurface}
 {
     QSurfaceFormat format;
     format.setProfile(QSurfaceFormat::CoreProfile);
