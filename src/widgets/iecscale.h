@@ -37,7 +37,7 @@ static inline double IEC_Scale(double dB)
         fScale = (dB + 40.0f) * 0.015f + 0.15f;
     else if (dB < -20.0f)
         fScale = (dB + 30.0f) * 0.02f + 0.3f;
-    else if (dB < -0.001f || dB > 0.001f)  /* if (dB < 0.0f) */
+    else if (dB < -0.001f || dB > 0.001f) /* if (dB < 0.0f) */
         fScale = (dB + 20.0f) * 0.025f + 0.5f;
 
     return fScale;

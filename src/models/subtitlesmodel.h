@@ -18,13 +18,12 @@
 #ifndef SUBTITLESMODEL_H
 #define SUBTITLESMODEL_H
 
-#include <MltProducer.h>
-
 #include "models/subtitles.h"
 
+#include <MltProducer.h>
 #include <QAbstractItemModel>
-#include <QTimer>
 #include <QString>
+#include <QTimer>
 
 #include <vector>
 
@@ -34,7 +33,6 @@ class SubtitlesModel : public QAbstractItemModel
     Q_PROPERTY(int trackCount READ trackCount NOTIFY tracksChanged)
 
 public:
-
     enum Roles {
         TextRole = Qt::UserRole + 1,
         StartRole,
@@ -46,7 +44,8 @@ public:
         SiblingCountRole,
     };
 
-    struct SubtitleTrack {
+    struct SubtitleTrack
+    {
         QString name;
         QString lang;
     };
@@ -87,7 +86,10 @@ public:
     void setItemStart(int trackIndex, int itemIndex, int64_t msTime);
     void setItemEnd(int trackIndex, int itemIndex, int64_t msTime);
     void setText(int trackIndex, int itemIndex, const QString &text);
-    Q_INVOKABLE void moveItems(int trackIndex, int firstItemIndex, int lastItemIndex, int64_t msTime);
+    Q_INVOKABLE void moveItems(int trackIndex,
+                               int firstItemIndex,
+                               int lastItemIndex,
+                               int64_t msTime);
     Q_INVOKABLE bool validateMove(const QModelIndexList &items, int64_t msTime);
 
     // Only to be called by subtitle commands

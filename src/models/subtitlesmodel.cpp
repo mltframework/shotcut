@@ -17,12 +17,12 @@
 
 #include "subtitlesmodel.h"
 
-#include <Logger.h>
+#include "Logger.h"
+#include "commands/subtitlecommands.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
-#include "commands/subtitlecommands.h"
 
 #include <QTimer>
 
@@ -30,13 +30,7 @@
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
 
-enum Columns {
-    COLUMN_TEXT = 0,
-    COLUMN_START,
-    COLUMN_END,
-    COLUMN_DURATION,
-    COLUMN_COUNT
-};
+enum Columns { COLUMN_TEXT = 0, COLUMN_START, COLUMN_END, COLUMN_DURATION, COLUMN_COUNT };
 
 SubtitlesModel::SubtitlesModel(QObject *parent)
     : QAbstractItemModel(parent)
@@ -64,9 +58,7 @@ SubtitlesModel::SubtitlesModel(QObject *parent)
     });
 }
 
-SubtitlesModel::~SubtitlesModel()
-{
-}
+SubtitlesModel::~SubtitlesModel() {}
 
 void SubtitlesModel::load(Mlt::Producer *producer)
 {
@@ -81,7 +73,7 @@ void SubtitlesModel::load(Mlt::Producer *producer)
                 continue;
             }
             if (!::qstrcmp(filter->get("mlt_service"), "subtitle_feed")
-                    && filter->property_exists("text")) {
+                && filter->property_exists("text")) {
                 SubtitleTrack track;
                 track.name = QString::fromUtf8(filter->get("feed"));
                 track.lang = QString::fromUtf8(filter->get("lang"));
@@ -105,7 +97,7 @@ int64_t SubtitlesModel::maxTime() const
 {
     int64_t maxTime = 0;
     if (m_producer && m_producer->is_valid()) {
-        maxTime = std::floor((double)m_producer->get_playtime() * 1000.0 / m_producer->get_fps());
+        maxTime = std::floor((double) m_producer->get_playtime() * 1000.0 / m_producer->get_fps());
     }
     return maxTime;
 }
@@ -182,7 +174,8 @@ void SubtitlesModel::commitToFeed(int trackIndex)
         }
         if (filter->get("mlt_service") == QStringLiteral("subtitle_feed")) {
             if (feedFilterIndex == trackIndex) {
-                Subtitles::SubtitleVector items(m_items[trackIndex].constBegin(), m_items[trackIndex].constEnd());
+                Subtitles::SubtitleVector items(m_items[trackIndex].constBegin(),
+                                                m_items[trackIndex].constEnd());
                 std::string text;
                 Subtitles::writeToSrtString(text, items);
                 filter->set("text", text.c_str());
@@ -200,7 +193,8 @@ void SubtitlesModel::addTrack(SubtitlesModel::SubtitleTrack &track)
         LOG_DEBUG() << "No producer";
         return;
     }
-    Subtitles::InsertTrackCommand *command = new Subtitles::InsertTrackCommand(*this, track,
+    Subtitles::InsertTrackCommand *command = new Subtitles::InsertTrackCommand(*this,
+                                                                               track,
                                                                                m_tracks.size());
     MAIN.undoStack()->push(command);
 }
@@ -280,7 +274,7 @@ int SubtitlesModel::itemIndexBeforeTime(int trackIndex, int64_t msTime) const
         }
     }
     if (ret == -1 && m_items[trackIndex].size() > 0
-            && m_items[trackIndex][itemCount - 1].end < msTime) {
+        && m_items[trackIndex][itemCount - 1].end < msTime) {
         ret = itemCount - 1;
     }
     return ret;
@@ -304,15 +298,16 @@ const Subtitles::SubtitleItem &SubtitlesModel::getItem(int trackIndex, int itemI
     return m_items[trackIndex][itemIndex];
 }
 
-void SubtitlesModel::importSubtitles(int trackIndex, int64_t msTime,
+void SubtitlesModel::importSubtitles(int trackIndex,
+                                     int64_t msTime,
                                      QList<Subtitles::SubtitleItem> &items)
 {
     if (!m_producer) {
         LOG_DEBUG() << "No producer";
         return;
     }
-    Subtitles::OverwriteSubtitlesCommand *command = new Subtitles::OverwriteSubtitlesCommand(*this,
-                                                                                             trackIndex, items);
+    Subtitles::OverwriteSubtitlesCommand *command
+        = new Subtitles::OverwriteSubtitlesCommand(*this, trackIndex, items);
     command->setText(QObject::tr("Import %1 subtitle items").arg(items.size()));
 
     MAIN.undoStack()->push(command);
@@ -330,12 +325,13 @@ void SubtitlesModel::importSubtitlesToNewTrack(SubtitlesModel::SubtitleTrack &tr
 
     MAIN.undoStack()->beginMacro(QObject::tr("Import %1 subtitle items").arg(items.size()));
 
-    Subtitles::InsertTrackCommand *trackCommand = new Subtitles::InsertTrackCommand(*this, track,
+    Subtitles::InsertTrackCommand *trackCommand = new Subtitles::InsertTrackCommand(*this,
+                                                                                    track,
                                                                                     trackIndex);
     MAIN.undoStack()->push(trackCommand);
 
-    Subtitles::OverwriteSubtitlesCommand *overwriteCommand = new Subtitles::OverwriteSubtitlesCommand(
-        *this, trackIndex, items);
+    Subtitles::OverwriteSubtitlesCommand *overwriteCommand
+        = new Subtitles::OverwriteSubtitlesCommand(*this, trackIndex, items);
     MAIN.undoStack()->push(overwriteCommand);
 
     MAIN.undoStack()->endMacro();
@@ -347,7 +343,8 @@ void SubtitlesModel::exportSubtitles(const QString &filePath, int trackIndex) co
         LOG_DEBUG() << "No producer";
         return;
     }
-    Subtitles::SubtitleVector items(m_items[trackIndex].constBegin(), m_items[trackIndex].constEnd());
+    Subtitles::SubtitleVector items(m_items[trackIndex].constBegin(),
+                                    m_items[trackIndex].constEnd());
     Subtitles::writeToSrtFile(filePath.toUtf8().toStdString(), items);
 }
 
@@ -355,8 +352,8 @@ void SubtitlesModel::overwriteItem(int trackIndex, const Subtitles::SubtitleItem
 {
     QList<Subtitles::SubtitleItem> items;
     items.append(item);
-    Subtitles::OverwriteSubtitlesCommand *command = new Subtitles::OverwriteSubtitlesCommand(*this,
-                                                                                             trackIndex, items);
+    Subtitles::OverwriteSubtitlesCommand *command
+        = new Subtitles::OverwriteSubtitlesCommand(*this, trackIndex, items);
     MAIN.undoStack()->push(command);
 }
 
@@ -364,8 +361,8 @@ void SubtitlesModel::appendItem(int trackIndex, const Subtitles::SubtitleItem &i
 {
     QList<Subtitles::SubtitleItem> items;
     items.append(item);
-    Subtitles::OverwriteSubtitlesCommand *command = new Subtitles::OverwriteSubtitlesCommand(*this,
-                                                                                             trackIndex, items);
+    Subtitles::OverwriteSubtitlesCommand *command
+        = new Subtitles::OverwriteSubtitlesCommand(*this, trackIndex, items);
     command->setText(QObject::tr("Append subtitle"));
     MAIN.undoStack()->push(command);
 }
@@ -373,7 +370,8 @@ void SubtitlesModel::appendItem(int trackIndex, const Subtitles::SubtitleItem &i
 void SubtitlesModel::removeItems(int trackIndex, int firstItemIndex, int lastItemIndex)
 {
     int count = m_items[trackIndex].size();
-    if (firstItemIndex < 0 || firstItemIndex >= count || lastItemIndex < 0 || lastItemIndex >= count) {
+    if (firstItemIndex < 0 || firstItemIndex >= count || lastItemIndex < 0
+        || lastItemIndex >= count) {
         LOG_ERROR() << "Invalid index to remove" << firstItemIndex << lastItemIndex;
     }
     QList<Subtitles::SubtitleItem> items;
@@ -381,7 +379,8 @@ void SubtitlesModel::removeItems(int trackIndex, int firstItemIndex, int lastIte
         items.append(m_items[trackIndex][i]);
     }
     Subtitles::RemoveSubtitlesCommand *command = new Subtitles::RemoveSubtitlesCommand(*this,
-                                                                                       trackIndex, items);
+                                                                                       trackIndex,
+                                                                                       items);
     MAIN.undoStack()->push(command);
 }
 
@@ -396,16 +395,17 @@ void SubtitlesModel::setItemStart(int trackIndex, int itemIndex, int64_t msTime)
         return;
     }
     if (msTime >= m_items[trackIndex][itemIndex].end) {
-        LOG_ERROR() << "Start can not be greater than end" << msTime << m_items[trackIndex][itemIndex].end;
+        LOG_ERROR() << "Start can not be greater than end" << msTime
+                    << m_items[trackIndex][itemIndex].end;
         return;
     }
     if (itemIndex > 0 && msTime < m_items[trackIndex][itemIndex - 1].end) {
-        LOG_ERROR() << "Start can not precede previous end" << msTime << m_items[trackIndex][itemIndex -
-                                                                                             1].end;
+        LOG_ERROR() << "Start can not precede previous end" << msTime
+                    << m_items[trackIndex][itemIndex - 1].end;
         return;
     }
-    Subtitles::SetStartCommand *command = new Subtitles::SetStartCommand(*this, trackIndex, itemIndex,
-                                                                         msTime);
+    Subtitles::SetStartCommand *command
+        = new Subtitles::SetStartCommand(*this, trackIndex, itemIndex, msTime);
     MAIN.undoStack()->push(command);
 }
 
@@ -420,40 +420,41 @@ void SubtitlesModel::setItemEnd(int trackIndex, int itemIndex, int64_t msTime)
         return;
     }
     if (msTime <= m_items[trackIndex][itemIndex].start) {
-        LOG_ERROR() << "End can not be less than start" << msTime << m_items[trackIndex][itemIndex].start;
+        LOG_ERROR() << "End can not be less than start" << msTime
+                    << m_items[trackIndex][itemIndex].start;
         return;
     }
     if (itemIndex < (m_items[trackIndex].size() - 1)
-            && msTime > m_items[trackIndex][itemIndex + 1].start) {
-        LOG_ERROR() << "End can not be greater than next start" << msTime << m_items[trackIndex][itemIndex +
-                                                                                                 1].start;
+        && msTime > m_items[trackIndex][itemIndex + 1].start) {
+        LOG_ERROR() << "End can not be greater than next start" << msTime
+                    << m_items[trackIndex][itemIndex + 1].start;
         return;
     }
-    Subtitles::SetEndCommand *command = new Subtitles::SetEndCommand(*this, trackIndex, itemIndex,
-                                                                     msTime);
+    Subtitles::SetEndCommand *command
+        = new Subtitles::SetEndCommand(*this, trackIndex, itemIndex, msTime);
     MAIN.undoStack()->push(command);
 }
 
 void SubtitlesModel::setText(int trackIndex, int itemIndex, const QString &text)
 {
-    Subtitles::SetTextCommand *command = new Subtitles::SetTextCommand(*this, trackIndex, itemIndex,
-                                                                       text);
+    Subtitles::SetTextCommand *command
+        = new Subtitles::SetTextCommand(*this, trackIndex, itemIndex, text);
     MAIN.undoStack()->push(command);
 }
 
-void SubtitlesModel::moveItems(int trackIndex, int firstItemIndex, int lastItemIndex,
-                               int64_t msTime)
+void SubtitlesModel::moveItems(int trackIndex, int firstItemIndex, int lastItemIndex, int64_t msTime)
 {
     int count = m_items[trackIndex].size();
-    if (firstItemIndex < 0 || firstItemIndex >= count || lastItemIndex < 0 || lastItemIndex >= count) {
+    if (firstItemIndex < 0 || firstItemIndex >= count || lastItemIndex < 0
+        || lastItemIndex >= count) {
         LOG_ERROR() << "Invalid index to move" << firstItemIndex << lastItemIndex;
     }
     QList<Subtitles::SubtitleItem> items;
     for (int i = firstItemIndex; i <= lastItemIndex; i++) {
         items.append(m_items[trackIndex][i]);
     }
-    Subtitles::MoveSubtitlesCommand *command = new Subtitles::MoveSubtitlesCommand(*this, trackIndex,
-                                                                                   items, msTime);
+    Subtitles::MoveSubtitlesCommand *command
+        = new Subtitles::MoveSubtitlesCommand(*this, trackIndex, items, msTime);
     MAIN.undoStack()->push(command);
 }
 
@@ -475,7 +476,7 @@ bool SubtitlesModel::validateMove(const QModelIndexList &items, int64_t msTime)
     int64_t newEndTime = msTime + duration;
     int itemCount = m_items[trackIndex].size();
     int gapItemIndex = itemIndexAtTime(trackIndex, msTime);
-    if (gapItemIndex == - 1) {
+    if (gapItemIndex == -1) {
         gapItemIndex = itemIndexAfterTime(trackIndex, msTime);
     }
     if (gapItemIndex >= 0) {
@@ -484,9 +485,9 @@ bool SubtitlesModel::validateMove(const QModelIndexList &items, int64_t msTime)
                 auto gapItem = m_items[trackIndex][gapItemIndex];
                 if (gapItem.start >= newEndTime) {
                     break;
-                } else if ((msTime >= gapItem.start && msTime < gapItem.end) ||
-                           (newEndTime > gapItem.start && newEndTime <= gapItem.end) ||
-                           (gapItem.start <= msTime && gapItem.end >= newEndTime)) {
+                } else if ((msTime >= gapItem.start && msTime < gapItem.end)
+                           || (newEndTime > gapItem.start && newEndTime <= gapItem.end)
+                           || (gapItem.start <= msTime && gapItem.end >= newEndTime)) {
                     return false;
                 }
             }
@@ -669,7 +670,8 @@ void SubtitlesModel::doSetText(int trackIndex, int itemIndex, const QString &tex
         m_items[trackIndex][itemIndex].text = text.toStdString();
         requestFeedCommit(trackIndex);
         QModelIndex parent = index(trackIndex);
-        emit dataChanged(index(itemIndex, COLUMN_TEXT, parent), index(itemIndex, COLUMN_TEXT, parent));
+        emit dataChanged(index(itemIndex, COLUMN_TEXT, parent),
+                         index(itemIndex, COLUMN_TEXT, parent));
     } else {
         LOG_ERROR() << "Invalid index" << itemIndex;
     }
@@ -686,7 +688,8 @@ void SubtitlesModel::doSetTime(int trackIndex, int itemIndex, int64_t startTime,
         m_items[trackIndex][itemIndex].end = endTime;
         requestFeedCommit(trackIndex);
         QModelIndex parent = index(trackIndex);
-        emit dataChanged(index(itemIndex, COLUMN_START, parent), index(itemIndex, COLUMN_DURATION, parent));
+        emit dataChanged(index(itemIndex, COLUMN_START, parent),
+                         index(itemIndex, COLUMN_DURATION, parent));
     } else {
         LOG_ERROR() << "Invalid index" << itemIndex;
     }
@@ -743,7 +746,7 @@ QVariant SubtitlesModel::data(const QModelIndex &index, int role) const
 
     // Subtitle item
     if (!index.isValid() || index.column() < 0 || index.column() >= COLUMN_COUNT || index.row() < 0
-            || index.row() >= itemCount(index.parent().row())) {
+        || index.row() >= itemCount(index.parent().row())) {
         LOG_ERROR() << "Invalid Index: " << index.row() << index.column() << role;
         return result;
     }
@@ -780,22 +783,22 @@ QVariant SubtitlesModel::data(const QModelIndex &index, int role) const
         result = QString::fromStdString(item.text);
         break;
     case StartRole:
-        result = (qlonglong)item.start;
+        result = (qlonglong) item.start;
         break;
     case EndRole:
-        result = (qlonglong)item.end;
+        result = (qlonglong) item.end;
         break;
     case DurationRole:
-        result = (qlonglong)(item.end - item.start);
+        result = (qlonglong) (item.end - item.start);
         break;
     case SimpleText:
         result = QString::fromStdString(item.text).replace('\n', ' ');
         break;
     case StartFrameRole:
-        result = (int)std::round(item.start * MLT.profile().fps() / 1000);
+        result = (int) std::round(item.start * MLT.profile().fps() / 1000);
         break;
     case EndFrameRole:
-        result = (int)std::round(item.end * MLT.profile().fps() / 1000);
+        result = (int) std::round(item.end * MLT.profile().fps() / 1000);
         break;
     case SiblingCountRole:
         result = m_items[index.parent().row()].size();
@@ -850,13 +853,13 @@ QModelIndex SubtitlesModel::parent(const QModelIndex &index) const
 QHash<int, QByteArray> SubtitlesModel::roleNames() const
 {
     QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
-    roles[TextRole]         = "text";
-    roles[StartRole]        = "start";
-    roles[EndRole]          = "end";
-    roles[DurationRole]     = "duration";
-    roles[SimpleText]       = "simpleText";
-    roles[StartFrameRole]   = "startFrame";
-    roles[EndFrameRole]     = "endFrame";
+    roles[TextRole] = "text";
+    roles[StartRole] = "start";
+    roles[EndRole] = "end";
+    roles[DurationRole] = "duration";
+    roles[SimpleText] = "simpleText";
+    roles[StartFrameRole] = "startFrame";
+    roles[EndFrameRole] = "endFrame";
     roles[SiblingCountRole] = "siblingCount";
     return roles;
 }

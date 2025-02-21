@@ -18,8 +18,8 @@
 #ifndef SERVICEPRESETWIDGET_H
 #define SERVICEPRESETWIDGET_H
 
-#include <QWidget>
 #include <MltProperties.h>
+#include <QWidget>
 
 namespace Ui {
 class ServicePresetWidget;

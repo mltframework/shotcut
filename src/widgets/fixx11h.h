@@ -22,7 +22,6 @@ DEALINGS IN THE SOFTWARE.
 
 ****************************************************************************/
 
-
 //#ifdef    don't do this, this file is supposed to be included
 //#define   multiple times
 
@@ -253,16 +252,14 @@ const int NormalState = XNormalState;
 #ifdef index
 #ifndef FIXX11H_index
 #define FIXX11H_index
-inline
-const char *Xindex( const char *s, int c )
+inline const char *Xindex(const char *s, int c)
 {
-    return index( s, c );
+    return index(s, c);
 }
 #undef index
-inline
-const char *index( const char *s, int c )
+inline const char *index(const char *s, int c)
 {
-    return Xindex( s, c );
+    return Xindex(s, c);
 }
 #endif
 #undef index
@@ -273,21 +270,19 @@ const char *index( const char *s, int c )
 // Affects: Should be without side effects.
 #ifndef FIXX11H_rindex
 #define FIXX11H_rindex
-inline
-const char *Xrindex( const char *s, int c )
+inline const char *Xrindex(const char *s, int c)
 {
-    return rindex( s, c );
+    return rindex(s, c);
 }
 #undef rindex
-inline
-const char *rindex( const char *s, int c )
+inline const char *rindex(const char *s, int c)
 {
-    return Xrindex( s, c );
+    return Xrindex(s, c);
 }
 #endif
 #undef rindex
 #endif
-}
+} // namespace X
 
 using namespace X;
 

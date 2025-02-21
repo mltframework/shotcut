@@ -19,8 +19,9 @@
 #ifndef PLASMAWIDGET_H
 #define PLASMAWIDGET_H
 
-#include <QWidget>
 #include <abstractproducerwidget.h>
+
+#include <QWidget>
 
 namespace Ui {
 class PlasmaWidget;

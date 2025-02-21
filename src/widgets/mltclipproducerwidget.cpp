@@ -26,8 +26,8 @@
 #include <QLabel>
 #include <QVBoxLayout>
 
-MltClipProducerWidget::MltClipProducerWidget(QWidget *parent) :
-    QWidget(parent)
+MltClipProducerWidget::MltClipProducerWidget(QWidget *parent)
+    : QWidget(parent)
 {
     qDebug();
     QVBoxLayout *vlayout = new QVBoxLayout();
@@ -93,12 +93,10 @@ MltClipProducerWidget::MltClipProducerWidget(QWidget *parent) :
 
     vlayout->addLayout(glayout);
 
-    this->setLayout (vlayout);
+    this->setLayout(vlayout);
 }
 
-MltClipProducerWidget::~MltClipProducerWidget()
-{
-}
+MltClipProducerWidget::~MltClipProducerWidget() {}
 
 Mlt::Producer *MltClipProducerWidget::newProducer(Mlt::Profile &)
 {
@@ -131,7 +129,7 @@ void MltClipProducerWidget::setProducer(Mlt::Producer *p)
     int dar_num = width * sar_num;
     int dar_den = height * sar_den;
     if (dar_den > 0) {
-        switch (int((double)dar_num / (double)dar_den * 100.0)) {
+        switch (int((double) dar_num / (double) dar_den * 100.0)) {
         case 133:
             dar_num = 4;
             dar_den = 3;
@@ -148,7 +146,7 @@ void MltClipProducerWidget::setProducer(Mlt::Producer *p)
     m_aspectRatioLabel->setText(QString("%1 : %2").arg(dar_num).arg(dar_den));
     int frame_rate_num = m_producer->get_int("meta.media.frame_rate_num");
     int frame_rate_den = m_producer->get_int("meta.media.frame_rate_den");
-    double fps = (double)frame_rate_num / (double)frame_rate_den;
+    double fps = (double) frame_rate_num / (double) frame_rate_den;
     m_frameRateLabel->setText(tr("%L1 fps").arg(fps, 0, 'f', 6));
     int progressive = m_producer->get_int("meta.media.progressive");
     if (progressive)
@@ -170,8 +168,7 @@ void MltClipProducerWidget::setProducer(Mlt::Producer *p)
     mismatchPalette.setColor(this->foregroundRole(), Qt::red);
 
     QScopedPointer<Mlt::Profile> profile(m_producer->profile());
-    if (profile->width() == width &&
-            profile->height() == height) {
+    if (profile->width() == width && profile->height() == height) {
         m_resolutionLabel->setPalette(standardPalette);
     } else {
         mismatch = true;
@@ -183,7 +180,7 @@ void MltClipProducerWidget::setProducer(Mlt::Producer *p)
         mismatch = true;
         m_frameRateLabel->setPalette(mismatchPalette);
     }
-    double darDiff = profile->dar() - ((double)dar_num / (double)dar_den);
+    double darDiff = profile->dar() - ((double) dar_num / (double) dar_den);
     if (fabs(darDiff) < 0.01) {
         m_aspectRatioLabel->setPalette(standardPalette);
     } else {
@@ -200,8 +197,8 @@ void MltClipProducerWidget::setProducer(Mlt::Producer *p)
     if (mismatch) {
         QIcon icon = QIcon(":/icons/oxygen/32x32/status/task-attempt.png");
         m_errorIcon->setPixmap(icon.pixmap(QSize(24, 24)));
-        m_errorText->setText(
-            tr("Subclip profile does not match project profile.\nThis may provide unexpected results"));
+        m_errorText->setText(tr("Subclip profile does not match project profile.\nThis may provide "
+                                "unexpected results"));
     } else {
         QIcon icon = QIcon(":/icons/oxygen/32x32/status/task-complete.png");
         m_errorIcon->setPixmap(icon.pixmap(QSize(24, 24)));

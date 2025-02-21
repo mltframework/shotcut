@@ -127,10 +127,13 @@ bool ScreenSelector::onMousePressEvent(QMouseEvent *event)
 
 bool ScreenSelector::onMouseMoveEvent(QMouseEvent *event)
 {
-    if (m_boundingRect.x() > -1 &&
-            !m_boundingRect.contains(event->globalPosition().toPoint())) {
-        int x = qBound(m_boundingRect.left(), qRound(event->globalPosition().x()), m_boundingRect.right());
-        int y = qBound(m_boundingRect.top(), qRound(event->globalPosition().y()), m_boundingRect.bottom());
+    if (m_boundingRect.x() > -1 && !m_boundingRect.contains(event->globalPosition().toPoint())) {
+        int x = qBound(m_boundingRect.left(),
+                       qRound(event->globalPosition().x()),
+                       m_boundingRect.right());
+        int y = qBound(m_boundingRect.top(),
+                       qRound(event->globalPosition().y()),
+                       m_boundingRect.bottom());
         QCursor::setPos(x, y);
         return true;
     }
@@ -139,7 +142,7 @@ bool ScreenSelector::onMouseMoveEvent(QMouseEvent *event)
         if (m_fixedSize.width() > -1) {
             // Center the selection around the cursor
             int x = qRound(event->globalPosition().x()) - m_fixedSize.width() / 2;
-            int y = qRound(event->globalPosition().y()) - m_fixedSize.height() /  2;
+            int y = qRound(event->globalPosition().y()) - m_fixedSize.height() / 2;
             if (m_boundingRect.x() > -1) {
                 x = qBound(m_boundingRect.left(), x, m_boundingRect.right() - m_fixedSize.width());
                 y = qBound(m_boundingRect.top(), y, m_boundingRect.bottom() - m_fixedSize.height());
@@ -166,7 +169,7 @@ bool ScreenSelector::onMouseMoveEvent(QMouseEvent *event)
 
 bool ScreenSelector::onMouseReleaseEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton && m_selectionInProgress == true ) {
+    if (event->button() == Qt::LeftButton && m_selectionInProgress == true) {
         release();
         emit screenSelected(m_selectionRect);
     }

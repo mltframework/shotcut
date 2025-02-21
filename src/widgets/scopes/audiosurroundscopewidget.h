@@ -20,8 +20,8 @@
 
 #include "scopewidget.h"
 
-#include <QMutex>
 #include <QImage>
+#include <QMutex>
 
 class AudioSurroundScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
@@ -33,7 +33,6 @@ public:
     QString getTitle() Q_DECL_OVERRIDE;
 
 private:
-
     // Called in scope thread
     void refreshScope(const QSize &size, bool full) Q_DECL_OVERRIDE;
     void drawGraticule(QPainter &p, qreal lineWidth);

@@ -16,21 +16,24 @@
  */
 
 #include "ffmpegjob.h"
-#include "mainwindow.h"
-#include "dialogs/textviewerdialog.h"
-#include "util.h"
-#include <MltProperties.h>
 
+#include "Logger.h"
+#include "dialogs/textviewerdialog.h"
+#include "mainwindow.h"
+#include "util.h"
+
+#include <MltProperties.h>
 #include <QAction>
 #include <QApplication>
-#include <QFileInfo>
 #include <QDir>
+#include <QFileInfo>
 #include <QRegularExpression>
-#include <Logger.h>
 
 #include <cstdio>
 
-FfmpegJob::FfmpegJob(const QString &name, const QStringList &args, bool isOpenLog,
+FfmpegJob::FfmpegJob(const QString &name,
+                     const QStringList &args,
+                     bool isOpenLog,
                      QThread::Priority priority)
     : AbstractJob(name, priority)
     , m_duration(0.0)
@@ -64,9 +67,7 @@ void FfmpegJob::start()
 void FfmpegJob::stop()
 {
     write("q");
-    QTimer::singleShot(3000, this, [this]() {
-        AbstractJob::stop();
-    });
+    QTimer::singleShot(3000, this, [this]() { AbstractJob::stop(); });
 }
 
 void FfmpegJob::onOpenTriggered()

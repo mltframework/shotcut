@@ -28,10 +28,10 @@ class MessageDialog : public QObject
 
 public:
     enum StandardButtons {
-        Ok                 = QMessageBox::Ok,
-        Yes                = QMessageBox::Yes,
-        No                 = QMessageBox::No,
-        Cancel             = QMessageBox::Cancel
+        Ok = QMessageBox::Ok,
+        Yes = QMessageBox::Yes,
+        No = QMessageBox::No,
+        Cancel = QMessageBox::Cancel
     };
     Q_ENUM(StandardButtons)
     explicit MessageDialog(QObject *parent = nullptr);
@@ -50,20 +50,11 @@ private:
     QString m_text;
     int m_buttons;
 
-    QString title() const
-    {
-        return m_title;
-    }
+    QString title() const { return m_title; }
     void setTitle(const QString &title);
-    QString text() const
-    {
-        return m_text;
-    }
+    QString text() const { return m_text; }
     void setText(const QString &text);
-    int buttons() const
-    {
-        return m_buttons;
-    }
+    int buttons() const { return m_buttons; }
     void setButtons(int buttons);
 };
 

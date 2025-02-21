@@ -18,13 +18,13 @@
 #ifndef FILTERSDOCK_H
 #define FILTERSDOCK_H
 
+#include "qmltypes/qmlproducer.h"
+#include "sharedframe.h"
+
 #include <QDockWidget>
 #include <QObject>
 #include <QQuickView>
 #include <QQuickWidget>
-
-#include "sharedframe.h"
-#include "qmltypes/qmlproducer.h"
 
 class QmlFilter;
 class QmlMetadata;
@@ -38,14 +38,13 @@ class FiltersDock : public QDockWidget
     Q_OBJECT
 
 public:
-    explicit FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *attachedModel,
-                         MotionTrackerModel *motionTrackerModel, SubtitlesModel *subtitlesModel,
+    explicit FiltersDock(MetadataModel *metadataModel,
+                         AttachedFiltersModel *attachedModel,
+                         MotionTrackerModel *motionTrackerModel,
+                         SubtitlesModel *subtitlesModel,
                          QWidget *parent = 0);
 
-    QmlProducer *qmlProducer()
-    {
-        return &m_producer;
-    }
+    QmlProducer *qmlProducer() { return &m_producer; }
 
 signals:
     void currentFilterRequested(int attachedIndex);
@@ -71,7 +70,7 @@ private:
     void setupActions();
     QQuickWidget m_qview;
     QmlProducer m_producer;
-    unsigned loadTries {0};
+    unsigned loadTries{0};
 };
 
 #endif // FILTERSDOCK_H

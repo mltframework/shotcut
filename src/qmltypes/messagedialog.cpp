@@ -16,16 +16,16 @@
  */
 
 #include "messagedialog.h"
+
+#include "Logger.h"
 #include "qmlapplication.h"
-#include <Logger.h>
 
 #include <QApplication>
 
 MessageDialog::MessageDialog(QObject *parent)
     : QObject{parent}
     , m_buttons{0}
-{
-}
+{}
 
 void MessageDialog::open()
 {

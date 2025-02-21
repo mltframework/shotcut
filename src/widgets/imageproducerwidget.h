@@ -18,8 +18,9 @@
 #ifndef IMAGEPRODUCERWIDGET_H
 #define IMAGEPRODUCERWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class ImageProducerWidget;
@@ -50,9 +51,9 @@ public slots:
 private slots:
     void on_resetButton_clicked();
 
-    void on_aspectNumSpinBox_valueChanged(int );
+    void on_aspectNumSpinBox_valueChanged(int);
 
-    void on_aspectDenSpinBox_valueChanged(int );
+    void on_aspectDenSpinBox_valueChanged(int);
 
     void on_durationSpinBox_editingFinished();
 

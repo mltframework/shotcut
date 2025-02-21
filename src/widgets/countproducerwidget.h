@@ -18,8 +18,9 @@
 #ifndef COUNTPRODUCERWIDGET_H
 #define COUNTPRODUCERWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class CountProducerWidget;

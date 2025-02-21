@@ -33,7 +33,9 @@ public:
     StatusLabelWidget(QWidget *parent = nullptr);
     virtual ~StatusLabelWidget();
     void setWidth(int width);
-    void showText(const QString &text, int timeoutSeconds = -1, QAction *action = nullptr,
+    void showText(const QString &text,
+                  int timeoutSeconds = -1,
+                  QAction *action = nullptr,
                   QPalette::ColorRole role = QPalette::ToolTipBase);
 
 signals:

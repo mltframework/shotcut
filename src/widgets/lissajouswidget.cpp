@@ -15,17 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "shotcut_mlt_properties.h"
 #include "lissajouswidget.h"
 #include "ui_lissajouswidget.h"
+
+#include "shotcut_mlt_properties.h"
 #include "util.h"
 
 static const char *kParamRatioX = "0";
 static const char *kParamRatioY = "1";
 
-LissajousWidget::LissajousWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::LissajousWidget)
+LissajousWidget::LissajousWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::LissajousWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);

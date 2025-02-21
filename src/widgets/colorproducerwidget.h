@@ -18,8 +18,9 @@
 #ifndef COLORPRODUCERWIDGET_H
 #define COLORPRODUCERWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class ColorProducerWidget;

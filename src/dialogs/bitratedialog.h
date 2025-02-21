@@ -19,14 +19,16 @@
 #define BITRATEDIALOG_H
 
 #include <QDialog>
-#include <QString>
 #include <QJsonArray>
+#include <QString>
 
 class BitrateDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit BitrateDialog(const QString &resource, double fps, const QJsonArray &data,
+    explicit BitrateDialog(const QString &resource,
+                           double fps,
+                           const QJsonArray &data,
                            QWidget *parent = nullptr);
 };
 

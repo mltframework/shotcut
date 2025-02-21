@@ -18,10 +18,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <QWidget>
+#include "sharedframe.h"
+
 #include <QIcon>
 #include <QSize>
-#include "sharedframe.h"
+#include <QWidget>
 
 class DockToolBar;
 class ScrubBar;
@@ -48,10 +49,7 @@ class Player : public QWidget
 {
     Q_OBJECT
 public:
-    typedef enum {
-        SourceTabIndex = 0,
-        ProjectTabIndex
-    } TabIndex;
+    typedef enum { SourceTabIndex = 0, ProjectTabIndex } TabIndex;
 
     explicit Player(QWidget *parent = 0);
     void connectTransport(const TransportControllable *);
@@ -59,14 +57,8 @@ public:
     void setOut(int);
     void setMarkers(const QList<int> &);
     QSize videoSize() const;
-    int position() const
-    {
-        return m_position;
-    }
-    NewProjectFolder *projectWidget() const
-    {
-        return m_projectWidget;
-    }
+    int position() const { return m_position; }
+    NewProjectFolder *projectWidget() const { return m_projectWidget; }
     void moveVideoToScreen(int screen = -1);
     void setPauseAfterOpen(bool pause);
     TabIndex tabIndex() const;
@@ -113,7 +105,9 @@ public slots:
     void switchToTab(TabIndex index);
     void enableTab(TabIndex index, bool enabled = true);
     void onTabBarClicked(int index);
-    void setStatusLabel(const QString &text, int timeoutSeconds, QAction *action,
+    void setStatusLabel(const QString &text,
+                        int timeoutSeconds,
+                        QAction *action,
                         QPalette::ColorRole role = QPalette::ToolTipBase);
     void showIdleStatus();
     void focusPositionSpinner() const;

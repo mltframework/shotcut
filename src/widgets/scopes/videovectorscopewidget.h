@@ -19,8 +19,9 @@
 #define VIDEOVECTORSCOPEWIDGET_H
 
 #include "scopewidget.h"
-#include <QMutex>
+
 #include <QImage>
+#include <QMutex>
 
 class VideoVectorScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
@@ -52,8 +53,8 @@ private:
     void refreshScope(const QSize &size, bool full) Q_DECL_OVERRIDE;
     void drawGraticuleLines(QPainter &p, qreal lineWidth);
     void drawSkinToneLine(QPainter &p, qreal lineWidth);
-    void drawGraticuleMark(QPainter &p, const QPoint &point, QColor color, qreal lineWidth,
-                           qreal LineLength);
+    void drawGraticuleMark(
+        QPainter &p, const QPoint &point, QColor color, qreal lineWidth, qreal LineLength);
 
     // Called in UI thread
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;

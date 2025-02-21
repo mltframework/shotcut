@@ -19,7 +19,6 @@
 #define MARKERSMODEL_H
 
 #include <MltProducer.h>
-
 #include <QAbstractItemModel>
 #include <QColor>
 #include <QString>
@@ -30,12 +29,12 @@ class Marker
 {
 public:
     QString text;
-    int start {-1};
-    int end {-1};
+    int start{-1};
+    int end{-1};
     QColor color;
 };
 
-}
+} // namespace Markers
 
 class MarkersModel : public QAbstractItemModel
 {
@@ -43,7 +42,6 @@ class MarkersModel : public QAbstractItemModel
     Q_PROPERTY(QStringList recentColors READ recentColors NOTIFY recentColorsChanged)
 
 public:
-
     enum Roles {
         TextRole = Qt::UserRole + 1,
         StartRole,
@@ -72,7 +70,7 @@ public:
     void doRemove(int markerIndex);
     void doInsert(int markerIndex, const Markers::Marker &marker);
     void doAppend(const Markers::Marker &marker);
-    void doUpdate(int markerIndex,  const Markers::Marker &marker);
+    void doUpdate(int markerIndex, const Markers::Marker &marker);
     void doClear();
     void doReplace(QList<Markers::Marker> &markers);
     void doShift(int shiftPosition, int shiftAmount);

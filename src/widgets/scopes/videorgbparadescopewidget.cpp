@@ -16,6 +16,7 @@
  */
 
 #include "videorgbparadescopewidget.h"
+
 #include <QMouseEvent>
 #include <QPainter>
 #include <QToolTip>
@@ -33,7 +34,6 @@ VideoRgbParadeScopeWidget::VideoRgbParadeScopeWidget()
     setMouseTracking(true);
     LOG_DEBUG() << "end";
 }
-
 
 void VideoRgbParadeScopeWidget::refreshScope(const QSize &size, bool full)
 {
@@ -53,7 +53,7 @@ void VideoRgbParadeScopeWidget::refreshScope(const QSize &size, bool full)
             m_renderImg = QImage(imgWidth, 256, QImage::QImage::Format_RGBX8888);
         }
 
-        QColor bgColor( 0, 0, 0, 0xff );
+        QColor bgColor(0, 0, 0, 0xff);
         m_renderImg.fill(bgColor);
 
         const uint8_t *src = m_frame.get_image(mlt_image_rgb);
@@ -85,8 +85,9 @@ void VideoRgbParadeScopeWidget::refreshScope(const QSize &size, bool full)
             }
         }
 
-        QImage scaledImage = m_renderImg.scaled(size, Qt::IgnoreAspectRatio,
-                                                Qt::SmoothTransformation).convertToFormat(QImage::Format_RGB32);
+        QImage scaledImage = m_renderImg
+                                 .scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
+                                 .convertToFormat(QImage::Format_RGB32);
 
         m_mutex.lock();
         m_displayImg.swap(m_renderImg);
@@ -130,15 +131,15 @@ void VideoRgbParadeScopeWidget::paintEvent(QPaintEvent *)
     p.drawLine(QPointF(0, y), QPointF(width(), y));
     p.drawText(textpad, textheight + textpad, tr("255"));
     // 191
-    y = (qreal)height() - 191.0 / 255.0 * (qreal)height();
+    y = (qreal) height() - 191.0 / 255.0 * (qreal) height();
     p.drawLine(0, y, width(), y);
     p.drawText(textpad, height() / 4 - textpad, tr("191"));
     // 127
-    y = (qreal)height() - 127.0 / 255.0 * (qreal)height();
+    y = (qreal) height() - 127.0 / 255.0 * (qreal) height();
     p.drawLine(0, y, width(), y);
     p.drawText(textpad, height() / 2 - textpad, tr("127"));
     // 64
-    y = (qreal)height() - 64.0 / 255.0 * (qreal)height();
+    y = (qreal) height() - 64.0 / 255.0 * (qreal) height();
     p.drawLine(0, y, width(), y);
     p.drawText(textpad, height() * 3 / 4 - textpad, tr("64"));
     // 0
@@ -151,7 +152,7 @@ void VideoRgbParadeScopeWidget::mouseMoveEvent(QMouseEvent *event)
 {
     QString text;
     qreal channelWidth = width() / 3.0;
-    qreal channelX = event->pos().x() % (int)channelWidth;
+    qreal channelX = event->pos().x() % (int) channelWidth;
     QString channelLabel;
     if (event->pos().x() < channelWidth) {
         channelLabel = tr("Red");
@@ -169,9 +170,9 @@ void VideoRgbParadeScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (frameWidth != 0) {
         int pixel = frameWidth * channelX / channelWidth;
-        text =  tr("Channel: %1\nPixel: %2\nValue: %3").arg(channelLabel).arg(pixel).arg(value);
+        text = tr("Channel: %1\nPixel: %2\nValue: %3").arg(channelLabel).arg(pixel).arg(value);
     } else {
-        text =  tr("Channel: %1\nValue: %2").arg(channelLabel).arg(value);
+        text = tr("Channel: %1\nValue: %2").arg(channelLabel).arg(value);
     }
     QToolTip::showText(event->globalPosition().toPoint(), text);
 }

@@ -18,8 +18,9 @@
 #ifndef BLIPPRODUCERWIDGET_H
 #define BLIPPRODUCERWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class BlipProducerWidget;

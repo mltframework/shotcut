@@ -19,10 +19,11 @@
 #ifndef AUDIOMETERWIDGET_H
 #define AUDIOMETERWIDGET_H
 
-#include <QWidget>
-#include <QVector>
-#include <QStringList>
 #include <QLinearGradient>
+#include <QStringList>
+#include <QVector>
+#include <QWidget>
+
 #include <stdint.h>
 
 class QLabel;

@@ -21,10 +21,10 @@
 #include "postjobaction.h"
 #include "settings.h"
 
-#include <QProcess>
-#include <QModelIndex>
-#include <QList>
 #include <QElapsedTimer>
+#include <QList>
+#include <QModelIndex>
+#include <QProcess>
 #include <QThread>
 
 class QAction;
@@ -47,24 +47,12 @@ public:
     }
     void appendToLog(const QString &);
     QString log() const;
-    QString label() const
-    {
-        return m_label;
-    }
+    QString label() const { return m_label; }
     void setLabel(const QString &label);
-    QList<QAction *> standardActions() const
-    {
-        return m_standardActions;
-    }
-    QList<QAction *> successActions() const
-    {
-        return m_successActions;
-    }
+    QList<QAction *> standardActions() const { return m_standardActions; }
+    QList<QAction *> successActions() const { return m_successActions; }
     QTime estimateRemaining(int percent);
-    QElapsedTimer time() const
-    {
-        return m_totalTime;
-    }
+    QElapsedTimer time() const { return m_totalTime; }
     void setPostJobAction(PostJobAction *action);
     bool paused() const;
     void setTarget(const QString & target)
@@ -90,7 +78,7 @@ signals:
 protected:
     QList<QAction *> m_standardActions;
     QList<QAction *> m_successActions;
-    QStandardItem  *m_item;
+    QStandardItem *m_item;
 
 protected slots:
     virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus = QProcess::NormalExit);

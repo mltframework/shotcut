@@ -17,6 +17,7 @@
  */
 
 #include "qmlprofile.h"
+
 #include "mltcontroller.h"
 
 QmlProfile &QmlProfile::singleton()
@@ -25,10 +26,9 @@ QmlProfile &QmlProfile::singleton()
     return instance;
 }
 
-QmlProfile::QmlProfile() :
-    QObject()
-{
-}
+QmlProfile::QmlProfile()
+    : QObject()
+{}
 
 int QmlProfile::width() const
 {

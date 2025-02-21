@@ -31,15 +31,9 @@ class TranscodeDialog : public QDialog
 public:
     explicit TranscodeDialog(const QString &message, bool isProgressive, QWidget *parent = nullptr);
     ~TranscodeDialog();
-    int format() const
-    {
-        return m_format;
-    }
+    int format() const { return m_format; }
     void showCheckBox();
-    bool isCheckBoxChecked() const
-    {
-        return m_isChecked;
-    }
+    bool isCheckBoxChecked() const { return m_isChecked; }
     bool deinterlace() const;
     bool fpsOverride() const;
     double fps() const;

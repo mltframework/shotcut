@@ -16,11 +16,12 @@
  */
 
 #include "filtercommands.h"
-#include "qmltypes/qmlmetadata.h"
+
+#include "Logger.h"
 #include "controllers/filtercontroller.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
-#include <Logger.h>
+#include "qmltypes/qmlmetadata.h"
 
 class FindProducerParser : public Mlt::Parser
 {
@@ -34,15 +35,9 @@ public:
         , m_uuid(uuid)
     {}
 
-    Mlt::Producer producer()
-    {
-        return m_producer;
-    }
+    Mlt::Producer producer() { return m_producer; }
 
-    int on_start_filter(Mlt::Filter *)
-    {
-        return 0;
-    }
+    int on_start_filter(Mlt::Filter *) { return 0; }
     int on_start_producer(Mlt::Producer *producer)
     {
         if (MLT.uuid(*producer) == m_uuid) {
@@ -51,70 +46,22 @@ public:
         }
         return 0;
     }
-    int on_end_producer(Mlt::Producer *)
-    {
-        return 0;
-    }
-    int on_start_playlist(Mlt::Playlist *playlist)
-    {
-        return on_start_producer(playlist);
-    }
-    int on_end_playlist(Mlt::Playlist *)
-    {
-        return 0;
-    }
-    int on_start_tractor(Mlt::Tractor *tractor)
-    {
-        return on_start_producer(tractor);
-    }
-    int on_end_tractor(Mlt::Tractor *)
-    {
-        return 0;
-    }
-    int on_start_multitrack(Mlt::Multitrack *)
-    {
-        return 0;
-    }
-    int on_end_multitrack(Mlt::Multitrack *)
-    {
-        return 0;
-    }
-    int on_start_track()
-    {
-        return 0;
-    }
-    int on_end_track()
-    {
-        return 0;
-    }
-    int on_end_filter(Mlt::Filter *)
-    {
-        return 0;
-    }
-    int on_start_transition(Mlt::Transition *)
-    {
-        return 0;
-    }
-    int on_end_transition(Mlt::Transition *)
-    {
-        return 0;
-    }
-    int on_start_chain(Mlt::Chain *chain)
-    {
-        return on_start_producer(chain);
-    }
-    int on_end_chain(Mlt::Chain *)
-    {
-        return 0;
-    }
-    int on_start_link(Mlt::Link *)
-    {
-        return 0;
-    }
-    int on_end_link(Mlt::Link *)
-    {
-        return 0;
-    }
+    int on_end_producer(Mlt::Producer *) { return 0; }
+    int on_start_playlist(Mlt::Playlist *playlist) { return on_start_producer(playlist); }
+    int on_end_playlist(Mlt::Playlist *) { return 0; }
+    int on_start_tractor(Mlt::Tractor *tractor) { return on_start_producer(tractor); }
+    int on_end_tractor(Mlt::Tractor *) { return 0; }
+    int on_start_multitrack(Mlt::Multitrack *) { return 0; }
+    int on_end_multitrack(Mlt::Multitrack *) { return 0; }
+    int on_start_track() { return 0; }
+    int on_end_track() { return 0; }
+    int on_end_filter(Mlt::Filter *) { return 0; }
+    int on_start_transition(Mlt::Transition *) { return 0; }
+    int on_end_transition(Mlt::Transition *) { return 0; }
+    int on_start_chain(Mlt::Chain *chain) { return on_start_producer(chain); }
+    int on_end_chain(Mlt::Chain *) { return 0; }
+    int on_start_link(Mlt::Link *) { return 0; }
+    int on_end_link(Mlt::Link *) { return 0; }
 };
 
 static Mlt::Producer findProducer(const QUuid &uuid)
@@ -144,8 +91,12 @@ static Mlt::Producer findProducer(const QUuid &uuid)
 
 namespace Filter {
 
-AddCommand::AddCommand(AttachedFiltersModel &model, const QString &name, Mlt::Service &service,
-                       int row, AddCommand::AddType type, QUndoCommand *parent)
+AddCommand::AddCommand(AttachedFiltersModel &model,
+                       const QString &name,
+                       Mlt::Service &service,
+                       int row,
+                       AddCommand::AddType type,
+                       QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_producer(*model.producer())
@@ -204,8 +155,11 @@ bool AddCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-RemoveCommand::RemoveCommand(AttachedFiltersModel &model, const QString &name,
-                             Mlt::Service &service, int row, QUndoCommand *parent)
+RemoveCommand::RemoveCommand(AttachedFiltersModel &model,
+                             const QString &name,
+                             Mlt::Service &service,
+                             int row,
+                             QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_row(row)
@@ -238,8 +192,8 @@ void RemoveCommand::undo()
     m_model.doAddService(producer, m_service, m_row);
 }
 
-MoveCommand::MoveCommand(AttachedFiltersModel &model, const QString &name,
-                         int fromRow, int toRow, QUndoCommand *parent)
+MoveCommand::MoveCommand(
+    AttachedFiltersModel &model, const QString &name, int fromRow, int toRow, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_fromRow(fromRow)
@@ -277,8 +231,8 @@ void MoveCommand::undo()
     }
 }
 
-DisableCommand::DisableCommand(AttachedFiltersModel &model, const QString &name, int row,
-                               bool disabled, QUndoCommand *parent)
+DisableCommand::DisableCommand(
+    AttachedFiltersModel &model, const QString &name, int row, bool disabled, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_row(row)
@@ -337,8 +291,12 @@ bool DisableCommand::mergeWith(const QUndoCommand *other)
     */
 }
 
-UndoParameterCommand::UndoParameterCommand(const QString &name, FilterController *controller,
-                                           int row, Mlt::Properties &before, const QString &desc, QUndoCommand *parent)
+UndoParameterCommand::UndoParameterCommand(const QString &name,
+                                           FilterController *controller,
+                                           int row,
+                                           Mlt::Properties &before,
+                                           const QString &desc,
+                                           QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_filterController(controller)
     , m_row(row)
@@ -370,7 +328,8 @@ void UndoParameterCommand::redo()
         Mlt::Producer producer = findProducer(m_producerUuid);
         Q_ASSERT(producer.is_valid());
         if (producer.is_valid() && m_filterController) {
-            Mlt::Service service = m_filterController->attachedModel()->doGetService(producer, m_row);
+            Mlt::Service service = m_filterController->attachedModel()->doGetService(producer,
+                                                                                     m_row);
             service.inherit(m_after);
             m_filterController->onUndoOrRedo(service);
         }
@@ -391,11 +350,11 @@ void UndoParameterCommand::undo()
 
 bool UndoParameterCommand::mergeWith(const QUndoCommand *other)
 {
-    UndoParameterCommand *that = const_cast<UndoParameterCommand *>
-                                 (static_cast<const UndoParameterCommand *>(other));
+    UndoParameterCommand *that = const_cast<UndoParameterCommand *>(
+        static_cast<const UndoParameterCommand *>(other));
     LOG_DEBUG() << "this filter" << m_row << "that filter" << that->m_row;
     if (that->id() != id() || that->m_row != m_row || that->m_producerUuid != m_producerUuid
-            || that->text() != text())
+        || that->text() != text())
         return false;
     m_after = that->m_after;
     return true;

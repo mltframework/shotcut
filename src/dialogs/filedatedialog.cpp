@@ -17,12 +17,12 @@
 
 #include "filedatedialog.h"
 
-#include <Logger.h>
-#include "shotcut_mlt_properties.h"
+#include "Logger.h"
 #include "mltcontroller.h"
-#include "MltProducer.h"
 #include "proxymanager.h"
+#include "shotcut_mlt_properties.h"
 
+#include <MltProducer.h>
 #include <QComboBox>
 #include <QDateTimeEdit>
 #include <QDebug>
@@ -46,7 +46,7 @@ FileDateDialog::FileDateDialog(QString title, Mlt::Producer *producer, QWidget *
     setWindowTitle(tr("%1 File Date").arg(title));
     int64_t milliseconds = producer->get_creation_time();
     QDateTime creation_time;
-    if (!milliseconds ) {
+    if (!milliseconds) {
         creation_time = QDateTime::currentDateTime();
     } else {
         // Set the date to the current producer date.
@@ -72,21 +72,21 @@ FileDateDialog::FileDateDialog(QString title, Mlt::Producer *producer, QWidget *
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
-    this->setLayout (VLayout);
+    this->setLayout(VLayout);
     this->setModal(true);
 }
 
 void FileDateDialog::accept()
 {
-    m_producer->set_creation_time((int64_t)m_dtEdit->dateTime().toTimeSpec(
-                                      Qt::LocalTime).toMSecsSinceEpoch());
+    m_producer->set_creation_time(
+        (int64_t) m_dtEdit->dateTime().toTimeSpec(Qt::LocalTime).toMSecsSinceEpoch());
     QDialog::accept();
 }
 
 void FileDateDialog::dateSelected(int index)
 {
     LOG_DEBUG() << index;
-    if ( index > -1 ) {
+    if (index > -1) {
         m_dtEdit->setDateTime(m_dtCombo->itemData(index).toDateTime());
     }
 }
@@ -97,7 +97,7 @@ void FileDateDialog::populateDateOptions(Mlt::Producer *producer)
 
     // Add current value
     int64_t milliseconds = producer->get_creation_time();
-    if ( milliseconds ) {
+    if (milliseconds) {
         dateTime = QDateTime::fromMSecsSinceEpoch(milliseconds);
         addDateToCombo(m_dtCombo, tr("Current Value"), dateTime);
     }
@@ -123,8 +123,9 @@ void FileDateDialog::populateDateOptions(Mlt::Producer *producer)
             addDateToCombo(m_dtCombo, tr("Metadata - Creation Time"), dateTime);
         }
         // Quicktime create date
-        dateTime = QDateTime::fromString(
-                       tmpProducer.get("meta.attr.com.apple.quicktime.creationdate.markup"), Qt::ISODateWithMs);
+        dateTime = QDateTime::fromString(tmpProducer.get(
+                                             "meta.attr.com.apple.quicktime.creationdate.markup"),
+                                         Qt::ISODateWithMs);
         if (dateTime.isValid()) {
             addDateToCombo(m_dtCombo, tr("Metadata - QuickTime date"), dateTime);
         }

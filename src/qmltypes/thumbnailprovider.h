@@ -19,9 +19,9 @@
 #ifndef THUMBNAILPROVIDER_H
 #define THUMBNAILPROVIDER_H
 
-#include <QQuickImageProvider>
 #include <MltProducer.h>
 #include <MltProfile.h>
+#include <QQuickImageProvider>
 
 class ThumbnailProvider : public QQuickImageProvider
 {
@@ -30,8 +30,11 @@ public:
     QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize);
 
 private:
-    QString cacheKey(Mlt::Properties &properties, const QString &service,
-                     const QString &resource, const QString &hash, int frameNumber);
+    QString cacheKey(Mlt::Properties &properties,
+                     const QString &service,
+                     const QString &resource,
+                     const QString &hash,
+                     int frameNumber);
     QImage makeThumbnail(Mlt::Producer &, int frameNumber, const QSize &requestedSize);
     Mlt::Profile m_profile;
 };

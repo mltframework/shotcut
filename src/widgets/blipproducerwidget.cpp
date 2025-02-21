@@ -15,15 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "shotcut_mlt_properties.h"
 #include "blipproducerwidget.h"
+
+#include "shotcut_mlt_properties.h"
 #include "ui_blipproducerwidget.h"
 #include "util.h"
+
 #include <MltProfile.h>
 
-BlipProducerWidget::BlipProducerWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::BlipProducerWidget)
+BlipProducerWidget::BlipProducerWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::BlipProducerWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);

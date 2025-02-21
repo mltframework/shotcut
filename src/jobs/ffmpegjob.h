@@ -19,13 +19,16 @@
 #define FFMPEGJOB_H
 
 #include "abstractjob.h"
+
 #include <QStringList>
 
 class FfmpegJob : public AbstractJob
 {
     Q_OBJECT
 public:
-    FfmpegJob(const QString &name, const QStringList &args, bool isOpenLog = true,
+    FfmpegJob(const QString &name,
+              const QStringList &args,
+              bool isOpenLog = true,
               QThread::Priority priority = Settings.jobPriority());
     virtual ~FfmpegJob();
     void start();

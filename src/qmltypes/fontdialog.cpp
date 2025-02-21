@@ -21,8 +21,7 @@
 
 FontDialog::FontDialog(QObject *parent)
     : QObject{parent}
-{
-}
+{}
 
 void FontDialog::open()
 {

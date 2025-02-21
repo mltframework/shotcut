@@ -16,12 +16,12 @@
  */
 
 #include "bitrateviewerjob.h"
+
+#include "Logger.h"
 #include "dialogs/bitratedialog.h"
 #include "mainwindow.h"
 #include "util.h"
-#include "Logger.h"
 
-#include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
@@ -37,10 +37,7 @@ BitrateViewerJob::BitrateViewerJob(const QString &name, const QStringList &args,
     m_successActions << action;
 }
 
-BitrateViewerJob::~BitrateViewerJob()
-{
-
-}
+BitrateViewerJob::~BitrateViewerJob() {}
 
 void BitrateViewerJob::onFinished(int exitCode, ExitStatus exitStatus)
 {

@@ -16,17 +16,18 @@
  */
 
 #include "postjobaction.h"
-#include "mainwindow.h"
+
+#include "Logger.h"
 #include "docks/playlistdock.h"
 #include "docks/subtitlesdock.h"
+#include "mainwindow.h"
 #include "shotcut_mlt_properties.h"
-#include <Logger.h>
-
-// For file time functions in FilePropertiesPostJobAction::doAction();
-#include <utime.h>
-#include <sys/stat.h>
 
 #include <QFile>
+
+// For file time functions in FilePropertiesPostJobAction::doAction();
+#include <sys/stat.h>
+#include <utime.h>
 
 void FilePropertiesPostJobAction::doAction()
 {
@@ -118,7 +119,6 @@ void ProxyFinalizePostJobAction::doAction()
         QFile::remove(m_dstFile);
     }
 }
-
 
 void ImportSrtPostJobAction::doAction()
 {

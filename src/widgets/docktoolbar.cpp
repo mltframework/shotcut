@@ -23,8 +23,6 @@
 #include <QStyle>
 #include <QStyleOptionToolBar>
 
-#include <QDebug>
-
 DockToolBar::DockToolBar(const QString &title, QWidget *parent)
     : QToolBar(title, parent)
     , m_area(Qt::TopToolBarArea)
@@ -45,8 +43,8 @@ void DockToolBar::setAreaHint(Qt::ToolBarArea area)
 void DockToolBar::paintEvent(QPaintEvent *event)
 {
     QPainter p(this);
-    QLinearGradient gradient = QLinearGradient(rect().left(), rect().center().y(),
-                                               rect().right(), rect().center().y());
+    QLinearGradient gradient
+        = QLinearGradient(rect().left(), rect().center().y(), rect().right(), rect().center().y());
     gradient.setColorAt(0, palette().window().color().lighter(104));
     gradient.setColorAt(1, palette().window().color());
     p.fillRect(rect(), gradient);
@@ -71,7 +69,7 @@ void DockToolBar::updateStyle()
     }
     setFixedHeight(height);
     setIconSize(QSize(height - 9, height - 9));
-    QString styleSheet = QString::fromUtf8( "   \
+    QString styleSheet = QString::fromUtf8("   \
          QToolButton {                          \
            width:%1px;                          \
            height:%1px;                         \
@@ -87,6 +85,7 @@ void DockToolBar::updateStyle()
            spacing:3px;                         \
            padding:1px;                         \
          }                                      \
-        ").arg(height - 9);
+        ")
+                             .arg(height - 9);
     setStyleSheet(styleSheet);
 }

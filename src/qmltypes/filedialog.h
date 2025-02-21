@@ -25,18 +25,16 @@ class FileDialog : public QObject
     Q_OBJECT
     Q_PROPERTY(FileDialog::FileMode fileMode READ fileMode WRITE setFileMode NOTIFY fileModeChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
-    Q_PROPERTY(QStringList nameFilters READ nameFilters WRITE setNameFilters NOTIFY nameFiltersChanged)
+    Q_PROPERTY(
+        QStringList nameFilters READ nameFilters WRITE setNameFilters NOTIFY nameFiltersChanged)
     Q_PROPERTY(QString selectedFile READ selectedFile NOTIFY fileSelected)
 
 public:
-    enum FileMode {OpenFile, SaveFile};
+    enum FileMode { OpenFile, SaveFile };
     Q_ENUM(FileMode)
 
     explicit FileDialog(QObject *parent = nullptr);
-    FileDialog::FileMode fileMode() const
-    {
-        return m_fileMode;
-    }
+    FileDialog::FileMode fileMode() const { return m_fileMode; }
     void setFileMode(FileDialog::FileMode mode);
     QString title() const;
     void setTitle(const QString &title);
@@ -55,7 +53,7 @@ signals:
     void rejected();
 
 private:
-    FileDialog::FileMode m_fileMode {FileDialog::OpenFile};
+    FileDialog::FileMode m_fileMode{FileDialog::OpenFile};
     std::unique_ptr<QFileDialog> m_fileDialog;
 };
 

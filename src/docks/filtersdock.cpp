@@ -16,36 +16,39 @@
  */
 
 #include "filtersdock.h"
-#include <QQuickView>
-#include <QQuickItem>
-#include <QtWidgets/QScrollArea>
-#include <QQmlEngine>
-#include <QDir>
-#include <QMenu>
-#include <QUrl>
-#include <QQmlContext>
-#include <QAction>
-#include <QIcon>
-#include <Logger.h>
 
+#include "Logger.h"
 #include "actions.h"
-#include "mainwindow.h"
 #include "controllers/filtercontroller.h"
+#include "mainwindow.h"
+#include "mltcontroller.h"
+#include "models/attachedfiltersmodel.h"
+#include "models/metadatamodel.h"
+#include "models/motiontrackermodel.h"
+#include "models/subtitlesmodel.h"
 #include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
-#include "models/metadatamodel.h"
-#include "models/motiontrackermodel.h"
-#include "models/subtitlesmodel.h"
-#include "models/attachedfiltersmodel.h"
-#include "mltcontroller.h"
 
-FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *attachedModel,
-                         MotionTrackerModel *motionTrackerModel, SubtitlesModel *subtitlesModel,
-                         QWidget *parent) :
-    QDockWidget(tr("Filters"), parent),
-    m_qview(QmlUtilities::sharedEngine(), this)
+#include <QAction>
+#include <QDir>
+#include <QIcon>
+#include <QMenu>
+#include <QQmlContext>
+#include <QQmlEngine>
+#include <QQuickItem>
+#include <QQuickView>
+#include <QUrl>
+#include <QtWidgets/QScrollArea>
+
+FiltersDock::FiltersDock(MetadataModel *metadataModel,
+                         AttachedFiltersModel *attachedModel,
+                         MotionTrackerModel *motionTrackerModel,
+                         SubtitlesModel *subtitlesModel,
+                         QWidget *parent)
+    : QDockWidget(tr("Filters"), parent)
+    , m_qview(QmlUtilities::sharedEngine(), this)
 {
     LOG_DEBUG() << "begin";
     setObjectName("FiltersDock");
@@ -73,7 +76,10 @@ FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *att
     connect(&m_producer, SIGNAL(seeked(int)), SIGNAL(seeked(int)));
     connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
     connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
-    connect(m_qview.quickWindow(), &QQuickWindow::sceneGraphInitialized, this, &FiltersDock::load,
+    connect(m_qview.quickWindow(),
+            &QQuickWindow::sceneGraphInitialized,
+            this,
+            &FiltersDock::load,
             Qt::QueuedConnection);
 
     setCurrentFilter(0, 0, QmlFilter::NoCurrentFilter);
@@ -86,7 +92,7 @@ void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int ind
     if (filter && filter->producer().is_valid()) {
         m_producer.setProducer(filter->producer());
         if (mlt_service_playlist_type != filter->producer().type() && MLT.producer()
-                && MLT.producer()->is_valid())
+            && MLT.producer()->is_valid())
             m_producer.seek(MLT.producer()->position());
     } else {
         Mlt::Producer emptyProducer(mlt_producer(0));
@@ -98,15 +104,16 @@ void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int ind
         connect(filter, SIGNAL(changed(QString)), SIGNAL(changed()));
     else
         disconnect(this, SIGNAL(changed()));
-    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant,
-                                                                              QVariant(index)));
+    QMetaObject::invokeMethod(m_qview.rootObject(),
+                              "setCurrentFilter",
+                              Q_ARG(QVariant, QVariant(index)));
 }
 
 bool FiltersDock::event(QEvent *event)
 {
     bool result = QDockWidget::event(event);
     if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange
-            || event->type() == QEvent::Show) {
+        || event->type() == QEvent::Show) {
         load();
     }
     return result;
@@ -161,7 +168,7 @@ void FiltersDock::showCopyFilterMenu()
 void FiltersDock::onServiceInChanged(int delta, Mlt::Service *service)
 {
     if (delta && service && m_producer.producer().is_valid()
-            && service->get_service() == m_producer.producer().get_service()) {
+        && service->get_service() == m_producer.producer().get_service()) {
         emit producerInChanged(delta);
     }
 }
@@ -173,7 +180,8 @@ void FiltersDock::load()
         QTimer::singleShot(300, this, &FiltersDock::load);
     }
 
-    LOG_DEBUG() << "begin" << "isVisible" << isVisible() << "qview.status" << m_qview.status();
+    LOG_DEBUG() << "begin"
+                << "isVisible" << isVisible() << "qview.status" << m_qview.status();
 
     emit currentFilterRequested(QmlFilter::NoCurrentFilter);
 
@@ -191,9 +199,11 @@ void FiltersDock::load()
     QUrl source = QUrl::fromLocalFile(viewPath.absoluteFilePath("filterview.qml"));
     m_qview.setSource(source);
 
-    QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
+    QObject::connect(m_qview.rootObject(),
+                     SIGNAL(currentFilterRequested(int)),
                      SIGNAL(currentFilterRequested(int)));
-    QObject::connect(m_qview.rootObject(), SIGNAL(copyFilterRequested()),
+    QObject::connect(m_qview.rootObject(),
+                     SIGNAL(copyFilterRequested()),
                      SLOT(showCopyFilterMenu()));
 }
 
@@ -205,10 +215,9 @@ void FiltersDock::setupActions()
     action = new QAction(tr("Add"), this);
     action->setShortcut(QKeySequence(Qt::Key_F));
     action->setToolTip(tr("Choose a filter to add"));
-    icon = QIcon::fromTheme("list-add",
-                            QIcon(":/icons/oxygen/32x32/actions/list-add.png"));
+    icon = QIcon::fromTheme("list-add", QIcon(":/icons/oxygen/32x32/actions/list-add.png"));
     action->setIcon(icon);
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         show();
         raise();
         m_qview.setFocus();
@@ -220,18 +229,15 @@ void FiltersDock::setupActions()
     action = new QAction(tr("Remove"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F));
     action->setToolTip(tr("Remove selected filter"));
-    icon = QIcon::fromTheme("list-remove",
-                            QIcon(":/icons/oxygen/32x32/actions/list-remove.png"));
+    icon = QIcon::fromTheme("list-remove", QIcon(":/icons/oxygen/32x32/actions/list-remove.png"));
     action->setIcon(icon);
-    connect(action, &QAction::triggered, this, [ = ]() {
-        MAIN.filterController()->removeCurrent();
-    });
+    connect(action, &QAction::triggered, this, [=]() { MAIN.filterController()->removeCurrent(); });
     addAction(action);
     Actions.add("filtersRemoveFilterAction", action, windowTitle());
 
     action = new QAction(tr("Copy Enabled"), this);
     action->setToolTip(tr("Copy checked filters to the clipboard"));
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         QmlApplication::singleton().copyEnabledFilters();
     });
     addAction(action);
@@ -239,7 +245,7 @@ void FiltersDock::setupActions()
 
     action = new QAction(tr("Copy Current"), this);
     action->setToolTip(tr("Copy current filter to the clipboard"));
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         QmlApplication::singleton().copyCurrentFilter();
     });
     addAction(action);
@@ -247,7 +253,7 @@ void FiltersDock::setupActions()
 
     action = new QAction(tr("Copy All"), this);
     action->setToolTip(tr("Copy all filters to the clipboard"));
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         QmlApplication::singleton().copyAllFilters();
     });
     addAction(action);
@@ -255,10 +261,9 @@ void FiltersDock::setupActions()
 
     action = new QAction(tr("Paste Filters"), this);
     action->setToolTip(tr("Paste the filters from the clipboard"));
-    icon = QIcon::fromTheme("edit-paste",
-                            QIcon(":/icons/oxygen/32x32/actions/edit-paste.png"));
+    icon = QIcon::fromTheme("edit-paste", QIcon(":/icons/oxygen/32x32/actions/edit-paste.png"));
     action->setIcon(icon);
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         QmlApplication::singleton().pasteFilters();
     });
     addAction(action);

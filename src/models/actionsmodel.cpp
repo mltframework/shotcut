@@ -17,14 +17,14 @@
 
 #include "actionsmodel.h"
 
+#include "Logger.h"
 #include "actions.h"
-#include <Logger.h>
 
 #include <QAction>
+#include <QFont>
 #include <QGuiApplication>
 #include <QKeySequence>
 #include <QPalette>
-#include <QFont>
 
 ActionsModel::ActionsModel(QObject *parent)
     : QAbstractItemModel(parent)
@@ -70,7 +70,7 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
     }
 
     if (!index.isValid() || index.column() < 0 || index.column() >= COLUMN_COUNT || index.row() < 0
-            || index.row() >= m_actions.size()) {
+        || index.row() >= m_actions.size()) {
         LOG_ERROR() << "Invalid Index: " << index.row() << index.column() << role;
         return result;
     }
@@ -87,8 +87,7 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
             QList<QKeySequence> sequences = action->shortcuts();
             if (sequences.size() > 0)
                 result = sequences[0].toString(QKeySequence::NativeText);
-        }
-        break;
+        } break;
         case COLUMN_SEQUENCE2: {
             result = action->property(Actions.hardKeyProperty);
             if (result.toString().isEmpty()) {
@@ -96,8 +95,7 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
                 if (sequences.size() > 1)
                     result = sequences[1].toString(QKeySequence::NativeText);
             }
-        }
-        break;
+        } break;
         default:
             LOG_ERROR() << "Invalid Column" << index.column() << role;
             break;
@@ -110,7 +108,8 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
         if (index.column() == COLUMN_SEQUENCE1) {
             QFont font;
             QList<QKeySequence> sequences = action->shortcuts();
-            if (sequences.size() > 0 && sequences[0] != action->property(Actions.defaultKey1Property)) {
+            if (sequences.size() > 0
+                && sequences[0] != action->property(Actions.defaultKey1Property)) {
                 font.setBold(true);
             }
             result = font;
@@ -119,15 +118,17 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
             QList<QKeySequence> sequences = action->shortcuts();
             if (action->property(Actions.hardKeyProperty).isValid()) {
                 font.setItalic(true);
-            } else if (sequences.size() > 1 && sequences[1] != action->property(Actions.defaultKey2Property)) {
+            } else if (sequences.size() > 1
+                       && sequences[1] != action->property(Actions.defaultKey2Property)) {
                 font.setBold(true);
             }
-            result =  font;
+            result = font;
         }
         break;
     case Qt::ForegroundRole:
-        if (index.column() == COLUMN_SEQUENCE2 && action->property(Actions.hardKeyProperty).isValid()) {
-            result =  QGuiApplication::palette().color(QPalette::Disabled, QPalette::Text);
+        if (index.column() == COLUMN_SEQUENCE2
+            && action->property(Actions.hardKeyProperty).isValid()) {
+            result = QGuiApplication::palette().color(QPalette::Disabled, QPalette::Text);
         }
         break;
     case ActionsModel::HardKeyRole:
@@ -155,7 +156,7 @@ QVariant ActionsModel::data(const QModelIndex &index, int role) const
 
 bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid() )
+    if (!index.isValid())
         return false;
 
     if (role != Qt::EditRole)
@@ -184,8 +185,9 @@ bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int 
             for (int i = 0; i < sequences.size(); i++) {
                 if (sequences[i] == ks) {
                     if (a != action) {
-                        QString error = tr("Shortcut %1 is used by %2").arg(ks.toString(), a->property(
-                                                                                Actions.displayProperty).toString());
+                        QString error = tr("Shortcut %1 is used by %2")
+                                            .arg(ks.toString(),
+                                                 a->property(Actions.displayProperty).toString());
                         emit editError(error);
                     }
                     return false;
@@ -193,8 +195,9 @@ bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int 
             }
             QString hardKey = a->property(Actions.hardKeyProperty).toString();
             if (!hardKey.isEmpty() && hardKey == ks.toString()) {
-                QString error = tr("Shortcut %1 is reserved for use by %2").arg(ks.toString(), a->property(
-                                                                                    Actions.displayProperty).toString());
+                QString error = tr("Shortcut %1 is reserved for use by %2")
+                                    .arg(ks.toString(),
+                                         a->property(Actions.displayProperty).toString());
                 emit editError(error);
                 return false;
             }
@@ -208,7 +211,7 @@ bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int 
         if (oldShortcuts.size() > 1 && oldShortcuts[1] != ks) {
             newShortcuts << oldShortcuts[1];
         }
-    } else if  (index.column() == COLUMN_SEQUENCE2) {
+    } else if (index.column() == COLUMN_SEQUENCE2) {
         if (oldShortcuts.size() > 0 && oldShortcuts[0] != ks) {
             newShortcuts << oldShortcuts[0];
         }
@@ -217,8 +220,8 @@ bool ActionsModel::setData(const QModelIndex &index, const QVariant &value, int 
 
     Actions.overrideShortcuts(action->objectName(), newShortcuts);
 
-    emit dataChanged(this->index(index.row(), COLUMN_SEQUENCE1), this->index(index.row(),
-                                                                             COLUMN_SEQUENCE2));
+    emit dataChanged(this->index(index.row(), COLUMN_SEQUENCE1),
+                     this->index(index.row(), COLUMN_SEQUENCE2));
     return true;
 }
 
@@ -246,7 +249,7 @@ QModelIndex ActionsModel::index(int row, int column, const QModelIndex &parent) 
     Q_UNUSED(parent)
     if (column < 0 || column >= COLUMN_COUNT || row < 0 || row >= m_actions.size())
         return QModelIndex();
-    return createIndex(row, column, (int)0);
+    return createIndex(row, column, (int) 0);
 }
 
 QModelIndex ActionsModel::parent(const QModelIndex &index) const

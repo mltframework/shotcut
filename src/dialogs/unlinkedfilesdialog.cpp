@@ -16,17 +16,18 @@
  */
 
 #include "unlinkedfilesdialog.h"
-#include "ui_unlinkedfilesdialog.h"
-#include "settings.h"
+#include "Logger.h"
 #include "mltxmlchecker.h"
+#include "settings.h"
+#include "ui_unlinkedfilesdialog.h"
 #include "util.h"
-#include <Logger.h>
+
 #include <QFileDialog>
 #include <QStringList>
 
-UnlinkedFilesDialog::UnlinkedFilesDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::UnlinkedFilesDialog)
+UnlinkedFilesDialog::UnlinkedFilesDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::UnlinkedFilesDialog)
 {
     ui->setupUi(this);
 }
@@ -53,8 +54,12 @@ void UnlinkedFilesDialog::on_tableView_doubleClicked(const QModelIndex &index)
 #ifdef Q_OS_MAC
     path.append("/*");
 #endif
-    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path,
-                                                          QString(), nullptr, Util::getFileDialogOptions());
+    QStringList filenames = QFileDialog::getOpenFileNames(this,
+                                                          tr("Open File"),
+                                                          path,
+                                                          QString(),
+                                                          nullptr,
+                                                          Util::getFileDialogOptions());
     if (filenames.length() > 0) {
         QAbstractItemModel *model = ui->tableView->model();
 
@@ -96,14 +101,15 @@ bool UnlinkedFilesDialog::lookInDir(const QDir &dir, bool recurse)
     }
     if (outstanding) {
         for (const auto &fileName :
-                dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot)) {
+             dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot)) {
             QString hash = Util::getFileHash(dir.absoluteFilePath(fileName));
             for (int row = 0; row < model->rowCount(); row++) {
                 QModelIndex replacementIndex = model->index(row, MltXmlChecker::ReplacementColumn);
                 if (model->data(replacementIndex, MltXmlChecker::ShotcutHashRole).isNull()) {
                     QModelIndex missingIndex = model->index(row, MltXmlChecker::MissingColumn);
                     QFileInfo missingInfo(model->data(missingIndex).toString());
-                    QString missingHash = model->data(missingIndex, MltXmlChecker::ShotcutHashRole).toString();
+                    QString missingHash
+                        = model->data(missingIndex, MltXmlChecker::ShotcutHashRole).toString();
                     if (hash == missingHash || fileName == missingInfo.fileName()) {
                         if (hash == missingHash) {
                             QIcon icon(":/icons/oxygen/32x32/status/task-complete.png");
@@ -128,7 +134,7 @@ bool UnlinkedFilesDialog::lookInDir(const QDir &dir, bool recurse)
     }
     if (outstanding && recurse) {
         for (const QString &dirName :
-                dir.entryList(QDir::Dirs | QDir::Executable | QDir::NoDotAndDotDot)) {
+             dir.entryList(QDir::Dirs | QDir::Executable | QDir::NoDotAndDotDot)) {
             if (!lookInDir(dir.absoluteFilePath(dirName), true))
                 break;
         }
@@ -138,7 +144,9 @@ bool UnlinkedFilesDialog::lookInDir(const QDir &dir, bool recurse)
 
 void UnlinkedFilesDialog::on_searchFolderButton_clicked()
 {
-    QString dirName = QFileDialog::getExistingDirectory(this, windowTitle(), Settings.openPath(),
+    QString dirName = QFileDialog::getExistingDirectory(this,
+                                                        windowTitle(),
+                                                        Settings.openPath(),
                                                         Util::getFileDialogOptions());
     if (!dirName.isEmpty()) {
         Settings.setOpenPath(dirName);

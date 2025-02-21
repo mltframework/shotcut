@@ -17,17 +17,19 @@
 
 #include "customprofiledialog.h"
 #include "ui_customprofiledialog.h"
+
 #include "mltcontroller.h"
 #include "settings.h"
 #include "util.h"
-#include <QDir>
+
 #include <QDesktopServices>
+#include <QDir>
 #include <QRegularExpression>
 
-CustomProfileDialog::CustomProfileDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::CustomProfileDialog),
-    m_fps(0.0)
+CustomProfileDialog::CustomProfileDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::CustomProfileDialog)
+    , m_fps(0.0)
 {
     ui->setupUi(this);
     ui->widthSpinner->setValue(MLT.profile().width());
@@ -48,8 +50,8 @@ QString CustomProfileDialog::profileName() const
 {
     // Replace characters that are not allowed in Windows file names
     QString filename = ui->nameEdit->text();
-    static QRegularExpression re("[" + QRegularExpression::escape( "\\/:*?\"<>|" ) + "]");
-    filename = filename.replace(re, QStringLiteral( "_" ));
+    static QRegularExpression re("[" + QRegularExpression::escape("\\/:*?\"<>|") + "]");
+    filename = filename.replace(re, QStringLiteral("_"));
     return filename;
 }
 
@@ -125,13 +127,15 @@ void CustomProfileDialog::on_fpsSpinner_editingFinished()
 
 void CustomProfileDialog::on_fpsComboBox_textActivated(const QString &arg1)
 {
-    if (arg1.isEmpty()) return;
+    if (arg1.isEmpty())
+        return;
     ui->fpsSpinner->setValue(arg1.toDouble());
 }
 
 void CustomProfileDialog::on_resolutionComboBox_textActivated(const QString &arg1)
 {
-    if (arg1.isEmpty()) return;
+    if (arg1.isEmpty())
+        return;
     auto parts = arg1.split(' ');
     ui->widthSpinner->setValue(parts[0].toInt());
     ui->heightSpinner->setValue(parts[2].toInt());
@@ -139,7 +143,8 @@ void CustomProfileDialog::on_resolutionComboBox_textActivated(const QString &arg
 
 void CustomProfileDialog::on_aspectRatioComboBox_textActivated(const QString &arg1)
 {
-    if (arg1.isEmpty()) return;
+    if (arg1.isEmpty())
+        return;
     auto parts = arg1.split(' ')[0].split(':');
     ui->aspectNumSpinner->setValue(parts[0].toInt());
     ui->aspectDenSpinner->setValue(parts[1].toInt());

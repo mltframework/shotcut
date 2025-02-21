@@ -19,7 +19,6 @@
 #define RESOURCEMODEL_H
 
 #include <MltProducer.h>
-
 #include <QAbstractItemModel>
 
 class ResourceModel : public QAbstractItemModel
@@ -27,7 +26,6 @@ class ResourceModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-
     enum Columns {
         COLUMN_INFO = 0,
         COLUMN_NAME,
@@ -54,7 +52,6 @@ public:
     QModelIndex parent(const QModelIndex &index) const;
 
 private:
-
     QList<Mlt::Producer> m_producers;
     QMap<QString, QString> m_locations;
 };

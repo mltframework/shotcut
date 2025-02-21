@@ -19,6 +19,7 @@
 #define MARKERCOMMANDS_H
 
 #include "models/markersmodel.h"
+
 #include <QUndoCommand>
 
 namespace Markers {
@@ -33,6 +34,7 @@ public:
     DeleteCommand(MarkersModel &model, const Marker &delMarker, int index);
     void redo();
     void undo();
+
 private:
     MarkersModel &m_model;
     Marker m_delMarker;
@@ -45,6 +47,7 @@ public:
     AppendCommand(MarkersModel &model, const Marker &newMarker, int index);
     void redo();
     void undo();
+
 private:
     MarkersModel &m_model;
     Marker m_newMarker;
@@ -57,12 +60,11 @@ public:
     UpdateCommand(MarkersModel &model, const Marker &newMarker, const Marker &oldMarker, int index);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdUpdate;
-    }
+    int id() const { return UndoIdUpdate; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     MarkersModel &m_model;
     Marker m_newMarker;
@@ -76,11 +78,12 @@ public:
     ClearCommand(MarkersModel &model, QList<Marker> &clearMarkers);
     void redo();
     void undo();
+
 private:
     MarkersModel &m_model;
     QList<Marker> m_clearMarkers;
 };
 
-}
+} // namespace Markers
 
 #endif // MARKERCOMMANDS_H

@@ -18,8 +18,8 @@
 #ifndef METADATAMODEL_H
 #define METADATAMODEL_H
 
-#include <QSortFilterProxyModel>
 #include <QList>
+#include <QSortFilterProxyModel>
 
 class QmlMetadata;
 
@@ -31,7 +31,6 @@ class MetadataModel : public QSortFilterProxyModel
     Q_PROPERTY(QString search READ search WRITE setSearch NOTIFY searchChanged)
 
 public:
-
     enum ModelRoles {
         NameRole = Qt::UserRole + 1,
         HiddenRole,
@@ -73,17 +72,14 @@ public:
     QmlMetadata *getFromSource(int index) const;
     Q_INVOKABLE void saveFilterSet(const QString &name);
     Q_INVOKABLE void deleteFilterSet(const QString &name);
-    MetadataFilter filter() const
-    {
-        return m_filter;
-    }
+    MetadataFilter filter() const { return m_filter; }
     void setFilter(MetadataFilter);
-    void updateFilterMask(bool isClipProducer, bool isChainProducer, bool isTrackProducer,
-                          bool isOutputProducer, bool isReverseSupported);
-    QString search() const
-    {
-        return m_search;
-    }
+    void updateFilterMask(bool isClipProducer,
+                          bool isChainProducer,
+                          bool isTrackProducer,
+                          bool isOutputProducer,
+                          bool isReverseSupported);
+    QString search() const { return m_search; }
     void setSearch(const QString &search);
 
 signals:
@@ -107,7 +103,8 @@ private:
 class InternalMetadataModel : public QAbstractListModel
 {
 public:
-    explicit InternalMetadataModel(QObject *parent = 0) : QAbstractListModel(parent) {};
+    explicit InternalMetadataModel(QObject *parent = 0)
+        : QAbstractListModel(parent){};
 
     // Implement QAbstractListModel
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -119,10 +116,7 @@ public:
     // Direct access to QmlMetadata
     void add(QmlMetadata *data);
     QmlMetadata *get(int index) const;
-    QList<QmlMetadata *> &list()
-    {
-        return m_list;
-    }
+    QList<QmlMetadata *> &list() { return m_list; }
     void remove(int index);
 
 private:

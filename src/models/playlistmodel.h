@@ -18,12 +18,10 @@
 #ifndef PLAYLISTMODEL_H
 #define PLAYLISTMODEL_H
 
+#include <MltPlaylist.h>
 #include <QAbstractTableModel>
 #include <QMimeData>
 #include <QStringList>
-#include "MltPlaylist.h"
-
-
 
 class PlaylistModel : public QAbstractTableModel
 {
@@ -36,13 +34,7 @@ public:
         Icons,
     };
 
-    enum MediaType {
-        Video,
-        Image,
-        Audio,
-        Other,
-        Pending
-    };
+    enum MediaType { Video, Image, Audio, Other, Pending };
 
     enum Columns {
         COLUMN_INDEX = 0,
@@ -84,22 +76,25 @@ public:
     Qt::DropActions supportedDropActions() const;
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
-    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
-                  const QModelIndex &destinationParent, int destinationChild);
+    bool moveRows(const QModelIndex &sourceParent,
+                  int sourceRow,
+                  int count,
+                  const QModelIndex &destinationParent,
+                  int destinationChild);
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QStringList mimeTypes() const;
     QMimeData *mimeData(const QModelIndexList &indexes) const;
-    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column,
+    bool dropMimeData(const QMimeData *data,
+                      Qt::DropAction action,
+                      int row,
+                      int column,
                       const QModelIndex &parent);
     QModelIndex createIndex(int row, int column) const;
     void createIfNeeded();
     void showThumbnail(int row);
     void refreshThumbnails();
-    Mlt::Playlist *playlist()
-    {
-        return m_playlist;
-    }
+    Mlt::Playlist *playlist() { return m_playlist; }
     void setPlaylist(Mlt::Playlist &playlist);
     void setInOut(int row, int in, int out);
 

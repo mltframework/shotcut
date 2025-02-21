@@ -16,6 +16,7 @@
  */
 
 #include "longuitask.h"
+
 #include "mainwindow.h"
 
 static QMutex g_mutex;
