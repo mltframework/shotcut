@@ -19,8 +19,8 @@
 #ifndef TRACKPROPERTIESWIDGET_H
 #define TRACKPROPERTIESWIDGET_H
 
-#include <QWidget>
 #include <MltProducer.h>
+#include <QWidget>
 
 namespace Ui {
 class TrackPropertiesWidget;

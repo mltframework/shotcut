@@ -17,18 +17,19 @@
 
 #include "textviewerdialog.h"
 #include "ui_textviewerdialog.h"
+
 #include "settings.h"
 #include "util.h"
 
+#include <QClipboard>
 #include <QFileDialog>
 #include <QPushButton>
-#include <QClipboard>
 #include <QScrollBar>
 
-TextViewerDialog::TextViewerDialog(QWidget *parent, bool forMltXml) :
-    QDialog(parent),
-    ui(new Ui::TextViewerDialog),
-    m_forMltXml(forMltXml)
+TextViewerDialog::TextViewerDialog(QWidget *parent, bool forMltXml)
+    : QDialog(parent)
+    , ui(new Ui::TextViewerDialog)
+    , m_forMltXml(forMltXml)
 {
     ui->setupUi(this);
     auto button = ui->buttonBox->addButton(tr("Copy"), QDialogButtonBox::ActionRole);
@@ -47,7 +48,8 @@ void TextViewerDialog::setText(const QString &s, bool scroll)
     if (s != ui->plainTextEdit->toPlainText()) {
         ui->plainTextEdit->setPlainText(s);
         if (scroll)
-            ui->plainTextEdit->verticalScrollBar()->setValue(ui->plainTextEdit->verticalScrollBar()->maximum());
+            ui->plainTextEdit->verticalScrollBar()->setValue(
+                ui->plainTextEdit->verticalScrollBar()->maximum());
     }
 }
 
@@ -64,8 +66,12 @@ void TextViewerDialog::on_buttonBox_accepted()
     if (m_forMltXml) {
         nameFilter = tr("MLT XML (*.mlt);;All Files (*)");
     }
-    QString filename = QFileDialog::getSaveFileName(this, caption, path, nameFilter,
-                                                    nullptr, Util::getFileDialogOptions());
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    caption,
+                                                    path,
+                                                    nameFilter,
+                                                    nullptr,
+                                                    Util::getFileDialogOptions());
     if (!filename.isEmpty()) {
         QFileInfo fi(filename);
         if (fi.suffix().isEmpty()) {

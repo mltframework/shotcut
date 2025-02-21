@@ -34,4 +34,3 @@ private:
 };
 
 #endif // LIENEDIT_H
-

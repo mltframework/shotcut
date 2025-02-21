@@ -20,18 +20,21 @@
 #define AUDIOLEVELSTASK_H
 
 #include "multitrackmodel.h"
-#include <QRunnable>
-#include <QPersistentModelIndex>
-#include <QList>
+
 #include <MltProducer.h>
 #include <MltProfile.h>
+#include <QList>
+#include <QPersistentModelIndex>
+#include <QRunnable>
 
 class AudioLevelsTask : public QRunnable
 {
 public:
     AudioLevelsTask(Mlt::Producer &producer, QObject *object, const QModelIndex &index);
     virtual ~AudioLevelsTask();
-    static void start(Mlt::Producer &producer, QObject *object, const QModelIndex &index,
+    static void start(Mlt::Producer &producer,
+                      QObject *object,
+                      const QModelIndex &index,
                       bool force = false);
     static void closeAll();
     bool operator==(AudioLevelsTask &b);

@@ -18,17 +18,17 @@
 #ifndef FILTERCONTROLLER_H
 #define FILTERCONTROLLER_H
 
-#include <QObject>
-#include <QScopedPointer>
-#include <QFuture>
+#include "models/attachedfiltersmodel.h"
 #include "models/metadatamodel.h"
 #include "models/motiontrackermodel.h"
-#include "models/attachedfiltersmodel.h"
-#include "qmltypes/qmlmetadata.h"
 #include "qmltypes/qmlfilter.h"
+#include "qmltypes/qmlmetadata.h"
+
+#include <QFuture>
+#include <QObject>
+#include <QScopedPointer>
 
 class QTimerEvent;
-
 
 class FilterController : public QObject
 {
@@ -37,24 +37,15 @@ class FilterController : public QObject
 public:
     explicit FilterController(QObject *parent = 0);
     MetadataModel *metadataModel();
-    MotionTrackerModel *motionTrackerModel()
-    {
-        return &m_motionTrackerModel;
-    }
+    MotionTrackerModel *motionTrackerModel() { return &m_motionTrackerModel; }
     AttachedFiltersModel *attachedModel();
 
     QmlMetadata *metadata(const QString &id);
     QmlMetadata *metadataForService(Mlt::Service *service);
-    QmlFilter *currentFilter() const
-    {
-        return m_currentFilter.data();
-    }
+    QmlFilter *currentFilter() const { return m_currentFilter.data(); }
     bool isOutputTrackSelected() const;
     void onUndoOrRedo(Mlt::Service &service);
-    int currentIndex() const
-    {
-        return m_currentFilterIndex;
-    }
+    int currentIndex() const { return m_currentFilterIndex; }
     void addOrEditFilter(Mlt::Filter *filter, const QStringList &key_properties);
 
 protected:

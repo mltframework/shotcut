@@ -20,8 +20,8 @@
 #define DATAQUEUE_H
 
 #include <QMutex>
-#include <QWaitCondition>
 #include <QMutexLocker>
+#include <QWaitCondition>
 
 #include <deque>
 
@@ -44,7 +44,7 @@
   between objects operating in different thread contexts.
 */
 
-template <class T>
+template<class T>
 class DataQueue
 {
 public:
@@ -94,7 +94,7 @@ private:
     QWaitCondition m_notFullCondition;
 };
 
-template <class T>
+template<class T>
 DataQueue<T>::DataQueue(int maxSize, OverflowMode mode)
     : m_queue()
     , m_maxSize(maxSize)
@@ -102,15 +102,13 @@ DataQueue<T>::DataQueue(int maxSize, OverflowMode mode)
     , m_mutex()
     , m_notEmptyCondition()
     , m_notFullCondition()
-{
-}
+{}
 
-template <class T>
+template<class T>
 DataQueue<T>::~DataQueue()
-{
-}
+{}
 
-template <class T>
+template<class T>
 void DataQueue<T>::push(const T &item)
 {
     m_mutex.lock();
@@ -137,7 +135,7 @@ void DataQueue<T>::push(const T &item)
     m_mutex.unlock();
 }
 
-template <class T>
+template<class T>
 T DataQueue<T>::pop()
 {
     T retVal;
@@ -154,7 +152,7 @@ T DataQueue<T>::pop()
     return retVal;
 }
 
-template <class T>
+template<class T>
 int DataQueue<T>::count() const
 {
     QMutexLocker locker(&m_mutex);

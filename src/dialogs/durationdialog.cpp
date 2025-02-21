@@ -18,9 +18,9 @@
 #include "durationdialog.h"
 #include "ui_durationdialog.h"
 
-DurationDialog::DurationDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::DurationDialog)
+DurationDialog::DurationDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::DurationDialog)
 {
     ui->setupUi(this);
     connect(ui->spinBox, &TimeSpinBox::accepted, this, &QDialog::accept);

@@ -18,9 +18,10 @@
 #ifndef QMLFILE_H
 #define QMLFILE_H
 
+#include <QFileSystemWatcher>
 #include <QObject>
 #include <QUrl>
-#include <QFileSystemWatcher>
+
 #include <memory>
 
 class QmlFile : public QObject

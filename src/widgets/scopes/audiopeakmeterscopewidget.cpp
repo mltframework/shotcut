@@ -16,21 +16,24 @@
  */
 
 #include "audiopeakmeterscopewidget.h"
-#include "settings.h"
-#include <Logger.h>
-#include <QVBoxLayout>
-#include "widgets/audiometerwidget.h"
+
+#include "Logger.h"
 #include "mltcontroller.h"
+#include "settings.h"
+#include "widgets/audiometerwidget.h"
+
+#include <QVBoxLayout>
+
 #include <cmath> // log10()
 
 AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
     : ScopeWidget("AudioPeakMeter")
     , m_audioMeter(0)
-    , m_orientation((Qt::Orientation) - 1)
-    , m_channels( Settings.playerAudioChannels() )
+    , m_orientation((Qt::Orientation) -1)
+    , m_channels(Settings.playerAudioChannels())
 {
     LOG_DEBUG() << "begin";
-    qRegisterMetaType< QVector<double> >("QVector<double>");
+    qRegisterMetaType<QVector<double>>("QVector<double>");
     setAutoFillBackground(true);
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(4, 4, 4, 4);
@@ -53,21 +56,26 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize & /*size*/, bool /*full
             int samples = sFrame.get_audio_samples();
             QVector<double> levels;
             const int16_t *audio = sFrame.get_audio();
-            for ( int c = 0; c < channels; c++ ) {
+            for (int c = 0; c < channels; c++) {
                 int16_t peak = 0;
                 const int16_t *p = audio + c;
-                for ( int s = 0; s < samples; s++ ) {
-                    int16_t sample = abs(*p );
-                    if (sample > peak) peak = sample;
+                for (int s = 0; s < samples; s++) {
+                    int16_t sample = abs(*p);
+                    if (sample > peak)
+                        peak = sample;
                     p += channels;
                 }
                 if (peak == 0) {
                     levels << -100.0;
                 } else {
-                    levels << 20 * log10((double)peak / (double)std::numeric_limits<int16_t>::max());
+                    levels << 20
+                                  * log10((double) peak
+                                          / (double) std::numeric_limits<int16_t>::max());
                 }
             }
-            QMetaObject::invokeMethod(m_audioMeter, "showAudio", Qt::QueuedConnection,
+            QMetaObject::invokeMethod(m_audioMeter,
+                                      "showAudio",
+                                      Qt::QueuedConnection,
                                       Q_ARG(const QVector<double> &, levels));
             if (m_channels != channels) {
                 m_channels = channels;
@@ -95,16 +103,16 @@ void AudioPeakMeterScopeWidget::reconfigureMeter()
 {
     // Set the bar labels.
     QStringList channelLabels;
-    if (m_channels == 2 )
+    if (m_channels == 2)
         channelLabels << tr("L") << tr("R");
-    if (m_channels == 4 )
+    if (m_channels == 4)
         channelLabels << tr("L") << tr("R") << tr("Ls") << tr("Rs");
-    else if (m_channels == 6 )
+    else if (m_channels == 6)
         channelLabels << tr("L") << tr("R") << tr("C") << tr("LF") << tr("Ls") << tr("Rs");
     m_audioMeter->setChannelLabels(channelLabels);
 
     // Set the size constraints.
-    int spaceNeeded = ( m_channels * 16 ) + 17;
+    int spaceNeeded = (m_channels * 16) + 17;
     if (m_orientation == Qt::Vertical) {
         m_audioMeter->setMinimumSize(spaceNeeded, 250);
         setMinimumSize(spaceNeeded + 8, 258);

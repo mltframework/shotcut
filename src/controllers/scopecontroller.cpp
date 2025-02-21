@@ -15,6 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "scopecontroller.h"
+
+#include "Logger.h"
+#include "docks/scopedock.h"
 #include "widgets/scopes/audioloudnessscopewidget.h"
 #include "widgets/scopes/audiopeakmeterscopewidget.h"
 #include "widgets/scopes/audiospectrumscopewidget.h"
@@ -27,8 +30,7 @@
 #include "widgets/scopes/videovectorscopewidget.h"
 #include "widgets/scopes/videowaveformscopewidget.h"
 #include "widgets/scopes/videozoomscopewidget.h"
-#include "docks/scopedock.h"
-#include <Logger.h>
+
 #include <QMainWindow>
 #include <QMenu>
 
@@ -52,8 +54,8 @@ ScopeController::ScopeController(QMainWindow *mainWindow, QMenu *menu)
     LOG_DEBUG() << "end";
 }
 
-template<typename ScopeTYPE> void ScopeController::createScopeDock(QMainWindow *mainWindow,
-                                                                   QMenu *menu)
+template<typename ScopeTYPE>
+void ScopeController::createScopeDock(QMainWindow *mainWindow, QMenu *menu)
 {
     ScopeWidget *scopeWidget = new ScopeTYPE();
     ScopeDock *scopeDock = new ScopeDock(this, scopeWidget);
@@ -61,4 +63,3 @@ template<typename ScopeTYPE> void ScopeController::createScopeDock(QMainWindow *
     menu->addAction(scopeDock->toggleViewAction());
     mainWindow->addDockWidget(Qt::RightDockWidgetArea, scopeDock);
 }
-

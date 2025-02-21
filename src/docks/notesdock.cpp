@@ -16,22 +16,23 @@
  */
 
 #include "notesdock.h"
+
+#include "Logger.h"
 #include "actions.h"
 #include "settings.h"
 
-#include <Logger.h>
-
 #include <QAction>
-#include <QIcon>
-#include <QPlainTextEdit>
 #include <QApplication>
+#include <QIcon>
 #include <QMenu>
+#include <QPlainTextEdit>
 #include <QWheelEvent>
 
-class TextEditor: public QPlainTextEdit
+class TextEditor : public QPlainTextEdit
 {
 public:
-    explicit TextEditor(QWidget *parent = nullptr) : QPlainTextEdit()
+    explicit TextEditor(QWidget *parent = nullptr)
+        : QPlainTextEdit()
     {
         zoomIn(Settings.notesZoom());
         setTabChangesFocus(false);
@@ -41,18 +42,14 @@ public:
         action->setShortcut(Qt::CTRL | Qt::ALT | Qt::Key_Minus);
         addAction(action);
         Actions.add("notesDecreaseTextSize", action, tr("Notes"));
-        connect(action, &QAction::triggered, this, [ = ]() {
-            setZoom(-4);
-        });
+        connect(action, &QAction::triggered, this, [=]() { setZoom(-4); });
         action = new QAction(tr("Increase Text Size"), this);
         action->setShortcut(Qt::CTRL | Qt::ALT | Qt::Key_Equal);
         addAction(action);
         Actions.add("notesIncreaseTextSize", action, tr("Notes"));
-        connect(action, &QAction::triggered, this, [ = ]() {
-            setZoom(4);
-        });
-        connect(this, &QWidget::customContextMenuRequested, this, [ = ](const QPoint & pos) {
-            std::unique_ptr<QMenu> menu {createStandardContextMenu()};
+        connect(action, &QAction::triggered, this, [=]() { setZoom(4); });
+        connect(this, &QWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
+            std::unique_ptr<QMenu> menu{createStandardContextMenu()};
             actions().at(0)->setEnabled(Settings.notesZoom() > 0);
             menu->addActions(actions());
             menu->exec(mapToGlobal(pos));
@@ -78,10 +75,10 @@ protected:
     }
 };
 
-NotesDock::NotesDock(QWidget *parent) :
-    QDockWidget(tr("Notes"), parent),
-    m_textEdit(new TextEditor(this)),
-    m_blockUpdate(false)
+NotesDock::NotesDock(QWidget *parent)
+    : QDockWidget(tr("Notes"), parent)
+    , m_textEdit(new TextEditor(this))
+    , m_blockUpdate(false)
 {
     LOG_DEBUG() << "begin";
     setObjectName("NotesDock");

@@ -16,6 +16,7 @@
  */
 
 #include "scrubbar.h"
+
 #include "mltcontroller.h"
 #include "settings.h"
 
@@ -24,7 +25,7 @@
 
 static const int selectionSize = 14; /// the height of the top bar
 #ifndef CLAMP
-#define CLAMP(x, min, max) (((x) < (min))? (min) : ((x) > (max))? (max) : (x))
+#define CLAMP(x, min, max) (((x) < (min)) ? (min) : ((x) > (max)) ? (max) : (x))
 #endif
 
 ScrubBar::ScrubBar(QWidget *parent)
@@ -48,15 +49,16 @@ ScrubBar::ScrubBar(QWidget *parent)
 void ScrubBar::setScale(int maximum)
 {
     if (!m_timecodeWidth) {
-        const int fontSize = font().pointSize() - (font().pointSize() > 10 ? 2 :
-                                                   (font().pointSize() > 8 ? 1 : 0));
+        const int fontSize = font().pointSize()
+                             - (font().pointSize() > 10 ? 2 : (font().pointSize() > 8 ? 1 : 0));
         setFont(QFont(font().family(), fontSize * devicePixelRatioF()));
         m_timecodeWidth = fontMetrics().horizontalAdvance("00:00:00:00") / devicePixelRatioF();
     }
     m_max = maximum;
     /// m_scale is the pixels per frame ratio
     m_scale = (double) (width() - 2 * m_margin) / (double) maximum;
-    if (m_scale == 0) m_scale = -1;
+    if (m_scale == 0)
+        m_scale = -1;
     m_secondsPerTick = qMax(qRound(double(m_timecodeWidth * 1.8) / m_scale / m_fps), 1);
     if (m_secondsPerTick > 3600)
         // force to a multiple of one hour
@@ -176,7 +178,8 @@ void ScrubBar::mouseMoveEvent(QMouseEvent *event)
             emit paused(pos);
         emit seeked(pos);
     } else if (event->buttons() == Qt::NoButton && MLT.producer()) {
-        QString text = QString::fromLatin1(MLT.producer()->frames_to_time(pos, Settings.timeFormat()));
+        QString text = QString::fromLatin1(
+            MLT.producer()->frames_to_time(pos, Settings.timeFormat()));
         QToolTip::showText(event->globalPosition().toPoint(), text);
     }
 }
@@ -202,7 +205,8 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     p.setClipRect(r);
     p.drawPixmap(0, 0, width(), height(), m_pixmap);
 
-    if (!isEnabled()) return;
+    if (!isEnabled())
+        return;
 
     // draw pointer
     QPolygon pa(3);
@@ -221,7 +225,12 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     // draw in point
     if (m_in > -1) {
         const int in = m_margin + m_in * m_scale;
-        pa.setPoints(3, in - selectionSize / 2, 0, in - selectionSize / 2, selectionSize - 1, in - 1,
+        pa.setPoints(3,
+                     in - selectionSize / 2,
+                     0,
+                     in - selectionSize / 2,
+                     selectionSize - 1,
+                     in - 1,
                      selectionSize / 2);
         p.setBrush(palette().text().color());
         p.setPen(Qt::NoPen);
@@ -233,7 +242,12 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     // draw out point
     if (m_out > -1) {
         const int out = m_margin + m_out * m_scale;
-        pa.setPoints(3, out + selectionSize / 2, 0, out + selectionSize / 2, selectionSize - 1, out,
+        pa.setPoints(3,
+                     out + selectionSize / 2,
+                     0,
+                     out + selectionSize / 2,
+                     selectionSize - 1,
+                     out,
                      selectionSize / 2);
         p.setBrush(palette().text().color());
         p.setPen(Qt::NoPen);
@@ -287,7 +301,8 @@ void ScrubBar::updatePixmap()
         const int in = m_in * m_scale * ratio;
         const int out = m_out * m_scale * ratio;
         p.fillRect(l_margin + in, 0, out - in, l_selectionSize, Qt::red);
-        p.fillRect(l_margin + in + (2 + ratio), ratio, // 2 for the in point line
+        p.fillRect(l_margin + in + (2 + ratio),
+                   ratio, // 2 for the in point line
                    out - in - 2 * (2 + ratio) - qFloor(0.5 * ratio),
                    l_selectionSize - ratio * 2,
                    palette().highlight().color());
@@ -301,11 +316,20 @@ void ScrubBar::updatePixmap()
         for (int x = l_margin; x < l_width - l_margin; x += l_interval) {
             p.drawLine(x, l_selectionSize, x, l_height - 1);
             if (x + l_interval / 4 < l_width - l_margin)
-                p.drawLine(x + l_interval / 4,     l_height - 3 * ratio, x + l_interval / 4,     l_height - 1);
+                p.drawLine(x + l_interval / 4,
+                           l_height - 3 * ratio,
+                           x + l_interval / 4,
+                           l_height - 1);
             if (x + l_interval / 2 < l_width - l_margin)
-                p.drawLine(x + l_interval / 2,     l_height - 7 * ratio, x + l_interval / 2,     l_height - 1);
+                p.drawLine(x + l_interval / 2,
+                           l_height - 7 * ratio,
+                           x + l_interval / 2,
+                           l_height - 1);
             if (x + l_interval * 3 / 4 < l_width - l_margin)
-                p.drawLine(x + l_interval * 3 / 4, l_height - 3 * ratio, x + l_interval * 3 / 4, l_height - 1);
+                p.drawLine(x + l_interval * 3 / 4,
+                           l_height - 3 * ratio,
+                           x + l_interval * 3 / 4,
+                           l_height - 1);
         }
     }
 
@@ -316,7 +340,9 @@ void ScrubBar::updatePixmap()
         for (int i = 0; x < l_width - l_margin - l_timecodeWidth; i++, x += l_interval) {
             int y = l_selectionSize + fontMetrics().ascent() - 2 * ratio;
             int frames = qRound(i * m_fps * m_secondsPerTick);
-            p.drawText(x + 2 * ratio, y, QString(MLT.producer()->frames_to_time(frames, timeFormat)).left(8));
+            p.drawText(x + 2 * ratio,
+                       y,
+                       QString(MLT.producer()->frames_to_time(frames, timeFormat)).left(8));
         }
     }
 
@@ -328,7 +354,11 @@ void ScrubBar::updatePixmap()
             QString s = QString::number(i++);
             int markerWidth = fontMetrics().horizontalAdvance(s) * 1.5;
             p.fillRect(x, 0, 1, l_height, palette().highlight().color());
-            p.fillRect(x - markerWidth / 2, 0, markerWidth, markerHeight, palette().highlight().color());
+            p.fillRect(x - markerWidth / 2,
+                       0,
+                       markerWidth,
+                       markerHeight,
+                       palette().highlight().color());
             p.drawText(x - markerWidth / 3, markerHeight - 2 * ratio, s);
         }
     }

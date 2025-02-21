@@ -18,11 +18,12 @@
 #ifndef MULTITRACKMODEL_H
 #define MULTITRACKMODEL_H
 
+#include <MltPlaylist.h>
+#include <MltTractor.h>
 #include <QAbstractItemModel>
 #include <QList>
 #include <QString>
-#include <MltTractor.h>
-#include <MltPlaylist.h>
+
 #include <memory>
 
 typedef enum {
@@ -33,7 +34,8 @@ typedef enum {
     VideoTrackType
 } TrackType;
 
-typedef struct {
+typedef struct
+{
     TrackType type;
     int number;
     int mlt_index;
@@ -52,52 +54,45 @@ public:
     /// Two level model: tracks and clips on track
     enum {
         NameRole = Qt::UserRole + 1,
-        CommentRole,     /// clip only
-        ResourceRole,    /// clip only
-        ServiceRole,     /// clip only
-        IsBlankRole,     /// clip only
-        StartRole,       /// clip only
+        CommentRole,  /// clip only
+        ResourceRole, /// clip only
+        ServiceRole,  /// clip only
+        IsBlankRole,  /// clip only
+        StartRole,    /// clip only
         DurationRole,
-        InPointRole,     /// clip only
-        OutPointRole,    /// clip only
-        FramerateRole,   /// clip only
-        IsMuteRole,      /// track only
-        IsHiddenRole,    /// track only
+        InPointRole,   /// clip only
+        OutPointRole,  /// clip only
+        FramerateRole, /// clip only
+        IsMuteRole,    /// track only
+        IsHiddenRole,  /// track only
         IsAudioRole,
-        AudioLevelsRole, /// clip only
-        IsCompositeRole, /// track only
-        IsLockedRole,    /// track only
-        FadeInRole,      /// clip only
-        FadeOutRole,     /// clip only
-        IsTransitionRole,/// clip only
-        FileHashRole,    /// clip only
-        SpeedRole,       /// clip only
+        AudioLevelsRole,  /// clip only
+        IsCompositeRole,  /// track only
+        IsLockedRole,     /// track only
+        FadeInRole,       /// clip only
+        FadeOutRole,      /// clip only
+        IsTransitionRole, /// clip only
+        FileHashRole,     /// clip only
+        SpeedRole,        /// clip only
         IsFilteredRole,
-        IsTopVideoRole,   /// track only
-        IsBottomVideoRole,/// track only
-        IsTopAudioRole,   /// track only
-        IsBottomAudioRole,/// track only
-        AudioIndexRole,   /// clip only
-        GroupRole,        /// clip only
+        IsTopVideoRole,    /// track only
+        IsBottomVideoRole, /// track only
+        IsTopAudioRole,    /// track only
+        IsBottomAudioRole, /// track only
+        AudioIndexRole,    /// clip only
+        GroupRole,         /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);
     ~MultitrackModel();
 
-    Mlt::Tractor *tractor() const
-    {
-        return m_tractor;
-    }
-    const TrackList &trackList() const
-    {
-        return m_trackList;
-    }
+    Mlt::Tractor *tractor() const { return m_tractor; }
+    const TrackList &trackList() const { return m_trackList; }
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
-    QModelIndex index(int row, int column = 0,
-                      const QModelIndex &parent = QModelIndex()) const;
+    QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
     QModelIndex makeIndex(int trackIndex, int clipIndex) const;
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
@@ -121,7 +116,9 @@ public:
     void moveTrack(int fromTrackIndex, int toTrackIndex);
     void insertOrAdjustBlankAt(QList<int> tracks, int position, int length);
     bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
-    std::unique_ptr<Mlt::ClipInfo> findClipByUuid(const QUuid &uuid, int &trackIndex, int &clipIndex);
+    std::unique_ptr<Mlt::ClipInfo> findClipByUuid(const QUuid &uuid,
+                                                  int &trackIndex,
+                                                  int &clipIndex);
     std::unique_ptr<Mlt::ClipInfo> getClipInfo(int trackIndex, int clipIndex);
     QString getTrackName(int trackIndex);
     int bottomVideoTrackIndex() const;
@@ -157,13 +154,17 @@ public slots:
     void notifyClipIn(int trackIndex, int clipIndex);
     int trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple, bool rippleAllTracks);
     void notifyClipOut(int trackIndex, int clipIndex);
-    bool moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple,
-                  bool rippleAllTracks);
+    bool moveClip(
+        int fromTrack, int toTrack, int clipIndex, int position, bool ripple, bool rippleAllTracks);
     int overwriteClip(int trackIndex, Mlt::Producer &clip, int position, bool seek = true);
-    QString overwrite(int trackIndex, Mlt::Producer &clip, int position, bool seek = true,
-                      bool notify = true);
-    int insertClip(int trackIndex, Mlt::Producer &clip, int position, bool rippleAllTracks,
-                   bool seek = true, bool notify = true);
+    QString overwrite(
+        int trackIndex, Mlt::Producer &clip, int position, bool seek = true, bool notify = true);
+    int insertClip(int trackIndex,
+                   Mlt::Producer &clip,
+                   int position,
+                   bool rippleAllTracks,
+                   bool seek = true,
+                   bool notify = true);
     int appendClip(int trackIndex, Mlt::Producer &clip, bool seek = true, bool notify = true);
     void removeClip(int trackIndex, int clipIndex, bool rippleAllTracks);
     void liftClip(int trackIndex, int clipIndex);
@@ -196,10 +197,19 @@ private:
     TrackList m_trackList;
     bool m_isMakingTransition;
 
-    void moveClipToEnd(Mlt::Playlist &playlist, int trackIndex, int clipIndex, int position,
-                       bool ripple, bool rippleAllTracks);
-    void moveClipInBlank(Mlt::Playlist &playlist, int trackIndex, int clipIndex, int position,
-                         bool ripple, bool rippleAllTracks, int duration = 0);
+    void moveClipToEnd(Mlt::Playlist &playlist,
+                       int trackIndex,
+                       int clipIndex,
+                       int position,
+                       bool ripple,
+                       bool rippleAllTracks);
+    void moveClipInBlank(Mlt::Playlist &playlist,
+                         int trackIndex,
+                         int clipIndex,
+                         int position,
+                         bool ripple,
+                         bool rippleAllTracks,
+                         int duration = 0);
     void consolidateBlanks(Mlt::Playlist &playlist, int trackIndex);
     void consolidateBlanksAllTracks();
     void getAudioLevels();

@@ -17,7 +17,7 @@
 
 #include "metalvideowidget.h"
 
-#include <Logger.h>
+#include "Logger.h"
 
 #include <Metal/Metal.h>
 

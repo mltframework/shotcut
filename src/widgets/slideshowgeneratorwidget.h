@@ -19,7 +19,6 @@
 #define SLIDESHOWGENERATORWIDGET_H
 
 #include <MltProducer.h>
-
 #include <QFuture>
 #include <QMutex>
 #include <QWidget>
@@ -32,7 +31,7 @@ namespace Mlt {
 class Filter;
 class Playlist;
 class Transition;
-}
+} // namespace Mlt
 class ProducerPreviewWidget;
 
 class SlideshowGeneratorWidget : public QWidget
@@ -49,7 +48,8 @@ private slots:
     void on_parameterChanged();
 
 private:
-    struct SlideshowConfig {
+    struct SlideshowConfig
+    {
         double clipDuration;
         int aspectConversion;
         int zoomPercent;

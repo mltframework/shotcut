@@ -17,18 +17,20 @@
 
 #include "listselectiondialog.h"
 #include "ui_listselectiondialog.h"
+
 #include <QListWidget>
 
-ListSelectionDialog::ListSelectionDialog(const QStringList &list, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ListSelectionDialog)
+ListSelectionDialog::ListSelectionDialog(const QStringList &list, QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::ListSelectionDialog)
 {
     ui->setupUi(this);
     for (auto &text : list) {
         QListWidgetItem *item = new QListWidgetItem(text, ui->listWidget);
         item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
         item->setCheckState(Qt::Unchecked);
-        connect(ui->listWidget, SIGNAL(itemActivated(QListWidgetItem *)),
+        connect(ui->listWidget,
+                SIGNAL(itemActivated(QListWidgetItem *)),
                 SLOT(onItemActivated(QListWidgetItem *)));
     }
 }
@@ -45,7 +47,8 @@ void ListSelectionDialog::setColors(const QStringList &list)
     for (auto &text : list) {
         QListWidgetItem *item = new QListWidgetItem(text, ui->listWidget);
         item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-        connect(ui->listWidget, SIGNAL(itemActivated(QListWidgetItem *)),
+        connect(ui->listWidget,
+                SIGNAL(itemActivated(QListWidgetItem *)),
                 SLOT(onItemActivated(QListWidgetItem *)));
         QColor color(text);
         item->setCheckState(Qt::Checked);

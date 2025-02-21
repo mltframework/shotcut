@@ -18,12 +18,13 @@
 
 #include "pulseaudiowidget.h"
 #include "ui_pulseaudiowidget.h"
-#include "util.h"
-#include "shotcut_mlt_properties.h"
 
-PulseAudioWidget::PulseAudioWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::PulseAudioWidget)
+#include "shotcut_mlt_properties.h"
+#include "util.h"
+
+PulseAudioWidget::PulseAudioWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::PulseAudioWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label);

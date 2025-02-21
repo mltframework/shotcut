@@ -16,7 +16,9 @@
  */
 
 #include "videohistogramscopewidget.h"
-#include <Logger.h>
+
+#include "Logger.h"
+
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPainterPath>
@@ -120,8 +122,12 @@ void VideoHistogramScopeWidget::paintEvent(QPaintEvent *)
     p.end();
 }
 
-void VideoHistogramScopeWidget::drawHistogram(QPainter &p, QString title, QColor color,
-                                              QColor outline, QVector<unsigned int> &bins, QRect rect)
+void VideoHistogramScopeWidget::drawHistogram(QPainter &p,
+                                              QString title,
+                                              QColor color,
+                                              QColor outline,
+                                              QVector<unsigned int> &bins,
+                                              QRect rect)
 {
     unsigned int binCount = bins.size();
     unsigned int *pBins = bins.data();
@@ -154,7 +160,8 @@ void VideoHistogramScopeWidget::drawHistogram(QPainter &p, QString title, QColor
     p.drawText(textpad, rect.y() + fm.height() + textpad, text);
 
     // Nothing to draw.
-    if (maxLevel < minValue) return;
+    if (maxLevel < minValue)
+        return;
 
     // Set histogram background gradient.
     QLinearGradient gradient = QLinearGradient(rect.left(), rect.top(), rect.right(), rect.top());
@@ -171,17 +178,17 @@ void VideoHistogramScopeWidget::drawHistogram(QPainter &p, QString title, QColor
     p.setPen(pen);
 
     QPainterPath histPath;
-    histPath.moveTo( rect.bottomLeft() );
-    qreal lineWidth = (qreal)rect.width() / 256.0;
+    histPath.moveTo(rect.bottomLeft());
+    qreal lineWidth = (qreal) rect.width() / 256.0;
     for (unsigned int i = 0; i < binCount; i++) {
-        qreal xPos = (qreal)rect.width() * i / binCount;
-        qreal yPos = (qreal)rect.bottom() - (histHeight * pBins[i] / maxLevel);
+        qreal xPos = (qreal) rect.width() * i / binCount;
+        qreal yPos = (qreal) rect.bottom() - (histHeight * pBins[i] / maxLevel);
         histPath.lineTo(xPos, yPos);
         histPath.lineTo(xPos + lineWidth, yPos);
     }
-    histPath.lineTo( rect.bottomRight() );
+    histPath.lineTo(rect.bottomRight());
     histPath.closeSubpath();
-    p.drawPath( histPath );
+    p.drawPath(histPath);
 }
 
 void VideoHistogramScopeWidget::mouseMoveEvent(QMouseEvent *event)

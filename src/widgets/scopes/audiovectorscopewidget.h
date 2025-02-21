@@ -20,8 +20,8 @@
 
 #include "scopewidget.h"
 
-#include <QMutex>
 #include <QImage>
+#include <QMutex>
 
 class QComboBox;
 class QLabel;
@@ -57,7 +57,6 @@ private:
     QImage m_displayImg;
     int m_c1Index;
     int m_c2Index;
-
 };
 
 #endif // AUDIOVECTORSCOPEWIDGET_H

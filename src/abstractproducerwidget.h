@@ -36,10 +36,7 @@ public:
         return p;
     }
     virtual void loadPreset(Mlt::Properties &) {}
-    Mlt::Producer *producer() const
-    {
-        return m_producer.data();
-    }
+    Mlt::Producer *producer() const { return m_producer.data(); }
     static bool isDevice(const QWidget *widget);
 
 protected:

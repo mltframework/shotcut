@@ -16,6 +16,7 @@
  */
 
 #include "qimagejob.h"
+
 #include "util.h"
 
 #include <QImage>
@@ -42,7 +43,7 @@ QImageJob::~QImageJob()
 void QImageJob::start()
 {
     AbstractJob::start();
-    auto result = QtConcurrent::run([ = ]() {
+    auto result = QtConcurrent::run([=]() {
         appendToLog(QStringLiteral("Reading source image \"%1\"\n").arg(m_srcFilePath));
         QImageReader reader;
         reader.setAutoTransform(true);
@@ -52,7 +53,8 @@ void QImageJob::start()
         if (!image.isNull()) {
             image = image.scaledToHeight(m_height, Qt::SmoothTransformation);
             if (image.save(m_destFilePath)) {
-                appendToLog(QStringLiteral("Successfully saved image as \"%1\"\n").arg(m_destFilePath));
+                appendToLog(
+                    QStringLiteral("Successfully saved image as \"%1\"\n").arg(m_destFilePath));
                 QMetaObject::invokeMethod(this, "onFinished", Qt::QueuedConnection, Q_ARG(int, 0));
             } else {
                 appendToLog(QStringLiteral("Failed to save image as \"%1\"\n").arg(m_destFilePath));

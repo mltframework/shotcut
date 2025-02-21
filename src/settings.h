@@ -19,73 +19,66 @@
 #define SETTINGS_H
 
 #include <framework/mlt_types.h>
-
+#include <QByteArray>
 #include <QKeySequence>
 #include <QObject>
 #include <QSettings>
 #include <QStringList>
-#include <QByteArray>
 #include <QThread>
 
 class ShotcutSettings : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool timelineDragScrub READ timelineDragScrub WRITE setTimelineDragScrub NOTIFY
-               timelineDragScrubChanged)
+                   timelineDragScrubChanged)
     Q_PROPERTY(bool timelineShowWaveforms READ timelineShowWaveforms WRITE setTimelineShowWaveforms
-               NOTIFY timelineShowWaveformsChanged)
-    Q_PROPERTY(bool timelineShowThumbnails READ timelineShowThumbnails WRITE setTimelineShowThumbnails
-               NOTIFY timelineShowThumbnailsChanged)
+                   NOTIFY timelineShowWaveformsChanged)
+    Q_PROPERTY(bool timelineShowThumbnails READ timelineShowThumbnails WRITE
+                   setTimelineShowThumbnails NOTIFY timelineShowThumbnailsChanged)
     Q_PROPERTY(bool timelineRipple READ timelineRipple WRITE setTimelineRipple NOTIFY
-               timelineRippleChanged)
+                   timelineRippleChanged)
     Q_PROPERTY(bool timelineRippleAllTracks READ timelineRippleAllTracks WRITE
-               setTimelineRippleAllTracks NOTIFY timelineRippleAllTracksChanged)
+                   setTimelineRippleAllTracks NOTIFY timelineRippleAllTracksChanged)
     Q_PROPERTY(bool timelineRippleMarkers READ timelineRippleMarkers WRITE setTimelineRippleMarkers
-               NOTIFY timelineRippleMarkersChanged)
+                   NOTIFY timelineRippleMarkersChanged)
     Q_PROPERTY(bool timelineSnap READ timelineSnap WRITE setTimelineSnap NOTIFY timelineSnapChanged)
     Q_PROPERTY(bool timelineScrollZoom READ timelineScrollZoom WRITE setTimelineScrollZoom NOTIFY
-               timelineScrollZoomChanged)
+                   timelineScrollZoomChanged)
     Q_PROPERTY(bool timelineFramebufferWaveform READ timelineFramebufferWaveform WRITE
-               setTimelineFramebufferWaveform NOTIFY timelineFramebufferWaveformChanged)
+                   setTimelineFramebufferWaveform NOTIFY timelineFramebufferWaveformChanged)
     Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
     Q_PROPERTY(QString playlistThumbnails READ playlistThumbnails WRITE setPlaylistThumbnails NOTIFY
-               playlistThumbnailsChanged)
+                   playlistThumbnailsChanged)
     Q_PROPERTY(QString viewMode READ viewMode WRITE setViewMode NOTIFY viewModeChanged)
     Q_PROPERTY(int playerAudioChannels READ playerAudioChannels NOTIFY playerAudioChannelsChanged)
     Q_PROPERTY(bool playerGPU READ playerGPU NOTIFY playerGpuChanged)
     Q_PROPERTY(double audioInDuration READ audioInDuration WRITE setAudioInDuration NOTIFY
-               audioInDurationChanged)
+                   audioInDurationChanged)
     Q_PROPERTY(double audioOutDuration READ audioOutDuration WRITE setAudioOutDuration NOTIFY
-               audioOutDurationChanged)
+                   audioOutDurationChanged)
     Q_PROPERTY(double videoInDuration READ videoInDuration WRITE setVideoInDuration NOTIFY
-               videoInDurationChanged)
+                   videoInDurationChanged)
     Q_PROPERTY(double videoOutDuration READ videoOutDuration WRITE setVideoOutDuration NOTIFY
-               videoOutDurationChanged)
-    Q_PROPERTY(double audioInCurve READ audioInCurve WRITE setAudioInCurve NOTIFY
-               audioInCurveChanged)
-    Q_PROPERTY(double audioOutCurve READ audioOutCurve WRITE setAudioOutCurve NOTIFY
-               audioOutCurveChanged)
+                   videoOutDurationChanged)
+    Q_PROPERTY(double audioInCurve READ audioInCurve WRITE setAudioInCurve NOTIFY audioInCurveChanged)
+    Q_PROPERTY(
+        double audioOutCurve READ audioOutCurve WRITE setAudioOutCurve NOTIFY audioOutCurveChanged)
     Q_PROPERTY(bool smallIcons READ smallIcons WRITE setSmallIcons NOTIFY smallIconsChanged)
     Q_PROPERTY(bool askOutputFilter READ askOutputFilter WRITE setAskOutputFilter NOTIFY
-               askOutputFilterChanged)
+                   askOutputFilterChanged)
     Q_PROPERTY(QString appDataLocation READ appDataLocation CONSTANT)
     Q_PROPERTY(TimelineScrolling timelineScrolling READ timelineScrolling WRITE setTimelineScrolling
-               NOTIFY timelineScrollingChanged)
+                   NOTIFY timelineScrollingChanged)
     Q_ENUMS(TimelineScrolling)
     Q_PROPERTY(bool timelineRectangleSelect READ timelineRectangleSelect WRITE
-               setTimelineRectangleSelect NOTIFY timelineRectangleSelectChanged)
-    Q_PROPERTY(bool keyframesDragScrub READ keyframesDragScrub WRITE setKeyframesDragScrub
-               NOTIFY keyframesDragScrubChanged)
+                   setTimelineRectangleSelect NOTIFY timelineRectangleSelectChanged)
+    Q_PROPERTY(bool keyframesDragScrub READ keyframesDragScrub WRITE setKeyframesDragScrub NOTIFY
+                   keyframesDragScrubChanged)
 
 public:
-    static const qsizetype MaxPath {32767};
-    enum TimelineScrolling {
-        NoScrolling,
-        CenterPlayhead,
-        PageScrolling,
-        SmoothScrolling
-    };
+    static const qsizetype MaxPath{32767};
+    enum TimelineScrolling { NoScrolling, CenterPlayhead, PageScrolling, SmoothScrolling };
 
     static ShotcutSettings &singleton();
     void log();

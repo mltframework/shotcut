@@ -19,8 +19,9 @@
 #ifndef VIDEO4LINUXWIDGET_H
 #define VIDEO4LINUXWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class Video4LinuxWidget;

@@ -19,9 +19,9 @@
 #ifndef COLORWHEEL_H
 #define COLORWHEEL_H
 
-#include <QWidget>
 #include <QPainter>
 #include <QResizeEvent>
+#include <QWidget>
 
 class ColorWheel : public QWidget
 {
@@ -29,8 +29,8 @@ class ColorWheel : public QWidget
 public:
     explicit ColorWheel(QWidget *parent = 0);
 
-    virtual QSize sizeHint () const;
-    virtual QSize minimumSizeHint () const;
+    virtual QSize sizeHint() const;
+    virtual QSize minimumSizeHint() const;
     QColor color();
     void setColor(const QColor &color);
 

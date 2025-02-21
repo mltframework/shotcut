@@ -31,8 +31,7 @@ QmlMarkerMenu::QmlMarkerMenu(QObject *parent)
     : QObject(parent)
     , m_timeline(nullptr)
     , m_index(-1)
-{
-}
+{}
 
 QObject *QmlMarkerMenu::target()
 {
@@ -62,16 +61,12 @@ void QmlMarkerMenu::popup()
 
     QAction editAction(tr("Edit..."));
     editAction.setShortcut(Actions["timelineMarkerAction"]->shortcut());
-    connect(&editAction, &QAction::triggered, this, [&]() {
-        m_timeline->editMarker(m_index);
-    });
+    connect(&editAction, &QAction::triggered, this, [&]() { m_timeline->editMarker(m_index); });
     menu.addAction(&editAction);
 
     QAction deleteAction(tr("Delete"));
     deleteAction.setShortcut(Actions["timelineDeleteMarkerAction"]->shortcut());
-    connect(&deleteAction, &QAction::triggered, this, [&]() {
-        m_timeline->deleteMarker(m_index);
-    });
+    connect(&deleteAction, &QAction::triggered, this, [&]() { m_timeline->deleteMarker(m_index); });
     menu.addAction(&deleteAction);
 
     QAction colorAction(tr("Choose Color..."));
@@ -96,24 +91,25 @@ void QmlMarkerMenu::popup()
         QToolButton *colorButton = new QToolButton();
         colorButton->setText(colors[c]);
         QString textColor = QmlApplication::contrastingColor(colors[c]).name();
-        QString styleSheet = QString(
-                                 "QToolButton {"
-                                 "    background-color: %1;"
-                                 "    border-style: solid;"
-                                 "    border-width: 3px;"
-                                 "    border-color: %1;"
-                                 "    color: %2"
-                                 "}"
-                                 "QToolButton:hover {"
-                                 "    background-color: %1;"
-                                 "    border-style: solid;"
-                                 "    border-width: 3px;"
-                                 "    border-color: %3;"
-                                 "    color: %2"
-                                 "}"
-                             ).arg(colors[c]).arg(textColor).arg(highlightColor);
+        QString styleSheet = QString("QToolButton {"
+                                     "    background-color: %1;"
+                                     "    border-style: solid;"
+                                     "    border-width: 3px;"
+                                     "    border-color: %1;"
+                                     "    color: %2"
+                                     "}"
+                                     "QToolButton:hover {"
+                                     "    background-color: %1;"
+                                     "    border-style: solid;"
+                                     "    border-width: 3px;"
+                                     "    border-color: %3;"
+                                     "    color: %2"
+                                     "}")
+                                 .arg(colors[c])
+                                 .arg(textColor)
+                                 .arg(highlightColor);
         colorButton->setStyleSheet(styleSheet);
-        connect(colorButton, &QToolButton::clicked, this, [ &, colorButton]() {
+        connect(colorButton, &QToolButton::clicked, this, [&, colorButton]() {
             m_timeline->markersModel()->setColor(m_index, colorButton->text());
             menu.close();
         });

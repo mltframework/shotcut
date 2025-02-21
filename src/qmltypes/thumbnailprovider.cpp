@@ -16,22 +16,22 @@
  */
 
 #include "thumbnailprovider.h"
-#include <QQuickImageProvider>
-#include <QCryptographicHash>
+
+#include "Logger.h"
+#include "database.h"
 #include "mltcontroller.h"
 #include "models/playlistmodel.h"
-#include "database.h"
-#include "util.h"
 #include "settings.h"
+#include "util.h"
 
-#include <Logger.h>
+#include <QCryptographicHash>
+#include <QQuickImageProvider>
 
 ThumbnailProvider::ThumbnailProvider()
     : QQuickImageProvider(QQmlImageProviderBase::Image,
                           QQmlImageProviderBase::ForceAsynchronousImageLoading)
     , m_profile("atsc_720p_60")
-{
-}
+{}
 
 QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSize &requestedSize)
 {
@@ -70,7 +70,9 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
             if (service == "count") {
                 producer = Mlt::Producer(m_profile, service.toUtf8().constData(), "loader-nogl");
             } else if (!Settings.playerGPU() || (service != "xml-nogl" && service != "consumer")) {
-                producer = Mlt::Producer(m_profile, service.toUtf8().constData(), resource.toUtf8().constData());
+                producer = Mlt::Producer(m_profile,
+                                         service.toUtf8().constData(),
+                                         resource.toUtf8().constData());
             }
             if (producer.is_valid()) {
                 result = makeThumbnail(producer, frameNumber, requestedSize);
@@ -87,8 +89,11 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
     return result;
 }
 
-QString ThumbnailProvider::cacheKey(Mlt::Properties &properties, const QString &service,
-                                    const QString &resource, const QString &hash, int frameNumber)
+QString ThumbnailProvider::cacheKey(Mlt::Properties &properties,
+                                    const QString &service,
+                                    const QString &resource,
+                                    const QString &hash,
+                                    int frameNumber)
 {
     QString time = properties.frames_to_time(frameNumber, mlt_time_clock);
     // Reduce the precision to centiseconds to increase chance for cache hit
@@ -96,10 +101,7 @@ QString ThumbnailProvider::cacheKey(Mlt::Properties &properties, const QString &
     time = time.left(time.size() - 1);
     QString key;
     if (hash.isEmpty()) {
-        key = QStringLiteral("%1 %2 %3")
-              .arg(service)
-              .arg(resource)
-              .arg(time);
+        key = QStringLiteral("%1 %2 %3").arg(service).arg(resource).arg(time);
         QCryptographicHash hash(QCryptographicHash::Sha1);
         hash.addData(key.toUtf8());
         key = hash.result().toHex();
@@ -109,7 +111,8 @@ QString ThumbnailProvider::cacheKey(Mlt::Properties &properties, const QString &
     return key;
 }
 
-QImage ThumbnailProvider::makeThumbnail(Mlt::Producer &producer, int frameNumber,
+QImage ThumbnailProvider::makeThumbnail(Mlt::Producer &producer,
+                                        int frameNumber,
                                         const QSize &requestedSize)
 {
     Mlt::Filter scaler(m_profile, "swscale");

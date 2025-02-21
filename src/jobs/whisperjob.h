@@ -19,14 +19,19 @@
 #define WHISPERJOB_H
 
 #include "abstractjob.h"
+
 #include <QTemporaryFile>
 
 class WhisperJob : public AbstractJob
 {
     Q_OBJECT
 public:
-    WhisperJob(const QString &name, const QString &iWavFile, const QString &oSrtFile,
-               const QString &lang, bool translate, int maxLength,
+    WhisperJob(const QString &name,
+               const QString &iWavFile,
+               const QString &oSrtFile,
+               const QString &lang,
+               bool translate,
+               int maxLength,
                QThread::Priority priority = Settings.jobPriority());
     virtual ~WhisperJob();
 

@@ -16,17 +16,19 @@
  */
 
 #include "audioscale.h"
+
+#include "Logger.h"
 #include "iecscale.h"
+
 #include <QFont>
 #include <QPainter>
-#include <Logger.h>
 
-AudioScale::AudioScale(QWidget *parent) :
-    QWidget(parent)
+AudioScale::AudioScale(QWidget *parent)
+    : QWidget(parent)
 {
     const QFont &font = QWidget::font();
-    const int fontSize = font.pointSize() - (font.pointSize() > 10 ? 2 : (font.pointSize() > 8 ? 1 :
-                                                                          0));
+    const int fontSize = font.pointSize()
+                         - (font.pointSize() > 10 ? 2 : (font.pointSize() > 8 ? 1 : 0));
     setFont(QFont(font.family(), fontSize));
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     setMinimumWidth(fontMetrics().horizontalAdvance("-60"));

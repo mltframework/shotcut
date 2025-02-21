@@ -16,12 +16,14 @@
  */
 
 #include "abstractjob.h"
+
+#include "Logger.h"
 #include "postjobaction.h"
 
+#include <QAction>
 #include <QApplication>
 #include <QTimer>
-#include <QAction>
-#include <Logger.h>
+
 #ifdef Q_OS_WIN
 #include <windows.h>
 #else
@@ -39,12 +41,15 @@ AbstractJob::AbstractJob(const QString &name, QThread::Priority priority)
     , m_isPaused(false)
 {
     setObjectName(name);
-    connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int,
-                                                                                     QProcess::ExitStatus)));
+    connect(this,
+            SIGNAL(finished(int, QProcess::ExitStatus)),
+            this,
+            SLOT(onFinished(int, QProcess::ExitStatus)));
     connect(this, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     connect(this, SIGNAL(started()), this, SLOT(onStarted()));
-    connect(this, SIGNAL(progressUpdated(QStandardItem *, int)), SLOT(onProgressUpdated(QStandardItem *,
-                                                                                        int)));
+    connect(this,
+            SIGNAL(progressUpdated(QStandardItem *, int)),
+            SLOT(onProgressUpdated(QStandardItem *, int)));
     m_actionPause = new QAction(tr("Pause This Job"), this);
     m_standardActions << m_actionPause;
     m_actionPause->setEnabled(false);

@@ -17,13 +17,14 @@
 
 #include "decklinkproducerwidget.h"
 #include "ui_decklinkproducerwidget.h"
-#include "mltcontroller.h"
-#include "util.h"
-#include "shotcut_mlt_properties.h"
 
-DecklinkProducerWidget::DecklinkProducerWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::DecklinkProducerWidget)
+#include "mltcontroller.h"
+#include "shotcut_mlt_properties.h"
+#include "util.h"
+
+DecklinkProducerWidget::DecklinkProducerWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::DecklinkProducerWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label);
@@ -70,10 +71,16 @@ DecklinkProducerWidget::~DecklinkProducerWidget()
 Mlt::Producer *DecklinkProducerWidget::newProducer(Mlt::Profile &profile)
 {
     Mlt::Producer *p = new Mlt::Producer(profile,
-                                         QStringLiteral("consumer:decklink:%1").arg(ui->deviceCombo->currentIndex()).toLatin1().constData());
+                                         QStringLiteral("consumer:decklink:%1")
+                                             .arg(ui->deviceCombo->currentIndex())
+                                             .toLatin1()
+                                             .constData());
     if (p->is_valid()) {
-        p->set("profile", ui->profileCombo->itemData(
-                   ui->profileCombo->currentIndex()).toString().toLatin1().constData());
+        p->set("profile",
+               ui->profileCombo->itemData(ui->profileCombo->currentIndex())
+                   .toString()
+                   .toLatin1()
+                   .constData());
         p->set(kBackgroundCaptureProperty, 2);
         p->set(kShotcutCaptionProperty, tr("SDI/HDMI").toUtf8().constData());
     }

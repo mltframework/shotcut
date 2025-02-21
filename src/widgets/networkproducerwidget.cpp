@@ -17,12 +17,13 @@
 
 #include "networkproducerwidget.h"
 #include "ui_networkproducerwidget.h"
+
 #include "mltcontroller.h"
 #include "util.h"
 
-NetworkProducerWidget::NetworkProducerWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::NetworkProducerWidget)
+NetworkProducerWidget::NetworkProducerWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::NetworkProducerWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_2);

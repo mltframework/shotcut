@@ -16,18 +16,23 @@
  */
 
 #include "videoqualityjob.h"
-#include <QAction>
-#include <QFile>
-#include <QDomDocument>
-#include <QTextStream>
-#include <QFileInfo>
-#include <QUrl>
-#include <QDesktopServices>
-#include "mainwindow.h"
-#include "dialogs/textviewerdialog.h"
 
-VideoQualityJob::VideoQualityJob(const QString &name, const QString &xml,
-                                 const QString &reportPath, int frameRateNum, int frameRateDen)
+#include "dialogs/textviewerdialog.h"
+#include "mainwindow.h"
+
+#include <QAction>
+#include <QDesktopServices>
+#include <QDomDocument>
+#include <QFile>
+#include <QFileInfo>
+#include <QTextStream>
+#include <QUrl>
+
+VideoQualityJob::VideoQualityJob(const QString &name,
+                                 const QString &xml,
+                                 const QString &reportPath,
+                                 int frameRateNum,
+                                 int frameRateDen)
     : MeltJob(name, xml, frameRateNum, frameRateDen)
     , m_reportPath(reportPath)
 {
@@ -64,7 +69,7 @@ void VideoQualityJob::onOpenTiggered()
 
     // Locate the VQM transition.
     QDomNodeList transitions = dom.elementsByTagName("transition");
-    for (int i = 0; i < transitions.length(); i++ ) {
+    for (int i = 0; i < transitions.length(); i++) {
         QDomElement property = transitions.at(i).firstChildElement("property");
         while (!property.isNull()) {
             // Change the render property to 1.

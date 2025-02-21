@@ -29,8 +29,8 @@ class EditMarkerDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditMarkerDialog(QWidget *parent, const QString &text, const QColor &color, int start,
-                              int end, int maxEnd);
+    explicit EditMarkerDialog(
+        QWidget *parent, const QString &text, const QColor &color, int start, int end, int maxEnd);
     QString getText();
     QColor getColor();
     int getStart();

@@ -17,37 +17,36 @@
 
 #include "util.h"
 
-#include <QFileInfo>
-#include <QWidget>
-#include <QStringList>
-#include <QFileInfo>
-#include <QDir>
-#include <QProcess>
-#include <QUrl>
-#include <QDesktopServices>
-#include <QMessageBox>
-#include <QMap>
-#include <QDoubleSpinBox>
-#include <QTemporaryFile>
-#include <QApplication>
-#include <QCryptographicHash>
-#include <QtGlobal>
-#include <QMediaDevices>
-#include <QCamera>
-#include <QCameraDevice>
-#include <QStorageInfo>
-#include <QCheckBox>
-
-#include <MltChain.h>
-#include <MltProducer.h>
-#include <Logger.h>
+#include "Logger.h"
 #include "dialogs/transcodedialog.h"
 #include "mainwindow.h"
-#include "shotcut_mlt_properties.h"
-#include "qmltypes/qmlapplication.h"
 #include "proxymanager.h"
+#include "qmltypes/qmlapplication.h"
 #include "settings.h"
+#include "shotcut_mlt_properties.h"
 #include "transcoder.h"
+#include <MltChain.h>
+#include <MltProducer.h>
+
+#include <QApplication>
+#include <QCamera>
+#include <QCameraDevice>
+#include <QCheckBox>
+#include <QCryptographicHash>
+#include <QDesktopServices>
+#include <QDir>
+#include <QDoubleSpinBox>
+#include <QFileInfo>
+#include <QMap>
+#include <QMediaDevices>
+#include <QMessageBox>
+#include <QProcess>
+#include <QStorageInfo>
+#include <QStringList>
+#include <QTemporaryFile>
+#include <QUrl>
+#include <QWidget>
+#include <QtGlobal>
 
 #include <math.h>
 #include <memory>
@@ -78,18 +77,16 @@ QString Util::baseName(const QString &filePath, bool trimQuery)
 void Util::setColorsToHighlight(QWidget *widget, QPalette::ColorRole role)
 {
     if (role == QPalette::Base) {
-        widget->setStyleSheet(
-            "QLineEdit {"
-            "font-weight: bold;"
-            "background-color: palette(highlight);"
-            "color: palette(highlighted-text);"
-            "selection-background-color: palette(alternate-base);"
-            "selection-color: palette(text);"
-            "}"
-            "QLineEdit:hover {"
-            "border: 2px solid palette(button-text);"
-            "}"
-        );
+        widget->setStyleSheet("QLineEdit {"
+                              "font-weight: bold;"
+                              "background-color: palette(highlight);"
+                              "color: palette(highlighted-text);"
+                              "selection-background-color: palette(alternate-base);"
+                              "selection-color: palette(text);"
+                              "}"
+                              "QLineEdit:hover {"
+                              "border: 2px solid palette(button-text);"
+                              "}");
     } else {
         QPalette palette = QApplication::palette();
         palette.setColor(role, palette.color(palette.Highlight));
@@ -140,11 +137,12 @@ bool Util::warnIfNotWritable(const QString &filePath, QWidget *parent, const QSt
         }
         if (!info.isWritable()) {
             info = QFileInfo(filePath);
-            QMessageBox::warning(parent, caption,
+            QMessageBox::warning(parent,
+                                 caption,
                                  QObject::tr("Unable to write file %1\n"
                                              "Perhaps you do not have permission.\n"
                                              "Try again with a different folder.")
-                                 .arg(info.fileName()));
+                                     .arg(info.fileName()));
             return true;
         }
     }
@@ -155,7 +153,8 @@ QString Util::producerTitle(const Mlt::Producer &producer)
 {
     QString result;
     Mlt::Producer &p = const_cast<Mlt::Producer &>(producer);
-    if (!p.is_valid() || p.is_blank()) return result;
+    if (!p.is_valid() || p.is_blank())
+        return result;
     if (p.get(kShotcutTransitionProperty))
         return QObject::tr("Transition");
     if (p.get(kTrackNameProperty))
@@ -179,19 +178,19 @@ QString Util::removeFileScheme(QUrl &url, bool fromPercentEncoding)
 
 static inline bool isValidGoProFirstFilePrefix(const QFileInfo &info)
 {
-    QStringList list {"GOPR", "GH01", "GL01", "GM01", "GS01", "GX01"};
+    QStringList list{"GOPR", "GH01", "GL01", "GM01", "GS01", "GX01"};
     return list.contains(info.baseName().left(4).toUpper());
 }
 
 static inline bool isValidGoProPrefix(const QFileInfo &info)
 {
-    QStringList list {"GP", "GH", "GL", "GM", "GS", "GX"};
+    QStringList list{"GP", "GH", "GL", "GM", "GS", "GX"};
     return list.contains(info.baseName().left(2).toUpper());
 }
 
 static inline bool isValidGoProSuffix(const QFileInfo &info)
 {
-    QStringList list {"MP4", "LRV", "360", "WAV"};
+    QStringList list{"MP4", "LRV", "360", "WAV"};
     return list.contains(info.suffix().toUpper());
 }
 
@@ -211,7 +210,7 @@ const QStringList Util::sortedFileList(const QList<QUrl> &urls)
     foreach (QUrl url, urls) {
         QFileInfo fi(removeFileScheme(url, false));
         if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProPrefix(fi)
-                && !isValidGoProFirstFilePrefix(fi)) {
+            && !isValidGoProFirstFilePrefix(fi)) {
             QString goproNumber = fi.baseName().mid(4);
             // Only if there is a matching main GoPro file.
             if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].size()) {
@@ -232,8 +231,8 @@ const QStringList Util::sortedFileList(const QList<QUrl> &urls)
     // Add all the non-GoPro files.
     for (auto url : urls) {
         QFileInfo fi(removeFileScheme(url, false));
-        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) &&
-                (isValidGoProFirstFilePrefix(fi) || isValidGoProPrefix(fi))) {
+        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi)
+            && (isValidGoProFirstFilePrefix(fi) || isValidGoProPrefix(fi))) {
             QString goproNumber = fi.baseName().mid(4);
             if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].contains(fi.filePath()))
                 continue;
@@ -268,18 +267,16 @@ QList<QUrl> Util::expandDirectories(const QList<QUrl> &urls)
 bool Util::isDecimalPoint(QChar ch)
 {
     // See https://en.wikipedia.org/wiki/Decimal_separator#Unicode_characters
-    return ch == '.' || ch == ',' || ch == '\'' || ch == ' '
-           || ch == QChar(0x00B7) || ch == QChar(0x2009) || ch == QChar(0x202F)
-           || ch == QChar(0x02D9) || ch == QChar(0x066B) || ch == QChar(0x066C)
-           || ch == QChar(0x2396);
+    return ch == '.' || ch == ',' || ch == '\'' || ch == ' ' || ch == QChar(0x00B7)
+           || ch == QChar(0x2009) || ch == QChar(0x202F) || ch == QChar(0x02D9)
+           || ch == QChar(0x066B) || ch == QChar(0x066C) || ch == QChar(0x2396);
 }
 
 bool Util::isNumeric(QString &str)
 {
     for (int i = 0; i < str.size(); ++i) {
         auto ch = str[i];
-        if (ch != '+' && ch != '-' && ch.toLower() != 'e'
-                && !isDecimalPoint(ch) && !ch.isDigit())
+        if (ch != '+' && ch != '-' && ch.toLower() != 'e' && !isDecimalPoint(ch) && !ch.isDigit())
             return false;
     }
     return true;
@@ -318,15 +315,19 @@ bool Util::convertDecimalPoints(QString &str, QChar decimalPoint)
     return result;
 }
 
-void Util::showFrameRateDialog(const QString &caption, int numerator, QDoubleSpinBox *spinner,
+void Util::showFrameRateDialog(const QString &caption,
+                               int numerator,
+                               QDoubleSpinBox *spinner,
                                QWidget *parent)
 {
     double fps = numerator / 1001.0;
-    QMessageBox dialog(QMessageBox::Question, caption,
+    QMessageBox dialog(QMessageBox::Question,
+                       caption,
                        QObject::tr("The value you entered is very similar to the common,\n"
                                    "more standard %1 = %2/1001.\n\n"
                                    "Do you want to use %1 = %2/1001 instead?")
-                       .arg(fps, 0, 'f', 6).arg(numerator),
+                           .arg(fps, 0, 'f', 6)
+                           .arg(numerator),
                        QMessageBox::No | QMessageBox::Yes,
                        parent);
     dialog.setDefaultButton(QMessageBox::Yes);
@@ -341,8 +342,10 @@ QTemporaryFile *Util::writableTemporaryFile(const QString &filePath, const QStri
 {
     // filePath should already be checked writable.
     QFileInfo info(filePath);
-    QString templateFileName = templateName.isEmpty() ?
-                               QStringLiteral("%1.XXXXXX").arg(QCoreApplication::applicationName()) : templateName;
+    QString templateFileName
+        = templateName.isEmpty()
+              ? QStringLiteral("%1.XXXXXX").arg(QCoreApplication::applicationName())
+              : templateName;
 
     // First, try the system temp dir.
     QString templateFilePath = QDir(QDir::tempPath()).filePath(templateFileName);
@@ -377,18 +380,13 @@ void Util::applyCustomProperties(Mlt::Producer &destination, Mlt::Producer &sour
     p.clear(kOriginalOutProperty);
     if (!p.get_int(kIsProxyProperty))
         p.clear(kOriginalResourceProperty);
-    destination.pass_list(source,
-                          "mlt_service, audio_index, video_index, astream, vstream, force_progressive, force_tff,"
-                          "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch, rotate,"
-                          kAspectRatioNumerator ","
-                          kAspectRatioDenominator ","
-                          kCommentProperty ","
-                          kShotcutProducerProperty ","
-                          kDefaultAudioIndexProperty ","
-                          kOriginalInProperty ","
-                          kOriginalOutProperty ","
-                          kOriginalResourceProperty ","
-                          kDisableProxyProperty);
+    destination.pass_list(
+        source,
+        "mlt_service, audio_index, video_index, astream, vstream, force_progressive, force_tff,"
+        "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch, "
+        "rotate," kAspectRatioNumerator "," kAspectRatioDenominator "," kCommentProperty
+        "," kShotcutProducerProperty "," kDefaultAudioIndexProperty "," kOriginalInProperty
+        "," kOriginalOutProperty "," kOriginalResourceProperty "," kDisableProxyProperty);
     if (!destination.get("_shotcut:resource")) {
         destination.set("_shotcut:resource", destination.get("resource"));
         destination.set("_shotcut:length", destination.get("length"));
@@ -523,8 +521,8 @@ bool Util::isMemoryLow()
     unsigned int availableKB = UINT_MAX;
     QFile meminfo("/proc/meminfo");
     if (meminfo.open(QIODevice::ReadOnly)) {
-        for (auto line = meminfo.readLine(1024); availableKB == UINT_MAX
-                && !line.isEmpty(); line = meminfo.readLine(1024)) {
+        for (auto line = meminfo.readLine(1024); availableKB == UINT_MAX && !line.isEmpty();
+             line = meminfo.readLine(1024)) {
             if (line.startsWith("MemAvailable")) {
                 const auto &fields = line.split(' ');
                 for (const auto &s : fields) {
@@ -550,7 +548,7 @@ QString Util::removeQueryString(const QString &s)
     if (i < 0) {
         i = s.lastIndexOf("%5C?");
     }
-    if (i > 0 ) {
+    if (i > 0) {
         return s.left(i);
     }
     return s;
@@ -619,7 +617,7 @@ void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal &frameRate, Q
             camera->setCameraFormat(currentFormat);
             for (const auto &format : camera->cameraDevice().videoFormats()) {
                 if (format.resolution().width() > currentFormat.resolution().width()
-                        && format.resolution().height() > currentFormat.resolution().height()) {
+                    && format.resolution().height() > currentFormat.resolution().height()) {
                     camera->setCameraFormat(format);
                     currentFormat = format;
                 }
@@ -691,20 +689,15 @@ QString Util::updateCaption(Mlt::Producer *producer)
 
 void Util::passProducerProperties(Mlt::Producer *src, Mlt::Producer *dst)
 {
-    dst->pass_list(*src, "audio_index, video_index, astream, vstream, force_aspect_ratio,"
-                   "video_delay, force_progressive, force_tff, force_full_range, color_range, warp_pitch, rotate,"
-                   kAspectRatioNumerator ","
-                   kAspectRatioDenominator ","
-                   kShotcutHashProperty ","
-                   kPlaylistIndexProperty ","
-                   kShotcutSkipConvertProperty ","
-                   kCommentProperty ","
-                   kDefaultAudioIndexProperty ","
-                   kShotcutCaptionProperty ","
-                   kOriginalResourceProperty ","
-                   kDisableProxyProperty ","
-                   kIsProxyProperty ","
-                   kShotcutProducerProperty);
+    dst->pass_list(*src,
+                   "audio_index, video_index, astream, vstream, force_aspect_ratio,"
+                   "video_delay, force_progressive, force_tff, force_full_range, color_range, "
+                   "warp_pitch, rotate," kAspectRatioNumerator "," kAspectRatioDenominator
+                   "," kShotcutHashProperty "," kPlaylistIndexProperty
+                   "," kShotcutSkipConvertProperty "," kCommentProperty
+                   "," kDefaultAudioIndexProperty "," kShotcutCaptionProperty
+                   "," kOriginalResourceProperty "," kDisableProxyProperty "," kIsProxyProperty
+                   "," kShotcutProducerProperty);
     QString shotcutProducer(src->get(kShotcutProducerProperty));
     QString service(src->get("mlt_service"));
     if (service.startsWith("avformat") || shotcutProducer == "avformat")
@@ -718,16 +711,17 @@ bool Util::warnIfLowDiskSpace(const QString &path)
         QStorageInfo si(QFileInfo(path).path());
         LOG_DEBUG() << si.bytesAvailable() << "bytes available on" << si.displayName();
         if (si.isValid() && si.bytesAvailable() < kFreeSpaceThesholdGB) {
-            QMessageBox dialog(QMessageBox::Question, QApplication::applicationDisplayName(),
+            QMessageBox dialog(QMessageBox::Question,
+                               QApplication::applicationDisplayName(),
                                QObject::tr("The drive you chose only has %1 MiB of free space.\n"
                                            "Do you still want to continue?")
-                               .arg(si.bytesAvailable() / 1024 / 1024),
+                                   .arg(si.bytesAvailable() / 1024 / 1024),
                                QMessageBox::No | QMessageBox::Yes);
             dialog.setWindowModality(QmlApplication::dialogModality());
             dialog.setDefaultButton(QMessageBox::Yes);
             dialog.setEscapeButton(QMessageBox::No);
-            dialog.setCheckBox(new QCheckBox(QObject::tr("Do not show this anymore.",
-                                                         "Export free disk space warning dialog")));
+            dialog.setCheckBox(new QCheckBox(
+                QObject::tr("Do not show this anymore.", "Export free disk space warning dialog")));
             int result = dialog.exec();
             if (dialog.checkBox()->isChecked())
                 Settings.setEncodeFreeSpaceCheck(false);
@@ -817,11 +811,13 @@ QString Util::getConversionAdvice(Mlt::Producer *producer)
     if (!Util::trcIsCompatible(trc)) {
         QString trcString = Util::trcString(trc);
         LOG_INFO() << resource << "Probable HDR" << trcString;
-        advice = QObject::tr("This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.").arg(
-                     trcString);
+        advice = QObject::tr("This file uses color transfer characteristics %1, which may result "
+                             "in incorrect colors or brightness in Shotcut.")
+                     .arg(trcString);
     } else if (producer->get_int("meta.media.variable_frame_rate")) {
         LOG_INFO() << resource << "is variable frame rate";
-        advice = QObject::tr("This file is variable frame rate, which is not reliable for editing.");
+        advice = QObject::tr(
+            "This file is variable frame rate, which is not reliable for editing.");
     } else if (QFile::exists(resource) && !MLT.isSeekable(producer)) {
         LOG_INFO() << resource << "is not seekable";
         advice = QObject::tr("This file does not support seeking and cannot be used for editing.");
@@ -834,28 +830,29 @@ QString Util::getConversionAdvice(Mlt::Producer *producer)
 
 mlt_color Util::mltColorFromQColor(const QColor &color)
 {
-    return mlt_color {
-        static_cast<uint8_t>(color.red()),
-        static_cast<uint8_t>(color.green()),
-        static_cast<uint8_t>(color.blue()),
-        static_cast<uint8_t>(color.alpha())
-    };
+    return mlt_color{static_cast<uint8_t>(color.red()),
+                     static_cast<uint8_t>(color.green()),
+                     static_cast<uint8_t>(color.blue()),
+                     static_cast<uint8_t>(color.alpha())};
 }
 
 void Util::offerSingleFileConversion(QString &message, Mlt::Producer *producer, QWidget *parent)
 {
-    TranscodeDialog dialog(message.append(
-                               QObject::tr(" Do you want to convert it to an edit-friendly format?\n\n"
-                                           "If yes, choose a format below and then click OK to choose a file name. "
-                                           "After choosing a file name, a job is created. "
-                                           "When it is done, it automatically replaces clips, or you can double-click the job to open it.\n")),
-                           producer->get_int("progressive"), parent);
+    TranscodeDialog
+        dialog(message.append(QObject::tr(
+                   " Do you want to convert it to an edit-friendly format?\n\n"
+                   "If yes, choose a format below and then click OK to choose a file name. "
+                   "After choosing a file name, a job is created. "
+                   "When it is done, it automatically replaces clips, or you can double-click the "
+                   "job to open it.\n")),
+               producer->get_int("progressive"),
+               parent);
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.showCheckBox();
     dialog.set709Convert(!Util::trcIsCompatible(producer->get_int("meta.media.color_trc")));
     dialog.showSubClipCheckBox();
-    LOG_DEBUG() << "in" << producer->get_in() << "out" << producer->get_out() << "length" <<
-                producer->get_length() - 1;
+    LOG_DEBUG() << "in" << producer->get_in() << "out" << producer->get_out() << "length"
+                << producer->get_length() - 1;
     dialog.setSubClipChecked(producer->get_in() > 0
                              || producer->get_out() < producer->get_length() - 1);
     auto fps = Util::getAndroidFrameRate(producer);
@@ -894,8 +891,9 @@ Mlt::Producer Util::openMltVirtualClip(const QString &path)
     Mlt::Producer xmlProducer(nullptr, "xml-clip", path.toUtf8().constData());
     QScopedPointer<Mlt::Profile> testProfile(xmlProducer.profile());
     if (Settings.playerGPU() && MLT.profile().is_explicit()) {
-        if (testProfile->width() != MLT.profile().width() || testProfile->height() != MLT.profile().height()
-                || Util::isFpsDifferent(MLT.profile().fps(), testProfile->fps())) {
+        if (testProfile->width() != MLT.profile().width()
+            || testProfile->height() != MLT.profile().height()
+            || Util::isFpsDifferent(MLT.profile().fps(), testProfile->fps())) {
             return Mlt::Producer();
         }
     }

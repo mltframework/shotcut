@@ -51,7 +51,9 @@ FrameRateWidget::FrameRateWidget(QWidget *parent)
     m_fpsComboBox->addItem("50");
     m_fpsComboBox->addItem("59.940060");
     m_fpsComboBox->addItem("60");
-    connect(m_fpsComboBox, SIGNAL(currentTextChanged(const QString &)), this,
+    connect(m_fpsComboBox,
+            SIGNAL(currentTextChanged(const QString &)),
+            this,
             SLOT(on_fpsComboBox_activated(const QString &)));
     layout->addWidget(m_fpsComboBox);
 }

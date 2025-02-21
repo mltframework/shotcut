@@ -20,11 +20,11 @@
 #include "videowidget.h"
 #include "videozoomwidget.h"
 
+#include <QGridLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QToolButton>
 #include <QToolTip>
-#include <QGridLayout>
-#include <QHBoxLayout>
 
 #include <math.h>
 
@@ -35,7 +35,7 @@ QWidget *getSeparator()
     separator->setGeometry(0, 0, 300, 300);
     separator->setMinimumSize(1, 1);
     QPalette pal = separator->palette();
-//    pal.setColor(QPalette::Background, pal.color(QPalette::WindowText));
+    //    pal.setColor(QPalette::Background, pal.color(QPalette::WindowText));
     separator->setAutoFillBackground(true);
     separator->setPalette(pal);
     return separator;
@@ -48,18 +48,18 @@ QRect getPlayerBoundingRect(Mlt::VideoWidget *videoWidget)
     // so that all of the image is available and it fills the widget in one
     // direction.
     QRect rect;
-    double widgetAr = (double)videoWidget->width() / (double)videoWidget->height();
+    double widgetAr = (double) videoWidget->width() / (double) videoWidget->height();
     double vidAr = MLT.profile().dar();
     if (widgetAr > vidAr) {
-        double width = (double)videoWidget->height() * vidAr;
-        rect.setX((round((double)videoWidget->width() - width) / 2));
+        double width = (double) videoWidget->height() * vidAr;
+        rect.setX((round((double) videoWidget->width() - width) / 2));
         rect.setY(0);
         rect.setWidth(round(width));
         rect.setHeight(videoWidget->height());
     } else {
         double height = videoWidget->width() / vidAr;
         rect.setX(0);
-        rect.setY((round((double)videoWidget->height() - height) / 2));
+        rect.setY((round((double) videoWidget->height() - height) / 2));
         rect.setWidth(videoWidget->width());
         rect.setHeight(round(height));
     }
@@ -70,8 +70,10 @@ QPoint pixelToPlayerPos(const QRect &playerRect, const QPoint &pixel)
 {
     // Convert a pixel index to the corresponding global screen position of that
     // pixel in the player.
-    double xOffset = (double)playerRect.width() * (double)pixel.x() / (double)MLT.profile().width();
-    double yOffset = (double)playerRect.height() * (double)pixel.y() / (double)MLT.profile().height();
+    double xOffset = (double) playerRect.width() * (double) pixel.x()
+                     / (double) MLT.profile().width();
+    double yOffset = (double) playerRect.height() * (double) pixel.y()
+                     / (double) MLT.profile().height();
     return playerRect.topLeft() + QPoint(round(xOffset), round(yOffset));
 }
 
@@ -80,8 +82,10 @@ QPoint playerPosToPixel(const QRect &playerRect, const QPoint &pos)
     // Convert the global position of a point in the player to the corresponding
     // pixel index.
     QPoint offset = pos - playerRect.topLeft();
-    double xOffset = (double)MLT.profile().width() * (double)offset.x() / (double)playerRect.width();
-    double yOffset = (double)MLT.profile().height() * (double)offset.y() / (double)playerRect.height();
+    double xOffset = (double) MLT.profile().width() * (double) offset.x()
+                     / (double) playerRect.width();
+    double yOffset = (double) MLT.profile().height() * (double) offset.y()
+                     / (double) playerRect.height();
     return QPoint(round(xOffset), round(yOffset));
 }
 
@@ -134,7 +138,11 @@ VideoZoomScopeWidget::VideoZoomScopeWidget()
     glayout->addWidget(m_uLabel, 10, 1, Qt::AlignRight);
     glayout->addWidget(new QLabel(tr("V")), 11, 0, Qt::AlignLeft);
     glayout->addWidget(m_vLabel, 11, 1, Qt::AlignRight);
-    glayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), 12, 0, 1, 2);
+    glayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding),
+                     12,
+                     0,
+                     1,
+                     2);
     updateLabels();
     onZoomChanged(m_zoomWidget->getZoom());
 
@@ -147,15 +155,15 @@ VideoZoomScopeWidget::VideoZoomScopeWidget()
     // Add pixel picker button
     QToolButton *pickButton = new QToolButton(this);
     pickButton->setToolTip(tr("Pick a pixel from the source player"));
-    pickButton->setIcon(QIcon::fromTheme("zoom-select",
-                                         QIcon(":/icons/oxygen/32x32/actions/zoom-select")));
+    pickButton->setIcon(
+        QIcon::fromTheme("zoom-select", QIcon(":/icons/oxygen/32x32/actions/zoom-select")));
     toolLayout->addWidget(pickButton);
     connect(pickButton, SIGNAL(clicked()), this, SLOT(onScreenSelectStarted()));
 
     // Add pixel lock button
     m_lockButton->setToolTip(tr("Lock/Unlock the selected pixel"));
-    m_lockButton->setIcon(QIcon::fromTheme("object-unlocked",
-                                           QIcon(":/icons/oxygen/32x32/status/object-unlocked")));
+    m_lockButton->setIcon(
+        QIcon::fromTheme("object-unlocked", QIcon(":/icons/oxygen/32x32/status/object-unlocked")));
     m_lockButton->setCheckable(true);
     m_lockButton->setChecked(false);
     toolLayout->addWidget(m_lockButton);
@@ -172,12 +180,18 @@ VideoZoomScopeWidget::VideoZoomScopeWidget()
     hlayout->addLayout(glayout);
     hlayout->addWidget(m_zoomWidget);
 
-    connect(m_zoomWidget, SIGNAL(pixelSelected(const QPoint &)), this,
+    connect(m_zoomWidget,
+            SIGNAL(pixelSelected(const QPoint &)),
+            this,
             SLOT(onPixelSelected(const QPoint &)));
     connect(m_zoomWidget, SIGNAL(zoomChanged(int)), this, SLOT(onZoomChanged(int)));
-    connect(&m_selector, SIGNAL(screenSelected(const QRect &)), this,
+    connect(&m_selector,
+            SIGNAL(screenSelected(const QRect &)),
+            this,
             SLOT(onScreenRectSelected(const QRect &)));
-    connect(&m_selector, SIGNAL(pointSelected(const QPoint &)), this,
+    connect(&m_selector,
+            SIGNAL(pointSelected(const QPoint &)),
+            this,
             SLOT(onScreenPointSelected(const QPoint &)));
     LOG_DEBUG() << "end";
 }
@@ -199,10 +213,12 @@ void VideoZoomScopeWidget::onScreenSelectStarted()
 
     // Calculate the size of the zoom window to show over the image.
     QSize selectionSize;
-    selectionSize.setWidth((double)boundingRect.width() * (((double)m_zoomWidget->width() /
-                                                            (double)m_zoomWidget->getZoom()) / (double)MLT.profile().width()));
-    selectionSize.setHeight((double)boundingRect.height() * (((double)m_zoomWidget->height() /
-                                                              (double)m_zoomWidget->getZoom()) / (double)MLT.profile().height()));
+    selectionSize.setWidth((double) boundingRect.width()
+                           * (((double) m_zoomWidget->width() / (double) m_zoomWidget->getZoom())
+                              / (double) MLT.profile().width()));
+    selectionSize.setHeight((double) boundingRect.height()
+                            * (((double) m_zoomWidget->height() / (double) m_zoomWidget->getZoom())
+                               / (double) MLT.profile().height()));
     m_selector.setFixedSize(selectionSize);
 
     // Calculate the global position of the zoom window.
@@ -221,11 +237,12 @@ void VideoZoomScopeWidget::onLockToggled(bool enabled)
 {
     m_zoomWidget->lock(enabled);
     if (enabled) {
-        m_lockButton->setIcon(QIcon::fromTheme("object-locked",
-                                               QIcon(":/icons/oxygen/32x32/status/object-locked")));
+        m_lockButton->setIcon(
+            QIcon::fromTheme("object-locked", QIcon(":/icons/oxygen/32x32/status/object-locked")));
     } else {
-        m_lockButton->setIcon(QIcon::fromTheme("object-unlocked",
-                                               QIcon(":/icons/oxygen/32x32/status/object-unlocked")));
+        m_lockButton->setIcon(
+            QIcon::fromTheme("object-unlocked",
+                             QIcon(":/icons/oxygen/32x32/status/object-unlocked")));
     }
 }
 

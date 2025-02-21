@@ -19,8 +19,8 @@
 #ifndef QMLUTILITIES_H
 #define QMLUTILITIES_H
 
-#include <QObject>
 #include <QDir>
+#include <QObject>
 #include <QPoint>
 #include <QUrl>
 

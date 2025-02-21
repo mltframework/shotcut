@@ -31,10 +31,7 @@ public:
     explicit AutoSaveFile(const QString &filename, QObject *parent = 0);
     ~AutoSaveFile();
 
-    QString managedFileName() const
-    {
-        return m_managedFile;
-    }
+    QString managedFileName() const { return m_managedFile; }
     void changeManagedFile(const QString &filename);
 
     virtual bool open(OpenMode openmode);

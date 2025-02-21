@@ -19,8 +19,9 @@
 #ifndef NETWORKPRODUCERWIDGET_H
 #define NETWORKPRODUCERWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class NetworkProducerWidget;

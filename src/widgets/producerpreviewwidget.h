@@ -21,7 +21,6 @@
 #include "dataqueue.h"
 
 #include <MltProducer.h>
-
 #include <QFuture>
 #include <QPixmap>
 #include <QWidget>
@@ -60,7 +59,8 @@ private:
     int m_seekTo;
     int m_timerId;
     Mlt::Producer m_producer;
-    struct QueueItem {
+    struct QueueItem
+    {
         QPixmap pixmap;
         int position;
         QString positionText;

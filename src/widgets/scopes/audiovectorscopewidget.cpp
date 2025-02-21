@@ -17,7 +17,7 @@
 
 #include "audiovectorscopewidget.h"
 
-#include <Logger.h>
+#include "Logger.h"
 #include "settings.h"
 
 #include <QComboBox>
@@ -25,6 +25,7 @@
 #include <QLabel>
 #include <QPainter>
 #include <QVBoxLayout>
+
 #include <cmath>
 
 static const qreal MAX_AMPLITUDE = 32768.0;
@@ -78,9 +79,7 @@ AudioVectorScopeWidget::AudioVectorScopeWidget()
     LOG_DEBUG() << "end";
 }
 
-AudioVectorScopeWidget::~AudioVectorScopeWidget()
-{
-}
+AudioVectorScopeWidget::~AudioVectorScopeWidget() {}
 
 void AudioVectorScopeWidget::setComboBoxOptions()
 {
@@ -180,7 +179,7 @@ void AudioVectorScopeWidget::refreshScope(const QSize &size, bool full)
         int samples = m_frame.get_audio_samples();
 
         // Find the max value to be used for scaling
-        const int16_t *a = (int16_t *)m_frame.get_audio();
+        const int16_t *a = (int16_t *) m_frame.get_audio();
         int16_t maxSampleValue = 0;
         for (int s = 0; s < samples; s++) {
             if (std::abs(a[c1]) > maxSampleValue) {
@@ -192,11 +191,11 @@ void AudioVectorScopeWidget::refreshScope(const QSize &size, bool full)
             a += channels;
         }
 
-        a = (int16_t *)m_frame.get_audio();
+        a = (int16_t *) m_frame.get_audio();
         qreal maxPoint = sqrt(side * side + side * side) / 4;
         qreal scaleFactor = maxPoint / maxSampleValue;
         for (int s = 0; s < samples; s++) {
-            QPointF point((qreal)a[c1] * scaleFactor, (qreal)a[c2] * scaleFactor);
+            QPointF point((qreal) a[c1] * scaleFactor, (qreal) a[c2] * scaleFactor);
             p.drawPoint(point);
             a += channels;
         }

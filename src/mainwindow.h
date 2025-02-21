@@ -18,16 +18,17 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "mltcontroller.h"
+#include "mltxmlchecker.h"
+
+#include <QDateTime>
 #include <QMainWindow>
 #include <QMutex>
-#include <QTimer>
-#include <QUrl>
 #include <QNetworkAccessManager>
 #include <QScopedPointer>
 #include <QSharedPointer>
-#include <QDateTime>
-#include "mltcontroller.h"
-#include "mltxmlchecker.h"
+#include <QTimer>
+#include <QUrl>
 
 #define EXIT_RESTART (42)
 #define EXIT_RESET (43)
@@ -59,15 +60,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    enum LayoutMode {
-        Custom = 0,
-        Logging,
-        Editing,
-        Effects,
-        Color,
-        Audio,
-        PlayerOnly
-    };
+    enum LayoutMode { Custom = 0, Logging, Editing, Effects, Color, Audio, PlayerOnly };
 
     static MainWindow &singleton();
     ~MainWindow();
@@ -77,18 +70,9 @@ public:
     QUndoStack *undoStack() const;
     bool saveXML(const QString &filename, bool withRelativePaths = true);
     static void changeTheme(const QString &theme);
-    PlaylistDock *playlistDock() const
-    {
-        return m_playlistDock;
-    }
-    TimelineDock *timelineDock() const
-    {
-        return m_timelineDock;
-    }
-    FilterController *filterController() const
-    {
-        return m_filterController;
-    }
+    PlaylistDock *playlistDock() const { return m_playlistDock; }
+    TimelineDock *timelineDock() const { return m_timelineDock; }
+    FilterController *filterController() const { return m_filterController; }
     Mlt::Playlist *playlist() const;
     bool isPlaylistValid() const;
     Mlt::Producer *multitrack() const;
@@ -97,27 +81,20 @@ public:
     void setFullScreen(bool isFullScreen);
     QString untitledFileName() const;
     void setProfile(const QString &profile_name);
-    QString fileName() const
-    {
-        return m_currentFile;
-    }
+    QString fileName() const { return m_currentFile; }
     bool isSourceClipMyProject(QString resource = MLT.resource(), bool withDialog = true);
     bool keyframesDockIsVisible() const;
 
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);
     void hideSetDataDirectory();
-    QMenu *customProfileMenu() const
-    {
-        return m_customProfileMenu;
-    }
+    QMenu *customProfileMenu() const { return m_customProfileMenu; }
     QAction *actionAddCustomProfile() const;
     QAction *actionProfileRemove() const;
-    QActionGroup *profileGroup() const
-    {
-        return m_profileGroup;
-    }
-    void buildVideoModeMenu(QMenu *topMenu, QMenu *&customMenu, QActionGroup *group,
+    QActionGroup *profileGroup() const { return m_profileGroup; }
+    void buildVideoModeMenu(QMenu *topMenu,
+                            QMenu *&customMenu,
+                            QActionGroup *group,
                             QAction *addAction,
                             QAction *removeAction);
     void newProject(const QString &filename, bool isProjectFolder = false);
@@ -126,10 +103,7 @@ public:
     QUuid timelineClipUuid(int trackIndex, int clipIndex);
     void replaceInTimeline(const QUuid &uuid, Mlt::Producer &producer);
     void replaceAllByHash(const QString &hash, Mlt::Producer &producer, bool isProxy = false);
-    bool isClipboardNewer() const
-    {
-        return m_clipboardUpdatedAt > m_sourceUpdatedAt;
-    }
+    bool isClipboardNewer() const { return m_clipboardUpdatedAt > m_sourceUpdatedAt; }
     int mltIndexForTrack(int trackIndex) const;
     int bottomVideoTrackIndex() const;
     void cropSource(const QRectF &rect);
@@ -242,7 +216,9 @@ private:
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker &checker);
     bool isXmlRepaired(MltXmlChecker &checker, QString &fileName);
-    bool open(QString url, const Mlt::Properties * = nullptr, bool play = true,
+    bool open(QString url,
+              const Mlt::Properties * = nullptr,
+              bool play = true,
               bool skipConvert = false);
     void openMultiple(const QStringList &paths);
     void openMultiple(const QList<QUrl> &urls);
@@ -251,7 +227,8 @@ public slots:
     void hideProducer();
     void closeProducer();
     void showStatusMessage(QAction *action, int timeoutSeconds = 5);
-    void showStatusMessage(const QString &message, int timeoutSeconds = 5,
+    void showStatusMessage(const QString &message,
+                           int timeoutSeconds = 5,
                            QPalette::ColorRole role = QPalette::ToolTipBase);
     void onStatusMessageClicked();
     void seekPlaylist(int start);

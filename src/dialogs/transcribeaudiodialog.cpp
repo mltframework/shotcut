@@ -17,12 +17,12 @@
 
 #include "transcribeaudiodialog.h"
 
-#include "docks/timelinedock.h"
 #include "Logger.h"
+#include "docks/timelinedock.h"
 #include "mainwindow.h"
+#include "qmltypes/qmlapplication.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
-#include "qmltypes/qmlapplication.h"
 
 #include <MltProducer.h>
 #include <QCheckBox>
@@ -38,15 +38,12 @@
 
 // List of supported languages from whispercpp
 static const std::vector<const char *> whisperLanguages = {
-    "en", "zh", "de", "es", "ru", "ko", "fr", "ja", "pt", "tr",
-    "pl", "ca", "nl", "ar", "sv", "it", "id", "hi", "fi", "vi",
-    "he", "uk", "el", "ms", "cs", "ro", "da", "hu", "ta", "no",
-    "th", "ur", "hr", "bg", "lt", "la", "mi", "ml", "cy", "sk",
-    "te", "fa", "lv", "bn", "sr", "az", "sl", "kn", "et", "mk",
-    "br", "eu", "is", "hy", "ne", "mn", "bs", "kk", "sq", "sw",
-    "gl", "mr", "pa", "si", "km", "sn", "yo", "so", "af", "oc",
-    "ka", "be", "tg", "sd", "gu", "am", "yi", "lo", "uz", "fo",
-    "ht", "ps", "tk", "nn", "mt", "sa", "lb", "my", "bo", "tl",
+    "en", "zh", "de", "es",  "ru", "ko", "fr", "ja", "pt", "tr",  "pl", "ca", "nl", "ar", "sv",
+    "it", "id", "hi", "fi",  "vi", "he", "uk", "el", "ms", "cs",  "ro", "da", "hu", "ta", "no",
+    "th", "ur", "hr", "bg",  "lt", "la", "mi", "ml", "cy", "sk",  "te", "fa", "lv", "bn", "sr",
+    "az", "sl", "kn", "et",  "mk", "br", "eu", "is", "hy", "ne",  "mn", "bs", "kk", "sq", "sw",
+    "gl", "mr", "pa", "si",  "km", "sn", "yo", "so", "af", "oc",  "ka", "be", "tg", "sd", "gu",
+    "am", "yi", "lo", "uz",  "fo", "ht", "ps", "tk", "nn", "mt",  "sa", "lb", "my", "bo", "tl",
     "mg", "as", "tt", "haw", "ln", "ha", "ba", "jw", "su", "yue",
 };
 
@@ -186,14 +183,16 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     m_exeLabel->setReadOnly(true);
     configLayout->addWidget(m_exeLabel, 1, 1, Qt::AlignLeft);
     QPushButton *exeBrowseButton = new QPushButton(this);
-    exeBrowseButton->setIcon(QIcon::fromTheme("document-open",
-                                              QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
+    exeBrowseButton->setIcon(
+        QIcon::fromTheme("document-open", QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
     connect(exeBrowseButton, &QAbstractButton::clicked, this, [&] {
-        auto path = QFileDialog::getOpenFileName(this, tr("Find Whisper.cpp"), Settings.whisperExe(),
+        auto path = QFileDialog::getOpenFileName(this,
+                                                 tr("Find Whisper.cpp"),
+                                                 Settings.whisperExe(),
                                                  QString(),
-                                                 nullptr, Util::getFileDialogOptions());
-        if (QFileInfo(path).isExecutable())
-        {
+                                                 nullptr,
+                                                 Util::getFileDialogOptions());
+        if (QFileInfo(path).isExecutable()) {
             Settings.setWhisperExe(path);
             updateWhisperStatus();
         }
@@ -207,19 +206,20 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     m_modelLabel->setReadOnly(true);
     configLayout->addWidget(m_modelLabel, 2, 1, Qt::AlignLeft);
     QPushButton *modelBrowseButton = new QPushButton(this);
-    modelBrowseButton->setIcon(QIcon::fromTheme("document-open",
-                                                QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
+    modelBrowseButton->setIcon(
+        QIcon::fromTheme("document-open", QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
     connect(modelBrowseButton, &QAbstractButton::clicked, this, [&] {
-        auto path = QFileDialog::getOpenFileName(this, tr("Find Whisper.cpp"), Settings.whisperModel(),
+        auto path = QFileDialog::getOpenFileName(this,
+                                                 tr("Find Whisper.cpp"),
+                                                 Settings.whisperModel(),
                                                  "*.bin",
-                                                 nullptr, Util::getFileDialogOptions());
-        if (QFileInfo(path).exists())
-        {
+                                                 nullptr,
+                                                 Util::getFileDialogOptions());
+        if (QFileInfo(path).exists()) {
             LOG_INFO() << "Model found" << path;
             Settings.setWhisperModel(path);
             updateWhisperStatus();
-        } else
-        {
+        } else {
             LOG_INFO() << "Model not found" << path;
         }
     });
@@ -278,7 +278,6 @@ void TranscribeAudioDialog::clicked(QAbstractButton *button)
         LOG_DEBUG() << "Unknown role" << role;
     }
 }
-
 
 QString TranscribeAudioDialog::name()
 {

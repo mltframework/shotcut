@@ -16,14 +16,15 @@
  */
 
 #include "metadatamodel.h"
+
+#include "Logger.h"
 #include "controllers/filtercontroller.h"
 #include "mainwindow.h"
 #include "qmltypes/qmlmetadata.h"
 #include "settings.h"
-#include <Logger.h>
 
-#include <QGuiApplication>
 #include <QClipboard>
+#include <QGuiApplication>
 #include <QSaveFile>
 
 MetadataModel::MetadataModel(QObject *parent)
@@ -92,7 +93,8 @@ QVariant InternalMetadataModel::data(const QModelIndex &index, int role) const
 
 bool InternalMetadataModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if (!index.isValid()) return false;
+    if (!index.isValid())
+        return false;
     switch (role) {
     case MetadataModel::FavoriteRole: {
         QmlMetadata *meta = m_list.at(index.row());
@@ -132,8 +134,8 @@ void MetadataModel::add(QmlMetadata *data)
 void InternalMetadataModel::add(QmlMetadata *data)
 {
     int i = 0;
-    for ( i = 0; i < m_list.size(); i++ ) {
-        if (m_list[i]->name().toLower() > data->name().toLower() ) {
+    for (i = 0; i < m_list.size(); i++) {
+        if (m_list[i]->name().toLower() > data->name().toLower()) {
             break;
         }
     }
@@ -192,29 +194,36 @@ bool MetadataModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourcePar
     if (meta->filterMask & m_filterMask) {
         return false;
     }
-    if (Settings.playerGPU() && meta->needsGPU() && MAIN.filterController()->isOutputTrackSelected()) {
+    if (Settings.playerGPU() && meta->needsGPU()
+        && MAIN.filterController()->isOutputTrackSelected()) {
         return false;
     }
     if (m_search.isEmpty()) {
         switch (m_filter) {
         case FavoritesFilter:
-            if (!meta->isFavorite()) return false;
+            if (!meta->isFavorite())
+                return false;
             break;
         case VideoFilter:
             if (meta->isAudio() || meta->needsGPU() || meta->type() == QmlMetadata::Link
-                    || meta->type() == QmlMetadata::FilterSet) return false;
+                || meta->type() == QmlMetadata::FilterSet)
+                return false;
             break;
         case AudioFilter:
-            if (!meta->isAudio()) return false;
+            if (!meta->isAudio())
+                return false;
             break;
         case LinkFilter:
-            if (meta->type() != QmlMetadata::Link) return false;
+            if (meta->type() != QmlMetadata::Link)
+                return false;
             break;
         case FilterSetFilter:
-            if (meta->type() != QmlMetadata::FilterSet) return false;
+            if (meta->type() != QmlMetadata::FilterSet)
+                return false;
             break;
         case GPUFilter:
-            if (!meta->needsGPU()) return false;
+            if (!meta->needsGPU())
+                return false;
             break;
         default:
             break;
@@ -226,8 +235,10 @@ bool MetadataModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourcePar
     return true;
 }
 
-void MetadataModel::updateFilterMask(bool isClipProducer, bool isChainProducer,
-                                     bool isTrackProducer, bool isOutputProducer,
+void MetadataModel::updateFilterMask(bool isClipProducer,
+                                     bool isChainProducer,
+                                     bool isTrackProducer,
+                                     bool isOutputProducer,
                                      bool isReverseSupported)
 {
     beginResetModel();
@@ -267,14 +278,22 @@ void MetadataModel::updateFilterMask(bool isClipProducer, bool isChainProducer,
 unsigned InternalMetadataModel::computeFilterMask(const QmlMetadata *meta)
 {
     unsigned mask = 0;
-    if (meta->isHidden()) mask |= MetadataModel::HiddenMaskBit;
-    if (meta->isClipOnly()) mask |= MetadataModel::clipOnlyMaskBit;
-    if (meta->isTrackOnly()) mask |= MetadataModel::trackOnlyMaskBit;
-    if (meta->isOutputOnly()) mask |= MetadataModel::outputOnlyMaskBit;
-    if (!meta->isGpuCompatible()) mask |= MetadataModel::gpuIncompatibleMaskBit;
-    if (meta->needsGPU()) mask |= MetadataModel::needsGPUMaskBit;
-    if (meta->type() == QmlMetadata::Link) mask |= MetadataModel::linkMaskBit;
-    if (meta->seekReverse()) mask |= MetadataModel::reverseMaskBit;
+    if (meta->isHidden())
+        mask |= MetadataModel::HiddenMaskBit;
+    if (meta->isClipOnly())
+        mask |= MetadataModel::clipOnlyMaskBit;
+    if (meta->isTrackOnly())
+        mask |= MetadataModel::trackOnlyMaskBit;
+    if (meta->isOutputOnly())
+        mask |= MetadataModel::outputOnlyMaskBit;
+    if (!meta->isGpuCompatible())
+        mask |= MetadataModel::gpuIncompatibleMaskBit;
+    if (meta->needsGPU())
+        mask |= MetadataModel::needsGPUMaskBit;
+    if (meta->type() == QmlMetadata::Link)
+        mask |= MetadataModel::linkMaskBit;
+    if (meta->seekReverse())
+        mask |= MetadataModel::reverseMaskBit;
     return mask;
 }
 
@@ -302,8 +321,8 @@ void MetadataModel::saveFilterSet(const QString &name)
     stream.setEncoding(QStringConverter::Utf8);
     stream << QGuiApplication::clipboard()->text();
     if (file.error() != QFileDevice::NoError) {
-        LOG_ERROR() << "error while writing filter set file" << file.fileName() << ":" <<
-                    file.errorString();
+        LOG_ERROR() << "error while writing filter set file" << file.fileName() << ":"
+                    << file.errorString();
         return;
     }
     if (file.commit() && !exists) {

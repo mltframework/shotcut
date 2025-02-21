@@ -16,7 +16,9 @@
  */
 
 #include "videowaveformscopewidget.h"
-#include <Logger.h>
+
+#include "Logger.h"
+
 #include <QMouseEvent>
 #include <QPainter>
 #include <QToolTip>
@@ -24,7 +26,6 @@
 static const qreal IRE0 = 16;
 static const qreal IRE100 = 235;
 static const QColor TEXT_COLOR = {255, 255, 255, 127};
-
 
 VideoWaveformScopeWidget::VideoWaveformScopeWidget()
     : ScopeWidget("VideoWaveform")
@@ -37,7 +38,6 @@ VideoWaveformScopeWidget::VideoWaveformScopeWidget()
     setMouseTracking(true);
     LOG_DEBUG() << "end";
 }
-
 
 void VideoWaveformScopeWidget::refreshScope(const QSize &size, bool full)
 {
@@ -56,7 +56,7 @@ void VideoWaveformScopeWidget::refreshScope(const QSize &size, bool full)
             m_renderImg = QImage(width, 256, QImage::Format_RGBX8888);
         }
 
-        QColor bgColor( 0, 0, 0, 0xff );
+        QColor bgColor(0, 0, 0, 0xff);
         m_renderImg.fill(bgColor);
 
         const uint8_t *src = m_frame.get_image(mlt_image_yuv420p);
@@ -71,12 +71,13 @@ void VideoWaveformScopeWidget::refreshScope(const QSize &size, bool full)
                     dst[dIndex + 1] += 0x0f;
                     dst[dIndex + 2] += 0x0f;
                 }
-                src ++;
+                src++;
             }
         }
 
-        QImage scaledImage = m_renderImg.scaled(size, Qt::IgnoreAspectRatio,
-                                                Qt::SmoothTransformation).convertToFormat(QImage::Format_RGB32);
+        QImage scaledImage = m_renderImg
+                                 .scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
+                                 .convertToFormat(QImage::Format_RGB32);
 
         m_mutex.lock();
         m_displayImg.swap(scaledImage);
@@ -140,9 +141,9 @@ void VideoWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (frameWidth != 0) {
         int pixel = frameWidth * event->pos().x() / width();
-        text =  tr("Pixel: %1\nIRE: %2").arg(pixel).arg(ire);
+        text = tr("Pixel: %1\nIRE: %2").arg(pixel).arg(ire);
     } else {
-        text =  tr("IRE: %1").arg(ire);
+        text = tr("IRE: %1").arg(ire);
     }
     QToolTip::showText(event->globalPosition().toPoint(), text);
 }

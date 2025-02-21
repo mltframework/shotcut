@@ -19,8 +19,8 @@
 #ifndef AUDIOSPECTRUMSCOPEWIDGET_H
 #define AUDIOSPECTRUMSCOPEWIDGET_H
 
-
 #include "scopewidget.h"
+
 #include <MltFilter.h>
 
 class AudioMeterWidget;

@@ -16,25 +16,30 @@
  */
 
 #include "encodejob.h"
-#include <QAction>
-#include <QUrl>
-#include <QDesktopServices>
-#include <QFileInfo>
-#include <QFileDialog>
-#include <QTemporaryFile>
-#include <QDir>
-#include <QDomDocument>
-#include <QTextStream>
-#include "mainwindow.h"
-#include "settings.h"
+
 #include "jobqueue.h"
 #include "jobs/videoqualityjob.h"
-#include "util.h"
+#include "mainwindow.h"
+#include "settings.h"
 #include "spatialmedia/spatialmedia.h"
+#include "util.h"
 
-#include <Logger.h>
+#include <QAction>
+#include <QDesktopServices>
+#include <QDir>
+#include <QDomDocument>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QTemporaryFile>
+#include <QTextStream>
+#include <QUrl>
 
-EncodeJob::EncodeJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen,
+#include "Logger.h"
+
+EncodeJob::EncodeJob(const QString &name,
+                     const QString &xml,
+                     int frameRateNum,
+                     int frameRateDen,
                      QThread::Priority priority)
     : MeltJob(name, xml, frameRateNum, frameRateDen, priority)
 {
@@ -69,8 +74,12 @@ void EncodeJob::onVideoQualityTriggered()
     QString directory = Settings.encodePath();
     QString caption = tr("Video Quality Report");
     QString nameFilter = tr("Text Documents (*.txt);;All Files (*)");
-    QString reportPath = QFileDialog::getSaveFileName(&MAIN, caption, directory, nameFilter,
-                                                      nullptr, Util::getFileDialogOptions());
+    QString reportPath = QFileDialog::getSaveFileName(&MAIN,
+                                                      caption,
+                                                      directory,
+                                                      nameFilter,
+                                                      nullptr,
+                                                      Util::getFileDialogOptions());
     if (!reportPath.isEmpty()) {
         QFileInfo fi(reportPath);
         if (fi.suffix().isEmpty())
@@ -114,8 +123,11 @@ void EncodeJob::onVideoQualityTriggered()
             consumerNode.setAttribute("terminate_on_pause", 1);
 
             // Create job and add it to the queue.
-            JOBS.add(new VideoQualityJob(objectName(), dom.toString(2), reportPath,
-                                         MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den()));
+            JOBS.add(new VideoQualityJob(objectName(),
+                                         dom.toString(2),
+                                         reportPath,
+                                         MLT.profile().frame_rate_num(),
+                                         MLT.profile().frame_rate_den()));
         }
     }
 }
@@ -126,11 +138,15 @@ void EncodeJob::onSpatialMediaTriggered()
     QString caption = tr("Set Equirectangular Projection");
     QFileInfo info(objectName());
     QString directory = QStringLiteral("%1/%2 - ERP.%3")
-                        .arg(Settings.encodePath())
-                        .arg(info.completeBaseName())
-                        .arg(info.suffix());
-    QString filePath = QFileDialog::getSaveFileName(&MAIN, caption, directory, QString(),
-                                                    nullptr, Util::getFileDialogOptions());
+                            .arg(Settings.encodePath())
+                            .arg(info.completeBaseName())
+                            .arg(info.suffix());
+    QString filePath = QFileDialog::getSaveFileName(&MAIN,
+                                                    caption,
+                                                    directory,
+                                                    QString(),
+                                                    nullptr,
+                                                    Util::getFileDialogOptions());
     if (!filePath.isEmpty()) {
         if (SpatialMedia::injectSpherical(objectName().toStdString(), filePath.toStdString())) {
             MAIN.showStatusMessage(tr("Successfully wrote %1").arg(QFileInfo(filePath).fileName()));
@@ -154,7 +170,7 @@ void EncodeJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 
         // Locate the consumer element.
         QDomNodeList consumers = dom.elementsByTagName("consumer");
-        for (int i = 0; i < consumers.length(); i++ ) {
+        for (int i = 0; i < consumers.length(); i++) {
             QDomElement consumer = consumers.at(i).toElement();
             // If real_time is set for parallel.
             if (consumer.attribute("real_time").toInt() < -1) {

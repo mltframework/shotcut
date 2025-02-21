@@ -19,6 +19,7 @@
 #define QIMAGEJOB_H
 
 #include "abstractjob.h"
+
 #include <QSize>
 
 class QImageJob : public AbstractJob

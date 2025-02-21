@@ -15,19 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dialogs/longuitask.h"
 #include "timelinecommands.h"
+
+#include "Logger.h"
+#include "controllers/filtercontroller.h"
+#include "dialogs/longuitask.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
-#include "shotcut_mlt_properties.h"
-#include "settings.h"
 #include "proxymanager.h"
-#include "dialogs/longuitask.h"
-#include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
+#include "settings.h"
+#include "shotcut_mlt_properties.h"
 #include "util.h"
-#include <Logger.h>
-
 
 #include <QMetaObject>
 
@@ -64,8 +63,12 @@ int getUniqueGroupNumber(MultitrackModel &model)
     return 0;
 }
 
-AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml,
-                             bool skipProxy, bool seek, QUndoCommand *parent)
+AppendCommand::AppendCommand(MultitrackModel &model,
+                             int trackIndex,
+                             const QString &xml,
+                             bool skipProxy,
+                             bool seek,
+                             QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -82,7 +85,7 @@ void AppendCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex;
     LongUiTask longTask(QObject::tr("Append to Timeline"));
     m_undoHelper.recordBeforeState();
-    Mlt::Producer *producer = longTask.runAsync<Mlt::Producer *>(QObject::tr("Preparing"), [ = ]() {
+    Mlt::Producer *producer = longTask.runAsync<Mlt::Producer *>(QObject::tr("Preparing"), [=]() {
         return deserializeProducer(m_xml);
     });
     if (producer->type() == mlt_service_playlist_type) {
@@ -92,13 +95,15 @@ void AppendCommand::redo()
             longTask.reportProgress(QObject::tr("Appending"), i, count);
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             Mlt::Producer clip = Mlt::Producer(info->producer);
-            if (!m_skipProxy) ProxyManager::generateIfNotExists(clip);
+            if (!m_skipProxy)
+                ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             bool lastClip = i == (count - 1);
             m_model.appendClip(m_trackIndex, clip, false, lastClip);
         }
     } else {
-        if (!m_skipProxy) ProxyManager::generateIfNotExists(*producer);
+        if (!m_skipProxy)
+            ProxyManager::generateIfNotExists(*producer);
         m_model.appendClip(m_trackIndex, *producer, m_seek);
     }
     longTask.reportProgress(QObject::tr("Finishing"), 0, 0);
@@ -112,8 +117,13 @@ void AppendCommand::undo()
     m_undoHelper.undoChanges();
 }
 
-InsertCommand::InsertCommand(MultitrackModel &model, MarkersModel &markersModel, int trackIndex,
-                             int position, const QString &xml, bool seek, QUndoCommand *parent)
+InsertCommand::InsertCommand(MultitrackModel &model,
+                             MarkersModel &markersModel,
+                             int trackIndex,
+                             int position,
+                             const QString &xml,
+                             bool seek,
+                             QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_markersModel(markersModel)
@@ -144,7 +154,9 @@ void InsertCommand::redo()
         while (i--) {
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             clip = Mlt::Producer(info->producer);
-            longTask.reportProgress(QFileInfo(ProxyManager::resource(clip)).fileName(), n - i - 1, n);
+            longTask.reportProgress(QFileInfo(ProxyManager::resource(clip)).fileName(),
+                                    n - i - 1,
+                                    n);
             ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             bool lastClip = i == 0;
@@ -172,8 +184,12 @@ void InsertCommand::undo()
     }
 }
 
-OverwriteCommand::OverwriteCommand(MultitrackModel &model, int trackIndex,
-                                   int position, const QString &xml, bool seek, QUndoCommand *parent)
+OverwriteCommand::OverwriteCommand(MultitrackModel &model,
+                                   int trackIndex,
+                                   int position,
+                                   const QString &xml,
+                                   bool seek,
+                                   QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -219,8 +235,7 @@ void OverwriteCommand::undo()
     m_undoHelper.undoChanges();
 }
 
-LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex,
-                         int clipIndex, QUndoCommand *parent)
+LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex, int clipIndex, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -245,8 +260,11 @@ void LiftCommand::undo()
     m_undoHelper.undoChanges();
 }
 
-RemoveCommand::RemoveCommand(MultitrackModel &model, MarkersModel &markersModel, int trackIndex,
-                             int clipIndex, QUndoCommand *parent)
+RemoveCommand::RemoveCommand(MultitrackModel &model,
+                             MarkersModel &markersModel,
+                             int trackIndex,
+                             int clipIndex,
+                             QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_markersModel(markersModel)
@@ -283,8 +301,7 @@ void RemoveCommand::redo()
             QList<Markers::Marker> newMarkers = m_markers;
             for (int i = 0; i < newMarkers.size(); i++) {
                 Markers::Marker &marker = newMarkers[i];
-                if (marker.start >= m_markerRemoveStart &&
-                        marker.start <= m_markerRemoveEnd) {
+                if (marker.start >= m_markerRemoveStart && marker.start <= m_markerRemoveEnd) {
                     // This marker is in the removed segment. Remove it
                     newMarkers.removeAt(i);
                     i--;
@@ -323,8 +340,7 @@ void RemoveCommand::undo()
 GroupCommand::GroupCommand(MultitrackModel &model, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
-{
-}
+{}
 
 void GroupCommand::addToGroup(int trackIndex, int clipIndex)
 {
@@ -346,8 +362,12 @@ void GroupCommand::redo()
         auto clipInfo = m_model.getClipInfo(clip.trackIndex, clip.clipIndex);
         if (clipInfo && clipInfo->cut) {
             clipInfo->cut->set(kShotcutGroupProperty, groupNumber);
-            QModelIndex modelIndex = m_model.index(clip.clipIndex, 0, m_model.index(clip.trackIndex));
-            emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
+            QModelIndex modelIndex = m_model.index(clip.clipIndex,
+                                                   0,
+                                                   m_model.index(clip.trackIndex));
+            emit m_model.dataChanged(modelIndex,
+                                     modelIndex,
+                                     QVector<int>() << MultitrackModel::GroupRole);
         }
     }
 }
@@ -362,8 +382,12 @@ void GroupCommand::undo()
             } else {
                 clipInfo->cut->Mlt::Properties::clear(kShotcutGroupProperty);
             }
-            QModelIndex modelIndex = m_model.index(clip.clipIndex, 0, m_model.index(clip.trackIndex));
-            emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
+            QModelIndex modelIndex = m_model.index(clip.clipIndex,
+                                                   0,
+                                                   m_model.index(clip.trackIndex));
+            emit m_model.dataChanged(modelIndex,
+                                     modelIndex,
+                                     QVector<int>() << MultitrackModel::GroupRole);
         }
     }
 }
@@ -371,8 +395,7 @@ void GroupCommand::undo()
 UngroupCommand::UngroupCommand(MultitrackModel &model, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
-{
-}
+{}
 
 void UngroupCommand::removeFromGroup(int trackIndex, int clipIndex)
 {
@@ -392,8 +415,12 @@ void UngroupCommand::redo()
         auto clipInfo = m_model.getClipInfo(clip.trackIndex, clip.clipIndex);
         if (clipInfo && clipInfo->cut) {
             clipInfo->cut->Mlt::Properties::clear(kShotcutGroupProperty);
-            QModelIndex modelIndex = m_model.index(clip.clipIndex, 0, m_model.index(clip.trackIndex));
-            emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
+            QModelIndex modelIndex = m_model.index(clip.clipIndex,
+                                                   0,
+                                                   m_model.index(clip.trackIndex));
+            emit m_model.dataChanged(modelIndex,
+                                     modelIndex,
+                                     QVector<int>() << MultitrackModel::GroupRole);
         }
     }
 }
@@ -404,14 +431,20 @@ void UngroupCommand::undo()
         auto clipInfo = m_model.getClipInfo(clip.trackIndex, clip.clipIndex);
         if (clipInfo && clipInfo->cut) {
             clipInfo->cut->set(kShotcutGroupProperty, m_prevGroups[clip]);
-            QModelIndex modelIndex = m_model.index(clip.clipIndex, 0, m_model.index(clip.trackIndex));
-            emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
+            QModelIndex modelIndex = m_model.index(clip.clipIndex,
+                                                   0,
+                                                   m_model.index(clip.trackIndex));
+            emit m_model.dataChanged(modelIndex,
+                                     modelIndex,
+                                     QVector<int>() << MultitrackModel::GroupRole);
         }
     }
 }
 
-NameTrackCommand::NameTrackCommand(MultitrackModel &model, int trackIndex,
-                                   const QString &name, QUndoCommand *parent)
+NameTrackCommand::NameTrackCommand(MultitrackModel &model,
+                                   int trackIndex,
+                                   const QString &name,
+                                   QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -433,7 +466,9 @@ void NameTrackCommand::undo()
     m_model.setTrackName(m_trackIndex, m_oldName);
 }
 
-MergeCommand::MergeCommand(MultitrackModel &model, int trackIndex, int clipIndex,
+MergeCommand::MergeCommand(MultitrackModel &model,
+                           int trackIndex,
+                           int clipIndex,
                            QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -457,7 +492,6 @@ void MergeCommand::undo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipindex" << m_clipIndex;
     m_undoHelper.undoChanges();
 }
-
 
 MuteTrackCommand::MuteTrackCommand(MultitrackModel &model, int trackIndex, QUndoCommand *parent)
     : QUndoCommand(parent)
@@ -501,7 +535,9 @@ void HideTrackCommand::undo()
     m_model.setTrackHidden(m_trackIndex, m_oldValue);
 }
 
-CompositeTrackCommand::CompositeTrackCommand(MultitrackModel &model, int trackIndex, bool value,
+CompositeTrackCommand::CompositeTrackCommand(MultitrackModel &model,
+                                             int trackIndex,
+                                             bool value,
                                              QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -524,7 +560,9 @@ void CompositeTrackCommand::undo()
     m_model.setTrackComposite(m_trackIndex, m_oldValue);
 }
 
-LockTrackCommand::LockTrackCommand(MultitrackModel &model, int trackIndex, bool value,
+LockTrackCommand::LockTrackCommand(MultitrackModel &model,
+                                   int trackIndex,
+                                   bool value,
                                    QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -547,8 +585,8 @@ void LockTrackCommand::undo()
     m_model.setTrackLock(m_trackIndex, m_oldValue);
 }
 
-MoveClipCommand::MoveClipCommand(TimelineDock &timeline, int trackDelta, int positionDelta,
-                                 bool ripple, QUndoCommand *parent)
+MoveClipCommand::MoveClipCommand(
+    TimelineDock &timeline, int trackDelta, int positionDelta, bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_timeline(timeline)
     , m_model(*timeline.model())
@@ -608,8 +646,8 @@ void MoveClipCommand::redo()
             auto targetIndex = playlist.get_clip_index_at(newStart);
             auto clipIndex = m_clips.first().clipIndex;
             if (targetIndex >= clipIndex || // pushing clips on same track
-                    // pulling clips on same track
-                    (playlist.is_blank_at(newStart) && targetIndex == clipIndex - 1)) {
+                // pulling clips on same track
+                (playlist.is_blank_at(newStart) && targetIndex == clipIndex - 1)) {
                 bool done = true;
                 if (targetIndex == clipIndex && m_model.isTransition(playlist, clipIndex - 1)) {
                     // Increase duration of transition
@@ -618,7 +656,11 @@ void MoveClipCommand::redo()
                         m_model.trimClipIn(trackIndex, clipIndex + 1, m_positionDelta, true, false);
                 } else if (m_ripple) {
                     // Push or pull clips on the same track
-                    m_model.moveClip(trackIndex, trackIndex, clipIndex, newStart, m_ripple,
+                    m_model.moveClip(trackIndex,
+                                     trackIndex,
+                                     clipIndex,
+                                     newStart,
+                                     m_ripple,
                                      m_rippleAllTracks);
                 } else if (m_model.isTransition(playlist, clipIndex + 1)) {
                     // Increase duration of transition
@@ -633,7 +675,8 @@ void MoveClipCommand::redo()
                         m_undoHelper.recordAfterState();
                     }
                     redoMarkers();
-                    selection = m_timeline.uuidsToSelection(QVector<QUuid>() << m_clips.first().uuid);
+                    selection = m_timeline.uuidsToSelection(QVector<QUuid>()
+                                                            << m_clips.first().uuid);
                     m_timeline.setSelection(selection);
                     return;
                 }
@@ -683,7 +726,8 @@ void MoveClipCommand::redo()
             return;
         }
         Mlt::Producer &producer = producers.front();
-        int newTrackIndex = qBound(0, clip.trackIndex + m_trackDelta,
+        int newTrackIndex = qBound(0,
+                                   clip.trackIndex + m_trackDelta,
                                    qMax(int(m_model.trackList().size()) - 1, 0));
         int newStart = clip.start + m_positionDelta;
         producer.set_in_and_out(clip.frame_in, clip.frame_out);
@@ -697,8 +741,12 @@ void MoveClipCommand::redo()
             if (clipInfo && clipInfo->cut) {
                 if (clip.group >= 0) {
                     clipInfo->cut->set(kShotcutGroupProperty, clip.group);
-                    QModelIndex modelIndex = m_model.index(newClipIndex, 0, m_model.index(newTrackIndex));
-                    emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::GroupRole);
+                    QModelIndex modelIndex = m_model.index(newClipIndex,
+                                                           0,
+                                                           m_model.index(newTrackIndex));
+                    emit m_model.dataChanged(modelIndex,
+                                             modelIndex,
+                                             QVector<int>() << MultitrackModel::GroupRole);
                 }
                 MLT.setUuid(*clipInfo->producer, clip.uuid);
                 uuids << clip.uuid;
@@ -735,9 +783,8 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
 {
     const MoveClipCommand *that = static_cast<const MoveClipCommand *>(other);
     LOG_DEBUG() << "this delta" << m_positionDelta << "that delta" << that->m_positionDelta;
-    if (that->id() != id() || that->m_clips.size() != m_clips.size()
-            || that->m_ripple != m_ripple || that->m_rippleAllTracks != m_rippleAllTracks
-            || that->m_rippleMarkers != m_rippleMarkers)
+    if (that->id() != id() || that->m_clips.size() != m_clips.size() || that->m_ripple != m_ripple
+        || that->m_rippleAllTracks != m_rippleAllTracks || that->m_rippleMarkers != m_rippleMarkers)
         return false;
     if (that->m_undoHelper.affectedTracks() != m_undoHelper.affectedTracks()) {
         return false;
@@ -763,8 +810,8 @@ void MoveClipCommand::redoMarkers()
         bool markersModified = false;
         for (int i = 0; i < newMarkers.size(); i++) {
             Markers::Marker &marker = newMarkers[i];
-            if (marker.start < m_earliestStart &&
-                    marker.start > (m_earliestStart + m_positionDelta)) {
+            if (marker.start < m_earliestStart
+                && marker.start > (m_earliestStart + m_positionDelta)) {
                 // This marker is in the overwritten segment. Remove it
                 newMarkers.removeAt(i);
                 i--;
@@ -784,8 +831,14 @@ void MoveClipCommand::redoMarkers()
     }
 }
 
-TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, MarkersModel &markersModel,
-                                     int trackIndex, int clipIndex, int delta, bool ripple, bool redo, QUndoCommand *parent)
+TrimClipInCommand::TrimClipInCommand(MultitrackModel &model,
+                                     MarkersModel &markersModel,
+                                     int trackIndex,
+                                     int clipIndex,
+                                     int delta,
+                                     bool ripple,
+                                     bool redo,
+                                     QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_markersModel(markersModel)
@@ -819,8 +872,7 @@ void TrimClipInCommand::redo()
             QList<Markers::Marker> newMarkers = m_markers;
             for (int i = 0; i < newMarkers.size(); i++) {
                 Markers::Marker &marker = newMarkers[i];
-                if (marker.start >= m_markerRemoveStart &&
-                        marker.start <= m_markerRemoveEnd) {
+                if (marker.start >= m_markerRemoveStart && marker.start <= m_markerRemoveEnd) {
                     // This marker is in the removed segment. Remove it
                     newMarkers.removeAt(i);
                     i--;
@@ -843,7 +895,8 @@ void TrimClipInCommand::redo()
     }
 
     if (m_redo) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta"
+                    << m_delta;
         m_undoHelper.reset(new UndoHelper(m_model));
         if (m_ripple) {
             m_undoHelper->setHints(UndoHelper::SkipXML);
@@ -875,8 +928,8 @@ bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
     const TrimClipInCommand *that = static_cast<const TrimClipInCommand *>(other);
     LOG_DEBUG() << "this clipIndex" << m_clipIndex << "that clipIndex" << that->m_clipIndex;
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex
-            || that->m_ripple != m_ripple || that->m_rippleAllTracks != m_rippleAllTracks
-            || that->m_rippleMarkers != m_rippleMarkers)
+        || that->m_ripple != m_ripple || that->m_rippleAllTracks != m_rippleAllTracks
+        || that->m_rippleMarkers != m_rippleMarkers)
         return false;
     Q_ASSERT(m_undoHelper);
     m_undoHelper->recordAfterState();
@@ -884,8 +937,14 @@ bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, MarkersModel &markersModel,
-                                       int trackIndex, int clipIndex, int delta, bool ripple, bool redo, QUndoCommand *parent)
+TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model,
+                                       MarkersModel &markersModel,
+                                       int trackIndex,
+                                       int clipIndex,
+                                       int delta,
+                                       bool ripple,
+                                       bool redo,
+                                       QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_markersModel(markersModel)
@@ -911,8 +970,8 @@ void TrimClipOutCommand::redo()
             QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
             if (track && track->is_valid()) {
                 Mlt::Playlist playlist(*track);
-                m_markerRemoveStart = playlist.clip_start(m_clipIndex) + playlist.clip_length(
-                                          m_clipIndex) - m_delta;
+                m_markerRemoveStart = playlist.clip_start(m_clipIndex)
+                                      + playlist.clip_length(m_clipIndex) - m_delta;
                 if (!m_redo) {
                     // For the first redo, the clip has already been trimmed by the timeline dock.
                     // So remove the delta that has already been applied
@@ -925,8 +984,7 @@ void TrimClipOutCommand::redo()
             QList<Markers::Marker> newMarkers = m_markers;
             for (int i = 0; i < newMarkers.size(); i++) {
                 Markers::Marker &marker = newMarkers[i];
-                if (marker.start >= m_markerRemoveStart &&
-                        marker.start < m_markerRemoveEnd) {
+                if (marker.start >= m_markerRemoveStart && marker.start < m_markerRemoveEnd) {
                     // This marker is in the removed segment. Remove it
                     newMarkers.removeAt(i);
                     i--;
@@ -953,7 +1011,8 @@ void TrimClipOutCommand::redo()
         if (!m_ripple)
             m_undoHelper->setHints(UndoHelper::SkipXML);
         m_undoHelper->recordBeforeState();
-        m_clipIndex = m_model.trimClipOut(m_trackIndex, m_clipIndex, m_delta, m_ripple, m_rippleAllTracks);
+        m_clipIndex
+            = m_model.trimClipOut(m_trackIndex, m_clipIndex, m_delta, m_ripple, m_rippleAllTracks);
         m_undoHelper->recordAfterState();
     } else {
         Q_ASSERT(m_undoHelper);
@@ -976,8 +1035,8 @@ bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
 {
     const TrimClipOutCommand *that = static_cast<const TrimClipOutCommand *>(other);
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex
-            || that->m_ripple != m_ripple || that->m_rippleAllTracks != m_rippleAllTracks
-            || that->m_rippleMarkers != m_rippleMarkers)
+        || that->m_ripple != m_ripple || that->m_rippleAllTracks != m_rippleAllTracks
+        || that->m_rippleMarkers != m_rippleMarkers)
         return false;
     Q_ASSERT(m_undoHelper);
     m_undoHelper->recordAfterState();
@@ -985,8 +1044,11 @@ bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-SplitCommand::SplitCommand(MultitrackModel &model, const std::vector<int> &trackIndex,
-                           const std::vector<int> &clipIndex, int position, QUndoCommand *parent)
+SplitCommand::SplitCommand(MultitrackModel &model,
+                           const std::vector<int> &trackIndex,
+                           const std::vector<int> &clipIndex,
+                           int position,
+                           QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
@@ -1004,8 +1066,8 @@ SplitCommand::SplitCommand(MultitrackModel &model, const std::vector<int> &track
 
 void SplitCommand::redo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex[0] << "clipIndex" << m_clipIndex[0] << "position" <<
-                m_position;
+    LOG_DEBUG() << "trackIndex" << m_trackIndex[0] << "clipIndex" << m_clipIndex[0] << "position"
+                << m_position;
     m_undoHelper.recordBeforeState();
     for (int i = 0; i < m_trackIndex.size(); i++) {
         m_model.splitClip(m_trackIndex[i], m_clipIndex[i], m_position);
@@ -1015,13 +1077,13 @@ void SplitCommand::redo()
 
 void SplitCommand::undo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex[0] << "clipIndex" << m_clipIndex[0] << "position" <<
-                m_position;
+    LOG_DEBUG() << "trackIndex" << m_trackIndex[0] << "clipIndex" << m_clipIndex[0] << "position"
+                << m_position;
     m_undoHelper.undoChanges();
 }
 
-FadeInCommand::FadeInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration,
-                             QUndoCommand *parent)
+FadeInCommand::FadeInCommand(
+    MultitrackModel &model, int trackIndex, int clipIndex, int duration, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -1040,8 +1102,8 @@ void FadeInCommand::redo()
 
 void FadeInCommand::undo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "duration" <<
-                m_duration;
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "duration"
+                << m_duration;
     m_model.fadeIn(m_trackIndex, m_clipIndex, m_previous);
 }
 
@@ -1049,14 +1111,14 @@ bool FadeInCommand::mergeWith(const QUndoCommand *other)
 {
     const FadeInCommand *that = static_cast<const FadeInCommand *>(other);
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex
-            || (!that->m_duration && m_duration != that->m_duration))
+        || (!that->m_duration && m_duration != that->m_duration))
         return false;
     m_duration = static_cast<const FadeInCommand *>(other)->m_duration;
     return true;
 }
 
-FadeOutCommand::FadeOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration,
-                               QUndoCommand *parent)
+FadeOutCommand::FadeOutCommand(
+    MultitrackModel &model, int trackIndex, int clipIndex, int duration, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -1075,8 +1137,8 @@ void FadeOutCommand::redo()
 
 void FadeOutCommand::undo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "duration" <<
-                m_duration;
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "duration"
+                << m_duration;
     m_model.fadeOut(m_trackIndex, m_clipIndex, m_previous);
 }
 
@@ -1084,14 +1146,18 @@ bool FadeOutCommand::mergeWith(const QUndoCommand *other)
 {
     const FadeOutCommand *that = static_cast<const FadeOutCommand *>(other);
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex
-            || (!that->m_duration && m_duration != that->m_duration))
+        || (!that->m_duration && m_duration != that->m_duration))
         return false;
     m_duration = static_cast<const FadeOutCommand *>(other)->m_duration;
     return true;
 }
 
-AddTransitionCommand::AddTransitionCommand(TimelineDock &timeline, int trackIndex, int clipIndex,
-                                           int position, bool ripple, QUndoCommand *parent)
+AddTransitionCommand::AddTransitionCommand(TimelineDock &timeline,
+                                           int trackIndex,
+                                           int clipIndex,
+                                           int position,
+                                           bool ripple,
+                                           QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_timeline(timeline)
     , m_model(*m_timeline.model())
@@ -1112,8 +1178,8 @@ AddTransitionCommand::AddTransitionCommand(TimelineDock &timeline, int trackInde
 
 void AddTransitionCommand::redo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
-                m_position;
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position"
+                << m_position;
 
     if (m_rippleMarkers) {
         // Calculate the marker delta before moving anything
@@ -1127,8 +1193,8 @@ void AddTransitionCommand::redo()
     }
 
     m_undoHelper.recordBeforeState();
-    m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple,
-                                              m_rippleAllTracks);
+    m_transitionIndex
+        = m_model.addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple, m_rippleAllTracks);
     LOG_DEBUG() << "m_transitionIndex" << m_transitionIndex;
     m_undoHelper.recordAfterState();
 
@@ -1140,8 +1206,7 @@ void AddTransitionCommand::redo()
         int startDelta = m_markerNewStart - m_markerOldStart;
         for (int i = 0; i < newMarkers.size(); i++) {
             Markers::Marker &marker = newMarkers[i];
-            if (marker.start <= m_markerOldStart &&
-                    marker.start > m_markerNewStart) {
+            if (marker.start <= m_markerOldStart && marker.start > m_markerNewStart) {
                 // This marker is in the overwritten segment. Remove it
                 newMarkers.removeAt(i);
                 i--;
@@ -1166,8 +1231,8 @@ void AddTransitionCommand::redo()
 void AddTransitionCommand::undo()
 {
     if (m_transitionIndex >= 0) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
-                    m_position;
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position"
+                    << m_position;
         m_undoHelper.undoChanges();
         m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
 
@@ -1177,8 +1242,12 @@ void AddTransitionCommand::undo()
     }
 }
 
-TrimTransitionInCommand::TrimTransitionInCommand(MultitrackModel &model, int trackIndex,
-                                                 int clipIndex, int delta, bool redo, QUndoCommand *parent)
+TrimTransitionInCommand::TrimTransitionInCommand(MultitrackModel &model,
+                                                 int trackIndex,
+                                                 int clipIndex,
+                                                 int delta,
+                                                 bool redo,
+                                                 QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -1208,7 +1277,8 @@ void TrimTransitionInCommand::undo()
         m_model.trimTransitionIn(m_trackIndex, m_clipIndex, -m_delta);
         m_model.notifyClipIn(m_trackIndex, m_clipIndex);
         m_notify = true;
-    } else LOG_WARNING() << "invalid clip index" << m_clipIndex;
+    } else
+        LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
 bool TrimTransitionInCommand::mergeWith(const QUndoCommand *other)
@@ -1220,8 +1290,12 @@ bool TrimTransitionInCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-TrimTransitionOutCommand::TrimTransitionOutCommand(MultitrackModel &model, int trackIndex,
-                                                   int clipIndex, int delta, bool redo, QUndoCommand *parent)
+TrimTransitionOutCommand::TrimTransitionOutCommand(MultitrackModel &model,
+                                                   int trackIndex,
+                                                   int clipIndex,
+                                                   int delta,
+                                                   bool redo,
+                                                   QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -1248,11 +1322,13 @@ void TrimTransitionOutCommand::redo()
 void TrimTransitionOutCommand::undo()
 {
     if (m_clipIndex >= 0) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta"
+                    << m_delta;
         m_model.trimTransitionOut(m_trackIndex, m_clipIndex, -m_delta);
         m_model.notifyClipOut(m_trackIndex, m_clipIndex);
         m_notify = true;
-    } else LOG_WARNING() << "invalid clip index" << m_clipIndex;
+    } else
+        LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
 bool TrimTransitionOutCommand::mergeWith(const QUndoCommand *other)
@@ -1264,8 +1340,13 @@ bool TrimTransitionOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(TimelineDock &timeline, int trackIndex,
-                                                           int clipIndex, int duration, int trimDelta, bool redo, QUndoCommand *parent)
+AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(TimelineDock &timeline,
+                                                           int trackIndex,
+                                                           int clipIndex,
+                                                           int duration,
+                                                           int trimDelta,
+                                                           bool redo,
+                                                           QUndoCommand *parent)
     : TrimCommand(parent)
     , m_timeline(timeline)
     , m_trackIndex(qBound(0, trackIndex, qMax(timeline.model()->rowCount() - 1, 0)))
@@ -1281,8 +1362,8 @@ AddTransitionByTrimInCommand::AddTransitionByTrimInCommand(TimelineDock &timelin
 void AddTransitionByTrimInCommand::redo()
 {
     if (m_redo) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta
-                    << "duration" << m_duration;
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta"
+                    << m_trimDelta << "duration" << m_duration;
         if (m_trimDelta)
             m_timeline.model()->trimClipIn(m_trackIndex, m_clipIndex + 1, m_trimDelta, false, false);
         m_timeline.model()->addTransitionByTrimIn(m_trackIndex, m_clipIndex, m_duration);
@@ -1297,24 +1378,32 @@ void AddTransitionByTrimInCommand::redo()
 void AddTransitionByTrimInCommand::undo()
 {
     if (m_clipIndex > 0) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta;
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta"
+                    << m_trimDelta;
         m_timeline.model()->removeTransitionByTrimIn(m_trackIndex, m_clipIndex, -m_trimDelta);
         m_notify = true;
         m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
-    } else LOG_WARNING() << "invalid clip index" << m_clipIndex;
+    } else
+        LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
 bool AddTransitionByTrimInCommand::mergeWith(const QUndoCommand *other)
 {
-    const AddTransitionByTrimInCommand *that = static_cast<const AddTransitionByTrimInCommand *>(other);
-    if (that->id() != id() || that->m_trackIndex != m_trackIndex ||
-            (that->m_clipIndex != m_clipIndex && m_clipIndex != that->m_clipIndex - 1))
+    const AddTransitionByTrimInCommand *that = static_cast<const AddTransitionByTrimInCommand *>(
+        other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex
+        || (that->m_clipIndex != m_clipIndex && m_clipIndex != that->m_clipIndex - 1))
         return false;
     return true;
 }
 
 RemoveTransitionByTrimInCommand::RemoveTransitionByTrimInCommand(MultitrackModel &model,
-                                                                 int trackIndex, int clipIndex, int delta, QString xml, bool redo, QUndoCommand *parent)
+                                                                 int trackIndex,
+                                                                 int clipIndex,
+                                                                 int delta,
+                                                                 QString xml,
+                                                                 bool redo,
+                                                                 QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -1343,17 +1432,21 @@ void RemoveTransitionByTrimInCommand::redo()
 void RemoveTransitionByTrimInCommand::undo()
 {
     if (m_clipIndex > 0) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta"
+                    << m_delta;
         m_model.addTransitionByTrimOut(m_trackIndex, m_clipIndex - 1, m_delta);
         // Copy properties from old transition to new transition
         auto clipInfo = m_model.getClipInfo(m_trackIndex, m_clipIndex);
-        Mlt::Service oldService = Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+        Mlt::Service oldService = Mlt::Producer(MLT.profile(),
+                                                "xml-string",
+                                                m_xml.toUtf8().constData());
         while (oldService.is_valid()) {
             if (oldService.type() == mlt_service_transition_type) {
                 Mlt::Service newService(clipInfo->producer);
                 while (newService.is_valid()) {
-                    if (newService.type() == mlt_service_transition_type &&
-                            QString(oldService.get("mlt_service")) == QString(newService.get("mlt_service"))) {
+                    if (newService.type() == mlt_service_transition_type
+                        && QString(oldService.get("mlt_service"))
+                               == QString(newService.get("mlt_service"))) {
                         newService.inherit(oldService);
                         break;
                     }
@@ -1367,11 +1460,17 @@ void RemoveTransitionByTrimInCommand::undo()
             delete tmpOldService;
         }
         m_model.notifyClipIn(m_trackIndex, m_clipIndex + 1);
-    } else LOG_WARNING() << "invalid clip index" << m_clipIndex;
+    } else
+        LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
 RemoveTransitionByTrimOutCommand::RemoveTransitionByTrimOutCommand(MultitrackModel &model,
-                                                                   int trackIndex, int clipIndex, int delta, QString xml, bool redo, QUndoCommand *parent)
+                                                                   int trackIndex,
+                                                                   int clipIndex,
+                                                                   int delta,
+                                                                   QString xml,
+                                                                   bool redo,
+                                                                   QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -1400,17 +1499,21 @@ void RemoveTransitionByTrimOutCommand::redo()
 void RemoveTransitionByTrimOutCommand::undo()
 {
     if (m_clipIndex > 0) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta"
+                    << m_delta;
         m_model.addTransitionByTrimIn(m_trackIndex, m_clipIndex, m_delta);
         // Copy properties from old transition to new transition
         auto clipInfo = m_model.getClipInfo(m_trackIndex, m_clipIndex);
-        Mlt::Service oldService = Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+        Mlt::Service oldService = Mlt::Producer(MLT.profile(),
+                                                "xml-string",
+                                                m_xml.toUtf8().constData());
         while (oldService.is_valid()) {
             if (oldService.type() == mlt_service_transition_type) {
                 Mlt::Service newService(clipInfo->producer);
                 while (newService.is_valid()) {
-                    if (newService.type() == mlt_service_transition_type &&
-                            QString(oldService.get("mlt_service")) == QString(newService.get("mlt_service"))) {
+                    if (newService.type() == mlt_service_transition_type
+                        && QString(oldService.get("mlt_service"))
+                               == QString(newService.get("mlt_service"))) {
                         newService.inherit(oldService);
                         break;
                     }
@@ -1424,11 +1527,17 @@ void RemoveTransitionByTrimOutCommand::undo()
             delete tmpOldService;
         }
         m_model.notifyClipOut(m_trackIndex, m_clipIndex - 1);
-    } else LOG_WARNING() << "invalid clip index" << m_clipIndex;
+    } else
+        LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
-AddTransitionByTrimOutCommand::AddTransitionByTrimOutCommand(MultitrackModel &model, int trackIndex,
-                                                             int clipIndex, int duration, int trimDelta, bool redo, QUndoCommand *parent)
+AddTransitionByTrimOutCommand::AddTransitionByTrimOutCommand(MultitrackModel &model,
+                                                             int trackIndex,
+                                                             int clipIndex,
+                                                             int duration,
+                                                             int trimDelta,
+                                                             bool redo,
+                                                             QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -1444,8 +1553,8 @@ AddTransitionByTrimOutCommand::AddTransitionByTrimOutCommand(MultitrackModel &mo
 void AddTransitionByTrimOutCommand::redo()
 {
     if (m_redo) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta
-                    << "duration" << m_duration;
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta"
+                    << m_trimDelta << "duration" << m_duration;
         if (m_trimDelta)
             m_model.trimClipOut(m_trackIndex, m_clipIndex, m_trimDelta, false, false);
         m_model.addTransitionByTrimOut(m_trackIndex, m_clipIndex, m_duration);
@@ -1459,16 +1568,18 @@ void AddTransitionByTrimOutCommand::redo()
 void AddTransitionByTrimOutCommand::undo()
 {
     if (m_clipIndex + 2 < m_model.rowCount(m_model.index(m_trackIndex))) {
-        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta;
+        LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta"
+                    << m_trimDelta;
         m_model.removeTransitionByTrimOut(m_trackIndex, m_clipIndex, -m_trimDelta);
         m_notify = true;
-    } else LOG_WARNING() << "invalid clip index" << m_clipIndex;
+    } else
+        LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
 
 bool AddTransitionByTrimOutCommand::mergeWith(const QUndoCommand *other)
 {
-    const AddTransitionByTrimOutCommand *that = static_cast<const AddTransitionByTrimOutCommand *>
-                                                (other);
+    const AddTransitionByTrimOutCommand *that = static_cast<const AddTransitionByTrimOutCommand *>(
+        other);
     if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
         return false;
     return true;
@@ -1512,7 +1623,9 @@ void AddTrackCommand::undo()
     m_model.removeTrack(m_trackIndex);
 }
 
-InsertTrackCommand::InsertTrackCommand(MultitrackModel &model, int trackIndex, TrackType trackType,
+InsertTrackCommand::InsertTrackCommand(MultitrackModel &model,
+                                       int trackIndex,
+                                       TrackType trackType,
                                        QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -1520,8 +1633,8 @@ InsertTrackCommand::InsertTrackCommand(MultitrackModel &model, int trackIndex, T
     , m_trackType(trackType)
 {
     if (trackType != AudioTrackType && trackType != VideoTrackType) {
-        m_trackType = model.trackList().size() > 0 ? model.trackList().at(m_trackIndex).type :
-                      VideoTrackType;
+        m_trackType = model.trackList().size() > 0 ? model.trackList().at(m_trackIndex).type
+                                                   : VideoTrackType;
     }
     if (m_trackType == AudioTrackType)
         setText(QObject::tr("Insert audio track"));
@@ -1531,8 +1644,8 @@ InsertTrackCommand::InsertTrackCommand(MultitrackModel &model, int trackIndex, T
 
 void InsertTrackCommand::redo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "type" << (m_trackType == AudioTrackType ? "audio" :
-                                                              "video");
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "type"
+                << (m_trackType == AudioTrackType ? "audio" : "video");
     m_model.insertTrack(m_trackIndex, m_trackType);
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
     std::unique_ptr<Mlt::Multitrack> multitrack(m_model.tractor()->multitrack());
@@ -1550,8 +1663,8 @@ void InsertTrackCommand::redo()
 
 void InsertTrackCommand::undo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "type" << (m_trackType == AudioTrackType ? "audio" :
-                                                              "video");
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "type"
+                << (m_trackType == AudioTrackType ? "audio" : "video");
     m_model.removeTrack(m_trackIndex);
 }
 
@@ -1586,8 +1699,8 @@ RemoveTrackCommand::RemoveTrackCommand(MultitrackModel &model, int trackIndex, Q
 
 void RemoveTrackCommand::redo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "type" << (m_trackType == AudioTrackType ? "audio" :
-                                                              "video");
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "type"
+                << (m_trackType == AudioTrackType ? "audio" : "video");
     m_undoHelper.recordBeforeState();
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
@@ -1603,8 +1716,8 @@ void RemoveTrackCommand::redo()
 
 void RemoveTrackCommand::undo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "type" << (m_trackType == AudioTrackType ? "audio" :
-                                                              "video");
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "type"
+                << (m_trackType == AudioTrackType ? "audio" : "video");
     m_model.insertTrack(m_trackIndex, m_trackType);
     m_model.setTrackName(m_trackIndex, m_trackName);
 
@@ -1615,15 +1728,19 @@ void RemoveTrackCommand::undo()
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(mlt_index));
     Mlt::Playlist playlist(*producer);
-    if (playlist.is_valid() && m_filtersProducer &&  m_filtersProducer->is_valid()) {
+    if (playlist.is_valid() && m_filtersProducer && m_filtersProducer->is_valid()) {
         MLT.setUuid(playlist, m_uuid);
         MLT.copyFilters(*m_filtersProducer, playlist);
         QModelIndex modelIndex = m_model.index(m_trackIndex);
-        emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::IsFilteredRole);
+        emit m_model.dataChanged(modelIndex,
+                                 modelIndex,
+                                 QVector<int>() << MultitrackModel::IsFilteredRole);
     }
 }
 
-MoveTrackCommand::MoveTrackCommand(MultitrackModel &model, int fromTrackIndex, int toTrackIndex,
+MoveTrackCommand::MoveTrackCommand(MultitrackModel &model,
+                                   int fromTrackIndex,
+                                   int toTrackIndex,
                                    QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -1649,7 +1766,9 @@ void MoveTrackCommand::undo()
 }
 
 ChangeBlendModeCommand::ChangeBlendModeCommand(Mlt::Transition &transition,
-                                               const QString &propertyName, const QString &mode, QUndoCommand *parent)
+                                               const QString &propertyName,
+                                               const QString &mode,
+                                               QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_transition(transition)
     , m_propertyName(propertyName)
@@ -1685,8 +1804,8 @@ void ChangeBlendModeCommand::undo()
     emit modeChanged(m_oldMode);
 }
 
-UpdateCommand::UpdateCommand(TimelineDock &timeline, int trackIndex, int clipIndex,
-                             int position, QUndoCommand *parent)
+UpdateCommand::UpdateCommand(
+    TimelineDock &timeline, int trackIndex, int clipIndex, int position, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_timeline(timeline)
     , m_trackIndex(trackIndex)
@@ -1726,8 +1845,8 @@ void UpdateCommand::setRippleAllTracks(bool ripple)
 
 void UpdateCommand::redo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
-                m_position;
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position"
+                << m_position;
     if (!m_isFirstRedo)
         m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xmlAfter.toUtf8().constData());
@@ -1743,15 +1862,19 @@ void UpdateCommand::redo()
 
 void UpdateCommand::undo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
-                m_position;
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position"
+                << m_position;
     m_undoHelper.undoChanges();
     m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
     m_isFirstRedo = false;
 }
 
-DetachAudioCommand::DetachAudioCommand(TimelineDock &timeline, int trackIndex, int clipIndex,
-                                       int position, const QString &xml, QUndoCommand *parent)
+DetachAudioCommand::DetachAudioCommand(TimelineDock &timeline,
+                                       int trackIndex,
+                                       int clipIndex,
+                                       int position,
+                                       const QString &xml,
+                                       QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_timeline(timeline)
     , m_trackIndex(qBound(0, trackIndex, qMax(timeline.model()->rowCount() - 1, 0)))
@@ -1767,8 +1890,8 @@ DetachAudioCommand::DetachAudioCommand(TimelineDock &timeline, int trackIndex, i
 
 void DetachAudioCommand::redo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
-                m_position;
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position"
+                << m_position;
     Mlt::Producer audioClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     Mlt::Producer videoClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     int groupNumber = -1;
@@ -1779,7 +1902,7 @@ void DetachAudioCommand::redo()
         {
             auto videoClipInfo = model->getClipInfo(m_trackIndex, m_clipIndex);
             if (videoClipInfo && videoClipInfo->cut
-                    && videoClipInfo->cut->property_exists(kShotcutGroupProperty)) {
+                && videoClipInfo->cut->property_exists(kShotcutGroupProperty)) {
                 groupNumber = videoClipInfo->cut->get_int(kShotcutGroupProperty);
             }
         }
@@ -1791,7 +1914,7 @@ void DetachAudioCommand::redo()
         for (int i = 0; i < videoClip.filter_count(); i++) {
             Mlt::Filter *filter = videoClip.filter(i);
             if (filter && filter->is_valid() && !filter->get_int("_loader")
-                    && !filter->get_int(kShotcutHiddenProperty)) {
+                && !filter->get_int(kShotcutHiddenProperty)) {
                 QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
                 if (newMeta && newMeta->isAudio()) {
                     videoClip.detach(*filter);
@@ -1808,7 +1931,7 @@ void DetachAudioCommand::redo()
         for (int i = 0; i < audioClip.filter_count(); i++) {
             Mlt::Filter *filter = audioClip.filter(i);
             if (filter && filter->is_valid() && !filter->get_int("_loader")
-                    && !filter->get_int(kShotcutHiddenProperty)) {
+                && !filter->get_int(kShotcutHiddenProperty)) {
                 QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
                 if (newMeta && !newMeta->isAudio()) {
                     audioClip.detach(*filter);
@@ -1821,7 +1944,8 @@ void DetachAudioCommand::redo()
         // Add an audio track if needed.
         int n = model->trackList().size();
         for (int i = 0; i < n; i++) {
-            QScopedPointer<Mlt::Producer> track(model->tractor()->track(model->trackList()[i].mlt_index));
+            QScopedPointer<Mlt::Producer> track(
+                model->tractor()->track(model->trackList()[i].mlt_index));
             if (!track->is_valid())
                 continue;
             if (track->get(kAudioTrackProperty)) {
@@ -1829,7 +1953,8 @@ void DetachAudioCommand::redo()
                 int out = videoClip.get_playtime() - 1;
                 // If the audio track is blank in the target region.
                 if (playlist.is_blank_at(m_position) && playlist.is_blank_at(m_position + out)
-                        && playlist.get_clip_index_at(m_position) == playlist.get_clip_index_at(m_position + out)) {
+                    && playlist.get_clip_index_at(m_position)
+                           == playlist.get_clip_index_at(m_position + out)) {
                     // Save the target track index.
                     m_targetTrackIndex = i;
                     break;
@@ -1870,8 +1995,10 @@ void DetachAudioCommand::redo()
             }
             m_undoHelper.recordAfterState();
             QModelIndex modelIndex = model->makeIndex(m_trackIndex, m_clipIndex);
-            emit model->dataChanged(modelIndex, modelIndex,
-                                    QVector<int>() << MultitrackModel::AudioIndexRole << MultitrackModel::GroupRole);
+            emit model->dataChanged(modelIndex,
+                                    modelIndex,
+                                    QVector<int>() << MultitrackModel::AudioIndexRole
+                                                   << MultitrackModel::GroupRole);
             m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
         }
     }
@@ -1879,8 +2006,8 @@ void DetachAudioCommand::redo()
 
 void DetachAudioCommand::undo()
 {
-    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
-                m_position;
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position"
+                << m_position;
     auto model = m_timeline.model();
     m_undoHelper.undoChanges();
     if (m_trackAdded) {
@@ -1891,14 +2018,16 @@ void DetachAudioCommand::undo()
     Mlt::Producer originalClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     model->overwrite(m_trackIndex, originalClip, m_position, true);
     QModelIndex modelIndex = model->makeIndex(m_trackIndex, m_clipIndex);
-    emit model->dataChanged(modelIndex, modelIndex,
-                            QVector<int>() << MultitrackModel::AudioIndexRole << MultitrackModel::AudioLevelsRole <<
-                            MultitrackModel::GroupRole);
+    emit model->dataChanged(modelIndex,
+                            modelIndex,
+                            QVector<int>()
+                                << MultitrackModel::AudioIndexRole
+                                << MultitrackModel::AudioLevelsRole << MultitrackModel::GroupRole);
     m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
 }
 
-ReplaceCommand::ReplaceCommand(MultitrackModel &model, int trackIndex, int clipIndex,
-                               const QString &xml, QUndoCommand *parent)
+ReplaceCommand::ReplaceCommand(
+    MultitrackModel &model, int trackIndex, int clipIndex, const QString &xml, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
@@ -1951,7 +2080,8 @@ void AlignClipsCommand::addAlignment(QUuid uuid, int offset, double speed)
 void AlignClipsCommand::redo()
 {
     LOG_DEBUG() << "Alignment Clips:" << m_alignments.size();
-    struct ClipItem {
+    struct ClipItem
+    {
         Mlt::Producer *clip;
         int track;
         int start;
@@ -2009,7 +2139,8 @@ void AlignClipsCommand::undo()
     m_undoHelper.undoChanges();
 }
 
-ApplyFiltersCommand::ApplyFiltersCommand(MultitrackModel &model, const QString &filterProducerXml,
+ApplyFiltersCommand::ApplyFiltersCommand(MultitrackModel &model,
+                                         const QString &filterProducerXml,
                                          QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -2021,7 +2152,7 @@ ApplyFiltersCommand::ApplyFiltersCommand(MultitrackModel &model, const QString &
 void ApplyFiltersCommand::addClip(int trackIndex, int clipIndex)
 {
     auto clipInfo = m_model.getClipInfo(trackIndex, clipIndex);
-    if (clipInfo && clipInfo->producer && !clipInfo->cut->is_blank() ) {
+    if (clipInfo && clipInfo->producer && !clipInfo->cut->is_blank()) {
         ClipPosition position(trackIndex, clipIndex);
         m_prevFilters.insert(position, MLT.XML(clipInfo->producer));
     }
@@ -2033,7 +2164,7 @@ void ApplyFiltersCommand::redo()
 
     Mlt::Producer filtersProducer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (!filtersProducer.is_valid() || filtersProducer.filter_count() < 1
-            || !filtersProducer.get_int(kShotcutFiltersClipboard)) {
+        || !filtersProducer.get_int(kShotcutFiltersClipboard)) {
         LOG_ERROR() << "Invalid filters producer";
         return;
     }
@@ -2043,7 +2174,7 @@ void ApplyFiltersCommand::redo()
     for (int i = 0; i < filtersProducer.filter_count(); i++) {
         Mlt::Filter *filter = filtersProducer.filter(i);
         if (filter && filter->is_valid() && !filter->get_int("_loader")
-                && !filter->get_int(kShotcutHiddenProperty)) {
+            && !filter->get_int(kShotcutHiddenProperty)) {
             m_applyMeta.append(MAIN.filterController()->metadataForService(filter));
         }
         delete filter;
@@ -2056,7 +2187,7 @@ void ApplyFiltersCommand::redo()
             for (int i = 0; i < clipInfo->producer->filter_count(); i++) {
                 Mlt::Filter *filter = clipInfo->producer->filter(i);
                 if (filter && filter->is_valid() && !filter->get_int("_loader")
-                        && !filter->get_int(kShotcutHiddenProperty)) {
+                    && !filter->get_int(kShotcutHiddenProperty)) {
                     QmlMetadata *currentMeta = MAIN.filterController()->metadataForService(filter);
                     for (int j = 0; j < m_applyMeta.size(); j++) {
                         if (m_applyMeta[j] == currentMeta) {
@@ -2088,14 +2219,15 @@ void ApplyFiltersCommand::undo()
             for (int i = 0; i < clipInfo->producer->filter_count(); i++) {
                 Mlt::Filter *filter = clipInfo->producer->filter(i);
                 if (filter && filter->is_valid() && !filter->get_int("_loader")
-                        && !filter->get_int(kShotcutHiddenProperty)) {
+                    && !filter->get_int(kShotcutHiddenProperty)) {
                     clipInfo->producer->detach(*filter);
                     i--;
                 }
                 delete filter;
             }
             // Copy the previous filters
-            Mlt::Producer previousProducer(MLT.profile(), "xml-string",
+            Mlt::Producer previousProducer(MLT.profile(),
+                                           "xml-string",
                                            m_prevFilters[clip].toUtf8().constData());
             if (previousProducer.is_valid()) {
                 // Apply the previous filters
@@ -2111,6 +2243,6 @@ void ApplyFiltersCommand::undo()
     }
 }
 
-} // namespace
+} // namespace Timeline
 
 #include "moc_timelinecommands.cpp"

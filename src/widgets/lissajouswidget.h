@@ -18,8 +18,9 @@
 #ifndef LISSAJOUSWIDGET_H
 #define LISSAJOUSWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Mlt {
 class Producer;

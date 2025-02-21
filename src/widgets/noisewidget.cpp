@@ -16,14 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "shotcut_mlt_properties.h"
 #include "noisewidget.h"
 #include "ui_noisewidget.h"
+
+#include "shotcut_mlt_properties.h"
 #include "util.h"
 
-NoiseWidget::NoiseWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::NoiseWidget)
+NoiseWidget::NoiseWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::NoiseWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);

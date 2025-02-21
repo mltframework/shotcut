@@ -17,19 +17,21 @@
 
 #include "trackpropertieswidget.h"
 #include "ui_trackpropertieswidget.h"
-#include "shotcut_mlt_properties.h"
+
 #include "commands/timelinecommands.h"
 #include "mainwindow.h"
+#include "shotcut_mlt_properties.h"
 #include "util.h"
+
 #include <Mlt.h>
 #include <QScopedPointer>
 
 static const char *BLEND_PROPERTY_CAIROBLEND = "1";
 
-TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::TrackPropertiesWidget),
-    m_track(track)
+TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track, QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::TrackPropertiesWidget)
+    , m_track(track)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);
@@ -123,8 +125,11 @@ void TrackPropertiesWidget::on_blendModeCombo_currentIndexChanged(int index)
         if (!transition)
             transition.reset(getTransition("movit.overlay"));
         if (transition && transition->is_valid()) {
-            Timeline::ChangeBlendModeCommand *command = new Timeline::ChangeBlendModeCommand(
-                *transition, BLEND_PROPERTY_CAIROBLEND, ui->blendModeCombo->itemData(index).toString());
+            Timeline::ChangeBlendModeCommand *command
+                = new Timeline::ChangeBlendModeCommand(*transition,
+                                                       BLEND_PROPERTY_CAIROBLEND,
+                                                       ui->blendModeCombo->itemData(index)
+                                                           .toString());
             connect(command, SIGNAL(modeChanged(QString &)), SLOT(onModeChanged(QString &)));
             MAIN.undoStack()->push(command);
         }

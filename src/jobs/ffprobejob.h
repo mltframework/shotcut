@@ -19,6 +19,7 @@
 #define FFPROBEJOB_H
 
 #include "abstractjob.h"
+
 #include <QStringList>
 
 class FfprobeJob : public AbstractJob
