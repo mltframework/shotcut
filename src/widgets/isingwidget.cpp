@@ -15,18 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "shotcut_mlt_properties.h"
 #include "isingwidget.h"
 #include "ui_isingwidget.h"
+
+#include "shotcut_mlt_properties.h"
 #include "util.h"
 
 static const char *kParamTemperature = "0";
 static const char *kParamBorderGrowth = "1";
 static const char *kParamSpontaneous = "2";
 
-IsingWidget::IsingWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::IsingWidget)
+IsingWidget::IsingWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::IsingWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);

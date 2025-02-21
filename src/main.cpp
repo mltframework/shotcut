@@ -15,20 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtWidgets>
-#include <QtGlobal>
+#include "ConsoleAppender.h"
+#include "FileAppender.h"
+#include "Logger.h"
 #include "mainwindow.h"
 #include "settings.h"
-#include <Logger.h>
-#include <FileAppender.h>
-#include <ConsoleAppender.h>
-#include <QSysInfo>
-#include <QProcess>
-#include <QCommandLineParser>
+
 #include <framework/mlt_log.h>
+#include <QCommandLineParser>
 #include <QFile>
+#include <QProcess>
 #include <QQuickStyle>
 #include <QQuickWindow>
+#include <QSysInfo>
+#include <QtGlobal>
+#include <QtWidgets>
 
 #ifdef Q_OS_MAC
 #include "macos.h"
@@ -37,13 +38,12 @@
 #ifdef Q_OS_WIN
 #include <windows.h>
 #if defined(QT_DEBUG) && !defined(__ARM_ARCH)
-#   include <exchndl.h>
+#include <exchndl.h>
 #endif
-extern "C"
-{
-    // Inform the driver we could make use of the discrete gpu
-    __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
-    __declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
+extern "C" {
+// Inform the driver we could make use of the discrete gpu
+__declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
+__declspec(dllexport) DWORD AmdPowerXpressRequestHighPerformance = 0x00000001;
 }
 #endif
 
@@ -81,7 +81,7 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
         char *service_name = mlt_properties_get(properties, "mlt_service");
         char *resource = mlt_properties_get(properties, "resource");
         if (!resource || resource[0] != '<' || resource[strlen(resource) - 1] != '>')
-            mlt_type = mlt_properties_get(properties, "mlt_type" );
+            mlt_type = mlt_properties_get(properties, "mlt_type");
         if (service_name)
             message = QStringLiteral("[%1 %2] ").arg(mlt_type, service_name);
         else
@@ -94,14 +94,18 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
         message = QString::vasprintf(format, args);
         message.replace('\n', "");
     }
-    cuteLogger->write(cuteLoggerLevel, __FILE__, __LINE__, "MLT",
-                      cuteLogger->defaultCategory().toLatin1().constData(), message);
+    cuteLogger->write(cuteLoggerLevel,
+                      __FILE__,
+                      __LINE__,
+                      "MLT",
+                      cuteLogger->defaultCategory().toLatin1().constData(),
+                      message);
 }
 
 class Application : public QApplication
 {
 public:
-    MainWindow *mainWindow {nullptr};
+    MainWindow *mainWindow{nullptr};
     QTranslator qtTranslator;
     QTranslator qtBaseTranslator;
     QTranslator shotcutTranslator;
@@ -145,54 +149,71 @@ public:
         parser.addHelpOption();
         parser.addVersionOption();
 #ifndef Q_OS_WIN
-        QCommandLineOption fullscreenOption("fullscreen",
-                                            QCoreApplication::translate("main", "Fill the screen with the Shotcut window."));
+        QCommandLineOption fullscreenOption(
+            "fullscreen",
+            QCoreApplication::translate("main", "Fill the screen with the Shotcut window."));
         parser.addOption(fullscreenOption);
 #endif
-        QCommandLineOption noupgradeOption("noupgrade",
-                                           QCoreApplication::translate("main", "Hide upgrade prompt and menu item."));
+        QCommandLineOption noupgradeOption(
+            "noupgrade", QCoreApplication::translate("main", "Hide upgrade prompt and menu item."));
         parser.addOption(noupgradeOption);
-        QCommandLineOption glaxnimateOption("glaxnimate",
-                                            QCoreApplication::translate("main", "Run Glaxnimate instead of Shotcut."));
+        QCommandLineOption
+            glaxnimateOption("glaxnimate",
+                             QCoreApplication::translate("main",
+                                                         "Run Glaxnimate instead of Shotcut."));
         parser.addOption(glaxnimateOption);
         QCommandLineOption gpuOption("gpu",
                                      QCoreApplication::translate("main", "Use GPU processing."));
         parser.addOption(gpuOption);
         QCommandLineOption clearRecentOption("clear-recent",
-                                             QCoreApplication::translate("main", "Clear Recent on Exit"));
+                                             QCoreApplication::translate("main",
+                                                                         "Clear Recent on Exit"));
         parser.addOption(clearRecentOption);
-        QCommandLineOption appDataOption("appdata",
-                                         QCoreApplication::translate("main", "The directory for app configuration and data."),
-                                         QCoreApplication::translate("main", "directory"));
+        QCommandLineOption appDataOption(
+            "appdata",
+            QCoreApplication::translate("main", "The directory for app configuration and data."),
+            QCoreApplication::translate("main", "directory"));
         parser.addOption(appDataOption);
-        QCommandLineOption scaleOption("QT_SCALE_FACTOR",
-                                       QCoreApplication::translate("main", "The scale factor for a high-DPI screen"),
-                                       QCoreApplication::translate("main", "number"));
+        QCommandLineOption
+            scaleOption("QT_SCALE_FACTOR",
+                        QCoreApplication::translate("main",
+                                                    "The scale factor for a high-DPI screen"),
+                        QCoreApplication::translate("main", "number"));
         parser.addOption(scaleOption);
-        scaleOption = QCommandLineOption("QT_SCREEN_SCALE_FACTORS",
-                                         QCoreApplication::translate("main", "A semicolon-separated list of scale factors for each screen"),
-                                         QCoreApplication::translate("main", "list"));
+        scaleOption
+            = QCommandLineOption("QT_SCREEN_SCALE_FACTORS",
+                                 QCoreApplication::translate(
+                                     "main",
+                                     "A semicolon-separated list of scale factors for each screen"),
+                                 QCoreApplication::translate("main", "list"));
         parser.addOption(scaleOption);
-        QCommandLineOption scalePolicyOption("QT_SCALE_FACTOR_ROUNDING_POLICY",
-                                             QCoreApplication::translate("main", "How to handle a fractional display scale: %1")
-                                             .arg("Round, Ceil, Floor, RoundPreferFloor, PassThrough"),
-                                             QCoreApplication::translate("main", "string"), "PassThrough");
+        QCommandLineOption scalePolicyOption(
+            "QT_SCALE_FACTOR_ROUNDING_POLICY",
+            QCoreApplication::translate("main", "How to handle a fractional display scale: %1")
+                .arg("Round, Ceil, Floor, RoundPreferFloor, PassThrough"),
+            QCoreApplication::translate("main", "string"),
+            "PassThrough");
         parser.addOption(scalePolicyOption);
 #if defined(Q_OS_WIN)
-        QCommandLineOption sdlAudioDriverOption("SDL_AUDIODRIVER",
-                                                QCoreApplication::translate("main", "Which operating system audio API to use: %1")
-                                                .arg("directsound, wasapi, winmm"),
-                                                QCoreApplication::translate("main", "string"), "wasapi");
+        QCommandLineOption sdlAudioDriverOption(
+            "SDL_AUDIODRIVER",
+            QCoreApplication::translate("main", "Which operating system audio API to use: %1")
+                .arg("directsound, wasapi, winmm"),
+            QCoreApplication::translate("main", "string"),
+            "wasapi");
         parser.addOption(sdlAudioDriverOption);
 #elif defined(Q_OS_LINUX)
-        QCommandLineOption sdlAudioDriverOption("SDL_AUDIODRIVER",
-                                                QCoreApplication::translate("main", "Which operating system audio API to use: %1")
-                                                .arg("alsa, arts, dsp, esd, jack, pipewire, pulseaudio"),
-                                                QCoreApplication::translate("main", "string"), "pulseaudio");
+        QCommandLineOption sdlAudioDriverOption(
+            "SDL_AUDIODRIVER",
+            QCoreApplication::translate("main", "Which operating system audio API to use: %1")
+                .arg("alsa, arts, dsp, esd, jack, pipewire, pulseaudio"),
+            QCoreApplication::translate("main", "string"),
+            "pulseaudio");
         parser.addOption(sdlAudioDriverOption);
 #endif
-        parser.addPositionalArgument("[FILE]...",
-                                     QCoreApplication::translate("main", "Zero or more files or folders to open"));
+        parser.addPositionalArgument(
+            "[FILE]...",
+            QCoreApplication::translate("main", "Zero or more files or folders to open"));
         parser.process(arguments());
         if (parser.isSet(glaxnimateOption)) {
             QStringList args = arguments();
@@ -222,7 +243,8 @@ public:
 
         // Startup logging.
         dir.setPath(Settings.appDataLocation());
-        if (!dir.exists()) dir.mkpath(dir.path());
+        if (!dir.exists())
+            dir.mkpath(dir.path());
         const auto logFileName = dir.filePath("shotcut-log.txt");
         if (QFile::exists(logFileName)) {
             const auto previousLogName = dir.filePath("shotcut-log.bak");
@@ -301,7 +323,8 @@ protected:
             QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
             resourceArg << openEvent->file();
             return true;
-        } else return QApplication::event(event);
+        } else
+            return QApplication::event(event);
     }
 };
 
@@ -314,7 +337,8 @@ int main(int argc, char **argv)
     ::qputenv("QT_LOGGING_RULES", "*.warning=false");
 #endif
     for (int i = 1; i + 1 < argc; i++) {
-        if (!::qstrcmp("--QT_SCALE_FACTOR", argv[i]) || !::qstrcmp("--QT_SCREEN_SCALE_FACTORS", argv[i])) {
+        if (!::qstrcmp("--QT_SCALE_FACTOR", argv[i])
+            || !::qstrcmp("--QT_SCREEN_SCALE_FACTORS", argv[i])) {
             QByteArray value(argv[i + 1]);
             ::qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "0");
             ::qputenv(value.contains(';') ? "QT_SCREEN_SCALE_FACTORS" : "QT_SCALE_FACTOR", value);
@@ -362,7 +386,8 @@ int main(int argc, char **argv)
     if (QProcessEnvironment::systemEnvironment().value(MLT_LC_NAME).isEmpty()) {
         qputenv(MLT_LC_NAME, QLocale().name().toUtf8());
 
-        QLocale localeByName(QLocale(QLocale().language(), QLocale().script(), QLocale().territory()));
+        QLocale localeByName(
+            QLocale(QLocale().language(), QLocale().script(), QLocale().territory()));
         if (QLocale().decimalPoint() != localeByName.decimalPoint()) {
             // If region's numeric format does not match the language's, then we run
             // into problems because we told MLT and libc to use a different numeric
@@ -398,9 +423,10 @@ int main(int argc, char **argv)
 #if defined(Q_OS_WIN)
         LOG_INFO() << "Windows version" << QSysInfo::productVersion();
 #elif defined(Q_OS_MAC)
-        LOG_INFO() << "macOS version" << QSysInfo::productVersion();
+    LOG_INFO() << "macOS version" << QSysInfo::productVersion();
 #else
-        LOG_INFO() << "Linux version" << QSysInfo::productVersion();;
+    LOG_INFO() << "Linux version" << QSysInfo::productVersion();
+    ;
 #endif
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
@@ -412,11 +438,13 @@ int main(int argc, char **argv)
                            Qt::AlignRight | Qt::AlignVCenter);
         splash.show();
         a.processEvents();
-        auto dir = QDir(QStandardPaths::standardLocations(QStandardPaths::CacheLocation).constFirst());
+        auto dir = QDir(
+            QStandardPaths::standardLocations(QStandardPaths::CacheLocation).constFirst());
         if (dir.exists() && dir.cd("qmlcache")) {
             auto ls = dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot, QDir::Time);
             if (qMax(0, ls.size() - kMaxCacheCount) > 0) {
-                LOG_INFO() << "removing" << qMax(0, ls.size() - kMaxCacheCount) << "from" << dir.path();
+                LOG_INFO() << "removing" << qMax(0, ls.size() - kMaxCacheCount) << "from"
+                           << dir.path();
             }
             for (int i = kMaxCacheCount; i < ls.size(); i++) {
                 QString filePath = dir.filePath(ls[i]);
@@ -464,7 +492,8 @@ int main(int argc, char **argv)
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
             ::qputenv("LIBGL_ALWAYS_SOFTWARE",
                       Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()
-                      ? "1" : "0");
+                          ? "1"
+                          : "0");
 #endif
             QProcess *restart = new QProcess;
             QStringList args = a.arguments();

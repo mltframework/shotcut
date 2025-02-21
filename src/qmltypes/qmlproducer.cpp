@@ -16,20 +16,20 @@
  */
 
 #include "qmlproducer.h"
-#include "mltcontroller.h"
-#include "util.h"
-#include "models/audiolevelstask.h"
+
+#include "Logger.h"
 #include "mainwindow.h"
+#include "mltcontroller.h"
+#include "models/audiolevelstask.h"
 #include "qmltypes/qmlapplication.h"
-#include "widgets/glaxnimateproducerwidget.h"
 #include "settings.h"
-#include <Logger.h>
+#include "util.h"
+#include "widgets/glaxnimateproducerwidget.h"
 
 static const char *kWidthProperty = "meta.media.width";
 static const char *kHeightProperty = "meta.media.height";
 static const char *kAspectNumProperty = "meta.media.sample_aspect_num";
 static const char *kAspectDenProperty = "meta.media.sample_aspect_den";
-
 
 QmlProducer::QmlProducer(QObject *parent)
     : QObject(parent)
@@ -40,7 +40,8 @@ QmlProducer::QmlProducer(QObject *parent)
 
 int QmlProducer::in()
 {
-    if (!m_producer.is_valid()) return 0;
+    if (!m_producer.is_valid())
+        return 0;
     if (m_producer.get(kFilterInProperty))
         // Shots on the timeline will set the producer to the cut parent.
         // However, we want time-based filters such as fade in/out to use
@@ -52,7 +53,8 @@ int QmlProducer::in()
 
 int QmlProducer::out()
 {
-    if (!m_producer.is_valid()) return 0;
+    if (!m_producer.is_valid())
+        return 0;
     if (m_producer.get(kFilterOutProperty))
         // Shots on the timeline will set the producer to the cut parent.
         // However, we want time-based filters such as fade in/out to use
@@ -64,12 +66,13 @@ int QmlProducer::out()
 
 double QmlProducer::aspectRatio()
 {
-    if (!m_producer.is_valid()) return 1.0;
+    if (!m_producer.is_valid())
+        return 1.0;
     if (m_producer.get(kHeightProperty)) {
         double sar = 1.0;
         if (m_producer.get(kAspectDenProperty)) {
-            sar = m_producer.get_double(kAspectNumProperty) /
-                  m_producer.get_double(kAspectDenProperty);
+            sar = m_producer.get_double(kAspectNumProperty)
+                  / m_producer.get_double(kAspectDenProperty);
         }
         return sar * m_producer.get_double(kWidthProperty) / m_producer.get_double(kHeightProperty);
     }
@@ -78,7 +81,8 @@ double QmlProducer::aspectRatio()
 
 QString QmlProducer::resource()
 {
-    if (!m_producer.is_valid()) return QString();
+    if (!m_producer.is_valid())
+        return QString();
     QString result = QString::fromUtf8(m_producer.get("resource"));
     if (result == "<producer>" && m_producer.get("mlt_service"))
         result = QString::fromUtf8(m_producer.get("mlt_service"));
@@ -92,7 +96,8 @@ QString QmlProducer::name()
 
 QVariant QmlProducer::audioLevels()
 {
-    if (!m_producer.is_valid()) return QVariant();
+    if (!m_producer.is_valid())
+        return QVariant();
     if (m_producer.get_data(kAudioLevelsProperty))
         return QVariant::fromValue(*((QVariantList *) m_producer.get_data(kAudioLevelsProperty)));
     else
@@ -101,7 +106,8 @@ QVariant QmlProducer::audioLevels()
 
 int QmlProducer::fadeIn()
 {
-    if (!m_producer.is_valid()) return 0;
+    if (!m_producer.is_valid())
+        return 0;
     QScopedPointer<Mlt::Filter> filter(MLT.getFilter("fadeInVolume", &m_producer));
     if (!filter || !filter->is_valid())
         filter.reset(MLT.getFilter("fadeInBrightness", &m_producer));
@@ -112,7 +118,8 @@ int QmlProducer::fadeIn()
 
 int QmlProducer::fadeOut()
 {
-    if (!m_producer.is_valid()) return 0;
+    if (!m_producer.is_valid())
+        return 0;
     QScopedPointer<Mlt::Filter> filter(MLT.getFilter("fadeOutVolume", &m_producer));
     if (!filter || !filter->is_valid())
         filter.reset(MLT.getFilter("fadeOutBrightness", &m_producer));
@@ -124,7 +131,8 @@ int QmlProducer::fadeOut()
 double QmlProducer::speed()
 {
     double result = 1.0;
-    if (!m_producer.is_valid()) return result;
+    if (!m_producer.is_valid())
+        return result;
     if (m_producer.is_valid()) {
         if (!qstrcmp("timewarp", m_producer.get("mlt_service")))
             result = m_producer.get_double("warp_speed");
@@ -134,7 +142,8 @@ double QmlProducer::speed()
 
 void QmlProducer::setPosition(int position)
 {
-    if (!m_producer.is_valid()) return;
+    if (!m_producer.is_valid())
+        return;
     int length = duration();
     if (position < length) {
         if (MLT.isMultitrack())
@@ -194,8 +203,8 @@ double QmlProducer::displayAspectRatio()
     if (m_producer.is_valid() && m_producer.get(kHeightProperty)) {
         double sar = 1.0;
         if (m_producer.get(kAspectDenProperty)) {
-            sar = m_producer.get_double(kAspectNumProperty) /
-                  m_producer.get_double(kAspectDenProperty);
+            sar = m_producer.get_double(kAspectNumProperty)
+                  / m_producer.get_double(kAspectDenProperty);
         }
         return sar * m_producer.get_double(kWidthProperty) / m_producer.get_double(kHeightProperty);
     }
@@ -208,7 +217,8 @@ QString QmlProducer::get(QString name, int position)
         if (position < 0)
             return QString::fromUtf8(m_producer.get(name.toUtf8().constData()));
         else
-            return QString::fromUtf8(m_producer.anim_get(name.toUtf8().constData(), position, duration()));
+            return QString::fromUtf8(
+                m_producer.anim_get(name.toUtf8().constData(), position, duration()));
     } else {
         return QString();
     }
@@ -228,7 +238,8 @@ double QmlProducer::getDouble(QString name, int position)
 
 QRectF QmlProducer::getRect(QString name, int position)
 {
-    if (!m_producer.is_valid()) return QRectF();
+    if (!m_producer.is_valid())
+        return QRectF();
     QString s = QString::fromUtf8(m_producer.get(name.toUtf8().constData()));
     if (!s.isEmpty()) {
         mlt_rect rect;
@@ -263,4 +274,3 @@ void QmlProducer::setProducer(Mlt::Producer &producer)
     emit outChanged(0);
     emit lengthChanged();
 }
-

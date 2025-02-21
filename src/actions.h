@@ -29,7 +29,6 @@ class ShotcutActions : public QObject
     Q_OBJECT
 
 public:
-
     static const char *hardKeyProperty;
     static const char *displayProperty;
     static const char *defaultKey1Property;
@@ -37,11 +36,13 @@ public:
     static const char *defaultToolTipProperty;
 
     static ShotcutActions &singleton();
-    explicit ShotcutActions() : QObject() {}
+    explicit ShotcutActions()
+        : QObject()
+    {}
 
     void add(const QString &name, QAction *action, QString group = "");
     void loadFromMenu(QMenu *menu, const QString group = "");
-    QAction *operator [](const QString &key);
+    QAction *operator[](const QString &key);
     QList<QString> keys();
     void overrideShortcuts(const QString &key, QList<QKeySequence> shortcuts);
     void initializeShortcuts();

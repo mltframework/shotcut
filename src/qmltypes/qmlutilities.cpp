@@ -15,39 +15,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "qmltypes/qmlapplication.h"
+#include "qmltypes/qmlutilities.h"
+#include "models/keyframesmodel.h"
+#include "models/metadatamodel.h"
+#include "models/subtitlesmodel.h"
+#include "models/subtitlesselectionmodel.h"
 #include "qmltypes/colordialog.h"
 #include "qmltypes/colorpickeritem.h"
 #include "qmltypes/colorwheelitem.h"
 #include "qmltypes/filedialog.h"
 #include "qmltypes/fontdialog.h"
 #include "qmltypes/messagedialog.h"
+#include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmleditmenu.h"
-#include "qmltypes/qmlprofile.h"
-#include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlfile.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlmarkermenu.h"
 #include "qmltypes/qmlmetadata.h"
+#include "qmltypes/qmlprofile.h"
 #include "qmltypes/qmlrichtext.h"
 #include "qmltypes/qmlrichtextmenu.h"
 #include "qmltypes/timelineitems.h"
 #include "settings.h"
-#include "models/metadatamodel.h"
-#include "models/keyframesmodel.h"
-#include "models/subtitlesmodel.h"
-#include "models/subtitlesselectionmodel.h"
-#include <QCoreApplication>
-#include <QSysInfo>
-#include <QCursor>
-#include <QtQml>
-#include <QQmlEngine>
-#include <QQmlContext>
 
-QmlUtilities::QmlUtilities(QObject *parent) :
-    QObject(parent)
-{
-}
+#include <QCoreApplication>
+#include <QCursor>
+#include <QQmlContext>
+#include <QQmlEngine>
+#include <QSysInfo>
+#include <QtQml>
+
+QmlUtilities::QmlUtilities(QObject *parent)
+    : QObject(parent)
+{}
 
 void QmlUtilities::registerCommonTypes()
 {
@@ -62,9 +62,15 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<SubtitlesSelectionModel>("org.shotcut.qml", 1, 0, "SubtitlesSelectionModel");
     qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
     // MetadataModel is registered to access its MetadataFilter enum.
-    qmlRegisterUncreatableType<MetadataModel>("org.shotcut.qml", 1, 0, "MetadataModel",
+    qmlRegisterUncreatableType<MetadataModel>("org.shotcut.qml",
+                                              1,
+                                              0,
+                                              "MetadataModel",
                                               "You cannot create a MetadataModel from QML.");
-    qmlRegisterUncreatableType<ShotcutSettings>("org.shotcut.qml", 1, 0, "Settings",
+    qmlRegisterUncreatableType<ShotcutSettings>("org.shotcut.qml",
+                                                1,
+                                                0,
+                                                "Settings",
                                                 "You cannot create a Settings from QML.");
     qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
     qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");

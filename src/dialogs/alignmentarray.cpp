@@ -23,8 +23,8 @@
 #include <QMutexLocker>
 
 #include <algorithm>
-#include <cstring>
 #include <cmath>
+#include <cstring>
 #include <iostream>
 #include <numeric>
 
@@ -36,8 +36,7 @@ AlignmentArray::AlignmentArray()
     , m_backwardBuf(nullptr)
     , m_autocorrelationMax(std::numeric_limits<double>::min())
     , m_isTransformed(false)
-{
-}
+{}
 
 AlignmentArray::AlignmentArray(size_t minimum_size)
     : AlignmentArray()
@@ -84,9 +83,9 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int *offset)
     // Create a destination for the correlation values
     s_fftwPlanningMutex.lock();
     fftw_complex *buf = fftw_alloc_complex(m_actualComplexSize);
-    std::complex<double> *correlationBuf = reinterpret_cast<std::complex<double>*>(buf);
-    fftw_plan correlationPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD,
-                                                 FFTW_ESTIMATE);
+    std::complex<double> *correlationBuf = reinterpret_cast<std::complex<double> *>(buf);
+    fftw_plan correlationPlan
+        = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD, FFTW_ESTIMATE);
     std::fill(correlationBuf, correlationBuf + m_actualComplexSize, std::complex<double>(0));
     s_fftwPlanningMutex.unlock();
 
@@ -111,8 +110,8 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int *offset)
         }
     }
 
-    if ( 2 * *offset > (int)m_actualComplexSize ) {
-        *offset -= ((int)m_actualComplexSize);
+    if (2 * *offset > (int) m_actualComplexSize) {
+        *offset -= ((int) m_actualComplexSize);
     }
 
     s_fftwPlanningMutex.lock();
@@ -126,12 +125,14 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int *offset)
     return max / correlationCoefficient;
 }
 
-double AlignmentArray::calculateOffsetAndSpeed(AlignmentArray &from, double *speed, int *offset,
+double AlignmentArray::calculateOffsetAndSpeed(AlignmentArray &from,
+                                               double *speed,
+                                               int *offset,
                                                double speedRange)
 {
     // The minimum speed step results in one frame of stretch.
     // Do not try to compensate for more than 1 frame of speed difference.
-    double minimumSpeedStep = 1.0 / (double)from.m_values.size();
+    double minimumSpeedStep = 1.0 / (double) from.m_values.size();
     double speedStep = 0.0005;
     double bestSpeed = 1.0;
     int bestOffset = 0;
@@ -147,7 +148,7 @@ double AlignmentArray::calculateOffsetAndSpeed(AlignmentArray &from, double *spe
             }
             // Stretch the original values to simulate a speed compensation
             double factor = 1.0 / s;
-            size_t stretchedSize = std::floor((double)from.m_values.size() * factor);
+            size_t stretchedSize = std::floor((double) from.m_values.size() * factor);
             std::vector<double> strechedValues(stretchedSize);
             // Nearest neighbor interpolation
             for (size_t i = 0; i < stretchedSize; i++) {
@@ -181,30 +182,30 @@ void AlignmentArray::transform()
             fftw_complex *buf = nullptr;
             // Allocate the forward buffer and plan
             buf = fftw_alloc_complex(m_actualComplexSize);
-            m_forwardBuf = reinterpret_cast<std::complex<double>*>(buf);
-            m_forwardPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_FORWARD, FFTW_ESTIMATE);
+            m_forwardBuf = reinterpret_cast<std::complex<double> *>(buf);
+            m_forwardPlan
+                = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_FORWARD, FFTW_ESTIMATE);
             // Allocate the backward buffer and plan
             buf = fftw_alloc_complex(m_actualComplexSize);
-            m_backwardBuf = reinterpret_cast<std::complex<double>*>(buf);
-            m_backwardPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD, FFTW_ESTIMATE);
+            m_backwardBuf = reinterpret_cast<std::complex<double> *>(buf);
+            m_backwardPlan
+                = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD, FFTW_ESTIMATE);
             s_fftwPlanningMutex.unlock();
         }
         std::fill(m_forwardBuf, m_forwardBuf + m_actualComplexSize, std::complex<double>(0));
         std::fill(m_backwardBuf, m_backwardBuf + m_actualComplexSize, std::complex<double>(0));
         // Calculate the mean and standard deviation to be used to normalize the values.
         double accum = 0.0;
-        std::for_each (m_values.begin(), m_values.end(), [&](const double d) {
-            accum += d;
-        });
+        std::for_each(m_values.begin(), m_values.end(), [&](const double d) { accum += d; });
         double mean = accum / m_values.size();
         accum = 0;
-        std::for_each (m_values.begin(), m_values.end(), [&](const double d) {
+        std::for_each(m_values.begin(), m_values.end(), [&](const double d) {
             accum += (d - mean) * (d - mean);
         });
         double stddev = sqrt(accum / (m_values.size() - 1));
         // Fill the transform array
         // Normalize the input values: Subtract the mean and divide by the standard deviation.
-        for ( size_t i = 0; i < m_values.size(); i++ ) {
+        for (size_t i = 0; i < m_values.size(); i++) {
             m_forwardBuf[i] = (m_values[i] - mean) / stddev;
         }
         // Perform the forward DFT

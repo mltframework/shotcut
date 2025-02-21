@@ -24,8 +24,8 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 
-EditMarkerDialog::EditMarkerDialog(QWidget *parent, const QString &text, const QColor &color,
-                                   int start, int end, int maxEnd)
+EditMarkerDialog::EditMarkerDialog(
+    QWidget *parent, const QString &text, const QColor &color, int start, int end, int maxEnd)
     : QDialog(parent)
 {
     setWindowTitle(tr("Edit Marker"));

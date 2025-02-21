@@ -19,6 +19,7 @@
 #define BITRATEVIEWERJOB_H
 
 #include "ffprobejob.h"
+
 #include <QJsonArray>
 
 class BitrateViewerJob : public FfprobeJob
@@ -34,7 +35,7 @@ private slots:
 
 private:
     QString m_resource;
-    double m_fps {0.0};
+    double m_fps{0.0};
     QJsonArray m_data;
 };
 

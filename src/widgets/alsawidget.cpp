@@ -17,14 +17,15 @@
 
 #include "alsawidget.h"
 #include "ui_alsawidget.h"
-#include "mltcontroller.h"
-#include "util.h"
-#include "shotcut_mlt_properties.h"
-#include "settings.h"
 
-AlsaWidget::AlsaWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::AlsaWidget)
+#include "mltcontroller.h"
+#include "settings.h"
+#include "shotcut_mlt_properties.h"
+#include "util.h"
+
+AlsaWidget::AlsaWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::AlsaWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_2);

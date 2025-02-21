@@ -20,8 +20,8 @@
 
 #include "abstractproducerwidget.h"
 
-#include <QWidget>
 #include <MltService.h>
+#include <QWidget>
 
 class QLabel;
 

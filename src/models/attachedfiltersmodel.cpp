@@ -16,25 +16,25 @@
  */
 
 #include "attachedfiltersmodel.h"
-#include "mltcontroller.h"
-#include "mainwindow.h"
+
+#include "Logger.h"
 #include "commands/filtercommands.h"
 #include "controllers/filtercontroller.h"
+#include "mainwindow.h"
+#include "mltcontroller.h"
+#include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlmetadata.h"
+#include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
-#include "qmltypes/qmlapplication.h"
-#include "settings.h"
 
-#include <QApplication>
-#include <QMessageBox>
-#include <QTimer>
-#include <QGuiApplication>
-#include <QClipboard>
-
-#include <Logger.h>
 #include <MltChain.h>
 #include <MltLink.h>
+#include <QApplication>
+#include <QClipboard>
+#include <QGuiApplication>
+#include <QMessageBox>
+#include <QTimer>
 
 static int sortOrder(const QmlMetadata *meta)
 {
@@ -60,7 +60,8 @@ static int normalFilterCount(Mlt::Producer *producer)
     if (producer && producer->is_valid()) {
         for (int i = 0; i < producer->filter_count(); i++) {
             Mlt::Filter *filter = producer->filter(i);
-            if (filter->is_valid() && (filter->get_int("_loader") || filter->get_int(kShotcutHiddenProperty))) {
+            if (filter->is_valid()
+                && (filter->get_int("_loader") || filter->get_int(kShotcutHiddenProperty))) {
                 count++;
             } else {
                 i = producer->filter_count();
@@ -124,8 +125,7 @@ static int mltLinkIndex(Mlt::Producer *producer, int row)
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_dropRow(-1)
-{
-}
+{}
 
 Mlt::Service *AttachedFiltersModel::getService(int row) const
 {
@@ -177,7 +177,7 @@ bool AttachedFiltersModel::isProducerSelected() const
 bool AttachedFiltersModel::supportsLinks() const
 {
     if (!m_producer.isNull() && m_producer->is_valid()
-            && m_producer->type() == mlt_service_chain_type ) {
+        && m_producer->type() == mlt_service_chain_type) {
         return true;
     }
     return false;
@@ -216,10 +216,9 @@ Qt::ItemFlags AttachedFiltersModel::flags(const QModelIndex &index) const
 
 QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
 {
-    if (!m_producer || !m_producer->is_valid()
-            || index.row() >= m_metaList.size())
+    if (!m_producer || !m_producer->is_valid() || index.row() >= m_metaList.size())
         return QVariant();
-    switch (role ) {
+    switch (role) {
     case Qt::DisplayRole:
         return name(index.row());
     case Qt::CheckStateRole: {
@@ -229,8 +228,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
             result = Qt::Checked;
         delete service;
         return result;
-    }
-    break;
+    } break;
     case TypeDisplayRole: {
         QVariant result;
         const QmlMetadata *meta = m_metaList[index.row()];
@@ -249,8 +247,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
         const QmlMetadata *meta = m_metaList[index.row()];
         QVariant result = meta ? meta->type() : QmlMetadata::Filter;
         return result;
-    }
-    break;
+    } break;
     default:
         break;
     }
@@ -269,8 +266,8 @@ bool AttachedFiltersModel::setData(const QModelIndex &index, const QVariant &, i
         if (isSourceClip()) {
             doSetDisabled(*m_producer.data(), index.row(), !disabled);
         } else {
-            MAIN.undoStack()->push(new Filter::DisableCommand(*this, name(index.row()), index.row(),
-                                                              !disabled));
+            MAIN.undoStack()->push(
+                new Filter::DisableCommand(*this, name(index.row()), index.row(), !disabled));
         }
     } else {
         LOG_ERROR() << "Invalid filter index" << index.row();
@@ -363,8 +360,11 @@ bool AttachedFiltersModel::removeRows(int row, int, const QModelIndex &parent)
     }
 }
 
-bool AttachedFiltersModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
-                                    const QModelIndex &destinationParent, int destinationRow)
+bool AttachedFiltersModel::moveRows(const QModelIndex &sourceParent,
+                                    int sourceRow,
+                                    int count,
+                                    const QModelIndex &destinationParent,
+                                    int destinationRow)
 {
     if (!m_producer || !m_producer->is_valid() || sourceParent != destinationParent || count != 1) {
         return false;
@@ -377,7 +377,8 @@ bool AttachedFiltersModel::moveRows(const QModelIndex &sourceParent, int sourceR
     if (isSourceClip()) {
         doMoveService(*m_producer, sourceRow, destinationRow);
     } else {
-        MAIN.undoStack()->push(new Filter::MoveCommand(*this, name(sourceRow), sourceRow, destinationRow));
+        MAIN.undoStack()->push(
+            new Filter::MoveCommand(*this, name(sourceRow), sourceRow, destinationRow));
     }
 
     return true;
@@ -442,7 +443,8 @@ void AttachedFiltersModel::doMoveService(Mlt::Producer &producer, int fromRow, i
 int AttachedFiltersModel::add(QmlMetadata *meta)
 {
     int insertRow = -1;
-    if (!m_producer) return -1;
+    if (!m_producer)
+        return -1;
 
     if (!meta->allowMultiple()) {
         for (int i = 0; i < m_metaList.count(); i++) {
@@ -454,7 +456,7 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
         }
     }
     if (m_producer->is_valid() && mlt_service_tractor_type != m_producer->type()
-            && !QmlApplication::confirmOutputFilter()) {
+        && !QmlApplication::confirmOutputFilter()) {
         return -1;
     }
 
@@ -466,26 +468,30 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
             filter.set(kNewFilterProperty, 1);
             if (!meta->objectName().isEmpty())
                 filter.set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
-            filter.set_in_and_out(
-                m_producer->get(kFilterInProperty) ? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
-                m_producer->get(kFilterOutProperty) ? m_producer->get_int(kFilterOutProperty) :
-                m_producer->get_out());
+            filter.set_in_and_out(m_producer->get(kFilterInProperty)
+                                      ? m_producer->get_int(kFilterInProperty)
+                                      : m_producer->get_in(),
+                                  m_producer->get(kFilterOutProperty)
+                                      ? m_producer->get_int(kFilterOutProperty)
+                                      : m_producer->get_out());
             if (isSourceClip()) {
                 doAddService(*m_producer, filter, insertRow);
             } else {
-                MAIN.undoStack()->push(new Filter::AddCommand(*this, meta->name(), filter, insertRow));
+                MAIN.undoStack()->push(
+                    new Filter::AddCommand(*this, meta->name(), filter, insertRow));
             }
         }
-    }
-    break;
+    } break;
     case QmlMetadata::Link: {
         if (m_producer->type() != mlt_service_chain_type) {
             LOG_ERROR() << "Not a chain";
             return -1;
         }
         if (meta->seekReverse() && m_producer->get_int("meta.media.has_b_frames") != 0) {
-            emit requestConvert(tr("This file has B-frames, which is not supported by %1.").arg(meta->name()),
-                                false, true);
+            emit requestConvert(tr("This file has B-frames, which is not supported by %1.")
+                                    .arg(meta->name()),
+                                false,
+                                true);
             return -1;
         }
         Mlt::Link link(meta->mlt_service().toUtf8().constData());
@@ -494,18 +500,19 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
             link.set(kNewFilterProperty, 1);
             if (!meta->objectName().isEmpty())
                 link.set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
-            link.set_in_and_out(
-                m_producer->get(kFilterInProperty) ? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
-                m_producer->get(kFilterOutProperty) ? m_producer->get_int(kFilterOutProperty) :
-                m_producer->get_out());
+            link.set_in_and_out(m_producer->get(kFilterInProperty)
+                                    ? m_producer->get_int(kFilterInProperty)
+                                    : m_producer->get_in(),
+                                m_producer->get(kFilterOutProperty)
+                                    ? m_producer->get_int(kFilterOutProperty)
+                                    : m_producer->get_out());
             if (isSourceClip()) {
                 doAddService(*m_producer, link, insertRow);
             } else {
                 MAIN.undoStack()->push(new Filter::AddCommand(*this, meta->name(), link, insertRow));
             }
         }
-    }
-    break;
+    } break;
     case QmlMetadata::FilterSet: {
         Mlt::Producer filterSetProducer = getFilterSetProducer(meta);
         if (!filterSetProducer.is_valid() || filterSetProducer.filter_count() == 0) {
@@ -514,15 +521,18 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
         }
         for (int i = 0; i < filterSetProducer.filter_count(); i++) {
             Mlt::Filter *filter = filterSetProducer.filter(i);
-            if (filter->is_valid() && !filter->get_int("_loader") && !filter->get_int(kShotcutHiddenProperty)) {
+            if (filter->is_valid() && !filter->get_int("_loader")
+                && !filter->get_int(kShotcutHiddenProperty)) {
                 QmlMetadata *tmpMeta = MAIN.filterController()->metadataForService(filter);
                 insertRow = findInsertRow(tmpMeta);
                 if (!meta->objectName().isEmpty())
                     filter->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
-                filter->set_in_and_out(
-                    m_producer->get(kFilterInProperty) ? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
-                    m_producer->get(kFilterOutProperty) ? m_producer->get_int(kFilterOutProperty) :
-                    m_producer->get_out());
+                filter->set_in_and_out(m_producer->get(kFilterInProperty)
+                                           ? m_producer->get_int(kFilterInProperty)
+                                           : m_producer->get_in(),
+                                       m_producer->get(kFilterOutProperty)
+                                           ? m_producer->get_int(kFilterOutProperty)
+                                           : m_producer->get_out());
                 if (isSourceClip()) {
                     doAddService(*m_producer, *filter, insertRow);
                 } else {
@@ -530,13 +540,13 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
                     if (i == filterSetProducer.filter_count() - 1) {
                         type = Filter::AddCommand::AddSetLast;
                     }
-                    MAIN.undoStack()->push(new Filter::AddCommand(*this, meta->name(), *filter, insertRow, type));
+                    MAIN.undoStack()->push(
+                        new Filter::AddCommand(*this, meta->name(), *filter, insertRow, type));
                 }
             }
             delete filter;
         }
-    }
-    break;
+    } break;
     default:
         LOG_ERROR() << "Unknown type" << meta->type();
         break;
@@ -548,7 +558,8 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
 int AttachedFiltersModel::addService(Mlt::Service *service)
 {
     int insertRow = -1;
-    if (!m_producer) return -1;
+    if (!m_producer)
+        return -1;
 
     QmlMetadata *meta = MAIN.filterController()->metadataForService(service);
     if (!meta->allowMultiple()) {
@@ -566,10 +577,12 @@ int AttachedFiltersModel::addService(Mlt::Service *service)
         insertRow = findInsertRow(meta);
         if (!meta->objectName().isEmpty())
             filter.set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
-        filter.set_in_and_out(
-            m_producer->get(kFilterInProperty) ? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
-            m_producer->get(kFilterOutProperty) ? m_producer->get_int(kFilterOutProperty) :
-            m_producer->get_out());
+        filter.set_in_and_out(m_producer->get(kFilterInProperty)
+                                  ? m_producer->get_int(kFilterInProperty)
+                                  : m_producer->get_in(),
+                              m_producer->get(kFilterOutProperty)
+                                  ? m_producer->get_int(kFilterOutProperty)
+                                  : m_producer->get_out());
         if (isSourceClip()) {
             doAddService(*m_producer, filter, insertRow);
         } else {
@@ -619,8 +632,7 @@ void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &s
             producer.move_filter(producer.filter_count() - 1, mltIndex);
         }
         emit changed();
-    }
-    break;
+    } break;
     case mlt_service_link_type: {
         if (producer.type() != mlt_service_chain_type) {
             LOG_ERROR() << "Not a chain";
@@ -647,8 +659,7 @@ void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &s
             chain.move_link(chain.link_count() - 1, mltIndex);
         }
         emit changed();
-    }
-    break;
+    } break;
     default:
         LOG_ERROR() << "invalid service type" << service.type();
         break;
@@ -683,7 +694,7 @@ void AttachedFiltersModel::doRemoveService(Mlt::Producer &producer, int row)
     int filterIndex = mltFilterIndex(&producer, row);
     int linkIndex = mltLinkIndex(&producer, row);
     LOG_DEBUG() << row << filterIndex << linkIndex;
-    if (linkIndex >= 0 ) {
+    if (linkIndex >= 0) {
         Mlt::Chain chain(producer);
         Mlt::Link *link = chain.link(linkIndex);
         if (isProducerLoaded(producer)) {
@@ -741,8 +752,9 @@ void AttachedFiltersModel::reset(Mlt::Producer *producer)
     m_metaList.clear();
 
     if (m_producer && m_producer->is_valid()) {
-        Mlt::Event *event = m_producer->listen("service-changed", this,
-                                               (mlt_listener)AttachedFiltersModel::producerChanged);
+        Mlt::Event *event = m_producer->listen("service-changed",
+                                               this,
+                                               (mlt_listener) AttachedFiltersModel::producerChanged);
         m_event.reset(event);
         int count = 0;
         if (m_producer->type() == mlt_service_chain_type) {
@@ -763,7 +775,7 @@ void AttachedFiltersModel::reset(Mlt::Producer *producer)
         for (int i = 0; i < count; i++) {
             Mlt::Filter *filter = m_producer->filter(i);
             if (filter && filter->is_valid() && !filter->get_int("_loader")
-                    && !filter->get_int(kShotcutHiddenProperty)) {
+                && !filter->get_int(kShotcutHiddenProperty)) {
                 QmlMetadata *newMeta = MAIN.filterController()->metadataForService(filter);
                 m_metaList.append(newMeta);
             }

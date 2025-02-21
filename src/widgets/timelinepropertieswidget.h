@@ -18,8 +18,8 @@
 #ifndef TIMELINEPROPERTIESWIDGET_H
 #define TIMELINEPROPERTIESWIDGET_H
 
-#include <QWidget>
 #include <MltService.h>
+#include <QWidget>
 
 namespace Ui {
 class TimelinePropertiesWidget;

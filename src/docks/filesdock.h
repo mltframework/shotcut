@@ -19,11 +19,11 @@
 #define FILESDOCK_H
 
 #include <QDockWidget>
-#include <QUndoCommand>
-#include <QTimer>
 #include <QFileSystemModel>
 #include <QHash>
 #include <QMutex>
+#include <QTimer>
+#include <QUndoCommand>
 
 namespace Ui {
 class FilesDock;
@@ -47,8 +47,9 @@ public:
     explicit FilesDock(QWidget *parent = 0);
     ~FilesDock();
 
-    struct CacheItem {
-        int mediaType {-1}; // -1 = unknown
+    struct CacheItem
+    {
+        int mediaType{-1}; // -1 = unknown
     };
 
     int getCacheMediaType(const QString &key);

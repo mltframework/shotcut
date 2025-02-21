@@ -18,22 +18,23 @@
 #ifndef MLTCONTROLLER_H
 #define MLTCONTROLLER_H
 
-#include <QImage>
-#include <QString>
-#include <QUuid>
-#include <QScopedPointer>
-#include <QTemporaryFile>
-#include <QMutex>
-#include <Mlt.h>
 #include "transportcontrol.h"
+
+#include <Mlt.h>
+#include <QImage>
+#include <QMutex>
+#include <QScopedPointer>
+#include <QString>
+#include <QTemporaryFile>
+#include <QUuid>
 
 // forward declarations
 class QQuickView;
 
 #define MLT_LC_CATEGORY LC_ALL
-#define MLT_LC_NAME     "LC_ALL"
+#define MLT_LC_NAME "LC_ALL"
 
-#if LIBMLT_VERSION_INT >= ((7<<16)+(19<<8))
+#if LIBMLT_VERSION_INT >= ((7 << 16) + (19 << 8))
 #define kAudioIndexProperty "astream"
 #define kVideoIndexProperty "vstream"
 #else
@@ -97,8 +98,12 @@ public:
     void onWindowResize();
     virtual void seek(int position);
     virtual void refreshConsumer(bool scrubAudio = false);
-    bool saveXML(const QString &filename, Service *service = nullptr, bool withRelativePaths = true,
-                 QTemporaryFile *tempFile = nullptr, bool proxy = false, QString projectNote = QString());
+    bool saveXML(const QString &filename,
+                 Service *service = nullptr,
+                 bool withRelativePaths = true,
+                 QTemporaryFile *tempFile = nullptr,
+                 bool proxy = false,
+                 QString projectNote = QString());
     QString XML(Service *service = nullptr, bool withProfile = false, bool withMetadata = true);
     int consumerChanged();
     void setProfile(const QString &profile_name);
@@ -134,66 +139,35 @@ public:
     QUuid uuid(Mlt::Properties &properties) const;
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties &properties) const;
-    static void copyFilters(Mlt::Producer &fromProducer, Mlt::Producer &toProducer,
-                            bool fromClipboard = false, int filterIndex = FILTER_INDEX_ENABLED);
+    static void copyFilters(Mlt::Producer &fromProducer,
+                            Mlt::Producer &toProducer,
+                            bool fromClipboard = false,
+                            int filterIndex = FILTER_INDEX_ENABLED);
     void copyFilters(Mlt::Producer *producer = nullptr, int filterIndex = FILTER_INDEX_ENABLED);
     void pasteFilters(Mlt::Producer *producer = nullptr, Mlt::Producer *fromProducer = nullptr);
     static void adjustFilters(Mlt::Producer &producer, int startIndex = 0);
-    static void adjustFilter(Mlt::Filter *filter, int in, int out, int inDelta, int outDelta,
-                             int keyframeDelta);
-    static void adjustClipFilters(Mlt::Producer &producer, int in, int out, int inDelta, int outDelta,
-                                  int keyframeDelta);
+    static void adjustFilter(
+        Mlt::Filter *filter, int in, int out, int inDelta, int outDelta, int keyframeDelta);
+    static void adjustClipFilters(
+        Mlt::Producer &producer, int in, int out, int inDelta, int outDelta, int keyframeDelta);
     bool hasFiltersOnClipboard() const
     {
         return m_filtersClipboard->is_valid() && m_filtersClipboard->filter_count() > 0;
     }
-    QString filtersClipboardXML()
-    {
-        return XML(m_filtersClipboard.get());
-    }
+    QString filtersClipboardXML() { return XML(m_filtersClipboard.get()); }
 
-    int audioChannels() const
-    {
-        return m_audioChannels;
-    }
-    Mlt::Repository *repository() const
-    {
-        return m_repo;
-    }
-    Mlt::Profile &profile()
-    {
-        return m_profile;
-    }
-    Mlt::Profile &previewProfile()
-    {
-        return m_previewProfile;
-    }
-    Mlt::Producer *producer() const
-    {
-        return m_producer.data();
-    }
-    Mlt::Consumer *consumer() const
-    {
-        return m_consumer.data();
-    }
-    const QString &URL() const
-    {
-        return m_url;
-    }
-    const TransportControllable *transportControl() const
-    {
-        return &m_transportControl;
-    }
-    Mlt::Producer *savedProducer() const
-    {
-        return m_savedProducer.data();
-    }
+    int audioChannels() const { return m_audioChannels; }
+    Mlt::Repository *repository() const { return m_repo; }
+    Mlt::Profile &profile() { return m_profile; }
+    Mlt::Profile &previewProfile() { return m_previewProfile; }
+    Mlt::Producer *producer() const { return m_producer.data(); }
+    Mlt::Consumer *consumer() const { return m_consumer.data(); }
+    const QString &URL() const { return m_url; }
+    const TransportControllable *transportControl() const { return &m_transportControl; }
+    Mlt::Producer *savedProducer() const { return m_savedProducer.data(); }
     void setSavedProducer(Mlt::Producer *producer);
     static Mlt::Filter *getFilter(const QString &name, Mlt::Service *service);
-    QString projectFolder() const
-    {
-        return m_projectFolder;
-    }
+    QString projectFolder() const { return m_projectFolder; }
     void setProjectFolder(const QString &folderName);
     QChar decimalPoint();
     static void resetLocale();
@@ -203,10 +177,7 @@ public:
     void updatePreviewProfile();
     static void purgeMemoryPool();
     static bool fullRange(Mlt::Producer &producer);
-    static bool isMltXml(const QString &s)
-    {
-        return s.contains("<mlt ");
-    }
+    static bool isMltXml(const QString &s) { return s.contains("<mlt "); }
     static bool isTrackProducer(Mlt::Producer &producer);
     static int checkFile(const QString &path);
     bool blockRefresh(bool block);
@@ -214,14 +185,8 @@ public:
     class RefreshBlocker
     {
     public:
-        RefreshBlocker()
-        {
-            singleton().blockRefresh(true);
-        }
-        ~RefreshBlocker()
-        {
-            singleton().blockRefresh(false);
-        }
+        RefreshBlocker() { singleton().blockRefresh(true); }
+        ~RefreshBlocker() { singleton().blockRefresh(false); }
     };
 
 protected:
@@ -252,7 +217,7 @@ private:
     void initFiltersClipboard();
 };
 
-} // namespace
+} // namespace Mlt
 
 #define MLT Mlt::Controller::singleton()
 

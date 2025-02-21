@@ -17,20 +17,21 @@
 
 #include "player.h"
 
+#include "Logger.h"
 #include "actions.h"
-#include "scrubbar.h"
-#include "mainwindow.h"
 #include "dialogs/durationdialog.h"
+#include "mainwindow.h"
+#include "proxymanager.h"
+#include "scrubbar.h"
+#include "settings.h"
+#include "widgets/audioscale.h"
+#include "widgets/docktoolbar.h"
+#include "widgets/newprojectfolder.h"
 #include "widgets/statuslabelwidget.h"
 #include "widgets/timespinbox.h"
-#include "widgets/audioscale.h"
-#include "settings.h"
-#include "widgets/newprojectfolder.h"
-#include "proxymanager.h"
-#include "widgets/docktoolbar.h"
-#include <Logger.h>
 
 #include <QtWidgets>
+
 #include <limits>
 
 #define VOLUME_KNEE (88)
@@ -39,10 +40,7 @@
 
 class NoWheelTabBar : public QTabBar
 {
-    void wheelEvent(QWheelEvent *event)
-    {
-        event->ignore();
-    };
+    void wheelEvent(QWheelEvent *event) { event->ignore(); };
 };
 
 QString blankTime()
@@ -138,7 +136,8 @@ Player::Player(QWidget *parent)
     m_volumePopup = new QFrame(this, Qt::Popup);
     QVBoxLayout *volumeLayoutV = new QVBoxLayout(m_volumePopup);
     volumeLayoutV->setContentsMargins(0, 0, 0, 0);
-    volumeLayoutV->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    volumeLayoutV->addSpacerItem(
+        new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
     QBoxLayout *volumeLayoutH = new QHBoxLayout;
     volumeLayoutH->setSpacing(0);
     volumeLayoutH->setContentsMargins(0, 0, 0, 0);
@@ -172,8 +171,9 @@ Player::Player(QWidget *parent)
     m_muteButton = new QPushButton(this);
     m_muteButton->setFocusPolicy(Qt::NoFocus);
     m_muteButton->setObjectName(QString::fromUtf8("muteButton"));
-    m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted",
-                                           QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+    m_muteButton->setIcon(
+        QIcon::fromTheme("audio-volume-muted",
+                         QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
     m_muteButton->setToolTip(tr("Silence the audio"));
     m_muteButton->setCheckable(true);
     m_muteButton->setChecked(Settings.playerMuted());
@@ -236,39 +236,74 @@ Player::Player(QWidget *parent)
     // Zoom button
     m_zoomButton = new QToolButton;
     m_zoomMenu = new QMenu(this);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/oxygen/32x32/actions/zoom-fit-best")),
-        tr("Zoom Fit"), this, SLOT(onZoomTriggered()))->setData(0.0f);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
-        tr("Zoom 10%"), this, SLOT(onZoomTriggered()))->setData(0.1f);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
-        tr("Zoom 25%"), this, SLOT(onZoomTriggered()))->setData(0.25f);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
-        tr("Zoom 50%"), this, SLOT(onZoomTriggered()))->setData(0.5f);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-original", QIcon(":/icons/oxygen/32x32/actions/zoom-original")),
-        tr("Zoom 100%"), this, SLOT(onZoomTriggered()))->setData(1.0f);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
-        tr("Zoom 200%"), this, SLOT(onZoomTriggered()))->setData(2.0f);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
-        tr("Zoom 300%"), this, SLOT(onZoomTriggered()))->setData(3.0f);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
-        tr("Zoom 400%"), this, SLOT(onZoomTriggered()))->setData(4.0f);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
-        tr("Zoom 500%"), this, SLOT(onZoomTriggered()))->setData(5.0f);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
-        tr("Zoom 750%"), this, SLOT(onZoomTriggered()))->setData(7.5f);
-    m_zoomMenu->addAction(
-        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
-        tr("Zoom 1000%"), this, SLOT(onZoomTriggered()))->setData(10.0f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-fit-best",
+                                     QIcon(":/icons/oxygen/32x32/actions/zoom-fit-best")),
+                    tr("Zoom Fit"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(0.0f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
+                    tr("Zoom 10%"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(0.1f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
+                    tr("Zoom 25%"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(0.25f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
+                    tr("Zoom 50%"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(0.5f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-original",
+                                     QIcon(":/icons/oxygen/32x32/actions/zoom-original")),
+                    tr("Zoom 100%"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(1.0f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+                    tr("Zoom 200%"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(2.0f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+                    tr("Zoom 300%"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(3.0f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+                    tr("Zoom 400%"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(4.0f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+                    tr("Zoom 500%"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(5.0f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+                    tr("Zoom 750%"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(7.5f);
+    m_zoomMenu
+        ->addAction(QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+                    tr("Zoom 1000%"),
+                    this,
+                    SLOT(onZoomTriggered()))
+        ->setData(10.0f);
     connect(m_zoomButton, SIGNAL(toggled(bool)), SLOT(toggleZoom(bool)));
     m_zoomButton->setMenu(m_zoomMenu);
     m_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -320,8 +355,8 @@ Player::Player(QWidget *parent)
     connect(action, SIGNAL(toggled(bool)), MLT.videoWidget(), SLOT(setSnapToGrid(bool)));
     connect(m_gridButton, SIGNAL(toggled(bool)), SLOT(toggleGrid(bool)));
     m_gridButton->setMenu(gridMenu);
-    m_gridButton->setIcon(QIcon::fromTheme("view-grid",
-                                           QIcon(":/icons/oxygen/32x32/actions/view-grid")));
+    m_gridButton->setIcon(
+        QIcon::fromTheme("view-grid", QIcon(":/icons/oxygen/32x32/actions/view-grid")));
     m_gridButton->setPopupMode(QToolButton::MenuButtonPopup);
     m_gridButton->setCheckable(true);
     m_gridButton->setToolTip(tr("Toggle grid display on the player"));
@@ -329,8 +364,8 @@ Player::Player(QWidget *parent)
     // Add volume control to toolbar.
     m_volumeButton = new QToolButton;
     m_volumeButton->setObjectName(QString::fromUtf8("volumeButton"));
-    m_volumeButton->setIcon(QIcon::fromTheme("player-volume",
-                                             QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+    m_volumeButton->setIcon(
+        QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
     m_volumeButton->setText(tr("Volume"));
     m_volumeButton->setToolTip(tr("Show the volume control"));
     connect(m_volumeButton, SIGNAL(clicked()), this, SLOT(onVolumeTriggered()));
@@ -367,7 +402,9 @@ Player::Player(QWidget *parent)
 
     onMuteButtonToggled(Settings.playerMuted());
 
-    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
+    connect(MLT.videoWidget(),
+            SIGNAL(frameDisplayed(const SharedFrame &)),
+            this,
             SLOT(onFrameDisplayed(const SharedFrame &)));
     connect(m_scrubber, SIGNAL(seeked(int)), this, SLOT(seek(int)));
     connect(m_scrubber, SIGNAL(paused(int)), this, SLOT(pause(int)));
@@ -379,7 +416,8 @@ Player::Player(QWidget *parent)
     connect(this, SIGNAL(zoomChanged(float)), MLT.videoWidget(), SLOT(setZoom(float)));
     connect(m_horizontalScroll, SIGNAL(valueChanged(int)), MLT.videoWidget(), SLOT(setOffsetX(int)));
     connect(m_verticalScroll, SIGNAL(valueChanged(int)), MLT.videoWidget(), SLOT(setOffsetY(int)));
-    connect(MLT.videoWidget(), SIGNAL(offsetChanged(const QPoint &)),
+    connect(MLT.videoWidget(),
+            SIGNAL(offsetChanged(const QPoint &)),
             SLOT(onOffsetChanged(const QPoint &)));
 
     connect(&Settings, &ShotcutSettings::timeFormatChanged, this, [&]() {
@@ -394,7 +432,8 @@ Player::Player(QWidget *parent)
 
 void Player::connectTransport(const TransportControllable *receiver)
 {
-    if (receiver == m_currentTransport) return;
+    if (receiver == m_currentTransport)
+        return;
     if (m_currentTransport)
         disconnect(m_currentTransport);
     m_currentTransport = receiver;
@@ -437,13 +476,12 @@ void Player::setupActions()
 
     action = new QAction(tr("Loop"), this);
     action->setShortcut(QKeySequence(Qt::Key_Backslash));
-    action->setIcon(QIcon::fromTheme("media-playback-loop",
-                                     QIcon(":/icons/oxygen/32x32/actions/media-playback-loop.png")));
+    action->setIcon(
+        QIcon::fromTheme("media-playback-loop",
+                         QIcon(":/icons/oxygen/32x32/actions/media-playback-loop.png")));
     action->setCheckable(true);
     action->setToolTip(tr("Toggle player looping"));
-    connect(action, &QAction::toggled, this, [&]() {
-        setLoopRange(m_loopStart, m_loopEnd);
-    });
+    connect(action, &QAction::toggled, this, [&]() { setLoopRange(m_loopStart, m_loopEnd); });
     Actions.add("playerLoopAction", action);
 
     action = new QAction(tr("Loop All"), this);
@@ -574,9 +612,7 @@ void Player::setupActions()
 
     action = new QAction(tr("Seek Start"), this);
     action->setShortcut(QKeySequence(Qt::Key_Home));
-    connect(action, &QAction::triggered, this, [&]() {
-        seek(0);
-    });
+    connect(action, &QAction::triggered, this, [&]() { seek(0); });
     Actions.add("playerSeekStartAction", action);
 
     action = new QAction(tr("Seek End"), this);
@@ -697,7 +733,7 @@ void Player::setupActions()
         DurationDialog dialog(this);
         dialog.setDuration(qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));
         if (dialog.exec() == QDialog::Accepted) {
-            Settings.setPlayerJumpSeconds((double)dialog.duration() / MLT.profile().fps());
+            Settings.setPlayerJumpSeconds((double) dialog.duration() / MLT.profile().fps());
         }
     });
     Actions.add("playerSetJumpAction", action);
@@ -764,9 +800,7 @@ void Player::setupActions()
 
     action = new QAction(tr("Focus Player"), this);
     action->setProperty(Actions.hardKeyProperty, "Shift+Esc");
-    connect(action, &QAction::triggered, this, [&]() {
-        setFocus();
-    });
+    connect(action, &QAction::triggered, this, [&]() { setFocus(); });
     Actions.add("playerFocus", action, tr("Player"));
 }
 
@@ -944,7 +978,7 @@ void Player::onProducerOpened(bool play)
     if (play || (MLT.isClip() && !MLT.isClosedClip())) {
         if (m_pauseAfterOpen) {
             m_pauseAfterOpen = false;
-            QTimer::singleShot(500, this, [ = ]() {
+            QTimer::singleShot(500, this, [=]() {
                 if (MLT.producer())
                     pause(MLT.producer()->position());
             });
@@ -1020,8 +1054,8 @@ void Player::updateSelection()
 {
     if (MLT.producer() && MLT.producer()->get_in() > 0) {
         m_inPointLabel->setText(QString(MLT.producer()->get_time("in", Settings.timeFormat())));
-        m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime(),
-                                                                Settings.timeFormat()));
+        m_selectedLabel->setText(
+            MLT.producer()->frames_to_time(MLT.producer()->get_playtime(), Settings.timeFormat()));
     } else {
         m_inPointLabel->setText(blankTime());
         if (MLT.isClip() && MLT.producer()->get_out() < m_duration - 1) {
@@ -1102,7 +1136,7 @@ void Player::onTabBarClicked(int index)
     switch (index) {
     case SourceTabIndex:
         if (MLT.savedProducer() && MLT.savedProducer()->is_valid() && MLT.producer()
-                && MLT.producer()->get_producer() != MLT.savedProducer()->get_producer()) {
+            && MLT.producer()->get_producer() != MLT.savedProducer()->get_producer()) {
             m_pauseAfterOpen = true;
             MAIN.open(new Mlt::Producer(MLT.savedProducer()));
         }
@@ -1119,7 +1153,9 @@ void Player::onTabBarClicked(int index)
     }
 }
 
-void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction *action,
+void Player::setStatusLabel(const QString &text,
+                            int timeoutSeconds,
+                            QAction *action,
                             QPalette::ColorRole role)
 {
     m_statusLabel->setWidth(m_scrubber->width() - m_tabs->width());
@@ -1190,9 +1226,9 @@ void Player::setLoopRange(int start, int end)
 
 void Player::layoutToolbars()
 {
-    int totalWidth = m_currentDurationToolBar->sizeHint().width() +
-                     m_controlsToolBar->sizeHint().width() + m_optionsToolBar->sizeHint().width() +
-                     m_inSelectedToolBar->sizeHint().width() + 20;
+    int totalWidth = m_currentDurationToolBar->sizeHint().width()
+                     + m_controlsToolBar->sizeHint().width() + m_optionsToolBar->sizeHint().width()
+                     + m_inSelectedToolBar->sizeHint().width() + 20;
     bool twoRowsInUse = m_toolRow2->count() > 0;
 
     if (m_toolRow1->count() > 0) {
@@ -1261,13 +1297,19 @@ void Player::layoutToolbars()
 void Player::showIdleStatus()
 {
     if (Settings.proxyEnabled() && Settings.playerPreviewScale() > 0) {
-        setStatusLabel(tr("Proxy and preview scaling are ON at %1p").arg(ProxyManager::resolution()), -1,
-                       nullptr, QPalette::AlternateBase);
+        setStatusLabel(tr("Proxy and preview scaling are ON at %1p").arg(ProxyManager::resolution()),
+                       -1,
+                       nullptr,
+                       QPalette::AlternateBase);
     } else if (Settings.proxyEnabled()) {
-        setStatusLabel(tr("Proxy is ON at %1p").arg(ProxyManager::resolution()), -1, nullptr,
+        setStatusLabel(tr("Proxy is ON at %1p").arg(ProxyManager::resolution()),
+                       -1,
+                       nullptr,
                        QPalette::AlternateBase);
     } else if (Settings.playerPreviewScale() > 0) {
-        setStatusLabel(tr("Preview scaling is ON at %1p").arg(Settings.playerPreviewScale()), -1, nullptr,
+        setStatusLabel(tr("Preview scaling is ON at %1p").arg(Settings.playerPreviewScale()),
+                       -1,
+                       nullptr,
                        QPalette::AlternateBase);
     } else {
         setStatusLabel("", -1, nullptr);
@@ -1281,10 +1323,12 @@ void Player::focusPositionSpinner() const
 
 void Player::moveVideoToScreen(int screen)
 {
-    if (screen == m_monitorScreen) return;
+    if (screen == m_monitorScreen)
+        return;
     if (screen == -2) {
         // -2 = embedded
-        if (!m_videoScrollWidget->isFullScreen()) return;
+        if (!m_videoScrollWidget->isFullScreen())
+            return;
         m_videoScrollWidget->showNormal();
         m_videoLayout->insertWidget(0, m_videoScrollWidget, 10);
     } else if (QGuiApplication::screens().size() > 1) {
@@ -1315,19 +1359,19 @@ Player::TabIndex Player::tabIndex() const
 //----------------------------------------------------------------------------
 // IEC standard dB scaling -- as borrowed from meterbridge (c) Steve Harris
 
-static inline float IEC_dB ( float fScale )
+static inline float IEC_dB(float fScale)
 {
     float dB = 0.0f;
 
-    if (fScale < 0.025f)        // IEC_Scale(-60.0f)
+    if (fScale < 0.025f) // IEC_Scale(-60.0f)
         dB = (fScale / 0.0025f) - 70.0f;
-    else if (fScale < 0.075f)   // IEC_Scale(-50.0f)
+    else if (fScale < 0.075f) // IEC_Scale(-50.0f)
         dB = (fScale - 0.025f) / 0.005f - 60.0f;
-    else if (fScale < 0.15f)    // IEC_Scale(-40.0f)
+    else if (fScale < 0.15f) // IEC_Scale(-40.0f)
         dB = (fScale - 0.075f) / 0.0075f - 50.0f;
-    else if (fScale < 0.3f)     // IEC_Scale(-30.0f)
+    else if (fScale < 0.3f) // IEC_Scale(-30.0f)
         dB = (fScale - 0.15f) / 0.015f - 40.0f;
-    else if (fScale < 0.5f)     // IEC_Scale(-20.0f)
+    else if (fScale < 0.5f) // IEC_Scale(-20.0f)
         dB = (fScale - 0.3f) / 0.02f - 30.0f;
     else /* if (fScale < 1.0f)  // IED_Scale(0.0f)) */
         dB = (fScale - 0.5f) / 0.025f - 20.0f;
@@ -1342,10 +1386,11 @@ void Player::onVolumeChanged(int volume)
     Settings.setPlayerVolume(volume);
     Settings.setPlayerMuted(false);
     m_muteButton->setChecked(false);
-    m_volumeButton->setIcon(QIcon::fromTheme("player-volume",
-                                             QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
-    m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted",
-                                           QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+    m_volumeButton->setIcon(
+        QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+    m_muteButton->setIcon(
+        QIcon::fromTheme("audio-volume-muted",
+                         QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
     m_muteButton->setToolTip(tr("Mute"));
 }
 
@@ -1371,17 +1416,21 @@ void Player::onMuteButtonToggled(bool checked)
     if (checked) {
         m_savedVolume = MLT.volume();
         MLT.setVolume(0);
-        m_volumeButton->setIcon(QIcon::fromTheme("audio-volume-muted",
-                                                 QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
-        m_muteButton->setIcon(QIcon::fromTheme("audio-volume-high",
-                                               QIcon(":/icons/oxygen/32x32/status/audio-volume-high.png")));
+        m_volumeButton->setIcon(
+            QIcon::fromTheme("audio-volume-muted",
+                             QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+        m_muteButton->setIcon(
+            QIcon::fromTheme("audio-volume-high",
+                             QIcon(":/icons/oxygen/32x32/status/audio-volume-high.png")));
         m_muteButton->setToolTip(tr("Unmute"));
     } else {
         MLT.setVolume(m_savedVolume);
-        m_volumeButton->setIcon(QIcon::fromTheme("player-volume",
-                                                 QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
-        m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted",
-                                               QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+        m_volumeButton->setIcon(
+            QIcon::fromTheme("player-volume",
+                             QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+        m_muteButton->setIcon(
+            QIcon::fromTheme("audio-volume-muted",
+                             QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
         m_muteButton->setToolTip(tr("Mute"));
     }
     Settings.setPlayerMuted(checked);

@@ -18,8 +18,8 @@
 #ifndef FONTDIALOG_H
 #define FONTDIALOG_H
 
-#include <QObject>
 #include <QFont>
+#include <QObject>
 
 class FontDialog : public QObject
 {
@@ -39,10 +39,7 @@ signals:
 private:
     QFont m_font;
 
-    QFont selectedFont() const
-    {
-        return m_font;
-    }
+    QFont selectedFont() const { return m_font; }
     void setSelectedFont(const QFont &font);
 };
 

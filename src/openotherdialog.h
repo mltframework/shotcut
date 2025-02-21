@@ -28,7 +28,7 @@ namespace Mlt {
 class Properties;
 class Producer;
 class Profile;
-}
+} // namespace Mlt
 class QPushButton;
 
 class OpenOtherDialog : public QDialog
@@ -41,10 +41,7 @@ public:
 
     Mlt::Producer *newProducer(Mlt::Profile &) const;
     void load(Mlt::Producer *);
-    QWidget *currentWidget() const
-    {
-        return m_current;
-    }
+    QWidget *currentWidget() const { return m_current; }
 
 private slots:
     void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);

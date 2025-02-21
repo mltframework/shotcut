@@ -18,10 +18,10 @@
 #ifndef ATTACHEDFILTERSMODEL_H
 #define ATTACHEDFILTERSMODEL_H
 
-#include <QAbstractListModel>
+#include <MltEvent.h>
 #include <MltFilter.h>
 #include <MltProducer.h>
-#include <MltEvent.h>
+#include <QAbstractListModel>
 
 class QmlMetadata;
 
@@ -46,10 +46,7 @@ public:
     bool isProducerSelected() const;
     bool isSourceClip() const;
     bool supportsLinks() const;
-    Mlt::Producer *producer() const
-    {
-        return m_producer.data();
-    }
+    Mlt::Producer *producer() const { return m_producer.data(); }
     QString name(int row) const;
 
     // The below are used by QUndoCommands
@@ -68,8 +65,11 @@ public:
     Qt::DropActions supportedDropActions() const;
     bool insertRows(int row, int count, const QModelIndex &parent);
     bool removeRows(int row, int count, const QModelIndex &parent);
-    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
-                  const QModelIndex &destinationParent, int destinationRow);
+    bool moveRows(const QModelIndex &sourceParent,
+                  int sourceRow,
+                  int count,
+                  const QModelIndex &destinationParent,
+                  int destinationRow);
 
 signals:
     void changed();

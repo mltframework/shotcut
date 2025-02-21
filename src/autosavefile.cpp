@@ -19,18 +19,19 @@
  */
 
 #include "autosavefile.h"
+
 #include "settings.h"
 
-#include <QtCore/QDir>
 #include <QtCore/QCryptographicHash>
+#include <QtCore/QDir>
 
 static const QLatin1String subdir("/autosave");
 static const QLatin1String extension(".mlt");
 
 static QString hashName(const QString &name)
 {
-    return QString::fromLatin1(QCryptographicHash::hash(name.toUtf8(),
-                                                        QCryptographicHash::Md5).toHex());
+    return QString::fromLatin1(
+        QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex());
 }
 
 AutoSaveFile::AutoSaveFile(const QString &filename, QObject *parent)

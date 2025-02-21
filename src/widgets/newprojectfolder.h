@@ -18,11 +18,11 @@
 #ifndef NEWPROJECTFOLDER_H
 #define NEWPROJECTFOLDER_H
 
-#include <QWidget>
+#include <QMenu>
 #include <QModelIndex>
 #include <QStandardItemModel>
-#include <QMenu>
 #include <QString>
+#include <QWidget>
 
 namespace Ui {
 class NewProjectFolder;

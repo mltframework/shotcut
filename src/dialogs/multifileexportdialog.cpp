@@ -19,18 +19,17 @@
 
 #include "mainwindow.h"
 #include "proxymanager.h"
+#include "qmltypes/qmlapplication.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
-#include "qmltypes/qmlapplication.h"
 
 #include <MltPlaylist.h>
-
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QDir>
 #include <QFileDialog>
-#include <QHBoxLayout>
 #include <QGridLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
@@ -44,8 +43,12 @@ enum {
     NAME_FIELD_HASH,
 };
 
-MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist *playlist,
-                                             const QString &directory, const QString &prefix, const QString &extension, QWidget *parent)
+MultiFileExportDialog::MultiFileExportDialog(QString title,
+                                             Mlt::Playlist *playlist,
+                                             const QString &directory,
+                                             const QString &prefix,
+                                             const QString &extension,
+                                             QWidget *parent)
     : QDialog(parent)
     , m_playlist(playlist)
 {
@@ -62,8 +65,8 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist *playl
     m_dir = new QLineEdit(QDir::toNativeSeparators(directory));
     m_dir->setReadOnly(true);
     QPushButton *browseButton = new QPushButton(this);
-    browseButton->setIcon(QIcon::fromTheme("document-open",
-                                           QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
+    browseButton->setIcon(
+        QIcon::fromTheme("document-open", QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
     if (!connect(browseButton, &QAbstractButton::clicked, this, &MultiFileExportDialog::browse))
         connect(browseButton, SIGNAL(clicked()), SLOT(browse()));
     dirHbox->addWidget(m_dir);
@@ -79,7 +82,9 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist *playl
     glayout->addWidget(new QLabel(tr("Field 1")), col, 0, Qt::AlignRight);
     m_field1 = new QComboBox();
     fillCombo(m_field1);
-    if (!connect(m_field1, QOverload<int>::of(&QComboBox::activated), this,
+    if (!connect(m_field1,
+                 QOverload<int>::of(&QComboBox::activated),
+                 this,
                  &MultiFileExportDialog::rebuildList))
         connect(m_field1, SIGNAL(activated(const QString &)), SLOT(rebuildList()));
     glayout->addWidget(m_field1, col++, 1, Qt::AlignLeft);
@@ -87,7 +92,9 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist *playl
     glayout->addWidget(new QLabel(tr("Field 2")), col, 0, Qt::AlignRight);
     m_field2 = new QComboBox();
     fillCombo(m_field2);
-    if (!connect(m_field2, QOverload<int>::of(&QComboBox::activated), this,
+    if (!connect(m_field2,
+                 QOverload<int>::of(&QComboBox::activated),
+                 this,
                  &MultiFileExportDialog::rebuildList))
         connect(m_field2, SIGNAL(activated(const QString &)), SLOT(rebuildList()));
     glayout->addWidget(m_field2, col++, 1, Qt::AlignLeft);
@@ -96,7 +103,9 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist *playl
     m_field3 = new QComboBox();
     fillCombo(m_field3);
     m_field3->setCurrentIndex(NAME_FIELD_INDEX);
-    if (!connect(m_field3, QOverload<int>::of(&QComboBox::activated), this,
+    if (!connect(m_field3,
+                 QOverload<int>::of(&QComboBox::activated),
+                 this,
                  &MultiFileExportDialog::rebuildList))
         connect(m_field3, SIGNAL(activated(const QString &)), SLOT(rebuildList()));
     glayout->addWidget(m_field3, col++, 1, Qt::AlignLeft);
@@ -125,9 +134,10 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist *playl
     connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
     glayout->setColumnMinimumWidth(1,
-                                   fontMetrics().horizontalAdvance(m_dir->text()) + browseButton->width());
+                                   fontMetrics().horizontalAdvance(m_dir->text())
+                                       + browseButton->width());
 
-    this->setLayout (glayout);
+    this->setLayout(glayout);
     this->setModal(true);
 
     rebuildList();
@@ -266,8 +276,11 @@ void MultiFileExportDialog::rebuildList()
 
 void MultiFileExportDialog::browse()
 {
-    QString directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this,
-                                                                                   tr("Export Directory"), m_dir->text(), Util::getFileDialogOptions()));
+    QString directory = QDir::toNativeSeparators(
+        QFileDialog::getExistingDirectory(this,
+                                          tr("Export Directory"),
+                                          m_dir->text(),
+                                          Util::getFileDialogOptions()));
     if (!directory.isEmpty()) {
         m_dir->setText(directory);
         rebuildList();

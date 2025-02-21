@@ -32,16 +32,17 @@
 ****************************************************************************/
 
 #include "qmlrichtext.h"
-#include <Logger.h>
 
-#include <QtGui/QTextDocument>
-#include <QtGui/QTextCursor>
-#include <QtGui/QFontDatabase>
-#include <QtCore/QFileInfo>
-#include <QGuiApplication>
+#include "Logger.h"
+
 #include <QClipboard>
+#include <QGuiApplication>
 #include <QStringBuilder>
 #include <QStringConverter>
+#include <QtCore/QFileInfo>
+#include <QtGui/QFontDatabase>
+#include <QtGui/QTextCursor>
+#include <QtGui/QTextDocument>
 
 QmlRichText::QmlRichText()
     : m_target(0)
@@ -49,8 +50,7 @@ QmlRichText::QmlRichText()
     , m_cursorPosition(-1)
     , m_selectionStart(0)
     , m_selectionEnd(0)
-{
-}
+{}
 
 void QmlRichText::setTarget(QQuickItem *target)
 {
@@ -80,25 +80,29 @@ void QmlRichText::setFileUrl(const QUrl &arg)
             if (file.open(QFile::ReadOnly)) {
                 QByteArray data = file.readAll();
                 if (Qt::mightBeRichText(data)) {
-                    auto decoder = QStringDecoder(QStringConverter::encodingForHtml(data).value_or(
-                                                      QStringConverter::Utf8));
+                    auto decoder = QStringDecoder(
+                        QStringConverter::encodingForHtml(data).value_or(QStringConverter::Utf8));
                     setText(decoder(data));
                 } else {
-                    auto decoder = QStringDecoder(QStringConverter::encodingForData(data).value_or(
-                                                      QStringConverter::Utf8));
-                    setText(QStringLiteral("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
-                                           "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
+                    auto decoder = QStringDecoder(
+                        QStringConverter::encodingForData(data).value_or(QStringConverter::Utf8));
+                    setText(QStringLiteral("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" "
+                                           "\"http://www.w3.org/TR/REC-html40/strict.dtd\">"
+                                           "<html><head><meta name=\"qrichtext\" content=\"1\" "
+                                           "/><style type=\"text/css\">"
                                            "p, li { white-space: pre-wrap; }"
 #if defined(Q_OS_WIN)
-                                           "body { font-family:Verdana; font-size:72pt; font-weight:normal; font-style:normal; color:#ffffff; }"
+                                           "body { font-family:Verdana; font-size:72pt; "
+                                           "font-weight:normal; font-style:normal; color:#ffffff; }"
 #elif defined(Q_OS_MAC)
-                                           "body { font-family:Helvetica; font-size:72pt; font-weight:normal; font-style:normal; color:#ffffff; }"
+                                           "body { font-family:Helvetica; font-size:72pt; "
+                                           "font-weight:normal; font-style:normal; color:#ffffff; }"
 #else
-                                           "body { font-family:sans-serif; font-size:72pt; font-weight:normal; font-style:normal; color:#ffffff; }"
+                                           "body { font-family:sans-serif; font-size:72pt; "
+                                           "font-weight:normal; font-style:normal; color:#ffffff; }"
 #endif
                                            "</style></head><body>")
-                            % QString(decoder(data))
-                            % QStringLiteral("</body></html>"));
+                            % QString(decoder(data)) % QStringLiteral("</body></html>"));
                 }
                 if (m_doc)
                     m_doc->setModified(false);
@@ -149,17 +153,18 @@ void QmlRichText::insertTable(int rows, int columns, int border)
     if (cursor.isNull())
         return;
     QString color = textColor().name(QColor::HexArgb);
-    QString html = QString(
-                       "<style>"
-                       "table { border-style: solid; border-color: %1 }"
-                       "td { font: %2 %3 %4pt %5;"
-                       "color: %1; vertical-align: top; }"
-                       "</style>"
-                       "<table width=100% cellspacing=0 cellpadding=%6 border=%6>")
-                   .arg(color)
-                   .arg(italic() ? "italic" : "normal").arg(bold() ? "bold" : "normal").arg(fontSize()).arg(
-                       fontFamily())
-                   .arg(border);
+    QString html = QString("<style>"
+                           "table { border-style: solid; border-color: %1 }"
+                           "td { font: %2 %3 %4pt %5;"
+                           "color: %1; vertical-align: top; }"
+                           "</style>"
+                           "<table width=100% cellspacing=0 cellpadding=%6 border=%6>")
+                       .arg(color)
+                       .arg(italic() ? "italic" : "normal")
+                       .arg(bold() ? "bold" : "normal")
+                       .arg(fontSize())
+                       .arg(fontFamily())
+                       .arg(border);
     for (auto i = 0; i < rows; ++i) {
         html += "<tr>";
         for (auto j = 0; j < columns; ++j) {

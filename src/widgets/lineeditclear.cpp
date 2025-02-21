@@ -9,24 +9,28 @@
 ****************************************************************************/
 
 #include "lineeditclear.h"
-#include <QToolButton>
-#include <QStyle>
+
 #include <QKeyEvent>
+#include <QStyle>
+#include <QToolButton>
 
 LineEditClear::LineEditClear(QWidget *parent)
     : QLineEdit(parent)
 {
     clearButton = new QToolButton(this);
-    clearButton->setIcon(QIcon::fromTheme("edit-clear",
-                                          QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
-//    clearButton->setIconSize(QSize(16, 16));
+    clearButton->setIcon(
+        QIcon::fromTheme("edit-clear", QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
+    //    clearButton->setIconSize(QSize(16, 16));
     clearButton->setCursor(Qt::ArrowCursor);
     clearButton->setStyleSheet("QToolButton { border: none; padding: 0px; }");
     clearButton->hide();
     connect(clearButton, SIGNAL(clicked()), this, SLOT(clear()));
-    connect(this, SIGNAL(textChanged(const QString &)), this, SLOT(updateCloseButton(const QString &)));
+    connect(this,
+            SIGNAL(textChanged(const QString &)),
+            this,
+            SLOT(updateCloseButton(const QString &)));
     int frameWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
-//    setStyleSheet(QStringLiteral("QLineEdit { padding-right: %1px; } ").arg(clearButton->sizeHint().width() + frameWidth + 1));
+    //    setStyleSheet(QStringLiteral("QLineEdit { padding-right: %1px; } ").arg(clearButton->sizeHint().width() + frameWidth + 1));
     QSize msz = minimumSizeHint();
     setMinimumSize(qMax(msz.width(), clearButton->sizeHint().height() + frameWidth * 2 + 2),
                    qMax(msz.height(), clearButton->sizeHint().height() + frameWidth * 2 + 2));
@@ -43,7 +47,8 @@ void LineEditClear::resizeEvent(QResizeEvent *)
 
 bool LineEditClear::eventFilter(QObject *target, QEvent *event)
 {
-    if (QEvent::KeyPress == event->type() && Qt::Key_Escape == static_cast<QKeyEvent *>(event)->key()) {
+    if (QEvent::KeyPress == event->type()
+        && Qt::Key_Escape == static_cast<QKeyEvent *>(event)->key()) {
         clear();
     }
     return QLineEdit::eventFilter(target, event);

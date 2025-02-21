@@ -24,7 +24,8 @@
 
 namespace Subtitles {
 
-struct SubtitleItem {
+struct SubtitleItem
+{
     int64_t start;
     int64_t end;
     std::string text;

@@ -17,24 +17,23 @@
 
 #include "subtitlesdock.h"
 
+#include "Logger.h"
 #include "actions.h"
-#include "mainwindow.h"
-#include "settings.h"
-#include "shotcut_mlt_properties.h"
-#include "util.h"
 #include "dialogs/subtitletrackdialog.h"
 #include "dialogs/transcribeaudiodialog.h"
 #include "jobqueue.h"
 #include "jobs/meltjob.h"
 #include "jobs/whisperjob.h"
+#include "mainwindow.h"
 #include "models/subtitlesmodel.h"
 #include "models/subtitlesselectionmodel.h"
-#include "widgets/docktoolbar.h"
 #include "qmltypes/qmlapplication.h"
-#include <Logger.h>
+#include "settings.h"
+#include "shotcut_mlt_properties.h"
+#include "util.h"
+#include "widgets/docktoolbar.h"
 
-#include "MltPlaylist.h"
-
+#include <MltPlaylist.h>
 #include <QAction>
 #include <QApplication>
 #include <QComboBox>
@@ -52,8 +51,8 @@
 #include <QStandardPaths>
 #include <QTextDocumentFragment>
 #include <QTextEdit>
-#include <QTreeView>
 #include <QToolButton>
+#include <QTreeView>
 #include <QVBoxLayout>
 #include <QtWidgets/QScrollArea>
 
@@ -70,7 +69,8 @@ static mlt_position msToPosition(int64_t ms)
     return ms * MLT.profile().frame_rate_num() / MLT.profile().frame_rate_den() / 1000;
 }
 
-static QList<Subtitles::SubtitleItem> readSrtFile(const QString &path, int64_t timeOffset,
+static QList<Subtitles::SubtitleItem> readSrtFile(const QString &path,
+                                                  int64_t timeOffset,
                                                   bool includeNonspoken)
 {
     QList<Subtitles::SubtitleItem> items;
@@ -97,9 +97,9 @@ static QList<Subtitles::SubtitleItem> readSrtFile(const QString &path, int64_t t
                 line = line.remove(0, 1).simplified();
             }
             // Remove unspoken sounds if requested
-            if (!includeNonspoken &&
-                    ((line.startsWith("[") && line.endsWith("]")) ||
-                     (line.startsWith("(") && line.endsWith(")")))) {
+            if (!includeNonspoken
+                && ((line.startsWith("[") && line.endsWith("]"))
+                    || (line.startsWith("(") && line.endsWith(")")))) {
                 continue;
             }
             if (i != 0) {
@@ -119,8 +119,8 @@ static QList<Subtitles::SubtitleItem> readSrtFile(const QString &path, int64_t t
     return items;
 }
 
-SubtitlesDock::SubtitlesDock(QWidget *parent) :
-    QDockWidget(parent)
+SubtitlesDock::SubtitlesDock(QWidget *parent)
+    : QDockWidget(parent)
     , m_model(nullptr)
     , m_pos(-1)
     , m_textEditInProgress(false)
@@ -129,7 +129,8 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
 
     setObjectName("SubtitlesDock");
     QDockWidget::setWindowTitle(tr("Subtitles"));
-    QIcon filterIcon = QIcon::fromTheme("subtitle", QIcon(":/icons/oxygen/32x32/actions/subtitle.png"));
+    QIcon filterIcon = QIcon::fromTheme("subtitle",
+                                        QIcon(":/icons/oxygen/32x32/actions/subtitle.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
 
@@ -211,8 +212,8 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     toolbar->setAreaHint(Qt::BottomToolBarArea);
 
     auto button = new QToolButton;
-    button->setIcon(QIcon::fromTheme("show-menu",
-                                     QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
+    button->setIcon(
+        QIcon::fromTheme("show-menu", QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
     button->setToolTip(tr("Subtitles Menu"));
     button->setAutoRaise(true);
     button->setMenu(mainMenu);
@@ -294,17 +295,15 @@ SubtitlesDock::SubtitlesDock(QWidget *parent) :
     LOG_DEBUG() << "end";
 }
 
-SubtitlesDock::~SubtitlesDock()
-{
-}
+SubtitlesDock::~SubtitlesDock() {}
 
 void SubtitlesDock::setupActions()
 {
     QAction *action;
 
     action = new QAction(tr("Add Subtitle Track"), this);
-    action->setIcon(QIcon::fromTheme("list-add",
-                                     QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
+    action->setIcon(
+        QIcon::fromTheme("list-add", QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
     action->setToolTip(tr("Add a subtitle track"));
     connect(action, &QAction::triggered, this, [&]() {
         show();
@@ -314,8 +313,8 @@ void SubtitlesDock::setupActions()
     Actions.add("subtitleAddTrackAction", action);
 
     action = new QAction(tr("Remove Subtitle Track"), this);
-    action->setIcon(QIcon::fromTheme("list-remove",
-                                     QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
+    action->setIcon(
+        QIcon::fromTheme("list-remove", QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
     action->setToolTip(tr("Remove this subtitle track"));
     connect(action, &QAction::triggered, this, [&]() {
         show();
@@ -325,8 +324,8 @@ void SubtitlesDock::setupActions()
     Actions.add("subtitleRemoveTrackAction", action);
 
     action = new QAction(tr("Edit Subtitle Track"), this);
-    action->setIcon(QIcon::fromTheme("document-edit",
-                                     QIcon(":/icons/oxygen/32x32/actions/document-edit.png")));
+    action->setIcon(
+        QIcon::fromTheme("document-edit", QIcon(":/icons/oxygen/32x32/actions/document-edit.png")));
     action->setToolTip(tr("Edit this subtitle track"));
     connect(action, &QAction::triggered, this, [&]() {
         show();
@@ -359,57 +358,57 @@ void SubtitlesDock::setupActions()
 
     action = new QAction(tr("Create/Edit Subtitle"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Q));
-    action->setIcon(QIcon::fromTheme("subtitle",
-                                     QIcon(":/icons/oxygen/32x32/actions/subtitle.png")));
+    action->setIcon(
+        QIcon::fromTheme("subtitle", QIcon(":/icons/oxygen/32x32/actions/subtitle.png")));
     action->setToolTip(tr("Create or Edit a subtitle at the cursor position."));
     connect(action, &QAction::triggered, this, &SubtitlesDock::onCreateOrEditRequested);
     Actions.add("subtitleCreateEditItemAction", action, windowTitle());
 
     action = new QAction(tr("Add Subtitle Item"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_W));
-    action->setIcon(QIcon::fromTheme("list-add",
-                                     QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
+    action->setIcon(
+        QIcon::fromTheme("list-add", QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
     action->setToolTip(tr("Add a subtitle at the cursor position"));
     connect(action, &QAction::triggered, this, &SubtitlesDock::onAddRequested);
     Actions.add("subtitleAddItemAction", action, windowTitle());
 
     action = new QAction(tr("Remove Subtitle Item"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_E));
-    action->setIcon(QIcon::fromTheme("list-remove",
-                                     QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
+    action->setIcon(
+        QIcon::fromTheme("list-remove", QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
     action->setToolTip(tr("Remove the selected subtitle item"));
     connect(action, &QAction::triggered, this, &SubtitlesDock::onRemoveRequested);
     Actions.add("subtitleRemoveItemAction", action, windowTitle());
 
     action = new QAction(tr("Set Subtitle Start"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_R));
-    action->setIcon(QIcon::fromTheme("keyframes-filter-in",
-                                     QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-in.png")));
+    action->setIcon(
+        QIcon::fromTheme("keyframes-filter-in",
+                         QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-in.png")));
     action->setToolTip(tr("Set the selected subtitle to start at the cursor position"));
     connect(action, &QAction::triggered, this, &SubtitlesDock::onSetStartRequested);
     Actions.add("subtitleSetStartAction", action, windowTitle());
 
     action = new QAction(tr("Set Subtitle End"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_T));
-    action->setIcon(QIcon::fromTheme("keyframes-filter-out",
-                                     QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-out.png")));
+    action->setIcon(
+        QIcon::fromTheme("keyframes-filter-out",
+                         QIcon(":/icons/oxygen/32x32/actions/keyframes-filter-out.png")));
     action->setToolTip(tr("Set the selected subtitle to end at the cursor position"));
     connect(action, &QAction::triggered, this, &SubtitlesDock::onSetEndRequested);
     Actions.add("subtitleSetEndAction", action, windowTitle());
 
     action = new QAction(tr("Move Subtitles"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Y));
-    action->setIcon(QIcon::fromTheme("4-direction",
-                                     QIcon(":/icons/oxygen/32x32/actions/4-direction.png")));
+    action->setIcon(
+        QIcon::fromTheme("4-direction", QIcon(":/icons/oxygen/32x32/actions/4-direction.png")));
     action->setToolTip(tr("Move the selected subtitles to the cursor position"));
     connect(action, &QAction::triggered, this, &SubtitlesDock::onMoveRequested);
     Actions.add("subtitleMoveAction", action, windowTitle());
 
     action = new QAction(tr("Burn In Subtitles on Output"), this);
-    action->setToolTip(
-        tr("Create or edit a Burn In Subtitles filter on the timeline output."));
-    action->setIcon(QIcon::fromTheme("font",
-                                     QIcon(":/icons/oxygen/32x32/actions/font.png")));
+    action->setToolTip(tr("Create or edit a Burn In Subtitles filter on the timeline output."));
+    action->setIcon(QIcon::fromTheme("font", QIcon(":/icons/oxygen/32x32/actions/font.png")));
     connect(action, &QAction::triggered, this, &SubtitlesDock::burnInOnTimeline);
     Actions.add("subtitleBurnInAction", action, windowTitle());
 
@@ -420,8 +419,7 @@ void SubtitlesDock::setupActions()
     Actions.add("subtitleGenerateTextAction", action, windowTitle());
 
     action = new QAction(tr("Speech to Text..."), this);
-    action->setToolTip(
-        tr("Detect speech and transcribe to a new subtitle track."));
+    action->setToolTip(tr("Detect speech and transcribe to a new subtitle track."));
     action->setIcon(QIcon::fromTheme("speech-to-text",
                                      QIcon(":/icons/oxygen/32x32/actions/speech-to-text.png")));
     connect(action, &QAction::triggered, this, &SubtitlesDock::speechToText);
@@ -460,9 +458,13 @@ void SubtitlesDock::setModel(SubtitlesModel *model, SubtitlesSelectionModel *sel
     m_treeView->setColumnHidden(2, !Settings.subtitlesShowColumn("start"));
     m_treeView->setColumnHidden(3, !Settings.subtitlesShowColumn("end"));
     m_treeView->setColumnHidden(4, !Settings.subtitlesShowColumn("duration"));
-    connect(m_selectionModel, &QItemSelectionModel::currentChanged, this,
+    connect(m_selectionModel,
+            &QItemSelectionModel::currentChanged,
+            this,
             &SubtitlesDock::refreshWidgets);
-    connect(m_selectionModel, &SubtitlesSelectionModel::selectedTrackModelIndexChanged, m_treeView,
+    connect(m_selectionModel,
+            &SubtitlesSelectionModel::selectedTrackModelIndexChanged,
+            m_treeView,
             &QTreeView::setRootIndex);
     connect(m_treeView, &QTreeView::doubleClicked, this, &SubtitlesDock::onItemDoubleClicked);
     connect(m_model, &QAbstractItemModel::modelReset, this, &SubtitlesDock::onModelReset);
@@ -470,18 +472,22 @@ void SubtitlesDock::setModel(SubtitlesModel *model, SubtitlesSelectionModel *sel
     connect(m_model, &QAbstractItemModel::dataChanged, this, &SubtitlesDock::refreshWidgets);
     connect(m_model, &QAbstractItemModel::rowsInserted, this, &SubtitlesDock::refreshWidgets);
     connect(m_model, &QAbstractItemModel::rowsMoved, this, &SubtitlesDock::refreshWidgets);
-    connect(m_model, &QAbstractItemModel::rowsRemoved, this, [&](const QModelIndex & parent, int first,
-    int last) {
-        if (parent.isValid()) {
-            refreshWidgets();
-        }
-    });
+    connect(m_model,
+            &QAbstractItemModel::rowsRemoved,
+            this,
+            [&](const QModelIndex &parent, int first, int last) {
+                if (parent.isValid()) {
+                    refreshWidgets();
+                }
+            });
     refreshTracksCombo();
     refreshWidgets();
 }
 
-void SubtitlesDock::importSrtFromFile(const QString &srtPath, const QString &trackName,
-                                      const QString &lang, bool includeNonspoken)
+void SubtitlesDock::importSrtFromFile(const QString &srtPath,
+                                      const QString &trackName,
+                                      const QString &lang,
+                                      bool includeNonspoken)
 {
     QList<Subtitles::SubtitleItem> items = readSrtFile(srtPath, 0, includeNonspoken);
     if (items.size() == 0) {
@@ -529,13 +535,16 @@ void SubtitlesDock::removeSubtitleTrack()
         if (multitrack && multitrack->is_valid()) {
             for (int i = 0; i < multitrack->filter_count(); i++) {
                 QScopedPointer<Mlt::Filter> filter(multitrack->filter(i));
-                if (!filter || !filter->is_valid() || filter->get("mlt_service") != QStringLiteral("subtitle")) {
+                if (!filter || !filter->is_valid()
+                    || filter->get("mlt_service") != QStringLiteral("subtitle")) {
                     continue;
                 }
                 if (name == filter->get("feed")) {
-                    QMessageBox::warning(this, tr("Remove Subtitle Track"),
-                                         tr("This track is in use by a subtitle filter.\n"
-                                            "Remove the subtitle filter before removing this track."));
+                    QMessageBox::warning(
+                        this,
+                        tr("Remove Subtitle Track"),
+                        tr("This track is in use by a subtitle filter.\n"
+                           "Remove the subtitle filter before removing this track."));
                     return;
                 }
             }
@@ -578,10 +587,13 @@ void SubtitlesDock::editSubtitleTrack()
 void SubtitlesDock::importSubtitles()
 {
     // Get the file name from the user.
-    QString subtitlePath = QFileDialog::getOpenFileName(&MAIN, tr("Import Subtitle File"),
-                                                        Settings.openPath(),
-                                                        tr("Subtitle Files (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)"),
-                                                        nullptr, Util::getFileDialogOptions());
+    QString subtitlePath = QFileDialog::getOpenFileName(
+        &MAIN,
+        tr("Import Subtitle File"),
+        Settings.openPath(),
+        tr("Subtitle Files (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)"),
+        nullptr,
+        Util::getFileDialogOptions());
     if (subtitlePath.isEmpty()) {
         return;
     }
@@ -602,14 +614,17 @@ void SubtitlesDock::importSubtitles()
     QProcess proc;
     QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
     QStringList args;
-    args << "-y" << "-hide_banner" << "-i" << subtitleFi.absoluteFilePath() << tmpFileName;
+    args << "-y"
+         << "-hide_banner"
+         << "-i" << subtitleFi.absoluteFilePath() << tmpFileName;
     LOG_INFO() << ffmpegPath.absoluteFilePath() << args;
     MAIN.showStatusMessage(QObject::tr("Importing subtitles..."));
     proc.setStandardOutputFile(QProcess::nullDevice());
     proc.setReadChannel(QProcess::StandardError);
     proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
     QCoreApplication::processEvents();
-    if (!proc.waitForFinished(8000) || proc.exitStatus() != QProcess::NormalExit || proc.exitCode()) {
+    if (!proc.waitForFinished(8000) || proc.exitStatus() != QProcess::NormalExit
+        || proc.exitCode()) {
         QString output = proc.readAll();
         foreach (const QString &line, output.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts))
             LOG_INFO() << line;
@@ -631,9 +646,12 @@ void SubtitlesDock::exportSubtitles()
 {
     auto track = m_model->getTrack(m_trackCombo->currentIndex());
     QString suggestedPath = QStringLiteral("%1/%2.srt").arg(Settings.savePath()).arg(track.name);
-    QString srtPath = QFileDialog::getSaveFileName(&MAIN, tr("Export SRT File"), suggestedPath,
+    QString srtPath = QFileDialog::getSaveFileName(&MAIN,
+                                                   tr("Export SRT File"),
+                                                   suggestedPath,
                                                    tr("SRT Files (*.srt *.SRT)"),
-                                                   nullptr, Util::getFileDialogOptions());
+                                                   nullptr,
+                                                   Util::getFileDialogOptions());
     if (srtPath.isEmpty()) {
         return;
     }
@@ -659,7 +677,8 @@ void SubtitlesDock::refreshTracksCombo()
         QList<SubtitlesModel::SubtitleTrack> tracks = m_model->getTracks();
         m_trackCombo->clear();
         for (auto &track : tracks) {
-            m_trackCombo->addItem(QStringLiteral("%1 (%2)").arg(track.name).arg(track.lang), track.name);
+            m_trackCombo->addItem(QStringLiteral("%1 (%2)").arg(track.name).arg(track.lang),
+                                  track.name);
         }
         if (tracks.size() > 0) {
             m_trackCombo->setCurrentIndex(0);
@@ -841,7 +860,7 @@ void SubtitlesDock::onItemDoubleClicked(const QModelIndex &index)
     if (index.parent().isValid()) {
         const Subtitles::SubtitleItem item = m_model->getItem(index.parent().row(), index.row());
         int64_t position = msToPosition(item.start);
-        emit seekRequested((int)position);
+        emit seekRequested((int) position);
     }
 }
 
@@ -883,7 +902,7 @@ void SubtitlesDock::updateTextWidgets()
         int trackIndex = currentIndex.parent().row();
         int itemIndex = currentIndex.row();
         if (trackIndex >= 0 && trackIndex < m_model->trackCount() && itemIndex >= 0
-                && itemIndex < m_model->itemCount(trackIndex)) {
+            && itemIndex < m_model->itemCount(trackIndex)) {
             item = m_model->getItem(trackIndex, itemIndex);
             m_text->setPlainText(QString::fromStdString(item.text));
             m_text->setReadOnly(false);
@@ -953,7 +972,6 @@ void SubtitlesDock::updateTextWidgets()
 
 void SubtitlesDock::updateActionAvailablity()
 {
-
     if (!m_model || !m_model->isValid()) {
         // Disable all actions
         m_addToTimelineLabel->setVisible(true);
@@ -1140,7 +1158,8 @@ void SubtitlesDock::generateTextOnTimeline()
         presetFile.close();
         if (isYaml) {
             // Load from YAML file.
-            Mlt::Properties *properties = Mlt::Properties::parse_yaml(presetFilePath.toUtf8().constData());
+            Mlt::Properties *properties = Mlt::Properties::parse_yaml(
+                presetFilePath.toUtf8().constData());
             filterProperties = *properties;
             delete properties;
         } else {
@@ -1212,8 +1231,8 @@ void SubtitlesDock::speechToText()
 
     // Make a copy of the timeline producer
     QString xml = MLT.XML(MAIN.multitrack());
-    std::unique_ptr<Mlt::Producer> tempProducer(new Mlt::Producer(MLT.profile(), "xml-string",
-                                                                  xml.toUtf8().constData()));
+    std::unique_ptr<Mlt::Producer> tempProducer(
+        new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
 
     // Mute tracks as requested
     Mlt::Tractor tractor(*tempProducer.get());
@@ -1251,9 +1270,15 @@ void SubtitlesDock::speechToText()
 
     // Make the wav file from the timeline
     QStringList args;
-    args << "-consumer" << "avformat:" + tmpWav->fileName() << "video_off=1" << "ar=16000" << "ac=1";
+    args << "-consumer"
+         << "avformat:" + tmpWav->fileName() << "video_off=1"
+         << "ar=16000"
+         << "ac=1";
     QString jobName = tr("Extracting Audio");
-    MeltJob *wavJob = new MeltJob(jobName, wavXml, args, MLT.profile().frame_rate_num(),
+    MeltJob *wavJob = new MeltJob(jobName,
+                                  wavXml,
+                                  args,
+                                  MLT.profile().frame_rate_num(),
                                   MLT.profile().frame_rate_den());
     tmpWav->setParent(wavJob);
     JOBS.add(wavJob);
@@ -1268,16 +1293,23 @@ void SubtitlesDock::speechToText()
 
     // Run speech transcription on the wav file
     jobName = tr("Speech to Text");
-    WhisperJob *whisperJob = new WhisperJob(jobName, tmpWav->fileName(), tmpSrt->fileName(),
-                                            dialog.language(), dialog.translate(), dialog.maxLineLength());
+    WhisperJob *whisperJob = new WhisperJob(jobName,
+                                            tmpWav->fileName(),
+                                            tmpSrt->fileName(),
+                                            dialog.language(),
+                                            dialog.translate(),
+                                            dialog.maxLineLength());
     // Ensure the language code is 3 character (part 2)
     QString langCode = dialog.language();
     QLocale::Language lang = QLocale::codeToLanguage(langCode);
     if (lang != QLocale::AnyLanguage) {
         langCode = QLocale::languageToCode(lang, QLocale::ISO639Part2);
     }
-    whisperJob->setPostJobAction(new ImportSrtPostJobAction(tmpSrt->fileName(), dialog.name(), langCode,
-                                                            dialog.includeNonspoken(), this));
+    whisperJob->setPostJobAction(new ImportSrtPostJobAction(tmpSrt->fileName(),
+                                                            dialog.name(),
+                                                            langCode,
+                                                            dialog.includeNonspoken(),
+                                                            this));
     tmpSrt->setParent(whisperJob);
     JOBS.add(whisperJob);
 }

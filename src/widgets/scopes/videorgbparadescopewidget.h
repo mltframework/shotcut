@@ -19,8 +19,9 @@
 #define VIDEORGBPARADESCOPEWIDGET_H
 
 #include "scopewidget.h"
-#include <QMutex>
+
 #include <QImage>
+#include <QMutex>
 
 class VideoRgbParadeScopeWidget Q_DECL_FINAL : public ScopeWidget
 {

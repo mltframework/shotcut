@@ -18,8 +18,9 @@
 #ifndef DECKLINKPRODUCERWIDGET_H
 #define DECKLINKPRODUCERWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class DecklinkProducerWidget;

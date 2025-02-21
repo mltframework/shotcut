@@ -20,10 +20,10 @@
 
 #include <MltProducer.h>
 #include <QAbstractListModel>
-#include <QString>
-#include <QMap>
 #include <QList>
+#include <QMap>
 #include <QRectF>
+#include <QString>
 
 class QmlFilter;
 namespace Mlt {
@@ -37,7 +37,8 @@ class MotionTrackerModel : public QAbstractListModel
     Q_PROPERTY(QString operationProperty READ trackerOperationProperty CONSTANT)
 
 public:
-    struct TrackingItem {
+    struct TrackingItem
+    {
         int frame;
         QRectF rect;
     };
@@ -59,10 +60,10 @@ public:
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    bool setData(const QModelIndex &index, const QVariant &value,
-                 int role = Qt::EditRole) override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
-    Q_INVOKABLE static void undo(QmlFilter *filter = nullptr, const QString &propertyName = QString());
+    Q_INVOKABLE static void undo(QmlFilter *filter = nullptr,
+                                 const QString &propertyName = QString());
     static QString trackerNameProperty()
     {
         return QString::fromLatin1("shotcut:motionTracker.name");
@@ -76,12 +77,10 @@ public slots:
     void removeFromService(Mlt::Service *service);
 
 private:
-    enum Roles {
-        IdentifierRole = Qt::UserRole,
-        TrackingDataRole = Qt::UserRole + 1
-    };
+    enum Roles { IdentifierRole = Qt::UserRole, TrackingDataRole = Qt::UserRole + 1 };
 
-    struct Item {
+    struct Item
+    {
         QString name;
         QString trackingData;
         int intervalFrames;

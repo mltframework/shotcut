@@ -17,20 +17,21 @@
 
 #include "openotherdialog.h"
 #include "ui_openotherdialog.h"
+
 #include "mltcontroller.h"
+
 #include <Mlt.h>
 #include <QtWidgets>
 
-OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::OpenOtherDialog)
+OpenOtherDialog::OpenOtherDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::OpenOtherDialog)
 {
     ui->setupUi(this);
     m_current = ui->networkWidget;
-    m_addTimelineButton = ui->buttonBox->addButton(tr("Add To Timeline"), QDialogButtonBox::ApplyRole);
-    connect(m_addTimelineButton, &QPushButton::clicked, this, [ = ]() {
-        done(-1);
-    });
+    m_addTimelineButton = ui->buttonBox->addButton(tr("Add To Timeline"),
+                                                   QDialogButtonBox::ApplyRole);
+    connect(m_addTimelineButton, &QPushButton::clicked, this, [=]() { done(-1); });
 
     QScopedPointer<Mlt::Properties> mltProducers(MLT.repository()->producers());
     QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());

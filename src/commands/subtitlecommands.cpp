@@ -17,15 +17,16 @@
 
 #include "subtitlecommands.h"
 
-#include <Logger.h>
-#include <mainwindow.h>
+#include "Logger.h"
+#include "mainwindow.h"
 
 #include <QFileInfo>
 
 namespace Subtitles {
 
 InsertTrackCommand::InsertTrackCommand(SubtitlesModel &model,
-                                       const SubtitlesModel::SubtitleTrack &track, int index)
+                                       const SubtitlesModel::SubtitleTrack &track,
+                                       int index)
     : QUndoCommand(0)
     , m_model(model)
     , m_track(track)
@@ -71,7 +72,8 @@ void RemoveTrackCommand::undo()
 }
 
 EditTrackCommand::EditTrackCommand(SubtitlesModel &model,
-                                   const SubtitlesModel::SubtitleTrack &track, int index)
+                                   const SubtitlesModel::SubtitleTrack &track,
+                                   int index)
     : QUndoCommand(0)
     , m_model(model)
     , m_newTrack(track)
@@ -92,7 +94,8 @@ void EditTrackCommand::undo()
     m_model.doEditTrack(m_oldTrack, m_index);
 }
 
-OverwriteSubtitlesCommand::OverwriteSubtitlesCommand(SubtitlesModel &model, int trackIndex,
+OverwriteSubtitlesCommand::OverwriteSubtitlesCommand(SubtitlesModel &model,
+                                                     int trackIndex,
                                                      const QList<Subtitles::SubtitleItem> &items)
     : QUndoCommand(0)
     , m_model(model)
@@ -114,8 +117,8 @@ OverwriteSubtitlesCommand::OverwriteSubtitlesCommand(SubtitlesModel &model, int 
     int count = m_model.itemCount(m_trackIndex);
     for (int i = 0; i < count; i++) {
         auto item = m_model.getItem(m_trackIndex, i);
-        if ((item.start >= startPosition && item.start < endPosition) || (item.end > startPosition
-                                                                          && item.end < endPosition)) {
+        if ((item.start >= startPosition && item.start < endPosition)
+            || (item.end > startPosition && item.end < endPosition)) {
             m_saveSubtitles.push_back(item);
         }
     }
@@ -145,7 +148,8 @@ void OverwriteSubtitlesCommand::undo()
     }
 }
 
-RemoveSubtitlesCommand::RemoveSubtitlesCommand(SubtitlesModel &model, int trackIndex,
+RemoveSubtitlesCommand::RemoveSubtitlesCommand(SubtitlesModel &model,
+                                               int trackIndex,
                                                const QList<Subtitles::SubtitleItem> &items)
     : QUndoCommand(0)
     , m_model(model)
@@ -173,7 +177,9 @@ void RemoveSubtitlesCommand::undo()
     }
 }
 
-SetTextCommand::SetTextCommand(SubtitlesModel &model, int trackIndex, int itemIndex,
+SetTextCommand::SetTextCommand(SubtitlesModel &model,
+                               int trackIndex,
+                               int itemIndex,
                                const QString &text)
     : QUndoCommand(0)
     , m_model(model)
@@ -206,7 +212,9 @@ bool SetTextCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-SetStartCommand::SetStartCommand(SubtitlesModel &model, int trackIndex, int itemIndex,
+SetStartCommand::SetStartCommand(SubtitlesModel &model,
+                                 int trackIndex,
+                                 int itemIndex,
                                  int64_t msTime)
     : QUndoCommand(0)
     , m_model(model)
@@ -275,8 +283,10 @@ bool SetEndCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-MoveSubtitlesCommand::MoveSubtitlesCommand(SubtitlesModel &model, int trackIndex,
-                                           const QList<Subtitles::SubtitleItem> &items, int64_t msTime)
+MoveSubtitlesCommand::MoveSubtitlesCommand(SubtitlesModel &model,
+                                           int trackIndex,
+                                           const QList<Subtitles::SubtitleItem> &items,
+                                           int64_t msTime)
     : QUndoCommand(0)
     , m_model(model)
     , m_trackIndex(trackIndex)

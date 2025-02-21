@@ -56,7 +56,10 @@ StatusLabelWidget::StatusLabelWidget(QWidget *parent)
         m_fadeOut->setEasingCurve(QEasingCurve::OutBack);
         m_timer.setSingleShot(true);
         connect(&m_timer, SIGNAL(timeout()), m_fadeOut, SLOT(start()));
-        connect(m_fadeOut, &QPropertyAnimation::finished, this, &StatusLabelWidget::onFadeOutFinished);
+        connect(m_fadeOut,
+                &QPropertyAnimation::finished,
+                this,
+                &StatusLabelWidget::onFadeOutFinished);
         m_fadeOut->start();
     } else {
         connect(&m_timer, &QTimer::timeout, this, &StatusLabelWidget::onFadeOutFinished);
@@ -64,21 +67,21 @@ StatusLabelWidget::StatusLabelWidget(QWidget *parent)
     setLayout(m_layout);
 }
 
-StatusLabelWidget::~StatusLabelWidget()
-{
-}
+StatusLabelWidget::~StatusLabelWidget() {}
 
 void StatusLabelWidget::setWidth(int width)
 {
     m_width = width;
 }
 
-void StatusLabelWidget::showText(const QString &text, int timeoutSeconds, QAction *action,
+void StatusLabelWidget::showText(const QString &text,
+                                 int timeoutSeconds,
+                                 QAction *action,
                                  QPalette::ColorRole role)
 {
     auto width = m_width ? m_width : m_layout->maximumSize().width();
     QString s = QStringLiteral("  %1  ").arg(
-                    m_label->fontMetrics().elidedText(text, Qt::ElideRight, width - 30));
+        m_label->fontMetrics().elidedText(text, Qt::ElideRight, width - 30));
     m_label->setText(s);
     m_label->setToolTip(text);
     auto palette = QApplication::palette();

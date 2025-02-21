@@ -52,7 +52,7 @@ ResourceWidget::ResourceWidget(QWidget *parent)
                                             QHeaderView::Interactive);
     m_table->header()->setSectionResizeMode(ResourceModel::COLUMN_AUD_DESCRIPTION,
                                             QHeaderView::Interactive);
-    connect(m_table->selectionModel(), &QItemSelectionModel::currentChanged, this, [ = ]() {
+    connect(m_table->selectionModel(), &QItemSelectionModel::currentChanged, this, [=]() {
         m_table->selectionModel()->clearCurrentIndex();
     });
     vlayout->addWidget(m_table);
@@ -60,9 +60,7 @@ ResourceWidget::ResourceWidget(QWidget *parent)
     setLayout(vlayout);
 }
 
-ResourceWidget::~ResourceWidget()
-{
-}
+ResourceWidget::~ResourceWidget() {}
 
 void ResourceWidget::search(Mlt::Producer *producer)
 {
@@ -80,7 +78,9 @@ void ResourceWidget::selectTroubleClips()
     for (int i = 0; i < m_model->rowCount(QModelIndex()); i++) {
         QModelIndex index = m_model->index(i, ResourceModel::COLUMN_INFO);
         if (!m_model->data(index, Qt::ToolTipRole).toString().isEmpty()) {
-            m_table->selectionModel()->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+            m_table->selectionModel()->select(index,
+                                              QItemSelectionModel::Select
+                                                  | QItemSelectionModel::Rows);
         }
     }
 }

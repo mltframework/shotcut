@@ -24,8 +24,8 @@
 class ColorDialog : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QColor selectedColor READ selectedColor WRITE setSelectedColor NOTIFY
-               selectedColorChanged)
+    Q_PROPERTY(
+        QColor selectedColor READ selectedColor WRITE setSelectedColor NOTIFY selectedColorChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
 
 public:
@@ -42,15 +42,9 @@ private:
     QColor m_color;
     QString m_title;
 
-    QColor selectedColor() const
-    {
-        return m_color;
-    }
+    QColor selectedColor() const { return m_color; }
     void setSelectedColor(const QColor &color);
-    QString title() const
-    {
-        return m_title;
-    }
+    QString title() const { return m_title; }
     void setTitle(const QString &title);
 };
 

@@ -18,8 +18,7 @@
 #ifndef SUBTITLESDOCK_H
 #define SUBTITLESDOCK_H
 
-#include "MltPlaylist.h"
-
+#include <MltPlaylist.h>
 #include <QDockWidget>
 
 class SubtitlesModel;
@@ -38,7 +37,9 @@ public:
     explicit SubtitlesDock(QWidget *parent = 0);
     ~SubtitlesDock();
     void setModel(SubtitlesModel *model, SubtitlesSelectionModel *selectionModel);
-    void importSrtFromFile(const QString &srtPath, const QString &trackName, const QString &lang,
+    void importSrtFromFile(const QString &srtPath,
+                           const QString &trackName,
+                           const QString &lang,
                            bool includeNonspoken);
 
 signals:

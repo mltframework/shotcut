@@ -17,49 +17,50 @@
 
 #include "filesdock.h"
 #include "ui_filesdock.h"
+
+#include "Logger.h"
 #include "actions.h"
-#include "mainwindow.h"
-#include "settings.h"
-#include "widgets/docktoolbar.h"
-#include "widgets/playlisticonview.h"
-#include "widgets/playlisttable.h"
-#include "widgets/playlistlistview.h"
-#include "util.h"
-#include "qmltypes/qmlapplication.h"
-#include "widgets/lineeditclear.h"
-#include "models/playlistmodel.h"
 #include "database.h"
 #include "dialogs/listselectiondialog.h"
-#include <Logger.h>
+#include "mainwindow.h"
+#include "models/playlistmodel.h"
+#include "qmltypes/qmlapplication.h"
+#include "settings.h"
+#include "util.h"
+#include "widgets/docktoolbar.h"
+#include "widgets/lineeditclear.h"
+#include "widgets/playlisticonview.h"
+#include "widgets/playlistlistview.h"
+#include "widgets/playlisttable.h"
 
-#include <QItemSelectionModel>
-#include <QMenu>
-#include <QStyledItemDelegate>
-#include <QToolButton>
-#include <QPainter>
-#include <QHeaderView>
-#include <QKeyEvent>
+#include <QActionGroup>
+#include <QClipboard>
+#include <QDesktopServices>
 #include <QDir>
 #include <QGuiApplication>
-#include <QClipboard>
-#include <QActionGroup>
-#include <QSortFilterProxyModel>
-#include <QPushButton>
+#include <QHeaderView>
 #include <QInputDialog>
-#include <QStandardPaths>
-#include <QRunnable>
-#include <QThreadPool>
-#include <QMutexLocker>
+#include <QItemSelectionModel>
+#include <QKeyEvent>
+#include <QMenu>
 #include <QMessageBox>
-#include <QDesktopServices>
+#include <QMutexLocker>
+#include <QPainter>
 #include <QProcess>
+#include <QPushButton>
+#include <QRunnable>
+#include <QSortFilterProxyModel>
+#include <QStandardPaths>
+#include <QStyledItemDelegate>
+#include <QThreadPool>
+#include <QToolButton>
 
 static const auto kTilePaddingPx = 10;
 static const auto kTreeViewWidthPx = 150;
 static const auto kDetailedMode = QLatin1String("detailed");
 static const auto kIconsMode = QLatin1String("icons");
 static const auto kTiledMode = QLatin1String("tiled");
-static const QSet<QString> kAudioExtensions {
+static const QSet<QString> kAudioExtensions{
     QLatin1String("m4a"),
     QLatin1String("wav"),
     QLatin1String("mp3"),
@@ -70,7 +71,7 @@ static const QSet<QString> kAudioExtensions {
     QLatin1String("wma"),
     QLatin1String("mka"),
 };
-static const QSet<QString> kImageExtensions {
+static const QSet<QString> kImageExtensions{
     QLatin1String("jpg"),
     QLatin1String("jpeg"),
     QLatin1String("png"),
@@ -82,29 +83,14 @@ static const QSet<QString> kImageExtensions {
     QLatin1String("gif"),
     QLatin1String("tga"),
 };
-static const QSet<QString> kOtherExtensions {
-    QLatin1String("mlt"),
-    QLatin1String("xml"),
-    QLatin1String("txt"),
-    QLatin1String("pdf"),
-    QLatin1String("doc"),
-    QLatin1String("gpx"),
-    QLatin1String("rawr"),
-    QLatin1String("stab"),
-    QLatin1String("srt"),
-    QLatin1String("so"),
-    QLatin1String("dll"),
-    QLatin1String("exe"),
-    QLatin1String("zip"),
-    QLatin1String("edl"),
-    QLatin1String("kdenlive"),
-    QLatin1String("osp"),
-    QLatin1String("blend"),
-    QLatin1String("swf"),
-    QLatin1String("cube"),
-    QLatin1String("json"),
+static const QSet<QString> kOtherExtensions{
+    QLatin1String("mlt"),   QLatin1String("xml"), QLatin1String("txt"),      QLatin1String("pdf"),
+    QLatin1String("doc"),   QLatin1String("gpx"), QLatin1String("rawr"),     QLatin1String("stab"),
+    QLatin1String("srt"),   QLatin1String("so"),  QLatin1String("dll"),      QLatin1String("exe"),
+    QLatin1String("zip"),   QLatin1String("edl"), QLatin1String("kdenlive"), QLatin1String("osp"),
+    QLatin1String("blend"), QLatin1String("swf"), QLatin1String("cube"),     QLatin1String("json"),
 };
-static const QSet<QString> kVideoExtensions {
+static const QSet<QString> kVideoExtensions{
     QLatin1String("mp4"),
     QLatin1String("m4v"),
     QLatin1String("avi"),
@@ -123,9 +109,13 @@ static const QSet<QString> kVideoExtensions {
     QLatin1String("wmv"),
 };
 
-static void cacheMediaType(FilesModel *model, const QString &filePath, int mediaType,
+static void cacheMediaType(FilesModel *model,
+                           const QString &filePath,
+                           int mediaType,
                            const QModelIndex &index);
-static void cacheThumbnail(FilesModel *model, const QString &filePath, QImage &image,
+static void cacheThumbnail(FilesModel *model,
+                           const QString &filePath,
+                           QImage &image,
                            const QModelIndex &index);
 
 class FilesMediaTypeTask : public QRunnable
@@ -140,13 +130,12 @@ public:
         , m_model(model)
         , m_filePath(filePath)
         , m_index(index)
-    {
-    }
+    {}
 
 public:
     void run()
     {
-        static Mlt::Profile profile {"atsc_720p_60"};
+        static Mlt::Profile profile{"atsc_720p_60"};
         Mlt::Producer producer(profile, m_filePath.toUtf8().constData());
         auto mediaType = PlaylistModel::Other;
         if (producer.is_valid()) {
@@ -156,7 +145,7 @@ public:
                 auto service = QString::fromLatin1(producer.get("mlt_service"));
                 if (service.startsWith(QLatin1String("avformat"))) {
                     if (producer.get_int("video_index") > -1
-                            && Util::getSuggestedFrameRate(&producer) != 90000)
+                        && Util::getSuggestedFrameRate(&producer) != 90000)
                         mediaType = PlaylistModel::Video;
                     else if (producer.get_int("audio_index") > -1)
                         mediaType = PlaylistModel::Audio;
@@ -180,8 +169,7 @@ public:
         , m_model(model)
         , m_filePath(filePath)
         , m_index(index)
-    {
-    }
+    {}
 
     static QString cacheKey(const QString &filePath)
     {
@@ -195,10 +183,8 @@ private:
     {
         if (producer.is_valid()) {
             auto service = QString::fromLatin1(producer.get("mlt_service"));
-            return (service.startsWith("avformat") ||
-                    service == "qimage" ||
-                    service == "pixbuf" ||
-                    service == "glaxnimate");
+            return (service.startsWith("avformat") || service == "qimage" || service == "pixbuf"
+                    || service == "glaxnimate");
         }
         return false;
     }
@@ -208,7 +194,7 @@ public:
     {
         LOG_DEBUG() << "Mlt::Producer" << m_filePath;
         QImage image;
-        static Mlt::Profile profile {"atsc_720p_60"};
+        static Mlt::Profile profile{"atsc_720p_60"};
         Mlt::Producer producer(profile, "abnormal", m_filePath.toUtf8().constData());
         if (isValidService(producer)) {
             Mlt::Filter scaler(profile, "swscale");
@@ -241,8 +227,7 @@ public:
     explicit FilesModel(FilesDock *parent = nullptr)
         : QFileSystemModel(parent)
         , m_dock(parent)
-    {
-    }
+    {}
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override
     {
@@ -342,9 +327,9 @@ public:
             image = QImage(64, 64, QImage::Format_ARGB32);
             image.fill(Qt::transparent);
             if (index.isValid()) {
-                const auto pixmap = QFileSystemModel::data(index,
-                                                           Qt::DecorationRole).value<QIcon>().pixmap({16, 16},
-                                                                                                     m_dock->devicePixelRatioF());
+                const auto pixmap = QFileSystemModel::data(index, Qt::DecorationRole)
+                                        .value<QIcon>()
+                                        .pixmap({16, 16}, m_dock->devicePixelRatioF());
                 QPainter painter(&image);
                 QIcon(pixmap).paint(&painter, image.rect());
             }
@@ -356,33 +341,34 @@ public:
     }
 };
 
-static void cacheMediaType(FilesModel *model, const QString &filePath, int mediaType,
+static void cacheMediaType(FilesModel *model,
+                           const QString &filePath,
+                           int mediaType,
                            const QModelIndex &index)
 {
     model->cacheMediaType(filePath, mediaType, index);
 }
 
-static void cacheThumbnail(FilesModel *model, const QString &filePath, QImage &image,
+static void cacheThumbnail(FilesModel *model,
+                           const QString &filePath,
+                           QImage &image,
                            const QModelIndex &index)
 {
     model->cacheThumbnail(filePath, image, index);
 }
-
 
 class FilesTileDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
     FilesTileDelegate(QAbstractItemView *view, QWidget *parent = nullptr)
-        : QStyledItemDelegate(parent),
-          m_view(view)
+        : QStyledItemDelegate(parent)
+        , m_view(view)
     {
-        connect(&Settings, SIGNAL(playlistThumbnailsChanged()),
-                SLOT(emitSizeHintChanged()));
+        connect(&Settings, SIGNAL(playlistThumbnailsChanged()), SLOT(emitSizeHintChanged()));
     }
 
-    void paint(QPainter *painter,
-               const QStyleOptionViewItem &option, const QModelIndex &index) const
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
     {
         const QImage thumb = index.data(FilesModel::ThumbnailRole).value<QImage>();
         const int lineHeight = painter->fontMetrics().height();
@@ -413,12 +399,17 @@ public:
         textPoint.setY(textPoint.y() + lineHeight);
         painter->setFont(boldFont);
         painter->drawText(textPoint,
-                          painter->fontMetrics().elidedText(fileInfo.fileName(), Qt::ElideMiddle, textRect.width()));
+                          painter->fontMetrics().elidedText(fileInfo.fileName(),
+                                                            Qt::ElideMiddle,
+                                                            textRect.width()));
         painter->setFont(oldFont);
 
         textPoint.setY(textPoint.y() + lineHeight);
-        painter->drawText(textPoint, tr("Date: %1").arg(
-                              index.data(FilesModel::DateRole).toDateTime().toString("yyyy-MM-dd HH:mm:ss")));
+        painter->drawText(textPoint,
+                          tr("Date: %1")
+                              .arg(index.data(FilesModel::DateRole)
+                                       .toDateTime()
+                                       .toString("yyyy-MM-dd HH:mm:ss")));
         textPoint.setY(textPoint.y() + lineHeight);
         if (!fileInfo.isDir()) {
             // Get the text of the second (size) column
@@ -436,14 +427,10 @@ public:
     }
 
 private slots:
-    void emitSizeHintChanged()
-    {
-        emit sizeHintChanged(QModelIndex());
-    }
+    void emitSizeHintChanged() { emit sizeHintChanged(QModelIndex()); }
 
 private:
     QAbstractItemView *m_view;
-
 };
 
 class FilesProxyModel : public QSortFilterProxyModel
@@ -451,8 +438,7 @@ class FilesProxyModel : public QSortFilterProxyModel
 public:
     explicit FilesProxyModel(QObject *parent = nullptr)
         : QSortFilterProxyModel(parent)
-    {
-    }
+    {}
 
     void setMediaTypes(QList<PlaylistModel::MediaType> types)
     {
@@ -473,7 +459,9 @@ protected:
         }
 
         // Text search
-        return index.data(QFileSystemModel::FileNameRole).toString().contains(filterRegularExpression());
+        return index.data(QFileSystemModel::FileNameRole)
+            .toString()
+            .contains(filterRegularExpression());
     }
 
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override
@@ -510,28 +498,33 @@ FilesDock::FilesDock(QWidget *parent)
     const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     ui->locationsCombo->addItem(tr("Home", "The user's home folder in the file system"), ls.first());
     ui->locationsCombo->addItem(tr("Current Project"), "");
-    ui->locationsCombo->addItem(tr("Documents"),
-                                QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first());
+    ui->locationsCombo
+        ->addItem(tr("Documents"),
+                  QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first());
 #if defined(Q_OS_MAC)
-    ui->locationsCombo->addItem(tr("Movies",
-                                   "The system-provided videos folder called Movies on macOS"),
-                                QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
+    ui->locationsCombo
+        ->addItem(tr("Movies", "The system-provided videos folder called Movies on macOS"),
+                  QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
 #endif
-    ui->locationsCombo->addItem(tr("Music"),
-                                QStandardPaths::standardLocations(QStandardPaths::MusicLocation).first());
-    ui->locationsCombo->addItem(tr("Pictures", "The system-provided photos folder"),
-                                QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
+    ui->locationsCombo
+        ->addItem(tr("Music"),
+                  QStandardPaths::standardLocations(QStandardPaths::MusicLocation).first());
+    ui->locationsCombo
+        ->addItem(tr("Pictures", "The system-provided photos folder"),
+                  QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
 #if defined(Q_OS_MAC)
-    ui->locationsCombo->addItem(tr("Volumes",
-                                   "The macOS file system location where external drives and network shares are mounted"),
-                                "/Volumes");
+    ui->locationsCombo->addItem(
+        tr("Volumes",
+           "The macOS file system location where external drives and network shares are mounted"),
+        "/Volumes");
 #else
-    ui->locationsCombo->addItem(tr("Videos"),
-                                QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
+    ui->locationsCombo
+        ->addItem(tr("Videos"),
+                  QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
 #endif
     ui->removeLocationButton->setDisabled(true);
     auto n = ui->locationsCombo->count();
-    connect(ui->locationsCombo, &QComboBox::currentIndexChanged, this, [ = ](int index) {
+    connect(ui->locationsCombo, &QComboBox::currentIndexChanged, this, [=](int index) {
         ui->removeLocationButton->setEnabled(index >= n);
     });
 
@@ -542,7 +535,9 @@ FilesDock::FilesDock(QWidget *parent)
         ui->locationsCombo->addItem(name, path);
     }
     ui->locationsCombo->setEditText(QDir::toNativeSeparators(Settings.filesCurrentDir()));
-    connect(ui->locationsCombo->lineEdit(), &QLineEdit::editingFinished, this,
+    connect(ui->locationsCombo->lineEdit(),
+            &QLineEdit::editingFinished,
+            this,
             &FilesDock::onLocationsEditingFinished);
 
     m_filesModel = new FilesModel(this);
@@ -558,7 +553,9 @@ FilesDock::FilesDock(QWidget *parent)
     m_filesProxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     m_filesProxyModel->setRecursiveFilteringEnabled(true);
     m_selectionModel = new QItemSelectionModel(m_filesProxyModel, this);
-    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, this,
+    connect(m_selectionModel,
+            &QItemSelectionModel::selectionChanged,
+            this,
             &FilesDock::selectionChanged);
 
     m_dirsModel.reset(new QFileSystemModel);
@@ -581,14 +578,12 @@ FilesDock::FilesDock(QWidget *parent)
     ui->treeView->setExpanded(homeIndex, true);
     ui->treeView->scrollTo(homeIndex);
     ui->treeView->setCurrentIndex(homeIndex);
-    QTimer::singleShot(0, this, [ = ]() {
-        ui->treeView->setVisible(Settings.filesFoldersOpen());
-    });
-    connect(ui->treeView, &QWidget::customContextMenuRequested, this, [ = ](const QPoint & pos) {
+    QTimer::singleShot(0, this, [=]() { ui->treeView->setVisible(Settings.filesFoldersOpen()); });
+    connect(ui->treeView, &QWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
         QMenu menu(this);
         menu.exec(mapToGlobal(pos));
     });
-    connect(ui->treeView, &QAbstractItemView::clicked, this, [ = ](const QModelIndex & index) {
+    connect(ui->treeView, &QAbstractItemView::clicked, this, [=](const QModelIndex &index) {
         auto filePath = m_dirsModel->filePath(index);
         LOG_DEBUG() << "clicked" << filePath;
         auto sourceIndex = m_filesModel->setRootPath(filePath);
@@ -613,8 +608,8 @@ FilesDock::FilesDock(QWidget *parent)
     DockToolBar *toolbar = new DockToolBar(tr("Files Controls"));
     toolbar->setAreaHint(Qt::BottomToolBarArea);
     QToolButton *menuButton = new QToolButton();
-    menuButton->setIcon(QIcon::fromTheme("show-menu",
-                                         QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
+    menuButton->setIcon(
+        QIcon::fromTheme("show-menu", QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
     menuButton->setToolTip(tr("Files Menu"));
     menuButton->setAutoRaise(true);
     menuButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
@@ -639,33 +634,35 @@ FilesDock::FilesDock(QWidget *parent)
     ui->filtersLayout->addWidget(toolbar);
 
     auto toolbar2 = new QToolBar(tr("Files Filters"));
-    QString styleSheet = QStringLiteral(
-                             "QToolButton {"
-                             "    background-color: palette(background);"
-                             "    border-style: solid;"
-                             "    border-width: 1px;"
-                             "    border-radius: 3px;"
-                             "    border-color: palette(shadow);"
-                             "    color: palette(button-text);"
-                             "}"
-                             "QToolButton:checked {"
-                             "    color:palette(highlighted-text);"
-                             "    background-color:palette(highlight);"
-                             "    border-color: palette(highlight);"
-                             "}"
-                         );
+    QString styleSheet = QStringLiteral("QToolButton {"
+                                        "    background-color: palette(background);"
+                                        "    border-style: solid;"
+                                        "    border-width: 1px;"
+                                        "    border-radius: 3px;"
+                                        "    border-color: palette(shadow);"
+                                        "    color: palette(button-text);"
+                                        "}"
+                                        "QToolButton:checked {"
+                                        "    color:palette(highlighted-text);"
+                                        "    background-color:palette(highlight);"
+                                        "    border-color: palette(highlight);"
+                                        "}");
     toolbar2->setStyleSheet(styleSheet);
-    ui->filtersLayout->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
-    toolbar2->addActions({Actions["filesFiltersVideo"], Actions["filesFiltersAudio"], Actions["filesFiltersImage"], Actions["filesFiltersOther"]});
+    ui->filtersLayout->addItem(
+        new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
+    toolbar2->addActions({Actions["filesFiltersVideo"],
+                          Actions["filesFiltersAudio"],
+                          Actions["filesFiltersImage"],
+                          Actions["filesFiltersOther"]});
     ui->filtersLayout->addWidget(toolbar2);
     m_searchField = new LineEditClear(this);
     m_searchField->setToolTip(tr("Only show files whose name contains some text"));
     m_searchField->setPlaceholderText(tr("search"));
-    connect(m_searchField, &QLineEdit::textChanged, this, [ = ](const QString & search) {
+    connect(m_searchField, &QLineEdit::textChanged, this, [=](const QString &search) {
         m_filesProxyModel->setFilterFixedString(search);
         if (search.isEmpty()) {
-            changeFilesDirectory(m_filesProxyModel->mapFromSource(m_filesModel->index(
-                                                                      m_filesModel->rootPath())));
+            changeFilesDirectory(
+                m_filesProxyModel->mapFromSource(m_filesModel->index(m_filesModel->rootPath())));
         }
         m_view->scrollToTop();
     });
@@ -684,7 +681,7 @@ FilesDock::FilesDock(QWidget *parent)
     ui->tableView->sortByColumn(0, Qt::AscendingOrder);
     ui->tableView->horizontalHeader()->setSectionsMovable(true);
     ui->tableView->setColumnWidth(1, 100);
-    connect(ui->tableView, &QAbstractItemView::activated, this, [ = ] (const QModelIndex & index) {
+    connect(ui->tableView, &QAbstractItemView::activated, this, [=](const QModelIndex &index) {
         auto sourceIndex = m_filesProxyModel->mapToSource(index);
         auto filePath = m_filesModel->filePath(sourceIndex);
 
@@ -704,13 +701,21 @@ FilesDock::FilesDock(QWidget *parent)
         if (!MAIN.open(filePath))
             openClip(filePath);
     });
-    connect(ui->tableView->horizontalHeader(), &QHeaderView::sortIndicatorChanged,
-    this, [ = ](int column, Qt::SortOrder order) {
-        LOG_DEBUG() << "sort by column" << column;
-        ui->tableView->sortByColumn(column, order);
-    });
-    connect(ui->listView, &QAbstractItemView::activated, ui->tableView, &QAbstractItemView::activated);
-    connect(m_iconsView, &QAbstractItemView::activated, ui->tableView, &QAbstractItemView::activated);
+    connect(ui->tableView->horizontalHeader(),
+            &QHeaderView::sortIndicatorChanged,
+            this,
+            [=](int column, Qt::SortOrder order) {
+                LOG_DEBUG() << "sort by column" << column;
+                ui->tableView->sortByColumn(column, order);
+            });
+    connect(ui->listView,
+            &QAbstractItemView::activated,
+            ui->tableView,
+            &QAbstractItemView::activated);
+    connect(m_iconsView,
+            &QAbstractItemView::activated,
+            ui->tableView,
+            &QAbstractItemView::activated);
 
     QList<QAbstractItemView *> views;
     views << ui->tableView;
@@ -720,7 +725,8 @@ FilesDock::FilesDock(QWidget *parent)
         view->setDragDropMode(QAbstractItemView::DragOnly);
         view->setAcceptDrops(false);
         view->setAlternatingRowColors(true);
-        connect(view, SIGNAL(customContextMenuRequested(QPoint)),
+        connect(view,
+                SIGNAL(customContextMenuRequested(QPoint)),
                 SLOT(viewCustomContextMenuRequested(QPoint)));
     }
 
@@ -807,28 +813,28 @@ void FilesDock::setupActions()
     action->setToolTip(tr("Open the clip in the Source player"));
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &FilesDock::onOpenActionTriggered);
-    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [=]() {
         action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesOpenAction", action);
 
     action = new QAction(tr("System Default"), this);
     action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         auto filePath = firstSelectedFilePath();
         if (filePath.isEmpty())
             filePath = m_filesModel->rootPath();
         LOG_DEBUG() << filePath;
         openClip(filePath);
     });
-    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [=]() {
         action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesOpenDefaultAction", action);
 
     action = new QAction(tr("Other..."), this);
     action->setEnabled(false);
-    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [=]() {
         action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     connect(action, &QAction::triggered, this, &FilesDock::onOpenOtherAdd);
@@ -836,14 +842,14 @@ void FilesDock::setupActions()
 
     action = new QAction(tr("Remove..."), this);
     action->setEnabled(false);
-    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [=]() {
         action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     connect(action, &QAction::triggered, this, &FilesDock::onOpenOtherRemove);
     Actions.add("filesOpenWithRemoveAction", action);
 
     action = new QAction(tr("Show In File Manager"), this);
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         auto filePath = firstSelectedFilePath();
         if (filePath.isEmpty())
             filePath = m_filesModel->rootPath();
@@ -855,7 +861,7 @@ void FilesDock::setupActions()
     action = new QAction(tr("Update Thumbnails"), this);
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, &FilesDock::onUpdateThumbnailsActionTriggered);
-    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [=]() {
         action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesUpdateThumbnailsAction", action);
@@ -863,21 +869,21 @@ void FilesDock::setupActions()
     action = new QAction(tr("Select All"), this);
     // action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_A));
     connect(action, &QAction::triggered, this, &FilesDock::onSelectAllActionTriggered);
-    connect(m_filesProxyModel, &QAbstractItemModel::rowsInserted, this, [ = ]() {
+    connect(m_filesProxyModel, &QAbstractItemModel::rowsInserted, this, [=]() {
         action->setEnabled(m_filesProxyModel->rowCount() > 0);
     });
-    connect(m_filesProxyModel, &QAbstractItemModel::rowsRemoved, this, [ = ]() {
+    connect(m_filesProxyModel, &QAbstractItemModel::rowsRemoved, this, [=]() {
         action->setEnabled(m_filesProxyModel->rowCount() > 0);
     });
     Actions.add("filesSelectAllAction", action);
 
     action = new QAction(tr("Select None"), this);
     // action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_D));
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         m_view->setCurrentIndex(QModelIndex());
         m_selectionModel->clearSelection();
     });
-    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [=]() {
         action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesSelectNoneAction", action);
@@ -885,11 +891,11 @@ void FilesDock::setupActions()
     action = new QAction(tr("Open Previous"), this);
     // action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Up));
     action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         raise();
         incrementIndex(-1);
     });
-    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [=]() {
         action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesOpenPreviousAction", action);
@@ -897,11 +903,11 @@ void FilesDock::setupActions()
     action = new QAction(tr("Open Next"), this);
     // action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Down));
     action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         raise();
         incrementIndex(1);
     });
-    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [ = ]() {
+    connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [=]() {
         action->setEnabled(!m_selectionModel->selection().isEmpty());
     });
     Actions.add("filesOpenNextAction", action);
@@ -932,12 +938,11 @@ void FilesDock::setupActions()
 
     action = new QAction(tr("Folders"), this);
     action->setToolTip(tr("Hide or show the list of folders"));
-    icon = QIcon::fromTheme("view-choose",
-                            QIcon(":/icons/oxygen/32x32/actions/view-choose.png"));
+    icon = QIcon::fromTheme("view-choose", QIcon(":/icons/oxygen/32x32/actions/view-choose.png"));
     action->setIcon(icon);
     action->setCheckable(true);
     action->setChecked(Settings.filesFoldersOpen());
-    connect(action, &QAction::triggered, this, [ = ](bool checked) {
+    connect(action, &QAction::triggered, this, [=](bool checked) {
         ui->treeView->setVisible(checked);
         Settings.setFilesFoldersOpen(checked);
     });
@@ -946,10 +951,9 @@ void FilesDock::setupActions()
     action = new QAction(tr("Go Up"), this);
     action->setToolTip(tr("Show the parent folder"));
     action->setShortcut({Qt::ALT | Qt::Key_Backspace});
-    icon = QIcon::fromTheme("lift",
-                            QIcon(":/icons/oxygen/32x32/actions/lift.png"));
+    icon = QIcon::fromTheme("lift", QIcon(":/icons/oxygen/32x32/actions/lift.png"));
     action->setIcon(icon);
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         auto dir = QDir(m_filesModel->rootPath());
         dir.cdUp();
         const auto filePath = dir.absolutePath();
@@ -964,10 +968,9 @@ void FilesDock::setupActions()
     Actions.add("filesGoUp", action);
 
     action = new QAction(tr("Refresh Folders"), this);
-    icon = QIcon::fromTheme("view-refresh",
-                            QIcon(":/icons/oxygen/32x32/actions/view-refresh.png"));
+    icon = QIcon::fromTheme("view-refresh", QIcon(":/icons/oxygen/32x32/actions/view-refresh.png"));
     action->setIcon(icon);
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         const auto cd = m_dirsModel->filePath(ui->treeView->currentIndex());
         m_dirsModel.reset(new QFileSystemModel);
         m_dirsModel->setReadOnly(true);
@@ -987,7 +990,7 @@ void FilesDock::setupActions()
 
     action = new QAction(tr("Search"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_F));
-    connect(action, &QAction::triggered, this, [ = ]() {
+    connect(action, &QAction::triggered, this, [=]() {
         setVisible(true);
         raise();
         m_searchField->setFocus();
@@ -1015,7 +1018,7 @@ void FilesDock::addOpenWithMenu(QMenu *menu)
     // custom options
     auto programs = Settings.filesOpenOther(firstSelectedMediaType());
     for (const auto &program : programs) {
-        auto action = subMenu->addAction(QFileInfo(program).baseName(), this, [ = ]() {
+        auto action = subMenu->addAction(QFileInfo(program).baseName(), this, [=]() {
             const auto filePath = firstSelectedFilePath();
             LOG_DEBUG() << program << filePath;
             QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)});
@@ -1111,7 +1114,7 @@ void FilesDock::changeDirectory(const QString &filePath, bool updateLocation)
     if (info.isDir()) {
         m_view->scrollToTop();
     } else {
-        QTimer::singleShot(2000, this, [ = ]() {
+        QTimer::singleShot(2000, this, [=]() {
             const auto index = m_filesProxyModel->mapFromSource(m_filesModel->index(filePath));
             m_view->scrollTo(index);
             m_view->setCurrentIndex(index);
@@ -1165,8 +1168,8 @@ void FilesDock::updateViewMode()
     } else {
         m_view = m_iconsView;
     }
-    m_view->setRootIndex(m_filesProxyModel->mapFromSource(m_filesModel->index(
-                                                              m_filesModel->rootPath())));
+    m_view->setRootIndex(
+        m_filesProxyModel->mapFromSource(m_filesModel->index(m_filesModel->rootPath())));
     m_iconsView->updateSizes();
     m_view->show();
 }
@@ -1251,7 +1254,8 @@ void FilesDock::onOpenOtherAdd()
 {
     LOG_DEBUG();
     const auto filePath = firstSelectedFilePath();
-    if (filePath.isEmpty()) return;
+    if (filePath.isEmpty())
+        return;
 
     QString dir("/usr/bin");
     QString filter;
@@ -1261,9 +1265,12 @@ void FilesDock::onOpenOtherAdd()
 #elif defined(Q_OS_MAC)
     dir = QStringLiteral("/Applications");
 #endif
-    const auto program = QFileDialog::getOpenFileName(MAIN.window(), tr("Choose Executable"), dir,
+    const auto program = QFileDialog::getOpenFileName(MAIN.window(),
+                                                      tr("Choose Executable"),
+                                                      dir,
                                                       filter,
-                                                      nullptr, Util::getFileDialogOptions());
+                                                      nullptr,
+                                                      Util::getFileDialogOptions());
     if (!program.isEmpty()) {
         if (QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
             Settings.setFilesOpenOther(firstSelectedMediaType(), program);
@@ -1278,7 +1285,7 @@ void FilesDock::onOpenOtherRemove()
     auto ls = Settings.filesOpenOther(mediaType);
     ls.sort(Qt::CaseInsensitive);
     QStringList programs;
-    std::for_each(ls.begin(), ls.end(), [&](const QString & s) {
+    std::for_each(ls.begin(), ls.end(), [&](const QString &s) {
         programs << QDir::toNativeSeparators(s);
     });
     ListSelectionDialog dialog(programs, this);
@@ -1338,8 +1345,9 @@ void FilesDock::on_locationsCombo_activated(int index)
 
 void FilesDock::on_addLocationButton_clicked()
 {
-    const auto path = m_filesProxyModel->mapToSource(m_view->rootIndex()).data(
-                          QFileSystemModel::FilePathRole).toString();
+    const auto path = m_filesProxyModel->mapToSource(m_view->rootIndex())
+                          .data(QFileSystemModel::FilePathRole)
+                          .toString();
     if (path.isEmpty())
         return;
     QInputDialog dialog(this);

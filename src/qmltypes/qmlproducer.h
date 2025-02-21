@@ -18,13 +18,13 @@
 #ifndef QMLPRODUCER_H
 #define QMLPRODUCER_H
 
-#include <QObject>
-#include <QString>
-#include <QVariant>
-#include <QRectF>
+#include "shotcut_mlt_properties.h"
 
 #include <MltProducer.h>
-#include "shotcut_mlt_properties.h"
+#include <QObject>
+#include <QRectF>
+#include <QString>
+#include <QVariant>
 
 class QmlProducer : public QObject
 {
@@ -51,14 +51,8 @@ public:
     int in();
     int out();
     double aspectRatio();
-    int duration()
-    {
-        return m_producer.is_valid() ? out() - in() + 1 : 0;
-    }
-    int length()
-    {
-        return m_producer.is_valid() ? m_producer.get_length() : 0;
-    }
+    int duration() { return m_producer.is_valid() ? out() - in() + 1 : 0; }
+    int length() { return m_producer.is_valid() ? m_producer.get_length() : 0; }
     QString resource();
     QString mlt_service()
     {
@@ -73,16 +67,10 @@ public:
     int fadeIn();
     int fadeOut();
     double speed();
-    int position() const
-    {
-        return m_position;
-    }
+    int position() const { return m_position; }
     void setPosition(int position);
     void seek(int position);
-    Mlt::Producer &producer()
-    {
-        return m_producer;
-    }
+    Mlt::Producer &producer() { return m_producer; }
     Q_INVOKABLE void audioLevelsReady(const QPersistentModelIndex &index);
     Q_INVOKABLE void remakeAudioLevels();
     double displayAspectRatio();

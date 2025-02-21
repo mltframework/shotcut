@@ -16,10 +16,10 @@
  */
 
 #include "d3dvideowidget.h"
-#include <Logger.h>
+
+#include "Logger.h"
 
 #include <d3dcompiler.h>
-
 
 D3DVideoWidget::D3DVideoWidget(QObject *parent)
     : Mlt::VideoWidget{parent}
@@ -58,11 +58,11 @@ void D3DVideoWidget::initialize()
     // We are not prepared for anything other than running with the RHI and its D3D11 backend.
     Q_ASSERT(rif->graphicsApi() == QSGRendererInterface::Direct3D11);
 
-    m_device = reinterpret_cast<ID3D11Device *>(rif->getResource(quickWindow(),
-                                                                 QSGRendererInterface::DeviceResource));
+    m_device = reinterpret_cast<ID3D11Device *>(
+        rif->getResource(quickWindow(), QSGRendererInterface::DeviceResource));
     Q_ASSERT(m_device);
-    m_context = reinterpret_cast<ID3D11DeviceContext *>(rif->getResource(quickWindow(),
-                                                                         QSGRendererInterface::DeviceContextResource));
+    m_context = reinterpret_cast<ID3D11DeviceContext *>(
+        rif->getResource(quickWindow(), QSGRendererInterface::DeviceContextResource));
     Q_ASSERT(m_context);
 
     if (m_vert.isEmpty())
@@ -99,10 +99,19 @@ void D3DVideoWidget::initialize()
         qFatal("Failed to create buffer: 0x%x", uint(hr));
 
     const D3D11_INPUT_ELEMENT_DESC inputDesc[] = {
-        { "VERTEX", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "TEXCOORD", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(DirectX::XMFLOAT2), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        {"VERTEX", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        {"TEXCOORD",
+         0,
+         DXGI_FORMAT_R32G32B32_FLOAT,
+         0,
+         sizeof(DirectX::XMFLOAT2),
+         D3D11_INPUT_PER_VERTEX_DATA,
+         0},
     };
-    hr = m_device->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), vs.constData(), vs.size(),
+    hr = m_device->CreateInputLayout(inputDesc,
+                                     ARRAYSIZE(inputDesc),
+                                     vs.constData(),
+                                     vs.size(),
                                      &m_inputLayout);
     if (FAILED(hr))
         qFatal("Failed to create input layout: 0x%x", uint(hr));
@@ -132,11 +141,24 @@ void D3DVideoWidget::beforeRendering()
     // Provide vertices of triangle strip
     float width = rect().width() * devicePixelRatioF() / 2.0f;
     float height = rect().height() * devicePixelRatioF() / 2.0f;
-    float vertexData[] = { // x,y plus u,v texture coordinates
-        width, -height, 1.f, 1.f, // bottom left
-        -width, -height, 0.f, 1.f, // bottom right
-        width,  height, 1.f, 0.f, // top left
-        -width,  height, 0.f, 0.f   // top right
+    float vertexData[] = {
+        // x,y plus u,v texture coordinates
+        width,
+        -height,
+        1.f,
+        1.f, // bottom left
+        -width,
+        -height,
+        0.f,
+        1.f, // bottom right
+        width,
+        height,
+        1.f,
+        0.f, // top left
+        -width,
+        height,
+        0.f,
+        0.f // top right
     };
 
     // Setup an orthographic projection
@@ -177,7 +199,8 @@ void D3DVideoWidget::beforeRendering()
     }
     m_texture[0] = initTexture(image, iwidth, iheight);
     m_texture[1] = initTexture(image + iwidth * iheight, iwidth / 2, iheight / 2);
-    m_texture[2] = initTexture(image + iwidth * iheight + iwidth / 2 * iheight / 2, iwidth / 2,
+    m_texture[2] = initTexture(image + iwidth * iheight + iwidth / 2 * iheight / 2,
+                               iwidth / 2,
                                iheight / 2);
     m_mutex.unlock();
 
@@ -289,7 +312,8 @@ void D3DVideoWidget::prepareShader(Stage stage)
     }
 }
 
-QByteArray D3DVideoWidget::compileShader(Stage stage, const QByteArray &source,
+QByteArray D3DVideoWidget::compileShader(Stage stage,
+                                         const QByteArray &source,
                                          const QByteArray &entryPoint)
 {
     const char *target;
@@ -307,9 +331,17 @@ QByteArray D3DVideoWidget::compileShader(Stage stage, const QByteArray &source,
 
     ID3DBlob *bytecode = nullptr;
     ID3DBlob *errors = nullptr;
-    HRESULT hr = D3DCompile(source.constData(), source.size(),
-                            nullptr, nullptr, nullptr,
-                            entryPoint.constData(), target, 0, 0, &bytecode, &errors);
+    HRESULT hr = D3DCompile(source.constData(),
+                            source.size(),
+                            nullptr,
+                            nullptr,
+                            nullptr,
+                            entryPoint.constData(),
+                            target,
+                            0,
+                            0,
+                            &bytecode,
+                            &errors);
     if (FAILED(hr) || !bytecode) {
         qWarning("HLSL shader compilation failed: 0x%x", uint(hr));
         if (errors) {

@@ -59,7 +59,8 @@ private slots:
     void onEndColumnToggled(bool checked);
     void onDurationColumnToggled(bool checked);
     void onRowsInserted(const QModelIndex &parent, int first, int last);
-    void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight,
+    void onDataChanged(const QModelIndex &topLeft,
+                       const QModelIndex &bottomRight,
                        const QVector<int> &roles = QVector<int>());
     void onValuesChanged();
     void onModelReset();

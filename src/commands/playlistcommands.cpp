@@ -16,16 +16,19 @@
  */
 
 #include "playlistcommands.h"
+#include "Logger.h"
 #include "docks/playlistdock.h"
-#include "mltcontroller.h"
 #include "mainwindow.h"
+#include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
-#include <Logger.h>
+
 #include <QTreeWidget>
 
 namespace Playlist {
 
-AppendCommand::AppendCommand(PlaylistModel &model, const QString &xml, bool emitModified,
+AppendCommand::AppendCommand(PlaylistModel &model,
+                             const QString &xml,
+                             bool emitModified,
                              QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -53,8 +56,7 @@ void AppendCommand::undo()
     m_model.remove(m_model.rowCount() - 1);
 }
 
-InsertCommand::InsertCommand(PlaylistModel &model, const QString &xml, int row,
-                             QUndoCommand *parent)
+InsertCommand::InsertCommand(PlaylistModel &model, const QString &xml, int row, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_xml(xml)
@@ -81,8 +83,7 @@ void InsertCommand::undo()
     m_model.remove(m_row);
 }
 
-UpdateCommand::UpdateCommand(PlaylistModel &model, const QString &xml, int row,
-                             QUndoCommand *parent)
+UpdateCommand::UpdateCommand(PlaylistModel &model, const QString &xml, int row, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_newXml(xml)
@@ -172,7 +173,8 @@ void ClearCommand::redo()
 void ClearCommand::undo()
 {
     LOG_DEBUG() << "";
-    Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), "xml-string",
+    Mlt::Producer *producer = new Mlt::Producer(MLT.profile(),
+                                                "xml-string",
                                                 m_xml.toUtf8().constData());
     if (producer->is_valid()) {
         producer->set("resource", "<playlist>");
@@ -213,8 +215,7 @@ void MoveCommand::undo()
     m_model.move(m_to, m_from);
 }
 
-SortCommand::SortCommand(PlaylistModel &model, int column, Qt::SortOrder order,
-                         QUndoCommand *parent)
+SortCommand::SortCommand(PlaylistModel &model, int column, Qt::SortOrder order, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_column(column)
@@ -240,7 +241,8 @@ void SortCommand::redo()
 void SortCommand::undo()
 {
     LOG_DEBUG() << "";
-    Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), "xml-string",
+    Mlt::Producer *producer = new Mlt::Producer(MLT.profile(),
+                                                "xml-string",
                                                 m_xml.toUtf8().constData());
     if (producer->is_valid()) {
         producer->set("resource", "<playlist>");
@@ -336,7 +338,9 @@ bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-ReplaceCommand::ReplaceCommand(PlaylistModel &model, const QString &xml, int row,
+ReplaceCommand::ReplaceCommand(PlaylistModel &model,
+                               const QString &xml,
+                               int row,
                                QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -365,7 +369,9 @@ void ReplaceCommand::undo()
     MLT.setUuid(producer, m_uuid);
 }
 
-NewBinCommand::NewBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
+NewBinCommand::NewBinCommand(PlaylistModel &model,
+                             QTreeWidget *tree,
+                             const QString &bin,
                              QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
@@ -382,8 +388,7 @@ NewBinCommand::NewBinCommand(PlaylistModel &model, QTreeWidget *tree, const QStr
 void NewBinCommand::redo()
 {
     auto item = new QTreeWidgetItem(m_binTree, {m_bin});
-    auto icon = QIcon::fromTheme("folder",
-                                 QIcon(":/icons/oxygen/32x32/places/folder.png"));
+    auto icon = QIcon::fromTheme("folder", QIcon(":/icons/oxygen/32x32/places/folder.png"));
     item->setIcon(0, icon);
 
     PlaylistDock::sortBins(m_binTree);
@@ -409,8 +414,11 @@ void NewBinCommand::undo()
     RenameBinCommand::rebuildBinList(m_model, m_binTree);
 }
 
-MoveToBinCommand::MoveToBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
-                                   const QList<int> &rows, QUndoCommand *parent)
+MoveToBinCommand::MoveToBinCommand(PlaylistModel &model,
+                                   QTreeWidget *tree,
+                                   const QString &bin,
+                                   const QList<int> &rows,
+                                   QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_binTree(tree)
@@ -439,8 +447,11 @@ void MoveToBinCommand::undo()
     }
 }
 
-RenameBinCommand::RenameBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
-                                   const QString &newName, QUndoCommand *parent)
+RenameBinCommand::RenameBinCommand(PlaylistModel &model,
+                                   QTreeWidget *tree,
+                                   const QString &bin,
+                                   const QString &newName,
+                                   QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_binTree(tree)
@@ -498,15 +509,15 @@ void RenameBinCommand::undo()
     if (m_newName.isEmpty()) {
         // Undo remove
         auto item = new QTreeWidgetItem(m_binTree, {m_bin});
-        auto icon = QIcon::fromTheme("folder",
-                                     QIcon(":/icons/oxygen/32x32/places/folder.png"));
+        auto icon = QIcon::fromTheme("folder", QIcon(":/icons/oxygen/32x32/places/folder.png"));
         item->setIcon(0, icon);
 
         PlaylistDock::sortBins(m_binTree);
 
         // Restore bin property on playlist items
         for (auto row : m_removedRows) {
-            m_model.playlist()->get_clip(row)->parent().set(kShotcutBinsProperty, m_bin.toUtf8().constData());
+            m_model.playlist()->get_clip(row)->parent().set(kShotcutBinsProperty,
+                                                            m_bin.toUtf8().constData());
         }
         m_model.renameBin(m_bin);
         rebuildBinList(m_model, m_binTree);

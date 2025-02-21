@@ -15,39 +15,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QColorDialog>
-#include <QFileInfo>
 #include "glaxnimateproducerwidget.h"
-#include "mainwindow.h"
-#include "settings.h"
 #include "ui_glaxnimateproducerwidget.h"
-#include "shotcut_mlt_properties.h"
-#include "util.h"
+
+#include "Logger.h"
+#include "dialogs/longuitask.h"
+#include "mainwindow.h"
 #include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
-#include "dialogs/longuitask.h"
+#include "settings.h"
+#include "shotcut_mlt_properties.h"
+#include "util.h"
 #include "videowidget.h"
-#include <Logger.h>
-#include <QProcess>
+
+#include <QColorDialog>
 #include <QFile>
+#include <QFileInfo>
+#include <QFileSystemWatcher>
+#include <QFuture>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonArray>
-#include <QFileSystemWatcher>
 #include <QMessageBox>
+#include <QProcess>
 #include <QtConcurrent/QtConcurrentRun>
-#include <QFuture>
 
 static const QString kTransparent = QObject::tr("transparent", "Open Other > Animation");
 
 static QString colorToString(const QColor &color)
 {
     return (color == QColor(0, 0, 0, 0)) ? kTransparent
-           : QString::asprintf("#%02X%02X%02X%02X",
-                               qAlpha(color.rgba()),
-                               qRed(color.rgba()),
-                               qGreen(color.rgba()),
-                               qBlue(color.rgba()));
+                                         : QString::asprintf("#%02X%02X%02X%02X",
+                                                             qAlpha(color.rgba()),
+                                                             qRed(color.rgba()),
+                                                             qGreen(color.rgba()),
+                                                             qBlue(color.rgba()));
 }
 
 static QString colorStringToResource(const QString &s)
@@ -55,9 +57,9 @@ static QString colorStringToResource(const QString &s)
     return (s == kTransparent) ? "#00000000" : s;
 }
 
-GlaxnimateProducerWidget::GlaxnimateProducerWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::GlaxnimateProducerWidget)
+GlaxnimateProducerWidget::GlaxnimateProducerWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::GlaxnimateProducerWidget)
 {
     ui->setupUi(this);
     m_title = ui->lineEdit->text();
@@ -98,15 +100,16 @@ void GlaxnimateProducerWidget::on_colorButton_clicked()
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
         rgb.setAlpha(color.alpha());
-        if (newColor.alpha() == 0 && (rgb != color ||
-                                      (newColor == transparent && color == transparent))) {
+        if (newColor.alpha() == 0
+            && (rgb != color || (newColor == transparent && color == transparent))) {
             newColor.setAlpha(255);
         }
         ui->colorLabel->setText(colorToString(newColor));
         ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
-                                      .arg(Util::textColor(newColor), newColor.name()));
+                                          .arg(Util::textColor(newColor), newColor.name()));
         if (m_producer) {
-            m_producer->set("background", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
+            m_producer->set("background",
+                            colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
             emit producerChanged(m_producer.get());
         }
     }
@@ -122,16 +125,19 @@ static void modifyJsonValue(QJsonValue &destValue, const QString &path, const QJ
     const int indexOfSquareBracketClose = path.indexOf(']');
 
     const int arrayIndex = path.mid(indexOfSquareBracketOpen + 1,
-                                    indexOfSquareBracketClose - indexOfSquareBracketOpen - 1).toInt();
+                                    indexOfSquareBracketClose - indexOfSquareBracketOpen - 1)
+                               .toInt();
 
     const QString squareBracketPropertyName = path.left(indexOfSquareBracketOpen);
-    const QString squareBracketSubPath = indexOfSquareBracketClose > 0 ? (path.mid(
-                                                                              indexOfSquareBracketClose + 1)[0] == '.' ? path.mid(indexOfSquareBracketClose + 2) : path.mid(
-                                                                              indexOfSquareBracketClose + 1)) : QString();
+    const QString squareBracketSubPath = indexOfSquareBracketClose > 0
+                                             ? (path.mid(indexOfSquareBracketClose + 1)[0] == '.'
+                                                    ? path.mid(indexOfSquareBracketClose + 2)
+                                                    : path.mid(indexOfSquareBracketClose + 1))
+                                             : QString();
 
     // determine what is first in path. dot or bracket
     bool useDot = true;
-    if (indexOfDot >= 0) { // there is a dot in path
+    if (indexOfDot >= 0) {                   // there is a dot in path
         if (indexOfSquareBracketOpen >= 0) { // there is squarebracket in path
             if (indexOfDot > indexOfSquareBracketOpen)
                 useDot = false;
@@ -188,7 +194,6 @@ static void modifyJsonValue(QJsonValue &destValue, const QString &path, const QJ
     }
 }
 
-
 Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
 {
     // Get the file name.
@@ -198,8 +203,12 @@ Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
         path.append("/%1.rawr");
         path = path.arg(tr("animation"));
         auto nameFilter = tr("Glaxnimate (*.rawr);;All Files (*)");
-        filename = QFileDialog::getSaveFileName(this, tr("New Animation"), path, nameFilter,
-                                                nullptr, Util::getFileDialogOptions());
+        filename = QFileDialog::getSaveFileName(this,
+                                                tr("New Animation"),
+                                                path,
+                                                nameFilter,
+                                                nullptr,
+                                                Util::getFileDialogOptions());
     }
     if (filename.isEmpty()) {
         return nullptr;
@@ -212,8 +221,9 @@ Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
 
     GlaxnimateIpcServer::instance().newFile(filename, ui->durationSpinBox->value());
 
-    Mlt::Producer *p = new Mlt::Producer(profile,
-                                         QStringLiteral("glaxnimate:").append(filename).toUtf8().constData());
+    Mlt::Producer *p
+        = new Mlt::Producer(profile,
+                            QStringLiteral("glaxnimate:").append(filename).toUtf8().constData());
     p->set("background", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
 
     m_title = info.fileName();
@@ -221,7 +231,9 @@ Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
     p->set(kShotcutDetailProperty, filename.toUtf8().constData());
 
     m_watcher.reset(new QFileSystemWatcher({filename}));
-    connect(m_watcher.get(), &QFileSystemWatcher::fileChanged, this,
+    connect(m_watcher.get(),
+            &QFileSystemWatcher::fileChanged,
+            this,
             &GlaxnimateProducerWidget::onFileChanged);
     GlaxnimateIpcServer::instance().launch(p);
 
@@ -246,7 +258,9 @@ void GlaxnimateProducerWidget::setProducer(Mlt::Producer *p)
     ui->durationSpinBox->setValue(p->get_length());
 
     m_watcher.reset(new QFileSystemWatcher({filename}));
-    connect(m_watcher.get(), &QFileSystemWatcher::fileChanged, this,
+    connect(m_watcher.get(),
+            &QFileSystemWatcher::fileChanged,
+            this,
             &GlaxnimateProducerWidget::onFileChanged);
 }
 
@@ -262,10 +276,11 @@ void GlaxnimateProducerWidget::loadPreset(Mlt::Properties &p)
 {
     QColor color(QFileInfo(p.get("background")).baseName());
     ui->colorLabel->setText(colorToString(color));
-    ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
-                                  .arg(Util::textColor(color), color.name()));
+    ui->colorLabel->setStyleSheet(
+        QStringLiteral("color: %1; background-color: %2").arg(Util::textColor(color), color.name()));
     if (m_producer) {
-        m_producer->set("background", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
+        m_producer->set("background",
+                        colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
         emit producerChanged(m_producer.get());
     }
 }
@@ -359,7 +374,8 @@ void GlaxnimateProducerWidget::on_reloadButton_clicked()
 void GlaxnimateProducerWidget::on_durationSpinBox_editingFinished()
 {
     if (m_producer && m_producer->is_valid()) {
-        m_producer->set("length", m_producer->frames_to_time(ui->durationSpinBox->value(), mlt_time_clock));
+        m_producer->set("length",
+                        m_producer->frames_to_time(ui->durationSpinBox->value(), mlt_time_clock));
         emit producerChanged(m_producer.get());
     }
 }
@@ -372,8 +388,8 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
         return;
     m_profile.reset(new Mlt::Profile(::mlt_profile_clone(MLT.profile().get_profile())));
     m_profile->set_progressive(Settings.playerProgressive());
-    m_glaxnimateProducer.reset(new Mlt::Producer(*m_profile, "xml-string",
-                                                 MLT.XML().toUtf8().constData()));
+    m_glaxnimateProducer.reset(
+        new Mlt::Producer(*m_profile, "xml-string", MLT.XML().toUtf8().constData()));
     if (m_glaxnimateProducer && m_glaxnimateProducer->is_valid()) {
         m_frameNum = -1;
         // hide this clip's video track and upper ones
@@ -417,7 +433,8 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
                     for (int i = 0; i < count; i++) {
                         std::unique_ptr<Mlt::Filter> filter(info->producer->filter(i));
                         if (filter && filter->is_valid()) {
-                            if (found || !qstrcmp(filter->get(kShotcutFilterProperty), "maskGlaxnimate")) {
+                            if (found
+                                || !qstrcmp(filter->get(kShotcutFilterProperty), "maskGlaxnimate")) {
                                 found = true;
                                 filter->set("disable", 1);
                             }
@@ -434,7 +451,10 @@ void GlaxnimateIpcServer::onConnect()
     LOG_DEBUG() << "";
     m_socket = m_server->nextPendingConnection();
     connect(m_socket.data(), &QLocalSocket::readyRead, this, &GlaxnimateIpcServer::onReadyRead);
-    connect(m_socket.data(), &QLocalSocket::errorOccurred, this, &GlaxnimateIpcServer::onSocketError);
+    connect(m_socket.data(),
+            &QLocalSocket::errorOccurred,
+            this,
+            &GlaxnimateIpcServer::onSocketError);
     m_stream.reset(new QDataStream(m_socket.data()));
     m_stream->setVersion(QDataStream::Qt_5_15);
     *m_stream << QStringLiteral("hello");
@@ -446,7 +466,8 @@ void GlaxnimateIpcServer::onConnect()
 int GlaxnimateIpcServer::toMltFps(float frame) const
 {
     if (parent->m_producer.get_double("meta.media.frame_rate") > 0) {
-        return qRound(frame / parent->m_producer.get_double("meta.media.frame_rate") * MLT.profile().fps());
+        return qRound(frame / parent->m_producer.get_double("meta.media.frame_rate")
+                      * MLT.profile().fps());
     }
     return frame;
 }
@@ -472,14 +493,13 @@ void GlaxnimateIpcServer::onReadyRead()
         }
 
         // Only if the frame number is different
-        int frameNum = parent->m_producer.get_int(kPlaylistStartProperty) + toMltFps(
-                           time) - parent->m_producer.get_int("first_frame");
+        int frameNum = parent->m_producer.get_int(kPlaylistStartProperty) + toMltFps(time)
+                       - parent->m_producer.get_int("first_frame");
         if (frameNum != parent->m_frameNum) {
             LOG_DEBUG() << "glaxnimate time =" << time << "=> Shotcut frameNum =" << frameNum;
 
             if (!parent || !parent->m_glaxnimateProducer
-                    || !parent->m_glaxnimateProducer->is_valid()
-                    || time < 0.0) {
+                || !parent->m_glaxnimateProducer->is_valid() || time < 0.0) {
                 MLT.seek(frameNum);
                 return;
             }
@@ -494,11 +514,14 @@ void GlaxnimateIpcServer::onReadyRead()
             int scale = Settings.playerPreviewScale() ? Settings.playerPreviewScale() : 2160;
 #endif
             auto height = qMin(scale, MLT.profile().height());
-            auto width = (height == MLT.profile().height()) ? MLT.profile().width() :
-                         Util::coerceMultiple(height * MLT.profile().display_aspect_num() /
-                                              MLT.profile().display_aspect_den()
-                                              * MLT.profile().sample_aspect_den()  / MLT.profile().sample_aspect_num());
-            frame->set("consumer.deinterlacer", Settings.playerDeinterlacer().toLatin1().constData());
+            auto width = (height == MLT.profile().height())
+                             ? MLT.profile().width()
+                             : Util::coerceMultiple(height * MLT.profile().display_aspect_num()
+                                                    / MLT.profile().display_aspect_den()
+                                                    * MLT.profile().sample_aspect_den()
+                                                    / MLT.profile().sample_aspect_num());
+            frame->set("consumer.deinterlacer",
+                       Settings.playerDeinterlacer().toLatin1().constData());
             frame->set("consumer.top_field_first", -1);
             mlt_image_format format = mlt_image_rgb;
             const uchar *image = frame->get_image(format, width, height);
@@ -510,7 +533,10 @@ void GlaxnimateIpcServer::onReadyRead()
                 if (MLT.profile().sar() - 1.0 > 0.0001) {
                     // Use QImage to convert to square pixels
                     width = qRound(width * MLT.profile().sar());
-                    temp = temp.scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+                    temp = temp.scaled(width,
+                                       height,
+                                       Qt::IgnoreAspectRatio,
+                                       Qt::SmoothTransformation);
                 }
                 if (copyToShared(temp)) {
                     parent->m_frameNum = frameNum;
@@ -535,7 +561,7 @@ void GlaxnimateIpcServer::onSocketError(QLocalSocket::LocalSocketError socketErr
 
 void GlaxnimateIpcServer::onFrameDisplayed(const SharedFrame &frame)
 {
-    auto image  = frame.get_image(mlt_image_rgb);
+    auto image = frame.get_image(mlt_image_rgb);
     if (image) {
         auto width = frame.get_image_width();
         auto height = frame.get_image_height();
@@ -565,7 +591,9 @@ void GlaxnimateIpcServer::newFile(const QString &filename, int duration)
 
     QJsonValue jsonValue(json);
     modifyJsonValue(jsonValue, "animation.name", QFileInfo(filename).completeBaseName());
-    modifyJsonValue(jsonValue, "animation.width", qRound(MLT.profile().width() * MLT.profile().sar()));
+    modifyJsonValue(jsonValue,
+                    "animation.width",
+                    qRound(MLT.profile().width() * MLT.profile().sar()));
     modifyJsonValue(jsonValue, "animation.height", MLT.profile().height());
     modifyJsonValue(jsonValue, "animation.fps", MLT.profile().fps());
     modifyJsonValue(jsonValue, "animation.animation.last_frame", duration);
@@ -587,15 +615,18 @@ void GlaxnimateIpcServer::reset()
     parent.reset();
 }
 
-void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename,
+void GlaxnimateIpcServer::launch(const Mlt::Producer &producer,
+                                 QString filename,
                                  bool hideCurrentTrack)
 {
     parent.reset(new ParentResources);
 
     if (Settings.playerGPU()) {
         parent->m_producer = producer;
-        connect(qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget()), &Mlt::VideoWidget::frameDisplayed,
-                this, &GlaxnimateIpcServer::onFrameDisplayed);
+        connect(qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget()),
+                &Mlt::VideoWidget::frameDisplayed,
+                this,
+                &GlaxnimateIpcServer::onFrameDisplayed);
     } else {
         LongUiTask longTask(QObject::tr("Edit With Glaxnimate"));
         auto future = QtConcurrent::run([this, &producer, &hideCurrentTrack]() {
@@ -634,7 +665,7 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
         args.clear();
         args << filename;
         // Run without --ipc
-    } else  {
+    } else {
         childProcess.setArguments(args);
         if (childProcess.startDetached()) {
             LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
@@ -664,8 +695,12 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
         dialog.setEscapeButton(QMessageBox::Cancel);
         dialog.setWindowModality(QmlApplication::dialogModality());
         if (dialog.exec() == QMessageBox::Ok) {
-            auto path = QFileDialog::getOpenFileName(MAIN.window(), tr("Find Glaxnimate"), QString(), QString(),
-                                                     nullptr, Util::getFileDialogOptions());
+            auto path = QFileDialog::getOpenFileName(MAIN.window(),
+                                                     tr("Find Glaxnimate"),
+                                                     QString(),
+                                                     QString(),
+                                                     nullptr,
+                                                     Util::getFileDialogOptions());
             if (!path.isEmpty()) {
                 args.clear();
                 args << "--ipc" << name << filename;

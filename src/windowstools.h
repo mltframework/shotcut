@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QWidget>
 #include <QWinTaskbarButton>
 #include <QWinTaskbarProgress>
-#include <QWidget>
 
 class WindowsTaskbarButton
 {
@@ -27,6 +27,7 @@ public:
     void setParentWindow(QWidget *parent);
     void setProgress(int progress);
     void resetProgress();
+
 private:
     WindowsTaskbarButton();
 

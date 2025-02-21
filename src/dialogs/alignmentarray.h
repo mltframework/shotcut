@@ -36,7 +36,10 @@ public:
     void init(size_t minimum_size);
     void setValues(const std::vector<double> &values);
     double calculateOffset(AlignmentArray &from, int *offset);
-    double calculateOffsetAndSpeed(AlignmentArray &from, double *speed, int *offset, double speedRange);
+    double calculateOffsetAndSpeed(AlignmentArray &from,
+                                   double *speed,
+                                   int *offset,
+                                   double speedRange);
 
 private:
     void transform();
@@ -53,4 +56,3 @@ private:
 };
 
 #endif
-

@@ -16,7 +16,8 @@
  */
 
 #include "markercommands.h"
-#include <Logger.h>
+
+#include "Logger.h"
 
 namespace Markers {
 
@@ -58,8 +59,9 @@ void AppendCommand::undo()
     m_model.doRemove(m_index);
 }
 
-
-UpdateCommand::UpdateCommand(MarkersModel &model, const Marker &newMarker, const Marker &oldMarker,
+UpdateCommand::UpdateCommand(MarkersModel &model,
+                             const Marker &newMarker,
+                             const Marker &oldMarker,
                              int index)
     : QUndoCommand(0)
     , m_model(model)
@@ -91,16 +93,16 @@ bool UpdateCommand::mergeWith(const QUndoCommand *other)
     if (that->id() != id() || that->m_index != m_index)
         return false;
     bool merge = false;
-    if (that->m_newMarker.text == m_oldMarker.text &&
-            that->m_newMarker.color == m_oldMarker.color) {
+    if (that->m_newMarker.text == m_oldMarker.text && that->m_newMarker.color == m_oldMarker.color) {
         // Only start/end change. Merge with previous move command.
         merge = true;
-    } else if (that->m_newMarker.end == m_oldMarker.end &&
-               that->m_newMarker.start == m_oldMarker.start) {
+    } else if (that->m_newMarker.end == m_oldMarker.end
+               && that->m_newMarker.start == m_oldMarker.start) {
         // Only text/color change. Merge with previous edit command.
         merge = true;
     }
-    if (!merge) return false;
+    if (!merge)
+        return false;
     m_newMarker = that->m_newMarker;
     return true;
 }

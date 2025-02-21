@@ -18,9 +18,9 @@
 #ifndef LUMAMIXTRANSITION_H
 #define LUMAMIXTRANSITION_H
 
-#include <QWidget>
 #include <MltProducer.h>
 #include <MltTransition.h>
+#include <QWidget>
 
 namespace Ui {
 class LumaMixTransition;

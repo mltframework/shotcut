@@ -20,8 +20,8 @@
 #ifndef COLORWHEELITEM_H
 #define COLORWHEELITEM_H
 
-#include <QQuickPaintedItem>
 #include <QImage>
+#include <QQuickPaintedItem>
 
 class ColorWheelItem : public QQuickPaintedItem
 {
@@ -52,7 +52,6 @@ public:
     void setBlueF(qreal blue);
     qreal step();
     void setStep(qreal blue);
-
 
 signals:
     void colorChanged(const QColor &color);

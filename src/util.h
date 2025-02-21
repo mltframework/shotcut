@@ -18,11 +18,11 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <QString>
-#include <QPalette>
-#include <QUrl>
-#include <QFileDialog>
 #include <MltProperties.h>
+#include <QFileDialog>
+#include <QPalette>
+#include <QString>
+#include <QUrl>
 
 class QWidget;
 class QDoubleSpinBox;
@@ -36,6 +36,7 @@ class Util
 {
 private:
     Util() {}
+
 public:
     static QString baseName(const QString &filePath, bool trimQuery = false);
     static void setColorsToHighlight(QWidget *widget, QPalette::ColorRole role = QPalette::Window);
@@ -50,11 +51,15 @@ public:
     static bool isNumeric(QString &str);
     static bool convertNumericString(QString &str, QChar decimalPoint);
     static bool convertDecimalPoints(QString &str, QChar decimalPoint);
-    static void showFrameRateDialog(const QString &caption, int numerator, QDoubleSpinBox *spinner,
+    static void showFrameRateDialog(const QString &caption,
+                                    int numerator,
+                                    QDoubleSpinBox *spinner,
                                     QWidget *parent = Q_NULLPTR);
     static QTemporaryFile *writableTemporaryFile(const QString &filePath = QString(),
                                                  const QString &templateName = QString());
-    static void applyCustomProperties(Mlt::Producer &destination, Mlt::Producer &source, int in,
+    static void applyCustomProperties(Mlt::Producer &destination,
+                                      Mlt::Producer &source,
+                                      int in,
                                       int out);
     static QString getFileHash(const QString &path);
     static QString getHash(Mlt::Properties &properties);
@@ -78,7 +83,9 @@ public:
     static bool trcIsCompatible(int trc);
     static QString getConversionAdvice(Mlt::Producer *producer);
     static mlt_color mltColorFromQColor(const QColor &color);
-    static void offerSingleFileConversion(QString &message, Mlt::Producer *producer, QWidget *parent);
+    static void offerSingleFileConversion(QString &message,
+                                          Mlt::Producer *producer,
+                                          QWidget *parent);
     static double getAndroidFrameRate(Mlt::Producer *producer);
     static double getSuggestedFrameRate(Mlt::Producer *producer);
     static Mlt::Producer openMltVirtualClip(const QString &path);

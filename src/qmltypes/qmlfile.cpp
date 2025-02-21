@@ -16,22 +16,23 @@
  */
 
 #include "qmlfile.h"
-#include <QFileInfo>
-#include <QFile>
+
+#include "Logger.h"
+
 #include <QDir>
-#include <Logger.h>
+#include <QFile>
+#include <QFileInfo>
 
 QmlFile::QmlFile(QObject *parent)
     : QObject(parent)
     , m_url()
-{
-}
+{}
 
 QString QmlFile::getUrl()
 {
     auto s = QUrl::fromPercentEncoding(m_url.toString().toUtf8());
 #ifdef Q_OS_WIN
-    if (s.size() > 2 && s[1]  == ':' && s[2]  == '/') {
+    if (s.size() > 2 && s[1] == ':' && s[2] == '/') {
         s[0] = s[0].toUpper();
     }
 #endif
@@ -41,14 +42,11 @@ QString QmlFile::getUrl()
 void QmlFile::setUrl(QString text)
 {
     QUrl url = text.replace('\\', "/");
-    QString s = url.toString();;
-    QUrl::FormattingOptions options =
-        QUrl::RemoveScheme |
-        QUrl::RemovePassword |
-        QUrl::RemoveUserInfo |
-        QUrl::RemovePort |
-        QUrl::RemoveAuthority |
-        QUrl::RemoveQuery;
+    QString s = url.toString();
+    ;
+    QUrl::FormattingOptions options = QUrl::RemoveScheme | QUrl::RemovePassword
+                                      | QUrl::RemoveUserInfo | QUrl::RemovePort
+                                      | QUrl::RemoveAuthority | QUrl::RemoveQuery;
 
     if (s.startsWith("file://") && s.size() > 9 && s[9] != ':') {
         // QUrl removes the host from a UNC path when removing the scheme.
@@ -69,7 +67,7 @@ void QmlFile::setUrl(QString text)
     // If there is a slash before a drive letter.
     // On Windows, file URLs look like file:///C:/Users/....
     // The scheme is removed but only "://" (not 3 slashes) between scheme and path.
-    if (s.size() > 2 && s[0] == '/' && s[2]  == ':') {
+    if (s.size() > 2 && s[0] == '/' && s[2] == ':') {
         // Remove the leading slash.
         s = s.mid(1);
     }

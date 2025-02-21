@@ -24,12 +24,7 @@ class ScrubBar : public QWidget
 {
     Q_OBJECT
 
-    enum controls {
-        CONTROL_NONE,
-        CONTROL_HEAD,
-        CONTROL_IN,
-        CONTROL_OUT
-    };
+    enum controls { CONTROL_NONE, CONTROL_HEAD, CONTROL_IN, CONTROL_OUT };
 
 public:
     explicit ScrubBar(QWidget *parent = 0);
@@ -43,14 +38,8 @@ public:
     void setInPoint(int in);
     void setOutPoint(int out);
     void setMarkers(const QList<int> &);
-    QList<int> markers() const
-    {
-        return m_markers;
-    }
-    void setMargin(int margin)
-    {
-        m_margin = margin;
-    }
+    QList<int> markers() const { return m_markers; }
+    void setMargin(int margin) { m_margin = margin; }
     void setLoopRange(int start, int end);
 
 signals:

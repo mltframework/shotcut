@@ -18,7 +18,7 @@
  */
 
 #include "colorpickeritem.h"
-#include <Logger.h>
+#include "Logger.h"
 
 #include <QApplication>
 #include <QGuiApplication>
@@ -64,9 +64,11 @@ void ColorPickerItem::screenSelected(const QRect &rect)
 void ColorPickerItem::grabColor()
 {
     QScreen *screen = QGuiApplication::screenAt(m_selectedRect.topLeft());
-    QPixmap screenGrab = screen->grabWindow(0, m_selectedRect.x() - screen->geometry().x(),
+    QPixmap screenGrab = screen->grabWindow(0,
+                                            m_selectedRect.x() - screen->geometry().x(),
                                             m_selectedRect.y() - screen->geometry().y(),
-                                            m_selectedRect.width(), m_selectedRect.height());
+                                            m_selectedRect.width(),
+                                            m_selectedRect.height());
     QImage image = screenGrab.toImage();
     int numPixel = qMax(image.width() * image.height(), 1);
     int sumR = 0;
@@ -111,19 +113,24 @@ const QDBusArgument &operator>>(const QDBusArgument &arg, QColor &color)
 
 void ColorPickerItem::grabColorDBus()
 {
-    QDBusMessage message = QDBusMessage::createMethodCall(
-                               QLatin1String("org.freedesktop.portal.Desktop"), QLatin1String("/org/freedesktop/portal/desktop"),
-                               QLatin1String("org.freedesktop.portal.Screenshot"), QLatin1String("PickColor"));
+    QDBusMessage message
+        = QDBusMessage::createMethodCall(QLatin1String("org.freedesktop.portal.Desktop"),
+                                         QLatin1String("/org/freedesktop/portal/desktop"),
+                                         QLatin1String("org.freedesktop.portal.Screenshot"),
+                                         QLatin1String("PickColor"));
     message << QLatin1String("x11:") << QVariantMap{};
     QDBusPendingCall pendingCall = QDBusConnection::sessionBus().asyncCall(message);
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(pendingCall);
-    connect(watcher, &QDBusPendingCallWatcher::finished, [ = ](QDBusPendingCallWatcher * watcher) {
+    connect(watcher, &QDBusPendingCallWatcher::finished, [=](QDBusPendingCallWatcher *watcher) {
         QDBusPendingReply<QDBusObjectPath> reply = *watcher;
         if (reply.isError()) {
             LOG_WARNING() << "Unable to get DBus reply: " << reply.error().message();
         } else {
-            QDBusConnection::sessionBus().connect(QString(), reply.value().path(),
-                                                  QLatin1String("org.freedesktop.portal.Request"), QLatin1String("Response"), this,
+            QDBusConnection::sessionBus().connect(QString(),
+                                                  reply.value().path(),
+                                                  QLatin1String("org.freedesktop.portal.Request"),
+                                                  QLatin1String("Response"),
+                                                  this,
                                                   SLOT(gotColorResponse(uint, QVariantMap)));
         }
     });

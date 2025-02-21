@@ -16,8 +16,10 @@
  */
 
 #include "qmlmetadata.h"
+
+#include "Logger.h"
 #include "settings.h"
-#include <Logger.h>
+
 #include <QVersionNumber>
 
 QmlMetadata::QmlMetadata(QObject *parent)
@@ -37,8 +39,7 @@ QmlMetadata::QmlMetadata(QObject *parent)
     , m_isGpuCompatible(true)
     , m_isDeprecated(false)
     , m_seekReverse(false)
-{
-}
+{}
 
 void QmlMetadata::loadSettings()
 {
@@ -191,8 +192,7 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject *parent)
     , m_allowAnimateOut(false)
     , m_enabled(true)
     , m_allowOvershoot(true)
-{
-}
+{}
 
 QmlKeyframesParameter *QmlKeyframesMetadata::parameter(const QString &propertyName) const
 {
@@ -226,5 +226,4 @@ QmlKeyframesParameter::QmlKeyframesParameter(QObject *parent)
     , m_isRectangle(false)
     , m_rangeType(MinMax)
     , m_isColor(false)
-{
-}
+{}

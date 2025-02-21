@@ -24,8 +24,11 @@ class VideoQualityJob : public MeltJob
 {
     Q_OBJECT
 public:
-    VideoQualityJob(const QString &name, const QString &xml,
-                    const QString &reportPath, int frameRateNum, int frameRateDen);
+    VideoQualityJob(const QString &name,
+                    const QString &xml,
+                    const QString &reportPath,
+                    int frameRateNum,
+                    int frameRateDen);
 
 private slots:
     void onOpenTiggered();
