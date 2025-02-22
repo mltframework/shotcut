@@ -4872,10 +4872,11 @@ void MainWindow::onOpenOtherFinished(int result)
         open(producer);
         // Mlt::Controller owns the producer now
     } else {
+        m_player->switchToTab(Player::ProjectTabIndex);
         auto trackType = ("ToneProducerWidget" == name || "toneWidget" == name)
                          ? AudioTrackType : VideoTrackType;
         auto trackIndex = m_timelineDock->addTrackIfNeeded(trackType);
-        m_timelineDock->overwrite(trackIndex, -1, MLT.XML(producer), false);
+        m_timelineDock->overwrite(trackIndex, -1, MLT.XML(producer), true);
         delete producer;
     }
     if ("TextProducerWidget" == name || "textWidget" == name) {
