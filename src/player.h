@@ -94,6 +94,7 @@ signals:
     void trimIn();
     void trimOut();
     void loopChanged(int start, int end);
+    void toggleVuiRequested();
 
 public slots:
     void play(double speed = 1.0);

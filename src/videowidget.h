@@ -113,6 +113,7 @@ public:
     {
         return m_maxTextureSize;
     }
+    void toggleVuiDisplay();
 
 public slots:
     void setGrid(int grid);
@@ -158,6 +159,7 @@ private:
     float m_zoom;
     QPoint m_offset;
     QUrl m_savedQmlSource;
+    bool m_hideVui;
     bool m_snapToGrid;
     QTimer m_refreshTimer;
     bool m_scrubAudio;
