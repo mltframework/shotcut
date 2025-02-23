@@ -329,6 +329,7 @@ void MainWindow::setupAndConnectPlayerWidget()
     ui->menuPlayer->addAction(Actions["playerSetInAction"]);
     ui->menuPlayer->addAction(Actions["playerSetOutAction"]);
     ui->menuPlayer->addAction(Actions["playerSetPositionAction"]);
+    ui->menuPlayer->addAction(Actions["playerToggleVui"]);
     ui->menuPlayer->addAction(Actions["playerSwitchSourceProgramAction"]);
 }
 
@@ -800,6 +801,8 @@ void MainWindow::connectVideoWidgetSignals()
             &ScopeController::newFrame);
     connect(m_filterController, &FilterController::currentFilterChanged, videoWidget,
             &Mlt::VideoWidget::setCurrentFilter);
+    connect(m_player, &Player::toggleVuiRequested, videoWidget,
+            &Mlt::VideoWidget::toggleVuiDisplay);
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const

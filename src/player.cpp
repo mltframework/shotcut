@@ -768,6 +768,13 @@ void Player::setupActions()
         setFocus();
     });
     Actions.add("playerFocus", action, tr("Player"));
+
+    action = new QAction(tr("Toggle Player Filter Overlay"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Q));
+    connect(action, &QAction::triggered, this, [&]() {
+        emit toggleVuiRequested();
+    });
+    Actions.add("playerToggleVui", action, tr("Player"));
 }
 
 void Player::setIn(int pos)
