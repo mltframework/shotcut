@@ -17,14 +17,15 @@
  */
 
 #include "qmlview.h"
+
+#include "Logger.h"
+
 #include <QWidget>
-#include <Logger.h>
 
 QmlView::QmlView(QWidget *qview)
     : QObject(qview)
     , m_qview(qview)
-{
-}
+{}
 
 QPoint QmlView::pos()
 {

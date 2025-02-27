@@ -17,7 +17,7 @@
 
 #include "videozoomwidget.h"
 
-#include <Logger.h>
+#include "Logger.h"
 
 #include <QMouseEvent>
 #include <QMutexLocker>
@@ -30,7 +30,7 @@ const int DEFAULT_ZOOM = 10;
 
 QColor getHighContrastColor(const QColor &color)
 {
-    if (color.value() > 128 ) {
+    if (color.value() > 128) {
         return QColor(Qt::black);
     }
     return QColor(Qt::white);
@@ -52,7 +52,8 @@ VideoZoomWidget::VideoZoomWidget()
 
 void VideoZoomWidget::putFrame(SharedFrame frame)
 {
-    if (!frame.is_valid()) return;
+    if (!frame.is_valid())
+        return;
 
     // Make sure the images are pre-cached for the UI thread
     frame.get_image(mlt_image_yuv420p);
@@ -73,11 +74,16 @@ QPoint VideoZoomWidget::getSelectedPixel()
 void VideoZoomWidget::setSelectedPixel(QPoint pixel)
 {
     QMutexLocker locker(&m_mutex);
-    if (!m_frame.is_valid()) return;
-    if (pixel.x() < 0) return;
-    if (pixel.x() >= m_frame.get_image_width()) return;
-    if (pixel.y() < 0) return;
-    if (pixel.y() >= m_frame.get_image_height()) return;
+    if (!m_frame.is_valid())
+        return;
+    if (pixel.x() < 0)
+        return;
+    if (pixel.x() >= m_frame.get_image_width())
+        return;
+    if (pixel.y() < 0)
+        return;
+    if (pixel.y() >= m_frame.get_image_height())
+        return;
     m_selectedPixel = pixel;
     update();
     locker.unlock();
@@ -103,11 +109,16 @@ VideoZoomWidget::PixelValues VideoZoomWidget::getPixelValues(const QPoint &pixel
 void VideoZoomWidget::setOffset(QPoint offset)
 {
     QMutexLocker locker(&m_mutex);
-    if (!m_frame.is_valid()) return;
-    if (offset.x() < 0) return;
-    if (offset.x() >= m_frame.get_image_width()) return;
-    if (offset.y() < 0) return;
-    if (offset.y() >= m_frame.get_image_height()) return;
+    if (!m_frame.is_valid())
+        return;
+    if (offset.x() < 0)
+        return;
+    if (offset.x() >= m_frame.get_image_width())
+        return;
+    if (offset.y() < 0)
+        return;
+    if (offset.y() >= m_frame.get_image_height())
+        return;
     m_imageOffset = offset;
     update();
 }
@@ -124,10 +135,12 @@ QSize VideoZoomWidget::sizeHint() const
 
 void VideoZoomWidget::paintEvent(QPaintEvent *)
 {
-    if (!isVisible()) return;
+    if (!isVisible())
+        return;
 
     QMutexLocker locker(&m_mutex);
-    if (!m_frame.is_valid()) return;
+    if (!m_frame.is_valid())
+        return;
 
     // Create the painter
     QPainter p(this);
@@ -145,17 +158,15 @@ void VideoZoomWidget::paintEvent(QPaintEvent *)
     for (int y = 0; y < wHeight && iy < iHeight; y += m_zoom) {
         const uint8_t *pPixel = pImg + ((iy * iWidth) + ix) * 3;
         for (int x = 0; x < wWidth; x += m_zoom) {
-            p.fillRect(x, y, m_zoom, m_zoom, QColor(pPixel[0], pPixel[1], pPixel[2], 255 ));
+            p.fillRect(x, y, m_zoom, m_zoom, QColor(pPixel[0], pPixel[1], pPixel[2], 255));
             pPixel += 3;
         }
         iy++;
     }
 
     // Outline the selected pixel
-    if (m_selectedPixel.x() >= 0 &&
-            m_selectedPixel.y() >= 0 &&
-            m_selectedPixel.x() < iWidth &&
-            m_selectedPixel.y() < iHeight) {
+    if (m_selectedPixel.x() >= 0 && m_selectedPixel.y() >= 0 && m_selectedPixel.x() < iWidth
+        && m_selectedPixel.y() < iHeight) {
         const uint8_t *pPixel = pImg + ((m_selectedPixel.y() * iWidth) + m_selectedPixel.x()) * 3;
         int posX = (m_selectedPixel.x() - m_imageOffset.x()) * m_zoom;
         int posY = (m_selectedPixel.y() - m_imageOffset.y()) * m_zoom;
@@ -168,14 +179,19 @@ void VideoZoomWidget::paintEvent(QPaintEvent *)
 void VideoZoomWidget::mouseMoveEvent(QMouseEvent *event)
 {
     QMutexLocker locker(&m_mutex);
-    if (!m_frame.is_valid()) return;
+    if (!m_frame.is_valid())
+        return;
     int iWidth = m_frame.get_image_width();
     int iHeight = m_frame.get_image_height();
     QPoint currMousePixel = posToPixel(event->pos());
-    if (currMousePixel.x() < 0) return;
-    if (currMousePixel.x() >= iWidth) return;
-    if (currMousePixel.y() < 0) return;
-    if (currMousePixel.y() >= iHeight) return;
+    if (currMousePixel.x() < 0)
+        return;
+    if (currMousePixel.x() >= iWidth)
+        return;
+    if (currMousePixel.y() < 0)
+        return;
+    if (currMousePixel.y() >= iHeight)
+        return;
     locker.unlock();
 
     if (event->buttons() & Qt::LeftButton) {
@@ -184,9 +200,9 @@ void VideoZoomWidget::mouseMoveEvent(QMouseEvent *event)
             int maxOffsetY = iHeight - (height() / m_zoom);
             // Calculate the new image offset
             QPoint newImageOffset;
-            newImageOffset.setX((int)m_mouseGrabPixel.x() - ((int)event->pos().x() / m_zoom));
+            newImageOffset.setX((int) m_mouseGrabPixel.x() - ((int) event->pos().x() / m_zoom));
             newImageOffset.setX(qBound(0, newImageOffset.x(), maxOffsetX));
-            newImageOffset.setY((int)m_mouseGrabPixel.y() - ((int)event->pos().y() / m_zoom));
+            newImageOffset.setY((int) m_mouseGrabPixel.y() - ((int) event->pos().y() / m_zoom));
             newImageOffset.setY(qBound(0, newImageOffset.y(), maxOffsetY));
 
             // Apply the offset if it has changed
@@ -221,7 +237,8 @@ void VideoZoomWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton) {
         QMutexLocker locker(&m_mutex);
-        if (!m_frame.is_valid()) return;
+        if (!m_frame.is_valid())
+            return;
         QPoint currMousePixel = posToPixel(event->pos());
         m_selectedPixel = currMousePixel;
         m_mouseGrabPixel = currMousePixel;
@@ -235,7 +252,8 @@ void VideoZoomWidget::mousePressEvent(QMouseEvent *event)
 void VideoZoomWidget::wheelEvent(QWheelEvent *event)
 {
     QMutexLocker locker(&m_mutex);
-    if (!m_frame.is_valid()) return;
+    if (!m_frame.is_valid())
+        return;
 
     QPoint steps = event->angleDelta() / 8 / 15;
     int newZoom = qBound(MIN_ZOOM, m_zoom + steps.y(), MAX_ZOOM);
@@ -265,15 +283,15 @@ void VideoZoomWidget::wheelEvent(QWheelEvent *event)
 
 QPoint VideoZoomWidget::pixelToPos(const QPoint &pixel)
 {
-    int x = ((int)pixel.x() - (int)m_imageOffset.x()) * m_zoom;
-    int y = ((int)pixel.y() - (int)m_imageOffset.y()) * m_zoom;
+    int x = ((int) pixel.x() - (int) m_imageOffset.x()) * m_zoom;
+    int y = ((int) pixel.y() - (int) m_imageOffset.y()) * m_zoom;
     return QPoint(x, y);
 }
 
 QPoint VideoZoomWidget::posToPixel(const QPoint &pos)
 {
-    int x = ((int)pos.x() / m_zoom) + (int)m_imageOffset.x();
-    int y = ((int)pos.y() / m_zoom) + (int)m_imageOffset.y();
+    int x = ((int) pos.x() / m_zoom) + (int) m_imageOffset.x();
+    int y = ((int) pos.y() / m_zoom) + (int) m_imageOffset.y();
     return QPoint(x, y);
 }
 
@@ -286,9 +304,10 @@ VideoZoomWidget::PixelValues VideoZoomWidget::pixelToValues(const QPoint &pixel)
     const uint8_t *pRgb = m_frame.get_image(mlt_image_rgb) + imageOffset * 3;
     const uint8_t *pYuv = m_frame.get_image(mlt_image_yuv420p);
     const uint8_t *pY = pYuv + imageOffset;
-    const uint8_t *pU = pYuv + (iWidth * iHeight) + (iWidth / 2 * (pixel.y() / 2)) + (pixel.x() / 2);
-    const uint8_t *pV = pYuv + (iWidth * iHeight * 5 / 4) + (iWidth / 2 * (pixel.y() / 2)) +
-                        (pixel.x() / 2);
+    const uint8_t *pU = pYuv + (iWidth * iHeight) + (iWidth / 2 * (pixel.y() / 2))
+                        + (pixel.x() / 2);
+    const uint8_t *pV = pYuv + (iWidth * iHeight * 5 / 4) + (iWidth / 2 * (pixel.y() / 2))
+                        + (pixel.x() / 2);
     values.y = *pY;
     values.u = *pU;
     values.v = *pV;

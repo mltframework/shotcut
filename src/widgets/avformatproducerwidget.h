@@ -18,10 +18,12 @@
 #ifndef AVFORMATPRODUCERWIDGET_H
 #define AVFORMATPRODUCERWIDGET_H
 
-#include <QWidget>
-#include <QRunnable>
 #include "abstractproducerwidget.h"
+
 #include "dialogs/transcodedialog.h"
+
+#include <QRunnable>
+#include <QWidget>
 
 namespace Ui {
 class AvformatProducerWidget;
@@ -65,9 +67,9 @@ private slots:
 
     void on_fieldOrderComboBox_activated(int index);
 
-    void on_aspectNumSpinBox_valueChanged(int );
+    void on_aspectNumSpinBox_valueChanged(int);
 
-    void on_aspectDenSpinBox_valueChanged(int );
+    void on_aspectDenSpinBox_valueChanged(int);
 
     void on_durationSpinBox_editingFinished();
 
@@ -155,6 +157,7 @@ public:
 
 signals:
     void probeFinished();
+
 private:
     Mlt::Producer m_producer;
 };

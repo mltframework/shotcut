@@ -19,9 +19,7 @@
 
 ExportPresetsTreeView::ExportPresetsTreeView(QWidget *parent)
     : QTreeView(parent)
-{
-
-}
+{}
 
 void ExportPresetsTreeView::currentChanged(const QModelIndex &current, const QModelIndex &previous)
 {

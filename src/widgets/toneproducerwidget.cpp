@@ -15,15 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "shotcut_mlt_properties.h"
 #include "toneproducerwidget.h"
 #include "ui_toneproducerwidget.h"
+
+#include "shotcut_mlt_properties.h"
 #include "util.h"
+
 #include <MltProfile.h>
 
-ToneProducerWidget::ToneProducerWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ToneProducerWidget)
+ToneProducerWidget::ToneProducerWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::ToneProducerWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);
@@ -93,6 +95,5 @@ void ToneProducerWidget::on_preset_saveClicked()
 
 QString ToneProducerWidget::detail() const
 {
-    return tr("Tone: %1Hz %2dB").arg(ui->frequencySpinBox->value()).arg(
-               ui->levelSpinBox->value());
+    return tr("Tone: %1Hz %2dB").arg(ui->frequencySpinBox->value()).arg(ui->levelSpinBox->value());
 }

@@ -16,13 +16,14 @@
  */
 
 #include "motiontrackermodel.h"
-#include "shotcut_mlt_properties.h"
-#include "qmltypes/qmlfilter.h"
-#include "mltcontroller.h"
 
-#include <QUuid>
+#include "Logger.h"
+#include "mltcontroller.h"
+#include "qmltypes/qmlfilter.h"
+#include "shotcut_mlt_properties.h"
+
 #include <Mlt.h>
-#include <Logger.h>
+#include <QUuid>
 
 // This is hard-coded for now (minimum viable product).
 static const int KEYFRAME_INTERVAL_FRAMES = 5;
@@ -56,74 +57,23 @@ public:
         }
         return 0;
     }
-    int on_start_producer(Mlt::Producer *)
-    {
-        return 0;
-    }
-    int on_end_producer(Mlt::Producer *)
-    {
-        return 0;
-    }
-    int on_start_playlist(Mlt::Playlist *)
-    {
-        return 0;
-    }
-    int on_end_playlist(Mlt::Playlist *)
-    {
-        return 0;
-    }
-    int on_start_tractor(Mlt::Tractor *)
-    {
-        return 0;
-    }
-    int on_end_tractor(Mlt::Tractor *)
-    {
-        return 0;
-    }
-    int on_start_multitrack(Mlt::Multitrack *)
-    {
-        return 0;
-    }
-    int on_end_multitrack(Mlt::Multitrack *)
-    {
-        return 0;
-    }
-    int on_start_track()
-    {
-        return 0;
-    }
-    int on_end_track()
-    {
-        return 0;
-    }
-    int on_end_filter(Mlt::Filter *)
-    {
-        return 0;
-    }
-    int on_start_transition(Mlt::Transition *)
-    {
-        return 0;
-    }
-    int on_end_transition(Mlt::Transition *)
-    {
-        return 0;
-    }
-    int on_start_chain(Mlt::Chain *)
-    {
-        return 0;
-    }
-    int on_end_chain(Mlt::Chain *)
-    {
-        return 0;
-    }
-    int on_start_link(Mlt::Link *)
-    {
-        return 0;
-    }
-    int on_end_link(Mlt::Link *)
-    {
-        return 0;
-    }
+    int on_start_producer(Mlt::Producer *) { return 0; }
+    int on_end_producer(Mlt::Producer *) { return 0; }
+    int on_start_playlist(Mlt::Playlist *) { return 0; }
+    int on_end_playlist(Mlt::Playlist *) { return 0; }
+    int on_start_tractor(Mlt::Tractor *) { return 0; }
+    int on_end_tractor(Mlt::Tractor *) { return 0; }
+    int on_start_multitrack(Mlt::Multitrack *) { return 0; }
+    int on_end_multitrack(Mlt::Multitrack *) { return 0; }
+    int on_start_track() { return 0; }
+    int on_end_track() { return 0; }
+    int on_end_filter(Mlt::Filter *) { return 0; }
+    int on_start_transition(Mlt::Transition *) { return 0; }
+    int on_end_transition(Mlt::Transition *) { return 0; }
+    int on_start_chain(Mlt::Chain *) { return 0; }
+    int on_end_chain(Mlt::Chain *) { return 0; }
+    int on_start_link(Mlt::Link *) { return 0; }
+    int on_end_link(Mlt::Link *) { return 0; }
 };
 
 MotionTrackerModel::MotionTrackerModel(QObject *parent)
@@ -134,7 +84,8 @@ MotionTrackerModel::MotionTrackerModel(QObject *parent)
 
 void MotionTrackerModel::load(Mlt::Producer *producer, bool reset)
 {
-    if (!producer) producer = MLT.producer();
+    if (!producer)
+        producer = MLT.producer();
     if (reset) {
         beginResetModel();
         m_data.clear();
@@ -152,7 +103,8 @@ void MotionTrackerModel::load(Mlt::Producer *producer, bool reset)
             }
         }
     }
-    if (reset) endResetModel();
+    if (reset)
+        endResetModel();
 }
 
 QString MotionTrackerModel::add(const QString &name, const QString &data)
@@ -268,7 +220,7 @@ QList<MotionTrackerModel::TrackingItem> MotionTrackerModel::trackingData(const Q
     QList<TrackingItem> result;
     auto s = m_data.value(key, {}).trackingData;
     auto l = s.split(';');
-    bool ok {false};
+    bool ok{false};
     Mlt::Properties props;
 
     for (const auto &i : l) {

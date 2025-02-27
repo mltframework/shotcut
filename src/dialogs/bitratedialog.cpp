@@ -16,27 +16,30 @@
  */
 
 #include "bitratedialog.h"
-#include "settings.h"
-#include "dialogs/saveimagedialog.h"
 
-#include <QtCharts/QChartView>
-#include <QtCharts/QStackedBarSeries>
+#include "dialogs/saveimagedialog.h"
+#include "settings.h"
+
+#include <QDialogButtonBox>
+#include <QJsonObject>
+#include <QPushButton>
+#include <QQueue>
+#include <QScrollArea>
+#include <QVBoxLayout>
+#include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QBarSet>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLegend>
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QSplineSeries>
-#include <QtCharts/QLegend>
-#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QStackedBarSeries>
 #include <QtCharts/QValueAxis>
-#include <QVBoxLayout>
-#include <QScrollArea>
-#include <QJsonObject>
-#include <QQueue>
-#include <QDialogButtonBox>
-#include <QPushButton>
 
 static const auto kSlidingWindowSize = 30;
 
-BitrateDialog::BitrateDialog(const QString &resource, double fps, const QJsonArray &data,
+BitrateDialog::BitrateDialog(const QString &resource,
+                             double fps,
+                             const QJsonArray &data,
                              QWidget *parent)
     : QDialog(parent)
 {
@@ -129,8 +132,11 @@ BitrateDialog::BitrateDialog(const QString &resource, double fps, const QJsonArr
     chart->addSeries(averageLine);
     chart->setTheme(Settings.theme() == "dark" ? QChart::ChartThemeDark : QChart::ChartThemeLight);
     averageLine->setColor(Qt::yellow);
-    chart->setTitle(tr("Bitrates for %1 ~~ Avg. %2 Min. %3 Max. %4 Kb/s").arg(resource)
-                    .arg(qRound(totalKbps / time)).arg(qRound(minKbps)).arg(qRound(maxKbps)));
+    chart->setTitle(tr("Bitrates for %1 ~~ Avg. %2 Min. %3 Max. %4 Kb/s")
+                        .arg(resource)
+                        .arg(qRound(totalKbps / time))
+                        .arg(qRound(minKbps))
+                        .arg(qRound(maxKbps)));
 
     auto axisX = new QValueAxis();
     chart->addAxis(axisX, Qt::AlignBottom);
@@ -164,7 +170,7 @@ BitrateDialog::BitrateDialog(const QString &resource, double fps, const QJsonArr
     auto buttons = new QDialogButtonBox(QDialogButtonBox::Save | QDialogButtonBox::Close, this);
     buttons->button(QDialogButtonBox::Close)->setDefault(true);
     layout->addWidget(buttons);
-    connect(buttons, &QDialogButtonBox::accepted, this, [ = ] {
+    connect(buttons, &QDialogButtonBox::accepted, this, [=] {
         QImage image(chartView->size(), QImage::Format_RGB32);
         QPainter painter(&image);
         painter.setRenderHint(QPainter::Antialiasing);

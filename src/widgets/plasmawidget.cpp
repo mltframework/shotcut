@@ -16,21 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "shotcut_mlt_properties.h"
 #include "plasmawidget.h"
 #include "ui_plasmawidget.h"
+
+#include "shotcut_mlt_properties.h"
 #include "util.h"
 
 static const char *kParamSpeed1 = "0";
 static const char *kParamSpeed2 = "1";
 static const char *kParamSpeed3 = "2";
 static const char *kParamSpeed4 = "3";
-static const char *kParamMove1  = "4";
-static const char *kParamMove2  = "5";
+static const char *kParamMove1 = "4";
+static const char *kParamMove2 = "5";
 
-PlasmaWidget::PlasmaWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::PlasmaWidget)
+PlasmaWidget::PlasmaWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::PlasmaWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);

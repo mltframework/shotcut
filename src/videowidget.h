@@ -18,14 +18,15 @@
 #ifndef VIDEOWIDGET_H
 #define VIDEOWIDGET_H
 
-#include <QSemaphore>
-#include <QQuickWidget>
-#include <QMutex>
-#include <QThread>
-#include <QRectF>
-#include <QTimer>
 #include "mltcontroller.h"
 #include "sharedframe.h"
+
+#include <QMutex>
+#include <QQuickWidget>
+#include <QRectF>
+#include <QSemaphore>
+#include <QThread>
+#include <QTimer>
 
 class QmlFilter;
 class QmlMetadata;
@@ -38,7 +39,7 @@ class Filter;
 class RenderThread;
 class FrameRenderer;
 
-typedef void *(*thread_function_t )( void * );
+typedef void *(*thread_function_t)(void *);
 
 class VideoWidget : public QQuickWidget, public Controller
 {
@@ -62,8 +63,10 @@ public:
     void play(double speed = 1.0)
     {
         Controller::play(speed);
-        if (speed == 0) emit paused();
-        else emit playing();
+        if (speed == 0)
+            emit paused();
+        else
+            emit playing();
     }
     void seek(int position)
     {
@@ -76,43 +79,19 @@ public:
         Controller::pause();
         emit paused();
     }
-    int displayWidth() const
-    {
-        return m_rect.width();
-    }
-    int displayHeight() const
-    {
-        return m_rect.height();
-    }
+    int displayWidth() const { return m_rect.width(); }
+    int displayHeight() const { return m_rect.height(); }
 
-    QObject *videoWidget()
-    {
-        return this;
-    }
-    QRectF rect() const
-    {
-        return m_rect;
-    }
-    int grid() const
-    {
-        return m_grid;
-    }
-    float zoom() const
-    {
-        return m_zoom * MLT.profile().width() / m_rect.width();
-    }
+    QObject *videoWidget() { return this; }
+    QRectF rect() const { return m_rect; }
+    int grid() const { return m_grid; }
+    float zoom() const { return m_zoom * MLT.profile().width() / m_rect.width(); }
     QPoint offset() const;
     QImage image() const;
     bool imageIsProxy() const;
     void requestImage() const;
-    bool snapToGrid() const
-    {
-        return m_snapToGrid;
-    }
-    int maxTextureSize() const
-    {
-        return m_maxTextureSize;
-    }
+    bool snapToGrid() const { return m_snapToGrid; }
+    int maxTextureSize() const { return m_maxTextureSize; }
     void toggleVuiDisplay();
 
 public slots:
@@ -124,7 +103,7 @@ public slots:
     void setCurrentFilter(QmlFilter *filter, QmlMetadata *meta);
     void setSnapToGrid(bool snap);
     virtual void initialize();
-    virtual void beforeRendering() {};
+    virtual void beforeRendering(){};
     virtual void renderVideo();
     virtual void onFrameDisplayed(const SharedFrame &frame);
 
@@ -208,17 +187,11 @@ class FrameRenderer : public QThread
 public:
     FrameRenderer();
     ~FrameRenderer();
-    QSemaphore *semaphore()
-    {
-        return &m_semaphore;
-    }
+    QSemaphore *semaphore() { return &m_semaphore; }
     SharedFrame getDisplayFrame();
     Q_INVOKABLE void showFrame(Mlt::Frame frame);
     void requestImage();
-    QImage image() const
-    {
-        return m_image;
-    }
+    QImage image() const { return m_image; }
 
 signals:
     void frameDisplayed(const SharedFrame &frame);
@@ -231,6 +204,6 @@ private:
     QImage m_image;
 };
 
-} // namespace
+} // namespace Mlt
 
 #endif

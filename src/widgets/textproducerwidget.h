@@ -18,8 +18,9 @@
 #ifndef TEXTPRODUCERWIDGET_H
 #define TEXTPRODUCERWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class TextProducerWidget;

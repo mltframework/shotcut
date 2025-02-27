@@ -17,25 +17,26 @@
 
 #include "newprojectfolder.h"
 #include "ui_newprojectfolder.h"
-#include "settings.h"
-#include "mainwindow.h"
-#include "util.h"
+
+#include "Logger.h"
 #include "dialogs/customprofiledialog.h"
 #include "dialogs/listselectiondialog.h"
+#include "mainwindow.h"
 #include "qmltypes/qmlapplication.h"
-#include <Logger.h>
+#include "settings.h"
+#include "util.h"
 
+#include <QActionGroup>
 #include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
-#include <QMessageBox>
 #include <QListWidgetItem>
-#include <QActionGroup>
+#include <QMessageBox>
 
-NewProjectFolder::NewProjectFolder(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::NewProjectFolder),
-    m_isOpening(false)
+NewProjectFolder::NewProjectFolder(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::NewProjectFolder)
+    , m_isOpening(false)
 {
     ui->setupUi(this);
     setColors();
@@ -79,8 +80,11 @@ void NewProjectFolder::showEvent(QShowEvent *)
         m_profileGroup->addAction(ui->actionProfileAutomatic);
         m_videoModeMenu.addAction(ui->actionProfileAutomatic);
     }
-    MAIN.buildVideoModeMenu(&m_videoModeMenu, m_customProfileMenu, m_profileGroup,
-                            ui->actionAddCustomProfile, ui->actionProfileRemove);
+    MAIN.buildVideoModeMenu(&m_videoModeMenu,
+                            m_customProfileMenu,
+                            m_profileGroup,
+                            ui->actionAddCustomProfile,
+                            ui->actionProfileRemove);
 
     // Check the current menu item.
     foreach (QAction *a, m_profileGroup->actions()) {
@@ -122,7 +126,8 @@ void NewProjectFolder::updateRecentProjects()
 
 void NewProjectFolder::on_projectsFolderButton_clicked()
 {
-    QString dirName = QFileDialog::getExistingDirectory(this, tr("Projects Folder"),
+    QString dirName = QFileDialog::getExistingDirectory(this,
+                                                        tr("Projects Folder"),
                                                         Settings.projectsFolder(),
                                                         Util::getFileDialogOptions());
     if (!dirName.isEmpty()) {
@@ -150,8 +155,13 @@ void NewProjectFolder::on_actionAddCustomProfile_triggered()
         QString name = dialog.profileName();
         if (!name.isEmpty()) {
             ui->videoModeButton->setText(name);
-            MAIN.addCustomProfile(name, m_customProfileMenu, ui->actionProfileRemove, m_profileGroup);
-            MAIN.addCustomProfile(name, MAIN.customProfileMenu(), MAIN.actionProfileRemove(),
+            MAIN.addCustomProfile(name,
+                                  m_customProfileMenu,
+                                  ui->actionProfileRemove,
+                                  m_profileGroup);
+            MAIN.addCustomProfile(name,
+                                  MAIN.customProfileMenu(),
+                                  MAIN.actionProfileRemove(),
                                   MAIN.profileGroup());
         } else if (m_profileGroup->checkedAction()) {
             ui->videoModeButton->setText(tr("Custom"));
@@ -175,8 +185,13 @@ void NewProjectFolder::on_actionProfileRemove_triggered()
 
         // Show the dialog.
         if (dialog.exec() == QDialog::Accepted) {
-            MAIN.removeCustomProfiles(dialog.selection(), dir, m_customProfileMenu, ui->actionProfileRemove);
-            MAIN.removeCustomProfiles(dialog.selection(), dir, MAIN.customProfileMenu(),
+            MAIN.removeCustomProfiles(dialog.selection(),
+                                      dir,
+                                      m_customProfileMenu,
+                                      ui->actionProfileRemove);
+            MAIN.removeCustomProfiles(dialog.selection(),
+                                      dir,
+                                      MAIN.customProfileMenu(),
                                       MAIN.actionProfileRemove());
             if (dialog.selection().indexOf(ui->videoModeButton->text()) >= 0) {
                 ui->actionProfileAutomatic->setChecked(true);
@@ -193,7 +208,8 @@ void NewProjectFolder::on_startButton_clicked()
     QString fileName = projectName;
 
     if (projectName.contains('/') || projectName.contains('\\')) {
-        QMessageBox::warning(this, ui->newProjectLabel->text(),
+        QMessageBox::warning(this,
+                             ui->newProjectLabel->text(),
                              tr("The project name cannot include a slash."));
         ui->startButton->setDisabled(true);
         return;
@@ -208,7 +224,8 @@ void NewProjectFolder::on_startButton_clicked()
     if (dir.cd(projectName)) {
         // Check if the project file exists.
         if (dir.exists(fileName)) {
-            QMessageBox::warning(this, ui->newProjectLabel->text(),
+            QMessageBox::warning(this,
+                                 ui->newProjectLabel->text(),
                                  tr("There is already a project with that name.\n"
                                     "Try again with a different name."));
             return;
@@ -216,10 +233,12 @@ void NewProjectFolder::on_startButton_clicked()
     } else {
         // Create the project folder if needed.
         if (!dir.mkpath(projectName)) {
-            QMessageBox::warning(this, ui->newProjectLabel->text(),
+            QMessageBox::warning(this,
+                                 ui->newProjectLabel->text(),
                                  tr("Unable to create folder %1\n"
                                     "Perhaps you do not have permission.\n"
-                                    "Try again with a different folder.").arg(projectName));
+                                    "Try again with a different folder.")
+                                     .arg(projectName));
             return;
         }
         dir.cd(projectName);
@@ -280,8 +299,8 @@ void NewProjectFolder::setColors()
 void NewProjectFolder::setProjectFolderButtonText(const QString &text)
 {
     auto path = QDir::toNativeSeparators(text);
-    QString elidedText = ui->projectsFolderButton->fontMetrics().elidedText(path, Qt::ElideLeft,
-                                                                            ui->recentListView->width() / 1.5);
+    QString elidedText = ui->projectsFolderButton->fontMetrics()
+                             .elidedText(path, Qt::ElideLeft, ui->recentListView->width() / 1.5);
     ui->projectsFolderButton->setText(elidedText);
     if (path != elidedText)
         ui->projectsFolderButton->setToolTip(path);
@@ -303,7 +322,6 @@ void NewProjectFolder::on_recentListView_customContextMenuRequested(const QPoint
     }
 }
 
-
 void NewProjectFolder::on_actionRecentRemove_triggered()
 {
     if (ui->recentListView->currentIndex().isValid()) {
@@ -321,4 +339,3 @@ void NewProjectFolder::on_actionRecentRemove_triggered()
         }
     }
 }
-

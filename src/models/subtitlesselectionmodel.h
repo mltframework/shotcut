@@ -24,7 +24,7 @@ class SubtitlesSelectionModel : public QItemSelectionModel
 {
     Q_OBJECT
     Q_PROPERTY(QModelIndex selectedTrackModelIndex READ selectedTrackModelIndex NOTIFY
-               selectedTrackModelIndexChanged)
+                   selectedTrackModelIndexChanged)
     Q_PROPERTY(QVariantList selectedItems READ selectedItems NOTIFY selectedItemsChanged)
 public:
     explicit SubtitlesSelectionModel(QAbstractItemModel *model);

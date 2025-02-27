@@ -16,15 +16,16 @@
  */
 
 #include "timelineitems.h"
+
+#include "Logger.h"
 #include "mltcontroller.h"
 #include "settings.h"
-#include <Logger.h>
 
-#include <QQuickPaintedItem>
-#include <QPainter>
-#include <QPalette>
-#include <QPainterPath>
 #include <QLinearGradient>
+#include <QPainter>
+#include <QPainterPath>
+#include <QPalette>
+#include <QQuickPaintedItem>
 
 class TimelineTransition : public QQuickPaintedItem
 {
@@ -77,10 +78,7 @@ class TimelinePlayhead : public QQuickPaintedItem
 class TimelineTriangle : public QQuickPaintedItem
 {
 public:
-    TimelineTriangle()
-    {
-        setAntialiasing(true);
-    }
+    TimelineTriangle() { setAntialiasing(true); }
     void paint(QPainter *painter)
     {
         QPainterPath path;
@@ -125,7 +123,7 @@ public:
         const int outPoint = qRound(m_outPoint / MLT.profile().fps() * 25.0);
         const qreal indicesPrPixel = qreal(outPoint - inPoint) / width();
 
-//        LOG_DEBUG() << "In/out points" << inPoint << "/" << outPoint;
+        //        LOG_DEBUG() << "In/out points" << inPoint << "/" << outPoint;
 
         QPainterPath path;
         path.moveTo(-1, height());
@@ -155,7 +153,7 @@ private:
     int m_inPoint;
     int m_outPoint;
     QColor m_color;
-    bool m_isActive {true};
+    bool m_isActive{true};
 };
 
 class MarkerStart : public QQuickPaintedItem
@@ -216,7 +214,6 @@ signals:
 private:
     QColor m_color;
 };
-
 
 void registerTimelineItems()
 {

@@ -16,15 +16,16 @@
  */
 
 #include "ffprobejob.h"
-#include "mainwindow.h"
+
+#include "Logger.h"
 #include "dialogs/textviewerdialog.h"
+#include "mainwindow.h"
 #include "util.h"
 
 #include <QAction>
 #include <QApplication>
-#include <QFileInfo>
 #include <QDir>
-#include <Logger.h>
+#include <QFileInfo>
 
 FfprobeJob::FfprobeJob(const QString &name, const QStringList &args)
     : AbstractJob(name)
@@ -32,17 +33,14 @@ FfprobeJob::FfprobeJob(const QString &name, const QStringList &args)
     m_args.append(args);
 }
 
-FfprobeJob::~FfprobeJob()
-{
-
-}
+FfprobeJob::~FfprobeJob() {}
 
 void FfprobeJob::start()
 {
     QString shotcutPath = qApp->applicationDirPath();
     QFileInfo ffprobePath(shotcutPath, "ffprobe");
     setReadChannel(QProcess::StandardOutput);
-    LOG_DEBUG() << ffprobePath.absoluteFilePath()  + " " + m_args.join(' ');
+    LOG_DEBUG() << ffprobePath.absoluteFilePath() + " " + m_args.join(' ');
     AbstractJob::start(ffprobePath.absoluteFilePath(), m_args);
 }
 

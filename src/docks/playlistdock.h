@@ -18,11 +18,12 @@
 #ifndef PLAYLISTDOCK_H
 #define PLAYLISTDOCK_H
 
+#include "models/playlistmodel.h"
+
 #include <QDockWidget>
-#include <QUndoCommand>
 #include <QTimer>
 #include <QTreeWidget>
-#include "models/playlistmodel.h"
+#include <QUndoCommand>
 
 namespace Ui {
 class PlaylistDock;
@@ -67,10 +68,7 @@ public:
 
     explicit PlaylistDock(QWidget *parent = 0);
     ~PlaylistDock();
-    PlaylistModel *model()
-    {
-        return &m_model;
-    }
+    PlaylistModel *model() { return &m_model; }
     int position();
     void replaceClipsWithHash(const QString &hash, Mlt::Producer &producer);
     void getSelectionRange(int *start, int *end);

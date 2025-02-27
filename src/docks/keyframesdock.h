@@ -18,8 +18,8 @@
 #ifndef KEYFRAMESDOCK_H
 #define KEYFRAMESDOCK_H
 
-#include "qmltypes/qmlfilter.h"
 #include "models/keyframesmodel.h"
+#include "qmltypes/qmlfilter.h"
 
 #include <QDockWidget>
 #include <QQuickWidget>
@@ -39,17 +39,11 @@ class KeyframesDock : public QDockWidget
 public:
     explicit KeyframesDock(QmlProducer *qmlProducer, QWidget *parent = 0);
 
-    KeyframesModel &model()
-    {
-        return m_model;
-    }
+    KeyframesModel &model() { return m_model; }
     Q_INVOKABLE int seekPrevious();
     Q_INVOKABLE int seekNext();
     int currentParameter() const;
-    double timeScale() const
-    {
-        return m_timeScale;
-    }
+    double timeScale() const { return m_timeScale; }
     void setTimeScale(double value);
 
 signals:
@@ -93,7 +87,7 @@ private:
     QMenu *m_keyTypePrevMenu;
     QMenu *m_keyTypeNextMenu;
     QMenu *m_clipMenu;
-    double m_timeScale {1.0};
+    double m_timeScale{1.0};
 };
 
 #endif // KEYFRAMESDOCK_H

@@ -19,8 +19,9 @@
 #define AUDIOWAVEFORMSCOPEWIDGET_H
 
 #include "scopewidget.h"
-#include <QMutex>
+
 #include <QImage>
+#include <QMutex>
 
 class AudioWaveformScopeWidget Q_DECL_FINAL : public ScopeWidget
 {

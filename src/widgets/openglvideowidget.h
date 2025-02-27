@@ -20,11 +20,11 @@
 
 #include "videowidget.h"
 
+#include <QOffscreenSurface>
+#include <QOpenGLContext>
+#include <QOpenGLFramebufferObject>
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
-#include <QOpenGLFramebufferObject>
-#include <QOpenGLContext>
-#include <QOffscreenSurface>
 
 class OpenGLVideoWidget : public Mlt::VideoWidget, protected QOpenGLFunctions
 {

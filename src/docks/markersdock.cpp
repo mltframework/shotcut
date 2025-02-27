@@ -17,14 +17,14 @@
 
 #include "markersdock.h"
 
+#include "Logger.h"
 #include "actions.h"
 #include "mainwindow.h"
 #include "models/markersmodel.h"
 #include "settings.h"
+#include "util.h"
 #include "widgets/docktoolbar.h"
 #include "widgets/editmarkerwidget.h"
-#include "util.h"
-#include <Logger.h>
 
 #include <QAction>
 #include <QDebug>
@@ -34,14 +34,14 @@
 #include <QLineEdit>
 #include <QMenu>
 #include <QMouseEvent>
+#include <QPainter>
 #include <QSortFilterProxyModel>
 #include <QSpacerItem>
-#include <QTreeView>
+#include <QStyledItemDelegate>
 #include <QToolButton>
+#include <QTreeView>
 #include <QVBoxLayout>
 #include <QtWidgets/QScrollArea>
-#include <QStyledItemDelegate>
-#include <QPainter>
 
 class ColorItemDelegate : public QStyledItemDelegate
 {
@@ -50,17 +50,16 @@ public:
     ColorItemDelegate(QAbstractItemView *view, QWidget *parent = nullptr)
         : QStyledItemDelegate(parent)
         , m_view(view)
-    {
-    }
+    {}
 
-    void paint(QPainter *painter,
-               const QStyleOptionViewItem &option, const QModelIndex &index) const
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
     {
         const auto color = index.data(MarkersModel::ColorRole).value<QColor>();
         const auto textColor(Util::textColor(color));
         painter->fillRect(option.rect, color);
-        const auto point = option.rect.topLeft() + QPoint(2 * m_view->devicePixelRatioF(),
-                                                          option.fontMetrics.ascent() + m_view->devicePixelRatioF());
+        const auto point = option.rect.topLeft()
+                           + QPoint(2 * m_view->devicePixelRatioF(),
+                                    option.fontMetrics.ascent() + m_view->devicePixelRatioF());
         painter->setPen(textColor);
         painter->drawText(point, color.name());
     }
@@ -74,7 +73,6 @@ public:
 
 private:
     QAbstractItemView *m_view;
-
 };
 
 class MarkerTreeView : public QTreeView
@@ -84,10 +82,7 @@ class MarkerTreeView : public QTreeView
 public:
     // Make this function public
     using QTreeView::selectedIndexes;
-    void blockSelectionEvent(bool block)
-    {
-        m_blockSelectionEvent = block;
-    }
+    void blockSelectionEvent(bool block) { m_blockSelectionEvent = block; }
 
 signals:
     void rowClicked(const QModelIndex &index);
@@ -122,8 +117,8 @@ private:
 // Include this so that MarkerTreeView can be declared in the source file.
 #include "markersdock.moc"
 
-MarkersDock::MarkersDock(QWidget *parent) :
-    QDockWidget(parent)
+MarkersDock::MarkersDock(QWidget *parent)
+    : QDockWidget(parent)
     , m_model(nullptr)
     , m_proxyModel(nullptr)
     , m_editInProgress(false)
@@ -150,9 +145,13 @@ MarkersDock::MarkersDock(QWidget *parent) :
     m_treeView->setRootIsDecorated(false);
     m_treeView->setUniformRowHeights(true);
     m_treeView->setSortingEnabled(true);
-    connect(m_treeView, SIGNAL(markerSelected(QModelIndex &)), this,
+    connect(m_treeView,
+            SIGNAL(markerSelected(QModelIndex &)),
+            this,
             SLOT(onSelectionChanged(QModelIndex &)));
-    connect(m_treeView, SIGNAL(rowClicked(const QModelIndex &)), this,
+    connect(m_treeView,
+            SIGNAL(rowClicked(const QModelIndex &)),
+            this,
             SLOT(onRowClicked(const QModelIndex &)));
     vboxLayout->addWidget(m_treeView, 1);
 
@@ -187,8 +186,8 @@ MarkersDock::MarkersDock(QWidget *parent) :
     DockToolBar *toolbar = new DockToolBar(tr("Markers Controls"));
     toolbar->setAreaHint(Qt::BottomToolBarArea);
     QToolButton *menuButton = new QToolButton(this);
-    menuButton->setIcon(QIcon::fromTheme("show-menu",
-                                         QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
+    menuButton->setIcon(
+        QIcon::fromTheme("show-menu", QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
     menuButton->setToolTip(tr("Markers Menu"));
     menuButton->setAutoRaise(true);
     menuButton->setMenu(mainMenu);
@@ -196,8 +195,8 @@ MarkersDock::MarkersDock(QWidget *parent) :
     toolbar->addWidget(menuButton);
 
     m_addButton = new QToolButton(this);
-    m_addButton->setIcon(QIcon::fromTheme("list-add",
-                                          QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
+    m_addButton->setIcon(
+        QIcon::fromTheme("list-add", QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
     m_addButton->setToolTip(tr("Add a marker at the current time"));
     m_addButton->setAutoRaise(true);
     if (!connect(m_addButton, &QAbstractButton::clicked, this, &MarkersDock::onAddRequested))
@@ -205,8 +204,8 @@ MarkersDock::MarkersDock(QWidget *parent) :
     toolbar->addWidget(m_addButton);
 
     m_removeButton = new QToolButton(this);
-    m_removeButton->setIcon(QIcon::fromTheme("list-remove",
-                                             QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
+    m_removeButton->setIcon(
+        QIcon::fromTheme("list-remove", QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
     m_removeButton->setToolTip(tr("Remove the selected marker"));
     m_removeButton->setAutoRaise(true);
     if (!connect(m_removeButton, &QAbstractButton::clicked, this, &MarkersDock::onRemoveRequested))
@@ -214,11 +213,13 @@ MarkersDock::MarkersDock(QWidget *parent) :
     toolbar->addWidget(m_removeButton);
 
     m_clearButton = new QToolButton(this);
-    m_clearButton->setIcon(QIcon::fromTheme("window-close",
-                                            QIcon(":/icons/oxygen/32x32/actions/window-close.png")));
+    m_clearButton->setIcon(
+        QIcon::fromTheme("window-close", QIcon(":/icons/oxygen/32x32/actions/window-close.png")));
     m_clearButton->setToolTip(tr("Deselect the marker"));
     m_clearButton->setAutoRaise(true);
-    if (!connect(m_clearButton, &QAbstractButton::clicked, this,
+    if (!connect(m_clearButton,
+                 &QAbstractButton::clicked,
+                 this,
                  &MarkersDock::onClearSelectionRequested))
         connect(m_clearButton, SIGNAL(clicked()), SLOT(onClearSelectionRequested()));
     toolbar->addWidget(m_clearButton);
@@ -230,8 +231,8 @@ MarkersDock::MarkersDock(QWidget *parent) :
     toolbar->addWidget(m_searchField);
 
     m_clearSearchButton = new QToolButton(this);
-    m_clearSearchButton->setIcon(QIcon::fromTheme("edit-clear",
-                                                  QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
+    m_clearSearchButton->setIcon(
+        QIcon::fromTheme("edit-clear", QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
     m_clearSearchButton->setToolTip(tr("Clear search"));
     m_clearSearchButton->setAutoRaise(true);
     if (!connect(m_clearSearchButton, &QAbstractButton::clicked, m_searchField, &QLineEdit::clear))
@@ -251,9 +252,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     LOG_DEBUG() << "end";
 }
 
-MarkersDock::~MarkersDock()
-{
-}
+MarkersDock::~MarkersDock() {}
 
 void MarkersDock::setModel(MarkersModel *model)
 {
@@ -269,13 +268,18 @@ void MarkersDock::setModel(MarkersModel *model)
     m_treeView->setColumnHidden(3, !Settings.markersShowColumn("end"));
     m_treeView->setColumnHidden(4, !Settings.markersShowColumn("duration"));
     m_treeView->sortByColumn(Settings.getMarkerSortColumn(), Settings.getMarkerSortOrder());
-    connect(m_model, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this,
+    connect(m_model,
+            SIGNAL(rowsInserted(const QModelIndex &, int, int)),
+            this,
             SLOT(onRowsInserted(const QModelIndex &, int, int)));
-    connect(m_model, SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &,
-                                        const QVector<int> &)), this, SLOT(onDataChanged(const QModelIndex &, const QModelIndex &,
-                                                                                         const QVector<int> &)));
+    connect(m_model,
+            SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &, const QVector<int> &)),
+            this,
+            SLOT(onDataChanged(const QModelIndex &, const QModelIndex &, const QVector<int> &)));
     connect(m_model, SIGNAL(modelReset()), this, SLOT(onModelReset()));
-    connect(m_treeView->header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this,
+    connect(m_treeView->header(),
+            SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)),
+            this,
             SLOT(onSortIndicatorChanged(int, Qt::SortOrder)));
     m_treeView->blockSelectionEvent(false);
 }
@@ -298,7 +302,10 @@ void MarkersDock::onSelectionChanged(QModelIndex &index)
             enableButtons(true);
             m_editMarkerWidget->setVisible(true);
             QSignalBlocker editBlocker(m_editMarkerWidget);
-            m_editMarkerWidget->setValues(marker.text, marker.color, marker.start, marker.end,
+            m_editMarkerWidget->setValues(marker.text,
+                                          marker.color,
+                                          marker.start,
+                                          marker.end,
                                           MAIN.multitrack()->get_length() - 1);
             return;
         }
@@ -393,7 +400,8 @@ void MarkersDock::onRowsInserted(const QModelIndex &parent, int first, int last)
     m_treeView->setCurrentIndex(insertedIndex);
 }
 
-void MarkersDock::onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight,
+void MarkersDock::onDataChanged(const QModelIndex &topLeft,
+                                const QModelIndex &bottomRight,
                                 const QVector<int> &roles)
 {
     Q_UNUSED(topLeft);
@@ -407,7 +415,10 @@ void MarkersDock::onDataChanged(const QModelIndex &topLeft, const QModelIndex &b
                 Markers::Marker marker = m_model->getMarker(realIndex.row());
                 m_editMarkerWidget->setVisible(true);
                 QSignalBlocker editBlocker(m_editMarkerWidget);
-                m_editMarkerWidget->setValues(marker.text, marker.color, marker.start, marker.end,
+                m_editMarkerWidget->setValues(marker.text,
+                                              marker.color,
+                                              marker.start,
+                                              marker.end,
                                               MAIN.multitrack()->get_length() - 1);
                 return;
             }

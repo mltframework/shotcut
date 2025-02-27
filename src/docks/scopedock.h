@@ -20,6 +20,7 @@
 #define SCOPEDOCK_H
 
 #include "widgets/scopes/scopewidget.h"
+
 #include <QDockWidget>
 #include <QObject>
 
@@ -39,7 +40,7 @@ private:
     ScopeController *m_scopeController;
     ScopeWidget *m_scopeWidget;
 
-    void setWidget(QWidget *widget);  // Private to disallow use
+    void setWidget(QWidget *widget); // Private to disallow use
 
 private slots:
     void onActionToggled(bool checked);

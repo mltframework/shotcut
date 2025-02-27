@@ -19,8 +19,9 @@
 #define JOBQUEUE_H
 
 #include "jobs/abstractjob.h"
-#include <QStandardItemModel>
+
 #include <QMutex>
+#include <QStandardItemModel>
 
 class JobQueue : public QStandardItemModel
 {
@@ -30,12 +31,7 @@ protected:
     void startNextJob();
 
 public:
-    enum ColumnRole {
-        COLUMN_ICON,
-        COLUMN_OUTPUT,
-        COLUMN_STATUS,
-        COLUMN_COUNT
-    };
+    enum ColumnRole { COLUMN_ICON, COLUMN_OUTPUT, COLUMN_STATUS, COLUMN_COUNT };
 
     static JobQueue &singleton(QObject *parent = 0);
     void cleanup();
@@ -49,10 +45,8 @@ public:
     bool hasIncomplete() const;
     void remove(const QModelIndex &index);
     void removeFinished();
-    QList<AbstractJob *> jobs() const
-    {
-        return m_jobs;
-    }
+    QList<AbstractJob *> jobs() const { return m_jobs; }
+    bool targetIsInProgress(const QString &target);
 
 signals:
     void jobAdded();

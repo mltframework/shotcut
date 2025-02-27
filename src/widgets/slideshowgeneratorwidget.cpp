@@ -19,10 +19,10 @@
 
 #include "Logger.h"
 #include "mltcontroller.h"
+#include "qmltypes/qmlapplication.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "widgets/producerpreviewwidget.h"
-#include "qmltypes/qmlapplication.h"
 
 #include <QComboBox>
 #include <QDebug>
@@ -78,9 +78,11 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
         }
     }
     m_aspectConversionCombo->setToolTip(tr("Choose an aspect ratio conversion method."));
-    m_aspectConversionCombo->setCurrentIndex(Settings.slideshowAspectConversion(
-                                                 ASPECT_CONVERSION_CROP_CENTER));
-    connect(m_aspectConversionCombo, SIGNAL(currentIndexChanged(int)), this,
+    m_aspectConversionCombo->setCurrentIndex(
+        Settings.slideshowAspectConversion(ASPECT_CONVERSION_CROP_CENTER));
+    connect(m_aspectConversionCombo,
+            SIGNAL(currentIndexChanged(int)),
+            this,
             SLOT(on_parameterChanged()));
     grid->addWidget(m_aspectConversionCombo, 1, 1);
 
@@ -98,13 +100,16 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     grid->addWidget(new QLabel(tr("Transition duration")), 3, 0, Qt::AlignRight);
     m_transitionDurationSpinner = new QDoubleSpinBox();
     m_transitionDurationSpinner->setToolTip(
-        tr("Set the duration of the transition.\nMay not be longer than half the duration of the clip.\nIf the duration is 0, no transition will be created."));
+        tr("Set the duration of the transition.\nMay not be longer than half the duration of the "
+           "clip.\nIf the duration is 0, no transition will be created."));
     m_transitionDurationSpinner->setSuffix(" s");
     m_transitionDurationSpinner->setDecimals(1);
     m_transitionDurationSpinner->setMinimum(0);
     m_transitionDurationSpinner->setMaximum(10);
     m_transitionDurationSpinner->setValue(Settings.slideshowTransitionDuration(2.0));
-    connect(m_transitionDurationSpinner, SIGNAL(valueChanged(double)), this,
+    connect(m_transitionDurationSpinner,
+            SIGNAL(valueChanged(double)),
+            this,
             SLOT(on_parameterChanged()));
     grid->addWidget(m_transitionDurationSpinner, 3, 1);
 
@@ -141,7 +146,9 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     }
     m_transitionStyleCombo->setToolTip(tr("Choose a transition effect."));
     m_transitionStyleCombo->setCurrentIndex(Settings.slideshowTransitionStyle(dissolveIndex));
-    connect(m_transitionStyleCombo, SIGNAL(currentIndexChanged(int)), this,
+    connect(m_transitionStyleCombo,
+            SIGNAL(currentIndexChanged(int)),
+            this,
             SLOT(on_parameterChanged()));
     grid->addWidget(m_transitionStyleCombo, 4, 1);
 
@@ -187,7 +194,9 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
             auto out = c->frame_in + framesPerClip - 1;
             if (QString::fromLatin1(c->producer->get("mlt_service")).startsWith("avformat"))
                 out = qMin(c->frame_out, out);
-            Mlt::Producer producer(MLT.profile(), "xml-string", MLT.XML(c->producer).toUtf8().constData());
+            Mlt::Producer producer(MLT.profile(),
+                                   "xml-string",
+                                   MLT.XML(c->producer).toUtf8().constData());
             slideshow->append(producer, c->frame_in, out);
         }
     }
@@ -197,7 +206,8 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
         Mlt::ClipInfo *c = slideshow->clip_info(i, &info);
         if (c && c->producer) {
             if (!c->producer->property_exists("meta.media.width")) {
-                delete c->producer->get_frame(); // makes avformat producer set meta.media.width and .height
+                delete c->producer
+                    ->get_frame(); // makes avformat producer set meta.media.width and .height
             }
             attachAffineFilter(config, c->producer, c->frame_count - 1);
             attachBlurFilter(config, c->producer);
@@ -228,7 +238,7 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
             // Create playlist mix
             slideshow->mix(i, framesPerTransition);
             QScopedPointer<Mlt::Producer> producer(slideshow->get_clip(i + 1));
-            if ( producer.isNull() ) {
+            if (producer.isNull()) {
                 break;
             }
             producer->parent().set(kShotcutTransitionProperty, "lumaMix");
@@ -257,12 +267,12 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
     return slideshow;
 }
 
-void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig &config, Mlt::Producer *producer,
+void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig &config,
+                                                  Mlt::Producer *producer,
                                                   int endPosition)
 {
-    if (config.zoomPercent == 0 &&
-            config.aspectConversion != ASPECT_CONVERSION_CROP_CENTER &&
-            config.aspectConversion != ASPECT_CONVERSION_CROP_PAN) {
+    if (config.zoomPercent == 0 && config.aspectConversion != ASPECT_CONVERSION_CROP_CENTER
+        && config.aspectConversion != ASPECT_CONVERSION_CROP_PAN) {
         return;
     }
 
@@ -295,50 +305,50 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig &config, Mlt::
         return;
     }
 
-    if (config.aspectConversion == ASPECT_CONVERSION_CROP_CENTER ||
-            config.aspectConversion == ASPECT_CONVERSION_CROP_PAN) {
+    if (config.aspectConversion == ASPECT_CONVERSION_CROP_CENTER
+        || config.aspectConversion == ASPECT_CONVERSION_CROP_PAN) {
         if (sourceDar > destDar) {
             // Crop sides to fit height
-            beginRect.w = (double)MLT.profile().width() * sourceDar / destDar;
+            beginRect.w = (double) MLT.profile().width() * sourceDar / destDar;
             beginRect.h = MLT.profile().height();
             beginRect.y = 0;
             endRect.w = beginRect.w;
             endRect.h = beginRect.h;
             endRect.y = beginRect.y;
             if (config.aspectConversion == ASPECT_CONVERSION_CROP_CENTER) {
-                beginRect.x = ((double)MLT.profile().width() - beginRect.w) / 2.0;
+                beginRect.x = ((double) MLT.profile().width() - beginRect.w) / 2.0;
                 endRect.x = beginRect.x;
             } else {
                 beginRect.x = 0;
-                endRect.x = (double)MLT.profile().width() - endRect.w;
+                endRect.x = (double) MLT.profile().width() - endRect.w;
             }
         } else if (destDar > sourceDar) {
             // Crop top and bottom to fit width.
             beginRect.w = MLT.profile().width();
-            beginRect.h = (double)MLT.profile().height() * destDar / sourceDar;
+            beginRect.h = (double) MLT.profile().height() * destDar / sourceDar;
             beginRect.x = 0;
             endRect.w = beginRect.w;
             endRect.h = beginRect.h;
             endRect.x = beginRect.x;
             if (config.aspectConversion == ASPECT_CONVERSION_CROP_CENTER) {
-                beginRect.y = ((double)MLT.profile().height() - beginRect.h) / 2.0;
+                beginRect.y = ((double) MLT.profile().height() - beginRect.h) / 2.0;
                 endRect.y = beginRect.y;
             } else {
                 beginRect.y = 0;
-                endRect.y =  (double)MLT.profile().height() - endRect.h;
+                endRect.y = (double) MLT.profile().height() - endRect.h;
             }
         }
     } else {
         // Pad: modify rect to fit the aspect ratio of the source
         if (sourceDar > destDar) {
             beginRect.w = MLT.profile().width();
-            beginRect.h = (double)MLT.profile().height() * destDar / sourceDar;
+            beginRect.h = (double) MLT.profile().height() * destDar / sourceDar;
             beginRect.x = 0;
-            beginRect.y = ((double)MLT.profile().height() - beginRect.h) / 2.0;
+            beginRect.y = ((double) MLT.profile().height() - beginRect.h) / 2.0;
         } else if (destDar > sourceDar) {
-            beginRect.w = (double)MLT.profile().width() * sourceDar / destDar;
+            beginRect.w = (double) MLT.profile().width() * sourceDar / destDar;
             beginRect.h = MLT.profile().height();
-            beginRect.x = ((double)MLT.profile().width() - beginRect.w) / 2.0;
+            beginRect.x = ((double) MLT.profile().width() - beginRect.w) / 2.0;
             beginRect.y = 0;
         }
         endRect.w = beginRect.w;
@@ -348,13 +358,13 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig &config, Mlt::
     }
 
     if (config.zoomPercent > 0) {
-        double endScale = (double)config.zoomPercent / 100.0;
+        double endScale = (double) config.zoomPercent / 100.0;
         endRect.x = endRect.x - (endScale * endRect.w / 2.0);
         endRect.y = endRect.y - (endScale * endRect.h / 2.0);
         endRect.w = endRect.w + (endScale * endRect.w);
         endRect.h = endRect.h + (endScale * endRect.h);
     } else if (config.zoomPercent < 0) {
-        double beginScale = -1.0 * (double)config.zoomPercent / 100.0;
+        double beginScale = -1.0 * (double) config.zoomPercent / 100.0;
         beginRect.x = beginRect.x - (beginScale * beginRect.w / 2.0);
         beginRect.y = beginRect.y - (beginScale * beginRect.h / 2.0);
         beginRect.w = beginRect.w + (beginScale * beginRect.w);
@@ -406,7 +416,7 @@ void SlideshowGeneratorWidget::attachBlurFilter(SlideshowConfig &config, Mlt::Pr
         sourceAr = producer->get_double("aspect_ratio");
     }
     double sourceDar = destDar;
-    if ( sourceW && sourceH && sourceAr ) {
+    if (sourceW && sourceH && sourceAr) {
         sourceDar = sourceW * sourceAr / sourceH;
     }
     if (sourceDar == destDar) {
@@ -417,11 +427,11 @@ void SlideshowGeneratorWidget::attachBlurFilter(SlideshowConfig &config, Mlt::Pr
     if (sourceDar > destDar) {
         // Blur top/bottom to pad.
         rect.h = MLT.profile().height() * destDar / sourceDar;
-        rect.y = ((double)MLT.profile().height() - rect.h) / 2.0;
+        rect.y = ((double) MLT.profile().height() - rect.h) / 2.0;
     } else if (destDar > sourceDar) {
         // Blur sides to pad.
         rect.w = MLT.profile().width() * sourceDar / destDar;
-        rect.x = ((double)MLT.profile().width() - rect.w) / 2.0;
+        rect.x = ((double) MLT.profile().width() - rect.w) / 2.0;
     }
 
     Mlt::Filter filter(MLT.profile(), "pillar_echo");
@@ -448,11 +458,15 @@ void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition *lu
         luma->set("resource", "");
         luma->set("softness", 0);
     } else if (index <= 24) {
-        luma->set("resource", QStringLiteral("%luma%1.pgm").arg(index - 2, 2, 10,
-                                                                QChar('0')).toLatin1().constData());
+        luma->set("resource",
+                  QStringLiteral("%luma%1.pgm")
+                      .arg(index - 2, 2, 10, QChar('0'))
+                      .toLatin1()
+                      .constData());
         luma->set("softness", config.transitionSoftness / 100.0);
     } else {
-        luma->set("resource", m_transitionStyleCombo->itemData(index).toString().toUtf8().constData());
+        luma->set("resource",
+                  m_transitionStyleCombo->itemData(index).toString().toUtf8().constData());
         luma->set("softness", config.transitionSoftness / 100.0);
     }
     luma->set("progressive", 1);
@@ -464,7 +478,7 @@ void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition *lu
 
 void SlideshowGeneratorWidget::on_parameterChanged()
 {
-    if (m_transitionDurationSpinner->value() > m_clipDurationSpinner->value() / 2 ) {
+    if (m_transitionDurationSpinner->value() > m_clipDurationSpinner->value() / 2) {
         m_transitionDurationSpinner->setValue(m_clipDurationSpinner->value() / 2);
     }
     if (m_transitionDurationSpinner->value() == randomIndex) {
@@ -482,8 +496,8 @@ void SlideshowGeneratorWidget::on_parameterChanged()
     }
 
     m_preview->stop();
-    m_preview->showText(Settings.playerGPU() ? tr("Preview is not available with GPU Effects") :
-                        tr("Generating Preview..."));
+    m_preview->showText(Settings.playerGPU() ? tr("Preview is not available with GPU Effects")
+                                             : tr("Generating Preview..."));
     m_mutex.lock();
     m_refreshPreview = true;
     m_config.clipDuration = m_clipDurationSpinner->value();

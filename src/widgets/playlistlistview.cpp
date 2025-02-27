@@ -16,12 +16,12 @@
  */
 
 #include "playlistlistview.h"
+
 #include <QDropEvent>
 
 PlaylistListView::PlaylistListView(QWidget *parent)
     : QListView(parent)
-{
-}
+{}
 
 void PlaylistListView::dropEvent(QDropEvent *event)
 {

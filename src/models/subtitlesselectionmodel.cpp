@@ -23,18 +23,20 @@ SubtitlesSelectionModel::SubtitlesSelectionModel(QAbstractItemModel *model)
     : QItemSelectionModel(model)
     , m_selectedTrackIndex(-1)
 {
-    connect(this, &QItemSelectionModel::selectionChanged, this, [&](const QItemSelection & selected,
-    const QItemSelection & deselected) {
-        QVariantList result;
-        foreach (auto modelIndex, selectedRows()) {
-            result << modelIndex.row();
-        }
-        m_selectedItems = result;
-        if (selectedRows().size() == 1) {
-            m_lastSingleSelection = selectedRows()[0].row();
-        }
-        emit selectedItemsChanged();
-    });
+    connect(this,
+            &QItemSelectionModel::selectionChanged,
+            this,
+            [&](const QItemSelection &selected, const QItemSelection &deselected) {
+                QVariantList result;
+                foreach (auto modelIndex, selectedRows()) {
+                    result << modelIndex.row();
+                }
+                m_selectedItems = result;
+                if (selectedRows().size() == 1) {
+                    m_lastSingleSelection = selectedRows()[0].row();
+                }
+                emit selectedItemsChanged();
+            });
 }
 
 QModelIndex SubtitlesSelectionModel::selectedTrackModelIndex()
@@ -95,14 +97,16 @@ void SubtitlesSelectionModel::selectRange(int itemIndex)
     }
     qDebug() << m_lastSingleSelection << itemIndex;
     if (m_lastSingleSelection == -1) {
-        select(itemModelIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::SelectCurrent |
-               QItemSelectionModel::Rows);
+        select(itemModelIndex,
+               QItemSelectionModel::ClearAndSelect | QItemSelectionModel::SelectCurrent
+                   | QItemSelectionModel::Rows);
     } else {
         QModelIndex firstItemModelIndex = smodel->itemModelIndex(m_selectedTrackIndex,
                                                                  m_lastSingleSelection);
         QItemSelection newSelection(firstItemModelIndex, itemModelIndex);
-        select(newSelection, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::SelectCurrent |
-               QItemSelectionModel::Rows);
+        select(newSelection,
+               QItemSelectionModel::ClearAndSelect | QItemSelectionModel::SelectCurrent
+                   | QItemSelectionModel::Rows);
     }
     setCurrentIndex(itemModelIndex, QItemSelectionModel::NoUpdate);
 }

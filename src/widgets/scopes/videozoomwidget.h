@@ -20,15 +20,16 @@
 
 #include "sharedframe.h"
 
-#include <QWidget>
 #include <QMutex>
+#include <QWidget>
 
 class VideoZoomWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    struct PixelValues {
+    struct PixelValues
+    {
         uint8_t y;
         uint8_t u;
         uint8_t v;
@@ -60,9 +61,9 @@ private:
     virtual QSize sizeHint() const Q_DECL_OVERRIDE;
 
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
-    void mouseMoveEvent(QMouseEvent *event)Q_DECL_OVERRIDE;
-    void mousePressEvent(QMouseEvent *event)Q_DECL_OVERRIDE;
-    void wheelEvent(QWheelEvent *event)Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void wheelEvent(QWheelEvent *event) Q_DECL_OVERRIDE;
 
     QPoint pixelToPos(const QPoint &pixel);
     QPoint posToPixel(const QPoint &pos);

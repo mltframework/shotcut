@@ -18,14 +18,15 @@
 #ifndef SCOPEWIDGET_H
 #define SCOPEWIDGET_H
 
-#include <QWidget>
-#include <QString>
-#include <Logger.h>
-#include <QThread>
+#include "Logger.h"
+#include "dataqueue.h"
+#include "sharedframe.h"
+
 #include <QFuture>
 #include <QMutex>
-#include "sharedframe.h"
-#include "dataqueue.h"
+#include <QString>
+#include <QThread>
+#include <QWidget>
 
 /*!
   \class ScopeWidget
@@ -79,7 +80,7 @@ public:
       Sets the preferred orientation on the scope.
       This virtual function may be reimplemented by subclasses.
     */
-    virtual void setOrientation(Qt::Orientation) {};
+    virtual void setOrientation(Qt::Orientation){};
 
 public slots:
     //! Provides a new frame to the scope. Should be called by the application.

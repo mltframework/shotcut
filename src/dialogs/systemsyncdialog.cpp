@@ -17,13 +17,14 @@
 
 #include "systemsyncdialog.h"
 #include "ui_systemsyncdialog.h"
-#include "settings.h"
-#include "mltcontroller.h"
 
-SystemSyncDialog::SystemSyncDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::SystemSyncDialog),
-    m_oldValue(Settings.playerVideoDelayMs())
+#include "mltcontroller.h"
+#include "settings.h"
+
+SystemSyncDialog::SystemSyncDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::SystemSyncDialog)
+    , m_oldValue(Settings.playerVideoDelayMs())
 {
     ui->setupUi(this);
     ui->syncSlider->setValue(Settings.playerVideoDelayMs());
@@ -75,5 +76,4 @@ void SystemSyncDialog::setDelay(int delay)
         MLT.consumerChanged();
     }
     ui->applyButton->hide();
-
 }

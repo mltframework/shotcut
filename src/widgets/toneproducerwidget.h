@@ -18,8 +18,9 @@
 #ifndef TONEPRODUCERWIDGET_H
 #define TONEPRODUCERWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class ToneProducerWidget;

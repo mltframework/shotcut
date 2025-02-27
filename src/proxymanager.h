@@ -19,31 +19,29 @@
 #define PROXYMANAGER_H
 
 #include <QDir>
-#include <QString>
 #include <QPoint>
+#include <QString>
 
 namespace Mlt {
 class Producer;
 class Service;
-}
+} // namespace Mlt
 
 class ProxyManager
 {
 private:
-    ProxyManager() {};
+    ProxyManager(){};
 
 public:
-    enum ScanMode {
-        Automatic,
-        Progressive,
-        InterlacedTopFieldFirst,
-        InterlacedBottomFieldFirst
-    };
+    enum ScanMode { Automatic, Progressive, InterlacedTopFieldFirst, InterlacedBottomFieldFirst };
 
     static QDir dir();
     static QString resource(Mlt::Service &producer);
-    static void generateVideoProxy(Mlt::Producer &producer, bool fullRange,
-                                   ScanMode scanMode = Automatic, const QPoint &aspectRatio = QPoint(), bool replace = true);
+    static void generateVideoProxy(Mlt::Producer &producer,
+                                   bool fullRange,
+                                   ScanMode scanMode = Automatic,
+                                   const QPoint &aspectRatio = QPoint(),
+                                   bool replace = true);
     static void generateImageProxy(Mlt::Producer &producer, bool replace = true);
     static bool filterXML(QString &xml, QString root);
     static bool fileExists(Mlt::Producer &producer);

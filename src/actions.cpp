@@ -17,7 +17,7 @@
 
 #include "actions.h"
 
-#include <Logger.h>
+#include "Logger.h"
 #include "settings.h"
 
 #include <QAction>
@@ -51,7 +51,7 @@ void ShotcutActions::add(const QString &key, QAction *action, QString group)
     if (group.isEmpty()) {
         group = tr("Other");
     }
-    action->setProperty(displayProperty, group +  " > " + action->iconText());
+    action->setProperty(displayProperty, group + " > " + action->iconText());
 
     QList<QKeySequence> sequences = action->shortcuts();
     if (sequences.size() > 0)
@@ -93,7 +93,7 @@ void ShotcutActions::loadFromMenu(QMenu *menu, QString group)
     }
 }
 
-QAction *ShotcutActions::operator [](const QString &key)
+QAction *ShotcutActions::operator[](const QString &key)
 {
     auto iterator = m_actions.find(key);
     if (iterator != m_actions.end()) {

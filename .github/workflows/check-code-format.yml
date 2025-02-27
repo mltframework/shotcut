@@ -7,26 +7,34 @@ on:
   push:
 
 jobs:
-  astyle:
+  clang-format:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Artistic Style
-        run: sudo apt-get install -y astyle grep
+      - name: Install clang-format
+        run: sudo apt-get install -y clang-format-14
 
       - name: Check style
         run: |
-          results="$(astyle --project=.astylerc --dry-run --recursive "./*.cpp,*.h" | awk '/^Formatted/')"
-          if [ -z "$results" ]
+          FILES=`find . -type f -name "*.h" -o -name "*.c" -o -name "*.cpp"`
+          FILTERED_FILES=()
+          for file in ${FILES[@]};
+          do
+            [[ $file =~ "./src/" ]] &&
+            [[ ! $file =~ "spatialmedia" ]] &&
+            [[ ! $file =~ "defaultlayouts.h" ]] &&
+            [[ ! $file =~ "_autogen" ]] &&
+            FILTERED_FILES+=($file)
+          done
+          clang-format-14 --verbose --dry-run --Werror -style=file -i ${FILTERED_FILES[@]}
+          if [ $? -eq 0 ]
           then
             echo "SUCCESS: All files are formatted correctly"
             exit 0
           else
-            count=`wc -l <<< "$results"`
-            echo "FAILURE: $count files are formatted incorrectly"
-            echo "${results//'Formatted '/'   '}"
+          echo "FAILURE: some files are formatted incorrectly"
             exit 99
           fi

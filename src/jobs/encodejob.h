@@ -19,13 +19,17 @@
 #define ENCODEJOB_H
 
 #include "meltjob.h"
+
 #include <QThread>
 
 class EncodeJob : public MeltJob
 {
     Q_OBJECT
 public:
-    EncodeJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen,
+    EncodeJob(const QString &name,
+              const QString &xml,
+              int frameRateNum,
+              int frameRateDen,
               const QThread::Priority priority);
 
 private slots:

@@ -19,8 +19,8 @@
 #define RECENTDOCK_H
 
 #include <QDockWidget>
-#include <QStandardItemModel>
 #include <QSortFilterProxyModel>
+#include <QStandardItemModel>
 
 namespace Ui {
 class RecentDock;

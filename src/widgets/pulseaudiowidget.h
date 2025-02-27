@@ -19,8 +19,9 @@
 #ifndef PULSEAUDIOWIDGET_H
 #define PULSEAUDIOWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class PulseAudioWidget;

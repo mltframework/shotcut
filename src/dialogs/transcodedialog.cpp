@@ -17,17 +17,18 @@
 
 #include "transcodedialog.h"
 #include "ui_transcodedialog.h"
+
 #include "mltcontroller.h"
 #include "settings.h"
 
 #include <QPushButton>
 
-TranscodeDialog::TranscodeDialog(const QString &message, bool isProgressive, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::TranscodeDialog),
-    m_format(0),
-    m_isChecked(false),
-    m_isProgressive(isProgressive)
+TranscodeDialog::TranscodeDialog(const QString &message, bool isProgressive, QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::TranscodeDialog)
+    , m_format(0)
+    , m_isChecked(false)
+    , m_isProgressive(isProgressive)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Convert to Edit-friendly..."));
@@ -109,9 +110,9 @@ void TranscodeDialog::set709Convert(bool enable)
 QString TranscodeDialog::sampleRate() const
 {
     QString sampleRate;
-    if ( ui->sampleRateComboBox->currentIndex() == 1 ) {
+    if (ui->sampleRateComboBox->currentIndex() == 1) {
         sampleRate = "44100";
-    } else if ( ui->sampleRateComboBox->currentIndex() == 2 ) {
+    } else if (ui->sampleRateComboBox->currentIndex() == 2) {
         sampleRate = "48000";
     }
     return sampleRate;
@@ -145,8 +146,8 @@ void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
         ui->formatLabel->setText(tr("Lossy: I-frame–only %1").arg("H.264/AC-3 MP4"));
         break;
     case 1:
-        ui->formatLabel->setText(tr("Intermediate: %1").arg(m_isProgressive ? "DNxHR/PCM MOV" :
-                                                            "ProRes/PCM MOV"));
+        ui->formatLabel->setText(
+            tr("Intermediate: %1").arg(m_isProgressive ? "DNxHR/PCM MOV" : "ProRes/PCM MOV"));
         break;
     case 2:
         ui->formatLabel->setText(tr("Lossless: %1").arg("Ut Video/PCM MKV"));

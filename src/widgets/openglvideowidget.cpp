@@ -19,16 +19,26 @@
  */
 
 #include "openglvideowidget.h"
-#include <Logger.h>
-#include <QOpenGLVersionFunctionsFactory>
+
+#include "Logger.h"
+
+#include <utility>
 #include <QOpenGLFunctions_1_1>
 #include <QOpenGLFunctions_3_2_Core>
-#include <utility>
+#include <QOpenGLVersionFunctionsFactory>
 
 #ifdef QT_NO_DEBUG
-#define check_error(fn) {}
+#define check_error(fn) \
+    {}
 #else
-#define check_error(fn) { int err = fn->glGetError(); if (err != GL_NO_ERROR) { LOG_ERROR() << "GL error"  << Qt::hex << err << Qt::dec << "at" << __FILE__ << ":" << __LINE__; } }
+#define check_error(fn) \
+    { \
+        int err = fn->glGetError(); \
+        if (err != GL_NO_ERROR) { \
+            LOG_ERROR() << "GL error" << Qt::hex << err << Qt::dec << "at" << __FILE__ << ":" \
+                        << __LINE__; \
+        } \
+    }
 #endif
 
 OpenGLVideoWidget::OpenGLVideoWidget(QObject *parent)
@@ -55,8 +65,9 @@ OpenGLVideoWidget::~OpenGLVideoWidget()
 void OpenGLVideoWidget::initialize()
 {
     LOG_DEBUG() << "begin";
-    auto context = static_cast<QOpenGLContext *>(quickWindow()->rendererInterface()->getResource(
-                                                     quickWindow(), QSGRendererInterface::OpenGLContextResource));
+    auto context = static_cast<QOpenGLContext *>(
+        quickWindow()->rendererInterface()->getResource(quickWindow(),
+                                                        QSGRendererInterface::OpenGLContextResource));
     m_quickContext = context;
 
     if (!m_offscreenSurface.isValid()) {
@@ -95,29 +106,30 @@ void OpenGLVideoWidget::createShader()
                                       "  gl_Position = projection * modelView * vertex;"
                                       "  coordinates = texCoord;"
                                       "}");
-    m_shader->addShaderFromSourceCode(QOpenGLShader::Fragment,
-                                      "uniform sampler2D Ytex, Utex, Vtex;"
-                                      "uniform lowp int colorspace;"
-                                      "varying highp vec2 coordinates;"
-                                      "void main(void) {"
-                                      "  mediump vec3 texel;"
-                                      "  texel.r = texture2D(Ytex, coordinates).r -  16.0/255.0;" // Y
-                                      "  texel.g = texture2D(Utex, coordinates).r - 128.0/255.0;" // U
-                                      "  texel.b = texture2D(Vtex, coordinates).r - 128.0/255.0;" // V
-                                      "  mediump mat3 coefficients;"
-                                      "  if (colorspace == 601) {"
-                                      "    coefficients = mat3("
-                                      "      1.1643,  1.1643,  1.1643," // column 1
-                                      "      0.0,    -0.39173, 2.017," // column 2
-                                      "      1.5958, -0.8129,  0.0);" // column 3
-                                      "  } else {" // ITU-R 709
-                                      "    coefficients = mat3("
-                                      "      1.1643, 1.1643, 1.1643," // column 1
-                                      "      0.0,   -0.213,  2.112," // column 2
-                                      "      1.793, -0.533,  0.0);" // column 3
-                                      "  }"
-                                      "  gl_FragColor = vec4(coefficients * texel, 1.0);"
-                                      "}");
+    m_shader
+        ->addShaderFromSourceCode(QOpenGLShader::Fragment,
+                                  "uniform sampler2D Ytex, Utex, Vtex;"
+                                  "uniform lowp int colorspace;"
+                                  "varying highp vec2 coordinates;"
+                                  "void main(void) {"
+                                  "  mediump vec3 texel;"
+                                  "  texel.r = texture2D(Ytex, coordinates).r -  16.0/255.0;" // Y
+                                  "  texel.g = texture2D(Utex, coordinates).r - 128.0/255.0;" // U
+                                  "  texel.b = texture2D(Vtex, coordinates).r - 128.0/255.0;" // V
+                                  "  mediump mat3 coefficients;"
+                                  "  if (colorspace == 601) {"
+                                  "    coefficients = mat3("
+                                  "      1.1643,  1.1643,  1.1643," // column 1
+                                  "      0.0,    -0.39173, 2.017,"  // column 2
+                                  "      1.5958, -0.8129,  0.0);"   // column 3
+                                  "  } else {"                      // ITU-R 709
+                                  "    coefficients = mat3("
+                                  "      1.1643, 1.1643, 1.1643," // column 1
+                                  "      0.0,   -0.213,  2.112,"  // column 2
+                                  "      1.793, -0.533,  0.0);"   // column 3
+                                  "  }"
+                                  "  gl_FragColor = vec4(coefficients * texel, 1.0);"
+                                  "}");
     m_shader->link();
     m_textureLocation[0] = m_shader->uniformLocation("Ytex");
     m_textureLocation[1] = m_shader->uniformLocation("Utex");
@@ -146,7 +158,7 @@ static void uploadTextures(QOpenGLContext *context, const SharedFrame &frame, GL
     f->glGenTextures(3, texture);
     check_error(f);
 
-    f->glBindTexture  (GL_TEXTURE_2D, texture[0]);
+    f->glBindTexture(GL_TEXTURE_2D, texture[0]);
     check_error(f);
     f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     check_error(f);
@@ -156,11 +168,18 @@ static void uploadTextures(QOpenGLContext *context, const SharedFrame &frame, GL
     check_error(f);
     f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     check_error(f);
-    f->glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, width, height, 0,
-                       GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
+    f->glTexImage2D(GL_TEXTURE_2D,
+                    0,
+                    GL_LUMINANCE,
+                    width,
+                    height,
+                    0,
+                    GL_LUMINANCE,
+                    GL_UNSIGNED_BYTE,
+                    image);
     check_error(f);
 
-    f->glBindTexture  (GL_TEXTURE_2D, texture[1]);
+    f->glBindTexture(GL_TEXTURE_2D, texture[1]);
     check_error(f);
     f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     check_error(f);
@@ -170,11 +189,18 @@ static void uploadTextures(QOpenGLContext *context, const SharedFrame &frame, GL
     check_error(f);
     f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     check_error(f);
-    f->glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, width / 2, height / 2, 0,
-                       GL_LUMINANCE, GL_UNSIGNED_BYTE, image + width * height);
+    f->glTexImage2D(GL_TEXTURE_2D,
+                    0,
+                    GL_LUMINANCE,
+                    width / 2,
+                    height / 2,
+                    0,
+                    GL_LUMINANCE,
+                    GL_UNSIGNED_BYTE,
+                    image + width * height);
     check_error(f);
 
-    f->glBindTexture  (GL_TEXTURE_2D, texture[2]);
+    f->glBindTexture(GL_TEXTURE_2D, texture[2]);
     check_error(f);
     f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     check_error(f);
@@ -184,15 +210,23 @@ static void uploadTextures(QOpenGLContext *context, const SharedFrame &frame, GL
     check_error(f);
     f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     check_error(f);
-    f->glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, width / 2, height / 2, 0,
-                       GL_LUMINANCE, GL_UNSIGNED_BYTE, image + width * height + width / 2 * height / 2);
+    f->glTexImage2D(GL_TEXTURE_2D,
+                    0,
+                    GL_LUMINANCE,
+                    width / 2,
+                    height / 2,
+                    0,
+                    GL_LUMINANCE,
+                    GL_UNSIGNED_BYTE,
+                    image + width * height + width / 2 * height / 2);
     check_error(f);
 }
 
 void OpenGLVideoWidget::renderVideo()
 {
-    auto context = static_cast<QOpenGLContext *>(quickWindow()->rendererInterface()->getResource(
-                                                     quickWindow(), QSGRendererInterface::OpenGLContextResource));
+    auto context = static_cast<QOpenGLContext *>(
+        quickWindow()->rendererInterface()->getResource(quickWindow(),
+                                                        QSGRendererInterface::OpenGLContextResource));
     if (!m_quickContext) {
         LOG_ERROR() << "No quickContext";
         return;
@@ -337,4 +371,3 @@ void OpenGLVideoWidget::onFrameDisplayed(const SharedFrame &frame)
     }
     Mlt::VideoWidget::onFrameDisplayed(frame);
 }
-

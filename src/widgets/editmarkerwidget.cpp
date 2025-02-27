@@ -19,9 +19,9 @@
 
 #include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
-#include "widgets/timespinbox.h"
-#include "util.h"
 #include "settings.h"
+#include "util.h"
+#include "widgets/timespinbox.h"
 
 #include <QColorDialog>
 #include <QDebug>
@@ -32,8 +32,8 @@
 #include <QPushButton>
 #include <QSignalBlocker>
 
-EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString &text, const QColor &color,
-                                   int start, int end, int maxEnd)
+EditMarkerWidget::EditMarkerWidget(
+    QWidget *parent, const QString &text, const QColor &color, int start, int end, int maxEnd)
     : QWidget(parent)
 {
     QGridLayout *grid = new QGridLayout();
@@ -50,8 +50,8 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString &text, const Q
     connect(m_colorButton, SIGNAL(clicked()), SLOT(on_colorButton_clicked()));
     grid->addWidget(m_colorButton, 1, 0, Qt::AlignRight);
     m_colorLabel = new QLabel(color.name(QColor::HexRgb));
-    m_colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
-                                .arg(Util::textColor(color), color.name()));
+    m_colorLabel->setStyleSheet(
+        QStringLiteral("color: %1; background-color: %2").arg(Util::textColor(color), color.name()));
     grid->addWidget(m_colorLabel, 1, 1);
 
     grid->addWidget(new QLabel(tr("Start")), 2, 0, Qt::AlignRight);
@@ -60,7 +60,10 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString &text, const Q
     m_startSpinner->setMaximum(end);
     m_startSpinner->setValue(start);
     m_startSpinner->setToolTip(tr("Set the start time for this marker."));
-    connect(m_startSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_startSpinner_valueChanged(int)));
+    connect(m_startSpinner,
+            SIGNAL(valueChanged(int)),
+            this,
+            SLOT(on_startSpinner_valueChanged(int)));
     grid->addWidget(m_startSpinner, 2, 1);
 
     grid->addWidget(new QLabel(tr("End")), 3, 0, Qt::AlignRight);
@@ -78,9 +81,7 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString &text, const Q
     grid->addWidget(m_durationLabel, 4, 1);
 }
 
-EditMarkerWidget::~EditMarkerWidget()
-{
-}
+EditMarkerWidget::~EditMarkerWidget() {}
 
 QString EditMarkerWidget::getText()
 {
@@ -102,8 +103,8 @@ int EditMarkerWidget::getEnd()
     return m_endSpinner->value();
 }
 
-void EditMarkerWidget::setValues(const QString &text, const QColor &color, int start, int end,
-                                 int maxEnd)
+void EditMarkerWidget::setValues(
+    const QString &text, const QColor &color, int start, int end, int maxEnd)
 {
     QSignalBlocker textBlocker(m_textField);
     QSignalBlocker colorBlocker(m_colorLabel);
@@ -111,8 +112,8 @@ void EditMarkerWidget::setValues(const QString &text, const QColor &color, int s
     QSignalBlocker endBlocker(m_endSpinner);
     m_textField->setText(text);
     m_colorLabel->setText(color.name(QColor::HexRgb));
-    m_colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
-                                .arg(Util::textColor(color), color.name()));
+    m_colorLabel->setStyleSheet(
+        QStringLiteral("color: %1; background-color: %2").arg(Util::textColor(color), color.name()));
     m_startSpinner->setMinimum(0);
     m_startSpinner->setMaximum(end);
     m_startSpinner->setValue(start);
@@ -135,7 +136,7 @@ void EditMarkerWidget::on_colorButton_clicked()
         auto newColor = dialog.currentColor();
         m_colorLabel->setText(newColor.name(QColor::HexRgb));
         m_colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
-                                    .arg(Util::textColor(newColor), newColor.name()));
+                                        .arg(Util::textColor(newColor), newColor.name()));
     }
     emit valuesChanged();
 }

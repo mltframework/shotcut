@@ -19,10 +19,11 @@
 #define FILTERCOMMANDS_H
 
 #include "models/attachedfiltersmodel.h"
-#include <MltService.h>
+
 #include <MltProducer.h>
-#include <QUndoCommand>
+#include <MltService.h>
 #include <QString>
+#include <QUndoCommand>
 #include <QUuid>
 
 class QmlMetadata;
@@ -48,16 +49,19 @@ public:
         AddSet,
         AddSetLast,
     } AddType;
-    AddCommand(AttachedFiltersModel &model, const QString &name, Mlt::Service &service, int row,
-               AddCommand::AddType type = AddCommand::AddSingle, QUndoCommand *parent = 0);
+    AddCommand(AttachedFiltersModel &model,
+               const QString &name,
+               Mlt::Service &service,
+               int row,
+               AddCommand::AddType type = AddCommand::AddSingle,
+               QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdAdd;
-    }
+    int id() const { return UndoIdAdd; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     AttachedFiltersModel &m_model;
     std::vector<int> m_rows;
@@ -70,10 +74,14 @@ private:
 class RemoveCommand : public QUndoCommand
 {
 public:
-    RemoveCommand(AttachedFiltersModel &model, const QString &name, Mlt::Service &service, int row,
+    RemoveCommand(AttachedFiltersModel &model,
+                  const QString &name,
+                  Mlt::Service &service,
+                  int row,
                   QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     AttachedFiltersModel &m_model;
     int m_index;
@@ -86,15 +94,17 @@ private:
 class MoveCommand : public QUndoCommand
 {
 public:
-    MoveCommand(AttachedFiltersModel &model, const QString &name, int fromRow, int toRow,
+    MoveCommand(AttachedFiltersModel &model,
+                const QString &name,
+                int fromRow,
+                int toRow,
                 QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdMove;
-    }
+    int id() const { return UndoIdMove; }
+
 private:
     AttachedFiltersModel &m_model;
     int m_fromRow;
@@ -106,16 +116,18 @@ private:
 class DisableCommand : public QUndoCommand
 {
 public:
-    DisableCommand(AttachedFiltersModel &model, const QString &name, int row, bool disabled,
+    DisableCommand(AttachedFiltersModel &model,
+                   const QString &name,
+                   int row,
+                   bool disabled,
                    QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdDisable;
-    }
+    int id() const { return UndoIdDisable; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     AttachedFiltersModel &m_model;
     int m_row;
@@ -127,17 +139,20 @@ private:
 class UndoParameterCommand : public QUndoCommand
 {
 public:
-    UndoParameterCommand(const QString &name, FilterController *controller, int row,
-                         Mlt::Properties  &before, const QString &desc = QString(), QUndoCommand *parent = 0);
+    UndoParameterCommand(const QString &name,
+                         FilterController *controller,
+                         int row,
+                         Mlt::Properties &before,
+                         const QString &desc = QString(),
+                         QUndoCommand *parent = 0);
     void update(const QString &propertyName);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdChangeParameter;
-    }
+    int id() const { return UndoIdChangeParameter; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     int m_row;
     QUuid m_producerUuid;
@@ -150,53 +165,49 @@ private:
 class UndoAddKeyframeCommand : public UndoParameterCommand
 {
 public:
-    UndoAddKeyframeCommand(const QString &name, FilterController *controller, int row,
+    UndoAddKeyframeCommand(const QString &name,
+                           FilterController *controller,
+                           int row,
                            Mlt::Properties &before)
         : UndoParameterCommand(name, controller, row, before, QObject::tr("add keyframe"))
     {}
+
 protected:
-    int id() const
-    {
-        return UndoIdChangeAddKeyframe;
-    }
-    bool mergeWith(const QUndoCommand *other)
-    {
-        return false;
-    }
+    int id() const { return UndoIdChangeAddKeyframe; }
+    bool mergeWith(const QUndoCommand *other) { return false; }
 };
 
 class UndoRemoveKeyframeCommand : public UndoParameterCommand
 {
 public:
-    UndoRemoveKeyframeCommand(const QString &name, FilterController *controller, int row,
+    UndoRemoveKeyframeCommand(const QString &name,
+                              FilterController *controller,
+                              int row,
                               Mlt::Properties &before)
         : UndoParameterCommand(name, controller, row, before, QObject::tr("remove keyframe"))
     {}
+
 protected:
-    int id() const
-    {
-        return UndoIdChangeRemoveKeyframe;
-    }
-    bool mergeWith(const QUndoCommand *other)
-    {
-        return false;
-    }
+    int id() const { return UndoIdChangeRemoveKeyframe; }
+    bool mergeWith(const QUndoCommand *other) { return false; }
 };
 
 class UndoModifyKeyframeCommand : public UndoParameterCommand
 {
 public:
-    UndoModifyKeyframeCommand(const QString &name, FilterController *controller, int row,
-                              Mlt::Properties &before, int paramIndex, int keyframeIndex)
+    UndoModifyKeyframeCommand(const QString &name,
+                              FilterController *controller,
+                              int row,
+                              Mlt::Properties &before,
+                              int paramIndex,
+                              int keyframeIndex)
         : UndoParameterCommand(name, controller, row, before, QObject::tr("modify keyframe"))
         , m_paramIndex(paramIndex)
         , m_keyframeIndex(keyframeIndex)
     {}
+
 protected:
-    int id() const
-    {
-        return UndoIdChangeRemoveKeyframe;
-    }
+    int id() const { return UndoIdChangeRemoveKeyframe; }
     bool mergeWith(const QUndoCommand *other)
     {
         auto *that = dynamic_cast<const UndoModifyKeyframeCommand *>(other);

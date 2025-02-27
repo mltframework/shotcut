@@ -18,16 +18,17 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#include "models/multitrackmodel.h"
-#include "models/markersmodel.h"
 #include "docks/timelinedock.h"
+#include "models/markersmodel.h"
+#include "models/multitrackmodel.h"
 #include "undohelper.h"
-#include <QUndoCommand>
-#include <QString>
-#include <QObject>
-#include <QUuid>
-#include <MltTransition.h>
+
 #include <MltProducer.h>
+#include <MltTransition.h>
+#include <QObject>
+#include <QString>
+#include <QUndoCommand>
+#include <QUuid>
 
 #include <vector>
 
@@ -46,14 +47,15 @@ enum {
     UndoIdMoveClip
 };
 
-struct ClipPosition {
+struct ClipPosition
+{
     ClipPosition(int track, int clip)
     {
         trackIndex = track;
         clipIndex = clip;
     }
 
-    bool operator < (const ClipPosition &rhs) const
+    bool operator<(const ClipPosition &rhs) const
     {
         if (trackIndex == rhs.trackIndex) {
             return clipIndex < rhs.clipIndex;
@@ -69,10 +71,15 @@ struct ClipPosition {
 class AppendCommand : public QUndoCommand
 {
 public:
-    AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml, bool skipProxy = false,
-                  bool seek = true, QUndoCommand *parent = 0);
+    AppendCommand(MultitrackModel &model,
+                  int trackIndex,
+                  const QString &xml,
+                  bool skipProxy = false,
+                  bool seek = true,
+                  QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -85,10 +92,16 @@ private:
 class InsertCommand : public QUndoCommand
 {
 public:
-    InsertCommand(MultitrackModel &model, MarkersModel &markersModel, int trackIndex, int position,
-                  const QString &xml, bool seek = true, QUndoCommand *parent = 0);
+    InsertCommand(MultitrackModel &model,
+                  MarkersModel &markersModel,
+                  int trackIndex,
+                  int position,
+                  const QString &xml,
+                  bool seek = true,
+                  QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     MarkersModel &m_markersModel;
@@ -106,10 +119,15 @@ private:
 class OverwriteCommand : public QUndoCommand
 {
 public:
-    OverwriteCommand(MultitrackModel &model, int trackIndex, int position, const QString &xml,
-                     bool seek = true, QUndoCommand *parent = 0);
+    OverwriteCommand(MultitrackModel &model,
+                     int trackIndex,
+                     int position,
+                     const QString &xml,
+                     bool seek = true,
+                     QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -125,6 +143,7 @@ public:
     LiftCommand(MultitrackModel &model, int trackIndex, int clipIndex, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -135,10 +154,14 @@ private:
 class RemoveCommand : public QUndoCommand
 {
 public:
-    RemoveCommand(MultitrackModel &model, MarkersModel &markersModel, int trackIndex, int clipIndex,
+    RemoveCommand(MultitrackModel &model,
+                  MarkersModel &markersModel,
+                  int trackIndex,
+                  int clipIndex,
                   QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     MarkersModel &m_markersModel;
@@ -159,6 +182,7 @@ public:
     void addToGroup(int trackIndex, int clipIndex);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     QList<ClipPosition> m_clips;
@@ -172,6 +196,7 @@ public:
     void removeFromGroup(int trackIndex, int clipIndex);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     QMap<ClipPosition, int> m_prevGroups;
@@ -180,10 +205,13 @@ private:
 class NameTrackCommand : public QUndoCommand
 {
 public:
-    NameTrackCommand(MultitrackModel &model, int trackIndex, const QString &name,
+    NameTrackCommand(MultitrackModel &model,
+                     int trackIndex,
+                     const QString &name,
                      QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -197,6 +225,7 @@ public:
     MergeCommand(MultitrackModel &model, int trackIndex, int clipIndex, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -210,6 +239,7 @@ public:
     MuteTrackCommand(MultitrackModel &model, int trackIndex, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -222,6 +252,7 @@ public:
     HideTrackCommand(MultitrackModel &model, int trackIndex, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -231,9 +262,13 @@ private:
 class CompositeTrackCommand : public QUndoCommand
 {
 public:
-    CompositeTrackCommand(MultitrackModel &model, int trackIndex, bool value, QUndoCommand *parent = 0);
+    CompositeTrackCommand(MultitrackModel &model,
+                          int trackIndex,
+                          bool value,
+                          QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -247,6 +282,7 @@ public:
     LockTrackCommand(MultitrackModel &model, int trackIndex, bool value, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -257,17 +293,19 @@ private:
 class MoveClipCommand : public QUndoCommand
 {
 public:
-    MoveClipCommand(TimelineDock &timeline, int trackDelta, int positionDelta, bool ripple,
+    MoveClipCommand(TimelineDock &timeline,
+                    int trackDelta,
+                    int positionDelta,
+                    bool ripple,
                     QUndoCommand *parent = 0);
     void addClip(int trackIndex, int clipIndex);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdMoveClip;
-    }
+    int id() const { return UndoIdMoveClip; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     void redoMarkers();
 
@@ -275,7 +313,8 @@ private:
     MultitrackModel &m_model;
     MarkersModel &m_markersModel;
 
-    struct Info {
+    struct Info
+    {
         int trackIndex;
         int clipIndex;
         int frame_in;
@@ -309,11 +348,10 @@ private:
 class TrimCommand : public QUndoCommand
 {
 public:
-    explicit TrimCommand(QUndoCommand *parent = 0) : QUndoCommand(parent) {}
-    void setUndoHelper(UndoHelper *helper)
-    {
-        m_undoHelper.reset(helper);
-    }
+    explicit TrimCommand(QUndoCommand *parent = 0)
+        : QUndoCommand(parent)
+    {}
+    void setUndoHelper(UndoHelper *helper) { m_undoHelper.reset(helper); }
 
 protected:
     QScopedPointer<UndoHelper> m_undoHelper;
@@ -322,16 +360,21 @@ protected:
 class TrimClipInCommand : public TrimCommand
 {
 public:
-    TrimClipInCommand(MultitrackModel &model, MarkersModel &markersModel, int trackIndex, int clipIndex,
-                      int delta, bool ripple, bool redo = true, QUndoCommand *parent = 0);
+    TrimClipInCommand(MultitrackModel &model,
+                      MarkersModel &markersModel,
+                      int trackIndex,
+                      int clipIndex,
+                      int delta,
+                      bool ripple,
+                      bool redo = true,
+                      QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdTrimClipIn;
-    }
+    int id() const { return UndoIdTrimClipIn; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     MultitrackModel &m_model;
     MarkersModel &m_markersModel;
@@ -350,16 +393,21 @@ private:
 class TrimClipOutCommand : public TrimCommand
 {
 public:
-    TrimClipOutCommand(MultitrackModel &model, MarkersModel &markersModel, int trackIndex,
-                       int clipIndex, int delta, bool ripple, bool redo = true, QUndoCommand *parent = 0);
+    TrimClipOutCommand(MultitrackModel &model,
+                       MarkersModel &markersModel,
+                       int trackIndex,
+                       int clipIndex,
+                       int delta,
+                       bool ripple,
+                       bool redo = true,
+                       QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdTrimClipOut;
-    }
+    int id() const { return UndoIdTrimClipOut; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     MultitrackModel &m_model;
     MarkersModel &m_markersModel;
@@ -378,12 +426,14 @@ private:
 class SplitCommand : public QUndoCommand
 {
 public:
-    SplitCommand(MultitrackModel &model, const std::vector<int> &trackIndex,
+    SplitCommand(MultitrackModel &model,
+                 const std::vector<int> &trackIndex,
                  const std::vector<int> &clipIndex,
                  int position,
                  QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     std::vector<int> m_trackIndex;
@@ -395,16 +445,18 @@ private:
 class FadeInCommand : public QUndoCommand
 {
 public:
-    FadeInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration,
+    FadeInCommand(MultitrackModel &model,
+                  int trackIndex,
+                  int clipIndex,
+                  int duration,
                   QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdFadeIn;
-    }
+    int id() const { return UndoIdFadeIn; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -416,16 +468,18 @@ private:
 class FadeOutCommand : public QUndoCommand
 {
 public:
-    FadeOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration,
+    FadeOutCommand(MultitrackModel &model,
+                   int trackIndex,
+                   int clipIndex,
+                   int duration,
                    QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdFadeOut;
-    }
+    int id() const { return UndoIdFadeOut; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -437,14 +491,16 @@ private:
 class AddTransitionCommand : public QUndoCommand
 {
 public:
-    AddTransitionCommand(TimelineDock &timeline, int trackIndex, int clipIndex, int position,
-                         bool ripple, QUndoCommand *parent = 0);
+    AddTransitionCommand(TimelineDock &timeline,
+                         int trackIndex,
+                         int clipIndex,
+                         int position,
+                         bool ripple,
+                         QUndoCommand *parent = 0);
     void redo();
     void undo();
-    int getTransitionIndex() const
-    {
-        return m_transitionIndex;
-    }
+    int getTransitionIndex() const { return m_transitionIndex; }
+
 private:
     TimelineDock &m_timeline;
     MultitrackModel &m_model;
@@ -465,16 +521,19 @@ private:
 class TrimTransitionInCommand : public TrimCommand
 {
 public:
-    TrimTransitionInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta,
-                            bool redo = true, QUndoCommand *parent = 0);
+    TrimTransitionInCommand(MultitrackModel &model,
+                            int trackIndex,
+                            int clipIndex,
+                            int delta,
+                            bool redo = true,
+                            QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdTrimTransitionIn;
-    }
+    int id() const { return UndoIdTrimTransitionIn; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -487,16 +546,19 @@ private:
 class TrimTransitionOutCommand : public TrimCommand
 {
 public:
-    TrimTransitionOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta,
-                             bool redo = true, QUndoCommand *parent = 0);
+    TrimTransitionOutCommand(MultitrackModel &model,
+                             int trackIndex,
+                             int clipIndex,
+                             int delta,
+                             bool redo = true,
+                             QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdTrimTransitionOut;
-    }
+    int id() const { return UndoIdTrimTransitionOut; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -509,16 +571,20 @@ private:
 class AddTransitionByTrimInCommand : public TrimCommand
 {
 public:
-    AddTransitionByTrimInCommand(TimelineDock &timeline, int trackIndex, int clipIndex, int duration,
-                                 int trimDelta, bool redo = true, QUndoCommand *parent = 0);
+    AddTransitionByTrimInCommand(TimelineDock &timeline,
+                                 int trackIndex,
+                                 int clipIndex,
+                                 int duration,
+                                 int trimDelta,
+                                 bool redo = true,
+                                 QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdAddTransitionByTrimIn;
-    }
+    int id() const { return UndoIdAddTransitionByTrimIn; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     TimelineDock &m_timeline;
     int m_trackIndex;
@@ -532,10 +598,16 @@ private:
 class RemoveTransitionByTrimInCommand : public TrimCommand
 {
 public:
-    RemoveTransitionByTrimInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta,
-                                    QString xml, bool redo = true, QUndoCommand *parent = 0);
+    RemoveTransitionByTrimInCommand(MultitrackModel &model,
+                                    int trackIndex,
+                                    int clipIndex,
+                                    int delta,
+                                    QString xml,
+                                    bool redo = true,
+                                    QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -548,10 +620,16 @@ private:
 class RemoveTransitionByTrimOutCommand : public TrimCommand
 {
 public:
-    RemoveTransitionByTrimOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta,
-                                     QString xml, bool redo = true, QUndoCommand *parent = 0);
+    RemoveTransitionByTrimOutCommand(MultitrackModel &model,
+                                     int trackIndex,
+                                     int clipIndex,
+                                     int delta,
+                                     QString xml,
+                                     bool redo = true,
+                                     QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -564,16 +642,20 @@ private:
 class AddTransitionByTrimOutCommand : public TrimCommand
 {
 public:
-    AddTransitionByTrimOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration,
-                                  int trimDelta, bool redo = true, QUndoCommand *parent = 0);
+    AddTransitionByTrimOutCommand(MultitrackModel &model,
+                                  int trackIndex,
+                                  int clipIndex,
+                                  int duration,
+                                  int trimDelta,
+                                  bool redo = true,
+                                  QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdAddTransitionByTrimOut;
-    }
+    int id() const { return UndoIdAddTransitionByTrimOut; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -584,12 +666,13 @@ private:
     bool m_redo;
 };
 
-class AddTrackCommand: public QUndoCommand
+class AddTrackCommand : public QUndoCommand
 {
 public:
     AddTrackCommand(MultitrackModel &model, bool isVideo, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -600,10 +683,13 @@ private:
 class InsertTrackCommand : public QUndoCommand
 {
 public:
-    InsertTrackCommand(MultitrackModel &model, int trackIndex, TrackType trackType = PlaylistTrackType,
+    InsertTrackCommand(MultitrackModel &model,
+                       int trackIndex,
+                       TrackType trackType = PlaylistTrackType,
                        QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -617,6 +703,7 @@ public:
     RemoveTrackCommand(MultitrackModel &model, int trackIndex, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -630,10 +717,13 @@ private:
 class MoveTrackCommand : public QUndoCommand
 {
 public:
-    MoveTrackCommand(MultitrackModel &model, int fromTrackIndex, int toTrackIndex,
+    MoveTrackCommand(MultitrackModel &model,
+                     int fromTrackIndex,
+                     int toTrackIndex,
                      QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_fromTrackIndex;
@@ -644,12 +734,15 @@ class ChangeBlendModeCommand : public QObject, public QUndoCommand
 {
     Q_OBJECT
 public:
-    ChangeBlendModeCommand(Mlt::Transition &transition, const QString &propertyName,
-                           const QString &mode, QUndoCommand *parent = 0);
+    ChangeBlendModeCommand(Mlt::Transition &transition,
+                           const QString &propertyName,
+                           const QString &mode,
+                           QUndoCommand *parent = 0);
     void redo();
     void undo();
 signals:
     void modeChanged(QString &mode);
+
 private:
     Mlt::Transition m_transition;
     QString m_propertyName;
@@ -660,25 +753,20 @@ private:
 class UpdateCommand : public QUndoCommand
 {
 public:
-    UpdateCommand(TimelineDock &timeline, int trackIndex, int clipIndex, int position,
+    UpdateCommand(TimelineDock &timeline,
+                  int trackIndex,
+                  int clipIndex,
+                  int position,
                   QUndoCommand *parent = 0);
     void setXmlAfter(const QString &xml);
     void setPosition(int trackIndex, int clipIndex, int position);
     void setRippleAllTracks(bool);
-    int trackIndex() const
-    {
-        return m_trackIndex;
-    }
-    int clipIndex() const
-    {
-        return m_clipIndex;
-    }
-    int position() const
-    {
-        return m_position;
-    }
+    int trackIndex() const { return m_trackIndex; }
+    int clipIndex() const { return m_clipIndex; }
+    int position() const { return m_position; }
     void redo();
     void undo();
+
 private:
     TimelineDock &m_timeline;
     int m_trackIndex;
@@ -691,13 +779,18 @@ private:
     bool m_rippleAllTracks;
 };
 
-class DetachAudioCommand: public QUndoCommand
+class DetachAudioCommand : public QUndoCommand
 {
 public:
-    DetachAudioCommand(TimelineDock &timeline, int trackIndex, int clipIndex, int position,
-                       const QString &xml, QUndoCommand *parent = 0);
+    DetachAudioCommand(TimelineDock &timeline,
+                       int trackIndex,
+                       int clipIndex,
+                       int position,
+                       const QString &xml,
+                       QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     TimelineDock &m_timeline;
     int m_trackIndex;
@@ -713,10 +806,14 @@ private:
 class ReplaceCommand : public QUndoCommand
 {
 public:
-    ReplaceCommand(MultitrackModel &model, int trackIndex, int clipIndex, const QString &xml,
+    ReplaceCommand(MultitrackModel &model,
+                   int trackIndex,
+                   int clipIndex,
+                   const QString &xml,
                    QUndoCommand *parent = nullptr);
     void redo();
     void undo();
+
 private:
     MultitrackModel &m_model;
     int m_trackIndex;
@@ -725,7 +822,6 @@ private:
     bool m_isFirstRedo;
     UndoHelper m_undoHelper;
 };
-
 
 class AlignClipsCommand : public QUndoCommand
 {
@@ -739,7 +835,8 @@ private:
     MultitrackModel &m_model;
     UndoHelper m_undoHelper;
     bool m_redo;
-    struct Alignment {
+    struct Alignment
+    {
         QUuid uuid;
         int offset;
         double speed;
@@ -750,7 +847,8 @@ private:
 class ApplyFiltersCommand : public QUndoCommand
 {
 public:
-    ApplyFiltersCommand(MultitrackModel &model, const QString &filterProducerXml,
+    ApplyFiltersCommand(MultitrackModel &model,
+                        const QString &filterProducerXml,
                         QUndoCommand *parent = 0);
     void addClip(int trackIndex, int clipIndex);
     void redo();

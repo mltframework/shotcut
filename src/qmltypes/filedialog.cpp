@@ -16,6 +16,7 @@
  */
 
 #include "filedialog.h"
+
 #include "mainwindow.h"
 #include "settings.h"
 #include "util.h"

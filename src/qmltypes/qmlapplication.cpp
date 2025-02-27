@@ -16,22 +16,24 @@
  */
 
 #include "qmlapplication.h"
+
+#include "controllers/filtercontroller.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
-#include "controllers/filtercontroller.h"
 #include "models/attachedfiltersmodel.h"
-#include "videowidget.h"
 #include "settings.h"
 #include "util.h"
+#include "videowidget.h"
+
 #include <QApplication>
-#include <QSysInfo>
-#include <QCursor>
-#include <QPalette>
-#include <QStyle>
-#include <QFileInfo>
-#include <QMessageBox>
 #include <QCheckBox>
 #include <QClipboard>
+#include <QCursor>
+#include <QFileInfo>
+#include <QMessageBox>
+#include <QPalette>
+#include <QStyle>
+#include <QSysInfo>
 #ifdef Q_OS_WIN
 #include <QLocale>
 #else
@@ -45,10 +47,9 @@ QmlApplication &QmlApplication::singleton()
     return instance;
 }
 
-QmlApplication::QmlApplication() :
-    QObject()
-{
-}
+QmlApplication::QmlApplication()
+    : QObject()
+{}
 
 Qt::WindowModality QmlApplication::dialogModality()
 {
@@ -109,8 +110,8 @@ bool QmlApplication::hasFiltersOnClipboard()
 
 void QmlApplication::copyEnabledFilters()
 {
-    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
-                                               MAIN.filterController()->attachedModel()->producer()));
+    QScopedPointer<Mlt::Producer> producer(
+        new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     MLT.copyFilters(producer.data(), MLT.FILTER_INDEX_ENABLED);
     QGuiApplication::clipboard()->setText(MLT.filtersClipboardXML());
     emit QmlApplication::singleton().filtersCopied();
@@ -118,8 +119,8 @@ void QmlApplication::copyEnabledFilters()
 
 void QmlApplication::copyAllFilters()
 {
-    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
-                                               MAIN.filterController()->attachedModel()->producer()));
+    QScopedPointer<Mlt::Producer> producer(
+        new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     MLT.copyFilters(producer.data(), MLT.FILTER_INDEX_ENABLED);
     QGuiApplication::clipboard()->setText(MLT.filtersClipboardXML());
     emit QmlApplication::singleton().filtersCopied();
@@ -132,8 +133,8 @@ void QmlApplication::copyCurrentFilter()
         MAIN.showStatusMessage(tr("Select a filter to copy"));
         return;
     }
-    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
-                                               MAIN.filterController()->attachedModel()->producer()));
+    QScopedPointer<Mlt::Producer> producer(
+        new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     MLT.copyFilters(producer.data(), currentIndex);
     QGuiApplication::clipboard()->setText(MLT.filtersClipboardXML());
     emit QmlApplication::singleton().filtersCopied();
@@ -141,15 +142,15 @@ void QmlApplication::copyCurrentFilter()
 
 void QmlApplication::pasteFilters()
 {
-    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
-                                               MAIN.filterController()->attachedModel()->producer()));
+    QScopedPointer<Mlt::Producer> producer(
+        new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     if (confirmOutputFilter()) {
         QString s = QGuiApplication::clipboard()->text();
         if (MLT.isMltXml(s)) {
             Mlt::Profile profile(kDefaultMltProfile);
             Mlt::Producer filtersProducer(profile, "xml-string", s.toUtf8().constData());
             if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0
-                    && filtersProducer.get_int(kShotcutFiltersClipboard)) {
+                && filtersProducer.get_int(kShotcutFiltersClipboard)) {
                 MLT.pasteFilters(producer.get(), &filtersProducer);
             } else {
                 MLT.pasteFilters(producer.data());
@@ -235,11 +236,13 @@ bool QmlApplication::confirmOutputFilter()
                               "<p><b>Timeline > Output</b> is currently selected. "
                               "Adding filters to <b>Output</b> affects ALL clips in the "
                               "timeline including new ones that will be added.</p>"),
-                           QMessageBox::No | QMessageBox::Yes, &MAIN);
+                           QMessageBox::No | QMessageBox::Yes,
+                           &MAIN);
         dialog.setWindowModality(dialogModality());
         dialog.setDefaultButton(QMessageBox::No);
         dialog.setEscapeButton(QMessageBox::Yes);
-        dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.", "confirm output filters dialog")));
+        dialog.setCheckBox(
+            new QCheckBox(tr("Do not show this anymore.", "confirm output filters dialog")));
         result = dialog.exec() == QMessageBox::Yes;
         if (dialog.checkBox()->isChecked()) {
             Settings.setAskOutputFilter(false);

@@ -17,15 +17,15 @@
 
 #include "scopedock.h"
 
+#include "Logger.h"
 #include "controllers/scopecontroller.h"
 #include "mltcontroller.h"
 
-#include <Logger.h>
-#include <QtWidgets/QScrollArea>
 #include <QAction>
+#include <QtWidgets/QScrollArea>
 
-ScopeDock::ScopeDock(ScopeController *scopeController, ScopeWidget *scopeWidget) :
-    QDockWidget()
+ScopeDock::ScopeDock(ScopeController *scopeController, ScopeWidget *scopeWidget)
+    : QDockWidget()
     , m_scopeController(scopeController)
     , m_scopeWidget(scopeWidget)
 {
@@ -56,11 +56,15 @@ void ScopeDock::resizeEvent(QResizeEvent *e)
 void ScopeDock::onActionToggled(bool checked)
 {
     if (checked) {
-        connect(m_scopeController, SIGNAL(newFrame(const SharedFrame &)), m_scopeWidget,
+        connect(m_scopeController,
+                SIGNAL(newFrame(const SharedFrame &)),
+                m_scopeWidget,
                 SLOT(onNewFrame(const SharedFrame &)));
         MLT.refreshConsumer();
     } else {
-        disconnect(m_scopeController, SIGNAL(newFrame(const SharedFrame &)), m_scopeWidget,
+        disconnect(m_scopeController,
+                   SIGNAL(newFrame(const SharedFrame &)),
+                   m_scopeWidget,
                    SLOT(onNewFrame(const SharedFrame &)));
     }
 }

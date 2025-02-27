@@ -16,24 +16,27 @@
  */
 
 #include "undohelper.h"
+
+#include "Logger.h"
 #include "mltcontroller.h"
 #include "models/audiolevelstask.h"
 #include "shotcut_mlt_properties.h"
-#include <Logger.h>
+
 #include <QScopedPointer>
 #include <QUuid>
 
 #ifdef UNDOHELPER_DEBUG
 #define UNDOLOG LOG_DEBUG()
 #else
-#define UNDOLOG if (false) LOG_DEBUG()
+#define UNDOLOG \
+    if (false) \
+    LOG_DEBUG()
 #endif
 
 UndoHelper::UndoHelper(MultitrackModel &model)
     : m_model(model)
     , m_hints(NoHints)
-{
-}
+{}
 
 void UndoHelper::recordBeforeState()
 {
@@ -103,11 +106,10 @@ void UndoHelper::recordAfterState()
                 info.newClipIndex = j;
 
                 /* Indices have changed; these are moved */
-                if (info.oldTrackIndex != info.newTrackIndex || info.oldClipIndex != info.newClipIndex) {
-                    UNDOLOG << "Clip" << uid << "moved from"
-                            << info.oldTrackIndex << info.oldClipIndex
-                            << "to"
-                            << info.newTrackIndex << info.newClipIndex;
+                if (info.oldTrackIndex != info.newTrackIndex
+                    || info.oldClipIndex != info.newClipIndex) {
+                    UNDOLOG << "Clip" << uid << "moved from" << info.oldTrackIndex
+                            << info.oldClipIndex << "to" << info.newTrackIndex << info.newClipIndex;
                     info.changes |= Moved;
                     m_affectedTracks << info.oldTrackIndex;
                     m_affectedTracks << info.newTrackIndex;
@@ -166,21 +168,23 @@ void UndoHelper::undoChanges()
      * the current index are as they were originally before we move on to the next one */
     foreach (QUuid uid, m_insertedOrder) {
         const Info &info = m_state[uid];
-        UNDOLOG << "Handling uid" << uid << "on track" << info.oldTrackIndex << "index" <<
-                info.oldClipIndex;
+        UNDOLOG << "Handling uid" << uid << "on track" << info.oldTrackIndex << "index"
+                << info.oldClipIndex;
 
         int trackIndex = m_model.trackList()[info.oldTrackIndex].mlt_index;
         QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(trackIndex));
         Mlt::Playlist playlist(*trackProducer);
 
         /* This is the index in the track we're currently restoring */
-        int currentIndex = qMin(info.oldClipIndex + indexAdjustment[trackIndex], playlist.count() - 1);
+        int currentIndex = qMin(info.oldClipIndex + indexAdjustment[trackIndex],
+                                playlist.count() - 1);
 
         /* Clips that were moved are simply searched for using the uid, and moved in place. We
          * do not use the indices directly because they become invalid once the playlist is
          * modified. */
         if (info.changes & Moved) {
-            Q_ASSERT(info.newTrackIndex == info.oldTrackIndex && "cross-track moves are unsupported so far");
+            Q_ASSERT(info.newTrackIndex == info.oldTrackIndex
+                     && "cross-track moves are unsupported so far");
             int clipCurrentlyAt = -1;
             for (int i = 0; i < playlist.count(); ++i) {
                 QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
@@ -192,11 +196,14 @@ void UndoHelper::undoChanges()
             Q_ASSERT(clipCurrentlyAt != -1 && "Moved clip could not be found");
             UNDOLOG << "Found clip with uid" << uid << "at index" << clipCurrentlyAt;
 
-            if (clipCurrentlyAt != info.oldClipIndex &&
-                    (currentIndex < clipCurrentlyAt || currentIndex > clipCurrentlyAt + 1)) {
+            if (clipCurrentlyAt != info.oldClipIndex
+                && (currentIndex < clipCurrentlyAt || currentIndex > clipCurrentlyAt + 1)) {
                 UNDOLOG << "moving from" << clipCurrentlyAt << "to" << currentIndex;
                 QModelIndex modelIndex = m_model.createIndex(clipCurrentlyAt, 0, info.oldTrackIndex);
-                m_model.beginMoveRows(modelIndex.parent(), clipCurrentlyAt, clipCurrentlyAt, modelIndex.parent(),
+                m_model.beginMoveRows(modelIndex.parent(),
+                                      clipCurrentlyAt,
+                                      clipCurrentlyAt,
+                                      modelIndex.parent(),
                                       currentIndex);
                 playlist.move(clipCurrentlyAt, currentIndex);
                 m_model.endMoveRows();
@@ -214,7 +221,9 @@ void UndoHelper::undoChanges()
                 UNDOLOG << "inserting clip at " << currentIndex << uid;
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
-                Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
+                Mlt::Producer restoredClip(MLT.profile(),
+                                           "xml-string",
+                                           info.xml.toUtf8().constData());
                 if (restoredClip.type() == mlt_service_tractor_type) { // transition
                     restoredClip.set("mlt_type", "mlt_producer");
                 } else {
@@ -246,7 +255,8 @@ void UndoHelper::undoChanges()
 
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
             if (clip && clip->is_valid()) {
-                UNDOLOG << "resizing clip at" << currentIndex << "in" << info.frame_in << "out" << info.frame_out;
+                UNDOLOG << "resizing clip at" << currentIndex << "in" << info.frame_in << "out"
+                        << info.frame_out;
                 if (clip->parent().get_data("mlt_mix"))
                     clip->parent().set("mlt_mix", nullptr, 0);
                 if (clip->get_data("mix_in"))
@@ -254,7 +264,11 @@ void UndoHelper::undoChanges()
                 if (clip->get_data("mix_out"))
                     clip->set("mix_out", nullptr, 0);
                 playlist.resize_clip(currentIndex, info.frame_in, info.frame_out);
-                MLT.adjustClipFilters(clip->parent(), filterIn, filterOut, info.in_delta, info.out_delta,
+                MLT.adjustClipFilters(clip->parent(),
+                                      filterIn,
+                                      filterOut,
+                                      info.in_delta,
+                                      info.out_delta,
                                       info.in_delta);
             }
 
@@ -324,9 +338,12 @@ void UndoHelper::debugPrintState(const QString &title)
             if (info.producer->is_blank() && info.cut) {
                 uid = MLT.uuid(*info.cut);
             }
-            trackStr += QStringLiteral(" [ %5 %1 -> %2 (%3 frames) %4]").arg(info.frame_in).arg(
-                            info.frame_out).arg(
-                            info.frame_count).arg(info.cut->is_blank() ? "blank " : "clip").arg(uid.toString());
+            trackStr += QStringLiteral(" [ %5 %1 -> %2 (%3 frames) %4]")
+                            .arg(info.frame_in)
+                            .arg(info.frame_out)
+                            .arg(info.frame_count)
+                            .arg(info.cut->is_blank() ? "blank " : "clip")
+                            .arg(uid.toString());
         }
         LOG_DEBUG() << qPrintable(trackStr);
     }
@@ -353,8 +370,8 @@ void UndoHelper::restoreAffectedTracks()
     for (const auto &uid : std::as_const(m_insertedOrder)) {
         const Info &info = m_state[uid];
         if (m_affectedTracks.contains(info.oldTrackIndex)) {
-            UNDOLOG << "Handling uid" << uid << "on track" << info.oldTrackIndex << "index" <<
-                    info.oldClipIndex;
+            UNDOLOG << "Handling uid" << uid << "on track" << info.oldTrackIndex << "index"
+                    << info.oldClipIndex;
             // Clips are restored using their stored XML.
             int mltIndex = m_model.trackList()[info.oldTrackIndex].mlt_index;
             QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
@@ -369,7 +386,9 @@ void UndoHelper::restoreAffectedTracks()
                 UNDOLOG << "appending clip at" << currentIndex;
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
-                Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
+                Mlt::Producer restoredClip(MLT.profile(),
+                                           "xml-string",
+                                           info.xml.toUtf8().constData());
                 if (restoredClip.type() == mlt_service_tractor_type) { // transition
                     restoredClip.set("mlt_type", "mlt_producer");
                 }
@@ -413,9 +432,7 @@ void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Prod
         return;
     }
     int transitionIndex = 0;
-    for (auto currentIndex : {
-                clipIndex + 1, clipIndex - 1
-            }) {
+    for (auto currentIndex : {clipIndex + 1, clipIndex - 1}) {
         // Connect a transition on the right/left to the new producer.
         Mlt::Producer producer(playlist.get_clip(currentIndex));
         if (producer.is_valid() && producer.parent().get(kShotcutTransitionProperty)) {
@@ -423,10 +440,11 @@ void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Prod
             if (transition.is_valid()) {
                 QScopedPointer<Mlt::Producer> transitionClip(transition.track(transitionIndex));
                 if (transitionClip->is_valid()
-                        && transitionClip->parent().get_service() != clip.parent().get_service()) {
-                    UNDOLOG << "Fixing transition at clip index" << currentIndex << "transition index" <<
-                            transitionIndex;
-                    transitionClip.reset(clip.cut(transitionClip->get_in(), transitionClip->get_out()));
+                    && transitionClip->parent().get_service() != clip.parent().get_service()) {
+                    UNDOLOG << "Fixing transition at clip index" << currentIndex
+                            << "transition index" << transitionIndex;
+                    transitionClip.reset(
+                        clip.cut(transitionClip->get_in(), transitionClip->get_out()));
                     transition.set_track(*transitionClip.data(), transitionIndex);
                 }
             }

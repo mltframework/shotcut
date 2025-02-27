@@ -21,9 +21,11 @@
 
 #include "colorwheelitem.h"
 #include "mainwindow.h"
-#include <QPainter>
+
 #include <QCursor>
+#include <QPainter>
 #include <qmath.h>
+
 #include <cstdio>
 
 static const qreal WHEEL_SLIDER_RATIO = 10.0;
@@ -154,13 +156,14 @@ void ColorWheelItem::setStep(qreal step)
 
 int ColorWheelItem::wheelSize() const
 {
-    qreal ws = (qreal)width() / (1.0 + 1.0 / WHEEL_SLIDER_RATIO);
+    qreal ws = (qreal) width() / (1.0 + 1.0 / WHEEL_SLIDER_RATIO);
     return qMin(ws, height());
 }
 
 QColor ColorWheelItem::colorForPoint(const QPoint &point)
 {
-    if (! m_image.valid(point)) return QColor();
+    if (!m_image.valid(point))
+        return QColor();
     if (m_isInWheel) {
         qreal w = wheelSize() - m_margin * 2;
         qreal xf = qreal(point.x() - m_margin) / w;
@@ -173,11 +176,11 @@ QColor ColorWheelItem::colorForPoint(const QPoint &point)
         if (theta < 0.0)
             theta += 2.0 * M_PI;
         qreal hue = (theta * 180.0 / M_PI) / 360.0;
-        return QColor::fromHsvF( hue, rad, m_color.valueF() );
+        return QColor::fromHsvF(hue, rad, m_color.valueF());
     }
     if (m_isInSquare) {
         qreal value = 1.0 - qreal(point.y() - m_margin) / (wheelSize() - m_margin * 2);
-        return QColor::fromHsvF( m_color.hueF(), m_color.saturationF(), value);
+        return QColor::fromHsvF(m_color.hueF(), m_color.saturationF(), value);
     }
     return QColor();
 }
@@ -205,7 +208,8 @@ void ColorWheelItem::mouseMoveEvent(QMouseEvent *event)
 {
     updateCursor(event->pos());
 
-    if (!m_isMouseDown) return;
+    if (!m_isMouseDown)
+        return;
     m_lastPoint = event->pos();
     if (m_wheelRegion.contains(m_lastPoint) && m_isInWheel) {
         QColor color = colorForPoint(m_lastPoint);
@@ -233,27 +237,33 @@ void ColorWheelItem::hoverMoveEvent(QHoverEvent *event)
 void ColorWheelItem::wheelEvent(QWheelEvent *event)
 {
     QPoint steps = event->angleDelta() / 8 / 15;
-    qreal delta = (qreal)steps.y() * m_step;
+    qreal delta = (qreal) steps.y() * m_step;
     QColor currentColor = color();
     qreal c;
 
     // Increment/decrement RGB values by delta
     c = currentColor.redF();
     c += delta;
-    if (c < 0) c = 0;
-    if (c > 1) c = 1;
+    if (c < 0)
+        c = 0;
+    if (c > 1)
+        c = 1;
     currentColor.setRedF(c);
 
     c = currentColor.greenF();
     c += delta;
-    if (c < 0) c = 0;
-    if (c > 1) c = 1;
+    if (c < 0)
+        c = 0;
+    if (c > 1)
+        c = 1;
     currentColor.setGreenF(c);
 
     c = currentColor.blueF();
     c += delta;
-    if (c < 0) c = 0;
-    if (c > 1) c = 1;
+    if (c < 0)
+        c = 0;
+    if (c > 1)
+        c = 1;
     currentColor.setBlueF(c);
 
     setColor(currentColor);
@@ -263,9 +273,9 @@ void ColorWheelItem::wheelEvent(QWheelEvent *event)
 
 void ColorWheelItem::paint(QPainter *painter)
 {
-    QSize size( width(), height() );
+    QSize size(width(), height());
 
-    if ( m_size != size ) {
+    if (m_size != size) {
         m_image = QImage(QSize(width(), height()), QImage::Format_ARGB32_Premultiplied);
         m_image.fill(qRgba(0, 0, 0, 0));
         drawWheel();
@@ -287,13 +297,13 @@ void ColorWheelItem::drawWheel()
     m_image.fill(0); // transparent
 
     QConicalGradient conicalGradient;
-    conicalGradient.setColorAt(        0.0, Qt::red);
-    conicalGradient.setColorAt( 60.0 / 360.0, Qt::yellow);
+    conicalGradient.setColorAt(0.0, Qt::red);
+    conicalGradient.setColorAt(60.0 / 360.0, Qt::yellow);
     conicalGradient.setColorAt(135.0 / 360.0, Qt::green);
     conicalGradient.setColorAt(180.0 / 360.0, Qt::cyan);
     conicalGradient.setColorAt(240.0 / 360.0, Qt::blue);
     conicalGradient.setColorAt(315.0 / 360.0, Qt::magenta);
-    conicalGradient.setColorAt(        1.0, Qt::red);
+    conicalGradient.setColorAt(1.0, Qt::red);
 
     QRadialGradient radialGradient(0.0, 0.0, r / 2);
     radialGradient.setColorAt(0.0, Qt::white);
@@ -333,7 +343,7 @@ void ColorWheelItem::drawSliderBar(QPainter &painter)
 {
     qreal value = 1.0 - m_color.valueF();
     int ws = wheelSize() * MAIN.devicePixelRatioF();
-    int w = (qreal)ws / WHEEL_SLIDER_RATIO;
+    int w = (qreal) ws / WHEEL_SLIDER_RATIO;
     int h = ws - m_margin * 2;
     QPen pen(Qt::white);
     pen.setWidth(qRound(2 * MAIN.devicePixelRatioF()));
@@ -349,7 +359,7 @@ void ColorWheelItem::drawSlider()
     QPainter painter(&m_image);
     painter.setRenderHint(QPainter::Antialiasing);
     int ws = wheelSize();
-    int w = (qreal)ws / WHEEL_SLIDER_RATIO;
+    int w = (qreal) ws / WHEEL_SLIDER_RATIO;
     int h = ws - m_margin * 2;
     QLinearGradient gradient(0, 0, w, h);
     gradient.setColorAt(0.0, Qt::white);

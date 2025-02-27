@@ -17,18 +17,20 @@
 
 #include "video4linuxwidget.h"
 #include "ui_video4linuxwidget.h"
-#include "pulseaudiowidget.h"
+
 #include "alsawidget.h"
 #include "mltcontroller.h"
-#include "util.h"
-#include "shotcut_mlt_properties.h"
+#include "pulseaudiowidget.h"
 #include "settings.h"
+#include "shotcut_mlt_properties.h"
+#include "util.h"
+
 #include <QtWidgets>
 
-Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Video4LinuxWidget),
-    m_audioWidget(0)
+Video4LinuxWidget::Video4LinuxWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::Video4LinuxWidget)
+    , m_audioWidget(0)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_3);
@@ -46,9 +48,9 @@ Video4LinuxWidget::~Video4LinuxWidget()
 QString Video4LinuxWidget::URL() const
 {
     QString s = QStringLiteral("video4linux2:%1?width=%2&height=%3")
-                .arg(ui->v4lLineEdit->text())
-                .arg(ui->v4lWidthSpinBox->value())
-                .arg(ui->v4lHeightSpinBox->value());
+                    .arg(ui->v4lLineEdit->text())
+                    .arg(ui->v4lWidthSpinBox->value())
+                    .arg(ui->v4lHeightSpinBox->value());
     if (ui->v4lFramerateSpinBox->value() > 0)
         s += QStringLiteral("&framerate=%1").arg(ui->v4lFramerateSpinBox->value());
     if (ui->v4lStandardCombo->currentIndex() > 0)
@@ -64,14 +66,16 @@ Mlt::Producer *Video4LinuxWidget::newProducer(Mlt::Profile &profile)
         Mlt::Profile ntscProfile("dv_ntsc");
         Mlt::Profile palProfile("dv_pal");
         if (ui->v4lWidthSpinBox->value() == ntscProfile.width()
-                && ui->v4lHeightSpinBox->value() == ntscProfile.height()) {
-            profile.set_sample_aspect(ntscProfile.sample_aspect_num(), ntscProfile.sample_aspect_den());
+            && ui->v4lHeightSpinBox->value() == ntscProfile.height()) {
+            profile.set_sample_aspect(ntscProfile.sample_aspect_num(),
+                                      ntscProfile.sample_aspect_den());
             profile.set_progressive(ntscProfile.progressive());
             profile.set_colorspace(ntscProfile.colorspace());
             profile.set_frame_rate(ntscProfile.frame_rate_num(), ntscProfile.frame_rate_den());
         } else if (ui->v4lWidthSpinBox->value() == palProfile.width()
                    && ui->v4lHeightSpinBox->value() == palProfile.height()) {
-            profile.set_sample_aspect(palProfile.sample_aspect_num(), palProfile.sample_aspect_den());
+            profile.set_sample_aspect(palProfile.sample_aspect_num(),
+                                      palProfile.sample_aspect_den());
             profile.set_progressive(palProfile.progressive());
             profile.set_colorspace(palProfile.colorspace());
             profile.set_frame_rate(palProfile.frame_rate_num(), palProfile.frame_rate_den());
@@ -90,11 +94,12 @@ Mlt::Producer *Video4LinuxWidget::newProducer(Mlt::Profile &profile)
     if (!p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
-        p->set("resource1", QStringLiteral("video4linux2:%1")
-               .arg(ui->v4lLineEdit->text()).toLatin1().constData());
+        p->set("resource1",
+               QStringLiteral("video4linux2:%1").arg(ui->v4lLineEdit->text()).toLatin1().constData());
         p->set("error", 1);
     } else if (m_audioWidget) {
-        Mlt::Producer *audio = dynamic_cast<AbstractProducerWidget *>(m_audioWidget)->newProducer(profile);
+        Mlt::Producer *audio
+            = dynamic_cast<AbstractProducerWidget *>(m_audioWidget)->newProducer(profile);
         Mlt::Tractor *tractor = new Mlt::Tractor;
         tractor->set("_profile", profile.get_profile(), 0);
         tractor->set_track(*p, 0);
@@ -103,8 +108,8 @@ Mlt::Producer *Video4LinuxWidget::newProducer(Mlt::Profile &profile)
         delete audio;
         p = new Mlt::Producer(tractor->get_producer());
         delete tractor;
-        p->set("resource1", QStringLiteral("video4linux2:%1")
-               .arg(ui->v4lLineEdit->text()).toLatin1().constData());
+        p->set("resource1",
+               QStringLiteral("video4linux2:%1").arg(ui->v4lLineEdit->text()).toLatin1().constData());
     }
     p->set("device", ui->v4lLineEdit->text().toLatin1().constData());
     p->set("width", ui->v4lWidthSpinBox->value());

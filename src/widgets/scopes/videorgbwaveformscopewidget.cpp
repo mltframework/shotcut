@@ -16,6 +16,7 @@
  */
 
 #include "videorgbwaveformscopewidget.h"
+
 #include <QMouseEvent>
 #include <QPainter>
 #include <QToolTip>
@@ -34,7 +35,6 @@ VideoRgbWaveformScopeWidget::VideoRgbWaveformScopeWidget()
     LOG_DEBUG() << "end";
 }
 
-
 void VideoRgbWaveformScopeWidget::refreshScope(const QSize &size, bool full)
 {
     Q_UNUSED(size)
@@ -52,7 +52,7 @@ void VideoRgbWaveformScopeWidget::refreshScope(const QSize &size, bool full)
             m_renderImg = QImage(width, 256, QImage::QImage::Format_RGBX8888);
         }
 
-        QColor bgColor( 0, 0, 0, 0xff );
+        QColor bgColor(0, 0, 0, 0xff);
         m_renderImg.fill(bgColor);
 
         const uint8_t *src = m_frame.get_image(mlt_image_rgb);
@@ -81,8 +81,9 @@ void VideoRgbWaveformScopeWidget::refreshScope(const QSize &size, bool full)
             }
         }
 
-        QImage scaledImage = m_renderImg.scaled(size, Qt::IgnoreAspectRatio,
-                                                Qt::SmoothTransformation).convertToFormat(QImage::Format_RGB32);
+        QImage scaledImage = m_renderImg
+                                 .scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
+                                 .convertToFormat(QImage::Format_RGB32);
 
         m_mutex.lock();
         m_displayImg.swap(m_renderImg);
@@ -126,15 +127,15 @@ void VideoRgbWaveformScopeWidget::paintEvent(QPaintEvent *)
     p.drawLine(QPointF(0, y), QPointF(width(), y));
     p.drawText(textpad, textheight + textpad, tr("255"));
     // 191
-    y = (qreal)height() - 191.0 / 255.0 * (qreal)height();
+    y = (qreal) height() - 191.0 / 255.0 * (qreal) height();
     p.drawLine(0, y, width(), y);
     p.drawText(textpad, height() / 4 - textpad, tr("191"));
     // 127
-    y = (qreal)height() - 127.0 / 255.0 * (qreal)height();
+    y = (qreal) height() - 127.0 / 255.0 * (qreal) height();
     p.drawLine(0, y, width(), y);
     p.drawText(textpad, height() / 2 - textpad, tr("127"));
     // 64
-    y = (qreal)height() - 64.0 / 255.0 * (qreal)height();
+    y = (qreal) height() - 64.0 / 255.0 * (qreal) height();
     p.drawLine(0, y, width(), y);
     p.drawText(textpad, height() * 3 / 4 - textpad, tr("64"));
     // 0
@@ -155,9 +156,9 @@ void VideoRgbWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (frameWidth != 0) {
         int pixel = frameWidth * event->pos().x() / width();
-        text =  tr("Pixel: %1\nValue: %2").arg(pixel).arg(value);
+        text = tr("Pixel: %1\nValue: %2").arg(pixel).arg(value);
     } else {
-        text =  tr("Value: %1").arg(value);
+        text = tr("Value: %1").arg(value);
     }
     QToolTip::showText(event->globalPosition().toPoint(), text);
 }

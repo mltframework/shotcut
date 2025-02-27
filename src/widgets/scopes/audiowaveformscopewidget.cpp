@@ -17,12 +17,13 @@
 
 #include "audiowaveformscopewidget.h"
 
-#include <Logger.h>
+#include "Logger.h"
 
 #include <QMouseEvent>
 #include <QPainter>
 #include <QResizeEvent>
 #include <QToolTip>
+
 #include <cmath>
 
 static const qreal MAX_AMPLITUDE = 32768.0;
@@ -68,9 +69,7 @@ AudioWaveformScopeWidget::AudioWaveformScopeWidget()
     LOG_DEBUG() << "end";
 }
 
-AudioWaveformScopeWidget::~AudioWaveformScopeWidget()
-{
-}
+AudioWaveformScopeWidget::~AudioWaveformScopeWidget() {}
 
 void AudioWaveformScopeWidget::refreshScope(const QSize &size, bool full)
 {
@@ -111,9 +110,9 @@ void AudioWaveformScopeWidget::refreshScope(const QSize &size, bool full)
 
     if (m_frame.is_valid() && m_frame.get_audio_samples() > 0) {
         int samples = m_frame.get_audio_samples();
-        int16_t *audio = (int16_t *)m_frame.get_audio();
+        int16_t *audio = (int16_t *) m_frame.get_audio();
         int waveAmplitude = graphHeight(size, m_channels, m_graphTopPadding) / 2;
-        qreal scaleFactor = (qreal)waveAmplitude / (qreal)MAX_AMPLITUDE;
+        qreal scaleFactor = (qreal) waveAmplitude / (qreal) MAX_AMPLITUDE;
 
         for (int c = 0; c < m_channels; c++) {
             p.save();
@@ -133,7 +132,7 @@ void AudioWaveformScopeWidget::refreshScope(const QSize &size, bool full)
             qreal min = value;
 
             for (int i = 0; i <= samples; i++) {
-                int x = ( i * size.width() ) / samples;
+                int x = (i * size.width()) / samples;
                 if (x != lastX) {
                     // The min and max have been determined for the previous x
                     // So draw the line
@@ -155,8 +154,10 @@ void AudioWaveformScopeWidget::refreshScope(const QSize &size, bool full)
                     min = tmp;
                 }
 
-                if (value > max) max = value;
-                if (value < min) min = value;
+                if (value > max)
+                    max = value;
+                if (value < min)
+                    min = value;
                 q += m_channels;
                 value = *q * -1;
             }
@@ -179,7 +180,7 @@ void AudioWaveformScopeWidget::createGrid(const QSize &size)
     QFontMetrics fm(font);
     QString zeroLabel = tr("0");
     QString infinityLabel = tr("-inf");
-    QRect textRect = fm.tightBoundingRect( infinityLabel );
+    QRect textRect = fm.tightBoundingRect(infinityLabel);
     int labelHeight = textRect.height();
     m_graphTopPadding = fm.height();
     m_graphLeftPadding = textRect.width() + 6;
@@ -201,7 +202,7 @@ void AudioWaveformScopeWidget::createGrid(const QSize &size)
         y = graphBottomY(size, c, m_channels, m_graphTopPadding);
         textLoc.setY(y + labelHeight / 2);
         textLoc.setX((m_graphLeftPadding - fm.horizontalAdvance(zeroLabel)) / 2);
-        p.drawText( textLoc, zeroLabel );
+        p.drawText(textLoc, zeroLabel);
         lineBegin.setY(y);
         lineEnd.setY(y);
         p.drawLine(lineBegin, lineEnd);
@@ -209,7 +210,7 @@ void AudioWaveformScopeWidget::createGrid(const QSize &size)
         y = graphCenterY(size, c, m_channels, m_graphTopPadding);
         textLoc.setY(y + labelHeight / 2);
         textLoc.setX((m_graphLeftPadding - fm.horizontalAdvance(infinityLabel)) / 2);
-        p.drawText( textLoc, infinityLabel );
+        p.drawText(textLoc, infinityLabel);
         lineBegin.setY(y);
         lineEnd.setY(y);
         p.drawLine(lineBegin, lineEnd);
@@ -217,7 +218,7 @@ void AudioWaveformScopeWidget::createGrid(const QSize &size)
         y = graphTopY(size, c, m_channels, m_graphTopPadding);
         textLoc.setY(y + labelHeight / 2);
         textLoc.setX((m_graphLeftPadding - fm.horizontalAdvance(zeroLabel)) / 2);
-        p.drawText( textLoc, zeroLabel );
+        p.drawText(textLoc, zeroLabel);
         lineBegin.setY(y);
         lineEnd.setY(y);
         p.drawLine(lineBegin, lineEnd);
@@ -250,25 +251,30 @@ void AudioWaveformScopeWidget::paintEvent(QPaintEvent *)
 void AudioWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
 {
     QMutexLocker locker(&m_mutex);
-    if (!m_frame.is_valid()) return;
+    if (!m_frame.is_valid())
+        return;
 
     int channels = m_frame.get_audio_channels();
     int samples = m_frame.get_audio_samples();
-    int16_t *audio = (int16_t *)m_frame.get_audio();
-    if (samples < 10 || channels < 1) return;
+    int16_t *audio = (int16_t *) m_frame.get_audio();
+    if (samples < 10 || channels < 1)
+        return;
 
-    qreal position = (qreal)event->pos().x() / (qreal)width();
-    int sample = (qreal)samples * position;
+    qreal position = (qreal) event->pos().x() / (qreal) width();
+    int sample = (qreal) samples * position;
     QString text = tr("Sample: %1\n").arg(sample + 1);
 
     for (int c = 0; c < channels; c++) {
         const int16_t *q = audio + (channels * sample) + c;
-        qreal scaledValue = (qreal) * q / MAX_AMPLITUDE;
+        qreal scaledValue = (qreal) *q / MAX_AMPLITUDE;
         qreal dbValue = 20 * log(fabs(scaledValue));
-        if (dbValue < 0.01 && dbValue > -0.01) dbValue = 0.0;
-        text += tr("Ch: %1: %2 (%3 dBFS)").arg(c + 1).arg(scaledValue, 0, 'f', 2)
-                .arg(dbValue, 0, 'f', 2);
-        if ( c != channels - 1 ) {
+        if (dbValue < 0.01 && dbValue > -0.01)
+            dbValue = 0.0;
+        text += tr("Ch: %1: %2 (%3 dBFS)")
+                    .arg(c + 1)
+                    .arg(scaledValue, 0, 'f', 2)
+                    .arg(dbValue, 0, 'f', 2);
+        if (c != channels - 1) {
             text += "\n";
         }
     }

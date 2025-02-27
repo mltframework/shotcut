@@ -19,27 +19,27 @@
 #define PLAYLISTCOMMANDS_H
 
 #include "models/playlistmodel.h"
-#include <QUndoCommand>
+
 #include <QString>
+#include <QUndoCommand>
 #include <QUuid>
 
 class QTreeWidget;
 
 namespace Playlist {
 
-enum {
-    UndoIdTrimClipIn = 0,
-    UndoIdTrimClipOut,
-    UndoIdUpdate
-};
+enum { UndoIdTrimClipIn = 0, UndoIdTrimClipOut, UndoIdUpdate };
 
 class AppendCommand : public QUndoCommand
 {
 public:
-    AppendCommand(PlaylistModel &model, const QString &xml, bool emitModified = true,
+    AppendCommand(PlaylistModel &model,
+                  const QString &xml,
+                  bool emitModified = true,
                   QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     PlaylistModel &m_model;
     QString m_xml;
@@ -53,6 +53,7 @@ public:
     InsertCommand(PlaylistModel &model, const QString &xml, int row, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     PlaylistModel &m_model;
     QString m_xml;
@@ -66,12 +67,11 @@ public:
     UpdateCommand(PlaylistModel &model, const QString &xml, int row, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdUpdate;
-    }
+    int id() const { return UndoIdUpdate; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     PlaylistModel &m_model;
     QString m_newXml;
@@ -86,6 +86,7 @@ public:
     RemoveCommand(PlaylistModel &model, int row, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     PlaylistModel &m_model;
     QString m_xml;
@@ -99,6 +100,7 @@ public:
     MoveCommand(PlaylistModel &model, int from, int to, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     PlaylistModel &m_model;
     int m_from;
@@ -111,6 +113,7 @@ public:
     ClearCommand(PlaylistModel &model, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     PlaylistModel &m_model;
     QString m_xml;
@@ -123,6 +126,7 @@ public:
     SortCommand(PlaylistModel &model, int column, Qt::SortOrder order, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     PlaylistModel &m_model;
     int m_column;
@@ -137,12 +141,11 @@ public:
     TrimClipInCommand(PlaylistModel &model, int row, int in, QUndoCommand *parent = nullptr);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdTrimClipIn;
-    }
+    int id() const { return UndoIdTrimClipIn; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     PlaylistModel &m_model;
     int m_row;
@@ -157,12 +160,11 @@ public:
     TrimClipOutCommand(PlaylistModel &model, int row, int out, QUndoCommand *parent = nullptr);
     void redo();
     void undo();
+
 protected:
-    int id() const
-    {
-        return UndoIdTrimClipOut;
-    }
+    int id() const { return UndoIdTrimClipOut; }
     bool mergeWith(const QUndoCommand *other);
+
 private:
     PlaylistModel &m_model;
     int m_row;
@@ -177,6 +179,7 @@ public:
     ReplaceCommand(PlaylistModel &model, const QString &xml, int row, QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     PlaylistModel &m_model;
     QString m_newXml;
@@ -188,10 +191,13 @@ private:
 class NewBinCommand : public QUndoCommand
 {
 public:
-    NewBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
+    NewBinCommand(PlaylistModel &model,
+                  QTreeWidget *tree,
+                  const QString &bin,
                   QUndoCommand *parent = 0);
     void redo();
     void undo();
+
 private:
     PlaylistModel &m_model;
     QTreeWidget *m_binTree;
@@ -202,8 +208,11 @@ private:
 class MoveToBinCommand : public QUndoCommand
 {
 public:
-    MoveToBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
-                     const QList<int> &rows, QUndoCommand *parent = 0);
+    MoveToBinCommand(PlaylistModel &model,
+                     QTreeWidget *tree,
+                     const QString &bin,
+                     const QList<int> &rows,
+                     QUndoCommand *parent = 0);
     void redo();
     void undo();
 
@@ -212,7 +221,8 @@ private:
     QTreeWidget *m_binTree;
     QString m_bin;
 
-    typedef struct {
+    typedef struct
+    {
         int row;
         QString bin;
     } oldData;
@@ -222,8 +232,11 @@ private:
 class RenameBinCommand : public QUndoCommand
 {
 public:
-    RenameBinCommand(PlaylistModel &model, QTreeWidget *tree, const QString &bin,
-                     const QString &newName = QString(), QUndoCommand *parent = 0);
+    RenameBinCommand(PlaylistModel &model,
+                     QTreeWidget *tree,
+                     const QString &bin,
+                     const QString &newName = QString(),
+                     QUndoCommand *parent = 0);
     void redo();
     void undo();
     static void rebuildBinList(PlaylistModel &model, QTreeWidget *binTree);
@@ -234,9 +247,8 @@ private:
     QString m_bin;
     QString m_newName;
     QList<int> m_removedRows;
-
 };
 
-}
+} // namespace Playlist
 
 #endif // PLAYLISTCOMMANDS_H

@@ -17,14 +17,14 @@
 
 #include "videovectorscopewidget.h"
 
+#include "Logger.h"
 #include "mltcontroller.h"
 #include "qmltypes/qmlprofile.h"
-#include <Logger.h>
 
 #include <QMouseEvent>
 #include <QPainter>
-#include <QtMath>
 #include <QToolTip>
+#include <QtMath>
 
 static const QColor LINE_COLOR = {255, 255, 255, 127};
 
@@ -61,7 +61,6 @@ void VideoVectorScopeWidget::refreshScope(const QSize &size, bool full)
     QSize squareSize = QSize(side, side);
 
     if (m_graticuleImg.size() != size || m_profileChanged) {
-
         m_graticuleImg = QImage(squareSize, QImage::Format_RGB32);
         m_graticuleImg.fill(0);
         QPainter p(&m_graticuleImg);
@@ -172,8 +171,8 @@ void VideoVectorScopeWidget::drawGraticuleLines(QPainter &p, qreal lineWidth)
 void VideoVectorScopeWidget::drawSkinToneLine(QPainter &p, qreal lineWidth)
 {
     // Draw a skin tone line 33 degrees counter clockwise from the red vector
-    qreal angle = qRadiansToDegrees(qAtan((qreal)(m_points[RED_100].x() - 128) / (qreal)(
-                                              m_points[RED_100].y() - 128)));
+    qreal angle = qRadiansToDegrees(
+        qAtan((qreal) (m_points[RED_100].x() - 128) / (qreal) (m_points[RED_100].y() - 128)));
     angle += 270;
     angle -= 33;
 
@@ -191,14 +190,14 @@ void VideoVectorScopeWidget::drawSkinToneLine(QPainter &p, qreal lineWidth)
     p.drawLine(skinToneLine);
 }
 
-void VideoVectorScopeWidget::drawGraticuleMark(QPainter &p, const QPoint &point, QColor color,
-                                               qreal lineWidth, qreal LineLength)
+void VideoVectorScopeWidget::drawGraticuleMark(
+    QPainter &p, const QPoint &point, QColor color, qreal lineWidth, qreal LineLength)
 {
     color = color.darker(100);
     p.setBrush(color);
     p.setPen(QPen(color, lineWidth, Qt::SolidLine, Qt::RoundCap));
     QLineF angleline;
-    qreal angle = qAtan((qreal)(point.x() - 128) / (qreal)(point.y() - 128));
+    qreal angle = qAtan((qreal) (point.x() - 128) / (qreal) (point.y() - 128));
     angle = qRadiansToDegrees(angle);
     angleline.setP1(point);
     angleline.setLength(LineLength / 2);
@@ -237,11 +236,11 @@ void VideoVectorScopeWidget::mouseMoveEvent(QMouseEvent *event)
         QToolTip::hideText();
         return;
     }
-    qreal realX = (qreal)event->pos().x() - ((qreal)width() - squareRect.width()) / 2;
-    qreal realY = (qreal)event->pos().y() - ((qreal)height() - squareRect.height()) / 2;
+    qreal realX = (qreal) event->pos().x() - ((qreal) width() - squareRect.width()) / 2;
+    qreal realY = (qreal) event->pos().y() - ((qreal) height() - squareRect.height()) / 2;
     qreal u = realX * 255.0 / squareRect.width();
     qreal v = (squareRect.height() - realY) * 255.0 / squareRect.height();
-    QString text =  tr("U: %1\nV: %2").arg(qRound(u)).arg(qRound(v));
+    QString text = tr("U: %1\nV: %2").arg(qRound(u)).arg(qRound(v));
     QToolTip::showText(event->globalPosition().toPoint(), text);
 }
 
@@ -265,32 +264,32 @@ void VideoVectorScopeWidget::profileChanged()
     m_mutex.lock();
     switch (MLT.profile().colorspace()) {
     case 601:
-        m_points[BLUE_75]     = QPoint(212, 114);
-        m_points[CYAN_75]     = QPoint(156, 44);
-        m_points[GREEN_75]    = QPoint(72, 58);
-        m_points[YELLOW_75]   = QPoint(44, 142);
-        m_points[RED_75]      = QPoint(100, 212);
-        m_points[MAGENTA_75]  = QPoint(184, 198);
-        m_points[BLUE_100]    = QPoint(240, 110);
-        m_points[CYAN_100]    = QPoint(166, 16);
-        m_points[GREEN_100]   = QPoint(54, 34);
-        m_points[YELLOW_100]  = QPoint(16, 146);
-        m_points[RED_100]     = QPoint(90, 240);
+        m_points[BLUE_75] = QPoint(212, 114);
+        m_points[CYAN_75] = QPoint(156, 44);
+        m_points[GREEN_75] = QPoint(72, 58);
+        m_points[YELLOW_75] = QPoint(44, 142);
+        m_points[RED_75] = QPoint(100, 212);
+        m_points[MAGENTA_75] = QPoint(184, 198);
+        m_points[BLUE_100] = QPoint(240, 110);
+        m_points[CYAN_100] = QPoint(166, 16);
+        m_points[GREEN_100] = QPoint(54, 34);
+        m_points[YELLOW_100] = QPoint(16, 146);
+        m_points[RED_100] = QPoint(90, 240);
         m_points[MAGENTA_100] = QPoint(202, 222);
         break;
     default:
     case 709:
-        m_points[BLUE_75]     = QPoint(212, 120);
-        m_points[CYAN_75]     = QPoint(147, 44);
-        m_points[GREEN_75]    = QPoint(63, 52);
-        m_points[YELLOW_75]   = QPoint(44, 136);
-        m_points[RED_75]      = QPoint(109, 212);
-        m_points[MAGENTA_75]  = QPoint(193, 204);
-        m_points[BLUE_100]    = QPoint(240, 118);
-        m_points[CYAN_100]    = QPoint(154, 16);
-        m_points[GREEN_100]   = QPoint(42, 26);
-        m_points[YELLOW_100]  = QPoint(16, 138);
-        m_points[RED_100]     = QPoint(102, 240);
+        m_points[BLUE_75] = QPoint(212, 120);
+        m_points[CYAN_75] = QPoint(147, 44);
+        m_points[GREEN_75] = QPoint(63, 52);
+        m_points[YELLOW_75] = QPoint(44, 136);
+        m_points[RED_75] = QPoint(109, 212);
+        m_points[MAGENTA_75] = QPoint(193, 204);
+        m_points[BLUE_100] = QPoint(240, 118);
+        m_points[CYAN_100] = QPoint(154, 16);
+        m_points[GREEN_100] = QPoint(42, 26);
+        m_points[YELLOW_100] = QPoint(16, 138);
+        m_points[RED_100] = QPoint(102, 240);
         m_points[MAGENTA_100] = QPoint(214, 230);
         break;
     }

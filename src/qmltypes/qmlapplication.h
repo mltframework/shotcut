@@ -18,10 +18,10 @@
 #ifndef QMLAPPLICATION_H
 #define QMLAPPLICATION_H
 
-#include <QObject>
-#include <QDir>
-#include <QPoint>
 #include <QColor>
+#include <QDir>
+#include <QObject>
+#include <QPoint>
 #include <QRect>
 
 namespace Mlt {

@@ -17,9 +17,7 @@
 
 #include "windowstools.h"
 
-WindowsTaskbarButton::WindowsTaskbarButton()
-{
-}
+WindowsTaskbarButton::WindowsTaskbarButton() {}
 
 WindowsTaskbarButton &WindowsTaskbarButton::getInstance()
 {

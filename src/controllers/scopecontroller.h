@@ -19,9 +19,10 @@
 #ifndef SCOPECONTROLLER_H
 #define SCOPECONTROLLER_H
 
+#include "sharedframe.h"
+
 #include <QObject>
 #include <QString>
-#include "sharedframe.h"
 
 class QMainWindow;
 class QMenu;
@@ -38,8 +39,8 @@ signals:
     void newFrame(const SharedFrame &frame);
 
 private:
-    template<typename ScopeTYPE> void createScopeDock(QMainWindow *mainWindow, QMenu *menu);
-
+    template<typename ScopeTYPE>
+    void createScopeDock(QMainWindow *mainWindow, QMenu *menu);
 };
 
 #endif // SCOPECONTROLLER_H

@@ -35,9 +35,7 @@
 #define QMLRICHTEXT_H
 
 #include <QQuickTextDocument>
-
 #include <QtGui/QTextCharFormat>
-
 #include <qqmlfile.h>
 
 QT_BEGIN_NAMESPACE
@@ -51,10 +49,10 @@ class QmlRichText : public QObject
     Q_ENUMS(HAlignment)
 
     Q_PROPERTY(QQuickItem *target READ target WRITE setTarget NOTIFY targetChanged)
-    Q_PROPERTY(int cursorPosition READ cursorPosition WRITE setCursorPosition NOTIFY
-               cursorPositionChanged)
-    Q_PROPERTY(int selectionStart READ selectionStart WRITE setSelectionStart NOTIFY
-               selectionStartChanged)
+    Q_PROPERTY(
+        int cursorPosition READ cursorPosition WRITE setCursorPosition NOTIFY cursorPositionChanged)
+    Q_PROPERTY(
+        int selectionStart READ selectionStart WRITE setSelectionStart NOTIFY selectionStartChanged)
     Q_PROPERTY(int selectionEnd READ selectionEnd WRITE setSelectionEnd NOTIFY selectionEndChanged)
     Q_PROPERTY(QColor textColor READ textColor WRITE setTextColor NOTIFY textColorChanged)
     Q_PROPERTY(QString fontFamily READ fontFamily WRITE setFontFamily NOTIFY fontFamilyChanged)
@@ -70,26 +68,14 @@ class QmlRichText : public QObject
 public:
     QmlRichText();
 
-    QQuickItem *target()
-    {
-        return m_target;
-    }
+    QQuickItem *target() { return m_target; }
     void setTarget(QQuickItem *target);
     void setCursorPosition(int position);
     void setSelectionStart(int position);
     void setSelectionEnd(int position);
-    int cursorPosition() const
-    {
-        return m_cursorPosition;
-    }
-    int selectionStart() const
-    {
-        return m_selectionStart;
-    }
-    int selectionEnd() const
-    {
-        return m_selectionEnd;
-    }
+    int cursorPosition() const { return m_cursorPosition; }
+    int selectionStart() const { return m_selectionStart; }
+    int selectionEnd() const { return m_selectionEnd; }
     QString fontFamily() const;
     QColor textColor() const;
     Qt::Alignment alignment() const;
@@ -100,10 +86,7 @@ public:
     int fontSize() const;
     QUrl fileUrl() const;
     QString text() const;
-    QSizeF size() const
-    {
-        return m_doc->size();
-    }
+    QSizeF size() const { return m_doc->size(); }
 
 public slots:
     void setBold(bool arg);

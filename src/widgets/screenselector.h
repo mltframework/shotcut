@@ -28,10 +28,7 @@ public:
     void setFixedSize(const QSize &size);
     void setBoundingRect(const QRect &rect);
     void setSelectedRect(const QRect &rect);
-    bool useDBus() const
-    {
-        return m_useDBus;
-    }
+    bool useDBus() const { return m_useDBus; }
 
 public slots:
     void startSelection(QPoint initialPos = QPoint(-1, -1));
