@@ -963,8 +963,7 @@ void MainWindow::connectVideoWidgetSignals()
             &FilterController::currentFilterChanged,
             videoWidget,
             &Mlt::VideoWidget::setCurrentFilter);
-    connect(m_player, &Player::toggleVuiRequested, videoWidget,
-            &Mlt::VideoWidget::toggleVuiDisplay);
+    connect(m_player, &Player::toggleVuiRequested, videoWidget, &Mlt::VideoWidget::toggleVuiDisplay);
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const

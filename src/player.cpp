@@ -805,9 +805,7 @@ void Player::setupActions()
 
     action = new QAction(tr("Toggle Filter Overlay"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Q));
-    connect(action, &QAction::triggered, this, [&]() {
-        emit toggleVuiRequested();
-    });
+    connect(action, &QAction::triggered, this, [&]() { emit toggleVuiRequested(); });
     Actions.add("playerToggleVui", action, tr("Player"));
 }
 
