@@ -1262,6 +1262,13 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service, const QString &target
     if (Util::warnIfNotWritable(target, this, caption))
         return nullptr;
 
+    if (JOBS.targetIsInProgress(target)) {
+        QMessageBox::warning(this, windowTitle(),
+                             QObject::tr("A job already exists for %1")
+                             .arg(target));
+        return nullptr;
+    }
+
     // if image sequence, change filename to include number
     QString mytarget = target;
     if (!ui->disableVideoCheckbox->isChecked()) {

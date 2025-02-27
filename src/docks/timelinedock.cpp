@@ -3864,6 +3864,7 @@ void TimelineDock::recordAudio()
 #endif
     args << "-flush_packets" << "1" << "-y" << filename;
     m_recordJob.reset(new FfmpegJob("vo", args, false, priority));
+    m_recordJob->setTarget(filename);
     connect(m_recordJob.get(), SIGNAL(started()), SLOT(onRecordStarted()));
     connect(m_recordJob.get(), SIGNAL(finished(AbstractJob *, bool)),
             SLOT(onRecordFinished(AbstractJob *, bool)));

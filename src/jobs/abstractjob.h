@@ -41,6 +41,10 @@ public:
     QStandardItem *standardItem();
     bool ran() const;
     bool stopped() const;
+    bool isFinished() const
+    {
+        return (ran() && state() != QProcess::Running);
+    }
     void appendToLog(const QString &);
     QString log() const;
     QString label() const
@@ -63,6 +67,14 @@ public:
     }
     void setPostJobAction(PostJobAction *action);
     bool paused() const;
+    void setTarget(const QString & target)
+    {
+        m_target = target;
+    }
+    QString target()
+    {
+        return m_target;
+    }
 
 public slots:
     void start(const QString &program, const QStringList &arguments);
@@ -101,6 +113,7 @@ private:
     QAction *m_actionPause;
     QAction *m_actionResume;
     bool m_isPaused;
+    QString m_target;
 };
 
 #endif // ABSTRACTJOB_H

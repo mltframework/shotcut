@@ -38,6 +38,7 @@ MeltJob::MeltJob(const QString &name, const QString &xml, int frameRateNum, int 
     , m_currentFrame(0)
     , m_useMultiConsumer(false)
 {
+    setTarget(name);
     if (!xml.isEmpty()) {
         QAction *action = new QAction(tr("View XML"), this);
         action->setToolTip(tr("View the MLT XML for this job"));

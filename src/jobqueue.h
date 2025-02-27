@@ -53,6 +53,7 @@ public:
     {
         return m_jobs;
     }
+    bool targetIsInProgress(const QString &target);
 
 signals:
     void jobAdded();

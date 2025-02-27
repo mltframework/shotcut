@@ -956,6 +956,12 @@ void AvformatProducerWidget::on_reverseButton_clicked()
                                      .arg(fi.fileName()));
                 return;
             }
+            if (JOBS.targetIsInProgress(filename)) {
+                QMessageBox::warning(this, dialog.windowTitle(),
+                                     QObject::tr("A job already exists for %1")
+                                     .arg(filename));
+                return;
+            }
             if (Util::warnIfNotWritable(filename, this, dialog.windowTitle()))
                 return;
 
@@ -989,6 +995,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             MeltJob *meltJob = new MeltJob(filename, meltArgs,
                                            m_producer->get_int("meta.media.frame_rate_num"), m_producer->get_int("meta.media.frame_rate_den"));
             meltJob->setLabel(tr("Reverse %1").arg(Util::baseName(resource)));
+            meltJob->setTarget(filename);
 
             if (m_producer->get(kMultitrackItemProperty)) {
                 QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
@@ -1034,6 +1041,12 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
                                  .arg(fi.fileName()));
             return;
         }
+        if (JOBS.targetIsInProgress(filename)) {
+            QMessageBox::warning(this, caption,
+                                 QObject::tr("A job already exists for %1")
+                                 .arg(filename));
+            return;
+        }
         if (Util::warnIfNotWritable(filename, this, caption))
             return;
         Settings.setSavePath(QFileInfo(filename).path());
@@ -1066,6 +1079,7 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
         // Run the ffmpeg job.
         FfmpegJob *ffmpegJob = new FfmpegJob(filename, ffmpegArgs, false);
         ffmpegJob->setLabel(tr("Extract sub-clip %1").arg(Util::baseName(resource)));
+        ffmpegJob->setTarget(filename);
         JOBS.add(ffmpegJob);
     }
 }

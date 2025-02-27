@@ -227,7 +227,7 @@ void JobQueue::removeFinished()
     QMutexLocker locker(&m_mutex);
     auto row = 0;
     foreach (AbstractJob *job, m_jobs) {
-        if (job->ran() && job->state() != QProcess::Running) {
+        if (job->isFinished()) {
             removeRow(row);
             m_jobs.removeOne(job);
             delete job;
@@ -235,4 +235,16 @@ void JobQueue::removeFinished()
             ++row;
         }
     }
+}
+
+bool JobQueue::targetIsInProgress(const QString &target)
+{
+    if (!m_jobs.isEmpty() && !target.isEmpty()) {
+        foreach (AbstractJob *job, m_jobs) {
+            if (!job->isFinished() && job->target() == target) {
+                return true;
+            }
+        }
+    }
+    return false;
 }

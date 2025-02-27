@@ -29,6 +29,7 @@ QImageJob::QImageJob(const QString &destFilePath, const QString &srcFilePath, co
     , m_destFilePath(destFilePath)
     , m_height(height)
 {
+    setTarget(destFilePath);
     setLabel(tr("Make proxy for %1").arg(Util::baseName(srcFilePath)));
 }
 

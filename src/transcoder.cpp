@@ -94,6 +94,10 @@ void Transcoder::convert(TranscodeDialog &dialog)
                                      .arg(fi.fileName()));
                 return;
             }
+            if (JOBS.targetIsInProgress(filename)) {
+                MAIN.showStatusMessage(tr("A job already exists for %1").arg(filename));
+                return;
+            }
             if (Util::warnIfNotWritable(filename, MAIN.centralWidget(), dialog.windowTitle()))
                 return;
 
@@ -123,6 +127,12 @@ void Transcoder::convert(TranscodeDialog &dialog)
             QFileInfo fi(resource);
             filename = path + nameFormat.arg(fi.completeBaseName(), suffix);
             filename = Util::getNextFile(filename);
+            if (JOBS.targetIsInProgress(filename)) {
+                if (JOBS.targetIsInProgress(filename)) {
+                    MAIN.showStatusMessage(tr("A job already exists for %1").arg(filename));
+                    return;
+                }
+            }
             convertProducer(&producer, dialog, filename);
         }
     }
@@ -274,6 +284,7 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
 
     FfmpegJob *job = new FfmpegJob(filename, args, false);
     job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
+    job->setTarget(filename);
     if (dialog.isSubClip()) {
         if (producer->get(kMultitrackItemProperty)) {
             QString s = QString::fromLatin1(producer->get(kMultitrackItemProperty));

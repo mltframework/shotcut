@@ -92,6 +92,11 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
     auto hwCodecs = Settings.encodeHardware();
     QString hwFilters;
 
+    if (JOBS.targetIsInProgress(fileName)) {
+        LOG_ERROR() << "A job is already in progress for" << fileName;
+        return;
+    }
+
     // Touch file to make it in progress
     QFile file(fileName);
     file.open(QIODevice::WriteOnly);
@@ -248,6 +253,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer, bool fullRange, S
 
     FfmpegJob *job = new FfmpegJob(fileName, args, true);
     job->setLabel(QObject::tr("Make proxy for %1").arg(Util::baseName(resource)));
+    job->setTarget(fileName);
     if (replace) {
         job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
     } else {

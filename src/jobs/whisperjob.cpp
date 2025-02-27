@@ -38,6 +38,7 @@ WhisperJob::WhisperJob(const QString &name, const QString &iWavFile, const QStri
     , m_maxLength(maxLength)
     , m_previousPercent(0)
 {
+    setTarget(oSrtFile);
 }
 
 WhisperJob::~WhisperJob()
