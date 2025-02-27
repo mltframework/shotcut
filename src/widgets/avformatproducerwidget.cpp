@@ -1057,9 +1057,9 @@ void AvformatProducerWidget::on_reverseButton_clicked()
                 return;
             }
             if (JOBS.targetIsInProgress(filename)) {
-                QMessageBox::warning(this, dialog.windowTitle(),
-                                     QObject::tr("A job already exists for %1")
-                                     .arg(filename));
+                QMessageBox::warning(this,
+                                     dialog.windowTitle(),
+                                     QObject::tr("A job already exists for %1").arg(filename));
                 return;
             }
             if (Util::warnIfNotWritable(filename, this, dialog.windowTitle()))
@@ -1149,9 +1149,9 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
             return;
         }
         if (JOBS.targetIsInProgress(filename)) {
-            QMessageBox::warning(this, caption,
-                                 QObject::tr("A job already exists for %1")
-                                 .arg(filename));
+            QMessageBox::warning(this,
+                                 caption,
+                                 QObject::tr("A job already exists for %1").arg(filename));
             return;
         }
         if (Util::warnIfNotWritable(filename, this, caption))

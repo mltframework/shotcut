@@ -1329,9 +1329,9 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service,
         return nullptr;
 
     if (JOBS.targetIsInProgress(target)) {
-        QMessageBox::warning(this, windowTitle(),
-                             QObject::tr("A job already exists for %1")
-                             .arg(target));
+        QMessageBox::warning(this,
+                             windowTitle(),
+                             QObject::tr("A job already exists for %1").arg(target));
         return nullptr;
     }
 

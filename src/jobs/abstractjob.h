@@ -41,10 +41,7 @@ public:
     QStandardItem *standardItem();
     bool ran() const;
     bool stopped() const;
-    bool isFinished() const
-    {
-        return (ran() && state() != QProcess::Running);
-    }
+    bool isFinished() const { return (ran() && state() != QProcess::Running); }
     void appendToLog(const QString &);
     QString log() const;
     QString label() const { return m_label; }
@@ -55,14 +52,8 @@ public:
     QElapsedTimer time() const { return m_totalTime; }
     void setPostJobAction(PostJobAction *action);
     bool paused() const;
-    void setTarget(const QString & target)
-    {
-        m_target = target;
-    }
-    QString target()
-    {
-        return m_target;
-    }
+    void setTarget(const QString &target) { m_target = target; }
+    QString target() { return m_target; }
 
 public slots:
     void start(const QString &program, const QStringList &arguments);
