@@ -45,6 +45,7 @@ VideoWidget::VideoWidget(QObject *parent)
     , m_snapToGrid(true)
     , m_scrubAudio(false)
     , m_maxTextureSize(4096)
+    , m_hideVui(false)
 {
     LOG_DEBUG() << "begin";
     setAttribute(Qt::WA_AcceptTouchEvents);
@@ -486,12 +487,18 @@ void VideoWidget::requestImage() const
     m_frameRenderer->requestImage();
 }
 
+void VideoWidget::toggleVuiDisplay()
+{
+    m_hideVui = !m_hideVui;
+    refreshConsumer();
+}
+
 void VideoWidget::onFrameDisplayed(const SharedFrame &frame)
 {
     m_mutex.lock();
     m_sharedFrame = frame;
     m_mutex.unlock();
-    bool isVui = frame.get_int(kShotcutVuiMetaProperty);
+    bool isVui = frame.get_int(kShotcutVuiMetaProperty) && !m_hideVui;
     if (!isVui && source() != QmlUtilities::blankVui()) {
         m_savedQmlSource = source();
         setSource(QmlUtilities::blankVui());
@@ -533,6 +540,7 @@ void VideoWidget::setOffsetY(int y)
 
 void VideoWidget::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta)
 {
+    m_hideVui = false;
     if (meta && meta->type() == QmlMetadata::Filter
         && QFile::exists(meta->vuiFilePath().toLocalFile())) {
         filter->producer().set(kShotcutVuiMetaProperty, 1);
