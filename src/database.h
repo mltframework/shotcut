@@ -18,8 +18,8 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <QImage>
 #include <QDir>
+#include <QImage>
 #include <QTimer>
 
 class Database : public QObject

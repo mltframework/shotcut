@@ -19,19 +19,19 @@
 
 #include "widgets/statuslabelwidget.h"
 
+#include <QAction>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QKeyEvent>
 #include <QKeySequenceEdit>
 #include <QLineEdit>
+#include <QPushButton>
 #include <QSortFilterProxyModel>
 #include <QStyledItemDelegate>
 #include <QToolButton>
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <QAction>
-#include <QPushButton>
-#include <QKeyEvent>
 
 static const unsigned int editorWidth = 180;
 
@@ -53,18 +53,16 @@ public:
         layout->addWidget(seqEdit);
 
         QToolButton *applyButton = new QToolButton();
-        applyButton->setIcon(QIcon::fromTheme("dialog-ok",
-                                              QIcon(":/icons/oxygen/32x32/actions/dialog-ok.png")));
+        applyButton->setIcon(
+            QIcon::fromTheme("dialog-ok", QIcon(":/icons/oxygen/32x32/actions/dialog-ok.png")));
         applyButton->setText(tr("Apply"));
         applyButton->setToolTip(tr("Apply"));
-        connect(applyButton, &QToolButton::clicked, this, [this]() {
-            emit applied();
-        });
+        connect(applyButton, &QToolButton::clicked, this, [this]() { emit applied(); });
         layout->addWidget(applyButton);
 
         QToolButton *defaultButton = new QToolButton();
-        defaultButton->setIcon(QIcon::fromTheme("edit-undo",
-                                                QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));
+        defaultButton->setIcon(
+            QIcon::fromTheme("edit-undo", QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));
         defaultButton->setText(tr("Set to default"));
         defaultButton->setToolTip(tr("Set to default"));
         connect(defaultButton, &QToolButton::clicked, this, [&]() {
@@ -73,13 +71,11 @@ public:
         layout->addWidget(defaultButton);
 
         QToolButton *clearButton = new QToolButton();
-        clearButton->setIcon(QIcon::fromTheme("edit-clear",
-                                              QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
+        clearButton->setIcon(
+            QIcon::fromTheme("edit-clear", QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
         clearButton->setText(tr("Clear shortcut"));
         clearButton->setToolTip(tr("Clear shortcut"));
-        connect(clearButton, &QToolButton::clicked, this, [&]() {
-            seqEdit->clear();
-        });
+        connect(clearButton, &QToolButton::clicked, this, [&]() { seqEdit->clear(); });
         layout->addWidget(clearButton);
 
         setLayout(layout);
@@ -101,15 +97,15 @@ class ShortcutItemDelegate : public QStyledItemDelegate
 public:
     ShortcutItemDelegate(QObject *parent = nullptr)
         : QStyledItemDelegate(parent)
-    {
-    }
+    {}
 
-    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
+    QWidget *createEditor(QWidget *parent,
+                          const QStyleOptionViewItem &option,
                           const QModelIndex &index) const
     {
-        if (index.column() == ActionsModel::COLUMN_SEQUENCE1 ||
-                (index.column() == ActionsModel::COLUMN_SEQUENCE2
-                 && !index.data(ActionsModel::HardKeyRole).isValid() )) {
+        if (index.column() == ActionsModel::COLUMN_SEQUENCE1
+            || (index.column() == ActionsModel::COLUMN_SEQUENCE2
+                && !index.data(ActionsModel::HardKeyRole).isValid())) {
             // Hard key shortcuts are in column 2 and are not editable.
             m_currentEditor = new ShortcutEditor(parent);
             connect(m_currentEditor, &ShortcutEditor::applied, this, [this]() {
@@ -142,10 +138,7 @@ public:
         model->setData(index, newSeq);
     }
 
-    ShortcutEditor *currentEditor() const
-    {
-        return m_currentEditor;
-    }
+    ShortcutEditor *currentEditor() const { return m_currentEditor; }
 
 private:
     mutable ShortcutEditor *m_currentEditor = nullptr;
@@ -155,15 +148,17 @@ class KeyPressFilter : public QObject
 {
     Q_OBJECT
 public:
-    KeyPressFilter(QObject *parent = 0) : QObject(parent) {}
+    KeyPressFilter(QObject *parent = 0)
+        : QObject(parent)
+    {}
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override
     {
         if (event->type() == QEvent::KeyPress) {
             auto keyEvent = static_cast<QKeyEvent *>(event);
-            if (!keyEvent->modifiers() && (keyEvent->key() == Qt::Key_Return
-                                           || keyEvent->key() == Qt::Key_Enter)) {
+            if (!keyEvent->modifiers()
+                && (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter)) {
                 auto window = static_cast<QWidget *>(parent());
                 window->close();
             }
@@ -176,15 +171,18 @@ class PrivateTreeView : public QTreeView
 {
     Q_OBJECT
 public:
-    PrivateTreeView(QWidget *parent = nullptr) : QTreeView(parent) {}
+    PrivateTreeView(QWidget *parent = nullptr)
+        : QTreeView(parent)
+    {}
 
-    virtual bool edit(const QModelIndex &index, QAbstractItemView::EditTrigger trigger,
+    virtual bool edit(const QModelIndex &index,
+                      QAbstractItemView::EditTrigger trigger,
                       QEvent *event) override
     {
         bool editInProgress = QTreeView::edit(index, trigger, event);
-        if (editInProgress && trigger == QAbstractItemView::AllEditTriggers &&
-                (index.column() == ActionsModel::COLUMN_SEQUENCE1
-                 || index.column() == ActionsModel::COLUMN_SEQUENCE2)) {
+        if (editInProgress && trigger == QAbstractItemView::AllEditTriggers
+            && (index.column() == ActionsModel::COLUMN_SEQUENCE1
+                || index.column() == ActionsModel::COLUMN_SEQUENCE2)) {
             if (state() != QAbstractItemView::EditingState)
                 emit editRejected();
         }
@@ -196,7 +194,7 @@ public:
     {
         if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
             emit activated(currentIndex());
-        } else if (event->key() == Qt::Key_F2)  {
+        } else if (event->key() == Qt::Key_F2) {
             edit(currentIndex(), QAbstractItemView::EditKeyPressed, event);
         } else {
             QAbstractItemView::keyPressEvent(event);
@@ -212,7 +210,9 @@ class SearchKeyPressFilter : public QObject
 {
     Q_OBJECT
 public:
-    SearchKeyPressFilter(QObject *parent = 0) : QObject(parent) {}
+    SearchKeyPressFilter(QObject *parent = 0)
+        : QObject(parent)
+    {}
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override
@@ -229,7 +229,6 @@ protected:
     }
 };
 
-
 // Include this so that ShortcutItemDelegate can be declared in the source file.
 #include "actionsdialog.moc"
 
@@ -237,7 +236,7 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(tr("Actions and Shortcuts"));
-    setSizeGripEnabled(true) ;
+    setSizeGripEnabled(true);
 
     QVBoxLayout *vlayout = new QVBoxLayout();
 
@@ -246,7 +245,7 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     m_searchField = new QLineEdit(this);
     m_searchField->setPlaceholderText(tr("search"));
     m_searchField->installEventFilter(new SearchKeyPressFilter(this));
-    connect(m_searchField, &QLineEdit::textChanged, this, [&](const QString & text) {
+    connect(m_searchField, &QLineEdit::textChanged, this, [&](const QString &text) {
         if (m_proxyModel) {
             m_proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
             m_proxyModel->setFilterFixedString(text);
@@ -255,8 +254,8 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     connect(m_searchField, &QLineEdit::returnPressed, this, &ActionsDialog::focusSearchResults);
     searchLayout->addWidget(m_searchField);
     QToolButton *clearSearchButton = new QToolButton(this);
-    clearSearchButton->setIcon(QIcon::fromTheme("edit-clear",
-                                                QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
+    clearSearchButton->setIcon(
+        QIcon::fromTheme("edit-clear", QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
     clearSearchButton->setMaximumSize(22, 22);
     clearSearchButton->setToolTip(tr("Clear search"));
     clearSearchButton->setAutoRaise(true);
@@ -289,26 +288,34 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     m_table->header()->resizeSection(2, editorWidth);
     m_table->sortByColumn(ActionsModel::COLUMN_ACTION, Qt::AscendingOrder);
     m_table->installEventFilter(new KeyPressFilter(this));
-    connect(m_table->selectionModel(), &QItemSelectionModel::selectionChanged,
-    this, [&](const QItemSelection & selected, const QItemSelection & deselected) {
-        m_status->showText(tr("Click on the selected shortcut to show the editor"), 5, nullptr,
-                           QPalette::AlternateBase);
-    });
+    connect(m_table->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            [&](const QItemSelection &selected, const QItemSelection &deselected) {
+                m_status->showText(tr("Click on the selected shortcut to show the editor"),
+                                   5,
+                                   nullptr,
+                                   QPalette::AlternateBase);
+            });
     connect(m_table, &PrivateTreeView::editRejected, this, [&]() {
-        m_status->showText(tr("Reserved shortcuts can not be edited"), 5, nullptr,
+        m_status->showText(tr("Reserved shortcuts can not be edited"),
+                           5,
+                           nullptr,
                            QPalette::AlternateBase);
     });
-    connect(m_table->selectionModel(), &QItemSelectionModel::currentChanged,
-    this, [&](const QModelIndex & current) {
-        if (current.column() == 0) {
-            m_table->setCurrentIndex(m_proxyModel->index(current.row(), 1));
-        }
-    });
+    connect(m_table->selectionModel(),
+            &QItemSelectionModel::currentChanged,
+            this,
+            [&](const QModelIndex &current) {
+                if (current.column() == 0) {
+                    m_table->setCurrentIndex(m_proxyModel->index(current.row(), 1));
+                }
+            });
     vlayout->addWidget(m_table);
 
     QHBoxLayout *hlayout = new QHBoxLayout();
     m_status = new StatusLabelWidget();
-    connect(&m_model, &ActionsModel::editError, this, [&](const QString & message) {
+    connect(&m_model, &ActionsModel::editError, this, [&](const QString &message) {
         m_status->showText(message, 5, nullptr);
     });
     hlayout->addWidget(m_status);
@@ -322,7 +329,7 @@ ActionsDialog::ActionsDialog(QWidget *parent)
     vlayout->addLayout(hlayout);
     setLayout(vlayout);
 
-    connect(m_table, &QAbstractItemView::activated, this, [&](const QModelIndex & index) {
+    connect(m_table, &QAbstractItemView::activated, this, [&](const QModelIndex &index) {
         auto action = m_model.action(m_proxyModel->mapToSource(index));
         if (action && action->isEnabled()) {
             action->trigger();
@@ -338,8 +345,8 @@ ActionsDialog::ActionsDialog(QWidget *parent)
 
 void ActionsDialog::saveCurrentEditor()
 {
-    auto delegate = static_cast<ShortcutItemDelegate *>(m_table->itemDelegateForColumn(
-                                                            m_table->currentIndex().column()));
+    auto delegate = static_cast<ShortcutItemDelegate *>(
+        m_table->itemDelegateForColumn(m_table->currentIndex().column()));
     if (delegate) {
         auto editor = delegate->currentEditor();
         if (editor && editor->seqEdit) {

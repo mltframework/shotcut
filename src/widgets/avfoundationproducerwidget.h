@@ -19,8 +19,9 @@
 #ifndef AVFOUNDATIONPRODUCERWIDGET_H
 #define AVFOUNDATIONPRODUCERWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class AvfoundationProducerWidget;

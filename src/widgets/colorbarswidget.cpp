@@ -15,28 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "shotcut_mlt_properties.h"
 #include "colorbarswidget.h"
 #include "ui_colorbarswidget.h"
-#include "util.h"
+
 #include "mltcontroller.h"
+#include "shotcut_mlt_properties.h"
+#include "util.h"
+
 #include <MltProfile.h>
 
 static const char *kParamType = "0";
 static const char *kParamAspect = "1";
 
-enum {
-    ASPECT_SQUARE = 0,
-    ASPECT_PAL,
-    ASPECT_PAL_WIDE,
-    ASPECT_NTSC,
-    ASPECT_NTSC_WIDE,
-    ASPECT_HDV
-};
+enum { ASPECT_SQUARE = 0, ASPECT_PAL, ASPECT_PAL_WIDE, ASPECT_NTSC, ASPECT_NTSC_WIDE, ASPECT_HDV };
 
-ColorBarsWidget::ColorBarsWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ColorBarsWidget)
+ColorBarsWidget::ColorBarsWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::ColorBarsWidget)
 {
     ui->setupUi(this);
     ui->comboBox->setCurrentIndex(4);

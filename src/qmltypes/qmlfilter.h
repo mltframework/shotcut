@@ -18,18 +18,18 @@
 #ifndef FILTER_H
 #define FILTER_H
 
-#include <QObject>
-#include <QString>
-#include <QVariant>
-#include <QRectF>
-#include <QUuid>
-#include <QColor>
-#include <MltService.h>
-#include <MltProducer.h>
-#include <MltAnimation.h>
-
 #include "qmlmetadata.h"
 #include "shotcut_mlt_properties.h"
+
+#include <MltAnimation.h>
+#include <MltProducer.h>
+#include <MltService.h>
+#include <QColor>
+#include <QObject>
+#include <QRectF>
+#include <QString>
+#include <QUuid>
+#include <QVariant>
 
 class AbstractJob;
 class EncodeJob;
@@ -50,25 +50,17 @@ class QmlFilter : public QObject
     Q_PROPERTY(bool blockSignals READ signalsBlocked WRITE blockSignals)
 
 public:
-    enum CurrentFilterIndex {
-        NoCurrentFilter = -1,
-        DeselectCurrentFilter = -2
-    };
+    enum CurrentFilterIndex { NoCurrentFilter = -1, DeselectCurrentFilter = -2 };
     Q_ENUM(CurrentFilterIndex)
 
     explicit QmlFilter();
-    explicit QmlFilter(Mlt::Service &mltService, const QmlMetadata *metadata,
+    explicit QmlFilter(Mlt::Service &mltService,
+                       const QmlMetadata *metadata,
                        QObject *parent = nullptr);
     ~QmlFilter();
 
-    bool isNew() const
-    {
-        return m_isNew;
-    }
-    void setIsNew(bool isNew)
-    {
-        m_isNew = isNew;
-    }
+    bool isNew() const { return m_isNew; }
+    void setIsNew(bool isNew) { m_isNew = isNew; }
 
     Q_INVOKABLE QString get(QString name, int position = -1);
     Q_INVOKABLE QColor getColor(QString name, int position = -1);
@@ -77,45 +69,48 @@ public:
     Q_INVOKABLE void removeRectPercents(QString name);
     Q_INVOKABLE QStringList getGradient(QString name);
     Q_INVOKABLE void set(QString name, QString value, int position = -1);
-    Q_INVOKABLE void set(QString name, const QColor &value,
-                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
-    Q_INVOKABLE void set(QString name, double value,
-                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
-    Q_INVOKABLE void set(QString name, int value,
-                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
-    Q_INVOKABLE void set(QString name, bool value,
-                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
-    Q_INVOKABLE void set(QString name, double x, double y, double width, double height,
+    Q_INVOKABLE void set(QString name,
+                         const QColor &value,
+                         int position = -1,
+                         mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
+    Q_INVOKABLE void set(QString name,
+                         double value,
+                         int position = -1,
+                         mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
+    Q_INVOKABLE void set(QString name,
+                         int value,
+                         int position = -1,
+                         mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
+    Q_INVOKABLE void set(QString name,
+                         bool value,
+                         int position = -1,
+                         mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
+    Q_INVOKABLE void set(QString name,
+                         double x,
+                         double y,
+                         double width,
+                         double height,
                          double opacity = 1.0,
-                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
-    Q_INVOKABLE void set(QString name, const QRectF &rect,
-                         int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
+                         int position = -1,
+                         mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
+    Q_INVOKABLE void set(QString name,
+                         const QRectF &rect,
+                         int position = -1,
+                         mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     Q_INVOKABLE void setGradient(QString name, const QStringList &gradient);
-    QString path() const
-    {
-        return m_path;
-    }
+    QString path() const { return m_path; }
     Q_INVOKABLE void loadPresets();
-    QStringList presets() const
-    {
-        return m_presets;
-    }
+    QStringList presets() const { return m_presets; }
     /// returns the index of the new preset
-    Q_INVOKABLE int  savePreset(const QStringList &propertyNames, const QString &name = QString());
+    Q_INVOKABLE int savePreset(const QStringList &propertyNames, const QString &name = QString());
     Q_INVOKABLE void deletePreset(const QString &name);
     Q_INVOKABLE void analyze(bool isAudio = false, bool deferJob = true);
     Q_INVOKABLE static int framesFromTime(const QString &time);
     Q_INVOKABLE void getHash();
-    Mlt::Producer &producer()
-    {
-        return m_producer;
-    }
+    Mlt::Producer &producer() { return m_producer; }
     int in();
     int out();
-    Mlt::Service &service()
-    {
-        return m_service;
-    }
+    Mlt::Service &service() { return m_service; }
     int animateIn();
     void setAnimateIn(int value);
     int animateOut();
@@ -126,7 +121,8 @@ public:
     Q_INVOKABLE void clearSimpleAnimation(const QString &name);
     Mlt::Animation getAnimation(const QString &name);
     Q_INVOKABLE int keyframeCount(const QString &name);
-    mlt_keyframe_type getKeyframeType(Mlt::Animation &animation, int position,
+    mlt_keyframe_type getKeyframeType(Mlt::Animation &animation,
+                                      int position,
                                       mlt_keyframe_type defaultType);
     Q_INVOKABLE int getKeyFrameType(const QString &name, int keyIndex);
     Q_INVOKABLE void setKeyFrameType(const QString &name, int keyIndex, int type);

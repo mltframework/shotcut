@@ -36,14 +36,9 @@ public slots:
     virtual void renderVideo();
 
 private:
-    enum Stage {
-        VertexStage,
-        FragmentStage
-    };
+    enum Stage { VertexStage, FragmentStage };
     void prepareShader(Stage stage);
-    QByteArray compileShader(Stage stage,
-                             const QByteArray &source,
-                             const QByteArray &entryPoint);
+    QByteArray compileShader(Stage stage, const QByteArray &source, const QByteArray &entryPoint);
     ID3D11ShaderResourceView *initTexture(const void *p, int width, int height);
 
     ID3D11Device *m_device = nullptr;
@@ -63,7 +58,8 @@ private:
     ID3D11DepthStencilState *m_dsState = nullptr;
     ID3D11ShaderResourceView *m_texture[3] = {nullptr, nullptr, nullptr};
 
-    struct ConstantBuffer {
+    struct ConstantBuffer
+    {
         int32_t colorspace;
     };
 

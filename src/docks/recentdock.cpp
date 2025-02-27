@@ -15,22 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "docks/recentdock.h"
-#include "settings.h"
+#include "recentdock.h"
 #include "ui_recentdock.h"
+
+#include "Logger.h"
+#include "settings.h"
 #include "util.h"
 
 #include <QAction>
 #include <QDir>
 #include <QKeyEvent>
 #include <QMenu>
-#include <Logger.h>
 
 static const int MaxItems = 200;
 
-RecentDock::RecentDock(QWidget *parent) :
-    QDockWidget(parent),
-    ui(new Ui::RecentDock)
+RecentDock::RecentDock(QWidget *parent)
+    : QDockWidget(parent)
+    , ui(new Ui::RecentDock)
 {
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
@@ -80,7 +81,8 @@ void RecentDock::add(const QString &s)
         return;
 
     QString filePath = QDir::fromNativeSeparators(s);
-    if (filePath.startsWith(QDir::tempPath())) return;
+    if (filePath.startsWith(QDir::tempPath()))
+        return;
     QString name = remove(s);
     QStandardItem *item = new QStandardItem(name);
     item->setToolTip(QDir::toNativeSeparators(s));

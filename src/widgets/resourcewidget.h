@@ -19,7 +19,6 @@
 #define RESOURCEWIDGET_H
 
 #include <Mlt.h>
-
 #include <QWidget>
 
 class ResourceModel;

@@ -16,21 +16,25 @@
  */
 
 #include "meltjob.h"
-#include <QFile>
-#include <QFileInfo>
-#include <QDir>
-#include <QIODevice>
-#include <QApplication>
-#include <QAction>
-#include <QDialog>
-#include <QDir>
-#include <QTimer>
-#include <Logger.h>
-#include "mainwindow.h"
+
+#include "Logger.h"
 #include "dialogs/textviewerdialog.h"
+#include "mainwindow.h"
 #include "util.h"
 
-MeltJob::MeltJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen,
+#include <QAction>
+#include <QApplication>
+#include <QDialog>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QIODevice>
+#include <QTimer>
+
+MeltJob::MeltJob(const QString &name,
+                 const QString &xml,
+                 int frameRateNum,
+                 int frameRateDen,
                  QThread::Priority priority)
     : AbstractJob(name, priority)
     , m_isStreaming(false)
@@ -85,7 +89,10 @@ void MeltJob::onShowInFilesTriggered()
     MAIN.showInFiles(objectName());
 }
 
-MeltJob::MeltJob(const QString &name, const QString &xml, const QStringList &args, int frameRateNum,
+MeltJob::MeltJob(const QString &name,
+                 const QString &xml,
+                 const QStringList &args,
+                 int frameRateNum,
                  int frameRateDen)
     : MeltJob(name, xml, frameRateNum, frameRateDen)
 {
@@ -109,9 +116,7 @@ void MeltJob::start()
         AbstractJob::start();
         LOG_ERROR() << "the job XML is empty!";
         appendToLog("Error: the job XML is empty!\n");
-        QTimer::singleShot(0, this, [ = ]() {
-            emit finished(this, false);
-        });
+        QTimer::singleShot(0, this, [=]() { emit finished(this, false); });
         return;
     }
     QString shotcutPath = qApp->applicationDirPath();
@@ -141,7 +146,7 @@ void MeltJob::start()
     if (m_out > -1) {
         args << QStringLiteral("out=%1").arg(m_out);
     }
-    LOG_DEBUG() << meltPath.absoluteFilePath()  + " " + args.join(' ');
+    LOG_DEBUG() << meltPath.absoluteFilePath() + " " + args.join(' ');
 #ifndef Q_OS_MAC
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
     // These environment variables fix rich text rendering for high DPI
@@ -151,7 +156,8 @@ void MeltJob::start()
     setProcessEnvironment(env);
 #endif
 #ifdef Q_OS_WIN
-    if (m_isStreaming) args << "-getc";
+    if (m_isStreaming)
+        args << "-getc";
 #endif
     AbstractJob::start(meltPath.absoluteFilePath(), args);
 }

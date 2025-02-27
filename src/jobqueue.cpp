@@ -16,17 +16,18 @@
  */
 
 #include "jobqueue.h"
+
+#include "Logger.h"
+
 #include <QtWidgets>
-#include <Logger.h>
 #if defined(Q_OS_WIN) && (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
 #include "windowstools.h"
 #endif
 
-JobQueue::JobQueue(QObject *parent) :
-    QStandardItemModel(0, COLUMN_COUNT, parent),
-    m_paused(false)
-{
-}
+JobQueue::JobQueue(QObject *parent)
+    : QStandardItemModel(0, COLUMN_COUNT, parent)
+    , m_paused(false)
+{}
 
 JobQueue &JobQueue::singleton(QObject *parent)
 {
@@ -64,10 +65,12 @@ AbstractJob *JobQueue::add(AbstractJob *job)
     appendRow(items);
     job->setParent(this);
     job->setStandardItem(item);
-    connect(job, SIGNAL(progressUpdated(QStandardItem *, int)), SLOT(onProgressUpdated(QStandardItem *,
-                                                                                       int)));
-    connect(job, SIGNAL(finished(AbstractJob *, bool, QString)), SLOT(onFinished(AbstractJob *, bool,
-                                                                                 QString)));
+    connect(job,
+            SIGNAL(progressUpdated(QStandardItem *, int)),
+            SLOT(onProgressUpdated(QStandardItem *, int)));
+    connect(job,
+            SIGNAL(finished(AbstractJob *, bool, QString)),
+            SLOT(onFinished(AbstractJob *, bool, QString)));
     m_mutex.lock();
     m_jobs.append(job);
     m_mutex.unlock();
@@ -143,7 +146,8 @@ void JobQueue::onFinished(AbstractJob *job, bool isSuccess, QString time)
 
 void JobQueue::startNextJob()
 {
-    if (m_paused) return;
+    if (m_paused)
+        return;
     QMutexLocker locker(&m_mutex);
     if (!m_jobs.isEmpty()) {
         foreach (AbstractJob *job, m_jobs) {

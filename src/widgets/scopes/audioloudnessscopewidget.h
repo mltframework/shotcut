@@ -20,10 +20,11 @@
 #define AUDIOLOUDNESSSCOPEWIDGET_H
 
 #include "scopewidget.h"
-#include <QMutex>
-#include <QImage>
-#include <QVector>
+
 #include <MltFilter.h>
+#include <QImage>
+#include <QMutex>
+#include <QVector>
 
 class QQuickWidget;
 class QLabel;

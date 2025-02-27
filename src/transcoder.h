@@ -21,7 +21,6 @@
 #include "dialogs/transcodedialog.h"
 
 #include <MltProducer.h>
-
 #include <QList>
 #include <QObject>
 
@@ -30,8 +29,9 @@ class Transcoder : public QObject
     Q_OBJECT
 
 public:
-
-    explicit Transcoder() : QObject() {}
+    explicit Transcoder()
+        : QObject()
+    {}
     void setProducers(QList<Mlt::Producer> &producers);
     void addProducer(Mlt::Producer &producer);
     void addProducer(Mlt::Producer *producer);

@@ -21,8 +21,7 @@
 
 QmlRichTextMenu::QmlRichTextMenu(QObject *parent)
     : QObject(parent)
-{
-}
+{}
 
 void QmlRichTextMenu::popup()
 {

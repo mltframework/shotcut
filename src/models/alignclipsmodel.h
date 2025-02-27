@@ -27,7 +27,6 @@ class AlignClipsModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-
     enum Columns {
         COLUMN_ERROR = 0,
         COLUMN_NAME,
@@ -57,7 +56,8 @@ protected:
     QModelIndex parent(const QModelIndex &index) const;
 
 private:
-    typedef struct {
+    typedef struct
+    {
         QString name;
         int offset;
         double speed;

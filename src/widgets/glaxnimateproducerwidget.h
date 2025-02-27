@@ -18,15 +18,15 @@
 #ifndef GLAXNIMATEPRODUCERWIDGET_H
 #define GLAXNIMATEPRODUCERWIDGET_H
 
-#include <QWidget>
-#include <QPointer>
-#include <QLocalSocket>
-#include <QLocalServer>
-#include <QDataStream>
-#include <QSharedMemory>
+#include "abstractproducerwidget.h"
 #include "sharedframe.h"
 
-#include "abstractproducerwidget.h"
+#include <QDataStream>
+#include <QLocalServer>
+#include <QLocalSocket>
+#include <QPointer>
+#include <QSharedMemory>
+#include <QWidget>
 
 class GlaxnimateIpcServer : public QObject
 {
@@ -54,7 +54,8 @@ public:
     static GlaxnimateIpcServer &instance();
     static void newFile(const QString &filename, int duration);
     void reset();
-    void launch(const Mlt::Producer &producer, QString filename = QString(),
+    void launch(const Mlt::Producer &producer,
+                QString filename = QString(),
                 bool hideCurrentTrack = true);
 
 private slots:

@@ -16,7 +16,9 @@
  */
 
 #include "scopewidget.h"
-#include <Logger.h>
+
+#include "Logger.h"
+
 #include <QtConcurrent/QtConcurrent>
 
 ScopeWidget::ScopeWidget(const QString &name)
@@ -33,9 +35,7 @@ ScopeWidget::ScopeWidget(const QString &name)
     LOG_DEBUG() << "end";
 }
 
-ScopeWidget::~ScopeWidget()
-{
-}
+ScopeWidget::~ScopeWidget() {}
 
 void ScopeWidget::onNewFrame(const SharedFrame &frame)
 {

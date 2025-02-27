@@ -18,10 +18,10 @@
 #ifndef KEYFRAMESMODEL_H
 #define KEYFRAMESMODEL_H
 
+#include <MltAnimation.h>
+#include <MltProperties.h>
 #include <QAbstractItemModel>
 #include <QString>
-#include <MltProperties.h>
-#include <MltAnimation.h>
 
 class QmlMetadata;
 class QmlFilter;
@@ -73,18 +73,18 @@ public:
     /// Two level model: parameters and keyframes on parameters
     enum Roles {
         NameRole = Qt::UserRole + 1, /// parameter or keyframe
-        PropertyNameRole, /// parameter only
-        IsCurveRole,      /// parameter only
-        MinimumValueRole, /// parameter only
-        MaximumValueRole, /// parameter only
-        LowestValueRole,  /// parameter only
-        HighestValueRole, /// parameter only
-        FrameNumberRole,  /// keyframe only
-        KeyframeTypeRole, /// keyframe only
-        PrevKeyframeTypeRole, /// keyframe only
-        NumericValueRole, /// keyframe only
-        MinimumFrameRole, /// keyframe only
-        MaximumFrameRole  /// keyframe only
+        PropertyNameRole,            /// parameter only
+        IsCurveRole,                 /// parameter only
+        MinimumValueRole,            /// parameter only
+        MaximumValueRole,            /// parameter only
+        LowestValueRole,             /// parameter only
+        HighestValueRole,            /// parameter only
+        FrameNumberRole,             /// keyframe only
+        KeyframeTypeRole,            /// keyframe only
+        PrevKeyframeTypeRole,        /// keyframe only
+        NumericValueRole,            /// keyframe only
+        MinimumFrameRole,            /// keyframe only
+        MaximumFrameRole             /// keyframe only
     };
 
     explicit KeyframesModel(QObject *parent = 0);
@@ -93,8 +93,7 @@ public:
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
-    QModelIndex index(int row, int column = 0,
-                      const QModelIndex &parent = QModelIndex()) const;
+    QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
     QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
     void load(QmlFilter *, QmlMetadata *);
@@ -105,11 +104,15 @@ public:
     Q_INVOKABLE int parameterIndex(const QString &propertyName) const;
     Q_INVOKABLE bool setInterpolation(int parameterIndex, int keyframeIndex, InterpolationType type);
     Q_INVOKABLE void setKeyframePosition(int parameterIndex, int keyframeIndex, int position);
-    Q_INVOKABLE void addKeyframe(int parameterIndex, double value, int position,
+    Q_INVOKABLE void addKeyframe(int parameterIndex,
+                                 double value,
+                                 int position,
                                  InterpolationType type);
     Q_INVOKABLE void addKeyframe(int parameterIndex, int position);
     Q_INVOKABLE void setKeyframeValue(int parameterIndex, int keyframeIndex, double value);
-    Q_INVOKABLE void setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value,
+    Q_INVOKABLE void setKeyframeValuePosition(int parameterIndex,
+                                              int keyframeIndex,
+                                              double value,
                                               int position);
     Q_INVOKABLE bool isKeyframe(int parameterIndex, int position);
     Q_INVOKABLE bool advancedKeyframesInUse();

@@ -23,8 +23,7 @@ QmlEditMenu::QmlEditMenu(QObject *parent)
     : QObject(parent)
     , m_showPastePlain(false)
     , m_readOnly(false)
-{
-}
+{}
 
 void QmlEditMenu::popup()
 {

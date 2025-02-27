@@ -18,8 +18,9 @@
 #ifndef COLORBARSWIDGET_H
 #define COLORBARSWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class ColorBarsWidget;

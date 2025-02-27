@@ -34,8 +34,12 @@ class MultiFileExportDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit MultiFileExportDialog(QString title, Mlt::Playlist *playlist, const QString &directory,
-                                   const QString &prefix, const QString &extension, QWidget *parent = 0);
+    explicit MultiFileExportDialog(QString title,
+                                   Mlt::Playlist *playlist,
+                                   const QString &directory,
+                                   const QString &prefix,
+                                   const QString &extension,
+                                   QWidget *parent = 0);
     QStringList getExportFiles();
 
 private slots:

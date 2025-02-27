@@ -16,26 +16,29 @@
  */
 
 #include "audioloudnessscopewidget.h"
-#include <Logger.h>
-#include <QVBoxLayout>
-#include <QQmlEngine>
-#include <QDir>
-#include <QQuickWidget>
-#include <QQuickItem>
-#include <QPushButton>
-#include <QToolButton>
-#include <QMenu>
-#include <QLabel>
-#include <QTimer>
-#include <MltProfile.h>
-#include <math.h>
-#include "qmltypes/qmlutilities.h"
+
+#include "Logger.h"
 #include "mltcontroller.h"
+#include "qmltypes/qmlutilities.h"
 #include "settings.h"
 
-static double onedec( double in )
+#include <MltProfile.h>
+#include <QDir>
+#include <QLabel>
+#include <QMenu>
+#include <QPushButton>
+#include <QQmlEngine>
+#include <QQuickItem>
+#include <QQuickWidget>
+#include <QTimer>
+#include <QToolButton>
+#include <QVBoxLayout>
+
+#include <math.h>
+
+static double onedec(double in)
 {
-    return round( in * 10.0 ) / 10.0;
+    return round(in * 10.0) / 10.0;
 }
 
 AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
@@ -44,7 +47,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
     , m_peak(-100)
     , m_true_peak(-100)
     , m_newData(false)
-    , m_orientation((Qt::Orientation) - 1)
+    , m_orientation((Qt::Orientation) -1)
     , m_qview(new QQuickWidget(QmlUtilities::sharedEngine(), this))
     , m_timeLabel(new QLabel(this))
 {
@@ -101,8 +104,8 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
     // Add config button
     QToolButton *configButton = new QToolButton(this);
     configButton->setToolTip(tr("Configure Graphs"));
-    configButton->setIcon(QIcon::fromTheme("show-menu",
-                                           QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
+    configButton->setIcon(
+        QIcon::fromTheme("show-menu", QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
     configButton->setPopupMode(QToolButton::InstantPopup);
     configButton->setMenu(configMenu);
     hlayout->addWidget(configButton);
@@ -151,10 +154,10 @@ void AudioLoudnessScopeWidget::refreshScope(const QSize & /*size*/, bool /*full*
                 Mlt::Frame mFrame = sFrame.clone(true, false, false);
                 m_loudnessFilter->process(mFrame);
                 mFrame.get_audio(format, frequency, channels, samples);
-                if ( m_peak < m_loudnessFilter->get_double("peak") ) {
+                if (m_peak < m_loudnessFilter->get_double("peak")) {
                     m_peak = m_loudnessFilter->get_double("peak");
                 }
-                if ( m_true_peak < m_loudnessFilter->get_double("true_peak") ) {
+                if (m_true_peak < m_loudnessFilter->get_double("true_peak")) {
                     m_true_peak = m_loudnessFilter->get_double("true_peak");
                 }
                 m_newData = true;
@@ -164,8 +167,10 @@ void AudioLoudnessScopeWidget::refreshScope(const QSize & /*size*/, bool /*full*
 
     // Update the time with every frame.
     QString time = m_loudnessFilter->get_time("frames_processed");
-    QMetaObject::invokeMethod(m_timeLabel, "setText", Qt::QueuedConnection, Q_ARG(const QString &,
-                                                                                  time));
+    QMetaObject::invokeMethod(m_timeLabel,
+                              "setText",
+                              Qt::QueuedConnection,
+                              Q_ARG(const QString &, time));
 }
 
 QString AudioLoudnessScopeWidget::getTitle()
@@ -185,12 +190,18 @@ void AudioLoudnessScopeWidget::setOrientation(Qt::Orientation orientation, bool 
             // Calculate the minimum width
             int x = 0;
             const int meterWidth = 54;
-            if (Settings.loudnessScopeShowMeter("momentary")) x += meterWidth;
-            if (Settings.loudnessScopeShowMeter("shortterm")) x += meterWidth;
-            if (Settings.loudnessScopeShowMeter("integrated")) x += meterWidth;
-            if (Settings.loudnessScopeShowMeter("range")) x += meterWidth;
-            if (Settings.loudnessScopeShowMeter("peak")) x += meterWidth;
-            if (Settings.loudnessScopeShowMeter("truepeak")) x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("momentary"))
+                x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("shortterm"))
+                x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("integrated"))
+                x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("range"))
+                x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("peak"))
+                x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("truepeak"))
+                x += meterWidth;
             x = std::max(x, 200);
             setMinimumSize(x, 250);
             setMaximumSize(x, 600);
@@ -198,12 +209,18 @@ void AudioLoudnessScopeWidget::setOrientation(Qt::Orientation orientation, bool 
             // Calculate the minimum height
             int y = 32;
             const int meterHeight = 47;
-            if (Settings.loudnessScopeShowMeter("momentary")) y += meterHeight;
-            if (Settings.loudnessScopeShowMeter("shortterm")) y += meterHeight;
-            if (Settings.loudnessScopeShowMeter("integrated")) y += meterHeight;
-            if (Settings.loudnessScopeShowMeter("range")) y += meterHeight;
-            if (Settings.loudnessScopeShowMeter("peak")) y += meterHeight;
-            if (Settings.loudnessScopeShowMeter("truepeak")) y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("momentary"))
+                y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("shortterm"))
+                y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("integrated"))
+                y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("range"))
+                y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("peak"))
+                y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("truepeak"))
+                y += meterHeight;
             y = std::max(y, 80);
             setMinimumSize(250, y);
             setMaximumSize(600, y);
@@ -217,7 +234,7 @@ void AudioLoudnessScopeWidget::setOrientation(Qt::Orientation orientation, bool 
 void AudioLoudnessScopeWidget::onResetButtonClicked()
 {
     m_loudnessFilter->set("reset", 1);
-    m_timeLabel->setText( "00:00:00:00" );
+    m_timeLabel->setText("00:00:00:00");
     setOrientation(m_orientation, true);
     resetQview();
 }
@@ -272,18 +289,22 @@ void AudioLoudnessScopeWidget::onTruePeakToggled(bool checked)
 
 void AudioLoudnessScopeWidget::updateMeters(void)
 {
-    if (!m_newData || !m_qview->rootObject()) return;
-    if (m_loudnessFilter->get_int("calc_program") )
-        m_qview->rootObject()->setProperty("integrated", onedec(m_loudnessFilter->get_double("program")));
-    if (m_loudnessFilter->get_int("calc_shortterm") )
-        m_qview->rootObject()->setProperty("shortterm", onedec(m_loudnessFilter->get_double("shortterm")));
-    if (m_loudnessFilter->get_int("calc_momentary") )
-        m_qview->rootObject()->setProperty("momentary", onedec(m_loudnessFilter->get_double("momentary")));
-    if (m_loudnessFilter->get_int("calc_range") )
+    if (!m_newData || !m_qview->rootObject())
+        return;
+    if (m_loudnessFilter->get_int("calc_program"))
+        m_qview->rootObject()->setProperty("integrated",
+                                           onedec(m_loudnessFilter->get_double("program")));
+    if (m_loudnessFilter->get_int("calc_shortterm"))
+        m_qview->rootObject()->setProperty("shortterm",
+                                           onedec(m_loudnessFilter->get_double("shortterm")));
+    if (m_loudnessFilter->get_int("calc_momentary"))
+        m_qview->rootObject()->setProperty("momentary",
+                                           onedec(m_loudnessFilter->get_double("momentary")));
+    if (m_loudnessFilter->get_int("calc_range"))
         m_qview->rootObject()->setProperty("range", onedec(m_loudnessFilter->get_double("range")));
-    if (m_loudnessFilter->get_int("calc_peak") )
+    if (m_loudnessFilter->get_int("calc_peak"))
         m_qview->rootObject()->setProperty("peak", onedec(m_peak));
-    if (m_loudnessFilter->get_int("calc_true_peak") )
+    if (m_loudnessFilter->get_int("calc_true_peak"))
         m_qview->rootObject()->setProperty("truePeak", onedec(m_true_peak));
     m_peak = -100;
     m_true_peak = -100;
@@ -301,8 +322,8 @@ bool AudioLoudnessScopeWidget::event(QEvent *event)
 
 void AudioLoudnessScopeWidget::resetQview()
 {
-    LOG_DEBUG() << "begin" << "isSceneGraphInitialized" <<
-                m_qview->quickWindow()->isSceneGraphInitialized();
+    LOG_DEBUG() << "begin"
+                << "isSceneGraphInitialized" << m_qview->quickWindow()->isSceneGraphInitialized();
     if (!m_qview->quickWindow()->isSceneGraphInitialized()) {
         return;
     }
@@ -328,10 +349,13 @@ void AudioLoudnessScopeWidget::resetQview()
         m_qview->rootObject()->setProperty("orientation", m_orientation);
         m_qview->rootObject()->setProperty("enableIntegrated",
                                            Settings.loudnessScopeShowMeter("integrated"));
-        m_qview->rootObject()->setProperty("enableShortterm", Settings.loudnessScopeShowMeter("shortterm"));
-        m_qview->rootObject()->setProperty("enableMomentary", Settings.loudnessScopeShowMeter("momentary"));
+        m_qview->rootObject()->setProperty("enableShortterm",
+                                           Settings.loudnessScopeShowMeter("shortterm"));
+        m_qview->rootObject()->setProperty("enableMomentary",
+                                           Settings.loudnessScopeShowMeter("momentary"));
         m_qview->rootObject()->setProperty("enableRange", Settings.loudnessScopeShowMeter("range"));
         m_qview->rootObject()->setProperty("enablePeak", Settings.loudnessScopeShowMeter("peak"));
-        m_qview->rootObject()->setProperty("enableTruePeak", Settings.loudnessScopeShowMeter("truepeak"));
+        m_qview->rootObject()->setProperty("enableTruePeak",
+                                           Settings.loudnessScopeShowMeter("truepeak"));
     }
 }

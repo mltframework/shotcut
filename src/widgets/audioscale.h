@@ -32,7 +32,6 @@ protected:
 
 private:
     QVector<int> dbscale;
-
 };
 
 #endif // AUDIOSCALE_H

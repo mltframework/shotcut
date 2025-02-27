@@ -17,15 +17,16 @@
 
 #include "lumamixtransition.h"
 #include "ui_lumamixtransition.h"
-#include "settings.h"
+
+#include "Logger.h"
 #include "mltcontroller.h"
+#include "qmltypes/qmlapplication.h"
+#include "settings.h"
 #include "util.h"
 #include "widgets/producerpreviewwidget.h"
-#include "qmltypes/qmlapplication.h"
 
 #include <QFileDialog>
 #include <QFileInfo>
-#include <Logger.h>
 
 static const int kLumaComboDissolveIndex = 0;
 static const int kLumaComboCutIndex = 1;
@@ -56,7 +57,8 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
         QString resource = transition->get("resource");
         ui->lumaCombo->blockSignals(true);
         if (!resource.isEmpty() && resource.indexOf("%luma") != -1) {
-            ui->lumaCombo->setCurrentRow(resource.mid(resource.indexOf("%luma") + 5).left(2).toInt() + 2);
+            ui->lumaCombo->setCurrentRow(resource.mid(resource.indexOf("%luma") + 5).left(2).toInt()
+                                         + 2);
         } else if (!resource.isEmpty() && resource.startsWith("color:")) {
             ui->lumaCombo->setCurrentRow(kLumaComboCutIndex);
             ui->softnessLabel->setText(tr("Position"));
@@ -105,8 +107,8 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
     ui->horizontalLayout->addWidget(m_preview, 0, Qt::AlignCenter);
     connect(this, SIGNAL(modified()), this, SLOT(startPreview()), Qt::QueuedConnection);
     ui->getCustomLabel->setText(
-        QString::fromLatin1("<a href=\"https://shotcut.org/resources/#transitions\">%1</a>").arg(
-            ui->getCustomLabel->text()));
+        QString::fromLatin1("<a href=\"https://shotcut.org/resources/#transitions\">%1</a>")
+            .arg(ui->getCustomLabel->text()));
 }
 
 LumaMixTransition::~LumaMixTransition()
@@ -190,7 +192,8 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
             Mlt::Transition transition(*service);
             if (name == transition.get("mlt_service"))
                 return new Mlt::Transition(transition);
-            else if (name == "luma" && QStringLiteral("movit.luma_mix") == transition.get("mlt_service"))
+            else if (name == "luma"
+                     && QStringLiteral("movit.luma_mix") == transition.get("mlt_service"))
                 return new Mlt::Transition(transition);
         }
         service.reset(service->producer());
@@ -205,7 +208,7 @@ void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)
     ui->customLumaLabel->setToolTip(QString());
     QString resource = transition.get("resource");
     if (resource.isEmpty() || resource.indexOf("%luma") != -1 || resource.startsWith("color:")
-            || ui->lumaCombo->currentRow() > m_maxStockIndex) {
+        || ui->lumaCombo->currentRow() > m_maxStockIndex) {
     } else if (!resource.isEmpty() && !resource.startsWith("color:")) {
         ui->customLumaLabel->setText(QFileInfo(transition.get("resource")).fileName());
         ui->customLumaLabel->setToolTip(transition.get("resource"));
@@ -220,8 +223,8 @@ void LumaMixTransition::on_lumaCombo_currentRowChanged(int index)
         on_invertCheckBox_clicked(false);
         ui->invertCheckBox->setChecked(false);
     }
-    ui->invertCheckBox->setEnabled( index != kLumaComboDissolveIndex && index != kLumaComboCutIndex);
-    ui->softnessSlider->setEnabled( index != kLumaComboDissolveIndex);
+    ui->invertCheckBox->setEnabled(index != kLumaComboDissolveIndex && index != kLumaComboCutIndex);
+    ui->softnessSlider->setEnabled(index != kLumaComboDissolveIndex);
     ui->softnessSpinner->setEnabled(index != kLumaComboDissolveIndex);
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
@@ -240,8 +243,12 @@ void LumaMixTransition::on_lumaCombo_currentRowChanged(int index)
 #ifdef Q_OS_MAC
             path.append("/*");
 #endif
-            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path,
-                                                            QString(), nullptr, Util::getFileDialogOptions());
+            QString filename = QFileDialog::getOpenFileName(this,
+                                                            tr("Open File"),
+                                                            path,
+                                                            QString(),
+                                                            nullptr,
+                                                            Util::getFileDialogOptions());
             activateWindow();
             if (!filename.isEmpty()) {
                 transition->set("resource", filename.toUtf8().constData());
@@ -256,8 +263,11 @@ void LumaMixTransition::on_lumaCombo_currentRowChanged(int index)
             Util::getHash(*transition);
         } else {
             ui->softnessLabel->setText(tr("Softness"));
-            transition->set("resource", QStringLiteral("%luma%1.pgm").arg(index - 2, 2, 10,
-                                                                          QChar('0')).toLatin1().constData());
+            transition->set("resource",
+                            QStringLiteral("%luma%1.pgm")
+                                .arg(index - 2, 2, 10, QChar('0'))
+                                .toLatin1()
+                                .constData());
         }
         if (qstrcmp(transition->get("resource"), "")) {
             transition->set("progressive", 1);
@@ -279,7 +289,8 @@ void LumaMixTransition::startPreview()
 {
     if (Settings.timelinePreviewTransition() && m_producer.is_valid() && MLT.isPaused()) {
         m_preview->stop();
-        m_previewProducer = new Mlt::Producer(MLT.profile(), "xml-string",
+        m_previewProducer = new Mlt::Producer(MLT.profile(),
+                                              "xml-string",
                                               MLT.XML(&m_producer).toUtf8().constData());
         m_preview->start(m_previewProducer);
     }
@@ -293,7 +304,6 @@ void LumaMixTransition::on_previewCheckBox_clicked(bool checked)
     }
 }
 
-
 void LumaMixTransition::on_favoriteButton_clicked()
 {
     QmlApplication::addWipe(ui->customLumaLabel->toolTip());
@@ -303,4 +313,3 @@ void LumaMixTransition::on_favoriteButton_clicked()
         dir.mkdir(transitions);
     }
 }
-

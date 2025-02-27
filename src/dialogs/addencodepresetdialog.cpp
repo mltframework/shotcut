@@ -18,9 +18,9 @@
 #include "addencodepresetdialog.h"
 #include "ui_addencodepresetdialog.h"
 
-AddEncodePresetDialog::AddEncodePresetDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::AddEncodePresetDialog)
+AddEncodePresetDialog::AddEncodePresetDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::AddEncodePresetDialog)
 {
     ui->setupUi(this);
 }

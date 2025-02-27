@@ -17,12 +17,12 @@
 
 #include "audiosurroundscopewidget.h"
 
-#include <Logger.h>
+#include "Logger.h"
 #include "settings.h"
 #include "widgets/iecscale.h"
 
-#include <QPen>
 #include <QPainter>
+#include <QPen>
 
 #include <math.h>
 
@@ -63,9 +63,7 @@ AudioSurroundScopeWidget::AudioSurroundScopeWidget()
     LOG_DEBUG() << "end";
 }
 
-AudioSurroundScopeWidget::~AudioSurroundScopeWidget()
-{
-}
+AudioSurroundScopeWidget::~AudioSurroundScopeWidget() {}
 
 QString AudioSurroundScopeWidget::getTitle()
 {
@@ -98,19 +96,20 @@ void AudioSurroundScopeWidget::refreshScope(const QSize &size, bool full)
         int samples = m_frame.get_audio_samples();
         QVector<double> levels;
         const int16_t *audio = m_frame.get_audio();
-        for ( int c = 0; c < channels; c++ ) {
+        for (int c = 0; c < channels; c++) {
             int16_t peak = 0;
             const int16_t *p = audio + c;
-            for ( int s = 0; s < samples; s++ ) {
-                int16_t sample = abs(*p );
-                if (sample > peak) peak = sample;
+            for (int s = 0; s < samples; s++) {
+                int16_t sample = abs(*p);
+                if (sample > peak)
+                    peak = sample;
                 p += channels;
             }
             double levelDb = 0.0;
             if (peak == 0) {
                 levelDb = -100.0;
             } else {
-                levelDb = 20 * log10((double)peak / (double)std::numeric_limits<int16_t>::max());
+                levelDb = 20 * log10((double) peak / (double) std::numeric_limits<int16_t>::max());
             }
             levels << IEC_ScaleMax(levelDb, 0);
         }
@@ -129,7 +128,7 @@ void AudioSurroundScopeWidget::refreshScope(const QSize &size, bool full)
         insideRect.setY(insideRect.x());
         insideRect.setWidth(rect.width() - 2 * insideRect.x());
         insideRect.setHeight(insideRect.width());
-        qreal maxCornerLength = sqrt( 2 * pow(insideRect.width() / 2, 2) );
+        qreal maxCornerLength = sqrt(2 * pow(insideRect.width() / 2, 2));
 
         // Draw the inside lines from center
         pen.setColor(palette().color(QPalette::Active, QPalette::Highlight));
@@ -137,7 +136,7 @@ void AudioSurroundScopeWidget::refreshScope(const QSize &size, bool full)
         p.setPen(pen);
         // Left
         if (channels > 1) {
-            qreal magnitude =  levels[0] * maxCornerLength;
+            qreal magnitude = levels[0] * maxCornerLength;
             QPointF point = vectorToPoint(135, magnitude);
             point = mapFromCenter(point, center);
             p.drawLine(center, point);
@@ -158,7 +157,7 @@ void AudioSurroundScopeWidget::refreshScope(const QSize &size, bool full)
         }
         // Right
         if (channels > 1) {
-            qreal magnitude =  levels[1] * maxCornerLength;
+            qreal magnitude = levels[1] * maxCornerLength;
             QPointF point = vectorToPoint(45, magnitude);
             point = mapFromCenter(point, center);
             p.drawLine(center, point);

@@ -16,21 +16,23 @@
  */
 
 #include "audiolevelstask.h"
+
+#include "Logger.h"
 #include "database.h"
-#include "shotcut_mlt_properties.h"
-#include "settings.h"
 #include "mainwindow.h"
+#include "settings.h"
+#include "shotcut_mlt_properties.h"
 #include "util.h"
-#include <QString>
-#include <QVariantList>
-#include <QImage>
+
 #include <QCryptographicHash>
-#include <QRgb>
-#include <QThreadPool>
-#include <QMutex>
-#include <QTime>
 #include <QElapsedTimer>
-#include <Logger.h>
+#include <QImage>
+#include <QMutex>
+#include <QRgb>
+#include <QString>
+#include <QThreadPool>
+#include <QTime>
+#include <QVariantList>
 
 static QList<AudioLevelsTask *> tasksList;
 static QMutex tasksListMutex;
@@ -55,15 +57,17 @@ AudioLevelsTask::~AudioLevelsTask()
         delete p.first;
 }
 
-void AudioLevelsTask::start(Mlt::Producer &producer, QObject *object, const QModelIndex &index,
+void AudioLevelsTask::start(Mlt::Producer &producer,
+                            QObject *object,
+                            const QModelIndex &index,
                             bool force)
 {
     if (Settings.timelineShowWaveforms() && producer.is_valid()) {
-
         QString serviceName = producer.get("mlt_service");
-        if (serviceName == "pixbuf" || serviceName == "qimage" || serviceName == "webvfx" ||
-                serviceName == "color"  || serviceName.startsWith("frei0r") || serviceName == "glaxnimate" ||
-                (serviceName.startsWith("avformat") && producer.get_int("audio_index") == -1)) {
+        if (serviceName == "pixbuf" || serviceName == "qimage" || serviceName == "webvfx"
+            || serviceName == "color" || serviceName.startsWith("frei0r")
+            || serviceName == "glaxnimate"
+            || (serviceName.startsWith("avformat") && producer.get_int("audio_index") == -1)) {
             return;
         }
 
@@ -122,8 +126,8 @@ Mlt::Producer *AudioLevelsTask::tempProducer()
             service = "avformat";
         else if (service.startsWith("xml"))
             service = "xml-nogl";
-        m_tempProducer.reset(new Mlt::Producer(m_profile, service.toUtf8().constData(),
-                                               producer->get("resource")));
+        m_tempProducer.reset(
+            new Mlt::Producer(m_profile, service.toUtf8().constData(), producer->get("resource")));
         if (m_tempProducer->is_valid()) {
             Mlt::Filter channels(m_profile, "audiochannels");
             Mlt::Filter converter(m_profile, "audioconvert");
@@ -154,8 +158,10 @@ QString AudioLevelsTask::cacheKey()
     }
     if (producer->get("audio_index")) {
         // Add the audio index only if different than default to avoid cache miss.
-        if (m_isForce || (producer->get(kDefaultAudioIndexProperty) &&
-                          producer->get_int("audio_index") != producer->get_int(kDefaultAudioIndexProperty))) {
+        if (m_isForce
+            || (producer->get(kDefaultAudioIndexProperty)
+                && producer->get_int("audio_index")
+                       != producer->get_int(kDefaultAudioIndexProperty))) {
             key += QStringLiteral(" %1").arg(producer->get("audio_index"));
         }
     }
@@ -168,14 +174,15 @@ void AudioLevelsTask::run()
     QVariantList levels;
     QImage image = DB.getThumbnail(cacheKey());
     if (image.isNull() || m_isForce) {
-        const char *key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
+        const char *key[2] = {"meta.media.audio_level.0", "meta.media.audio_level.1"};
         QElapsedTimer updateTime;
         updateTime.start();
         // TODO: use project channel count
         int channels = 2;
 
         auto message = QStringLiteral("%1 %2").arg(QObject::tr("generating audio waveforms for"),
-                                                   Util::baseName(tempProducer()->get("resource"), true));
+                                                   Util::baseName(tempProducer()->get("resource"),
+                                                                  true));
         if (tempProducer()->get("audio_index")) {
             LOG_DEBUG() << message << " with audio_index =" << tempProducer()->get("audio_index");
         } else {
@@ -189,7 +196,9 @@ void AudioLevelsTask::run()
             if (frame && frame->is_valid() && !frame->get_int("test_audio")) {
                 mlt_audio_format format = mlt_audio_s16;
                 int frequency = 48000;
-                int samples = mlt_audio_calculate_frame_samples(m_producers.first().first->get_fps(), frequency, i);
+                int samples = mlt_audio_calculate_frame_samples(m_producers.first().first->get_fps(),
+                                                                frequency,
+                                                                i);
                 frame->get_audio(format, frequency, channels, samples);
                 // for each channel
                 for (int channel = 0; channel < channels; channel++)
@@ -208,11 +217,17 @@ void AudioLevelsTask::run()
                 foreach (ProducerAndIndex p, m_producers) {
                     QVariantList *levelsCopy = new QVariantList(levels);
                     p.first->lock();
-                    p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
+                    p.first->set(kAudioLevelsProperty,
+                                 levelsCopy,
+                                 0,
+                                 (mlt_destructor) deleteQVariantList);
                     p.first->unlock();
-                    if (-1 != m_object->metaObject()->indexOfMethod("audioLevelsReady(QPersistentModelIndex)"))
-                        QMetaObject::invokeMethod(m_object, "audioLevelsReady", Q_ARG(const QPersistentModelIndex &,
-                                                                                      p.second));
+                    if (-1
+                        != m_object->metaObject()->indexOfMethod(
+                            "audioLevelsReady(QPersistentModelIndex)"))
+                        QMetaObject::invokeMethod(m_object,
+                                                  "audioLevelsReady",
+                                                  Q_ARG(const QPersistentModelIndex &, p.second));
                 }
             }
         }
@@ -221,10 +236,12 @@ void AudioLevelsTask::run()
             int count = levels.size();
             QImage image((count + 3) / 4 / channels, channels, QImage::Format_ARGB32);
             n = image.width() * image.height();
-            for (int i = 0; i < n; i ++) {
+            for (int i = 0; i < n; i++) {
                 QRgb p;
                 if ((4 * i + 3) < count) {
-                    p = qRgba(levels.at(4 * i).toInt(), levels.at(4 * i + 1).toInt(), levels.at(4 * i + 2).toInt(),
+                    p = qRgba(levels.at(4 * i).toInt(),
+                              levels.at(4 * i + 1).toInt(),
+                              levels.at(4 * i + 2).toInt(),
                               levels.at(4 * i + 3).toInt());
                 } else {
                     int last = levels.last().toInt();
@@ -247,7 +264,9 @@ void AudioLevelsTask::run()
             }
         }
         message = QStringLiteral("%1 %2").arg(QObject::tr("Done"), message);
-        QMetaObject::invokeMethod(&MAIN, "showStatusMessage",  Qt::QueuedConnection,
+        QMetaObject::invokeMethod(&MAIN,
+                                  "showStatusMessage",
+                                  Qt::QueuedConnection,
                                   Q_ARG(QString, message));
     } else if (!m_isCanceled && !image.isNull()) {
         // convert cached image
@@ -278,9 +297,11 @@ void AudioLevelsTask::run()
             p.first->lock();
             p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
             p.first->unlock();
-            if (-1 != m_object->metaObject()->indexOfMethod("audioLevelsReady(QPersistentModelIndex)"))
-                QMetaObject::invokeMethod(m_object, "audioLevelsReady", Q_ARG(const QPersistentModelIndex &,
-                                                                              p.second));
+            if (-1
+                != m_object->metaObject()->indexOfMethod("audioLevelsReady(QPersistentModelIndex)"))
+                QMetaObject::invokeMethod(m_object,
+                                          "audioLevelsReady",
+                                          Q_ARG(const QPersistentModelIndex &, p.second));
         }
     }
 }

@@ -26,14 +26,14 @@
 
 #include <QDialogButtonBox>
 #include <QMessageBox>
-#include <QVBoxLayout>
 #include <QPushButton>
+#include <QVBoxLayout>
 
 ResourceDialog::ResourceDialog(QWidget *parent)
     : QDialog(parent)
 {
     setWindowTitle(tr("Resources"));
-    setSizeGripEnabled(true) ;
+    setSizeGripEnabled(true);
 
     QVBoxLayout *vlayout = new QVBoxLayout();
     m_resourceWidget = new ResourceWidget(this);
@@ -99,11 +99,12 @@ void ResourceDialog::convert()
         return;
     }
 
-    TranscodeDialog dialog(
-        tr("Choose an edit-friendly format below and then click OK to choose a file name. "
-           "After choosing a file name, a job is created. "
-           "When it is done, double-click the job to open it.\n"),
-        MLT.profile().progressive(), this);
+    TranscodeDialog
+        dialog(tr("Choose an edit-friendly format below and then click OK to choose a file name. "
+                  "After choosing a file name, a job is created. "
+                  "When it is done, double-click the job to open it.\n"),
+               MLT.profile().progressive(),
+               this);
     dialog.setWindowTitle(tr("Convert..."));
     dialog.setWindowModality(QmlApplication::dialogModality());
     Transcoder transcoder;

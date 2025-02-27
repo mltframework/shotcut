@@ -17,19 +17,19 @@
 
 #include "servicepresetwidget.h"
 #include "ui_servicepresetwidget.h"
+
+#include "Logger.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
-
-#include <Logger.h>
 
 #include <QDir>
 #include <QInputDialog>
 #include <QMessageBox>
 
-ServicePresetWidget::ServicePresetWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ServicePresetWidget),
-    m_widgetName(parent->objectName())
+ServicePresetWidget::ServicePresetWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::ServicePresetWidget)
+    , m_widgetName(parent->objectName())
 {
     ui->setupUi(this);
 }

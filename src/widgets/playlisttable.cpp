@@ -16,14 +16,14 @@
  */
 
 #include "playlisttable.h"
-#include <Logger.h>
+
+#include "Logger.h"
+
 #include <QKeyEvent>
 
 PlaylistTable::PlaylistTable(QWidget *parent)
     : QTableView(parent)
-{
-
-}
+{}
 
 void PlaylistTable::keyPressEvent(QKeyEvent *event)
 {

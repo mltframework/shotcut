@@ -19,7 +19,6 @@
 #define SLIDESHOWGENERATORDIALOG_H
 
 #include <MltPlaylist.h>
-
 #include <QDialog>
 
 class SlideshowGeneratorWidget;

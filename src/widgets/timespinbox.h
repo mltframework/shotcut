@@ -18,8 +18,8 @@
 #ifndef TIMESPINBOX_H
 #define TIMESPINBOX_H
 
-#include <QSpinBox>
 #include <QLineEdit>
+#include <QSpinBox>
 
 class QRegularExpressionValidator;
 

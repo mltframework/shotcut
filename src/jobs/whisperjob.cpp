@@ -17,18 +17,22 @@
 
 #include "whisperjob.h"
 
+#include "Logger.h"
 #include "dialogs/textviewerdialog.h"
-#include <Logger.h>
 #include "mainwindow.h"
 
 #include <QApplication>
 #include <QDir>
 #include <QFileInfo>
-#include <QTimer>
 #include <QThread>
+#include <QTimer>
 
-WhisperJob::WhisperJob(const QString &name, const QString &iWavFile, const QString &oSrtFile,
-                       const QString &lang, bool translate, int maxLength,
+WhisperJob::WhisperJob(const QString &name,
+                       const QString &iWavFile,
+                       const QString &oSrtFile,
+                       const QString &lang,
+                       bool translate,
+                       int maxLength,
                        QThread::Priority priority)
     : AbstractJob(name, priority)
     , m_iWavFile(iWavFile)
@@ -76,7 +80,7 @@ void WhisperJob::start()
 #endif
     args << "-t" << QString::number(threadCount);
 
-    LOG_DEBUG() << whisperPath  + " " + args.join(' ');
+    LOG_DEBUG() << whisperPath + " " + args.join(' ');
     AbstractJob::start(whisperPath, args);
     emit progressUpdated(m_item, 0);
 }

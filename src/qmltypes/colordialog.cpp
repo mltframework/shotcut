@@ -21,8 +21,7 @@
 
 ColorDialog::ColorDialog(QObject *parent)
     : QObject{parent}
-{
-}
+{}
 
 void ColorDialog::open()
 {
@@ -36,7 +35,8 @@ void ColorDialog::open()
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
         rgb.setAlpha(color.alpha());
-        if (newColor.alpha() == 0 && (rgb != color || (newColor == transparent && color == transparent))) {
+        if (newColor.alpha() == 0
+            && (rgb != color || (newColor == transparent && color == transparent))) {
             newColor.setAlpha(255);
         }
         setSelectedColor(newColor);

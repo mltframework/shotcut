@@ -18,8 +18,9 @@
 #ifndef ISINGWIDGET_H
 #define ISINGWIDGET_H
 
-#include <QWidget>
 #include "abstractproducerwidget.h"
+
+#include <QWidget>
 
 namespace Ui {
 class IsingWidget;

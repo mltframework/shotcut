@@ -16,12 +16,14 @@
  */
 
 #include "timespinbox.h"
+
 #include "mltcontroller.h"
 #include "settings.h"
-#include <QRegularExpressionValidator>
-#include <QKeyEvent>
+
 #include <QFontDatabase>
 #include <QGuiApplication>
+#include <QKeyEvent>
+#include <QRegularExpressionValidator>
 
 TimeSpinBox::TimeSpinBox(QWidget *parent)
     : QSpinBox(parent)
@@ -29,17 +31,16 @@ TimeSpinBox::TimeSpinBox(QWidget *parent)
     setLineEdit(new TimeSpinBoxLineEdit);
     setRange(0, INT_MAX);
     setAlignment(Qt::AlignRight);
-    m_validator = new QRegularExpressionValidator(
-        QRegularExpression("^\\s*(\\d*:){0,2}(\\d*[.;:])?\\d*\\s*$"), this);
+    m_validator = new QRegularExpressionValidator(QRegularExpression(
+                                                      "^\\s*(\\d*:){0,2}(\\d*[.;:])?\\d*\\s*$"),
+                                                  this);
     setValue(0);
     QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     font.setPointSize(QGuiApplication::font().pointSize());
     setFont(font);
     setFixedWidth(fontMetrics().boundingRect("_HHH:MM:SS;FFF_").width());
 
-    connect(&Settings, &ShotcutSettings::timeFormatChanged, this, [&]() {
-        setValue(value());
-    });
+    connect(&Settings, &ShotcutSettings::timeFormatChanged, this, [&]() { setValue(value()); });
 }
 
 QValidator::State TimeSpinBox::validate(QString &input, int &pos) const
@@ -81,12 +82,10 @@ void TimeSpinBox::keyPressEvent(QKeyEvent *event)
     }
 }
 
-
 TimeSpinBoxLineEdit::TimeSpinBoxLineEdit(QWidget *parent)
     : QLineEdit(parent)
     , m_selectOnMousePress(false)
-{
-}
+{}
 
 void TimeSpinBoxLineEdit::focusInEvent(QFocusEvent *event)
 {
@@ -111,4 +110,3 @@ void TimeSpinBoxLineEdit::mousePressEvent(QMouseEvent *event)
         m_selectOnMousePress = false;
     }
 }
-

@@ -19,30 +19,24 @@
 #define UNDOHELPER_H
 
 #include "models/multitrackmodel.h"
+
 #include <MltPlaylist.h>
-#include <QString>
-#include <QMap>
 #include <QList>
+#include <QMap>
 #include <QSet>
+#include <QString>
 
 class UndoHelper
 {
 public:
-    enum OptimizationHints {
-        NoHints,
-        SkipXML,
-        RestoreTracks
-    };
+    enum OptimizationHints { NoHints, SkipXML, RestoreTracks };
     UndoHelper(MultitrackModel &model);
 
     void recordBeforeState();
     void recordAfterState();
     void undoChanges();
     void setHints(OptimizationHints hints);
-    QSet<int> affectedTracks() const
-    {
-        return m_affectedTracks;
-    }
+    QSet<int> affectedTracks() const { return m_affectedTracks; }
 
 private:
     void debugPrintState(const QString &title);
@@ -57,7 +51,8 @@ private:
         Removed = 0x8
     };
 
-    struct Info {
+    struct Info
+    {
         int oldTrackIndex;
         int oldClipIndex;
         int newTrackIndex;

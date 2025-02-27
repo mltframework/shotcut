@@ -15,11 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "shotcut_mlt_properties.h"
 #include "countproducerwidget.h"
 #include "ui_countproducerwidget.h"
-#include "util.h"
+
 #include "mltcontroller.h"
+#include "shotcut_mlt_properties.h"
+#include "util.h"
+
 #include <MltProfile.h>
 
 void setLength(Mlt::Properties *p, int length)
@@ -29,9 +31,9 @@ void setLength(Mlt::Properties *p, int length)
     p->set("in", 0);
 }
 
-CountProducerWidget::CountProducerWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::CountProducerWidget)
+CountProducerWidget::CountProducerWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::CountProducerWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->nameLabel);
@@ -117,7 +119,8 @@ Mlt::Properties CountProducerWidget::getPreset() const
 
 void CountProducerWidget::loadPreset(Mlt::Properties &p)
 {
-    if (!p.get("direction") || !p.get("style")) return;
+    if (!p.get("direction") || !p.get("style"))
+        return;
     int index = -1;
 
     index = ui->directionCombo->findData(QVariant(QString::fromLatin1(p.get("direction"))));
@@ -219,6 +222,7 @@ void CountProducerWidget::on_preset_saveClicked()
 
 QString CountProducerWidget::detail() const
 {
-    return tr("Count: %1 %2").arg(ui->directionCombo->currentText()).arg(
-               ui->styleCombo->currentText());
+    return tr("Count: %1 %2")
+        .arg(ui->directionCombo->currentText())
+        .arg(ui->styleCombo->currentText());
 }

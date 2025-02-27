@@ -31,11 +31,13 @@ public:
     QRect visualRect(const QModelIndex &index) const Q_DECL_OVERRIDE;
     void scrollTo(const QModelIndex &index, ScrollHint hint = EnsureVisible) Q_DECL_OVERRIDE;
     QModelIndex indexAt(const QPoint &point) const Q_DECL_OVERRIDE;
-    QModelIndex moveCursor(CursorAction cursorAction, Qt::KeyboardModifiers modifiers) Q_DECL_OVERRIDE;
+    QModelIndex moveCursor(CursorAction cursorAction,
+                           Qt::KeyboardModifiers modifiers) Q_DECL_OVERRIDE;
     int horizontalOffset() const Q_DECL_OVERRIDE;
     int verticalOffset() const Q_DECL_OVERRIDE;
     bool isIndexHidden(const QModelIndex &index) const Q_DECL_OVERRIDE;
-    void setSelection(const QRect &rect, QItemSelectionModel::SelectionFlags command) Q_DECL_OVERRIDE;
+    void setSelection(const QRect &rect,
+                      QItemSelectionModel::SelectionFlags command) Q_DECL_OVERRIDE;
     QRegion visualRegionForSelection(const QItemSelection &selection) const Q_DECL_OVERRIDE;
     void currentChanged(const QModelIndex &current, const QModelIndex &previous) Q_DECL_OVERRIDE;
 
@@ -51,7 +53,8 @@ public:
 
     void rowsInserted(const QModelIndex &parent, int start, int end) Q_DECL_OVERRIDE;
     void rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end) Q_DECL_OVERRIDE;
-    void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight,
+    void dataChanged(const QModelIndex &topLeft,
+                     const QModelIndex &bottomRight,
                      const QVector<int> &roles = QVector<int>()) Q_DECL_OVERRIDE;
 
 public slots:
@@ -63,14 +66,15 @@ protected slots:
 
 private:
     int rowWidth() const;
-    QAbstractItemView::DropIndicatorPosition position(const QPoint &pos, const QRect &rect,
+    QAbstractItemView::DropIndicatorPosition position(const QPoint &pos,
+                                                      const QRect &rect,
                                                       const QModelIndex &index) const;
 
     QSize m_gridSize;
     QPoint m_draggingOverPos;
     int m_itemsPerRow;
-    bool m_isToggleSelect {false};
-    bool m_isRangeSelect {false};
+    bool m_isToggleSelect{false};
+    bool m_isRangeSelect{false};
     QModelIndex m_pendingSelect;
     int m_iconRole;
 };

@@ -19,8 +19,9 @@
 #define AUDIOPEAKMETERSCOPEWIDGET_H
 
 #include "scopewidget.h"
-#include <QMutex>
+
 #include <QImage>
+#include <QMutex>
 #include <QVector>
 
 class AudioMeterWidget;

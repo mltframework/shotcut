@@ -17,17 +17,17 @@
 
 #include "widgets/producerpreviewwidget.h"
 
-#include <Logger.h>
-#include "scrubbar.h"
+#include "Logger.h"
 #include "mltcontroller.h"
+#include "scrubbar.h"
 #include "settings.h"
 
-#include <QtConcurrent/QtConcurrent>
 #include <QHBoxLayout>
 #include <QImage>
 #include <QLabel>
 #include <QProgressBar>
 #include <QVBoxLayout>
+#include <QtConcurrent/QtConcurrent>
 
 ProducerPreviewWidget::ProducerPreviewWidget(double dar, int width)
     : QWidget()
@@ -39,7 +39,7 @@ ProducerPreviewWidget::ProducerPreviewWidget(double dar, int width)
     , m_isLooping(true)
 {
     LOG_DEBUG() << "begin";
-    int height = lrint((double)width / dar);
+    int height = lrint((double) width / dar);
     height -= height % 2;
     if (height > width) {
         height = width;
@@ -103,12 +103,12 @@ void ProducerPreviewWidget::start(const Mlt::Producer &producer)
 
 void ProducerPreviewWidget::ProducerPreviewWidget::stop(bool releaseProducer)
 {
-    if ( m_timerId ) {
+    if (m_timerId) {
         killTimer(m_timerId);
         m_timerId = 0;
     }
     m_generateFrames = false;
-    while ( m_queue.count() > 0 ) {
+    while (m_queue.count() > 0) {
         m_queue.pop();
     }
     m_future.waitForFinished();
@@ -116,7 +116,7 @@ void ProducerPreviewWidget::ProducerPreviewWidget::stop(bool releaseProducer)
         m_producer = Mlt::Producer();
         m_scrubber->setScale(0);
     }
-    while ( m_queue.count() > 0 ) {
+    while (m_queue.count() > 0) {
         m_queue.pop();
     }
     m_seekTo = 0;
@@ -157,14 +157,15 @@ void ProducerPreviewWidget::seeked(int position)
 
 void ProducerPreviewWidget::timerEvent(QTimerEvent *)
 {
-    if ( m_queue.count() > 0 ) {
+    if (m_queue.count() > 0) {
         QueueItem item = m_queue.pop();
         m_imageLabel->setPixmap(item.pixmap);
         m_scrubber->onSeek(item.position);
         m_posLabel->setText(item.positionText);
     } else if (!m_generateFrames && m_timerId) {
         stop(false);
-        m_posLabel->setText(QStringLiteral("<p><b><a href=\"restart\">%1</a></b></p>").arg(tr("Play")));
+        m_posLabel->setText(
+            QStringLiteral("<p><b><a href=\"restart\">%1</a></b></p>").arg(tr("Play")));
     }
 }
 
@@ -181,7 +182,7 @@ void ProducerPreviewWidget::generateFrame()
     if (m_seekTo != -1) {
         m_producer.seek(m_seekTo);
         m_seekTo = -1;
-        while ( m_queue.count() > 1 ) {
+        while (m_queue.count() > 1) {
             m_queue.pop();
         }
     }
@@ -192,17 +193,16 @@ void ProducerPreviewWidget::generateFrame()
     int height = m_previewSize.height();
     mlt_image_format format = mlt_image_rgb;
     std::unique_ptr<Mlt::Frame> frame(m_producer.get_frame());
-    frame->set( "rescale.interp", "bilinear" );
-    uint8_t *mltImage = frame->get_image( format, width, height, 0 );
-    QImage image( mltImage, width, height, QImage::Format_RGB888 );
-
+    frame->set("rescale.interp", "bilinear");
+    uint8_t *mltImage = frame->get_image(format, width, height, 0);
+    QImage image(mltImage, width, height, QImage::Format_RGB888);
 
     // Send the image and status in the queue
     QueueItem item;
     item.pixmap.convertFromImage(image);
     item.position = position;
-    item.positionText = QString::fromLatin1(m_producer.frame_time()) + QStringLiteral(" / ") +
-                        QString::fromLatin1(m_producer.get_length_time());
+    item.positionText = QString::fromLatin1(m_producer.frame_time()) + QStringLiteral(" / ")
+                        + QString::fromLatin1(m_producer.get_length_time());
     m_queue.push(item);
 
     // Seek to the next frame (every other frame with repeat)

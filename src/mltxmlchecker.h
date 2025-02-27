@@ -18,67 +18,36 @@
 #ifndef MLTXMLCHECKER_H
 #define MLTXMLCHECKER_H
 
+#include <QFileInfo>
+#include <QPair>
+#include <QStandardItemModel>
+#include <QString>
+#include <QTemporaryFile>
+#include <QVector>
+#include <QVersionNumber>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-#include <QTemporaryFile>
-#include <QString>
-#include <QFileInfo>
-#include <QStandardItemModel>
-#include <QVector>
-#include <QPair>
-#include <QVersionNumber>
 
 class QUIDevice;
 
 class MltXmlChecker
 {
 public:
+    enum { ShotcutHashRole = Qt::UserRole + 1 };
 
-    enum {
-        ShotcutHashRole = Qt::UserRole + 1
-    };
-
-    enum {
-        MissingColumn = 0,
-        ReplacementColumn,
-        ColumnCount
-    };
+    enum { MissingColumn = 0, ReplacementColumn, ColumnCount };
 
     MltXmlChecker();
     QXmlStreamReader::Error check(const QString &fileName);
     QString errorString() const;
-    bool needsGPU() const
-    {
-        return m_needsGPU;
-    }
-    bool needsCPU() const
-    {
-        return m_needsCPU;
-    }
-    bool hasEffects() const
-    {
-        return m_hasEffects;
-    }
-    bool isCorrected() const
-    {
-        return m_isCorrected;
-    }
-    bool isUpdated() const
-    {
-        return m_isUpdated;
-    }
-    QTemporaryFile &tempFile() const
-    {
-        return *m_tempFile;
-    }
-    QStandardItemModel &unlinkedFilesModel()
-    {
-        return m_unlinkedFilesModel;
-    }
-    QString shotcutVersion() const
-    {
-        return m_shotcutVersion;
-    }
+    bool needsGPU() const { return m_needsGPU; }
+    bool needsCPU() const { return m_needsCPU; }
+    bool hasEffects() const { return m_hasEffects; }
+    bool isCorrected() const { return m_isCorrected; }
+    bool isUpdated() const { return m_isUpdated; }
+    QTemporaryFile &tempFile() const { return *m_tempFile; }
+    QStandardItemModel &unlinkedFilesModel() { return m_unlinkedFilesModel; }
+    QString shotcutVersion() const { return m_shotcutVersion; }
 
 private:
     typedef QPair<QString, QString> MltProperty;
@@ -116,7 +85,8 @@ private:
     QStandardItemModel m_unlinkedFilesModel;
     QString mlt_class;
     QVector<MltProperty> m_properties;
-    struct MltXmlResource {
+    struct MltXmlResource
+    {
         QFileInfo info;
         QString hash;
         QString newHash;

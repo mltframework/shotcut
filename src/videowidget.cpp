@@ -15,19 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtWidgets>
-#include <QUrl>
+#include "videowidget.h"
+
+#include "Logger.h"
+#include "mainwindow.h"
+#include "qmltypes/qmlfilter.h"
+#include "qmltypes/qmlutilities.h"
+#include "settings.h"
+
+#include <Mlt.h>
 #include <QOffscreenSurface>
 #include <QOpenGLContext>
-#include <QtQml>
 #include <QQuickItem>
-#include <Mlt.h>
-#include <Logger.h>
-#include "videowidget.h"
-#include "settings.h"
-#include "qmltypes/qmlutilities.h"
-#include "qmltypes/qmlfilter.h"
-#include "mainwindow.h"
+#include <QUrl>
+#include <QtQml>
+#include <QtWidgets>
 
 using namespace Mlt;
 
@@ -62,7 +64,10 @@ VideoWidget::VideoWidget(QObject *parent)
         m_glslManager.reset();
     }
 
-    connect(quickWindow(), &QQuickWindow::visibilityChanged, this, &VideoWidget::setBlankScene,
+    connect(quickWindow(),
+            &QQuickWindow::visibilityChanged,
+            this,
+            &VideoWidget::setBlankScene,
             Qt::QueuedConnection);
     connect(&m_refreshTimer, &QTimer::timeout, this, &VideoWidget::onRefreshTimeout);
     connect(this, &VideoWidget::rectChanged, this, &VideoWidget::zoomChanged);
@@ -85,19 +90,23 @@ void VideoWidget::initialize()
 {
     LOG_DEBUG() << "begin";
     m_frameRenderer = new FrameRenderer();
-    connect(m_frameRenderer, &FrameRenderer::frameDisplayed, this,
-            &VideoWidget::onFrameDisplayed, Qt::QueuedConnection);
-    connect(m_frameRenderer, &FrameRenderer::frameDisplayed, this,
-            &VideoWidget::frameDisplayed, Qt::QueuedConnection);
+    connect(m_frameRenderer,
+            &FrameRenderer::frameDisplayed,
+            this,
+            &VideoWidget::onFrameDisplayed,
+            Qt::QueuedConnection);
+    connect(m_frameRenderer,
+            &FrameRenderer::frameDisplayed,
+            this,
+            &VideoWidget::frameDisplayed,
+            Qt::QueuedConnection);
     connect(m_frameRenderer, SIGNAL(imageReady()), SIGNAL(imageReady()));
     m_initSem.release();
     m_isInitialized = true;
     LOG_DEBUG() << "end";
 }
 
-void VideoWidget::renderVideo()
-{
-}
+void VideoWidget::renderVideo() {}
 
 void VideoWidget::setBlankScene()
 {
@@ -147,7 +156,8 @@ void VideoWidget::onRefreshTimeout()
 void VideoWidget::mousePressEvent(QMouseEvent *event)
 {
     QQuickWidget::mousePressEvent(event);
-    if (event->isAccepted()) return;
+    if (event->isAccepted())
+        return;
     if (event->button() == Qt::LeftButton)
         m_dragStart = event->pos();
     else if (event->button() == Qt::MiddleButton)
@@ -159,7 +169,8 @@ void VideoWidget::mousePressEvent(QMouseEvent *event)
 void VideoWidget::mouseMoveEvent(QMouseEvent *event)
 {
     QQuickWidget::mouseMoveEvent(event);
-    if (event->isAccepted()) return;
+    if (event->isAccepted())
+        return;
     if (event->buttons() & Qt::MiddleButton) {
         emit offsetChanged(m_offset + m_mousePosition - event->pos());
         m_mousePosition = event->pos();
@@ -195,7 +206,8 @@ void VideoWidget::mouseMoveEvent(QMouseEvent *event)
     mimeData->setText(QString::number(MLT.producer()->get_playtime()));
     if (m_frameRenderer && m_frameRenderer->getDisplayFrame().is_valid()) {
         Mlt::Frame displayFrame(m_frameRenderer->getDisplayFrame().clone(false, true));
-        QImage displayImage = MLT.image(&displayFrame, 45 * MLT.profile().dar(), 45).scaledToHeight(45);
+        QImage displayImage
+            = MLT.image(&displayFrame, 45 * MLT.profile().dar(), 45).scaledToHeight(45);
         drag->setPixmap(QPixmap::fromImage(displayImage));
     }
     drag->setHotSpot(QPoint(0, 0));
@@ -205,7 +217,8 @@ void VideoWidget::mouseMoveEvent(QMouseEvent *event)
 void VideoWidget::keyPressEvent(QKeyEvent *event)
 {
     QQuickWidget::keyPressEvent(event);
-    if (event->isAccepted()) return;
+    if (event->isAccepted())
+        return;
     MAIN.keyPressEvent(event);
 }
 
@@ -256,7 +269,9 @@ static void onThreadCreate(mlt_properties owner, VideoWidget *self, mlt_event_da
     Q_UNUSED(owner)
     auto threadData = (mlt_event_data_thread *) Mlt::EventData(data).to_object();
     if (threadData) {
-        self->createThread((RenderThread **) threadData->thread, threadData->function, threadData->data);
+        self->createThread((RenderThread **) threadData->thread,
+                           threadData->function,
+                           threadData->data);
     }
 }
 
@@ -301,7 +316,7 @@ void VideoWidget::stopGlsl()
     //Technically, this should be the correct thing to do, but it appears
     //some changes in the 15.01 and 15.03 releases have created regression
     //with respect to restarting the consumer in GPU mode.
-//    m_glslManager->fire_event("close glsl");
+    //    m_glslManager->fire_event("close glsl");
 }
 
 static void onThreadStopped(mlt_properties owner, VideoWidget *self)
@@ -328,7 +343,8 @@ int VideoWidget::reconfigure(bool isMulti)
         if (isMulti)
             m_consumer.reset(new Mlt::FilteredConsumer(previewProfile(), "multi"));
         else
-            m_consumer.reset(new Mlt::FilteredConsumer(previewProfile(), serviceName.toLatin1().constData()));
+            m_consumer.reset(
+                new Mlt::FilteredConsumer(previewProfile(), serviceName.toLatin1().constData()));
 
         m_threadStartEvent.reset();
         m_threadStopEvent.reset();
@@ -341,7 +357,8 @@ int VideoWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
-        m_consumer->set("mlt_image_format", serviceName.startsWith("decklink") ? "yuv422p" : "yuv420p");
+        m_consumer->set("mlt_image_format",
+                        serviceName.startsWith("decklink") ? "yuv422p" : "yuv420p");
         m_consumer->set("channels", property("audio_channels").toInt());
         if (property("audio_channels").toInt() == 4) {
             m_consumer->set("channel_layout", "quad");
@@ -392,16 +409,19 @@ int VideoWidget::reconfigure(bool isMulti)
         }
         if (m_glslManager) {
             if (!m_threadCreateEvent)
-                m_threadCreateEvent.reset(m_consumer->listen("consumer-thread-create", this,
+                m_threadCreateEvent.reset(m_consumer->listen("consumer-thread-create",
+                                                             this,
                                                              (mlt_listener) onThreadCreate));
             if (!m_threadJoinEvent)
-                m_threadJoinEvent.reset(m_consumer->listen("consumer-thread-join", this,
-                                                           (mlt_listener) onThreadJoin));
+                m_threadJoinEvent.reset(
+                    m_consumer->listen("consumer-thread-join", this, (mlt_listener) onThreadJoin));
             if (!m_threadStartEvent)
-                m_threadStartEvent.reset(m_consumer->listen("consumer-thread-started", this,
+                m_threadStartEvent.reset(m_consumer->listen("consumer-thread-started",
+                                                            this,
                                                             (mlt_listener) onThreadStarted));
             if (!m_threadStopEvent)
-                m_threadStopEvent.reset(m_consumer->listen("consumer-thread-stopped", this,
+                m_threadStopEvent.reset(m_consumer->listen("consumer-thread-stopped",
+                                                           this,
                                                            (mlt_listener) onThreadStopped));
         } else {
             emit started();
@@ -427,7 +447,7 @@ QPoint VideoWidget::offset() const
     if (m_zoom == 0.0) {
         return QPoint(0, 0);
     } else {
-        return QPoint(m_offset.x() - (MLT.profile().width()  * m_zoom -  width()) / 2,
+        return QPoint(m_offset.x() - (MLT.profile().width() * m_zoom - width()) / 2,
                       m_offset.y() - (MLT.profile().height() * m_zoom - height()) / 2);
     }
 }
@@ -514,7 +534,7 @@ void VideoWidget::setOffsetY(int y)
 void VideoWidget::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta)
 {
     if (meta && meta->type() == QmlMetadata::Filter
-            && QFile::exists(meta->vuiFilePath().toLocalFile())) {
+        && QFile::exists(meta->vuiFilePath().toLocalFile())) {
         filter->producer().set(kShotcutVuiMetaProperty, 1);
         rootContext()->setContextProperty("filter", filter);
         setSource(meta->vuiFilePath());
@@ -536,8 +556,11 @@ void VideoWidget::on_frame_show(mlt_consumer, VideoWidget *widget, mlt_event_dat
     auto frame = Mlt::EventData(data).to_frame();
     if (frame.is_valid() && frame.get_int("rendered")) {
         int timeout = (widget->consumer()->get_int("real_time") > 0) ? 0 : 1000;
-        if (widget->m_frameRenderer && widget->m_frameRenderer->semaphore()->tryAcquire(1, timeout)) {
-            QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection,
+        if (widget->m_frameRenderer
+            && widget->m_frameRenderer->semaphore()->tryAcquire(1, timeout)) {
+            QMetaObject::invokeMethod(widget->m_frameRenderer,
+                                      "showFrame",
+                                      Qt::QueuedConnection,
                                       Q_ARG(Mlt::Frame, frame));
         } else if (!Settings.playerRealtime()) {
             LOG_WARNING() << "VideoWidget dropped frame" << frame.get_position();
@@ -550,7 +573,7 @@ RenderThread::RenderThread(thread_function_t function, void *data)
     , m_function{function}
     , m_data{data}
     , m_context{new QOpenGLContext}
-, m_surface{new QOffscreenSurface}
+    , m_surface{new QOffscreenSurface}
 {
     QSurfaceFormat format;
     format.setProfile(QSurfaceFormat::CoreProfile);
@@ -588,9 +611,7 @@ FrameRenderer::FrameRenderer()
     start();
 }
 
-FrameRenderer::~FrameRenderer()
-{
-}
+FrameRenderer::~FrameRenderer() {}
 
 void FrameRenderer::showFrame(Mlt::Frame frame)
 {

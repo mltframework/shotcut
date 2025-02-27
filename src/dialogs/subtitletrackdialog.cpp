@@ -17,19 +17,18 @@
 
 #include "subtitletrackdialog.h"
 
-#include <QDebug>
-
 #include <QComboBox>
+#include <QDialogButtonBox>
+#include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QList>
 #include <QLocale>
-#include <QDialogButtonBox>
-#include <QGridLayout>
 
 static void fillLanguages(QComboBox *combo)
 {
-    QList<QLocale> allLocales = QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript,
+    QList<QLocale> allLocales = QLocale::matchingLocales(QLocale::AnyLanguage,
+                                                         QLocale::AnyScript,
                                                          QLocale::AnyTerritory);
     QMap<QString, QString> iso639_2LanguageCodes;
     for (const QLocale &locale : allLocales) {
@@ -43,7 +42,7 @@ static void fillLanguages(QComboBox *combo)
         }
     }
     for (auto it = iso639_2LanguageCodes.keyValueBegin(); it != iso639_2LanguageCodes.keyValueEnd();
-            ++it) {
+         ++it) {
         QString text = QStringLiteral("%1 (%2)").arg(it->first).arg(it->second);
         combo->addItem(text, it->second);
     }

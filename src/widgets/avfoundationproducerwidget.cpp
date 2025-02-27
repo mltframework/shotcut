@@ -17,22 +17,24 @@
 
 #include "avfoundationproducerwidget.h"
 #include "ui_avfoundationproducerwidget.h"
+
+#include "Logger.h"
 #include "mltcontroller.h"
-#include "util.h"
 #include "settings.h"
-#include <QMediaDevices>
-#include <QCameraDevice>
-#include <QCamera>
-#include <QString>
-#include <QAudioDevice>
 #include "shotcut_mlt_properties.h"
-#include <Logger.h>
+#include "util.h"
+
+#include <QAudioDevice>
+#include <QCamera>
+#include <QCameraDevice>
+#include <QMediaDevices>
+#include <QString>
 
 #define ENABLE_SCREEN_CAPTURE (0)
 
-AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::AvfoundationProducerWidget)
+AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::AvfoundationProducerWidget)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label);
@@ -73,27 +75,31 @@ Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile &profile)
 {
     QString resource;
     qreal frameRate = 30.0;
-    QSize size {1280, 720};
+    QSize size{1280, 720};
     Util::cameraFrameRateSize(ui->videoCombo->currentData().toByteArray(), frameRate, size);
     if (ui->videoCombo->currentIndex()) {
-        resource = QStringLiteral("avfoundation:%1:%2?pixel_format=yuyv422&framerate=%3&video_size=%4x%5")
-                   .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
-                   .arg(ui->audioCombo->currentText().replace(tr("None"), "none"))
-                   .arg(frameRate).arg(size.width()).arg(size.height());
+        resource = QStringLiteral(
+                       "avfoundation:%1:%2?pixel_format=yuyv422&framerate=%3&video_size=%4x%5")
+                       .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
+                       .arg(ui->audioCombo->currentText().replace(tr("None"), "none"))
+                       .arg(frameRate)
+                       .arg(size.width())
+                       .arg(size.height());
     } else {
-        resource = QStringLiteral("avfoundation:none:%1").arg(ui->audioCombo->currentText().replace(
-                                                                  tr("None"),
-                                                                  "none"));
+        resource = QStringLiteral("avfoundation:none:%1")
+                       .arg(ui->audioCombo->currentText().replace(tr("None"), "none"));
     }
     LOG_DEBUG() << resource;
     Mlt::Producer *p = new Mlt::Producer(profile, resource.toUtf8().constData());
     if (!p || !p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
-        p->set("resource", QStringLiteral("avfoundation:%1:%2")
-               .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
-               .arg(ui->audioCombo->currentText())
-               .toUtf8().constData());
+        p->set("resource",
+               QStringLiteral("avfoundation:%1:%2")
+                   .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
+                   .arg(ui->audioCombo->currentText())
+                   .toUtf8()
+                   .constData());
         p->set("error", 1);
     }
     p->set("force_seekable", 0);

@@ -16,19 +16,16 @@
  */
 
 #include "alignclipsmodel.h"
-#include "settings.h"
 
-#include <Logger.h>
+#include "Logger.h"
 #include "mltcontroller.h"
+#include "settings.h"
 
 AlignClipsModel::AlignClipsModel(QObject *parent)
     : QAbstractItemModel(parent)
-{
-}
+{}
 
-AlignClipsModel::~AlignClipsModel()
-{
-}
+AlignClipsModel::~AlignClipsModel() {}
 
 void AlignClipsModel::clear()
 {
@@ -54,7 +51,7 @@ void AlignClipsModel::updateProgress(int row, int percent)
 {
     QModelIndex modelIndex = index(row, COLUMN_NAME);
     if (!modelIndex.isValid() || modelIndex.column() < 0 || modelIndex.column() >= COLUMN_COUNT
-            || modelIndex.row() < 0 || modelIndex.row() >= m_clips.size()) {
+        || modelIndex.row() < 0 || modelIndex.row() >= m_clips.size()) {
         LOG_ERROR() << "Invalid Index: " << modelIndex.row() << modelIndex.column();
         return;
     }
@@ -133,7 +130,7 @@ QVariant AlignClipsModel::data(const QModelIndex &index, int role) const
     }
 
     if (!index.isValid() || index.column() < 0 || index.column() >= COLUMN_COUNT || index.row() < 0
-            || index.row() >= m_clips.size()) {
+        || index.row() >= m_clips.size()) {
         LOG_ERROR() << "Invalid Index: " << index.row() << index.column() << role;
         return result;
     }
@@ -150,11 +147,13 @@ QVariant AlignClipsModel::data(const QModelIndex &index, int role) const
             break;
         case COLUMN_OFFSET:
             if (clip.progress != 0 && clip.offset != INVALID_OFFSET && MLT.producer()
-                    && MLT.producer()->is_valid()) {
+                && MLT.producer()->is_valid()) {
                 if (clip.offset >= 0) {
-                    result = QString::fromLatin1(MLT.producer()->frames_to_time(clip.offset, Settings.timeFormat()));
+                    result = QString::fromLatin1(
+                        MLT.producer()->frames_to_time(clip.offset, Settings.timeFormat()));
                 } else {
-                    result = QStringLiteral("-") + MLT.producer()->frames_to_time(-clip.offset, Settings.timeFormat());
+                    result = QStringLiteral("-")
+                             + MLT.producer()->frames_to_time(-clip.offset, Settings.timeFormat());
                 }
             }
             break;
@@ -163,7 +162,8 @@ QVariant AlignClipsModel::data(const QModelIndex &index, int role) const
                 result = QLocale().toString(clip.speed * 100.0, 'g', 4);
             break;
         default:
-            LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role] << role;
+            LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role]
+                        << role;
             break;
         }
         break;
@@ -180,7 +180,8 @@ QVariant AlignClipsModel::data(const QModelIndex &index, int role) const
             result = Qt::AlignCenter;
             break;
         default:
-            LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role] << role;
+            LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role]
+                        << role;
             break;
         }
         break;
@@ -215,7 +216,7 @@ QModelIndex AlignClipsModel::index(int row, int column, const QModelIndex &paren
     Q_UNUSED(parent)
     if (column < 0 || column >= COLUMN_COUNT || row < 0 || row >= m_clips.size())
         return QModelIndex();
-    return createIndex(row, column, (int)0);
+    return createIndex(row, column, (int) 0);
 }
 
 QModelIndex AlignClipsModel::parent(const QModelIndex &index) const

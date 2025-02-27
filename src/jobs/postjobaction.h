@@ -46,7 +46,9 @@ protected:
 class OpenPostJobAction : public FilePropertiesPostJobAction
 {
 public:
-    OpenPostJobAction(const QString &srcFile, const QString &dstFile, const QString &fileNameToRemove)
+    OpenPostJobAction(const QString &srcFile,
+                      const QString &dstFile,
+                      const QString &fileNameToRemove)
         : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_fileNameToRemove(fileNameToRemove)
     {}
@@ -59,8 +61,11 @@ private:
 class ReplaceOnePostJobAction : public FilePropertiesPostJobAction
 {
 public:
-    ReplaceOnePostJobAction(const QString &srcFile, const QString &dstFile,
-                            const QString &fileNameToRemove, const QUuid &srcUuid, int in)
+    ReplaceOnePostJobAction(const QString &srcFile,
+                            const QString &dstFile,
+                            const QString &fileNameToRemove,
+                            const QUuid &srcUuid,
+                            int in)
         : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_fileNameToRemove(fileNameToRemove)
         , m_uuid(srcUuid)
@@ -122,8 +127,11 @@ class SubtitlesDock;
 class ImportSrtPostJobAction : public PostJobAction
 {
 public:
-    ImportSrtPostJobAction(const QString &srtFile, const QString &trackName, const QString &lang,
-                           bool includeNonspoken, SubtitlesDock *dock)
+    ImportSrtPostJobAction(const QString &srtFile,
+                           const QString &trackName,
+                           const QString &lang,
+                           bool includeNonspoken,
+                           SubtitlesDock *dock)
         : m_srtFile(srtFile)
         , m_trackName(trackName)
         , m_lang(lang)

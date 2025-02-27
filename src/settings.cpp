@@ -17,17 +17,17 @@
 
 #include "settings.h"
 
+#include "Logger.h"
 #include "qmltypes/qmlapplication.h"
 
 #include <QApplication>
-#include <QColor>
-#include <QLocale>
-#include <QStandardPaths>
-#include <QFile>
-#include <QDir>
-#include <QMediaDevices>
 #include <QAudioDevice>
-#include <Logger.h>
+#include <QColor>
+#include <QDir>
+#include <QFile>
+#include <QLocale>
+#include <QMediaDevices>
+#include <QStandardPaths>
 #include <qdesktopservices.h>
 
 static const QString APP_DATA_DIR_KEY("appdatadir");
@@ -45,8 +45,10 @@ ShotcutSettings &ShotcutSettings::singleton()
         if (appDataForSession.isEmpty()) {
             instance.reset(new ShotcutSettings);
             if (instance->settings.value(APP_DATA_DIR_KEY).isValid()
-                    && QFile::exists(instance->settings.value(APP_DATA_DIR_KEY).toString() + SHOTCUT_INI_FILENAME) )
-                instance.reset(new ShotcutSettings(instance->settings.value(APP_DATA_DIR_KEY).toString()));
+                && QFile::exists(instance->settings.value(APP_DATA_DIR_KEY).toString()
+                                 + SHOTCUT_INI_FILENAME))
+                instance.reset(
+                    new ShotcutSettings(instance->settings.value(APP_DATA_DIR_KEY).toString()));
         } else {
             instance.reset(new ShotcutSettings(appDataForSession));
         }
@@ -88,7 +90,7 @@ void ShotcutSettings::migrateRecent()
         }
         setRecent(newRecents);
         m_recent.sync();
-//        settings.remove("recent");
+        //        settings.remove("recent");
         settings.sync();
     }
 }
@@ -117,7 +119,7 @@ void ShotcutSettings::log()
     LOG_INFO() << "audio channels" << playerAudioChannels();
 #if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
     if (::qEnvironmentVariableIsSet("SDL_AUDIODRIVER")) {
-        LOG_INFO() << "audio driver" <<::qgetenv("SDL_AUDIODRIVER");
+        LOG_INFO() << "audio driver" << ::qgetenv("SDL_AUDIODRIVER");
     } else {
         LOG_INFO() << "audio driver" << playerAudioDriver();
     }
@@ -149,8 +151,9 @@ void ShotcutSettings::setImageDuration(double d)
 
 QString ShotcutSettings::openPath() const
 {
-    return settings.value("openPath",
-                          QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();
+    return settings
+        .value("openPath", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation))
+        .toString();
 }
 
 void ShotcutSettings::setOpenPath(const QString &s)
@@ -161,8 +164,9 @@ void ShotcutSettings::setOpenPath(const QString &s)
 
 QString ShotcutSettings::savePath() const
 {
-    return settings.value("savePath",
-                          QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)).toString();
+    return settings
+        .value("savePath", QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation))
+        .toString();
 }
 
 void ShotcutSettings::setSavePath(const QString &s)
@@ -446,8 +450,9 @@ void ShotcutSettings::setExportFrameSuffix(const QString &exportFrameSuffix)
 
 QString ShotcutSettings::encodePath() const
 {
-    return settings.value("encode/path",
-                          QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();
+    return settings
+        .value("encode/path", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation))
+        .toString();
 }
 
 void ShotcutSettings::setEncodePath(const QString &s)
@@ -918,11 +923,11 @@ void ShotcutSettings::setTimelineScrolling(ShotcutSettings::TimelineScrolling va
 ShotcutSettings::TimelineScrolling ShotcutSettings::timelineScrolling() const
 {
     if (settings.contains("timeline/centerPlayhead")
-            && settings.value("timeline/centerPlayhead").toBool())
+        && settings.value("timeline/centerPlayhead").toBool())
         return ShotcutSettings::TimelineScrolling::CenterPlayhead;
     else
-        return ShotcutSettings::TimelineScrolling(settings.value("timeline/scrolling",
-                                                                 PageScrolling).toInt());
+        return ShotcutSettings::TimelineScrolling(
+            settings.value("timeline/scrolling", PageScrolling).toInt());
 }
 
 bool ShotcutSettings::timelineAutoAddTracks() const
@@ -979,7 +984,6 @@ void ShotcutSettings::setAudioOutDuration(double d)
     settings.setValue("filter/audioOutDuration", d);
     emit audioOutDurationChanged();
 }
-
 
 double ShotcutSettings::videoInDuration() const
 {
@@ -1079,7 +1083,7 @@ int ShotcutSettings::getMarkerSortColumn()
 
 Qt::SortOrder ShotcutSettings::getMarkerSortOrder()
 {
-    return (Qt::SortOrder)settings.value("markers/sortOrder", Qt::AscendingOrder).toInt();
+    return (Qt::SortOrder) settings.value("markers/sortOrder", Qt::AscendingOrder).toInt();
 }
 
 int ShotcutSettings::drawMethod() const
@@ -1187,7 +1191,8 @@ QStringList ShotcutSettings::layouts() const
     return result;
 }
 
-bool ShotcutSettings::setLayout(const QString &name, const QByteArray &geometry,
+bool ShotcutSettings::setLayout(const QString &name,
+                                const QByteArray &geometry,
                                 const QByteArray &state)
 {
     bool isNew = false;
@@ -1253,8 +1258,9 @@ void ShotcutSettings::setClearRecent(bool b)
 
 QString ShotcutSettings::projectsFolder() const
 {
-    return settings.value("projectsFolder",
-                          QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();
+    return settings
+        .value("projectsFolder", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation))
+        .toString();
 }
 
 void ShotcutSettings::setProjectsFolder(const QString &path)
@@ -1264,7 +1270,7 @@ void ShotcutSettings::setProjectsFolder(const QString &path)
 
 QString ShotcutSettings::audioInput() const
 {
-    QString defaultValue  = "default";
+    QString defaultValue = "default";
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
     for (const auto &deviceInfo : QMediaDevices::audioInputs()) {
         defaultValue = deviceInfo.description();
@@ -1511,8 +1517,8 @@ QString ShotcutSettings::whisperModel()
 {
     QDir dataPath = QmlApplication::dataDir();
     dataPath.cd("shotcut/whisper_models");
-    return settings.value("subtitles/whisperModel",
-                          dataPath.absoluteFilePath("ggml-base-q5_1.bin")).toString();
+    return settings.value("subtitles/whisperModel", dataPath.absoluteFilePath("ggml-base-q5_1.bin"))
+        .toString();
 }
 
 void ShotcutSettings::setNotesZoom(int zoom)
@@ -1554,7 +1560,7 @@ void ShotcutSettings::setBackupPeriod(int minutes)
 
 mlt_time_format ShotcutSettings::timeFormat() const
 {
-    return (mlt_time_format)settings.value("timeFormat", mlt_time_smpte_df).toInt();
+    return (mlt_time_format) settings.value("timeFormat", mlt_time_smpte_df).toInt();
 }
 
 void ShotcutSettings::setTimeFormat(int format)

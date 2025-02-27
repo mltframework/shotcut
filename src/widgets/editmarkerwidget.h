@@ -31,8 +31,8 @@ class EditMarkerWidget : public QWidget
 
 public:
     EditMarkerWidget(QWidget *parent);
-    EditMarkerWidget(QWidget *parent, const QString &text, const QColor &color, int start, int end,
-                     int maxEnd);
+    EditMarkerWidget(
+        QWidget *parent, const QString &text, const QColor &color, int start, int end, int maxEnd);
     virtual ~EditMarkerWidget();
     QString getText();
     QColor getColor();

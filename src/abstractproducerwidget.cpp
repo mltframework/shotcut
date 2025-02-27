@@ -16,15 +16,12 @@
  */
 
 #include "abstractproducerwidget.h"
+
 #include <QWidget>
 
-AbstractProducerWidget::AbstractProducerWidget()
-{
-}
+AbstractProducerWidget::AbstractProducerWidget() {}
 
-AbstractProducerWidget::~AbstractProducerWidget()
-{
-}
+AbstractProducerWidget::~AbstractProducerWidget() {}
 
 void AbstractProducerWidget::setProducer(Mlt::Producer *producer)
 {
@@ -39,10 +36,9 @@ void AbstractProducerWidget::setProducer(Mlt::Producer *producer)
 bool AbstractProducerWidget::isDevice(const QWidget *widget)
 {
     auto name = widget->objectName();
-    return "AlsaWidget" == name || "alsaWidget" == name
-           || "AvfoundationProducerWidget" == name || "avfoundationWidget" == name
-           || "DecklinkProducerWidget" == name || "decklinkWidget" == name
-           || "DirectShowVideoWidget" == name || "dshowVideoWidget" == name
-           || "PulseAudioWidget" == name || "pulseWidget" == name
+    return "AlsaWidget" == name || "alsaWidget" == name || "AvfoundationProducerWidget" == name
+           || "avfoundationWidget" == name || "DecklinkProducerWidget" == name
+           || "decklinkWidget" == name || "DirectShowVideoWidget" == name
+           || "dshowVideoWidget" == name || "PulseAudioWidget" == name || "pulseWidget" == name
            || "Video4LinuxWidget" == name || "v4lWidget" == name;
 }
