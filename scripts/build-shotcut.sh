@@ -712,6 +712,10 @@ function set_globals {
   if test 0 = "$SVTAV1_HEAD" -a "$SVTAV1_REVISION" ; then
     REVISIONS[29]="$SVTAV1_REVISION"
   fi
+  REVISIONS[30]=""
+  if test 0 = "$WHISPERCPP_HEAD" -a "$WHISPERCPP_REVISION" ; then
+    REVISIONS[30]="$WHISPERCPP_REVISION"
+  fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then

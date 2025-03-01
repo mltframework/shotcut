@@ -505,6 +505,9 @@ function set_globals {
     REVISIONS[8]="$BIGSH0T_REVISION"
   fi
   REVISIONS[9]=""
+  if test 0 = "$WHISPERCPP_HEAD" -a "$WHISPERCPP_REVISION" ; then
+    REVISIONS[9]="$WHISPERCPP_REVISION"
+  fi
   REVISIONS[10]=""
   if test 0 = "$DAV1D_HEAD" -a "$DAV1D_REVISION" ; then
     REVISIONS[10]="$DAV1D_REVISION"
