@@ -1656,7 +1656,7 @@ void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
             Mlt::Producer *p = new Mlt::Producer(i->producer);
             p->set_in_and_out(i->frame_in, i->frame_out);
             setPlaylistIndex(p, sourceIndex.row());
-            setIndex(sourceIndex.row());
+            setIndex(index.row());
             emit clipOpened(p, Settings.playlistAutoplay());
         }
         delete i;
