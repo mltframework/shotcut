@@ -210,6 +210,15 @@ public:
             return false;
         });
 
+        // Not in a Bin
+        m_functors.push_back([this](int row, const QModelIndex &index) {
+            auto clip = MAIN.playlist()->get_clip(row);
+            if (clip && clip->is_valid()) {
+                return QString::fromUtf8(clip->parent().get(kShotcutBinsProperty)).isEmpty();
+            }
+            return false;
+        });
+
         // Not In Timeline
         m_functors.push_back([this](int row, const QModelIndex &index) {
             // m_hashes contains the unique hashes in the timeline
@@ -281,7 +290,7 @@ public:
 
     static QString smartBinName(int index)
     {
-        QString names[] = {tr("All"), tr("Duplicates"), tr("Not In Timeline")};
+        QString names[] = {tr("All"), tr("Duplicates"), tr("Not In a Bin"), tr("Not In Timeline")};
         return names[index];
     }
 

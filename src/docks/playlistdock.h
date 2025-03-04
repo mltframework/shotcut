@@ -62,6 +62,7 @@ public:
         SmartBinNone = -1,
         SmartBinAll,
         SmartBinDuplicates,
+        SmartBinNotInBin,
         SmartBinNotInTimeline,
         SmartBinCount
     };
