@@ -136,6 +136,22 @@ private:
     bool m_disabled;
 };
 
+class PasteCommand : public QUndoCommand
+{
+public:
+    PasteCommand(AttachedFiltersModel &model,
+                 const QString &filterProducerXml,
+                 QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+
+private:
+    AttachedFiltersModel &m_model;
+    QString m_xml;
+    QString m_beforeXml;
+    QUuid m_producerUuid;
+};
+
 class UndoParameterCommand : public QUndoCommand
 {
 public:

@@ -54,7 +54,6 @@ public:
     Q_INVOKABLE static void copyAllFilters();
     Q_INVOKABLE static void copyEnabledFilters();
     Q_INVOKABLE static void copyCurrentFilter();
-    Q_INVOKABLE static void pasteFilters();
     Q_INVOKABLE static QString clockFromFrames(int frames);
     Q_INVOKABLE static QString timeFromFrames(int frames);
     Q_INVOKABLE static int audioChannels();

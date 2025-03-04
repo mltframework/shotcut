@@ -264,7 +264,7 @@ void FiltersDock::setupActions()
     icon = QIcon::fromTheme("edit-paste", QIcon(":/icons/oxygen/32x32/actions/edit-paste.png"));
     action->setIcon(icon);
     connect(action, &QAction::triggered, this, [=]() {
-        QmlApplication::singleton().pasteFilters();
+        MAIN.filterController()->attachedModel()->pasteFilters();
     });
     addAction(action);
     Actions.add("filtersPasteFiltersAction", action, windowTitle());

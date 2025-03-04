@@ -3480,6 +3480,7 @@ void MainWindow::onProducerModified()
 {
     setWindowModified(true);
     sourceUpdated();
+    MLT.refreshConsumer();
 }
 
 void MainWindow::onFilterModelChanged()

@@ -140,29 +140,6 @@ void QmlApplication::copyCurrentFilter()
     emit QmlApplication::singleton().filtersCopied();
 }
 
-void QmlApplication::pasteFilters()
-{
-    QScopedPointer<Mlt::Producer> producer(
-        new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
-    if (confirmOutputFilter()) {
-        QString s = QGuiApplication::clipboard()->text();
-        if (MLT.isMltXml(s)) {
-            Mlt::Profile profile(kDefaultMltProfile);
-            Mlt::Producer filtersProducer(profile, "xml-string", s.toUtf8().constData());
-            if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0
-                && filtersProducer.get_int(kShotcutFiltersClipboard)) {
-                MLT.pasteFilters(producer.get(), &filtersProducer);
-            } else {
-                MLT.pasteFilters(producer.data());
-            }
-        } else {
-            MLT.pasteFilters(producer.data());
-        }
-        emit QmlApplication::singleton().filtersPasted(
-            MAIN.filterController()->attachedModel()->producer());
-    }
-}
-
 QString QmlApplication::clockFromFrames(int frames)
 {
     if (MLT.producer()) {

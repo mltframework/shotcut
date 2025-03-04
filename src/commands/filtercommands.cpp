@@ -21,6 +21,7 @@
 #include "controllers/filtercontroller.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
+#include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlmetadata.h"
 
 class FindProducerParser : public Mlt::Parser
@@ -289,6 +290,55 @@ bool DisableCommand::mergeWith(const QUndoCommand *other)
         setText(that->text());
         return true;
     */
+}
+
+PasteCommand::PasteCommand(AttachedFiltersModel &model,
+                           const QString &filterProducerXml,
+                           QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_xml(filterProducerXml)
+    , m_producerUuid(MLT.ensureHasUuid(*model.producer()))
+{
+    setText(QObject::tr("Paste filters"));
+    m_beforeXml = MLT.XML(model.producer());
+}
+
+void PasteCommand::redo()
+{
+    LOG_DEBUG() << text();
+    Mlt::Producer producer = findProducer(m_producerUuid);
+    Q_ASSERT(producer.is_valid());
+    Mlt::Profile profile(kDefaultMltProfile);
+    Mlt::Producer filtersProducer(profile, "xml-string", m_xml.toUtf8().constData());
+    if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0) {
+        MLT.pasteFilters(&producer, &filtersProducer);
+    }
+    emit QmlApplication::singleton().filtersPasted(&producer);
+}
+
+void PasteCommand::undo()
+{
+    LOG_DEBUG() << text();
+    Mlt::Producer producer = findProducer(m_producerUuid);
+    Q_ASSERT(producer.is_valid());
+    // Remove all filters
+    for (int i = 0; i < producer.filter_count(); i++) {
+        Mlt::Filter *filter = producer.filter(i);
+        if (filter && filter->is_valid() && !filter->get_int("_loader")
+            && !filter->get_int(kShotcutHiddenProperty)) {
+            producer.detach(*filter);
+            i--;
+        }
+        delete filter;
+    }
+    // Restore the "before" filters
+    Mlt::Profile profile(kDefaultMltProfile);
+    Mlt::Producer filtersProducer(profile, "xml-string", m_beforeXml.toUtf8().constData());
+    if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0) {
+        MLT.pasteFilters(&producer, &filtersProducer);
+    }
+    emit QmlApplication::singleton().filtersPasted(&producer);
 }
 
 UndoParameterCommand::UndoParameterCommand(const QString &name,

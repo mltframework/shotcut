@@ -85,6 +85,7 @@ public slots:
     int addService(Mlt::Service *service);
     void remove(int row);
     bool move(int fromRow, int toRow);
+    void pasteFilters();
 
 private:
     static void producerChanged(mlt_properties owner, AttachedFiltersModel *model);

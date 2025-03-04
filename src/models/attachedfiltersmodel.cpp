@@ -739,6 +739,16 @@ bool AttachedFiltersModel::move(int fromRow, int toRow)
     return moveRows(parent, fromRow, 1, parent, toRow);
 }
 
+void AttachedFiltersModel::pasteFilters()
+{
+    if (m_producer && QmlApplication::confirmOutputFilter()) {
+        QString s = QGuiApplication::clipboard()->text();
+        if (MLT.isMltXml(s)) {
+            MAIN.undoStack()->push(new Filter::PasteCommand(*this, s));
+        }
+    }
+}
+
 void AttachedFiltersModel::reset(Mlt::Producer *producer)
 {
     beginResetModel();
