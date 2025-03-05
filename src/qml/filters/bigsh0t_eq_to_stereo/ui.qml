@@ -58,6 +58,7 @@ Item {
         fovSlider.value = filter.getDouble("fov", position);
         fovKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("fov") > 0;
         amountSlider.value = filter.getDouble("amount", position);
+        amountKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("amount") > 0;
         interpolationComboBox.currentIndex = filter.get("interpolation");
         blockUpdate = false;
     }
