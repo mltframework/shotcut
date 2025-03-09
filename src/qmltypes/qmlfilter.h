@@ -141,6 +141,7 @@ public:
 
     // Functions for undo/redo
     void startUndoTracking();
+    void stopUndoTracking();
     Q_INVOKABLE void startUndoParameterCommand(const QString &desc = QString());
     void startUndoAddKeyframeCommand();
     void startUndoRemoveKeyframeCommand();

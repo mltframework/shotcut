@@ -801,6 +801,15 @@ void QmlFilter::startUndoTracking()
     }
 }
 
+void QmlFilter::stopUndoTracking()
+{
+    if (!m_previousState.count()) {
+        LOG_DEBUG() << "Undo tracking has not started yet";
+        return;
+    }
+    m_previousState = Mlt::Properties();
+}
+
 void QmlFilter::startUndoParameterCommand(const QString &desc)
 {
     if (!m_previousState.count()) {

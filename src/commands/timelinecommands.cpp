@@ -855,6 +855,7 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model,
 
 void TrimClipInCommand::redo()
 {
+    MAIN.filterController()->pauseUndoTracking();
     if (m_rippleMarkers) {
         // Remove and shift markers as appropriate
         bool markersModified = false;
@@ -911,16 +912,19 @@ void TrimClipInCommand::redo()
         m_undoHelper->recordAfterState();
         m_redo = true;
     }
+    MAIN.filterController()->resumeUndoTracking();
 }
 
 void TrimClipInCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
     Q_ASSERT(m_undoHelper);
+    MAIN.filterController()->pauseUndoTracking();
     m_undoHelper->undoChanges();
     if (m_rippleMarkers && m_markerRemoveStart >= 0) {
         m_markersModel.doReplace(m_markers);
     }
+    MAIN.filterController()->resumeUndoTracking();
 }
 
 bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
@@ -961,6 +965,7 @@ TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model,
 
 void TrimClipOutCommand::redo()
 {
+    MAIN.filterController()->pauseUndoTracking();
     if (m_rippleMarkers) {
         // Remove and shift markers as appropriate
         bool markersModified = false;
@@ -1019,16 +1024,19 @@ void TrimClipOutCommand::redo()
         m_undoHelper->recordAfterState();
         m_redo = true;
     }
+    MAIN.filterController()->resumeUndoTracking();
 }
 
 void TrimClipOutCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
     Q_ASSERT(m_undoHelper);
+    MAIN.filterController()->pauseUndoTracking();
     m_undoHelper->undoChanges();
     if (m_rippleMarkers && m_markerRemoveStart >= 0) {
         m_markersModel.doReplace(m_markers);
     }
+    MAIN.filterController()->resumeUndoTracking();
 }
 
 bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
@@ -1262,9 +1270,11 @@ TrimTransitionInCommand::TrimTransitionInCommand(MultitrackModel &model,
 void TrimTransitionInCommand::redo()
 {
     if (m_redo) {
+        MAIN.filterController()->pauseUndoTracking();
         m_model.trimTransitionIn(m_trackIndex, m_clipIndex, m_delta);
         if (m_notify && m_clipIndex >= 0)
             m_model.notifyClipIn(m_trackIndex, m_clipIndex);
+        MAIN.filterController()->resumeUndoTracking();
     } else {
         m_redo = true;
     }
@@ -1274,9 +1284,11 @@ void TrimTransitionInCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
     if (m_clipIndex >= 0) {
+        MAIN.filterController()->pauseUndoTracking();
         m_model.trimTransitionIn(m_trackIndex, m_clipIndex, -m_delta);
         m_model.notifyClipIn(m_trackIndex, m_clipIndex);
         m_notify = true;
+        MAIN.filterController()->resumeUndoTracking();
     } else
         LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }
@@ -1311,9 +1323,11 @@ void TrimTransitionOutCommand::redo()
 {
     if (m_redo) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
+        MAIN.filterController()->pauseUndoTracking();
         m_model.trimTransitionOut(m_trackIndex, m_clipIndex, m_delta);
         if (m_notify && m_clipIndex >= 0)
             m_model.notifyClipOut(m_trackIndex, m_clipIndex);
+        MAIN.filterController()->resumeUndoTracking();
     } else {
         m_redo = true;
     }
@@ -1324,9 +1338,11 @@ void TrimTransitionOutCommand::undo()
     if (m_clipIndex >= 0) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta"
                     << m_delta;
+        MAIN.filterController()->pauseUndoTracking();
         m_model.trimTransitionOut(m_trackIndex, m_clipIndex, -m_delta);
         m_model.notifyClipOut(m_trackIndex, m_clipIndex);
         m_notify = true;
+        MAIN.filterController()->resumeUndoTracking();
     } else
         LOG_WARNING() << "invalid clip index" << m_clipIndex;
 }

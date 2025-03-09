@@ -128,6 +128,8 @@ signals:
     void warnTrackLocked(int trackIndex);
     void refreshWaveforms();
     void updateThumbnails(int trackIndex, int clipIndex);
+    void trimStarted();
+    void trimEnded();
 
 public slots:
     int addAudioTrack();

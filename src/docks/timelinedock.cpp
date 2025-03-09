@@ -2685,6 +2685,7 @@ void TimelineDock::commitTrimCommand()
     }
     m_trimDelta = 0;
     m_transitionDelta = 0;
+    emit trimEnded();
 }
 
 void TimelineDock::onRowsInserted(const QModelIndex &parent, int first, int last)
@@ -3202,6 +3203,7 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
 
 bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, int delta, bool ripple)
 {
+    emit trimStarted();
     if (dynamic_cast<Timeline::RemoveTransitionByTrimInCommand *>(m_trimCommand.get())) {
         if (delta < 0) {
             // Do not trim past the removed tansition
@@ -3292,6 +3294,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
 
 bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple)
 {
+    emit trimStarted();
     if (dynamic_cast<Timeline::RemoveTransitionByTrimOutCommand *>(m_trimCommand.get())) {
         if (delta < 0) {
             // Do not trim past the removed tansition

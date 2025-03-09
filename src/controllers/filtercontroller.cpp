@@ -363,6 +363,20 @@ void FilterController::onProducerChanged()
     emit m_attachedModel.trackTitleChanged();
 }
 
+void FilterController::pauseUndoTracking()
+{
+    if (m_currentFilter && !m_attachedModel.isSourceClip()) {
+        m_currentFilter->stopUndoTracking();
+    }
+}
+
+void FilterController::resumeUndoTracking()
+{
+    if (m_currentFilter && !m_attachedModel.isSourceClip()) {
+        m_currentFilter->startUndoTracking();
+    }
+}
+
 void FilterController::addMetadata(QmlMetadata *meta)
 {
     m_metadataModel.add(meta);

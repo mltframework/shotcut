@@ -666,6 +666,14 @@ void MainWindow::setupAndConnectDocks()
             m_filterController->motionTrackerModel(),
             &MotionTrackerModel::removeFromService);
     connect(this, SIGNAL(audioChannelsChanged()), m_filterController, SLOT(setProducer()));
+    connect(m_timelineDock,
+            &TimelineDock::trimStarted,
+            m_filterController,
+            &FilterController::pauseUndoTracking);
+    connect(m_timelineDock,
+            &TimelineDock::trimEnded,
+            m_filterController,
+            &FilterController::resumeUndoTracking);
 
     m_markersDock = new MarkersDock(this);
     m_markersDock->hide();

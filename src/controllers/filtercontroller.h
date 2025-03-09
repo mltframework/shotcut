@@ -66,6 +66,8 @@ public slots:
     void onServiceOutChanged(int delta, Mlt::Service *service = 0);
     void removeCurrent();
     void onProducerChanged();
+    void pauseUndoTracking();
+    void resumeUndoTracking();
 
 private slots:
     void handleAttachedModelChange();
