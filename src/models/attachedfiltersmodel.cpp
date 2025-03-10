@@ -625,8 +625,6 @@ void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &s
             QmlMetadata *meta = MAIN.filterController()->metadataForService(&service);
             m_metaList.insert(row, meta);
             endInsertRows();
-            emit addedOrRemoved(m_producer.data());
-
         } else {
             producer.attach(filter);
             producer.move_filter(producer.filter_count() - 1, mltIndex);
@@ -653,7 +651,6 @@ void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &s
             QmlMetadata *meta = MAIN.filterController()->metadataForService(&service);
             m_metaList.insert(row, meta);
             endInsertRows();
-            emit addedOrRemoved(m_producer.data());
         } else {
             chain.attach(link);
             chain.move_link(chain.link_count() - 1, mltIndex);
@@ -664,6 +661,7 @@ void AttachedFiltersModel::doAddService(Mlt::Producer &producer, Mlt::Service &s
         LOG_ERROR() << "invalid service type" << service.type();
         break;
     }
+    emit addedOrRemoved(&producer);
 }
 
 void AttachedFiltersModel::remove(int row)
@@ -704,7 +702,6 @@ void AttachedFiltersModel::doRemoveService(Mlt::Producer &producer, int row)
             m_event->unblock();
             m_metaList.removeAt(row);
             endRemoveRows();
-            emit addedOrRemoved(m_producer.get());
         } else {
             chain.detach(*link);
         }
@@ -719,7 +716,6 @@ void AttachedFiltersModel::doRemoveService(Mlt::Producer &producer, int row)
             m_event->unblock();
             m_metaList.removeAt(row);
             endRemoveRows();
-            emit addedOrRemoved(m_producer.get());
         } else {
             producer.detach(*filter);
         }
@@ -728,6 +724,7 @@ void AttachedFiltersModel::doRemoveService(Mlt::Producer &producer, int row)
     } else {
         LOG_WARNING() << "invalid service:" << producer.type();
     }
+    emit addedOrRemoved(&producer);
 }
 
 bool AttachedFiltersModel::move(int fromRow, int toRow)
