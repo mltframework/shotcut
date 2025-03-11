@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -628,23 +628,13 @@ void Player::setupActions()
     action = new QAction(tr("Next Frame"), this);
     action->setProperty(Actions.hardKeyProperty, "K+L");
     action->setShortcut(QKeySequence(Qt::Key_Right));
-    connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer()) {
-            pause(position() + 1);
-            seek(position() + 1);
-        }
-    });
+    connect(action, &QAction::triggered, this, &Player::nextFrame);
     Actions.add("playerNextFrameAction", action);
 
     action = new QAction(tr("Previous Frame"), this);
     action->setProperty(Actions.hardKeyProperty, "K+J");
     action->setShortcut(QKeySequence(Qt::Key_Left));
-    connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer()) {
-            pause(position() - 1);
-            seek(position() - 1);
-        }
-    });
+    connect(action, &QAction::triggered, this, &Player::previousFrame);
     Actions.add("playerPreviousFrameAction", action);
 
     action = new QAction(tr("Forward One Second"), this);
@@ -1440,6 +1430,24 @@ void Player::onMuteButtonToggled(bool checked)
     }
     Settings.setPlayerMuted(checked);
     m_volumePopup->hide();
+}
+
+void Player::nextFrame()
+{
+    if (MLT.producer() && m_requestedPosition != position() + 1) {
+        m_requestedPosition = position() + 1;
+        pause(m_requestedPosition);
+        seek(m_requestedPosition);
+    }
+}
+
+void Player::previousFrame()
+{
+    if (MLT.producer() && m_requestedPosition != position() - 1) {
+        m_requestedPosition = position() - 1;
+        pause(m_requestedPosition);
+        seek(m_requestedPosition);
+    }
 }
 
 void Player::setZoom(float factor, const QIcon &icon)

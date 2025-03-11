@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,6 +113,8 @@ public slots:
     void showIdleStatus();
     void focusPositionSpinner() const;
     void onMuteButtonToggled(bool checked);
+    void nextFrame();
+    void previousFrame();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -172,6 +174,7 @@ private:
     DockToolBar *m_inSelectedToolBar;
     QHBoxLayout *m_toolRow1;
     QHBoxLayout *m_toolRow2;
+    int m_requestedPosition{0};
 
 private slots:
     void updateSelection();
