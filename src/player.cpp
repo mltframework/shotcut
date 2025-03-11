@@ -639,81 +639,55 @@ void Player::setupActions()
 
     action = new QAction(tr("Forward One Second"), this);
     action->setShortcut(QKeySequence(Qt::Key_PageDown));
-    connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
-            seek(position() + qRound(MLT.profile().fps()));
-    });
+    connect(action, &QAction::triggered, this, [&]() { seekBy(qRound(MLT.profile().fps())); });
     Actions.add("playerForwardOneSecondAction", action);
 
     action = new QAction(tr("Backward One Second"), this);
     action->setShortcut(QKeySequence(Qt::Key_PageUp));
-    connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
-            seek(position() - qRound(MLT.profile().fps()));
-    });
+    connect(action, &QAction::triggered, this, [&]() { seekBy(-qRound(MLT.profile().fps())); });
     Actions.add("playerBackwardOneSecondAction", action);
 
     action = new QAction(tr("Forward Two Seconds"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_PageDown));
-    connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
-            seek(position() + 2 * qRound(MLT.profile().fps()));
-    });
+    connect(action, &QAction::triggered, this, [&]() { seekBy(2 * qRound(MLT.profile().fps())); });
     Actions.add("playerForwardTwoSecondsAction", action);
 
     action = new QAction(tr("Backward Two Seconds"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_PageUp));
-    connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
-            seek(position() - 2 * qRound(MLT.profile().fps()));
-    });
+    connect(action, &QAction::triggered, this, [&]() { seekBy(-2 * qRound(MLT.profile().fps())); });
     Actions.add("playerBackwardTwoAction", action);
 
     action = new QAction(tr("Forward Five Seconds"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageDown));
-    connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
-            seek(position() + 5 * qRound(MLT.profile().fps()));
-    });
+    connect(action, &QAction::triggered, this, [&]() { seekBy(5 * qRound(MLT.profile().fps())); });
     Actions.add("playerForwardFiveSecondsAction", action);
 
     action = new QAction(tr("Backward Five Seconds"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_PageUp));
-    connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
-            seek(position() - 5 * qRound(MLT.profile().fps()));
-    });
+    connect(action, &QAction::triggered, this, [&]() { seekBy(-5 * qRound(MLT.profile().fps())); });
     Actions.add("playerBackwardFiveSecondsAction", action);
 
     action = new QAction(tr("Forward Ten Seconds"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::CTRL | Qt::Key_PageDown));
-    connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
-            seek(position() + 10 * qRound(MLT.profile().fps()));
-    });
+    connect(action, &QAction::triggered, this, [&]() { seekBy(10 * qRound(MLT.profile().fps())); });
     Actions.add("playerForwardTenSecondsAction", action);
 
     action = new QAction(tr("Backward Ten Seconds"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::CTRL | Qt::Key_PageUp));
-    connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
-            seek(position() - 10 * qRound(MLT.profile().fps()));
-    });
+    connect(action, &QAction::triggered, this, [&]() { seekBy(-10 * qRound(MLT.profile().fps())); });
     Actions.add("playerBackwardTenSecondsAction", action);
 
     action = new QAction(tr("Forward Jump"), this);
     action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_PageDown));
     connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
-            seek(position() + qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));
+        seekBy(qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));
     });
     Actions.add("playerForwardJumpAction", action);
 
     action = new QAction(tr("Backward Jump"), this);
     action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_PageUp));
     connect(action, &QAction::triggered, this, [&]() {
-        if (MLT.producer())
-            seek(position() - qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));
+        seekBy(-qRound(MLT.profile().fps() * Settings.playerJumpSeconds()));
     });
     Actions.add("playerBackwardJumpAction", action);
 
@@ -1289,6 +1263,15 @@ void Player::layoutToolbars()
     }
 }
 
+void Player::seekBy(int frames)
+{
+    auto newPosition = position() + frames;
+    if (MLT.producer() && newPosition != m_requestedPosition) {
+        m_requestedPosition = newPosition;
+        seek(m_requestedPosition);
+    }
+}
+
 void Player::showIdleStatus()
 {
     if (Settings.proxyEnabled() && Settings.playerPreviewScale() > 0) {
@@ -1434,20 +1417,12 @@ void Player::onMuteButtonToggled(bool checked)
 
 void Player::nextFrame()
 {
-    if (MLT.producer() && m_requestedPosition != position() + 1) {
-        m_requestedPosition = position() + 1;
-        pause(m_requestedPosition);
-        seek(m_requestedPosition);
-    }
+    seekBy(1);
 }
 
 void Player::previousFrame()
 {
-    if (MLT.producer() && m_requestedPosition != position() - 1) {
-        m_requestedPosition = position() - 1;
-        pause(m_requestedPosition);
-        seek(m_requestedPosition);
-    }
+    seekBy(-1);
 }
 
 void Player::setZoom(float factor, const QIcon &icon)

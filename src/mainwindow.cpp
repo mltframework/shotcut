@@ -2586,7 +2586,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     switch (event->key()) {
     case Qt::Key_J:
         if (m_isKKeyPressed)
-            m_player->nextFrame();
+            m_player->previousFrame();
         else
             m_player->rewind(false);
         break;
@@ -2597,7 +2597,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     case Qt::Key_L:
         if (event->modifiers() == Qt::NoModifier) {
             if (m_isKKeyPressed)
-                m_player->previousFrame();
+                m_player->nextFrame();
             else
                 m_player->fastForward(false);
         }

@@ -127,6 +127,7 @@ private:
     double setVolume(int volume);
     void setLoopRange(int start, int end);
     void layoutToolbars();
+    void seekBy(int frames);
 
     ScrubBar *m_scrubber;
     TimeSpinBox *m_positionSpinner;
