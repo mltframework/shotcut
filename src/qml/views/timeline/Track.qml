@@ -86,6 +86,7 @@ Rectangle {
             isBlank: typeof model.blank !== 'undefined' ? model.blank : false
             isAudio: typeof model.audio !== 'undefined' ? model.audio : false
             isTransition: typeof model.isTransition !== 'undefined' ? model.isTransition : false
+            isFiltered:  typeof model.filtered !== 'undefined' ? model.filtered : false
             audioLevels: typeof model.audioLevels !== 'undefined' ? model.audioLevels : ""
             width: typeof model.duration !== 'undefined' ? model.duration * timeScale : 0
             height: trackRoot.height
