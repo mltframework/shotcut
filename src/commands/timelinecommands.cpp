@@ -789,6 +789,12 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
     if (that->m_undoHelper.affectedTracks() != m_undoHelper.affectedTracks()) {
         return false;
     }
+    if (that->m_trackDelta || m_trackDelta) {
+        // Do not merge move commands if the move is between tracks.
+        // In particular, if a clip is moved to a track and then back to the origional track,
+        // there is no change and a single undo command is left with nothing to undo.
+        return false;
+    }
     auto thisIterator = m_clips.begin();
     auto thatIterator = that->m_clips.begin();
     while (thisIterator != m_clips.end() && thatIterator != that->m_clips.end()) {
