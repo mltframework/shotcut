@@ -444,7 +444,7 @@ function set_globals {
 #  REPOLOCS[8]="https://bitbucket.org/dandennedy/bigsh0t.git"
   REPOLOCS[8]="https://bitbucket.org/leo_sutic/bigsh0t.git"
   REPOLOCS[9]="https://github.com/ggerganov/whisper.cpp.git"
-  REPOLOCS[10]="https://code.videolan.org/videolan/dav1d.git"
+  REPOLOCS[10]="https://github.com/videolan/dav1d.git"
   REPOLOCS[11]="https://aomedia.googlesource.com/aom"
   REPOLOCS[12]="https://github.com/Netflix/vmaf.git"
   REPOLOCS[13]="https://gitlab.com/ddennedy/glaxnimate.git"
