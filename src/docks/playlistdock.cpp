@@ -1340,9 +1340,13 @@ void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
             }
             producer = MLT.setupNewProducer(producer);
             producer->set(kShotcutSkipConvertProperty, 1);
-            if (ui->treeWidget->topLevelItemCount() > 1) {
-                auto bin = ui->treeWidget->selectedItems().first()->text(0);
-                producer->set(kShotcutBinsProperty, bin.toUtf8().constData());
+            if (ui->treeWidget->topLevelItemCount() > SmartBinCount) {
+                auto items = ui->treeWidget->selectedItems();
+                // Skip if a smart bin is selected
+                if (!items.isEmpty() && items.first()->data(0, Qt::UserRole).isNull()) {
+                    auto bin = items.first()->text(0);
+                    producer->set(kShotcutBinsProperty, bin.toUtf8().constData());
+                }
             }
             if (!MLT.isLiveProducer(producer) || producer->get_int(kShotcutVirtualClip)) {
                 ProxyManager::generateIfNotExists(*producer);
