@@ -31,6 +31,7 @@ Rectangle {
     property bool isBlank: false
     property bool isAudio: false
     property bool isTransition: false
+    property bool isFiltered: false
     property var audioLevels
     property int fadeIn: 0
     property int fadeOut: 0
@@ -422,6 +423,29 @@ Rectangle {
                 clipRoot.clicked(clipRoot, mouse);
                 clipRoot.clipRightClicked(clipRoot, mouse);
             }
+        }
+    }
+
+    ToolButton {
+        visible: !elided && !isBlank && parent.height > 20 && isFiltered
+        icon.name: 'view-filter'
+        icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
+        icon.width: 16
+        icon.height: 16
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 4
+        anchors.leftMargin: 4
+        width: 20
+        height: 20
+        padding: 1
+        focusPolicy: Qt.NoFocus
+        onClicked: {
+            clipRoot.clicked(clipRoot, null);
+            timeline.filteredClicked();
+        }
+        Shotcut.HoverTip {
+            text: qsTr('Filters')
         }
     }
 

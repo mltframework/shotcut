@@ -2291,6 +2291,7 @@ void MultitrackModel::filterAddedOrRemoved(Mlt::Producer *producer)
             QVector<int> roles;
             roles << FadeInRole;
             roles << FadeOutRole;
+            roles << IsFilteredRole;
             emit dataChanged(modelIndex, modelIndex, roles);
         }
     } else
