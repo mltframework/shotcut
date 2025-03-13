@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,6 +86,7 @@ Rectangle {
             isBlank: typeof model.blank !== 'undefined' ? model.blank : false
             isAudio: typeof model.audio !== 'undefined' ? model.audio : false
             isTransition: typeof model.isTransition !== 'undefined' ? model.isTransition : false
+            isFiltered: typeof model.filtered !== 'undefined' ? model.filtered : false
             audioLevels: typeof model.audioLevels !== 'undefined' ? model.audioLevels : ""
             width: typeof model.duration !== 'undefined' ? model.duration * timeScale : 0
             height: trackRoot.height
