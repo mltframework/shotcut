@@ -78,7 +78,7 @@ Item {
             return 0.5 + w;
         if (w == 0.5)
             return 1.0;
-        return w * 2
+        return w * 2;
     }
 
     function scaleValueToWheelV1(v) {
@@ -89,7 +89,7 @@ Item {
         if (v == 1.0)
             return 0.5;
         if (v > 1.0)
-            return v / 2.0
+            return v / 2.0;
     }
 
     function scaleWheelToValueV0(w, f) {

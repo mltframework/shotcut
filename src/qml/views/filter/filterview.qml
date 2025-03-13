@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ Rectangle {
     property int selectedIndex: Shotcut.Filter.NoCurrentFilter
 
     signal currentFilterRequested(int attachedIndex)
-    signal copyFilterRequested()
+    signal copyFilterRequested
 
     function clearCurrentFilter() {
         if (filterConfig.item) {

@@ -259,8 +259,8 @@ Item {
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeAllCursor
             drag.target: rectangle
-            property var startX;
-            property var startY;
+            property var startX
+            property var startY
             onDoubleClicked: {
                 _positionDragLocked = !_positionDragLocked;
                 filter.set('_shotcut:positionDragLocked', _positionDragLocked);
