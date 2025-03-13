@@ -290,8 +290,8 @@ Item {
                 startY = rectangle.y;
             }
             onPositionChanged: mouse => {
-                var newX;
-                var newY;
+                var newX = rectangle.x;
+                var newY = rectangle.y;
                 if (!(mouse.modifiers & Qt.AltModifier)) {
                     newX = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2;
                     newY = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2;
@@ -311,11 +311,9 @@ Item {
                         newY = startY;
                     }
                 }
-                if (newX && newY) {
-                    rectangle.x = newX;
-                    rectangle.y = newY;
-                    rectChanged(rectangle);
-                }
+                rectangle.x = newX;
+                rectangle.y = newY;
+                rectChanged(rectangle);
             }
             onReleased: {
                 rectChanged(rectangle);
