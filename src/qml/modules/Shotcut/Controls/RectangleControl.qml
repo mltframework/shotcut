@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -300,7 +300,7 @@ Item {
                     newX = Math.min(Math.max(rectangle.x, 0), widthScale * profile.width - rectangle.width);
                     newY = Math.min(Math.max(rectangle.y, 0), heightScale * profile.height - rectangle.height);
                 }
-                if (mouse.modifiers & Qt.ShiftModifier) {
+                if (mouse.modifiers & Qt.ControlModifier) {
                     var deltaX = Math.abs(startX - newX);
                     var deltaY = Math.abs(startY - newY);
                     if (deltaX < deltaY) {
@@ -311,9 +311,11 @@ Item {
                         newY = startY;
                     }
                 }
-                rectangle.x = newX;
-                rectangle.y = newY;
-                rectChanged(rectangle);
+                if (newX && newY) {
+                    rectangle.x = newX;
+                    rectangle.y = newY;
+                    rectChanged(rectangle);
+                }
             }
             onReleased: {
                 rectChanged(rectangle);
