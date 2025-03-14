@@ -379,7 +379,7 @@ Item {
         }
         Shotcut.UndoButton {
             id: hfov0Undo
-            onClicked: hfov0Slider.value = 180
+            onClicked: hfov0Slider.value = -90
         }
         Shotcut.KeyframesButton {
             id: hfov0KeyframesButton
@@ -416,7 +416,7 @@ Item {
         }
         Shotcut.UndoButton {
             id: hfov1Undo
-            onClicked: hfov1Slider.value = 200
+            onClicked: hfov1Slider.value = 90
         }
         Shotcut.KeyframesButton {
             id: hfov1KeyframesButton
@@ -458,7 +458,7 @@ Item {
         }
         Shotcut.UndoButton {
             id: vfov0Undo
-            onClicked: vfov0Slider.value = 140
+            onClicked: vfov0Slider.value = -45
         }
         Shotcut.KeyframesButton {
             id: vfov0KeyframesButton
@@ -495,7 +495,7 @@ Item {
         }
         Shotcut.UndoButton {
             id: vfov1Undo
-            onClicked: vfov1Slider.value = 160
+            onClicked: vfov1Slider.value = 45
         }
         Shotcut.KeyframesButton {
             id: vfov1KeyframesButton
