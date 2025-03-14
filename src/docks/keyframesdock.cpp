@@ -34,7 +34,6 @@
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QQuickItem>
-#include <QQuickView>
 #include <QSlider>
 #include <QToolButton>
 #include <QUrl>

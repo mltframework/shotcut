@@ -28,9 +28,6 @@
 #include <QTemporaryFile>
 #include <QUuid>
 
-// forward declarations
-class QQuickView;
-
 #define MLT_LC_CATEGORY LC_ALL
 #define MLT_LC_NAME "LC_ALL"
 

@@ -38,7 +38,6 @@
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QQuickItem>
-#include <QQuickView>
 #include <QUrl>
 #include <QtWidgets/QScrollArea>
 

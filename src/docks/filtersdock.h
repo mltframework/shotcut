@@ -23,7 +23,6 @@
 
 #include <QDockWidget>
 #include <QObject>
-#include <QQuickView>
 #include <QQuickWidget>
 
 class QmlFilter;
