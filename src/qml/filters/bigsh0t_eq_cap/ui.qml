@@ -1,8 +1,8 @@
-import QtQuick 2.1
-import QtQuick.Controls 1.4
-import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Dialogs
+import Shotcut.Controls as Shotcut
 Shotcut.KeyframableFilter {
     width: 350
     height: 650
@@ -501,7 +501,6 @@ Shotcut.KeyframableFilter {
         CheckBox {
             text: qsTr('')
             checked: true
-            partiallyCheckedEnabled: false
             id: topEnabledCheckBox
             Layout.columnSpan: 3
             onCheckedChanged: updateProperty_topEnabled()
@@ -617,7 +616,7 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.UndoButton {
             id: topBlendInUndo
-            onClicked: topBlendInSlider.value = 10
+            onClicked: topBlendInSlider.value = 0
         }
         Label {
             text: qsTr('Out')
@@ -765,7 +764,6 @@ Shotcut.KeyframableFilter {
         CheckBox {
             text: qsTr('')
             checked: true
-            partiallyCheckedEnabled: false
             id: bottomEnabledCheckBox
             Layout.columnSpan: 3
             onCheckedChanged: updateProperty_bottomEnabled()
@@ -846,7 +844,7 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.UndoButton {
             id: bottomFadeInUndo
-            onClicked: bottomFadeInSlider.value = 10
+            onClicked: bottomFadeInSlider.value = 0
         }
         Label {
             text: qsTr('Blend')
