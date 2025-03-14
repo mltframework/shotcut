@@ -343,10 +343,12 @@
    <addaction name="actionAudioMeter"/>
    <addaction name="actionProperties"/>
    <addaction name="actionRecent"/>
+   <addaction name="actionNotes"/>
    <addaction name="actionPlaylist"/>
    <addaction name="actionFiles"/>
    <addaction name="actionTimeline"/>
    <addaction name="actionFilters"/>
+   <addaction name="actionMarkers"/>
    <addaction name="actionKeyframes"/>
    <addaction name="actionHistory"/>
    <addaction name="actionEncode"/>

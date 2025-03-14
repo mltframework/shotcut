@@ -5245,6 +5245,11 @@ void MainWindow::on_actionShowTextUnderIcons_toggled(bool b)
     ui->mainToolBar->setToolButtonStyle(b ? Qt::ToolButtonTextUnderIcon : Qt::ToolButtonIconOnly);
     Settings.setTextUnderIcons(b);
     updateLayoutSwitcher();
+    if (b && this->width() < 1900) {
+        ui->mainToolBar->removeAction(ui->actionFiles);
+        ui->mainToolBar->removeAction(ui->actionMarkers);
+        ui->mainToolBar->removeAction(ui->actionNotes);
+    }
 }
 
 void MainWindow::on_actionShowSmallIcons_toggled(bool b)
