@@ -246,7 +246,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width)
+        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.width * 2 : inThumbnail.width + filtersIcon.width)
         width: label.width + 2
         height: label.height
     }
@@ -263,7 +263,7 @@ Rectangle {
             top: parent.top
             left: parent.left
             topMargin: parent.border.width + 1
-            leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : inThumbnail.width) + 1
+            leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.width * 2 : inThumbnail.width + filtersIcon.width) + 1
         }
     }
 
@@ -423,6 +423,33 @@ Rectangle {
                 clipRoot.clicked(clipRoot, mouse);
                 clipRoot.clipRightClicked(clipRoot, mouse);
             }
+        }
+    }
+
+    ToolButton {
+        id: filtersIcon
+        visible: !elided && !isBlank && isFiltered
+        icon.source: 'qrc:///icons/light/32x32/view-filter.png'
+        icon.width: 16
+        icon.height: 16
+        opacity: 0.7
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.topMargin: parent.border.width
+        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? visible ? label.height : 0 : inThumbnail.width)
+        width: visible ? label.height : 0
+        height: label.height
+        padding: 0
+        focusPolicy: Qt.NoFocus
+        onClicked: {
+            clipRoot.clicked(clipRoot, null);
+            timeline.filteredClicked();
+        }
+        background: Rectangle {
+            implicitWidth: 16
+            implicitHeight: 16
+            color: 'lightgray'
+            opacity: enabled ? 1 : 0.3
         }
     }
 
