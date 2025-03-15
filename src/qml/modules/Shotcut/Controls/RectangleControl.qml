@@ -404,6 +404,7 @@ Item {
             color: handleColor
             visible: rotationHandle.visible
             antialiasing: true
+            z: 1
         }
     }
 
@@ -414,6 +415,8 @@ Item {
         color: handleColor
         width: handleSize
         height: handleSize
+        border.width: borderSize
+        border.color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0.2)
 
         MouseArea {
             anchors.fill: parent
@@ -475,6 +478,8 @@ Item {
         width: handleSize
         height: handleSize
         visible: aspectRatio !== 0 ? false : !isRotated()
+        border.width: borderSize
+        border.color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0.2)
 
         MouseArea {
             anchors.fill: parent
@@ -514,6 +519,8 @@ Item {
         width: handleSize
         height: handleSize
         visible: aspectRatio !== 0 ? false : !isRotated()
+        border.width: borderSize
+        border.color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0.2)
 
         MouseArea {
             anchors.fill: parent
@@ -553,6 +560,8 @@ Item {
         width: handleSize
         height: handleSize
         visible: aspectRatio !== 0 ? false : !isRotated()
+        border.width: borderSize
+        border.color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0.2)
 
         MouseArea {
             anchors.fill: parent
@@ -592,6 +601,8 @@ Item {
         width: handleSize
         height: handleSize
         visible: aspectRatio !== 0 ? false : !isRotated()
+        border.width: borderSize
+        border.color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0.2)
 
         MouseArea {
             anchors.fill: parent
@@ -631,6 +642,8 @@ Item {
         color: handleColor
         width: handleSize
         height: handleSize
+        border.width: borderSize
+        border.color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0.2)
 
         MouseArea {
             anchors.fill: parent
@@ -688,6 +701,8 @@ Item {
         color: handleColor
         width: handleSize
         height: handleSize
+        border.width: borderSize
+        border.color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0.2)
 
         MouseArea {
             anchors.fill: parent
@@ -745,6 +760,8 @@ Item {
         color: handleColor
         width: handleSize
         height: handleSize
+        border.width: borderSize
+        border.color: Qt.rgba(0, 0, 0, item.enabled ? 0.4 : 0.2)
 
         MouseArea {
             anchors.fill: parent
