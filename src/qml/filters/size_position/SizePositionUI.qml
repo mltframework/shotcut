@@ -117,7 +117,7 @@ Item {
                 filter.set(rotationProperty, filter.getDouble(rotationMiddleValue), filter.duration - filter.animateOut);
                 filter.set(rotationProperty, filter.getDouble(rotationEndValue), filter.duration - 1);
             }
-        } else if (!rotationKeyframesButton.checked && filter.keyframeCount(rotationProperty) > 0) {
+        } else if (!rotationKeyframesButton.checked) {
             filter.resetProperty(rotationProperty);
             filter.set(rotationProperty, filter.getDouble(rotationMiddleValue));
         } else if (position !== null) {
