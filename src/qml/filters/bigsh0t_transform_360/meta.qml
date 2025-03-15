@@ -6,7 +6,7 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("360: Transform")
     mlt_service: "frei0r.bigsh0t_transform_360"
-    keywords: qsTr('spherical yaw pitch roll', 'search keywords for the 360: Transform video filter') + ' 360: transform bigsh0t'
+    keywords: qsTr('spherical yaw pitch roll', 'search keywords for the 360: Transform video filter') + ' 360: transform bigsh0t #rgba'
     objectName: "bigsh0t_transform_360"
     qml: "ui.qml"
     vui: "vui.qml"

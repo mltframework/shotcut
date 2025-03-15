@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Halftone")
-    keywords: qsTr('noise dots newsprint', 'search keywords for the Halftone video filter') + ' halftone'
+    keywords: qsTr('noise dots newsprint', 'search keywords for the Halftone video filter') + ' halftone #rgba'
     objectName: 'halftone'
     mlt_service: "frei0r.colorhalftone"
     qml: "ui.qml"

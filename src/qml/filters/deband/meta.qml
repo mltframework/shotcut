@@ -21,7 +21,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr('Deband')
-    keywords: qsTr('mean average median contour', 'search keywords for the Deband video filter') + ' deband'
+    keywords: qsTr('mean average median contour', 'search keywords for the Deband video filter') + ' deband #rgba #yuv #10bit'
     objectName: 'deband'
     mlt_service: 'avfilter.deband'
     qml: 'ui.qml'

@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     objectName: 'timer'
     name: qsTr('Timer')
-    keywords: qsTr('text seconds timestamp', 'search keywords for the Timer video filter') + ' timer'
+    keywords: qsTr('text seconds timestamp', 'search keywords for the Timer video filter') + ' timer #rgba'
     mlt_service: 'timer'
     qml: "ui.qml"
     vui: 'vui.qml'

@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr('Vibrance')
-    keywords: qsTr('color intensity saturation vibe', 'search keywords for the Vibrance video filter') + ' vibrance'
+    keywords: qsTr('color intensity saturation vibe', 'search keywords for the Vibrance video filter') + ' vibrance #rgba #10bit'
     mlt_service: 'avfilter.vibrance'
     qml: 'ui.qml'
     icon: 'icon.webp'

@@ -6,7 +6,7 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("360: Equirectangular to Rectilinear")
     mlt_service: "frei0r.bigsh0t_eq_to_rect"
-    keywords: qsTr('spherical projection', 'search keywords for the 360: Equirectangular to Rectilinear video filter') + ' 360: equirectangular rectilinear bigsh0t'
+    keywords: qsTr('spherical projection', 'search keywords for the 360: Equirectangular to Rectilinear video filter') + ' 360: equirectangular rectilinear bigsh0t #rgba'
     objectName: "bigsh0t_eq_to_rect"
     qml: "ui.qml"
     vui: "vui.qml"

@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr('No Sync')
-    keywords: qsTr('horizontal vertical synchronization slip analog', 'search keywords for the No Sync video filter') + ' vhs no sync'
+    keywords: qsTr('horizontal vertical synchronization slip analog', 'search keywords for the No Sync video filter') + ' vhs no sync #rgba'
     objectName: 'nosync'
     mlt_service: 'frei0r.nosync0r'
     qml: 'ui.qml'

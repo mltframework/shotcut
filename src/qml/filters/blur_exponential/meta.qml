@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Blur: Exponential")
-    keywords: qsTr('soften obscure hide', 'search keywords for the Blur: Exponential video filter') + ' blur: exponential'
+    keywords: qsTr('soften obscure hide', 'search keywords for the Blur: Exponential video filter') + ' blur: exponential #rgba'
     objectName: 'blur_exponential'
     mlt_service: "frei0r.IIRblur"
     qml: "ui.qml"

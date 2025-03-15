@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Threshold")
-    keywords: qsTr('black white luma', 'search keywords for the Threshold video filter') + ' threshold'
+    keywords: qsTr('black white luma', 'search keywords for the Threshold video filter') + ' threshold #yuv'
     mlt_service: "threshold"
     qml: "ui.qml"
     icon: 'icon.webp'

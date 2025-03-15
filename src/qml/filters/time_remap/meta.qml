@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Link
     isAudio: false
     name: qsTr("Time Remap")
-    keywords: qsTr('temporal speed ramp reverse fast slow motion', 'search keywords for the Time: Remap filter') + ' time: remap'
+    keywords: qsTr('temporal speed ramp reverse fast slow motion', 'search keywords for the Time: Remap filter') + ' time: remap #rgba #yuv #10bit'
     mlt_service: "timeremap"
     qml: "ui.qml"
     isFavorite: false

@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr('Mask: Chroma Key')
-    keywords: qsTr('matte stencil alpha color', 'search keywords for the Mask: Chroma Key video filter') + ' mask: chroma key'
+    keywords: qsTr('matte stencil alpha color', 'search keywords for the Mask: Chroma Key video filter') + ' mask: chroma key #rgba'
     mlt_service: 'mask_start'
     objectName: 'maskChromaKey'
     qml: 'ui.qml'

@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Dither")
-    keywords: qsTr('noise dots', 'search keywords for the Dither video filter') + ' dither'
+    keywords: qsTr('noise dots', 'search keywords for the Dither video filter') + ' dither #rgba'
     objectName: 'dither'
     mlt_service: "frei0r.dither"
     qml: "ui.qml"

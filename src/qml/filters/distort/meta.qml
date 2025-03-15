@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2019-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Distort")
-    keywords: qsTr('deform wiggle wave', 'search keywords for the Distort video filter') + ' distort'
+    keywords: qsTr('deform wiggle wave', 'search keywords for the Distort video filter') + ' distort #rgba'
     mlt_service: "frei0r.distort0r"
     qml: "ui.qml"
     icon: 'icon.webp'

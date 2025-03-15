@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Alpha Channel: Adjust")
-    keywords: qsTr('transparency shave shrink grow soft feather', 'search keywords for the Alpha Channel: Adjust video filter') + ' alpha channel: adjust'
+    keywords: qsTr('transparency shave shrink grow soft feather', 'search keywords for the Alpha Channel: Adjust video filter') + ' alpha channel: adjust #rgba'
     mlt_service: 'frei0r.alpha0ps'
     objectName: 'alphaChannelAdjust'
     qml: 'ui.qml'

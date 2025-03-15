@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Grid")
-    keywords: qsTr('repeat', 'search keywords for the Grid video filter') + ' grid'
+    keywords: qsTr('repeat', 'search keywords for the Grid video filter') + ' grid #rgba'
     mlt_service: "frei0r.cairoimagegrid"
     qml: "ui.qml"
     icon: 'icon.webp'

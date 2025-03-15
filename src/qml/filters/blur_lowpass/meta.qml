@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2019-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Blur: Low Pass")
-    keywords: qsTr('soften obscure hide', 'search keywords for the Blur: Low Pass video filter') + ' blur: low pass'
+    keywords: qsTr('soften obscure hide', 'search keywords for the Blur: Low Pass video filter') + ' blur: low pass #rgba'
     objectName: 'blur_lowpass'
     mlt_service: "frei0r.IIRblur"
     qml: "ui.qml"

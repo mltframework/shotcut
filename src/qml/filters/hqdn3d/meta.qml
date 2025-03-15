@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Reduce Noise: HQDN3D")
-    keywords: qsTr('denoise artifact dirt smooth', 'search keywords for the Reduce Noise: HQDN3D video filter') + ' reduce noise: hqdn3d'
+    keywords: qsTr('denoise artifact dirt smooth', 'search keywords for the Reduce Noise: HQDN3D video filter') + ' reduce noise: hqdn3d #rgba'
     mlt_service: "frei0r.hqdn3d"
     qml: "ui.qml"
     icon: 'icon.webp'

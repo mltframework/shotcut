@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     objectName: 'subtitles'
     name: qsTr('Subtitle Burn In')
-    keywords: qsTr('subtitle overlay burn', 'search keywords for the Subtitle Burn In video filter') + ' subtitle burn in'
+    keywords: qsTr('subtitle overlay burn', 'search keywords for the Subtitle Burn In video filter') + ' subtitle burn in #rgba'
     mlt_service: 'subtitle'
     qml: "ui.qml"
     vui: 'vui.qml'

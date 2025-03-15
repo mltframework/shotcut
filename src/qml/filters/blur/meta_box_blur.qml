@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Blur: Box")
-    keywords: qsTr('soften obscure hide directional', 'search keywords for the Blur: Box video filter') + ' blur: box'
+    keywords: qsTr('soften obscure hide directional', 'search keywords for the Blur: Box video filter') + ' blur: box #rgba'
     mlt_service: "box_blur"
     qml: "ui_box_blur.qml"
     icon: 'icon.webp'

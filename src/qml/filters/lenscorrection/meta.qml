@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2023 Meltytech, LLC
+ * Copyright (c) 2019-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Lens Correction")
-    keywords: qsTr('deform lens distort wide angle panoramic hemispherical fisheye', 'search keywords for the Lens Correction video filter') + ' lens correction'
+    keywords: qsTr('deform lens distort wide angle panoramic hemispherical fisheye', 'search keywords for the Lens Correction video filter') + ' lens correction #rgba'
     mlt_service: 'frei0r.lenscorrection'
     qml: "ui.qml"
     icon: 'icon.webp'

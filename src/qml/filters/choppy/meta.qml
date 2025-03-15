@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr('Choppy')
-    keywords: qsTr('fps framerate', 'search keywords for the Choppy video filter') + ' choppy'
+    keywords: qsTr('fps framerate', 'search keywords for the Choppy video filter') + ' choppy #rgba #yuv #10bit'
     mlt_service: 'choppy'
     qml: 'ui.qml'
     icon: 'icon.webp'

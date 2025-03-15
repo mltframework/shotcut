@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("Brightness")
     mlt_service: "brightness"
-    keywords: qsTr('lightness value exposure', 'search keywords for the Brightness video filter') + ' brightness'
+    keywords: qsTr('lightness value exposure', 'search keywords for the Brightness video filter') + ' brightness #yuv'
     qml: "ui.qml"
     icon: 'icon.webp'
     isFavorite: true

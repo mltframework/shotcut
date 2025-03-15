@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     objectName: 'cropCircle'
     name: qsTr('Crop: Circle')
-    keywords: qsTr('trim remove oval ellipse', 'search keywords for the Crop: Circle video filter') + ' crop: circle'
+    keywords: qsTr('trim remove oval ellipse', 'search keywords for the Crop: Circle video filter') + ' crop: circle #rgba'
     mlt_service: 'qtcrop'
     qml: 'ui.qml'
     icon: 'icon.webp'

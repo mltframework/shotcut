@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Vignette")
-    keywords: qsTr('dark edges fade', 'search keywords for the Vignette video filter') + ' vignette'
+    keywords: qsTr('dark edges fade', 'search keywords for the Vignette video filter') + ' vignette #yuv'
     mlt_service: "vignette"
     qml: "ui_oldfilm.qml"
     icon: 'icon.webp'

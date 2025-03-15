@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("GPS Graphic")
-    keywords: qsTr('gpx sticker decal gauge map graph speedometer', 'search keywords for the GPS Graphic video filter') + ' gps graphic'
+    keywords: qsTr('gpx sticker decal gauge map graph speedometer', 'search keywords for the GPS Graphic video filter') + ' gps graphic #rgba'
     mlt_service: 'gpsgraphic'
     qml: 'ui.qml'
     vui: 'vui.qml'

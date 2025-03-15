@@ -5,7 +5,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("360: Equirectangular to Stereographic")
-    keywords: qsTr('spherical projection tiny small planet', 'search keywords for the 360: Equirectangular to Stereographic video filter') + ' 360: equirectangular stereographic bigsh0t'
+    keywords: qsTr('spherical projection tiny small planet', 'search keywords for the 360: Equirectangular to Stereographic video filter') + ' 360: equirectangular stereographic bigsh0t #rgba'
     mlt_service: "frei0r.bigsh0t_eq_to_stereo"
     objectName: "bigsh0t_eq_to_stereo"
     qml: "ui.qml"

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2022 Meltytech, LLC
+ * Copyright (c) 2021-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Reduce Noise: Quantization")
-    keywords: qsTr('denoise artifact postprocess compress', 'search keywords for the Reduce Noise: Quantization video filter') + ' fspp reduce noise: quantization'
+    keywords: qsTr('denoise artifact postprocess compress', 'search keywords for the Reduce Noise: Quantization video filter') + ' fspp reduce noise: quantization #rgb #yuv'
     mlt_service: "avfilter.fspp"
     qml: "ui.qml"
     icon: 'icon.webp'

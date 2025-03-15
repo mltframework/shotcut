@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     objectName: 'richText'
     name: qsTr('Text: Rich')
-    keywords: qsTr('type font format overlay', 'search keywords for the Text: Rich video filter') + ' html text: rich'
+    keywords: qsTr('type font format overlay', 'search keywords for the Text: Rich video filter') + ' html text: rich #rgba'
     mlt_service: 'qtext'
     qml: "ui.qml"
     vui: 'vui.qml'

@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Contrast")
-    keywords: qsTr('variation value', 'search keywords for the Contrast video filter') + ' contrast'
+    keywords: qsTr('variation value', 'search keywords for the Contrast video filter') + ' contrast #rgba'
     objectName: "contrast"
     mlt_service: "lift_gamma_gain"
     qml: "ui.qml"

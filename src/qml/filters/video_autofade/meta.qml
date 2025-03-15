@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     isAudio: false
     name: qsTr("Track Auto Fade Video")
-    keywords: qsTr('splice fade dip', 'search keywords for the Track Auto Fade Video filter') + ' auto fade'
+    keywords: qsTr('splice fade dip', 'search keywords for the Track Auto Fade Video filter') + ' auto fade #rgba'
     mlt_service: "autofade"
     objectName: 'autoFadeVideo'
     qml: "ui.qml"

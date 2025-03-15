@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Chroma Key: Advanced")
-    keywords: qsTr('green blue screen', 'search keywords for the Chroma Key: Advanced video filter') + ' chroma key: advanced'
+    keywords: qsTr('green blue screen', 'search keywords for the Chroma Key: Advanced video filter') + ' chroma key: advanced #rgba'
     mlt_service: 'frei0r.select0r'
     qml: 'ui.qml'
     icon: 'icon.webp'

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Fisheye")
-    keywords: qsTr('deform lens distort wide angle panoramic hemispherical', 'search keywords for the Fisheye video filter') + ' gopro fisheye'
+    keywords: qsTr('deform lens distort wide angle panoramic hemispherical', 'search keywords for the Fisheye video filter') + ' gopro fisheye #rgba'
     mlt_service: 'frei0r.defish0r'
     qml: 'ui.qml'
     icon: 'icon.webp'

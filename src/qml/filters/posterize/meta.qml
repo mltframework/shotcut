@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Posterize")
-    keywords: qsTr('reduce colors banding cartoon', 'search keywords for the Posterize video filter') + ' posterize'
+    keywords: qsTr('reduce colors banding cartoon', 'search keywords for the Posterize video filter') + ' posterize #rgba'
     objectName: 'posterize'
     mlt_service: "frei0r.posterize"
     qml: "ui.qml"

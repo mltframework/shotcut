@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr('Levels', 'Levels video filter')
-    keywords: qsTr('gamma value black white', 'search keywords for the Levels video filter') + ' levels'
+    keywords: qsTr('gamma value black white', 'search keywords for the Levels video filter') + ' levels #rgba'
     mlt_service: 'frei0r.levels'
     qml: 'ui.qml'
     icon: 'icon.webp'

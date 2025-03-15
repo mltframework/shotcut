@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr('Mask: From File')
-    keywords: qsTr('matte stencil alpha luma wipe custom', 'search keywords for the Mask: From File video filter') + ' mask: from file'
+    keywords: qsTr('matte stencil alpha luma wipe custom', 'search keywords for the Mask: From File video filter') + ' mask: from file #rgba'
     mlt_service: 'mask_start'
     objectName: 'maskFromFile'
     qml: 'ui.qml'

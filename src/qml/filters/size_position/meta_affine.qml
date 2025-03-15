@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     objectName: 'affineSizePosition'
     name: qsTr('Size, Position & Rotate')
-    keywords: qsTr('transform zoom rotation distort fill move', 'search keywords for the Size, Position & Rotate video filter') + ' size position rotate'
+    keywords: qsTr('transform zoom rotation distort fill move', 'search keywords for the Size, Position & Rotate video filter') + ' size position rotate #rgba'
     mlt_service: 'affine'
     qml: 'ui_affine.qml'
     vui: 'vui_affine.qml'

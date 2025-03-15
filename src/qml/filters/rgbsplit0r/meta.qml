@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2019-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("RGB Shift")
-    keywords: qsTr('glitch chroma analog split', 'search keywords for the RGB Shift video filter') + ' rgb shift'
+    keywords: qsTr('glitch chroma analog split', 'search keywords for the RGB Shift video filter') + ' rgb shift #rgba'
     mlt_service: "frei0r.rgbsplit0r"
     qml: "ui.qml"
     icon: 'icon.webp'

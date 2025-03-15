@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Key Spill: Advanced")
-    keywords: qsTr('chroma alpha clean suppress', 'search keywords for the Key Spill: Advanced video filter') + ' key spill: advanced'
+    keywords: qsTr('chroma alpha clean suppress', 'search keywords for the Key Spill: Advanced video filter') + ' key spill: advanced #rgba'
     mlt_service: 'frei0r.keyspillm0pup'
     qml: 'ui.qml'
 }
