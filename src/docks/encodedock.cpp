@@ -1244,6 +1244,7 @@ MeltJob *EncodeDock::convertReframe(Mlt::Producer *service,
             reframeProfile.set_sample_aspect(1, 1);
             reframeProfile.set_width(rect.w);
             reframeProfile.set_height(rect.h);
+            reframeProfile.set_progressive(MLT.profile().progressive());
             auto gcd = Util::greatestCommonDivisor(rect.w, rect.h);
             reframeProfile.set_display_aspect(rect.w / gcd, rect.h / gcd);
             LOG_DEBUG() << "reframe profile" << reframeProfile.width() << "x"
