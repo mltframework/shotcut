@@ -641,7 +641,7 @@ Rectangle {
     Rectangle {
         id: trimIn
 
-        enabled: !elided && !isBlank && !isTransition
+        enabled: parent.width > 1 && !isBlank && !isTransition
         anchors.left: parent.left
         anchors.leftMargin: 0
         height: parent.height
@@ -693,7 +693,7 @@ Rectangle {
     Rectangle {
         id: trimOut
 
-        enabled: !elided && !isBlank && !isTransition
+        enabled: parent.width > 1 && !isBlank && !isTransition
         anchors.right: parent.right
         anchors.rightMargin: 0
         height: parent.height
