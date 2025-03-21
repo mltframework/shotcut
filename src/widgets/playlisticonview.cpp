@@ -44,7 +44,7 @@ PlaylistIconView::PlaylistIconView(QWidget *parent)
     connect(&Settings, SIGNAL(playlistThumbnailsChanged()), SLOT(updateSizes()));
 }
 
-QRect PlaylistIconView::visualRect(const QModelIndex &index) const
+QRect PlaylistIconView::_visualRect(const QModelIndex &index) const
 {
     if (!index.isValid())
         return QRect();
@@ -54,6 +54,13 @@ QRect PlaylistIconView::visualRect(const QModelIndex &index) const
                  row * m_gridSize.height(),
                  m_gridSize.width(),
                  m_gridSize.height());
+}
+
+QRect PlaylistIconView::visualRect(const QModelIndex &index) const
+{
+    // TODO: this was causing a performance problem
+    // return _visualRect(index);
+    return QRect();
 }
 
 void PlaylistIconView::rowsInserted(const QModelIndex &parent, int start, int end)
@@ -299,7 +306,7 @@ void PlaylistIconView::dropEvent(QDropEvent *event)
     m_draggingOverPos = QPoint();
 
     QModelIndex index = indexAt(event->position().toPoint());
-    QRect rectAtDropPoint = visualRect(index);
+    QRect rectAtDropPoint = _visualRect(index);
 
     QAbstractItemView::DropIndicatorPosition dropPos = position(event->position().toPoint(),
                                                                 rectAtDropPoint,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2024 Meltytech, LLC
+ * Copyright (c) 2016-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,6 +69,7 @@ private:
     QAbstractItemView::DropIndicatorPosition position(const QPoint &pos,
                                                       const QRect &rect,
                                                       const QModelIndex &index) const;
+    QRect _visualRect(const QModelIndex &index) const;
 
     QSize m_gridSize;
     QPoint m_draggingOverPos;
