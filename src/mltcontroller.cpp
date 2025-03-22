@@ -542,8 +542,12 @@ QString Controller::XML(Service *service, bool withProfile, bool withMetadata)
     Service s(service                                  ? service->get_service()
               : (m_producer && m_producer->is_valid()) ? m_producer->get_service()
                                                        : nullptr);
-    // Save the consumer on this service so it can be restored.
-    mlt_service saveConsumer = mlt_service_consumer(s.get_service());
+    // Save the consumer of this service so it can be restored.
+    std::unique_ptr<Service> saveConsumer(s.consumer());
+    if (!saveConsumer) {
+        LOG_ERROR() << "Unable to get save consumer";
+        saveConsumer.reset(new Service());
+    }
     if (!s.is_valid())
         return "";
     int ignore = s.get_int("ignore_points");
@@ -560,7 +564,7 @@ QString Controller::XML(Service *service, bool withProfile, bool withMetadata)
     if (ignore)
         s.set("ignore_points", ignore);
     // Restore the consumer that was previously on this service
-    mlt_service_set_consumer(s.get_service(), saveConsumer);
+    s.set_consumer(*saveConsumer);
     return QString::fromUtf8(c.get(kMltXmlPropertyName));
 }
 
