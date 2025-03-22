@@ -146,8 +146,6 @@ public:
                            (mlt_destructor) deleteQImage,
                            NULL);
         }
-        m_model->showThumbnail(m_row);
-
         if (setting == "tall" || setting == "wide") {
             image = DB.getThumbnail(cacheKey(outPoint));
             if (m_force || image.isNull()) {
@@ -165,8 +163,8 @@ public:
                                (mlt_destructor) deleteQImage,
                                NULL);
             }
-            m_model->showThumbnail(m_row);
         }
+        m_model->showThumbnail(m_row);
     }
 
     QImage makeThumbnail(int frameNumber)
@@ -701,9 +699,9 @@ void PlaylistModel::clear()
     if (!m_playlist)
         return;
     if (rowCount()) {
-        beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+        beginResetModel();
         m_playlist->clear();
-        endRemoveRows();
+        endResetModel();
     }
     emit cleared();
 }
@@ -712,9 +710,9 @@ void PlaylistModel::load()
 {
     if (m_playlist) {
         if (rowCount()) {
-            beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+            beginResetModel();
             m_playlist->clear();
-            endRemoveRows();
+            endResetModel();
         }
         delete m_playlist;
     }
@@ -731,8 +729,8 @@ void PlaylistModel::load()
         return;
     }
     if (m_playlist->count() > 0) {
-        beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
-        endInsertRows();
+        beginResetModel();
+        endResetModel();
     }
     // do not let opening a clip change the profile!
     MLT.profile().set_explicit(true);
@@ -876,7 +874,9 @@ void PlaylistModel::createIfNeeded()
 
 void PlaylistModel::showThumbnail(int row)
 {
-    emit dataChanged(createIndex(row, 0), createIndex(row, columnCount()));
+    emit dataChanged(createIndex(row, PlaylistModel::COLUMN_THUMBNAIL),
+                     createIndex(row, PlaylistModel::COLUMN_THUMBNAIL),
+                     QList<int>() << PlaylistModel::COLUMN_THUMBNAIL);
 }
 
 void PlaylistModel::refreshThumbnails()
@@ -902,9 +902,9 @@ void PlaylistModel::setPlaylist(Mlt::Playlist &playlist)
     if (playlist.is_valid()) {
         if (m_playlist) {
             if (rowCount()) {
-                beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+                beginResetModel();
                 m_playlist->clear();
-                endRemoveRows();
+                endResetModel();
             }
             delete m_playlist;
         }
@@ -915,8 +915,8 @@ void PlaylistModel::setPlaylist(Mlt::Playlist &playlist)
             return;
         }
         if (m_playlist->count() > 0) {
-            beginInsertRows(QModelIndex(), 0, m_playlist->count() - 1);
-            endInsertRows();
+            beginResetModel();
+            endResetModel();
         }
         // do not let opening a clip change the profile!
         MLT.profile().set_explicit(true);
