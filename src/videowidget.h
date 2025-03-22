@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2023 Meltytech, LLC
+ * Copyright (c) 2011-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #define VIDEOWIDGET_H
 
 #include "mltcontroller.h"
+#include "settings.h"
 #include "sharedframe.h"
 
 #include <QMutex>
@@ -54,13 +55,13 @@ public:
     VideoWidget(QObject *parent = 0);
     virtual ~VideoWidget();
 
-    int setProducer(Mlt::Producer *, bool isMulti = false);
+    int setProducer(Mlt::Producer *, bool isMulti = false) override;
     void createThread(RenderThread **thread, thread_function_t function, void *data);
     void startGlsl();
     void stopGlsl();
-    int reconfigure(bool isMulti);
+    int reconfigure(bool isMulti) override;
 
-    void play(double speed = 1.0)
+    void play(double speed = 1.0) override
     {
         Controller::play(speed);
         if (speed == 0)
@@ -68,21 +69,22 @@ public:
         else
             emit playing();
     }
-    void seek(int position)
+    void seek(int position) override
     {
         Controller::seek(position);
-        emit paused();
+        if (Settings.playerPauseAfterSeek())
+            emit paused();
     }
-    void refreshConsumer(bool scrubAudio = false);
-    void pause()
+    void refreshConsumer(bool scrubAudio = false) override;
+    void pause(int position = -1) override
     {
         Controller::pause();
         emit paused();
     }
-    int displayWidth() const { return m_rect.width(); }
-    int displayHeight() const { return m_rect.height(); }
+    int displayWidth() const override { return m_rect.width(); }
+    int displayHeight() const override { return m_rect.height(); }
 
-    QObject *videoWidget() { return this; }
+    QObject *videoWidget() override { return this; }
     QRectF rect() const { return m_rect; }
     int grid() const { return m_grid; }
     float zoom() const { return m_zoom * MLT.profile().width() / m_rect.width(); }
@@ -152,11 +154,11 @@ private slots:
     void onRefreshTimeout();
 
 protected:
-    void resizeEvent(QResizeEvent *event);
-    void mousePressEvent(QMouseEvent *);
-    void mouseMoveEvent(QMouseEvent *);
-    void keyPressEvent(QKeyEvent *event);
-    bool event(QEvent *event);
+    void resizeEvent(QResizeEvent *event) override;
+    void mousePressEvent(QMouseEvent *) override;
+    void mouseMoveEvent(QMouseEvent *) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    bool event(QEvent *event) override;
     void createShader();
 
     int m_maxTextureSize;
