@@ -1974,10 +1974,16 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
             return true;
         QCoreApplication::processEvents();
         // close existing project
-        if (playlist())
+        if (playlist()) {
+            m_playlistDock->model()->blockSignals(true);
             m_playlistDock->model()->close();
-        if (multitrack())
+            m_playlistDock->model()->blockSignals(false);
+        }
+        if (multitrack()) {
+            m_timelineDock->model()->blockSignals(true);
             m_timelineDock->model()->close();
+            m_timelineDock->model()->blockSignals(false);
+        }
         MLT.purgeMemoryPool();
         if (!isXmlRepaired(checker, url))
             return true;
