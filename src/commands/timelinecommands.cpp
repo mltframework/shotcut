@@ -1124,18 +1124,22 @@ void SplitCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex[0] << "clipIndex" << m_clipIndex[0] << "position"
                 << m_position;
+    MAIN.filterController()->pauseUndoTracking();
     m_undoHelper.recordBeforeState();
     for (int i = 0; i < m_trackIndex.size(); i++) {
         m_model.splitClip(m_trackIndex[i], m_clipIndex[i], m_position);
     }
     m_undoHelper.recordAfterState();
+    MAIN.filterController()->resumeUndoTracking();
 }
 
 void SplitCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex[0] << "clipIndex" << m_clipIndex[0] << "position"
                 << m_position;
+    MAIN.filterController()->pauseUndoTracking();
     m_undoHelper.undoChanges();
+    MAIN.filterController()->resumeUndoTracking();
 }
 
 FadeInCommand::FadeInCommand(
