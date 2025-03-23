@@ -833,7 +833,7 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
     }
     if (that->m_trackDelta || m_trackDelta) {
         // Do not merge move commands if the move is between tracks.
-        // In particular, if a clip is moved to a track and then back to the origional track,
+        // In particular, if a clip is moved to a track and then back to the original track,
         // there is no change and a single undo command is left with nothing to undo.
         return false;
     }
@@ -845,6 +845,8 @@ bool MoveClipCommand::mergeWith(const QUndoCommand *other)
         thisIterator++;
         thatIterator++;
     }
+    m_positionDelta += that->m_positionDelta;
+    m_undoHelper.recordAfterState();
     return true;
 }
 
