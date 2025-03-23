@@ -37,6 +37,23 @@ Mlt::Producer *deserializeProducer(QString &xml)
     return new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
 }
 
+QVector<QUuid> getProducerUuids(Mlt::Producer *producer)
+{
+    QVector<QUuid> uuids;
+    if (producer->type() == mlt_service_playlist_type) {
+        Mlt::Playlist playlist(*producer);
+        int count = playlist.count();
+        for (int i = 0; i < count; i++) {
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
+            Mlt::Producer clip = Mlt::Producer(info->producer);
+            uuids << MLT.ensureHasUuid(clip.parent());
+        }
+    } else {
+        uuids << MLT.ensureHasUuid(*producer);
+    }
+    return uuids;
+}
+
 int getUniqueGroupNumber(MultitrackModel &model)
 {
     QSet<int> groups;
@@ -88,6 +105,14 @@ void AppendCommand::redo()
     Mlt::Producer *producer = longTask.runAsync<Mlt::Producer *>(QObject::tr("Preparing"), [=]() {
         return deserializeProducer(m_xml);
     });
+    if (!producer || !producer->is_valid()) {
+        LOG_ERROR() << "Invalid producer";
+        m_undoHelper.recordAfterState();
+        return;
+    }
+    if (m_uuids.empty()) {
+        m_uuids = getProducerUuids(producer);
+    }
     if (producer->type() == mlt_service_playlist_type) {
         Mlt::Playlist playlist(*producer);
         int count = playlist.count();
@@ -98,10 +123,12 @@ void AppendCommand::redo()
             if (!m_skipProxy)
                 ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
+            MLT.setUuid(clip.parent(), m_uuids[i]);
             bool lastClip = i == (count - 1);
             m_model.appendClip(m_trackIndex, clip, false, lastClip);
         }
     } else {
+        MLT.setUuid(*producer, m_uuids[0]);
         if (!m_skipProxy)
             ProxyManager::generateIfNotExists(*producer);
         m_model.appendClip(m_trackIndex, *producer, m_seek);
@@ -146,6 +173,14 @@ void InsertCommand::redo()
     int shift = 0;
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    if (!clip.is_valid()) {
+        LOG_ERROR() << "Invalid producer";
+        m_undoHelper.recordAfterState();
+        return;
+    }
+    if (m_uuids.empty()) {
+        m_uuids = getProducerUuids(&clip);
+    }
     if (clip.type() == mlt_service_playlist_type) {
         LongUiTask longTask(QObject::tr("Add Files"));
         Mlt::Playlist playlist(clip);
@@ -159,12 +194,14 @@ void InsertCommand::redo()
                                     n);
             ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
+            MLT.setUuid(clip.parent(), m_uuids[i]);
             bool lastClip = i == 0;
             m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false, lastClip);
             shift += info->frame_count;
         }
     } else {
         shift = clip.get_playtime();
+        MLT.setUuid(clip, m_uuids[0]);
         ProxyManager::generateIfNotExists(clip);
         m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, m_seek);
     }
@@ -207,6 +244,9 @@ void OverwriteCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    if (m_uuids.empty()) {
+        m_uuids = getProducerUuids(&clip);
+    }
     if (clip.type() == mlt_service_playlist_type) {
         LongUiTask longTask(QObject::tr("Add Files"));
         Mlt::Playlist playlist(clip);
@@ -218,11 +258,13 @@ void OverwriteCommand::redo()
             longTask.reportProgress(QFileInfo(ProxyManager::resource(clip)).fileName(), i, n);
             ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
+            MLT.setUuid(clip.parent(), m_uuids[i]);
             bool lastClip = i == (n - 1);
             m_model.overwrite(m_trackIndex, clip, position, false, lastClip);
             position += info->frame_count;
         }
     } else {
+        MLT.setUuid(clip, m_uuids[0]);
         ProxyManager::generateIfNotExists(clip);
         m_model.overwrite(m_trackIndex, clip, m_position, m_seek);
     }

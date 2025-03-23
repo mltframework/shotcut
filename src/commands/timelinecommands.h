@@ -87,6 +87,7 @@ private:
     UndoHelper m_undoHelper;
     bool m_skipProxy;
     bool m_seek;
+    QVector<QUuid> m_uuids;
 };
 
 class InsertCommand : public QUndoCommand
@@ -114,6 +115,7 @@ private:
     bool m_rippleAllTracks;
     bool m_rippleMarkers;
     int m_markersShift;
+    QVector<QUuid> m_uuids;
 };
 
 class OverwriteCommand : public QUndoCommand
@@ -135,6 +137,7 @@ private:
     QString m_xml;
     UndoHelper m_undoHelper;
     bool m_seek;
+    QVector<QUuid> m_uuids;
 };
 
 class LiftCommand : public QUndoCommand
