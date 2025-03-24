@@ -231,7 +231,8 @@ public:
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override
     {
-        const auto isDir = fileInfo(index).isDir();
+        const auto info = fileInfo(index);
+        const auto isDir = info.isDir();
         if (MediaTypeStringRole == role || (index.column() == 2 && Qt::DisplayRole == role)) {
             QString names[] = {
                 tr("Video"),
@@ -245,18 +246,19 @@ public:
         }
         switch (role) {
         case Qt::ToolTipRole:
-            return QDir::toNativeSeparators(filePath(index));
+            return QDir::toNativeSeparators(info.filePath());
         case DateRole:
-            return fileInfo(index).lastModified();
+            return info.lastModified();
         case MediaTypeRole:
             return isDir ? PlaylistModel::Other : mediaType(index);
         case ThumbnailRole: {
-            const auto path = filePath(index);
+            const auto path = info.filePath();
             const auto thumbnailKey = FilesThumbnailTask::cacheKey(path);
             auto image = DB.getThumbnail(thumbnailKey);
             if (image.isNull()) {
                 ::cacheThumbnail(const_cast<FilesModel *>(this), path, image, index);
-                if (!path.endsWith(QStringLiteral(".mlt"), Qt::CaseInsensitive))
+                if (!path.endsWith(QStringLiteral(".mlt"), Qt::CaseInsensitive)
+                    && !info.isShortcut())
                     QThreadPool::globalInstance()->start(
                         new FilesThumbnailTask(const_cast<FilesModel *>(this), path, index));
             }
@@ -385,11 +387,13 @@ public:
         }
 
         auto thumbRect = thumb.rect();
-        const float width = qRound(16.f / 9.f * option.rect.height());
-        thumbRect = QRect(0, 0, width, qRound(width * thumbRect.height() / thumbRect.width()));
-        thumbRect.moveCenter(option.rect.center());
-        thumbRect.moveLeft(0);
-        painter->drawImage(thumbRect, thumb);
+        if (thumbRect.width() > 0) {
+            const float width = qRound(16.f / 9.f * option.rect.height());
+            thumbRect = QRect(0, 0, width, qRound(width * thumbRect.height() / thumbRect.width()));
+            thumbRect.moveCenter(option.rect.center());
+            thumbRect.moveLeft(0);
+            painter->drawImage(thumbRect, thumb);
+        }
         auto textRect = option.rect;
         textRect.setHeight(lineHeight * 3 + kTilePaddingPx);
         textRect.moveCenter(option.rect.center());
@@ -398,10 +402,9 @@ public:
         QPoint textPoint = textRect.topLeft();
         textPoint.setY(textPoint.y() + lineHeight);
         painter->setFont(boldFont);
-        painter->drawText(textPoint,
-                          painter->fontMetrics().elidedText(fileInfo.fileName(),
-                                                            Qt::ElideMiddle,
-                                                            textRect.width()));
+        auto name = fileInfo.isShortcut() ? fileInfo.baseName() : fileInfo.fileName();
+        name = painter->fontMetrics().elidedText(name, Qt::ElideMiddle, textRect.width());
+        painter->drawText(textPoint, name);
         painter->setFont(oldFont);
 
         textPoint.setY(textPoint.y() + lineHeight);
@@ -411,11 +414,11 @@ public:
                                        .toDateTime()
                                        .toString("yyyy-MM-dd HH:mm:ss")));
         textPoint.setY(textPoint.y() + lineHeight);
-        if (!fileInfo.isDir()) {
+        if (fileInfo.isFile()) {
             // Get the text of the second (size) column
             auto myindex = index.model()->index(index.row(), 1, index.parent());
-            auto mediaType = myindex.data(Qt::DisplayRole).toString();
-            painter->drawText(textPoint, tr("Size: %1").arg(mediaType));
+            auto size = myindex.data(Qt::DisplayRole).toString();
+            painter->drawText(textPoint, tr("Size: %1").arg(size));
         }
     }
 
@@ -682,19 +685,12 @@ FilesDock::FilesDock(QWidget *parent)
     ui->tableView->horizontalHeader()->setSectionsMovable(true);
     ui->tableView->setColumnWidth(1, 100);
     connect(ui->tableView, &QAbstractItemView::activated, this, [=](const QModelIndex &index) {
-        auto sourceIndex = m_filesProxyModel->mapToSource(index);
-        auto filePath = m_filesModel->filePath(sourceIndex);
+        const auto sourceIndex = m_filesProxyModel->mapToSource(index);
+        const auto filePath = m_filesModel->filePath(sourceIndex);
 
         LOG_DEBUG() << "activated" << filePath;
         if (m_filesModel->isDir(sourceIndex)) {
-            m_filesModel->setRootPath(filePath);
-            Settings.setFilesCurrentDir(filePath);
-            changeFilesDirectory(index);
-            m_view->setCurrentIndex(QModelIndex());
-            const auto dirsIndex = m_dirsModel->index(filePath);
-            ui->treeView->setExpanded(dirsIndex, true);
-            ui->treeView->scrollTo(dirsIndex);
-            ui->treeView->setCurrentIndex(dirsIndex);
+            changeDirectory(filePath);
             return;
         }
         m_selectionModel->setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
@@ -1106,7 +1102,8 @@ void FilesDock::changeDirectory(const QString &filePath, bool updateLocation)
     }
     index = m_filesModel->setRootPath(path);
     Settings.setFilesCurrentDir(path);
-    ui->locationsCombo->setToolTip(QDir::toNativeSeparators(path));
+    path = QDir::toNativeSeparators(path);
+    ui->locationsCombo->setToolTip(path);
     if (updateLocation && path != ui->locationsCombo->currentText())
         ui->locationsCombo->setCurrentText(path);
     m_view->setRootIndex(m_filesProxyModel->mapFromSource(index));
