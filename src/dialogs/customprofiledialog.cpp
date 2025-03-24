@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,17 @@ CustomProfileDialog::CustomProfileDialog(QWidget *parent)
     ui->aspectDenSpinner->setValue(MLT.profile().display_aspect_den());
     ui->fpsSpinner->setValue(MLT.profile().fps());
     ui->scanModeCombo->setCurrentIndex(MLT.profile().progressive());
-    ui->colorspaceCombo->setCurrentIndex(MLT.profile().colorspace() == 709);
+    switch (MLT.profile().colorspace()) {
+    case 601:
+        ui->colorspaceCombo->setCurrentIndex(0);
+        break;
+    case 2020:
+        ui->colorspaceCombo->setCurrentIndex(2);
+        break;
+    default:
+        ui->colorspaceCombo->setCurrentIndex(1);
+        break;
+    }
 }
 
 CustomProfileDialog::~CustomProfileDialog()
@@ -69,7 +79,17 @@ void CustomProfileDialog::on_buttonBox_accepted()
     Util::normalizeFrameRate(ui->fpsSpinner->value(), numerator, denominator);
     MLT.profile().set_frame_rate(numerator, denominator);
     MLT.profile().set_progressive(ui->scanModeCombo->currentIndex());
-    MLT.profile().set_colorspace((ui->colorspaceCombo->currentIndex() == 1) ? 709 : 601);
+    switch (ui->colorspaceCombo->currentIndex()) {
+    case 0:
+        MLT.profile().set_colorspace(601);
+        break;
+    case 2:
+        MLT.profile().set_colorspace(2020);
+        break;
+    default:
+        MLT.profile().set_colorspace(709);
+        break;
+    }
     MLT.updatePreviewProfile();
     MLT.setPreviewScale(Settings.playerPreviewScale());
 

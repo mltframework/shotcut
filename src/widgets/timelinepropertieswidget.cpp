@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,8 @@ TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidge
             ui->colorspaceLabel->setText("ITU-R BT.601");
         else if (profile.colorspace() == 709)
             ui->colorspaceLabel->setText("ITU-R BT.709");
+        else if (profile.colorspace() == 2020)
+            ui->colorspaceLabel->setText("ITU-R BT.2020");
         else
             ui->colorspaceLabel->setText("");
     }

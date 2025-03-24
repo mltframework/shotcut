@@ -53,6 +53,11 @@
             <string notr="true">ITU-R BT.709</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>ITU-R BT.2020</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item>

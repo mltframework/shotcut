@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Meltytech, LLC
+ * Copyright (c) 2024-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -156,8 +156,10 @@ void MltClipProducerWidget::setProducer(Mlt::Producer *p)
     int colorspace = m_producer->get_int("meta.media.colorspace");
     if (colorspace == 601)
         m_colorspaceLabel->setText("ITU-R BT.601");
-    else if (colorspace)
+    else if (colorspace == 709)
         m_colorspaceLabel->setText("ITU-R BT.709");
+    else if (colorspace == 2020)
+        m_colorspaceLabel->setText("ITU-R BT.2020");
     else
         m_colorspaceLabel->setText("");
     m_durationLabel->setText(QString(m_producer->get_length_time(Settings.timeFormat())));
