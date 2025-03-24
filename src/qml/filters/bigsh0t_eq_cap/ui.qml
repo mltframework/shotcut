@@ -246,15 +246,9 @@ Shotcut.KeyframableFilter {
         setControls();
     }
     function setControlsForAllParameters() {
-        console.log("START");
-        console.log(allParameters.length);
         for (var i = 0; i < allParameters.length; ++i) {
-            console.log(i);
             var param = allParameters[i];
             var control = getControl(param);
-            console.log(param.name);
-            console.log(param.type);
-            console.log(control);
             if (param.type == "simple") {
                 setSimpleControl(param.name, control, getKeyframesButton(param));
             } else if (param.type == "static") {
@@ -280,7 +274,6 @@ Shotcut.KeyframableFilter {
         if (filter.isNew) {
             for (var i = 0; i < allParameters.length; ++i) {
                 var param = allParameters[i];
-                console.log(param.name);
                 if (param.def != null) {
                     var control = getControl(param);
                     filter.set(param.name, param.def);
