@@ -686,7 +686,7 @@ FilesDock::FilesDock(QWidget *parent)
     ui->tableView->setColumnWidth(1, 100);
     connect(ui->tableView, &QAbstractItemView::activated, this, [=](const QModelIndex &index) {
         const auto sourceIndex = m_filesProxyModel->mapToSource(index);
-        const auto filePath = m_filesModel->filePath(sourceIndex);
+        auto filePath = m_filesModel->filePath(sourceIndex);
 
         LOG_DEBUG() << "activated" << filePath;
         if (m_filesModel->isDir(sourceIndex)) {
@@ -694,6 +694,9 @@ FilesDock::FilesDock(QWidget *parent)
             return;
         }
         m_selectionModel->setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
+        const auto info = m_filesModel->fileInfo(sourceIndex);
+        if (info.isSymLink())
+            filePath = info.symLinkTarget();
         if (!MAIN.open(filePath))
             openClip(filePath);
     });
@@ -1035,6 +1038,9 @@ QString FilesDock::firstSelectedFilePath()
         if (index.isValid()) {
             auto sourceIndex = m_filesProxyModel->mapToSource(index);
             result = m_filesModel->filePath(sourceIndex);
+            const auto info = m_filesModel->fileInfo(sourceIndex);
+            if (info.isSymLink())
+                result = info.symLinkTarget();
         }
     }
     return result;
