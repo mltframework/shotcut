@@ -441,6 +441,7 @@ Rectangle {
         height: label.height
         padding: 0
         focusPolicy: Qt.NoFocus
+        enabled: false
         onClicked: {
             clipRoot.clicked(clipRoot, null);
             timeline.filteredClicked();
