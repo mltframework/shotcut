@@ -455,7 +455,7 @@ Rectangle {
             implicitWidth: 16
             implicitHeight: 16
             color: 'lightgray'
-            opacity: 0.7
+            opacity: 1
         }
     }
 
