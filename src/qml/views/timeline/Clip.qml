@@ -239,14 +239,15 @@ Rectangle {
     }
 
     Rectangle {
-        // text background
+        id: leftLabelBackground
+
         color: 'lightgray'
         visible: !elided && !isBlank && !isTransition
         opacity: 0.7
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.width * 2 : inThumbnail.width + filtersIcon.width)
+        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.enabledWidth : inThumbnail.width + filtersIcon.width)
         width: label.width + 2
         height: label.height
     }
@@ -261,14 +262,15 @@ Rectangle {
 
         anchors {
             top: parent.top
-            left: parent.left
+            left: leftLabelBackground.left
             topMargin: parent.border.width + 1
-            leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? filtersIcon.width * 2 : inThumbnail.width + filtersIcon.width) + 1
+            leftMargin: parent.border.width + 1
         }
     }
 
     Rectangle {
-        // text background
+        id: rightLabelBackground
+
         color: 'lightgray'
         visible: labelRight.visible
         opacity: 0.7
@@ -290,9 +292,9 @@ Rectangle {
 
         anchors {
             top: parent.top
-            right: parent.right
+            right: rightLabelBackground.right
             topMargin: parent.border.width + 1
-            rightMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : outThumbnail.width) + 3
+            rightMargin: parent.border.width
         }
     }
 
@@ -428,6 +430,9 @@ Rectangle {
 
     ToolButton {
         id: filtersIcon
+
+        property real enabledWidth: enabled ? 2 * width : width
+
         visible: !elided && !isBlank && isFiltered
         icon.source: 'qrc:///icons/light/32x32/view-filter.png'
         icon.width: 16
@@ -436,7 +441,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? visible ? label.height : 0 : inThumbnail.width)
+        anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? (enabled ? width : 0) : inThumbnail.width)
         width: visible ? label.height : 0
         height: label.height
         padding: 0
@@ -450,7 +455,7 @@ Rectangle {
             implicitWidth: 16
             implicitHeight: 16
             color: 'lightgray'
-            opacity: enabled ? 1 : 0.3
+            opacity: 0.7
         }
     }
 
