@@ -687,16 +687,17 @@ FilesDock::FilesDock(QWidget *parent)
     connect(ui->tableView, &QAbstractItemView::activated, this, [=](const QModelIndex &index) {
         const auto sourceIndex = m_filesProxyModel->mapToSource(index);
         auto filePath = m_filesModel->filePath(sourceIndex);
-
-        LOG_DEBUG() << "activated" << filePath;
-        if (m_filesModel->isDir(sourceIndex)) {
+        auto info = m_filesModel->fileInfo(sourceIndex);
+        if (info.isSymLink()) {
+            filePath = info.symLinkTarget();
+            info = QFileInfo(filePath);
+        }
+        LOG_DEBUG() << "activated" << filePath + (info.isDir() ? "/" : "");
+        if (info.isDir()) {
             changeDirectory(filePath);
             return;
         }
         m_selectionModel->setCurrentIndex(index, QItemSelectionModel::SelectCurrent);
-        const auto info = m_filesModel->fileInfo(sourceIndex);
-        if (info.isSymLink())
-            filePath = info.symLinkTarget();
         if (!MAIN.open(filePath))
             openClip(filePath);
     });
@@ -1185,15 +1186,15 @@ void FilesDock::keyPressEvent(QKeyEvent *event)
             const auto index = m_view->selectionModel()->selectedIndexes().first();
             if (index.isValid()) {
                 const auto sourceIndex = m_filesProxyModel->mapToSource(index);
-                const auto filePath = m_filesModel->filePath(sourceIndex);
-                if (m_filesModel->isDir(sourceIndex)) {
-                    m_filesModel->setRootPath(filePath);
-                    Settings.setFilesCurrentDir(filePath);
-                    changeFilesDirectory(index);
-                    const auto dirsIndex = m_dirsModel->index(filePath);
-                    ui->treeView->setExpanded(dirsIndex, true);
-                    ui->treeView->scrollTo(dirsIndex);
-                    ui->treeView->setCurrentIndex(dirsIndex);
+                auto filePath = m_filesModel->filePath(sourceIndex);
+                QFileInfo info(filePath);
+                if (info.isSymLink()) {
+                    filePath = info.symLinkTarget();
+                    info = QFileInfo(filePath);
+                }
+                LOG_DEBUG() << "activated" << filePath + (info.isDir() ? "/" : "");
+                if (info.isDir()) {
+                    changeDirectory(filePath);
                     return;
                 }
                 if (!MAIN.open(filePath))
