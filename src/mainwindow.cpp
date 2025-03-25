@@ -1975,14 +1975,10 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         QCoreApplication::processEvents();
         // close existing project
         if (playlist()) {
-            m_playlistDock->model()->blockSignals(true);
             m_playlistDock->model()->close();
-            m_playlistDock->model()->blockSignals(false);
         }
         if (multitrack()) {
-            m_timelineDock->model()->blockSignals(true);
             m_timelineDock->model()->close();
-            m_timelineDock->model()->blockSignals(false);
         }
         MLT.purgeMemoryPool();
         if (!isXmlRepaired(checker, url))
@@ -3373,7 +3369,6 @@ void MainWindow::onPlaylistCleared()
 
 void MainWindow::onPlaylistClosed()
 {
-    closeProducer();
     setProfile(Settings.playerProfile());
     resetVideoModeMenu();
     setAudioChannels(Settings.playerAudioChannels());
@@ -3406,7 +3401,6 @@ void MainWindow::onMultitrackCreated()
 void MainWindow::onMultitrackClosed()
 {
     setAudioChannels(Settings.playerAudioChannels());
-    closeProducer();
     setProfile(Settings.playerProfile());
     resetVideoModeMenu();
     setCurrentFile("");
@@ -4604,6 +4598,7 @@ void MainWindow::on_actionClose_triggered()
             m_playlistDock->model()->close();
         else
             onMultitrackClosed();
+        closeProducer();
         m_notesDock->setText("");
         m_player->enableTab(Player::SourceTabIndex, false);
         MLT.purgeMemoryPool();
