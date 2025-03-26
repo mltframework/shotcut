@@ -4,15 +4,15 @@ sudo xcode-select -s /Applications/Xcode.app/
 
 SIGNER="Developer ID Application: Meltytech, LLC (Y6RX44QG2G)"
 find ~/Desktop/Shotcut.app -type d -name __pycache__ -exec rm -r {} \+
-find ~/Desktop/Shotcut.app/Contents -name '*.o' -exec rm {} \;
-find ~/Desktop/Shotcut.app/Contents/lib -type f -exec codesign --options=runtime --force --verbose --sign "$SIGNER" {} \;
-find ~/Desktop/Shotcut.app/Contents/Frameworks -type f -exec codesign --options=runtime --force --verbose --sign "$SIGNER" {} \;
-find ~/Desktop/Shotcut.app/Contents/PlugIns -type f -exec codesign --options=runtime --force --verbose --sign "$SIGNER" {} \;
-find ~/Desktop/Shotcut.app/Contents/Resources -type f -exec codesign --options=runtime --force --verbose --sign "$SIGNER" {} \;
+find ~/Desktop/Shotcut.app/Contents \( -name '*.o' -or -name '*.a' \) -exec rm {} \;
 xattr -cr ~/Desktop/Shotcut.app
-codesign --options=runtime --force --verbose --sign "$SIGNER" \
-  --entitlements ./notarization.entitlements \
-  ~/Desktop/Shotcut.app/Contents/MacOS/{melt,ffmpeg,ffplay,ffprobe,glaxnimate,gopro2gpx,whisper-cli}
+find ~/Desktop/Shotcut.app/Contents -type f \( -name '*.dylib' -o -name '*.so' \) -exec \
+  codesign --options=runtime --force --verbose --sign "$SIGNER" \
+  {} \;
+find ~/Desktop/Shotcut.app/Contents/MacOS -type f -exec \
+  codesign --options=runtime --force --verbose --sign "$SIGNER" \
+    --entitlements ./notarization.entitlements \
+    {} \;
 codesign --options=runtime --force --verbose --sign "$SIGNER" \
   --entitlements ./notarization.entitlements \
   ~/Desktop/Shotcut.app
