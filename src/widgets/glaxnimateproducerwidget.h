@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023 Meltytech, LLC
+ * Copyright (c) 2022-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,6 +93,7 @@ public:
     virtual void setProducer(Mlt::Producer *);
     Mlt::Properties getPreset() const;
     void loadPreset(Mlt::Properties &);
+    void setLaunchOnNew(bool launch);
 
 signals:
     void producerChanged(Mlt::Producer *);
@@ -116,6 +117,7 @@ private:
     Ui::GlaxnimateProducerWidget *ui;
     QString m_title;
     std::unique_ptr<QFileSystemWatcher> m_watcher;
+    bool m_launchOnNew = true;
 };
 
 #endif // GLAXNIMATEPRODUCERWIDGET_H

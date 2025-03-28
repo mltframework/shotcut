@@ -5126,9 +5126,17 @@ void MainWindow::onOpenOtherFinished(int result)
         return;
     if (AbstractProducerWidget::isDevice(m_producerWidget.get()) && !Settings.playerGPU())
         closeProducer();
+
+    const auto name = m_producerWidget->objectName();
+    auto dialog = dynamic_cast<AbstractProducerWidget *>(m_producerWidget.get());
+    if (QLatin1String("GlaxnimateProducerWidget") == name
+        || QLatin1String("glaxnimateWidget") == name) {
+        auto glax = qobject_cast<GlaxnimateProducerWidget *>(m_producerWidget.get());
+        glax->setLaunchOnNew(false);
+    }
+
     auto &profile = MLT.profile();
-    auto producer
-        = dynamic_cast<AbstractProducerWidget *>(m_producerWidget.get())->newProducer(profile);
+    auto producer = dialog->newProducer(profile);
     if (!(producer && producer->is_valid())) {
         delete producer;
         m_producerWidget.reset();
@@ -5141,15 +5149,16 @@ void MainWindow::onOpenOtherFinished(int result)
     }
     MLT.updatePreviewProfile();
     setPreviewScale(Settings.playerPreviewScale());
-    auto name = m_producerWidget->objectName();
     if (QDialog::Accepted == result) {
         // open in the source player
         open(producer);
         // Mlt::Controller owns the producer now
     } else {
         m_player->switchToTab(Player::ProjectTabIndex);
-        auto trackType = ("ToneProducerWidget" == name || "toneWidget" == name) ? AudioTrackType
-                                                                                : VideoTrackType;
+        auto trackType = (QLatin1String("ToneProducerWidget") == name
+                          || QLatin1String("toneWidget") == name)
+                             ? AudioTrackType
+                             : VideoTrackType;
         auto trackIndex = m_timelineDock->addTrackIfNeeded(trackType);
         m_timelineDock->overwrite(trackIndex, -1, MLT.XML(producer), true);
         delete producer;

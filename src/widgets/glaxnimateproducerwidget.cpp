@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 Meltytech, LLC
+ * Copyright (c) 2022-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -235,7 +235,8 @@ Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
             &QFileSystemWatcher::fileChanged,
             this,
             &GlaxnimateProducerWidget::onFileChanged);
-    GlaxnimateIpcServer::instance().launch(p);
+    if (m_launchOnNew)
+        GlaxnimateIpcServer::instance().launch(p);
 
     return p;
 }
@@ -283,6 +284,11 @@ void GlaxnimateProducerWidget::loadPreset(Mlt::Properties &p)
                         colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
         emit producerChanged(m_producer.get());
     }
+}
+
+void GlaxnimateProducerWidget::setLaunchOnNew(bool launch)
+{
+    m_launchOnNew = launch;
 }
 
 void GlaxnimateProducerWidget::rename()
