@@ -52,6 +52,7 @@ jobs:
 
       - name: Package AppImage
         run: |
+          sudo apt update
           sudo apt install desktop-file-utils libfuse2 imagemagick
           mkdir packaging/linux/Shotcut
           cp VERSION packaging/linux/Shotcut/
