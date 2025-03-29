@@ -25,6 +25,7 @@
 #include "dialogs/editmarkerdialog.h"
 #include "dialogs/longuitask.h"
 #include "dialogs/resourcedialog.h"
+#include "jobs/meltjob.h"
 #include "mainwindow.h"
 #include "models/audiolevelstask.h"
 #include "models/multitrackmodel.h"
@@ -4171,11 +4172,15 @@ void TimelineDock::recordAudio()
     m_recordingClipIndex = clipIndexAtPosition(trackIndex, position());
 
     // Start ffmpeg background job.
-    auto priority = QThread::HighPriority;
 #if defined(Q_OS_MAC)
-    QStringList args{"-f", "avfoundation", "-i", "none:" + Settings.audioInput()};
-    priority = QThread::NormalPriority;
-#elif defined(Q_OS_WIN)
+    QStringList args{"avformat:avfoundation:none:" + Settings.audioInput()};
+    args << "-consumer"
+         << "avformat:" + filename << "video_off=1"
+         << "strict=-2";
+    m_recordJob.reset(
+        new MeltJob("vo", args, MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den()));
+#else
+#if defined(Q_OS_WIN)
     QStringList args{"-f", "dshow", "-i", "audio=" + Settings.audioInput()};
 #else
     QStringList args{"-f", "pulse", "-name", "Shotcut", "-i", Settings.audioInput()};
@@ -4183,7 +4188,8 @@ void TimelineDock::recordAudio()
     args << "-flush_packets"
          << "1"
          << "-y" << filename;
-    m_recordJob.reset(new FfmpegJob("vo", args, false, priority));
+    m_recordJob.reset(new FfmpegJob("vo", args, false, QThread::HighPriority));
+#endif
     m_recordJob->setTarget(filename);
     connect(m_recordJob.get(), SIGNAL(started()), SLOT(onRecordStarted()));
     connect(m_recordJob.get(),
