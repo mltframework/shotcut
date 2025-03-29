@@ -466,7 +466,7 @@ void MainWindow::setupAndConnectDocks()
             &PlaylistModel::outChanged,
             this,
             &MainWindow::onPlaylistOutChanged);
-    QMenu *viewModeMenu = ui->menuPlaylist->addMenu(tr("View mode"));
+    QMenu *viewModeMenu = ui->menuPlaylist->addMenu(tr("View Mode"));
     viewModeMenu->addAction(Actions["playlistViewDetailsAction"]);
     viewModeMenu->addAction(Actions["playlistViewTilesAction"]);
     viewModeMenu->addAction(Actions["playlistViewIconsAction"]);
