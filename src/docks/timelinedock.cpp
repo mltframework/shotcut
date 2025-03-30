@@ -24,11 +24,13 @@
 #include "dialogs/editmarkerdialog.h"
 #include "dialogs/longuitask.h"
 #include "dialogs/resourcedialog.h"
+#include "findanalysisfilterparser.h"
 #include "mainwindow.h"
 #include "models/audiolevelstask.h"
 #include "models/multitrackmodel.h"
 #include "proxymanager.h"
 #include "qmltypes/qmlapplication.h"
+#include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
 #include "qmltypes/thumbnailprovider.h"
@@ -127,6 +129,8 @@ TimelineDock::TimelineDock(QWidget *parent)
     editMenu->addAction(Actions["timelineSplitAction"]);
     editMenu->addAction(Actions["timelineSplitAllTracksAction"]);
     editMenu->addAction(Actions["timelineApplyCopiedFiltersAction"]);
+    editMenu->addAction(Actions["timelineAnalyzeFilters"]);
+
     m_mainMenu->addMenu(editMenu);
     QMenu *viewMenu = new QMenu(tr("View"), this);
     viewMenu->addAction(Actions["timelineZoomOutAction"]);
@@ -1475,6 +1479,27 @@ void TimelineDock::setupActions()
         action->setEnabled(selection().size() > 1);
     });
     Actions.add("timelineGroupAction", action);
+
+    action = new QAction(tr("Rerun Filter Analysis"), this);
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        if (m_model.tractor() && m_model.tractor()->is_valid()) {
+            // Look in the producer for all two-pass filters.
+            FindAnalysisFilterParser parser;
+            parser.skipAnalyzed(false);
+            parser.start(*m_model.tractor());
+            if (parser.filters().size() > 0) {
+                foreach (Mlt::Filter filter, parser.filters()) {
+                    QScopedPointer<QmlMetadata> meta(new QmlMetadata);
+                    QmlFilter qmlFilter(filter, meta.data());
+                    bool isAudio = !::qstrcmp("loudness", filter.get("mlt_service"));
+                    qmlFilter.analyze(isAudio, false);
+                }
+            } else {
+                emit showStatusMessage(tr("No filters to analyze."));
+            }
+        }
+    });
+    Actions.add("timelineAnalyzeFilters", action);
 }
 
 int TimelineDock::addTrackIfNeeded(TrackType trackType)
