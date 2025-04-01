@@ -121,7 +121,7 @@ void QmlApplication::copyAllFilters()
 {
     QScopedPointer<Mlt::Producer> producer(
         new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
-    MLT.copyFilters(producer.data(), MLT.FILTER_INDEX_ENABLED);
+    MLT.copyFilters(producer.data(), MLT.FILTER_INDEX_ALL);
     QGuiApplication::clipboard()->setText(MLT.filtersClipboardXML());
     emit QmlApplication::singleton().filtersCopied();
 }
