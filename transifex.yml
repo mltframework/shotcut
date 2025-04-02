@@ -1,0 +1,6 @@
+filters:
+  - filter_type: file
+    file_format: QT
+    source_file: translations/shotcut_en.ts
+    source_language: en
+    translation_files_expression: 'translations/shotcut_<lang>.ts'
