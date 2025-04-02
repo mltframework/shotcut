@@ -58,8 +58,8 @@ ENABLE_OPENCV=1
 OPENCV_HEAD=0
 OPENCV_REVISION="4.10.0"
 ENABLE_LIBSPATIALAUDIO=1
-LIBSPATIALAUDIO_HEAD=1
-LIBSPATIALAUDIO_REVISION=
+LIBSPATIALAUDIO_HEAD=0
+LIBSPATIALAUDIO_REVISION="origin/patch-1"
 ENABLE_LADSPA=1
 LADSPA_HEAD=0
 LADSPA_REVISION="origin/shotcut"
@@ -451,7 +451,7 @@ function set_globals {
   REPOLOCS[14]="https://github.com/ddennedy/gopro2gpx.git"
   REPOLOCS[15]="https://github.com/opencv/opencv.git"
   REPOLOCS[16]="https://github.com/opencv/opencv_contrib.git"
-  REPOLOCS[17]="https://github.com/videolabs/libspatialaudio.git"
+  REPOLOCS[17]="https://github.com/ddennedy/libspatialaudio.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -535,7 +535,7 @@ function set_globals {
   fi
   REVISIONS[17]=""
   if test 0 = "$LIBSPATIALAUDIO_HEAD" -a "$LIBSPATIALAUDIO_REVISION" ; then
-    REVISIONS[17]="$LIBSPATIALAUDIO_REVISION_REVISION"
+    REVISIONS[17]="$LIBSPATIALAUDIO_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
