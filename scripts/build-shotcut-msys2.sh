@@ -54,9 +54,11 @@ ENABLE_GLAXNIMATE=1
 GLAXNIMATE_HEAD=0
 GLAXNIMATE_REVISION="origin/v0.5.4"
 ENABLE_GOPRO2GPX=1
-ENABLE_OPENCV=0
+ENABLE_OPENCV=1
 OPENCV_HEAD=0
-OPENCV_REVISION="4.10.0"
+OPENCV_REVISION="origin/cmake4"
+OPENCV_CONTRIB_HEAD=0
+OPENCV_CONTRIB_REVISION="4.11.0"
 ENABLE_LIBSPATIALAUDIO=1
 LIBSPATIALAUDIO_HEAD=0
 LIBSPATIALAUDIO_REVISION="origin/patch-1"
@@ -449,7 +451,7 @@ function set_globals {
   REPOLOCS[12]="https://github.com/Netflix/vmaf.git"
   REPOLOCS[13]="https://gitlab.com/ddennedy/glaxnimate.git"
   REPOLOCS[14]="https://github.com/ddennedy/gopro2gpx.git"
-  REPOLOCS[15]="https://github.com/opencv/opencv.git"
+  REPOLOCS[15]="https://github.com/ddennedy/opencv.git"
   REPOLOCS[16]="https://github.com/opencv/opencv_contrib.git"
   REPOLOCS[17]="https://github.com/ddennedy/libspatialaudio.git"
 
@@ -530,8 +532,8 @@ function set_globals {
     REVISIONS[15]="$OPENCV_REVISION"
   fi
   REVISIONS[16]=""
-  if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
-    REVISIONS[16]="$OPENCV_REVISION"
+  if test 0 = "$OPENCV_CONTRIB_HEAD" -a "$OPENCV_CONTRIB_REVISION" ; then
+    REVISIONS[16]="$OPENCV_CONTRIB_REVISION"
   fi
   REVISIONS[17]=""
   if test 0 = "$LIBSPATIALAUDIO_HEAD" -a "$LIBSPATIALAUDIO_REVISION" ; then
@@ -715,7 +717,7 @@ function set_globals {
 
   #####
   # opencv
-  CONFIG[15]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules -D WITH_OPENMP=ON -D CMAKE_POLICY_VERSION_MINIMUM=3.5 $CMAKE_DEBUG_FLAG"
+  CONFIG[15]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules -D WITH_OPENMP=ON $CMAKE_DEBUG_FLAG"
   CFLAGS_[15]="$CFLAGS"
   LDFLAGS_[15]="$LDFLAGS"
   BUILD[15]="build_opencv"
