@@ -647,7 +647,7 @@ Rectangle {
     Rectangle {
         id: trimIn
 
-        enabled: parent.width > 1 && !isBlank && !isTransition
+        enabled: trimInMouseArea.drag.active || (!elided && !isBlank && !isTransition)
         anchors.left: parent.left
         anchors.leftMargin: 0
         height: parent.height
@@ -699,7 +699,7 @@ Rectangle {
     Rectangle {
         id: trimOut
 
-        enabled: parent.width > 1 && !isBlank && !isTransition
+        enabled: trimOutMouseArea.drag.active || (!elided && !isBlank && !isTransition)
         anchors.right: parent.right
         anchors.rightMargin: 0
         height: parent.height
