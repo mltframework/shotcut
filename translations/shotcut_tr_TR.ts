@@ -12957,7 +12957,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="56"/>
         <source>Non-Linear scale factor</source>
-        <translation>Doğrusal olmayan ölçek faktörü</translation>
+        <translation>Doğrusal olmayan ölçek çarpanı</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/posterize/meta.qml" line="6"/>
