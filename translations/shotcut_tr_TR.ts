@@ -15139,7 +15139,7 @@ Ek dinamik aralığın neden olduğu aşırı genliği düzeltmek için kullanı
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="234"/>
         <source>Reset the measurement if a discontinuity is detected - such as seeking or clip change.</source>
-        <translation>Arama veya klip değiştirme gibi bir süreksizlik algılanırsa ölçümü sıfırlar.</translation>
+        <translation>Arama veya parça değiştirme gibi bir süreksizlik algılanırsa ölçümü sıfırlar.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="260"/>
