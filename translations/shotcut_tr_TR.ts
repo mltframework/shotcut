@@ -12952,7 +12952,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="49"/>
         <source>Linear scale factor</source>
-        <translation>Doğrusal ölçek faktörü</translation>
+        <translation>Doğrusal ölçek çarpanı</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="56"/>
