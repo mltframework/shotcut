@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ga">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ga">
 <context>
     <name>AbstractJob</name>
     <message>
@@ -1087,11 +1085,7 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
     <message numerus="yes">
         <location filename="../src/widgets/blipproducerwidget.cpp" line="67"/>
         <source> second(s)</source>
-        <translation>
-            <numerusform>soicind</numerusform>
-            <numerusform>soicindí</numerusform>
-            <numerusform>soicindí</numerusform>
-        </translation>
+        <translation><numerusform>soicind</numerusform><numerusform>soicindí</numerusform><numerusform>soicindí</numerusform><numerusform>soicindí</numerusform><numerusform>soicindí</numerusform></translation>
     </message>
     <message>
         <location filename="../src/widgets/blipproducerwidget.cpp" line="89"/>
@@ -1408,7 +1402,7 @@ Fág bán chun an ghearrthaisce a úsáid:</translation>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="58"/>
         <source>ITU-R BT.2020</source>
-        <translation type="unfinished"></translation>
+        <translation>ITU-R BT.2020</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="81"/>
@@ -2394,7 +2388,7 @@ Déanfaidh Shotcut iarracht do thionscadal a dheisiú.</translation>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="502"/>
         <source>Home</source>
-        <comment>The user&apos;s home folder in the file system</comment>
+        <comment>The user's home folder in the file system</comment>
         <translation>Baile</translation>
     </message>
     <message>
@@ -2644,11 +2638,7 @@ Déanfaidh Shotcut iarracht do thionscadal a dheisiú.</translation>
     <message numerus="yes">
         <location filename="../src/docks/filesdock.cpp" line="1316"/>
         <source>%n item(s)</source>
-        <translation>
-            <numerusform>%n mír</numerusform>
-            <numerusform>%n mhír</numerusform>
-            <numerusform>%n mhír</numerusform>
-        </translation>
+        <translation><numerusform>%n mír</numerusform><numerusform>%n mhír</numerusform><numerusform>%n mhír</numerusform><numerusform>%n mhír</numerusform><numerusform>%n mhír</numerusform></translation>
     </message>
     <message>
         <location filename="../src/docks/filesdock.cpp" line="1359"/>
@@ -2853,7 +2843,7 @@ Déanfaidh Shotcut iarracht do thionscadal a dheisiú.</translation>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="237"/>
         <source>Copy Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Cóipeáil Cumasaithe</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="238"/>
@@ -2863,22 +2853,22 @@ Déanfaidh Shotcut iarracht do thionscadal a dheisiú.</translation>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="245"/>
         <source>Copy Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Cóipeáil Reatha</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="246"/>
         <source>Copy current filter to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Cóipeáil an scagaire reatha go dtí an ghearrthaisce</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="253"/>
         <source>Copy All</source>
-        <translation type="unfinished"></translation>
+        <translation>Cóipeáil Uile</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="254"/>
         <source>Copy all filters to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Cóipeáil na scagairí go léir chuig an ngearrthaisce</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="261"/>
@@ -4065,7 +4055,7 @@ fad an aistrithe.</translation>
         <location filename="../src/widgets/lumamixtransition.ui" line="271"/>
         <source>Do not alter the audio levels during the
 course of the transition. Instead, set a
-fixed mixing level, or choose only clip A&apos;s
+fixed mixing level, or choose only clip A's
 audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Ná hathraigh na leibhéil fuaime le linn na
 le linn an aistrithe. Ina ionad sin, socraigh
@@ -4610,7 +4600,7 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="697"/>
         <source>Lanczos (best)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lanczos (is fearr)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="886"/>
@@ -5184,7 +5174,7 @@ Nó Shotcut a shábháil agus a atosú.</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="2525"/>
         <source>%1x%2 %3fps %4ch</source>
-        <translation type="unfinished"></translation>
+        <translation>%1x%2 %3fps %4ch</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2550"/>
@@ -5333,6 +5323,11 @@ An bhfuil fonn ort athshocrú agus atosú anois?</translation>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="469"/>
+        <source>View Mode</source>
+        <translation>Mód Amharc</translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="3184"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
@@ -5392,11 +5387,6 @@ Ní mór duit do thionscadal a athoscailt tar éis gach post seachfhreastalaí a
         <location filename="../src/mainwindow.cpp" line="310"/>
         <source>Set Loop Range</source>
         <translation>Socraigh Raon na Lúibe</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="469"/>
-        <source>View mode</source>
-        <translation>Mód amhairc</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="473"/>
@@ -6712,7 +6702,7 @@ Bain triail eile as le fillteán eile.</translation>
     <message>
         <location filename="../src/player.cpp" line="770"/>
         <source>Toggle Filter Overlay</source>
-        <translation type="unfinished"></translation>
+        <translation>Scoránaigh Forleagan Scagaire</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="923"/>
@@ -7263,11 +7253,7 @@ p, li { white-space: pre-wrap; }
     <message numerus="yes">
         <location filename="../src/docks/playlistdock.cpp" line="1203"/>
         <source>Replace %n playlist items</source>
-        <translation>
-            <numerusform>Ionadaigh %n mír seinmliosta</numerusform>
-            <numerusform>Ionadaigh %n míreanna seinmliosta</numerusform>
-            <numerusform>Ionadaigh %n míreanna seinmliosta</numerusform>
-        </translation>
+        <translation><numerusform>Ionadaigh %n mír seinmliosta</numerusform><numerusform>Ionadaigh %n míreanna seinmliosta</numerusform><numerusform>Ionadaigh %n míreanna seinmliosta</numerusform><numerusform>Ionadaigh %n míreanna seinmliosta</numerusform><numerusform>Ionadaigh %n míreanna seinmliosta</numerusform></translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="432"/>
@@ -7283,11 +7269,7 @@ p, li { white-space: pre-wrap; }
     <message numerus="yes">
         <location filename="../src/docks/playlistdock.cpp" line="1543"/>
         <source>Remove %n playlist items</source>
-        <translation>
-            <numerusform>Bain %n mír seinmliosta</numerusform>
-            <numerusform>Bain %n míreanna seinmliosta</numerusform>
-            <numerusform>Bain %n míreanna seinmliosta</numerusform>
-        </translation>
+        <translation><numerusform>Bain %n mír seinmliosta</numerusform><numerusform>Bain %n míreanna seinmliosta</numerusform><numerusform>Bain %n míreanna seinmliosta</numerusform><numerusform>Bain %n míreanna seinmliosta</numerusform><numerusform>Bain %n míreanna seinmliosta</numerusform></translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="612"/>
@@ -7429,7 +7411,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="293"/>
         <source>Not In a Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Ní In Araid</translation>
     </message>
 </context>
 <context>
@@ -7571,11 +7553,7 @@ p, li { white-space: pre-wrap; }
     <message numerus="yes">
         <location filename="../src/commands/playlistcommands.cpp" line="427"/>
         <source>Move %n item(s) to bin: %1</source>
-        <translation>
-            <numerusform>Bog %n mír go bosca bruscair: % 1</numerusform>
-            <numerusform>Bog %n míreanna go bosca bruscair: % 1</numerusform>
-            <numerusform>Bog %n míreanna go bosca bruscair: % 1</numerusform>
-        </translation>
+        <translation><numerusform>Bog %n mír go bosca bruscair: % 1</numerusform><numerusform>Bog %n míreanna go bosca bruscair: % 1</numerusform><numerusform>Bog %n míreanna go bosca bruscair: % 1</numerusform><numerusform>Bog %n míreanna go bosca bruscair: % 1</numerusform><numerusform>Bog %n míreanna go bosca bruscair: % 1</numerusform></translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="462"/>
@@ -7641,20 +7619,12 @@ p, li { white-space: pre-wrap; }
     <message numerus="yes">
         <location filename="../src/commands/timelinecommands.cpp" line="402"/>
         <source>Group %n clips</source>
-        <translation>
-            <numerusform>Grúpa %n gearrthóg</numerusform>
-            <numerusform>Grúpa %n gearrthóg</numerusform>
-            <numerusform>Grúpa %n gearrthóg</numerusform>
-        </translation>
+        <translation><numerusform>Grúpa %n gearrthóg</numerusform><numerusform>Grúpa %n gearrthóg</numerusform><numerusform>Grúpa %n gearrthóg</numerusform><numerusform>Grúpa %n gearrthóg</numerusform><numerusform>Grúpa %n gearrthóg</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../src/commands/timelinecommands.cpp" line="455"/>
         <source>Ungroup %n clips</source>
-        <translation>
-            <numerusform>Díghrúpáil %n gearrthóg</numerusform>
-            <numerusform>Díghrúpáil %n gearrthóg</numerusform>
-            <numerusform>Díghrúpáil %n gearrthóg</numerusform>
-        </translation>
+        <translation><numerusform>Díghrúpáil %n gearrthóg</numerusform><numerusform>Díghrúpáil %n gearrthóg</numerusform><numerusform>Díghrúpáil %n gearrthóg</numerusform><numerusform>Díghrúpáil %n gearrthóg</numerusform><numerusform>Díghrúpáil %n gearrthóg</numerusform></translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="496"/>
@@ -7689,11 +7659,7 @@ p, li { white-space: pre-wrap; }
     <message numerus="yes">
         <location filename="../src/commands/timelinecommands.cpp" line="676"/>
         <source>Move %n timeline clips</source>
-        <translation>
-            <numerusform>Bog %n gearrthóg amlíne</numerusform>
-            <numerusform>Bog %n gearrthóg amlíne</numerusform>
-            <numerusform>Bog %n gearrthóg amlíne</numerusform>
-        </translation>
+        <translation><numerusform>Bog %n gearrthóg amlíne</numerusform><numerusform>Bog %n gearrthóg amlíne</numerusform><numerusform>Bog %n gearrthóg amlíne</numerusform><numerusform>Bog %n gearrthóg amlíne</numerusform><numerusform>Bog %n gearrthóg amlíne</numerusform></translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="678"/>
@@ -8060,7 +8026,7 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
     <message>
         <location filename="../src/commands/filtercommands.cpp" line="303"/>
         <source>Paste filters</source>
-        <translation type="unfinished">Greamaigh scagairí</translation>
+        <translation>Greamaigh scagairí</translation>
     </message>
     <message>
         <location filename="../src/commands/filtercommands.cpp" line="357"/>
@@ -8120,29 +8086,17 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
     <message numerus="yes">
         <location filename="../src/commands/subtitlecommands.cpp" line="108"/>
         <source>Add %n subtitles</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation><numerusform>Cuir %n fotheidil leis</numerusform><numerusform>Cuir %n fotheidil leis</numerusform><numerusform>Cuir %n fotheidil leis</numerusform><numerusform>Cuir %n fotheidil leis</numerusform><numerusform>Cuir %n fotheidil leis</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../src/commands/subtitlecommands.cpp" line="162"/>
         <source>Remove %n subtitles</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation><numerusform>Bain %n fotheidil</numerusform><numerusform>Bain %n fotheidil</numerusform><numerusform>Bain %n fotheidil</numerusform><numerusform>Bain %n fotheidil</numerusform><numerusform>Bain %n fotheidil</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../src/commands/subtitlecommands.cpp" line="301"/>
         <source>Move %n subtitles</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation><numerusform>Bog %n fotheidil</numerusform><numerusform>Bog %n fotheidil</numerusform><numerusform>Bog %n fotheidil</numerusform><numerusform>Bog %n fotheidil</numerusform><numerusform>Bog %n fotheidil</numerusform></translation>
     </message>
     <message>
         <location filename="../src/commands/subtitlecommands.cpp" line="160"/>
@@ -8172,11 +8126,7 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
     <message numerus="yes">
         <location filename="../src/docks/subtitlesdock.cpp" line="504"/>
         <source>Imported %1 subtitle item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation><numerusform>Iompórtáladh % 1 mír(anna) fotheideal</numerusform><numerusform>Iompórtáladh % 1 mír(anna) fotheideal</numerusform><numerusform>Iompórtáladh % 1 mír(anna) fotheideal</numerusform><numerusform>Iompórtáladh % 1 mír(anna) fotheideal</numerusform><numerusform>Iompórtáladh % 1 mír(anna) fotheideal</numerusform></translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="606"/>
@@ -8187,11 +8137,7 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
     <message numerus="yes">
         <location filename="../src/docks/subtitlesdock.cpp" line="642"/>
         <source>Imported %n subtitle item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation><numerusform>Iompórtáladh %n mír(anna) fotheideal</numerusform><numerusform>Iompórtáladh %n mír(anna) fotheideal</numerusform><numerusform>Iompórtáladh %n mír(anna) fotheideal</numerusform><numerusform>Iompórtáladh %n mír(anna) fotheideal</numerusform><numerusform>Iompórtáladh %n mír(anna) fotheideal</numerusform></translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="494"/>
@@ -8215,7 +8161,7 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1062"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1154"/>
         <source>A job already exists for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tá post le haghaidh %1 cheana féin</translation>
     </message>
 </context>
 <context>
@@ -8223,7 +8169,7 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
     <message>
         <location filename="../src/qmltypes/qmlapplication.cpp" line="133"/>
         <source>Select a filter to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Roghnaigh scagaire le cóipeáil</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlapplication.cpp" line="212"/>
@@ -8920,11 +8866,7 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
     <message numerus="yes">
         <location filename="../src/dialogs/slideshowgeneratordialog.cpp" line="33"/>
         <source>Slideshow Generator - %n Clips</source>
-        <translation>
-            <numerusform>Gineadóir Taispeána Sleamhnán - %n Gearrthóg</numerusform>
-            <numerusform>Gineadóir Taispeána Sleamhnán - %n Gearrthóg</numerusform>
-            <numerusform>Gineadóir Taispeána Sleamhnán - %n Gearrthóg</numerusform>
-        </translation>
+        <translation><numerusform>Gineadóir Taispeána Sleamhnán - %n Gearrthóg</numerusform><numerusform>Gineadóir Taispeána Sleamhnán - %n Gearrthóg</numerusform><numerusform>Gineadóir Taispeána Sleamhnán - %n Gearrthóg</numerusform><numerusform>Gineadóir Taispeána Sleamhnán - %n Gearrthóg</numerusform><numerusform>Gineadóir Taispeána Sleamhnán - %n Gearrthóg</numerusform></translation>
     </message>
 </context>
 <context>
@@ -9084,7 +9026,7 @@ Más é 0 an ré, ní chruthófar aon aistriú.</translation>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="135"/>
         <source>Matrix Snake Parallel Vertical</source>
         <translation>Nathair na Matrics Ingearach Comhthreomhar
-&#xa0;</translation>
+ </translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="136"/>
@@ -9465,17 +9407,17 @@ Más é 0 an ré, ní chruthófar aon aistriú.</translation>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="1131"/>
         <source>Generate subtitle text on timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Gin téacs fotheideal ar amlíne</translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="1132"/>
         <source>Text style preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Stíl téacs réamhshocraithe</translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="1134"/>
         <source>Default subtitle style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stíl fotheideal réamhshocraithe</translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="1277"/>
@@ -10386,11 +10328,7 @@ Bain an scagaire fotheideal roimh an rian seo a bhaint.</translation>
     <message numerus="yes">
         <location filename="../src/docks/timelinedock.cpp" line="3885"/>
         <source>Replace %n timeline clips</source>
-        <translation>
-            <numerusform>Ionadaigh %n gearrthóg amlíne</numerusform>
-            <numerusform>Ionadaigh %n gearrthóg amlíne</numerusform>
-            <numerusform>Ionadaigh %n gearrthóg amlíne</numerusform>
-        </translation>
+        <translation><numerusform>Ionadaigh %n gearrthóg amlíne</numerusform><numerusform>Ionadaigh %n gearrthóg amlíne</numerusform><numerusform>Ionadaigh %n gearrthóg amlíne</numerusform><numerusform>Ionadaigh %n gearrthóg amlíne</numerusform><numerusform>Ionadaigh %n gearrthóg amlíne</numerusform></translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="3938"/>
@@ -10903,7 +10841,7 @@ Cúiteamh Tairisceana: Idirshuíomh frámaí nua ag baint úsáide as cúiteamh 
         <location filename="../src/transcoder.cpp" line="102"/>
         <location filename="../src/transcoder.cpp" line="138"/>
         <source>A job already exists for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tá post le haghaidh %1 cheana féin</translation>
     </message>
     <message>
         <location filename="../src/transcoder.cpp" line="109"/>
@@ -11533,7 +11471,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="232"/>
         <source>Copy filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Cóipeáil na scagairí</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="247"/>
@@ -13056,7 +12994,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/nosync/meta.qml" line="7"/>
         <source>horizontal vertical synchronization slip analog</source>
         <comment>search keywords for the No Sync video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>analóg duillín sioncrónaithe ingearach cothrománach</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/trails/meta.qml" line="6"/>
@@ -13589,9 +13527,9 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dropshadow/meta.qml" line="7"/>
-        <source></source>
+        <source/>
         <comment>search keywords for the Drop Shadow video filter</comment>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/dropshadow/meta.qml" line="31"/>
@@ -13817,166 +13755,166 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="7"/>
         <source>360: Cap Top &amp; Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Cap Barr &amp; Bun</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="9"/>
         <source>spherical fill blur zenith nadir</source>
         <comment>search keywords for the 360: Cap Top &amp; Bottom video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>líonadh sféarúil doiléirigh buaic nadir</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="38"/>
         <source>topStart</source>
-        <translation type="unfinished"></translation>
+        <translation>barrTosaigh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="45"/>
         <source>topEnd</source>
-        <translation type="unfinished"></translation>
+        <translation>barrDeireadh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="52"/>
         <source>topBlendIn</source>
-        <translation type="unfinished"></translation>
+        <translation>barrCumaiscI</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="59"/>
         <source>topBlendOut</source>
-        <translation type="unfinished"></translation>
+        <translation>barrCumaiscAmach</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="66"/>
         <source>topFadeIn</source>
-        <translation type="unfinished"></translation>
+        <translation>barrCéimnitheI</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="73"/>
         <source>topBlurWidthStart</source>
-        <translation type="unfinished"></translation>
+        <translation>barrDoiléirighLeitheadTosaigh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="80"/>
         <source>topBlurWidthEnd</source>
-        <translation type="unfinished"></translation>
+        <translation>barrDoiléirighLeitheadDeireadh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="87"/>
         <source>topBlurHeightStart</source>
-        <translation type="unfinished"></translation>
+        <translation>barrDoiléirighAirdeTosaigh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="94"/>
         <source>topBlurHeightEnd</source>
-        <translation type="unfinished"></translation>
+        <translation>barrDoiléirighAirdeDeireadh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="102"/>
         <source>bottomStart</source>
-        <translation type="unfinished"></translation>
+        <translation>bunTosaigh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="109"/>
         <source>bottomEnd</source>
-        <translation type="unfinished"></translation>
+        <translation>bunDeireadh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="116"/>
         <source>bottomBlendIn</source>
-        <translation type="unfinished"></translation>
+        <translation>bunCumascI</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="123"/>
         <source>bottomBlendOut</source>
-        <translation type="unfinished"></translation>
+        <translation>bunCumascAmach</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="130"/>
         <source>bottomFadeIn</source>
-        <translation type="unfinished"></translation>
+        <translation>bunCéimnitheI</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="137"/>
         <source>bottomBlurWidthStart</source>
-        <translation type="unfinished"></translation>
+        <translation>bunDoiléirighLeitheadTosaigh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="144"/>
         <source>bottomBlurWidthEnd</source>
-        <translation type="unfinished"></translation>
+        <translation>bunDoiléirighLeitheadDeireadh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="151"/>
         <source>bottomBlurHeightStart</source>
-        <translation type="unfinished"></translation>
+        <translation>bunDoiléirighAirdeTosaigh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="158"/>
         <source>bottomBlurHeightEnd</source>
-        <translation type="unfinished"></translation>
+        <translation>bunDoiléirighAirdeDeireadh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="7"/>
         <source>360: Equirectangular Wrap</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Timfhilleadh Cothrománach</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="9"/>
         <source>spherical stretch</source>
         <comment>search keywords for the 360: Equirectangular Wrap video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>stráice sféarúil</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="18"/>
         <source>hfov0</source>
-        <translation type="unfinished"></translation>
+        <translation>hfov0</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="25"/>
         <source>hfov1</source>
-        <translation type="unfinished"></translation>
+        <translation>hfov1</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="32"/>
         <source>vfov0</source>
-        <translation type="unfinished"></translation>
+        <translation>vfov0</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="39"/>
         <source>vfov1</source>
-        <translation type="unfinished"></translation>
+        <translation>vfov1</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="46"/>
         <source>blurStart</source>
-        <translation type="unfinished"></translation>
+        <translation>doiléirighTosaigh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="53"/>
         <source>blurEnd</source>
-        <translation type="unfinished"></translation>
+        <translation>doiléirighDeireadh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="7"/>
         <source>360: Zenith Correction</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Ceartú Zenith</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="8"/>
         <source>spherical level</source>
         <comment>search keywords for the 360: Zenith correction filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>leibhéal sféarúil</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/histeq/meta.qml" line="6"/>
         <source>Clarity</source>
-        <translation type="unfinished"></translation>
+        <translation>Soiléire</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/histeq/meta.qml" line="7"/>
         <source>histogram equalization constrast detail color distribution</source>
         <comment>search keywords for the Clarity video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>histeagram cothromú codarsnacht sonraí dáileadh dath</translation>
     </message>
 </context>
 <context>
@@ -14289,7 +14227,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="7"/>
         <source>shine blur</source>
         <comment>search keywords for the Glow video filter</comment>
-        <translation type="unfinished">soilsigh doiléir</translation>
+        <translation>soilsigh doiléir</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="26"/>
@@ -15443,43 +15381,43 @@ A úsáidtear chun aimplitiúid iomarcach a cheartú de bharr an raon dinimiciú
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="554"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="817"/>
         <source>Fade</source>
-        <translation type="unfinished"></translation>
+        <translation>Céimnithe</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="589"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="852"/>
         <source>In</source>
-        <translation type="unfinished">I</translation>
+        <translation>I</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="615"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="878"/>
         <source>Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Amach</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="650"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="913"/>
         <source>Width at start</source>
-        <translation type="unfinished"></translation>
+        <translation>Leithead ag tús</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="676"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="939"/>
         <source>Height at start</source>
-        <translation type="unfinished"></translation>
+        <translation>Airde ag tús</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="702"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="965"/>
         <source>Width at end</source>
-        <translation type="unfinished"></translation>
+        <translation>Leithead ag deireadh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="728"/>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="991"/>
         <source>Height at end</source>
-        <translation type="unfinished"></translation>
+        <translation>Airde sa deireadh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="754"/>
@@ -16712,7 +16650,7 @@ Cliceáil &quot;Oscail&quot; chun comhad a luchtú.</translation>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="624"/>
         <source>Orthographic</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortagrafach</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="629"/>
@@ -16816,7 +16754,7 @@ Níl taobhanna na híomhá socraithe</translation>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="857"/>
         <source>Separate Y scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar leithligh Y scála</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="887"/>
@@ -17189,8 +17127,8 @@ Athraigh an claonadh saobhadh barr/taobh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="189"/>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="291"/>
@@ -17847,7 +17785,7 @@ Gach = 360° + Randamaíodh</translation>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="350"/>
         <source>Matrix Snake Parallel Vertical</source>
         <translation>Nathair na Matrics Ingearach Comhthreomhar
-&#xa0;</translation>
+ </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="355"/>
@@ -19320,17 +19258,17 @@ Cliceáil chun roghnú, tarraing chun suíomh a athrú</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="520"/>
         <source>Blur Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Doiléirigh Tosaigh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="111"/>
         <source>File for zenith correction</source>
-        <translation type="unfinished"></translation>
+        <translation>Comhad le haghaidh ceartú zenith</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="209"/>
         <source>Smooth yaw instead of locking it</source>
-        <translation type="unfinished"></translation>
+        <translation>Mín luascáil in ionad é a ghlasáil</translation>
     </message>
 </context>
 <context>
