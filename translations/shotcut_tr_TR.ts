@@ -19701,7 +19701,7 @@ Seçmek için tıklayın, konumu değiştirmek için sürükleyin</translation>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="141"/>
         <source>Line</source>
-        <translation>Satır</translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="141"/>
