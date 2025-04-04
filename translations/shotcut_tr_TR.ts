@@ -17316,7 +17316,7 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="379"/>
         <source>Image mode</source>
-        <translation>Görsel kip</translation>
+        <translation>Görsel kipi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="383"/>
@@ -18813,7 +18813,7 @@ Ek anahtar sözcük: RAW (yalnızca dosyadaki değerleri yazdırır).</translati
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>3D Speed (km/h)</source>
-        <translation>3D Hız (km/h)</translation>
+        <translation>3D hız (km/h)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
@@ -19701,7 +19701,7 @@ Seçmek için tıklayın, konumu değiştirmek için sürükleyin</translation>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="141"/>
         <source>Line</source>
-        <translation>Satır</translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="141"/>
