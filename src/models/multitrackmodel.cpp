@@ -618,6 +618,23 @@ void MultitrackModel::setTrackHeight(int height)
         Settings.setTimelineTrackHeight(qBound(10, height, 150));
         m_tractor->set(kTrackHeightProperty, Settings.timelineTrackHeight());
         emit trackHeightChanged();
+        emit modified();
+    }
+}
+
+int MultitrackModel::trackHeaderWidth() const
+{
+    return (m_tractor && m_tractor->property_exists(kTrackHeaderWidthProperty))
+               ? m_tractor->get_int(kTrackHeaderWidthProperty)
+               : 140;
+}
+
+void MultitrackModel::setTrackHeaderWidth(int width)
+{
+    if (m_tractor) {
+        m_tractor->set(kTrackHeaderWidthProperty, width);
+        emit trackHeaderWidthChanged();
+        emit modified();
     }
 }
 
@@ -3517,6 +3534,7 @@ void MultitrackModel::load()
     emit created();
     emit filteredChanged();
     emit scaleFactorChanged();
+    emit trackHeaderWidthChanged();
 }
 
 void MultitrackModel::reload(bool asynchronous)
@@ -3620,6 +3638,7 @@ void MultitrackModel::close()
     endResetModel();
     emit closed();
     emit filteredChanged();
+    emit trackHeaderWidthChanged();
 }
 
 int MultitrackModel::clipIndex(int trackIndex, int position)

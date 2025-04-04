@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,8 @@ class MultitrackModel : public QAbstractItemModel
 {
     Q_OBJECT
     Q_PROPERTY(int trackHeight READ trackHeight WRITE setTrackHeight NOTIFY trackHeightChanged)
+    Q_PROPERTY(int trackHeaderWidth READ trackHeaderWidth WRITE setTrackHeaderWidth NOTIFY
+                   trackHeaderWidthChanged FINAL)
     Q_PROPERTY(double scaleFactor READ scaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged)
     Q_PROPERTY(bool filtered READ isFiltered NOTIFY filteredChanged)
 
@@ -109,6 +111,8 @@ public:
     bool trimClipOutValid(int trackIndex, int clipIndex, int delta, bool ripple);
     int trackHeight() const;
     void setTrackHeight(int height);
+    int trackHeaderWidth() const;
+    void setTrackHeaderWidth(int width);
     double scaleFactor() const;
     void setScaleFactor(double scale);
     bool isTransition(Mlt::Playlist &playlist, int clipIndex) const;
@@ -132,6 +136,7 @@ signals:
     void modified();
     void seeked(int position, bool seekPlayer = true);
     void trackHeightChanged();
+    void trackHeaderWidthChanged();
     void scaleFactorChanged();
     void showStatusMessage(QString);
     void durationChanged();

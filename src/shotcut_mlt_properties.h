@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@
 #define kShotcutVirtualClip "shotcut:virtual"
 #define kTimelineScaleProperty "shotcut:scaleFactor"
 #define kTrackHeightProperty "shotcut:trackHeight"
+#define kTrackHeaderWidthProperty "shotcut:trackHeaderWidth"
 #define kTrackNameProperty "shotcut:name"
 #define kTrackLockProperty "shotcut:lock"
 #define kVideoTrackProperty "shotcut:video"

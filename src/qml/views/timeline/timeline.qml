@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import "Timeline.js" as Logic
 Rectangle {
     id: root
 
-    property int headerWidth: 140
+    property int headerWidth: multitrack.trackHeaderWidth
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3)
     property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
@@ -380,6 +380,19 @@ Rectangle {
                     anchors.top: parent.top
                     anchors.topMargin: -rulerFlickable.height
                     anchors.bottom: parent.bottom
+
+                    MouseArea {
+                        anchors.fill: parent
+                        anchors.leftMargin: -5
+                        anchors.rightMargin: -5
+                        acceptedButtons: Qt.LeftButton
+                        drag.target: parent
+                        drag.axis: Drag.XAxis
+                        drag.minimumX: 140
+                        drag.maximumX: 500
+                        cursorShape: Qt.SizeHorCursor
+                        onPositionChanged: multitrack.trackHeaderWidth = Math.max(drag.minimumX, Math.min(drag.maximumX, parent.x))
+                    }
                 }
             }
         }
