@@ -17316,7 +17316,7 @@ Change top/side distortion bias</source>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="379"/>
         <source>Image mode</source>
-        <translation>Görsel kip</translation>
+        <translation>Görsel kipi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="383"/>
