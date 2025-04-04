@@ -18813,7 +18813,7 @@ Ek anahtar sözcük: RAW (yalnızca dosyadaki değerleri yazdırır).</translati
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="802"/>
         <source>3D Speed (km/h)</source>
-        <translation>3D Hız (km/h)</translation>
+        <translation>3D hız (km/h)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="803"/>
