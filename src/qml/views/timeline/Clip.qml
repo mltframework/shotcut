@@ -102,7 +102,6 @@ Rectangle {
 
     border.color: (selected || Drag.active || trackIndex != originalTrackIndex) ? group < 0 ? 'red' : 'white' : 'black'
     border.width: isBlank && !selected ? 0 : 1
-    clip: true
     Drag.active: mouseArea.drag.active
     Drag.proposedAction: Qt.MoveAction
     opacity: Drag.active ? 0.5 : 1
@@ -176,8 +175,8 @@ Rectangle {
         anchors.leftMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
-        width: height * 16 / 9
-        fillMode: Image.PreserveAspectFit
+        width: Math.min(parent.width - border.width, height * 16 / 9)
+        fillMode: Image.PreserveAspectCrop
         source: imagePath(inPoint)
     }
 
@@ -214,7 +213,7 @@ Rectangle {
                 // bottom edge
                 property int channels: 2
 
-                width: Math.min(clipRoot.width, waveform.maxWidth)
+                width: Math.min(clipRoot.width - clipRoot.border.width * 2, waveform.maxWidth)
                 height: waveform.height
                 fillColor: getColor()
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
@@ -259,6 +258,8 @@ Rectangle {
         visible: !elided && !isBlank && !isTransition
         font.pointSize: 8
         color: 'black'
+        width: Math.min(labelMetrics.width + 1, parent.width - inThumbnail.width - 2 * (parent.border.width + 1))
+        elide: Text.ElideRight
 
         anchors {
             top: parent.top
@@ -266,6 +267,13 @@ Rectangle {
             topMargin: parent.border.width + 1
             leftMargin: parent.border.width + 1
         }
+    }
+
+    TextMetrics {
+        id:     labelMetrics
+
+        font:   label.font
+        text:   label.text
     }
 
     Rectangle {
