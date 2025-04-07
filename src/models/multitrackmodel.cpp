@@ -626,7 +626,7 @@ int MultitrackModel::trackHeaderWidth() const
 {
     return (m_tractor && m_tractor->property_exists(kTrackHeaderWidthProperty))
                ? m_tractor->get_int(kTrackHeaderWidthProperty)
-               : 140;
+               : 150;
 }
 
 void MultitrackModel::setTrackHeaderWidth(int width)

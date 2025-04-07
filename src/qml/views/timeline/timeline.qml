@@ -181,6 +181,7 @@ Rectangle {
 
                 MouseArea {
                     anchors.fill: parent
+                    anchors.rightMargin: 10
                     acceptedButtons: Qt.LeftButton | Qt.RightButton
                     onClicked: mouse => {
                         timeline.selectMultitrack();
@@ -383,12 +384,11 @@ Rectangle {
 
                     MouseArea {
                         anchors.fill: parent
-                        anchors.leftMargin: -5
-                        anchors.rightMargin: -5
+                        anchors.leftMargin: -10
                         acceptedButtons: Qt.LeftButton
                         drag.target: parent
                         drag.axis: Drag.XAxis
-                        drag.minimumX: 140
+                        drag.minimumX: 150
                         drag.maximumX: 500
                         cursorShape: Qt.SizeHorCursor
                         onPositionChanged: multitrack.trackHeaderWidth = Math.max(drag.minimumX, Math.min(drag.maximumX, parent.x))
