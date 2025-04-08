@@ -2525,7 +2525,7 @@ void MainWindow::updateWindowTitle()
     QString profileText = tr("%1x%2 %3fps %4ch")
                               .arg(QString::number(MLT.profile().width(), 'f', 0),
                                    QString::number(MLT.profile().height(), 'f', 0),
-                                   QString::number(MLT.profile().fps(), 'g', 2),
+                                   QString::number(MLT.profile().fps(), 'f', 2),
                                    QString::number(Settings.playerAudioChannels(), 'f', 0));
 #ifdef Q_OS_MAC
     setWindowTitle(
