@@ -627,8 +627,17 @@ FilesDock::FilesDock(QWidget *parent)
     toolbar->addSeparator();
     m_label = new QLabel(toolbar);
     toolbar->addWidget(m_label);
-    connect(m_filesModel, &QAbstractItemModel::rowsInserted, this, &FilesDock::updateStatus);
-    connect(m_filesModel, &QFileSystemModel::directoryLoaded, this, &FilesDock::updateStatus);
+    connect(m_filesModel,
+            &QFileSystemModel::directoryLoaded,
+            this,
+            &FilesDock::updateStatus,
+            Qt::QueuedConnection);
+    connect(m_filesProxyModel,
+            &QAbstractItemModel::modelAboutToBeReset,
+            this,
+            &FilesDock::clearStatus);
+    connect(m_filesProxyModel, &QAbstractItemModel::rowsInserted, this, &FilesDock::updateStatus);
+    connect(m_filesProxyModel, &QAbstractItemModel::rowsRemoved, this, &FilesDock::updateStatus);
     ui->verticalLayout->addWidget(toolbar);
     ui->verticalLayout->addSpacing(2);
 
@@ -1134,7 +1143,6 @@ void FilesDock::changeFilesDirectory(const QModelIndex &index)
     ui->locationsCombo->setCurrentText(path);
     ui->locationsCombo->setToolTip(path);
     m_view->scrollToTop();
-    clearStatus();
 }
 
 void FilesDock::viewCustomContextMenuRequested(const QPoint &pos)
@@ -1312,7 +1320,7 @@ void FilesDock::clearStatus()
 
 void FilesDock::updateStatus()
 {
-    auto n = m_filesModel->rowCount(m_filesModel->index(m_filesModel->rootPath()));
+    auto n = m_filesProxyModel->rowCount(m_view->rootIndex());
     m_label->setText(tr("%n item(s)", nullptr, n));
     QCoreApplication::processEvents();
 }

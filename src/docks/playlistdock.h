@@ -31,6 +31,7 @@ class PlaylistDock;
 
 class QAbstractItemView;
 class QItemSelectionModel;
+class QLabel;
 class QMenu;
 class PlaylistIconView;
 class PlaylistProxyModel;
@@ -112,6 +113,8 @@ private slots:
     void onOutTimerFired();
     void onMediaTypeClicked();
     void on_treeWidget_itemSelectionChanged();
+    void clearStatus();
+    void updateStatus();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -157,6 +160,7 @@ private:
     PlaylistProxyModel *m_proxyModel;
     Mlt::Playlist m_binPlaylist;
     LineEditClear *m_searchField;
+    QLabel *m_label;
 };
 
 #endif // PLAYLISTDOCK_H

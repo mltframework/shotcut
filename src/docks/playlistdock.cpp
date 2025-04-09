@@ -48,6 +48,7 @@
 #include <QInputDialog>
 #include <QItemSelectionModel>
 #include <QKeyEvent>
+#include <QLabel>
 #include <QMenu>
 #include <QPainter>
 #include <QPushButton>
@@ -464,6 +465,15 @@ PlaylistDock::PlaylistDock(QWidget *parent)
     toolbar->addAction(Actions["playlistViewTilesAction"]);
     toolbar->addAction(Actions["playlistViewIconsAction"]);
     toolbar->addSeparator();
+    m_label = new QLabel(toolbar);
+    toolbar->addWidget(m_label);
+    connect(m_proxyModel,
+            &QAbstractItemModel::modelAboutToBeReset,
+            this,
+            &PlaylistDock::clearStatus);
+    connect(m_proxyModel, &QAbstractItemModel::modelReset, this, &PlaylistDock::updateStatus);
+    connect(m_proxyModel, &QAbstractItemModel::rowsInserted, this, &PlaylistDock::updateStatus);
+    connect(m_proxyModel, &QAbstractItemModel::rowsRemoved, this, &PlaylistDock::updateStatus);
     ui->verticalLayout->addWidget(toolbar);
     ui->verticalLayout->addSpacing(2);
 
@@ -2115,6 +2125,18 @@ void PlaylistDock::on_treeWidget_itemSelectionChanged()
                 }
             }
         }
+}
+
+void PlaylistDock::clearStatus()
+{
+    m_label->setText("...");
+}
+
+void PlaylistDock::updateStatus()
+{
+    auto n = m_proxyModel->rowCount();
+    m_label->setText(n > 0 ? tr("%n item(s)", nullptr, n) : "");
+    QCoreApplication::processEvents();
 }
 
 void BinTree::dropEvent(QDropEvent *event)
