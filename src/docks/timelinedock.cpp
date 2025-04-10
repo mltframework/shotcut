@@ -127,6 +127,7 @@ TimelineDock::TimelineDock(QWidget *parent)
     editMenu->addAction(Actions["timelineSplitAction"]);
     editMenu->addAction(Actions["timelineSplitAllTracksAction"]);
     editMenu->addAction(Actions["timelineApplyCopiedFiltersAction"]);
+    editMenu->addAction(Actions["timelineFreezeFrameAction"]);
     m_mainMenu->addMenu(editMenu);
     QMenu *viewMenu = new QMenu(tr("View"), this);
     viewMenu->addAction(Actions["timelineZoomOutAction"]);
@@ -156,6 +157,7 @@ TimelineDock::TimelineDock(QWidget *parent)
     m_clipMenu->addAction(Actions["timelineNudgeBackwardAction"]);
     m_clipMenu->addAction(Actions["timelineMergeWithNextAction"]);
     m_clipMenu->addAction(Actions["timelineDetachAudioAction"]);
+    m_clipMenu->addAction(Actions["timelineFreezeFrameAction"]);
     m_clipMenu->addAction(Actions["timelineAlignToReferenceAction"]);
     m_clipMenu->addAction(Actions["timelineApplyCopiedFiltersAction"]);
     m_clipMenu->addAction(Actions["timelineUpdateThumbnailsAction"]);
@@ -866,7 +868,7 @@ void TimelineDock::setupActions()
                 }
             }
         }
-        // Next, choose a clip based on track selection
+        // Next, choose a clip based on current track
         if (tracks.size() == 0) {
             clipIndex = -1;
             trackIndex = currentTrack();
@@ -1338,6 +1340,11 @@ void TimelineDock::setupActions()
         action->setEnabled(enabled);
     });
     Actions.add("timelineDetachAudioAction", action);
+
+    action = new QAction(tr("Freeze Frame"), this);
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_H));
+    connect(action, &QAction::triggered, this, [&] { freezeFrame(); });
+    Actions.add("timelineFreezeFrameAction", action);
 
     action = new QAction(tr("Align To Reference Track"), this);
     action->setEnabled(false);
@@ -3080,6 +3087,71 @@ void TimelineDock::insertOrOverwriteDrop(int trackIndex, int position, const QSt
     if (autoAddTracks) {
         QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
         m_model.checkForEmptyTracks(trackIndex);
+    }
+}
+
+void TimelineDock::freezeFrame()
+{
+    auto clipIndex = -1;
+    auto trackIndex = currentTrack();
+    if (selection().isEmpty()) {
+        chooseClipAtPosition(m_position, trackIndex, clipIndex);
+        if (trackIndex < 0 || clipIndex < 0) {
+            return;
+        } else if (isBlank(trackIndex, clipIndex)) {
+            return;
+        } else if (isTransition(trackIndex, clipIndex)) {
+            emit showStatusMessage(tr("You cannot freeze a frame of a transition."));
+            return;
+        }
+    } else {
+        auto &selected = selection().first();
+        trackIndex = selected.y();
+        clipIndex = selected.x();
+        if (trackIndex < 0)
+            trackIndex = currentTrack();
+        if (clipIndex < 0)
+            clipIndex = clipIndexAtPlayhead(trackIndex);
+    }
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+
+    auto info = m_model.getClipInfo(trackIndex, clipIndex);
+    if (info && m_position > info->start && m_position < info->start + info->frame_count) {
+        setCurrentTrack(trackIndex);
+
+        QString xml = MLT.XML(info->producer);
+        Mlt::Producer p(MLT.profile(), "xml-string", xml.toUtf8().constData());
+        const auto fps = qRound(MLT.profile().fps());
+
+        info->frame_in += m_position - info->start;
+        info->frame_out = info->frame_in + fps - 1;
+        p.set("length", p.frames_to_time(qRound(MLT.profile().fps() * 3600 * 4), mlt_time_clock));
+        p.set_in_and_out(info->frame_in, info->frame_out);
+
+        Mlt::Link link("timeremap");
+        link.set_profile(MLT.profile());
+        link.set(kShotcutFilterProperty, "speedForward");
+        link.set_in_and_out(info->frame_in, info->frame_out);
+        link.anim_set("speed_map", 0, 0, 0, mlt_keyframe_discrete);
+
+        Mlt::Chain chain(p);
+        chain.attach(link);
+        int normalizerCount = 0;
+        for (int i = 0; i < chain.link_count(); i++) {
+            std::unique_ptr<Mlt::Link> link{chain.link(i)};
+            if (link->is_valid() && link->get_int("_loader")) {
+                normalizerCount++;
+            } else {
+                break;
+            }
+        }
+        chain.move_link(chain.link_count() - 1, normalizerCount);
+
+        MAIN.undoStack()->beginMacro(tr("Insert Freeze Frame"));
+        insert(-1, m_position, MLT.XML(&chain), false);
+        MAIN.undoStack()->endMacro();
+    } else {
+        emit showStatusMessage(tr("The play head is not over the selected clip."));
     }
 }
 
