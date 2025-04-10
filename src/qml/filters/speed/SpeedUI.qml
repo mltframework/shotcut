@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,6 +96,7 @@ Item {
             application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only').arg(application.OS === 'macOS' ? '⌘' : 'Ctrl').arg(application.OS === 'macOS' ? '⌥' : 'Alt'));
         }
         blockUpdate = false;
+        setControls();
     }
 
     GridLayout {
