@@ -156,7 +156,7 @@ Rectangle {
         anchors.rightMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
-        width: height * 16 / 9
+        width: inThumbnail.width
         fillMode: Image.PreserveAspectFit
         source: imagePath(outPoint)
     }
@@ -171,7 +171,7 @@ Rectangle {
         anchors.leftMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
-        width: Math.min(parent.width - border.width, height * 16 / 9)
+        width: visible ? Math.min(parent.width - parent.border.width, height * 16 / 9) : 0
         fillMode: Image.PreserveAspectCrop
         source: imagePath(inPoint)
     }
@@ -254,7 +254,8 @@ Rectangle {
         visible: !elided && !isBlank && !isTransition
         font.pointSize: 8
         color: 'black'
-        width: Math.min(labelMetrics.width + 2, parent.width - inThumbnail.width - 15)
+        width: Math.min(labelMetrics.width + 2, parent.width - inThumbnail.width - filtersIcon.width - 4)
+        height: Math.min(parent.height - parent.border.width, fontMetrics.height * clipName.split('\n').length)
         elide: Text.ElideRight
 
         anchors {
@@ -282,8 +283,8 @@ Rectangle {
         anchors.right: parent.right
         anchors.topMargin: parent.border.width
         anchors.rightMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? 0 : outThumbnail.width) + 2
-        width: labelRight.width + 2
-        height: labelRight.height
+        width: leftLabelBackground.width
+        height: leftLabelBackground.height
     }
 
     Text {
@@ -294,6 +295,7 @@ Rectangle {
         font.pointSize: 8
         color: 'black'
         width: label.width
+        height: label.height
         elide: Text.ElideRight
 
         anchors {
@@ -444,8 +446,8 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
         anchors.leftMargin: parent.border.width + ((isAudio || !settings.timelineShowThumbnails) ? (enabled ? width : 0) : inThumbnail.width)
-        width: visible ? label.height : 0
-        height: label.height
+        width: visible ? fontMetrics.height : 0
+        height: leftLabelBackground.height
         padding: 0
         focusPolicy: Qt.NoFocus
         enabled: false
