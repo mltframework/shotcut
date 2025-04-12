@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,10 +24,6 @@ Rectangle {
 
     height: 28
     color: activePalette.base
-
-    SystemPalette {
-        id: activePalette
-    }
 
     Repeater {
         model: parent.width / (intervalSeconds * profile.fps * timeScale)

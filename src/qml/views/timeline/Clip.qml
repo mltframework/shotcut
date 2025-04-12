@@ -146,10 +146,6 @@ Rectangle {
         }
     ]
 
-    SystemPalette {
-        id: activePalette
-    }
-
     Image {
         id: outThumbnail
 
@@ -326,10 +322,6 @@ Rectangle {
         onExited: {
             nameHoverTimer.stop();
             bubbleHelp.hide();
-        }
-
-        FontMetrics {
-            id: fontMetrics
         }
 
         Timer {

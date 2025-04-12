@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,6 @@ Rectangle {
 
     height: visible ? Logic.ITEM_HEIGHT : 0
     color: activePalette.base
-
-    SystemPalette {
-        id: activePalette
-    }
 
     Row {
         height: Logic.ITEM_HEIGHT

@@ -120,6 +120,10 @@ Rectangle {
         }
     }
 
+    FontMetrics {
+        id: fontMetrics
+    }
+
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
