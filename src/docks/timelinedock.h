@@ -225,6 +225,7 @@ private:
     void applyCopiedFiltersToSelectdClips();
     void insertOrOverwriteDrop(int trackIndex, int position, const QString &xml);
     void freezeFrame();
+    void addGenerator(QWidget *widget);
 
     QQuickWidget m_quickView;
     MultitrackModel m_model;
@@ -275,6 +276,7 @@ private slots:
     void onTimelineRightClicked();
     void onClipRightClicked();
     void onNoMoreEmptyTracks(bool isAudio);
+    void addGenerator();
 };
 
 #endif // TIMELINEDOCK_H

@@ -239,6 +239,7 @@ public slots:
     void onGpuNotSupported();
     void onShuttle(float x);
     void onPropertiesDockTriggered(bool checked = true);
+    void onFiltersDockTriggered(bool checked = true);
     bool on_actionSave_triggered();
     void onCreateOrEditFilterOnOutput(Mlt::Filter *filter, const QStringList &key_properties);
     void showSettingsMenu() const;
@@ -256,7 +257,6 @@ private slots:
     void onPlaylistDockTriggered(bool checked = true);
     void onTimelineDockTriggered(bool checked = true);
     void onHistoryDockTriggered(bool checked = true);
-    void onFiltersDockTriggered(bool checked = true);
     void onKeyframesDockTriggered(bool checked = true);
     void onMarkersDockTriggered(bool = true);
     void onNotesDockTriggered(bool = true);

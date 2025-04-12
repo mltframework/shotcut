@@ -18,6 +18,7 @@
 #include "timelinedock.h"
 
 #include "Logger.h"
+#include "abstractproducerwidget.h"
 #include "actions.h"
 #include "commands/timelinecommands.h"
 #include "dialogs/alignaudiodialog.h"
@@ -35,13 +36,23 @@
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include "widgets/blipproducerwidget.h"
+#include "widgets/colorbarswidget.h"
+#include "widgets/colorproducerwidget.h"
+#include "widgets/countproducerwidget.h"
 #include "widgets/docktoolbar.h"
+#include "widgets/glaxnimateproducerwidget.h"
+#include "widgets/noisewidget.h"
+#include "widgets/textproducerwidget.h"
+#include "widgets/toneproducerwidget.h"
 
 #include <QAction>
 #include <QActionGroup>
 #include <QClipboard>
+#include <QDialogButtonBox>
 #include <QGuiApplication>
 #include <QMenu>
+#include <QProgressBar>
 #include <QQmlContext>
 #include <QQuickItem>
 #include <QQuickWidget>
@@ -49,8 +60,8 @@
 #include <QToolBar>
 #include <QToolButton>
 #include <QVBoxLayout>
-#include <qprogressbar.h>
-#include <qwidgetaction.h>
+#include <QWidgetAction>
+#include <qlistwidget.h>
 
 static const char *kFileUrlProtocol = "file://";
 static const char *kFilesUrlDelimiter = ",file://";
@@ -180,6 +191,19 @@ TimelineDock::TimelineDock(QWidget *parent)
     toolbar->addAction(Actions["timelineCopyAction"]);
     toolbar->addAction(Actions["timelinePasteAction"]);
     toolbar->addSeparator();
+
+    const auto action = Actions["timelineNewGenerator"];
+    menuButton = new QToolButton();
+    menuButton->setIcon(action->icon());
+    menuButton->setToolTip(action->toolTip());
+    menuButton->setAutoRaise(true);
+    menuButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
+    menuButton->setMenu(action->menu());
+    toolbar->addWidget(menuButton);
+    connect(action, &QAction::triggered, this, [=]() {
+        action->menu()->popup(menuButton->mapToGlobal(QPoint(0, menuButton->height())));
+    });
+
     toolbar->addAction(Actions["timelineAppendAction"]);
     toolbar->addAction(Actions["timelineDeleteAction"]);
     toolbar->addAction(Actions["timelineLiftAction"]);
@@ -1269,6 +1293,43 @@ void TimelineDock::setupActions()
         emit zoomToFit();
     });
     Actions.add("timelineZoomFitAction", action);
+
+    action = new QAction(tr("New Generator"), this);
+    icon = QIcon::fromTheme("document-new", QIcon(":/icons/oxygen/32x32/actions/document-new.png"));
+    action->setIcon(icon);
+    {
+        QScopedPointer<Mlt::Properties> mltProducers(MLT.repository()->producers());
+        QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
+        auto menu = new QMenu;
+        if (mltProducers->get_data("color")) {
+            menu->addAction(tr("Color"), this, SLOT(addGenerator()))->setObjectName("color");
+            if (mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext")) {
+                menu->addAction(tr("Text"), this, SLOT(addGenerator()))->setObjectName("text");
+            }
+        }
+        if (mltProducers->get_data("glaxnimate")) {
+            menu->addAction(tr("Animation") + " (Glaxnimate)", this, SLOT(addGenerator()))
+                ->setObjectName("glaxnimate");
+        }
+        if (mltProducers->get_data("noise")) {
+            menu->addAction(tr("Noise"), this, SLOT(addGenerator()))->setObjectName("noise");
+        }
+        if (mltProducers->get_data("frei0r.test_pat_B")) {
+            menu->addAction(tr("Color Bars"), this, SLOT(addGenerator()))
+                ->setObjectName("test_pat_B");
+        }
+        if (mltProducers->get_data("tone")) {
+            menu->addAction(tr("Audio Tone"), this, SLOT(addGenerator()))->setObjectName("tone");
+        }
+        if (mltProducers->get_data("count")) {
+            menu->addAction(tr("Count"), this, SLOT(addGenerator()))->setObjectName("count");
+        }
+        if (mltProducers->get_data("blipflash")) {
+            menu->addAction(tr("Blip Flash"), this, SLOT(addGenerator()))->setObjectName("blipflash");
+        }
+        action->setMenu(menu);
+    }
+    Actions.add("timelineNewGenerator", action, windowTitle());
 
     action = new QAction(tr("Record Audio"), this);
     icon = QIcon::fromTheme("audio-input-microphone",
@@ -3902,6 +3963,82 @@ void TimelineDock::onNoMoreEmptyTracks(bool isAudio)
             incrementCurrentTrack(1);
         }
     }
+}
+
+void TimelineDock::addGenerator(QWidget *widget)
+{
+    auto dialog = new QDialog(this);
+    dialog->resize(426, 288);
+    dialog->setWindowModality(QmlApplication::dialogModality());
+    auto vlayout = new QVBoxLayout(dialog);
+    vlayout->addWidget(widget);
+    auto buttonBox = new QDialogButtonBox(dialog);
+    buttonBox->setOrientation(Qt::Horizontal);
+    buttonBox->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+    vlayout->addWidget(buttonBox);
+    connect(buttonBox, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
+    connect(dialog, &QDialog::finished, this, [=](int result) {
+        if (QDialog::Rejected == result)
+            return;
+        const auto name = widget->objectName();
+        auto dialog = dynamic_cast<AbstractProducerWidget *>(widget);
+        if (QLatin1String("GlaxnimateProducerWidget") == name) {
+            auto glax = qobject_cast<GlaxnimateProducerWidget *>(widget);
+            glax->setLaunchOnNew(false);
+        }
+
+        auto &profile = MLT.profile();
+        auto producer = dialog->newProducer(profile);
+        if (!(producer && producer->is_valid())) {
+            delete producer;
+            return;
+        }
+        if (!profile.is_explicit()) {
+            profile.from_producer(*producer);
+            profile.set_width(Util::coerceMultiple(profile.width()));
+            profile.set_height(Util::coerceMultiple(profile.height()));
+        }
+        MLT.updatePreviewProfile();
+        MLT.setPreviewScale(Settings.playerPreviewScale());
+        if (QDialog::Accepted == result) {
+            auto trackType = (QLatin1String("ToneProducerWidget") == name) ? AudioTrackType
+                                                                           : VideoTrackType;
+            auto trackIndex = addTrackIfNeeded(trackType);
+            overwrite(trackIndex, -1, MLT.XML(producer), true);
+            delete producer;
+        }
+        if (QLatin1String("TextProducerWidget") == name) {
+            MAIN.onFiltersDockTriggered();
+        } else {
+            MAIN.onPropertiesDockTriggered();
+        }
+    });
+    if (QLatin1String("NoiseWidget") == widget->objectName()) {
+        emit dialog->finished(QDialog::Accepted);
+    } else {
+        dialog->show();
+    }
+}
+
+void TimelineDock::addGenerator()
+{
+    if (sender()->objectName() == "color")
+        addGenerator(new ColorProducerWidget(this));
+    else if (sender()->objectName() == "text")
+        addGenerator(new TextProducerWidget(this));
+    else if (sender()->objectName() == "glaxnimate")
+        addGenerator(new GlaxnimateProducerWidget(this));
+    else if (sender()->objectName() == "noise")
+        addGenerator(new NoiseWidget(this));
+    else if (sender()->objectName() == "test_pat_B")
+        addGenerator(new ColorBarsWidget(this));
+    else if (sender()->objectName() == "tone")
+        addGenerator(new ToneProducerWidget(this));
+    else if (sender()->objectName() == "count")
+        addGenerator(new CountProducerWidget(this));
+    else if (sender()->objectName() == "blipflash")
+        addGenerator(new BlipProducerWidget(this));
 }
 
 class FindProducersByHashParser : public Mlt::Parser

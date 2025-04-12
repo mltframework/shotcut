@@ -1459,53 +1459,46 @@ void MainWindow::setupOpenOtherMenu()
     QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
     QMenu *otherMenu = new QMenu(this);
     ui->actionOpenOther2->setMenu(otherMenu);
+    ui->menuNew->addSeparator();
 
     // populate the generators
     if (mltProducers->get_data("color")) {
         otherMenu->addAction(tr("Color"), this, SLOT(onOpenOtherTriggered()))->setObjectName("color");
-        if (mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext"))
+        ui->menuNew->addAction(otherMenu->actions().constLast());
+        if (mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext")) {
             otherMenu->addAction(tr("Text"), this, SLOT(onOpenOtherTriggered()))
                 ->setObjectName("text");
+            ui->menuNew->addAction(otherMenu->actions().constLast());
+        }
     }
-    if (mltProducers->get_data("glaxnimate"))
+    if (mltProducers->get_data("glaxnimate")) {
         otherMenu->addAction(tr("Animation") + " (Glaxnimate)", this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("glaxnimate");
-    if (mltProducers->get_data("noise"))
+        ui->menuNew->addAction(otherMenu->actions().constLast());
+    }
+    if (mltProducers->get_data("noise")) {
         otherMenu->addAction(tr("Noise"), this, SLOT(onOpenOtherTriggered()))->setObjectName("noise");
-    if (mltProducers->get_data("frei0r.ising0r"))
-        otherMenu->addAction(tr("Ising"), this, SLOT(onOpenOtherTriggered()))
-            ->setObjectName("ising0r");
-    if (mltProducers->get_data("frei0r.lissajous0r"))
-        otherMenu->addAction(tr("Lissajous"), this, SLOT(onOpenOtherTriggered()))
-            ->setObjectName("lissajous0r");
-    if (mltProducers->get_data("frei0r.plasma"))
-        otherMenu->addAction(tr("Plasma"), this, SLOT(onOpenOtherTriggered()))
-            ->setObjectName("plasma");
-    if (mltProducers->get_data("frei0r.test_pat_B"))
+        ui->menuNew->addAction(otherMenu->actions().constLast());
+    }
+    if (mltProducers->get_data("frei0r.test_pat_B")) {
         otherMenu->addAction(tr("Color Bars"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("test_pat_B");
-    if (mltProducers->get_data("tone"))
+        ui->menuNew->addAction(otherMenu->actions().constLast());
+    }
+    if (mltProducers->get_data("tone")) {
         otherMenu->addAction(tr("Audio Tone"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("tone");
-    if (mltProducers->get_data("count"))
+        ui->menuNew->addAction(otherMenu->actions().constLast());
+    }
+    if (mltProducers->get_data("count")) {
         otherMenu->addAction(tr("Count"), this, SLOT(onOpenOtherTriggered()))->setObjectName("count");
-    if (mltProducers->get_data("blipflash"))
+        ui->menuNew->addAction(otherMenu->actions().constLast());
+    }
+    if (mltProducers->get_data("blipflash")) {
         otherMenu->addAction(tr("Blip Flash"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("blipflash");
-
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    otherMenu->addAction(tr("Video4Linux"), this, SLOT(onOpenOtherTriggered()))
-        ->setObjectName("v4l2");
-    otherMenu->addAction(tr("PulseAudio"), this, SLOT(onOpenOtherTriggered()))
-        ->setObjectName("pulse");
-    otherMenu->addAction(tr("ALSA Audio"), this, SLOT(onOpenOtherTriggered()))->setObjectName("alsa");
-#elif defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    otherMenu->addAction(tr("Audio/Video Device"), this, SLOT(onOpenOtherTriggered()))
-        ->setObjectName("device");
-#endif
-    if (mltProducers->get_data("decklink"))
-        otherMenu->addAction(tr("SDI/HDMI"), this, SLOT(onOpenOtherTriggered()))
-            ->setObjectName("decklink");
+        ui->menuNew->addAction(otherMenu->actions().constLast());
+    }
 }
 
 QAction *MainWindow::addProfile(QActionGroup *actionGroup, const QString &desc, const QString &name)
@@ -5094,8 +5087,8 @@ void MainWindow::on_actionLayoutRemove_triggered()
 
 void MainWindow::on_actionOpenOther2_triggered()
 {
-    ui->actionOpenOther2->menu()->popup(mapToGlobal(ui->mainToolBar->geometry().bottomLeft())
-                                        + QPoint(64, 0));
+    const auto widget = ui->mainToolBar->widgetForAction(ui->actionOpenOther2);
+    ui->actionOpenOther2->menu()->popup(widget->mapToGlobal(QPoint(0, widget->height())));
 }
 
 void MainWindow::onOpenOtherTriggered(QWidget *widget)
@@ -5129,8 +5122,7 @@ void MainWindow::onOpenOtherFinished(int result)
 
     const auto name = m_producerWidget->objectName();
     auto dialog = dynamic_cast<AbstractProducerWidget *>(m_producerWidget.get());
-    if (QLatin1String("GlaxnimateProducerWidget") == name
-        || QLatin1String("glaxnimateWidget") == name) {
+    if (QLatin1String("GlaxnimateProducerWidget") == name) {
         auto glax = qobject_cast<GlaxnimateProducerWidget *>(m_producerWidget.get());
         glax->setLaunchOnNew(false);
     }
@@ -5155,15 +5147,13 @@ void MainWindow::onOpenOtherFinished(int result)
         // Mlt::Controller owns the producer now
     } else {
         m_player->switchToTab(Player::ProjectTabIndex);
-        auto trackType = (QLatin1String("ToneProducerWidget") == name
-                          || QLatin1String("toneWidget") == name)
-                             ? AudioTrackType
-                             : VideoTrackType;
+        auto trackType = (QLatin1String("ToneProducerWidget") == name) ? AudioTrackType
+                                                                       : VideoTrackType;
         auto trackIndex = m_timelineDock->addTrackIfNeeded(trackType);
         m_timelineDock->overwrite(trackIndex, -1, MLT.XML(producer), true);
         delete producer;
     }
-    if ("TextProducerWidget" == name || "textWidget" == name) {
+    if (QLatin1String("TextProducerWidget") == name) {
         m_filtersDock->show();
         m_filtersDock->raise();
     } else {
@@ -5197,21 +5187,6 @@ void MainWindow::onOpenOtherTriggered()
         onOpenOtherTriggered(new CountProducerWidget(this));
     else if (sender()->objectName() == "blipflash")
         onOpenOtherTriggered(new BlipProducerWidget(this));
-    else if (sender()->objectName() == "v4l2")
-        onOpenOtherTriggered(new Video4LinuxWidget(this));
-    else if (sender()->objectName() == "pulse")
-        onOpenOtherTriggered(new PulseAudioWidget(this));
-    else if (sender()->objectName() == "alsa")
-        onOpenOtherTriggered(new AlsaWidget(this));
-#if defined(Q_OS_MAC)
-    else if (sender()->objectName() == "device")
-        onOpenOtherTriggered(new AvfoundationProducerWidget(this));
-#elif defined(Q_OS_WIN)
-    else if (sender()->objectName() == "device")
-        onOpenOtherTriggered(new DirectShowVideoWidget(this));
-#endif
-    else if (sender()->objectName() == "decklink")
-        onOpenOtherTriggered(new DecklinkProducerWidget(this));
 }
 
 void MainWindow::on_actionClearRecentOnExit_toggled(bool arg1)

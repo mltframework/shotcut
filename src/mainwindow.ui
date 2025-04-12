@@ -61,7 +61,13 @@
      </property>
      <addaction name="separator"/>
     </widget>
-    <addaction name="actionNew"/>
+    <widget class="QMenu" name="menuNew">
+     <property name="title">
+      <string>New</string>
+     </property>
+     <addaction name="actionNew"/>
+    </widget>
+    <addaction name="menuNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenOther"/>
     <addaction name="actionOpenXML"/>
@@ -987,10 +993,13 @@
   </action>
   <action name="actionNew">
    <property name="text">
-    <string>New</string>
+    <string>New Project</string>
+   </property>
+   <property name="toolTip">
+    <string>New Project</string>
    </property>
    <property name="shortcut">
-    <string notr="true">Ctrl+N</string>
+    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="actionKeyboardShortcuts">
@@ -1078,10 +1087,7 @@
      <normaloff>:/icons/oxygen/32x32/actions/document-new.png</normaloff>:/icons/oxygen/32x32/actions/document-new.png</iconset>
    </property>
    <property name="text">
-    <string>Open Other</string>
-   </property>
-   <property name="toolTip">
-    <string>Open a device, stream or generator</string>
+    <string>New Generator</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
