@@ -231,9 +231,9 @@ private:
     MarkersModel m_markersModel;
     SubtitlesModel m_subtitlesModel;
     SubtitlesSelectionModel m_subtitlesSelectionModel;
-    int m_position;
+    int m_position{-1};
     std::unique_ptr<Timeline::UpdateCommand> m_updateCommand;
-    bool m_ignoreNextPositionChange;
+    bool m_ignoreNextPositionChange{false};
     struct Selection
     {
         QList<QPoint> selectedClips; // x is the clip index, y is the track index
@@ -247,8 +247,8 @@ private:
     QTimer m_selectionSignalTimer;
     std::unique_ptr<Timeline::TrimCommand> m_trimCommand;
     std::unique_ptr<UndoHelper> m_undoHelper;
-    int m_trimDelta;
-    int m_transitionDelta;
+    int m_trimDelta{0};
+    int m_transitionDelta{0};
     bool m_isRecording{false};
     std::unique_ptr<AbstractJob> m_recordJob;
     QTimer m_recordingTimer;

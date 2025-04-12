@@ -42,12 +42,13 @@
 #include <QClipboard>
 #include <QGuiApplication>
 #include <QMenu>
+#include <QQmlContext>
+#include <QQuickItem>
+#include <QQuickWidget>
 #include <QSlider>
 #include <QToolBar>
 #include <QToolButton>
 #include <QVBoxLayout>
-#include <QtQml>
-#include <QtQuick>
 #include <qprogressbar.h>
 #include <qwidgetaction.h>
 
@@ -58,10 +59,6 @@ static const int kRecordingTimerIntervalMs = 1000;
 TimelineDock::TimelineDock(QWidget *parent)
     : QDockWidget(parent)
     , m_quickView(QmlUtilities::sharedEngine(), this)
-    , m_position(-1)
-    , m_ignoreNextPositionChange(false)
-    , m_trimDelta(0)
-    , m_transitionDelta(0)
     , m_subtitlesModel()
     , m_subtitlesSelectionModel(&m_subtitlesModel)
 {
@@ -1178,7 +1175,7 @@ void TimelineDock::setupActions()
     action->setCheckable(true);
     action->setChecked(ShotcutSettings::TimelineScrolling::NoScrolling
                        == Settings.timelineScrolling());
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         Settings.setTimelineScrolling(ShotcutSettings::TimelineScrolling::NoScrolling);
     });
     connect(&Settings, &ShotcutSettings::timelineScrollingChanged, action, [=]() {
@@ -1191,7 +1188,7 @@ void TimelineDock::setupActions()
     action->setCheckable(true);
     action->setChecked(ShotcutSettings::TimelineScrolling::PageScrolling
                        == Settings.timelineScrolling());
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         Settings.setTimelineScrolling(ShotcutSettings::TimelineScrolling::PageScrolling);
     });
     connect(&Settings, &ShotcutSettings::timelineScrollingChanged, action, [=]() {
@@ -1204,7 +1201,7 @@ void TimelineDock::setupActions()
     action->setCheckable(true);
     action->setChecked(ShotcutSettings::TimelineScrolling::SmoothScrolling
                        == Settings.timelineScrolling());
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         Settings.setTimelineScrolling(ShotcutSettings::TimelineScrolling::SmoothScrolling);
     });
     connect(&Settings, &ShotcutSettings::timelineScrollingChanged, action, [=]() {
@@ -1218,7 +1215,7 @@ void TimelineDock::setupActions()
     action->setCheckable(true);
     action->setChecked(ShotcutSettings::TimelineScrolling::CenterPlayhead
                        == Settings.timelineScrolling());
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         Settings.setTimelineScrolling(ShotcutSettings::TimelineScrolling::CenterPlayhead);
     });
     connect(&Settings, &ShotcutSettings::timelineScrollingChanged, action, [=]() {
@@ -1279,7 +1276,7 @@ void TimelineDock::setupActions()
     action->setIcon(icon);
     action->setCheckable(true);
     action->setChecked(isRecording());
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         if (isRecording())
             stopRecording();
         else
@@ -1291,7 +1288,7 @@ void TimelineDock::setupActions()
     Actions.add("timelineRecordAudioAction", action);
 
     action = new QAction(tr("Properties"), this);
-    connect(action, &QAction::triggered, this, [&](bool checked) { openProperties(); });
+    connect(action, &QAction::triggered, this, [&]() { openProperties(); });
     connect(this, &TimelineDock::selectionChanged, action, [=]() {
         action->setEnabled(!blankIsSelected());
     });
@@ -1299,7 +1296,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Rejoin With Next Clip"), this);
     action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         if (m_selection.selectedClips.length() == 1 && !selection().isEmpty()) {
             mergeClipWithNext(selection().first().y(), selection().first().x(), false);
         }
@@ -1315,7 +1312,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Detach Audio"), this);
     action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         if (m_selection.selectedClips.length() == 1 && !selection().isEmpty()) {
             detachAudio(selection().first().y(), selection().first().x());
         }
@@ -1348,7 +1345,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Align To Reference Track"), this);
     action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         if (m_selection.selectedClips.length() > 0) {
             alignSelectedClips();
         }
@@ -1368,7 +1365,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Apply Copied Filters"), this);
     action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         if (m_selection.selectedClips.length() > 0) {
             applyCopiedFiltersToSelectdClips();
         }
@@ -1392,7 +1389,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Update Thumbnails"), this);
     action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         foreach (auto point, selection()) {
             if (!isBlank(point.y(), point.x()) && !isTransition(point.y(), point.x())) {
                 emit updateThumbnails(point.y(), point.x());
@@ -1416,7 +1413,7 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Rebuild Audio Waveform"), this);
     action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         foreach (auto point, selection()) {
             if (!isBlank(point.y(), point.x()) && !isTransition(point.y(), point.x())) {
                 remakeAudioLevels(point.y(), point.x());
@@ -1440,14 +1437,14 @@ void TimelineDock::setupActions()
 
     action = new QAction(tr("Ripple Trim Clip In"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_I));
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         trimClipAtPlayhead(TimelineDock::TrimInPoint, true);
     });
     Actions.add("timelineRippleTrimClipInAction", action);
 
     action = new QAction(tr("Ripple Trim Clip Out"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_O));
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         trimClipAtPlayhead(TimelineDock::TrimOutPoint, true);
     });
     Actions.add("timelineRippleTrimClipOutAction", action);
@@ -1455,7 +1452,7 @@ void TimelineDock::setupActions()
     action = new QAction(tr("Group/Ungroup"), this);
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_G));
     action->setEnabled(false);
-    connect(action, &QAction::triggered, this, [&](bool checked) {
+    connect(action, &QAction::triggered, this, [&]() {
         auto selectedClips = selection();
         if (selectedClips.size() <= 1) {
             LOG_ERROR() << "Not enough clips selected" << selectedClips.size();
@@ -3629,8 +3626,6 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
                             playlist.clip_info(mltClipIndex, &info);
                             Mlt::Producer clip(info.producer);
                             clip.set_in_and_out(info.frame_in, info.frame_out);
-                            bool lastClip = mltTrackIndex == tractor.count() - 1
-                                            && mltClipIndex == playlist.count() - 1;
                             MAIN.undoStack()->push(
                                 new Timeline::OverwriteCommand(m_model,
                                                                trackIndex,
