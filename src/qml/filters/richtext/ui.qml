@@ -117,13 +117,13 @@ Shotcut.KeyframableFilter {
             filter.blockSignals = false;
             var s;
             if (filter.get(specialPresetProperty) === 'scroll-down')
-                s = '0=' + filterRect.x + '/-' + Math.round(document.height) + ':' + filterRect.width + 'x' + filterRect.height + '; -1=' + filterRect.x + '/' + profile.height + ':' + filterRect.width + 'x' + filterRect.height;
+                s = '0=' + filterRect.x + '/-' + Math.round(document.height) + ':' + filterRect.width + 'x' + filterRect.height + '; ' + filter.duration + '=' + filterRect.x + '/' + profile.height + ':' + filterRect.width + 'x' + filterRect.height;
             else if (filter.get(specialPresetProperty) === 'scroll-up')
-                s = '0=' + filterRect.x + '/' + profile.height + ':' + filterRect.width + 'x' + filterRect.height + '; -1=' + filterRect.x + '/-' + Math.round(document.height) + ':' + filterRect.width + 'x' + filterRect.height;
+                s = '0=' + filterRect.x + '/' + profile.height + ':' + filterRect.width + 'x' + filterRect.height + '; ' + filter.duration + '=' + filterRect.x + '/-' + Math.round(document.height) + ':' + filterRect.width + 'x' + filterRect.height;
             else if (filter.get(specialPresetProperty) === 'scroll-right')
-                s = '0=-' + Math.round(document.width) + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height + '; -1=' + profile.width + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height;
+                s = '0=-' + Math.round(document.width) + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height + '; ' + filter.duration + '=' + profile.width + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height;
             else if (filter.get(specialPresetProperty) === 'scroll-left')
-                s = '0=' + profile.width + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height + '; -1=-' + Math.round(document.width) + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height;
+                s = '0=' + profile.width + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height + '; ' + filter.duration + '=-' + Math.round(document.width) + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height;
             if (s) {
                 console.log(filter.get(specialPresetProperty) + ': ' + s);
                 filter.set(rectProperty, s);
