@@ -258,7 +258,7 @@ Rectangle {
         visible: !elided && !isBlank && !isTransition
         font.pointSize: 8
         color: 'black'
-        width: Math.min(labelMetrics.width + 1, parent.width - inThumbnail.width - 2 * (parent.border.width + 1))
+        width: Math.min(labelMetrics.width + 2, parent.width - inThumbnail.width - 15)
         elide: Text.ElideRight
 
         anchors {
@@ -297,6 +297,8 @@ Rectangle {
         visible: !elided && !isBlank && !isTransition && parent.width > ((settings.timelineShowThumbnails ? 2 * outThumbnail.width : 0) + 3 * label.width)
         font.pointSize: 8
         color: 'black'
+        width: label.width
+        elide: Text.ElideRight
 
         anchors {
             top: parent.top
@@ -441,7 +443,7 @@ Rectangle {
 
         property real enabledWidth: enabled ? 2 * width : width
 
-        visible: !elided && !isBlank && isFiltered
+        visible: !elided && !isBlank && isFiltered && parent.width > inThumbnail.width + height
         icon.source: 'qrc:///icons/light/32x32/view-filter.png'
         icon.width: 16
         icon.height: 16
