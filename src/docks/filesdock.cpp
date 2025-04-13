@@ -239,7 +239,7 @@ public:
                 tr("Image"),
                 tr("Audio"),
                 tr("Other"),
-                QStringLiteral(""),
+                QLatin1String(""),
             };
             auto i = isDir ? 4 : mediaType(index);
             return names[i];
@@ -503,18 +503,18 @@ FilesDock::FilesDock(QWidget *parent)
     ui->locationsCombo->addItem(tr("Current Project"), "");
     ui->locationsCombo
         ->addItem(tr("Documents"),
-                  QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first());
+                  QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).constFirst());
 #if defined(Q_OS_MAC)
     ui->locationsCombo
         ->addItem(tr("Movies", "The system-provided videos folder called Movies on macOS"),
-                  QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).first());
+                  QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).constFirst());
 #endif
     ui->locationsCombo
         ->addItem(tr("Music"),
-                  QStandardPaths::standardLocations(QStandardPaths::MusicLocation).first());
+                  QStandardPaths::standardLocations(QStandardPaths::MusicLocation).constFirst());
     ui->locationsCombo
         ->addItem(tr("Pictures", "The system-provided photos folder"),
-                  QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).first());
+                  QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).constFirst());
 #if defined(Q_OS_MAC)
     ui->locationsCombo->addItem(
         tr("Volumes",
@@ -1240,7 +1240,7 @@ void FilesDock::onSelectAllActionTriggered()
 
 void FilesDock::onUpdateThumbnailsActionTriggered()
 {
-    for (const auto &index : m_view->selectionModel()->selectedIndexes()) {
+    for (auto &index : m_view->selectionModel()->selectedIndexes()) {
         auto sourceIndex = m_filesProxyModel->mapToSource(index);
         if (sourceIndex.isValid())
             m_filesModel->updateThumbnails(sourceIndex);
@@ -1320,6 +1320,8 @@ void FilesDock::clearStatus()
 
 void FilesDock::updateStatus()
 {
+    if (!m_view->rootIndex().isValid())
+        return;
     auto n = m_filesProxyModel->rowCount(m_view->rootIndex());
     m_label->setText(tr("%n item(s)", nullptr, n));
     QCoreApplication::processEvents();
@@ -1338,7 +1340,7 @@ void FilesDock::onLocationsEditingFinished()
     changeDirectory(path);
 }
 
-void FilesDock::on_locationsCombo_activated(int index)
+void FilesDock::on_locationsCombo_activated(int)
 {
     auto path = ui->locationsCombo->currentData().toString();
     if (path.isEmpty() && !MAIN.fileName().isEmpty())
