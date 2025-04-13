@@ -38,6 +38,7 @@
 #include "docks/encodedock.h"
 #include "docks/filesdock.h"
 #include "docks/filtersdock.h"
+#include "docks/findanalysisfilterparser.h"
 #include "docks/jobsdock.h"
 #include "docks/keyframesdock.h"
 #include "docks/markersdock.h"
@@ -2377,6 +2378,44 @@ void MainWindow::setupActions()
     });
     addAction(action);
     Actions.add("timelineReload", action, tr("Timeline"));
+
+    action = new QAction(tr("Rerun Filter Analysis"), this);
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        FindAnalysisFilterParser parser;
+        parser.skipAnalyzed(false);
+        // Look for two pass filters
+        if (m_timelineDock->model()->tractor() && m_timelineDock->model()->tractor()->is_valid()) {
+            parser.start(*m_timelineDock->model()->tractor());
+        }
+        if (m_playlistDock->model()->playlist() && m_playlistDock->model()->playlist()->is_valid()) {
+            parser.start(*m_playlistDock->model()->playlist());
+        }
+        if (parser.filters().size() > 0) {
+            QMessageBox dialog(QMessageBox::Question,
+                               windowTitle(),
+                               tr("This will start %n analysis job(s). Continue?",
+                                  nullptr,
+                                  parser.filters().size()),
+                               QMessageBox::No | QMessageBox::Yes,
+                               this);
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            if (QMessageBox::Yes == dialog.exec()) {
+                // If dialog accepted enqueue jobs.
+                foreach (Mlt::Filter filter, parser.filters()) {
+                    QScopedPointer<QmlMetadata> meta(new QmlMetadata);
+                    QmlFilter qmlFilter(filter, meta.data());
+                    bool isAudio = !::qstrcmp("loudness", filter.get("mlt_service"));
+                    qmlFilter.analyze(isAudio, false);
+                }
+            }
+        } else {
+            emit showStatusMessage(tr("No filters to analyze."));
+        }
+    });
+    Actions.add("analyzeFilters", action);
+    ui->menuFile->insertAction(ui->actionShowProjectFolder, action);
 
     Actions.loadFromMenu(ui->menuFile);
     Actions.loadFromMenu(ui->menuEdit);
