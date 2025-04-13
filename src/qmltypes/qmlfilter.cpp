@@ -118,7 +118,7 @@ QRectF QmlFilter::getRect(QString name, int position)
         if (position < 0) {
             rect = m_service.get_rect(qUtf8Printable(name));
         } else {
-            rect = m_service.anim_get_rect(qUtf8Printable(name), position, -1);
+            rect = m_service.anim_get_rect(qUtf8Printable(name), position, duration());
         }
         if (::strchr(s, '%')) {
             return QRectF(qRound(rect.x * MLT.profile().width()),
