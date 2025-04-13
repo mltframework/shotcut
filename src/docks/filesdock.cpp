@@ -1324,7 +1324,6 @@ void FilesDock::updateStatus()
         return;
     auto n = m_filesProxyModel->rowCount(m_view->rootIndex());
     m_label->setText(tr("%n item(s)", nullptr, n));
-    QCoreApplication::processEvents();
 }
 
 void FilesDock::onLocationsEditingFinished()

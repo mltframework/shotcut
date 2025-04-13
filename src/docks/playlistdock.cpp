@@ -2136,7 +2136,6 @@ void PlaylistDock::updateStatus()
 {
     auto n = m_proxyModel->rowCount();
     m_label->setText(n > 0 ? tr("%n item(s)", nullptr, n) : "");
-    QCoreApplication::processEvents();
 }
 
 void BinTree::dropEvent(QDropEvent *event)
