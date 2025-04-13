@@ -2393,8 +2393,9 @@ void MainWindow::setupActions()
         if (parser.filters().size() > 0) {
             QMessageBox dialog(QMessageBox::Question,
                                windowTitle(),
-                               tr("This will start %1 analysis jobs. Continue?")
-                                   .arg(parser.filters().size()),
+                               tr("This will start %n analysis job(s). Continue?",
+                                  nullptr,
+                                  parser.filters().size()),
                                QMessageBox::No | QMessageBox::Yes,
                                this);
             dialog.setDefaultButton(QMessageBox::Yes);
