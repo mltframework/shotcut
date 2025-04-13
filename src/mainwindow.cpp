@@ -1459,7 +1459,6 @@ void MainWindow::setupOpenOtherMenu()
     QScopedPointer<Mlt::Properties> mltProducers(MLT.repository()->producers());
     QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
     QMenu *otherMenu = new QMenu(this);
-    ui->actionOpenOther2->setMenu(otherMenu);
     ui->menuNew->addSeparator();
 
     // populate the generators
@@ -5122,12 +5121,6 @@ void MainWindow::on_actionLayoutRemove_triggered()
             }
         }
     }
-}
-
-void MainWindow::on_actionOpenOther2_triggered()
-{
-    const auto widget = ui->mainToolBar->widgetForAction(ui->actionOpenOther2);
-    ui->actionOpenOther2->menu()->popup(widget->mapToGlobal(QPoint(0, widget->height())));
 }
 
 void MainWindow::onOpenOtherTriggered(QWidget *widget)
