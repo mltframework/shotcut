@@ -501,9 +501,9 @@ FilesDock::FilesDock(QWidget *parent)
     const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
     ui->locationsCombo->addItem(tr("Home", "The user's home folder in the file system"), ls.first());
     ui->locationsCombo->addItem(tr("Current Project"), "");
-    ui->locationsCombo
-        ->addItem(tr("Documents"),
-                  QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).constFirst());
+    ui->locationsCombo->addItem(tr("Documents"),
+                                QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)
+                                    .constFirst());
 #if defined(Q_OS_MAC)
     ui->locationsCombo
         ->addItem(tr("Movies", "The system-provided videos folder called Movies on macOS"),
