@@ -992,10 +992,10 @@
   </action>
   <action name="actionNew">
    <property name="text">
-    <string>New Project</string>
+    <string>Project</string>
    </property>
    <property name="toolTip">
-    <string>New Project</string>
+    <string>Project</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
