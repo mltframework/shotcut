@@ -1105,6 +1105,8 @@ void MainWindow::setupSettingsMenu()
     m_previewScaleGroup->addAction(ui->actionPreview360);
     m_previewScaleGroup->addAction(ui->actionPreview540);
     m_previewScaleGroup->addAction(ui->actionPreview720);
+    m_previewScaleGroup->addAction(ui->actionPreview1080);
+    ui->menuPreviewScaling->addAction(ui->actionPreview1080);
 
     group = new QActionGroup(this);
     group->addAction(ui->actionTimeFrames);
@@ -1820,12 +1822,21 @@ void MainWindow::setPreviewScale(int scale)
     case 720:
         ui->actionPreview720->setChecked(true);
         break;
+    case 1080:
+        ui->actionPreview1080->setChecked(true);
+        break;
     default:
         ui->actionPreviewNone->setChecked(true);
         break;
     }
     MLT.setPreviewScale(scale);
-    MLT.refreshConsumer();
+    if (!m_externalGroup->checkedAction()->data().toString().isEmpty()) {
+        // DeckLink external monitor
+        MLT.consumerChanged();
+    } else {
+        // System monitor
+        MLT.refreshConsumer();
+    }
 }
 
 void MainWindow::setVideoModeMenu()
@@ -2246,12 +2257,13 @@ void MainWindow::readPlayerSettings()
     setAudioChannels(Settings.playerAudioChannels());
 
     if (isExternalPeripheral) {
-        setPreviewScale(0);
-        m_previewScaleGroup->setEnabled(false);
+        ui->actionPreview360->setEnabled(false);
+        ui->actionPreview540->setEnabled(false);
     } else {
-        setPreviewScale(Settings.playerPreviewScale());
-        m_previewScaleGroup->setEnabled(true);
+        ui->actionPreview360->setEnabled(true);
+        ui->actionPreview540->setEnabled(true);
     }
+    setPreviewScale(Settings.playerPreviewScale());
 
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
@@ -4246,12 +4258,13 @@ void MainWindow::onExternalTriggered(QAction *action)
 
     // Preview scaling not permitted for SDI/HDMI
     if (isExternal) {
-        setPreviewScale(0);
-        m_previewScaleGroup->setEnabled(false);
+        ui->actionPreview360->setEnabled(false);
+        ui->actionPreview540->setEnabled(false);
     } else {
-        setPreviewScale(Settings.playerPreviewScale());
-        m_previewScaleGroup->setEnabled(true);
+        ui->actionPreview360->setEnabled(true);
+        ui->actionPreview540->setEnabled(true);
     }
+    setPreviewScale(Settings.playerPreviewScale());
 }
 
 void MainWindow::onDecklinkGammaTriggered(QAction *action)
@@ -5362,6 +5375,15 @@ void MainWindow::on_actionPreview720_triggered(bool checked)
     if (checked) {
         Settings.setPlayerPreviewScale(720);
         setPreviewScale(720);
+        m_player->showIdleStatus();
+    }
+}
+
+void MainWindow::on_actionPreview1080_triggered(bool checked)
+{
+    if (checked) {
+        Settings.setPlayerPreviewScale(1080);
+        setPreviewScale(1080);
         m_player->showIdleStatus();
     }
 }

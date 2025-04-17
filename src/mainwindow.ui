@@ -1162,6 +1162,14 @@
     <string notr="true">F9</string>
    </property>
   </action>
+  <action name="actionPreview1080">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>1080p</string>
+   </property>
+  </action>
   <action name="actionPreviewNone">
    <property name="checkable">
     <bool>true</bool>
