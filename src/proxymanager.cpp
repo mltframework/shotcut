@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2024 Meltytech, LLC
+ * Copyright (c) 2020-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -205,6 +205,12 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer,
              << "bt470bg";
         args << "-colorspace"
              << "bt470bg";
+        break;
+    case 2020:
+        args << "-color_primaries"
+             << "bt2020";
+        args << "-colorspace"
+             << "bt2020nc";
         break;
     default:
         args << "-color_primaries"
