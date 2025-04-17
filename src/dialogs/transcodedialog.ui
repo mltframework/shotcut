@@ -101,7 +101,7 @@
      <item>
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>large</string>
+        <string>BIG</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -111,7 +111,7 @@
      <item>
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>biggest</string>
+        <string>&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;HUGE&lt;/span&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
