@@ -499,11 +499,21 @@ bool Controller::saveXML(const QString &filename,
         c.set("no_root", 1);
         c.set("title",
               QStringLiteral("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
+
+        // Save the consumer of this service so it can be restored.
+        std::unique_ptr<Service> saveConsumer(s.consumer());
+        if (!saveConsumer) {
+            LOG_ERROR() << "Unable to get save consumer";
+            saveConsumer.reset(new Service());
+        }
         c.connect(s);
         c.start();
         if (ignore)
             s.set("ignore_points", ignore);
         auto xml = QString::fromUtf8(c.get(kMltXmlPropertyName));
+        // Restore the consumer that was previously on this service
+        s.set_consumer(*saveConsumer);
+
         if (!proxy && ProxyManager::filterXML(xml, root)) { // also verifies
             if (tempFile) {
                 QTextStream stream(tempFile);
@@ -542,14 +552,15 @@ QString Controller::XML(Service *service, bool withProfile, bool withMetadata)
     Service s(service                                  ? service->get_service()
               : (m_producer && m_producer->is_valid()) ? m_producer->get_service()
                                                        : nullptr);
+    if (!s.is_valid())
+        return QString();
+
     // Save the consumer of this service so it can be restored.
     std::unique_ptr<Service> saveConsumer(s.consumer());
     if (!saveConsumer) {
         LOG_ERROR() << "Unable to get save consumer";
         saveConsumer.reset(new Service());
     }
-    if (!s.is_valid())
-        return "";
     int ignore = s.get_int("ignore_points");
     if (ignore)
         s.set("ignore_points", 0);
