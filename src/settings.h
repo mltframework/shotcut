@@ -153,6 +153,8 @@ public:
     void setPlayerInterpolation(const QString &);
     bool playerJACK() const;
     void setPlayerJACK(bool);
+    int playerDecklinkGamma() const;
+    void setPlayerDecklinkGamma(int);
     int playerKeyerMode() const;
     void setPlayerKeyerMode(int);
     bool playerMuted() const;

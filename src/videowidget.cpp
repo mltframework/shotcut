@@ -377,6 +377,16 @@ int VideoWidget::reconfigure(bool isMulti)
         case 470:
             m_consumer->set("color_trc", "bt470bg");
             break;
+        case 2020:
+            switch (property("decklinkGamma").toInt()) {
+            case 1:
+                m_consumer->set("color_trc", "arib-std-b67");
+                break;
+            default:
+                m_consumer->clear("color_trc");
+                break;
+            }
+            break;
         default:
             m_consumer->set("color_trc", "bt709");
             break;

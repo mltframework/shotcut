@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 Meltytech, LLC
+ * Copyright (c) 2011-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -185,6 +185,7 @@ private:
     QDockWidget *m_historyDock;
     QActionGroup *m_profileGroup;
     QActionGroup *m_externalGroup;
+    QActionGroup *m_decklinkGammaGroup{nullptr};
     QActionGroup *m_keyerGroup;
     QActionGroup *m_layoutGroup;
     QActionGroup *m_previewScaleGroup;
@@ -192,6 +193,7 @@ private:
     FilterController *m_filterController;
     ScopeController *m_scopeController;
     QMenu *m_customProfileMenu;
+    QMenu *m_decklinkGammaMenu{nullptr};
     QMenu *m_keyerMenu;
     QStringList m_multipleFiles;
     bool m_multipleFilesLoading;
@@ -301,6 +303,7 @@ private slots:
     void on_actionJack_triggered(bool checked);
     void on_actionGPU_triggered(bool checked);
     void onExternalTriggered(QAction *);
+    void onDecklinkGammaTriggered(QAction *);
     void onKeyerTriggered(QAction *);
     void onProfileTriggered(QAction *);
     void onProfileChanged();

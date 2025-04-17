@@ -606,6 +606,16 @@ void ShotcutSettings::setPlayerJACK(bool b)
     settings.setValue("player/jack", b);
 }
 
+int ShotcutSettings::playerDecklinkGamma() const
+{
+    return settings.value("player/decklinkGamma", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerDecklinkGamma(int i)
+{
+    settings.setValue("player/decklinkGamma", i);
+}
+
 int ShotcutSettings::playerKeyerMode() const
 {
     return settings.value("player/keyer", 0).toInt();

@@ -1182,6 +1182,15 @@ void MainWindow::setupSettingsMenu()
                 action->setData(QStringLiteral("decklink:%1").arg(i));
                 m_externalGroup->addAction(action);
 
+                if (!m_decklinkGammaGroup) {
+                    m_decklinkGammaGroup = new QActionGroup(this);
+                    action = new QAction(tr("SDR"), m_decklinkGammaGroup);
+                    action->setData(QVariant(0));
+                    action->setCheckable(true);
+                    action = new QAction(tr("HLG HDR"), m_decklinkGammaGroup);
+                    action->setData(QVariant(1));
+                    action->setCheckable(true);
+                }
                 if (!m_keyerGroup) {
                     m_keyerGroup = new QActionGroup(this);
                     action = new QAction(tr("Off"), m_keyerGroup);
@@ -1203,11 +1212,20 @@ void MainWindow::setupSettingsMenu()
         delete ui->menuExternal;
         ui->menuExternal = 0;
     }
+    if (m_decklinkGammaGroup) {
+        m_decklinkGammaMenu = ui->menuExternal->addMenu(tr("DeckLink Gamma"));
+        m_decklinkGammaMenu->addActions(m_decklinkGammaGroup->actions());
+        m_decklinkGammaMenu->setDisabled(true);
+        connect(m_decklinkGammaGroup,
+                &QActionGroup::triggered,
+                this,
+                &MainWindow::onDecklinkGammaTriggered);
+    }
     if (m_keyerGroup) {
         m_keyerMenu = ui->menuExternal->addMenu(tr("DeckLink Keyer"));
         m_keyerMenu->addActions(m_keyerGroup->actions());
         m_keyerMenu->setDisabled(true);
-        connect(m_keyerGroup, SIGNAL(triggered(QAction *)), this, SLOT(onKeyerTriggered(QAction *)));
+        connect(m_keyerGroup, &QActionGroup::triggered, this, &MainWindow::onKeyerTriggered);
     }
     connect(m_externalGroup,
             SIGNAL(triggered(QAction *)),
@@ -2264,15 +2282,28 @@ void MainWindow::readPlayerSettings()
 #endif
             if (a->data() == external) {
                 a->setChecked(true);
-                if (a->data().toString().startsWith("decklink") && m_keyerMenu)
-                    m_keyerMenu->setEnabled(true);
+                if (a->data().toString().startsWith("decklink")) {
+                    if (m_decklinkGammaMenu)
+                        m_decklinkGammaMenu->setEnabled(true);
+                    if (m_keyerMenu)
+                        m_keyerMenu->setEnabled(true);
+                }
                 break;
             }
     }
 
+    if (m_decklinkGammaGroup) {
+        auto gamma = Settings.playerDecklinkGamma();
+        for (auto a : m_decklinkGammaGroup->actions()) {
+            if (a->data() == gamma) {
+                a->setChecked(true);
+                break;
+            }
+        }
+    }
     if (m_keyerGroup) {
-        int keyer = Settings.playerKeyerMode();
-        foreach (QAction *a, m_keyerGroup->actions()) {
+        auto keyer = Settings.playerKeyerMode();
+        for (auto a : m_keyerGroup->actions()) {
             if (a->data() == keyer) {
                 a->setChecked(true);
                 break;
@@ -2525,6 +2556,9 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("rescale", "bicubic");
     else
         MLT.videoWidget()->setProperty("rescale", "hyper");
+    if (m_decklinkGammaGroup)
+        MLT.videoWidget()->setProperty("decklinkGamma",
+                                       m_decklinkGammaGroup->checkedAction()->data());
     if (m_keyerGroup)
         MLT.videoWidget()->setProperty("keyer", m_keyerGroup->checkedAction()->data());
     LOG_DEBUG() << "end";
@@ -4203,8 +4237,12 @@ void MainWindow::onExternalTriggered(QAction *action)
         MLT.consumer()->set("progressive", isProgressive);
         MLT.restart();
     }
-    if (m_keyerMenu)
-        m_keyerMenu->setEnabled(action->data().toString().startsWith("decklink"));
+    if (action->data().toString().startsWith("decklink")) {
+        if (m_decklinkGammaMenu)
+            m_decklinkGammaMenu->setEnabled(true);
+        if (m_keyerMenu)
+            m_keyerMenu->setEnabled(true);
+    }
 
     // Preview scaling not permitted for SDI/HDMI
     if (isExternal) {
@@ -4214,6 +4252,14 @@ void MainWindow::onExternalTriggered(QAction *action)
         setPreviewScale(Settings.playerPreviewScale());
         m_previewScaleGroup->setEnabled(true);
     }
+}
+
+void MainWindow::onDecklinkGammaTriggered(QAction *action)
+{
+    LOG_DEBUG() << action->data().toString();
+    MLT.videoWidget()->setProperty("decklinkGamma", action->data());
+    MLT.consumerChanged();
+    Settings.setPlayerDecklinkGamma(action->data().toInt());
 }
 
 void MainWindow::onKeyerTriggered(QAction *action)
