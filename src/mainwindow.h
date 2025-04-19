@@ -361,6 +361,7 @@ private slots:
     void onLayoutTriggered(QAction *);
     void on_actionProfileRemove_triggered();
     void on_actionLayoutRemove_triggered();
+    void on_actionOpenOther2_triggered();
     void onOpenOtherTriggered(QWidget *widget);
     void onOpenOtherFinished(int result);
     void onOpenOtherTriggered();

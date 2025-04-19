@@ -1478,40 +1478,51 @@ void MainWindow::setupOpenOtherMenu()
     // Open Other toolbar menu button
     QScopedPointer<Mlt::Properties> mltProducers(MLT.repository()->producers());
     QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
+    QMenu *otherMenu = new QMenu(this);
+    ui->actionOpenOther2->setMenu(otherMenu);
+    ui->menuNew->addSeparator();
 
     // populate the generators
     if (mltProducers->get_data("color")) {
         ui->menuNew->addAction(tr("Color"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("color");
+        otherMenu->addAction(ui->menuNew->actions().constLast());
         if (mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext")) {
             ui->menuNew->addAction(tr("Text"), this, SLOT(onOpenOtherTriggered()))
                 ->setObjectName("text");
+            otherMenu->addAction(ui->menuNew->actions().constLast());
         }
     }
     if (mltProducers->get_data("glaxnimate")) {
         ui->menuNew
             ->addAction(tr("Animation") + " (Glaxnimate)", this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("glaxnimate");
+        otherMenu->addAction(ui->menuNew->actions().constLast());
     }
     if (mltProducers->get_data("noise")) {
         ui->menuNew->addAction(tr("Noise"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("noise");
+        otherMenu->addAction(ui->menuNew->actions().constLast());
     }
     if (mltProducers->get_data("frei0r.test_pat_B")) {
         ui->menuNew->addAction(tr("Color Bars"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("test_pat_B");
+        otherMenu->addAction(ui->menuNew->actions().constLast());
     }
     if (mltProducers->get_data("tone")) {
         ui->menuNew->addAction(tr("Audio Tone"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("tone");
+        otherMenu->addAction(ui->menuNew->actions().constLast());
     }
     if (mltProducers->get_data("count")) {
         ui->menuNew->addAction(tr("Count"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("count");
+        otherMenu->addAction(ui->menuNew->actions().constLast());
     }
     if (mltProducers->get_data("blipflash")) {
         ui->menuNew->addAction(tr("Blip Flash"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("blipflash");
+        otherMenu->addAction(ui->menuNew->actions().constLast());
     }
 }
 
@@ -5174,6 +5185,12 @@ void MainWindow::on_actionLayoutRemove_triggered()
             }
         }
     }
+}
+
+void MainWindow::on_actionOpenOther2_triggered()
+{
+    const auto widget = ui->mainToolBar->widgetForAction(ui->actionOpenOther2);
+    ui->actionOpenOther2->menu()->popup(widget->mapToGlobal(QPoint(0, widget->height())));
 }
 
 void MainWindow::onOpenOtherTriggered(QWidget *widget)
