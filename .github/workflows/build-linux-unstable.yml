@@ -75,3 +75,24 @@ jobs:
             --acl-public
             --stop-on-error
             put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/
+
+      - name: Install Snapcraft
+        if: ${{ github.repository_owner == 'mltframework' }}
+        uses: samuelmeuli/action-snapcraft@v1.2.0
+        with:
+          use_lxd: true
+      - name: Package snap
+        if: ${{ github.repository_owner == 'mltframework' }}
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+        run: |
+          VERSION=$(cat VERSION)
+          mv scripts/shotcut-linux-x86_64-*.txz packaging/linux
+          cd packaging/linux
+          mkdir -p snap/gui
+          cp ../../icons/shotcut-logo-64.png snap/gui
+          sed 's|Icon=.*|Icon=${SNAP}/meta/gui/shotcut-logo-64.png|' org.shotcut.Shotcut.desktop > snap/gui/shotcut.desktop
+          FILENAME=$(ls *.txz)
+          sed "s/\$VERSION/${VERSION}/ ; s/\$FILENAME/${FILENAME}/" snapcraft.yaml.in > snap/snapcraft.yaml
+          sg lxd -c 'snapcraft --use-lxd'
+          snapcraft upload --release=edge shotcut_*.snap
