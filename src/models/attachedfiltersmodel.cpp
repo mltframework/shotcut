@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -519,6 +519,7 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
             LOG_ERROR() << "Invalid producer" << meta->name() << filterSetProducer.filter_count();
             return -1;
         }
+        int adjustFrom = m_producer->filter_count();
         for (int i = 0; i < filterSetProducer.filter_count(); i++) {
             Mlt::Filter *filter = filterSetProducer.filter(i);
             if (filter->is_valid() && !filter->get_int("_loader")
@@ -546,6 +547,8 @@ int AttachedFiltersModel::add(QmlMetadata *meta)
             }
             delete filter;
         }
+        if (isSourceClip())
+            MLT.adjustFilters(*m_producer, adjustFrom);
     } break;
     default:
         LOG_ERROR() << "Unknown type" << meta->type();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024 Meltytech, LLC
+ * Copyright (c) 2021-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
-#include "qmltypes/qmlmetadata.h"
 
 class FindProducerParser : public Mlt::Parser
 {
@@ -121,9 +120,12 @@ void AddCommand::redo()
         producer = findProducer(m_producerUuid);
     }
     Q_ASSERT(producer.is_valid());
+    int adjustFrom = producer.filter_count();
     for (int i = 0; i < m_rows.size(); i++) {
         m_model.doAddService(producer, m_services[i], m_rows[i]);
     }
+    if (AddSetLast == m_type)
+        MLT.adjustFilters(producer, adjustFrom);
     // Only hold the producer reference for the first redo and lookup by UUID thereafter.
     m_producer = Mlt::Producer();
 }
@@ -356,7 +358,7 @@ UndoParameterCommand::UndoParameterCommand(const QString &name,
     if (desc.isEmpty()) {
         setText(QObject::tr("Change %1 filter").arg(name));
     } else {
-        setText(QObject::tr("Change %1 filter: %2").arg(name).arg(desc));
+        setText(QObject::tr("Change %1 filter: %2").arg(name, desc));
     }
     m_before.inherit(before);
     Mlt::Service *service = controller->attachedModel()->getService(m_row);
