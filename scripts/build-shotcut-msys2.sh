@@ -56,7 +56,7 @@ GLAXNIMATE_REVISION="origin/v0.5.4"
 ENABLE_GOPRO2GPX=1
 ENABLE_OPENCV=1
 OPENCV_HEAD=0
-OPENCV_REVISION="origin/cmake4"
+OPENCV_REVISION="origin/4.x"
 OPENCV_CONTRIB_HEAD=0
 OPENCV_CONTRIB_REVISION="4.11.0"
 ENABLE_LIBSPATIALAUDIO=1
@@ -451,7 +451,7 @@ function set_globals {
   REPOLOCS[12]="https://github.com/Netflix/vmaf.git"
   REPOLOCS[13]="https://gitlab.com/ddennedy/glaxnimate.git"
   REPOLOCS[14]="https://github.com/ddennedy/gopro2gpx.git"
-  REPOLOCS[15]="https://github.com/ddennedy/opencv.git"
+  REPOLOCS[15]="https://github.com/opencv/opencv.git"
   REPOLOCS[16]="https://github.com/opencv/opencv_contrib.git"
   REPOLOCS[17]="https://github.com/ddennedy/libspatialaudio.git"
 
