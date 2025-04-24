@@ -4232,10 +4232,11 @@ void TimelineDock::onRecordFinished(AbstractJob *, bool success)
 {
     if (!success) {
         stopRecording();
-        Settings.setAudioInput(QString()); // saved input likely no longer valid
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+        Settings.setAudioInput(QString()); // saved input likely no longer valid
         emit showStatusMessage(tr("Record Audio error: check PulseAudio settings"));
-#else
+#elif !defined(Q_OS_MAC)
+        Settings.setAudioInput(QString()); // saved input likely no longer valid
         emit showStatusMessage(
             tr("Record Audio error: choose File > Open Other > Audio/Video Device"));
 #endif
