@@ -26,9 +26,10 @@
       <property name="mlt_service">frei0r.pixeliz0r</property>
       <property name="0">0.05</property>
       <property name="1">0.05</property>
+      <property name="2">1</property>
     </filter>
     <filter id="filter2" out="00:00:30.030">
-      <property name="transition">frei0r.composition</property>
+      <property name="transition">frei0r.cairoblend</property>
       <property name="mlt_image_format">rgba</property>
       <property name="mlt_service">mask_apply</property>
       <property name="transition.threads">0</property>

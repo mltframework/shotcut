@@ -34,7 +34,7 @@
       <property name="opacity">0.5</property>
     </filter>
     <filter id="filter3" out="00:00:30.030">
-      <property name="transition">frei0r.composition</property>
+      <property name="transition">frei0r.cairoblend</property>
       <property name="mlt_image_format">rgba</property>
       <property name="mlt_service">mask_apply</property>
       <property name="transition.threads">0</property>
