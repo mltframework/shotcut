@@ -1409,16 +1409,7 @@ void TimelineDock::setupActions()
         bool enabled = true;
         auto clipIndex = -1;
         auto trackIndex = currentTrack();
-        if (selection().isEmpty()) {
-            chooseClipAtPosition(m_position, trackIndex, clipIndex);
-            if (trackIndex < 0 || clipIndex < 0) {
-                enabled = false;
-            } else if (isBlank(trackIndex, clipIndex)) {
-                enabled = false;
-            } else if (isTransition(trackIndex, clipIndex)) {
-                enabled = false;
-            }
-        } else {
+        if (!selection().isEmpty()) {
             auto &selected = selection().first();
             trackIndex = selected.y();
             clipIndex = selected.x();
@@ -1426,15 +1417,15 @@ void TimelineDock::setupActions()
                 trackIndex = currentTrack();
             if (clipIndex < 0)
                 clipIndex = clipIndexAtPlayhead(trackIndex);
-        }
 
-        if (enabled) {
             auto info = m_model.getClipInfo(trackIndex, clipIndex);
-            if (info && m_position > info->start && m_position < info->start + info->frame_count) {
+            if (info) {
                 std::unique_ptr<Mlt::Link> link(MLT.getLink("timeremap", info->producer));
                 enabled = !link
                           && QString::fromLatin1(info->producer->get("mlt_service"))
                                  .startsWith("avformat");
+            } else {
+                enabled = false;
             }
         }
         action->setEnabled(enabled);
