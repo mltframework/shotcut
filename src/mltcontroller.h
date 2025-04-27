@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 Meltytech, LLC
+ * Copyright (c) 2011-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -164,6 +164,7 @@ public:
     Mlt::Producer *savedProducer() const { return m_savedProducer.data(); }
     void setSavedProducer(Mlt::Producer *producer);
     static Mlt::Filter *getFilter(const QString &name, Mlt::Service *service);
+    static Mlt::Link *getLink(const QString &name, Mlt::Service *service);
     QString projectFolder() const { return m_projectFolder; }
     void setProjectFolder(const QString &folderName);
     QChar decimalPoint();

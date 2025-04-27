@@ -1557,6 +1557,24 @@ void Controller::setSavedProducer(Mlt::Producer *producer)
     m_savedProducer.reset(new Mlt::Producer(producer));
 }
 
+Link *Controller::getLink(const QString &name, Service *service)
+{
+    if (service->type() == mlt_service_chain_type) {
+        Chain chain(*service);
+        int link_count = chain.link_count();
+        for (int j = 0; j < link_count; j++) {
+            Link *link = chain.link(j);
+            if (link && link->is_valid()) {
+                if (name == QString::fromUtf8(link->get(kShotcutFilterProperty))
+                    || name == QString::fromUtf8(link->get("mlt_service")))
+                    return link;
+                delete link;
+            }
+        }
+    }
+    return nullptr;
+}
+
 Filter *Controller::getFilter(const QString &name, Service *service)
 {
     for (int i = 0; i < service->filter_count(); i++) {

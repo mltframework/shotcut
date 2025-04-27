@@ -1404,7 +1404,41 @@ void TimelineDock::setupActions()
     action->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_H));
     connect(action, &QAction::triggered, this, [&] { freezeFrame(); });
     Actions.add("timelineFreezeFrameAction", action);
+    action->setEnabled(false);
+    connect(this, &TimelineDock::selectionChanged, action, [=]() {
+        bool enabled = true;
+        auto clipIndex = -1;
+        auto trackIndex = currentTrack();
+        if (selection().isEmpty()) {
+            chooseClipAtPosition(m_position, trackIndex, clipIndex);
+            if (trackIndex < 0 || clipIndex < 0) {
+                enabled = false;
+            } else if (isBlank(trackIndex, clipIndex)) {
+                enabled = false;
+            } else if (isTransition(trackIndex, clipIndex)) {
+                enabled = false;
+            }
+        } else {
+            auto &selected = selection().first();
+            trackIndex = selected.y();
+            clipIndex = selected.x();
+            if (trackIndex < 0)
+                trackIndex = currentTrack();
+            if (clipIndex < 0)
+                clipIndex = clipIndexAtPlayhead(trackIndex);
+        }
 
+        if (enabled) {
+            auto info = m_model.getClipInfo(trackIndex, clipIndex);
+            if (info && m_position > info->start && m_position < info->start + info->frame_count) {
+                std::unique_ptr<Mlt::Link> link(MLT.getLink("timeremap", info->producer));
+                enabled = !link
+                          && QString::fromLatin1(info->producer->get("mlt_service"))
+                                 .startsWith("avformat");
+            }
+        }
+        action->setEnabled(enabled);
+    });
     action = new QAction(tr("Align To Reference Track"), this);
     action->setEnabled(false);
     connect(action, &QAction::triggered, this, [&]() {
@@ -3176,6 +3210,13 @@ void TimelineDock::freezeFrame()
 
     auto info = m_model.getClipInfo(trackIndex, clipIndex);
     if (info && m_position > info->start && m_position < info->start + info->frame_count) {
+        std::unique_ptr<Mlt::Link> linkExists(MLT.getLink("timeremap", info->producer));
+        if (linkExists
+            || !QString::fromLatin1(info->producer->get("mlt_service")).startsWith("avformat")) {
+            emit showStatusMessage(tr("Freeze Frame is not available."));
+            return;
+        }
+
         setCurrentTrack(trackIndex);
 
         QString xml = MLT.XML(info->producer);
