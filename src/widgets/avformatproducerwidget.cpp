@@ -83,7 +83,7 @@ Mlt::Producer *AvformatProducerWidget::newProducer(Mlt::Profile &profile)
         QString warpspeed = QString::fromLatin1(tempProps.get("speed"));
 
         QString filename = Util::GetFilenameFromProducer(producer(), false);
-        QString s = QStringLiteral("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
+        QString s = QStringLiteral("%1:%2:%3").arg("timewarp", warpspeed, filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
     }
@@ -340,11 +340,8 @@ void AvformatProducerWidget::reloadProducerValues()
             QString width(m_producer->get(key.toLatin1().constData()));
             key = QStringLiteral("meta.media.%1.codec.height").arg(i);
             QString height(m_producer->get(key.toLatin1().constData()));
-            QString name = QStringLiteral("%1: %2x%3 %4")
-                               .arg(videoIndex + 1)
-                               .arg(width)
-                               .arg(height)
-                               .arg(codec);
+            QString name
+                = QStringLiteral("%1: %2x%3 %4").arg(videoIndex + 1).arg(width, height, codec);
             if (populateTrackCombos) {
                 if (ui->videoTrackComboBox->count() == 0)
                     ui->videoTrackComboBox->addItem(tr("None"), -1);
@@ -1036,7 +1033,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             break;
         }
         QFileInfo fi(resource);
-        path = path.arg(fi.completeBaseName()).arg(tr("Reversed"));
+        path = path.arg(fi.completeBaseName(), tr("Reversed"));
         QString filename = QmlApplication::getNextProjectFile(path);
         if (filename.isEmpty()) {
             filename = QFileDialog::getSaveFileName(this,
@@ -1075,9 +1072,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             // Make a temporary file name for the ffmpeg job.
             QFileInfo fi(filename);
             QString tmpFileName = QStringLiteral("%1/%2 - XXXXXX.%3")
-                                      .arg(fi.path())
-                                      .arg(fi.completeBaseName())
-                                      .arg(ffmpegSuffix);
+                                      .arg(fi.path(), fi.completeBaseName(), ffmpegSuffix);
             QTemporaryFile tmp(tmpFileName);
             tmp.setAutoRemove(false);
             tmp.open();
@@ -1128,9 +1123,9 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
     QFileInfo fi(resource);
 
     path.append("/%1 - %2.%3");
-    path = path.arg(fi.completeBaseName()).arg(tr("Sub-clip")).arg(fi.suffix());
+    path = path.arg(fi.completeBaseName(), tr("Sub-clip"), fi.suffix());
     QString caption = tr("Extract Sub-clip...");
-    QString nameFilter = tr("%1 (*.%2);;All Files (*)").arg(fi.suffix()).arg(fi.suffix());
+    QString nameFilter = tr("%1 (*.%2);;All Files (*)").arg(fi.suffix(), fi.suffix());
     QString filename = QFileDialog::getSaveFileName(this,
                                                     caption,
                                                     path,
@@ -1447,10 +1442,8 @@ void AvformatProducerWidget::on_actionSetEquirectangular_triggered()
     // Get the location and file name for the report.
     QString caption = tr("Set Equirectangular Projection");
     QFileInfo info(Util::GetFilenameFromProducer(producer()));
-    QString directory = QStringLiteral("%1/%2 - ERP.%3")
-                            .arg(info.path())
-                            .arg(info.completeBaseName())
-                            .arg(info.suffix());
+    QString directory
+        = QStringLiteral("%1/%2 - ERP.%3").arg(info.path(), info.completeBaseName(), info.suffix());
     QString filePath = QFileDialog::getSaveFileName(&MAIN,
                                                     caption,
                                                     directory,
