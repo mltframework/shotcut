@@ -6,6 +6,7 @@ Metadata {
     name: qsTr("Alpha Strobe")
     keywords: qsTr('strobe alpha', 'search keywords for the Strobe video filter') + ' strobe #rgba'
     mlt_service: "strobe"
+    isGpuCompatible: false
     qml: "ui.qml"
 
     keyframes {
