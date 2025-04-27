@@ -181,7 +181,17 @@ Shotcut.KeyframableFilter {
             name: "bottomBlurHeightEnd",
             type: "simple",
             def: 2
-        }
+        },
+        {
+            name: "topEnabled",
+            type: "checkbox",
+            def: true
+        },
+        {
+            name: "bottomEnabled",
+            type: "checkbox",
+            def: true
+        },
         ]
     function isKeyframeButtonChecked(control){
         return filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(control) > 0;
@@ -462,7 +472,9 @@ Shotcut.KeyframableFilter {
                 "bottomBlurWidthStart",
                 "bottomBlurWidthEnd",
                 "bottomBlurHeightStart",
-                "bottomBlurHeightEnd"
+                "bottomBlurHeightEnd",
+                "topEnabled",
+                "bottomEnabled"
                 ]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
