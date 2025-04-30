@@ -623,8 +623,6 @@ FilesDock::FilesDock(QWidget *parent)
     toolbar->addAction(Actions["filesViewTilesAction"]);
     toolbar->addAction(Actions["filesViewIconsAction"]);
     toolbar->addSeparator();
-    toolbar->addAction(Actions["filesGoUp"]);
-    toolbar->addSeparator();
     m_label = new QLabel(toolbar);
     toolbar->addWidget(m_label);
     connect(m_filesModel,
@@ -644,6 +642,12 @@ FilesDock::FilesDock(QWidget *parent)
     toolbar = new DockToolBar(tr("Files Filters"));
     toolbar->addAction(Actions["filesFoldersView"]);
     ui->filtersLayout->addWidget(toolbar);
+
+    toolbar = new DockToolBar(ui->label->text());
+    toolbar->addAction(Actions["filesRefreshFolders"]);
+    toolbar->addAction(Actions["filesGoUp"]);
+    delete ui->label;
+    ui->locationsLayout->insertWidget(1, toolbar);
 
     auto toolbar2 = new QToolBar(tr("Files Filters"));
     QString styleSheet = QStringLiteral("QToolButton {"
