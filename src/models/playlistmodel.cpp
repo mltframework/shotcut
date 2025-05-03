@@ -82,6 +82,7 @@ public:
                                                    service.toUtf8().constData(),
                                                    "loader-nogl");
             } else if (!Settings.playerGPU() || (service != "xml-nogl" && service != "consumer")) {
+                LOG_DEBUG() << service << m_producer.get("resource");
                 m_tempProducer = new Mlt::Producer(m_profile,
                                                    service.toUtf8().constData(),
                                                    m_producer.get("resource"));
@@ -734,6 +735,8 @@ void PlaylistModel::load()
     }
     // do not let opening a clip change the profile!
     MLT.profile().set_explicit(true);
+    if (Settings.playerGPU() && Settings.playlistThumbnails() != "hidden")
+        refreshThumbnails();
     emit loaded();
 }
 
@@ -881,6 +884,7 @@ void PlaylistModel::showThumbnail(int row)
 
 void PlaylistModel::refreshThumbnails()
 {
+    LOG_DEBUG() << (m_playlist && m_playlist->is_valid());
     if (m_playlist && m_playlist->is_valid()) {
         for (int i = 0; i < m_playlist->count(); i++) {
             Mlt::ClipInfo *info = m_playlist->clip_info(i);
