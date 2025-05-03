@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -386,7 +386,8 @@ void Util::applyCustomProperties(Mlt::Producer &destination, Mlt::Producer &sour
         "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch, "
         "rotate," kAspectRatioNumerator "," kAspectRatioDenominator "," kCommentProperty
         "," kShotcutProducerProperty "," kDefaultAudioIndexProperty "," kOriginalInProperty
-        "," kOriginalOutProperty "," kOriginalResourceProperty "," kDisableProxyProperty);
+        "," kOriginalOutProperty "," kOriginalResourceProperty "," kDisableProxyProperty
+        "," kShotcutBinsProperty);
     if (!destination.get("_shotcut:resource")) {
         destination.set("_shotcut:resource", destination.get("resource"));
         destination.set("_shotcut:length", destination.get("length"));
