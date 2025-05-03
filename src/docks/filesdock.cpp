@@ -750,7 +750,6 @@ FilesDock::FilesDock(QWidget *parent)
     } else { /* if (Settings.filesViewMode() == kIconsMode) */
         Actions["filesViewIconsAction"]->trigger();
     }
-    addOpenWithMenu(m_mainMenu);
     Actions.loadFromMenu(m_mainMenu);
 
     LOG_DEBUG() << "end";
