@@ -1306,7 +1306,7 @@ void FilesDock::onOpenOtherRemove()
     });
     ListSelectionDialog dialog(programs, this);
     dialog.setWindowModality(QmlApplication::dialogModality());
-    dialog.setWindowTitle(tr("Remove From Open Other"));
+    dialog.setWindowTitle(tr("Remove From Open With"));
     if (QDialog::Accepted == dialog.exec()) {
         for (auto program : dialog.selection()) {
             program = QDir::fromNativeSeparators(program);
