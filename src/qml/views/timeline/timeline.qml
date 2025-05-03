@@ -929,7 +929,7 @@ Rectangle {
             setZoom(value);
         }
 
-        function onWarnTrackLocked() {
+        function onWarnTrackLocked(trackIndex) {
             pulseLockButtonOnTrack(trackIndex);
         }
 
