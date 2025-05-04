@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('matte stencil alpha luma wipe custom', 'search keywords for the Mask: From File video filter') + ' mask: from file #rgba'
     mlt_service: 'mask_start'
     objectName: 'maskFromFile'
+    isGpuCompatible: false
     qml: 'ui.qml'
     icon: 'icon.webp'
 
