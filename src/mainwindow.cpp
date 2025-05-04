@@ -4219,6 +4219,32 @@ void MainWindow::onExternalTriggered(QAction *action)
 {
     LOG_DEBUG() << action->data().toString();
     bool isExternal = !action->data().toString().isEmpty();
+    QString profile = Settings.playerProfile();
+    if (Settings.playerGPU() && MLT.producer() && Settings.playerExternal() != action->data()) {
+        if (confirmRestartExternalMonitor()) {
+            Settings.setPlayerExternal(action->data().toString());
+            if (isExternal && profile.isEmpty()) {
+                profile = "atsc_720p_50";
+                Settings.setPlayerProfile(profile);
+            }
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        } else {
+            for (auto a : m_externalGroup->actions()) {
+                if (a->data() == Settings.playerExternal()) {
+                    a->setChecked(true);
+                    if (a->data().toString().startsWith("decklink")) {
+                        if (m_decklinkGammaMenu)
+                            m_decklinkGammaMenu->setEnabled(true);
+                        if (m_keyerMenu)
+                            m_keyerMenu->setEnabled(true);
+                    }
+                    break;
+                }
+            }
+        }
+        return;
+    }
     Settings.setPlayerExternal(action->data().toString());
     MLT.stop();
     bool ok = false;
@@ -4232,7 +4258,6 @@ void MainWindow::onExternalTriggered(QAction *action)
         MLT.videoWidget()->setProperty("mlt_service", action->data());
     }
 
-    QString profile = Settings.playerProfile();
     // Automatic not permitted for SDI/HDMI
     if (isExternal && profile.isEmpty()) {
         profile = "atsc_720p_50";
@@ -4282,6 +4307,22 @@ void MainWindow::onDecklinkGammaTriggered(QAction *action)
 {
     LOG_DEBUG() << action->data().toString();
     MLT.videoWidget()->setProperty("decklinkGamma", action->data());
+    if (Settings.playerGPU() && MLT.producer()) {
+        if (confirmRestartExternalMonitor()) {
+            Settings.setPlayerDecklinkGamma(action->data().toInt());
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        } else {
+            auto gamma = Settings.playerDecklinkGamma();
+            for (auto a : m_decklinkGammaGroup->actions()) {
+                if (a->data() == gamma) {
+                    a->setChecked(true);
+                    break;
+                }
+            }
+        }
+        return;
+    }
     MLT.consumerChanged();
     Settings.setPlayerDecklinkGamma(action->data().toInt());
 }
@@ -4290,6 +4331,22 @@ void MainWindow::onKeyerTriggered(QAction *action)
 {
     LOG_DEBUG() << action->data().toString();
     MLT.videoWidget()->setProperty("keyer", action->data());
+    if (Settings.playerGPU() && MLT.producer()) {
+        if (confirmRestartExternalMonitor()) {
+            Settings.setPlayerKeyerMode(action->data().toInt());
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        } else {
+            auto keyer = Settings.playerKeyerMode();
+            for (auto a : m_keyerGroup->actions()) {
+                if (a->data() == keyer) {
+                    a->setChecked(true);
+                    break;
+                }
+            }
+        }
+        return;
+    }
     MLT.consumerChanged();
     Settings.setPlayerKeyerMode(action->data().toInt());
 }
@@ -4425,6 +4482,20 @@ bool MainWindow::confirmProfileChange()
     if (dialog.checkBox()->isChecked())
         Settings.setAskChangeVideoMode(false);
     return result;
+}
+
+bool MainWindow::confirmRestartExternalMonitor()
+{
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("Shotcut must restarto change external monitoring.\n"
+                          "Do you want to restart now?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    return dialog.exec() == QMessageBox::Yes;
 }
 
 void MainWindow::on_actionSystemTheme_triggered()

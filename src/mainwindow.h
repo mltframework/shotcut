@@ -170,6 +170,7 @@ private:
     void backup();
     void backupPeriodically();
     bool confirmProfileChange();
+    bool confirmRestartExternalMonitor();
 
     Ui::MainWindow *ui;
     Player *m_player;
