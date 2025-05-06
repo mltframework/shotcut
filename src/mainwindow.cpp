@@ -3068,7 +3068,7 @@ void MainWindow::onProducerOpened(bool withReopen)
     if (MLT.isClip()) {
         m_filterController->setProducer(MLT.producer());
         m_player->enableTab(Player::SourceTabIndex);
-        m_player->switchToTab(Player::SourceTabIndex);
+        m_player->switchToTab(MLT.isClosedClip() ? Player::ProjectTabIndex : Player::SourceTabIndex);
         Util::getHash(*MLT.producer());
     }
     ui->actionSave->setEnabled(true);
