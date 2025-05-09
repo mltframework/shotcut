@@ -107,6 +107,7 @@ public:
     void setAudioChannels(int audioChannels);
     QString resource() const;
     bool isSeekable(Mlt::Producer *p = nullptr) const;
+    int maxFrameCount() const;
     bool isLiveProducer(Mlt::Producer *p = nullptr) const;
     bool isClip() const;
     bool isClosedClip(Producer *producer = nullptr) const;

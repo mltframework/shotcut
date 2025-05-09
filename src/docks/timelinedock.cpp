@@ -22,6 +22,7 @@
 #include "actions.h"
 #include "commands/timelinecommands.h"
 #include "dialogs/alignaudiodialog.h"
+#include "dialogs/durationdialog.h"
 #include "dialogs/editmarkerdialog.h"
 #include "dialogs/longuitask.h"
 #include "dialogs/resourcedialog.h"
@@ -2338,7 +2339,16 @@ void TimelineDock::append(int trackIndex)
         Mlt::Producer producer;
         if (xmlToUse.isEmpty()) {
             Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
-            ProxyManager::generateIfNotExists(producer);
+            if (MLT.isLiveProducer(&producer)) {
+                LongUiTask::cancel();
+                DurationDialog durationDialog(this);
+                durationDialog.setDuration(MLT.profile().fps() * 5);
+                if (durationDialog.exec() == QDialog::Accepted) {
+                    producer.set_in_and_out(0, durationDialog.duration() - 1);
+                }
+            } else {
+                ProxyManager::generateIfNotExists(producer);
+            }
             xmlToUse = MLT.XML(&producer);
         } else {
             producer = Mlt::Producer(MLT.profile(), "xml-string", xmlToUse.toUtf8().constData());
@@ -3130,7 +3140,16 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xmlOrUrls)
                     }
                     Mlt::Producer *producer = MLT.setupNewProducer(&p);
                     producer->set(kShotcutSkipConvertProperty, 1);
-                    ProxyManager::generateIfNotExists(*producer);
+                    if (MLT.isLiveProducer(producer)) {
+                        LongUiTask::cancel();
+                        DurationDialog durationDialog(this);
+                        durationDialog.setDuration(MLT.profile().fps() * 5);
+                        if (durationDialog.exec() == QDialog::Accepted) {
+                            producer->set_in_and_out(0, durationDialog.duration() - 1);
+                        }
+                    } else {
+                        ProxyManager::generateIfNotExists(*producer);
+                    }
                     playlist.append(*producer);
                     dialog.add(producer);
                     delete producer;
@@ -3564,7 +3583,16 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         Mlt::Producer producer;
         if (xmlToUse.isEmpty() && xml.isEmpty()) {
             Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
-            ProxyManager::generateIfNotExists(producer);
+            if (MLT.isLiveProducer(&producer)) {
+                LongUiTask::cancel();
+                DurationDialog durationDialog(this);
+                durationDialog.setDuration(MLT.profile().fps() * 5);
+                if (durationDialog.exec() == QDialog::Accepted) {
+                    producer.set_in_and_out(0, durationDialog.duration() - 1);
+                }
+            } else {
+                ProxyManager::generateIfNotExists(producer);
+            }
             xmlToUse = MLT.XML(&producer);
         } else if (!xml.isEmpty()) {
             xmlToUse = xml;
@@ -3685,10 +3713,31 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
         Mlt::Producer producer;
         if (xmlToUse.isEmpty() && xml.isEmpty()) {
             Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
-            ProxyManager::generateIfNotExists(producer);
+            if (MLT.isLiveProducer(&producer)) {
+                LongUiTask::cancel();
+                DurationDialog durationDialog(this);
+                durationDialog.setDuration(MLT.profile().fps() * 5);
+                if (durationDialog.exec() == QDialog::Accepted) {
+                    producer.set_in_and_out(0, durationDialog.duration() - 1);
+                }
+            } else {
+                ProxyManager::generateIfNotExists(producer);
+            }
             xmlToUse = MLT.XML(&producer);
         } else if (!xml.isEmpty()) {
-            xmlToUse = xml;
+            if (MLT.isLiveProducer()) {
+                LongUiTask::cancel();
+                DurationDialog durationDialog(this);
+                durationDialog.setDuration(MLT.profile().fps() * 5);
+                if (durationDialog.exec() == QDialog::Accepted) {
+                    MLT.producer()->set_in_and_out(0, durationDialog.duration() - 1);
+                    xmlToUse = MLT.XML();
+                } else {
+                    xmlToUse = xml;
+                }
+            } else {
+                xmlToUse = xml;
+            }
         } else {
             producer = Mlt::Producer(MLT.profile(), "xml-string", xmlToUse.toUtf8().constData());
         }
