@@ -1,9 +1,10 @@
 [main]
 host = https://www.transifex.com
 
-[o:ddennedy:p:shotcut:r:main-ui]
-file_filter = translations/shotcut_<lang>.ts
-source_file = translations/shotcut_en.ts
-source_lang = en
-type        = QT
+[o:ddennedy:p:shotcut:r:b2dd924aaa7b89974223d14970b7072d]
+file_filter   = translations/shotcut_<lang>.ts
+source_file   = translations/shotcut_en.ts
+type          = QT
+minimum_perc  = 0
+resource_name = translations/shotcut_en.ts (master)
 

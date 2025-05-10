@@ -476,7 +476,7 @@
     <message>
         <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="298"/>
         <source>Audio Waveform</source>
-        <translation>Forma onda audio</translation>
+        <translation>Forma d&apos;onda audio</translation>
     </message>
 </context>
 <context>
@@ -535,7 +535,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="295"/>
         <source>Scan mode</source>
-        <translation>Modalità scansione</translation>
+        <translation>Modo scansione</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="600"/>
@@ -821,39 +821,39 @@ La posizione centrale equivale a nessuna modifica.</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="993"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="864"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="861"/>
         <source>Reverse...</source>
         <translation>Invertire...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1057"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1132"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1127"/>
         <source>Extract Sub-clip...</source>
         <translation>Estrai sotto-clip...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="350"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="421"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="347"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="418"/>
         <source>None</source>
         <translation>Nessuno</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="379"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="376"/>
         <source>unknown (%1)</source>
         <translation>sconosciuto (%1)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="455"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="452"/>
         <source>All</source>
         <translation>Tutto</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="501"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="498"/>
         <source>(PROXY)</source>
         <translation>(PROXY)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="544"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="541"/>
         <source>(variable)</source>
         <translation>(variabile)</translation>
     </message>
@@ -876,8 +876,8 @@ Al termine, vengono sostituite utomaticamente le clip oppure è possibile fare d
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="784"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="859"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="781"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="856"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Scegli un formato compatibile per la modifica in basso e poi selwziona &apos;OK&apos; per scegliere un nome file. 
@@ -886,94 +886,94 @@ Al termine, fai doppio clic sull&apos;attività automatica per aprirlo.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="973"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="970"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1018"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1015"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1035"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1032"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1090"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1085"/>
         <source>Convert %1</source>
         <translation>Converti %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1039"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1036"/>
         <source>Reversed</source>
         <translation>Invertito</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1069"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1066"/>
         <source>Reverse canceled</source>
         <translation>Inversione annullata</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1100"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1095"/>
         <source>Reverse %1</source>
         <translation>Inverti %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1471"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1464"/>
         <source>Choose the Other Video</source>
         <translation>Scegli l&apos;altro video</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1524"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1517"/>
         <source>Measure %1</source>
         <translation>Misura %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1131"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1126"/>
         <source>Sub-clip</source>
         <translation>Sotto-clip</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1133"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1128"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1205"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1200"/>
         <source>Extract sub-clip %1</source>
         <translation>Estrai sotto-clip %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1224"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1274"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1219"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1269"/>
         <source>Track %1</source>
         <translation>Traccia %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1226"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1276"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1221"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1271"/>
         <source>Track %1 (%2)</source>
         <translation>Traccia %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1230"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1225"/>
         <source>Export Subtitles...</source>
         <translation>Esporta sottotitoli...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1232"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1227"/>
         <source>No subtitles found</source>
         <translation>Nessun sottotitolo trovato</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1291"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1286"/>
         <source>Extract subtitles %1</source>
         <translation>Estrai i sottotitoli %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1404"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1399"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -982,22 +982,22 @@ Al termine, fai doppio clic sull&apos;attività automatica per aprirlo.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1448"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1443"/>
         <source>Set Equirectangular Projection</source>
         <translation>Imposta proiezione equirettangolare</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1462"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1455"/>
         <source>Successfully wrote %1</source>
         <translation>Scrittura %1 completata</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1464"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1457"/>
         <source>An error occurred saving the projection.</source>
         <translation>Si è verificato un errore durante il salvataggio della proiezione.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1584"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1577"/>
         <source>Bitrate %1</source>
         <translation>Bitrate %1</translation>
     </message>
@@ -1179,7 +1179,7 @@ Al termine, fai doppio clic sull&apos;attività automatica per aprirlo.
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="58"/>
         <source>Click to open color dialog</source>
-        <translation>Fai clic per aprire il selettore colore</translation>
+        <translation>Clic per aprire finestra di dialogo</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="89"/>
@@ -1414,7 +1414,7 @@ Se necessario l&apos;orologio e il time code avanzeranno due fotogrammi ogni min
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="58"/>
         <source>ITU-R BT.2020</source>
-        <translation type="unfinished"></translation>
+        <translation>ITU-R BT.2020</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="81"/>
@@ -1493,7 +1493,7 @@ Se necessario l&apos;orologio e il time code avanzeranno due fotogrammi ogni min
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="67"/>
         <source>Signal mode</source>
-        <translation>Modalità segnale</translation>
+        <translation>Modo segnale</translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="85"/>
@@ -2006,8 +2006,8 @@ nella compressione temporale</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
         <location filename="../src/docks/encodedock.cpp" line="1328"/>
-        <location filename="../src/docks/encodedock.cpp" line="1901"/>
-        <location filename="../src/docks/encodedock.cpp" line="2393"/>
+        <location filename="../src/docks/encodedock.cpp" line="1839"/>
+        <location filename="../src/docks/encodedock.cpp" line="2331"/>
         <source>Export File</source>
         <translation>Esporta file</translation>
     </message>
@@ -2033,19 +2033,19 @@ nella compressione temporale</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2097"/>
-        <location filename="../src/docks/encodedock.cpp" line="2104"/>
-        <location filename="../src/docks/encodedock.cpp" line="2216"/>
+        <location filename="../src/docks/encodedock.cpp" line="2035"/>
+        <location filename="../src/docks/encodedock.cpp" line="2042"/>
+        <location filename="../src/docks/encodedock.cpp" line="2154"/>
         <source>Stream</source>
         <translation>Flusso</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1884"/>
-        <location filename="../src/docks/encodedock.cpp" line="1985"/>
-        <location filename="../src/docks/encodedock.cpp" line="1995"/>
+        <location filename="../src/docks/encodedock.cpp" line="1822"/>
+        <location filename="../src/docks/encodedock.cpp" line="1923"/>
+        <location filename="../src/docks/encodedock.cpp" line="1933"/>
         <source>Stop Capture</source>
-        <translation>Ferma cattura</translation>
+        <translation>Stop cattura</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="135"/>
@@ -2056,7 +2056,7 @@ nella compressione temporale</translation>
         <location filename="../src/docks/encodedock.cpp" line="143"/>
         <location filename="../src/docks/encodedock.cpp" line="153"/>
         <source>Default for format</source>
-        <translation>Predefinito per formato</translation>
+        <translation>Formato predefinito</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="465"/>
@@ -2082,8 +2082,8 @@ nella compressione temporale</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="510"/>
-        <location filename="../src/docks/encodedock.cpp" line="1831"/>
-        <location filename="../src/docks/encodedock.cpp" line="1832"/>
+        <location filename="../src/docks/encodedock.cpp" line="1769"/>
+        <location filename="../src/docks/encodedock.cpp" line="1770"/>
         <source>Custom</source>
         <translation>Personalizzato</translation>
     </message>
@@ -2105,96 +2105,96 @@ Try again with a different folder or file name.</source>
 Riprova con una cartella o un nome di file diversi.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1555"/>
+        <location filename="../src/docks/encodedock.cpp" line="1493"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut ha trovato filtri che richiedono lavori di analisi che non sono stati eseguiti.
 Vuoi eseguire i lavori di analisi?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1901"/>
-        <location filename="../src/docks/encodedock.cpp" line="2395"/>
+        <location filename="../src/docks/encodedock.cpp" line="1839"/>
+        <location filename="../src/docks/encodedock.cpp" line="2333"/>
         <source>Capture File</source>
         <translation>File cattura</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1903"/>
+        <location filename="../src/docks/encodedock.cpp" line="1841"/>
         <source>Export Files</source>
         <translation>Esporta file</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1918"/>
+        <location filename="../src/docks/encodedock.cpp" line="1856"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1920"/>
+        <location filename="../src/docks/encodedock.cpp" line="1858"/>
         <source>Determined by Export (*)</source>
         <translation>Determinato da Esportazione (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2092"/>
-        <location filename="../src/docks/encodedock.cpp" line="2114"/>
+        <location filename="../src/docks/encodedock.cpp" line="2030"/>
+        <location filename="../src/docks/encodedock.cpp" line="2052"/>
         <source>Stop Stream</source>
-        <translation>Ferma flusso</translation>
+        <translation>Stop stream</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2106"/>
+        <location filename="../src/docks/encodedock.cpp" line="2044"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Inserisci lo schema del protocollo di rete, l&apos;indirizzo, la porta, e i parametri come una URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2149"/>
+        <location filename="../src/docks/encodedock.cpp" line="2087"/>
         <source>Add Export Preset</source>
         <translation>Aggiungi profilo esportazione</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2193"/>
+        <location filename="../src/docks/encodedock.cpp" line="2131"/>
         <source>Delete Preset</source>
         <translation>Elimina profilo</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2194"/>
+        <location filename="../src/docks/encodedock.cpp" line="2132"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Vuoi eliminare %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2322"/>
+        <location filename="../src/docks/encodedock.cpp" line="2260"/>
         <source>None</source>
         <translation>Nessuno</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2377"/>
+        <location filename="../src/docks/encodedock.cpp" line="2315"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2525"/>
+        <location filename="../src/docks/encodedock.cpp" line="2463"/>
         <source>Detect</source>
         <translation>Individua</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2582"/>
+        <location filename="../src/docks/encodedock.cpp" line="2520"/>
         <source>(auto)</source>
         <translation>(automatico)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2628"/>
+        <location filename="../src/docks/encodedock.cpp" line="2566"/>
         <source>Detecting hardware encoders...</source>
         <translation>Rilevazione encoder hardware...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2685"/>
+        <location filename="../src/docks/encodedock.cpp" line="2623"/>
         <source>Nothing found</source>
         <translation>Non è stato trovato nulla</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2687"/>
+        <location filename="../src/docks/encodedock.cpp" line="2625"/>
         <source>Found %1</source>
         <translation>Trovato %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2910"/>
+        <location filename="../src/docks/encodedock.cpp" line="2848"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2205,17 +2205,17 @@ Salva il progetto, chiudilo e riaprilo.
 Shotcut proverà a ripararlo automaticamente.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2959"/>
+        <location filename="../src/docks/encodedock.cpp" line="2897"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>Le proporzioni non corrispondono alla modalità video del progetto, il che provocherà barre nere.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2997"/>
+        <location filename="../src/docks/encodedock.cpp" line="2935"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>La frequenza dei fotogrammi è superiore alla modalità video del progetto, il che provoca la ripetizione dei fotogrammi.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2523"/>
+        <location filename="../src/docks/encodedock.cpp" line="2461"/>
         <source>Configure Hardware Encoding</source>
         <translation>Configurazione codifica hardware</translation>
     </message>
@@ -2230,17 +2230,17 @@ Shotcut proverà a ripararlo automaticamente.</translation>
         <translation>Ogni elemento del contenitore playlist</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1904"/>
+        <location filename="../src/docks/encodedock.cpp" line="1842"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>Esporta ogni elemento del contenitore playlist</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1949"/>
+        <location filename="../src/docks/encodedock.cpp" line="1887"/>
         <source>Export canceled</source>
         <translation>Esportazione annullata</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2547"/>
+        <location filename="../src/docks/encodedock.cpp" line="2485"/>
         <source>Export Frames/sec</source>
         <translation>Esportazione Fotogrammi/sec</translation>
     </message>
@@ -2409,7 +2409,7 @@ Shotcut proverà a ripararlo automaticamente.</translation>
         <translation>Progetto attuale</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="505"/>
+        <location filename="../src/docks/filesdock.cpp" line="504"/>
         <source>Documents</source>
         <translation>Documenti</translation>
     </message>
@@ -2457,198 +2457,198 @@ Shotcut proverà a ripararlo automaticamente.</translation>
         <translation>Menu File</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="635"/>
-        <location filename="../src/docks/filesdock.cpp" line="639"/>
+        <location filename="../src/docks/filesdock.cpp" line="642"/>
+        <location filename="../src/docks/filesdock.cpp" line="652"/>
         <source>Files Filters</source>
         <translation>Filtri file</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="662"/>
+        <location filename="../src/docks/filesdock.cpp" line="675"/>
         <source>Only show files whose name contains some text</source>
         <translation>Visualizza solo i file il cui nome contiene del testo</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="663"/>
+        <location filename="../src/docks/filesdock.cpp" line="676"/>
         <source>search</source>
         <translation>cerca</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="773"/>
+        <location filename="../src/docks/filesdock.cpp" line="785"/>
         <source>Tiles</source>
         <translation>Elenco</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="774"/>
+        <location filename="../src/docks/filesdock.cpp" line="786"/>
         <source>View as tiles</source>
         <translation>Visualizza elenco</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="786"/>
+        <location filename="../src/docks/filesdock.cpp" line="798"/>
         <source>Icons</source>
         <translation>Icone</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="787"/>
+        <location filename="../src/docks/filesdock.cpp" line="799"/>
         <source>View as icons</source>
         <translation>Visualizza icone</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="799"/>
+        <location filename="../src/docks/filesdock.cpp" line="811"/>
         <source>Details</source>
         <translation>Dettagli</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="800"/>
+        <location filename="../src/docks/filesdock.cpp" line="812"/>
         <source>View as details</source>
         <translation>Visualizza dettagli</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="812"/>
+        <location filename="../src/docks/filesdock.cpp" line="824"/>
         <source>Open In Shotcut</source>
         <translation>Apri in Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="813"/>
+        <location filename="../src/docks/filesdock.cpp" line="825"/>
         <source>Open the clip in the Source player</source>
         <translation>Apri clip nel riproduttore sorgente</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="821"/>
+        <location filename="../src/docks/filesdock.cpp" line="833"/>
         <source>System Default</source>
         <translation>Predefinito sistema</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="835"/>
+        <location filename="../src/docks/filesdock.cpp" line="847"/>
         <source>Other...</source>
         <translation>Altri...</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="843"/>
+        <location filename="../src/docks/filesdock.cpp" line="855"/>
         <source>Remove...</source>
         <translation>Rimuovi...</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="851"/>
+        <location filename="../src/docks/filesdock.cpp" line="863"/>
         <source>Show In File Manager</source>
         <translation>Visualizza in Gestione file</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="861"/>
+        <location filename="../src/docks/filesdock.cpp" line="873"/>
         <source>Update Thumbnails</source>
         <translation>Aggiorna miniature</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="869"/>
+        <location filename="../src/docks/filesdock.cpp" line="881"/>
         <source>Select All</source>
         <translation>Seleziona tutto</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="880"/>
+        <location filename="../src/docks/filesdock.cpp" line="892"/>
         <source>Select None</source>
         <translation>Deseleziona tutto</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="891"/>
+        <location filename="../src/docks/filesdock.cpp" line="903"/>
         <source>Open Previous</source>
         <translation>Apri precedente</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="903"/>
+        <location filename="../src/docks/filesdock.cpp" line="915"/>
         <source>Open Next</source>
         <translation>Apri successivo</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="915"/>
+        <location filename="../src/docks/filesdock.cpp" line="927"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="916"/>
+        <location filename="../src/docks/filesdock.cpp" line="928"/>
         <source>Show or hide video files</source>
         <translation>Visualizza/nascondi file video</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="921"/>
+        <location filename="../src/docks/filesdock.cpp" line="933"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="922"/>
+        <location filename="../src/docks/filesdock.cpp" line="934"/>
         <source>Show or hide audio files</source>
         <translation>Visualizza/nascondi file audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="927"/>
+        <location filename="../src/docks/filesdock.cpp" line="939"/>
         <source>Image</source>
         <translation>Immagine</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="928"/>
+        <location filename="../src/docks/filesdock.cpp" line="940"/>
         <source>Show or hide image files</source>
         <translation>Visualizza/nascondi file immagine</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="933"/>
+        <location filename="../src/docks/filesdock.cpp" line="945"/>
         <source>Other</source>
         <translation>Altro</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="934"/>
+        <location filename="../src/docks/filesdock.cpp" line="946"/>
         <source>Show or hide other kinds of files</source>
         <translation>Visualizza/nascondi altri tipi di file</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="939"/>
+        <location filename="../src/docks/filesdock.cpp" line="951"/>
         <source>Folders</source>
         <translation>Cartelle</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="940"/>
+        <location filename="../src/docks/filesdock.cpp" line="952"/>
         <source>Hide or show the list of folders</source>
         <translation>Visualizza/nascondi elenco cartelle</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="951"/>
+        <location filename="../src/docks/filesdock.cpp" line="963"/>
         <source>Go Up</source>
         <translation>Liv. sup.</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="952"/>
+        <location filename="../src/docks/filesdock.cpp" line="964"/>
         <source>Show the parent folder</source>
         <translation>Visualizza cartella principale</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="970"/>
+        <location filename="../src/docks/filesdock.cpp" line="982"/>
         <source>Refresh Folders</source>
         <translation>Aggiorna cartelle</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="991"/>
+        <location filename="../src/docks/filesdock.cpp" line="1003"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1015"/>
+        <location filename="../src/docks/filesdock.cpp" line="1027"/>
         <source>Open With</source>
         <translation>Apri con</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1268"/>
+        <location filename="../src/docks/filesdock.cpp" line="1279"/>
         <source>Executable Files (*.exe);;All Files (*)</source>
         <translation>File eseguibili (*.exe);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1273"/>
+        <location filename="../src/docks/filesdock.cpp" line="1284"/>
         <source>Choose Executable</source>
         <translation>Scegli eseguibile</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1297"/>
-        <source>Remove From Open Other</source>
-        <translation>Rimuovi da Apri altro</translation>
+        <location filename="../src/docks/filesdock.cpp" line="1308"/>
+        <source>Remove From Open With</source>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/filesdock.cpp" line="1316"/>
+        <location filename="../src/docks/filesdock.cpp" line="1329"/>
         <source>%n item(s)</source>
         <translation>
             <numerusform>%n elemento</numerusform>
@@ -2656,22 +2656,22 @@ Shotcut proverà a ripararlo automaticamente.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1359"/>
+        <location filename="../src/docks/filesdock.cpp" line="1371"/>
         <source>Add Location</source>
         <translation>Aggiungi percorso</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1360"/>
+        <location filename="../src/docks/filesdock.cpp" line="1372"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1378"/>
+        <location filename="../src/docks/filesdock.cpp" line="1390"/>
         <source>Delete Location</source>
         <translation>Elimina percorso</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1379"/>
+        <location filename="../src/docks/filesdock.cpp" line="1391"/>
         <source>Are you sure you want to remove %1?</source>
         <translation>Vuoi rimuovere %1?</translation>
     </message>
@@ -2806,24 +2806,24 @@ Shotcut proverà a ripararlo automaticamente.</translation>
 <context>
     <name>FilterMenuDelegate</name>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="116"/>
+        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="112"/>
         <source>Delete Filter Set</source>
         <translation>Elimina set filtri</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="128"/>
+        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="124"/>
         <source>Are you sure you want to delete this?
 %1</source>
         <translation>Vuoi eliminare questo?
 %1</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="143"/>
+        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="139"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="153"/>
+        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="149"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
@@ -2858,7 +2858,7 @@ Shotcut proverà a ripararlo automaticamente.</translation>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="237"/>
         <source>Copy Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia abilitata</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="238"/>
@@ -2868,22 +2868,22 @@ Shotcut proverà a ripararlo automaticamente.</translation>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="245"/>
         <source>Copy Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia attuale</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="246"/>
         <source>Copy current filter to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia filtro attuale negli appunti</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="253"/>
         <source>Copy All</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia tutto</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="254"/>
         <source>Copy all filters to the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia tutti i filtri negli appunti</translation>
     </message>
     <message>
         <location filename="../src/docks/filtersdock.cpp" line="261"/>
@@ -3283,7 +3283,7 @@ su un&apos;attività per aprire un menu per fermare l&apos;attività attualmente
     <message>
         <location filename="../src/docks/jobsdock.ui" line="164"/>
         <source>View Log</source>
-        <translation>Visualizza registro eventi</translation>
+        <translation>Visualizza registro</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="167"/>
@@ -3320,12 +3320,12 @@ su un&apos;attività per aprire un menu per fermare l&apos;attività attualmente
 <context>
     <name>KeyframeClip</name>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="249"/>
+        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="245"/>
         <source>Confirm Removing Advanced Keyframes</source>
         <translation>Conferma rimozione fotogrammi chiave avanzati</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="250"/>
+        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="246"/>
         <source>This will remove all advanced keyframes to enable simple keyframes.&lt;p&gt;Do you still want to do this?</source>
         <translation>Questo rimuoverà tutti i fotogrammi chiave avanzati per abilitare fotogrammi chiave semplici.&lt;p&gt;Vuoi continuare?</translation>
     </message>
@@ -4122,438 +4122,440 @@ audio (0%) o clip B (100%).</translation>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="82"/>
+        <location filename="../src/mainwindow.ui" line="88"/>
         <source>&amp;View</source>
         <translation>&amp;Visualizza</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="86"/>
+        <location filename="../src/mainwindow.ui" line="92"/>
         <source>Layout</source>
         <translation>Disposizione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="111"/>
+        <location filename="../src/mainwindow.ui" line="117"/>
         <source>&amp;Edit</source>
         <translation>&amp;Modifica</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="121"/>
+        <location filename="../src/mainwindow.ui" line="127"/>
         <source>&amp;Help</source>
         <translation>&amp;Aiuto</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="139"/>
+        <location filename="../src/mainwindow.ui" line="145"/>
         <source>Audio Channels</source>
         <translation>Canali audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="240"/>
+        <location filename="../src/mainwindow.ui" line="246"/>
         <source>Deinterlacer</source>
         <translation>Deinterlaccia</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="250"/>
+        <location filename="../src/mainwindow.ui" line="256"/>
         <source>Interpolation</source>
         <translation>Interpolazione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="148"/>
+        <location filename="../src/mainwindow.ui" line="154"/>
         <source>Video Mode</source>
         <translation>Modalità video</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="259"/>
+        <location filename="../src/mainwindow.ui" line="265"/>
         <source>External Monitor</source>
         <translation>Monitor esterno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="154"/>
+        <location filename="../src/mainwindow.ui" line="160"/>
         <source>Language</source>
         <translation>Lingua</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="159"/>
+        <location filename="../src/mainwindow.ui" line="165"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="167"/>
+        <location filename="../src/mainwindow.ui" line="173"/>
         <source>Display Method</source>
         <translation>Metodo di visualizzazione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="193"/>
+        <location filename="../src/mainwindow.ui" line="199"/>
         <source>App Data Directory</source>
         <translation>Cartella dati applicazione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="200"/>
+        <location filename="../src/mainwindow.ui" line="206"/>
         <source>Preview Scaling</source>
         <translation> Anteprima ridimensionamento</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="218"/>
+        <location filename="../src/mainwindow.ui" line="224"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="222"/>
+        <location filename="../src/mainwindow.ui" line="228"/>
         <source>Storage</source>
         <translation>Archiviazione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="313"/>
+        <location filename="../src/mainwindow.ui" line="319"/>
         <source>Toolbar</source>
-        <translation>Barra degli strumenti</translation>
+        <translation>Barra strumenti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="372"/>
+        <location filename="../src/mainwindow.ui" line="378"/>
         <source>&amp;Open File...</source>
         <translation>&amp;Apri file...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="386"/>
+        <location filename="../src/mainwindow.ui" line="392"/>
         <source>E&amp;xit</source>
         <translation>E&amp;sci</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="389"/>
+        <location filename="../src/mainwindow.ui" line="395"/>
         <source>Quit the application</source>
         <translation>Chiudi applicazione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="397"/>
+        <location filename="../src/mainwindow.ui" line="403"/>
         <source>&amp;About Shotcut</source>
         <translation>&amp;Info su Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="405"/>
+        <location filename="../src/mainwindow.ui" line="411"/>
         <source>About Qt</source>
         <translation>Info sulle librerie Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="413"/>
+        <location filename="../src/mainwindow.ui" line="419"/>
         <source>Open Other...</source>
         <translation>Apri altro...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="416"/>
-        <location filename="../src/mainwindow.ui" line="1084"/>
+        <location filename="../src/mainwindow.ui" line="422"/>
         <source>Open a device, stream or generator</source>
         <translation>Apri un dispositivo, flusso o generatore</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="431"/>
+        <location filename="../src/mainwindow.ui" line="437"/>
         <source>&amp;Save</source>
         <translation>&amp;Salva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="434"/>
+        <location filename="../src/mainwindow.ui" line="440"/>
         <source>Save project as a MLT XML file</source>
         <translation>Salva progetto come file XML MLT</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="445"/>
+        <location filename="../src/mainwindow.ui" line="451"/>
         <source>Save &amp;As...</source>
         <translation>Salva &amp;come...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="448"/>
+        <location filename="../src/mainwindow.ui" line="454"/>
         <source>Save project to a different MLT XML file</source>
         <translation>Salva il progetto in un file XML MLT differente</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="51"/>
-        <location filename="../src/mainwindow.ui" line="460"/>
-        <location filename="../src/mainwindow.ui" line="463"/>
+        <location filename="../src/mainwindow.ui" line="466"/>
+        <location filename="../src/mainwindow.ui" line="469"/>
         <source>Export</source>
         <translation>Esporta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="176"/>
+        <location filename="../src/mainwindow.ui" line="182"/>
         <source>Job Priority</source>
         <translation>Priorità attività</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="472"/>
+        <location filename="../src/mainwindow.ui" line="478"/>
         <source>&amp;Undo</source>
         <translation>&amp;Annulla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="481"/>
+        <location filename="../src/mainwindow.ui" line="487"/>
         <source>&amp;Redo</source>
         <translation>&amp;Rifai</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="486"/>
+        <location filename="../src/mainwindow.ui" line="492"/>
         <source>Forum...</source>
         <translation>Forum...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="491"/>
+        <location filename="../src/mainwindow.ui" line="497"/>
         <source>FAQ...</source>
         <translation>FAQ (domande frequenti)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="500"/>
-        <location filename="../src/mainwindow.cpp" line="3838"/>
+        <location filename="../src/mainwindow.ui" line="506"/>
+        <location filename="../src/mainwindow.cpp" line="3922"/>
         <source>Enter Full Screen</source>
         <translation>Vai a schermo pieno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="512"/>
+        <location filename="../src/mainwindow.ui" line="518"/>
         <source>Peak Meter</source>
         <translation>Misuratore picco</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="524"/>
-        <location filename="../src/mainwindow.cpp" line="400"/>
-        <location filename="../src/mainwindow.cpp" line="2367"/>
+        <location filename="../src/mainwindow.ui" line="530"/>
+        <location filename="../src/mainwindow.cpp" line="401"/>
+        <location filename="../src/mainwindow.cpp" line="2408"/>
         <source>Properties</source>
         <translation>Proprietà</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="533"/>
-        <location filename="../src/mainwindow.cpp" line="2376"/>
+        <location filename="../src/mainwindow.ui" line="539"/>
+        <location filename="../src/mainwindow.cpp" line="2417"/>
         <source>Recent</source>
         <translation>Recenti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="188"/>
-        <location filename="../src/mainwindow.ui" line="542"/>
+        <location filename="../src/mainwindow.ui" line="194"/>
+        <location filename="../src/mainwindow.ui" line="548"/>
         <source>Playlist</source>
         <translation>Elenco riproduzione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="551"/>
-        <location filename="../src/mainwindow.cpp" line="721"/>
+        <location filename="../src/mainwindow.ui" line="557"/>
+        <location filename="../src/mainwindow.cpp" line="722"/>
         <source>History</source>
         <translation>Cronologia</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="562"/>
+        <location filename="../src/mainwindow.ui" line="568"/>
         <source>Realtime (frame dropping)</source>
         <translation>Tempo reale (perdita fotogrammi)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="573"/>
+        <location filename="../src/mainwindow.ui" line="579"/>
         <source>Progressive</source>
         <translation>Progressivo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="581"/>
+        <location filename="../src/mainwindow.ui" line="587"/>
         <source>GPU Effects (unstable)</source>
         <translation>Effetti GPU (instabile)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="584"/>
+        <location filename="../src/mainwindow.ui" line="590"/>
         <source>Use GPU filters</source>
         <translation>Usa i filtri GPU</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="595"/>
+        <location filename="../src/mainwindow.ui" line="601"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="603"/>
+        <location filename="../src/mainwindow.ui" line="609"/>
         <source>2 (stereo)</source>
         <translation>2 (stereo)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="630"/>
+        <location filename="../src/mainwindow.ui" line="636"/>
         <source>One Field (fast)</source>
         <translation>Un campo (veloce)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="638"/>
+        <location filename="../src/mainwindow.ui" line="644"/>
         <source>Linear Blend (fast)</source>
         <translation>Fusione lineare (veloce)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="646"/>
+        <location filename="../src/mainwindow.ui" line="652"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - solo temporale (buono)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="673"/>
+        <location filename="../src/mainwindow.ui" line="679"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Più vicino possibile (veloce)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="681"/>
+        <location filename="../src/mainwindow.ui" line="687"/>
         <source>Bilinear (good)</source>
         <translation>Bilineare (buona)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="689"/>
+        <location filename="../src/mainwindow.ui" line="695"/>
         <source>Bicubic (better)</source>
         <translation>Bicubica (migliore)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="708"/>
-        <location filename="../src/mainwindow.ui" line="841"/>
+        <location filename="../src/mainwindow.ui" line="714"/>
+        <location filename="../src/mainwindow.ui" line="847"/>
+        <location filename="../src/mainwindow.cpp" line="2613"/>
         <source>Automatic</source>
         <translation>Automatica</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="719"/>
-        <location filename="../src/mainwindow.ui" line="1177"/>
+        <location filename="../src/mainwindow.ui" line="725"/>
+        <location filename="../src/mainwindow.ui" line="1191"/>
         <source>None</source>
         <translation>Nessuna</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="727"/>
+        <location filename="../src/mainwindow.ui" line="733"/>
         <source>Use JACK Audio</source>
-        <translation>Usa audio JACK</translation>
+        <translation>Usa jack audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="736"/>
-        <location filename="../src/mainwindow.ui" line="739"/>
+        <location filename="../src/mainwindow.ui" line="742"/>
+        <location filename="../src/mainwindow.ui" line="745"/>
         <source>Filters</source>
         <translation>Filtri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="744"/>
-        <location filename="../src/mainwindow.ui" line="1062"/>
+        <location filename="../src/mainwindow.ui" line="750"/>
+        <location filename="../src/mainwindow.ui" line="1071"/>
         <source>Add...</source>
         <translation>Aggiungi...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="752"/>
+        <location filename="../src/mainwindow.ui" line="758"/>
         <source>System</source>
         <translation>Sistema</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="755"/>
+        <location filename="../src/mainwindow.ui" line="761"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation>Usa lo stile, colori, e icone dell&apos;utente o della piattaforma.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="763"/>
+        <location filename="../src/mainwindow.ui" line="769"/>
         <source>Fusion Dark</source>
         <translation>Fusion scuro</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="771"/>
+        <location filename="../src/mainwindow.ui" line="777"/>
         <source>Fusion Light</source>
         <translation>Fusion chiaro</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="776"/>
+        <location filename="../src/mainwindow.ui" line="782"/>
         <source>Tutorials...</source>
         <translation>Guide...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="183"/>
-        <location filename="../src/mainwindow.ui" line="785"/>
-        <location filename="../src/mainwindow.cpp" line="2386"/>
+        <location filename="../src/mainwindow.ui" line="189"/>
+        <location filename="../src/mainwindow.ui" line="791"/>
+        <location filename="../src/mainwindow.cpp" line="2427"/>
         <source>Timeline</source>
         <translation>Timeline</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="790"/>
-        <location filename="../src/mainwindow.ui" line="793"/>
+        <location filename="../src/mainwindow.ui" line="796"/>
+        <location filename="../src/mainwindow.ui" line="799"/>
         <source>Restore Default Layout</source>
         <translation>Ripristina disposizione predefinita</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="801"/>
+        <location filename="../src/mainwindow.ui" line="807"/>
         <source>Show Title Bars</source>
         <translation>Barre titolo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="809"/>
+        <location filename="../src/mainwindow.ui" line="815"/>
         <source>Show Toolbar</source>
         <translation>Barra strumenti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="814"/>
+        <location filename="../src/mainwindow.ui" line="820"/>
         <source>Upgrade...</source>
         <translation>Aggiorna programma...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="819"/>
+        <location filename="../src/mainwindow.ui" line="825"/>
         <source>Open MLT XML As Clip...</source>
         <translation>Apri XML MLT come clip...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="822"/>
+        <location filename="../src/mainwindow.ui" line="828"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation>Apri un file di progetto XML MLT come clip virtuale</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="830"/>
+        <location filename="../src/mainwindow.ui" line="836"/>
         <source>Scrub Audio</source>
         <translation>Scorri audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="865"/>
+        <location filename="../src/mainwindow.ui" line="871"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
         <translation>Software (Mesa)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="873"/>
+        <location filename="../src/mainwindow.ui" line="879"/>
         <source>Low</source>
         <translation>Bassa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="881"/>
+        <location filename="../src/mainwindow.ui" line="887"/>
         <source>Normal</source>
         <translation>Normale</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="891"/>
+        <location filename="../src/mainwindow.ui" line="897"/>
         <source>Application Log...</source>
         <translation>Registro eventi applicazione...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="899"/>
+        <location filename="../src/mainwindow.ui" line="905"/>
+        <location filename="../src/mainwindow.ui" line="996"/>
+        <location filename="../src/mainwindow.ui" line="999"/>
         <source>Project</source>
         <translation>Progetto</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="236"/>
-        <location filename="../src/mainwindow.ui" line="1315"/>
+        <location filename="../src/mainwindow.ui" line="242"/>
+        <location filename="../src/mainwindow.ui" line="1329"/>
         <source>Player</source>
         <translation>Riproduttore</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="907"/>
+        <location filename="../src/mainwindow.ui" line="913"/>
         <source>User Interface</source>
         <translation>Interfaccia utente</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="915"/>
+        <location filename="../src/mainwindow.ui" line="921"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1138"/>
+        <location filename="../src/mainwindow.ui" line="1144"/>
         <source>Notes</source>
         <translation>Note</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1344"/>
+        <location filename="../src/mainwindow.ui" line="1358"/>
         <source>Markers as Chapters...</source>
         <translation>Marcatori come capitoli...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1347"/>
-        <location filename="../src/mainwindow.ui" line="1350"/>
-        <location filename="../src/mainwindow.cpp" line="5702"/>
+        <location filename="../src/mainwindow.ui" line="1361"/>
+        <location filename="../src/mainwindow.ui" line="1364"/>
+        <location filename="../src/mainwindow.cpp" line="5861"/>
         <source>Export Chapters</source>
         <translation>Esporta capitoli</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1355"/>
+        <location filename="../src/mainwindow.ui" line="1369"/>
         <source>Audio/Video Device...</source>
         <translation>Dispositivo audio/video</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="965"/>
-        <location filename="../src/mainwindow.ui" line="1255"/>
+        <location filename="../src/mainwindow.ui" line="971"/>
+        <location filename="../src/mainwindow.ui" line="1269"/>
         <source>Set...</source>
         <translation>Imposta cartella...</translation>
     </message>
@@ -4563,387 +4565,397 @@ audio (0%) o clip B (100%).</translation>
         <translation>Altre versioni</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="116"/>
+        <location filename="../src/mainwindow.ui" line="122"/>
         <source>&amp;Player</source>
         <translation>Ri&amp;porduttore</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="135"/>
+        <location filename="../src/mainwindow.ui" line="141"/>
         <source>&amp;Settings</source>
         <translation>Impo&amp;stazioni</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="209"/>
+        <location filename="../src/mainwindow.ui" line="215"/>
         <source>Time Format</source>
         <translation>Formato orario</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="275"/>
+        <location filename="../src/mainwindow.ui" line="281"/>
         <source>Backup</source>
         <translation>Backup</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="375"/>
+        <location filename="../src/mainwindow.ui" line="381"/>
         <source>Open a video, audio, image, or project file</source>
         <translation>Apri un file video, audio, immagine o progetto</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="515"/>
+        <location filename="../src/mainwindow.ui" line="521"/>
         <source>Audio Peak Meter</source>
         <translation>Misuratore picco audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="611"/>
+        <location filename="../src/mainwindow.ui" line="617"/>
         <source>4 (quad/Ambisonics)</source>
         <translation>4 (quad/Ambisonics)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="619"/>
+        <location filename="../src/mainwindow.ui" line="625"/>
         <source>6 (5.1 surround)</source>
         <translation>6 (5.1 surround)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="654"/>
+        <location filename="../src/mainwindow.ui" line="660"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation>YADIF - temporale + spaziale (migliore)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="662"/>
+        <location filename="../src/mainwindow.ui" line="668"/>
         <source>BWDIF (best)</source>
         <translation>BWDIF (migliore)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="697"/>
+        <location filename="../src/mainwindow.ui" line="703"/>
         <source>Lanczos (best)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lanczos (migliore)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="886"/>
+        <location filename="../src/mainwindow.ui" line="892"/>
         <source>Resources...</source>
         <translation>Risorse</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="970"/>
-        <location filename="../src/mainwindow.ui" line="1263"/>
+        <location filename="../src/mainwindow.ui" line="976"/>
+        <location filename="../src/mainwindow.ui" line="1277"/>
         <source>Show...</source>
         <translation>Apri cartella...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="973"/>
+        <location filename="../src/mainwindow.ui" line="979"/>
         <source>Show</source>
         <translation>Visualizza</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="982"/>
-        <location filename="../src/mainwindow.ui" line="985"/>
+        <location filename="../src/mainwindow.ui" line="988"/>
+        <location filename="../src/mainwindow.ui" line="991"/>
         <source>Keyframes</source>
         <translation>Fotogrammi chiave</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="990"/>
+        <location filename="../src/mainwindow.ui" line="66"/>
         <source>New</source>
         <translation>Nuovo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1009"/>
+        <location filename="../src/mainwindow.ui" line="1002"/>
+        <source>Ctrl+N</source>
+        <translation>Ctrl+N</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1018"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1012"/>
+        <location filename="../src/mainwindow.ui" line="1021"/>
         <source>Switch to the audio layout</source>
         <translation>Cambia in disposizione audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1015"/>
+        <location filename="../src/mainwindow.ui" line="1024"/>
         <source>Alt+5</source>
         <translation>Alt+5</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1023"/>
+        <location filename="../src/mainwindow.ui" line="1032"/>
         <source>Logging</source>
         <translation>Accesso</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1026"/>
+        <location filename="../src/mainwindow.ui" line="1035"/>
         <source>Switch to the logging layout</source>
         <translation>Passa al layout regsitrazione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1029"/>
+        <location filename="../src/mainwindow.ui" line="1038"/>
         <source>Alt+1</source>
         <translation>Alt+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1037"/>
+        <location filename="../src/mainwindow.ui" line="1046"/>
         <source>Editing</source>
         <translation>Modifica</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1040"/>
+        <location filename="../src/mainwindow.ui" line="1049"/>
         <source>Switch to the editing layout</source>
         <translation>Cambia in disposizione modifica</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1043"/>
+        <location filename="../src/mainwindow.ui" line="1052"/>
         <source>Alt+2</source>
         <translation>Alt+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1051"/>
+        <location filename="../src/mainwindow.ui" line="1060"/>
         <source>FX</source>
         <translation>Effetti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1054"/>
+        <location filename="../src/mainwindow.ui" line="1063"/>
         <source>Switch to the effects layout</source>
         <translation>Cambia in disposizione effetti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1057"/>
+        <location filename="../src/mainwindow.ui" line="1066"/>
         <source>Alt+3</source>
         <translation>Alt+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1129"/>
+        <location filename="../src/mainwindow.ui" line="1090"/>
+        <source>New Generator</source>
+        <translation>Nuovo generatore</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1135"/>
         <source>Markers</source>
         <translation>Marcatori</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1147"/>
+        <location filename="../src/mainwindow.ui" line="1153"/>
         <source>Subtitles</source>
         <translation>Sottotitoli</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1199"/>
+        <location filename="../src/mainwindow.ui" line="1183"/>
+        <source>1080p</source>
+        <translation>1080p</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1213"/>
         <source>Timecode (Drop-Frame)</source>
         <translation>Timecode (scarta fotogrammi)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1207"/>
+        <location filename="../src/mainwindow.ui" line="1221"/>
         <source>Frames</source>
         <translation>Fotogrammi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1215"/>
+        <location filename="../src/mainwindow.ui" line="1229"/>
         <source>Clock</source>
         <translation>Orologio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1223"/>
+        <location filename="../src/mainwindow.ui" line="1237"/>
         <source>Timecode (Non-Drop Frame)</source>
         <translation>Timecode (no scarto fotogrammi)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1228"/>
+        <location filename="../src/mainwindow.ui" line="1242"/>
         <source>Topics</source>
         <translation>Argomenti Guida in linea</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1236"/>
+        <location filename="../src/mainwindow.ui" line="1250"/>
         <source>Synchronization...</source>
         <translation>Sincronizzazione...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1239"/>
+        <location filename="../src/mainwindow.ui" line="1253"/>
         <source>Synchronization</source>
         <translation>Sincronizzazione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1247"/>
+        <location filename="../src/mainwindow.ui" line="1261"/>
         <source>Use Proxy</source>
         <translation>Usa proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1258"/>
+        <location filename="../src/mainwindow.ui" line="1272"/>
         <source>Set the proxy storage folder</source>
         <translation>Imposta cartella archiviazione proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1266"/>
+        <location filename="../src/mainwindow.ui" line="1280"/>
         <source>Show the proxy storage folder</source>
         <translation>Visualizza cartella archiviazione proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1277"/>
+        <location filename="../src/mainwindow.ui" line="1291"/>
         <source>Use Project Folder</source>
         <translation>Usare la cartella progetti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1280"/>
+        <location filename="../src/mainwindow.ui" line="1294"/>
         <source>Store proxies in the project folder if defined</source>
         <translation>Conservare i proxy nella cartella del progetto, se definito</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1288"/>
+        <location filename="../src/mainwindow.ui" line="1302"/>
         <source>Use Hardware Encoder</source>
         <translation>Usa encoder hardware</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1293"/>
+        <location filename="../src/mainwindow.ui" line="1307"/>
         <source>Configure Hardware Encoder...</source>
         <translation>Configura encoder hardware...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1304"/>
+        <location filename="../src/mainwindow.ui" line="1318"/>
         <source>Switch to the color layout</source>
         <translation>Cambia in disposizione colore</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1307"/>
+        <location filename="../src/mainwindow.ui" line="1321"/>
         <source>Alt+4</source>
         <translation>Alt+4</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1318"/>
+        <location filename="../src/mainwindow.ui" line="1332"/>
         <source>Switch to the player only layout</source>
         <translation>Cambia in disposizione solo riproduttore</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1321"/>
+        <location filename="../src/mainwindow.ui" line="1335"/>
         <source>Alt+6</source>
         <translation>Alt+6</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1334"/>
+        <location filename="../src/mainwindow.ui" line="1348"/>
         <source>Playlist Project</source>
         <translation>Progetto elenco riproduzione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1339"/>
+        <location filename="../src/mainwindow.ui" line="1353"/>
         <source>Clip-only Project</source>
         <translation>Progetto di soli filmati</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1360"/>
+        <location filename="../src/mainwindow.ui" line="1374"/>
         <source>Reset...</source>
         <translation>Ripristina impostazioni...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1365"/>
-        <location filename="../src/mainwindow.ui" line="1368"/>
+        <location filename="../src/mainwindow.ui" line="1379"/>
+        <location filename="../src/mainwindow.ui" line="1382"/>
         <source>Backup and Save</source>
         <translation>Backup/salvataggio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1371"/>
+        <location filename="../src/mainwindow.ui" line="1385"/>
         <source>Ctrl+Alt+S</source>
         <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1379"/>
+        <location filename="../src/mainwindow.ui" line="1393"/>
         <source>Manually</source>
         <translation>Manuale</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1387"/>
+        <location filename="../src/mainwindow.ui" line="1401"/>
         <source>Hourly</source>
         <translation>Ogni ora</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1395"/>
+        <location filename="../src/mainwindow.ui" line="1409"/>
         <source>Daily</source>
         <translation>Ogni giorno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1406"/>
+        <location filename="../src/mainwindow.ui" line="1420"/>
         <source>Weekly</source>
         <translation>Ogni settimana</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1411"/>
+        <location filename="../src/mainwindow.ui" line="1425"/>
         <source>Show Project in Folder</source>
         <translation>Visualizza progetto nella cartella</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1422"/>
+        <location filename="../src/mainwindow.ui" line="1436"/>
         <source>Pause After Seek</source>
         <translation>Pausa dopo la ricerca</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1431"/>
+        <location filename="../src/mainwindow.ui" line="1445"/>
         <source>Files</source>
         <translation>File</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1067"/>
-        <location filename="../src/mainwindow.ui" line="1072"/>
+        <location filename="../src/mainwindow.ui" line="1076"/>
+        <location filename="../src/mainwindow.ui" line="1081"/>
         <source>Remove...</source>
         <translation>Rimuovi...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="503"/>
+        <location filename="../src/mainwindow.ui" line="509"/>
         <source>F11</source>
         <translation>F11</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="926"/>
+        <location filename="../src/mainwindow.ui" line="932"/>
         <source>EDL...</source>
         <translation>EDL...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="937"/>
+        <location filename="../src/mainwindow.ui" line="943"/>
         <source>Frame...</source>
         <translation>Fotogramma...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="951"/>
+        <location filename="../src/mainwindow.ui" line="957"/>
         <source>Video...</source>
         <translation>Video...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="954"/>
-        <location filename="../src/mainwindow.ui" line="957"/>
+        <location filename="../src/mainwindow.ui" line="960"/>
+        <location filename="../src/mainwindow.ui" line="963"/>
         <source>Export Video</source>
         <translation>Esporta video</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="998"/>
+        <location filename="../src/mainwindow.ui" line="1007"/>
         <source>Actions and Shortcuts...</source>
         <translation>Azioni e scorciatoie...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1081"/>
-        <source>Open Other</source>
-        <translation>Apri altro</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1095"/>
+        <location filename="../src/mainwindow.ui" line="1101"/>
         <source>Clear Recent on Exit</source>
         <translation>Elimina elenco recenti all&apos;uscita</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1103"/>
+        <location filename="../src/mainwindow.ui" line="1109"/>
         <source>Show Text Under Icons</source>
         <translation>Testo sotto le icone</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1111"/>
+        <location filename="../src/mainwindow.ui" line="1117"/>
         <source>Show Small Icons</source>
         <translation>Icone piccole</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1120"/>
+        <location filename="../src/mainwindow.ui" line="1126"/>
         <source>Jobs</source>
         <translation>Attività</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1155"/>
+        <location filename="../src/mainwindow.ui" line="1161"/>
         <source>540p</source>
         <translation>540p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1166"/>
+        <location filename="../src/mainwindow.ui" line="1172"/>
         <source>720p</source>
         <translation>720p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1188"/>
+        <location filename="../src/mainwindow.ui" line="1202"/>
         <source>360p</source>
         <translation>360p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="150"/>
+        <location filename="../src/mainwindow.cpp" line="151"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
@@ -4952,153 +4964,113 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 Per favore installala utilizzando il tuo gestore di pacchetti. Può essere denominata libsdl2-2.0-0, SDL2 o simile.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1159"/>
+        <location filename="../src/mainwindow.cpp" line="1162"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>Schermo %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1186"/>
+        <location filename="../src/mainwindow.cpp" line="1198"/>
         <source>Off</source>
         <translation>OFF</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1189"/>
+        <location filename="../src/mainwindow.cpp" line="1201"/>
         <source>Internal</source>
         <translation>Interno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1192"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>External</source>
         <translation>Esterno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1206"/>
+        <location filename="../src/mainwindow.cpp" line="1227"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1301"/>
-        <location filename="../src/mainwindow.cpp" line="1465"/>
+        <location filename="../src/mainwindow.ui" line="1315"/>
+        <location filename="../src/mainwindow.cpp" line="1487"/>
         <source>Color</source>
         <translation>Colore</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1467"/>
+        <location filename="../src/mainwindow.cpp" line="1491"/>
         <source>Text</source>
         <translation>Testo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1471"/>
+        <location filename="../src/mainwindow.cpp" line="1498"/>
         <source>Animation</source>
         <translation>Animazione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1474"/>
+        <location filename="../src/mainwindow.cpp" line="1503"/>
         <source>Noise</source>
         <translation>Rumore</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1476"/>
-        <source>Ising</source>
-        <translation>Ising</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1479"/>
-        <source>Lissajous</source>
-        <translation>Lissajous</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1482"/>
-        <source>Plasma</source>
-        <translation>Plasma</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1485"/>
+        <location filename="../src/mainwindow.cpp" line="1508"/>
         <source>Color Bars</source>
         <translation>Barre colore</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1488"/>
+        <location filename="../src/mainwindow.cpp" line="1513"/>
         <source>Audio Tone</source>
         <translation>Tono audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1491"/>
+        <location filename="../src/mainwindow.cpp" line="1518"/>
         <source>Count</source>
         <translation>Conteggio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1493"/>
+        <location filename="../src/mainwindow.cpp" line="1523"/>
         <source>Blip Flash</source>
         <translation>Blip Flash</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1497"/>
-        <source>Video4Linux</source>
-        <translation>Video4Linux</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1499"/>
-        <source>PulseAudio</source>
-        <translation>PulseAudio</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1501"/>
-        <source>ALSA Audio</source>
-        <translation>Audio ALSA</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1503"/>
-        <source>Audio/Video Device</source>
-        <translation>Dispositivo audio/video</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1507"/>
-        <source>SDI/HDMI</source>
-        <translation>SDI/HDMI</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1530"/>
-        <location filename="../src/mainwindow.cpp" line="1532"/>
-        <location filename="../src/mainwindow.cpp" line="1961"/>
-        <location filename="../src/mainwindow.cpp" line="1969"/>
-        <location filename="../src/mainwindow.cpp" line="1992"/>
-        <location filename="../src/mainwindow.cpp" line="2052"/>
-        <location filename="../src/mainwindow.cpp" line="4491"/>
-        <location filename="../src/mainwindow.cpp" line="4504"/>
-        <location filename="../src/mainwindow.cpp" line="5478"/>
+        <location filename="../src/mainwindow.cpp" line="1548"/>
+        <location filename="../src/mainwindow.cpp" line="1550"/>
+        <location filename="../src/mainwindow.cpp" line="1988"/>
+        <location filename="../src/mainwindow.cpp" line="1996"/>
+        <location filename="../src/mainwindow.cpp" line="2019"/>
+        <location filename="../src/mainwindow.cpp" line="2079"/>
+        <location filename="../src/mainwindow.cpp" line="4659"/>
+        <location filename="../src/mainwindow.cpp" line="4672"/>
+        <location filename="../src/mainwindow.cpp" line="5637"/>
         <source>Failed to open </source>
         <translation>Impossibile aprire</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1565"/>
+        <location filename="../src/mainwindow.cpp" line="1583"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.</source>
         <translation>Il file che hai aperto usa gli effetti GPU, ma gli effetti GPU non sono abilitati.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1577"/>
+        <location filename="../src/mainwindow.cpp" line="1595"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>Il file che hai aperto utilizza effetti CPU non compatibili con gli effetti GPU, ma gli effetti GPU sono abilitati. 
 Vuoi  disattivare gli effetti GPU e riavviare?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1600"/>
+        <location filename="../src/mainwindow.cpp" line="1618"/>
         <source>Repaired</source>
         <translation>Riparato</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1601"/>
+        <location filename="../src/mainwindow.cpp" line="1619"/>
         <source>Save Repaired XML</source>
         <translation>Salva XML riparato</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1638"/>
+        <location filename="../src/mainwindow.cpp" line="1656"/>
         <source>Repairing the project failed.</source>
         <translation>La riparazione del progetto è fallita.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1651"/>
+        <location filename="../src/mainwindow.cpp" line="1669"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -5111,22 +5083,22 @@ Se scegli Sì, Shotcut creerà una copia del progetto
 con &quot;- Riparato&quot; nel nome del file e lo aprirà.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1686"/>
+        <location filename="../src/mainwindow.cpp" line="1704"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Sono disponibili i file di auto-salvataggio. Vuoi recuperarli ora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1758"/>
+        <location filename="../src/mainwindow.cpp" line="1776"/>
         <source>You cannot add a project to itself!</source>
         <translation>Non puoi aggiungere un progetto a se stesso!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1796"/>
+        <location filename="../src/mainwindow.cpp" line="1814"/>
         <source>There was an error saving. Please try again.</source>
         <translation>Si è verificato un errore durante il salvataggio. Per favore riprova.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1872"/>
+        <location filename="../src/mainwindow.cpp" line="1899"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -5135,7 +5107,7 @@ It was made with version </source>
 È stato realizzato con la versione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1903"/>
+        <location filename="../src/mainwindow.cpp" line="1930"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -5146,150 +5118,170 @@ Perfavore chiudi le altre applicazioni o le linguette del browser web e riprova.
 Oppure Salva e fai ripartire Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1955"/>
+        <location filename="../src/mainwindow.cpp" line="1982"/>
         <source>Opening %1</source>
         <translation>Apertura %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2094"/>
-        <location filename="../src/mainwindow.cpp" line="4478"/>
+        <location filename="../src/mainwindow.cpp" line="2121"/>
+        <location filename="../src/mainwindow.cpp" line="4646"/>
         <source>Open File</source>
         <translation>Apri file</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2096"/>
+        <location filename="../src/mainwindow.cpp" line="2123"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Tutti i file (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2350"/>
+        <location filename="../src/mainwindow.cpp" line="2391"/>
         <source>Preferences</source>
         <translation>Preferenze</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2360"/>
+        <location filename="../src/mainwindow.cpp" line="2401"/>
         <source>Rename Clip</source>
         <translation>Rinomina clip</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2369"/>
+        <location filename="../src/mainwindow.cpp" line="2410"/>
         <source>Find</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2378"/>
+        <location filename="../src/mainwindow.cpp" line="2419"/>
         <source>Reload</source>
         <translation>Ricarica</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2520"/>
+        <location filename="../src/mainwindow.cpp" line="2429"/>
+        <source>Rerun Filter Analysis</source>
+        <translation>Riesegui analisi file</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/mainwindow.cpp" line="2443"/>
+        <source>This will start %n analysis job(s). Continue?</source>
+        <translation>
+            <numerusform>Questo avvierà %n attività di analisi. 
+Vuoi continuare?</numerusform>
+            <numerusform>Questo avvierà %n attività di analisi. 
+Vuoi continuare?</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2461"/>
+        <source>No filters to analyze.</source>
+        <translation>Nessun filtro da analizzare</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2602"/>
         <source>Untitled</source>
         <translation>Senza titolo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2525"/>
+        <location filename="../src/mainwindow.cpp" line="2607"/>
         <source>%1x%2 %3fps %4ch</source>
-        <translation type="unfinished"></translation>
+        <translation>%1x%2 %3fps %4can</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2550"/>
+        <location filename="../src/mainwindow.cpp" line="2634"/>
         <source>About %1</source>
         <translation>Info su %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2679"/>
+        <location filename="../src/mainwindow.cpp" line="2763"/>
         <source>Non-Broadcast</source>
         <translation>Non broadcast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2684"/>
+        <location filename="../src/mainwindow.cpp" line="2768"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2685"/>
+        <location filename="../src/mainwindow.cpp" line="2769"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2696"/>
+        <location filename="../src/mainwindow.cpp" line="2780"/>
         <source>Square 1080p 30 fps</source>
         <translation>Quadrato 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2697"/>
+        <location filename="../src/mainwindow.cpp" line="2781"/>
         <source>Square 1080p 60 fps</source>
         <translation>Quadrato 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2698"/>
+        <location filename="../src/mainwindow.cpp" line="2782"/>
         <source>Vertical HD 30 fps</source>
         <translation>Verticale HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2699"/>
+        <location filename="../src/mainwindow.cpp" line="2783"/>
         <source>Vertical HD 60 fps</source>
         <translation>Verticale HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2700"/>
+        <location filename="../src/mainwindow.cpp" line="2784"/>
         <source>Custom</source>
         <translation>Personalizzata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2731"/>
-        <location filename="../src/mainwindow.cpp" line="3026"/>
+        <location filename="../src/mainwindow.cpp" line="2815"/>
+        <location filename="../src/mainwindow.cpp" line="3110"/>
         <source>Saved %1</source>
         <translation>Salvato %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3017"/>
-        <location filename="../src/mainwindow.cpp" line="3040"/>
-        <location filename="../src/mainwindow.cpp" line="4292"/>
+        <location filename="../src/mainwindow.cpp" line="3101"/>
+        <location filename="../src/mainwindow.cpp" line="3124"/>
+        <location filename="../src/mainwindow.cpp" line="4446"/>
         <source>Save XML</source>
         <translation>Salva XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3136"/>
+        <location filename="../src/mainwindow.cpp" line="3220"/>
         <source>Timeline is not loaded</source>
         <translation>Timeline non caricata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3146"/>
+        <location filename="../src/mainwindow.cpp" line="3230"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation>Marcatore intervallo non trovato sotto il cursore della timeline</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3211"/>
+        <location filename="../src/mainwindow.cpp" line="3295"/>
         <source>There are incomplete jobs.
 Do you still want to exit?</source>
         <translation>Ci sono attività non completate.
 Vuoi uscire dal programma?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3223"/>
+        <location filename="../src/mainwindow.cpp" line="3307"/>
         <source>An export is in progress.
 Do you still want to exit?</source>
         <translation>È in corso un&apos;esportazione.
 Vuoi uscire dal programma?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4294"/>
+        <location filename="../src/mainwindow.cpp" line="4448"/>
         <source>Saved backup %1</source>
         <translation>Backup salvato %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3102"/>
+        <location filename="../src/mainwindow.cpp" line="3186"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation>Vuoi modificare la modalità video in %1 x %2?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4017"/>
+        <location filename="../src/mainwindow.cpp" line="4101"/>
         <source>Opened Files</source>
         <translation>File aperti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4099"/>
+        <location filename="../src/mainwindow.cpp" line="4183"/>
         <source>GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.
 At this time, a project created with GPU effects cannot be converted to a CPU-only project later.
 
@@ -5301,72 +5293,77 @@ Al momento, un progetto creato con effetti GPU non può essere convertito succes
 Vuoi abilitare gli effetti GPU e riavviare Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5113"/>
+        <location filename="../src/mainwindow.cpp" line="5281"/>
         <source>Add To Timeline</source>
         <translation>Aggiungi alla timeline</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5678"/>
+        <location filename="../src/mainwindow.cpp" line="5837"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>Intervalli inclusione (durata &gt; 1 fotogramma)?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5689"/>
+        <location filename="../src/mainwindow.cpp" line="5848"/>
         <source>Choose Markers</source>
         <translation>Scegli marcatori</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5706"/>
+        <location filename="../src/mainwindow.cpp" line="5865"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Testo (*.txt);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5761"/>
+        <location filename="../src/mainwindow.cpp" line="5920"/>
         <source>Failed to open export-chapters.js</source>
         <translation>Impossibile aprire export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5802"/>
+        <location filename="../src/mainwindow.cpp" line="5961"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation>Questo ripristinerà &lt;b&gt;tutte&lt;/b&gt; le impostazioni, e Shotcut deve essere successivamnte riavviato.
 Vuoi ripristinare le impostazoini e riavviare Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1605"/>
-        <location filename="../src/mainwindow.cpp" line="3044"/>
+        <location filename="../src/mainwindow.cpp" line="1623"/>
+        <location filename="../src/mainwindow.cpp" line="3128"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3184"/>
+        <location filename="../src/mainwindow.cpp" line="470"/>
+        <source>View Mode</source>
+        <translation>Modo visualizzazione</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="3268"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Il progetto è stato modificato.
 Vuoi salvare le modifiche?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3841"/>
+        <location filename="../src/mainwindow.cpp" line="3925"/>
         <source>Exit Full Screen</source>
         <translation>Esci da schermo intero</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5437"/>
+        <location filename="../src/mainwindow.cpp" line="5596"/>
         <source>Turn Proxy On</source>
         <translation>Attiva proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5437"/>
+        <location filename="../src/mainwindow.cpp" line="5596"/>
         <source>Turn Proxy Off</source>
         <translation>Disattiva proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5442"/>
+        <location filename="../src/mainwindow.cpp" line="5601"/>
         <source>Converting</source>
         <translation>Conversione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5458"/>
+        <location filename="../src/mainwindow.cpp" line="5617"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -5375,88 +5372,98 @@ You must reopen your project after all proxy jobs are finished.</source>
 È necessario riaprire il progetto al termine di tutti i processi proxy.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5496"/>
+        <location filename="../src/mainwindow.cpp" line="5655"/>
         <source>Proxy Folder</source>
         <translation>Cartella proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5514"/>
+        <location filename="../src/mainwindow.cpp" line="5673"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Vuoi spostare tutti i file dalla vecchia cartella nella nuova cartella?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5522"/>
+        <location filename="../src/mainwindow.cpp" line="5681"/>
         <source>Moving Files</source>
         <translation>Spostamento di file</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3853"/>
+        <location filename="../src/mainwindow.cpp" line="3937"/>
         <source>GPU effects are not supported</source>
         <translation>Gli effetti GPU non sono supportati</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="310"/>
+        <location filename="../src/mainwindow.cpp" line="311"/>
         <source>Set Loop Range</source>
         <translation>Imposta intervallo loop</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="469"/>
-        <source>View mode</source>
-        <translation>Modalità visualizzazione</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="473"/>
+        <location filename="../src/mainwindow.cpp" line="474"/>
         <source>Thumbnails</source>
         <translation>Miniature</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="564"/>
+        <location filename="../src/mainwindow.cpp" line="565"/>
         <source>Scrolling</source>
         <translation>Scorrimento</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1042"/>
+        <location filename="../src/mainwindow.cpp" line="1043"/>
         <source>Audio API</source>
         <translation>API audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1063"/>
+        <location filename="../src/mainwindow.cpp" line="1064"/>
         <source>default</source>
         <translation>Predefinito</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1070"/>
+        <location filename="../src/mainwindow.cpp" line="1071"/>
         <source>You must restart Shotcut to change the audio API.
 Do you want to restart now?</source>
         <translation>Per modificare l&apos;API audio è necessario riavviare Shotcut.
 Vuoi riavviare Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3873"/>
+        <location filename="../src/mainwindow.cpp" line="1189"/>
+        <source>SDR</source>
+        <translation>SDR</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1192"/>
+        <source>HLG HDR</source>
+        <translation>HLG HDR</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1218"/>
+        <source>DeckLink Gamma</source>
+        <translation>Gamma Declink</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="3957"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Fai clic qui per verificare la disponibilità di una nuova versione di Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3988"/>
+        <location filename="../src/mainwindow.cpp" line="4072"/>
         <source>Open Files</source>
         <translation>Aprire i file</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4047"/>
+        <location filename="../src/mainwindow.cpp" line="4131"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Per passare alla nuova lingua devi riavviare Shotcut.
 Vuoi riavviare Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4090"/>
+        <location filename="../src/mainwindow.cpp" line="4174"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Impossibile connettersi a JACK.
 Verifica che JACK sia installato e in esecuzione.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4119"/>
+        <location filename="../src/mainwindow.cpp" line="4203"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -5465,102 +5472,108 @@ Disable GPU effects and restart?</source>
 Disabilitare gli effetti GPU e riavviare?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4271"/>
+        <location filename="../src/mainwindow.cpp" line="4425"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>Per passare al nuovo tema devi riavviare %1 .
 Vuoi riavviare ora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4314"/>
+        <location filename="../src/mainwindow.cpp" line="4468"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Dopo aver apportato questa modifica rivedi l&apos;intero progetto .&lt;/p&gt;&lt;p&gt;Se si modifica la risoluzione o le proporzioni Shotcut non regola automaticamente gli elementi sensibili alle dimensioni e alla posizione.&lt;/p&lt;br&gt;Se si modifica la frequenza dei fotogrammi i tempi delle modifiche e dei fotogrammi chiave potrebbero essere leggermente diversi .&lt;/p&gt;&lt;p&gt;È una buona idea usare &lt;b&gt;File &gt; Backup e salvataggio&lt;/b&gt; prima o dopo questa operazione.&lt;/p&gt;&lt;p&gt;Vuoi cambiare la &lt;b&gt;modalità video&lt;/b&gt;?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4328"/>
+        <location filename="../src/mainwindow.cpp" line="4482"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>Non visualizzare più questa finestra.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4455"/>
+        <location filename="../src/mainwindow.cpp" line="4493"/>
+        <source>Shotcut must restarto change external monitoring.
+Do you want to restart now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4623"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Vuoi verificare automaticamente gli aggiornamenti in futuro?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4462"/>
+        <location filename="../src/mainwindow.cpp" line="4630"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Non visualizzare più questa finestra.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4480"/>
+        <location filename="../src/mainwindow.cpp" line="4648"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>XML MLT (*.mlt);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4534"/>
+        <location filename="../src/mainwindow.cpp" line="4702"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Devi riavviare Shotcut per modificare il metodo di visualizzazione. 
 Vuoi riavviare Shotcut ora?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4564"/>
+        <location filename="../src/mainwindow.cpp" line="4732"/>
         <source>Application Log</source>
         <translation>Registro eventi applicazione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4567"/>
+        <location filename="../src/mainwindow.cpp" line="4735"/>
         <source>Previous</source>
         <translation>Precedente</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4629"/>
+        <location filename="../src/mainwindow.cpp" line="4797"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>È disponibile Shotcut versione %1! Fai clic qui scaricarlo.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4635"/>
+        <location filename="../src/mainwindow.cpp" line="4803"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>La versione installata di Shotcut è aggiornata.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4649"/>
+        <location filename="../src/mainwindow.cpp" line="4817"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Impossibile leggere version.json durante il controllo. 
 Fai clic qui per visitare il sito web.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="929"/>
-        <location filename="../src/mainwindow.ui" line="932"/>
-        <location filename="../src/mainwindow.cpp" line="4669"/>
+        <location filename="../src/mainwindow.ui" line="935"/>
+        <location filename="../src/mainwindow.ui" line="938"/>
+        <location filename="../src/mainwindow.cpp" line="4837"/>
         <source>Export EDL</source>
         <translation>Esporta EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4673"/>
+        <location filename="../src/mainwindow.cpp" line="4841"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4720"/>
-        <location filename="../src/mainwindow.cpp" line="5758"/>
+        <location filename="../src/mainwindow.cpp" line="4888"/>
+        <location filename="../src/mainwindow.cpp" line="5917"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Si è verificato un errore JavaScript durante l&apos;esportazione.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4723"/>
+        <location filename="../src/mainwindow.cpp" line="4891"/>
         <source>Failed to open export-edl.js</source>
         <translation>Impossibile aprire export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4754"/>
+        <location filename="../src/mainwindow.cpp" line="4922"/>
         <source>Export frame from proxy?</source>
         <translation>Vuoi esportare il frame dal proxy?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4755"/>
+        <location filename="../src/mainwindow.cpp" line="4923"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -5569,51 +5582,51 @@ Do you still want to continue?</source>
 Vuoi continuare?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="940"/>
-        <location filename="../src/mainwindow.ui" line="943"/>
-        <location filename="../src/mainwindow.cpp" line="4767"/>
+        <location filename="../src/mainwindow.ui" line="946"/>
+        <location filename="../src/mainwindow.ui" line="949"/>
+        <location filename="../src/mainwindow.cpp" line="4935"/>
         <source>Export Frame</source>
         <translation>Esporta un fotogramma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4773"/>
+        <location filename="../src/mainwindow.cpp" line="4941"/>
         <source>Unable to export frame.</source>
         <translation>Impossibile esportare il fotogramma.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4781"/>
+        <location filename="../src/mainwindow.cpp" line="4949"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Per modificare la cartella dei dati è necessario riavviare Shotcut.
 Vuoi continuare?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4792"/>
+        <location filename="../src/mainwindow.cpp" line="4960"/>
         <source>Data Directory</source>
         <translation>Cartella dati</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5002"/>
+        <location filename="../src/mainwindow.cpp" line="5170"/>
         <source>Add Custom Layout</source>
         <translation>Aggiungi disposizione personalizzata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5003"/>
+        <location filename="../src/mainwindow.cpp" line="5171"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5042"/>
+        <location filename="../src/mainwindow.cpp" line="5210"/>
         <source>Remove Video Mode</source>
         <translation>Rimuovi la modalità video</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5059"/>
+        <location filename="../src/mainwindow.cpp" line="5227"/>
         <source>Remove Layout</source>
         <translation>Rimuovi la disposizione</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5231"/>
+        <location filename="../src/mainwindow.cpp" line="5381"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -6013,7 +6026,7 @@ Ciò potrebbe fornire risultati imprevisti.</translation>
         <translation>(PROXY)</translation>
     </message>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="2636"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="2653"/>
         <source>Error: Shotcut could not find the %1 plugin on your system.
 
 Please install the %2 plugins.</source>
@@ -6205,7 +6218,7 @@ Riprova con una cartella diversa.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="38"/>
-        <location filename="../src/openotherdialog.cpp" line="142"/>
+        <location filename="../src/openotherdialog.cpp" line="143"/>
         <source>Network</source>
         <translation>Rete</translation>
     </message>
@@ -6216,32 +6229,32 @@ Riprova con una cartella diversa.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="45"/>
-        <location filename="../src/openotherdialog.cpp" line="144"/>
+        <location filename="../src/openotherdialog.cpp" line="145"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="49"/>
-        <location filename="../src/openotherdialog.cpp" line="134"/>
+        <location filename="../src/openotherdialog.cpp" line="135"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="51"/>
-        <location filename="../src/openotherdialog.cpp" line="136"/>
+        <location filename="../src/openotherdialog.cpp" line="137"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="53"/>
-        <location filename="../src/openotherdialog.cpp" line="138"/>
+        <location filename="../src/openotherdialog.cpp" line="139"/>
         <source>ALSA Audio</source>
         <translation>Audio ALSA</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="56"/>
         <location filename="../src/openotherdialog.cpp" line="59"/>
-        <location filename="../src/openotherdialog.cpp" line="140"/>
+        <location filename="../src/openotherdialog.cpp" line="141"/>
         <source>Audio/Video Device</source>
         <translation>Dispositivo audio/video</translation>
     </message>
@@ -6252,7 +6265,7 @@ Riprova con una cartella diversa.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="66"/>
-        <location filename="../src/openotherdialog.cpp" line="146"/>
+        <location filename="../src/openotherdialog.cpp" line="147"/>
         <source>Color</source>
         <translation>Colore</translation>
     </message>
@@ -6263,55 +6276,55 @@ Riprova con una cartella diversa.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="74"/>
-        <location filename="../src/openotherdialog.cpp" line="148"/>
+        <location filename="../src/openotherdialog.cpp" line="149"/>
         <source>Animation</source>
         <translation>Animazione</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="78"/>
-        <location filename="../src/openotherdialog.cpp" line="150"/>
+        <location filename="../src/openotherdialog.cpp" line="151"/>
         <source>Noise</source>
         <translation>Rumore</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="82"/>
-        <location filename="../src/openotherdialog.cpp" line="152"/>
+        <location filename="../src/openotherdialog.cpp" line="153"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="86"/>
-        <location filename="../src/openotherdialog.cpp" line="154"/>
+        <location filename="../src/openotherdialog.cpp" line="87"/>
+        <location filename="../src/openotherdialog.cpp" line="155"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="90"/>
-        <location filename="../src/openotherdialog.cpp" line="156"/>
+        <location filename="../src/openotherdialog.cpp" line="91"/>
+        <location filename="../src/openotherdialog.cpp" line="157"/>
         <source>Plasma</source>
         <translation>Plasma</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="94"/>
-        <location filename="../src/openotherdialog.cpp" line="158"/>
+        <location filename="../src/openotherdialog.cpp" line="95"/>
+        <location filename="../src/openotherdialog.cpp" line="159"/>
         <source>Color Bars</source>
         <translation>Barre colore</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="98"/>
-        <location filename="../src/openotherdialog.cpp" line="160"/>
+        <location filename="../src/openotherdialog.cpp" line="99"/>
+        <location filename="../src/openotherdialog.cpp" line="161"/>
         <source>Audio Tone</source>
         <translation>Tono audio</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="102"/>
-        <location filename="../src/openotherdialog.cpp" line="162"/>
+        <location filename="../src/openotherdialog.cpp" line="103"/>
+        <location filename="../src/openotherdialog.cpp" line="163"/>
         <source>Count</source>
         <translation>Conteggio</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="106"/>
-        <location filename="../src/openotherdialog.cpp" line="164"/>
+        <location filename="../src/openotherdialog.cpp" line="107"/>
+        <location filename="../src/openotherdialog.cpp" line="165"/>
         <source>Blip Flash</source>
         <translation>Blip Flash</translation>
     </message>
@@ -6720,7 +6733,7 @@ Riprova con una cartella diversa.</translation>
     <message>
         <location filename="../src/player.cpp" line="770"/>
         <source>Toggle Filter Overlay</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtro overlay ON/OFF</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="923"/>
@@ -6848,7 +6861,7 @@ Riprova con una cartella diversa.</translation>
     <name>PlaylistDock</name>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="18"/>
-        <location filename="../src/docks/playlistdock.cpp" line="381"/>
+        <location filename="../src/docks/playlistdock.cpp" line="382"/>
         <source>Playlist</source>
         <translation>Elenco riproduzione</translation>
     </message>
@@ -6877,418 +6890,426 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Doppio clic su un elemento dell&apos;elenco riproduzione per aprirlo nel riproduttore.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="591"/>
+        <location filename="../src/docks/playlistdock.cpp" line="601"/>
         <source>Add the Source to the playlist</source>
         <translation>Aggiungi la sorgente all&apos;elenco riproduzione</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="602"/>
+        <location filename="../src/docks/playlistdock.cpp" line="612"/>
         <source>Remove cut</source>
         <translation>Rimuovi taglio</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="620"/>
+        <location filename="../src/docks/playlistdock.cpp" line="630"/>
         <source>Update</source>
         <translation>Aggiorna</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="632"/>
+        <location filename="../src/docks/playlistdock.cpp" line="642"/>
         <source>View as tiles</source>
         <translation>Visualizza elenco</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="645"/>
+        <location filename="../src/docks/playlistdock.cpp" line="655"/>
         <source>View as icons</source>
         <translation>Visualizza icone</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="658"/>
+        <location filename="../src/docks/playlistdock.cpp" line="668"/>
         <source>View as details</source>
         <translation>Visualizza dettagli</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="597"/>
+        <location filename="../src/docks/playlistdock.cpp" line="607"/>
         <source>Remove</source>
         <translation>Rimuovi</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="710"/>
+        <location filename="../src/docks/playlistdock.cpp" line="720"/>
         <source>Set Creation Time...</source>
         <translation>Imposta il tempo di creazione...</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="696"/>
-        <location filename="../src/docks/playlistdock.cpp" line="697"/>
+        <location filename="../src/docks/playlistdock.cpp" line="706"/>
+        <location filename="../src/docks/playlistdock.cpp" line="707"/>
         <source>Insert</source>
         <translation>Inserisci</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="450"/>
+        <location filename="../src/docks/playlistdock.cpp" line="451"/>
         <source>Playlist Menu</source>
         <translation>Menu playlist</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="589"/>
+        <location filename="../src/docks/playlistdock.cpp" line="599"/>
         <source>Append</source>
         <translation>Aggiungi</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="671"/>
+        <location filename="../src/docks/playlistdock.cpp" line="681"/>
         <source>Open the clip in the Source player</source>
         <translation>Apri clip nel riproduttore sorgente</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="681"/>
+        <location filename="../src/docks/playlistdock.cpp" line="691"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation>Vai all&apos;inizio di questa clip nel riproduttore del progetto</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="718"/>
+        <location filename="../src/docks/playlistdock.cpp" line="728"/>
         <source>Remove All</source>
         <translation>Rimuovi tutto</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="719"/>
+        <location filename="../src/docks/playlistdock.cpp" line="729"/>
         <source>Remove all items from the playlist</source>
         <translation>Rimuovi tutti gli elementi dall&apos;elenco riproduzione</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="795"/>
+        <location filename="../src/docks/playlistdock.cpp" line="805"/>
         <source>Hidden</source>
         <translation>Nascosto</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="807"/>
+        <location filename="../src/docks/playlistdock.cpp" line="817"/>
         <source>In and Out - Left/Right</source>
         <translation>Ingresso e uscita - sinistra/destra</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="823"/>
+        <location filename="../src/docks/playlistdock.cpp" line="833"/>
         <source>In and Out - Top/Bottom</source>
         <translation>Ingresso e uscita - alto/basso</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="840"/>
+        <location filename="../src/docks/playlistdock.cpp" line="850"/>
         <source>In Only - Small</source>
         <translation>Solo in ingresso - piccolo</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="856"/>
+        <location filename="../src/docks/playlistdock.cpp" line="866"/>
         <source>In Only - Large</source>
         <translation>Solo in ingresso - grande</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="762"/>
+        <location filename="../src/docks/playlistdock.cpp" line="772"/>
         <source>Add Selected to Timeline</source>
         <translation>Aggiungi il selezionato alla linea temporale</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="769"/>
+        <location filename="../src/docks/playlistdock.cpp" line="779"/>
         <source>Add Selected to Slideshow</source>
         <translation>Aggiungi i selezionati alla presentazione</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="873"/>
+        <location filename="../src/docks/playlistdock.cpp" line="883"/>
         <source>Play After Open</source>
         <translation>Riproduci dopo l&apos;apertura</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="724"/>
+        <location filename="../src/docks/playlistdock.cpp" line="734"/>
         <source>Select All</source>
         <translation>Seleziona tutto</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="730"/>
+        <location filename="../src/docks/playlistdock.cpp" line="740"/>
         <source>Select None</source>
         <translation>Non selezionare niente</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="702"/>
+        <location filename="../src/docks/playlistdock.cpp" line="712"/>
         <source>Update Thumbnails</source>
         <translation>Aggiorna miniature</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="776"/>
+        <location filename="../src/docks/playlistdock.cpp" line="786"/>
         <source>Sort By Name</source>
         <translation>Ordina per nome</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="784"/>
+        <location filename="../src/docks/playlistdock.cpp" line="794"/>
         <source>Sort By Date</source>
         <translation>Ordina per data</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="657"/>
+        <location filename="../src/docks/playlistdock.cpp" line="667"/>
         <source>Details</source>
         <translation>Dettagli</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="411"/>
+        <location filename="../src/docks/playlistdock.cpp" line="412"/>
         <source>Select</source>
         <translation>Seleziona</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="428"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1124"/>
+        <location filename="../src/docks/playlistdock.cpp" line="429"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1134"/>
         <source>Bins</source>
         <translation>Contenitori</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="435"/>
+        <location filename="../src/docks/playlistdock.cpp" line="436"/>
         <source>Columns</source>
         <translation>Colonne</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="445"/>
+        <location filename="../src/docks/playlistdock.cpp" line="446"/>
         <source>Playlist Controls</source>
         <translation>Controlli playlist</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="470"/>
-        <location filename="../src/docks/playlistdock.cpp" line="474"/>
+        <location filename="../src/docks/playlistdock.cpp" line="480"/>
+        <location filename="../src/docks/playlistdock.cpp" line="484"/>
         <source>Playlist Filters</source>
         <translation>Filtri playlist</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="498"/>
+        <location filename="../src/docks/playlistdock.cpp" line="508"/>
         <source>Only show files whose name, path, or comment contains some text</source>
         <translation>Visualizza solo i file il cui nome, percorso o commento contiene testo</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="499"/>
+        <location filename="../src/docks/playlistdock.cpp" line="509"/>
         <source>search</source>
         <translation>cerca</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="613"/>
+        <location filename="../src/docks/playlistdock.cpp" line="623"/>
         <source>Add files to playlist</source>
         <translation>Aggiungi file alla playlist</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="631"/>
+        <location filename="../src/docks/playlistdock.cpp" line="641"/>
         <source>Tiles</source>
         <translation>Elenco</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="644"/>
+        <location filename="../src/docks/playlistdock.cpp" line="654"/>
         <source>Icons</source>
         <translation>Icone</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="670"/>
+        <location filename="../src/docks/playlistdock.cpp" line="680"/>
         <source>Open</source>
         <translation>Apri</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="680"/>
+        <location filename="../src/docks/playlistdock.cpp" line="690"/>
         <source>GoTo</source>
         <translation>Vai a</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="686"/>
+        <location filename="../src/docks/playlistdock.cpp" line="696"/>
         <source>Copy</source>
         <translation>Copia</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="687"/>
+        <location filename="../src/docks/playlistdock.cpp" line="697"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation>Apri una copia della clip nel riproduttore sorgente</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="738"/>
+        <location filename="../src/docks/playlistdock.cpp" line="748"/>
         <source>Move Up</source>
         <translation>Sposta su</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="750"/>
+        <location filename="../src/docks/playlistdock.cpp" line="760"/>
         <source>Move Down</source>
         <translation>Sposta giù</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="881"/>
+        <location filename="../src/docks/playlistdock.cpp" line="891"/>
         <source>Open Previous</source>
         <translation>Apri precedente</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="894"/>
+        <location filename="../src/docks/playlistdock.cpp" line="904"/>
         <source>Open Next</source>
         <translation>Apri successivo</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="907"/>
+        <location filename="../src/docks/playlistdock.cpp" line="917"/>
         <source>Select Clip 1</source>
         <translation>Seleziona clip 1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="919"/>
+        <location filename="../src/docks/playlistdock.cpp" line="929"/>
         <source>Select Clip 2</source>
         <translation>Seleziona clip 2</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="931"/>
+        <location filename="../src/docks/playlistdock.cpp" line="941"/>
         <source>Select Clip 3</source>
         <translation>Seleziona clip 3</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="943"/>
+        <location filename="../src/docks/playlistdock.cpp" line="953"/>
         <source>Select Clip 4</source>
         <translation>Seleziona clip 4</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="955"/>
+        <location filename="../src/docks/playlistdock.cpp" line="965"/>
         <source>Select Clip 5</source>
         <translation>Seleziona clip 5</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="967"/>
+        <location filename="../src/docks/playlistdock.cpp" line="977"/>
         <source>Select Clip 6</source>
         <translation>Seleziona clip 6</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="979"/>
+        <location filename="../src/docks/playlistdock.cpp" line="989"/>
         <source>Select Clip 7</source>
         <translation>Seleziona clip 7</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="991"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1001"/>
         <source>Select Clip 8</source>
         <translation>Seleziona clip 8</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1003"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1013"/>
         <source>Select Clip 9</source>
         <translation>Seleziona clip 9</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1015"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1025"/>
         <source>Thumbnails</source>
         <translation>Miniature</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1024"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1034"/>
         <source>Clip</source>
         <translation>Clip</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1033"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1043"/>
         <source>In</source>
         <translation>Ingresso</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1042"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1052"/>
         <source>Duration</source>
         <translation>Durata</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1051"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1061"/>
         <source>Start</source>
         <translation>Avvia</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1060"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1070"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1069"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1079"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1078"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1088"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1079"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1089"/>
         <source>Show or hide video files</source>
         <translation>Visualizza/nascondi file video</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1084"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1094"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1085"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1095"/>
         <source>Show or hide audio files</source>
         <translation>Visualizza/nascondi file audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1090"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1100"/>
         <source>Image</source>
         <translation>Immagine</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1091"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1101"/>
         <source>Show or hide image files</source>
         <translation>Visualizza/nascondi file immagine</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1096"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1106"/>
         <source>Other</source>
         <translation>Altro</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1097"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1107"/>
         <source>Show or hide other kinds of files</source>
         <translation>Visualizza/nascondi altri tipi di file</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1102"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1103"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1112"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1113"/>
         <source>New Bin</source>
         <translation>Nuovo contenitore</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1114"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1154"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1124"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1164"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1125"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1135"/>
         <source>Show or hide the list of bins</source>
         <translation>Visualizza/nascondi elenco contenitori</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1134"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1135"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1144"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1145"/>
         <source>Remove Bin</source>
         <translation>Elimina contenitore</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1146"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1147"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1156"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1157"/>
         <source>Rename Bin</source>
         <translation>Rinomina contenitore</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1168"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1178"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1203"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1213"/>
         <source>Replace %n playlist items</source>
         <translation>
             <numerusform>Sostituisci %n elemento della playlist</numerusform>
             <numerusform>Sostituisci %n elementi della playlist</numerusform>
         </translation>
     </message>
+    <message numerus="yes">
+        <location filename="../src/docks/playlistdock.cpp" line="2138"/>
+        <source>%n item(s)</source>
+        <translation>
+            <numerusform>%n elemento</numerusform>
+            <numerusform>%n elementi</numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="432"/>
+        <location filename="../src/docks/playlistdock.cpp" line="433"/>
         <source>Sort</source>
         <translation>Ordinare</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1526"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1758"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1536"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1768"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Non puoi inserire un elenco riproduzione in un elenco riproduzione!</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1543"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1553"/>
         <source>Remove %n playlist items</source>
         <translation>
             <numerusform>Rimuovi %n elemento dalla playlist</numerusform>
@@ -7296,39 +7317,39 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="612"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1302"/>
+        <location filename="../src/docks/playlistdock.cpp" line="622"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1312"/>
         <source>Add Files</source>
         <translation>Aggiungi i file</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1256"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1266"/>
         <source>Appending</source>
         <translation>Aggiunta</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1312"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1321"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1322"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1331"/>
         <source>Failed to open </source>
         <translation>Impossibile aprire</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1385"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1395"/>
         <source>Dropped Files</source>
         <translation>File rilasciati</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1847"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1857"/>
         <source>Generating</source>
         <translation>Generazione</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2066"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2076"/>
         <source>Open File</source>
         <translation>Apri file</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2068"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2078"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Tutti i file (*);;MLT XML (*.mlt)</translation>
     </message>
@@ -7345,72 +7366,72 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PlaylistModel</name>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="268"/>
+        <location filename="../src/models/playlistmodel.cpp" line="269"/>
         <source>(PROXY)</source>
         <translation>(PROXY)</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="408"/>
+        <location filename="../src/models/playlistmodel.cpp" line="409"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="410"/>
+        <location filename="../src/models/playlistmodel.cpp" line="411"/>
         <source>Image</source>
         <translation>Immagine</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="412"/>
+        <location filename="../src/models/playlistmodel.cpp" line="413"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="414"/>
+        <location filename="../src/models/playlistmodel.cpp" line="415"/>
         <source>Other</source>
         <translation>Altro</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="493"/>
+        <location filename="../src/models/playlistmodel.cpp" line="494"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="495"/>
+        <location filename="../src/models/playlistmodel.cpp" line="496"/>
         <source>Thumbnails</source>
         <translation>Anteprime</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="497"/>
+        <location filename="../src/models/playlistmodel.cpp" line="498"/>
         <source>Clip</source>
         <translation>Clip</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="499"/>
+        <location filename="../src/models/playlistmodel.cpp" line="500"/>
         <source>In</source>
         <translation>Ingresso</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="501"/>
+        <location filename="../src/models/playlistmodel.cpp" line="502"/>
         <source>Duration</source>
         <translation>Durata</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="503"/>
+        <location filename="../src/models/playlistmodel.cpp" line="504"/>
         <source>Start</source>
         <translation>Avvia</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="505"/>
+        <location filename="../src/models/playlistmodel.cpp" line="506"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="507"/>
+        <location filename="../src/models/playlistmodel.cpp" line="508"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="509"/>
+        <location filename="../src/models/playlistmodel.cpp" line="510"/>
         <source>Comment</source>
         <translation>Commento</translation>
     </message>
@@ -7418,24 +7439,24 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PlaylistProxyModel</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="293"/>
+        <location filename="../src/docks/playlistdock.cpp" line="294"/>
         <source>All</source>
         <translation>Tutto</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="293"/>
+        <location filename="../src/docks/playlistdock.cpp" line="294"/>
         <source>Duplicates</source>
         <translation>Duplicati</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="293"/>
+        <location filename="../src/docks/playlistdock.cpp" line="294"/>
         <source>Not In Timeline</source>
         <translation>Non nella timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="293"/>
+        <location filename="../src/docks/playlistdock.cpp" line="294"/>
         <source>Not In a Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Non in un contenitore</translation>
     </message>
 </context>
 <context>
@@ -7677,7 +7698,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="565"/>
         <source>Toggle track hidden</source>
-        <translation>Visualizza/nascondi traccia</translation>
+        <translation>Nascondi traccia ON/OFF</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="590"/>
@@ -7705,12 +7726,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="903"/>
         <source>Trim clip in point</source>
-        <translation>Punto iniziale taglio clip</translation>
+        <translation>Ritaglia punto iniziale clip</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1013"/>
         <source>Trim clip out point</source>
-        <translation>Punto finale taglio clip</translation>
+        <translation>Ritaglia punto finale clip</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1118"/>
@@ -7826,7 +7847,7 @@ p, li { white-space: pre-wrap; }
         <translation>Applica filtri copiati</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4000"/>
+        <location filename="../src/mainwindow.cpp" line="4084"/>
         <source>You cannot add a project to itself!</source>
         <translation>Non puoi aggiungere un progetto a se stesso!</translation>
     </message>
@@ -7838,8 +7859,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/transcoder.cpp" line="95"/>
         <location filename="../src/util.cpp" line="142"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1053"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1145"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1050"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1140"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -7874,50 +7895,50 @@ più standard %1 = %2/1001.
 Vuoi utilizzare %1 = %2/1001 invece?</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="716"/>
+        <location filename="../src/util.cpp" line="717"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>L&apos;unità che hai scelto ha solo %1 MiB di spazio libero. 
 Vuoi procedere comunque?</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="724"/>
+        <location filename="../src/util.cpp" line="725"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Non visualizzare più questa finestra.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="760"/>
+        <location filename="../src/util.cpp" line="761"/>
         <source>unknown (%1)</source>
         <translation>sconosciuto (%1)</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="763"/>
+        <location filename="../src/util.cpp" line="764"/>
         <source>NA</source>
         <translation>N/D</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="814"/>
+        <location filename="../src/util.cpp" line="815"/>
         <source>This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.</source>
         <translation>Questo file utilizza le caratteristiche di trasferimento del colore %1, che possono causare colori o luminosità errati in Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="819"/>
+        <location filename="../src/util.cpp" line="820"/>
         <source>This file is variable frame rate, which is not reliable for editing.</source>
         <translation>Questo file ha una frequenza fotogrammi variabile, che non è affidabile per la modifica.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="823"/>
+        <location filename="../src/util.cpp" line="824"/>
         <source>This file does not support seeking and cannot be used for editing.</source>
         <translation>Questo file non supporta la ricerca e non può essere usato per la modifica.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="826"/>
+        <location filename="../src/util.cpp" line="827"/>
         <source>This file format (HDV) is not reliable for editing.</source>
         <translation>Questo formato file (HDV) non è affidabile per la modifica.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="842"/>
+        <location filename="../src/util.cpp" line="843"/>
         <source> Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, it automatically replaces clips, or you can double-click the job to open it.
@@ -7937,32 +7958,32 @@ Al termine, sostituisce automaticamente le clip oppure è possibile fare doppio 
         <translation>trasparente</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3013"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3114"/>
         <source>Drop Files</source>
         <translation>Elimina file</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3020"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3121"/>
         <source>Failed to open </source>
         <translation>Impossibile aprire</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3036"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3137"/>
         <source>Not adding non-seekable file: </source>
         <translation>Non aggiungere file non ricercabili:</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1240"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1250"/>
         <source>Generating Playlist for Bin</source>
         <translation>Generazione playlist contenitore</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1845"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1855"/>
         <source>Generate Slideshow</source>
         <translation>Genera presentazione</translation>
     </message>
     <message>
-        <location filename="../src/proxymanager.cpp" line="360"/>
+        <location filename="../src/proxymanager.cpp" line="366"/>
         <source>Make proxy for %1</source>
         <translation>Crea proxy per %1</translation>
     </message>
@@ -8033,47 +8054,47 @@ Al termine, sostituisce automaticamente le clip oppure è possibile fare doppio 
         <translation>%1x%2</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="108"/>
+        <location filename="../src/commands/filtercommands.cpp" line="107"/>
         <source>Add %1 filter</source>
         <translation>Aggiungi filtro %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="110"/>
+        <location filename="../src/commands/filtercommands.cpp" line="109"/>
         <source>Add %1 filter set</source>
         <translation>Aggiungi set filtri %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="171"/>
+        <location filename="../src/commands/filtercommands.cpp" line="173"/>
         <source>Remove %1 filter</source>
         <translation>Rimuovi filtro %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="205"/>
+        <location filename="../src/commands/filtercommands.cpp" line="207"/>
         <source>Move %1 filter</source>
         <translation>Sposta filtro %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="245"/>
+        <location filename="../src/commands/filtercommands.cpp" line="247"/>
         <source>Disable %1 filter</source>
         <translation>Disabilita filtro %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="247"/>
+        <location filename="../src/commands/filtercommands.cpp" line="249"/>
         <source>Enable %1 filter</source>
         <translation>Abilita filtro %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="303"/>
+        <location filename="../src/commands/filtercommands.cpp" line="305"/>
         <source>Paste filters</source>
-        <translation type="unfinished">Incolla filtri</translation>
+        <translation>Incolla filtri</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="357"/>
+        <location filename="../src/commands/filtercommands.cpp" line="359"/>
         <source>Change %1 filter</source>
         <translation>Modifica filtro %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="359"/>
+        <location filename="../src/commands/filtercommands.cpp" line="361"/>
         <source>Change %1 filter: %2</source>
         <translation>Modifica filtro %1: %2</translation>
     </message>
@@ -8125,25 +8146,25 @@ Al termine, sostituisce automaticamente le clip oppure è possibile fare doppio 
     <message numerus="yes">
         <location filename="../src/commands/subtitlecommands.cpp" line="108"/>
         <source>Add %n subtitles</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Aggiungi %n sottotitolo</numerusform>
+            <numerusform>Aggiungi %n sottotitoli</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/commands/subtitlecommands.cpp" line="162"/>
         <source>Remove %n subtitles</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Rimuovi %n sottotitolo</numerusform>
+            <numerusform>Rimuovi %n sottotitoli</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/commands/subtitlecommands.cpp" line="301"/>
         <source>Move %n subtitles</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Sposta %n sottotitolo</numerusform>
+            <numerusform>Sposta %n sottotitoli</numerusform>
         </translation>
     </message>
     <message>
@@ -8174,9 +8195,9 @@ Al termine, sostituisce automaticamente le clip oppure è possibile fare doppio 
     <message numerus="yes">
         <location filename="../src/docks/subtitlesdock.cpp" line="504"/>
         <source>Imported %1 subtitle item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Importati %1 elemento sottotitolo</numerusform>
+            <numerusform>Importati %1 elementi sottotitoli</numerusform>
         </translation>
     </message>
     <message>
@@ -8188,9 +8209,9 @@ Al termine, sostituisce automaticamente le clip oppure è possibile fare doppio 
     <message numerus="yes">
         <location filename="../src/docks/subtitlesdock.cpp" line="642"/>
         <source>Imported %n subtitle item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Importati %n elemento sottotitolo</numerusform>
+            <numerusform>Importati %n elementi sottotitoli</numerusform>
         </translation>
     </message>
     <message>
@@ -8212,10 +8233,10 @@ Al termine, sostituisce automaticamente le clip oppure è possibile fare doppio 
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1335"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1062"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1154"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1059"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1149"/>
         <source>A job already exists for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Esiste già una attività per %1</translation>
     </message>
 </context>
 <context>
@@ -8223,7 +8244,7 @@ Al termine, sostituisce automaticamente le clip oppure è possibile fare doppio 
     <message>
         <location filename="../src/qmltypes/qmlapplication.cpp" line="133"/>
         <source>Select a filter to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona il filtro da copiare</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlapplication.cpp" line="212"/>
@@ -8559,7 +8580,7 @@ Aggiungendo i filtri a &lt;b&gt;Destinazione&lt;/b&gt;tutte le clip nella timeli
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="174"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation>Sei sicuro di voler eliminare %1?</translation>
+        <translation>Vuoi eliminare %1?</translation>
     </message>
 </context>
 <context>
@@ -9161,45 +9182,45 @@ Se la durata è 0, non verrà creata alcuna transizione.</translation>
         <translation>Tieni premuto %1 per trascinare un fotogramma chiave solo in verticale o %2 per trascinare solo in orizzontale</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="107"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="108"/>
         <source>Preset</source>
         <translation>Profilo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="129"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="130"/>
         <source>Speed</source>
         <translation>Velocità</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="133"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="134"/>
         <source>Map the specified speed to the current time. Use keyframes to vary the speed mappings over time.</source>
         <translation>Mappa la velocità specificata al punto attuale. 
 Usa i fotogrammi chiave per variare le mappature velocità nel tempo.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="157"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="158"/>
         <source>Image mode</source>
         <translation>Modalità immagine</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="161"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="162"/>
         <source>Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.</source>
         <translation>Usa la modalità di selezione dell&apos;immagine specificata. 
 &quot;Più vicina&quot; visualizzerà l&apos;immagine più vicina all&apos;ora mappata. 
 &quot;Miscela&quot; fonderà tutte le immagini durante il tempo mappato.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="180"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="181"/>
         <source>Nearest</source>
         <translation>Più vicino</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="185"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="186"/>
         <source>Blend</source>
         <translation>Miscela</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="200"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="201"/>
         <source>Enable pitch compensation</source>
         <translation>Abilita compensazione tono</translation>
     </message>
@@ -9470,17 +9491,17 @@ I sottotitoli esistono già.</translation>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="1131"/>
         <source>Generate subtitle text on timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Genera testo sottotitoli nella timeline</translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="1132"/>
         <source>Text style preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilo stile testo</translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="1134"/>
         <source>Default subtitle style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stile predefinito sottotitoli</translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="1277"/>
@@ -9840,12 +9861,12 @@ I sottotitoli esistono già.</translation>
 <context>
     <name>TiledItemDelegate</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="122"/>
+        <location filename="../src/docks/playlistdock.cpp" line="123"/>
         <source>Duration: %1</source>
         <translation>Durata: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="127"/>
+        <location filename="../src/docks/playlistdock.cpp" line="128"/>
         <source>Date: %1</source>
         <translation>Data: %1</translation>
     </message>
@@ -9866,531 +9887,601 @@ I sottotitoli esistono già.</translation>
 <context>
     <name>TimelineDock</name>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="73"/>
-        <location filename="../src/docks/timelinedock.cpp" line="84"/>
+        <location filename="../src/docks/timelinedock.cpp" line="83"/>
+        <location filename="../src/docks/timelinedock.cpp" line="94"/>
         <source>Timeline</source>
         <translation>Timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1612"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1704"/>
         <source>This track is locked</source>
         <translation>Questa traccia è bloccata</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1617"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1709"/>
         <source>You cannot add a non-seekable source.</source>
         <translation>Non è possibile aggiungere una fonte non ricercabile.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2015"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2049"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2107"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2141"/>
         <source>Track %1 was not moved</source>
         <translation>La traccia %1 non è stata spostata</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2020"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2112"/>
         <source>Can not move audio track above video track</source>
         <translation>Impossibile spostare la traccia audio sopra la traccia video</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2036"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2128"/>
         <source>Can not move video track below audio track</source>
         <translation>Impossibile spostare la traccia video sotto la traccia audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1342"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2177"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1434"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2269"/>
         <source>Align To Reference Track</source>
         <translation>Allinea alla traccia di riferimento</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="85"/>
+        <location filename="../src/docks/timelinedock.cpp" line="95"/>
         <source>Track Operations</source>
         <translation>Traccia Operazioni</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="97"/>
+        <location filename="../src/docks/timelinedock.cpp" line="107"/>
         <source>Track Height</source>
         <translation>Traccia Altezza</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="102"/>
+        <location filename="../src/docks/timelinedock.cpp" line="112"/>
         <source>Selection</source>
         <translation>Selezione</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="115"/>
+        <location filename="../src/docks/timelinedock.cpp" line="125"/>
         <source>Edit</source>
         <translation>Modifica</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="131"/>
+        <location filename="../src/docks/timelinedock.cpp" line="142"/>
         <source>View</source>
         <translation>Visualizza</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="137"/>
+        <location filename="../src/docks/timelinedock.cpp" line="148"/>
         <source>Marker</source>
         <translation>Marcatore</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="147"/>
+        <location filename="../src/docks/timelinedock.cpp" line="158"/>
         <source>Timeline Clip</source>
         <translation>Clip timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="170"/>
+        <location filename="../src/docks/timelinedock.cpp" line="182"/>
         <source>Timeline Controls</source>
         <translation>Controlli timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="174"/>
+        <location filename="../src/docks/timelinedock.cpp" line="186"/>
         <source>Timeline Menu</source>
         <translation>Menu timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="352"/>
+        <location filename="../src/docks/timelinedock.cpp" line="377"/>
         <source>Add Audio Track</source>
         <translation>Aggiungi traccia audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="361"/>
+        <location filename="../src/docks/timelinedock.cpp" line="386"/>
         <source>Add Video Track</source>
         <translation>Aggiungi traccia video</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="370"/>
+        <location filename="../src/docks/timelinedock.cpp" line="395"/>
         <source>Insert Track</source>
         <translation>Inserisci traccia</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="379"/>
+        <location filename="../src/docks/timelinedock.cpp" line="404"/>
         <source>Remove Track</source>
         <translation>Rimuovi traccia</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="390"/>
+        <location filename="../src/docks/timelinedock.cpp" line="415"/>
         <source>Move Track Up</source>
         <translation>Sposta traccia su</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="401"/>
+        <location filename="../src/docks/timelinedock.cpp" line="426"/>
         <source>Move Track Down</source>
         <translation>Sposta traccia giù</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="412"/>
+        <location filename="../src/docks/timelinedock.cpp" line="437"/>
         <source>Show/Hide Selected Track</source>
         <translation>Visualizza/nascondi traccia selezionata</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="428"/>
+        <location filename="../src/docks/timelinedock.cpp" line="453"/>
         <source>Lock/Unlock Selected Track</source>
         <translation>Blocca/sblocca traccia selezionata</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="447"/>
+        <location filename="../src/docks/timelinedock.cpp" line="472"/>
         <source>Mute/Unmute Selected Track</source>
         <translation>Disattiva/attiva audio traccia selezionata</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="463"/>
+        <location filename="../src/docks/timelinedock.cpp" line="488"/>
         <source>Blend/Unblend Selected Track</source>
         <translation>Unisci/separa traccia selezionata</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="481"/>
+        <location filename="../src/docks/timelinedock.cpp" line="506"/>
         <source>Make Tracks Shorter</source>
         <translation>Rendi le tracce più brevi</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="490"/>
+        <location filename="../src/docks/timelinedock.cpp" line="515"/>
         <source>Make Tracks Taller</source>
         <translation>Rendi le tracce più alte</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="499"/>
+        <location filename="../src/docks/timelinedock.cpp" line="524"/>
         <source>Reset Track Height</source>
         <translation>Ripristinare altezza traccia</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="508"/>
+        <location filename="../src/docks/timelinedock.cpp" line="533"/>
         <source>Select All</source>
         <translation>Seleziona tutto</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="519"/>
+        <location filename="../src/docks/timelinedock.cpp" line="544"/>
         <source>Select All On Current Track</source>
         <translation>Seleziona tutto nella traccia attuale</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="530"/>
+        <location filename="../src/docks/timelinedock.cpp" line="555"/>
         <source>Select None</source>
         <translation>Non selezionare niente</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="542"/>
+        <location filename="../src/docks/timelinedock.cpp" line="567"/>
         <source>Select Next Clip</source>
         <translation>Seleziona clip successiva</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="557"/>
+        <location filename="../src/docks/timelinedock.cpp" line="582"/>
         <source>Select Previous Clip</source>
         <translation>Seleziona clip precedente</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="572"/>
+        <location filename="../src/docks/timelinedock.cpp" line="597"/>
         <source>Select Clip Above</source>
         <translation>Seleziona clip sopra</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="593"/>
+        <location filename="../src/docks/timelinedock.cpp" line="618"/>
         <source>Select Clip Below</source>
         <translation>Seleziona clip sotto</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="614"/>
+        <location filename="../src/docks/timelinedock.cpp" line="639"/>
         <source>Set Current Track Above</source>
         <translation>Imposta traccia attuale sopra</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="623"/>
+        <location filename="../src/docks/timelinedock.cpp" line="648"/>
         <source>Set Current Track Below</source>
         <translation>Imposta traccia attuale sotto</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="632"/>
+        <location filename="../src/docks/timelinedock.cpp" line="657"/>
         <source>Select Clip Under Playhead</source>
         <translation>Seleziona clip sotto punmto riproduzione</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="647"/>
+        <location filename="../src/docks/timelinedock.cpp" line="672"/>
         <source>Cu&amp;t</source>
         <translation>&amp;Taglia</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="668"/>
+        <location filename="../src/docks/timelinedock.cpp" line="693"/>
         <source>&amp;Copy</source>
         <translation>&amp;Copia</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="697"/>
+        <location filename="../src/docks/timelinedock.cpp" line="722"/>
         <source>&amp;Paste</source>
         <translation>&amp;Incolla</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="711"/>
+        <location filename="../src/docks/timelinedock.cpp" line="736"/>
         <source>Nudge Forward</source>
         <translation>Spingi in avanti</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="726"/>
+        <location filename="../src/docks/timelinedock.cpp" line="751"/>
         <source>Nudge Forward is not available</source>
         <translation>Spinta in avanti non è disponibile</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="748"/>
+        <location filename="../src/docks/timelinedock.cpp" line="773"/>
         <source>Nudge Backward</source>
         <translation>Spinta indietro</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="758"/>
+        <location filename="../src/docks/timelinedock.cpp" line="783"/>
         <source>Nudge Backward is not available</source>
         <translation>Spinta indietro non è disponibile</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="780"/>
+        <location filename="../src/docks/timelinedock.cpp" line="805"/>
         <source>Append</source>
         <translation>Aggiungi</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="791"/>
+        <location filename="../src/docks/timelinedock.cpp" line="816"/>
         <source>Ripple Delete</source>
         <translation>Elimina ripple</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="808"/>
+        <location filename="../src/docks/timelinedock.cpp" line="833"/>
         <source>Lift</source>
         <translation>Togli</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="826"/>
+        <location filename="../src/docks/timelinedock.cpp" line="851"/>
         <source>Overwrite</source>
         <translation>Sovrascrivi</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="839"/>
+        <location filename="../src/docks/timelinedock.cpp" line="864"/>
         <source>Split At Playhead</source>
         <translation>Dividi al punto riproduzione</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="896"/>
+        <location filename="../src/docks/timelinedock.cpp" line="921"/>
         <source>Split All Tracks At Playhead</source>
         <translation>Dividi tutte le tracce alla posizioen riproduzione</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="927"/>
+        <location filename="../src/docks/timelinedock.cpp" line="952"/>
         <source>Replace</source>
         <translation>Sostitusci</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="946"/>
+        <location filename="../src/docks/timelinedock.cpp" line="971"/>
         <source>Create/Edit Marker</source>
         <translation>Crea/modifica marcatore</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="959"/>
+        <location filename="../src/docks/timelinedock.cpp" line="984"/>
         <source>Previous Marker</source>
         <translation>Marcatore precedente</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="973"/>
+        <location filename="../src/docks/timelinedock.cpp" line="998"/>
         <source>Next Marker</source>
         <translation>Marcatore successivo</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="987"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1012"/>
         <source>Delete Marker</source>
         <translation>Elimina marcatore</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="998"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1023"/>
         <source>Cycle Marker Color</source>
         <translation>Colore marcatore ciclo</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1014"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1039"/>
         <source>Create Marker Around Selected Clip</source>
         <translation>Crea marcatore attorno alla clip selezionata</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1025"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1050"/>
         <source>Rectangle Selection</source>
         <translation>Selezione rettangolare</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1036"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1061"/>
         <source>Automatically Add Tracks</source>
         <translation>Aggiungi automaticamente tracce</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1047"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1072"/>
         <source>Snap</source>
         <translation>Salto</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1061"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1086"/>
         <source>Scrub While Dragging</source>
         <translation>Pulisci mentre trascini</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1074"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1099"/>
         <source>Ripple</source>
         <translation>Sposta tutte le clip</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1088"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1113"/>
         <source>Ripple All Tracks</source>
         <translation>Sposta tutte le tracce</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1102"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1127"/>
         <source>Ripple Markers</source>
         <translation>Marcatori ripple</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1117"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1142"/>
         <source>Toggle Ripple And All Tracks</source>
         <translation>Abilita/disabilita &apos;Ripple&apos; e &apos;Tutte le tracce&apos;</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1125"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1150"/>
         <source>Toggle Ripple, All Tracks, And Markers</source>
         <translation>Abilita/dsiabilita &apos;Ripple&apos;, &apos;Tutte le tracce&apos; e &apos;Marcatori&apos;</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1134"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1159"/>
         <source>Show Audio Waveforms</source>
         <translation>Visualizza forme onda audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1148"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1173"/>
         <source>Use Higher Performance Waveforms</source>
         <translation>Usa forme d&apos;onda a elevate prestazioni</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1164"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1189"/>
         <source>Show Video Thumbnails</source>
         <translation>Visualizza miniature video</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1175"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1200"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1188"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1213"/>
         <source>Page</source>
         <translation>Pagina</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1201"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1226"/>
         <source>Smooth</source>
         <translation>Regolare</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1214"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1239"/>
         <source>Center the Playhead</source>
         <translation>Centra punto riproduzione</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1228"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1253"/>
         <source>Scroll to Playhead on Zoom</source>
         <translation>Quando ingrnadisci scorri fino al punto riproduzione</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1240"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1265"/>
         <source>Zoom Timeline Out</source>
         <translation>Zoom -  timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1251"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1276"/>
         <source>Zoom Timeline In</source>
         <translation>Zoom + timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1262"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1287"/>
         <source>Zoom Timeline To Fit</source>
         <translation>Zoom adattivo timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1291"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1299"/>
+        <source>New Generator</source>
+        <translation>Nuovo generatore</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1307"/>
+        <source>Color</source>
+        <translation>Colore</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1309"/>
+        <source>Text</source>
+        <translation>Testo</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1313"/>
+        <source>Animation</source>
+        <translation>Animazione</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1317"/>
+        <source>Noise</source>
+        <translation>Rumore</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1320"/>
+        <source>Color Bars</source>
+        <translation>Barre colore</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1324"/>
+        <source>Audio Tone</source>
+        <translation>Tono audio</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1327"/>
+        <source>Count</source>
+        <translation>Conteggio</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1330"/>
+        <source>Blip Flash</source>
+        <translation>Blip Flash</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1353"/>
         <source>Properties</source>
         <translation>Proprietà</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1298"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1360"/>
         <source>Rejoin With Next Clip</source>
         <translation>Rientra con la clip successiva</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1314"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1376"/>
         <source>Detach Audio</source>
         <translation>Scollega audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1362"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1404"/>
+        <source>Freeze Frame</source>
+        <translation>Blocco fotogramma</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1454"/>
         <source>Apply Copied Filters</source>
         <translation>Applica filtri copiati</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1386"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1478"/>
         <source>Update Thumbnails</source>
         <translation>Aggiorna miniature</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1410"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1502"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Ricostruisci la forma onda audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1434"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1526"/>
         <source>Ripple Trim Clip In</source>
         <translation>Ripple iniziale clip</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1441"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1533"/>
         <source>Ripple Trim Clip Out</source>
         <translation>Ripple finale clip in</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1448"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1540"/>
         <source>Group/Ungroup</source>
         <translation>Raggruppa/separa</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2266"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2367"/>
         <source>Append multiple to timeline</source>
         <translation>Aggiungi multipli alla timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2326"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2427"/>
         <source>Ripple delete transition</source>
         <translation>Transizione eliminazione ripple</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2375"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2476"/>
         <source>Lift transition</source>
         <translation>Transizione ascensore</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2450"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2551"/>
         <source>Cut %1 from timeline</source>
         <translation>Taglia %1 dalla timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2452"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2553"/>
         <source>Remove %1 from timeline</source>
         <translation>Rimuovi %1 dalla timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2475"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2576"/>
         <source>Lift %1 from timeline</source>
         <translation>Togli %1 dalla timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2826"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2927"/>
         <source>There is nothing in the Source player.</source>
         <translation>Non c&apos;è nulla nel riproduttore sorgente</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2841"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2942"/>
         <source>You cannot replace a transition.</source>
         <translation>Non puoi sostituire una transizione</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2871"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2972"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation>Per creare un marcatore attorno ad essa seleziona una clip nella timeline </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2892"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2993"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation>Aggiunto marcatore: &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2912"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3013"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation>Marcatore aggiunto: &quot;%1&quot;. Tieni premuto %2 e trascina per creare un intervallo</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3028"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3129"/>
         <source>Failed to open </source>
         <translation>Impossibile aprire</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3052"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3162"/>
         <source>Dropped Files</source>
         <translation>File rilasciati</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3425"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3207"/>
+        <source>You cannot freeze a frame of a transition.</source>
+        <translation>Non puoi bloccare un fotogramma di una transizione.</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3226"/>
+        <source>Freeze Frame is not available.</source>
+        <translation>Il fotogramma catturato non è disponibile.</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3260"/>
+        <source>Insert Freeze Frame</source>
+        <translation>Inserisci blocco fotogramma</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3264"/>
+        <source>The play head is not over the selected clip.</source>
+        <translation>La testina riproduzione non è sopra la clip selezionata.</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3616"/>
         <source>Insert multiple into timeline</source>
         <translation>Inserisci mutlipli nella timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3543"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3755"/>
         <source>Overwrite multiple onto timeline</source>
         <translation>Sovrascrivi multipli nella timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="879"/>
-        <location filename="../src/docks/timelinedock.cpp" line="911"/>
+        <location filename="../src/docks/timelinedock.cpp" line="904"/>
+        <location filename="../src/docks/timelinedock.cpp" line="936"/>
         <source>You cannot split a transition.</source>
         <translation>Non puoi dividere una transizione.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="3885"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4171"/>
         <source>Replace %n timeline clips</source>
         <translation>
             <numerusform>Sostituisci %n clip nella timeline</numerusform>
@@ -10398,44 +10489,44 @@ I sottotitoli esistono già.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3938"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4224"/>
         <source>voiceover</source>
         <translation>voce fuoricampo</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3939"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4225"/>
         <source>Opus (*.opus);;All Files (*)</source>
         <translation>Opus (*.opus);;Tutti i file (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1274"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3941"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4051"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1336"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4227"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4343"/>
         <source>Record Audio</source>
         <translation>Registra audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3955"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4241"/>
         <source>Record Audio: %1</source>
         <translation>Registra audio: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4017"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4308"/>
         <source>Audio Recording In Progress</source>
         <translation>Registrazione audio in corso</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4027"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4318"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation>Errore registrazione audio: controlla le impostazioni di PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4030"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4322"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation>Errore registrazione audio: scegli File &gt; Apri altro &gt; Dispositivo audio/video</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4057"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4349"/>
         <source>Saving audio recording...</source>
         <translation>Salvataggio registrazione audio...</translation>
     </message>
@@ -10548,37 +10639,37 @@ I sottotitoli esistono già.</translation>
 <context>
     <name>TrackHead</name>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="223"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="219"/>
         <source>Unmute</source>
         <translation>Attiva audio traccia</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="223"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="219"/>
         <source>Mute</source>
         <translation>Disattiva audio traccia</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="240"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="236"/>
         <source>Show</source>
         <translation>Visualizza traccia</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="240"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="236"/>
         <source>Hide</source>
         <translation>Nascondi traccia</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="187"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="183"/>
         <source>Unlock track</source>
         <translation>Sblocca traccia</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="187"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="183"/>
         <source>Lock track</source>
         <translation>Blocca traccia</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="259"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="255"/>
         <source>Filters</source>
         <translation>Filtri</translation>
     </message>
@@ -10716,16 +10807,6 @@ I sottotitoli esistono già.</translation>
         <translation>media</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="104"/>
-        <source>large</source>
-        <translation>grande</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="114"/>
-        <source>biggest</source>
-        <translation>maggiore</translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="136"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
@@ -10770,6 +10851,16 @@ used not all of the matching source clips are replaced, instead
 only the currently selected one.</source>
         <translation>Questa opzione converte solo la parte tagliata della sorgente clip più un po&apos; invece dell&apos;intera clip. 
 Quando è usata questa opzione non tutte le clip sorgente corrispondenti vengono invece sostituite ma solo quelle attualmente selezionata.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="104"/>
+        <source>BIG</source>
+        <translation>BIG</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="114"/>
+        <source>&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;HUGE&lt;/span&gt;</source>
+        <translation>&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;ENORME&lt;/span&gt;</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="171"/>
@@ -10907,7 +10998,7 @@ Questo metodo è molto lento e può causare artefatti.</translation>
         <location filename="../src/transcoder.cpp" line="102"/>
         <location filename="../src/transcoder.cpp" line="138"/>
         <source>A job already exists for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Esiste già una attività per %1</translation>
     </message>
     <message>
         <location filename="../src/transcoder.cpp" line="109"/>
@@ -11067,7 +11158,7 @@ Questo metodo è molto lento e può causare artefatti.</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="43"/>
         <source>Set the path to the video device file</source>
-        <translation>Imposta il percorso del file del dispositivo video</translation>
+        <translation>Imposta il percorso del file video dispositivo</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="46"/>
@@ -11410,7 +11501,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="153"/>
         <source>Video Waveform</source>
-        <translation>Forma onda video</translation>
+        <translation>Forma d&apos;onda video</translation>
     </message>
 </context>
 <context>
@@ -11537,7 +11628,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="232"/>
         <source>Copy filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia filtri</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="247"/>
@@ -12620,7 +12711,7 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="7"/>
-        <source>gamma value black white</source>
+        <source>gamma value black white color</source>
         <comment>search keywords for the Levels video filter</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -12689,7 +12780,7 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="32"/>
-        <location filename="../src/qml/filters/mask_shape/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/mask_shape/meta.qml" line="20"/>
         <location filename="../src/qml/filters/threshold/meta.qml" line="6"/>
         <source>Threshold</source>
         <translation>Soglia</translation>
@@ -13700,7 +13791,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="39"/>
         <source>Red Lightness</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminosità rosso</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="46"/>
@@ -13715,7 +13806,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="60"/>
         <source>Yellow Lightness</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminosità giallo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="67"/>
@@ -13730,7 +13821,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="81"/>
         <source>Green Lightness</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminosità verde</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="88"/>
@@ -13745,7 +13836,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="102"/>
         <source>Cyan Lightness</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminosità ciano</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="109"/>
@@ -13760,7 +13851,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="123"/>
         <source>Blue Lightness</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminosità blu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="130"/>
@@ -13775,7 +13866,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/hslprimaries/meta.qml" line="144"/>
         <source>Magenta Lightness</source>
-        <translation type="unfinished"></translation>
+        <translation>Luminosità magenta</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hslrange/meta.qml" line="6"/>
@@ -13806,7 +13897,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/hslrange/meta.qml" line="39"/>
         <source>Lightness Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Scala luminosità</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hslrange/meta.qml" line="46"/>
@@ -13933,22 +14024,22 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="18"/>
         <source>hfov0</source>
-        <translation type="unfinished"></translation>
+        <translation>hfov0</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="25"/>
         <source>hfov1</source>
-        <translation type="unfinished"></translation>
+        <translation>hfov1</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="32"/>
         <source>vfov0</source>
-        <translation type="unfinished"></translation>
+        <translation>vfov0</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="39"/>
         <source>vfov1</source>
-        <translation type="unfinished"></translation>
+        <translation>vfov1</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="46"/>
@@ -13963,24 +14054,40 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="7"/>
         <source>360: Zenith Correction</source>
-        <translation type="unfinished"></translation>
+        <translation>360: correzione zenit</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="8"/>
         <source>spherical level</source>
         <comment>search keywords for the 360: Zenith correction filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>livello sferico</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/histeq/meta.qml" line="6"/>
         <source>Clarity</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiarezza</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/histeq/meta.qml" line="7"/>
         <source>histogram equalization constrast detail color distribution</source>
         <comment>search keywords for the Clarity video filter</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/strobe/meta.qml" line="6"/>
+        <source>Alpha Strobe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/strobe/meta.qml" line="7"/>
+        <source>strobe alpha</source>
+        <comment>search keywords for the Strobe video filter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/strobe/meta.qml" line="17"/>
+        <source>Interval</source>
+        <translation>Intervallo</translation>
     </message>
 </context>
 <context>
@@ -14178,7 +14285,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="6"/>
         <source>White Balance</source>
-        <translation>Bilanciamento bianco</translation>
+        <translation>Bilanciamento del bianco</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="7"/>
@@ -14192,7 +14299,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/color/meta_frei0r_coloradj.qml" line="7"/>
         <source>Color Grading</source>
-        <translation>Gradiente colore</translation>
+        <translation>Regolazione colore</translation>
     </message>
 </context>
 <context>
@@ -14250,7 +14357,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="6"/>
         <source>Color Grading</source>
-        <translation>Gradiente colore</translation>
+        <translation>Regolazione colore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="7"/>
@@ -14393,7 +14500,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
         <source>White Balance</source>
-        <translation>Bilanciamento bianco</translation>
+        <translation>Bilanciamento del bianco</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="7"/>
@@ -14482,57 +14589,57 @@ IRE: %2</translation>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="174"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="178"/>
         <source>Output</source>
         <translation>Output</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="203"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="208"/>
         <source>Filters</source>
         <translation>Filtri</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="308"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="313"/>
         <source>Move %1</source>
         <translation>Sposta %1</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="350"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="355"/>
         <source>Can not move audio track above video track</source>
         <translation>Impossibile spostare la traccia audio sopra la traccia video</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="352"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="357"/>
         <source>Can not move video track below audio track</source>
         <translation>Impossibile spostare la traccia video sotto la traccia audio</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="354"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="359"/>
         <source>Track %1 was not moved</source>
         <translation>La traccia %1 non è stata spostata</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="689"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="706"/>
         <source>Insert</source>
         <translation>Inserisci</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="689"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="706"/>
         <source>Overwrite</source>
         <translation>Sovrascrivi</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="1011"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="1028"/>
         <source>Do you want to insert an audio or video track?</source>
         <translation>Vuoi inserire una traccia audio o video?</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="1021"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="1038"/>
         <source>Audio</source>
         <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="1029"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="1046"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
@@ -14591,8 +14698,8 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="117"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="641"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="904"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="653"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="916"/>
         <location filename="../src/qml/filters/dropshadow/ui.qml" line="129"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="287"/>
         <source>Blur</source>
@@ -14711,7 +14818,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/audio_seam/ui.qml" line="75"/>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="72"/>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="92"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="441"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="451"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="232"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="294"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="295"/>
@@ -14782,6 +14889,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/sketch/ui.qml" line="52"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="55"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/strobe/ui.qml" line="97"/>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="83"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="47"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="70"/>
@@ -15440,60 +15548,60 @@ Usato per correggere l&apos;ampiezza eccessiva causata dalla gamma dinamica extr
         <translation> BIAS centrale</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="491"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="503"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="160"/>
         <location filename="../src/qml/filters/reflect/ui.qml" line="78"/>
         <source>Top</source>
-        <translation>Alto</translation>
+        <translation>In alto</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="554"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="817"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="566"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="829"/>
         <source>Fade</source>
-        <translation type="unfinished"></translation>
+        <translation>Dissolvenza</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="589"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="852"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="601"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="864"/>
         <source>In</source>
-        <translation type="unfinished">Ingresso</translation>
+        <translation>Ingresso</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="615"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="878"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="627"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="890"/>
         <source>Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Uscita</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="650"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="913"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="662"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="925"/>
         <source>Width at start</source>
-        <translation type="unfinished"></translation>
+        <translation>Larghezza iniziale</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="676"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="939"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="688"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="951"/>
         <source>Height at start</source>
-        <translation type="unfinished"></translation>
+        <translation>Altezza iniziale</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="702"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="965"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="714"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="977"/>
         <source>Width at end</source>
-        <translation type="unfinished"></translation>
+        <translation>Larghezza finale</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="728"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="991"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="740"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="1003"/>
         <source>Height at end</source>
-        <translation type="unfinished"></translation>
+        <translation>Altezza finale</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="754"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="766"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="180"/>
         <location filename="../src/qml/filters/reflect/ui.qml" line="73"/>
         <source>Bottom</source>
-        <translation>Basso</translation>
+        <translation>Sotto</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="239"/>
@@ -16163,7 +16271,7 @@ Seleziona &quot;Apri&quot; per caricare un file.</translation>
         <translation>Apri file 3D LUT</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="476"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="488"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="343"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="344"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="791"/>
@@ -16458,8 +16566,8 @@ Seleziona &quot;Apri&quot; per caricare un file.</translation>
         <translation>Orizzontale</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="502"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="765"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="514"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="777"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="279"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="373"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="367"/>
@@ -16469,8 +16577,8 @@ Seleziona &quot;Apri&quot; per caricare un file.</translation>
         <translation>Avvia</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="528"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="791"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="540"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="803"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="323"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="417"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="404"/>
@@ -16719,7 +16827,7 @@ Seleziona &quot;Apri&quot; per caricare un file.</translation>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="624"/>
         <source>Orthographic</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortografico</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="629"/>
@@ -16823,7 +16931,7 @@ I lati dell&apos;immagine non sono fissi</translation>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="857"/>
         <source>Separate Y scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Scala Y separata</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="887"/>
@@ -17420,8 +17528,8 @@ Usa i fotogrammi chiave per variare le mappature temporali nel tempo.</translati
 Premendo il pulsante del mouse e poi spostando il mouse è possibile selezionare una sezione dello schermo da cui ottenere un colore medio.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="580"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="843"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="592"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="855"/>
         <location filename="../src/qml/filters/hslrange/ui.qml" line="265"/>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="408"/>
         <source>Blend</source>
@@ -19335,22 +19443,27 @@ Fai clic per selezionare, trascinare per cambiare posizione</translation>
         <location filename="../src/qml/filters/hslprimaries/ui.qml" line="512"/>
         <location filename="../src/qml/filters/hslrange/ui.qml" line="352"/>
         <source>Lightness Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Scala luminosità</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="520"/>
         <source>Blur Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Blur iniziale</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="111"/>
         <source>File for zenith correction</source>
-        <translation type="unfinished"></translation>
+        <translation>File correzione zenit</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="209"/>
         <source>Smooth yaw instead of locking it</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/strobe/ui.qml" line="116"/>
+        <source>Interval</source>
+        <translation>Intervallo</translation>
     </message>
 </context>
 <context>

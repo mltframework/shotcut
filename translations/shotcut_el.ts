@@ -820,39 +820,39 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="993"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="864"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="861"/>
         <source>Reverse...</source>
         <translation>Αντιστροφή...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1057"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1132"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1127"/>
         <source>Extract Sub-clip...</source>
         <translation>Εξαγωγή, μέρος κλιπ...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="350"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="421"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="347"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="418"/>
         <source>None</source>
         <translation>Κανένα</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="379"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="376"/>
         <source>unknown (%1)</source>
         <translation>άγνωστο (%1)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="455"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="452"/>
         <source>All</source>
         <translation>Όλα</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="501"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="498"/>
         <source>(PROXY)</source>
         <translation>(PROXY)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="544"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="541"/>
         <source>(variable)</source>
         <translation>(μεταβλητή)</translation>
     </message>
@@ -873,102 +873,102 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="784"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="859"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="781"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="856"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Επιλέξτε την παρακάτω μορφή και, στην συνέχεια, πατήστε στο πλήκτρο OK για να επιλέξετε ένα όνομα αρχείου. Αφού επιλέξετε ένα όνομα αρχείου, μια εργασία έχει δημιουργηθεί. Όταν γίνει αυτό, πατήστε δύο φορές στην εργασία για να την ανοίξετε.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="973"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="970"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1018"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1015"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1035"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1032"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1090"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1085"/>
         <source>Convert %1</source>
         <translation>Μετατροπή %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1039"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1036"/>
         <source>Reversed</source>
         <translation>Ανεστραμένο</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1069"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1066"/>
         <source>Reverse canceled</source>
         <translation>Η αντιστροφή ακυρώθηκε.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1100"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1095"/>
         <source>Reverse %1</source>
         <translation>Αντιστροφή %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1471"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1464"/>
         <source>Choose the Other Video</source>
         <translation>Επιλέξτε το άλλο βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1524"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1517"/>
         <source>Measure %1</source>
         <translation>Μέτρηση %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1131"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1126"/>
         <source>Sub-clip</source>
         <translation>Μέρος κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1133"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1128"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1205"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1200"/>
         <source>Extract sub-clip %1</source>
         <translation>Εξαγωγή μέρους κλιπ %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1224"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1274"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1219"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1269"/>
         <source>Track %1</source>
         <translation>Κομμάτι %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1226"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1276"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1221"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1271"/>
         <source>Track %1 (%2)</source>
         <translation>Κομμάτι %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1230"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1225"/>
         <source>Export Subtitles...</source>
         <translation>Εξαγωγή υπότιτλων...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1232"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1227"/>
         <source>No subtitles found</source>
         <translation>Δεν βρέθηκαν υπότιτλοι</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1291"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1286"/>
         <source>Extract subtitles %1</source>
         <translation>Εξαγωγή υπότιτλων %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1404"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1399"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -977,22 +977,22 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1448"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1443"/>
         <source>Set Equirectangular Projection</source>
         <translation>Ορισμός ισοορθογώνιας προβολής</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1462"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1455"/>
         <source>Successfully wrote %1</source>
         <translation>Επιτυχής εγγραφή %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1464"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1457"/>
         <source>An error occurred saving the projection.</source>
         <translation>Παρουσιάστηκε σφάλμα κατά την αποθήκευση της προβολής.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1584"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1577"/>
         <source>Bitrate %1</source>
         <translation>Ρυθμός Μετάδοσης %1</translation>
     </message>
@@ -1999,8 +1999,8 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
         <location filename="../src/docks/encodedock.cpp" line="1328"/>
-        <location filename="../src/docks/encodedock.cpp" line="1901"/>
-        <location filename="../src/docks/encodedock.cpp" line="2393"/>
+        <location filename="../src/docks/encodedock.cpp" line="1839"/>
+        <location filename="../src/docks/encodedock.cpp" line="2331"/>
         <source>Export File</source>
         <translation>Εξαγωγή Αρχείου</translation>
     </message>
@@ -2026,17 +2026,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2097"/>
-        <location filename="../src/docks/encodedock.cpp" line="2104"/>
-        <location filename="../src/docks/encodedock.cpp" line="2216"/>
+        <location filename="../src/docks/encodedock.cpp" line="2035"/>
+        <location filename="../src/docks/encodedock.cpp" line="2042"/>
+        <location filename="../src/docks/encodedock.cpp" line="2154"/>
         <source>Stream</source>
         <translation>Ροή</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1884"/>
-        <location filename="../src/docks/encodedock.cpp" line="1985"/>
-        <location filename="../src/docks/encodedock.cpp" line="1995"/>
+        <location filename="../src/docks/encodedock.cpp" line="1822"/>
+        <location filename="../src/docks/encodedock.cpp" line="1923"/>
+        <location filename="../src/docks/encodedock.cpp" line="1933"/>
         <source>Stop Capture</source>
         <translation>Στάση Καταγραφής</translation>
     </message>
@@ -2075,8 +2075,8 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="510"/>
-        <location filename="../src/docks/encodedock.cpp" line="1831"/>
-        <location filename="../src/docks/encodedock.cpp" line="1832"/>
+        <location filename="../src/docks/encodedock.cpp" line="1769"/>
+        <location filename="../src/docks/encodedock.cpp" line="1770"/>
         <source>Custom</source>
         <translation>Προσαρμοσμένο</translation>
     </message>
@@ -2098,96 +2098,96 @@ Try again with a different folder or file name.</source>
 Δοκιμάστε ξανά με ένα διαφορετικό όνομα φακέλου ή αρχείου.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1555"/>
+        <location filename="../src/docks/encodedock.cpp" line="1493"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Το Shotcut βρήκε φίλτρα τα οποία απαιτούν εργασίες ανάλυσης που δεν έχουν εκτελεστεί.
 Θέλετε να εκτελέσετε τις εργασίες ανάλυσης τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1901"/>
-        <location filename="../src/docks/encodedock.cpp" line="2395"/>
+        <location filename="../src/docks/encodedock.cpp" line="1839"/>
+        <location filename="../src/docks/encodedock.cpp" line="2333"/>
         <source>Capture File</source>
         <translation>Καταγραφή Αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1903"/>
+        <location filename="../src/docks/encodedock.cpp" line="1841"/>
         <source>Export Files</source>
         <translation>Εξαγωγή Αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1918"/>
+        <location filename="../src/docks/encodedock.cpp" line="1856"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1920"/>
+        <location filename="../src/docks/encodedock.cpp" line="1858"/>
         <source>Determined by Export (*)</source>
         <translation>Καθορισμός από Εξαγωγή (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2092"/>
-        <location filename="../src/docks/encodedock.cpp" line="2114"/>
+        <location filename="../src/docks/encodedock.cpp" line="2030"/>
+        <location filename="../src/docks/encodedock.cpp" line="2052"/>
         <source>Stop Stream</source>
         <translation>Στάση Ροής</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2106"/>
+        <location filename="../src/docks/encodedock.cpp" line="2044"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Εισαγωγή πρωτοκόλλου δικτύου, διεύθυνση, πόρτα και παραμέτρους σαν ένα URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2149"/>
+        <location filename="../src/docks/encodedock.cpp" line="2087"/>
         <source>Add Export Preset</source>
         <translation>Εισαγωγή Πρότυπου Εξαγωγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2193"/>
+        <location filename="../src/docks/encodedock.cpp" line="2131"/>
         <source>Delete Preset</source>
         <translation>Διαγραφή Πρότυπου</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2194"/>
+        <location filename="../src/docks/encodedock.cpp" line="2132"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Είστε βέβαιοι πως θέλετε να διαγραφή το %1;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2322"/>
+        <location filename="../src/docks/encodedock.cpp" line="2260"/>
         <source>None</source>
         <translation>Κανένα</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2377"/>
+        <location filename="../src/docks/encodedock.cpp" line="2315"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2525"/>
+        <location filename="../src/docks/encodedock.cpp" line="2463"/>
         <source>Detect</source>
         <translation>Εντοπισμός</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2582"/>
+        <location filename="../src/docks/encodedock.cpp" line="2520"/>
         <source>(auto)</source>
         <translation>(αυτόματα)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2628"/>
+        <location filename="../src/docks/encodedock.cpp" line="2566"/>
         <source>Detecting hardware encoders...</source>
         <translation>Εντοπισμός κωδικοποιητών υλικού...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2685"/>
+        <location filename="../src/docks/encodedock.cpp" line="2623"/>
         <source>Nothing found</source>
         <translation>δεν βρέθηκε τίποτα</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2687"/>
+        <location filename="../src/docks/encodedock.cpp" line="2625"/>
         <source>Found %1</source>
         <translation>Βρέθηκαν %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2910"/>
+        <location filename="../src/docks/encodedock.cpp" line="2848"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2198,17 +2198,17 @@ Shotcut will attempt to repair your project.</source>
 Το Shotcut θα προσπαθήσει να επιδιορθώσει το έργο σας.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2959"/>
+        <location filename="../src/docks/encodedock.cpp" line="2897"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>Ο λόγος διαστάσεων δεν ταιριάζει με τη Λειτουργία Βίντεο του έργου, αυτό θα δημιουργήσει μαύρες γραμμές.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2997"/>
+        <location filename="../src/docks/encodedock.cpp" line="2935"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>Ο ρυθμός καρέ είναι υψηλότερος από τη Λειτουργία Βίντεο έργου, αυτό θα προκαλέσει επαναλήψεις των καρέ.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2523"/>
+        <location filename="../src/docks/encodedock.cpp" line="2461"/>
         <source>Configure Hardware Encoding</source>
         <translation>Διαμόρφωση κωδικοποίησης υλικού</translation>
     </message>
@@ -2223,17 +2223,17 @@ Shotcut will attempt to repair your project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1904"/>
+        <location filename="../src/docks/encodedock.cpp" line="1842"/>
         <source>Export Each Playlist Bin Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1949"/>
+        <location filename="../src/docks/encodedock.cpp" line="1887"/>
         <source>Export canceled</source>
         <translation>Η εξαγωγή ακυρώθηκε.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2547"/>
+        <location filename="../src/docks/encodedock.cpp" line="2485"/>
         <source>Export Frames/sec</source>
         <translation>Εξαγωγή Καρέ/δευτ</translation>
     </message>
@@ -2402,7 +2402,7 @@ Shotcut will attempt to repair your project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="505"/>
+        <location filename="../src/docks/filesdock.cpp" line="504"/>
         <source>Documents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2450,198 +2450,198 @@ Shotcut will attempt to repair your project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="635"/>
-        <location filename="../src/docks/filesdock.cpp" line="639"/>
+        <location filename="../src/docks/filesdock.cpp" line="642"/>
+        <location filename="../src/docks/filesdock.cpp" line="652"/>
         <source>Files Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="662"/>
+        <location filename="../src/docks/filesdock.cpp" line="675"/>
         <source>Only show files whose name contains some text</source>
         <translation>Εμφάνιση μόνο αρχείων των οποίων το όνομα περιέχει κείμενο</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="663"/>
+        <location filename="../src/docks/filesdock.cpp" line="676"/>
         <source>search</source>
         <translation>αναζήτηση</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="773"/>
+        <location filename="../src/docks/filesdock.cpp" line="785"/>
         <source>Tiles</source>
         <translation>Πλακίδια</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="774"/>
+        <location filename="../src/docks/filesdock.cpp" line="786"/>
         <source>View as tiles</source>
         <translation>προβολή ως πλακίδια</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="786"/>
+        <location filename="../src/docks/filesdock.cpp" line="798"/>
         <source>Icons</source>
         <translation>Εικονίδια</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="787"/>
+        <location filename="../src/docks/filesdock.cpp" line="799"/>
         <source>View as icons</source>
         <translation>Προβολή ως εικονίδια</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="799"/>
+        <location filename="../src/docks/filesdock.cpp" line="811"/>
         <source>Details</source>
         <translation>Λεπτομέρειες</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="800"/>
+        <location filename="../src/docks/filesdock.cpp" line="812"/>
         <source>View as details</source>
         <translation>Προβολή λεπτομερειών </translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="812"/>
+        <location filename="../src/docks/filesdock.cpp" line="824"/>
         <source>Open In Shotcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="813"/>
+        <location filename="../src/docks/filesdock.cpp" line="825"/>
         <source>Open the clip in the Source player</source>
         <translation>Ανοιγμα του κλιπ στο Πρόγραμμα Αναπαραγωγής Πηγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="821"/>
+        <location filename="../src/docks/filesdock.cpp" line="833"/>
         <source>System Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="835"/>
+        <location filename="../src/docks/filesdock.cpp" line="847"/>
         <source>Other...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="843"/>
+        <location filename="../src/docks/filesdock.cpp" line="855"/>
         <source>Remove...</source>
         <translation>Αφαίρεση...</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="851"/>
+        <location filename="../src/docks/filesdock.cpp" line="863"/>
         <source>Show In File Manager</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="861"/>
+        <location filename="../src/docks/filesdock.cpp" line="873"/>
         <source>Update Thumbnails</source>
         <translation>Ενημέρωση Μικρογραφιών</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="869"/>
+        <location filename="../src/docks/filesdock.cpp" line="881"/>
         <source>Select All</source>
         <translation>Επιλογή Όλων</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="880"/>
+        <location filename="../src/docks/filesdock.cpp" line="892"/>
         <source>Select None</source>
         <translation>Καμία επιλογή</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="891"/>
+        <location filename="../src/docks/filesdock.cpp" line="903"/>
         <source>Open Previous</source>
         <translation>Ανοιγμα προηγούμενου</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="903"/>
+        <location filename="../src/docks/filesdock.cpp" line="915"/>
         <source>Open Next</source>
         <translation>Ανοιγμα επόμενου</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="915"/>
+        <location filename="../src/docks/filesdock.cpp" line="927"/>
         <source>Video</source>
         <translation>Βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="916"/>
+        <location filename="../src/docks/filesdock.cpp" line="928"/>
         <source>Show or hide video files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="921"/>
+        <location filename="../src/docks/filesdock.cpp" line="933"/>
         <source>Audio</source>
         <translation>Ηχος</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="922"/>
+        <location filename="../src/docks/filesdock.cpp" line="934"/>
         <source>Show or hide audio files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="927"/>
+        <location filename="../src/docks/filesdock.cpp" line="939"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="928"/>
+        <location filename="../src/docks/filesdock.cpp" line="940"/>
         <source>Show or hide image files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="933"/>
+        <location filename="../src/docks/filesdock.cpp" line="945"/>
         <source>Other</source>
         <translation>Άλλα</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="934"/>
+        <location filename="../src/docks/filesdock.cpp" line="946"/>
         <source>Show or hide other kinds of files</source>
         <translation>Εμφάνιση ή απόκρυψη άλλων ειδών αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="939"/>
+        <location filename="../src/docks/filesdock.cpp" line="951"/>
         <source>Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="940"/>
+        <location filename="../src/docks/filesdock.cpp" line="952"/>
         <source>Hide or show the list of folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="951"/>
+        <location filename="../src/docks/filesdock.cpp" line="963"/>
         <source>Go Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="952"/>
+        <location filename="../src/docks/filesdock.cpp" line="964"/>
         <source>Show the parent folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="970"/>
+        <location filename="../src/docks/filesdock.cpp" line="982"/>
         <source>Refresh Folders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="991"/>
+        <location filename="../src/docks/filesdock.cpp" line="1003"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1015"/>
+        <location filename="../src/docks/filesdock.cpp" line="1027"/>
         <source>Open With</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1268"/>
+        <location filename="../src/docks/filesdock.cpp" line="1279"/>
         <source>Executable Files (*.exe);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1273"/>
+        <location filename="../src/docks/filesdock.cpp" line="1284"/>
         <source>Choose Executable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1297"/>
-        <source>Remove From Open Other</source>
+        <location filename="../src/docks/filesdock.cpp" line="1308"/>
+        <source>Remove From Open With</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/filesdock.cpp" line="1316"/>
+        <location filename="../src/docks/filesdock.cpp" line="1329"/>
         <source>%n item(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -2649,22 +2649,22 @@ Shotcut will attempt to repair your project.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1359"/>
+        <location filename="../src/docks/filesdock.cpp" line="1371"/>
         <source>Add Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1360"/>
+        <location filename="../src/docks/filesdock.cpp" line="1372"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1378"/>
+        <location filename="../src/docks/filesdock.cpp" line="1390"/>
         <source>Delete Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1379"/>
+        <location filename="../src/docks/filesdock.cpp" line="1391"/>
         <source>Are you sure you want to remove %1?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2799,24 +2799,24 @@ Shotcut will attempt to repair your project.</source>
 <context>
     <name>FilterMenuDelegate</name>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="116"/>
+        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="112"/>
         <source>Delete Filter Set</source>
         <translation>Διαγραφή σετ φίλτρων</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="128"/>
+        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="124"/>
         <source>Are you sure you want to delete this?
 %1</source>
         <translation>Είστε βέβαιοι πως θέλετε να διαγραφεί αυτό;
 %1</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="143"/>
+        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="139"/>
         <source>OK</source>
         <translation>ΟΚ</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="153"/>
+        <location filename="../src/qml/views/filter/FilterMenuDelegate.qml" line="149"/>
         <source>Cancel</source>
         <translation>Άκυρο</translation>
     </message>
@@ -3313,12 +3313,12 @@ the list. This does not stop a currently running job. Right-
 <context>
     <name>KeyframeClip</name>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="249"/>
+        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="245"/>
         <source>Confirm Removing Advanced Keyframes</source>
         <translation>Επιβεβαίωση αφαίρεσης προηγμένων Keyframes</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="250"/>
+        <location filename="../src/qml/views/keyframes/KeyframeClip.qml" line="246"/>
         <source>This will remove all advanced keyframes to enable simple keyframes.&lt;p&gt;Do you still want to do this?</source>
         <translation>Αυτό θα διαγράψει όλα τα προηγμένα keyframes για να ενεργοποιήσει τα απλά keyframes.&lt;p&gt;Εξακολουθείτε να θέλετε να το κάνετε αυτό;</translation>
     </message>
@@ -4115,438 +4115,440 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>&amp;Αρχείο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="82"/>
+        <location filename="../src/mainwindow.ui" line="88"/>
         <source>&amp;View</source>
         <translation>Προ&amp;βολή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="86"/>
+        <location filename="../src/mainwindow.ui" line="92"/>
         <source>Layout</source>
         <translation>Διάταξη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="111"/>
+        <location filename="../src/mainwindow.ui" line="117"/>
         <source>&amp;Edit</source>
         <translation>&amp;Επεξεργασία</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="121"/>
+        <location filename="../src/mainwindow.ui" line="127"/>
         <source>&amp;Help</source>
         <translation>&amp;Βοήθεια</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="139"/>
+        <location filename="../src/mainwindow.ui" line="145"/>
         <source>Audio Channels</source>
         <translation>Κανάλια ήχου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="240"/>
+        <location filename="../src/mainwindow.ui" line="246"/>
         <source>Deinterlacer</source>
         <translation>Αποπλέκτης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="250"/>
+        <location filename="../src/mainwindow.ui" line="256"/>
         <source>Interpolation</source>
         <translation>Παρεμβολή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="148"/>
+        <location filename="../src/mainwindow.ui" line="154"/>
         <source>Video Mode</source>
         <translation>Ρυθμός Βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="259"/>
+        <location filename="../src/mainwindow.ui" line="265"/>
         <source>External Monitor</source>
         <translation>Εξωτερική Οθόνη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="154"/>
+        <location filename="../src/mainwindow.ui" line="160"/>
         <source>Language</source>
         <translation>Γλώσσα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="159"/>
+        <location filename="../src/mainwindow.ui" line="165"/>
         <source>Theme</source>
         <translation>Θέμα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="167"/>
+        <location filename="../src/mainwindow.ui" line="173"/>
         <source>Display Method</source>
         <translation>Μέθοδος Απεικόνισης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="193"/>
+        <location filename="../src/mainwindow.ui" line="199"/>
         <source>App Data Directory</source>
         <translation>Κατάλογος Δεδομένων Εφαρμογής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="200"/>
+        <location filename="../src/mainwindow.ui" line="206"/>
         <source>Preview Scaling</source>
         <translation>Κλιμάκωση Προεπισκόπησης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="218"/>
+        <location filename="../src/mainwindow.ui" line="224"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="222"/>
+        <location filename="../src/mainwindow.ui" line="228"/>
         <source>Storage</source>
         <translation>Χώρος αποθήκευσης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="313"/>
+        <location filename="../src/mainwindow.ui" line="319"/>
         <source>Toolbar</source>
         <translation>Εργαλιοθήκη </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="372"/>
+        <location filename="../src/mainwindow.ui" line="378"/>
         <source>&amp;Open File...</source>
         <translation>Ά&amp;νοιγμα Αρχείου...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="386"/>
+        <location filename="../src/mainwindow.ui" line="392"/>
         <source>E&amp;xit</source>
         <translation>Έ&amp;ξοδος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="389"/>
+        <location filename="../src/mainwindow.ui" line="395"/>
         <source>Quit the application</source>
         <translation>Κλείνει την εφαρμογή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="397"/>
+        <location filename="../src/mainwindow.ui" line="403"/>
         <source>&amp;About Shotcut</source>
         <translation>&amp;Σχετικά με τον Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="405"/>
+        <location filename="../src/mainwindow.ui" line="411"/>
         <source>About Qt</source>
         <translation>Σχετικά με το Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="413"/>
+        <location filename="../src/mainwindow.ui" line="419"/>
         <source>Open Other...</source>
         <translation>Άνοιγμα Άλλου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="416"/>
-        <location filename="../src/mainwindow.ui" line="1084"/>
+        <location filename="../src/mainwindow.ui" line="422"/>
         <source>Open a device, stream or generator</source>
         <translation>Άνοιγμα μίας συσκευής, ροής ή γεννήτριας</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="431"/>
+        <location filename="../src/mainwindow.ui" line="437"/>
         <source>&amp;Save</source>
         <translation>Α&amp;ποθήκευση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="434"/>
+        <location filename="../src/mainwindow.ui" line="440"/>
         <source>Save project as a MLT XML file</source>
         <translation>Αποθήκευση έργου ως αρχείο MLT XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="445"/>
+        <location filename="../src/mainwindow.ui" line="451"/>
         <source>Save &amp;As...</source>
         <translation>Αποθήκευση &amp;Ως...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="448"/>
+        <location filename="../src/mainwindow.ui" line="454"/>
         <source>Save project to a different MLT XML file</source>
         <translation>Αποθήκευση έργου σε διαφορετικό αρχείο MLT XML</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="51"/>
-        <location filename="../src/mainwindow.ui" line="460"/>
-        <location filename="../src/mainwindow.ui" line="463"/>
+        <location filename="../src/mainwindow.ui" line="466"/>
+        <location filename="../src/mainwindow.ui" line="469"/>
         <source>Export</source>
         <translation>Εξαγωγή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="176"/>
+        <location filename="../src/mainwindow.ui" line="182"/>
         <source>Job Priority</source>
         <translation>Προτεραιότητα Εργασιών</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="472"/>
+        <location filename="../src/mainwindow.ui" line="478"/>
         <source>&amp;Undo</source>
         <translation>Α&amp;ναίρεση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="481"/>
+        <location filename="../src/mainwindow.ui" line="487"/>
         <source>&amp;Redo</source>
         <translation>&amp;Επανάληψη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="486"/>
+        <location filename="../src/mainwindow.ui" line="492"/>
         <source>Forum...</source>
         <translation>Φόρουμ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="491"/>
+        <location filename="../src/mainwindow.ui" line="497"/>
         <source>FAQ...</source>
         <translation>FAQ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="500"/>
-        <location filename="../src/mainwindow.cpp" line="3838"/>
+        <location filename="../src/mainwindow.ui" line="506"/>
+        <location filename="../src/mainwindow.cpp" line="3922"/>
         <source>Enter Full Screen</source>
         <translation>Πλήρης Οθόνη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="512"/>
+        <location filename="../src/mainwindow.ui" line="518"/>
         <source>Peak Meter</source>
         <translation>Μετρητής Κορυφών</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="524"/>
-        <location filename="../src/mainwindow.cpp" line="400"/>
-        <location filename="../src/mainwindow.cpp" line="2367"/>
+        <location filename="../src/mainwindow.ui" line="530"/>
+        <location filename="../src/mainwindow.cpp" line="401"/>
+        <location filename="../src/mainwindow.cpp" line="2408"/>
         <source>Properties</source>
         <translation>Ιδιότητες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="533"/>
-        <location filename="../src/mainwindow.cpp" line="2376"/>
+        <location filename="../src/mainwindow.ui" line="539"/>
+        <location filename="../src/mainwindow.cpp" line="2417"/>
         <source>Recent</source>
         <translation>Πρόσφατα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="188"/>
-        <location filename="../src/mainwindow.ui" line="542"/>
+        <location filename="../src/mainwindow.ui" line="194"/>
+        <location filename="../src/mainwindow.ui" line="548"/>
         <source>Playlist</source>
         <translation>Λίστα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="551"/>
-        <location filename="../src/mainwindow.cpp" line="721"/>
+        <location filename="../src/mainwindow.ui" line="557"/>
+        <location filename="../src/mainwindow.cpp" line="722"/>
         <source>History</source>
         <translation>Ιστορικό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="562"/>
+        <location filename="../src/mainwindow.ui" line="568"/>
         <source>Realtime (frame dropping)</source>
         <translation>Πραγματικός χρόνος (απόρυψη καρέ)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="573"/>
+        <location filename="../src/mainwindow.ui" line="579"/>
         <source>Progressive</source>
         <translation>Προοδευτικός</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="581"/>
+        <location filename="../src/mainwindow.ui" line="587"/>
         <source>GPU Effects (unstable)</source>
         <translation>Εφέ GPU (ασταθές)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="584"/>
+        <location filename="../src/mainwindow.ui" line="590"/>
         <source>Use GPU filters</source>
         <translation>Χρήση φίλτρων GPU</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="595"/>
+        <location filename="../src/mainwindow.ui" line="601"/>
         <source>1 (mono)</source>
         <translation>1 (μονοφωνικό)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="603"/>
+        <location filename="../src/mainwindow.ui" line="609"/>
         <source>2 (stereo)</source>
         <translation>2 (στερεοφωνικό)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="630"/>
+        <location filename="../src/mainwindow.ui" line="636"/>
         <source>One Field (fast)</source>
         <translation>Ένα πεδίο (γρήγορο)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="638"/>
+        <location filename="../src/mainwindow.ui" line="644"/>
         <source>Linear Blend (fast)</source>
         <translation>Γραμμική Μίξη (γρήγορο)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="646"/>
+        <location filename="../src/mainwindow.ui" line="652"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - χρονικά μόνο (καλό)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="673"/>
+        <location filename="../src/mainwindow.ui" line="679"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Πλησιέστερος Γείτονας (γρήγορο)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="681"/>
+        <location filename="../src/mainwindow.ui" line="687"/>
         <source>Bilinear (good)</source>
         <translation>Διαγραμμικό (καλό)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="689"/>
+        <location filename="../src/mainwindow.ui" line="695"/>
         <source>Bicubic (better)</source>
         <translation>Δικυβικό (καλύτερο)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="708"/>
-        <location filename="../src/mainwindow.ui" line="841"/>
+        <location filename="../src/mainwindow.ui" line="714"/>
+        <location filename="../src/mainwindow.ui" line="847"/>
+        <location filename="../src/mainwindow.cpp" line="2613"/>
         <source>Automatic</source>
         <translation>Αυτόματα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="719"/>
-        <location filename="../src/mainwindow.ui" line="1177"/>
+        <location filename="../src/mainwindow.ui" line="725"/>
+        <location filename="../src/mainwindow.ui" line="1191"/>
         <source>None</source>
         <translation>Κανένα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="727"/>
+        <location filename="../src/mainwindow.ui" line="733"/>
         <source>Use JACK Audio</source>
         <translation>Χρήση Ήχου JACK</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="736"/>
-        <location filename="../src/mainwindow.ui" line="739"/>
+        <location filename="../src/mainwindow.ui" line="742"/>
+        <location filename="../src/mainwindow.ui" line="745"/>
         <source>Filters</source>
         <translation>Φίλτρα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="744"/>
-        <location filename="../src/mainwindow.ui" line="1062"/>
+        <location filename="../src/mainwindow.ui" line="750"/>
+        <location filename="../src/mainwindow.ui" line="1071"/>
         <source>Add...</source>
         <translation>Προσθήκη...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="752"/>
+        <location filename="../src/mainwindow.ui" line="758"/>
         <source>System</source>
         <translation>Σύστημα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="755"/>
+        <location filename="../src/mainwindow.ui" line="761"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation>Χρήση στυλ, χρώματα και εικονίδια του χρήστη ή της πλατφόρμας.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="763"/>
+        <location filename="../src/mainwindow.ui" line="769"/>
         <source>Fusion Dark</source>
         <translation>Σκοτεινή Τήξη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="771"/>
+        <location filename="../src/mainwindow.ui" line="777"/>
         <source>Fusion Light</source>
         <translation>Φωτηνή Τήξη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="776"/>
+        <location filename="../src/mainwindow.ui" line="782"/>
         <source>Tutorials...</source>
         <translation>Βοηθήματα...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="183"/>
-        <location filename="../src/mainwindow.ui" line="785"/>
-        <location filename="../src/mainwindow.cpp" line="2386"/>
+        <location filename="../src/mainwindow.ui" line="189"/>
+        <location filename="../src/mainwindow.ui" line="791"/>
+        <location filename="../src/mainwindow.cpp" line="2427"/>
         <source>Timeline</source>
         <translation>Χρονολόγιο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="790"/>
-        <location filename="../src/mainwindow.ui" line="793"/>
+        <location filename="../src/mainwindow.ui" line="796"/>
+        <location filename="../src/mainwindow.ui" line="799"/>
         <source>Restore Default Layout</source>
         <translation>Επαναφορά Προκαθορισμένης Διάταξης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="801"/>
+        <location filename="../src/mainwindow.ui" line="807"/>
         <source>Show Title Bars</source>
         <translation>Εμφάνιση Μπάρας Τίτλων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="809"/>
+        <location filename="../src/mainwindow.ui" line="815"/>
         <source>Show Toolbar</source>
         <translation>Εμφάνιση Εργαλειοθήκης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="814"/>
+        <location filename="../src/mainwindow.ui" line="820"/>
         <source>Upgrade...</source>
         <translation>Αναβάθμιση...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="819"/>
+        <location filename="../src/mainwindow.ui" line="825"/>
         <source>Open MLT XML As Clip...</source>
         <translation>Άνοιγμα MLT XML ως Κλιπ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="822"/>
+        <location filename="../src/mainwindow.ui" line="828"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation>Άνοιγμα ενός αρχείου έργου MLT XML ως εικονικό κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="830"/>
+        <location filename="../src/mainwindow.ui" line="836"/>
         <source>Scrub Audio</source>
         <translation>Scrub Ήχου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="865"/>
+        <location filename="../src/mainwindow.ui" line="871"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
         <translation>Λογισμικό (Mesa)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="873"/>
+        <location filename="../src/mainwindow.ui" line="879"/>
         <source>Low</source>
         <translation>Χαμηλό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="881"/>
+        <location filename="../src/mainwindow.ui" line="887"/>
         <source>Normal</source>
         <translation>Κανονικό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="891"/>
+        <location filename="../src/mainwindow.ui" line="897"/>
         <source>Application Log...</source>
         <translation>Καταγραφή Εφαρμογής...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="899"/>
+        <location filename="../src/mainwindow.ui" line="905"/>
+        <location filename="../src/mainwindow.ui" line="996"/>
+        <location filename="../src/mainwindow.ui" line="999"/>
         <source>Project</source>
         <translation>Πρότζεκτ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="236"/>
-        <location filename="../src/mainwindow.ui" line="1315"/>
+        <location filename="../src/mainwindow.ui" line="242"/>
+        <location filename="../src/mainwindow.ui" line="1329"/>
         <source>Player</source>
         <translation>Αναπαραγωγέας</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="907"/>
+        <location filename="../src/mainwindow.ui" line="913"/>
         <source>User Interface</source>
         <translation>Διεπαφή Χρήστη</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="915"/>
+        <location filename="../src/mainwindow.ui" line="921"/>
         <source>Close</source>
         <translation>Κλείσιμο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1138"/>
+        <location filename="../src/mainwindow.ui" line="1144"/>
         <source>Notes</source>
         <translation>Σημειώσεις</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1344"/>
+        <location filename="../src/mainwindow.ui" line="1358"/>
         <source>Markers as Chapters...</source>
         <translation>Χρήση δεικτών ως κεφάλαια...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1347"/>
-        <location filename="../src/mainwindow.ui" line="1350"/>
-        <location filename="../src/mainwindow.cpp" line="5702"/>
+        <location filename="../src/mainwindow.ui" line="1361"/>
+        <location filename="../src/mainwindow.ui" line="1364"/>
+        <location filename="../src/mainwindow.cpp" line="5861"/>
         <source>Export Chapters</source>
         <translation>Εξαγωγή κεφαλαίων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1355"/>
+        <location filename="../src/mainwindow.ui" line="1369"/>
         <source>Audio/Video Device...</source>
         <translation>Συσκευή Βίντεο/Ηχου...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="965"/>
-        <location filename="../src/mainwindow.ui" line="1255"/>
+        <location filename="../src/mainwindow.ui" line="971"/>
+        <location filename="../src/mainwindow.ui" line="1269"/>
         <source>Set...</source>
         <translation>Ρύθμιση...</translation>
     </message>
@@ -4556,387 +4558,397 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Αλλες Εκδόσεις</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="116"/>
+        <location filename="../src/mainwindow.ui" line="122"/>
         <source>&amp;Player</source>
         <translation>&amp;Πρόγραμμα αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="135"/>
+        <location filename="../src/mainwindow.ui" line="141"/>
         <source>&amp;Settings</source>
         <translation>&amp;Ρυθμίσεις</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="209"/>
+        <location filename="../src/mainwindow.ui" line="215"/>
         <source>Time Format</source>
         <translation>Μορφή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="275"/>
+        <location filename="../src/mainwindow.ui" line="281"/>
         <source>Backup</source>
         <translation>Αντίγραφο Ασφαλείας</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="375"/>
+        <location filename="../src/mainwindow.ui" line="381"/>
         <source>Open a video, audio, image, or project file</source>
         <translation>Ανοιγμα ενός αρχείου βίντεο, ήχου, εικόνας ή έργου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="515"/>
+        <location filename="../src/mainwindow.ui" line="521"/>
         <source>Audio Peak Meter</source>
         <translation>Μετρητής Κορυφών Ήχου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="611"/>
+        <location filename="../src/mainwindow.ui" line="617"/>
         <source>4 (quad/Ambisonics)</source>
         <translation>4 (τετραπλό/Ambisonics)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="619"/>
+        <location filename="../src/mainwindow.ui" line="625"/>
         <source>6 (5.1 surround)</source>
         <translation>6 (5.1 surround)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="654"/>
+        <location filename="../src/mainwindow.ui" line="660"/>
         <source>YADIF - temporal + spatial (better)</source>
         <translation>YADIF - χρονικά + χωρικά (καλύτερο)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="662"/>
+        <location filename="../src/mainwindow.ui" line="668"/>
         <source>BWDIF (best)</source>
         <translation>BWDIF (κάλλιστο)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="697"/>
+        <location filename="../src/mainwindow.ui" line="703"/>
         <source>Lanczos (best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="886"/>
+        <location filename="../src/mainwindow.ui" line="892"/>
         <source>Resources...</source>
         <translation>Πόροι...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="970"/>
-        <location filename="../src/mainwindow.ui" line="1263"/>
+        <location filename="../src/mainwindow.ui" line="976"/>
+        <location filename="../src/mainwindow.ui" line="1277"/>
         <source>Show...</source>
         <translation>Εμφάνιση...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="973"/>
+        <location filename="../src/mainwindow.ui" line="979"/>
         <source>Show</source>
         <translation>Εμφάνιση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="982"/>
-        <location filename="../src/mainwindow.ui" line="985"/>
+        <location filename="../src/mainwindow.ui" line="988"/>
+        <location filename="../src/mainwindow.ui" line="991"/>
         <source>Keyframes</source>
         <translation>Keyframes</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="990"/>
+        <location filename="../src/mainwindow.ui" line="66"/>
         <source>New</source>
         <translation>Νέο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1009"/>
+        <location filename="../src/mainwindow.ui" line="1002"/>
+        <source>Ctrl+N</source>
+        <translation>Ctrl+N</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1018"/>
         <source>Audio</source>
         <translation>Ηχος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1012"/>
+        <location filename="../src/mainwindow.ui" line="1021"/>
         <source>Switch to the audio layout</source>
         <translation>Εναλλαγή στη διάταξη ήχου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1015"/>
+        <location filename="../src/mainwindow.ui" line="1024"/>
         <source>Alt+5</source>
         <translation>Alt+5</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1023"/>
+        <location filename="../src/mainwindow.ui" line="1032"/>
         <source>Logging</source>
         <translation>Καταγραφή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1026"/>
+        <location filename="../src/mainwindow.ui" line="1035"/>
         <source>Switch to the logging layout</source>
         <translation>Εναλλαγή στη διάταξη καταγραφής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1029"/>
+        <location filename="../src/mainwindow.ui" line="1038"/>
         <source>Alt+1</source>
         <translation>Alt+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1037"/>
+        <location filename="../src/mainwindow.ui" line="1046"/>
         <source>Editing</source>
         <translation>Επεξεργασία</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1040"/>
+        <location filename="../src/mainwindow.ui" line="1049"/>
         <source>Switch to the editing layout</source>
         <translation>Εναλλαγή στη διάταξη επεξεργασίας - μοντάζ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1043"/>
+        <location filename="../src/mainwindow.ui" line="1052"/>
         <source>Alt+2</source>
         <translation>Alt+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1051"/>
+        <location filename="../src/mainwindow.ui" line="1060"/>
         <source>FX</source>
         <translation>Εφέ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1054"/>
+        <location filename="../src/mainwindow.ui" line="1063"/>
         <source>Switch to the effects layout</source>
         <translation>Εναλλαγή στη διάταξη εφέ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1057"/>
+        <location filename="../src/mainwindow.ui" line="1066"/>
         <source>Alt+3</source>
         <translation>Alt+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1129"/>
+        <location filename="../src/mainwindow.ui" line="1090"/>
+        <source>New Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1135"/>
         <source>Markers</source>
         <translation>Δείκτες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1147"/>
+        <location filename="../src/mainwindow.ui" line="1153"/>
         <source>Subtitles</source>
         <translation>Υπότιτλοι</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1199"/>
+        <location filename="../src/mainwindow.ui" line="1183"/>
+        <source>1080p</source>
+        <translation type="unfinished">1080p</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1213"/>
         <source>Timecode (Drop-Frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1207"/>
+        <location filename="../src/mainwindow.ui" line="1221"/>
         <source>Frames</source>
         <translation>Καρέ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1215"/>
+        <location filename="../src/mainwindow.ui" line="1229"/>
         <source>Clock</source>
         <translation>Ρολόι</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1223"/>
+        <location filename="../src/mainwindow.ui" line="1237"/>
         <source>Timecode (Non-Drop Frame)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1228"/>
+        <location filename="../src/mainwindow.ui" line="1242"/>
         <source>Topics</source>
         <translation>Θέματα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1236"/>
+        <location filename="../src/mainwindow.ui" line="1250"/>
         <source>Synchronization...</source>
         <translation>Συγχρονισμός...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1239"/>
+        <location filename="../src/mainwindow.ui" line="1253"/>
         <source>Synchronization</source>
         <translation>Συγχρονισμός</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1247"/>
+        <location filename="../src/mainwindow.ui" line="1261"/>
         <source>Use Proxy</source>
         <translation>Χρήση Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1258"/>
+        <location filename="../src/mainwindow.ui" line="1272"/>
         <source>Set the proxy storage folder</source>
         <translation>Ορίστε τον φάκελο Proxy στον αποθηκευτικό χώρο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1266"/>
+        <location filename="../src/mainwindow.ui" line="1280"/>
         <source>Show the proxy storage folder</source>
         <translation>Προβολή του φακέλου Proxy στον αποθηκευτικό χώρο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1277"/>
+        <location filename="../src/mainwindow.ui" line="1291"/>
         <source>Use Project Folder</source>
         <translation>Χρήση του φακέλου του έργου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1280"/>
+        <location filename="../src/mainwindow.ui" line="1294"/>
         <source>Store proxies in the project folder if defined</source>
         <translation>Αποθήκευση διακομιστών μεσολάβησης (proxies) στο φάκελο του έργου, εάν έχει οριστεί</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1288"/>
+        <location filename="../src/mainwindow.ui" line="1302"/>
         <source>Use Hardware Encoder</source>
         <translation>Χρήση κωδικοποιητή υλικού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1293"/>
+        <location filename="../src/mainwindow.ui" line="1307"/>
         <source>Configure Hardware Encoder...</source>
         <translation>Διαμόρφωση κωδικοποιητή υλικού</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1304"/>
+        <location filename="../src/mainwindow.ui" line="1318"/>
         <source>Switch to the color layout</source>
         <translation>Εναλλαγή στη διάταξη χρωμάτων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1307"/>
+        <location filename="../src/mainwindow.ui" line="1321"/>
         <source>Alt+4</source>
         <translation>Alt+4</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1318"/>
+        <location filename="../src/mainwindow.ui" line="1332"/>
         <source>Switch to the player only layout</source>
         <translation>Εναλλαγή στη διάταξη μόνο με πρόγραμμα αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1321"/>
+        <location filename="../src/mainwindow.ui" line="1335"/>
         <source>Alt+6</source>
         <translation>Alt+6</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1334"/>
+        <location filename="../src/mainwindow.ui" line="1348"/>
         <source>Playlist Project</source>
         <translation>Εργο λίστας αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1339"/>
+        <location filename="../src/mainwindow.ui" line="1353"/>
         <source>Clip-only Project</source>
         <translation>Εργο μόνο για κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1360"/>
+        <location filename="../src/mainwindow.ui" line="1374"/>
         <source>Reset...</source>
         <translation>Επαναφορά...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1365"/>
-        <location filename="../src/mainwindow.ui" line="1368"/>
+        <location filename="../src/mainwindow.ui" line="1379"/>
+        <location filename="../src/mainwindow.ui" line="1382"/>
         <source>Backup and Save</source>
         <translation>Δημιουργία αντιγράφου ασφαλείας και αποθήκευση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1371"/>
+        <location filename="../src/mainwindow.ui" line="1385"/>
         <source>Ctrl+Alt+S</source>
         <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1379"/>
+        <location filename="../src/mainwindow.ui" line="1393"/>
         <source>Manually</source>
         <translation>Χειροκίνητα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1387"/>
+        <location filename="../src/mainwindow.ui" line="1401"/>
         <source>Hourly</source>
         <translation>Ωριαία</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1395"/>
+        <location filename="../src/mainwindow.ui" line="1409"/>
         <source>Daily</source>
         <translation>Ημερησίως</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1406"/>
+        <location filename="../src/mainwindow.ui" line="1420"/>
         <source>Weekly</source>
         <translation>Εβδομαδιαία</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1411"/>
+        <location filename="../src/mainwindow.ui" line="1425"/>
         <source>Show Project in Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1422"/>
+        <location filename="../src/mainwindow.ui" line="1436"/>
         <source>Pause After Seek</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1431"/>
+        <location filename="../src/mainwindow.ui" line="1445"/>
         <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1067"/>
-        <location filename="../src/mainwindow.ui" line="1072"/>
+        <location filename="../src/mainwindow.ui" line="1076"/>
+        <location filename="../src/mainwindow.ui" line="1081"/>
         <source>Remove...</source>
         <translation>Αφαίρεση...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="503"/>
+        <location filename="../src/mainwindow.ui" line="509"/>
         <source>F11</source>
         <translation>F11</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="926"/>
+        <location filename="../src/mainwindow.ui" line="932"/>
         <source>EDL...</source>
         <translation>EDL...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="937"/>
+        <location filename="../src/mainwindow.ui" line="943"/>
         <source>Frame...</source>
         <translation>Καρέ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="951"/>
+        <location filename="../src/mainwindow.ui" line="957"/>
         <source>Video...</source>
         <translation>Βίντεο...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="954"/>
-        <location filename="../src/mainwindow.ui" line="957"/>
+        <location filename="../src/mainwindow.ui" line="960"/>
+        <location filename="../src/mainwindow.ui" line="963"/>
         <source>Export Video</source>
         <translation>Εξαγωγή Βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="998"/>
+        <location filename="../src/mainwindow.ui" line="1007"/>
         <source>Actions and Shortcuts...</source>
         <translation>Ενέργειες και Συντομεύσεις...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1081"/>
-        <source>Open Other</source>
-        <translation>Ανοιγμα Αλλου</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1095"/>
+        <location filename="../src/mainwindow.ui" line="1101"/>
         <source>Clear Recent on Exit</source>
         <translation>Εκκαθάριση Πρόσφατων κατά την έξοδο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1103"/>
+        <location filename="../src/mainwindow.ui" line="1109"/>
         <source>Show Text Under Icons</source>
         <translation>Εμφάνιση κειμένου κάτω από τα εικονίδια</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1111"/>
+        <location filename="../src/mainwindow.ui" line="1117"/>
         <source>Show Small Icons</source>
         <translation>Εμφάνιση μικρών εικονιδίων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1120"/>
+        <location filename="../src/mainwindow.ui" line="1126"/>
         <source>Jobs</source>
         <translation>Εργασίες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1155"/>
+        <location filename="../src/mainwindow.ui" line="1161"/>
         <source>540p</source>
         <translation>540p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1166"/>
+        <location filename="../src/mainwindow.ui" line="1172"/>
         <source>720p</source>
         <translation>720p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1188"/>
+        <location filename="../src/mainwindow.ui" line="1202"/>
         <source>360p</source>
         <translation>360p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="150"/>
+        <location filename="../src/mainwindow.cpp" line="151"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
@@ -4945,153 +4957,113 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 Παρακαλώ εγκαταστήστε την χρησιμοποιώντας τον διαχειριστή πακέτων. Μπορεί να ονομάζεται libsdl2-2.0-0, SDL2 ή παρομοίως.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1159"/>
+        <location filename="../src/mainwindow.cpp" line="1162"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>Οθόνη %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1186"/>
+        <location filename="../src/mainwindow.cpp" line="1198"/>
         <source>Off</source>
         <translation>Απενεργοποίηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1189"/>
+        <location filename="../src/mainwindow.cpp" line="1201"/>
         <source>Internal</source>
         <translation>Εσωτερικό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1192"/>
+        <location filename="../src/mainwindow.cpp" line="1204"/>
         <source>External</source>
         <translation>Εξωτερικό</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1206"/>
+        <location filename="../src/mainwindow.cpp" line="1227"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1301"/>
-        <location filename="../src/mainwindow.cpp" line="1465"/>
+        <location filename="../src/mainwindow.ui" line="1315"/>
+        <location filename="../src/mainwindow.cpp" line="1487"/>
         <source>Color</source>
         <translation>Χρώμα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1467"/>
+        <location filename="../src/mainwindow.cpp" line="1491"/>
         <source>Text</source>
         <translation>Κείμενο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1471"/>
+        <location filename="../src/mainwindow.cpp" line="1498"/>
         <source>Animation</source>
         <translation>Animation</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1474"/>
+        <location filename="../src/mainwindow.cpp" line="1503"/>
         <source>Noise</source>
         <translation>Θόρυβος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1476"/>
-        <source>Ising</source>
-        <translation>Ising</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1479"/>
-        <source>Lissajous</source>
-        <translation>Lissajous</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1482"/>
-        <source>Plasma</source>
-        <translation>Plasma</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1485"/>
+        <location filename="../src/mainwindow.cpp" line="1508"/>
         <source>Color Bars</source>
         <translation>Μπάρες Χρώματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1488"/>
+        <location filename="../src/mainwindow.cpp" line="1513"/>
         <source>Audio Tone</source>
         <translation>Χροιά Ήχου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1491"/>
+        <location filename="../src/mainwindow.cpp" line="1518"/>
         <source>Count</source>
         <translation>Αρίθμηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1493"/>
+        <location filename="../src/mainwindow.cpp" line="1523"/>
         <source>Blip Flash</source>
         <translation>Αναπαραγωγή ήχου Μπλιπ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1497"/>
-        <source>Video4Linux</source>
-        <translation>Video4Linux</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1499"/>
-        <source>PulseAudio</source>
-        <translation>PulseAudio</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1501"/>
-        <source>ALSA Audio</source>
-        <translation>Ηχος ALSA</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1503"/>
-        <source>Audio/Video Device</source>
-        <translation>Συσκευή Βίντεο/Ηχου</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1507"/>
-        <source>SDI/HDMI</source>
-        <translation>SDI/HDMI</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1530"/>
-        <location filename="../src/mainwindow.cpp" line="1532"/>
-        <location filename="../src/mainwindow.cpp" line="1961"/>
-        <location filename="../src/mainwindow.cpp" line="1969"/>
-        <location filename="../src/mainwindow.cpp" line="1992"/>
-        <location filename="../src/mainwindow.cpp" line="2052"/>
-        <location filename="../src/mainwindow.cpp" line="4491"/>
-        <location filename="../src/mainwindow.cpp" line="4504"/>
-        <location filename="../src/mainwindow.cpp" line="5478"/>
+        <location filename="../src/mainwindow.cpp" line="1548"/>
+        <location filename="../src/mainwindow.cpp" line="1550"/>
+        <location filename="../src/mainwindow.cpp" line="1988"/>
+        <location filename="../src/mainwindow.cpp" line="1996"/>
+        <location filename="../src/mainwindow.cpp" line="2019"/>
+        <location filename="../src/mainwindow.cpp" line="2079"/>
+        <location filename="../src/mainwindow.cpp" line="4659"/>
+        <location filename="../src/mainwindow.cpp" line="4672"/>
+        <location filename="../src/mainwindow.cpp" line="5637"/>
         <source>Failed to open </source>
         <translation>Αποτυχία ανοίγματος</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1565"/>
+        <location filename="../src/mainwindow.cpp" line="1583"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.</source>
         <translation>Το αρχείο που ανοίξατε χρησιμοποιεί εφέ GPU, όμως τα εφέ GPU δεν είναι ενεργοποιημένα.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1577"/>
+        <location filename="../src/mainwindow.cpp" line="1595"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>Το αρχείο που ανοίξατε χρησιμοποιεί εφέ CPU, τα οποία δεν είναι συμβατά με εφέ GPU, όμως τα εφέ GPU είναι ενεργοποιημένα.
 Θέλετε να απενεργοποιήσετε τα εφέ GPU και να επανεκκινήσετε το Shotcut;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1600"/>
+        <location filename="../src/mainwindow.cpp" line="1618"/>
         <source>Repaired</source>
         <translation>Επισκευασμένο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1601"/>
+        <location filename="../src/mainwindow.cpp" line="1619"/>
         <source>Save Repaired XML</source>
         <translation>Αποθήκευση επιδιορθωμένου XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1638"/>
+        <location filename="../src/mainwindow.cpp" line="1656"/>
         <source>Repairing the project failed.</source>
         <translation>Η επισκευή του πρότζεκτ απέτυχε.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1651"/>
+        <location filename="../src/mainwindow.cpp" line="1669"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -5104,22 +5076,22 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 με το &quot;-Επισκευασμένο&quot; στο όνομα αρχείου και θα το ανοίξει.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1686"/>
+        <location filename="../src/mainwindow.cpp" line="1704"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Υπάρχουν αρχεία αυτόματης αποθήκευσης. Θέλετε να τα ανακτίσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1758"/>
+        <location filename="../src/mainwindow.cpp" line="1776"/>
         <source>You cannot add a project to itself!</source>
         <translation>Δεν μπορείτε να προσθέσετε ένα έργο στον εαυτό του!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1796"/>
+        <location filename="../src/mainwindow.cpp" line="1814"/>
         <source>There was an error saving. Please try again.</source>
         <translation>Παρουσιάστηκε σφάλμα κατά την αποθήκευση. Παρακαλώ προσπαθήστε ξανά.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1872"/>
+        <location filename="../src/mainwindow.cpp" line="1899"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -5128,7 +5100,7 @@ It was made with version </source>
 Δημιουργήθηκε με την έκδοση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1903"/>
+        <location filename="../src/mainwindow.cpp" line="1930"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -5139,148 +5111,166 @@ Or save and restart Shotcut.</source>
 Ή αποθηκεύστε και επανεκκινήστε το Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1955"/>
+        <location filename="../src/mainwindow.cpp" line="1982"/>
         <source>Opening %1</source>
         <translation>Ανοιγμα %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2094"/>
-        <location filename="../src/mainwindow.cpp" line="4478"/>
+        <location filename="../src/mainwindow.cpp" line="2121"/>
+        <location filename="../src/mainwindow.cpp" line="4646"/>
         <source>Open File</source>
         <translation>Άνοιγμα Αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2096"/>
+        <location filename="../src/mainwindow.cpp" line="2123"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Ολα τα αρχεία (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2350"/>
+        <location filename="../src/mainwindow.cpp" line="2391"/>
         <source>Preferences</source>
         <translation>Προτιμήσεις</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2360"/>
+        <location filename="../src/mainwindow.cpp" line="2401"/>
         <source>Rename Clip</source>
         <translation>Μετονομασία Κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2369"/>
+        <location filename="../src/mainwindow.cpp" line="2410"/>
         <source>Find</source>
         <translation>Αναζήτηση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2378"/>
+        <location filename="../src/mainwindow.cpp" line="2419"/>
         <source>Reload</source>
         <translation>Επαναφόρτωση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2520"/>
+        <location filename="../src/mainwindow.cpp" line="2429"/>
+        <source>Rerun Filter Analysis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/mainwindow.cpp" line="2443"/>
+        <source>This will start %n analysis job(s). Continue?</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2461"/>
+        <source>No filters to analyze.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2602"/>
         <source>Untitled</source>
         <translation>Χωρίς τίτλο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2525"/>
+        <location filename="../src/mainwindow.cpp" line="2607"/>
         <source>%1x%2 %3fps %4ch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2550"/>
+        <location filename="../src/mainwindow.cpp" line="2634"/>
         <source>About %1</source>
         <translation>Σχετικά %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2679"/>
+        <location filename="../src/mainwindow.cpp" line="2763"/>
         <source>Non-Broadcast</source>
         <translation>Μη-Εκπεμπόμενο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2684"/>
+        <location filename="../src/mainwindow.cpp" line="2768"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Ευρείας Οθόνης NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2685"/>
+        <location filename="../src/mainwindow.cpp" line="2769"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Ευρείας Οθόνης PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2696"/>
+        <location filename="../src/mainwindow.cpp" line="2780"/>
         <source>Square 1080p 30 fps</source>
         <translation>Τετράγωνο 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2697"/>
+        <location filename="../src/mainwindow.cpp" line="2781"/>
         <source>Square 1080p 60 fps</source>
         <translation>Τετράγωνο 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2698"/>
+        <location filename="../src/mainwindow.cpp" line="2782"/>
         <source>Vertical HD 30 fps</source>
         <translation>Κατακόρυφο HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2699"/>
+        <location filename="../src/mainwindow.cpp" line="2783"/>
         <source>Vertical HD 60 fps</source>
         <translation>Κατακόρυφο HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2700"/>
+        <location filename="../src/mainwindow.cpp" line="2784"/>
         <source>Custom</source>
         <translation>Προσαρμοσμένο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2731"/>
-        <location filename="../src/mainwindow.cpp" line="3026"/>
+        <location filename="../src/mainwindow.cpp" line="2815"/>
+        <location filename="../src/mainwindow.cpp" line="3110"/>
         <source>Saved %1</source>
         <translation>Αποθήκευση %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3017"/>
-        <location filename="../src/mainwindow.cpp" line="3040"/>
-        <location filename="../src/mainwindow.cpp" line="4292"/>
+        <location filename="../src/mainwindow.cpp" line="3101"/>
+        <location filename="../src/mainwindow.cpp" line="3124"/>
+        <location filename="../src/mainwindow.cpp" line="4446"/>
         <source>Save XML</source>
         <translation>Αποθήκευση XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3136"/>
+        <location filename="../src/mainwindow.cpp" line="3220"/>
         <source>Timeline is not loaded</source>
         <translation>Η γραμμή χρόνου δεν έχει φορτωθεί</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3146"/>
+        <location filename="../src/mainwindow.cpp" line="3230"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation>Δεν βρέθηκε δείκτης εύρους κάτω από τον κέρσορα στην γραμμή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3211"/>
+        <location filename="../src/mainwindow.cpp" line="3295"/>
         <source>There are incomplete jobs.
 Do you still want to exit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3223"/>
+        <location filename="../src/mainwindow.cpp" line="3307"/>
         <source>An export is in progress.
 Do you still want to exit?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4294"/>
+        <location filename="../src/mainwindow.cpp" line="4448"/>
         <source>Saved backup %1</source>
         <translation>Το αντίγραφο ασφαλείας %1 αποθηκεύτηκε</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3102"/>
+        <location filename="../src/mainwindow.cpp" line="3186"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation>Θέλετε να αλλάξετε επίσης τη Λειτουργία Βίντεο σε %1 x %2;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4017"/>
+        <location filename="../src/mainwindow.cpp" line="4101"/>
         <source>Opened Files</source>
         <translation>Ανοιγμένα αρχεια</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4099"/>
+        <location filename="../src/mainwindow.cpp" line="4183"/>
         <source>GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.
 At this time, a project created with GPU effects cannot be converted to a CPU-only project later.
 
@@ -5291,72 +5281,77 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 Θέλετε να ενεργοποιήσετε τα εφέ GPU και να επανεκκινήσετε το Shotcut;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5113"/>
+        <location filename="../src/mainwindow.cpp" line="5281"/>
         <source>Add To Timeline</source>
         <translation>Προσθήκη στη γραμμή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5678"/>
+        <location filename="../src/mainwindow.cpp" line="5837"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>Συμπερίληψη διαστημάτων (Διάρκεια &gt; 1 καρέ);</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5689"/>
+        <location filename="../src/mainwindow.cpp" line="5848"/>
         <source>Choose Markers</source>
         <translation>Επιλέξτε δείκτες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5706"/>
+        <location filename="../src/mainwindow.cpp" line="5865"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Κείμενο (*.txt);;Ολα τα αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5761"/>
+        <location filename="../src/mainwindow.cpp" line="5920"/>
         <source>Failed to open export-chapters.js</source>
         <translation>Αποτυχία ανοίγματος export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5802"/>
+        <location filename="../src/mainwindow.cpp" line="5961"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation>Αυτό θα επαναφέρει &lt;b&gt;όλες&lt;/b&gt; τις ρυθμίσεις και στη συνέχεια πρέπει να γίνει επανεκκίνηση του Shotcut.
 Θέλετε να κάνετε επαναφορά και επανεκκίνηση τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1605"/>
-        <location filename="../src/mainwindow.cpp" line="3044"/>
+        <location filename="../src/mainwindow.cpp" line="1623"/>
+        <location filename="../src/mainwindow.cpp" line="3128"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3184"/>
+        <location filename="../src/mainwindow.cpp" line="470"/>
+        <source>View Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="3268"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Το έργο έχει τροποποιηθεί.
 Θέλετε να αποθηκευτούν οι αλλαγές σας;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3841"/>
+        <location filename="../src/mainwindow.cpp" line="3925"/>
         <source>Exit Full Screen</source>
         <translation>Έξοδος Πλήρης Οθόνης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5437"/>
+        <location filename="../src/mainwindow.cpp" line="5596"/>
         <source>Turn Proxy On</source>
         <translation>Ενεργοποίηση Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5437"/>
+        <location filename="../src/mainwindow.cpp" line="5596"/>
         <source>Turn Proxy Off</source>
         <translation>Απενεργοποίηση Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5442"/>
+        <location filename="../src/mainwindow.cpp" line="5601"/>
         <source>Converting</source>
         <translation>Μετατροπή</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5458"/>
+        <location filename="../src/mainwindow.cpp" line="5617"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -5365,88 +5360,98 @@ You must reopen your project after all proxy jobs are finished.</source>
 Πρέπει να ανοίξετε ξανά το έργο σας αφού ολοκληρωθούν όλες οι εργασίες διακομιστή μεσολάβησης.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5496"/>
+        <location filename="../src/mainwindow.cpp" line="5655"/>
         <source>Proxy Folder</source>
         <translation>Φάκελος Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5514"/>
+        <location filename="../src/mainwindow.cpp" line="5673"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Θέλετε να μετακινήσετε όλα τα αρχεία από τον παλιό φάκελο στον νέο φάκελο;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5522"/>
+        <location filename="../src/mainwindow.cpp" line="5681"/>
         <source>Moving Files</source>
         <translation>Μετακίνηση αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3853"/>
+        <location filename="../src/mainwindow.cpp" line="3937"/>
         <source>GPU effects are not supported</source>
         <translation>Τα εφέ GPU δεν υποστηρίζονται</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="310"/>
+        <location filename="../src/mainwindow.cpp" line="311"/>
         <source>Set Loop Range</source>
         <translation>Ορισμός εύρους επανάληψης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="469"/>
-        <source>View mode</source>
-        <translation>Τρόπος Προβολής</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="473"/>
+        <location filename="../src/mainwindow.cpp" line="474"/>
         <source>Thumbnails</source>
         <translation>Μικρογραφίες</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="564"/>
+        <location filename="../src/mainwindow.cpp" line="565"/>
         <source>Scrolling</source>
         <translation>Κύλιση</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1042"/>
+        <location filename="../src/mainwindow.cpp" line="1043"/>
         <source>Audio API</source>
         <translation>API ήχου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1063"/>
+        <location filename="../src/mainwindow.cpp" line="1064"/>
         <source>default</source>
         <translation>προκαθορισμένο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1070"/>
+        <location filename="../src/mainwindow.cpp" line="1071"/>
         <source>You must restart Shotcut to change the audio API.
 Do you want to restart now?</source>
         <translation>Πρέπει να κάνετε επανεκκίνηση στο Shotcut για να αλλάξει το API ήχου.
 Θέλετε να κάνετε επανεκκίνηση τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3873"/>
+        <location filename="../src/mainwindow.cpp" line="1189"/>
+        <source>SDR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1192"/>
+        <source>HLG HDR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1218"/>
+        <source>DeckLink Gamma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="3957"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Κάντε Κλικ εδώ για έλεγχο νέας έκδοσης του Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3988"/>
+        <location filename="../src/mainwindow.cpp" line="4072"/>
         <source>Open Files</source>
         <translation>Ανοιγμα αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4047"/>
+        <location filename="../src/mainwindow.cpp" line="4131"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Πρέπει να επανακινήσετε τον shotcut για την αλλαγή γλώσσας.
 Θέλετε να επανακινήσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4090"/>
+        <location filename="../src/mainwindow.cpp" line="4174"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Αποτυχία σύνδεσης στο JACK.
 Παρακαλώ επαληθεύστε ότι το JACK είναι εγκατεστημένο και εκτελείται.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4119"/>
+        <location filename="../src/mainwindow.cpp" line="4203"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -5455,101 +5460,107 @@ Disable GPU effects and restart?</source>
 Απενεργοποίηση εφέ GPU και επανεκκίνηση;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4271"/>
+        <location filename="../src/mainwindow.cpp" line="4425"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>Πρέπει να επανεκκινήσετε το %1 για να μεταβείτε στο νέο θέμα.
 Θέλετε να κάνετε επανεκκίνηση τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4314"/>
+        <location filename="../src/mainwindow.cpp" line="4468"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Παρακαλώ ελέγξτε ολόκληρο το έργο σας μετά την πραγματοποίηση αυτής της αλλαγής.&lt;/p&gt;&lt;p&gt;Το Shotcut δεν προσαρμόζει αυτόματα πράγματα που είναι ευαίσθητα στο μέγεθος και τη θέση, εάν αλλάξετε την ανάλυση ή την αναλογία διαστάσεων.&lt;/p&lt;br&gt; Ο χρόνος των επεξεργασιών και των keyframes μπορεί να είναι ελαφρώς διαφορετικός εάν αλλάξετε το ρυθμό καρέ.&lt;/p&gt;&lt;p&gt;Είναι καλή ιδέα να χρησιμοποιήσετε το &lt;b&gt;Αρχείο &gt; Αντίγραφο ασφαλείας και Αποθήκευση&lt;/b&gt; πριν ή μετά από αυτήν τη λειτουργία.&lt;/p&gt;&lt;p&gt;Θέλετε να αλλάξετε τη &lt;b&gt;λειτουργία βίντεο&lt;/b&gt; τώρα;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4328"/>
+        <location filename="../src/mainwindow.cpp" line="4482"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>Καμμία εμφάνιση ξανά.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4455"/>
+        <location filename="../src/mainwindow.cpp" line="4493"/>
+        <source>Shotcut must restarto change external monitoring.
+Do you want to restart now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4623"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Θέλετε να γίνεται έλεγχος για ενημερώσεις αυτόματα στο μέλλον;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4462"/>
+        <location filename="../src/mainwindow.cpp" line="4630"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Να μην ξαναεμφανιστεί αυτό.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4480"/>
+        <location filename="../src/mainwindow.cpp" line="4648"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Όλα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4534"/>
+        <location filename="../src/mainwindow.cpp" line="4702"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Πρέπει να επανεκκινήσετε τον Shotcut για να αλλάξει η μέθοδος απεικόνισης.
 Θέλετε να επανεκκινήσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4564"/>
+        <location filename="../src/mainwindow.cpp" line="4732"/>
         <source>Application Log</source>
         <translation>Καταγραφή Εφαρμογής</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4567"/>
+        <location filename="../src/mainwindow.cpp" line="4735"/>
         <source>Previous</source>
         <translation>Προηγούμενο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4629"/>
+        <location filename="../src/mainwindow.cpp" line="4797"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Είναι διαθέσιμη η έκδοση %1 του Shotcut. Κάντε Κλικ εδώ για την λάβετε.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4635"/>
+        <location filename="../src/mainwindow.cpp" line="4803"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Εκτελείτε την τελευταία έκδοση του Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4649"/>
+        <location filename="../src/mainwindow.cpp" line="4817"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Αδυναμία ανάγνωσης του version.json κατά τον έλεγχο. Κάντε Κλικ εδώ για να μεταβείτε στην ιστοσελίδα.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="929"/>
-        <location filename="../src/mainwindow.ui" line="932"/>
-        <location filename="../src/mainwindow.cpp" line="4669"/>
+        <location filename="../src/mainwindow.ui" line="935"/>
+        <location filename="../src/mainwindow.ui" line="938"/>
+        <location filename="../src/mainwindow.cpp" line="4837"/>
         <source>Export EDL</source>
         <translation>Εξαγωγή EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4673"/>
+        <location filename="../src/mainwindow.cpp" line="4841"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Ολα τα αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4720"/>
-        <location filename="../src/mainwindow.cpp" line="5758"/>
+        <location filename="../src/mainwindow.cpp" line="4888"/>
+        <location filename="../src/mainwindow.cpp" line="5917"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Προέκυψε ένα σφάλμα JavaScript κατά την εξαγωγή. </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4723"/>
+        <location filename="../src/mainwindow.cpp" line="4891"/>
         <source>Failed to open export-edl.js</source>
         <translation>Αδυναμία ανοίγματος του export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4754"/>
+        <location filename="../src/mainwindow.cpp" line="4922"/>
         <source>Export frame from proxy?</source>
         <translation>Εξαγωγή καρέ από διακομιστή μεσολάβησης (proxy);</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4755"/>
+        <location filename="../src/mainwindow.cpp" line="4923"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -5558,51 +5569,51 @@ Do you still want to continue?</source>
 Θέλετε ακόμα να συνεχίσετε;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="940"/>
-        <location filename="../src/mainwindow.ui" line="943"/>
-        <location filename="../src/mainwindow.cpp" line="4767"/>
+        <location filename="../src/mainwindow.ui" line="946"/>
+        <location filename="../src/mainwindow.ui" line="949"/>
+        <location filename="../src/mainwindow.cpp" line="4935"/>
         <source>Export Frame</source>
         <translation>Εξαγωγή Πλαισίου</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4773"/>
+        <location filename="../src/mainwindow.cpp" line="4941"/>
         <source>Unable to export frame.</source>
         <translation>Αδυναμία εξαγωγής πλαισίου.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4781"/>
+        <location filename="../src/mainwindow.cpp" line="4949"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Πρέπει να επανεκκινήσετε τον Shotcut για να αλλάξει ο κατάλογος δεδομένων.
 Θέλετε να επανεκκινήσετε τώρα;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4792"/>
+        <location filename="../src/mainwindow.cpp" line="4960"/>
         <source>Data Directory</source>
         <translation>Κατάλογος Δεδομένων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5002"/>
+        <location filename="../src/mainwindow.cpp" line="5170"/>
         <source>Add Custom Layout</source>
         <translation>Προσθήκη Προσαρμοσμένης Διάταξης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5003"/>
+        <location filename="../src/mainwindow.cpp" line="5171"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5042"/>
+        <location filename="../src/mainwindow.cpp" line="5210"/>
         <source>Remove Video Mode</source>
         <translation>Λειτουργία Αφαίρεσης Βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5059"/>
+        <location filename="../src/mainwindow.cpp" line="5227"/>
         <source>Remove Layout</source>
         <translation>Κατάργηση Διάταξης</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5231"/>
+        <location filename="../src/mainwindow.cpp" line="5381"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -6001,7 +6012,7 @@ This may provide unexpected results</source>
         <translation>(PROXY)</translation>
     </message>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="2636"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="2653"/>
         <source>Error: Shotcut could not find the %1 plugin on your system.
 
 Please install the %2 plugins.</source>
@@ -6192,7 +6203,7 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="38"/>
-        <location filename="../src/openotherdialog.cpp" line="142"/>
+        <location filename="../src/openotherdialog.cpp" line="143"/>
         <source>Network</source>
         <translation>Δίκτυο</translation>
     </message>
@@ -6203,32 +6214,32 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="45"/>
-        <location filename="../src/openotherdialog.cpp" line="144"/>
+        <location filename="../src/openotherdialog.cpp" line="145"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="49"/>
-        <location filename="../src/openotherdialog.cpp" line="134"/>
+        <location filename="../src/openotherdialog.cpp" line="135"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="51"/>
-        <location filename="../src/openotherdialog.cpp" line="136"/>
+        <location filename="../src/openotherdialog.cpp" line="137"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="53"/>
-        <location filename="../src/openotherdialog.cpp" line="138"/>
+        <location filename="../src/openotherdialog.cpp" line="139"/>
         <source>ALSA Audio</source>
         <translation>Ήχος ALSA</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="56"/>
         <location filename="../src/openotherdialog.cpp" line="59"/>
-        <location filename="../src/openotherdialog.cpp" line="140"/>
+        <location filename="../src/openotherdialog.cpp" line="141"/>
         <source>Audio/Video Device</source>
         <translation>Συσκευή Βίντεο/Ηχου</translation>
     </message>
@@ -6239,7 +6250,7 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="66"/>
-        <location filename="../src/openotherdialog.cpp" line="146"/>
+        <location filename="../src/openotherdialog.cpp" line="147"/>
         <source>Color</source>
         <translation>Χρώμα</translation>
     </message>
@@ -6250,55 +6261,55 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="74"/>
-        <location filename="../src/openotherdialog.cpp" line="148"/>
+        <location filename="../src/openotherdialog.cpp" line="149"/>
         <source>Animation</source>
         <translation>Animation</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="78"/>
-        <location filename="../src/openotherdialog.cpp" line="150"/>
+        <location filename="../src/openotherdialog.cpp" line="151"/>
         <source>Noise</source>
         <translation>Θόρυβος</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="82"/>
-        <location filename="../src/openotherdialog.cpp" line="152"/>
+        <location filename="../src/openotherdialog.cpp" line="153"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="86"/>
-        <location filename="../src/openotherdialog.cpp" line="154"/>
+        <location filename="../src/openotherdialog.cpp" line="87"/>
+        <location filename="../src/openotherdialog.cpp" line="155"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="90"/>
-        <location filename="../src/openotherdialog.cpp" line="156"/>
+        <location filename="../src/openotherdialog.cpp" line="91"/>
+        <location filename="../src/openotherdialog.cpp" line="157"/>
         <source>Plasma</source>
         <translation>Plasma</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="94"/>
-        <location filename="../src/openotherdialog.cpp" line="158"/>
+        <location filename="../src/openotherdialog.cpp" line="95"/>
+        <location filename="../src/openotherdialog.cpp" line="159"/>
         <source>Color Bars</source>
         <translation>Μπάρες Χρώματος</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="98"/>
-        <location filename="../src/openotherdialog.cpp" line="160"/>
+        <location filename="../src/openotherdialog.cpp" line="99"/>
+        <location filename="../src/openotherdialog.cpp" line="161"/>
         <source>Audio Tone</source>
         <translation>Χροιά Ήχου</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="102"/>
-        <location filename="../src/openotherdialog.cpp" line="162"/>
+        <location filename="../src/openotherdialog.cpp" line="103"/>
+        <location filename="../src/openotherdialog.cpp" line="163"/>
         <source>Count</source>
         <translation>Αρίθμηση</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="106"/>
-        <location filename="../src/openotherdialog.cpp" line="164"/>
+        <location filename="../src/openotherdialog.cpp" line="107"/>
+        <location filename="../src/openotherdialog.cpp" line="165"/>
         <source>Blip Flash</source>
         <translation>Αναπαραγωγή ήχου Μπλιπ</translation>
     </message>
@@ -6835,7 +6846,7 @@ Try again with a different folder.</source>
     <name>PlaylistDock</name>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="18"/>
-        <location filename="../src/docks/playlistdock.cpp" line="381"/>
+        <location filename="../src/docks/playlistdock.cpp" line="382"/>
         <source>Playlist</source>
         <translation>Λίστα</translation>
     </message>
@@ -6864,418 +6875,426 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Διπλό κλι σε ένα αντικείμενο της λίστας για να ανοίξει στην αναπαραγωγή.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="591"/>
+        <location filename="../src/docks/playlistdock.cpp" line="601"/>
         <source>Add the Source to the playlist</source>
         <translation>Προσθήκη της Πηγής στην λίστα</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="602"/>
+        <location filename="../src/docks/playlistdock.cpp" line="612"/>
         <source>Remove cut</source>
         <translation>Αφαίρεση κόψιμου</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="620"/>
+        <location filename="../src/docks/playlistdock.cpp" line="630"/>
         <source>Update</source>
         <translation>Ενημέρωση</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="632"/>
+        <location filename="../src/docks/playlistdock.cpp" line="642"/>
         <source>View as tiles</source>
         <translation>προβολή ως πλακίδια</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="645"/>
+        <location filename="../src/docks/playlistdock.cpp" line="655"/>
         <source>View as icons</source>
         <translation>Προβολή ως εικονίδια</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="658"/>
+        <location filename="../src/docks/playlistdock.cpp" line="668"/>
         <source>View as details</source>
         <translation>Προβολή λεπτομερειών </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="597"/>
+        <location filename="../src/docks/playlistdock.cpp" line="607"/>
         <source>Remove</source>
         <translation>Αφαίρεση</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="710"/>
+        <location filename="../src/docks/playlistdock.cpp" line="720"/>
         <source>Set Creation Time...</source>
         <translation>Ορισμός ημερομηνίας δημιουργίας</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="696"/>
-        <location filename="../src/docks/playlistdock.cpp" line="697"/>
+        <location filename="../src/docks/playlistdock.cpp" line="706"/>
+        <location filename="../src/docks/playlistdock.cpp" line="707"/>
         <source>Insert</source>
         <translation>Εισαγωγή</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="450"/>
+        <location filename="../src/docks/playlistdock.cpp" line="451"/>
         <source>Playlist Menu</source>
         <translation>Μενού λίστας αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="589"/>
+        <location filename="../src/docks/playlistdock.cpp" line="599"/>
         <source>Append</source>
         <translation>Προσάρτηση</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="671"/>
+        <location filename="../src/docks/playlistdock.cpp" line="681"/>
         <source>Open the clip in the Source player</source>
         <translation>Ανοιγμα του κλιπ στο Πρόγραμμα Αναπαραγωγής Πηγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="681"/>
+        <location filename="../src/docks/playlistdock.cpp" line="691"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation>Μετάβαση στην αρχή αυτού του κλιπ στο πρόγραμμα αναπαραγωγής Εργου</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="718"/>
+        <location filename="../src/docks/playlistdock.cpp" line="728"/>
         <source>Remove All</source>
         <translation>Αφαίρεση Όλων</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="719"/>
+        <location filename="../src/docks/playlistdock.cpp" line="729"/>
         <source>Remove all items from the playlist</source>
         <translation>Αφαίρεση όλων των αντικειμένων από την λίστα</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="795"/>
+        <location filename="../src/docks/playlistdock.cpp" line="805"/>
         <source>Hidden</source>
         <translation>Κρυμμένο</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="807"/>
+        <location filename="../src/docks/playlistdock.cpp" line="817"/>
         <source>In and Out - Left/Right</source>
         <translation>Είσοδος και Έξοδος - Αριστερά/Δεξιά</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="823"/>
+        <location filename="../src/docks/playlistdock.cpp" line="833"/>
         <source>In and Out - Top/Bottom</source>
         <translation>Είσοδος και Έξοδος - Πάνω/Κάτω</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="840"/>
+        <location filename="../src/docks/playlistdock.cpp" line="850"/>
         <source>In Only - Small</source>
         <translation>Είσοδος Μόνο - Μικρό</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="856"/>
+        <location filename="../src/docks/playlistdock.cpp" line="866"/>
         <source>In Only - Large</source>
         <translation>Είσοδος Μόνο - Μεγάλο</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="762"/>
+        <location filename="../src/docks/playlistdock.cpp" line="772"/>
         <source>Add Selected to Timeline</source>
         <translation>Προσθήκη επιλεγμένων στη γραμμή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="769"/>
+        <location filename="../src/docks/playlistdock.cpp" line="779"/>
         <source>Add Selected to Slideshow</source>
         <translation>Προσθήκη επιλεγμένων στην Παρουσίαση</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="873"/>
+        <location filename="../src/docks/playlistdock.cpp" line="883"/>
         <source>Play After Open</source>
         <translation>Αναπαραγωγή μετά το Ανοιγμα</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="724"/>
+        <location filename="../src/docks/playlistdock.cpp" line="734"/>
         <source>Select All</source>
         <translation>Επιλογή Όλων</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="730"/>
+        <location filename="../src/docks/playlistdock.cpp" line="740"/>
         <source>Select None</source>
         <translation>Καμία επιλογή</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="702"/>
+        <location filename="../src/docks/playlistdock.cpp" line="712"/>
         <source>Update Thumbnails</source>
         <translation>Ενημέρωση Μικρογραφιών</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="776"/>
+        <location filename="../src/docks/playlistdock.cpp" line="786"/>
         <source>Sort By Name</source>
         <translation>Ταξινόμηση κατά όνομα</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="784"/>
+        <location filename="../src/docks/playlistdock.cpp" line="794"/>
         <source>Sort By Date</source>
         <translation>Ταξινόμηση κατά ημερομηνία</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="657"/>
+        <location filename="../src/docks/playlistdock.cpp" line="667"/>
         <source>Details</source>
         <translation>Λεπτομέρειες</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="411"/>
+        <location filename="../src/docks/playlistdock.cpp" line="412"/>
         <source>Select</source>
         <translation>Επιλογή</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="428"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1124"/>
+        <location filename="../src/docks/playlistdock.cpp" line="429"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1134"/>
         <source>Bins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="435"/>
+        <location filename="../src/docks/playlistdock.cpp" line="436"/>
         <source>Columns</source>
         <translation>Στήλες</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="445"/>
+        <location filename="../src/docks/playlistdock.cpp" line="446"/>
         <source>Playlist Controls</source>
         <translation>Χειριστήρια προγράμματος αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="470"/>
-        <location filename="../src/docks/playlistdock.cpp" line="474"/>
+        <location filename="../src/docks/playlistdock.cpp" line="480"/>
+        <location filename="../src/docks/playlistdock.cpp" line="484"/>
         <source>Playlist Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="498"/>
+        <location filename="../src/docks/playlistdock.cpp" line="508"/>
         <source>Only show files whose name, path, or comment contains some text</source>
         <translation>Εμφάνιση μόνο αρχείων των οποίων το όνομα, η διαδρομή ή το σχόλιο περιέχει κείμενο</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="499"/>
+        <location filename="../src/docks/playlistdock.cpp" line="509"/>
         <source>search</source>
         <translation>αναζήτηση</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="613"/>
+        <location filename="../src/docks/playlistdock.cpp" line="623"/>
         <source>Add files to playlist</source>
         <translation>Προσθήκη αρχείων στη λίστα αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="631"/>
+        <location filename="../src/docks/playlistdock.cpp" line="641"/>
         <source>Tiles</source>
         <translation>Πλακίδια</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="644"/>
+        <location filename="../src/docks/playlistdock.cpp" line="654"/>
         <source>Icons</source>
         <translation>Εικονίδια</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="670"/>
+        <location filename="../src/docks/playlistdock.cpp" line="680"/>
         <source>Open</source>
         <translation>Ανοιγμα</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="680"/>
+        <location filename="../src/docks/playlistdock.cpp" line="690"/>
         <source>GoTo</source>
         <translation>Μετάβαση</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="686"/>
+        <location filename="../src/docks/playlistdock.cpp" line="696"/>
         <source>Copy</source>
         <translation>Αντιγραφή</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="687"/>
+        <location filename="../src/docks/playlistdock.cpp" line="697"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation>Ανοιγμα ενός αντιγράφου του κλιπ στο Πρόγραμμα Αναπαραγωγής Πηγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="738"/>
+        <location filename="../src/docks/playlistdock.cpp" line="748"/>
         <source>Move Up</source>
         <translation>Μετακίνηση Πάνω</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="750"/>
+        <location filename="../src/docks/playlistdock.cpp" line="760"/>
         <source>Move Down</source>
         <translation>Μετακίνηση Κάτω</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="881"/>
+        <location filename="../src/docks/playlistdock.cpp" line="891"/>
         <source>Open Previous</source>
         <translation>Ανοιγμα προηγούμενου</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="894"/>
+        <location filename="../src/docks/playlistdock.cpp" line="904"/>
         <source>Open Next</source>
         <translation>Ανοιγμα επόμενου</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="907"/>
+        <location filename="../src/docks/playlistdock.cpp" line="917"/>
         <source>Select Clip 1</source>
         <translation>Επιλογή κλιπ 1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="919"/>
+        <location filename="../src/docks/playlistdock.cpp" line="929"/>
         <source>Select Clip 2</source>
         <translation>Επιλογή κλιπ 2</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="931"/>
+        <location filename="../src/docks/playlistdock.cpp" line="941"/>
         <source>Select Clip 3</source>
         <translation>Επιλογή κλιπ 3</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="943"/>
+        <location filename="../src/docks/playlistdock.cpp" line="953"/>
         <source>Select Clip 4</source>
         <translation>Επιλογή κλιπ 4</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="955"/>
+        <location filename="../src/docks/playlistdock.cpp" line="965"/>
         <source>Select Clip 5</source>
         <translation>Επιλογή κλιπ 5</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="967"/>
+        <location filename="../src/docks/playlistdock.cpp" line="977"/>
         <source>Select Clip 6</source>
         <translation>Επιλογή κλιπ 6</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="979"/>
+        <location filename="../src/docks/playlistdock.cpp" line="989"/>
         <source>Select Clip 7</source>
         <translation>Επιλογή κλιπ 7</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="991"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1001"/>
         <source>Select Clip 8</source>
         <translation>Επιλογή κλιπ 8</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1003"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1013"/>
         <source>Select Clip 9</source>
         <translation>Επιλογή κλιπ 9</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1015"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1025"/>
         <source>Thumbnails</source>
         <translation>Μικρογραφίες</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1024"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1034"/>
         <source>Clip</source>
         <translation>Κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1033"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1043"/>
         <source>In</source>
         <translation>Είσοδος</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1042"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1052"/>
         <source>Duration</source>
         <translation>Διάρκεια</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1051"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1061"/>
         <source>Start</source>
         <translation>Εκκίνηση</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1060"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1070"/>
         <source>Date</source>
         <translation>Ημερομηνία</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1069"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1079"/>
         <source>Type</source>
         <translation>Τύπος</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1078"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1088"/>
         <source>Video</source>
         <translation>Βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1079"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1089"/>
         <source>Show or hide video files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1084"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1094"/>
         <source>Audio</source>
         <translation>Ηχος</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1085"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1095"/>
         <source>Show or hide audio files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1090"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1100"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1091"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1101"/>
         <source>Show or hide image files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1096"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1106"/>
         <source>Other</source>
         <translation>Άλλα</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1097"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1107"/>
         <source>Show or hide other kinds of files</source>
         <translation>Εμφάνιση ή απόκρυψη άλλων ειδών αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1102"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1103"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1112"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1113"/>
         <source>New Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1114"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1154"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1124"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1164"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1125"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1135"/>
         <source>Show or hide the list of bins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1134"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1135"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1144"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1145"/>
         <source>Remove Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1146"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1147"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1156"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1157"/>
         <source>Rename Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1168"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1178"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1203"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1213"/>
         <source>Replace %n playlist items</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message numerus="yes">
+        <location filename="../src/docks/playlistdock.cpp" line="2138"/>
+        <source>%n item(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="432"/>
+        <location filename="../src/docks/playlistdock.cpp" line="433"/>
         <source>Sort</source>
         <translation>Ταξινόμηση</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1526"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1758"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1536"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1768"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Δεν μπορείτε να εισάγετε μία λίστα σε άλλη λίστα!</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/playlistdock.cpp" line="1543"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1553"/>
         <source>Remove %n playlist items</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -7283,39 +7302,39 @@ p, li { white-space: pre-wrap; }
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="612"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1302"/>
+        <location filename="../src/docks/playlistdock.cpp" line="622"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1312"/>
         <source>Add Files</source>
         <translation>Προσθήκη αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1256"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1266"/>
         <source>Appending</source>
         <translation>Προσάρτηση...</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1312"/>
-        <location filename="../src/docks/playlistdock.cpp" line="1321"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1322"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1331"/>
         <source>Failed to open </source>
         <translation>Αποτυχία ανοίγματος</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1385"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1395"/>
         <source>Dropped Files</source>
         <translation>Αρχεία που εναποθέσατε</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1847"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1857"/>
         <source>Generating</source>
         <translation>Δημιουργία</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2066"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2076"/>
         <source>Open File</source>
         <translation>Ανοιγμα Αρχείου</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="2068"/>
+        <location filename="../src/docks/playlistdock.cpp" line="2078"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Ολα τα αρχεία (*);;MLT XML (*.mlt)</translation>
     </message>
@@ -7332,72 +7351,72 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PlaylistModel</name>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="268"/>
+        <location filename="../src/models/playlistmodel.cpp" line="269"/>
         <source>(PROXY)</source>
         <translation>(PROXY)</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="408"/>
+        <location filename="../src/models/playlistmodel.cpp" line="409"/>
         <source>Video</source>
         <translation>Βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="410"/>
+        <location filename="../src/models/playlistmodel.cpp" line="411"/>
         <source>Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="412"/>
+        <location filename="../src/models/playlistmodel.cpp" line="413"/>
         <source>Audio</source>
         <translation>Ηχος</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="414"/>
+        <location filename="../src/models/playlistmodel.cpp" line="415"/>
         <source>Other</source>
         <translation>Άλλα</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="493"/>
+        <location filename="../src/models/playlistmodel.cpp" line="494"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="495"/>
+        <location filename="../src/models/playlistmodel.cpp" line="496"/>
         <source>Thumbnails</source>
         <translation>Μικρογραφίες</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="497"/>
+        <location filename="../src/models/playlistmodel.cpp" line="498"/>
         <source>Clip</source>
         <translation>Κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="499"/>
+        <location filename="../src/models/playlistmodel.cpp" line="500"/>
         <source>In</source>
         <translation>Είσοδος</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="501"/>
+        <location filename="../src/models/playlistmodel.cpp" line="502"/>
         <source>Duration</source>
         <translation>Διάρκεια</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="503"/>
+        <location filename="../src/models/playlistmodel.cpp" line="504"/>
         <source>Start</source>
         <translation>Εκκίνηση</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="505"/>
+        <location filename="../src/models/playlistmodel.cpp" line="506"/>
         <source>Date</source>
         <translation>Ημερομηνία</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="507"/>
+        <location filename="../src/models/playlistmodel.cpp" line="508"/>
         <source>Type</source>
         <translation>Τύπος</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="509"/>
+        <location filename="../src/models/playlistmodel.cpp" line="510"/>
         <source>Comment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7405,22 +7424,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PlaylistProxyModel</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="293"/>
+        <location filename="../src/docks/playlistdock.cpp" line="294"/>
         <source>All</source>
         <translation>Όλα</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="293"/>
+        <location filename="../src/docks/playlistdock.cpp" line="294"/>
         <source>Duplicates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="293"/>
+        <location filename="../src/docks/playlistdock.cpp" line="294"/>
         <source>Not In Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="293"/>
+        <location filename="../src/docks/playlistdock.cpp" line="294"/>
         <source>Not In a Bin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7813,7 +7832,7 @@ p, li { white-space: pre-wrap; }
         <translation>Εφαρμογή επιλεγμένων φίλτρων</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4000"/>
+        <location filename="../src/mainwindow.cpp" line="4084"/>
         <source>You cannot add a project to itself!</source>
         <translation>Δεν μπορείτε να προσθέσετε ένα έργο στον εαυτό του!</translation>
     </message>
@@ -7825,8 +7844,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/transcoder.cpp" line="95"/>
         <location filename="../src/util.cpp" line="142"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1053"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1145"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1050"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1140"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -7861,50 +7880,50 @@ Do you want to use %1 = %2/1001 instead?</source>
 Θέλετε να χρησιμοποιήσετε το %1 = %2/1001;</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="716"/>
+        <location filename="../src/util.cpp" line="717"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Ο χώρος αποθήκευσης που επιλέξατε έχει μόνο %1 MiB ελεύθερο χώρο.
 Θέλετε ακόμα να συνεχίσετε;</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="724"/>
+        <location filename="../src/util.cpp" line="725"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Να μην ξαναεμφανιστεί αυτό.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="760"/>
+        <location filename="../src/util.cpp" line="761"/>
         <source>unknown (%1)</source>
         <translation>άγνωστο (%1)</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="763"/>
+        <location filename="../src/util.cpp" line="764"/>
         <source>NA</source>
         <translation>NA</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="814"/>
+        <location filename="../src/util.cpp" line="815"/>
         <source>This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.</source>
         <translation>Αυτό το αρχείο χρησιμοποιεί χαρακτηριστικά μεταφοράς χρώματος %1, τα οποία μπορεί να έχουν ως αποτέλεσμα λανθασμένα χρώματα ή φωτεινότητα στο Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="819"/>
+        <location filename="../src/util.cpp" line="820"/>
         <source>This file is variable frame rate, which is not reliable for editing.</source>
         <translation>Αυτό το αρχείο έχει μεταβλητό ρυθμό καρέ, το οποίο δεν είναι αξιόπιστο για επεξεργασία.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="823"/>
+        <location filename="../src/util.cpp" line="824"/>
         <source>This file does not support seeking and cannot be used for editing.</source>
         <translation>Αυτό το αρχείο δεν υποστηρίζει αναζήτηση και δεν μπορεί να χρησιμοποιηθεί για επεξεργασία.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="826"/>
+        <location filename="../src/util.cpp" line="827"/>
         <source>This file format (HDV) is not reliable for editing.</source>
         <translation>Αυτή η μορφή αρχείου (HDV) δεν είναι αξιόπιστη για επεξεργασία.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="842"/>
+        <location filename="../src/util.cpp" line="843"/>
         <source> Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, it automatically replaces clips, or you can double-click the job to open it.
@@ -7922,32 +7941,32 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>διαφανές</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3013"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3114"/>
         <source>Drop Files</source>
         <translation>Απόθεση αρχείων</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3020"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3121"/>
         <source>Failed to open </source>
         <translation>Αποτυχία ανοίγματος</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3036"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3137"/>
         <source>Not adding non-seekable file: </source>
         <translation>Αρχείο χωρίς δυνατότητα αναζήτησης δεν προστέθηκε:</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1240"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1250"/>
         <source>Generating Playlist for Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="1845"/>
+        <location filename="../src/docks/playlistdock.cpp" line="1855"/>
         <source>Generate Slideshow</source>
         <translation>Δημιουργία παρουσίασης</translation>
     </message>
     <message>
-        <location filename="../src/proxymanager.cpp" line="360"/>
+        <location filename="../src/proxymanager.cpp" line="366"/>
         <source>Make proxy for %1</source>
         <translation>Δημιουργία proxy για %1</translation>
     </message>
@@ -8018,47 +8037,47 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>%1x%2</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="108"/>
+        <location filename="../src/commands/filtercommands.cpp" line="107"/>
         <source>Add %1 filter</source>
         <translation>Προσθήκη φίλτρου %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="110"/>
+        <location filename="../src/commands/filtercommands.cpp" line="109"/>
         <source>Add %1 filter set</source>
         <translation>Προσθήκη συνόλου φίλτρων %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="171"/>
+        <location filename="../src/commands/filtercommands.cpp" line="173"/>
         <source>Remove %1 filter</source>
         <translation>Αφαίρεση φίλτρου %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="205"/>
+        <location filename="../src/commands/filtercommands.cpp" line="207"/>
         <source>Move %1 filter</source>
         <translation>Μετακίνηση φίλτρου %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="245"/>
+        <location filename="../src/commands/filtercommands.cpp" line="247"/>
         <source>Disable %1 filter</source>
         <translation>Απενεργοποίηση φίλτρου %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="247"/>
+        <location filename="../src/commands/filtercommands.cpp" line="249"/>
         <source>Enable %1 filter</source>
         <translation>Ενεργοποίηση φίλτρου %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="303"/>
+        <location filename="../src/commands/filtercommands.cpp" line="305"/>
         <source>Paste filters</source>
-        <translation type="unfinished">Επικόλληση φίλτρων</translation>
+        <translation>Επικόλληση φίλτρων</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="357"/>
+        <location filename="../src/commands/filtercommands.cpp" line="359"/>
         <source>Change %1 filter</source>
         <translation>Αλλαγή φίλτρου %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/filtercommands.cpp" line="359"/>
+        <location filename="../src/commands/filtercommands.cpp" line="361"/>
         <source>Change %1 filter: %2</source>
         <translation>Αλλαγή φίλτρου %1: %2</translation>
     </message>
@@ -8197,8 +8216,8 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1335"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1062"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1154"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1059"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1149"/>
         <source>A job already exists for %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9142,42 +9161,42 @@ If the duration is 0, no transition will be created.</source>
         <translation>Κρατήστε πατημένο το %1 για να σύρετε ένα keyframe μόνο κατακόρυφα ή το %2 για να σύρετε μόνο οριζόντια</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="107"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="108"/>
         <source>Preset</source>
         <translation>Προκαθορισμένα</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="129"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="130"/>
         <source>Speed</source>
         <translation>Ταχύτητα</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="133"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="134"/>
         <source>Map the specified speed to the current time. Use keyframes to vary the speed mappings over time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="157"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="158"/>
         <source>Image mode</source>
         <translation>Λειτουργία εικόνας</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="161"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="162"/>
         <source>Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.</source>
         <translation>Χρησιμοποιήστε την καθορισμένη λειτουργία επιλογής εικόνας. Το Πλησιέστερο θα εμφανίσει την εικόνα που είναι πλησιέστερα στην αντιστοιχισμένη ώρα. Το Ανάμιξη θα συνδυάσει όλες τις εικόνες που εμφανίζονται κατά τη διάρκεια του αντιστοιχισμένου χρόνου.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="180"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="181"/>
         <source>Nearest</source>
         <translation>Πλησιέστερο</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="185"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="186"/>
         <source>Blend</source>
         <translation>Ανάμιξη</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="200"/>
+        <location filename="../src/qml/filters/speed/SpeedUI.qml" line="201"/>
         <source>Enable pitch compensation</source>
         <translation>Ενεργοποίηση αντιστάθμισης τονικού ύψους</translation>
     </message>
@@ -9816,12 +9835,12 @@ Remove the subtitle filter before removing this track.</source>
 <context>
     <name>TiledItemDelegate</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="122"/>
+        <location filename="../src/docks/playlistdock.cpp" line="123"/>
         <source>Duration: %1</source>
         <translation>Διάρκεια: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="127"/>
+        <location filename="../src/docks/playlistdock.cpp" line="128"/>
         <source>Date: %1</source>
         <translation>Ημερομηνία: %1</translation>
     </message>
@@ -9842,531 +9861,601 @@ Remove the subtitle filter before removing this track.</source>
 <context>
     <name>TimelineDock</name>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="73"/>
-        <location filename="../src/docks/timelinedock.cpp" line="84"/>
+        <location filename="../src/docks/timelinedock.cpp" line="83"/>
+        <location filename="../src/docks/timelinedock.cpp" line="94"/>
         <source>Timeline</source>
         <translation>Χρονολόγιο</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1612"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1704"/>
         <source>This track is locked</source>
         <translation>Το κομμάτι αυτό είναι κλειδωμένο</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1617"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1709"/>
         <source>You cannot add a non-seekable source.</source>
         <translation>Δεν μπορείτε να προσθέσετε μια πηγή χωρίς δυνατότητα αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2015"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2049"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2107"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2141"/>
         <source>Track %1 was not moved</source>
         <translation>Το κομμάτι %1 δεν μετακινήθηκε</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2020"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2112"/>
         <source>Can not move audio track above video track</source>
         <translation>Δεν είναι δυνατή η μετακίνηση ενός κομματιού ήχου πάνω από ένα κομμάτι βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2036"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2128"/>
         <source>Can not move video track below audio track</source>
         <translation>Δεν είναι δυνατή η μετακίνηση ενός κομματιού βίντεο κάτω από ένα κομμάτι ήχου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1342"/>
-        <location filename="../src/docks/timelinedock.cpp" line="2177"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1434"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2269"/>
         <source>Align To Reference Track</source>
         <translation>Ευθυγράμμιση με κομμάτι αναφοράς</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="85"/>
+        <location filename="../src/docks/timelinedock.cpp" line="95"/>
         <source>Track Operations</source>
         <translation>Λειτουργίες κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="97"/>
+        <location filename="../src/docks/timelinedock.cpp" line="107"/>
         <source>Track Height</source>
         <translation>Υψος κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="102"/>
+        <location filename="../src/docks/timelinedock.cpp" line="112"/>
         <source>Selection</source>
         <translation>Επιλογή</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="115"/>
+        <location filename="../src/docks/timelinedock.cpp" line="125"/>
         <source>Edit</source>
         <translation>Επεξεργασία</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="131"/>
+        <location filename="../src/docks/timelinedock.cpp" line="142"/>
         <source>View</source>
         <translation>Προβολή</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="137"/>
+        <location filename="../src/docks/timelinedock.cpp" line="148"/>
         <source>Marker</source>
         <translation>Δείκτης</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="147"/>
+        <location filename="../src/docks/timelinedock.cpp" line="158"/>
         <source>Timeline Clip</source>
         <translation>Κλιπ γραμμής χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="170"/>
+        <location filename="../src/docks/timelinedock.cpp" line="182"/>
         <source>Timeline Controls</source>
         <translation>Χειριστήρια γραμμής χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="174"/>
+        <location filename="../src/docks/timelinedock.cpp" line="186"/>
         <source>Timeline Menu</source>
         <translation>Μενού γραμμής χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="352"/>
+        <location filename="../src/docks/timelinedock.cpp" line="377"/>
         <source>Add Audio Track</source>
         <translation>Προσθήκη κομματιού ήχου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="361"/>
+        <location filename="../src/docks/timelinedock.cpp" line="386"/>
         <source>Add Video Track</source>
         <translation>Προσθήκη κομματιού βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="370"/>
+        <location filename="../src/docks/timelinedock.cpp" line="395"/>
         <source>Insert Track</source>
         <translation>Εισαγωγή κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="379"/>
+        <location filename="../src/docks/timelinedock.cpp" line="404"/>
         <source>Remove Track</source>
         <translation>Αφαίρεση κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="390"/>
+        <location filename="../src/docks/timelinedock.cpp" line="415"/>
         <source>Move Track Up</source>
         <translation>Μετακίνηση κομματιού πάνω</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="401"/>
+        <location filename="../src/docks/timelinedock.cpp" line="426"/>
         <source>Move Track Down</source>
         <translation>Μετακίνηση κομματιού κάτω</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="412"/>
+        <location filename="../src/docks/timelinedock.cpp" line="437"/>
         <source>Show/Hide Selected Track</source>
         <translation>Εμφάνιση/Απόκρυψη επιλεγμένου κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="428"/>
+        <location filename="../src/docks/timelinedock.cpp" line="453"/>
         <source>Lock/Unlock Selected Track</source>
         <translation>Κλείδωμα/Ξεκλείδωμα επιλεγμένου κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="447"/>
+        <location filename="../src/docks/timelinedock.cpp" line="472"/>
         <source>Mute/Unmute Selected Track</source>
         <translation>Σίγαση/Κατάργηση σίγασης επιλεγμένου κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="463"/>
+        <location filename="../src/docks/timelinedock.cpp" line="488"/>
         <source>Blend/Unblend Selected Track</source>
         <translation>Μίξη/Κατάργηση ανάμιξης επιλεγμένου κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="481"/>
+        <location filename="../src/docks/timelinedock.cpp" line="506"/>
         <source>Make Tracks Shorter</source>
         <translation>Κόντεμα Κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="490"/>
+        <location filename="../src/docks/timelinedock.cpp" line="515"/>
         <source>Make Tracks Taller</source>
         <translation>Ψήλωμα Κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="499"/>
+        <location filename="../src/docks/timelinedock.cpp" line="524"/>
         <source>Reset Track Height</source>
         <translation>Επαναφορά ύψους κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="508"/>
+        <location filename="../src/docks/timelinedock.cpp" line="533"/>
         <source>Select All</source>
         <translation>Επιλογή Όλων</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="519"/>
+        <location filename="../src/docks/timelinedock.cpp" line="544"/>
         <source>Select All On Current Track</source>
         <translation>Επιλογή Ολων στο τρέχον κομμάτι</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="530"/>
+        <location filename="../src/docks/timelinedock.cpp" line="555"/>
         <source>Select None</source>
         <translation>Καμία επιλογή</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="542"/>
+        <location filename="../src/docks/timelinedock.cpp" line="567"/>
         <source>Select Next Clip</source>
         <translation>Επιλογή επόμενου κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="557"/>
+        <location filename="../src/docks/timelinedock.cpp" line="582"/>
         <source>Select Previous Clip</source>
         <translation>Επιλογή προηγούμενου κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="572"/>
+        <location filename="../src/docks/timelinedock.cpp" line="597"/>
         <source>Select Clip Above</source>
         <translation>Επιλογή παραπάνω κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="593"/>
+        <location filename="../src/docks/timelinedock.cpp" line="618"/>
         <source>Select Clip Below</source>
         <translation>Επιλογή παρακάτω κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="614"/>
+        <location filename="../src/docks/timelinedock.cpp" line="639"/>
         <source>Set Current Track Above</source>
         <translation>Ρύθμιση τρέχοντος κομματιού παραπάνω</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="623"/>
+        <location filename="../src/docks/timelinedock.cpp" line="648"/>
         <source>Set Current Track Below</source>
         <translation>Ρύθμιση τρέχοντος κομματιού παρακάτω</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="632"/>
+        <location filename="../src/docks/timelinedock.cpp" line="657"/>
         <source>Select Clip Under Playhead</source>
         <translation>Επιλογή κλιπ κάτω από την κεφαλή αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="647"/>
+        <location filename="../src/docks/timelinedock.cpp" line="672"/>
         <source>Cu&amp;t</source>
         <translation>Απο&amp;κοπή</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="668"/>
+        <location filename="../src/docks/timelinedock.cpp" line="693"/>
         <source>&amp;Copy</source>
         <translation>Αντι&amp;γραφή</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="697"/>
+        <location filename="../src/docks/timelinedock.cpp" line="722"/>
         <source>&amp;Paste</source>
         <translation>Ε&amp;πικόλληση</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="711"/>
+        <location filename="../src/docks/timelinedock.cpp" line="736"/>
         <source>Nudge Forward</source>
         <translation>Μικρή Ωθηση Εμπρός</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="726"/>
+        <location filename="../src/docks/timelinedock.cpp" line="751"/>
         <source>Nudge Forward is not available</source>
         <translation>Η Μικρή Ωθηση Εμπρός δεν είναι διαθέσιμη</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="748"/>
+        <location filename="../src/docks/timelinedock.cpp" line="773"/>
         <source>Nudge Backward</source>
         <translation>Μικρή Ωθηση Πίσω</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="758"/>
+        <location filename="../src/docks/timelinedock.cpp" line="783"/>
         <source>Nudge Backward is not available</source>
         <translation>Η Μικρή Ωθηση Πίσω δεν είναι διαθέσιμη</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="780"/>
+        <location filename="../src/docks/timelinedock.cpp" line="805"/>
         <source>Append</source>
         <translation>Προσάρτηση</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="791"/>
+        <location filename="../src/docks/timelinedock.cpp" line="816"/>
         <source>Ripple Delete</source>
         <translation>Διαγραφή με διατήρηση συγχρονισμού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="808"/>
+        <location filename="../src/docks/timelinedock.cpp" line="833"/>
         <source>Lift</source>
         <translation>Ανασήκωση</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="826"/>
+        <location filename="../src/docks/timelinedock.cpp" line="851"/>
         <source>Overwrite</source>
         <translation>Επικάληψη </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="839"/>
+        <location filename="../src/docks/timelinedock.cpp" line="864"/>
         <source>Split At Playhead</source>
         <translation>Διαχωρισμός στην Κεφαλή Αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="896"/>
+        <location filename="../src/docks/timelinedock.cpp" line="921"/>
         <source>Split All Tracks At Playhead</source>
         <translation>Διαχωρισμός Ολων των Κομματιών στην Κεφαλή Αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="927"/>
+        <location filename="../src/docks/timelinedock.cpp" line="952"/>
         <source>Replace</source>
         <translation>Αντικατάσταση</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="946"/>
+        <location filename="../src/docks/timelinedock.cpp" line="971"/>
         <source>Create/Edit Marker</source>
         <translation>Προσθήκη/Επεξεργασία δείκτη</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="959"/>
+        <location filename="../src/docks/timelinedock.cpp" line="984"/>
         <source>Previous Marker</source>
         <translation>Προηγούμενος δείκτης</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="973"/>
+        <location filename="../src/docks/timelinedock.cpp" line="998"/>
         <source>Next Marker</source>
         <translation>Επόμενος δείκτης</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="987"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1012"/>
         <source>Delete Marker</source>
         <translation>Διαγραφή δείκτη</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="998"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1023"/>
         <source>Cycle Marker Color</source>
         <translation>Κυκλική επιλογή χρώματος δείκτη</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1014"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1039"/>
         <source>Create Marker Around Selected Clip</source>
         <translation>Δημιουργία δείκτη για ολόκληρο το επιλεγμένο κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1025"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1050"/>
         <source>Rectangle Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1036"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1061"/>
         <source>Automatically Add Tracks</source>
         <translation>Αυτόματη προσθήκη κομματιών</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1047"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1072"/>
         <source>Snap</source>
         <translation>Κούμπωμα</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1061"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1086"/>
         <source>Scrub While Dragging</source>
         <translation>Τρίψιμο κατά το σύρσιμο</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1074"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1099"/>
         <source>Ripple</source>
         <translation>Διατήρηση συγχρονισμού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1088"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1113"/>
         <source>Ripple All Tracks</source>
         <translation>Διατήρηση συγχρονισμού σε όλα τα κομμάτια</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1102"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1127"/>
         <source>Ripple Markers</source>
         <translation>Διατήρηση συγχρονισμού στους δείκτες</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1117"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1142"/>
         <source>Toggle Ripple And All Tracks</source>
         <translation>Εναλλαγή Διατήρησης Συγχρονισμού και Ολα τα Κομμάτια</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1125"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1150"/>
         <source>Toggle Ripple, All Tracks, And Markers</source>
         <translation>Εναλλαγή Διατήρησης Συγχρονισμού, Ολα τα Κομμάτια και Δείκτες</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1134"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1159"/>
         <source>Show Audio Waveforms</source>
         <translation>Εμφάνιση Κυματομορφών Ήχου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1148"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1173"/>
         <source>Use Higher Performance Waveforms</source>
         <translation>Χρήση κυματομορφών υψηλότερης απόδοσης</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1164"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1189"/>
         <source>Show Video Thumbnails</source>
         <translation>Εμφάνιση μικρογραφιών του βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1175"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1200"/>
         <source>No</source>
         <translation>Κανένα</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1188"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1213"/>
         <source>Page</source>
         <translation>Σελίδα</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1201"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1226"/>
         <source>Smooth</source>
         <translation>Εξομάλυνση</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1214"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1239"/>
         <source>Center the Playhead</source>
         <translation>Κεντράρισμα κεφαλής αναπαραγωγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1228"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1253"/>
         <source>Scroll to Playhead on Zoom</source>
         <translation>Κύλιση στην κεφαλίδα αναπαραγωγής κατά την μεγέθυνση/σμίκρυνση</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1240"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1265"/>
         <source>Zoom Timeline Out</source>
         <translation>Σμίκρυνση γραμμής χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1251"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1276"/>
         <source>Zoom Timeline In</source>
         <translation>Μεγέθυνση γραμμής χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1262"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1287"/>
         <source>Zoom Timeline To Fit</source>
         <translation>Μεγέθυνση γραμμής χρόνου ώστε να ταιριάζει</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1291"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1299"/>
+        <source>New Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1307"/>
+        <source>Color</source>
+        <translation>Χρώμα</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1309"/>
+        <source>Text</source>
+        <translation>Κείμενο</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1313"/>
+        <source>Animation</source>
+        <translation>Animation</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1317"/>
+        <source>Noise</source>
+        <translation>Θόρυβος</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1320"/>
+        <source>Color Bars</source>
+        <translation>Μπάρες Χρώματος</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1324"/>
+        <source>Audio Tone</source>
+        <translation>Χροιά Ήχου</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1327"/>
+        <source>Count</source>
+        <translation>Αρίθμηση</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1330"/>
+        <source>Blip Flash</source>
+        <translation>Αναπαραγωγή ήχου Μπλιπ</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1353"/>
         <source>Properties</source>
         <translation>Ιδιότητες</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1298"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1360"/>
         <source>Rejoin With Next Clip</source>
         <translation>Επανένωση με το επόμενο κλιπ</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1314"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1376"/>
         <source>Detach Audio</source>
         <translation>Αποσύνδεση ήχου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1362"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1404"/>
+        <source>Freeze Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1454"/>
         <source>Apply Copied Filters</source>
         <translation>Εφαρμογή Επιλεγμένων Φίλτρων</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1386"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1478"/>
         <source>Update Thumbnails</source>
         <translation>Ενημέρωση Μικρογραφιών</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1410"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1502"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Επαναδημιουργία της Κυματομορφής Ήχου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1434"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1526"/>
         <source>Ripple Trim Clip In</source>
         <translation>Εσωτερικό ξάκρισμα κομματιού με διατήρηση συγχρονισμού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1441"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1533"/>
         <source>Ripple Trim Clip Out</source>
         <translation>Εξωτερικό ξάκρισμα κομματιού με διατήρηση συγχρονισμού</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1448"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1540"/>
         <source>Group/Ungroup</source>
         <translation>Ομαδοποίηση/Κατάργηση Ομαδοποίησης</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2266"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2367"/>
         <source>Append multiple to timeline</source>
         <translation>Προσάρτηση πολλαπλών στη γραμμή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2326"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2427"/>
         <source>Ripple delete transition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2375"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2476"/>
         <source>Lift transition</source>
         <translation>Μετάβαση ανύψωσης</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2450"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2551"/>
         <source>Cut %1 from timeline</source>
         <translation>Αποκοπή %1 από τη γραμμή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2452"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2553"/>
         <source>Remove %1 from timeline</source>
         <translation>Αφαίρεση %1 από τη γραμμή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2475"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2576"/>
         <source>Lift %1 from timeline</source>
         <translation>Ανασήκωση %1 από τη γραμμή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2826"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2927"/>
         <source>There is nothing in the Source player.</source>
         <translation>Δεν υπάρχει τίποτα στο Πρόγραμμα Αναπαραγωγής Πηγής</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2841"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2942"/>
         <source>You cannot replace a transition.</source>
         <translation>Δεν μπορείτε να αντικαταστήσετε μία μετάβαση.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2871"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2972"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation>Επιλέξτε ένα κλιπ στη γραμμή χρόνου για να δημιουργήσετε έναν δείκτη που να το περικλείει ολόκληρο</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2892"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2993"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation>Προστέθηκε ο δείκτης: &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2912"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3013"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation>Προστέθηκε ο δείκτης: &quot;%1&quot;. Κρατήστε πατημένο το %2 και σύρετε για να δημιουργήσετε ένα εύρος</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3028"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3129"/>
         <source>Failed to open </source>
         <translation>Αποτυχία ανοίγματος</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3052"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3162"/>
         <source>Dropped Files</source>
         <translation>Αρχεία που εναποθέσατε</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3425"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3207"/>
+        <source>You cannot freeze a frame of a transition.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3226"/>
+        <source>Freeze Frame is not available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3260"/>
+        <source>Insert Freeze Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3264"/>
+        <source>The play head is not over the selected clip.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="3616"/>
         <source>Insert multiple into timeline</source>
         <translation>Εισαγωγή πολλαπλών στη γραμμή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3543"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3755"/>
         <source>Overwrite multiple onto timeline</source>
         <translation>Αντικατάσταση πολλαπλών στη γραμμή χρόνου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="879"/>
-        <location filename="../src/docks/timelinedock.cpp" line="911"/>
+        <location filename="../src/docks/timelinedock.cpp" line="904"/>
+        <location filename="../src/docks/timelinedock.cpp" line="936"/>
         <source>You cannot split a transition.</source>
         <translation>Δεν μπορείτε να χωρήσετε μία μετάβαση.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="3885"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4171"/>
         <source>Replace %n timeline clips</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -10374,44 +10463,44 @@ Remove the subtitle filter before removing this track.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3938"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4224"/>
         <source>voiceover</source>
         <translation>voiceover</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3939"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4225"/>
         <source>Opus (*.opus);;All Files (*)</source>
         <translation>Opus (*.opus);;Ολα τα Αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1274"/>
-        <location filename="../src/docks/timelinedock.cpp" line="3941"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4051"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1336"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4227"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4343"/>
         <source>Record Audio</source>
         <translation>Εγγραφή Ηχου</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3955"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4241"/>
         <source>Record Audio: %1</source>
         <translation>Εγγραφή Ηχου %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4017"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4308"/>
         <source>Audio Recording In Progress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4027"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4318"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation>Σφάλμα εγγραφής ήχου: ελέγξτε τις ρυθμίσεις PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4030"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4322"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation>Σφάλμα εγγραφής ήχου: επιλέξτε Αρχείο &gt; Ανοιγμα άλλου &gt; Συσκευή ήχου/βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4057"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4349"/>
         <source>Saving audio recording...</source>
         <translation>Αποθήκευση ηχογράφησης...</translation>
     </message>
@@ -10524,37 +10613,37 @@ Remove the subtitle filter before removing this track.</source>
 <context>
     <name>TrackHead</name>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="223"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="219"/>
         <source>Unmute</source>
         <translation>Από-Σίγαση</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="223"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="219"/>
         <source>Mute</source>
         <translation>Σίγαση</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="240"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="236"/>
         <source>Show</source>
         <translation>Εμφάνιση</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="240"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="236"/>
         <source>Hide</source>
         <translation>Απόκρυψη</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="187"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="183"/>
         <source>Unlock track</source>
         <translation>Ξεκλείδωμα κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="187"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="183"/>
         <source>Lock track</source>
         <translation>Κλείδομα κομματιού</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="259"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="255"/>
         <source>Filters</source>
         <translation>Φίλτρα</translation>
     </message>
@@ -10692,16 +10781,6 @@ Remove the subtitle filter before removing this track.</source>
         <translation>μεσαίο</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="104"/>
-        <source>large</source>
-        <translation>μεγάλο</translation>
-    </message>
-    <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="114"/>
-        <source>biggest</source>
-        <translation>μεγαλύτερο</translation>
-    </message>
-    <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="136"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
@@ -10748,6 +10827,16 @@ only the currently selected one.</source>
 του κλιπ πηγής συν λίγο ακόμα και όχι ολόκληρο το κλιπ.
 Οταν χρησιμοποιείται αυτή η επιλογή, δεν αντικαθίστανται όλα τα κλιπ πηγής
 που ταιριάζουν, αλλά μόνο το τρέχον επιλεγμένο.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="104"/>
+        <source>BIG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="114"/>
+        <source>&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;HUGE&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="171"/>
@@ -12596,7 +12685,7 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="7"/>
-        <source>gamma value black white</source>
+        <source>gamma value black white color</source>
         <comment>search keywords for the Levels video filter</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -12665,7 +12754,7 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="32"/>
-        <location filename="../src/qml/filters/mask_shape/meta.qml" line="19"/>
+        <location filename="../src/qml/filters/mask_shape/meta.qml" line="20"/>
         <location filename="../src/qml/filters/threshold/meta.qml" line="6"/>
         <source>Threshold</source>
         <translation>Κατώφλι</translation>
@@ -13958,6 +14047,22 @@ IRE: %2</translation>
         <comment>search keywords for the Clarity video filter</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/strobe/meta.qml" line="6"/>
+        <source>Alpha Strobe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/strobe/meta.qml" line="7"/>
+        <source>strobe alpha</source>
+        <comment>search keywords for the Strobe video filter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/strobe/meta.qml" line="17"/>
+        <source>Interval</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_affine</name>
@@ -14458,57 +14563,57 @@ IRE: %2</translation>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="174"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="178"/>
         <source>Output</source>
         <translation>Εξοδος</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="203"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="208"/>
         <source>Filters</source>
         <translation>Φίλτρα</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="308"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="313"/>
         <source>Move %1</source>
         <translation>Μετακίνηση %1</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="350"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="355"/>
         <source>Can not move audio track above video track</source>
         <translation>Δεν είναι δυνατή η μετακίνηση ενός κομματιού ήχου πάνω από ένα κομμάτι βίντεο</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="352"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="357"/>
         <source>Can not move video track below audio track</source>
         <translation>Δεν είναι δυνατή η μετακίνηση ενός κομματιού βίντεο κάτω από ένα κομμάτι ήχου</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="354"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="359"/>
         <source>Track %1 was not moved</source>
         <translation>Το κομμάτι %1 δεν μετακινήθηκε</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="689"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="706"/>
         <source>Insert</source>
         <translation>Εισαγωγή</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="689"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="706"/>
         <source>Overwrite</source>
         <translation>Επικάληψη </translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="1011"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="1028"/>
         <source>Do you want to insert an audio or video track?</source>
         <translation>Θέλετε να εισάγετε ένα κομμάτι ήχου ή βίντεο;</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="1021"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="1038"/>
         <source>Audio</source>
         <translation>Ηχος</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="1029"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="1046"/>
         <source>Video</source>
         <translation>Βίντεο</translation>
     </message>
@@ -14567,8 +14672,8 @@ IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="117"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="641"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="904"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="653"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="916"/>
         <location filename="../src/qml/filters/dropshadow/ui.qml" line="129"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="287"/>
         <source>Blur</source>
@@ -14687,7 +14792,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/audio_seam/ui.qml" line="75"/>
         <location filename="../src/qml/filters/audio_stereoenhance/ui.qml" line="72"/>
         <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="92"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="441"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="451"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="232"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="294"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="295"/>
@@ -14758,6 +14863,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/sketch/ui.qml" line="52"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="55"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/strobe/ui.qml" line="97"/>
         <location filename="../src/qml/filters/subtitle/ui.qml" line="83"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="47"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="70"/>
@@ -15410,56 +15516,56 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation>Κεντρική πόλωση</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="491"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="503"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="160"/>
         <location filename="../src/qml/filters/reflect/ui.qml" line="78"/>
         <source>Top</source>
         <translation>Πάνω</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="554"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="817"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="566"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="829"/>
         <source>Fade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="589"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="852"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="601"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="864"/>
         <source>In</source>
-        <translation type="unfinished">Είσοδος</translation>
+        <translation>Είσοδος</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="615"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="878"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="627"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="890"/>
         <source>Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Έξοδος</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="650"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="913"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="662"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="925"/>
         <source>Width at start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="676"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="939"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="688"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="951"/>
         <source>Height at start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="702"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="965"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="714"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="977"/>
         <source>Width at end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="728"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="991"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="740"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="1003"/>
         <source>Height at end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="754"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="766"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="180"/>
         <location filename="../src/qml/filters/reflect/ui.qml" line="73"/>
         <source>Bottom</source>
@@ -16133,7 +16239,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Άνοιγμα Αρχείου 3D LUT</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="476"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="488"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="343"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="344"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="791"/>
@@ -16428,8 +16534,8 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Οριζόντια</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="502"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="765"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="514"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="777"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="279"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="373"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="367"/>
@@ -16439,8 +16545,8 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Εκκίνηση</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="528"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="791"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="540"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="803"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="323"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="417"/>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/ui.qml" line="404"/>
@@ -17380,8 +17486,8 @@ Change top/side distortion bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="580"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="843"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="592"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_cap/ui.qml" line="855"/>
         <location filename="../src/qml/filters/hslrange/ui.qml" line="265"/>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="408"/>
         <source>Blend</source>
@@ -19276,6 +19382,11 @@ Click to select, drag to change position</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/ui.qml" line="209"/>
         <source>Smooth yaw instead of locking it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/strobe/ui.qml" line="116"/>
+        <source>Interval</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
