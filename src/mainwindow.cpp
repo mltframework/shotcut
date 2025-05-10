@@ -2609,6 +2609,8 @@ void MainWindow::updateWindowTitle()
                                    QString::number(MLT.profile().height(), 'f', 0),
                                    QString::number(MLT.profile().fps(), 'f', 2),
                                    QString::number(Settings.playerAudioChannels(), 'f', 0));
+    if (!MLT.profile().is_explicit())
+        profileText = tr("Automatic");
 #ifdef Q_OS_MAC
     setWindowTitle(
         QStringLiteral("%1 - %2 - %3").arg(shownName).arg(profileText).arg(qApp->applicationName()));
