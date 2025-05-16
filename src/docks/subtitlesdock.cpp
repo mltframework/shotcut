@@ -407,7 +407,7 @@ void SubtitlesDock::setupActions()
     Actions.add("subtitleMoveAction", action, windowTitle());
 
     action = new QAction(tr("Burn In Subtitles on Output"), this);
-    action->setToolTip(tr("Create or edit a Burn In Subtitles filter on the timeline output."));
+    action->setToolTip(tr("Create or edit a Subtitle Burn In filter on the timeline output."));
     action->setIcon(QIcon::fromTheme("font", QIcon(":/icons/oxygen/32x32/actions/font.png")));
     connect(action, &QAction::triggered, this, &SubtitlesDock::burnInOnTimeline);
     Actions.add("subtitleBurnInAction", action, windowTitle());
