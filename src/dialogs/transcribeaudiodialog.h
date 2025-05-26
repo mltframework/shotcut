@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Meltytech, LLC
+ * Copyright (c) 2024-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 #ifndef TRANSCRIBEAUDIODIALOG_H
 #define TRANSCRIBEAUDIODIALOG_H
 
+#include "models/extensionmodel.h"
+
 #include <QDialog>
 
 class QAbstractButton;
@@ -27,6 +29,7 @@ class QDialogButtonBox;
 class QLineEdit;
 class QListWidget;
 class QSpinBox;
+class QTreeView;
 
 class TranscribeAudioDialog : public QDialog
 {
@@ -42,10 +45,12 @@ public:
     bool includeNonspoken();
 
 private slots:
-    void clicked(QAbstractButton *button);
+    void onButtonClicked(QAbstractButton *button);
+    void onModelRowClicked(const QModelIndex &index);
 
 private:
     void updateWhisperStatus();
+    ExtensionModel m_model;
     QLineEdit *m_name;
     QComboBox *m_lang;
     QCheckBox *m_translate;
@@ -56,6 +61,7 @@ private:
     QLineEdit *m_exeLabel;
     QLineEdit *m_modelLabel;
     QDialogButtonBox *m_buttonBox;
+    QTreeView *m_table;
 };
 
 #endif // TRANSCRIBEAUDIODIALOG_H

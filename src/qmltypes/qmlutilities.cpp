@@ -28,6 +28,7 @@
 #include "qmltypes/messagedialog.h"
 #include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmleditmenu.h"
+#include "qmltypes/qmlextension.h"
 #include "qmltypes/qmlfile.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlmarkermenu.h"
@@ -51,6 +52,8 @@ QmlUtilities::QmlUtilities(QObject *parent)
 
 void QmlUtilities::registerCommonTypes()
 {
+    qmlRegisterType<QmlExtension>("org.shotcut.qml", 1, 0, "Extension");
+    qmlRegisterType<QmlExtensionFile>("org.shotcut.qml", 1, 0, "ExtensionFile");
     qmlRegisterType<QmlFile>("org.shotcut.qml", 1, 0, "File");
     qmlRegisterType<QmlFilter>("org.shotcut.qml", 1, 0, "Filter");
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
