@@ -28,6 +28,7 @@ set(LANGUAGES
     it
     ko
     ja
+    lt
     nb
     nn
     ne
