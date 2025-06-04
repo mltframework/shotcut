@@ -1259,13 +1259,14 @@ void Controller::adjustFilters(Producer &producer, int index)
                     filter->anim_set(key,
                                      1,
                                      filter->get_length()
-                                         - filter->get_int(kShotcutAnimOutProperty));
+                                         - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
                     filter->anim_set(key, 0, filter->get_length() - 1);
                 } else if (filterName == "fadeOutMovit") {
                     filter->clear("opacity");
                     filter->anim_set("opacity",
                                      1,
-                                     filter->get_length() - filter->get_int(kShotcutAnimOutProperty),
+                                     filter->get_length()
+                                         - std::max(filter->get_int(kShotcutAnimOutProperty), 2),
                                      0,
                                      mlt_keyframe_smooth);
                     filter->anim_set("opacity", 0, filter->get_length() - 1);
@@ -1274,7 +1275,7 @@ void Controller::adjustFilters(Producer &producer, int index)
                     filter->anim_set("level",
                                      0,
                                      filter->get_length()
-                                         - filter->get_int(kShotcutAnimOutProperty));
+                                         - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
                     filter->anim_set("level", -60, filter->get_length() - 1);
                 } else if (filter->get_int(kShotcutAnimOutProperty) > 0) {
                     // Update simple keyframes.
@@ -1428,13 +1429,15 @@ void Controller::adjustFilter(
                 filter->clear(key);
                 filter->anim_set(key,
                                  1,
-                                 filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                                 filter->get_length()
+                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
                 filter->anim_set(key, 0, filter->get_length() - 1);
             } else if (filterName == "fadeOutMovit") {
                 filter->clear("opacity");
                 filter->anim_set("opacity",
                                  1,
-                                 filter->get_length() - filter->get_int(kShotcutAnimOutProperty),
+                                 filter->get_length()
+                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2),
                                  0,
                                  mlt_keyframe_smooth);
                 filter->anim_set("opacity", 0, filter->get_length() - 1);
@@ -1442,7 +1445,8 @@ void Controller::adjustFilter(
                 filter->clear("level");
                 filter->anim_set("level",
                                  0,
-                                 filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                                 filter->get_length()
+                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
                 filter->anim_set("level", -60, filter->get_length() - 1);
             }
             emit MAIN.serviceInChanged(inDelta, filter);
@@ -1465,13 +1469,15 @@ void Controller::adjustFilter(
                 filter->clear(key);
                 filter->anim_set(key,
                                  1,
-                                 filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                                 filter->get_length()
+                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
                 filter->anim_set(key, 0, filter->get_length() - 1);
             } else if (filterName == "fadeOutMovit") {
                 filter->clear("opacity");
                 filter->anim_set("opacity",
                                  1,
-                                 filter->get_length() - filter->get_int(kShotcutAnimOutProperty),
+                                 filter->get_length()
+                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2),
                                  0,
                                  mlt_keyframe_smooth);
                 filter->anim_set("opacity", 0, filter->get_length() - 1);
@@ -1479,7 +1485,8 @@ void Controller::adjustFilter(
                 filter->clear("level");
                 filter->anim_set("level",
                                  0,
-                                 filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                                 filter->get_length()
+                                     - std::max(filter->get_int(kShotcutAnimOutProperty), 2));
                 filter->anim_set("level", -60, filter->get_length() - 1);
             }
             emit MAIN.serviceOutChanged(outDelta, filter);

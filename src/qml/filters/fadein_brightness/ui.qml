@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ Item {
         var name = (filter.get('alpha') != 1) ? 'alpha' : 'level';
         filter.resetProperty(name);
         filter.set(name, 0, 0);
-        filter.set(name, 1, Math.min(duration, filter.duration) - 1);
+        filter.set(name, 1, Math.max(Math.min(duration, filter.duration), 2) - 1);
     }
 
     width: 100
@@ -73,7 +73,7 @@ Item {
             Shotcut.TimeSpinner {
                 id: timeSpinner
 
-                minimumValue: 2
+                minimumValue: 1
                 maximumValue: 5000
                 onValueChanged: {
                     if (_blockUpdate)

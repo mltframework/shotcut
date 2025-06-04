@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ Item {
                     filter.animateIn = duration;
                     filter.resetProperty('opacity');
                     filter.set('opacity', 0, 0, KeyframesModel.SmoothNaturalInterpolation);
-                    filter.set('opacity', 1, Math.min(duration, filter.duration) - 1);
+                    filter.set('opacity', 1, Math.max(Math.min(duration, filter.duration), 2) - 1);
                     filter.endUndoCommand();
                 }
                 onSetDefaultClicked: {

@@ -1622,25 +1622,17 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                     if (Settings.playerGPU()) {
                         // Special handling for animation keyframes on movit.opacity.
                         filter->clear("opacity");
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (21 << 8))
                         filter->anim_set("opacity",
                                          1,
-                                         info->frame_count - duration,
+                                         info->frame_count - std::max(duration, 2),
                                          0,
                                          mlt_keyframe_smooth_natural);
-#else
-                        filter->anim_set("opacity",
-                                         1,
-                                         info->frame_count - duration,
-                                         0,
-                                         mlt_keyframe_smooth);
-#endif
                         filter->anim_set("opacity", 0, info->frame_count - 1);
                     } else {
                         // Special handling for animation keyframes on brightness.
                         const char *key = filter->get_int("alpha") != 1 ? "alpha" : "level";
                         filter->clear(key);
-                        filter->anim_set(key, 1, info->frame_count - duration);
+                        filter->anim_set(key, 1, info->frame_count - std::max(duration, 2));
                         filter->anim_set(key, 0, info->frame_count - 1);
                     }
                     filter->set(kShotcutAnimOutProperty, duration);
@@ -1678,7 +1670,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
 
                     // Adjust audio filter.
                     filter->clear("level");
-                    filter->anim_set("level", 0, info->frame_count - duration);
+                    filter->anim_set("level", 0, info->frame_count - std::max(duration, 2));
                     filter->anim_set("level", -60, info->frame_count - 1);
                     Mlt::Animation animation(filter->get_animation("level"));
                     animation.key_set_type(0, type);

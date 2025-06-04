@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ Item {
             filter.animateIn = duration;
             filter.resetProperty('level');
             filter.set('level', -60, 0);
-            filter.set('level', 0, Math.min(duration, filter.duration) - 1);
+            filter.set('level', 0, Math.max(Math.min(duration, filter.duration), 2) - 1);
             filter.setKeyFrameType('level', 0, settings.audioInCurve);
         } else if (filter.animateIn === 0) {
             // Convert legacy filter.
@@ -73,7 +73,7 @@ Item {
 
             undoButtonVisible: false
             saveButtonVisible: false
-            minimumValue: 2
+            minimumValue: 1
             maximumValue: 5000
             onValueChanged: {
                 if (_blockUpdate)
