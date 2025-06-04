@@ -19,6 +19,7 @@ set(LANGUAGES
     eu
     fi
     fr
+    fr_CA
     ga
     gd
     gl

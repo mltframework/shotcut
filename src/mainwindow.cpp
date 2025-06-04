@@ -1281,6 +1281,9 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::French), m_languagesGroup);
     a->setCheckable(true);
     a->setData("fr");
+    a = new QAction("French (Canada)", m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("fr_CA");
     a = new QAction(QLocale::languageToString(QLocale::Gaelic), m_languagesGroup);
     a->setCheckable(true);
     a->setData("gd");
