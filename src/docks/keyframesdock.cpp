@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2024 Meltytech, LLC
+ * Copyright (c) 2016-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     m_keyTypePrevMenu->addAction(Actions["keyframesTypePrevHoldAction"]);
     m_keyTypePrevMenu->addAction(Actions["keyframesTypePrevLinearAction"]);
     m_keyTypePrevMenu->addAction(Actions["keyframesTypePrevSmoothNaturalAction"]);
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (21 << 8))
+
     QMenu *keyEaseOutMenu = new QMenu(tr("Ease Out"), this);
     icon = QIcon::fromTheme("keyframe-ease-out",
                             QIcon(":/icons/oxygen/32x32/actions/keyframe-ease-out.png"));
@@ -96,13 +96,12 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     keyEaseOutMenu->addAction(Actions["keyframesTypePrevEaseOutElasAction"]);
     keyEaseOutMenu->addAction(Actions["keyframesTypePrevEaseOutBounAction"]);
     m_keyTypePrevMenu->addMenu(keyEaseOutMenu);
-#endif
     m_keyMenu->addMenu(m_keyTypePrevMenu);
     m_keyTypeNextMenu = new QMenu(tr("To Next"), this);
     m_keyTypeNextMenu->addAction(Actions["keyframesTypeHoldAction"]);
     m_keyTypeNextMenu->addAction(Actions["keyframesTypeLinearAction"]);
     m_keyTypeNextMenu->addAction(Actions["keyframesTypeSmoothNaturalAction"]);
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (21 << 8))
+
     QMenu *keyEaseInMenu = new QMenu(tr("Ease In"), this);
     icon = QIcon::fromTheme("keyframe-ease-in",
                             QIcon(":/icons/oxygen/32x32/actions/keyframe-ease-in.png"));
@@ -118,6 +117,7 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     keyEaseInMenu->addAction(Actions["keyframesTypeEaseInElasAction"]);
     keyEaseInMenu->addAction(Actions["keyframesTypeEaseInBounAction"]);
     m_keyTypeNextMenu->addMenu(keyEaseInMenu);
+
     QMenu *keyEaseInOutMenu = new QMenu(tr("Ease In/Out"), this);
     icon = QIcon::fromTheme("keyframe-ease-inout",
                             QIcon(":/icons/oxygen/32x32/actions/keyframe-ease-inout.png"));
@@ -133,7 +133,6 @@ KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutElasAction"]);
     keyEaseInOutMenu->addAction(Actions["keyframesTypeEaseInOutBounAction"]);
     m_keyTypeNextMenu->addMenu(keyEaseInOutMenu);
-#endif
     m_keyMenu->addMenu(m_keyTypeNextMenu);
     m_keyMenu->addAction(Actions["keyframesRemoveAction"]);
     Actions.loadFromMenu(m_keyMenu);
@@ -387,14 +386,9 @@ void KeyframesDock::setupActions()
             return;
         int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
         for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (21 << 8))
             m_model.setInterpolation(currentTrack,
                                      keyframeIndex.toInt() - 1,
                                      KeyframesModel::SmoothNaturalInterpolation);
-#else
-            m_model.setInterpolation(currentTrack, keyframeIndex.toInt() - 1,
-                                     KeyframesModel::SmoothLooseInterpolation);
-#endif
         }
     });
     icon = QIcon::fromTheme("keyframe-smooth",
@@ -633,14 +627,9 @@ void KeyframesDock::setupActions()
             return;
         int currentTrack = m_qview.rootObject()->property("currentTrack").toInt();
         for (auto keyframeIndex : m_qview.rootObject()->property("selection").toList()) {
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (21 << 8))
             m_model.setInterpolation(currentTrack,
                                      keyframeIndex.toInt(),
                                      KeyframesModel::SmoothNaturalInterpolation);
-#else
-            m_model.setInterpolation(currentTrack, keyframeIndex.toInt(),
-                                     KeyframesModel::SmoothLooseInterpolation);
-#endif
         }
     });
     icon = QIcon::fromTheme("keyframe-smooth",

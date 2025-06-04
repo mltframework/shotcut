@@ -1496,11 +1496,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                     if (Settings.playerGPU()) {
                         // Special handling for animation keyframes on movit.opacity.
                         filter->clear("opacity");
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (21 << 8))
                         filter->anim_set("opacity", 0, 0, 0, mlt_keyframe_smooth_natural);
-#else
-                        filter->anim_set("opacity", 0, 0, 0, mlt_keyframe_smooth);
-#endif
                         filter->anim_set("opacity", 1, duration - 1);
                     } else {
                         // Special handling for animation keyframes on brightness.

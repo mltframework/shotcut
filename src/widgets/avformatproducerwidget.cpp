@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -345,15 +345,9 @@ void AvformatProducerWidget::reloadProducerValues()
             if (populateTrackCombos) {
                 if (ui->videoTrackComboBox->count() == 0)
                     ui->videoTrackComboBox->addItem(tr("None"), -1);
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (19 << 8))
                 ui->videoTrackComboBox->addItem(name, videoIndex);
             }
             if (videoIndex == m_producer->get_int(kVideoIndexProperty)) {
-#else
-                ui->videoTrackComboBox->addItem(name, i);
-            }
-            if (i == m_producer->get_int(kVideoIndexProperty)) {
-#endif
                 key = QStringLiteral("meta.media.%1.codec.long_name").arg(i);
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->videoTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
@@ -416,15 +410,9 @@ void AvformatProducerWidget::reloadProducerValues()
             if (populateTrackCombos) {
                 if (ui->audioTrackComboBox->count() == 0)
                     ui->audioTrackComboBox->addItem(tr("None"), -1);
-#if LIBMLT_VERSION_INT >= ((7 << 16) + (19 << 8))
                 ui->audioTrackComboBox->addItem(name, audioIndex);
             }
             if (QString::number(audioIndex) == m_producer->get(kAudioIndexProperty)) {
-#else
-                ui->audioTrackComboBox->addItem(name, i);
-            }
-            if (QString::number(i) == m_producer->get(kAudioIndexProperty)) {
-#endif
                 key = QStringLiteral("meta.media.%1.codec.long_name").arg(i);
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
