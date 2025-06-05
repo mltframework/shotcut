@@ -466,7 +466,7 @@ bool ProxyManager::filterXML(QString &xmlString, QString root)
 
     // This prevents processProperties() from mis-matching a resource path that begins with root
     // when it is converting to relative paths.
-    if (!root.isEmpty() && root.endsWith('/')) {
+    if (!root.isEmpty() && !root.endsWith('/')) {
         root.append('/');
     }
 
