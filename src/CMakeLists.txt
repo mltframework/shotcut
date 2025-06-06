@@ -23,6 +23,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/durationdialog.ui
   dialogs/editmarkerdialog.cpp dialogs/editmarkerdialog.h
   dialogs/filedatedialog.cpp dialogs/filedatedialog.h
+  dialogs/filedownloaddialog.cpp dialogs/filedownloaddialog.h
   dialogs/listselectiondialog.cpp dialogs/listselectiondialog.h
   dialogs/listselectiondialog.ui
   dialogs/longuitask.cpp dialogs/longuitask.h
@@ -78,6 +79,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   models/alignclipsmodel.cpp models/alignclipsmodel.h
   models/attachedfiltersmodel.cpp models/attachedfiltersmodel.h
   models/audiolevelstask.cpp models/audiolevelstask.h
+  models/extensionmodel.cpp models/extensionmodel.h
   models/keyframesmodel.cpp models/keyframesmodel.h
   models/markersmodel.cpp models/markersmodel.h
   models/metadatamodel.cpp models/metadatamodel.h
@@ -100,6 +102,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   qmltypes/messagedialog.h qmltypes/messagedialog.cpp
   qmltypes/qmlapplication.cpp qmltypes/qmlapplication.h
   qmltypes/qmleditmenu.cpp qmltypes/qmleditmenu.h
+  qmltypes/qmlextension.cpp qmltypes/qmlextension.h
   qmltypes/qmlfile.cpp qmltypes/qmlfile.h
   qmltypes/qmlfilter.cpp qmltypes/qmlfilter.h
   qmltypes/qmlmarkermenu.cpp qmltypes/qmlmarkermenu.h

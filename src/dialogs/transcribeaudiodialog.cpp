@@ -18,8 +18,10 @@
 #include "transcribeaudiodialog.h"
 
 #include "Logger.h"
+#include "dialogs/filedownloaddialog.h"
 #include "docks/timelinedock.h"
 #include "mainwindow.h"
+#include "models/extensionmodel.h"
 #include "qmltypes/qmlapplication.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
@@ -30,11 +32,14 @@
 #include <QDialogButtonBox>
 #include <QFileDialog>
 #include <QGridLayout>
+#include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QSpinBox>
+#include <QTreeView>
 
 // List of supported languages from whispercpp
 static const std::vector<const char *> whisperLanguages = {
@@ -69,6 +74,7 @@ static void fillLanguages(QComboBox *combo)
 
 TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *parent)
     : QDialog(parent)
+    , m_model("whispermodel")
 {
     setWindowTitle(tr("Speech to Text"));
     setWindowModality(QmlApplication::dialogModality());
@@ -203,6 +209,7 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     configLayout->addWidget(new QLabel(tr("GGML Model")), 2, 0, Qt::AlignRight);
     m_modelLabel = new QLineEdit(this);
     m_modelLabel->setFixedWidth(maxPathWidth);
+    m_modelLabel->setPlaceholderText(tr("Select a model or browse to choose one"));
     m_modelLabel->setReadOnly(true);
     configLayout->addWidget(m_modelLabel, 2, 1, Qt::AlignLeft);
     QPushButton *modelBrowseButton = new QPushButton(this);
@@ -225,6 +232,30 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     });
     configLayout->addWidget(modelBrowseButton, 2, 2, Qt::AlignLeft);
 
+    // List of models
+    m_table = new QTreeView();
+    m_table->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_table->setItemsExpandable(false);
+    m_table->setRootIsDecorated(false);
+    m_table->setUniformRowHeights(true);
+    m_table->setSortingEnabled(false);
+    m_table->setModel(&m_model);
+    m_table->setWordWrap(false);
+    m_table->header()->setStretchLastSection(false);
+    qreal rowHeight = fontMetrics().height() * devicePixelRatioF();
+    m_table->header()->setMinimumSectionSize(rowHeight);
+    m_table->header()->setSectionResizeMode(ExtensionModel::COLUMN_STATUS, QHeaderView::Fixed);
+    m_table->setColumnWidth(ExtensionModel::COLUMN_STATUS, rowHeight);
+    m_table->header()->setSectionResizeMode(ExtensionModel::COLUMN_NAME, QHeaderView::Stretch);
+    m_table->header()->setSectionResizeMode(ExtensionModel::COLUMN_SIZE, QHeaderView::Fixed);
+    m_table->setColumnWidth(ExtensionModel::COLUMN_SIZE,
+                            fontMetrics().horizontalAdvance("XXX.XX XXX") * devicePixelRatioF()
+                                + 12);
+    connect(m_table, &QAbstractItemView::clicked, this, &TranscribeAudioDialog::onModelRowClicked);
+
+    configLayout->addWidget(m_table, 3, 0, 1, 3);
+
     grid->addWidget(m_configWidget, 6, 0, 1, 2);
 
     // Add a button box to the dialog
@@ -246,7 +277,10 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     }
     m_buttonBox->addButton(configButton, QDialogButtonBox::ActionRole);
     grid->addWidget(m_buttonBox, 7, 0, 1, 2);
-    connect(m_buttonBox, SIGNAL(clicked(QAbstractButton *)), this, SLOT(clicked(QAbstractButton *)));
+    connect(m_buttonBox,
+            SIGNAL(clicked(QAbstractButton *)),
+            this,
+            SLOT(onButtonClicked(QAbstractButton *)));
 
     setLayout(grid);
     setModal(true);
@@ -265,7 +299,7 @@ QList<int> TranscribeAudioDialog::tracks()
     return tracks;
 }
 
-void TranscribeAudioDialog::clicked(QAbstractButton *button)
+void TranscribeAudioDialog::onButtonClicked(QAbstractButton *button)
 {
     QDialogButtonBox::ButtonRole role = m_buttonBox->buttonRole(button);
     if (role == QDialogButtonBox::AcceptRole) {
@@ -277,6 +311,40 @@ void TranscribeAudioDialog::clicked(QAbstractButton *button)
     } else {
         LOG_DEBUG() << "Unknown role" << role;
     }
+}
+
+void TranscribeAudioDialog::onModelRowClicked(const QModelIndex &index)
+{
+    if (!m_model.downloaded(index.row())) {
+        QMessageBox qDialog(QMessageBox::Question,
+                            tr("Download Model"),
+                            tr("Are you sure you want to download %1?\n%2 of storage will be used")
+                                .arg(m_model.getName(index.row()))
+                                .arg(m_model.getFormattedDataSize(index.row())),
+                            QMessageBox::No | QMessageBox::Yes,
+                            this);
+        qDialog.setDefaultButton(QMessageBox::Yes);
+        qDialog.setEscapeButton(QMessageBox::No);
+        qDialog.setWindowModality(QmlApplication::dialogModality());
+        int result = qDialog.exec();
+        if (result == QMessageBox::Yes) {
+            FileDownloadDialog dlDialog(tr("Download Model"), this);
+            dlDialog.setSrc(m_model.url(index.row()));
+            dlDialog.setDst(m_model.localPath(index.row()));
+            dlDialog.start();
+        }
+    }
+
+    if (m_model.downloaded(index.row())) {
+        QString path = m_model.localPath(index.row());
+        if (QFileInfo(path).exists()) {
+            LOG_INFO() << "Model found" << path;
+            Settings.setWhisperModel(path);
+        } else {
+            LOG_INFO() << "Model not found" << path;
+        }
+    }
+    updateWhisperStatus();
 }
 
 QString TranscribeAudioDialog::name()
@@ -339,6 +407,14 @@ void TranscribeAudioDialog::updateWhisperStatus()
         QPalette palette;
         palette.setColor(QPalette::Text, Qt::red);
         m_modelLabel->setPalette(palette);
-        m_modelLabel->setToolTip(tr("GGML model not found"));
+        if (m_modelLabel->text().isEmpty()) {
+            m_modelLabel->setText(m_modelLabel->placeholderText());
+            m_modelLabel->setToolTip(tr("Select a model"));
+        } else {
+            m_modelLabel->setToolTip(tr("GGML model not found"));
+        }
     }
+
+    QModelIndex index = m_model.getIndexForPath(Settings.whisperModel());
+    m_table->setCurrentIndex(index);
 }
