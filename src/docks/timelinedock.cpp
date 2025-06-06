@@ -3219,7 +3219,7 @@ void TimelineDock::freezeFrame()
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
 
     auto info = m_model.getClipInfo(trackIndex, clipIndex);
-    if (info && m_position > info->start && m_position < info->start + info->frame_count) {
+    if (info && m_position >= info->start && m_position < info->start + info->frame_count) {
         std::unique_ptr<Mlt::Link> linkExists(MLT.getLink("timeremap", info->producer));
         if (linkExists
             || !QString::fromLatin1(info->producer->get("mlt_service")).startsWith("avformat")) {
