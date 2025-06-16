@@ -10,8 +10,8 @@ assignees: ''
 This tracker is for defects only! For feature requests, see [our discussion forum](https://forum.shotcut.org/).
 
 **OS and Version (please complete the following information):**
- - Operating System: [e.g. Windows, macOS (For Linux, specify *how* you installed because there are many different builds.)]
- - Shotcut Version: [e.g. 24.01]
+ - Operating System: [e.g. Windows, macOS]
+ - Shotcut Version: [e.g. 24.01] (For Linux, specify *how* you installed because there are many different builds.)
 
 **Describe the bug**
 A clear and concise description of what the bug is.
