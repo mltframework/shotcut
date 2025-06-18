@@ -410,6 +410,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
     }
     if (acodec == "vorbis" || acodec == "libvorbis")
         ui->audioRateControlCombo->setCurrentIndex(RateControlAverage);
+    if (acodec == "ac3" || acodec == "eac3" || acodec == "mp2" || acodec == "wmav2")
+        ui->audioRateControlCombo->setCurrentIndex(RateControlConstant);
     if ((ui->videoRateControlCombo->currentIndex() == RateControlQuality
          || ui->videoRateControlCombo->currentIndex() == RateControlConstrained)
         && videoQuality > -1) {
@@ -1610,7 +1612,7 @@ void EncodeDock::resetOptions()
 
     setAudioChannels(MLT.audioChannels());
     ui->sampleRateCombo->lineEdit()->setText("48000");
-    ui->audioRateControlCombo->setCurrentIndex(1);
+    ui->audioRateControlCombo->setCurrentIndex(0);
     ui->audioBitrateCombo->lineEdit()->setText("384k");
     ui->audioQualitySpinner->setValue(50);
     ui->disableAudioCheckbox->setChecked(false);
