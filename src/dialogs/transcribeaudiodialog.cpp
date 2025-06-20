@@ -74,8 +74,8 @@ static void fillLanguages(QComboBox *combo)
 
 TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *parent)
     : QDialog(parent)
-    , m_model("whispermodel")
 {
+    m_model.load(QmlExtension::WHISPER_ID);
     setWindowTitle(tr("Speech to Text"));
     setWindowModality(QmlApplication::dialogModality());
 
@@ -232,6 +232,38 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     });
     configLayout->addWidget(modelBrowseButton, 2, 2, Qt::AlignLeft);
 
+    // Update Model button
+    QPushButton *updateModelsButton = new QPushButton(tr("Refresh Models"), this);
+    connect(updateModelsButton, &QAbstractButton::clicked, this, [&] {
+        QString downloadUrl
+            = "https://raw.githubusercontent.com/mltframework/shotcut/"
+              "fb9b4bff4953ca94c2547e0772eae4c0af1b4ae7/src/qml/extensions/whispermodel.qml";
+        QString localDst = QmlExtension::appDir(QmlExtension::WHISPER_ID)
+                               .absoluteFilePath(QmlExtension::extensionFileName("whisper"));
+        FileDownloadDialog dlDialog(tr("Refresh Models"), this);
+        dlDialog.setSrc(downloadUrl);
+        dlDialog.setDst(localDst);
+        if (dlDialog.start()) {
+            m_model.load(QmlExtension::WHISPER_ID);
+            QMessageBox qDialog(QMessageBox::Information,
+                                tr("Refresh Models"),
+                                tr("Models refreshed"),
+                                QMessageBox::Ok,
+                                this);
+            qDialog.setWindowModality(QmlApplication::dialogModality());
+            qDialog.exec();
+        } else {
+            QMessageBox qDialog(QMessageBox::Critical,
+                                tr("Refresh Models"),
+                                tr("Failed to refresh models"),
+                                QMessageBox::Ok,
+                                this);
+            qDialog.setWindowModality(QmlApplication::dialogModality());
+            qDialog.exec();
+        }
+    });
+    configLayout->addWidget(updateModelsButton, 3, 1, Qt::AlignLeft);
+
     // List of models
     m_table = new QTreeView();
     m_table->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -254,7 +286,7 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
                                 + 12);
     connect(m_table, &QAbstractItemView::clicked, this, &TranscribeAudioDialog::onModelRowClicked);
 
-    configLayout->addWidget(m_table, 3, 0, 1, 3);
+    configLayout->addWidget(m_table, 4, 0, 1, 3);
 
     grid->addWidget(m_configWidget, 6, 0, 1, 2);
 

@@ -18,9 +18,9 @@
 #ifndef EXTENSIONMODEL_H
 #define EXTENSIONMODEL_H
 
-#include <QAbstractItemModel>
+#include "qmltypes/qmlextension.h"
 
-class QmlExtension;
+#include <QAbstractItemModel>
 
 class ExtensionModel : public QAbstractItemModel
 {
@@ -33,10 +33,9 @@ public:
         COLUMN_SIZE,
         COLUMN_COUNT,
     };
-    explicit ExtensionModel(const QString &id, QObject *parent = 0);
+    explicit ExtensionModel(QObject *parent = 0);
     virtual ~ExtensionModel();
-    void clear();
-    void addClip(const QString &name, int offset, int speed, const QString &error);
+    void load(const QString &id);
     QString getName(int row) const;
     QString getFormattedDataSize(int row) const;
     QString localPath(int row) const;

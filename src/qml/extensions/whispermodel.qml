@@ -2,6 +2,7 @@ import QtQuick
 import org.shotcut.qml
 
 Extension {
+    id: 'whispermodel'
     name: qsTr("Whisper Model")
     version: '1'
     files: [

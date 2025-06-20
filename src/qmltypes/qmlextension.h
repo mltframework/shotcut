@@ -18,6 +18,7 @@
 #ifndef QMLEXTENSION_H
 #define QMLEXTENSION_H
 
+#include <QDir>
 #include <QObject>
 #include <QQmlListProperty>
 #include <QString>
@@ -54,15 +55,22 @@ private:
 class QmlExtension : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString id READ id WRITE setId NOTIFY changed)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY changed)
     Q_PROPERTY(QString version READ version WRITE setVersion NOTIFY changed)
     Q_PROPERTY(QQmlListProperty<QmlExtensionFile> files READ files NOTIFY changed)
 
 public:
     static QmlExtension *load(const QString &id);
+    static QString extensionFileName(const QString &id);
+    static QDir installDir(const QString &id);
+    static QDir appDir(const QString &id);
+    static const QString WHISPER_ID;
 
     explicit QmlExtension(QObject *parent = 0);
 
+    QString id() const { return m_id; }
+    void setId(const QString &);
     QString name() const { return m_name; }
     void setName(const QString &);
     QString version() const { return m_version; }
@@ -80,6 +88,7 @@ signals:
     void changed();
 
 private:
+    QString m_id;
     QString m_name;
     QString m_version;
     QList<QmlExtensionFile *> m_files;

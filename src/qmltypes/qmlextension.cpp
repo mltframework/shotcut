@@ -24,20 +24,22 @@
 #include <QDir>
 #include <QQmlComponent>
 
+const QString QmlExtension::WHISPER_ID = QStringLiteral("whispermodel");
+
 QmlExtensionFile::QmlExtensionFile(QObject *parent)
     : QObject(parent)
 {}
 
 QmlExtension *QmlExtension::load(const QString &id)
 {
-    QDir dir = QmlUtilities::qmlDir();
-    dir.cd("extensions");
-    QString fileName = id + ".qml";
-    if (!dir.exists(fileName)) {
-        LOG_ERROR() << fileName << "does not exist";
+    QString filePath = appDir(id).absoluteFilePath(extensionFileName(id));
+    if (!QFile::exists(filePath)) {
+        filePath = installDir(id).absoluteFilePath(extensionFileName(id));
+    }
+    if (!QFile::exists(filePath)) {
+        LOG_ERROR() << filePath << "does not exist";
         return nullptr;
     }
-    QString filePath = dir.absoluteFilePath(fileName);
     QQmlComponent component(QmlUtilities::sharedEngine(), filePath);
     QmlExtension *extension = qobject_cast<QmlExtension *>(component.create());
     if (!extension) {
@@ -46,9 +48,38 @@ QmlExtension *QmlExtension::load(const QString &id)
     return extension;
 }
 
+QString QmlExtension::extensionFileName(const QString &id)
+{
+    return id + ".qml";
+}
+
+QDir QmlExtension::installDir(const QString &id)
+{
+    QDir dir = QmlUtilities::qmlDir();
+    dir.mkdir("extensions");
+    dir.cd("extensions");
+    return dir;
+}
+
+QDir QmlExtension::appDir(const QString &id)
+{
+    QDir dir = Settings.appDataLocation();
+    dir.mkdir("extensions");
+    dir.cd("extensions");
+    dir.mkdir(id);
+    dir.cd(id);
+    return dir;
+}
+
 QmlExtension::QmlExtension(QObject *parent)
     : QObject(parent)
 {}
+
+void QmlExtension::setId(const QString &id)
+{
+    m_id = id;
+    emit changed();
+}
 
 void QmlExtension::setName(const QString &name)
 {
@@ -68,11 +99,7 @@ QString QmlExtension::localPath(int index)
         LOG_ERROR() << "Invalid Index" << index;
         return QString();
     }
-    QDir localPath = Settings.appDataLocation();
-    localPath.mkdir("extensions");
-    localPath.cd("extensions");
-    localPath.mkdir(m_name);
-    localPath.cd(m_name);
+    QDir localPath = appDir(m_id);
     return localPath.absoluteFilePath(m_files[index]->file());
 }
 

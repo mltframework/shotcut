@@ -23,18 +23,25 @@
 
 #include <QIcon>
 
-ExtensionModel::ExtensionModel(const QString &id, QObject *parent)
+ExtensionModel::ExtensionModel(QObject *parent)
     : QAbstractItemModel(parent)
-{
-    m_ext = QmlExtension::load(id);
-    if (!m_ext) {
-        LOG_ERROR() << "Extension not loaded:" << id;
-    }
-}
+    , m_ext(nullptr)
+{}
 
 ExtensionModel::~ExtensionModel()
 {
     delete m_ext;
+}
+
+void ExtensionModel::load(const QString &id)
+{
+    beginResetModel();
+    delete m_ext;
+    m_ext = QmlExtension::load(id);
+    if (!m_ext) {
+        LOG_ERROR() << "Extension not loaded:" << id;
+    }
+    endResetModel();
 }
 
 QString ExtensionModel::getName(int row) const
