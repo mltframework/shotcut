@@ -1527,8 +1527,7 @@ QString ShotcutSettings::whisperModel()
 {
     QDir dataPath = QmlApplication::dataDir();
     dataPath.cd("shotcut/whisper_models");
-    return settings.value("subtitles/whisperModel", dataPath.absoluteFilePath("ggml-base-q5_1.bin"))
-        .toString();
+    return settings.value("subtitles/whisperModel", "").toString();
 }
 
 void ShotcutSettings::setNotesZoom(int zoom)
