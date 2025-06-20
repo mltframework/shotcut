@@ -738,7 +738,6 @@ function build_dav1d {
 }
 
 function build_opencv {
-  [ grep M_PI 3rdparty/carotene/include/carotene/definitions.hpp ] || printf >>3rdparty/carotene/include/carotene/definitions.hpp '#ifndef M_PI\n#define M_PI (3.14159265358979323846)\n#endif'
   cmd ninja -C build -j $MAKEJ
 }
 
