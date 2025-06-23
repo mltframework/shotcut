@@ -52,6 +52,7 @@
         <file>dark/32x32/document-open-recent.png</file>
         <file>dark/32x32/document-open.png</file>
         <file>dark/32x32/document-save.png</file>
+        <file>dark/32x32/download.png</file>
         <file>dark/32x32/edit-redo.png</file>
         <file>dark/32x32/font.png</file>
         <file>dark/32x32/media-playback-pause.png</file>
@@ -126,6 +127,7 @@
         <file>light/32x32/document-open-recent.png</file>
         <file>light/32x32/document-open.png</file>
         <file>light/32x32/document-save.png</file>
+        <file>light/32x32/download.png</file>
         <file>light/32x32/edit-redo.png</file>
         <file>light/32x32/font.png</file>
         <file>light/32x32/media-playback-pause.png</file>
@@ -196,6 +198,7 @@
         <file>oxygen/32x32/actions/document-open-recent.png</file>
         <file>oxygen/32x32/actions/document-open.png</file>
         <file>oxygen/32x32/actions/document-save.png</file>
+        <file>oxygen/32x32/actions/download.png</file>
         <file>oxygen/32x32/actions/edit-redo.png</file>
         <file>oxygen/32x32/actions/font.png</file>
         <file>oxygen/32x32/actions/help-about.png</file>
