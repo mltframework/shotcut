@@ -41,6 +41,9 @@
 #include <QSpinBox>
 #include <QTreeView>
 
+static const QString WHISPER_MODEL_EXTENSION_URL = QStringLiteral(
+    "https://check.shotcut.org/whispermodel.qml");
+
 // List of supported languages from whispercpp
 static const std::vector<const char *> whisperLanguages = {
     "en", "zh", "de", "es",  "ru", "ko", "fr", "ja", "pt", "tr",  "pl", "ca", "nl", "ar", "sv",
@@ -235,13 +238,10 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
     // Update Model button
     QPushButton *updateModelsButton = new QPushButton(tr("Refresh Models"), this);
     connect(updateModelsButton, &QAbstractButton::clicked, this, [&] {
-        QString downloadUrl
-            = "https://raw.githubusercontent.com/mltframework/shotcut/"
-              "fb9b4bff4953ca94c2547e0772eae4c0af1b4ae7/src/qml/extensions/whispermodel.qml";
         QString localDst = QmlExtension::appDir(QmlExtension::WHISPER_ID)
                                .absoluteFilePath(QmlExtension::extensionFileName("whisper"));
         FileDownloadDialog dlDialog(tr("Refresh Models"), this);
-        dlDialog.setSrc(downloadUrl);
+        dlDialog.setSrc(WHISPER_MODEL_EXTENSION_URL);
         dlDialog.setDst(localDst);
         if (dlDialog.start()) {
             m_model.load(QmlExtension::WHISPER_ID);
