@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,11 +26,19 @@ Item {
     width: 100
     height: 50
     Component.onCompleted: {
-        if (application.audioChannels() === 1) {
+        switch (application.audioChannels()) {
+        case 1:
             fromCombo.enabled = false;
             toCombo.enabled = false;
-        } else if (application.audioChannels() === 6) {
+            break;
+        case 4:
+            fromCombo.model = [qsTr('Front left'), qsTr('Front right'), qsTr('Left surround'), qsTr('Right surround')];
+            break;
+        case 6:
             fromCombo.model = [qsTr('Front left'), qsTr('Front right'), qsTr('Center'), qsTr('Low frequency'), qsTr('Left surround'), qsTr('Right surround')];
+            break;
+        default:
+            break;
         }
         if (filter.isNew) {
             // Set default parameter values
