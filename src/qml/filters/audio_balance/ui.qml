@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,55 @@ Item {
         return Math.max(producer.position - (filter.in - producer.in), 0);
     }
 
+    function setLabels() {
+        switch (operationCombo.currentIndex) {
+        case 0:
+            label.text = qsTr('Left');
+            slider.label = qsTr('Right');
+            break;
+        case 1:
+            label.text = qsTr('Left');
+            slider.label = qsTr('Right');
+            break;
+        case 2:
+            label.text = qsTr('Left');
+            slider.label = qsTr('Right');
+            break;
+        case 3:
+            label.text = qsTr('Front');
+            slider.label = qsTr('Surround');
+            break;
+        case 4:
+            label.text = qsTr('Front');
+            slider.label = qsTr('Surround');
+            break;
+        case 5:
+            label.text = qsTr('Front');
+            slider.label = qsTr('Surround');
+            break;
+        }
+    }
+
     function setControls() {
-        var position = getPosition();
+        let gang = filter.get('gang') === '1';
+        switch (parseInt(filter.get('channel'))) {
+        case -1:
+            operationCombo.currentIndex = gang ? 2 : 0;
+            break;
+        case -2:
+            operationCombo.currentIndex = 1;
+            break;
+        case -3:
+            operationCombo.currentIndex = gang ? 5 : 3;
+            break;
+        case -4:
+            operationCombo.currentIndex = 4;
+            break;
+        default:
+            break;
+        }
+        setLabels();
+        let position = getPosition();
         blockUpdate = true;
         slider.value = filter.getDouble('split', position) * slider.maximumValue;
         blockUpdate = false;
@@ -41,7 +88,7 @@ Item {
     function updateFilter(position) {
         if (blockUpdate)
             return;
-        var value = slider.value / slider.maximumValue;
+        let value = slider.value / slider.maximumValue;
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
                 startValue = value;
@@ -104,7 +151,7 @@ Item {
             id: preset
 
             Layout.columnSpan: parent.columns - 1
-            parameters: ['split']
+            parameters: ['split', 'channel', 'gang']
             onBeforePresetLoaded: {
                 filter.resetProperty(parameters[0]);
             }
@@ -119,6 +166,56 @@ Item {
         }
 
         Label {
+            text: qsTr('Operation')
+            Layout.alignment: Qt.AlignRight
+            visible: application.audioChannels() > 3
+        }
+
+        Shotcut.ComboBox {
+            id: operationCombo
+
+            visible: application.audioChannels() > 3
+            Layout.columnSpan: 2
+            model: [qsTr('Front Balance'), qsTr('Surround Balance'), qsTr('Front + Surround Balance'), qsTr('Left Fade'), qsTr('Right Fade'), qsTr('Left + Right Fade')]
+            onActivated: {
+                switch (currentIndex) {
+                case 0:
+                    filter.set('channel', -1);
+                    filter.set('gang', 0);
+                    break;
+                case 1:
+                    filter.set('channel', -2);
+                    filter.set('gang', 0);
+                    break;
+                case 2:
+                    filter.set('channel', -1);
+                    filter.set('gang', 1);
+                    break;
+                case 3:
+                    filter.set('channel', -3);
+                    filter.set('gang', 0);
+                    break;
+                case 4:
+                    filter.set('channel', -4);
+                    filter.set('gang', 0);
+                    break;
+                case 5:
+                    filter.set('channel', -3);
+                    filter.set('gang', 1);
+                    break;
+                }
+                setLabels();
+            }
+        }
+
+        Shotcut.UndoButton {
+            visible: application.audioChannels() > 3
+            onClicked: operationCombo.currentIndex = 0
+        }
+
+        Label {
+            id: label
+
             text: qsTr('Left')
         }
 
