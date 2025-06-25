@@ -1804,7 +1804,9 @@ void TimelineDock::setCurrentTrack(int currentTrack)
 
 int TimelineDock::currentTrack() const
 {
-    return m_currentTrack;
+    return qBound(0,
+                  m_currentTrack,
+                  m_model.trackList().isEmpty() ? 0 : m_model.trackList().size() - 1);
 }
 
 void TimelineDock::setSelectionFromJS(const QVariantList &list)

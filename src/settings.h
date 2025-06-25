@@ -321,8 +321,10 @@ public:
     QList<QKeySequence> shortcuts(const QString &name);
 
     // Slideshow
-    double slideshowClipDuration(double defaultClipDuration) const;
-    void setSlideshowClipDuration(double clipDuration);
+    double slideshowImageDuration(double defaultSeconds) const;
+    void setSlideshowImageDuration(double seconds);
+    double slideshowAudioVideoDuration(double defaultSeconds) const;
+    void setSlideshowAudioVideoDuration(double seconds);
     int slideshowAspectConversion(int defaultAspectConversion) const;
     void setSlideshowAspectConversion(int aspectConversion);
     int slideshowZoomPercent(int defaultZoomPercent) const;

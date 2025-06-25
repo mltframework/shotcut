@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2022 Meltytech, LLC
+ * Copyright (c) 2020-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,8 @@ private slots:
 private:
     struct SlideshowConfig
     {
-        double clipDuration;
+        double imageDuration;
+        double audioVideoDuration;
         int aspectConversion;
         int zoomPercent;
         double transitionDuration;
@@ -64,7 +65,8 @@ private:
     void generatePreviewSlideshow();
     Q_INVOKABLE void startPreview();
 
-    QDoubleSpinBox *m_clipDurationSpinner;
+    QDoubleSpinBox *m_imageDurationSpinner;
+    QDoubleSpinBox *m_audioVideoDurationSpinner;
     QComboBox *m_aspectConversionCombo;
     QSpinBox *m_zoomPercentSpinner;
     QDoubleSpinBox *m_transitionDurationSpinner;

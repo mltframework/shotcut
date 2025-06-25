@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2024 Meltytech, LLC
+ * Copyright (c) 2020-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,18 +55,34 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     QGridLayout *grid = new QGridLayout();
     setLayout(grid);
 
-    grid->addWidget(new QLabel(tr("Clip duration")), 0, 0, Qt::AlignRight);
-    m_clipDurationSpinner = new QDoubleSpinBox();
-    m_clipDurationSpinner->setToolTip(tr("Set the duration of each clip in the slideshow."));
-    m_clipDurationSpinner->setSuffix(" s");
-    m_clipDurationSpinner->setDecimals(1);
-    m_clipDurationSpinner->setMinimum(0.2);
-    m_clipDurationSpinner->setMaximum(3600 * 4);
-    m_clipDurationSpinner->setValue(Settings.slideshowClipDuration(10.0));
-    connect(m_clipDurationSpinner, SIGNAL(valueChanged(double)), this, SLOT(on_parameterChanged()));
-    grid->addWidget(m_clipDurationSpinner, 0, 1);
+    grid->addWidget(new QLabel(tr("Image duration")), 0, 0, Qt::AlignRight);
+    m_imageDurationSpinner = new QDoubleSpinBox();
+    m_imageDurationSpinner->setToolTip(tr("Set the duration of each image clip."));
+    m_imageDurationSpinner->setSuffix(" s");
+    m_imageDurationSpinner->setDecimals(1);
+    m_imageDurationSpinner->setMinimum(0.2);
+    m_imageDurationSpinner->setMaximum(3600 * 4);
+    m_imageDurationSpinner->setValue(Settings.slideshowImageDuration(10.0));
+    connect(m_imageDurationSpinner, SIGNAL(valueChanged(double)), this, SLOT(on_parameterChanged()));
+    grid->addWidget(m_imageDurationSpinner, 0, 1);
 
-    grid->addWidget(new QLabel(tr("Aspect ratio conversion")), 1, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Audio/Video duration")), 1, 0, Qt::AlignRight);
+    m_audioVideoDurationSpinner = new QDoubleSpinBox();
+    m_audioVideoDurationSpinner->setToolTip(
+        tr("Set the maximum duration of each audio or video clip."));
+    m_audioVideoDurationSpinner->setSuffix(" s");
+    m_audioVideoDurationSpinner->setDecimals(1);
+    m_audioVideoDurationSpinner->setMinimum(0.2);
+    m_audioVideoDurationSpinner->setMaximum(3600 * 4);
+    m_audioVideoDurationSpinner->setValue(
+        Settings.slideshowAudioVideoDuration(m_audioVideoDurationSpinner->maximum()));
+    connect(m_audioVideoDurationSpinner,
+            SIGNAL(valueChanged(double)),
+            this,
+            SLOT(on_parameterChanged()));
+    grid->addWidget(m_audioVideoDurationSpinner, 1, 1);
+
+    grid->addWidget(new QLabel(tr("Aspect ratio conversion")), 2, 0, Qt::AlignRight);
     m_aspectConversionCombo = new QComboBox();
     m_aspectConversionCombo->addItem(tr("Pad Black"));
     m_aspectConversionCombo->addItem(tr("Crop Center"));
@@ -84,9 +100,9 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
             SIGNAL(currentIndexChanged(int)),
             this,
             SLOT(on_parameterChanged()));
-    grid->addWidget(m_aspectConversionCombo, 1, 1);
+    grid->addWidget(m_aspectConversionCombo, 2, 1);
 
-    grid->addWidget(new QLabel(tr("Zoom effect")), 2, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Zoom effect")), 3, 0, Qt::AlignRight);
     m_zoomPercentSpinner = new QSpinBox();
     m_zoomPercentSpinner->setToolTip(
         tr("Set the percentage of the zoom-in effect.\n0% will result in no zoom effect."));
@@ -95,9 +111,9 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     m_zoomPercentSpinner->setMaximum(50);
     m_zoomPercentSpinner->setValue(Settings.slideshowZoomPercent(10));
     connect(m_zoomPercentSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
-    grid->addWidget(m_zoomPercentSpinner, 2, 1);
+    grid->addWidget(m_zoomPercentSpinner, 3, 1);
 
-    grid->addWidget(new QLabel(tr("Transition duration")), 3, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Transition duration")), 4, 0, Qt::AlignRight);
     m_transitionDurationSpinner = new QDoubleSpinBox();
     m_transitionDurationSpinner->setToolTip(
         tr("Set the duration of the transition.\nMay not be longer than half the duration of the "
@@ -111,9 +127,9 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
             SIGNAL(valueChanged(double)),
             this,
             SLOT(on_parameterChanged()));
-    grid->addWidget(m_transitionDurationSpinner, 3, 1);
+    grid->addWidget(m_transitionDurationSpinner, 4, 1);
 
-    grid->addWidget(new QLabel(tr("Transition type")), 4, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Transition type")), 5, 0, Qt::AlignRight);
     m_transitionStyleCombo = new QComboBox();
     m_transitionStyleCombo->setMaximumWidth(350);
     m_transitionStyleCombo->addItem(tr("Random"));
@@ -150,9 +166,9 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
             SIGNAL(currentIndexChanged(int)),
             this,
             SLOT(on_parameterChanged()));
-    grid->addWidget(m_transitionStyleCombo, 4, 1);
+    grid->addWidget(m_transitionStyleCombo, 5, 1);
 
-    grid->addWidget(new QLabel(tr("Transition softness")), 5, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Transition softness")), 6, 0, Qt::AlignRight);
     m_softnessSpinner = new QSpinBox();
     m_softnessSpinner->setToolTip(tr("Change the softness of the edge of the wipe."));
     m_softnessSpinner->setSuffix(" %");
@@ -160,10 +176,10 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist *clips, QWidget
     m_softnessSpinner->setMinimum(0);
     m_softnessSpinner->setValue(Settings.slideshowTransitionSoftness(20));
     connect(m_softnessSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
-    grid->addWidget(m_softnessSpinner, 5, 1);
+    grid->addWidget(m_softnessSpinner, 6, 1);
 
     m_preview = new ProducerPreviewWidget(MLT.profile().dar());
-    grid->addWidget(m_preview, 6, 0, 1, 2, Qt::AlignCenter);
+    grid->addWidget(m_preview, 7, 0, 1, 2, Qt::AlignCenter);
 
     on_parameterChanged();
 }
@@ -182,7 +198,7 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
     config = m_config;
     m_mutex.unlock();
 
-    int framesPerClip = round(config.clipDuration * MLT.profile().fps());
+    int framesPerClip = qRound(config.imageDuration * MLT.profile().fps());
     int count = m_clips->count();
     Mlt::Playlist *slideshow = new Mlt::Playlist(MLT.profile());
     Mlt::ClipInfo info;
@@ -191,8 +207,13 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
     for (int i = 0; i < count; i++) {
         Mlt::ClipInfo *c = m_clips->clip_info(i, &info);
         if (c && c->producer && c->producer->is_valid()) {
-            auto out = c->frame_in + framesPerClip - 1;
-            if (QString::fromLatin1(c->producer->get("mlt_service")).startsWith("avformat"))
+            auto isAudioVideo
+                = QString::fromLatin1(c->producer->get("mlt_service")).startsWith("avformat");
+            auto maxFrames = qRound(
+                MLT.profile().fps()
+                * (isAudioVideo ? config.audioVideoDuration : config.imageDuration));
+            int out = c->frame_in + maxFrames - 1;
+            if (isAudioVideo)
                 out = qMin(c->frame_out, out);
             Mlt::Producer producer(MLT.profile(),
                                    "xml-string",
@@ -257,7 +278,8 @@ Mlt::Playlist *SlideshowGeneratorWidget::getSlideshow()
         }
     }
 
-    Settings.setSlideshowClipDuration(m_config.clipDuration);
+    Settings.setSlideshowImageDuration(m_config.imageDuration);
+    Settings.setSlideshowAudioVideoDuration(m_config.audioVideoDuration);
     Settings.setSlideshowAspectConversion(m_config.aspectConversion);
     Settings.setSlideshowZoomPercent(m_config.zoomPercent);
     Settings.setSlideshowTransitionDuration(m_config.transitionDuration);
@@ -478,8 +500,8 @@ void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition *lu
 
 void SlideshowGeneratorWidget::on_parameterChanged()
 {
-    if (m_transitionDurationSpinner->value() > m_clipDurationSpinner->value() / 2) {
-        m_transitionDurationSpinner->setValue(m_clipDurationSpinner->value() / 2);
+    if (m_transitionDurationSpinner->value() > m_imageDurationSpinner->value() / 2) {
+        m_transitionDurationSpinner->setValue(m_imageDurationSpinner->value() / 2);
     }
     if (m_transitionDurationSpinner->value() == randomIndex) {
         m_transitionStyleCombo->setEnabled(false);
@@ -500,7 +522,8 @@ void SlideshowGeneratorWidget::on_parameterChanged()
                                              : tr("Generating Preview..."));
     m_mutex.lock();
     m_refreshPreview = true;
-    m_config.clipDuration = m_clipDurationSpinner->value();
+    m_config.imageDuration = m_imageDurationSpinner->value();
+    m_config.audioVideoDuration = m_audioVideoDurationSpinner->value();
     m_config.aspectConversion = m_aspectConversionCombo->currentIndex();
     m_config.zoomPercent = m_zoomPercentSpinner->value();
     m_config.transitionDuration = m_transitionDurationSpinner->value();

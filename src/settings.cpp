@@ -1412,14 +1412,24 @@ QList<QKeySequence> ShotcutSettings::shortcuts(const QString &name)
     return shortcuts;
 }
 
-double ShotcutSettings::slideshowClipDuration(double defaultClipDuration) const
+double ShotcutSettings::slideshowImageDuration(double defaultSeconds) const
 {
-    return settings.value("slideshow/clipDuration", defaultClipDuration).toDouble();
+    return settings.value("slideshow/clipDuration", defaultSeconds).toDouble();
 }
 
-void ShotcutSettings::setSlideshowClipDuration(double clipDuration)
+void ShotcutSettings::setSlideshowImageDuration(double seconds)
 {
-    settings.setValue("slideshow/clipDuration", clipDuration);
+    settings.setValue("slideshow/clipDuration", seconds);
+}
+
+double ShotcutSettings::slideshowAudioVideoDuration(double defaultSeconds) const
+{
+    return settings.value("slideshow/audioVideoDuration", defaultSeconds).toDouble();
+}
+
+void ShotcutSettings::setSlideshowAudioVideoDuration(double seconds)
+{
+    settings.setValue("slideshow/audioVideoDuration", seconds);
 }
 
 int ShotcutSettings::slideshowAspectConversion(int defaultAspectConversion) const
