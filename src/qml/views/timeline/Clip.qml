@@ -363,10 +363,11 @@ Rectangle {
         MouseArea {
             id: audioPeakMouseArea
 
+            enabled: settings.timelineAdjustGain
             anchors.fill: parent
             anchors.topMargin: -3
             anchors.bottomMargin: -3
-            cursorShape: Qt.SizeVerCursor
+            cursorShape: enabled ? Qt.SizeVerCursor : mouseArea.cursorShape
             drag.axis: Drag.YAxis
             drag.target: parent
             drag.minimumY: clipRoot.height - waveform.height

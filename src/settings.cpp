@@ -964,6 +964,17 @@ void ShotcutSettings::setTimelineRectangleSelect(bool b)
     emit timelineRectangleSelectChanged();
 }
 
+bool ShotcutSettings::timelineAdjustGain() const
+{
+    return settings.value("timeline/adjustGain", true).toBool();
+}
+
+void ShotcutSettings::setTimelineAdjustGain(bool b)
+{
+    settings.setValue("timeline/adjustGain", b);
+    emit timelineAdjustGainChanged();
+}
+
 QString ShotcutSettings::filterFavorite(const QString &filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();

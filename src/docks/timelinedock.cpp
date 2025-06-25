@@ -1058,6 +1058,17 @@ void TimelineDock::setupActions()
     });
     Actions.add("timelineRectangleSelectAction", action);
 
+    action = new QAction(tr("Adjust Clip Gain/Volume"), this);
+    action->setCheckable(true);
+    action->setChecked(Settings.timelineAdjustGain());
+    connect(action, &QAction::triggered, this, [&](bool checked) {
+        Settings.setTimelineAdjustGain(checked);
+    });
+    connect(&Settings, &ShotcutSettings::timelineAdjustGainChanged, action, [=]() {
+        action->setChecked(Settings.timelineAdjustGain());
+    });
+    Actions.add("timelineAdjustGainAction", action);
+
     action = new QAction(tr("Automatically Add Tracks"), this);
     action->setCheckable(true);
     action->setChecked(Settings.timelineAutoAddTracks());

@@ -557,10 +557,11 @@ void MainWindow::setupAndConnectDocks()
     ui->menuTimeline->addAction(Actions["timelineRippleMarkersAction"]);
     ui->menuTimeline->addAction(Actions["timelineToggleRippleAndAllTracksAction"]);
     ui->menuTimeline->addAction(Actions["timelineToggleRippleAllTracksAndMarkersAction"]);
-    ui->menuTimeline->addAction(Actions["timelineRectangleSelectAction"]);
+    ui->menuTimeline->addSeparator();
+    ui->menuTimeline->addAction(Actions["timelineAdjustGainAction"]);
     ui->menuTimeline->addAction(Actions["timelineAutoAddTracksAction"]);
+    ui->menuTimeline->addAction(Actions["timelineRectangleSelectAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowWaveformsAction"]);
-    ui->menuTimeline->addAction(Actions["timelinePerformanceWaveformsAction"]);
     ui->menuTimeline->addAction(Actions["timelineShowThumbnailsAction"]);
     auto submenu = ui->menuTimeline->addMenu(tr("Scrolling"));
     auto *group = new QActionGroup(this);

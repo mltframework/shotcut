@@ -75,6 +75,8 @@ class ShotcutSettings : public QObject
                    setTimelineRectangleSelect NOTIFY timelineRectangleSelectChanged)
     Q_PROPERTY(bool keyframesDragScrub READ keyframesDragScrub WRITE setKeyframesDragScrub NOTIFY
                    keyframesDragScrubChanged)
+    Q_PROPERTY(bool timelineAdjustGain READ timelineAdjustGain WRITE setTimelineAdjustGain NOTIFY
+                   timelineAdjustGainChanged)
 
 public:
     static const qsizetype MaxPath{32767};
@@ -223,6 +225,8 @@ public:
     void setTimelineAutoAddTracks(bool);
     bool timelineRectangleSelect() const;
     void setTimelineRectangleSelect(bool);
+    bool timelineAdjustGain() const;
+    void setTimelineAdjustGain(bool);
 
     // filter
     QString filterFavorite(const QString &filterName);
@@ -398,6 +402,7 @@ signals:
     void timelineRectangleSelectChanged();
     void timeFormatChanged();
     void keyframesDragScrubChanged();
+    void timelineAdjustGainChanged();
 
 private:
     explicit ShotcutSettings();
