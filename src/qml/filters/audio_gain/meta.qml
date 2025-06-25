@@ -6,6 +6,7 @@ Metadata {
     isAudio: true
     name: qsTr("Gain / Volume")
     mlt_service: "volume"
+    objectName: "audioGain"
     keywords: qsTr('loudness', 'search keywords for the Gain/Volume audio filter') + ' gain volume'
     qml: "ui.qml"
     icon: 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'

@@ -3843,6 +3843,17 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy, b
     m_model.checkForEmptyTracks(trackIndex);
 }
 
+void TimelineDock::changeGain(int trackIndex, int clipIndex, double gain)
+{
+    if (isTrackLocked(trackIndex)) {
+        emit warnTrackLocked(trackIndex);
+        return;
+    }
+    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+    MAIN.undoStack()->push(new Timeline::ChangeGainCommand(m_model, trackIndex, clipIndex, gain));
+    emit gainChanged(gain);
+}
+
 void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
 {
     if (isTrackLocked(trackIndex)) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,6 +62,7 @@ public slots:
     void setCurrentFilter(int attachedIndex);
     void onFadeInChanged();
     void onFadeOutChanged();
+    void onGainChanged();
     void onServiceInChanged(int delta, Mlt::Service *service = 0);
     void onServiceOutChanged(int delta, Mlt::Service *service = 0);
     void removeCurrent();

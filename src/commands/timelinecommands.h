@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,8 @@ enum {
     UndoIdAddTransitionByTrimIn,
     UndoIdAddTransitionByTrimOut,
     UndoIdUpdate,
-    UndoIdMoveClip
+    UndoIdMoveClip,
+    UndoIdChangeGain,
 };
 
 struct ClipPosition
@@ -861,6 +862,29 @@ private:
     MultitrackModel &m_model;
     QString m_xml;
     QMap<ClipPosition, QString> m_prevFilters;
+};
+
+class ChangeGainCommand : public QUndoCommand
+{
+public:
+    ChangeGainCommand(MultitrackModel &model,
+                      int trackIndex,
+                      int clipIndex,
+                      double gain,
+                      QUndoCommand *parent = 0);
+    void redo();
+    void undo();
+
+protected:
+    int id() const { return UndoIdChangeGain; }
+    bool mergeWith(const QUndoCommand *other);
+
+private:
+    MultitrackModel &m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    double m_gain;
+    double m_previous;
 };
 
 } // namespace Timeline

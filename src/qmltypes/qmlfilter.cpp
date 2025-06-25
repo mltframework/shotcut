@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -892,7 +892,7 @@ void QmlFilter::updateUndoCommand(const QString &name)
         return;
     }
     if (!m_changeInProgress) {
-        startUndoParameterCommand(QStringLiteral());
+        startUndoParameterCommand(QString());
     }
 
     const QUndoCommand *lastCommand = MAIN.undoStack()->command(MAIN.undoStack()->count() - 1);

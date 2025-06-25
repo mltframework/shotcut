@@ -627,6 +627,7 @@ void MainWindow::setupAndConnectDocks()
             SIGNAL(statusChanged(QString)),
             this,
             SLOT(showStatusMessage(QString)));
+    connect(m_timelineDock, SIGNAL(gainChanged(double)), m_filterController, SLOT(onGainChanged()));
     connect(m_timelineDock, SIGNAL(fadeInChanged(int)), m_filterController, SLOT(onFadeInChanged()));
     connect(m_timelineDock,
             SIGNAL(fadeOutChanged(int)),

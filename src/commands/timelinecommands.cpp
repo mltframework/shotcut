@@ -2313,6 +2313,40 @@ void ApplyFiltersCommand::undo()
     }
 }
 
+ChangeGainCommand::ChangeGainCommand(
+    MultitrackModel &model, int trackIndex, int clipIndex, double gain, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
+    , m_clipIndex(clipIndex)
+    , m_gain(gain)
+{
+    QModelIndex modelIndex = m_model.index(clipIndex, 0, m_model.index(trackIndex));
+    m_previous = model.data(modelIndex, MultitrackModel::GainRole).toInt();
+    setText(QObject::tr("Adjust gain/volume"));
+}
+
+void ChangeGainCommand::redo()
+{
+    m_model.changeGain(m_trackIndex, m_clipIndex, m_gain);
+}
+
+void ChangeGainCommand::undo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "gain" << m_gain;
+    m_model.changeGain(m_trackIndex, m_clipIndex, m_previous);
+}
+
+bool ChangeGainCommand::mergeWith(const QUndoCommand *other)
+{
+    const ChangeGainCommand *that = static_cast<const ChangeGainCommand *>(other);
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex
+        || (!that->m_gain && m_gain != that->m_gain))
+        return false;
+    m_gain = static_cast<const ChangeGainCommand *>(other)->m_gain;
+    return true;
+}
+
 } // namespace Timeline
 
 #include "moc_timelinecommands.cpp"

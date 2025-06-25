@@ -205,6 +205,10 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                         return info->cut->get_int(kShotcutGroupProperty);
                     else
                         return -1;
+                case GainRole: {
+                    QScopedPointer<Mlt::Filter> filter(getFilter("audioGain", info->producer));
+                    return (filter && filter->is_valid()) ? filter->get_double("level") : 0.0;
+                }
                 default:
                     break;
                 }
@@ -336,6 +340,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[IsBottomAudioRole] = "isBottomAudio";
     roles[AudioIndexRole] = "audioIndex";
     roles[GroupRole] = "group";
+    roles[GainRole] = "gain";
     return roles;
 }
 
@@ -1425,6 +1430,44 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         MLT.adjustClipFilters(clip->parent(), in, out, 0, delta, 0);
 
         emit modified();
+    }
+}
+
+void MultitrackModel::changeGain(int trackIndex, int clipIndex, double gain)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+        Mlt::Playlist playlist(*track);
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        if (info && info->producer && info->producer->is_valid()) {
+            // If audio track index is not None.
+            if (!info->producer->get("audio_index")
+                || info->producer->get_int("audio_index") != -1) {
+                // Get audio filter.
+                std::unique_ptr<Mlt::Filter> filter(getFilter("audioGain", info->producer));
+
+                // Add audio filter if needed.
+                if (!filter) {
+                    Mlt::Filter f(MLT.profile(), "volume");
+                    f.set(kShotcutFilterProperty, "audioGain");
+                    info->producer->attach(f);
+                    filter.reset(new Mlt::Filter(f));
+                    filter->set_in_and_out(info->frame_in, info->frame_out);
+                }
+
+                // Adjust audio filter.
+                filter->clear("level");
+                filter->set("level", gain);
+
+                // Signal change.
+                QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
+                QVector<int> roles;
+                roles << GainRole;
+                emit dataChanged(modelIndex, modelIndex, roles);
+                emit modified();
+            }
+        }
     }
 }
 
