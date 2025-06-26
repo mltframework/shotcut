@@ -377,7 +377,7 @@ Shotcut.KeyframableFilter {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: Qt.openUrlExternally('https://wiki.audacityteam.org/wiki/GVerb')
+                onClicked: Qt.openUrlExternally('https://web.archive.org/web/20221113010916/https://wiki.audacityteam.org/wiki/GVerb')
             }
         }
 
