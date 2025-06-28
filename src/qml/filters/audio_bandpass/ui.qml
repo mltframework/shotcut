@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2023 Meltytech, LLC
- * Author: Lauren Dennedy
+ * Copyright (c) 2015-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,6 +67,7 @@ Shotcut.KeyframableFilter {
             filter.savePreset(preset.parameters);
         }
         setControls();
+        channelMask.setChannelsControls();
     }
 
     GridLayout {
@@ -83,7 +83,7 @@ Shotcut.KeyframableFilter {
         Shotcut.Preset {
             id: preset
 
-            parameters: [centerProperty, bandwidthProperty, stagesProperty, wetnessProperty]
+            parameters: [centerProperty, bandwidthProperty, stagesProperty, wetnessProperty, channelMask.channelMaskProperty]
             Layout.columnSpan: parent.columns - 1
             onBeforePresetLoaded: {
                 resetSimpleKeyframes();
@@ -91,6 +91,7 @@ Shotcut.KeyframableFilter {
             onPresetSelected: {
                 setControls();
                 initializeSimpleKeyframes();
+                channelMask.setChannelsControls();
             }
         }
 
@@ -201,6 +202,21 @@ Shotcut.KeyframableFilter {
                 enableControls(true);
                 toggleKeyframes(checked, wetnessProperty, sliderWetness.value / sliderWetness.maximumValue);
             }
+        }
+
+        Label {
+            text: qsTr('Channels')
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Shotcut.ChannelMask {
+            id: channelMask
+
+            Layout.columnSpan: 2
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
 
         Item {

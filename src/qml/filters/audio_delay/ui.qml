@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
- * Author: Lauren Dennedy
+ * Copyright (c) 2015-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +24,7 @@ Item {
         sliderDelay.value = filter.getDouble('0');
         sliderFeedback.value = filter.getDouble('1');
         sliderWetness.value = filter.getDouble('wetness') * sliderWetness.maximumValue;
+        channelMask.setChannelsControls();
     }
 
     width: 350
@@ -53,7 +53,7 @@ Item {
         Shotcut.Preset {
             id: preset
 
-            parameters: ['0', '1', 'wetness']
+            parameters: ['0', '1', 'wetness', channelMask.channelMaskProperty]
             Layout.columnSpan: 2
             onPresetSelected: setControls()
         }
@@ -127,6 +127,17 @@ Item {
 
         Shotcut.UndoButton {
             onClicked: sliderWetness.value = sliderWetness.maximumValue
+        }
+
+        Label {
+            text: qsTr('Channels')
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Shotcut.ChannelMask {
+            id: channelMask
+
+            Layout.columnSpan: 2
         }
 
         Item {

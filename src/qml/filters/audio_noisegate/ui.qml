@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2019-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,6 +91,7 @@ Shotcut.KeyframableFilter {
         }
         setControls();
         outputCheckbox.checked = filter.get(output) === '-1';
+        channelMask.setChannelsControls();
     }
 
     GridLayout {
@@ -106,7 +107,7 @@ Shotcut.KeyframableFilter {
         Shotcut.Preset {
             id: preset
 
-            parameters: [lfkey, hfkey, threshold, attack, hold, decay, range]
+            parameters: [lfkey, hfkey, threshold, attack, hold, decay, range, channelMask.channelMaskProperty]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
                 resetSimpleKeyframes();
@@ -114,6 +115,7 @@ Shotcut.KeyframableFilter {
             onPresetSelected: {
                 setControls();
                 initializeSimpleKeyframes();
+                channelMask.setChannelsControls();
             }
         }
 
@@ -325,6 +327,21 @@ Shotcut.KeyframableFilter {
                 enableControls(true);
                 toggleKeyframes(checked, range, rangeSlider.value);
             }
+        }
+
+        Label {
+            text: qsTr('Channels')
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Shotcut.ChannelMask {
+            id: channelMask
+
+            Layout.columnSpan: 2
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
 
         Item {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ Shotcut.KeyframableFilter {
     middleValues: [0, 0, 0]
     endValues: [0, 0, 0]
     width: 200
-    height: 230
+    height: 130
     Component.onCompleted: {
         if (filter.isNew) {
             // Low Shelf - adjusts Low tone
@@ -100,6 +100,7 @@ Shotcut.KeyframableFilter {
             filter.savePreset(preset.parameters);
         }
         setControls();
+        channelMask.setChannelsControls();
     }
 
     GridLayout {
@@ -115,7 +116,7 @@ Shotcut.KeyframableFilter {
         Shotcut.Preset {
             id: preset
 
-            parameters: keyframableParameters.concat('.dummy')
+            parameters: keyframableParameters.concat('.dummy', channelMask.channelMaskProperty)
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
                 resetSimpleKeyframes();
@@ -123,6 +124,7 @@ Shotcut.KeyframableFilter {
             onPresetSelected: {
                 setControls();
                 initializeSimpleKeyframes();
+                channelMask.setChannelsControls();
             }
         }
 
@@ -230,6 +232,21 @@ Shotcut.KeyframableFilter {
 
         Shotcut.UndoButton {
             onClicked: highSlider.value = 0
+        }
+
+        Label {
+            text: qsTr('Channels')
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Shotcut.ChannelMask {
+            id: channelMask
+
+            Layout.columnSpan: 2
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
 
         Item {

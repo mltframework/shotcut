@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2022 Meltytech, LLC
+ * Copyright (c) 2015-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ Item {
         sliderRatio.value = filter.getDouble('4');
         sliderRadius.value = filter.getDouble('5');
         sliderGain.value = filter.getDouble('6');
+        channelMask.setChannelsControls();
     }
 
     width: 350
@@ -72,7 +73,7 @@ Item {
         Shotcut.Preset {
             id: preset
 
-            parameters: ['0', '1', '2', '3', '4', '5', '6']
+            parameters: ['0', '1', '2', '3', '4', '5', '6', channelMask.channelMaskProperty]
             Layout.columnSpan: 2
             onPresetSelected: setControls()
         }
@@ -247,6 +248,17 @@ Item {
 
         Shotcut.UndoButton {
             onClicked: sliderGain.value = 0
+        }
+
+        Label {
+            text: qsTr('Channels')
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Shotcut.ChannelMask {
+            id: channelMask
+
+            Layout.columnSpan: 2
         }
 
         Rectangle {
