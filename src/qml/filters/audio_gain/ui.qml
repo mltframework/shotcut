@@ -76,7 +76,7 @@ Item {
     }
 
     width: 200
-    height: 50
+    height: 75
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
@@ -95,6 +95,7 @@ Item {
                 endValue = filter.getDouble('level', filter.duration - 1);
         }
         setControls();
+        channelMask.setChannelsControls();
     }
 
     Connections {
@@ -147,7 +148,7 @@ Item {
             id: preset
 
             Layout.columnSpan: parent.columns - 1
-            parameters: ['level']
+            parameters: ['level', channelMask.channelMaskProperty]
             onBeforePresetLoaded: {
                 filter.resetProperty(parameters[0]);
             }
@@ -158,6 +159,7 @@ Item {
                     startValue = filter.getDouble(parameters[0], 0);
                 if (filter.animateOut > 0)
                     endValue = filter.getDouble(parameters[0], filter.duration - 1);
+                channelMask.setChannelsControls();
             }
         }
 
@@ -204,6 +206,21 @@ Item {
                 }
                 filter.endUndoCommand();
             }
+        }
+
+        Label {
+            text: qsTr('Channels')
+            Layout.alignment: Qt.AlignRight
+        }
+
+        Shotcut.ChannelMask {
+            id: channelMask
+
+            Layout.columnSpan: 2
+        }
+
+        Item {
+            Layout.fillWidth: true
         }
 
         Item {

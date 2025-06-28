@@ -45,14 +45,24 @@ RowLayout {
         id: leftToggle
 
         text: qsTr('L', 'Left audio channel')
+        implicitWidth: 22
         onClicked: updateChannelMask(0)
+
+        Shotcut.HoverTip {
+            text: qsTr('Left')
+        }
     }
 
     Shotcut.ToggleButton {
         id: rightToggle
 
         text: qsTr('R', 'Right audio channel')
+        implicitWidth: 22
         onClicked: updateChannelMask(1)
+
+        Shotcut.HoverTip {
+            text: qsTr('Right')
+        }
     }
 
     Shotcut.ToggleButton {
@@ -60,7 +70,12 @@ RowLayout {
 
         text: qsTr('C', 'Center audio channel')
         visible: application.audioChannels() > 4
+        implicitWidth: 22
         onClicked: updateChannelMask(2)
+
+        Shotcut.HoverTip {
+            text: qsTr('Center')
+        }
     }
 
     Shotcut.ToggleButton {
@@ -68,7 +83,12 @@ RowLayout {
 
         text: qsTr('LF', 'Low Frequency audio channel')
         visible: application.audioChannels() > 4
+        implicitWidth: 22
         onClicked: updateChannelMask(3)
+
+        Shotcut.HoverTip {
+            text: qsTr('Low Frequency')
+        }
     }
 
     Shotcut.ToggleButton {
@@ -76,7 +96,12 @@ RowLayout {
 
         text: qsTr('Ls', 'Left surround audio channel')
         visible: application.audioChannels() > 2
+        implicitWidth: 22
         onClicked: updateChannelMask(application.audioChannels() > 4 ? 4 : 2)
+
+        Shotcut.HoverTip {
+            text: qsTr('Left Surround')
+        }
     }
 
     Shotcut.ToggleButton {
@@ -84,7 +109,12 @@ RowLayout {
 
         text: qsTr('Rs', 'Right surround audio channel')
         visible: application.audioChannels() > 2
+        implicitWidth: 22
         onClicked: updateChannelMask(application.audioChannels() > 4 ? 5 : 3)
+
+        Shotcut.HoverTip {
+            text: qsTr('Right Surround')
+        }
     }
 
     Item {
