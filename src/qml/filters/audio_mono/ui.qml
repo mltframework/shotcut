@@ -20,6 +20,8 @@ import QtQuick.Layouts
 import Shotcut.Controls as Shotcut
 
 Item {
+    property bool channelMaskExists: filter.get("output_chmask") !== ''
+
     function updateFilter(channel) {
         let value = parseInt(filter.get('output_chmask'));
         value ^= 1 << channel;
@@ -56,7 +58,7 @@ Item {
             id: leftToggle
 
             text: qsTr('L', 'Left audio channel')
-            visible: application.audioChannels() > 2
+            visible: channelMaskExists && application.audioChannels() > 2
             onClicked: updateFilter(0)
         }
 
@@ -64,7 +66,7 @@ Item {
             id: rightToggle
 
             text: qsTr('R', 'Right audio channel')
-            visible: application.audioChannels() > 2
+            visible: channelMaskExists && application.audioChannels() > 2
             onClicked: updateFilter(1)
         }
 
@@ -72,7 +74,7 @@ Item {
             id: centerToggle
 
             text: qsTr('C', 'Center audio channel')
-            visible: application.audioChannels() > 4
+            visible: channelMaskExists && application.audioChannels() > 4
             onClicked: updateFilter(2)
         }
 
@@ -80,7 +82,7 @@ Item {
             id: lfToggle
 
             text: qsTr('LF', 'Low Frequency audio channel')
-            visible: application.audioChannels() > 4
+            visible: channelMaskExists && application.audioChannels() > 4
             onClicked: updateFilter(3)
         }
 
@@ -88,7 +90,7 @@ Item {
             id: leftSurroundToggle
 
             text: qsTr('Ls', 'Left surround audio channel')
-            visible: application.audioChannels() > 2
+            visible: channelMaskExists && application.audioChannels() > 2
             onClicked: updateFilter(application.audioChannels() > 4 ? 4 : 2)
         }
 
@@ -96,10 +98,9 @@ Item {
             id: rightSurroundToggle
 
             text: qsTr('Rs', 'Right surround audio channel')
-            visible: application.audioChannels() > 2
+            visible: channelMaskExists && application.audioChannels() > 2
             onClicked: updateFilter(application.audioChannels() > 4 ? 5 : 3)
         }
-
 
         Item {
             Layout.fillWidth: true
