@@ -21,7 +21,6 @@ jobs:
             autotools base-devel bzip2 coreutils git gzip tar xz zip
             perl-List-MoreUtils perl-XML-Parser
             mingw-w64-x86_64-toolchain
-            mingw-w64-x86_64-gcc-fortran
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-meson
             mingw-w64-x86_64-nasm
@@ -32,6 +31,7 @@ jobs:
             mingw-w64-x86_64-eigen3
             mingw-w64-x86_64-dlfcn
             mingw-w64-x86_64-fftw
+            mingw-w64-x86_64-gcc-fortran
             mingw-w64-x86_64-gettext-tools
             mingw-w64-x86_64-harfbuzz
             mingw-w64-x86_64-lame
@@ -74,10 +74,10 @@ jobs:
           mkdir Qt
           cd Qt
           echo Downloading Qt
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.8.3-x64-mingw.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.9.1-x64-mingw.txz
           echo Extracting Qt
-          tar -xJf qt-6.8.3-x64-mingw.txz
-          rm qt-6.8.3-x64-mingw.txz
+          tar -xJf qt-6.9.1-x64-mingw.txz
+          rm qt-6.9.1-x64-mingw.txz
           cd ..
           echo Downloading a few prebuilt dependencies
           curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v6.txz
