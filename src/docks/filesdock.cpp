@@ -640,10 +640,12 @@ FilesDock::FilesDock(QWidget *parent)
     ui->verticalLayout->addSpacing(2);
 
     toolbar = new DockToolBar(tr("Files Filters"));
+    toolbar->setAreaHint(Qt::BottomToolBarArea);
     toolbar->addAction(Actions["filesFoldersView"]);
     ui->filtersLayout->addWidget(toolbar);
 
     toolbar = new DockToolBar(ui->label->text());
+    toolbar->setAreaHint(Qt::BottomToolBarArea);
     toolbar->addAction(Actions["filesRefreshFolders"]);
     toolbar->addAction(Actions["filesGoUp"]);
     delete ui->label;
