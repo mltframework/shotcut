@@ -1252,8 +1252,6 @@ function install_whispercpp {
   cmd ninja -C build install
   cmd mkdir -p $FINAL_INSTALL_DIR/bin
   cmd install -p -c build/bin/whisper-cli $FINAL_INSTALL_DIR/bin
-  cmd mkdir -p $FINAL_INSTALL_DIR/share/shotcut/whisper_models
-  cmd install -p -c models/ggml-base-q5_1.bin $FINAL_INSTALL_DIR/share/shotcut/whisper_models
 }
 
 ######################################################################
@@ -1465,10 +1463,6 @@ function get_subproject {
       fi
       cmd cd $1 || die "Unable to change to directory $1"
   fi # git/svn
-
-  if [ "$1" = "whisper.cpp" ]; then
-    cmd sh ./models/download-ggml-model.sh base-q5_1
-  fi
 
   feedback_status Done getting or updating source for $1
   cmd popd
