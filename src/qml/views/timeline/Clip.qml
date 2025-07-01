@@ -47,6 +47,7 @@ Rectangle {
     property int group: -1
     property bool isTrackMute: false
     property bool elided: (width < 15) || (x + width < tracksFlickable.contentX) || (x > tracksFlickable.contentX + tracksFlickable.width) || (y + height < 0) || (y > tracksFlickable.contentY + tracksFlickable.contentHeight)
+    property color clipColor: isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : root.shotcutBlue
 
     signal clicked(var clip, var mouse)
     signal clipRightClicked(var clip, var mouse)
@@ -58,10 +59,6 @@ Rectangle {
     signal trimmedIn(var clip)
     signal trimmingOut(var clip, real delta, var mouse)
     signal trimmedOut(var clip)
-
-    function getColor() {
-        return isBlank ? 'transparent' : isTransition ? 'mediumpurple' : isAudio ? 'darkseagreen' : root.shotcutBlue;
-    }
 
     function reparent(track) {
         parent = track;
@@ -143,7 +140,7 @@ Rectangle {
 
             PropertyChanges {
                 target: gradientStop
-                color: Qt.darker(getColor())
+                color: Qt.darker(clipColor)
             }
         }
     ]
@@ -339,7 +336,7 @@ Rectangle {
 
                 width: Math.min(clipRoot.width, waveform.maxWidth)
                 height: waveform.height
-                fillColor: getColor()
+                fillColor: clipColor
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
                 levels: audioLevels
@@ -352,12 +349,12 @@ Rectangle {
         id: audioPeakLine
 
         width: parent.width - parent.border.width * 2
-        visible: waveform.visible && !isTransition
-        height: 2
+        visible: !elided && waveform.visible && !isTransition && parent.height > 25
+        height: audioPeakMouseArea.drag.active ? 2 : 1
         anchors.left: parent.left
         anchors.leftMargin: parent.border.width
         y: clipRoot.height - waveform.height * Math.min((gain + 72) / 80, 1)
-        color: audioPeakMouseArea.drag.active ? Qt.lighter(parent.color) : Qt.darker(parent.color)
+        color: audioPeakMouseArea.drag.active ? Qt.lighter(parent.color) : Qt.darker(clipColor)
         opacity: waveform.opacity
 
         MouseArea {
@@ -365,8 +362,8 @@ Rectangle {
 
             enabled: settings.timelineAdjustGain
             anchors.fill: parent
-            anchors.topMargin: -3
-            anchors.bottomMargin: -3
+            anchors.topMargin: -2
+            anchors.bottomMargin: -2
             cursorShape: enabled ? Qt.SizeVerCursor : mouseArea.cursorShape
             drag.axis: Drag.YAxis
             drag.target: parent
@@ -779,14 +776,14 @@ Rectangle {
             id: gradientStop
 
             position: 0
-            color: Qt.lighter(getColor())
+            color: Qt.lighter(clipColor)
         }
 
         GradientStop {
             id: gradientStop2
 
             position: 1
-            color: getColor()
+            color: clipColor
         }
     }
 }
