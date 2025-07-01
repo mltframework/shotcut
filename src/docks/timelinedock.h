@@ -163,7 +163,7 @@ public slots:
                    const QString &xml = QString(),
                    bool seek = true);
     void appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy, bool emptyTrack);
-    void changeGain(int trackIndex, int clipIndex, double gain);
+    bool changeGain(int trackIndex, int clipIndex, double gain);
     void fadeIn(int trackIndex, int clipIndex = -1, int duration = -1);
     void fadeOut(int trackIndex, int clipIndex = -1, int duration = -1);
     void seekPreviousEdit();

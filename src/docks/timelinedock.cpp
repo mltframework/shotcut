@@ -3856,15 +3856,26 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy, b
     m_model.checkForEmptyTracks(trackIndex);
 }
 
-void TimelineDock::changeGain(int trackIndex, int clipIndex, double gain)
+bool TimelineDock::changeGain(int trackIndex, int clipIndex, double gain)
 {
     if (isTrackLocked(trackIndex)) {
         emit warnTrackLocked(trackIndex);
-        return;
+        return false;
     }
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+
+    // ignore request and return false if there are keyframes
+    auto producer = producerForClip(trackIndex, clipIndex);
+    std::unique_ptr<Mlt::Filter> filter(MLT.getFilter("audioGain", &producer));
+    if (filter && filter->is_valid()) {
+        Mlt::Animation anim = filter->get_animation("level");
+        if (anim.is_valid() && anim.key_count() > 1)
+            return false;
+    }
+
     MAIN.undoStack()->push(new Timeline::ChangeGainCommand(m_model, trackIndex, clipIndex, gain));
     emit gainChanged(gain);
+    return true;
 }
 
 void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)

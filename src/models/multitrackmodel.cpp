@@ -205,9 +205,20 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                         return info->cut->get_int(kShotcutGroupProperty);
                     else
                         return -1;
+                case GainEnabledRole:
                 case GainRole: {
                     QScopedPointer<Mlt::Filter> filter(getFilter("audioGain", info->producer));
-                    return (filter && filter->is_valid()) ? filter->get_double("level") : 0.0;
+                    if (filter && filter->is_valid()) {
+                        Mlt::Animation anim = filter->get_animation("level");
+                        bool enabled = anim.key_count() < 2;
+                        if (GainEnabledRole == role)
+                            return enabled;
+                        if (enabled)
+                            return filter->get_double("level");
+                    } else if (GainEnabledRole == role) {
+                        return true;
+                    }
+                    return 0.0;
                 }
                 default:
                     break;
@@ -341,6 +352,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[AudioIndexRole] = "audioIndex";
     roles[GroupRole] = "group";
     roles[GainRole] = "gain";
+    roles[GainEnabledRole] = "gainEnabled";
     return roles;
 }
 
@@ -2370,9 +2382,11 @@ void MultitrackModel::onFilterChanged(Mlt::Service *filter)
                 if (!qstrcmp("fadeInMovit", name) || !qstrcmp("fadeInBrightness", name)
                     || !qstrcmp("fadeInVolume", name))
                     roles << FadeInRole;
-                if (!qstrcmp("fadeOutMovit", name) || !qstrcmp("fadeOutBrightness", name)
-                    || !qstrcmp("fadeOutVolume", name))
+                else if (!qstrcmp("fadeOutMovit", name) || !qstrcmp("fadeOutBrightness", name)
+                         || !qstrcmp("fadeOutVolume", name))
                     roles << FadeOutRole;
+                else if (!qstrcmp("audioGain", name))
+                    roles << GainRole;
                 if (roles.length())
                     emit dataChanged(modelIndex, modelIndex, roles);
             }

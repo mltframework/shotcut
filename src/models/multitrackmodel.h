@@ -84,6 +84,7 @@ public:
         AudioIndexRole,    /// clip only
         GroupRole,         /// clip only
         GainRole,          /// clip only
+        GainEnabledRole,   /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);

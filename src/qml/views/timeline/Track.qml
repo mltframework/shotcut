@@ -94,6 +94,7 @@ Rectangle {
             fadeIn: typeof model.fadeIn !== 'undefined' ? model.fadeIn : 0
             fadeOut: typeof model.fadeOut !== 'undefined' ? model.fadeOut : 0
             gain: typeof model.gain !== 'undefined' ? model.gain : 0
+            adjustGainEnabled: typeof model.gainEnabled !== 'undefined' ? model.gainEnabled : 0
             hash: typeof model.hash !== 'undefined' ? model.hash : 0
             speed: typeof model.speed !== 'undefined' ? model.speed : 1
             audioIndex: typeof model.audioindex !== 'undefined' ? model.audioIndex : 0

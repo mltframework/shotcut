@@ -36,6 +36,7 @@ Rectangle {
     property int fadeIn: 0
     property int fadeOut: 0
     property double gain: 0
+    property bool adjustGainEnabled: true
     property int trackIndex
     property int originalTrackIndex: trackIndex
     property int originalClipIndex: index
@@ -353,14 +354,15 @@ Rectangle {
         height: audioPeakMouseArea.drag.active ? 2 : 1
         anchors.left: parent.left
         anchors.leftMargin: parent.border.width
-        y: clipRoot.height - waveform.height * Math.min((gain + 72) / 80, 1)
+        property real yOffset: 0
+        y: clipRoot.height - waveform.height * Math.min((gain + 72) / 80, 1) + yOffset
         color: audioPeakMouseArea.drag.active ? Qt.lighter(parent.color) : Qt.darker(clipColor)
         opacity: waveform.opacity
 
         MouseArea {
             id: audioPeakMouseArea
 
-            enabled: settings.timelineAdjustGain
+            enabled: adjustGainEnabled && settings.timelineAdjustGain
             anchors.fill: parent
             anchors.topMargin: -2
             anchors.bottomMargin: -2
@@ -373,7 +375,11 @@ Rectangle {
                 let y = parent.y - (clipRoot.height - waveform.height);
                 let value = (waveform.height - Math.max(0, Math.min(y, waveform.height))) / waveform.height;
                 let gain = -80 /* dB */ * (1 - value) + 10;
-                timeline.changeGain(trackIndex, index, gain);
+                if (!timeline.changeGain(trackIndex, index, gain)) {
+                    // force y's expression to re-evaluate
+                    parent.yOffset = 0.1;
+                    parent.yOffset = 0;
+                }
             }
             onDoubleClicked: timeline.changeGain(trackIndex, index, 0);
         }
