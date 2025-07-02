@@ -158,10 +158,14 @@ Rectangle {
                 bubbleHelp.show(s);
             }
             onTrimmingIn: (clip, delta, mouse) => {
-                var originalDelta = delta;
-                if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple)
+                const originalDelta = delta;
+                if (settings.timelineDragScrub) {
+                    root.stopScrolling = false;
+                    timeline.position = Math.round(clip.x / timeScale) + (delta > 0 ? 1 : 0);
+                } else if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple) {
                     delta = Logic.snapTrimIn(clip, delta, root, trackRoot.DelegateModel.itemsIndex);
-                if (delta != 0) {
+                }
+                if (delta !== 0) {
                     if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, clip.originalClipIndex, delta, settings.timelineRipple)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = application.timeFromFrames(Math.abs(clip.originalX));
@@ -183,10 +187,14 @@ Rectangle {
                 timeline.commitTrimCommand();
             }
             onTrimmingOut: (clip, delta, mouse) => {
-                var originalDelta = delta;
-                if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple)
+                const originalDelta = delta;
+                if (settings.timelineDragScrub) {
+                    root.stopScrolling = false;
+                    timeline.position = Math.round((clip.x + clip.width) / timeScale) - (delta > 0 ? 2 : 0);
+                } else if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple) {
                     delta = Logic.snapTrimOut(clip, delta, root, trackRoot.DelegateModel.itemsIndex);
-                if (delta != 0) {
+                }
+                if (delta !== 0) {
                     if (timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta, settings.timelineRipple)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = application.timeFromFrames(Math.abs(clip.originalX));
