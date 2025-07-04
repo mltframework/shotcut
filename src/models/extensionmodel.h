@@ -42,6 +42,7 @@ public:
     QString localPath(int row) const;
     QString url(int row) const;
     bool downloaded(int row) const;
+    void deleteFile(int row);
     int getStandardIndex() const;
     QModelIndex getIndexForPath(QString path);
 

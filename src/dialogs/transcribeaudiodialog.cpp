@@ -36,6 +36,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
+#include <QMenu>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSpinBox>
@@ -264,6 +265,11 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
                             fontMetrics().horizontalAdvance("XXX.XX XXX") * devicePixelRatioF()
                                 + 12);
     connect(m_table, &QAbstractItemView::clicked, this, &TranscribeAudioDialog::onModelRowClicked);
+    m_table->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(m_table,
+            &QWidget::customContextMenuRequested,
+            this,
+            &TranscribeAudioDialog::showModelContextMenu);
 
     configLayout->addWidget(m_table, 4, 0, 1, 3);
 
@@ -493,4 +499,23 @@ void TranscribeAudioDialog::updateWhisperStatus()
 
     QModelIndex index = m_model.getIndexForPath(Settings.whisperModel());
     m_table->setCurrentIndex(index);
+}
+
+void TranscribeAudioDialog::showModelContextMenu(QPoint p)
+{
+    QModelIndex index = m_table->indexAt(p);
+    if (!index.isValid() || !m_model.downloaded(index.row())) {
+        updateWhisperStatus();
+        return;
+    }
+    QMenu *menu = new QMenu(tr("Model"));
+    QAction *action = new QAction(tr("Delete Model"), this);
+    connect(action, &QAction::triggered, this, [&]() { m_model.deleteFile(index.row()); });
+    QIcon icon = QIcon::fromTheme("edit-delete",
+                                  QIcon(":/icons/oxygen/32x32/actions/edit-delete.png"));
+    action->setIcon(icon);
+    menu->addAction(action);
+    menu->popup(QCursor::pos());
+    menu->exec();
+    updateWhisperStatus();
 }

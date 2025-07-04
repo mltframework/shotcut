@@ -56,6 +56,7 @@ private:
     void downloadModel(int index);
     void setCurrentModel(int index);
     void updateWhisperStatus();
+    void showModelContextMenu(QPoint p);
     ExtensionModel m_model;
     QLineEdit *m_name;
     QComboBox *m_lang;

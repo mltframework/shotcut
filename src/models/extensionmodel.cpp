@@ -88,6 +88,14 @@ bool ExtensionModel::downloaded(int row) const
     return m_ext->downloaded(row);
 }
 
+void ExtensionModel::deleteFile(int row)
+{
+    QFile file(localPath(row));
+    file.remove();
+    QModelIndex modelIndex = index(row, COLUMN_STATUS);
+    dataChanged(modelIndex, modelIndex);
+}
+
 int ExtensionModel::getStandardIndex() const
 {
     for (int row = 0; row < m_ext->fileCount(); row++) {
