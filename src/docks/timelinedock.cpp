@@ -3396,7 +3396,8 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
     }
 }
 
-bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, int delta, bool ripple)
+bool TimelineDock::trimClipIn(
+    int trackIndex, int clipIndex, int oldClipIndex, int delta, bool ripple, bool roll)
 {
     emit trimStarted();
     if (dynamic_cast<Timeline::RemoveTransitionByTrimInCommand *>(m_trimCommand.get())) {
@@ -3413,7 +3414,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
             clipIndex += 1;
         }
     }
-    if (!ripple && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
+    if (!ripple && !roll && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
         clipIndex = m_model.addTransitionByTrimIn(trackIndex, clipIndex, delta);
         m_transitionDelta += delta;
         m_trimCommand.reset(new Timeline::AddTransitionByTrimInCommand(*this,
@@ -3425,7 +3426,8 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
             && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);
-    } else if (!ripple && m_model.removeTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
+    } else if (!ripple && !roll
+               && m_model.removeTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
         Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
         std::unique_ptr<Mlt::ClipInfo> clipInfo = m_model.getClipInfo(trackIndex, clipIndex - 1);
         QString xml = MLT.XML(clipInfo->producer);
@@ -3446,7 +3448,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
             && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex - 1, -1);
-    } else if (!ripple && m_model.trimTransitionOutValid(trackIndex, clipIndex, delta)) {
+    } else if (!ripple && !roll && m_model.trimTransitionOutValid(trackIndex, clipIndex, delta)) {
         m_model.trimTransitionOut(trackIndex, clipIndex, delta);
         m_trimDelta += delta;
         m_trimCommand.reset(new Timeline::TrimTransitionOutCommand(m_model,
@@ -3454,7 +3456,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
                                                                    clipIndex,
                                                                    m_trimDelta,
                                                                    false));
-    } else if (m_model.trimClipInValid(trackIndex, clipIndex, delta, ripple)) {
+    } else if (m_model.trimClipInValid(trackIndex, clipIndex, delta, ripple || roll)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
             if (!ripple) {
@@ -3464,11 +3466,20 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
             }
             m_undoHelper->recordBeforeState();
         }
+        if (roll && delta < 0
+            && m_model.trimClipOutValid(trackIndex, clipIndex - 1, -delta, false)) {
+            m_model.trimClipOut(trackIndex, clipIndex - 1, -delta, false, false);
+            clipIndex += 1; // A blank was added
+        }
         clipIndex = m_model.trimClipIn(trackIndex,
                                        clipIndex,
                                        delta,
                                        ripple,
                                        Settings.timelineRippleAllTracks());
+        if (roll && delta > 0
+            && m_model.trimClipOutValid(trackIndex, clipIndex - 2, -delta, false)) {
+            m_model.trimClipOut(trackIndex, clipIndex - 2, -delta, false, false);
+        }
 
         m_trimDelta += delta;
         m_trimCommand.reset(new Timeline::TrimClipInCommand(
@@ -3487,7 +3498,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
     return true;
 }
 
-bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple)
+bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple, bool roll)
 {
     emit trimStarted();
     if (dynamic_cast<Timeline::RemoveTransitionByTrimOutCommand *>(m_trimCommand.get())) {
@@ -3503,7 +3514,7 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
             m_trimDelta = 0;
         }
     }
-    if (!ripple && m_model.addTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
+    if (!ripple && !roll && m_model.addTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
         m_model.addTransitionByTrimOut(trackIndex, clipIndex, delta);
         m_transitionDelta += delta;
         m_trimCommand.reset(new Timeline::AddTransitionByTrimOutCommand(m_model,
@@ -3515,7 +3526,8 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
             && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);
-    } else if (!ripple && m_model.removeTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
+    } else if (!ripple && !roll
+               && m_model.removeTransitionByTrimOutValid(trackIndex, clipIndex, delta)) {
         Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
         std::unique_ptr<Mlt::ClipInfo> clipInfo = m_model.getClipInfo(trackIndex, clipIndex + 1);
         QString xml = MLT.XML(clipInfo->producer);
@@ -3536,7 +3548,7 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
             && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);
-    } else if (!ripple && m_model.trimTransitionInValid(trackIndex, clipIndex, delta)) {
+    } else if (!ripple && !roll && m_model.trimTransitionInValid(trackIndex, clipIndex, delta)) {
         m_model.trimTransitionIn(trackIndex, clipIndex, delta);
         m_trimDelta += delta;
         m_trimCommand.reset(new Timeline::TrimTransitionInCommand(m_model,
@@ -3544,14 +3556,20 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
                                                                   clipIndex,
                                                                   m_trimDelta,
                                                                   false));
-    } else if (m_model.trimClipOutValid(trackIndex, clipIndex, delta, ripple)) {
+    } else if (m_model.trimClipOutValid(trackIndex, clipIndex, delta, ripple || roll)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
             if (!ripple)
                 m_undoHelper->setHints(UndoHelper::SkipXML);
             m_undoHelper->recordBeforeState();
         }
+        if (roll && delta < 0 && m_model.trimClipInValid(trackIndex, clipIndex + 1, -delta, false)) {
+            m_model.trimClipIn(trackIndex, clipIndex + 1, -delta, false, false);
+        }
         m_model.trimClipOut(trackIndex, clipIndex, delta, ripple, Settings.timelineRippleAllTracks());
+        if (roll && delta > 0 && m_model.trimClipInValid(trackIndex, clipIndex + 2, -delta, false)) {
+            m_model.trimClipIn(trackIndex, clipIndex + 2, -delta, false, false);
+        }
 
         m_trimDelta += delta;
         m_trimCommand.reset(new Timeline::TrimClipOutCommand(

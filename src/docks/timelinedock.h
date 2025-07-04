@@ -155,8 +155,9 @@ public slots:
     void setTrackLock(int trackIndex, bool lock);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     void onClipMoved(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
-    bool trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, int delta, bool ripple);
-    bool trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple);
+    bool trimClipIn(
+        int trackIndex, int clipIndex, int oldClipIndex, int delta, bool ripple, bool roll);
+    bool trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple, bool roll);
     void insert(int trackIndex, int position = -1, const QString &xml = QString(), bool seek = true);
     void overwrite(int trackIndex,
                    int position = -1,

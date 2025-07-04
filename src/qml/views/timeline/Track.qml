@@ -159,14 +159,16 @@ Rectangle {
             }
             onTrimmingIn: (clip, delta, mouse) => {
                 const originalDelta = delta;
+                const roll = mouse.modifiers & Qt.ControlModifier;
+                const ripple = !roll && (settings.timelineRipple || (mouse.modifiers & Qt.ShiftModifier));
                 if (settings.timelineDragScrub) {
                     root.stopScrolling = false;
                     timeline.position = Math.round(clip.x / timeScale) + (delta > 0 ? 1 : 0);
-                } else if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple) {
+                } else if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !ripple) {
                     delta = Logic.snapTrimIn(clip, delta, root, trackRoot.DelegateModel.itemsIndex);
                 }
                 if (delta !== 0) {
-                    if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, clip.originalClipIndex, delta, settings.timelineRipple)) {
+                    if (timeline.trimClipIn(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, clip.originalClipIndex, delta, ripple, roll)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = application.timeFromFrames(Math.abs(clip.originalX));
                         s = '%1%2 = %3'.arg((clip.originalX < 0) ? '-' : (clip.originalX > 0) ? '+' : '').arg(s.substring(3)).arg(application.timeFromFrames(clipDuration));
@@ -188,14 +190,16 @@ Rectangle {
             }
             onTrimmingOut: (clip, delta, mouse) => {
                 const originalDelta = delta;
+                const roll = mouse.modifiers & Qt.ControlModifier;
+                const ripple = !roll && (settings.timelineRipple || (mouse.modifiers & Qt.ShiftModifier));
                 if (settings.timelineDragScrub) {
                     root.stopScrolling = false;
                     timeline.position = Math.round((clip.x + clip.width) / timeScale) - (delta > 0 ? 2 : 0);
-                } else if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !settings.timelineRipple) {
+                } else if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap && !ripple) {
                     delta = Logic.snapTrimOut(clip, delta, root, trackRoot.DelegateModel.itemsIndex);
                 }
                 if (delta !== 0) {
-                    if (timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta, settings.timelineRipple)) {
+                    if (timeline.trimClipOut(trackRoot.DelegateModel.itemsIndex, clip.DelegateModel.itemsIndex, delta, ripple, roll)) {
                         // Show amount trimmed as a time in a "bubble" help.
                         var s = application.timeFromFrames(Math.abs(clip.originalX));
                         s = '%1%2 = %3'.arg((clip.originalX < 0) ? '+' : (clip.originalX > 0) ? '-' : '').arg(s.substring(3)).arg(application.timeFromFrames(clipDuration));
