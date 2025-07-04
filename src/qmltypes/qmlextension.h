@@ -31,6 +31,7 @@ class QmlExtensionFile : public QObject
     Q_PROPERTY(QString file MEMBER m_file NOTIFY changed)
     Q_PROPERTY(QString url MEMBER m_url NOTIFY changed)
     Q_PROPERTY(QString size MEMBER m_size NOTIFY changed)
+    Q_PROPERTY(bool standard MEMBER m_standard NOTIFY changed)
 
 public:
     explicit QmlExtensionFile(QObject *parent = 0);
@@ -40,6 +41,7 @@ public:
     QString file() const { return m_file; }
     QString url() const { return m_url; }
     QString size() const { return m_size; }
+    bool standard() const { return m_standard; }
 
 signals:
     void changed();
@@ -50,6 +52,7 @@ private:
     QString m_file;
     QString m_url;
     QString m_size;
+    bool m_standard;
 };
 
 class QmlExtension : public QObject

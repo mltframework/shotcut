@@ -36,11 +36,13 @@ public:
     explicit ExtensionModel(QObject *parent = 0);
     virtual ~ExtensionModel();
     void load(const QString &id);
+    int count();
     QString getName(int row) const;
     QString getFormattedDataSize(int row) const;
     QString localPath(int row) const;
     QString url(int row) const;
     bool downloaded(int row) const;
+    int getStandardIndex() const;
     QModelIndex getIndexForPath(QString path);
 
 protected:

@@ -47,6 +47,7 @@ Extension {
             file: "ggml-base-q5_1.bin"
             url: "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base-q5_1.bin"
             size: "62599987"
+            standard: true
         },
         ExtensionFile {
             name: qsTr('Base English')

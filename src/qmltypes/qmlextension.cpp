@@ -28,6 +28,7 @@ const QString QmlExtension::WHISPER_ID = QStringLiteral("whispermodel");
 
 QmlExtensionFile::QmlExtensionFile(QObject *parent)
     : QObject(parent)
+    , m_standard(false)
 {}
 
 QmlExtension *QmlExtension::load(const QString &id)

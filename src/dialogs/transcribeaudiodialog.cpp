@@ -237,31 +237,10 @@ TranscribeAudioDialog::TranscribeAudioDialog(const QString &trackName, QWidget *
 
     // Update Model button
     QPushButton *updateModelsButton = new QPushButton(tr("Refresh Models"), this);
-    connect(updateModelsButton, &QAbstractButton::clicked, this, [&] {
-        QString localDst = QmlExtension::appDir(QmlExtension::WHISPER_ID)
-                               .absoluteFilePath(QmlExtension::extensionFileName("whisper"));
-        FileDownloadDialog dlDialog(tr("Refresh Models"), this);
-        dlDialog.setSrc(WHISPER_MODEL_EXTENSION_URL);
-        dlDialog.setDst(localDst);
-        if (dlDialog.start()) {
-            m_model.load(QmlExtension::WHISPER_ID);
-            QMessageBox qDialog(QMessageBox::Information,
-                                tr("Refresh Models"),
-                                tr("Models refreshed"),
-                                QMessageBox::Ok,
-                                this);
-            qDialog.setWindowModality(QmlApplication::dialogModality());
-            qDialog.exec();
-        } else {
-            QMessageBox qDialog(QMessageBox::Critical,
-                                tr("Refresh Models"),
-                                tr("Failed to refresh models"),
-                                QMessageBox::Ok,
-                                this);
-            qDialog.setWindowModality(QmlApplication::dialogModality());
-            qDialog.exec();
-        }
-    });
+    connect(updateModelsButton,
+            &QAbstractButton::clicked,
+            this,
+            &TranscribeAudioDialog::refreshModels);
     configLayout->addWidget(updateModelsButton, 3, 1, Qt::AlignLeft);
 
     // List of models
@@ -360,22 +339,10 @@ void TranscribeAudioDialog::onModelRowClicked(const QModelIndex &index)
         qDialog.setWindowModality(QmlApplication::dialogModality());
         int result = qDialog.exec();
         if (result == QMessageBox::Yes) {
-            FileDownloadDialog dlDialog(tr("Download Model"), this);
-            dlDialog.setSrc(m_model.url(index.row()));
-            dlDialog.setDst(m_model.localPath(index.row()));
-            dlDialog.start();
+            downloadModel(index.row());
         }
     }
-
-    if (m_model.downloaded(index.row())) {
-        QString path = m_model.localPath(index.row());
-        if (QFileInfo(path).exists()) {
-            LOG_INFO() << "Model found" << path;
-            Settings.setWhisperModel(path);
-        } else {
-            LOG_INFO() << "Model not found" << path;
-        }
-    }
+    setCurrentModel(index.row());
     updateWhisperStatus();
 }
 
@@ -402,6 +369,83 @@ int TranscribeAudioDialog::maxLineLength()
 bool TranscribeAudioDialog::includeNonspoken()
 {
     return m_nonspoken->checkState() == Qt::Checked;
+}
+
+void TranscribeAudioDialog::showEvent(QShowEvent *event)
+{
+    QDialog::showEvent(event);
+    bool modelFound = QFileInfo(Settings.whisperModel()).exists();
+    if (modelFound) {
+        return;
+    }
+
+    // No model is found. Offer to download one
+    QMessageBox qDialog(QMessageBox::Question,
+                        tr("Download Model"),
+                        tr("No models found. Download a standard model?"),
+                        QMessageBox::No | QMessageBox::Yes,
+                        this);
+    qDialog.setDefaultButton(QMessageBox::Yes);
+    qDialog.setEscapeButton(QMessageBox::No);
+    qDialog.setWindowModality(QmlApplication::dialogModality());
+    int result = qDialog.exec();
+    if (result == QMessageBox::Yes) {
+        refreshModels(false);
+        int index = m_model.getStandardIndex();
+        downloadModel(index);
+        setCurrentModel(index);
+        updateWhisperStatus();
+    }
+}
+
+void TranscribeAudioDialog::refreshModels(bool report)
+{
+    QString localDst = QmlExtension::appDir(QmlExtension::WHISPER_ID)
+                           .absoluteFilePath(QmlExtension::extensionFileName("whisper"));
+    FileDownloadDialog dlDialog(tr("Refresh Models"), this);
+    dlDialog.setSrc(WHISPER_MODEL_EXTENSION_URL);
+    dlDialog.setDst(localDst);
+    if (dlDialog.start() && report) {
+        m_model.load(QmlExtension::WHISPER_ID);
+        QMessageBox qDialog(QMessageBox::Information,
+                            tr("Refresh Models"),
+                            tr("Models refreshed"),
+                            QMessageBox::Ok,
+                            this);
+        qDialog.setWindowModality(QmlApplication::dialogModality());
+        qDialog.exec();
+    } else if (report) {
+        QMessageBox qDialog(QMessageBox::Critical,
+                            tr("Refresh Models"),
+                            tr("Failed to refresh models"),
+                            QMessageBox::Ok,
+                            this);
+        qDialog.setWindowModality(QmlApplication::dialogModality());
+        qDialog.exec();
+    }
+}
+
+void TranscribeAudioDialog::downloadModel(int index)
+{
+    FileDownloadDialog dlDialog(tr("Download Model"), this);
+    dlDialog.setSrc(m_model.url(index));
+    dlDialog.setDst(m_model.localPath(index));
+    dlDialog.start();
+}
+
+void TranscribeAudioDialog::setCurrentModel(int index)
+{
+    if (m_model.downloaded(index)) {
+        QString path = m_model.localPath(index);
+        if (QFileInfo(path).exists()) {
+            LOG_INFO() << "Model found" << path;
+            Settings.setWhisperModel(path);
+        } else {
+            LOG_ERROR() << "Model not found" << path;
+        }
+    } else {
+        LOG_ERROR() << "Model not downloaded" << m_model.getName(index);
+    }
 }
 
 void TranscribeAudioDialog::updateWhisperStatus()

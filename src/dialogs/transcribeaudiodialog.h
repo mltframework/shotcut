@@ -44,11 +44,17 @@ public:
     int maxLineLength();
     bool includeNonspoken();
 
+protected:
+    virtual void showEvent(QShowEvent *event) override;
+
 private slots:
     void onButtonClicked(QAbstractButton *button);
     void onModelRowClicked(const QModelIndex &index);
 
 private:
+    void refreshModels(bool report = true);
+    void downloadModel(int index);
+    void setCurrentModel(int index);
     void updateWhisperStatus();
     ExtensionModel m_model;
     QLineEdit *m_name;

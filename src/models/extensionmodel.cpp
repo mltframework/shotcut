@@ -44,6 +44,14 @@ void ExtensionModel::load(const QString &id)
     endResetModel();
 }
 
+int ExtensionModel::count()
+{
+    if (m_ext) {
+        return m_ext->fileCount();
+    }
+    return 0;
+}
+
 QString ExtensionModel::getName(int row) const
 {
     if (!m_ext)
@@ -78,6 +86,16 @@ bool ExtensionModel::downloaded(int row) const
     if (!m_ext)
         return false;
     return m_ext->downloaded(row);
+}
+
+int ExtensionModel::getStandardIndex() const
+{
+    for (int row = 0; row < m_ext->fileCount(); row++) {
+        if (m_ext->file(row)->standard()) {
+            return row;
+        }
+    }
+    return 0;
 }
 
 QModelIndex ExtensionModel::getIndexForPath(QString path)
