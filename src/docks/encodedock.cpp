@@ -1735,6 +1735,8 @@ void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset, bool res
             ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
         }
 #endif
+        if (resetBframes && vcodec.startsWith("h264_"))
+            ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
     } else if (vcodec.endsWith("_vaapi") || vcodec.endsWith("_mf")) {
