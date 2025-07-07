@@ -4305,25 +4305,19 @@ void TimelineDock::recordAudio()
     m_recordingTrackIndex = trackIndex;
     m_recordingClipIndex = clipIndexAtPosition(trackIndex, position());
 
-    // Start ffmpeg background job.
+    // Start melt background job.
 #if defined(Q_OS_MAC)
     QStringList args{"avformat:avfoundation:none:" + Settings.audioInput()};
+#elif defined(Q_OS_WIN)
+    QStringList args{"avformat:dshow:audio=" + Settings.audioInput()};
+#else
+    QStringList args{"avformat:pulse:" + Settings.audioInput()};
+#endif
     args << "-consumer"
          << "avformat:" + filename << "video_off=1"
          << "strict=-2";
     m_recordJob.reset(
         new MeltJob("vo", args, MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den()));
-#else
-#if defined(Q_OS_WIN)
-    QStringList args{"-f", "dshow", "-i", "audio=" + Settings.audioInput()};
-#else
-    QStringList args{"-f", "pulse", "-name", "Shotcut", "-i", Settings.audioInput()};
-#endif
-    args << "-flush_packets"
-         << "1"
-         << "-y" << filename;
-    m_recordJob.reset(new FfmpegJob("vo", args, false, QThread::HighPriority));
-#endif
     m_recordJob->setTarget(filename);
     connect(m_recordJob.get(), SIGNAL(started()), SLOT(onRecordStarted()));
     connect(m_recordJob.get(),
