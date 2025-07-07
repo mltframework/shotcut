@@ -47,7 +47,7 @@
   <url type="bugtracker">https://github.com/mltframework/shotcut/issues/</url>
   <url type="faq">https://www.shotcut.org/FAQ/</url>
   <url type="help">https://www.shotcut.org/tutorials/</url>
-  <url type="translate">https://www.transifex.com/ddennedy/shotcut/</url>
+  <url type="translate">https://explore.transifex.com/ddennedy/shotcut/</url>
   <content_rating type="oars-1.1"/>
   <releases>
     <release version="@SHOTCUT_VERSION@" date="@SHOTCUT_DATE@"></release>
