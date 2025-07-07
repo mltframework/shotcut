@@ -4,7 +4,7 @@ Translation
 -----------
 
 We use the
-[Transifex](https://www.transifex.com/ddennedy/shotcut/)
+[Transifex](https://explore.transifex.com/ddennedy/shotcut/)
 collaboration web site to translate the Shotcut user interface.
 Additional languages are already started but have not yet reached the
 60% minimum level to be included in a Shotcut release.
