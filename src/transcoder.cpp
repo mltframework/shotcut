@@ -192,10 +192,16 @@ void Transcoder::convertProducer(Mlt::Producer *producer, TranscodeDialog &dialo
                           ? producer->get_int(kDefaultAudioIndexProperty)
                           : producer->get_int("audio_index");
     if (producer->get_int("video_index") < audioIndex) {
-        args << "-map"
-             << "0:V?"
-             << "-map"
-             << "0:a?";
+        if (Util::hasiPhoneAmbisonic(producer))
+            args << "-map"
+                 << "0:V?"
+                 << "-map"
+                 << "0:a:0";
+        else
+            args << "-map"
+                 << "0:V?"
+                 << "-map"
+                 << "0:a?";
     } else {
         args << "-map"
              << "0:a?"

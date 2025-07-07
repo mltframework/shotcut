@@ -909,3 +909,12 @@ Mlt::Producer Util::openMltVirtualClip(const QString &path)
     }
     return Mlt::Producer();
 }
+
+bool Util::hasiPhoneAmbisonic(Mlt::Producer *producer)
+{
+    // iPhone 16 Pro has a 4 channel (spatial) audio stream with codec "apac" that causes failure.
+    // This is not limited to only iPhone 16 Pro, but I think most iPhones only record one usable audio track.
+    return producer && producer->is_valid()
+           && !::qstrcmp(producer->get("meta.media.1.stream.type"), "audio")
+           && QString(producer->get("meta.attr.com.apple.quicktime.model.markup")).contains("iPhone");
+}

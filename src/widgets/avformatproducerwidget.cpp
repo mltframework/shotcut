@@ -908,11 +908,17 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         }
 
         // transcode all streams except data, subtitles, and attachments
-        ffmpegArgs << "-map"
-                   << "0:V?"
-                   << "-map"
-                   << "0:a?"
-                   << "-map_metadata"
+        if (Util::hasiPhoneAmbisonic(m_producer.get()))
+            ffmpegArgs << "-map"
+                       << "0:V?"
+                       << "-map"
+                       << "0:a:0";
+        else
+            ffmpegArgs << "-map"
+                       << "0:V?"
+                       << "-map"
+                       << "0:a?";
+        ffmpegArgs << "-map_metadata"
                    << "0"
                    << "-ignore_unknown";
         if (ui->rangeComboBox->currentIndex())
