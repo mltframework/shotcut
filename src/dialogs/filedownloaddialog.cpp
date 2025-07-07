@@ -80,8 +80,14 @@ bool FileDownloadDialog::start()
         m_file->remove();
     } else if (m_reply->error() != QNetworkReply::NoError) {
         LOG_ERROR() << m_reply->errorString();
-        m_file->remove();
-        QMessageBox::information(this, windowTitle(), tr("Download Failed"));
+        if (m_reply->error() == QNetworkReply::UnknownNetworkError && m_src.startsWith("https:")) {
+            m_src.replace("https://", "http://");
+            return start();
+        }
+        if (m_reply->error() != QNetworkReply::NoError) {
+            m_file->remove();
+            QMessageBox::information(this, windowTitle(), tr("Download Failed"));
+        }
     } else {
         // Notify success
         m_file->rename(m_dst);
@@ -94,9 +100,11 @@ bool FileDownloadDialog::start()
 
 void FileDownloadDialog::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-    int progress = bytesReceived * PROGRESS_MAX / bytesTotal;
-    LOG_INFO() << "Download Progress" << progress / 10;
-    setValue(progress);
+    if (bytesTotal > 0) {
+        int progress = bytesReceived * PROGRESS_MAX / bytesTotal;
+        LOG_INFO() << "Download Progress" << progress / 10;
+        setValue(progress);
+    }
 }
 
 void FileDownloadDialog::onReadyRead()
