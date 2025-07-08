@@ -4498,7 +4498,7 @@ bool MainWindow::confirmRestartExternalMonitor()
 {
     QMessageBox dialog(QMessageBox::Information,
                        qApp->applicationName(),
-                       tr("Shotcut must restarto change external monitoring.\n"
+                       tr("Shotcut must restart to change external monitoring.\n"
                           "Do you want to restart now?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
