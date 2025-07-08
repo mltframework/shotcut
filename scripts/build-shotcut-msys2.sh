@@ -725,7 +725,7 @@ function set_globals {
   CONFIG[15]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules -D WITH_OPENMP=ON $CMAKE_DEBUG_FLAG"
   CFLAGS_[15]="$CFLAGS"
   LDFLAGS_[15]="$LDFLAGS"
-  BUILD[15]="build_opencv"
+  BUILD[15]="ninja -C build -j $MAKEJ"
   INSTALL[15]="ninja -C build install"
 
   #####
@@ -740,11 +740,6 @@ function set_globals {
 function build_dav1d {
   # dav1d frequently fails on Windows on generate symbol file
   cmd ninja -C builddir -j $MAKEJ || cmd ninja -C builddir -j $MAKEJ
-}
-
-function build_opencv {
-  [ grep M_PI 3rdparty/carotene/include/carotene/definitions.hpp ] || printf >>3rdparty/carotene/include/carotene/definitions.hpp '#ifndef M_PI\n#define M_PI (3.14159265358979323846)\n#endif'
-  cmd ninja -C build -j $MAKEJ
 }
 
 function install_amf {
