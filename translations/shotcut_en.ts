@@ -5379,6 +5379,12 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="4501"/>
+        <source>Shotcut must restart to change external monitoring.
+Do you want to restart now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="5604"/>
         <source>Turn Proxy On</source>
         <translation type="unfinished"></translation>
@@ -5510,12 +5516,6 @@ Do you want to restart now?</source>
         <location filename="../src/mainwindow.cpp" line="4490"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="4501"/>
-        <source>Shotcut must restarto change external monitoring.
-Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
