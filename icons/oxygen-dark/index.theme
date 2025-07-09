@@ -1,0 +1,504 @@
+[Icon Theme]
+Name=Oxygen-Dark
+Name[ar]=أكسجين
+Name[bn]=অক্সিজেন
+Name[csb]=Krziseń
+Name[es]=Oxígeno
+Name[gu]=ઓક્સિજન
+Name[hi]=आक्सीजन
+Name[hne]=आक्सीजन
+Name[kk]=Оттегі
+Name[km]=អុកស៊ីហ្សែន
+Name[kn]=ಆಕ್ಸಿಜನ್
+Name[mai]=आक्सीजन
+Name[mk]=Оксиген
+Name[ml]=ഓക്സിജന്‍
+Name[mr]=आक्सीजन
+Name[ne]=अक्सिजन
+Name[nn]=Oksygen
+Name[or]=ଅକ୍ସିଜେନ
+Name[pa]=ਆਕਸੀਜਨ
+Name[se]=Oksygena
+Name[sr]=Кисеоник
+Name[sr@latin]=Kiseonik
+Name[ta]=ஆக்ஸிஜன்
+Name[th]=รูปแบบ Oxygen
+Name[wa]=Ocsidjinne
+Name[x-test]=xxOxygenxx
+
+Comment=Oxygen Team
+Comment[af]=Oxygen span
+Comment[ar]=ثيمة أكسجين
+Comment[be@latin]=Supołka „Oxygen”
+Comment[bg]=Екипът на Oxygen
+Comment[bn]=অক্সিজেন টীম
+Comment[bn_IN]=Oxygen দল
+Comment[cs]=Tým Oxygen
+Comment[csb]=Oxygen-Team
+Comment[da]=Oxygen-holdet
+Comment[de]=Oxygen-Team
+Comment[el]=Η ομάδα του Oxygen
+Comment[eo]=Oxygen Teamo
+Comment[es]=Equipo Oxygen
+Comment[et]=Oxygeni meeskond
+Comment[eu]=Oxygen taldea
+Comment[fi]=Oxygen-tiimi
+Comment[fr]=L'équipe Oxygen
+Comment[ga]=Foireann Oxygen
+Comment[gl]=A equipa de Oxygen
+Comment[gu]=ઓક્સિજન ટીમ
+Comment[he]=צוות Oxygen
+Comment[hi]=ऑक्सीजन टोली
+Comment[hne]=आक्सीजन टीम
+Comment[hr]=Tim Oxygen-a
+Comment[is]=Oxygen teymið
+Comment[it]=La squadra di Oxygen
+Comment[kk]=Oxygen тобы
+Comment[km]=ក្រុម​អុកស៊ីសែន
+Comment[kn]=ಆಕ್ಸಿಜನ್ ತಂಡ
+Comment[ko]=Oxygen 팀
+Comment[ku]=Koma Oxygen
+Comment[lt]=Oxygen komanda
+Comment[lv]=Oxygen komanda
+Comment[mk]=Тимот на Оксиген
+Comment[ml]=ഓക്സിജന്‍ സംഘം
+Comment[mr]=ऑक्सीजन समूह
+Comment[nds]=Oxygen-Koppel
+Comment[nl]=Oxygen-team
+Comment[nn]=Oksygen-gruppa
+Comment[or]=Oxygen ଦଳ
+Comment[pa]=ਆਕਸੀਜਨ ਟੀਮ
+Comment[pl]=Zespół Oxygena
+Comment[pt]=Equipa do Oxygen
+Comment[pt_BR]=Equipe do Oxygen
+Comment[ro]=Echipa Oxygen
+Comment[ru]=Команда Oxygen
+Comment[si]=Oxygen කණ්ඩායම
+Comment[sk]=Tím Oxygen
+Comment[sl]=Ekipa Oxygena
+Comment[sr]=Тим Кисеоника
+Comment[sr@latin]=Tim Kiseonika
+Comment[sv]=Oxygen-gruppen
+Comment[ta]=Oxygen அணி
+Comment[te]=Oxygen టీము
+Comment[tg]=Командаи Oxygen
+Comment[th]=กลุ่มผู้พัฒนา Oxygen
+Comment[tr]=Oxygen Ekibi
+Comment[uk]=Команда Oxygen
+Comment[uz]=Oxygen jamoasi
+Comment[uz@cyrillic]=Oxygen жамоаси
+Comment[wa]=Ekipe Ocsidjinne
+Comment[x-test]=xxOxygen Teamxx
+Comment[zh_CN]=Oxygen 团队
+Comment[zh_TW]=Oxygen 開發團隊
+
+DisplayDepth=32
+
+Inherits=hicolor
+
+Example=folder
+
+LinkOverlay=link
+LockOverlay=lockoverlay
+ShareOverlay=share
+ZipOverlay=zip
+
+DesktopDefault=48
+DesktopSizes=16,22,32,48,64,128,256
+ToolbarDefault=22
+ToolbarSizes=16,22,32,48
+MainToolbarDefault=22
+MainToolbarSizes=16,22,32,48
+SmallDefault=16
+SmallSizes=16,22,32,48
+PanelDefault=32
+PanelSizes=16,22,32,48,64,128,256
+DialogDefault=32
+DialogSizes=16,22,32,48,64,128,256
+
+Directories=8x8/emblems,16x16/actions,16x16/animations,16x16/apps,16x16/categories,16x16/devices,16x16/emblems,16x16/emotes,16x16/intl,16x16/mimetypes,16x16/places,16x16/status,16x16/special,22x22/actions,22x22/animations,22x22/apps,22x22/categories,22x22/devices,22x22/emblems,22x22/emotes,22x22/intl,22x22/mimetypes,22x22/places,22x22/status,22x22/special,32x32/actions,32x32/animations,32x32/apps,32x32/categories,32x32/devices,32x32/emblems,32x32/emotes,32x32/intl,32x32/mimetypes,32x32/places,32x32/status,48x48/actions,48x48/animations,48x48/apps,48x48/categories,48x48/devices,48x48/emblems,48x48/emotes,48x48/intl,48x48/mimetypes,48x48/places,48x48/status,64x64/actions,64x64/animations,64x64/apps,64x64/categories,64x64/devices,64x64/emblems,64x64/emotes,64x64/intl,64x64/mimetypes,64x64/places,64x64/status,128x128/actions,128x128/animations,128x128/apps,128x128/categories,128x128/devices,128x128/emblems,128x128/emotes,128x128/intl,128x128/mimetypes,128x128/places,128x128/status,256x256/actions,256x256/apps,256x256/categories,256x256/devices,256x256/mimetypes,256x256/places,256x256/status
+
+[8x8/emblems]
+Size=8
+Context=Emblems
+Type=Threshold
+
+[16x16/actions]
+Size=16
+Context=Actions
+Type=Threshold
+
+[16x16/animations]
+Size=16
+Context=Animations
+Type=Threshold
+
+[16x16/apps]
+Size=16
+Context=Applications
+Type=Threshold
+
+[16x16/categories]
+Size=16
+Context=Categories
+Type=Threshold
+
+[16x16/devices]
+Size=16
+Context=Devices
+Type=Threshold
+
+[16x16/emblems]
+Size=16
+Context=Emblems
+Type=Threshold
+
+[16x16/emotes]
+Size=16
+Context=Emotes
+Type=Threshold
+
+[16x16/intl]
+Size=16
+Context=International
+Type=Threshold
+
+[16x16/mimetypes]
+Size=16
+Context=MimeTypes
+Type=Threshold
+
+[16x16/places]
+Size=16
+Context=Places
+Type=Threshold
+
+[16x16/status]
+Size=16
+Context=Status
+Type=Threshold
+
+[16x16/special]
+Size=16
+Context=Actions
+Type=Threshold
+
+[22x22/actions]
+Size=22
+Context=Actions
+Type=Threshold
+
+[22x22/animations]
+Size=22
+Context=Animations
+Type=Threshold
+
+[22x22/apps]
+Size=22
+Context=Applications
+Type=Threshold
+
+[22x22/categories]
+Size=22
+Context=Categories
+Type=Threshold
+
+[22x22/devices]
+Size=22
+Context=Devices
+Type=Threshold
+
+[22x22/emblems]
+Size=22
+Context=Emblems
+Type=Threshold
+
+[22x22/emotes]
+Size=22
+Context=Emotes
+Type=Threshold
+
+[22x22/intl]
+Size=22
+Context=International
+Type=Threshold
+
+[22x22/mimetypes]
+Size=22
+Context=MimeTypes
+Type=Threshold
+
+[22x22/places]
+Size=22
+Context=Places
+Type=Threshold
+
+[22x22/status]
+Size=22
+Context=Status
+Type=Threshold
+
+[22x22/special]
+Size=22
+Context=Actions
+Type=Threshold
+
+[32x32/actions]
+Size=32
+Context=Actions
+Type=Threshold
+
+[32x32/animations]
+Size=32
+Context=Animations
+Type=Threshold
+
+[32x32/apps]
+Size=32
+Context=Applications
+Type=Threshold
+
+[32x32/categories]
+Size=32
+Context=Categories
+Type=Threshold
+
+[32x32/devices]
+Size=32
+Context=Devices
+Type=Threshold
+
+[32x32/emblems]
+Size=32
+Context=Emblems
+Type=Threshold
+
+[32x32/emotes]
+Size=32
+Context=Emotes
+Type=Threshold
+
+[32x32/intl]
+Size=32
+Context=International
+Type=Threshold
+
+[32x32/mimetypes]
+Size=32
+Context=MimeTypes
+Type=Threshold
+
+[32x32/places]
+Size=32
+Context=Places
+Type=Threshold
+
+[32x32/status]
+Size=32
+Context=Status
+Type=Threshold
+
+[48x48/actions]
+Size=48
+Context=Actions
+Type=Threshold
+
+[48x48/animations]
+Size=48
+Context=Animations
+Type=Threshold
+
+[48x48/apps]
+Size=48
+Context=Applications
+Type=Threshold
+
+[48x48/categories]
+Size=48
+Context=Categories
+Type=Threshold
+
+[48x48/devices]
+Size=48
+Context=Devices
+Type=Threshold
+
+[48x48/emblems]
+Size=48
+Context=Emblems
+Type=Threshold
+
+[48x48/emotes]
+Size=48
+Context=Emotes
+Type=Threshold
+
+[48x48/intl]
+Size=48
+Context=International
+Type=Threshold
+
+[48x48/mimetypes]
+Size=48
+Context=MimeTypes
+Type=Threshold
+
+[48x48/places]
+Size=48
+Context=Places
+Type=Threshold
+
+[48x48/status]
+Size=48
+Context=Status
+Type=Threshold
+
+[64x64/actions]
+Size=64
+Context=Actions
+Type=Threshold
+
+[64x64/animations]
+Size=64
+Context=Animations
+Type=Threshold
+
+[64x64/apps]
+Size=64
+Context=Applications
+Type=Threshold
+
+[64x64/categories]
+Size=64
+Context=Categories
+Type=Threshold
+
+[64x64/devices]
+Size=64
+Context=Devices
+Type=Threshold
+
+[64x64/emblems]
+Size=64
+Context=Emblems
+Type=Threshold
+
+[64x64/emotes]
+Size=64
+Context=Emotes
+Type=Threshold
+
+[64x64/intl]
+Size=64
+Context=International
+Type=Threshold
+
+[64x64/mimetypes]
+Size=64
+Context=MimeTypes
+Type=Threshold
+
+[64x64/places]
+Size=64
+Context=Places
+Type=Threshold
+
+[64x64/status]
+Size=64
+Context=Status
+Type=Threshold
+
+[128x128/actions]
+Size=128
+Context=Actions
+Type=Threshold
+
+[128x128/animations]
+Size=128
+Context=Animations
+Type=Threshold
+
+[128x128/apps]
+Size=128
+Context=Applications
+Type=Threshold
+
+[128x128/categories]
+Size=128
+Context=Categories
+Type=Threshold
+
+[128x128/devices]
+Size=128
+Context=Devices
+Type=Threshold
+
+[128x128/emblems]
+Size=128
+Context=Emblems
+Type=Threshold
+
+[128x128/emotes]
+Size=128
+Context=Emotes
+Type=Threshold
+
+[128x128/categories]
+Size=128
+Context=Categories
+Type=Threshold
+
+[128x128/intl]
+Size=128
+Context=International
+Type=Threshold
+
+[128x128/mimetypes]
+Size=128
+Context=MimeTypes
+Type=Threshold
+
+[128x128/places]
+Size=128
+Context=Places
+Type=Threshold
+
+[128x128/status]
+Size=128
+Context=Status
+Type=Threshold
+
+[256x256/actions]
+Size=256
+Context=Actions
+Type=Threshold
+
+[256x256/apps]
+Size=256
+Context=Applications
+Type=Threshold
+
+[256x256/categories]
+Size=256
+Context=Categories
+Type=Threshold
+
+[256x256/devices]
+Size=256
+Context=Devices
+Type=Threshold
+
+[256x256/mimetypes]
+Size=256
+Context=MimeTypes
+Type=Threshold
+
+[256x256/places]
+Size=256
+Context=Places
+Type=Threshold
+
+[256x256/status]
+Size=256
+Context=Status
+Type=Threshold

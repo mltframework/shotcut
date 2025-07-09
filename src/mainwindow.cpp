@@ -3661,6 +3661,7 @@ bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
 void MainWindow::changeTheme(const QString &theme)
 {
     LOG_DEBUG() << "begin";
+    LOG_DEBUG() << "Available styles:" << QStyleFactory::keys();
     auto mytheme = theme;
 
 #if !defined(SHOTCUT_THEME)
@@ -3730,10 +3731,30 @@ void MainWindow::changeTheme(const QString &theme)
         if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
             ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
     } else {
+        auto brightness = QGuiApplication::palette().color(QPalette::Text).lightnessF();
+#if defined(Q_OS_WIN)
+        if (!::qEnvironmentVariableIsSet("QT_STYLE_OVERRIDE")) {
+            // The modern Windows style adopted in Qt 6.7 changes spinboxes to have
+            // larger arrow buttons side-by-side thus making the numeric area
+            // smaller and incompatible with every other combination of style and OS.
+            // Windows, windows11, & windowsvista styles all break the width of drop down menus!
+            QApplication::setStyle("Fusion");
+
+            if (brightness > 0.5f) { // Dark
+                QPalette palette;
+                palette.setColor(QPalette::AlternateBase, palette.color(QPalette::Window));
+                palette.setColor(QPalette::Button, palette.color(QPalette::Window).lighter());
+                QApplication::setPalette(palette);
+                QIcon::setThemeName("oxygen-dark");
+            } else {
+                QIcon::setThemeName("oxygen");
+            }
+        }
+#else
         QApplication::setStyle(qApp->property("system-style").toString());
         QIcon::setThemeName("oxygen");
+#endif
         if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF")) {
-            auto brightness = QGuiApplication::palette().color(QPalette::Text).lightnessF();
             if (brightness < 0.5f)
                 ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
             else
