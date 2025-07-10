@@ -3661,6 +3661,14 @@ bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
     return result;
 }
 
+static const auto kThemeDark = QStringLiteral("dark");
+static const auto kThemeLight = QStringLiteral("light");
+static const auto kThemeSystem = QStringLiteral("system");
+static const auto kThemeSystemFusion = QStringLiteral("system-fusion");
+static const auto kStyleFusion = QStringLiteral("Fusion");
+static const auto kIconsOxygen = QStringLiteral("oxygen");
+static const auto kIconsDarkOxygen = QStringLiteral("oxygen-dark");
+
 void MainWindow::changeTheme(const QString &theme)
 {
     LOG_DEBUG() << "begin";
@@ -3672,11 +3680,11 @@ void MainWindow::changeTheme(const QString &theme)
     std::unique_ptr<QStyle> style{QStyleFactory::create("fusion")};
     auto brightness = style->standardPalette().color(QPalette::Text).lightnessF();
     LOG_DEBUG() << brightness;
-    mytheme = brightness < 0.5f ? "light" : "dark";
-    QApplication::setStyle("Fusion");
+    mytheme = brightness < 0.5f ? kThemeLight : kThemeDark;
+    QApplication::setStyle(kStyleFusion);
     QIcon::setThemeName(mytheme);
 #if defined(Q_OS_MAC)
-    if (mytheme == "dark") {
+    if (mytheme == kThemeDark) {
         auto palette = QGuiApplication::palette();
         palette.setColor(QPalette::AlternateBase, palette.color(QPalette::Base).lighter());
         QGuiApplication::setPalette(palette);
@@ -3685,8 +3693,8 @@ void MainWindow::changeTheme(const QString &theme)
     QGuiApplication::setPalette(style->standardPalette());
 #endif
 #else
-    if (mytheme == "dark") {
-        QApplication::setStyle("Fusion");
+    if (mytheme == kThemeDark) {
+        QApplication::setStyle(kStyleFusion);
         QPalette palette;
         palette.setColor(QPalette::Window, QColor(50, 50, 50));
         palette.setColor(QPalette::WindowText, QColor(220, 220, 220));
@@ -3706,11 +3714,11 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
-        QIcon::setThemeName("dark");
+        QIcon::setThemeName(kThemeDark);
         if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
             ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-dark.conf");
     } else if (mytheme == "light") {
-        QApplication::setStyle("Fusion");
+        QApplication::setStyle(kStyleFusion);
         QPalette palette;
         palette.setColor(QPalette::Window, "#efefef");
         palette.setColor(QPalette::WindowText, "#000000");
@@ -3730,36 +3738,40 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
-        QIcon::setThemeName("light");
+        QIcon::setThemeName(kThemeLight);
         if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
             ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
     } else {
-        auto brightness = QGuiApplication::palette().color(QPalette::Text).lightnessF();
+        auto isDark = QGuiApplication::palette().color(QPalette::Text).lightnessF() > 0.5f;
 #if defined(Q_OS_WIN)
         if (!::qEnvironmentVariableIsSet("QT_STYLE_OVERRIDE")) {
             // The modern Windows style adopted in Qt 6.7 changes spinboxes to have
             // larger arrow buttons side-by-side thus making the numeric area
             // smaller and incompatible with every other combination of style and OS.
             // Windows, windows11, & windowsvista styles all break the width of drop down menus!
-            QApplication::setStyle("Fusion");
+            QApplication::setStyle(kStyleFusion);
 
-            if (brightness > 0.5f) { // Dark
+            if (isDark) {
                 QPalette palette;
                 palette.setColor(QPalette::AlternateBase, palette.color(QPalette::Window));
                 palette.setColor(QPalette::Button, palette.color(QPalette::Window).lighter());
                 QApplication::setPalette(palette);
             }
         }
+#elif defined(Q_OS_MAC)
+        if (!::qEnvironmentVariableIsSet("QT_STYLE_OVERRIDE"))
+            // The macOS style is hideous in dark mode!
+            QApplication::setStyle(isDark ? kStyleFusion : QStringLiteral("macOS"));
 #else
         QApplication::setStyle(qApp->property("system-style").toString());
 #endif
-        if (brightness > 0.5f) // Dark
-            QIcon::setThemeName(mytheme == "system-fusion" ? "dark" : "oxygen-dark");
+        if (isDark)
+            QIcon::setThemeName(mytheme == kThemeSystemFusion ? kThemeDark : kIconsDarkOxygen);
         else
-            QIcon::setThemeName(mytheme == "system-fusion" ? "light" : "oxygen");
+            QIcon::setThemeName(mytheme == kThemeSystemFusion ? kThemeLight : kIconsOxygen);
 
         if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF")) {
-            if (brightness < 0.5f)
+            if (!isDark)
                 ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
             else
                 ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-dark.conf");
@@ -4464,7 +4476,7 @@ void MainWindow::restartAfterChangeTheme()
     dialog.setEscapeButton(QMessageBox::No);
     dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QMessageBox::Yes) {
-        //        m_exitCode = EXIT_RESTART;
+        m_exitCode = EXIT_RESTART;
         QApplication::closeAllWindows();
     }
 }
