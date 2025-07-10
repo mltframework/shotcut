@@ -313,6 +313,7 @@ private slots:
     void processSingleFile();
     void onLanguageTriggered(QAction *);
     void on_actionSystemTheme_triggered();
+    void on_actionSystemFusion_triggered();
     void on_actionFusionDark_triggered();
     void on_actionJobPriorityLow_triggered();
     void on_actionJobPriorityNormal_triggered();

@@ -1386,12 +1386,15 @@ void MainWindow::setupSettingsMenu()
 #if defined(SHOTCUT_THEME)
     group = new QActionGroup(this);
     group->addAction(ui->actionSystemTheme);
+    group->addAction(ui->actionSystemFusion);
     group->addAction(ui->actionFusionDark);
     group->addAction(ui->actionFusionLight);
     if (Settings.theme() == "dark")
         ui->actionFusionDark->setChecked(true);
     else if (Settings.theme() == "light")
         ui->actionFusionLight->setChecked(true);
+    else if (Settings.theme() == "system-fusion")
+        ui->actionSystemFusion->setChecked(true);
     else
         ui->actionSystemTheme->setChecked(true);
 #else
@@ -3745,15 +3748,16 @@ void MainWindow::changeTheme(const QString &theme)
                 palette.setColor(QPalette::AlternateBase, palette.color(QPalette::Window));
                 palette.setColor(QPalette::Button, palette.color(QPalette::Window).lighter());
                 QApplication::setPalette(palette);
-                QIcon::setThemeName("oxygen-dark");
-            } else {
-                QIcon::setThemeName("oxygen");
             }
         }
 #else
         QApplication::setStyle(qApp->property("system-style").toString());
-        QIcon::setThemeName("oxygen");
 #endif
+        if (brightness > 0.5f) // Dark
+            QIcon::setThemeName(mytheme == "system-fusion" ? "dark" : "oxygen-dark");
+        else
+            QIcon::setThemeName(mytheme == "system-fusion" ? "light" : "oxygen");
+
         if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF")) {
             if (brightness < 0.5f)
                 ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
@@ -4532,6 +4536,12 @@ bool MainWindow::confirmRestartExternalMonitor()
 void MainWindow::on_actionSystemTheme_triggered()
 {
     Settings.setTheme("system");
+    restartAfterChangeTheme();
+}
+
+void MainWindow::on_actionSystemFusion_triggered()
+{
+    Settings.setTheme("system-fusion");
     restartAfterChangeTheme();
 }
 

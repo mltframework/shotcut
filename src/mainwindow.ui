@@ -165,6 +165,7 @@
       <string>Theme</string>
      </property>
      <addaction name="actionSystemTheme"/>
+     <addaction name="actionSystemFusion"/>
      <addaction name="actionFusionDark"/>
      <addaction name="actionFusionLight"/>
     </widget>
@@ -759,6 +760,14 @@
    </property>
    <property name="toolTip">
     <string>Use the user or platform style, colors, and icons.</string>
+   </property>
+  </action>
+  <action name="actionSystemFusion">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>System Fusion</string>
    </property>
   </action>
   <action name="actionFusionDark">
