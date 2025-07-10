@@ -171,12 +171,19 @@ MainWindow::MainWindow()
     // Create the UI.
     ui->setupUi(this);
     setDockNestingEnabled(true);
-    setStyleSheet(QStringLiteral("QMainWindow::separator {"
-                                 "  width: 10px;"
-                                 "}"
-                                 "QMainWindow::separator:hover {"
-                                 "  background-color: rgba(23, 92, 118, 20%);"
-                                 "}"));
+    const auto highlight = palette().highlight().color();
+    LOG_DEBUG() << "highlight" << highlight.red() << highlight.green() << highlight.blue();
+    setStyleSheet(QString("QMainWindow::separator {"
+                          "  width: 10px;"
+                          "}"
+                          "QMainWindow::separator:hover {"
+                          "  background-color: rgba(%1, %2, %3, 51);"
+                          "}")
+                      .arg(highlight.red())
+                      .arg(highlight.green())
+                      .arg(highlight.blue()));
+    LOG_DEBUG() << "highlight" << highlight.red() << highlight.green() << highlight.blue()
+                << styleSheet();
 
     ui->statusBar->hide();
 
