@@ -3685,7 +3685,7 @@ void MainWindow::changeTheme(const QString &theme)
 #if !defined(SHOTCUT_THEME)
     // Workaround Quick Controls not using our custom palette - temporarily?
     std::unique_ptr<QStyle> style{QStyleFactory::create("fusion")};
-    auto brightness = style->standardPalette().color(QPalette::Text).lightnessF();
+    auto brightness = style->standardPalette().color(QPalette::WindowText).lightnessF();
     LOG_DEBUG() << brightness;
     mytheme = brightness < 0.5f ? kThemeLight : kThemeDark;
     QApplication::setStyle(kStyleFusion);
@@ -3749,7 +3749,7 @@ void MainWindow::changeTheme(const QString &theme)
         if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
             ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
     } else {
-        auto isDark = QGuiApplication::palette().color(QPalette::Text).lightnessF() > 0.5f;
+        auto isDark = QGuiApplication::palette().color(QPalette::WindowText).lightnessF() > 0.5f;
 #if defined(Q_OS_WIN)
         if (!::qEnvironmentVariableIsSet("QT_STYLE_OVERRIDE")) {
             // The modern Windows style adopted in Qt 6.7 changes spinboxes to have
@@ -3786,22 +3786,23 @@ void MainWindow::changeTheme(const QString &theme)
     }
 #endif
 
-    //    auto pal = QGuiApplication::palette();
-    //    LOG_INFO() << "altBase" << pal.alternateBase().color().name();
-    //    LOG_INFO() << "base" << pal.base().color().name();
-    //    LOG_INFO() << "window" << pal.window().color().name();
-    //    LOG_INFO() << "windowText" << pal.windowText().color().name();
-    //    LOG_INFO() << "toolTipBase" << pal.toolTipBase().color().name();
-    //    LOG_INFO() << "toolTipText" << pal.toolTipText().color().name();
-    //    LOG_INFO() << "text" << pal.text().color().name();
-    //    LOG_INFO() << "button" << pal.button().color().name();
-    //    LOG_INFO() << "buttonText" << pal.buttonText().color().name();
-    //    LOG_INFO() << "placeholderText" << pal.placeholderText().color().name();
-    //    LOG_INFO() << "brightText" << pal.brightText().color().name();
-    //    LOG_INFO() << "highlight" << pal.highlight().color().name();
-    //    LOG_INFO() << "highlightedText" << pal.highlightedText().color().name();
-    //    LOG_INFO() << "link" << pal.link().color().name();
-    //    LOG_INFO() << "linkVisited" << pal.linkVisited().color().name();
+    auto pal = QGuiApplication::palette();
+    LOG_INFO() << "altBase" << pal.alternateBase().color().name();
+    LOG_INFO() << "base" << pal.base().color().name();
+    LOG_INFO() << "window" << pal.window().color().name();
+    LOG_INFO() << "windowText" << pal.windowText().color().name();
+    LOG_INFO() << "toolTipBase" << pal.toolTipBase().color().name();
+    LOG_INFO() << "toolTipText" << pal.toolTipText().color().name();
+    LOG_INFO() << "text" << pal.text().color().name();
+    LOG_INFO() << "button" << pal.button().color().name();
+    LOG_INFO() << "buttonText" << pal.buttonText().color().name();
+    LOG_INFO() << "placeholderText" << pal.placeholderText().color().name();
+    LOG_INFO() << "brightText" << pal.brightText().color().name();
+    LOG_INFO() << "highlight" << pal.highlight().color().name();
+    LOG_INFO() << "highlightedText" << pal.highlightedText().color().name();
+    LOG_INFO() << "link" << pal.link().color().name();
+    LOG_INFO() << "linkVisited" << pal.linkVisited().color().name();
+    LOG_INFO() << "brightness" << pal.color(QPalette::WindowText).lightnessF();
     LOG_DEBUG() << "end";
 }
 
