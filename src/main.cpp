@@ -483,6 +483,7 @@ int main(int argc, char **argv)
 
         if (EXIT_RESTART == result || EXIT_RESET == result) {
             LOG_DEBUG() << "restarting app";
+            ::qunsetenv("QT_QUICK_CONTROLS_CONF"); // See MainWindow::changeTheme()
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
             ::qputenv("LIBGL_ALWAYS_SOFTWARE",
                       Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()

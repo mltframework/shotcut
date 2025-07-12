@@ -172,7 +172,6 @@ MainWindow::MainWindow()
     ui->setupUi(this);
     setDockNestingEnabled(true);
     const auto highlight = palette().highlight().color();
-    LOG_DEBUG() << "highlight" << highlight.red() << highlight.green() << highlight.blue();
     setStyleSheet(QString("QMainWindow::separator {"
                           "  width: 10px;"
                           "}"
@@ -182,8 +181,6 @@ MainWindow::MainWindow()
                       .arg(highlight.red())
                       .arg(highlight.green())
                       .arg(highlight.blue()));
-    LOG_DEBUG() << "highlight" << highlight.red() << highlight.green() << highlight.blue()
-                << styleSheet();
 
     ui->statusBar->hide();
 
@@ -3772,6 +3769,7 @@ void MainWindow::changeTheme(const QString &theme)
 #else
         QApplication::setStyle(qApp->property("system-style").toString());
 #endif
+        isDark = QGuiApplication::palette().color(QPalette::Text).lightnessF() > 0.5f;
         if (isDark)
             QIcon::setThemeName(mytheme == kThemeSystemFusion ? kThemeDark : kIconsDarkOxygen);
         else
