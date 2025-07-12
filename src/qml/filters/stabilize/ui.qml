@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ Item {
     }
 
     width: 350
-    height: 150
+    height: 200
     Component.onCompleted: {
         filter.set('analyze', 0);
         shakinessSlider.value = filter.getDouble('shakiness');
