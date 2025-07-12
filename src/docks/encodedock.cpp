@@ -152,6 +152,16 @@ EncodeDock::EncodeDock(QWidget *parent)
     ui->videoCodecCombo->model()->sort(0);
     ui->videoCodecCombo->insertItem(0, tr("Default for format"));
 
+    QListView* listView = new QListView();
+    listView->setFlow(QListView::LeftToRight);
+    listView->setWrapping(true);
+    listView->setResizeMode(QListView::Adjust);
+    listView->setLayoutMode(QListView::SinglePass);
+    listView->setMovement(QListView::Static);
+    listView->setFixedWidth(300);
+    listView->setGridSize(QSize(250, 30)); 
+    ui->videoCodecCombo->setView(listView);
+
     ui->hwencodeCheckBox->setChecked(Settings.encodeUseHardware()
                                      && !Settings.encodeHardware().isEmpty());
 
