@@ -3746,7 +3746,8 @@ void MainWindow::changeTheme(const QString &theme)
         if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
             ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
     } else {
-        auto isDark = QGuiApplication::palette().color(QPalette::Text).lightnessF() > 0.5f;
+        // Use a macro since this can change on some OS after setStyle(Fusion)
+#define isDark (QGuiApplication::palette().color(QPalette::Text).lightnessF() > 0.5f)
 #if defined(Q_OS_WIN)
         if (!::qEnvironmentVariableIsSet("QT_STYLE_OVERRIDE")) {
             // The modern Windows style adopted in Qt 6.7 changes spinboxes to have
@@ -3769,7 +3770,6 @@ void MainWindow::changeTheme(const QString &theme)
 #else
         QApplication::setStyle(qApp->property("system-style").toString());
 #endif
-        isDark = QGuiApplication::palette().color(QPalette::Text).lightnessF() > 0.5f;
         if (isDark)
             QIcon::setThemeName(mytheme == kThemeSystemFusion ? kThemeDark : kIconsDarkOxygen);
         else
