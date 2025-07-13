@@ -19,6 +19,7 @@
 #define FILEDOWNLOADDIALOG_H
 
 #include <QProgressDialog>
+#include <QSslError>
 
 class QFile;
 class QNetworkReply;
@@ -35,6 +36,7 @@ private slots:
     void onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void onReadyRead();
     void onFinished();
+    void sslErrors(const QList<QSslError> &errors);
 
 private:
     QString m_src;

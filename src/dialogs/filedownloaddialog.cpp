@@ -19,6 +19,7 @@
 
 #include "Logger.h"
 #include "mainwindow.h"
+#include "qmltypes/qmlapplication.h"
 
 #include <QMessageBox>
 #include <QNetworkAccessManager>
@@ -73,6 +74,7 @@ bool FileDownloadDialog::start()
                      &FileDownloadDialog::onDownloadProgress);
     QObject::connect(m_reply, &QNetworkReply::readyRead, this, &FileDownloadDialog::onReadyRead);
     QObject::connect(m_reply, &QNetworkReply::finished, this, &FileDownloadDialog::onFinished);
+    QObject::connect(m_reply, &QNetworkReply::sslErrors, this, &FileDownloadDialog::sslErrors);
 
     int result = exec();
     if (result != QDialog::Accepted) {
@@ -115,4 +117,26 @@ void FileDownloadDialog::onReadyRead()
 void FileDownloadDialog::onFinished()
 {
     accept();
+}
+
+void FileDownloadDialog::sslErrors(const QList<QSslError> &errors)
+{
+    LOG_ERROR() << "SSL Errors" << errors;
+    QString message = tr("The following SSL errors were encountered:");
+    foreach (const QSslError &error, errors) {
+        message = QStringLiteral("\n") + error.errorString();
+    }
+    message += tr("Attempt to ignore SSL errors?");
+    QMessageBox qDialog(QMessageBox::Question,
+                        windowTitle(),
+                        message,
+                        QMessageBox::No | QMessageBox::Yes,
+                        this);
+    qDialog.setDefaultButton(QMessageBox::Yes);
+    qDialog.setEscapeButton(QMessageBox::No);
+    qDialog.setWindowModality(QmlApplication::dialogModality());
+    int result = qDialog.exec();
+    if (result == QMessageBox::Yes) {
+        m_reply->ignoreSslErrors();
+    }
 }
