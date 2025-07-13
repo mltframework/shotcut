@@ -28,6 +28,7 @@
 
 #include <MltProducer.h>
 #include <QCheckBox>
+#include <QClipboard>
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QFileDialog>
@@ -513,6 +514,14 @@ void TranscribeAudioDialog::showModelContextMenu(QPoint p)
     connect(action, &QAction::triggered, this, [&]() { m_model.deleteFile(index.row()); });
     QIcon icon = QIcon::fromTheme("edit-delete",
                                   QIcon(":/icons/oxygen/32x32/actions/edit-delete.png"));
+    action->setIcon(icon);
+    menu->addAction(action);
+    action = new QAction(tr("Copy Model URL to Clipboard"), this);
+    connect(action, &QAction::triggered, this, [&]() {
+        QString url = m_model.url(index.row());
+        QGuiApplication::clipboard()->setText(url);
+    });
+    icon = QIcon::fromTheme("edit-copy", QIcon(":/icons/oxygen/32x32/actions/edit-copy.png"));
     action->setIcon(icon);
     menu->addAction(action);
     menu->popup(QCursor::pos());
