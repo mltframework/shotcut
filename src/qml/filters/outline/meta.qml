@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('stroke thickness', 'search keywords for the Outlin video filter') + ' outline #rgba'
     mlt_service: 'outline'
     qml: 'ui.qml'
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true

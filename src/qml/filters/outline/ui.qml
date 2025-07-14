@@ -30,14 +30,15 @@ Shotcut.KeyframableFilter {
         var position = getPosition();
         blockUpdate = true;
         colorPicker.value = filter.getColor(colorParam);
-        thicknessSlider.value = filter.getDouble(thicknessParam, position);
         colorKeyframesButton.checked = filter.keyframeCount(colorParam) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0;
+        thicknessSlider.value = filter.getDouble(thicknessParam, position);
         thicknessKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(thicknessParam) > 0;
         blockUpdate = false;
         enableControls(isSimpleKeyframesActive());
     }
 
     function enableControls(enabled) {
+        colorPicker.enabled = enabled;
         thicknessSlider.enabled = enabled;
     }
 
@@ -104,8 +105,6 @@ Shotcut.KeyframableFilter {
                     updateFilter('color', Qt.color(value), colorKeyframesButton, getPosition());
                 }
             }
-            onPickStarted: filter.set('disable', 1)
-            onPickCancelled: filter.set('disable', 0)
         }
 
         Shotcut.UndoButton {
