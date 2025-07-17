@@ -1249,11 +1249,7 @@ Mlt::Playlist *PlaylistDock::binPlaylist()
 {
     LongUiTask longTask(QObject::tr("Generating Playlist for Bin"));
     auto items = ui->treeWidget->selectedItems();
-    if (ui->treeWidget->topLevelItem(0)->isSelected() || items.isEmpty()) {
-        // ALL
-        m_binPlaylist = *m_model.playlist();
-        return &m_binPlaylist;
-    }
+    auto isAll = ui->treeWidget->topLevelItem(0)->isSelected() || items.isEmpty();
     auto bin = items.first()->text(0);
     m_binPlaylist.clear();
     auto count = m_model.playlist()->count();
@@ -1261,7 +1257,7 @@ Mlt::Playlist *PlaylistDock::binPlaylist()
         Mlt::ClipInfo info;
         m_model.playlist()->clip_info(i, &info);
         if (info.producer && info.producer->is_valid()
-            && bin == info.producer->get(kShotcutBinsProperty))
+            && (isAll || bin == info.producer->get(kShotcutBinsProperty)))
             m_binPlaylist.append(*info.producer, info.frame_in, info.frame_out);
         longTask.reportProgress(tr("Appending"), i, count);
     }
