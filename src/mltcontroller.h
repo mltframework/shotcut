@@ -111,6 +111,7 @@ public:
     bool isMultitrack() const;
     bool isImageProducer(Service *service) const;
     bool isFileProducer(Service *service) const;
+    static bool isProjectProducer(Service *service);
     void rewind(bool forceChangeDirection);
     void fastForward(bool forceChangeDirection);
     void previous(int currentPosition);

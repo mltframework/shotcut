@@ -163,11 +163,8 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
             delete newProducer;
             newProducer = new Mlt::Producer(profile(), myUrl.toUtf8().constData());
         }
-        if (m_url.isEmpty() && QString(newProducer->get("xml")) == "was here") {
-            if (newProducer->get_int("_original_type") != mlt_service_tractor_type
-                || (newProducer->get_int("_original_type") == mlt_service_tractor_type
-                    && newProducer->get(kShotcutXmlProperty)))
-                m_url = urlToSave;
+        if (m_url.isEmpty() && isProjectProducer(newProducer)) {
+            m_url = urlToSave;
         }
         Producer *producer = setupNewProducer(newProducer);
         producer->set(kShotcutSkipConvertProperty, skipConvert);
@@ -740,6 +737,13 @@ bool Controller::isFileProducer(Service *service) const
                 || serviceName.startsWith("avformat") || serviceName.startsWith("timewarp"));
     }
     return false;
+}
+
+bool Controller::isProjectProducer(Service *service)
+{
+    return service && service->is_valid() && QString(service->get("xml")) == "was here"
+           && (service->get_int("_original_type") != mlt_service_tractor_type
+               || service->get(kShotcutXmlProperty));
 }
 
 void Controller::rewind(bool forceChangeDirection)
