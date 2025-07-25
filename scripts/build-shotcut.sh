@@ -2054,6 +2054,8 @@ function create_startup_script {
   fi
 
   cmd cp -pLR /usr/lib/python${PYTHON_VERSION_DEFAULT} "$FINAL_INSTALL_DIR"/lib
+  cmd cp -p /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 "$FINAL_INSTALL_DIR"/lib
+  cmd cp -p /usr/lib/x86_64-linux-gnu/libssl.so.1.1 "$FINAL_INSTALL_DIR"/lib/libssl.so
 
   trace "Entering create_startup_script @ = $@"
   pushd .
