@@ -3764,9 +3764,15 @@ void MainWindow::changeTheme(const QString &theme)
             }
         }
 #elif defined(Q_OS_MAC)
-        if (!::qEnvironmentVariableIsSet("QT_STYLE_OVERRIDE"))
+        if (!::qEnvironmentVariableIsSet("QT_STYLE_OVERRIDE")) {
             // The macOS style is hideous in dark mode!
             QApplication::setStyle(isDark ? kStyleFusion : QStringLiteral("macOS"));
+        }
+        if (isDark) {
+            QPalette palette;
+            palette.setColor(QPalette::AlternateBase, palette.color(QPalette::Window));
+            QApplication::setPalette(palette);
+        }
 #else
         QApplication::setStyle(qApp->property("system-style").toString());
 #endif
