@@ -171,7 +171,7 @@ EncodeDock::~EncodeDock()
 
 void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
 {
-    int audioQuality = -1;
+    double audioQuality = -1.0;
     int videoQuality = -1;
     QStringList other;
     QChar decimalPoint = MLT.decimalPoint();
@@ -316,10 +316,10 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             ui->dualPassCheckbox->setChecked(preset.get_int("v2pass"));
         } else if (name == "aq") {
             ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
-            audioQuality = preset.get_int("aq");
+            audioQuality = preset.get_double("aq");
         } else if (name == "compression_level") {
             ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
-            audioQuality = preset.get_int("compression_level");
+            audioQuality = preset.get_double("compression_level");
         } else if (name == "vbr") {
             // libopus rate mode
             if (value == "off")
@@ -397,15 +397,17 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
 
     // normalize the quality settings
     // quality depends on codec
-    if (ui->audioRateControlCombo->currentIndex() == RateControlQuality && audioQuality > -1) {
+    if (ui->audioRateControlCombo->currentIndex() == RateControlQuality && audioQuality > -1.0) {
         const QString &acodec = ui->audioCodecCombo->currentText();
         if (acodec == "libmp3lame") // 0 (best) - 9 (worst)
             ui->audioQualitySpinner->setValue(TO_RELATIVE(9, 0, audioQuality));
         if (acodec == "libvorbis" || acodec == "vorbis"
             || acodec == "libopus") // 0 (worst) - 10 (best)
             ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 10, audioQuality));
+        else if (acodec == "aac")
+            ui->audioQualitySpinner->setValue(TO_RELATIVE(0.1, 2.0, audioQuality));
         else
-            // aac: 0 (worst) - 500 (best)
+            // 0 (worst) - 500 (best)
             ui->audioQualitySpinner->setValue(TO_RELATIVE(0, 500, audioQuality));
     }
     if (acodec == "vorbis" || acodec == "libvorbis")
