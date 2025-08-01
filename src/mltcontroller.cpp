@@ -498,10 +498,9 @@ bool Controller::saveXML(const QString &filename,
               QStringLiteral("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
 
         // Save the consumer of this service so it can be restored.
-        std::unique_ptr<Service> saveConsumer(s.consumer());
+        auto saveConsumer = mlt_service_consumer(s.consumer()->get_service());
         if (!saveConsumer) {
             LOG_ERROR() << "Unable to get save consumer";
-            saveConsumer.reset(new Service());
         }
         c.connect(s);
         c.start();
@@ -509,7 +508,7 @@ bool Controller::saveXML(const QString &filename,
             s.set("ignore_points", ignore);
         auto xml = QString::fromUtf8(c.get(kMltXmlPropertyName));
         // Restore the consumer that was previously on this service
-        s.set_consumer(*saveConsumer);
+        mlt_service_set_consumer(s.get_service(), saveConsumer);
 
         if (!proxy && ProxyManager::filterXML(xml, root)) { // also verifies
             if (tempFile) {
@@ -553,10 +552,9 @@ QString Controller::XML(Service *service, bool withProfile, bool withMetadata)
         return QString();
 
     // Save the consumer of this service so it can be restored.
-    std::unique_ptr<Service> saveConsumer(s.consumer());
+    auto saveConsumer = mlt_service_consumer(s.consumer()->get_service());
     if (!saveConsumer) {
         LOG_ERROR() << "Unable to get save consumer";
-        saveConsumer.reset(new Service());
     }
     int ignore = s.get_int("ignore_points");
     if (ignore)
@@ -572,7 +570,7 @@ QString Controller::XML(Service *service, bool withProfile, bool withMetadata)
     if (ignore)
         s.set("ignore_points", ignore);
     // Restore the consumer that was previously on this service
-    s.set_consumer(*saveConsumer);
+    mlt_service_set_consumer(s.get_service(), saveConsumer);
     return QString::fromUtf8(c.get(kMltXmlPropertyName));
 }
 
