@@ -72,7 +72,7 @@ EncodeJob::EncodeJob(const QString &name,
     connect(action, SIGNAL(triggered()), this, SLOT(onSpatialMediaTriggered()));
     m_successActions << action;
 
-    action = new QAction(tr("Embed Chapters..."), this);
+    action = new QAction(tr("Embed Markers as Chapters..."), this);
     connect(action, SIGNAL(triggered()), this, SLOT(onEmbedChapters()));
     m_successActions << action;
 }
@@ -255,22 +255,19 @@ void EncodeJob::onEmbedChapters()
                 result = result.call(args);
                 if (!result.isError()) {
                     // Save the result with the export file name.
-                    info = QFileInfo(filePath);
-                    auto metadataFilePath
-                        = QDir(info.absolutePath()).filePath(info.completeBaseName() + ".txt");
-                    QFile f(metadataFilePath);
-                    f.open(QIODevice::WriteOnly | QIODevice::Text);
-                    f.write(result.toString().toUtf8());
-                    f.close();
+                    auto tempFile = Util::writableTemporaryFile(filePath, "shotcut-XXXXXX.txt");
+                    tempFile->write(result.toString().toUtf8());
+                    tempFile->close();
 
                     QStringList args;
-                    args << "-i" << objectName() << "-i" << metadataFilePath << "-map_metadata"
+                    args << "-i" << objectName() << "-i" << tempFile->fileName() << "-map_metadata"
                          << "1"
                          << "-c"
                          << "copy"
                          << "-y" << filePath;
                     auto job = new FfmpegJob(filePath, args, false);
                     job->setLabel(filePath);
+                    tempFile->setParent(job);
                     JOBS.add(job);
                 }
             } else {
