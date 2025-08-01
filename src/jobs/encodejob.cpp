@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,13 @@
 
 #include "encodejob.h"
 
+#include "dialogs/listselectiondialog.h"
+#include "docks/timelinedock.h"
 #include "jobqueue.h"
 #include "jobs/videoqualityjob.h"
 #include "mainwindow.h"
+#include "qmltypes/qmlapplication.h"
+#include "qmltypes/qmlutilities.h"
 #include "settings.h"
 #include "spatialmedia/spatialmedia.h"
 #include "util.h"
@@ -30,6 +34,7 @@
 #include <QDomDocument>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QJSEngine>
 #include <QTemporaryFile>
 #include <QTextStream>
 #include <QUrl>
@@ -65,6 +70,10 @@ EncodeJob::EncodeJob(const QString &name,
 
     action = new QAction(tr("Set Equirectangular..."), this);
     connect(action, SIGNAL(triggered()), this, SLOT(onSpatialMediaTriggered()));
+    m_successActions << action;
+
+    action = new QAction(tr("Embed Chapters..."), this);
+    connect(action, SIGNAL(triggered()), this, SLOT(onEmbedChapters()));
     m_successActions << action;
 }
 
@@ -134,7 +143,7 @@ void EncodeJob::onVideoQualityTriggered()
 
 void EncodeJob::onSpatialMediaTriggered()
 {
-    // Get the location and file name for the report.
+    // Get the location and file name for the output file.
     QString caption = tr("Set Equirectangular Projection");
     QFileInfo info(objectName());
     QString directory = QStringLiteral("%1/%2 - ERP.%3")
@@ -152,6 +161,125 @@ void EncodeJob::onSpatialMediaTriggered()
             MAIN.showStatusMessage(tr("Successfully wrote %1").arg(QFileInfo(filePath).fileName()));
         } else {
             MAIN.showStatusMessage(tr("An error occurred saving the projection."));
+        }
+    }
+}
+
+void EncodeJob::onEmbedChapters()
+{
+    // Options dialog
+    auto uniqueColors = MAIN.timelineDock()->markersModel()->allColors();
+    if (uniqueColors.isEmpty()) {
+        return;
+    }
+    std::sort(uniqueColors.begin(), uniqueColors.end(), [=](const QColor &a, const QColor &b) {
+        if (a.hue() == b.hue()) {
+            if (a.saturation() == b.saturation()) {
+                return a.value() <= b.value();
+            }
+            return a.saturation() <= b.saturation();
+        }
+        return a.hue() <= b.hue();
+    });
+    QStringList colors;
+    for (auto &color : uniqueColors) {
+        colors << color.name();
+    }
+    const auto rangesOption = tr("Include ranges (Duration > 1 frame)?");
+    QStringList initialOptions;
+    for (auto &m : MAIN.timelineDock()->markersModel()->getMarkers()) {
+        if (m.end != m.start) {
+            initialOptions << rangesOption;
+            break;
+        }
+    }
+
+    ListSelectionDialog dialog(initialOptions, &MAIN);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setWindowTitle(tr("Choose Markers"));
+    if (Settings.exportRangeMarkers()) {
+        dialog.setSelection({rangesOption});
+    }
+    dialog.setColors(colors);
+    if (dialog.exec() != QDialog::Accepted) {
+        return;
+    }
+    auto selection = dialog.selection();
+    Settings.setExportRangeMarkers(selection.contains(rangesOption));
+
+    // Get the location and file name for the output file.
+    QString caption = tr("Embed Chapters");
+    QFileInfo info(objectName());
+    QString directory = QStringLiteral("%1/%2 - Chapters.%3")
+                            .arg(Settings.encodePath(), info.completeBaseName(), info.suffix());
+    QString filePath = QFileDialog::getSaveFileName(&MAIN,
+                                                    caption,
+                                                    directory,
+                                                    QString(),
+                                                    nullptr,
+                                                    Util::getFileDialogOptions());
+    if (!filePath.isEmpty()) {
+        if (Util::warnIfNotWritable(filePath, &MAIN, caption))
+            return;
+
+        // Locate the JavaScript file in the filesystem.
+        QDir qmlDir = QmlUtilities::qmlDir();
+        qmlDir.cd("export-chapters");
+        auto jsFileName = qmlDir.absoluteFilePath("export-chapters.js");
+        QFile scriptFile(jsFileName);
+        if (scriptFile.open(QIODevice::ReadOnly)) {
+            // Read JavaScript into a string.
+            QTextStream stream(&scriptFile);
+            stream.setEncoding(QStringConverter::Utf8);
+            stream.setAutoDetectUnicode(true);
+            QString contents = stream.readAll();
+            scriptFile.close();
+
+            // Evaluate JavaScript.
+            QJSEngine jsEngine;
+            QJSValue result = jsEngine.evaluate(contents, jsFileName);
+            if (!result.isError()) {
+                // Call the JavaScript main function.
+                QJSValue options = jsEngine.newObject();
+                options.setProperty("ffmetadata", true);
+                if (selection.contains(rangesOption)) {
+                    options.setProperty("includeRanges", true);
+                    selection.removeOne(rangesOption);
+                }
+                QJSValue array = jsEngine.newArray(selection.size());
+                for (int i = 0; i < selection.size(); ++i)
+                    array.setProperty(i, selection[i].toUpper());
+                options.setProperty("colors", array);
+                QJSValueList args;
+                args << MLT.XML(0, true, true) << options;
+                result = result.call(args);
+                if (!result.isError()) {
+                    // Save the result with the export file name.
+                    info = QFileInfo(filePath);
+                    auto metadataFilePath
+                        = QDir(info.absolutePath()).filePath(info.completeBaseName() + ".txt");
+                    QFile f(metadataFilePath);
+                    f.open(QIODevice::WriteOnly | QIODevice::Text);
+                    f.write(result.toString().toUtf8());
+                    f.close();
+
+                    QStringList args;
+                    args << "-i" << objectName() << "-i" << metadataFilePath << "-map_metadata"
+                         << "1"
+                         << "-c"
+                         << "copy"
+                         << "-y" << filePath;
+                    auto job = new FfmpegJob(filePath, args, false);
+                    job->setLabel(filePath);
+                    JOBS.add(job);
+                }
+            } else {
+                LOG_ERROR() << "Uncaught exception at line" << result.property("lineNumber").toInt()
+                            << ":" << result.toString();
+                MAIN.showStatusMessage(tr("A JavaScript error occurred during export."));
+            }
+        } else {
+            MAIN.showStatusMessage(tr("Failed to open export-chapters.js"));
         }
     }
 }

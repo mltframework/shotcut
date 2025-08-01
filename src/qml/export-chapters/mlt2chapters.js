@@ -1,5 +1,5 @@
 /*
- * MltXmlParser class Copyright (c) 2021 Meltytech, LLC
+ * MltXmlParser class Copyright (c) 2021-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,10 +30,11 @@ if (typeof module !== 'undefined' && module.exports) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function MltXmlParser(xmlString, options) {
-    var self = Object.create(this);
+    let self = Object.create(this);
     self.xmldoc = new xmldoc.XmlDocument(xmlString);
     self.includeRanges = self.get(options, 'includeRanges', false);
     self.selectedColors = self.get(options, 'colors', []);
+    self.ffmetadataFormat = self.get(options, 'ffmetadata', false);
     return self;
 }
 
@@ -45,10 +46,10 @@ MltXmlParser.prototype.timecode = function(value) {
     if (typeof value === 'string') {
         // Determine if this is a MLT "clock" time string.
         if (value[8] === '.' || value[8] === ',' || value[8] === ':' || value[8] === ';') {
-            if (value.substring(0,3) === '00:') {
-                return value.substring(3, 8);
-            } else {
-                return value.substring(0, 8);
+                if (value.substring(0,3) === '00:') {
+                    return value.substring(3, 8);
+                } else {
+                    return value.substring(0, 8);
             }
         }
         return value;
@@ -57,21 +58,21 @@ MltXmlParser.prototype.timecode = function(value) {
 };
 
 MltXmlParser.prototype.createChapters = function() {
-    var chaptersStr = "00:00 Intro\n";
-    var self = this;
-    var markers = [];
+    let self = this;
+    let chaptersStr = self.ffmetadataFormat ? ";FFMETADATA1\n" : "00:00 Intro\n";
+    let markers = [];
 
     this.xmldoc.childrenNamed('tractor').forEach(function (tractor) {
         tractor.childrenNamed('properties').forEach(function (p) {
             if (p.attr.name === 'shotcut:markers') {
                 p.childrenNamed('properties').forEach(function (m) {
-                    var marker = {};
+                    let marker = {};
                     m.childrenNamed('property').forEach(function (prop) {
                         if (prop.attr.name === 'start') {
                             marker.start = prop.val;
                             marker.timecode = self.timecode(prop.val);
                             marker.seconds = 3600 * parseInt(prop.val.substring(0, 2)) + 60 * parseInt(prop.val.substring(3, 5)) + parseInt(prop.val.substring(6, 8));
-                            if (marker.timecode === '00:00') {
+                            if (marker.timecode === '00:00' && !self.ffmetadataFormat) {
                                 chaptersStr = '';
                            }
                         } else if (prop.attr.name === 'end') {
@@ -84,6 +85,9 @@ MltXmlParser.prototype.createChapters = function() {
                     });
                     if ((self.includeRanges || marker.end === marker.start)
                             && (self.selectedColors.length === 0 || self.selectedColors.includes(marker.color))) {
+                        if (markers.length > 0) {
+                            markers[markers.length - 1].nextMarker = marker;
+                        }
                         markers.push(marker);
                     }
                 });
@@ -95,7 +99,12 @@ MltXmlParser.prototype.createChapters = function() {
         return (a.seconds === b.seconds)? 0 : (a.seconds < b.seconds)? -1 : 1;
     });
     markers.forEach(function (marker) {
-        chaptersStr += marker.timecode + ' ' + marker.text + "\n";
+        if (self.ffmetadataFormat) {
+            let end = (marker.end === marker.start && marker.nextMarker) ? (marker.nextMarker.seconds - 1) : (marker.endSeconds + 1);
+            chaptersStr += "[CHAPTER]\nTIMEBASE=1/1\nSTART=" + marker.seconds + "\nEND=" + end + "\ntitle=" + marker.text + "\n";
+        } else {
+            chaptersStr += marker.timecode + ' ' + marker.text + "\n";
+        }
     });
     return chaptersStr;
 };

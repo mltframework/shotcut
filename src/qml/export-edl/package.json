@@ -3,7 +3,7 @@
   "description": "A Javascript to convert MLT XML to EDL.",
   "homepage": "https://www.mltframework.org/",
   "main": "mlt2edl.js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Dan Dennedy",
     "email": "dan@dennedy.org",

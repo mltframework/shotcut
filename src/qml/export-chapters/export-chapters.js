@@ -1,38 +1,164 @@
 //QML Browserify - original prelude from browser-pack
 var modules = (function outer (modules, cache, entry) {
-    var previousRequire = typeof require == "function" && require;
-    function newRequire(name, jumped){
-        if(!cache[name]) {
-            if(!modules[name]) {
-                var currentRequire = typeof require == "function" && require;
+    var previousRequire = typeof require == "function" && require;
+    function newRequire(name, jumped){
+        if(!cache[name]) {
+            if(!modules[name]) {
+                var currentRequire = typeof require == "function" && require;
 
-                if (!jumped && currentRequire) return currentRequire(name, true);
+                if (!jumped && currentRequire) return currentRequire(name, true);
 
-                if (previousRequire) return previousRequire(name, true);
+                if (previousRequire) return previousRequire(name, true);
 
-                var err = new Error('Cannot find module \'' + name + '\'');
-                err.code = 'MODULE_NOT_FOUND';
-                throw err;
+                var err = new Error('Cannot find module \'' + name + '\'');
+                err.code = 'MODULE_NOT_FOUND';
+                throw err;
 
-            }
+            }
 
-            var m = cache[name] = {exports:{}};
-            modules[name][0].call(m.exports, function(x){
-                var id = modules[name][1][x];
-                return newRequire(id ? id : x);
-            },m,m.exports,outer,modules,cache,entry);
-        }
+            var m = cache[name] = {exports:{}};
+            modules[name][0].call(m.exports, function(x){
+                var id = modules[name][1][x];
+                return newRequire(id ? id : x);
+            },m,m.exports,outer,modules,cache,entry);
+        }
 
-        return cache[name].exports;
-    }
+        return cache[name].exports;
+    }
 
-    for(var i=0;i<entry.length;i++) newRequire(entry[i]);
+    for(var i=0;i<entry.length;i++) newRequire(entry[i]);
 
-    return newRequire(entry[0]);
+    return newRequire(entry[0]);
 })
 ({1:[function(require,module,exports){
+var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+;(function (exports) {
+	'use strict';
+
+  var Arr = (typeof Uint8Array !== 'undefined')
+    ? Uint8Array
+    : Array
+
+	var PLUS   = '+'.charCodeAt(0)
+	var SLASH  = '/'.charCodeAt(0)
+	var NUMBER = '0'.charCodeAt(0)
+	var LOWER  = 'a'.charCodeAt(0)
+	var UPPER  = 'A'.charCodeAt(0)
+	var PLUS_URL_SAFE = '-'.charCodeAt(0)
+	var SLASH_URL_SAFE = '_'.charCodeAt(0)
+
+	function decode (elt) {
+		var code = elt.charCodeAt(0)
+		if (code === PLUS ||
+		    code === PLUS_URL_SAFE)
+			return 62 // '+'
+		if (code === SLASH ||
+		    code === SLASH_URL_SAFE)
+			return 63 // '/'
+		if (code < NUMBER)
+			return -1 //no match
+		if (code < NUMBER + 10)
+			return code - NUMBER + 26 + 26
+		if (code < UPPER + 26)
+			return code - UPPER
+		if (code < LOWER + 26)
+			return code - LOWER + 26
+	}
+
+	function b64ToByteArray (b64) {
+		var i, j, l, tmp, placeHolders, arr
+
+		if (b64.length % 4 > 0) {
+			throw new Error('Invalid string. Length must be a multiple of 4')
+		}
+
+		// the number of equal signs (place holders)
+		// if there are two placeholders, than the two characters before it
+		// represent one byte
+		// if there is only one, then the three characters before it represent 2 bytes
+		// this is just a cheap hack to not do indexOf twice
+		var len = b64.length
+		placeHolders = '=' === b64.charAt(len - 2) ? 2 : '=' === b64.charAt(len - 1) ? 1 : 0
+
+		// base64 is 4/3 + up to two characters of the original data
+		arr = new Arr(b64.length * 3 / 4 - placeHolders)
+
+		// if there are placeholders, only get up to the last complete 4 chars
+		l = placeHolders > 0 ? b64.length - 4 : b64.length
+
+		var L = 0
+
+		function push (v) {
+			arr[L++] = v
+		}
+
+		for (i = 0, j = 0; i < l; i += 4, j += 3) {
+			tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
+			push((tmp & 0xFF0000) >> 16)
+			push((tmp & 0xFF00) >> 8)
+			push(tmp & 0xFF)
+		}
+
+		if (placeHolders === 2) {
+			tmp = (decode(b64.charAt(i)) << 2) | (decode(b64.charAt(i + 1)) >> 4)
+			push(tmp & 0xFF)
+		} else if (placeHolders === 1) {
+			tmp = (decode(b64.charAt(i)) << 10) | (decode(b64.charAt(i + 1)) << 4) | (decode(b64.charAt(i + 2)) >> 2)
+			push((tmp >> 8) & 0xFF)
+			push(tmp & 0xFF)
+		}
+
+		return arr
+	}
+
+	function uint8ToBase64 (uint8) {
+		var i,
+			extraBytes = uint8.length % 3, // if we have 1 byte left, pad 2 bytes
+			output = "",
+			temp, length
+
+		function encode (num) {
+			return lookup.charAt(num)
+		}
+
+		function tripletToBase64 (num) {
+			return encode(num >> 18 & 0x3F) + encode(num >> 12 & 0x3F) + encode(num >> 6 & 0x3F) + encode(num & 0x3F)
+		}
+
+		// go through the array every three bytes, we'll deal with trailing stuff later
+		for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
+			temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
+			output += tripletToBase64(temp)
+		}
+
+		// pad the end with zeros, but make sure to not forget the extra bytes
+		switch (extraBytes) {
+			case 1:
+				temp = uint8[uint8.length - 1]
+				output += encode(temp >> 2)
+				output += encode((temp << 4) & 0x3F)
+				output += '=='
+				break
+			case 2:
+				temp = (uint8[uint8.length - 2] << 8) + (uint8[uint8.length - 1])
+				output += encode(temp >> 10)
+				output += encode((temp >> 4) & 0x3F)
+				output += encode((temp << 2) & 0x3F)
+				output += '='
+				break
+		}
+
+		return output
+	}
+
+	exports.toByteArray = b64ToByteArray
+	exports.fromByteArray = uint8ToBase64
+}(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
 },{}],2:[function(require,module,exports){
+
+},{}],3:[function(require,module,exports){
 (function (global,Buffer){(function (){
 /*!
  * The buffer module from node.js, for the browser.
@@ -1584,227 +1710,123 @@ function blitBuffer (src, dst, offset, length) {
 }
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"base64-js":3,"buffer":2,"ieee754":4,"isarray":5}],3:[function(require,module,exports){
-var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-
-;(function (exports) {
-	'use strict';
-
-  var Arr = (typeof Uint8Array !== 'undefined')
-    ? Uint8Array
-    : Array
-
-	var PLUS   = '+'.charCodeAt(0)
-	var SLASH  = '/'.charCodeAt(0)
-	var NUMBER = '0'.charCodeAt(0)
-	var LOWER  = 'a'.charCodeAt(0)
-	var UPPER  = 'A'.charCodeAt(0)
-	var PLUS_URL_SAFE = '-'.charCodeAt(0)
-	var SLASH_URL_SAFE = '_'.charCodeAt(0)
-
-	function decode (elt) {
-		var code = elt.charCodeAt(0)
-		if (code === PLUS ||
-		    code === PLUS_URL_SAFE)
-			return 62 // '+'
-		if (code === SLASH ||
-		    code === SLASH_URL_SAFE)
-			return 63 // '/'
-		if (code < NUMBER)
-			return -1 //no match
-		if (code < NUMBER + 10)
-			return code - NUMBER + 26 + 26
-		if (code < UPPER + 26)
-			return code - UPPER
-		if (code < LOWER + 26)
-			return code - LOWER + 26
-	}
-
-	function b64ToByteArray (b64) {
-		var i, j, l, tmp, placeHolders, arr
-
-		if (b64.length % 4 > 0) {
-			throw new Error('Invalid string. Length must be a multiple of 4')
-		}
-
-		// the number of equal signs (place holders)
-		// if there are two placeholders, than the two characters before it
-		// represent one byte
-		// if there is only one, then the three characters before it represent 2 bytes
-		// this is just a cheap hack to not do indexOf twice
-		var len = b64.length
-		placeHolders = '=' === b64.charAt(len - 2) ? 2 : '=' === b64.charAt(len - 1) ? 1 : 0
-
-		// base64 is 4/3 + up to two characters of the original data
-		arr = new Arr(b64.length * 3 / 4 - placeHolders)
-
-		// if there are placeholders, only get up to the last complete 4 chars
-		l = placeHolders > 0 ? b64.length - 4 : b64.length
-
-		var L = 0
-
-		function push (v) {
-			arr[L++] = v
-		}
-
-		for (i = 0, j = 0; i < l; i += 4, j += 3) {
-			tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
-			push((tmp & 0xFF0000) >> 16)
-			push((tmp & 0xFF00) >> 8)
-			push(tmp & 0xFF)
-		}
-
-		if (placeHolders === 2) {
-			tmp = (decode(b64.charAt(i)) << 2) | (decode(b64.charAt(i + 1)) >> 4)
-			push(tmp & 0xFF)
-		} else if (placeHolders === 1) {
-			tmp = (decode(b64.charAt(i)) << 10) | (decode(b64.charAt(i + 1)) << 4) | (decode(b64.charAt(i + 2)) >> 2)
-			push((tmp >> 8) & 0xFF)
-			push(tmp & 0xFF)
-		}
-
-		return arr
-	}
-
-	function uint8ToBase64 (uint8) {
-		var i,
-			extraBytes = uint8.length % 3, // if we have 1 byte left, pad 2 bytes
-			output = "",
-			temp, length
-
-		function encode (num) {
-			return lookup.charAt(num)
-		}
-
-		function tripletToBase64 (num) {
-			return encode(num >> 18 & 0x3F) + encode(num >> 12 & 0x3F) + encode(num >> 6 & 0x3F) + encode(num & 0x3F)
-		}
-
-		// go through the array every three bytes, we'll deal with trailing stuff later
-		for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
-			temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
-			output += tripletToBase64(temp)
-		}
-
-		// pad the end with zeros, but make sure to not forget the extra bytes
-		switch (extraBytes) {
-			case 1:
-				temp = uint8[uint8.length - 1]
-				output += encode(temp >> 2)
-				output += encode((temp << 4) & 0x3F)
-				output += '=='
-				break
-			case 2:
-				temp = (uint8[uint8.length - 2] << 8) + (uint8[uint8.length - 1])
-				output += encode(temp >> 10)
-				output += encode((temp >> 4) & 0x3F)
-				output += encode((temp << 2) & 0x3F)
-				output += '='
-				break
-		}
-
-		return output
-	}
-
-	exports.toByteArray = b64ToByteArray
-	exports.fromByteArray = uint8ToBase64
-}(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
-
-},{}],4:[function(require,module,exports){
-/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
-exports.read = function (buffer, offset, isLE, mLen, nBytes) {
-  var e, m
-  var eLen = (nBytes * 8) - mLen - 1
-  var eMax = (1 << eLen) - 1
-  var eBias = eMax >> 1
-  var nBits = -7
-  var i = isLE ? (nBytes - 1) : 0
-  var d = isLE ? -1 : 1
-  var s = buffer[offset + i]
-
-  i += d
-
-  e = s & ((1 << (-nBits)) - 1)
-  s >>= (-nBits)
-  nBits += eLen
-  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
-
-  m = e & ((1 << (-nBits)) - 1)
-  e >>= (-nBits)
-  nBits += mLen
-  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
-
-  if (e === 0) {
-    e = 1 - eBias
-  } else if (e === eMax) {
-    return m ? NaN : ((s ? -1 : 1) * Infinity)
-  } else {
-    m = m + Math.pow(2, mLen)
-    e = e - eBias
-  }
-  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
-}
-
-exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
-  var e, m, c
-  var eLen = (nBytes * 8) - mLen - 1
-  var eMax = (1 << eLen) - 1
-  var eBias = eMax >> 1
-  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
-  var i = isLE ? 0 : (nBytes - 1)
-  var d = isLE ? 1 : -1
-  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
-
-  value = Math.abs(value)
-
-  if (isNaN(value) || value === Infinity) {
-    m = isNaN(value) ? 1 : 0
-    e = eMax
-  } else {
-    e = Math.floor(Math.log(value) / Math.LN2)
-    if (value * (c = Math.pow(2, -e)) < 1) {
-      e--
-      c *= 2
-    }
-    if (e + eBias >= 1) {
-      value += rt / c
-    } else {
-      value += rt * Math.pow(2, 1 - eBias)
-    }
-    if (value * c >= 2) {
-      e++
-      c /= 2
-    }
-
-    if (e + eBias >= eMax) {
-      m = 0
-      e = eMax
-    } else if (e + eBias >= 1) {
-      m = ((value * c) - 1) * Math.pow(2, mLen)
-      e = e + eBias
-    } else {
-      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
-      e = 0
-    }
-  }
-
-  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
-
-  e = (e << mLen) | m
-  eLen += mLen
-  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
-
-  buffer[offset + i - d] |= s * 128
-}
-
-},{}],5:[function(require,module,exports){
+},{"base64-js":1,"buffer":3,"ieee754":7,"isarray":4}],4:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+
+function isArray(arg) {
+  if (Array.isArray) {
+    return Array.isArray(arg);
+  }
+  return objectToString(arg) === '[object Array]';
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = require('buffer').Buffer.isBuffer;
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+},{"buffer":3}],6:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2109,6 +2131,93 @@ function isUndefined(arg) {
 }
 
 },{}],7:[function(require,module,exports){
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = ((value * c) - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+},{}],8:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2137,7 +2246,56 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
+(function (process){(function (){
+'use strict';
+
+if (typeof process === 'undefined' ||
+    !process.version ||
+    process.version.indexOf('v0.') === 0 ||
+    process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
+  module.exports = { nextTick: nextTick };
+} else {
+  module.exports = process
+}
+
+function nextTick(fn, arg1, arg2, arg3) {
+  if (typeof fn !== 'function') {
+    throw new TypeError('"callback" argument must be a function');
+  }
+  var len = arguments.length;
+  var args, i;
+  switch (len) {
+  case 0:
+  case 1:
+    return process.nextTick(fn);
+  case 2:
+    return process.nextTick(function afterTickOne() {
+      fn.call(null, arg1);
+    });
+  case 3:
+    return process.nextTick(function afterTickTwo() {
+      fn.call(null, arg1, arg2);
+    });
+  case 4:
+    return process.nextTick(function afterTickThree() {
+      fn.call(null, arg1, arg2, arg3);
+    });
+  default:
+    args = new Array(len - 1);
+    i = 0;
+    while (i < args.length) {
+      args[i++] = arguments[i];
+    }
+    return process.nextTick(function afterTick() {
+      fn.apply(null, args);
+    });
+  }
+}
+
+
+}).call(this)}).call(this,require('_process'))
+},{"_process":10}],10:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -2177,7 +2335,7 @@ function defaultClearTimeout () {
 } ())
 function runTimeout(fun) {
     if (cachedSetTimeout === setTimeout) {
-        //normal environments in sane situations
+        //normal enviroments in sane situations
         return setTimeout(fun, 0);
     }
     // if setTimeout wasn't available but was latter defined
@@ -2186,14 +2344,14 @@ function runTimeout(fun) {
         return setTimeout(fun, 0);
     }
     try {
-        // when when somebody has screwed with setTimeout but no I.E. madness
+        // when when somebody has screwed with setTimeout but no I.E. maddness
         return cachedSetTimeout(fun, 0);
     } catch(e){
         try {
             // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
             return cachedSetTimeout.call(null, fun, 0);
         } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopefully our context correct otherwise it will throw a global error
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
             return cachedSetTimeout.call(this, fun, 0);
         }
     }
@@ -2202,7 +2360,7 @@ function runTimeout(fun) {
 }
 function runClearTimeout(marker) {
     if (cachedClearTimeout === clearTimeout) {
-        //normal environments in sane situations
+        //normal enviroments in sane situations
         return clearTimeout(marker);
     }
     // if clearTimeout wasn't available but was latter defined
@@ -2211,14 +2369,14 @@ function runClearTimeout(marker) {
         return clearTimeout(marker);
     }
     try {
-        // when when somebody has screwed with setTimeout but no I.E. madness
+        // when when somebody has screwed with setTimeout but no I.E. maddness
         return cachedClearTimeout(marker);
     } catch (e){
         try {
             // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
             return cachedClearTimeout.call(null, marker);
         } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopefully our context correct otherwise it will throw a global error.
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
             // Some versions of I.E. have different rules for clearTimeout vs setTimeout
             return cachedClearTimeout.call(this, marker);
         }
@@ -2284,7 +2442,7 @@ process.nextTick = function (fun) {
     }
 };
 
-// v8 likes predictable objects
+// v8 likes predictible objects
 function Item(fun, array) {
     this.fun = fun;
     this.array = array;
@@ -2323,10 +2481,10 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = require('./lib/_stream_duplex.js');
 
-},{"./lib/_stream_duplex.js":10}],10:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":12}],12:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2458,7 +2616,7 @@ Duplex.prototype._destroy = function (err, cb) {
 
   pna.nextTick(cb, err);
 };
-},{"./_stream_readable":12,"./_stream_writable":14,"core-util-is":18,"inherits":7,"process-nextick-args":20}],11:[function(require,module,exports){
+},{"./_stream_readable":14,"./_stream_writable":16,"core-util-is":5,"inherits":8,"process-nextick-args":9}],13:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2506,7 +2664,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":13,"core-util-is":18,"inherits":7}],12:[function(require,module,exports){
+},{"./_stream_transform":15,"core-util-is":5,"inherits":8}],14:[function(require,module,exports){
 (function (process,global){(function (){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -2563,7 +2721,7 @@ var Stream = require('./internal/streams/stream');
 /*<replacement>*/
 
 var Buffer = require('safe-buffer').Buffer;
-var OurUint8Array = global.Uint8Array || function () {};
+var OurUint8Array = (typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : {}).Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
 }
@@ -3133,8 +3291,8 @@ Readable.prototype.pipe = function (dest, pipeOpts) {
       // also returned false.
       // => Check whether `dest` is still a piping destination.
       if ((state.pipesCount === 1 && state.pipes === dest || state.pipesCount > 1 && indexOf(state.pipes, dest) !== -1) && !cleanedUp) {
-        debug('false write response, pause', src._readableState.awaitDrain);
-        src._readableState.awaitDrain++;
+        debug('false write response, pause', state.awaitDrain);
+        state.awaitDrain++;
         increasedAwaitDrain = true;
       }
       src.pause();
@@ -3228,7 +3386,7 @@ Readable.prototype.unpipe = function (dest) {
     state.flowing = false;
 
     for (var i = 0; i < len; i++) {
-      dests[i].emit('unpipe', this, unpipeInfo);
+      dests[i].emit('unpipe', this, { hasUnpiped: false });
     }return this;
   }
 
@@ -3528,7 +3686,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./_stream_duplex":10,"./internal/streams/BufferList":15,"./internal/streams/destroy":16,"./internal/streams/stream":17,"_process":8,"core-util-is":18,"events":6,"inherits":7,"isarray":19,"process-nextick-args":20,"safe-buffer":21,"string_decoder/":22,"util":1}],13:[function(require,module,exports){
+},{"./_stream_duplex":12,"./internal/streams/BufferList":17,"./internal/streams/destroy":18,"./internal/streams/stream":19,"_process":10,"core-util-is":5,"events":6,"inherits":8,"isarray":20,"process-nextick-args":9,"safe-buffer":21,"string_decoder/":22,"util":2}],15:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3743,7 +3901,7 @@ function done(stream, er, data) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":10,"core-util-is":18,"inherits":7}],14:[function(require,module,exports){
+},{"./_stream_duplex":12,"core-util-is":5,"inherits":8}],16:[function(require,module,exports){
 (function (process,global,setImmediate){(function (){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -3828,7 +3986,7 @@ var Stream = require('./internal/streams/stream');
 /*<replacement>*/
 
 var Buffer = require('safe-buffer').Buffer;
-var OurUint8Array = global.Uint8Array || function () {};
+var OurUint8Array = (typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : typeof self !== 'undefined' ? self : {}).Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
   return Buffer.from(chunk);
 }
@@ -4096,7 +4254,7 @@ Writable.prototype.uncork = function () {
   if (state.corked) {
     state.corked--;
 
-    if (!state.writing && !state.corked && !state.finished && !state.bufferProcessing && state.bufferedRequest) clearBuffer(this, state);
+    if (!state.writing && !state.corked && !state.bufferProcessing && state.bufferedRequest) clearBuffer(this, state);
   }
 };
 
@@ -4338,7 +4496,7 @@ Writable.prototype.end = function (chunk, encoding, cb) {
   }
 
   // ignore unnecessary end() calls.
-  if (!state.ending && !state.finished) endWritable(this, state, cb);
+  if (!state.ending) endWritable(this, state, cb);
 };
 
 function needFinish(state) {
@@ -4399,11 +4557,9 @@ function onCorkedFinish(corkReq, state, err) {
     cb(err);
     entry = entry.next;
   }
-  if (state.corkedRequestsFree) {
-    state.corkedRequestsFree.next = corkReq;
-  } else {
-    state.corkedRequestsFree = corkReq;
-  }
+
+  // reuse the free corkReq.
+  state.corkedRequestsFree.next = corkReq;
 }
 
 Object.defineProperty(Writable.prototype, 'destroyed', {
@@ -4433,7 +4589,7 @@ Writable.prototype._destroy = function (err, cb) {
   cb(err);
 };
 }).call(this)}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
-},{"./_stream_duplex":10,"./internal/streams/destroy":16,"./internal/streams/stream":17,"_process":8,"core-util-is":18,"inherits":7,"process-nextick-args":20,"safe-buffer":21,"timers":30,"util-deprecate":23}],15:[function(require,module,exports){
+},{"./_stream_duplex":12,"./internal/streams/destroy":18,"./internal/streams/stream":19,"_process":10,"core-util-is":5,"inherits":8,"process-nextick-args":9,"safe-buffer":21,"timers":29,"util-deprecate":30}],17:[function(require,module,exports){
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4492,7 +4648,6 @@ module.exports = function () {
 
   BufferList.prototype.concat = function concat(n) {
     if (this.length === 0) return Buffer.alloc(0);
-    if (this.length === 1) return this.head.data;
     var ret = Buffer.allocUnsafe(n >>> 0);
     var p = this.head;
     var i = 0;
@@ -4513,7 +4668,7 @@ if (util && util.inspect && util.inspect.custom) {
     return this.constructor.name + ' ' + obj;
   };
 }
-},{"safe-buffer":21,"util":1}],16:[function(require,module,exports){
+},{"safe-buffer":21,"util":2}],18:[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
@@ -4531,9 +4686,15 @@ function destroy(err, cb) {
   if (readableDestroyed || writableDestroyed) {
     if (cb) {
       cb(err);
-    } else if (err && (!this._writableState || !this._writableState.errorEmitted)) {
-      pna.nextTick(emitErrorNT, this, err);
+    } else if (err) {
+      if (!this._writableState) {
+        pna.nextTick(emitErrorNT, this, err);
+      } else if (!this._writableState.errorEmitted) {
+        this._writableState.errorEmitted = true;
+        pna.nextTick(emitErrorNT, this, err);
+      }
     }
+
     return this;
   }
 
@@ -4551,9 +4712,11 @@ function destroy(err, cb) {
 
   this._destroy(err || null, function (err) {
     if (!cb && err) {
-      pna.nextTick(emitErrorNT, _this, err);
-      if (_this._writableState) {
+      if (!_this._writableState) {
+        pna.nextTick(emitErrorNT, _this, err);
+      } else if (!_this._writableState.errorEmitted) {
         _this._writableState.errorEmitted = true;
+        pna.nextTick(emitErrorNT, _this, err);
       }
     } else if (cb) {
       cb(err);
@@ -4575,6 +4738,8 @@ function undestroy() {
     this._writableState.destroyed = false;
     this._writableState.ended = false;
     this._writableState.ending = false;
+    this._writableState.finalCalled = false;
+    this._writableState.prefinished = false;
     this._writableState.finished = false;
     this._writableState.errorEmitted = false;
   }
@@ -4588,170 +4753,12 @@ module.exports = {
   destroy: destroy,
   undestroy: undestroy
 };
-},{"process-nextick-args":20}],17:[function(require,module,exports){
+},{"process-nextick-args":9}],19:[function(require,module,exports){
 module.exports = require('events').EventEmitter;
 
-},{"events":6}],18:[function(require,module,exports){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// NOTE: These type checking functions intentionally don't use `instanceof`
-// because it is fragile and can be easily faked with `Object.create()`.
-
-function isArray(arg) {
-  if (Array.isArray) {
-    return Array.isArray(arg);
-  }
-  return objectToString(arg) === '[object Array]';
-}
-exports.isArray = isArray;
-
-function isBoolean(arg) {
-  return typeof arg === 'boolean';
-}
-exports.isBoolean = isBoolean;
-
-function isNull(arg) {
-  return arg === null;
-}
-exports.isNull = isNull;
-
-function isNullOrUndefined(arg) {
-  return arg == null;
-}
-exports.isNullOrUndefined = isNullOrUndefined;
-
-function isNumber(arg) {
-  return typeof arg === 'number';
-}
-exports.isNumber = isNumber;
-
-function isString(arg) {
-  return typeof arg === 'string';
-}
-exports.isString = isString;
-
-function isSymbol(arg) {
-  return typeof arg === 'symbol';
-}
-exports.isSymbol = isSymbol;
-
-function isUndefined(arg) {
-  return arg === void 0;
-}
-exports.isUndefined = isUndefined;
-
-function isRegExp(re) {
-  return objectToString(re) === '[object RegExp]';
-}
-exports.isRegExp = isRegExp;
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-exports.isObject = isObject;
-
-function isDate(d) {
-  return objectToString(d) === '[object Date]';
-}
-exports.isDate = isDate;
-
-function isError(e) {
-  return (objectToString(e) === '[object Error]' || e instanceof Error);
-}
-exports.isError = isError;
-
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-exports.isFunction = isFunction;
-
-function isPrimitive(arg) {
-  return arg === null ||
-         typeof arg === 'boolean' ||
-         typeof arg === 'number' ||
-         typeof arg === 'string' ||
-         typeof arg === 'symbol' ||  // ES6 symbol
-         typeof arg === 'undefined';
-}
-exports.isPrimitive = isPrimitive;
-
-exports.isBuffer = require('buffer').Buffer.isBuffer;
-
-function objectToString(o) {
-  return Object.prototype.toString.call(o);
-}
-
-},{"buffer":2}],19:[function(require,module,exports){
-arguments[4][5][0].apply(exports,arguments)
-},{"dup":5}],20:[function(require,module,exports){
-(function (process){(function (){
-'use strict';
-
-if (typeof process === 'undefined' ||
-    !process.version ||
-    process.version.indexOf('v0.') === 0 ||
-    process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
-  module.exports = { nextTick: nextTick };
-} else {
-  module.exports = process
-}
-
-function nextTick(fn, arg1, arg2, arg3) {
-  if (typeof fn !== 'function') {
-    throw new TypeError('"callback" argument must be a function');
-  }
-  var len = arguments.length;
-  var args, i;
-  switch (len) {
-  case 0:
-  case 1:
-    return process.nextTick(fn);
-  case 2:
-    return process.nextTick(function afterTickOne() {
-      fn.call(null, arg1);
-    });
-  case 3:
-    return process.nextTick(function afterTickTwo() {
-      fn.call(null, arg1, arg2);
-    });
-  case 4:
-    return process.nextTick(function afterTickThree() {
-      fn.call(null, arg1, arg2, arg3);
-    });
-  default:
-    args = new Array(len - 1);
-    i = 0;
-    while (i < args.length) {
-      args[i++] = arguments[i];
-    }
-    return process.nextTick(function afterTick() {
-      fn.apply(null, args);
-    });
-  }
-}
-
-
-}).call(this)}).call(this,require('_process'))
-},{"_process":8}],21:[function(require,module,exports){
+},{"events":6}],20:[function(require,module,exports){
+arguments[4][4][0].apply(exports,arguments)
+},{"dup":4}],21:[function(require,module,exports){
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -4815,7 +4822,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":2}],22:[function(require,module,exports){
+},{"buffer":3}],22:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5113,80 +5120,9 @@ function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
 },{"safe-buffer":21}],23:[function(require,module,exports){
-(function (global){(function (){
-
-/**
- * Module exports.
- */
-
-module.exports = deprecate;
-
-/**
- * Mark that a method should not be used.
- * Returns a modified function which warns once by default.
- *
- * If `localStorage.noDeprecation = true` is set, then it is a no-op.
- *
- * If `localStorage.throwDeprecation = true` is set, then deprecated functions
- * will throw an Error when invoked.
- *
- * If `localStorage.traceDeprecation = true` is set, then deprecated functions
- * will invoke `console.trace()` instead of `console.error()`.
- *
- * @param {Function} fn - the function to deprecate
- * @param {String} msg - the string to print to the console when `fn` is invoked
- * @returns {Function} a new "deprecated" version of `fn`
- * @api public
- */
-
-function deprecate (fn, msg) {
-  if (config('noDeprecation')) {
-    return fn;
-  }
-
-  var warned = false;
-  function deprecated() {
-    if (!warned) {
-      if (config('throwDeprecation')) {
-        throw new Error(msg);
-      } else if (config('traceDeprecation')) {
-        console.trace(msg);
-      } else {
-        console.warn(msg);
-      }
-      warned = true;
-    }
-    return fn.apply(this, arguments);
-  }
-
-  return deprecated;
-}
-
-/**
- * Checks `localStorage` for boolean values for the given `name`.
- *
- * @param {String} name
- * @returns {Boolean}
- * @api private
- */
-
-function config (name) {
-  // accessing global.localStorage can trigger a DOMException in sandboxed iframes
-  try {
-    if (!global.localStorage) return false;
-  } catch (_) {
-    return false;
-  }
-  var val = global.localStorage[name];
-  if (null == val) return false;
-  return String(val).toLowerCase() === 'true';
-}
-
-}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],24:[function(require,module,exports){
 module.exports = require('./readable').PassThrough
 
-},{"./readable":25}],25:[function(require,module,exports){
+},{"./readable":24}],24:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = exports;
 exports.Readable = exports;
@@ -5195,13 +5131,13 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":10,"./lib/_stream_passthrough.js":11,"./lib/_stream_readable.js":12,"./lib/_stream_transform.js":13,"./lib/_stream_writable.js":14}],26:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":12,"./lib/_stream_passthrough.js":13,"./lib/_stream_readable.js":14,"./lib/_stream_transform.js":15,"./lib/_stream_writable.js":16}],25:[function(require,module,exports){
 module.exports = require('./readable').Transform
 
-},{"./readable":25}],27:[function(require,module,exports){
+},{"./readable":24}],26:[function(require,module,exports){
 module.exports = require('./lib/_stream_writable.js');
 
-},{"./lib/_stream_writable.js":14}],28:[function(require,module,exports){
+},{"./lib/_stream_writable.js":16}],27:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5330,7 +5266,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":6,"inherits":7,"readable-stream/duplex.js":9,"readable-stream/passthrough.js":24,"readable-stream/readable.js":25,"readable-stream/transform.js":26,"readable-stream/writable.js":27}],29:[function(require,module,exports){
+},{"events":6,"inherits":8,"readable-stream/duplex.js":11,"readable-stream/passthrough.js":23,"readable-stream/readable.js":24,"readable-stream/transform.js":25,"readable-stream/writable.js":26}],28:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5553,7 +5489,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":2}],30:[function(require,module,exports){
+},{"buffer":3}],29:[function(require,module,exports){
 (function (setImmediate,clearImmediate){(function (){
 var nextTick = require('process/browser.js').nextTick;
 var apply = Function.prototype.apply;
@@ -5632,290 +5568,80 @@ exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate :
   delete immediateIds[id];
 };
 }).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":8,"timers":30}],31:[function(require,module,exports){
-module.exports = {"xmldoc": require("xmldoc"),}
-},{"xmldoc":32}],32:[function(require,module,exports){
-// This file is just added for convenience so this repository can be
-// directly checked out into a project's deps folder
-module.exports = require('./lib/xmldoc');
-
-},{"./lib/xmldoc":33}],33:[function(require,module,exports){
+},{"process/browser.js":10,"timers":29}],30:[function(require,module,exports){
 (function (global){(function (){
-(function () {
 
-var sax;
+/**
+ * Module exports.
+ */
 
-if (typeof module !== 'undefined' && module.exports && !global.xmldocAssumeBrowser) {
-  // We're being used in a Node-like environment
-  sax = require('sax');
-}
-else {
-  // assume it's attached to the Window object in a browser
-  sax = this.sax;
+module.exports = deprecate;
 
-  if (!sax) // no sax for you!
-    throw new Error("Expected sax to be defined. Make sure you're including sax.js before this file.");
-}
+/**
+ * Mark that a method should not be used.
+ * Returns a modified function which warns once by default.
+ *
+ * If `localStorage.noDeprecation = true` is set, then it is a no-op.
+ *
+ * If `localStorage.throwDeprecation = true` is set, then deprecated functions
+ * will throw an Error when invoked.
+ *
+ * If `localStorage.traceDeprecation = true` is set, then deprecated functions
+ * will invoke `console.trace()` instead of `console.error()`.
+ *
+ * @param {Function} fn - the function to deprecate
+ * @param {String} msg - the string to print to the console when `fn` is invoked
+ * @returns {Function} a new "deprecated" version of `fn`
+ * @api public
+ */
 
-/*
-XmlElement is our basic building block. Everything is an XmlElement; even XmlDocument
-behaves like an XmlElement by inheriting its attributes and functions.
-*/
-
-function XmlElement(tag) {
-  // Capture the parser object off of the XmlDocument delegate
-  var parser = delegates[delegates.length - 1].parser;
-
-  this.name = tag.name;
-  this.attr = tag.attributes;
-  this.val = "";
-  this.isValCdata = false;
-  this.isValComment = false;
-  this.children = [];
-  this.firstChild = null;
-  this.lastChild = null;
-
-  // Assign parse information
-  this.line = parser.line;
-  this.column = parser.column;
-  this.position = parser.position;
-  this.startTagPosition = parser.startTagPosition;
-}
-
-// SaxParser handlers
-
-XmlElement.prototype._opentag = function(tag) {
-
-  var child = new XmlElement(tag);
-  
-  // add to our children array
-  this.children.push(child);
-
-  // update first/last pointers
-  if (!this.firstChild) this.firstChild = child;
-  this.lastChild = child;
-
-  delegates.unshift(child);
-};
-
-XmlElement.prototype._closetag = function() {
-  delegates.shift();
-};
-
-XmlElement.prototype._text = function(text) {
-  this.val = text;
-};
-
-XmlElement.prototype._cdata = function(cdata) {
-  this.val = cdata;
-  this.isValCdata=true;
-};
-
-XmlElement.prototype._comment = function(comment) {
-  this.val = comment;
-  this.isValComment=true;
-}
-
-XmlElement.prototype._error = function(err) {
-  throw err;
-};
-
-// Useful functions
-
-XmlElement.prototype.eachChild = function(iterator, context) {
-  for (var i=0, l=this.children.length; i<l; i++)
-    if (iterator.call(context, this.children[i], i, this.children) === false) return;
-};
-
-XmlElement.prototype.childNamed = function(name) {
-  for (var i=0, l=this.children.length; i<l; i++) {
-    var child = this.children[i];
-    if (child.name === name) return child;
+function deprecate (fn, msg) {
+  if (config('noDeprecation')) {
+    return fn;
   }
-  return undefined;
-};
 
-XmlElement.prototype.childrenNamed = function(name) {
-  var matches = [];
-
-  for (var i=0, l=this.children.length; i<l; i++)
-    if (this.children[i].name === name)
-      matches.push(this.children[i]);
-
-  return matches;
-};
-
-XmlElement.prototype.childWithAttribute = function(name,value) {
-  for (var i=0, l=this.children.length; i<l; i++) {
-    var child = this.children[i];
-    if ( (value && child.attr[name] === value) || (!value && child.attr[name]) )
-      return child;
+  var warned = false;
+  function deprecated() {
+    if (!warned) {
+      if (config('throwDeprecation')) {
+        throw new Error(msg);
+      } else if (config('traceDeprecation')) {
+        console.trace(msg);
+      } else {
+        console.warn(msg);
+      }
+      warned = true;
+    }
+    return fn.apply(this, arguments);
   }
-  return undefined;
-};
 
-XmlElement.prototype.descendantWithPath = function(path) {
-  var descendant = this;
-  var components = path.split('.');
+  return deprecated;
+}
 
-  for (var i=0, l=components.length; i<l; i++)
-    if (descendant)
-      descendant = descendant.childNamed(components[i]);
-    else
-      return undefined;
+/**
+ * Checks `localStorage` for boolean values for the given `name`.
+ *
+ * @param {String} name
+ * @returns {Boolean}
+ * @api private
+ */
 
-  return descendant;
-};
-
-XmlElement.prototype.valueWithPath = function(path) {
-  var components = path.split('@');
-  var descendant = this.descendantWithPath(components[0]);
-  if (descendant)
-    return components.length > 1 ? descendant.attr[components[1]] : descendant.val;
-  else
-    return undefined;
-};
-
-// String formatting (for debugging)
-
-XmlElement.prototype.toString = function(options) {
-  return this.toStringWithIndent("", options);
-};
-
-XmlElement.prototype.toStringWithIndent = function(indent, options) {
-  var s = indent + "<" + this.name;
-  var linebreak = options && options.compressed ? "" : "\n";
-  var preserveWhitespace = options && options.preserveWhitespace;
-
-  for (var name in this.attr)
-    if (Object.prototype.hasOwnProperty.call(this.attr, name))
-        s += " " + name + '="' + escapeXML(this.attr[name]) + '"';
-
-  var finalVal = '';
-  if (this.isValCdata){
-    finalVal = '<![CDATA['+this.val+']]>';
-  } else if (preserveWhitespace) {
-    finalVal = escapeXML(this.val);
-  } else{
-    finalVal = escapeXML(this.val.trim());
+function config (name) {
+  // accessing global.localStorage can trigger a DOMException in sandboxed iframes
+  try {
+    if (!global.localStorage) return false;
+  } catch (_) {
+    return false;
   }
-  if (options && options.trimmed && finalVal.length > 25)
-    finalVal = finalVal.substring(0,25).trim() + "…";
-  
-  if (this.children.length) {
-    s += ">" + linebreak;
-
-    var childIndent = indent + (options && options.compressed ? "" : "  ");
-    
-    if (finalVal.length)
-      s += childIndent + finalVal + linebreak;
-
-    for (var i=0, l=this.children.length; i<l; i++)
-      s += this.children[i].toStringWithIndent(childIndent, options) + linebreak;
-    
-    s += indent + "</" + this.name + ">";
-  }
-  else if (finalVal.length) {
-    s += ">" + finalVal + "</" + this.name +">";
-  }
-  else s += "/>";
-  
-  return s;
-};
-
-/*
-XmlDocument is the class we expose to the user; it uses the sax parser to create a hierarchy
-of XmlElements.
-*/
-
-function XmlDocument(xml) {
-  xml && (xml = xml.toString().trim());
-
-  if (!xml)
-    throw new Error("No XML to parse!");
-
-  // Stores doctype (if defined)
-  this.doctype = "";
-
-  // Expose the parser to the other delegates while the parser is running
-  this.parser = sax.parser(true); // strict
-  addParserEvents(this.parser);
-
-  // We'll use the file-scoped "delegates" var to remember what elements we're currently
-  // parsing; they will push and pop off the stack as we get deeper into the XML hierarchy.
-  // It's safe to use a global because JS is single-threaded.
-  delegates = [this];
-
-  this.parser.write(xml);
-
-  // Remove the parser as it is no longer needed and should not be exposed to clients
-  delete this.parser;
+  var val = global.localStorage[name];
+  if (null == val) return false;
+  return String(val).toLowerCase() === 'true';
 }
-
-// make XmlDocument inherit XmlElement's methods
-extend(XmlDocument.prototype, XmlElement.prototype);
-
-XmlDocument.prototype._opentag = function(tag) {
-  if (typeof this.children === 'undefined')
-    // the first tag we encounter should be the root - we'll "become" the root XmlElement
-    XmlElement.call(this,tag);
-  else
-    // all other tags will be the root element's children
-    XmlElement.prototype._opentag.apply(this,arguments);
-};
-
-XmlDocument.prototype._doctype = function(doctype) {
-  this.doctype += doctype;
-}
-
-// file-scoped global stack of delegates
-var delegates = null;
-
-/*
-Helper functions
-*/
-
-function addParserEvents(parser) {
-  parser.onopentag = parser_opentag;
-  parser.onclosetag = parser_closetag;
-  parser.ontext = parser_text;
-  parser.oncdata = parser_cdata;
-  parser.oncomment = parser_comment;
-  parser.ondoctype = parser_doctype;
-  parser.onerror = parser_error;
-}
-
-// create these closures and cache them by keeping them file-scoped
-function parser_opentag() { delegates[0] && delegates[0]._opentag.apply(delegates[0],arguments) }
-function parser_closetag() { delegates[0] && delegates[0]._closetag.apply(delegates[0],arguments) }
-function parser_text() { delegates[0] && delegates[0]._text.apply(delegates[0],arguments) }
-function parser_cdata() { delegates[0] && delegates[0]._cdata.apply(delegates[0],arguments) }
-function parser_comment() { delegates[0] && delegates[0]._comment.apply(delegates[0],arguments) }
-function parser_doctype() { delegates[0] && delegates[0]._doctype.apply(delegates[0],arguments) }
-function parser_error() { delegates[0] && delegates[0]._error.apply(delegates[0],arguments) }
-
-// a relatively standard extend method
-function extend(destination, source) {
-  for (var prop in source)
-    if (source.hasOwnProperty(prop))
-      destination[prop] = source[prop];
-}
-
-// escapes XML entities like "<", "&", etc.
-function escapeXML(value){
-  return value.replace(/&/g, '&amp;').replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, '&apos;').replace(/"/g, '&quot;');
-}
-
-// Are we being used in a Node-like environment?
-if (typeof module !== 'undefined' && module.exports && !global.xmldocAssumeBrowser)
-    module.exports.XmlDocument = XmlDocument;
-else
-    this.XmlDocument = XmlDocument;
-
-})();
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"sax":34}],34:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
+module.exports = {"xmldoc": require("xmldoc"),}
+},{"xmldoc":33}],32:[function(require,module,exports){
 (function (Buffer){(function (){
 ;(function (sax) { // wrapper for non-node envs
   sax.parser = function (strict, opt) { return new SAXParser(strict, opt) }
@@ -6617,7 +6343,7 @@ else
     var parent = parser.tags[parser.tags.length - 1] || parser
     var tag = parser.tag = { name: parser.tagName, attributes: {} }
 
-    // will be overridden if tag contains an xmlns="foo" or xmlns:foo="bar"
+    // will be overridden if tag contails an xmlns="foo" or xmlns:foo="bar"
     if (parser.opt.xmlns) {
       tag.ns = parent.ns
     }
@@ -7493,9 +7219,290 @@ else
 })(typeof exports === 'undefined' ? this.sax = {} : exports)
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":2,"stream":28,"string_decoder":29}]},{},[31]);
+},{"buffer":3,"stream":27,"string_decoder":28}],33:[function(require,module,exports){
+// This file is just added for convenience so this repository can be
+// directly checked out into a project's deps folder
+module.exports = require('./lib/xmldoc');
+
+},{"./lib/xmldoc":34}],34:[function(require,module,exports){
+(function (global){(function (){
+(function () {
+
+var sax;
+
+if (typeof module !== 'undefined' && module.exports && !global.xmldocAssumeBrowser) {
+  // We're being used in a Node-like environment
+  sax = require('sax');
+}
+else {
+  // assume it's attached to the Window object in a browser
+  sax = this.sax;
+
+  if (!sax) // no sax for you!
+    throw new Error("Expected sax to be defined. Make sure you're including sax.js before this file.");
+}
+
 /*
- * MltXmlParser class Copyright (c) 2021 Meltytech, LLC
+XmlElement is our basic building block. Everything is an XmlElement; even XmlDocument
+behaves like an XmlElement by inheriting its attributes and functions.
+*/
+
+function XmlElement(tag) {
+  // Capture the parser object off of the XmlDocument delegate
+  var parser = delegates[delegates.length - 1].parser;
+
+  this.name = tag.name;
+  this.attr = tag.attributes;
+  this.val = "";
+  this.isValCdata = false;
+  this.isValComment = false;
+  this.children = [];
+  this.firstChild = null;
+  this.lastChild = null;
+
+  // Assign parse information
+  this.line = parser.line;
+  this.column = parser.column;
+  this.position = parser.position;
+  this.startTagPosition = parser.startTagPosition;
+}
+
+// SaxParser handlers
+
+XmlElement.prototype._opentag = function(tag) {
+
+  var child = new XmlElement(tag);
+  
+  // add to our children array
+  this.children.push(child);
+
+  // update first/last pointers
+  if (!this.firstChild) this.firstChild = child;
+  this.lastChild = child;
+
+  delegates.unshift(child);
+};
+
+XmlElement.prototype._closetag = function() {
+  delegates.shift();
+};
+
+XmlElement.prototype._text = function(text) {
+  this.val = text;
+};
+
+XmlElement.prototype._cdata = function(cdata) {
+  this.val = cdata;
+  this.isValCdata=true;
+};
+
+XmlElement.prototype._comment = function(comment) {
+  this.val = comment;
+  this.isValComment=true;
+}
+
+XmlElement.prototype._error = function(err) {
+  throw err;
+};
+
+// Useful functions
+
+XmlElement.prototype.eachChild = function(iterator, context) {
+  for (var i=0, l=this.children.length; i<l; i++)
+    if (iterator.call(context, this.children[i], i, this.children) === false) return;
+};
+
+XmlElement.prototype.childNamed = function(name) {
+  for (var i=0, l=this.children.length; i<l; i++) {
+    var child = this.children[i];
+    if (child.name === name) return child;
+  }
+  return undefined;
+};
+
+XmlElement.prototype.childrenNamed = function(name) {
+  var matches = [];
+
+  for (var i=0, l=this.children.length; i<l; i++)
+    if (this.children[i].name === name)
+      matches.push(this.children[i]);
+
+  return matches;
+};
+
+XmlElement.prototype.childWithAttribute = function(name,value) {
+  for (var i=0, l=this.children.length; i<l; i++) {
+    var child = this.children[i];
+    if ( (value && child.attr[name] === value) || (!value && child.attr[name]) )
+      return child;
+  }
+  return undefined;
+};
+
+XmlElement.prototype.descendantWithPath = function(path) {
+  var descendant = this;
+  var components = path.split('.');
+
+  for (var i=0, l=components.length; i<l; i++)
+    if (descendant)
+      descendant = descendant.childNamed(components[i]);
+    else
+      return undefined;
+
+  return descendant;
+};
+
+XmlElement.prototype.valueWithPath = function(path) {
+  var components = path.split('@');
+  var descendant = this.descendantWithPath(components[0]);
+  if (descendant)
+    return components.length > 1 ? descendant.attr[components[1]] : descendant.val;
+  else
+    return undefined;
+};
+
+// String formatting (for debugging)
+
+XmlElement.prototype.toString = function(options) {
+  return this.toStringWithIndent("", options);
+};
+
+XmlElement.prototype.toStringWithIndent = function(indent, options) {
+  var s = indent + "<" + this.name;
+  var linebreak = options && options.compressed ? "" : "\n";
+  var preserveWhitespace = options && options.preserveWhitespace;
+
+  for (var name in this.attr)
+    if (Object.prototype.hasOwnProperty.call(this.attr, name))
+        s += " " + name + '="' + escapeXML(this.attr[name]) + '"';
+
+  var finalVal = '';
+  if (this.isValCdata){
+    finalVal = '<![CDATA['+this.val+']]>';
+  } else if (preserveWhitespace) {
+    finalVal = escapeXML(this.val);
+  } else{
+    finalVal = escapeXML(this.val.trim());
+  }
+  if (options && options.trimmed && finalVal.length > 25)
+    finalVal = finalVal.substring(0,25).trim() + "…";
+  
+  if (this.children.length) {
+    s += ">" + linebreak;
+
+    var childIndent = indent + (options && options.compressed ? "" : "  ");
+    
+    if (finalVal.length)
+      s += childIndent + finalVal + linebreak;
+
+    for (var i=0, l=this.children.length; i<l; i++)
+      s += this.children[i].toStringWithIndent(childIndent, options) + linebreak;
+    
+    s += indent + "</" + this.name + ">";
+  }
+  else if (finalVal.length) {
+    s += ">" + finalVal + "</" + this.name +">";
+  }
+  else s += "/>";
+  
+  return s;
+};
+
+/*
+XmlDocument is the class we expose to the user; it uses the sax parser to create a hierarchy
+of XmlElements.
+*/
+
+function XmlDocument(xml) {
+  xml && (xml = xml.toString().trim());
+
+  if (!xml)
+    throw new Error("No XML to parse!");
+
+  // Stores doctype (if defined)
+  this.doctype = "";
+
+  // Expose the parser to the other delegates while the parser is running
+  this.parser = sax.parser(true); // strict
+  addParserEvents(this.parser);
+
+  // We'll use the file-scoped "delegates" var to remember what elements we're currently
+  // parsing; they will push and pop off the stack as we get deeper into the XML hierarchy.
+  // It's safe to use a global because JS is single-threaded.
+  delegates = [this];
+
+  this.parser.write(xml);
+
+  // Remove the parser as it is no longer needed and should not be exposed to clients
+  delete this.parser;
+}
+
+// make XmlDocument inherit XmlElement's methods
+extend(XmlDocument.prototype, XmlElement.prototype);
+
+XmlDocument.prototype._opentag = function(tag) {
+  if (typeof this.children === 'undefined')
+    // the first tag we encounter should be the root - we'll "become" the root XmlElement
+    XmlElement.call(this,tag);
+  else
+    // all other tags will be the root element's children
+    XmlElement.prototype._opentag.apply(this,arguments);
+};
+
+XmlDocument.prototype._doctype = function(doctype) {
+  this.doctype += doctype;
+}
+
+// file-scoped global stack of delegates
+var delegates = null;
+
+/*
+Helper functions
+*/
+
+function addParserEvents(parser) {
+  parser.onopentag = parser_opentag;
+  parser.onclosetag = parser_closetag;
+  parser.ontext = parser_text;
+  parser.oncdata = parser_cdata;
+  parser.oncomment = parser_comment;
+  parser.ondoctype = parser_doctype;
+  parser.onerror = parser_error;
+}
+
+// create these closures and cache them by keeping them file-scoped
+function parser_opentag() { delegates[0] && delegates[0]._opentag.apply(delegates[0],arguments) }
+function parser_closetag() { delegates[0] && delegates[0]._closetag.apply(delegates[0],arguments) }
+function parser_text() { delegates[0] && delegates[0]._text.apply(delegates[0],arguments) }
+function parser_cdata() { delegates[0] && delegates[0]._cdata.apply(delegates[0],arguments) }
+function parser_comment() { delegates[0] && delegates[0]._comment.apply(delegates[0],arguments) }
+function parser_doctype() { delegates[0] && delegates[0]._doctype.apply(delegates[0],arguments) }
+function parser_error() { delegates[0] && delegates[0]._error.apply(delegates[0],arguments) }
+
+// a relatively standard extend method
+function extend(destination, source) {
+  for (var prop in source)
+    if (source.hasOwnProperty(prop))
+      destination[prop] = source[prop];
+}
+
+// escapes XML entities like "<", "&", etc.
+function escapeXML(value){
+  return value.replace(/&/g, '&amp;').replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/'/g, '&apos;').replace(/"/g, '&quot;');
+}
+
+// Are we being used in a Node-like environment?
+if (typeof module !== 'undefined' && module.exports && !global.xmldocAssumeBrowser)
+    module.exports.XmlDocument = XmlDocument;
+else
+    this.XmlDocument = XmlDocument;
+
+})();
+
+}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"sax":32}]},{},[31]);
+/*
+ * MltXmlParser class Copyright (c) 2021-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -7526,10 +7533,11 @@ if (typeof module !== 'undefined' && module.exports) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function MltXmlParser(xmlString, options) {
-    var self = Object.create(this);
+    let self = Object.create(this);
     self.xmldoc = new xmldoc.XmlDocument(xmlString);
     self.includeRanges = self.get(options, 'includeRanges', false);
     self.selectedColors = self.get(options, 'colors', []);
+    self.ffmetadataFormat = self.get(options, 'ffmetadata', false);
     return self;
 }
 
@@ -7541,10 +7549,10 @@ MltXmlParser.prototype.timecode = function(value) {
     if (typeof value === 'string') {
         // Determine if this is a MLT "clock" time string.
         if (value[8] === '.' || value[8] === ',' || value[8] === ':' || value[8] === ';') {
-            if (value.substring(0,3) === '00:') {
-                return value.substring(3, 8);
-            } else {
-                return value.substring(0, 8);
+                if (value.substring(0,3) === '00:') {
+                    return value.substring(3, 8);
+                } else {
+                    return value.substring(0, 8);
             }
         }
         return value;
@@ -7553,21 +7561,21 @@ MltXmlParser.prototype.timecode = function(value) {
 };
 
 MltXmlParser.prototype.createChapters = function() {
-    var chaptersStr = "00:00 Intro\n";
-    var self = this;
-    var markers = [];
+    let self = this;
+    let chaptersStr = self.ffmetadataFormat ? ";FFMETADATA1\n" : "00:00 Intro\n";
+    let markers = [];
 
     this.xmldoc.childrenNamed('tractor').forEach(function (tractor) {
         tractor.childrenNamed('properties').forEach(function (p) {
             if (p.attr.name === 'shotcut:markers') {
                 p.childrenNamed('properties').forEach(function (m) {
-                    var marker = {};
+                    let marker = {};
                     m.childrenNamed('property').forEach(function (prop) {
                         if (prop.attr.name === 'start') {
                             marker.start = prop.val;
                             marker.timecode = self.timecode(prop.val);
                             marker.seconds = 3600 * parseInt(prop.val.substring(0, 2)) + 60 * parseInt(prop.val.substring(3, 5)) + parseInt(prop.val.substring(6, 8));
-                            if (marker.timecode === '00:00') {
+                            if (marker.timecode === '00:00' && !self.ffmetadataFormat) {
                                 chaptersStr = '';
                            }
                         } else if (prop.attr.name === 'end') {
@@ -7580,6 +7588,9 @@ MltXmlParser.prototype.createChapters = function() {
                     });
                     if ((self.includeRanges || marker.end === marker.start)
                             && (self.selectedColors.length === 0 || self.selectedColors.includes(marker.color))) {
+                        if (markers.length > 0) {
+                            markers[markers.length - 1].nextMarker = marker;
+                        }
                         markers.push(marker);
                     }
                 });
@@ -7591,7 +7602,12 @@ MltXmlParser.prototype.createChapters = function() {
         return (a.seconds === b.seconds)? 0 : (a.seconds < b.seconds)? -1 : 1;
     });
     markers.forEach(function (marker) {
-        chaptersStr += marker.timecode + ' ' + marker.text + "\n";
+        if (self.ffmetadataFormat) {
+            let end = (marker.end === marker.start && marker.nextMarker) ? (marker.nextMarker.seconds - 1) : (marker.endSeconds + 1);
+            chaptersStr += "[CHAPTER]\nTIMEBASE=1/1\nSTART=" + marker.seconds + "\nEND=" + end + "\ntitle=" + marker.text + "\n";
+        } else {
+            chaptersStr += marker.timecode + ' ' + marker.text + "\n";
+        }
     });
     return chaptersStr;
 };
