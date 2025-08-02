@@ -499,9 +499,6 @@ bool Controller::saveXML(const QString &filename,
 
         // Save the consumer of this service so it can be restored.
         auto saveConsumer = mlt_service_consumer(s.consumer()->get_service());
-        if (!saveConsumer) {
-            LOG_ERROR() << "Unable to get save consumer";
-        }
         c.connect(s);
         c.start();
         if (ignore)
@@ -553,9 +550,6 @@ QString Controller::XML(Service *service, bool withProfile, bool withMetadata)
 
     // Save the consumer of this service so it can be restored.
     auto saveConsumer = mlt_service_consumer(s.consumer()->get_service());
-    if (!saveConsumer) {
-        LOG_ERROR() << "Unable to get save consumer";
-    }
     int ignore = s.get_int("ignore_points");
     if (ignore)
         s.set("ignore_points", 0);
