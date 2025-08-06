@@ -7,7 +7,7 @@ description: >
   no import required meaning native timeline editing; Blackmagic Design
   support for input and preview monitoring; and resolution support to 4k.
 
-base: core20
+base: core22
 grade: stable
 confinement: classic
 
