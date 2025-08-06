@@ -356,7 +356,7 @@ Rectangle {
         anchors.leftMargin: parent.border.width
         property real yOffset: 0
         y: clipRoot.height - waveform.height * Math.min((gain + 72) / 80, 1) + yOffset
-        color: audioPeakMouseArea.drag.active ? Qt.lighter(parent.color) : Qt.darker(clipColor)
+        color: audioPeakMouseArea.enabled ? audioPeakMouseArea.drag.active ? Qt.lighter(parent.color) : Qt.darker(clipColor) : Qt.darker(parent.color)
         opacity: waveform.opacity
 
         MouseArea {
