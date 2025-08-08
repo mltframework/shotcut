@@ -2594,7 +2594,7 @@ void MainWindow::configureVideoWidget()
         MLT.videoWidget()->setProperty("rescale", "bicubic");
     else
         MLT.videoWidget()->setProperty("rescale", "hyper");
-    if (m_decklinkGammaGroup)
+    if (m_decklinkGammaGroup && m_decklinkGammaGroup->isEnabled())
         MLT.videoWidget()->setProperty("decklinkGamma",
                                        m_decklinkGammaGroup->checkedAction()->data());
     if (m_keyerGroup)
