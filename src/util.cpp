@@ -800,7 +800,7 @@ QString Util::trcString(int trc)
 bool Util::trcIsCompatible(int trc)
 {
     // Transfer characteristics > SMPTE240M Probably need conversion except IEC61966-2-4 is OK
-    return trc <= 7 || trc == 11 || trc == 13 || trc == 18;
+    return trc <= 7 || trc == 11 || trc == 13 || trc == 14 || trc == 15 || trc == 18;
 }
 
 QString Util::getConversionAdvice(Mlt::Producer *producer)

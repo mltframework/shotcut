@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2023 Meltytech, LLC
+ * Copyright (c) 2011-2025 Meltytech, LLC
  *
  * Some GL shader based on BSD licensed code from Peter Bengtsson:
  * http://www.fourcc.org/source/YUV420P-OpenGL-GLSLang.c
@@ -119,10 +119,15 @@ void OpenGLVideoWidget::createShader()
                                   "  mediump mat3 coefficients;"
                                   "  if (colorspace == 601) {"
                                   "    coefficients = mat3("
-                                  "      1.1643,  1.1643,  1.1643," // column 1
-                                  "      0.0,    -0.39173, 2.017,"  // column 2
-                                  "      1.5958, -0.8129,  0.0);"   // column 3
-                                  "  } else {"                      // ITU-R 709
+                                  "      1.1643,  1.1643,  1.1643,"    // column 1
+                                  "      0.0,    -0.39173, 2.017,"     // column 2
+                                  "      1.5958, -0.8129,  0.0);"      // column 3
+                                  "  } else if (colorspace == 2020) {" // ITU-R BT.2020
+                                  "    coefficients = mat3("
+                                  "      1.1643, 1.1643, 1.1643," // column 1
+                                  "      0.0,   -0.1873, 2.1418," // column 2
+                                  "      1.7167, -0.6504, 0.0);"  // column 3
+                                  "  } else {"                    // ITU-R 709
                                   "    coefficients = mat3("
                                   "      1.1643, 1.1643, 1.1643," // column 1
                                   "      0.0,   -0.213,  2.112,"  // column 2

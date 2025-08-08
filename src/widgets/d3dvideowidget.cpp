@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -298,6 +298,11 @@ void D3DVideoWidget::prepareShader(Stage stage)
                  "      1.1643f,  0.0f,      1.5958f,"
                  "      1.1643f, -0.39173f, -0.8129f,"
                  "      1.1643f,  2.017f,    0.0f);"
+                 "  } else if (colorspace == 2020) {" // ITU-R BT.2020
+                 "    coefficients = float3x3("
+                 "      1.1643f,  0.0f,    1.7167f,"
+                 "      1.1643f, -0.1873f, -0.6504f,"
+                 "      1.1643f,  2.1418f,  0.0f);"
                  "  } else {" // ITU-R 709
                  "    coefficients = float3x3("
                  "      1.1643f,  0.0f,    1.793f,"
