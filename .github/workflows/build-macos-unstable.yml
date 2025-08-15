@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     if: ${{ github.repository_owner == 'mltframework' }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Download from S3
         run: |
