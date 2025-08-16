@@ -142,7 +142,6 @@ QmlMetadata *FilterController::metadata(const QString &id)
 
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
-    QmlMetadata *meta = nullptr;
     QString uniqueId = service->get(kShotcutFilterProperty);
 
     // Fallback to mlt_service for legacy filters

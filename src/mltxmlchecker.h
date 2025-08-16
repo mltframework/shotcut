@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2023 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,6 +66,7 @@ private:
     bool fixVersion1701WindowsPathBug(QString &value);
     void checkIncludesSelf(QVector<MltProperty> &properties);
     void checkLumaAlphaOver(const QString &mlt_service, QVector<MltProperty> &properties);
+    void checkAudioGain(const QString &mlt_service, QVector<MltProperty> &properties);
     void replaceWebVfxCropFilters(QString &mlt_service, QVector<MltProperty> &properties);
     void replaceWebVfxChoppyFilter(QString &mlt_service, QVector<MltProperty> &properties);
     void checkForProxy(const QString &mlt_service, QVector<MltProperty> &properties);
