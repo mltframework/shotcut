@@ -90,6 +90,10 @@ jobs:
           echo INSTALL_DIR=\"$CHECKOUT_DIR/build\"
           echo INSTALL_DIR=\"$CHECKOUT_DIR/build\" > build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
+
+          echo MLT_HEAD=0 > build-shotcut.conf
+          echo MLT_REVISION=8988ffd6677a89445e6307ba7035241abbce3a70  > build-shotcut.conf
+
           bash scripts/build-shotcut-msys2.sh
           pushd build
           echo Installing awscli
