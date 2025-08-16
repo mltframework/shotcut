@@ -2068,9 +2068,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <location filename="../src/docks/encodedock.cpp" line="1330"/>
-        <location filename="../src/docks/encodedock.cpp" line="1843"/>
-        <location filename="../src/docks/encodedock.cpp" line="2335"/>
+        <location filename="../src/docks/encodedock.cpp" line="1332"/>
+        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="2337"/>
         <source>Export File</source>
         <translation>Exporter le fichier</translation>
     </message>
@@ -2096,17 +2096,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2039"/>
-        <location filename="../src/docks/encodedock.cpp" line="2046"/>
-        <location filename="../src/docks/encodedock.cpp" line="2158"/>
+        <location filename="../src/docks/encodedock.cpp" line="2041"/>
+        <location filename="../src/docks/encodedock.cpp" line="2048"/>
+        <location filename="../src/docks/encodedock.cpp" line="2160"/>
         <source>Stream</source>
         <translation>Flux</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1826"/>
-        <location filename="../src/docks/encodedock.cpp" line="1927"/>
-        <location filename="../src/docks/encodedock.cpp" line="1937"/>
+        <location filename="../src/docks/encodedock.cpp" line="1828"/>
+        <location filename="../src/docks/encodedock.cpp" line="1929"/>
+        <location filename="../src/docks/encodedock.cpp" line="1939"/>
         <source>Stop Capture</source>
         <translation>Arrêter la capture</translation>
     </message>
@@ -2122,141 +2122,141 @@ in temporal compression</source>
         <translation>Format par défaut</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="467"/>
+        <location filename="../src/docks/encodedock.cpp" line="469"/>
         <source>Timeline</source>
         <translation>Timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="474"/>
-        <location filename="../src/docks/encodedock.cpp" line="480"/>
+        <location filename="../src/docks/encodedock.cpp" line="476"/>
+        <location filename="../src/docks/encodedock.cpp" line="482"/>
         <source>Source</source>
         <translation>Source</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="485"/>
-        <location filename="../src/docks/encodedock.cpp" line="492"/>
+        <location filename="../src/docks/encodedock.cpp" line="487"/>
+        <location filename="../src/docks/encodedock.cpp" line="494"/>
         <source>Marker</source>
         <translation>Marqueur</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="503"/>
+        <location filename="../src/docks/encodedock.cpp" line="505"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Vous devez saisir des valeurs numériques avec &quot;%1&quot; comme séparateur décimal.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="512"/>
-        <location filename="../src/docks/encodedock.cpp" line="1773"/>
-        <location filename="../src/docks/encodedock.cpp" line="1774"/>
+        <location filename="../src/docks/encodedock.cpp" line="514"/>
+        <location filename="../src/docks/encodedock.cpp" line="1775"/>
+        <location filename="../src/docks/encodedock.cpp" line="1776"/>
         <source>Custom</source>
         <translation>Personnalisé</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="548"/>
+        <location filename="../src/docks/encodedock.cpp" line="550"/>
         <source>Stock</source>
         <translation>Stock</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="551"/>
+        <location filename="../src/docks/encodedock.cpp" line="553"/>
         <source>Default</source>
         <translation>Par défaut</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1397"/>
+        <location filename="../src/docks/encodedock.cpp" line="1399"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Vous ne pouvez pas écrire un fichier qui appartient à votre projet. Réessayez avec un dossier ou un nom de fichier différent.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1495"/>
+        <location filename="../src/docks/encodedock.cpp" line="1497"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut a trouvé des filtres qui nécessitent des tâches d&apos;analyse qui n&apos;ont pas été effectuées.
 Voulez vous lancer ces tâches d&apos;analyses maintenant ?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1843"/>
-        <location filename="../src/docks/encodedock.cpp" line="2337"/>
+        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="2339"/>
         <source>Capture File</source>
         <translation>Fichier de capture</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="1847"/>
         <source>Export Files</source>
         <translation>Exporter Fichiers</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1860"/>
+        <location filename="../src/docks/encodedock.cpp" line="1862"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1862"/>
+        <location filename="../src/docks/encodedock.cpp" line="1864"/>
         <source>Determined by Export (*)</source>
         <translation>Défini par l&apos;export (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2034"/>
-        <location filename="../src/docks/encodedock.cpp" line="2056"/>
+        <location filename="../src/docks/encodedock.cpp" line="2036"/>
+        <location filename="../src/docks/encodedock.cpp" line="2058"/>
         <source>Stop Stream</source>
         <translation>Arrêter le Flux</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2048"/>
+        <location filename="../src/docks/encodedock.cpp" line="2050"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Entrer le type de protocole réseau, l’adresse, le port et les paramètres comme un URL :</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2091"/>
+        <location filename="../src/docks/encodedock.cpp" line="2093"/>
         <source>Add Export Preset</source>
         <translation>Ajouter un préréglage d’export</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2135"/>
+        <location filename="../src/docks/encodedock.cpp" line="2137"/>
         <source>Delete Preset</source>
         <translation>Supprimer une Préselection</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2136"/>
+        <location filename="../src/docks/encodedock.cpp" line="2138"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Voulez-vous vraiment supprimer %1 ?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2264"/>
+        <location filename="../src/docks/encodedock.cpp" line="2266"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2319"/>
+        <location filename="../src/docks/encodedock.cpp" line="2321"/>
         <source>KiB (%1s)</source>
         <translation> Kio (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2467"/>
+        <location filename="../src/docks/encodedock.cpp" line="2469"/>
         <source>Detect</source>
         <translation>Détecter</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2524"/>
+        <location filename="../src/docks/encodedock.cpp" line="2526"/>
         <source>(auto)</source>
         <translation>(auto)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2570"/>
+        <location filename="../src/docks/encodedock.cpp" line="2572"/>
         <source>Detecting hardware encoders...</source>
         <translation>Détection d’encodeurs matériels…</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2627"/>
+        <location filename="../src/docks/encodedock.cpp" line="2629"/>
         <source>Nothing found</source>
         <translation>Aucun résultat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2629"/>
+        <location filename="../src/docks/encodedock.cpp" line="2631"/>
         <source>Found %1</source>
         <translation>Trouvé %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2852"/>
+        <location filename="../src/docks/encodedock.cpp" line="2854"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2267,42 +2267,42 @@ Sauvegardez le projet et ouvrez-le à nouveau.
 Shotcut va tenter de le réparer.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2901"/>
+        <location filename="../src/docks/encodedock.cpp" line="2903"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>Le rapport d’aspect ne correspond pas au mode vidéo du projet, ce qui entraîne des barres noires.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2939"/>
+        <location filename="../src/docks/encodedock.cpp" line="2941"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>La fréquence d’images est supérieure au mode vidéo du projet, ce qui entraîne la répétition des images.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2465"/>
+        <location filename="../src/docks/encodedock.cpp" line="2467"/>
         <source>Configure Hardware Encoding</source>
         <translation>Configurer l&apos;encodage matériel</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="470"/>
+        <location filename="../src/docks/encodedock.cpp" line="472"/>
         <source>Current Playlist Bin</source>
         <translation>Panier de liste de lecture courant</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="471"/>
+        <location filename="../src/docks/encodedock.cpp" line="473"/>
         <source>Each Playlist Bin Item</source>
         <translation>Toutes les éléments du panier de liste de lecture</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1846"/>
+        <location filename="../src/docks/encodedock.cpp" line="1848"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>Exporter chaque élément du panier de la liste de lecture</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1891"/>
+        <location filename="../src/docks/encodedock.cpp" line="1893"/>
         <source>Export canceled</source>
         <translation>Export annulé.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2489"/>
+        <location filename="../src/docks/encodedock.cpp" line="2491"/>
         <source>Export Frames/sec</source>
         <translation>Exporter les images/sec</translation>
     </message>
@@ -2310,64 +2310,94 @@ Shotcut va tenter de le réparer.</translation>
 <context>
     <name>EncodeJob</name>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="46"/>
+        <location filename="../src/jobs/encodejob.cpp" line="51"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="48"/>
+        <location filename="../src/jobs/encodejob.cpp" line="53"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>Ouvrir le fichier de sortie dans le lecteur de Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="52"/>
-        <location filename="../src/jobs/encodejob.cpp" line="53"/>
+        <location filename="../src/jobs/encodejob.cpp" line="57"/>
+        <location filename="../src/jobs/encodejob.cpp" line="58"/>
         <source>Show In Files</source>
         <translation>Montrer dans les fichiers</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="57"/>
-        <location filename="../src/jobs/encodejob.cpp" line="58"/>
+        <location filename="../src/jobs/encodejob.cpp" line="62"/>
+        <location filename="../src/jobs/encodejob.cpp" line="63"/>
         <source>Show In Folder</source>
         <translation>Afficher dans le dossier</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="62"/>
+        <location filename="../src/jobs/encodejob.cpp" line="67"/>
         <source>Measure Video Quality...</source>
         <translation>Mesurer la qualité vidéo…</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="66"/>
+        <location filename="../src/jobs/encodejob.cpp" line="71"/>
         <source>Set Equirectangular...</source>
         <translation>Définir la projection parallélogrammatique...</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="75"/>
+        <source>Embed Markers as Chapters...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="84"/>
         <source>Video Quality Report</source>
         <translation>Rapport sur la qualité vidéo</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="76"/>
+        <location filename="../src/jobs/encodejob.cpp" line="85"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
         <translation>Documents texte (*.txt);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="138"/>
+        <location filename="../src/jobs/encodejob.cpp" line="147"/>
         <source>Set Equirectangular Projection</source>
         <translation>Définir la projection parallélogrammatique...</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="152"/>
+        <location filename="../src/jobs/encodejob.cpp" line="161"/>
         <source>Successfully wrote %1</source>
         <translation>Ecrit %1 avec succès</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="154"/>
+        <location filename="../src/jobs/encodejob.cpp" line="163"/>
         <source>An error occurred saving the projection.</source>
         <translation>Une erreur s&apos;est produite sauvegardant la projection</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="182"/>
+        <location filename="../src/jobs/encodejob.cpp" line="188"/>
+        <source>Include ranges (Duration &gt; 1 frame)?</source>
+        <translation type="unfinished">Inclure zone (Durée &gt; 1 image) ?</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="199"/>
+        <source>Choose Markers</source>
+        <translation type="unfinished">Choisir des marqueurs</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="211"/>
+        <source>Embed Chapters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="276"/>
+        <source>A JavaScript error occurred during export.</source>
+        <translation type="unfinished">Une erreur JavaScript est survenue pendant l’export.</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="279"/>
+        <source>Failed to open export-chapters.js</source>
+        <translation type="unfinished">Impossible d&apos;ouvrir export-chapters.js</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="307"/>
         <source>Export job failed; trying again without Parallel processing.</source>
         <translation>Tâche d&apos;export échouée; nouvel essai sans traitement parallèle.</translation>
     </message>
@@ -2818,7 +2848,7 @@ Shotcut va tenter de le réparer.</translation>
         <translation>(OBSOLETE)</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="352"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="351"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>Un seul filtre %1 est autorisé.</translation>
     </message>
@@ -8323,7 +8353,7 @@ Si oui, choisissez un format ci-dessous, puis cliquez sur OK pour choisir un nom
         <translation>Insérer sous-titre</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1337"/>
+        <location filename="../src/docks/encodedock.cpp" line="1339"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1053"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1143"/>
         <source>A job already exists for %1</source>
@@ -10286,7 +10316,7 @@ Supprimer le filtre de sous-titre avant de supprimer la piste.</translation>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1061"/>
         <source>Adjust Clip Gain/Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Régler le Gain/Volume du clip</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1072"/>
@@ -10815,7 +10845,7 @@ Supprimer le filtre de sous-titre avant de supprimer la piste.</translation>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
         <source>Multiply</source>
-        <translation>Produit</translation>
+        <translation>Multiplier</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
@@ -16324,7 +16354,7 @@ Utilisé pour corriger l&apos;amplitude excessive causée par la gamme dynamique
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="85"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="462"/>
         <source>Multiply</source>
-        <translation>Produit</translation>
+        <translation>Multiplier</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="90"/>

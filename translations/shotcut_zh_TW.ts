@@ -2063,9 +2063,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <location filename="../src/docks/encodedock.cpp" line="1330"/>
-        <location filename="../src/docks/encodedock.cpp" line="1843"/>
-        <location filename="../src/docks/encodedock.cpp" line="2335"/>
+        <location filename="../src/docks/encodedock.cpp" line="1332"/>
+        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="2337"/>
         <source>Export File</source>
         <translation>匯出至檔案</translation>
     </message>
@@ -2091,17 +2091,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2039"/>
-        <location filename="../src/docks/encodedock.cpp" line="2046"/>
-        <location filename="../src/docks/encodedock.cpp" line="2158"/>
+        <location filename="../src/docks/encodedock.cpp" line="2041"/>
+        <location filename="../src/docks/encodedock.cpp" line="2048"/>
+        <location filename="../src/docks/encodedock.cpp" line="2160"/>
         <source>Stream</source>
         <translation>串流</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1826"/>
-        <location filename="../src/docks/encodedock.cpp" line="1927"/>
-        <location filename="../src/docks/encodedock.cpp" line="1937"/>
+        <location filename="../src/docks/encodedock.cpp" line="1828"/>
+        <location filename="../src/docks/encodedock.cpp" line="1929"/>
+        <location filename="../src/docks/encodedock.cpp" line="1939"/>
         <source>Stop Capture</source>
         <translation>停止擷取</translation>
     </message>
@@ -2117,142 +2117,142 @@ in temporal compression</source>
         <translation>作為格式預設值</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="467"/>
+        <location filename="../src/docks/encodedock.cpp" line="469"/>
         <source>Timeline</source>
         <translation>時間軸</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="474"/>
-        <location filename="../src/docks/encodedock.cpp" line="480"/>
+        <location filename="../src/docks/encodedock.cpp" line="476"/>
+        <location filename="../src/docks/encodedock.cpp" line="482"/>
         <source>Source</source>
         <translation>來源</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="485"/>
-        <location filename="../src/docks/encodedock.cpp" line="492"/>
+        <location filename="../src/docks/encodedock.cpp" line="487"/>
+        <location filename="../src/docks/encodedock.cpp" line="494"/>
         <source>Marker</source>
         <translation>標記點</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="503"/>
+        <location filename="../src/docks/encodedock.cpp" line="505"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>必須以「%1」為小數點輸入數值。</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="512"/>
-        <location filename="../src/docks/encodedock.cpp" line="1773"/>
-        <location filename="../src/docks/encodedock.cpp" line="1774"/>
+        <location filename="../src/docks/encodedock.cpp" line="514"/>
+        <location filename="../src/docks/encodedock.cpp" line="1775"/>
+        <location filename="../src/docks/encodedock.cpp" line="1776"/>
         <source>Custom</source>
         <translation>自訂</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="548"/>
+        <location filename="../src/docks/encodedock.cpp" line="550"/>
         <source>Stock</source>
         <translation>內建</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="551"/>
+        <location filename="../src/docks/encodedock.cpp" line="553"/>
         <source>Default</source>
         <translation>預設</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1397"/>
+        <location filename="../src/docks/encodedock.cpp" line="1399"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>無法寫入到已經存在專案裡的檔案。
 請選擇其他資料夾或檔名再試。</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1495"/>
+        <location filename="../src/docks/encodedock.cpp" line="1497"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut 發現有需要尚未執行之分析作業的濾鏡。
 是否現在執行分析作業？</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1843"/>
-        <location filename="../src/docks/encodedock.cpp" line="2337"/>
+        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="2339"/>
         <source>Capture File</source>
         <translation>擷取檔案</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="1847"/>
         <source>Export Files</source>
         <translation>匯出檔案</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1860"/>
+        <location filename="../src/docks/encodedock.cpp" line="1862"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;所有檔案 (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1862"/>
+        <location filename="../src/docks/encodedock.cpp" line="1864"/>
         <source>Determined by Export (*)</source>
         <translation>由「匯出」決定 (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2034"/>
-        <location filename="../src/docks/encodedock.cpp" line="2056"/>
+        <location filename="../src/docks/encodedock.cpp" line="2036"/>
+        <location filename="../src/docks/encodedock.cpp" line="2058"/>
         <source>Stop Stream</source>
         <translation>停止串流</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2048"/>
+        <location filename="../src/docks/encodedock.cpp" line="2050"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>以 URL 形式輸入網路通訊協定、位置、連接埠與參數：</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2091"/>
+        <location filename="../src/docks/encodedock.cpp" line="2093"/>
         <source>Add Export Preset</source>
         <translation>新增匯出預設設定</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2135"/>
+        <location filename="../src/docks/encodedock.cpp" line="2137"/>
         <source>Delete Preset</source>
         <translation>刪除預設設定</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2136"/>
+        <location filename="../src/docks/encodedock.cpp" line="2138"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>確定要刪除 %1？</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2264"/>
+        <location filename="../src/docks/encodedock.cpp" line="2266"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2319"/>
+        <location filename="../src/docks/encodedock.cpp" line="2321"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2467"/>
+        <location filename="../src/docks/encodedock.cpp" line="2469"/>
         <source>Detect</source>
         <translation>偵測</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2524"/>
+        <location filename="../src/docks/encodedock.cpp" line="2526"/>
         <source>(auto)</source>
         <translation>（自動）</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2570"/>
+        <location filename="../src/docks/encodedock.cpp" line="2572"/>
         <source>Detecting hardware encoders...</source>
         <translation>正在偵測硬體編碼器…</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2627"/>
+        <location filename="../src/docks/encodedock.cpp" line="2629"/>
         <source>Nothing found</source>
         <translation>未找到任何項目</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2629"/>
+        <location filename="../src/docks/encodedock.cpp" line="2631"/>
         <source>Found %1</source>
         <translation>找到 %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2852"/>
+        <location filename="../src/docks/encodedock.cpp" line="2854"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2263,42 +2263,42 @@ Shotcut will attempt to repair your project.</source>
 Shotcut 會嘗試修復專案。</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2901"/>
+        <location filename="../src/docks/encodedock.cpp" line="2903"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>專案視訊模式與選取的外觀比例不一致，將會產生黑邊。</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2939"/>
+        <location filename="../src/docks/encodedock.cpp" line="2941"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>專案視訊模式較選取的影格播放速率為低，將會導致影格重複播放。</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2465"/>
+        <location filename="../src/docks/encodedock.cpp" line="2467"/>
         <source>Configure Hardware Encoding</source>
         <translation>設定硬體編碼</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="470"/>
+        <location filename="../src/docks/encodedock.cpp" line="472"/>
         <source>Current Playlist Bin</source>
         <translation>目前播放清單列表</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="471"/>
+        <location filename="../src/docks/encodedock.cpp" line="473"/>
         <source>Each Playlist Bin Item</source>
         <translation>播放清單列表中的每個項目</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1846"/>
+        <location filename="../src/docks/encodedock.cpp" line="1848"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>匯出播放清單列表中的每個項目</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1891"/>
+        <location filename="../src/docks/encodedock.cpp" line="1893"/>
         <source>Export canceled</source>
         <translation>匯出已取消</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2489"/>
+        <location filename="../src/docks/encodedock.cpp" line="2491"/>
         <source>Export Frames/sec</source>
         <translation>匯出影格／秒</translation>
     </message>
@@ -2306,64 +2306,94 @@ Shotcut 會嘗試修復專案。</translation>
 <context>
     <name>EncodeJob</name>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="46"/>
+        <location filename="../src/jobs/encodejob.cpp" line="51"/>
         <source>Open</source>
         <translation>開啟</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="48"/>
+        <location filename="../src/jobs/encodejob.cpp" line="53"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>在 Shotcut 播放器開啟輸出檔案</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="52"/>
-        <location filename="../src/jobs/encodejob.cpp" line="53"/>
+        <location filename="../src/jobs/encodejob.cpp" line="57"/>
+        <location filename="../src/jobs/encodejob.cpp" line="58"/>
         <source>Show In Files</source>
         <translation>在「檔案」中顯示</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="57"/>
-        <location filename="../src/jobs/encodejob.cpp" line="58"/>
+        <location filename="../src/jobs/encodejob.cpp" line="62"/>
+        <location filename="../src/jobs/encodejob.cpp" line="63"/>
         <source>Show In Folder</source>
         <translation>在資料夾中顯示</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="62"/>
+        <location filename="../src/jobs/encodejob.cpp" line="67"/>
         <source>Measure Video Quality...</source>
         <translation>測量視訊品質…</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="66"/>
+        <location filename="../src/jobs/encodejob.cpp" line="71"/>
         <source>Set Equirectangular...</source>
         <translation>設定等距長方投影…</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="75"/>
+        <source>Embed Markers as Chapters...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="84"/>
         <source>Video Quality Report</source>
         <translation>視訊品質報表</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="76"/>
+        <location filename="../src/jobs/encodejob.cpp" line="85"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
         <translation>文字文件 (*.txt);;所有檔案 (*)</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="138"/>
+        <location filename="../src/jobs/encodejob.cpp" line="147"/>
         <source>Set Equirectangular Projection</source>
         <translation>設定等距長方投影</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="152"/>
+        <location filename="../src/jobs/encodejob.cpp" line="161"/>
         <source>Successfully wrote %1</source>
         <translation>成功寫入 %1</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="154"/>
+        <location filename="../src/jobs/encodejob.cpp" line="163"/>
         <source>An error occurred saving the projection.</source>
         <translation>儲存投影時發生錯誤。</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="182"/>
+        <location filename="../src/jobs/encodejob.cpp" line="188"/>
+        <source>Include ranges (Duration &gt; 1 frame)?</source>
+        <translation type="unfinished">包含範圍（長度 &gt; 1 影格）？</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="199"/>
+        <source>Choose Markers</source>
+        <translation type="unfinished">選擇標記點</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="211"/>
+        <source>Embed Chapters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="276"/>
+        <source>A JavaScript error occurred during export.</source>
+        <translation type="unfinished">匯出時發生了 JavaScript 錯誤。</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="279"/>
+        <source>Failed to open export-chapters.js</source>
+        <translation type="unfinished">無法開啟 export-chapters.js</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="307"/>
         <source>Export job failed; trying again without Parallel processing.</source>
         <translation>匯出作業失敗；請在沒有「並行處理」的情況下重新嘗試。</translation>
     </message>
@@ -2813,7 +2843,7 @@ Shotcut 會嘗試修復專案。</translation>
         <translation>（已過時）</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="352"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="351"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>只允許一個「%1」濾鏡。</translation>
     </message>
@@ -8309,7 +8339,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>附加字幕</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1337"/>
+        <location filename="../src/docks/encodedock.cpp" line="1339"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1053"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1143"/>
         <source>A job already exists for %1</source>

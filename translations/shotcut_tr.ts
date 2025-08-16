@@ -2065,9 +2065,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <location filename="../src/docks/encodedock.cpp" line="1330"/>
-        <location filename="../src/docks/encodedock.cpp" line="1843"/>
-        <location filename="../src/docks/encodedock.cpp" line="2335"/>
+        <location filename="../src/docks/encodedock.cpp" line="1332"/>
+        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="2337"/>
         <source>Export File</source>
         <translation>Dosyayı dışa aktar</translation>
     </message>
@@ -2093,17 +2093,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2039"/>
-        <location filename="../src/docks/encodedock.cpp" line="2046"/>
-        <location filename="../src/docks/encodedock.cpp" line="2158"/>
+        <location filename="../src/docks/encodedock.cpp" line="2041"/>
+        <location filename="../src/docks/encodedock.cpp" line="2048"/>
+        <location filename="../src/docks/encodedock.cpp" line="2160"/>
         <source>Stream</source>
         <translation>Akış</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1826"/>
-        <location filename="../src/docks/encodedock.cpp" line="1927"/>
-        <location filename="../src/docks/encodedock.cpp" line="1937"/>
+        <location filename="../src/docks/encodedock.cpp" line="1828"/>
+        <location filename="../src/docks/encodedock.cpp" line="1929"/>
+        <location filename="../src/docks/encodedock.cpp" line="1939"/>
         <source>Stop Capture</source>
         <translation>Yakalamayı durdur</translation>
     </message>
@@ -2119,142 +2119,142 @@ in temporal compression</source>
         <translation>Biçim varsayılanı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="467"/>
+        <location filename="../src/docks/encodedock.cpp" line="469"/>
         <source>Timeline</source>
         <translation>Zaman akışı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="474"/>
-        <location filename="../src/docks/encodedock.cpp" line="480"/>
+        <location filename="../src/docks/encodedock.cpp" line="476"/>
+        <location filename="../src/docks/encodedock.cpp" line="482"/>
         <source>Source</source>
         <translation>Kaynak</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="485"/>
-        <location filename="../src/docks/encodedock.cpp" line="492"/>
+        <location filename="../src/docks/encodedock.cpp" line="487"/>
+        <location filename="../src/docks/encodedock.cpp" line="494"/>
         <source>Marker</source>
         <translation>İşaretleyici</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="503"/>
+        <location filename="../src/docks/encodedock.cpp" line="505"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Ondalık değer olarak &apos;%1&apos; kullanarak sayısal değerler yazmalısınız.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="512"/>
-        <location filename="../src/docks/encodedock.cpp" line="1773"/>
-        <location filename="../src/docks/encodedock.cpp" line="1774"/>
+        <location filename="../src/docks/encodedock.cpp" line="514"/>
+        <location filename="../src/docks/encodedock.cpp" line="1775"/>
+        <location filename="../src/docks/encodedock.cpp" line="1776"/>
         <source>Custom</source>
         <translation>Özel</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="548"/>
+        <location filename="../src/docks/encodedock.cpp" line="550"/>
         <source>Stock</source>
         <translation>Eski</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="551"/>
+        <location filename="../src/docks/encodedock.cpp" line="553"/>
         <source>Default</source>
         <translation>Varsayılan</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1397"/>
+        <location filename="../src/docks/encodedock.cpp" line="1399"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Projenizde bulunan bir dosyaya yazamazsınız.
 Farklı bir klasör ya da dosya adı ile yeniden deneyin.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1495"/>
+        <location filename="../src/docks/encodedock.cpp" line="1497"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut, çalışmayan inceleme görevlerine gerek duyan süzgeçler buldu.
 İnceleme görevlerini şimdi çalıştırmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1843"/>
-        <location filename="../src/docks/encodedock.cpp" line="2337"/>
+        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="2339"/>
         <source>Capture File</source>
         <translation>Yakalama dosyası</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="1847"/>
         <source>Export Files</source>
         <translation>Dosyaları dışa aktar</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1860"/>
+        <location filename="../src/docks/encodedock.cpp" line="1862"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1862"/>
+        <location filename="../src/docks/encodedock.cpp" line="1864"/>
         <source>Determined by Export (*)</source>
         <translation>Dışa aktarma tarafından belirlenen (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2034"/>
-        <location filename="../src/docks/encodedock.cpp" line="2056"/>
+        <location filename="../src/docks/encodedock.cpp" line="2036"/>
+        <location filename="../src/docks/encodedock.cpp" line="2058"/>
         <source>Stop Stream</source>
         <translation>Akışı durdur</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2048"/>
+        <location filename="../src/docks/encodedock.cpp" line="2050"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Adres olarak, ağ iletişim kuralı şemasını, adresi, bağlantı noktasını ve parametreleri yazın:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2091"/>
+        <location filename="../src/docks/encodedock.cpp" line="2093"/>
         <source>Add Export Preset</source>
         <translation>Dışa aktarma hazır ayarı ekle</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2135"/>
+        <location filename="../src/docks/encodedock.cpp" line="2137"/>
         <source>Delete Preset</source>
         <translation>Hazır ayarı sil</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2136"/>
+        <location filename="../src/docks/encodedock.cpp" line="2138"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>%1 ögesini silmek istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2264"/>
+        <location filename="../src/docks/encodedock.cpp" line="2266"/>
         <source>None</source>
         <translation>Yok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2319"/>
+        <location filename="../src/docks/encodedock.cpp" line="2321"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2467"/>
+        <location filename="../src/docks/encodedock.cpp" line="2469"/>
         <source>Detect</source>
         <translation>Algıla</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2524"/>
+        <location filename="../src/docks/encodedock.cpp" line="2526"/>
         <source>(auto)</source>
         <translation>(otomatik)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2570"/>
+        <location filename="../src/docks/encodedock.cpp" line="2572"/>
         <source>Detecting hardware encoders...</source>
         <translation>Donanımsal kodlayıcılar algılanıyor...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2627"/>
+        <location filename="../src/docks/encodedock.cpp" line="2629"/>
         <source>Nothing found</source>
         <translation>Herhangi bir şey bulunamadı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2629"/>
+        <location filename="../src/docks/encodedock.cpp" line="2631"/>
         <source>Found %1</source>
         <translation>%1 bulundu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2852"/>
+        <location filename="../src/docks/encodedock.cpp" line="2854"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2265,42 +2265,42 @@ Projenizi kaydedin, kapatın ve yeniden açın.
 Shotcut projenizi onarmayı deneyecek.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2901"/>
+        <location filename="../src/docks/encodedock.cpp" line="2903"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>En/boy oranı projenin görüntü kipi ile uyuşmuyor. Bu durum siyah çubuklara neden oluyor.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2939"/>
+        <location filename="../src/docks/encodedock.cpp" line="2941"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>Kare hızı projenin görüntü kipinden daha yüksek olduğundan kareler yineleniyor.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2465"/>
+        <location filename="../src/docks/encodedock.cpp" line="2467"/>
         <source>Configure Hardware Encoding</source>
         <translation>Donanımsal kodlamayı yapılandır</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="470"/>
+        <location filename="../src/docks/encodedock.cpp" line="472"/>
         <source>Current Playlist Bin</source>
         <translation>Geçerli oynatma listesi klasörü</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="471"/>
+        <location filename="../src/docks/encodedock.cpp" line="473"/>
         <source>Each Playlist Bin Item</source>
         <translation>Her oynatma listesi kutusu ögesi</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1846"/>
+        <location filename="../src/docks/encodedock.cpp" line="1848"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>Her oynatma listesi kutusu ögesini dışa aktar</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1891"/>
+        <location filename="../src/docks/encodedock.cpp" line="1893"/>
         <source>Export canceled</source>
         <translation>Dışa aktarma iptal edildi</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2489"/>
+        <location filename="../src/docks/encodedock.cpp" line="2491"/>
         <source>Export Frames/sec</source>
         <translation>Dışa aktarma kare/sn</translation>
     </message>
@@ -2308,64 +2308,94 @@ Shotcut projenizi onarmayı deneyecek.</translation>
 <context>
     <name>EncodeJob</name>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="46"/>
+        <location filename="../src/jobs/encodejob.cpp" line="51"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="48"/>
+        <location filename="../src/jobs/encodejob.cpp" line="53"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>Çıktı dosyası Shotcut oynatıcıda açılsın</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="52"/>
-        <location filename="../src/jobs/encodejob.cpp" line="53"/>
+        <location filename="../src/jobs/encodejob.cpp" line="57"/>
+        <location filename="../src/jobs/encodejob.cpp" line="58"/>
         <source>Show In Files</source>
         <translation>Dosyalar uygulamasında göster</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="57"/>
-        <location filename="../src/jobs/encodejob.cpp" line="58"/>
+        <location filename="../src/jobs/encodejob.cpp" line="62"/>
+        <location filename="../src/jobs/encodejob.cpp" line="63"/>
         <source>Show In Folder</source>
         <translation>Klasörde göster</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="62"/>
+        <location filename="../src/jobs/encodejob.cpp" line="67"/>
         <source>Measure Video Quality...</source>
         <translation>Görüntü kalitesini ölç...</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="66"/>
+        <location filename="../src/jobs/encodejob.cpp" line="71"/>
         <source>Set Equirectangular...</source>
         <translation>Eşkenar dörtgen ayarla...</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="75"/>
+        <source>Embed Markers as Chapters...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="84"/>
         <source>Video Quality Report</source>
         <translation>Görüntü kalitesi raporu</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="76"/>
+        <location filename="../src/jobs/encodejob.cpp" line="85"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
         <translation>Metin belgeleri (*.txt);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="138"/>
+        <location filename="../src/jobs/encodejob.cpp" line="147"/>
         <source>Set Equirectangular Projection</source>
         <translation>Eşkenar dörtgen izdüşümü ayarla</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="152"/>
+        <location filename="../src/jobs/encodejob.cpp" line="161"/>
         <source>Successfully wrote %1</source>
         <translation>%1 yazıldı</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="154"/>
+        <location filename="../src/jobs/encodejob.cpp" line="163"/>
         <source>An error occurred saving the projection.</source>
         <translation>İzdüşüm kaydedilirken bir sorun çıktı.</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="182"/>
+        <location filename="../src/jobs/encodejob.cpp" line="188"/>
+        <source>Include ranges (Duration &gt; 1 frame)?</source>
+        <translation type="unfinished">Aralıklar katılsın mı (süre &gt; 1 kare)?</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="199"/>
+        <source>Choose Markers</source>
+        <translation type="unfinished">İşaretleyicileri seçin</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="211"/>
+        <source>Embed Chapters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="276"/>
+        <source>A JavaScript error occurred during export.</source>
+        <translation type="unfinished">Dışa aktarma sırasında bir JavaScript sorunu çıktı.</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="279"/>
+        <source>Failed to open export-chapters.js</source>
+        <translation type="unfinished">export-chapters.js açılamadı</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="307"/>
         <source>Export job failed; trying again without Parallel processing.</source>
         <translation>Dışa aktarma görevi tamamlanamadı. Paralel işlem kullanmadan yeniden deneyin.</translation>
     </message>
@@ -2815,7 +2845,7 @@ Shotcut projenizi onarmayı deneyecek.</translation>
         <translation>(KALDIRILDI)</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="352"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="351"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>Yalnızca bir %1 süzgeci kullanılabilir.</translation>
     </message>
@@ -8319,7 +8349,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>Alt yazı ekle</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1337"/>
+        <location filename="../src/docks/encodedock.cpp" line="1339"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1053"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1143"/>
         <source>A job already exists for %1</source>

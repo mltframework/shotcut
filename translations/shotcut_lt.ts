@@ -2068,9 +2068,9 @@ esant temporal compression / laikinai kompresijai</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <location filename="../src/docks/encodedock.cpp" line="1330"/>
-        <location filename="../src/docks/encodedock.cpp" line="1843"/>
-        <location filename="../src/docks/encodedock.cpp" line="2335"/>
+        <location filename="../src/docks/encodedock.cpp" line="1332"/>
+        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="2337"/>
         <source>Export File</source>
         <translation>Iškelti rinkmeną</translation>
     </message>
@@ -2096,17 +2096,17 @@ esant temporal compression / laikinai kompresijai</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2039"/>
-        <location filename="../src/docks/encodedock.cpp" line="2046"/>
-        <location filename="../src/docks/encodedock.cpp" line="2158"/>
+        <location filename="../src/docks/encodedock.cpp" line="2041"/>
+        <location filename="../src/docks/encodedock.cpp" line="2048"/>
+        <location filename="../src/docks/encodedock.cpp" line="2160"/>
         <source>Stream</source>
         <translation>Srautas</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1826"/>
-        <location filename="../src/docks/encodedock.cpp" line="1927"/>
-        <location filename="../src/docks/encodedock.cpp" line="1937"/>
+        <location filename="../src/docks/encodedock.cpp" line="1828"/>
+        <location filename="../src/docks/encodedock.cpp" line="1929"/>
+        <location filename="../src/docks/encodedock.cpp" line="1939"/>
         <source>Stop Capture</source>
         <translation>Sustabdyti fiksavimą</translation>
     </message>
@@ -2122,142 +2122,142 @@ esant temporal compression / laikinai kompresijai</translation>
         <translation>Numatytasis formatui</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="467"/>
+        <location filename="../src/docks/encodedock.cpp" line="469"/>
         <source>Timeline</source>
         <translation>Laiko Juosta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="474"/>
-        <location filename="../src/docks/encodedock.cpp" line="480"/>
+        <location filename="../src/docks/encodedock.cpp" line="476"/>
+        <location filename="../src/docks/encodedock.cpp" line="482"/>
         <source>Source</source>
         <translation>Šaltinis</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="485"/>
-        <location filename="../src/docks/encodedock.cpp" line="492"/>
+        <location filename="../src/docks/encodedock.cpp" line="487"/>
+        <location filename="../src/docks/encodedock.cpp" line="494"/>
         <source>Marker</source>
         <translation>Žymė</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="503"/>
+        <location filename="../src/docks/encodedock.cpp" line="505"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Turite įvesti skaitines vertes, naudodami „%1“ kaip dešimtainį tašką.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="512"/>
-        <location filename="../src/docks/encodedock.cpp" line="1773"/>
-        <location filename="../src/docks/encodedock.cpp" line="1774"/>
+        <location filename="../src/docks/encodedock.cpp" line="514"/>
+        <location filename="../src/docks/encodedock.cpp" line="1775"/>
+        <location filename="../src/docks/encodedock.cpp" line="1776"/>
         <source>Custom</source>
         <translation>Pritaikomas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="548"/>
+        <location filename="../src/docks/encodedock.cpp" line="550"/>
         <source>Stock</source>
         <translation>Atsargos</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="551"/>
+        <location filename="../src/docks/encodedock.cpp" line="553"/>
         <source>Default</source>
         <translation>Numatytasis</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1397"/>
+        <location filename="../src/docks/encodedock.cpp" line="1399"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Negalite rašyti į rinkmeną, kuri yra jūsų projekte.
 Bandykite dar kartą naudojant kitą aplanką arba rinkmenos pavadinimą.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1495"/>
+        <location filename="../src/docks/encodedock.cpp" line="1497"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut aptiko filtrus, kuriems reikalingos analizės darbai nebuvo paleisti.
 Ar norite atlikti analizės darbus dabar?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1843"/>
-        <location filename="../src/docks/encodedock.cpp" line="2337"/>
+        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="2339"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="1847"/>
         <source>Export Files</source>
         <translation>Iškelti rinkmenas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1860"/>
+        <location filename="../src/docks/encodedock.cpp" line="1862"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Visos rinkmenos (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1862"/>
+        <location filename="../src/docks/encodedock.cpp" line="1864"/>
         <source>Determined by Export (*)</source>
         <translation>Nustatyta pagal iškeltį (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2034"/>
-        <location filename="../src/docks/encodedock.cpp" line="2056"/>
+        <location filename="../src/docks/encodedock.cpp" line="2036"/>
+        <location filename="../src/docks/encodedock.cpp" line="2058"/>
         <source>Stop Stream</source>
         <translation>Sustabdyti srautą</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2048"/>
+        <location filename="../src/docks/encodedock.cpp" line="2050"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Įveskite tinklo protokolo schemą, adresą, prievadą ir parametrus kaip URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2091"/>
+        <location filename="../src/docks/encodedock.cpp" line="2093"/>
         <source>Add Export Preset</source>
         <translation>Pridėti iškelties ruošinį</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2135"/>
+        <location filename="../src/docks/encodedock.cpp" line="2137"/>
         <source>Delete Preset</source>
         <translation>Ištrinti ruošinį</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2136"/>
+        <location filename="../src/docks/encodedock.cpp" line="2138"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Ar tikrai norite ištrinti %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2264"/>
+        <location filename="../src/docks/encodedock.cpp" line="2266"/>
         <source>None</source>
         <translation>Joks</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2319"/>
+        <location filename="../src/docks/encodedock.cpp" line="2321"/>
         <source>KiB (%1s)</source>
         <translation>KB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2467"/>
+        <location filename="../src/docks/encodedock.cpp" line="2469"/>
         <source>Detect</source>
         <translation>Aptikti</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2524"/>
+        <location filename="../src/docks/encodedock.cpp" line="2526"/>
         <source>(auto)</source>
         <translation>(automatinis)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2570"/>
+        <location filename="../src/docks/encodedock.cpp" line="2572"/>
         <source>Detecting hardware encoders...</source>
         <translation>Aptinkami aparatinės įrangos kodavimo įrenginiai...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2627"/>
+        <location filename="../src/docks/encodedock.cpp" line="2629"/>
         <source>Nothing found</source>
         <translation>Nieko nerasta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2629"/>
+        <location filename="../src/docks/encodedock.cpp" line="2631"/>
         <source>Found %1</source>
         <translation>Rasta %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2852"/>
+        <location filename="../src/docks/encodedock.cpp" line="2854"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2268,42 +2268,42 @@ Išsaugokite projektą, užverkite jį ir vėl atverkite.
 Shotcut bandys pataisyti jūsų projektą.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2901"/>
+        <location filename="../src/docks/encodedock.cpp" line="2903"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>Vaizdo įrašo santykis neatitinka projekto vaizdo veiksenos, todėl rodomos juodos juostos.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2939"/>
+        <location filename="../src/docks/encodedock.cpp" line="2941"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>Kadrų dažnis yra didesnis nei projekto vaizdo veiksenoje, todėl kadrai kartojasi.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2465"/>
+        <location filename="../src/docks/encodedock.cpp" line="2467"/>
         <source>Configure Hardware Encoding</source>
         <translation>Konfigūruoti aparatinį kodavimą</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="470"/>
+        <location filename="../src/docks/encodedock.cpp" line="472"/>
         <source>Current Playlist Bin</source>
         <translation>Dabartinis grojaraščio skyrius</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="471"/>
+        <location filename="../src/docks/encodedock.cpp" line="473"/>
         <source>Each Playlist Bin Item</source>
         <translation>Kiekvienas grojaraščio skyriaus elementas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1846"/>
+        <location filename="../src/docks/encodedock.cpp" line="1848"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>Iškelti kiekvieną grojaraščio skyriaus elementą</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1891"/>
+        <location filename="../src/docks/encodedock.cpp" line="1893"/>
         <source>Export canceled</source>
         <translation>Iškeltis atšaukta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2489"/>
+        <location filename="../src/docks/encodedock.cpp" line="2491"/>
         <source>Export Frames/sec</source>
         <translation>Iškelti kadrus/s</translation>
     </message>
@@ -2311,64 +2311,94 @@ Shotcut bandys pataisyti jūsų projektą.</translation>
 <context>
     <name>EncodeJob</name>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="46"/>
+        <location filename="../src/jobs/encodejob.cpp" line="51"/>
         <source>Open</source>
         <translation>Atverti</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="48"/>
+        <location filename="../src/jobs/encodejob.cpp" line="53"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>Atverti išvesties rinkmeną Shotcut grotuve</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="52"/>
-        <location filename="../src/jobs/encodejob.cpp" line="53"/>
+        <location filename="../src/jobs/encodejob.cpp" line="57"/>
+        <location filename="../src/jobs/encodejob.cpp" line="58"/>
         <source>Show In Files</source>
         <translation>Rodyti rinkmenose</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="57"/>
-        <location filename="../src/jobs/encodejob.cpp" line="58"/>
+        <location filename="../src/jobs/encodejob.cpp" line="62"/>
+        <location filename="../src/jobs/encodejob.cpp" line="63"/>
         <source>Show In Folder</source>
         <translation>Rodyti aplanke</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="62"/>
+        <location filename="../src/jobs/encodejob.cpp" line="67"/>
         <source>Measure Video Quality...</source>
         <translation>Išmatuoti vaizdo kokybę...</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="66"/>
+        <location filename="../src/jobs/encodejob.cpp" line="71"/>
         <source>Set Equirectangular...</source>
         <translation>Nustatyti Lygiakampį...</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="75"/>
+        <source>Embed Markers as Chapters...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="84"/>
         <source>Video Quality Report</source>
         <translation>Vaizdo įrašo kokybės ataskaita</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="76"/>
+        <location filename="../src/jobs/encodejob.cpp" line="85"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
         <translation>Teksto Dokumentai Documents (*.txt);;Visi Failai (*)</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="138"/>
+        <location filename="../src/jobs/encodejob.cpp" line="147"/>
         <source>Set Equirectangular Projection</source>
         <translation>Nustatykite Lygiakampę Projekciją</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="152"/>
+        <location filename="../src/jobs/encodejob.cpp" line="161"/>
         <source>Successfully wrote %1</source>
         <translation>Sėkmingai parašyta %1</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="154"/>
+        <location filename="../src/jobs/encodejob.cpp" line="163"/>
         <source>An error occurred saving the projection.</source>
         <translation>Išsaugant projekciją įvyko klaida.</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="182"/>
+        <location filename="../src/jobs/encodejob.cpp" line="188"/>
+        <source>Include ranges (Duration &gt; 1 frame)?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="199"/>
+        <source>Choose Markers</source>
+        <translation type="unfinished">Pasirinkti žymę</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="211"/>
+        <source>Embed Chapters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="276"/>
+        <source>A JavaScript error occurred during export.</source>
+        <translation type="unfinished">Iškeliant įvyko JavaScript klaida.</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="279"/>
+        <source>Failed to open export-chapters.js</source>
+        <translation type="unfinished">Nepavyko atverti export-chapters.js</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="307"/>
         <source>Export job failed; trying again without Parallel processing.</source>
         <translation>Įkelties užduotis nepavyko; bandoma dar kartą be lygiagretaus apdorojimo.</translation>
     </message>
@@ -2820,7 +2850,7 @@ Shotcut bandys pataisyti jūsų projektą.</translation>
         <translation>(NEBENAUDOJAMAS)</translation>
     </message>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="352"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="351"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>Leidžiamas tik vienas %1 filtras.</translation>
     </message>
@@ -8313,7 +8343,7 @@ Jei taip, žemiau pasirinkite formatą ir spustelėkite GERAI, kad pasirinktumė
         <translation>Pridėti subtitrus</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1337"/>
+        <location filename="../src/docks/encodedock.cpp" line="1339"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1053"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1143"/>
         <source>A job already exists for %1</source>
