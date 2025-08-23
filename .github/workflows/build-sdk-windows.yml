@@ -87,6 +87,10 @@ jobs:
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
           echo ENABLE_GLAXNIMATE=0 >> build-shotcut.conf
           echo DEBUG_BUILD=1 >> build-shotcut.conf
+
+          echo MLT_HEAD=0 >> build-shotcut.conf
+          echo MLT_REVISION=8988ffd6677a89445e6307ba7035241abbce3a70 >> build-shotcut.conf
+
           bash scripts/build-shotcut-msys2.sh -s
           mv build/shotcut-sdk.txz build/shotcut-win64-sdk-$FILENAME_VERSION.txz
           echo Done
