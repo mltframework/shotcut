@@ -38,7 +38,7 @@ X264_REVISION="origin/stable"
 X265_HEAD=0
 X265_REVISION="origin/stable"
 LIBVPX_HEAD=0
-LIBVPX_REVISION="v1.15.0"
+LIBVPX_REVISION="v1.15.1"
 LIBOPUS_HEAD=0
 LIBOPUS_REVISION="v1.5.2"
 ENABLE_SWH_PLUGINS=1
@@ -94,7 +94,9 @@ GLAXNIMATE_REVISION="origin/v0.5.4"
 ENABLE_GOPRO2GPX=1
 ENABLE_OPENCV=1
 OPENCV_HEAD=0
-OPENCV_REVISION="4.11.0"
+OPENCV_REVISION="origin/4.x"
+OPENCV_CONTRIB_HEAD=0
+OPENCV_CONTRIB_REVISION="4.12.0"
 ENABLE_LIBWEBP=1
 LIBWEBP_HEAD=0
 LIBWEBP_REVISION="v1.5.0"
@@ -107,11 +109,11 @@ WHISPERCPP_REVISION="v1.7.4"
 NV_CODEC_REVISION="sdk/12.0"
 MFX_DISPATCH_REVISION="1.25"
 
-PYTHON_VERSION_DEFAULT=3.8
+PYTHON_VERSION_DEFAULT=3.10
 PYTHON_VERSION_DARWIN=3.11
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
 
-QT_VERSION_DEFAULT=6.4.3
+QT_VERSION_DEFAULT=6.9.1
 QT_VERSION_DARWIN=6.9.1
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
@@ -701,8 +703,8 @@ function set_globals {
     REVISIONS[26]="$OPENCV_REVISION"
   fi
   REVISIONS[27]=""
-  if test 0 = "$OPENCV_HEAD" -a "$OPENCV_REVISION" ; then
-    REVISIONS[27]="$OPENCV_REVISION"
+  if test 0 = "$OPENCV_HEAD" -a "$OPENCV_CONTRIB_REVISION" ; then
+    REVISIONS[27]="$OPENCV_CONTRIB_REVISION"
   fi
   REVISIONS[28]=""
   if test 0 = "$LIBWEBP_HEAD" -a "$LIBWEBP_REVISION" ; then
@@ -1097,7 +1099,7 @@ function set_globals {
 
   #####
   # opencv
-  CONFIG[26]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules -D WITH_OPENMP=ON $CMAKE_DEBUG_FLAG"
+  CONFIG[26]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -D BUILD_LIST=tracking -D OPENCV_GENERATE_PKGCONFIG=YES -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules -D WITH_OPENMP=ON -D WITH_LAPACK=OFF $CMAKE_DEBUG_FLAG"
   [ "$TARGET_OS" = "Darwin" ] && CONFIG[26]="${CONFIG[26]} -D CMAKE_OSX_ARCHITECTURES='arm64;x86_64'"
   CFLAGS_[26]="$CFLAGS"
   LDFLAGS_[26]="$LDFLAGS"
@@ -1121,7 +1123,7 @@ function set_globals {
   LDFLAGS_[29]=$LDFLAGS
   BUILD[29]="ninja -C build -j $MAKEJ"
   INSTALL[29]="ninja -C build install"
-  
+
   #####
   # whisper.cpp
   CONFIG[30]="cmake -B build -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -D BUILD_SHARED_LIBS=ON -D GGML_NATIVE=OFF -D GGML_AVX2=OFF -D WHISPER_BUILD_SERVER=OFF -D WHISPER_BUILD_TESTS=OFF"
@@ -1196,7 +1198,7 @@ function install_shotcut_linux {
   cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
   cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
   cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-  cmd install -p -c "$QTDIR"/lib/libQt6{Charts,Core,Core5Compat,DBus,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,WaylandClient,WaylandEglClientHwIntegration,Widgets,Xml,X11Extras,XcbQpa}.so.6 "$FINAL_INSTALL_DIR"/lib
+  cmd install -p -c "$QTDIR"/lib/libQt6{Charts,Core,Core5Compat,DBus,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,WaylandClient,WaylandEglClientHwIntegration,Widgets,Xml,X11Extras,XcbQpa}.so.6 "$FINAL_INSTALL_DIR"/lib
   cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
   cmd install -d "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
   cmd cp -a "$QTDIR"/plugins/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt6
@@ -1666,7 +1668,7 @@ function configure_compile_install_all {
     configure_compile_install_subproject $DIR
   done
 
-  if [ "$ACTION_ARCHIVE" = "1" ] && [ "$TARGET_OS" = "Linux" ]; then
+  if [ "$TARGET_OS" = "Linux" ]; then
     log Copying some libs from system
     for lib in "$FINAL_INSTALL_DIR"/lib/qt6/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations}/*.so; do
       bundle_libs "$lib"
