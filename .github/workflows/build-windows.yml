@@ -69,7 +69,7 @@ jobs:
           echo $(date +"%y.%-m.%-d") > VERSION
           VERSION=$(cat VERSION)
           echo VERSION=$VERSION
-          FILENAME_VERSION=$(echo $VERSION | tr -d .)
+          FILENAME_VERSION=$VERSION
           pushd "$HOME"
           mkdir Qt
           cd Qt

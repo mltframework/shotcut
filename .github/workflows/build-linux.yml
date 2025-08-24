@@ -22,7 +22,7 @@ jobs:
           echo $(date +"%y.%-m.%-d") > VERSION
           VERSION=$(cat VERSION)
           echo VERSION=$VERSION
-          FILENAME_VERSION=$(echo $VERSION | tr -d .)
+          FILENAME_VERSION=$VERSION
           cd scripts
           echo Making build script config file
           echo CLEANUP=0 > build-shotcut.conf
@@ -59,7 +59,7 @@ jobs:
           cd packaging/linux
           wget https://raw.githubusercontent.com/probonopd/AppImages/master/pkg2appimage
           bash -ex pkg2appimage appimage/appimage.yml
-          FILENAME_VERSION=$(cat Shotcut/VERSION | tr -d .)
+          FILENAME_VERSION=$(cat Shotcut/VERSION)
           mv out/*.AppImage out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
 
       - name: Upload AppImage to S3

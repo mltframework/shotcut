@@ -63,7 +63,7 @@ jobs:
           echo $(date +"%y.%-m.%-d") > VERSION
           VERSION=$(cat VERSION)
           echo VERSION=$VERSION
-          FILENAME_VERSION=UNSTABLE-$(echo $VERSION | tr -d .)
+          FILENAME_VERSION=UNSTABLE-$VERSION
           pushd "$HOME"
           echo Downloading Qt
           mkdir Qt
