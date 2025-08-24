@@ -19,7 +19,7 @@ jobs:
       - name: Build
         run: |
           echo Preparing version
-          echo $(date +"%y.%m.%d") > VERSION
+          echo $(date +"%y.%-m.%-d") > VERSION
           VERSION=$(cat VERSION)
           echo VERSION=$VERSION
           FILENAME_VERSION=$(echo $VERSION | tr -d .)

@@ -6,6 +6,8 @@ endif()
 
 if(NOT DEFINED SHOTCUT_VERSION)
   string(TIMESTAMP SHOTCUT_VERSION "%y.%m.%d")
+  # Remove leading zeros from each digit group
+  string(REGEX REPLACE "0*([0-9]+)" "\\1" SHOTCUT_VERSION "${SHOTCUT_VERSION}")
 endif()
 
 project(shotcut
