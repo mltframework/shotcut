@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Download from S3
         run: |
-          VERSION=$(date +"UNSTABLE-%y%m%d")
+          VERSION=$(date +"UNSTABLE-%y.%-m.%-d")
           echo VERSION=$VERSION
           sudo apt install -yqq s3cmd
           s3cmd --access_key=${{ secrets.AWS_ACCESS_KEY }} --secret_key=${{ secrets.AWS_SECRET_KEY }} --stop-on-error get s3://builds.us.meltytech/shotcut-build-macos-unstable.txt
