@@ -57,7 +57,8 @@ jobs:
           mkdir packaging/linux/Shotcut
           cp VERSION packaging/linux/Shotcut/
           cd packaging/linux
-          wget https://raw.githubusercontent.com/probonopd/AppImages/master/pkg2appimage
+          export PKG2AICOMMIT=1eceb306077e51b991e987690b364e11971b44b3
+          wget https://raw.githubusercontent.com/probonopd/AppImages/${PKG2AICOMMIT}/pkg2appimage
           bash -ex pkg2appimage appimage/appimage.yml
           FILENAME_VERSION=$(cat Shotcut/VERSION)
           mv out/*.AppImage out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
