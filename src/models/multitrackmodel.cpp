@@ -2690,8 +2690,8 @@ void MultitrackModel::adjustServiceFilterDurations(Mlt::Service &service, int du
 bool MultitrackModel::warnIfInvalid(Mlt::Service &service)
 {
     if (!service.is_valid()) {
-        const char *plugin = Settings.playerGPU() ? "Movit overlay" : "frei0r cairoblend";
-        const char *plugins = Settings.playerGPU() ? "Movit" : "frei0r";
+        const char *plugin = Settings.playerGPU() ? "Movit overlay" : "qtblend";
+        const char *plugins = Settings.playerGPU() ? "Movit" : "qt";
         LongUiTask::cancel();
         QMessageBox::critical(&MAIN,
                               qApp->applicationName(),
@@ -2706,11 +2706,11 @@ bool MultitrackModel::warnIfInvalid(Mlt::Service &service)
 
 Mlt::Transition *MultitrackModel::getVideoBlendTransition(int trackIndex) const
 {
-    auto transition = getTransition("frei0r.cairoblend", trackIndex);
+    auto transition = getTransition("qtblend", trackIndex);
     if (!transition)
         transition = getTransition("movit.overlay", trackIndex);
     if (!transition)
-        transition = getTransition("qtblend", trackIndex);
+        transition = getTransition("frei0r.cairoblend", trackIndex);
     return transition;
 }
 
@@ -2937,10 +2937,9 @@ int MultitrackModel::addVideoTrack()
     m_tractor->plant_transition(mix, 0, i);
 
     // Add the composite transition.
-    Mlt::Transition composite(MLT.profile(),
-                              Settings.playerGPU() ? "movit.overlay" : "frei0r.cairoblend");
+    Mlt::Transition composite(MLT.profile(), Settings.playerGPU() ? "movit.overlay" : "qtblend");
     if (!composite.is_valid() && !Settings.playerGPU()) {
-        composite = Mlt::Transition(MLT.profile(), "qtblend");
+        composite = Mlt::Transition(MLT.profile(), "frei0r.cairoblend");
     } else if (composite.is_valid() && !Settings.playerGPU()) {
         composite.set("threads", 0);
     }
@@ -3142,7 +3141,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     int currentTrackNumber = currentTrack.number;
     int new_mlt_index = currentTrack.mlt_index;
     QScopedPointer<Mlt::Transition> lowerVideoTransition;
-    const char *videoTransitionName = Settings.playerGPU() ? "movit.overlay" : "frei0r.cairoblend";
+    const char *videoTransitionName = Settings.playerGPU() ? "movit.overlay" : "qtblend";
     bool isInsertBottomVideoTrack = false;
 
     if (type == VideoTrackType) {
@@ -3232,7 +3231,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
         // Add the composite transition.
         Mlt::Transition composite(MLT.profile(), videoTransitionName);
         if (!composite.is_valid() && !Settings.playerGPU()) {
-            composite = Mlt::Transition(MLT.profile(), "qtblend");
+            composite = Mlt::Transition(MLT.profile(), "frei0r.cairoblend");
         } else if (composite.is_valid() && !Settings.playerGPU()) {
             composite.set("threads", 0);
         }
@@ -3816,12 +3815,12 @@ void MultitrackModel::convertOldDoc()
 {
     QScopedPointer<Mlt::Field> field(m_tractor->field());
 
-    // Convert composite to frei0r.cairoblend.
+    // Convert composite to qtblend.
     int n = m_tractor->count();
     for (int i = 1; i < n; ++i) {
         QScopedPointer<Mlt::Transition> transition(getTransition("composite", i));
         if (transition) {
-            Mlt::Transition composite(MLT.profile(), "frei0r.cairoblend");
+            Mlt::Transition composite(MLT.profile(), "qtblend");
             composite.set("disable", transition->get_int("disable"));
             field->disconnect_service(*transition);
             m_tractor->plant_transition(composite, transition->get_int("a_track"), i);
