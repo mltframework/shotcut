@@ -69,10 +69,10 @@ jobs:
           echo Downloading Qt
           mkdir Qt
           cd Qt
-          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.9.1-x64-mingw.txz
+          curl -kLO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-6.9.2-x64-mingw.txz
           echo Extracting Qt
-          tar -xJf qt-6.9.1-x64-mingw.txz
-          rm qt-6.9.1-x64-mingw.txz
+          tar -xJf qt-6.9.2-x64-mingw.txz
+          rm qt-6.9.2-x64-mingw.txz
           cd ..
           echo Downloading a few prebuilt dependencies
           curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v6.txz
