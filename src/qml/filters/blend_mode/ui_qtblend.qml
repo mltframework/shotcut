@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2022 Meltytech, LLC
+ * Copyright (c) 2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@ Item {
         Shotcut.ComboBox {
             id: combo
 
+            implicitContentWidthPolicy: ComboBox.WidestTextWhenCompleted
             textRole: 'text'
             onActivated: {
                 filter.set(propertyName, comboItems.get(currentIndex).value);
@@ -62,93 +63,123 @@ Item {
                 id: comboItems
 
                 ListElement {
-                    text: qsTr('Over')
-                    value: 'normal'
+                    text: qsTr('Source Over')
+                    value: '0'
                 }
 
                 ListElement {
-                    text: qsTr('None')
-                    value: ''
+                    text: qsTr('Destination Over')
+                    value: '1'
                 }
 
                 ListElement {
-                    text: qsTr('Add')
-                    value: 'add'
+                    text: qsTr('Clear')
+                    value: '2'
                 }
 
                 ListElement {
-                    text: qsTr('Saturate')
-                    value: 'saturate'
+                    text: qsTr('Source')
+                    value: '3'
+                }
+
+                ListElement {
+                    text: qsTr('Destination')
+                    value: '4'
+                }
+
+                ListElement {
+                    text: qsTr('Source In')
+                    value: '5'
+                }
+
+                ListElement {
+                    text: qsTr('Destination In')
+                    value: '6'
+                }
+
+                ListElement {
+                    text: qsTr('Source Out')
+                    value: '7'
+                }
+
+                ListElement {
+                    text: qsTr('Destination Out')
+                    value: '8'
+                }
+
+                ListElement {
+                    text: qsTr('Source Atop')
+                    value: '9'
+                }
+
+                ListElement {
+                    text: qsTr('Destination Atop')
+                    value: '10'
+                }
+
+                ListElement {
+                    text: qsTr('XOR')
+                    value: '11'
+                }
+
+                ListElement {
+                    text: qsTr('Plus')
+                    value: '12'
                 }
 
                 ListElement {
                     text: qsTr('Multiply')
-                    value: 'multiply'
+                    value: '13'
                 }
 
                 ListElement {
                     text: qsTr('Screen')
-                    value: 'screen'
+                    value: '14'
                 }
 
                 ListElement {
                     text: qsTr('Overlay')
-                    value: 'overlay'
+                    value: '15'
                 }
 
                 ListElement {
                     text: qsTr('Darken')
-                    value: 'darken'
+                    value: '16'
                 }
 
                 ListElement {
-                    text: qsTr('Dodge')
-                    value: 'colordodge'
+                    text: qsTr('Lighten')
+                    value: '17'
                 }
 
                 ListElement {
-                    text: qsTr('Burn')
-                    value: 'colorburn'
+                    text: qsTr('Color Dodge')
+                    value: '18'
+                }
+
+                ListElement {
+                    text: qsTr('Color Burn')
+                    value: '19'
                 }
 
                 ListElement {
                     text: qsTr('Hard Light')
-                    value: 'hardlight'
+                    value: '20'
                 }
 
                 ListElement {
                     text: qsTr('Soft Light')
-                    value: 'softlight'
+                    value: '21'
                 }
 
                 ListElement {
                     text: qsTr('Difference')
-                    value: 'difference'
+                    value: '22'
                 }
 
                 ListElement {
                     text: qsTr('Exclusion')
-                    value: 'exclusion'
-                }
-
-                ListElement {
-                    text: qsTr('HSL Hue')
-                    value: 'hslhue'
-                }
-
-                ListElement {
-                    text: qsTr('HSL Saturation')
-                    value: 'hslsaturatation'
-                }
-
-                ListElement {
-                    text: qsTr('HSL Color')
-                    value: 'hslcolor'
-                }
-
-                ListElement {
-                    text: qsTr('HSL Luminosity')
-                    value: 'hslluminocity'
+                    value: '23'
                 }
             }
         }
