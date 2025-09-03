@@ -67,6 +67,7 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track, QWidget *pare
         ui->blendModeCombo->addItem(tr("Soft Light"), "21");
         ui->blendModeCombo->addItem(tr("Difference"), "22");
         ui->blendModeCombo->addItem(tr("Exclusion"), "23");
+        /*
         ui->blendModeCombo->addItem(tr("Source OR Destination"), "24");
         ui->blendModeCombo->addItem(tr("Source AND Destination"), "25");
         ui->blendModeCombo->addItem(tr("Source XOR Destination"), "26");
@@ -79,6 +80,7 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track, QWidget *pare
         ui->blendModeCombo->addItem(tr("NOT Source OR Destination"), "33");
         ui->blendModeCombo->addItem(tr("Source OR NOT Destination"), "34");
         ui->blendModeCombo->addItem(tr("NOT Destination"), "37");
+         */
         ui->blendModeCombo->blockSignals(false);
         ui->blendModeLabel->show();
         ui->blendModeCombo->show();
