@@ -148,6 +148,24 @@ void InternalMetadataModel::add(QmlMetadata *data)
     data->setParent(this);
 }
 
+void MetadataModel::setHidden(const QString &objectName, bool hidden)
+{
+    static_cast<InternalMetadataModel *>(sourceModel())->setHidden(objectName, hidden);
+}
+
+void InternalMetadataModel::setHidden(const QString &objectName, bool hidden)
+{
+    for (int i = 0; i < m_list.size(); i++) {
+        QmlMetadata *data = m_list[i];
+        if (data->objectName() == objectName) {
+            data->setIsHidden(hidden);
+            data->filterMask = computeFilterMask(data);
+            emit dataChanged(index(i), index(i));
+            break;
+        }
+    }
+}
+
 QmlMetadata *MetadataModel::get(int row) const
 {
     auto sourceIndex = mapToSource(index(row, 0));

@@ -27,6 +27,7 @@
 #include <QScopedPointer>
 
 static const char *BLEND_PROPERTY_CAIROBLEND = "1";
+static const char *BLEND_PROPERTY_QTBLEND = "compositing";
 
 TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track, QWidget *parent)
     : QWidget(parent)
@@ -39,48 +40,101 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track, QWidget *pare
     ui->blendModeLabel->hide();
     ui->blendModeCombo->hide();
 
-    QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend"));
+    QScopedPointer<Mlt::Transition> transition(getTransition("qtblend"));
     if (transition && transition->is_valid()) {
         ui->blendModeCombo->blockSignals(true);
-        ui->blendModeCombo->addItem(tr("None"), "");
-        ui->blendModeCombo->addItem(tr("Over"), "normal");
-        ui->blendModeCombo->addItem(tr("Add"), "add");
-        ui->blendModeCombo->addItem(tr("Saturate"), "saturate");
-        ui->blendModeCombo->addItem(tr("Multiply"), "multiply");
-        ui->blendModeCombo->addItem(tr("Screen"), "screen");
-        ui->blendModeCombo->addItem(tr("Overlay"), "overlay");
-        ui->blendModeCombo->addItem(tr("Darken"), "darken");
-        ui->blendModeCombo->addItem(tr("Dodge"), "colordodge");
-        ui->blendModeCombo->addItem(tr("Burn"), "colorburn");
-        ui->blendModeCombo->addItem(tr("Hard Light"), "hardlight");
-        ui->blendModeCombo->addItem(tr("Soft Light"), "softlight");
-        ui->blendModeCombo->addItem(tr("Difference"), "difference");
-        ui->blendModeCombo->addItem(tr("Exclusion"), "exclusion");
-        ui->blendModeCombo->addItem(tr("HSL Hue"), "hslhue");
-        ui->blendModeCombo->addItem(tr("HSL Saturation"), "hslsaturatation");
-        ui->blendModeCombo->addItem(tr("HSL Color"), "hslcolor");
-        ui->blendModeCombo->addItem(tr("HSL Luminosity"), "hslluminocity");
+        ui->blendModeCombo->addItem(tr("Source Over"), "0");
+        ui->blendModeCombo->addItem(tr("Destination Over"), "1");
+        ui->blendModeCombo->addItem(tr("Clear"), "2");
+        ui->blendModeCombo->addItem(tr("Source"), "3");
+        ui->blendModeCombo->addItem(tr("Destination"), "4");
+        ui->blendModeCombo->addItem(tr("Source In"), "5");
+        ui->blendModeCombo->addItem(tr("Destination In"), "6");
+        ui->blendModeCombo->addItem(tr("Source Out"), "7");
+        ui->blendModeCombo->addItem(tr("Destination Out"), "8");
+        ui->blendModeCombo->addItem(tr("Source Atop"), "9");
+        ui->blendModeCombo->addItem(tr("Destination Atop"), "10");
+        ui->blendModeCombo->addItem(tr("XOR"), "11");
+        ui->blendModeCombo->addItem(tr("Plus"), "12");
+        ui->blendModeCombo->addItem(tr("Multiply"), "13");
+        ui->blendModeCombo->addItem(tr("Screen"), "14");
+        ui->blendModeCombo->addItem(tr("Overlay"), "15");
+        ui->blendModeCombo->addItem(tr("Darken"), "16");
+        ui->blendModeCombo->addItem(tr("Lighten"), "17");
+        ui->blendModeCombo->addItem(tr("Color Dodge"), "18");
+        ui->blendModeCombo->addItem(tr("Color Burn"), "19");
+        ui->blendModeCombo->addItem(tr("Hard Light"), "20");
+        ui->blendModeCombo->addItem(tr("Soft Light"), "21");
+        ui->blendModeCombo->addItem(tr("Difference"), "22");
+        ui->blendModeCombo->addItem(tr("Exclusion"), "23");
+        /*
+        ui->blendModeCombo->addItem(tr("Source OR Destination"), "24");
+        ui->blendModeCombo->addItem(tr("Source AND Destination"), "25");
+        ui->blendModeCombo->addItem(tr("Source XOR Destination"), "26");
+        ui->blendModeCombo->addItem(tr("NOT Source AND NOT Destination"), "27");
+        ui->blendModeCombo->addItem(tr("NOT Source OR NOT Destination"), "28");
+        ui->blendModeCombo->addItem(tr("NOT Source XOR Destination"), "29");
+        ui->blendModeCombo->addItem(tr("NOT Source"), "30");
+        ui->blendModeCombo->addItem(tr("NOT Source AND Destination"), "31");
+        ui->blendModeCombo->addItem(tr("Source AND NOT Destination"), "32");
+        ui->blendModeCombo->addItem(tr("NOT Source OR Destination"), "33");
+        ui->blendModeCombo->addItem(tr("Source OR NOT Destination"), "34");
+        ui->blendModeCombo->addItem(tr("NOT Destination"), "37");
+         */
         ui->blendModeCombo->blockSignals(false);
         ui->blendModeLabel->show();
         ui->blendModeCombo->show();
 
-        QString blendMode = transition->get(BLEND_PROPERTY_CAIROBLEND);
+        QString blendMode = transition->get(BLEND_PROPERTY_QTBLEND);
         if (transition->get_int("disable"))
             blendMode = QString();
         else if (blendMode.isEmpty()) // A newly added track does not set its mode property.
-            blendMode = "normal";
+            blendMode = "0";
         onModeChanged(blendMode);
     } else {
-        transition.reset(getTransition("movit.overlay"));
+        transition.reset(getTransition("frei0r.cairoblend"));
         if (transition && transition->is_valid()) {
             ui->blendModeCombo->blockSignals(true);
             ui->blendModeCombo->addItem(tr("None"), "");
-            ui->blendModeCombo->addItem(tr("Over"), "over");
+            ui->blendModeCombo->addItem(tr("Over"), "normal");
+            ui->blendModeCombo->addItem(tr("Add"), "add");
+            ui->blendModeCombo->addItem(tr("Saturate"), "saturate");
+            ui->blendModeCombo->addItem(tr("Multiply"), "multiply");
+            ui->blendModeCombo->addItem(tr("Screen"), "screen");
+            ui->blendModeCombo->addItem(tr("Overlay"), "overlay");
+            ui->blendModeCombo->addItem(tr("Darken"), "darken");
+            ui->blendModeCombo->addItem(tr("Dodge"), "colordodge");
+            ui->blendModeCombo->addItem(tr("Burn"), "colorburn");
+            ui->blendModeCombo->addItem(tr("Hard Light"), "hardlight");
+            ui->blendModeCombo->addItem(tr("Soft Light"), "softlight");
+            ui->blendModeCombo->addItem(tr("Difference"), "difference");
+            ui->blendModeCombo->addItem(tr("Exclusion"), "exclusion");
+            ui->blendModeCombo->addItem(tr("HSL Hue"), "hslhue");
+            ui->blendModeCombo->addItem(tr("HSL Saturation"), "hslsaturatation");
+            ui->blendModeCombo->addItem(tr("HSL Color"), "hslcolor");
+            ui->blendModeCombo->addItem(tr("HSL Luminosity"), "hslluminocity");
             ui->blendModeCombo->blockSignals(false);
             ui->blendModeLabel->show();
             ui->blendModeCombo->show();
-            QString blendMode = transition->get_int("disable") ? QString() : "over";
+
+            QString blendMode = transition->get(BLEND_PROPERTY_CAIROBLEND);
+            if (transition->get_int("disable"))
+                blendMode = QString();
+            else if (blendMode.isEmpty()) // A newly added track does not set its mode property.
+                blendMode = "normal";
             onModeChanged(blendMode);
+        } else {
+            transition.reset(getTransition("movit.overlay"));
+            if (transition && transition->is_valid()) {
+                ui->blendModeCombo->blockSignals(true);
+                ui->blendModeCombo->addItem(tr("None"), "");
+                ui->blendModeCombo->addItem(tr("Over"), "over");
+                ui->blendModeCombo->blockSignals(false);
+                ui->blendModeLabel->show();
+                ui->blendModeCombo->show();
+                QString blendMode = transition->get_int("disable") ? QString() : "over";
+                onModeChanged(blendMode);
+            }
         }
     }
 }
@@ -132,6 +186,17 @@ void TrackPropertiesWidget::on_blendModeCombo_currentIndexChanged(int index)
                                                            .toString());
             connect(command, SIGNAL(modeChanged(QString &)), SLOT(onModeChanged(QString &)));
             MAIN.undoStack()->push(command);
+        } else {
+            transition.reset(getTransition("qtblend"));
+            if (transition && transition->is_valid()) {
+                Timeline::ChangeBlendModeCommand *command
+                    = new Timeline::ChangeBlendModeCommand(*transition,
+                                                           BLEND_PROPERTY_QTBLEND,
+                                                           ui->blendModeCombo->itemData(index)
+                                                               .toString());
+                connect(command, SIGNAL(modeChanged(QString &)), SLOT(onModeChanged(QString &)));
+                MAIN.undoStack()->push(command);
+            }
         }
     }
 }

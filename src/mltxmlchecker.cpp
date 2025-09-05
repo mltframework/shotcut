@@ -435,7 +435,8 @@ void MltXmlChecker::checkGpuEffects(const QString &mlt_service)
 
 void MltXmlChecker::checkCpuEffects(const QString &mlt_service)
 {
-    if (mlt_service.startsWith("frei0r.cairoblend") || mlt_service.startsWith("choppy"))
+    if (mlt_service.startsWith("qtblend") || mlt_service.startsWith("frei0r.cairoblend")
+        || mlt_service.startsWith("choppy"))
         m_needsCPU = true;
 }
 

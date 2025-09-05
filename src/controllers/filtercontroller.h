@@ -47,6 +47,7 @@ public:
     void onUndoOrRedo(Mlt::Service &service);
     int currentIndex() const { return m_currentFilterIndex; }
     void addOrEditFilter(Mlt::Filter *filter, const QStringList &key_properties);
+    void setTrackTransitionService(const QString &service);
 
 protected:
     void timerEvent(QTimerEvent *);

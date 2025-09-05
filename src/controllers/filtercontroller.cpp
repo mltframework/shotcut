@@ -431,3 +431,17 @@ void FilterController::addOrEditFilter(Mlt::Filter *filter, const QStringList &k
     }
     setCurrentFilter(serviceIndex);
 }
+
+void FilterController::setTrackTransitionService(const QString &service)
+{
+    if (service == QStringLiteral("qtblend")) {
+        m_metadataModel.setHidden("qtBlendMode", false);
+        m_metadataModel.setHidden("blendMode", true);
+    } else if (service == QStringLiteral("frei0r.cairoblend")) {
+        m_metadataModel.setHidden("qtBlendMode", true);
+        m_metadataModel.setHidden("blendMode", false);
+    } else {
+        m_metadataModel.setHidden("qtBlendMode", true);
+        m_metadataModel.setHidden("blendMode", true);
+    }
+}
