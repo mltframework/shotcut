@@ -3495,6 +3495,8 @@ void MainWindow::onPlaylistModified()
 void MainWindow::onMultitrackCreated()
 {
     m_player->enableTab(Player::ProjectTabIndex, true);
+    QString trackTransitionService = m_timelineDock->model()->trackTransitionService();
+    m_filterController->setTrackTransitionService(trackTransitionService);
 }
 
 void MainWindow::onMultitrackClosed()

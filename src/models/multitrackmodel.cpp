@@ -2789,6 +2789,25 @@ bool MultitrackModel::checkForEmptyTracks(int trackIndex)
     return false;
 }
 
+QString MultitrackModel::trackTransitionService()
+{
+    if (m_tractor) {
+        QScopedPointer<Mlt::Service> service(m_tractor->producer());
+        while (service && service->is_valid()) {
+            if (service->type() == mlt_service_transition_type) {
+                QString transitionService = service->get("mlt_service");
+                if (transitionService == QStringLiteral("qtblend")
+                    || transitionService == QStringLiteral("movit.overlay")
+                    || transitionService == QStringLiteral("frei0r.cairoblend")) {
+                    return transitionService;
+                }
+            }
+            service.reset(service->producer());
+        }
+    }
+    return Settings.playerGPU() ? QStringLiteral("movit.overlay") : QStringLiteral("qtblend");
+}
+
 void MultitrackModel::adjustTrackFilters()
 {
     if (!m_tractor)
@@ -2937,10 +2956,8 @@ int MultitrackModel::addVideoTrack()
     m_tractor->plant_transition(mix, 0, i);
 
     // Add the composite transition.
-    Mlt::Transition composite(MLT.profile(), Settings.playerGPU() ? "movit.overlay" : "qtblend");
-    if (!composite.is_valid() && !Settings.playerGPU()) {
-        composite = Mlt::Transition(MLT.profile(), "frei0r.cairoblend");
-    } else if (composite.is_valid() && !Settings.playerGPU()) {
+    Mlt::Transition composite(MLT.profile(), trackTransitionService().toUtf8().constData());
+    if (composite.is_valid() && !Settings.playerGPU()) {
         composite.set("threads", 0);
     }
     if (warnIfInvalid(composite)) {
@@ -3141,7 +3158,6 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     int currentTrackNumber = currentTrack.number;
     int new_mlt_index = currentTrack.mlt_index;
     QScopedPointer<Mlt::Transition> lowerVideoTransition;
-    const char *videoTransitionName = Settings.playerGPU() ? "movit.overlay" : "qtblend";
     bool isInsertBottomVideoTrack = false;
 
     if (type == VideoTrackType) {
@@ -3229,10 +3245,8 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
 
     if (type == VideoTrackType) {
         // Add the composite transition.
-        Mlt::Transition composite(MLT.profile(), videoTransitionName);
-        if (!composite.is_valid() && !Settings.playerGPU()) {
-            composite = Mlt::Transition(MLT.profile(), "frei0r.cairoblend");
-        } else if (composite.is_valid() && !Settings.playerGPU()) {
+        Mlt::Transition composite(MLT.profile(), trackTransitionService().toUtf8().constData());
+        if (composite.is_valid() && !Settings.playerGPU()) {
             composite.set("threads", 0);
         }
         if (warnIfInvalid(composite)) {

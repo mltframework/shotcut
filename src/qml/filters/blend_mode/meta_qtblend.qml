@@ -12,4 +12,5 @@ Metadata {
     isClipOnly: true
     allowMultiple: false
     isGpuCompatible: false
+    isHidden: true
 }

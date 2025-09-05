@@ -70,6 +70,7 @@ public:
     void add(QmlMetadata *data);
     Q_INVOKABLE QmlMetadata *get(int row) const;
     QmlMetadata *getFromSource(int index) const;
+    void setHidden(const QString &objectName, bool hidden);
     Q_INVOKABLE void saveFilterSet(const QString &name);
     Q_INVOKABLE void deleteFilterSet(const QString &name);
     MetadataFilter filter() const { return m_filter; }
@@ -118,6 +119,7 @@ public:
     QmlMetadata *get(int index) const;
     QList<QmlMetadata *> &list() { return m_list; }
     void remove(int index);
+    void setHidden(const QString &objectName, bool hidden);
 
 private:
     typedef QList<QmlMetadata *> MetadataList;

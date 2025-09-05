@@ -130,6 +130,7 @@ public:
     int bottomVideoTrackIndex() const;
     int mltIndexForTrack(int trackIndex) const;
     bool checkForEmptyTracks(int trackIndex);
+    QString trackTransitionService();
 
 signals:
     void created();
