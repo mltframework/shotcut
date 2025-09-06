@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 namespace Ui {
 class ImageProducerWidget;
 }
+class QFileSystemWatcher;
 
 class ImageProducerWidget : public QWidget, public AbstractProducerWidget
 {
@@ -49,7 +50,7 @@ public slots:
     void rename();
 
 private slots:
-    void on_resetButton_clicked();
+    void on_reloadButton_clicked();
 
     void on_aspectNumSpinBox_valueChanged(int);
 
@@ -87,12 +88,19 @@ private slots:
 
     void on_actionShowInFiles_triggered();
 
+    void on_openWithButton_clicked();
+
+    void on_actionReset_triggered();
+
 private:
     Ui::ImageProducerWidget *ui;
     int m_defaultDuration;
+    std::unique_ptr<QFileSystemWatcher> m_watcher;
 
     void reopen(Mlt::Producer *p);
     void recreateProducer();
+    void onOpenOtherAdd();
+    void onOpenOtherRemove();
 };
 
 #endif // IMAGEPRODUCERWIDGET_H

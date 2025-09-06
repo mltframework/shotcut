@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,21 +20,29 @@
 
 #include "Logger.h"
 #include "dialogs/filedatedialog.h"
+#include "dialogs/listselectiondialog.h"
 #include "mainwindow.h"
 #include "proxymanager.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include <unistd.h>
 
 #include <QClipboard>
+#include <QDesktopServices>
 #include <QDir>
 #include <QFileInfo>
+#include <QFileSystemWatcher>
 #include <QMenu>
 #include <QMessageBox>
+#include <QProcess>
 
 // This legacy property is only used in this widget.
 #define kShotcutResourceProperty "shotcut_resource"
+static const auto kImageMediaType = QLatin1String("image");
+
+static QString GetFilenameFromProducer(Mlt::Producer *producer, bool useOriginal = true);
 
 ImageProducerWidget::ImageProducerWidget(QWidget *parent)
     : QWidget(parent)
@@ -175,6 +183,15 @@ void ImageProducerWidget::recreateProducer()
         }
     }
     Mlt::Producer *p = newProducer(MLT.profile());
+    if (!p || !p->is_valid()) {
+        // retry
+        ::sleep(1);
+        p = newProducer(MLT.profile());
+    }
+    if (!p || !p->is_valid()) {
+        LOG_ERROR() << "failed to recreate producer for:" + resource;
+        return;
+    }
     p->pass_list(*m_producer,
                  "force_aspect_ratio," kAspectRatioNumerator "," kAspectRatioDenominator
                  ", begin, ttl," kShotcutResourceProperty
@@ -188,28 +205,20 @@ void ImageProducerWidget::recreateProducer()
     } else {
         reopen(p);
     }
+    if (m_watcher) {
+        m_watcher.reset(new QFileSystemWatcher({GetFilenameFromProducer(producer())}));
+        connect(m_watcher.get(),
+                &QFileSystemWatcher::fileChanged,
+                this,
+                &ImageProducerWidget::recreateProducer);
+    }
 }
 
-void ImageProducerWidget::on_resetButton_clicked()
+void ImageProducerWidget::on_reloadButton_clicked()
 {
     if (!m_producer)
         return;
-
-    const char *s = m_producer->get(kShotcutResourceProperty);
-    if (!s)
-        s = m_producer->get(kOriginalResourceProperty);
-    if (!s)
-        s = m_producer->get("resource");
-    if (!s)
-        return;
-    Mlt::Producer *p = new Mlt::Producer(MLT.profile(), s);
-    Mlt::Controller::copyFilters(*m_producer, *p);
-    if (m_producer->get(kMultitrackItemProperty)) {
-        emit producerChanged(p);
-        delete p;
-    } else {
-        reopen(p);
-    }
+    recreateProducer();
 }
 
 void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
@@ -358,10 +367,11 @@ void ImageProducerWidget::on_menuButton_clicked()
         menu.addAction(ui->actionOpenFolder);
     menu.addAction(ui->actionCopyFullFilePath);
     menu.addAction(ui->actionSetFileDate);
+    menu.addAction(ui->actionReset);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
-static QString GetFilenameFromProducer(Mlt::Producer *producer, bool useOriginal = true)
+static QString GetFilenameFromProducer(Mlt::Producer *producer, bool useOriginal)
 {
     QString resource;
     if (useOriginal && producer->get(kOriginalResourceProperty)) {
@@ -488,4 +498,138 @@ void ImageProducerWidget::on_proxyButton_clicked()
 void ImageProducerWidget::on_actionShowInFiles_triggered()
 {
     emit showInFiles(GetFilenameFromProducer(producer()));
+}
+
+void ImageProducerWidget::on_openWithButton_clicked()
+{
+    const auto filePath = GetFilenameFromProducer(producer());
+    QMenu menu;
+    auto action = new QAction(tr("System Default"), this);
+    menu.addAction(action);
+    connect(action, &QAction::triggered, this, [=]() {
+        LOG_DEBUG() << filePath;
+#if defined(Q_OS_WIN)
+        const auto scheme = QLatin1String("file:///");
+#else
+        const auto scheme = QLatin1String("file://");
+#endif
+        if (QDesktopServices::openUrl({scheme + filePath, QUrl::TolerantMode})) {
+            m_watcher.reset(new QFileSystemWatcher({filePath}));
+            connect(m_watcher.get(),
+                    &QFileSystemWatcher::fileChanged,
+                    this,
+                    &ImageProducerWidget::recreateProducer);
+        }
+    });
+
+    menu.addSeparator();
+    // custom options
+    auto programs = Settings.filesOpenOther(kImageMediaType);
+    for (const auto &program : programs) {
+        auto action = menu.addAction(QFileInfo(program).baseName(), this, [=]() {
+            LOG_DEBUG() << program << filePath;
+            if (QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
+                m_watcher.reset(new QFileSystemWatcher({filePath}));
+                connect(m_watcher.get(),
+                        &QFileSystemWatcher::fileChanged,
+                        this,
+                        &ImageProducerWidget::recreateProducer);
+            }
+        });
+        action->setObjectName(program);
+        menu.addAction(action);
+    }
+    menu.addSeparator();
+
+    action = new QAction(tr("Other..."), this);
+    menu.addAction(action);
+    connect(action, &QAction::triggered, this, &ImageProducerWidget::onOpenOtherAdd);
+
+    action = new QAction(tr("Remove..."), this);
+    menu.addAction(action);
+    connect(action, &QAction::triggered, this, &ImageProducerWidget::onOpenOtherRemove);
+
+    menu.exec(ui->openWithButton->mapToGlobal(QPoint(0, 0)));
+}
+
+void ImageProducerWidget::onOpenOtherAdd()
+{
+    LOG_DEBUG();
+    const auto filePath = GetFilenameFromProducer(producer());
+    if (filePath.isEmpty())
+        return;
+
+    QString dir("/usr/bin");
+    QString filter;
+#if defined(Q_OS_WIN)
+    dir = QStringLiteral("C:/Program Files");
+    filter = tr("Executable Files (*.exe);;All Files (*)");
+#elif defined(Q_OS_MAC)
+    dir = QStringLiteral("/Applications");
+#endif
+    const auto program = QFileDialog::getOpenFileName(MAIN.window(),
+                                                      tr("Choose Executable"),
+                                                      dir,
+                                                      filter,
+                                                      nullptr,
+                                                      Util::getFileDialogOptions());
+    if (!program.isEmpty()) {
+        LOG_DEBUG() << program << filePath;
+        if (QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
+            Settings.setFilesOpenOther(kImageMediaType, program);
+            m_watcher.reset(new QFileSystemWatcher({filePath}));
+            connect(m_watcher.get(),
+                    &QFileSystemWatcher::fileChanged,
+                    this,
+                    &ImageProducerWidget::recreateProducer);
+        }
+    }
+}
+
+void ImageProducerWidget::onOpenOtherRemove()
+{
+    auto ls = Settings.filesOpenOther(kImageMediaType);
+    ls.sort(Qt::CaseInsensitive);
+    QStringList programs;
+    std::for_each(ls.begin(), ls.end(), [&](const QString &s) {
+        programs << QDir::toNativeSeparators(s);
+    });
+    ListSelectionDialog dialog(programs, this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setWindowTitle(tr("Remove From Open With"));
+    if (QDialog::Accepted == dialog.exec()) {
+        for (auto program : dialog.selection()) {
+            program = QDir::fromNativeSeparators(program);
+            Settings.removeFilesOpenOther(kImageMediaType, program);
+        }
+    }
+}
+
+void ImageProducerWidget::on_actionReset_triggered()
+{
+    if (!m_producer)
+        return;
+
+    const char *s = m_producer->get(kShotcutResourceProperty);
+    if (!s)
+        s = m_producer->get(kOriginalResourceProperty);
+    if (!s)
+        s = m_producer->get("resource");
+    if (!s)
+        return;
+    Mlt::Producer *p = new Mlt::Producer(MLT.profile(), s);
+    if (!p->is_valid()) {
+        LOG_ERROR() << "failed to recreate image producer for:" << s;
+        return;
+    }
+    if (ui->durationSpinBox->value() > p->get_length())
+        p->set("length", p->frames_to_time(ui->durationSpinBox->value(), mlt_time_clock));
+    p->set_in_and_out(0, ui->durationSpinBox->value() - 1);
+    Mlt::Controller::copyFilters(*m_producer, *p);
+    if (m_producer->get(kMultitrackItemProperty)) {
+        emit producerChanged(p);
+        delete p;
+    } else {
+        reopen(p);
+    }
 }

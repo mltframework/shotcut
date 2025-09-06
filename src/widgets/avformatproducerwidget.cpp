@@ -42,9 +42,12 @@
 #include <QtWidgets>
 
 #include <limits>
+#include <unistd.h>
 
 static const auto kHandleSeconds = 15.0;
 static const auto kAbsoluteAudioIndex = "audio_index";
+static const auto kAudioMediaType = QLatin1String("audio");
+static const auto kVideoMediaType = QLatin1String("video");
 
 AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     : QWidget(parent)
@@ -242,6 +245,16 @@ void AvformatProducerWidget::reopen(Mlt::Producer *p)
 void AvformatProducerWidget::recreateProducer(bool getFrame)
 {
     Mlt::Producer *p = newProducer(MLT.profile());
+    if (!p || !p->is_valid()) {
+        // retry
+        ::sleep(1);
+        p = newProducer(MLT.profile());
+    }
+    if (!p || !p->is_valid()) {
+        LOG_ERROR() << "failed to recreate producer for:"
+                           + Util::GetFilenameFromProducer(producer());
+        return;
+    }
     Util::passProducerProperties(m_producer.data(), p);
     Util::updateCaption(p);
     Mlt::Controller::copyFilters(*m_producer, *p);
@@ -266,6 +279,13 @@ void AvformatProducerWidget::recreateProducer(bool getFrame)
         delete p;
     } else {
         reopen(p);
+    }
+    if (m_watcher) {
+        m_watcher.reset(new QFileSystemWatcher({Util::GetFilenameFromProducer(producer())}));
+        connect(m_watcher.get(),
+                &QFileSystemWatcher::fileChanged,
+                this,
+                &AvformatProducerWidget::on_reloadButton_clicked);
     }
 }
 
@@ -1575,4 +1595,122 @@ void AvformatProducerWidget::on_actionBitrateViewer_triggered()
 void AvformatProducerWidget::on_actionShowInFiles_triggered()
 {
     emit showInFiles(Util::GetFilenameFromProducer(producer()));
+}
+
+void AvformatProducerWidget::on_openWithButton_clicked()
+{
+    const auto filePath = Util::GetFilenameFromProducer(producer());
+    QMenu menu;
+    auto action = new QAction(tr("System Default"), this);
+    menu.addAction(action);
+    connect(action, &QAction::triggered, this, [=]() {
+        LOG_DEBUG() << filePath;
+#if defined(Q_OS_WIN)
+        const auto scheme = QLatin1String("file:///");
+#else
+        const auto scheme = QLatin1String("file://");
+#endif
+        if (QDesktopServices::openUrl({scheme + filePath, QUrl::TolerantMode})) {
+            m_watcher.reset(new QFileSystemWatcher({filePath}));
+            connect(m_watcher.get(),
+                    &QFileSystemWatcher::fileChanged,
+                    this,
+                    &AvformatProducerWidget::on_reloadButton_clicked);
+        }
+    });
+
+    menu.addSeparator();
+    // custom options
+    auto programs = Settings.filesOpenOther(mediaType());
+    for (const auto &program : programs) {
+        auto action = menu.addAction(QFileInfo(program).baseName(), this, [=]() {
+            LOG_DEBUG() << program << filePath;
+            if (QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
+                m_watcher.reset(new QFileSystemWatcher({filePath}));
+                connect(m_watcher.get(),
+                        &QFileSystemWatcher::fileChanged,
+                        this,
+                        &AvformatProducerWidget::on_reloadButton_clicked);
+            }
+        });
+        action->setObjectName(program);
+        menu.addAction(action);
+    }
+    menu.addSeparator();
+
+    action = new QAction(tr("Other..."), this);
+    menu.addAction(action);
+    connect(action, &QAction::triggered, this, &AvformatProducerWidget::onOpenOtherAdd);
+
+    action = new QAction(tr("Remove..."), this);
+    menu.addAction(action);
+    connect(action, &QAction::triggered, this, &AvformatProducerWidget::onOpenOtherRemove);
+
+    menu.exec(ui->openWithButton->mapToGlobal(QPoint(0, 0)));
+}
+
+void AvformatProducerWidget::onOpenOtherAdd()
+{
+    LOG_DEBUG();
+    const auto filePath = Util::GetFilenameFromProducer(producer());
+    if (filePath.isEmpty())
+        return;
+
+    QString dir("/usr/bin");
+    QString filter;
+#if defined(Q_OS_WIN)
+    dir = QStringLiteral("C:/Program Files");
+    filter = tr("Executable Files (*.exe);;All Files (*)");
+#elif defined(Q_OS_MAC)
+    dir = QStringLiteral("/Applications");
+#endif
+    const auto program = QFileDialog::getOpenFileName(MAIN.window(),
+                                                      tr("Choose Executable"),
+                                                      dir,
+                                                      filter,
+                                                      nullptr,
+                                                      Util::getFileDialogOptions());
+    if (!program.isEmpty()) {
+        LOG_DEBUG() << program << filePath;
+        if (QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
+            Settings.setFilesOpenOther(mediaType(), program);
+            m_watcher.reset(new QFileSystemWatcher({filePath}));
+            connect(m_watcher.get(),
+                    &QFileSystemWatcher::fileChanged,
+                    this,
+                    &AvformatProducerWidget::on_reloadButton_clicked);
+        }
+    }
+}
+
+void AvformatProducerWidget::onOpenOtherRemove()
+{
+    const auto mt = mediaType();
+    auto ls = Settings.filesOpenOther(mt);
+    ls.sort(Qt::CaseInsensitive);
+    QStringList programs;
+    std::for_each(ls.begin(), ls.end(), [&](const QString &s) {
+        programs << QDir::toNativeSeparators(s);
+    });
+    ListSelectionDialog dialog(programs, this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setWindowTitle(tr("Remove From Open With"));
+    if (QDialog::Accepted == dialog.exec()) {
+        for (auto program : dialog.selection()) {
+            program = QDir::fromNativeSeparators(program);
+            Settings.removeFilesOpenOther(mt, program);
+        }
+    }
+}
+
+QString AvformatProducerWidget::mediaType()
+{
+    if (fps() > 0.0 && fps() != 90000.0)
+        return kVideoMediaType;
+    return kAudioMediaType;
+}
+
+void AvformatProducerWidget::on_reloadButton_clicked()
+{
+    recreateProducer();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 namespace Ui {
 class AvformatProducerWidget;
 }
+class QFileSystemWatcher;
 
 class AvformatProducerWidget : public QWidget, public AbstractProducerWidget
 {
@@ -134,17 +135,23 @@ private:
     int m_defaultDuration;
     bool m_recalcDuration;
     bool m_askToConvert;
+    std::unique_ptr<QFileSystemWatcher> m_watcher;
 
     void reopen(Mlt::Producer *p);
     void recreateProducer(bool getFrame = false);
     bool revertToOriginalResource();
     void setSyncVisibility();
     double fps();
+    void onOpenOtherAdd();
+    void onOpenOtherRemove();
+    QString mediaType();
 
 private slots:
     void reloadProducerValues();
     void on_actionBitrateViewer_triggered();
     void on_actionShowInFiles_triggered();
+    void on_openWithButton_clicked();
+    void on_reloadButton_clicked();
 };
 
 class ProbeTask : public QObject, public QRunnable
