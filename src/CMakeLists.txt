@@ -58,6 +58,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/scopedock.cpp docks/scopedock.h
   docks/subtitlesdock.cpp docks/subtitlesdock.h
   docks/timelinedock.cpp docks/timelinedock.h
+  FlatpakWrapperGenerator.cpp FlatpakWrapperGenerator.h
   jobqueue.cpp jobqueue.h
   jobs/abstractjob.cpp jobs/abstractjob.h
   jobs/bitrateviewerjob.h jobs/bitrateviewerjob.cpp

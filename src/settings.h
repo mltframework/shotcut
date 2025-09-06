@@ -304,6 +304,8 @@ public:
     void setBackupPeriod(int i);
     mlt_time_format timeFormat() const;
     void setTimeFormat(int format);
+    bool askFlatpakWrappers();
+    void setAskFlatpakWrappers(bool b);
 
     // proxy
     bool proxyEnabled() const;

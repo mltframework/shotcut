@@ -90,6 +90,8 @@ public:
     static double getSuggestedFrameRate(Mlt::Producer *producer);
     static Mlt::Producer openMltVirtualClip(const QString &path);
     static bool hasiPhoneAmbisonic(Mlt::Producer *producer);
+    static bool installFlatpakWrappers(QWidget *parent);
+    static QString getExecutable(QWidget *parent);
 };
 
 #endif // UTIL_H

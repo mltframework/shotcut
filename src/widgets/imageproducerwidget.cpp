@@ -36,6 +36,7 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QProcess>
+#include <qstandardpaths.h>
 
 // This legacy property is only used in this widget.
 #define kShotcutResourceProperty "shotcut_resource"
@@ -557,20 +558,7 @@ void ImageProducerWidget::onOpenOtherAdd()
     if (filePath.isEmpty())
         return;
 
-    QString dir("/usr/bin");
-    QString filter;
-#if defined(Q_OS_WIN)
-    dir = QStringLiteral("C:/Program Files");
-    filter = tr("Executable Files (*.exe);;All Files (*)");
-#elif defined(Q_OS_MAC)
-    dir = QStringLiteral("/Applications");
-#endif
-    const auto program = QFileDialog::getOpenFileName(MAIN.window(),
-                                                      tr("Choose Executable"),
-                                                      dir,
-                                                      filter,
-                                                      nullptr,
-                                                      Util::getFileDialogOptions());
+    const auto program = Util::getExecutable(&MAIN);
     if (!program.isEmpty()) {
         LOG_DEBUG() << program << filePath;
         if (QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)})) {

@@ -1598,3 +1598,13 @@ void ShotcutSettings::setTimeFormat(int format)
     settings.setValue("timeFormat", format);
     emit timeFormatChanged();
 }
+
+bool ShotcutSettings::askFlatpakWrappers()
+{
+    return settings.value("flatpakWrappers", true).toBool();
+}
+
+void ShotcutSettings::setAskFlatpakWrappers(bool b)
+{
+    settings.setValue("flatpakWrappers", b);
+}

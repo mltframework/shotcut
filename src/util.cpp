@@ -17,6 +17,7 @@
 
 #include "util.h"
 
+#include "FlatpakWrapperGenerator.h"
 #include "Logger.h"
 #include "dialogs/transcodedialog.h"
 #include "mainwindow.h"
@@ -41,6 +42,7 @@
 #include <QMediaDevices>
 #include <QMessageBox>
 #include <QProcess>
+#include <QStandardPaths>
 #include <QStorageInfo>
 #include <QStringList>
 #include <QTemporaryFile>
@@ -917,4 +919,70 @@ bool Util::hasiPhoneAmbisonic(Mlt::Producer *producer)
     return producer && producer->is_valid()
            && !::qstrcmp(producer->get("meta.media.1.stream.type"), "audio")
            && QString(producer->get("meta.attr.com.apple.quicktime.model.markup")).contains("iPhone");
+}
+
+bool Util::installFlatpakWrappers(QWidget *parent)
+{
+    if (!Settings.askFlatpakWrappers())
+        return false;
+    QMessageBox dialog(QMessageBox::Question,
+                       qApp->applicationName(),
+                       parent->tr(
+                           "<p>Do you want use a Flatpak?</p>"
+                           "<p>Click <b>Yes</b> to install/update the Flatpak wrapper scripts "
+                           "in\n<b>Files > Home > Flatpaks</b>.</p>"
+                           "<p>Tip: Add <b><tt>~/Flatpaks</tt></b> to your <b><tt>$PATH</tt></b> "
+                           "to make them more "
+                           "convenient on the command line.</p>"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       parent);
+    dialog.setCheckBox(new QCheckBox(parent->tr("Do not show this anymore.")));
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    int r = dialog.exec();
+    if (dialog.checkBox()->isChecked())
+        Settings.setAskFlatpakWrappers(false);
+    if (r == QMessageBox::Yes) {
+        FlatpakWrapperGenerator flatpaks;
+        const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        auto home = QDir(ls.first());
+        const auto subdir = QStringLiteral("Flatpaks");
+        if (!home.cd(subdir)) {
+            if (home.mkdir(subdir))
+                home.cd(subdir);
+            else
+                return false;
+        }
+        flatpaks.setOutputDir(home.absolutePath());
+        flatpaks.setForce(true);
+        flatpaks.generateAllInstalled();
+        return true;
+    }
+    return false;
+}
+
+QString Util::getExecutable(QWidget *parent)
+{
+    const auto ls = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation);
+    QString dir(ls.first());
+    QString filter;
+#if defined(Q_OS_WIN)
+    filter = tr("Executable Files (*.exe);;All Files (*)");
+#elif defined(Q_OS_LINUX)
+    if (Util::installFlatpakWrappers(parent)) {
+        const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        auto home = QDir(ls.first());
+        home.cd("Flatpaks");
+        dir = home.absolutePath();
+    } else {
+        dir = QStringLiteral("/usr/bin");
+    }
+#endif
+    return QFileDialog::getOpenFileName(MAIN.window(),
+                                        parent->tr("Choose Executable"),
+                                        dir,
+                                        filter,
+                                        nullptr,
+                                        Util::getFileDialogOptions());
 }
