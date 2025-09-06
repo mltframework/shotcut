@@ -247,8 +247,7 @@ void AvformatProducerWidget::recreateProducer(bool getFrame)
     Mlt::Producer *p = newProducer(MLT.profile());
     if (!p || !p->is_valid()) {
         // retry
-        ::sleep(1);
-        p = newProducer(MLT.profile());
+        QTimer::singleShot(1000, this, [&]() { p = newProducer(MLT.profile()); });
     }
     if (!p || !p->is_valid()) {
         LOG_ERROR() << "failed to recreate producer for:"

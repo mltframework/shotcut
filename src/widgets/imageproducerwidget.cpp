@@ -27,7 +27,6 @@
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
-#include <unistd.h>
 
 #include <QClipboard>
 #include <QDesktopServices>
@@ -185,8 +184,7 @@ void ImageProducerWidget::recreateProducer()
     Mlt::Producer *p = newProducer(MLT.profile());
     if (!p || !p->is_valid()) {
         // retry
-        ::sleep(1);
-        p = newProducer(MLT.profile());
+        QTimer::singleShot(1000, this, [&]() { p = newProducer(MLT.profile()); });
     }
     if (!p || !p->is_valid()) {
         LOG_ERROR() << "failed to recreate producer for:" + resource;
