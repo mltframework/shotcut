@@ -964,11 +964,15 @@ bool Util::installFlatpakWrappers(QWidget *parent)
 
 QString Util::getExecutable(QWidget *parent)
 {
-    const auto ls = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation);
-    QString dir(ls.first());
+    QString dir;
     QString filter;
 #if defined(Q_OS_WIN)
-    filter = tr("Executable Files (*.exe);;All Files (*)");
+    dir = QStringLiteral("C:/ProgramData/Microsoft/Windows/Start Menu/Programs");
+    filter = parent->tr("Executable Files (*.exe);;All Files (*)");
+#elif defined(Q_OS_MAC)
+    const auto ls = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation);
+    LOG_DEBUG() << ls;
+    dir = ls.last();
 #elif defined(Q_OS_LINUX)
     if (Util::installFlatpakWrappers(parent)) {
         const auto ls = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
