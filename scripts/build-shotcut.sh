@@ -833,7 +833,7 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_QT=OFF -DMOD_QT6=ON -DMOD_GLAXNIMATE_QT6=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF -DUSE_VST2=OFF -DMOD_SPATIALAUDIO=ON"
+  CONFIG[1]="cmake -GNinja -B build -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DMOD_QT=OFF -DMOD_QT6=ON -DMOD_GLAXNIMATE_QT6=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF -DUSE_VST2=OFF -DMOD_SPATIALAUDIO=ON"
   # Remember, if adding more of these, to update the post-configure check.
   [ "$ENABLE_OPENCV" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_OPENCV=ON"
   [ "$MLT_DISABLE_SOX" = "1" ] && CONFIG[1]="${CONFIG[1]} -DMOD_SOX=OFF"
@@ -852,8 +852,8 @@ function set_globals {
   fi
   CXXFLAGS_[1]="${CFLAGS_[1]} -std=c++11"
   LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
-  BUILD[1]="ninja -j $MAKEJ"
-  INSTALL[1]="ninja install"
+  BUILD[1]="ninja -C build -j $MAKEJ"
+  INSTALL[1]="ninja -C build install"
 
   #####
   # frei0r
