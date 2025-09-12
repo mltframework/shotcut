@@ -31,6 +31,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   dialogs/resourcedialog.cpp dialogs/resourcedialog.h
   dialogs/saveimagedialog.cpp dialogs/saveimagedialog.h
   dialogs/slideshowgeneratordialog.cpp dialogs/slideshowgeneratordialog.h
+  dialogs/speechdialog.h dialogs/speechdialog.cpp
   dialogs/subtitletrackdialog.cpp dialogs/subtitletrackdialog.h
   dialogs/systemsyncdialog.cpp dialogs/systemsyncdialog.h
   dialogs/systemsyncdialog.ui
@@ -62,10 +63,12 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   jobqueue.cpp jobqueue.h
   jobs/abstractjob.cpp jobs/abstractjob.h
   jobs/bitrateviewerjob.h jobs/bitrateviewerjob.cpp
+  jobs/dockerpulljob.h jobs/dockerpulljob.cpp
   jobs/encodejob.cpp jobs/encodejob.h
   jobs/ffmpegjob.cpp jobs/ffmpegjob.h
   jobs/ffprobejob.cpp jobs/ffprobejob.h
   jobs/gopro2gpxjob.cpp jobs/gopro2gpxjob.h
+  jobs/kokorodokijob.cpp jobs/kokorodokijob.h
   jobs/meltjob.cpp jobs/meltjob.h
   jobs/postjobaction.cpp jobs/postjobaction.h
   jobs/qimagejob.cpp jobs/qimagejob.h

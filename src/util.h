@@ -19,7 +19,9 @@
 #define UTIL_H
 
 #include <MltProperties.h>
+#include <functional>
 #include <QFileDialog>
+#include <QPair>
 #include <QPalette>
 #include <QString>
 #include <QUrl>
@@ -92,6 +94,16 @@ public:
     static bool hasiPhoneAmbisonic(Mlt::Producer *producer);
     static bool installFlatpakWrappers(QWidget *parent);
     static QString getExecutable(QWidget *parent);
+    // Returns a pair of booleans: (dockerInstalled, imagePresent)
+    // imagePresent is only meaningful (true/false) if dockerInstalled is true; otherwise false.
+    static QPair<bool, bool> dockerStatus(const QString &imageName);
+    static bool isDockerImageCurrent(const QString &imageRef);
+    // Asynchronous version of isDockerImageCurrent. The callback is invoked on the GUI thread
+    // with the result. If any step fails (including docker not found), result is false.
+    // 'receiver' is used as the parent for internal QProcess objects (may be nullptr).
+    static void isDockerImageCurrentAsync(const QString &imageRef,
+                                          QObject *receiver,
+                                          std::function<void(bool)> callback);
 };
 
 #endif // UTIL_H

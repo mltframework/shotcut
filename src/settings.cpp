@@ -1523,6 +1523,36 @@ bool ShotcutSettings::subtitlesShowPrevNext() const
     return settings.value("subtitles/showPrevNext", true).toBool();
 }
 
+QString ShotcutSettings::speechLanguage() const
+{
+    return settings.value("speech/language", QStringLiteral("a")).toString();
+}
+
+void ShotcutSettings::setSpeechLanguage(const QString &code)
+{
+    settings.setValue("speech/language", code);
+}
+
+QString ShotcutSettings::speechVoice() const
+{
+    return settings.value("speech/voice", QString()).toString();
+}
+
+void ShotcutSettings::setSpeechVoice(const QString &voiceId)
+{
+    settings.setValue("speech/voice", voiceId);
+}
+
+double ShotcutSettings::speechSpeed() const
+{
+    return settings.value("speech/speed", 1.0).toDouble();
+}
+
+void ShotcutSettings::setSpeechSpeed(double speed)
+{
+    settings.setValue("speech/speed", speed);
+}
+
 void ShotcutSettings::setWhisperExe(const QString &path)
 {
     settings.setValue("subtitles/whisperExe", path);
@@ -1607,4 +1637,21 @@ bool ShotcutSettings::askFlatpakWrappers()
 void ShotcutSettings::setAskFlatpakWrappers(bool b)
 {
     settings.setValue("flatpakWrappers", b);
+}
+
+QString ShotcutSettings::dockerPath() const
+{
+#if defined(Q_OS_MAC)
+    return settings.value("dockerPath", "/usr/local/bin/docker").toString();
+#elif defined(Q_OS_WIN)
+    return settings.value("dockerPath", "C:/Program Files/Docker/Docker/resources/bin/docker.exe")
+        .toString();
+#else
+    return settings.value("dockerPath", "docker").toString();
+#endif
+}
+
+void ShotcutSettings::setDockerPath(const QString &path)
+{
+    settings.setValue("dockerPath", path);
 }

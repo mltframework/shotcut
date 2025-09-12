@@ -42,6 +42,7 @@
 #include <QMediaDevices>
 #include <QMessageBox>
 #include <QProcess>
+#include <QRegularExpression>
 #include <QStandardPaths>
 #include <QStorageInfo>
 #include <QStringList>
@@ -989,4 +990,150 @@ QString Util::getExecutable(QWidget *parent)
                                         filter,
                                         nullptr,
                                         Util::getFileDialogOptions());
+}
+
+QPair<bool, bool> Util::dockerStatus(const QString &imageName)
+{
+    // Check if docker executable is available by running 'docker --version'.
+    QProcess proc;
+    proc.start(Settings.dockerPath(), {"--version"});
+    if (!proc.waitForStarted(1000)) {
+        return qMakePair(false, false);
+    }
+    // Keep the timeout short to avoid UI stall.
+    if (!proc.waitForFinished(2000)) {
+        proc.kill();
+        return qMakePair(false, false);
+    }
+    bool dockerOk = proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0;
+    if (!dockerOk) {
+        return qMakePair(false, false);
+    }
+    if (imageName.isEmpty()) {
+        return qMakePair(true, false);
+    }
+
+    // Query local images for the given name (may include tag). We avoid pulling.
+    // Use 'docker image inspect <imageName>' which returns 0 if present.
+    QProcess procImage;
+    procImage.start(Settings.dockerPath(), {"image", "inspect", imageName});
+    if (!procImage.waitForStarted(1000)) {
+        return qMakePair(true, false);
+    }
+    if (!procImage.waitForFinished(5000)) { // allow a bit more time here
+        procImage.kill();
+        return qMakePair(true, false);
+    }
+    bool imageOk = procImage.exitStatus() == QProcess::NormalExit && procImage.exitCode() == 0;
+    return qMakePair(true, imageOk);
+}
+
+// Helper to extract digest from 'docker manifest inspect' output.
+static QString digestFromManifestInspect(const QByteArray &json)
+{
+    auto s = QString::fromUtf8(json);
+    auto idx = s.indexOf("sha256:");
+    if (idx >= 0 && idx + 71 <= s.size()) {
+        return s.mid(idx, 71);
+    }
+    return QString();
+}
+
+bool Util::isDockerImageCurrent(const QString &imageRef)
+{
+    if (imageRef.isEmpty()) {
+        return false;
+    }
+
+    // Inspect (local/remote combined behavior) - this is a simplistic approach.
+    QProcess localProc;
+    localProc.start(Settings.dockerPath(), {"image", "inspect", imageRef});
+    if (!localProc.waitForStarted(1000) || !localProc.waitForFinished(4000)) {
+        if (localProc.state() != QProcess::NotRunning)
+            localProc.kill();
+    }
+    QString localDigest;
+    if (localProc.exitStatus() == QProcess::NormalExit && localProc.exitCode() == 0) {
+        localDigest = digestFromManifestInspect(localProc.readAllStandardOutput());
+    }
+
+    // Run again expecting remote freshness (will hit registry) without pulling.
+    QProcess remoteProc;
+    remoteProc.start(Settings.dockerPath(), {"manifest", "inspect", imageRef});
+    if (!remoteProc.waitForStarted(1000) || !remoteProc.waitForFinished(15000)) {
+        if (remoteProc.state() != QProcess::NotRunning)
+            remoteProc.kill();
+        return false;
+    }
+    if (remoteProc.exitStatus() != QProcess::NormalExit || remoteProc.exitCode() != 0) {
+        return false;
+    }
+    auto remoteDigest = digestFromManifestInspect(remoteProc.readAllStandardOutput());
+    return !remoteDigest.isEmpty() && !localDigest.isEmpty() && localDigest == remoteDigest;
+}
+
+void Util::isDockerImageCurrentAsync(const QString &imageRef,
+                                     QObject *receiver,
+                                     std::function<void(bool)> callback)
+{
+    if (!callback) {
+        return; // nothing to do
+    }
+    if (imageRef.isEmpty()) {
+        callback(false);
+        return;
+    }
+    auto emitResult = [callback](bool result) {
+        QMetaObject::invokeMethod(
+            qApp, [callback, result]() { callback(result); }, Qt::QueuedConnection);
+    };
+
+    // Start with local inspect.
+    auto *localProc = new QProcess(receiver);
+    QObject::connect(localProc,
+                     &QProcess::errorOccurred,
+                     localProc,
+                     [localProc, emitResult](QProcess::ProcessError) {
+                         localProc->deleteLater();
+                         emitResult(false);
+                     });
+    QObject::connect(
+        localProc,
+        QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+        localProc,
+        [imageRef, receiver, emitResult, localProc](int, QProcess::ExitStatus) {
+            QString localDigest;
+            if (localProc->exitStatus() == QProcess::NormalExit && localProc->exitCode() == 0) {
+                localDigest = digestFromManifestInspect(localProc->readAllStandardOutput());
+            }
+            localProc->deleteLater();
+            // Remote manifest inspect regardless; if docker missing it will fail.
+            auto *remoteProc = new QProcess(receiver);
+            QObject::connect(remoteProc,
+                             &QProcess::errorOccurred,
+                             remoteProc,
+                             [remoteProc, emitResult](QProcess::ProcessError) {
+                                 remoteProc->deleteLater();
+                                 emitResult(false);
+                             });
+            QObject::connect(remoteProc,
+                             QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+                             remoteProc,
+                             [emitResult, remoteProc, localDigest](int, QProcess::ExitStatus) {
+                                 QString remoteDigest;
+                                 if (remoteProc->exitStatus() == QProcess::NormalExit
+                                     && remoteProc->exitCode() == 0) {
+                                     remoteDigest = digestFromManifestInspect(
+                                         remoteProc->readAllStandardOutput());
+                                 }
+                                 remoteProc->deleteLater();
+                                 bool current = !remoteDigest.isEmpty() && !localDigest.isEmpty()
+                                                && localDigest == remoteDigest;
+                                 emitResult(current);
+                             });
+            LOG_DEBUG() << "docker manifest inspect" << imageRef;
+            remoteProc->start(Settings.dockerPath(), {"manifest", "inspect", imageRef});
+        });
+    LOG_DEBUG() << "docker image inspect" << imageRef;
+    localProc->start(Settings.dockerPath(), {"image", "inspect", imageRef});
 }

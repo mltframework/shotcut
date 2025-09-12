@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 Meltytech, LLC
+ * Copyright (c) 2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,32 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NOTESDOCK_H
-#define NOTESDOCK_H
+#ifndef DOCKERPULLJOB_H
+#define DOCKERPULLJOB_H
 
-#include <QDockWidget>
-#include <QObject>
+#include "abstractjob.h"
 
-class TextEditor;
+#include <QString>
 
-class NotesDock : public QDockWidget
+class DockerPullJob : public AbstractJob
 {
     Q_OBJECT
-
 public:
-    explicit NotesDock(QWidget *parent = 0);
-    QString getText();
-    void setText(const QString &text);
+    DockerPullJob(const QString &imageRef, QThread::Priority priority = Settings.jobPriority());
+    virtual ~DockerPullJob();
 
-signals:
-    void modified();
+public slots:
+    void start();
 
-private slots:
-    void onTextChanged();
+protected slots:
+    void onReadyRead() override;
 
 private:
-    TextEditor *m_textEdit;
-    bool m_blockUpdate;
+    QString m_imageRef;
+    int m_previousPercent{-1};
 };
 
-#endif // NOTESDOCK_H
+#endif // DOCKERPULLJOB_H

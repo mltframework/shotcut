@@ -306,6 +306,8 @@ public:
     void setTimeFormat(int format);
     bool askFlatpakWrappers();
     void setAskFlatpakWrappers(bool b);
+    QString dockerPath() const;
+    void setDockerPath(const QString &path);
 
     // proxy
     bool proxyEnabled() const;
@@ -372,6 +374,14 @@ public:
     void setFilesCurrentDir(const QString &s);
     bool filesFoldersOpen() const;
     void setFilesFoldersOpen(bool b);
+
+    // Speech (Text-to-Speech dialog)
+    QString speechLanguage() const;
+    void setSpeechLanguage(const QString &code);
+    QString speechVoice() const;
+    void setSpeechVoice(const QString &voiceId);
+    double speechSpeed() const;
+    void setSpeechSpeed(double speed);
 
 public slots:
     void reset();

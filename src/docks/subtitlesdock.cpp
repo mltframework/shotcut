@@ -19,9 +19,11 @@
 
 #include "Logger.h"
 #include "actions.h"
+#include "dialogs/speechdialog.h"
 #include "dialogs/subtitletrackdialog.h"
 #include "dialogs/transcribeaudiodialog.h"
 #include "jobqueue.h"
+#include "jobs/kokorodokijob.h"
 #include "jobs/meltjob.h"
 #include "jobs/whisperjob.h"
 #include "mainwindow.h"
@@ -37,6 +39,7 @@
 #include <QAction>
 #include <QApplication>
 #include <QComboBox>
+#include <QFileInfo>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QHeaderView>
@@ -191,6 +194,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent)
     mainMenu->addAction(Actions["subtitleBurnInAction"]);
     mainMenu->addAction(Actions["subtitleGenerateTextAction"]);
     mainMenu->addAction(Actions["subtitleSpeechToTextAction"]);
+    mainMenu->addAction(Actions["subtitleTextToSpeechAction"]);
     mainMenu->addAction(Actions["subtitleTrackTimelineAction"]);
     mainMenu->addAction(Actions["subtitleShowPrevNextAction"]);
 
@@ -257,6 +261,11 @@ SubtitlesDock::SubtitlesDock(QWidget *parent)
 
     button = new QToolButton;
     button->setDefaultAction(Actions["subtitleSpeechToTextAction"]);
+    button->setAutoRaise(true);
+    toolbar->addWidget(button);
+
+    button = new QToolButton;
+    button->setDefaultAction(Actions["subtitleTextToSpeechAction"]);
     button->setAutoRaise(true);
     toolbar->addWidget(button);
 
@@ -424,6 +433,13 @@ void SubtitlesDock::setupActions()
                                      QIcon(":/icons/oxygen/32x32/actions/speech-to-text.png")));
     connect(action, &QAction::triggered, this, &SubtitlesDock::speechToText);
     Actions.add("subtitleSpeechToTextAction", action, windowTitle());
+
+    action = new QAction(tr("Text to Speech..."), this);
+    action->setToolTip(tr("Convert the current subtitle track to spoken audio."));
+    action->setIcon(
+        QIcon::fromTheme("text-speak", QIcon(":/icons/oxygen/32x32/actions/text-speak.png")));
+    connect(action, &QAction::triggered, this, &SubtitlesDock::textToSpeech);
+    Actions.add("subtitleTextToSpeechAction", action, windowTitle());
 
     action = new QAction(tr("Track Timeline Cursor"), this);
     action->setToolTip(tr("Track the timeline cursor"));
@@ -989,6 +1005,7 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["subtitleBurnInAction"]->setEnabled(false);
         Actions["subtitleGenerateTextAction"]->setEnabled(false);
         Actions["subtitleSpeechToTextAction"]->setEnabled(false);
+        Actions["subtitleTextToSpeechAction"]->setEnabled(false);
     } else {
         m_addToTimelineLabel->setVisible(false);
         Actions["subtitleCreateEditItemAction"]->setEnabled(true);
@@ -997,6 +1014,7 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["SubtitleImportAction"]->setEnabled(true);
         Actions["subtitleAddItemAction"]->setEnabled(true);
         Actions["subtitleSpeechToTextAction"]->setEnabled(true);
+        Actions["subtitleTextToSpeechAction"]->setEnabled(true);
         if (m_model->trackCount() == 0) {
             Actions["subtitleRemoveTrackAction"]->setEnabled(false);
             Actions["SubtitleExportAction"]->setEnabled(false);
@@ -1006,6 +1024,7 @@ void SubtitlesDock::updateActionAvailablity()
             Actions["subtitleSetEndAction"]->setEnabled(false);
             Actions["subtitleBurnInAction"]->setEnabled(false);
             Actions["subtitleGenerateTextAction"]->setEnabled(false);
+            Actions["subtitleTextToSpeechAction"]->setEnabled(false);
         } else {
             Actions["subtitleRemoveTrackAction"]->setEnabled(true);
             Actions["SubtitleExportAction"]->setEnabled(true);
@@ -1312,4 +1331,47 @@ void SubtitlesDock::speechToText()
                                                             this));
     tmpSrt->setParent(whisperJob);
     JOBS.add(whisperJob);
+}
+
+void SubtitlesDock::textToSpeech()
+{
+    if (!m_model || m_model->trackCount() == 0) {
+        return;
+    }
+    int trackIndex = m_trackCombo->currentIndex();
+    if (trackIndex < 0) {
+        return;
+    }
+    if (m_model->itemCount(trackIndex) == 0) {
+        return;
+    }
+
+    SpeechDialog dialog(this);
+    if (dialog.exec() != QDialog::Accepted) {
+        return;
+    }
+    const auto outFile = dialog.outputFile();
+    if (outFile.isEmpty()) {
+        return;
+    }
+    const auto lang = dialog.languageCode();
+    const auto voice = dialog.voiceCode();
+    const auto spd = dialog.speed();
+
+    KokorodokiJob::prepareAndRun(this, [=]() {
+        QFileInfo outInfo(outFile);
+        auto srtFile = new QTemporaryFile(outInfo.dir().filePath("XXXXXX.srt"));
+        if (!srtFile->open()) {
+            LOG_ERROR() << "Failed to create temp srt file" << srtFile->fileName();
+            srtFile->deleteLater();
+            return;
+        }
+        srtFile->close();
+        // Export current track subtitles to SRT.
+        m_model->exportSubtitles(srtFile->fileName(), trackIndex);
+        auto job = new KokorodokiJob(srtFile->fileName(), outFile, lang, voice, spd);
+        srtFile->setParent(job); // auto-delete with job
+        job->setPostJobAction(new OpenPostJobAction(outFile, outFile, QString()));
+        JOBS.add(job);
+    });
 }
