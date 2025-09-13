@@ -3026,18 +3026,14 @@ void MainWindow::showEvent(QShowEvent *event)
 
     QTimer::singleShot(400, this, [=]() {
         Database::singleton(this);
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
         this->setProperty("windowOpacity", 1.0);
-#endif
     });
 }
 
 void MainWindow::hideEvent(QHideEvent *event)
 {
     Q_UNUSED(event)
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     setProperty("windowOpacity", 0.0);
-#endif
 }
 
 void MainWindow::on_actionOpenOther_triggered()
