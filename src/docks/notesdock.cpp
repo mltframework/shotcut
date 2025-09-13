@@ -66,32 +66,33 @@ public:
         addAction(action);
         Actions.add("notesTextToSpeech", action, objectName());
         connect(action, &QAction::triggered, this, [=] {
-            if (toPlainText().isEmpty())
-                return;
-            SpeechDialog dialog(this);
-            if (dialog.exec() != QDialog::Accepted)
+            if (toPlainText().isEmpty() || !KokorodokiJob::checkDockerImage(this))
                 return;
 
-            const auto outFile = dialog.outputFile();
-            if (outFile.isEmpty())
+            m_speechDialog.reset(new SpeechDialog(this));
+            if (m_speechDialog->exec() != QDialog::Accepted)
                 return;
-
-            const auto lang = dialog.languageCode();
-            const auto voice = dialog.voiceCode();
-            const auto spd = dialog.speed();
-            const auto notesText = toPlainText();
 
             KokorodokiJob::prepareAndRun(this, [=]() {
+                const auto outFile = m_speechDialog->outputFile();
+                if (outFile.isEmpty())
+                    return;
                 QFileInfo outInfo(outFile);
                 auto txtFile = new QTemporaryFile(outInfo.dir().filePath("XXXXXX.txt"));
+
                 if (!txtFile->open()) {
                     LOG_ERROR() << "Failed to create temp text file" << txtFile->fileName();
                     txtFile->deleteLater();
                     return;
                 }
-                txtFile->write(notesText.toUtf8());
+                txtFile->write(toPlainText().toUtf8());
                 txtFile->close();
+
+                const auto lang = m_speechDialog->languageCode();
+                const auto voice = m_speechDialog->voiceCode();
+                const auto spd = m_speechDialog->speed();
                 auto job = new KokorodokiJob(txtFile->fileName(), outFile, lang, voice, spd);
+
                 txtFile->setParent(job); // auto-delete with job
                 job->setPostJobAction(new OpenPostJobAction(outFile, outFile, QString()));
                 JOBS.add(job);
@@ -123,6 +124,9 @@ protected:
             QPlainTextEdit::wheelEvent(event);
         }
     }
+
+private:
+    std::unique_ptr<SpeechDialog> m_speechDialog;
 };
 
 NotesDock::NotesDock(QWidget *parent)

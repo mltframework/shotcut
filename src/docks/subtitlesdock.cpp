@@ -1335,7 +1335,7 @@ void SubtitlesDock::speechToText()
 
 void SubtitlesDock::textToSpeech()
 {
-    if (!m_model || m_model->trackCount() == 0) {
+    if (!m_model || m_model->trackCount() == 0 || !KokorodokiJob::checkDockerImage(this)) {
         return;
     }
     int trackIndex = m_trackCombo->currentIndex();
@@ -1346,19 +1346,14 @@ void SubtitlesDock::textToSpeech()
         return;
     }
 
-    SpeechDialog dialog(this);
-    if (dialog.exec() != QDialog::Accepted) {
+    m_speechDialog.reset(new SpeechDialog(this));
+    if (m_speechDialog->exec() != QDialog::Accepted)
         return;
-    }
-    const auto outFile = dialog.outputFile();
-    if (outFile.isEmpty()) {
-        return;
-    }
-    const auto lang = dialog.languageCode();
-    const auto voice = dialog.voiceCode();
-    const auto spd = dialog.speed();
 
     KokorodokiJob::prepareAndRun(this, [=]() {
+        const auto outFile = m_speechDialog->outputFile();
+        if (outFile.isEmpty())
+            return;
         QFileInfo outInfo(outFile);
         auto srtFile = new QTemporaryFile(outInfo.dir().filePath("XXXXXX.srt"));
         if (!srtFile->open()) {
@@ -1367,9 +1362,14 @@ void SubtitlesDock::textToSpeech()
             return;
         }
         srtFile->close();
-        // Export current track subtitles to SRT.
         m_model->exportSubtitles(srtFile->fileName(), trackIndex);
+
+        // Export current track subtitles to SRT.
+        const auto lang = m_speechDialog->languageCode();
+        const auto voice = m_speechDialog->voiceCode();
+        const auto spd = m_speechDialog->speed();
         auto job = new KokorodokiJob(srtFile->fileName(), outFile, lang, voice, spd);
+
         srtFile->setParent(job); // auto-delete with job
         job->setPostJobAction(new OpenPostJobAction(outFile, outFile, QString()));
         JOBS.add(job);

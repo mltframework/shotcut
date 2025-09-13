@@ -28,6 +28,7 @@ class QItemSelection;
 class QLabel;
 class QTextEdit;
 class QTreeView;
+class SpeechDialog;
 
 class SubtitlesDock : public QDockWidget
 {
@@ -101,6 +102,7 @@ private:
     QLabel *m_nextLabel;
     int m_pos;
     bool m_textEditInProgress;
+    std::unique_ptr<SpeechDialog> m_speechDialog;
 };
 
 #endif // SUBTITLESDOCK_H

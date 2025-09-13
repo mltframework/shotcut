@@ -59,20 +59,17 @@ KokorodokiJob::~KokorodokiJob()
     LOG_DEBUG() << "KokorodokiJob destroyed";
 }
 
-// static
-void KokorodokiJob::prepareAndRun(QWidget *parent, std::function<void()> schedule)
+bool KokorodokiJob::checkDockerImage(QWidget *parent)
 {
-    if (!schedule)
-        return;
     auto dockerKokorodokiExists = Util::dockerStatus("mltframework/kokorodoki");
     if (!dockerKokorodokiExists.first) {
         QMessageBox
             dialog(QMessageBox::Warning,
                    QApplication::applicationName(),
                    parent
-                       ->tr("<p>This features requires <b><a "
+                       ->tr("<p>This feature requires <b><a "
                             "href=\"https://www.docker.com/\">Docker</a></b>, which provides an "
-                            "installer, and the automatic download of an <b><big>8.5 GB</big></b> "
+                            "installer, and the automatic download of an <b><big>13.2 GB</big></b> "
                             "Docker image.</p><p>If you already installed Docker it could not be "
                             "found at the expected location: <tt>%1</tt></p><p>Click <b>OK</b> to "
                             "continue and locate the <tt>docker</tt> program on your system.</p>")
@@ -83,13 +80,13 @@ void KokorodokiJob::prepareAndRun(QWidget *parent, std::function<void()> schedul
         dialog.setDefaultButton(QMessageBox::Ok);
         dialog.setEscapeButton(QMessageBox::Cancel);
         if (QMessageBox::Cancel == dialog.exec())
-            return;
+            return false;
     } else if (!dockerKokorodokiExists.second) {
         QMessageBox
             dialog(QMessageBox::Question,
                    QApplication::applicationName(),
                    parent
-                       ->tr("<p>This features requires the automatic download of an <b><big>8.5 "
+                       ->tr("<p>This feature requires the automatic download of an <b><big>13.2 "
                             "GB</big></b> Docker image.</p><p>Do you want to continue?</p>")
                        .arg(Settings.dockerPath()),
                    QMessageBox::No | QMessageBox::Yes,
@@ -98,23 +95,28 @@ void KokorodokiJob::prepareAndRun(QWidget *parent, std::function<void()> schedul
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
         if (QMessageBox::No == dialog.exec())
-            return;
+            return false;
     }
+    return true;
+}
 
-    Util::isDockerImageCurrentAsync(kDockerImageRef, parent, [schedule](bool current) {
+// static
+void KokorodokiJob::prepareAndRun(QWidget *parent, std::function<void()> callback)
+{
+    if (!callback)
+        return;
+    Util::isDockerImageCurrentAsync(kDockerImageRef, parent, [callback](bool current) {
         LOG_DEBUG() << "dockerImageIsCurrent" << current;
         if (current) {
-            schedule();
+            callback();
         } else {
             auto pullJob = new DockerPullJob(kDockerImageRef);
             QObject::connect(pullJob,
                              &AbstractJob::finished,
                              pullJob,
-                             [schedule](AbstractJob *j, bool success) {
-                                 if (success) {
-                                     schedule();
-                                 }
-                                 j->deleteLater();
+                             [callback](AbstractJob *, bool success) {
+                                 if (success)
+                                     callback();
                              });
             JOBS.add(pullJob);
         }

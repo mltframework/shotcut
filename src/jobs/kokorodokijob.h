@@ -30,10 +30,11 @@ public:
                   double speed,
                   QThread::Priority priority = Settings.jobPriority());
     ~KokorodokiJob() override;
-    // Performs Docker availability/image checks and optionally pulls the image.
-    // Calls 'schedule' once the image is ready (or immediately if already current).
+
+    static bool checkDockerImage(QWidget *parent);
+    // Calls 'callback' once the image is ready (or immediately if already current).
     // 'parent' is used for dialogs.
-    static void prepareAndRun(QWidget *parent, std::function<void()> schedule);
+    static void prepareAndRun(QWidget *parent, std::function<void()> callback);
 
 public slots:
     void start() override;

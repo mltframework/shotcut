@@ -1039,11 +1039,20 @@ static QString digestFromManifestInspect(const QByteArray &json)
     return QString();
 }
 
+static QSet<QString> dockerCurrentState;
+
 bool Util::isDockerImageCurrent(const QString &imageRef)
 {
     if (imageRef.isEmpty()) {
         return false;
     }
+
+    // TODO: This comparison is not working outside of the machine on which I built the image.
+    // In the meantime, use check once per session per image ref.
+    if (dockerCurrentState.contains(imageRef))
+        return true;
+    dockerCurrentState << imageRef;
+    return false;
 
     // Inspect (local/remote combined behavior) - this is a simplistic approach.
     QProcess localProc;
@@ -1083,6 +1092,17 @@ void Util::isDockerImageCurrentAsync(const QString &imageRef,
         callback(false);
         return;
     }
+
+    // TODO: This comparison is not working outside of the machine on which I built the image.
+    // In the meantime, use check once per session per image ref.
+    if (dockerCurrentState.contains(imageRef)) {
+        callback(true);
+        return;
+    }
+    dockerCurrentState << imageRef;
+    callback(false);
+    return;
+
     auto emitResult = [callback](bool result) {
         QMetaObject::invokeMethod(
             qApp, [callback, result]() { callback(result); }, Qt::QueuedConnection);
