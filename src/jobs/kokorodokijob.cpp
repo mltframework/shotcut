@@ -81,6 +81,11 @@ bool KokorodokiJob::checkDockerImage(QWidget *parent)
         dialog.setEscapeButton(QMessageBox::Cancel);
         if (QMessageBox::Cancel == dialog.exec())
             return false;
+
+        const auto docker = Util::getExecutable(parent);
+        if (docker.isEmpty())
+            return false;
+        Settings.setDockerPath(docker);
     } else if (!dockerKokorodokiExists.second) {
         QMessageBox
             dialog(QMessageBox::Question,
