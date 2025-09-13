@@ -25,6 +25,7 @@
 #include "mltcontroller.h"
 #include "settings.h"
 #include "util.h"
+#include "widgets/docktoolbar.h"
 
 #include <QAction>
 #include <QApplication>
@@ -33,6 +34,7 @@
 #include <QMessageBox>
 #include <QPlainTextEdit>
 #include <QTimer>
+#include <QVBoxLayout>
 #include <QWheelEvent>
 
 class TextEditor : public QPlainTextEdit
@@ -142,7 +144,23 @@ NotesDock::NotesDock(QWidget *parent)
     toggleViewAction()->setIcon(windowIcon());
 
     QObject::connect(m_textEdit, SIGNAL(textChanged()), SLOT(onTextChanged()));
-    QDockWidget::setWidget(m_textEdit);
+    // Wrap the text editor with a container so we can place a toolbar beneath it.
+    auto container = new QWidget(this);
+    auto layout = new QVBoxLayout(container);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
+    layout->addWidget(m_textEdit, /*stretch*/ 1);
+
+    // Create a DockToolBar to hold custom actions defined in TextEditor.
+    auto toolbar = new DockToolBar(tr("Notes Controls"), container);
+    toolbar->setAreaHint(Qt::BottomToolBarArea);
+    const auto actions = m_textEdit->actions();
+    toolbar->addAction(actions.at(0)); // Decrease Text Size
+    toolbar->addAction(actions.at(1)); // Increase Text Size
+    toolbar->addSeparator();
+    toolbar->addAction(actions.at(2)); // Text to Speech
+    layout->addWidget(toolbar, /*stretch*/ 0);
+    QDockWidget::setWidget(container);
 
     LOG_DEBUG() << "end";
 }
