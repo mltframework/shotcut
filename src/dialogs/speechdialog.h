@@ -18,11 +18,16 @@
 #ifndef SPEECHDIALOG_H
 #define SPEECHDIALOG_H
 
+#include <MltConsumer.h>
 #include <QComboBox>
 #include <QDialog>
 #include <QDoubleSpinBox>
 #include <QLineEdit>
 #include <QObject>
+
+namespace Mlt {
+class Consumer;
+}
 
 class SpeechDialog : public QDialog
 {
@@ -41,6 +46,7 @@ private:
     QComboBox *m_voice = nullptr;
     QDoubleSpinBox *m_speed = nullptr;
     QLineEdit *m_outputFile = nullptr;
+    std::unique_ptr<Mlt::Consumer> m_consumer;
     void populateVoices(const QString &langCode);
 };
 

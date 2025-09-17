@@ -17,8 +17,10 @@
 
 #include "speechdialog.h"
 #include "Logger.h"
+#include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
+
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
@@ -49,7 +51,7 @@ SpeechDialog::SpeechDialog(QWidget *parent)
     m_language->addItem(tr("French"), QStringLiteral("f"));
     m_language->addItem(tr("Hindi"), QStringLiteral("h"));
     m_language->addItem(tr("Italian"), QStringLiteral("i"));
-    m_language->addItem(tr("Brazilian Portuguese"), QStringLiteral("p"));
+    m_language->addItem(tr("Portuguese"), QStringLiteral("p"));
     m_language->addItem(tr("Japanese"), QStringLiteral("j"));
     m_language->addItem(tr("Mandarin Chinese"), QStringLiteral("z"));
     // Set persisted language selection
@@ -66,9 +68,38 @@ SpeechDialog::SpeechDialog(QWidget *parent)
 
     // Voice selector row
     auto voiceLabel = new QLabel(tr("Voice"), this);
-    m_voice = new QComboBox(this);
     grid->addWidget(voiceLabel, 1, 0, Qt::AlignRight);
-    grid->addWidget(m_voice, 1, 1);
+    m_voice = new QComboBox(this);
+    m_voice->setMinimumWidth(120);
+    auto icon = QIcon::fromTheme("media-playback-start",
+                                 QIcon(":/icons/oxygen/32x32/actions/media-playback-start.png"));
+    auto voiceButton = new QPushButton(icon, QString(), this);
+    auto voiceRow = new QWidget(this);
+    auto voiceLayout = new QHBoxLayout(voiceRow);
+    voiceButton->setToolTip(tr("Preview this voice"));
+    voiceLayout->setContentsMargins(0, 0, 0, 0);
+    voiceLayout->setSpacing(4);
+    voiceLayout->addWidget(m_voice);
+    voiceLayout->addWidget(voiceButton);
+    voiceLayout->addStretch();
+    grid->addWidget(voiceRow, 1, 1, 1, 2);
+    connect(voiceButton, &QPushButton::clicked, this, [this]() {
+        auto dir = QmlApplication::dataDir();
+        dir.cd("shotcut");
+        dir.cd("voices");
+        const auto filename = dir.filePath(m_voice->currentData().toString().append(".opus"));
+        LOG_DEBUG() << filename;
+        Mlt::Producer p(MLT.profile(), filename.toLocal8Bit().constData());
+        if (m_consumer && m_consumer->is_valid())
+            m_consumer->stop();
+        m_consumer.reset(new Mlt::Consumer(MLT.profile(), "sdl2_audio"));
+        if (!m_consumer || !m_consumer->is_valid())
+            return;
+        m_consumer->connect(p);
+        m_consumer->set("terminate_on_pause", 1);
+        m_consumer->set("video_off", 1);
+        m_consumer->start();
+    });
 
     // Populate voices for initial selection and react to changes
     populateVoices(m_language->currentData().toString());
@@ -93,8 +124,14 @@ SpeechDialog::SpeechDialog(QWidget *parent)
     m_speed->setDecimals(2);
     m_speed->setSingleStep(0.05);
     m_speed->setValue(Settings.speechSpeed());
+    auto speedRow = new QWidget(this);
+    auto speedLayout = new QHBoxLayout(speedRow);
+    speedLayout->setContentsMargins(0, 0, 0, 0);
+    speedLayout->setSpacing(4);
+    speedLayout->addWidget(m_speed);
+    speedLayout->addStretch();
     grid->addWidget(speedLabel, 2, 0, Qt::AlignRight);
-    grid->addWidget(m_speed, 2, 1);
+    grid->addWidget(speedRow, 2, 1, 1, 2);
 
     // Output file row
     auto outputLabel = new QLabel(tr("Output file"), this);
@@ -103,8 +140,8 @@ SpeechDialog::SpeechDialog(QWidget *parent)
     m_outputFile->setPlaceholderText(tr("Click the button to set the file"));
     m_outputFile->setDisabled(true);
     m_outputFile->setText(QmlApplication::getNextProjectFile("speech-.wav"));
-    auto icon = QIcon::fromTheme("document-save",
-                                 QIcon(":/icons/oxygen/32x32/actions/document-save.png"));
+    icon = QIcon::fromTheme("document-save",
+                            QIcon(":/icons/oxygen/32x32/actions/document-save.png"));
     auto browseButton = new QPushButton(icon, QString(), this);
     grid->addWidget(outputLabel, 3, 0, Qt::AlignRight);
     auto outputRow = new QWidget(this);
