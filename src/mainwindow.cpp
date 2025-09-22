@@ -48,6 +48,9 @@
 #include "docks/subtitlesdock.h"
 #include "docks/timelinedock.h"
 #include "jobqueue.h"
+#ifdef Q_OS_MAC
+#include "jobs/screencapturejob.h"
+#endif
 #include "models/audiolevelstask.h"
 #include "models/keyframesmodel.h"
 #include "models/motiontrackermodel.h"
@@ -92,13 +95,17 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QDirIterator>
+#include <QFileDialog>
 #include <QImageReader>
 #include <QJSEngine>
 #include <QJsonDocument>
 #include <QMutexLocker>
+#include <QProcess>
 #include <QQuickItem>
 #include <QQuickWindow>
+#include <QStandardPaths>
 #include <QThreadPool>
+#include <QTimer>
 #include <QVersionNumber>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QtNetwork>
@@ -897,6 +904,13 @@ void MainWindow::setupAndConnectDocks()
 
 void MainWindow::setupMenuFile()
 {
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+    // Add screen capture actions to File > New submenu
+    ui->actionScreenSnapshot->setVisible(true);
+    ui->actionScreenRecording->setVisible(true);
+    ui->menuNew->addAction(ui->actionScreenSnapshot);
+    ui->menuNew->addAction(ui->actionScreenRecording);
+#endif
 #ifdef Q_OS_MAC
     static auto sep = "        ";
 #else
@@ -1539,6 +1553,14 @@ void MainWindow::setupOpenOtherMenu()
             ->setObjectName("blipflash");
         otherMenu->addAction(ui->menuNew->actions().constLast());
     }
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+    ui->menuNew->addAction(tr("Screen Snapshot"), this, SLOT(on_actionScreenSnapshot_triggered()))
+        ->setObjectName("screenSnapshot");
+    otherMenu->addAction(ui->menuNew->actions().constLast());
+    ui->menuNew->addAction(tr("Screen Recording"), this, SLOT(on_actionScreenRecording_triggered()))
+        ->setObjectName("screenRecording");
+    otherMenu->addAction(ui->menuNew->actions().constLast());
+#endif
 }
 
 QAction *MainWindow::addProfile(QActionGroup *actionGroup, const QString &desc, const QString &name)
@@ -5059,6 +5081,68 @@ void MainWindow::on_actionNew_triggered()
     on_actionClose_triggered();
 }
 
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+void MainWindow::on_actionScreenSnapshot_triggered()
+{
+#ifdef Q_OS_WIN
+    showMinimized();
+    QDesktopServices::openUrl({"ms-screenclip:", QUrl::TolerantMode});
+#else
+    const auto path = Settings.savePath() + "/screen.png";
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Capture Screenshot"),
+                                                    path,
+                                                    tr("PNG Files (*.png)"));
+    if (!fileName.isEmpty()) {
+        // Ensure the filename ends with .png
+        if (!fileName.endsWith(".png", Qt::CaseInsensitive)) {
+            fileName += ".png";
+        }
+
+        // Run screencapture command directly
+        QStringList args;
+        args << "-i"
+             << "-t"
+             << "png" << fileName;
+
+        QProcess *process = new QProcess(this);
+        connect(process, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus) {
+            if (exitCode == 0 && QFileInfo::exists(fileName)) {
+                // Automatically open the captured file
+                QTimer::singleShot(500, this, [this, fileName]() { open(fileName); });
+            }
+            process->deleteLater();
+            showNormal();
+        });
+
+        showMinimized();
+        process->start("screencapture", args);
+    }
+#endif
+}
+
+void MainWindow::on_actionScreenRecording_triggered()
+{
+#ifdef Q_OS_WIN
+    QDesktopServices::openUrl({"ms-screenclip:?type=recording", QUrl::TolerantMode});
+#else
+    const auto path = Settings.savePath() + "/screen.mov";
+    QString fileName
+        = QFileDialog::getSaveFileName(this, tr("Record Screen"), path, tr("MOV Files (*.mov)"));
+    if (!fileName.isEmpty()) {
+        // Ensure the filename ends with .mov
+        if (!fileName.endsWith(".mov", Qt::CaseInsensitive)) {
+            fileName += ".mov";
+        }
+
+        ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, true);
+        job->start();
+        JOBS.add(job);
+    }
+#endif
+}
+#endif
+
 void MainWindow::on_actionKeyboardShortcuts_triggered()
 {
     auto name = QString::fromLatin1("actionsDialog");
@@ -5350,6 +5434,17 @@ void MainWindow::onOpenOtherTriggered(QWidget *widget)
 
 void MainWindow::onOpenOtherFinished(int result)
 {
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+    // Handle screen capture custom result codes
+    if (result == 42) { // Screen Snapshot
+        on_actionScreenSnapshot_triggered();
+        return;
+    } else if (result == 43) { // Screen Recording
+        on_actionScreenRecording_triggered();
+        return;
+    }
+#endif
+
     if (QDialog::Rejected == result || !m_producerWidget)
         return;
     if (AbstractProducerWidget::isDevice(m_producerWidget.get()) && !Settings.playerGPU())

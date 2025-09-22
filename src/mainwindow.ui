@@ -1011,6 +1011,28 @@
     <string>Ctrl+N</string>
    </property>
   </action>
+  <action name="actionScreenSnapshot">
+   <property name="text">
+    <string>Screen Snapshot</string>
+   </property>
+   <property name="toolTip">
+    <string>Capture a screenshot</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionScreenRecording">
+   <property name="text">
+    <string>Screen Recording</string>
+   </property>
+   <property name="toolTip">
+    <string>Record the screen</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
   <action name="actionKeyboardShortcuts">
    <property name="text">
     <string>Actions and Shortcuts...</string>

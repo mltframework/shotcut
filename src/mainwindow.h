@@ -350,6 +350,8 @@ private slots:
     void on_actionAppDataSet_triggered();
     void on_actionAppDataShow_triggered();
     void on_actionNew_triggered();
+    void on_actionScreenSnapshot_triggered();
+    void on_actionScreenRecording_triggered();
     void on_actionKeyboardShortcuts_triggered();
     void on_actionLayoutLogging_triggered();
     void on_actionLayoutEditing_triggered();

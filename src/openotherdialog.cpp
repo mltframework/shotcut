@@ -59,6 +59,12 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent)
     QTreeWidgetItem *item = new QTreeWidgetItem(group, QStringList(tr("Audio/Video Device")));
     item->setData(0, Qt::UserRole, ui->avfoundationTab->objectName());
 #endif
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+    item = new QTreeWidgetItem(group, QStringList(tr("Screen Snapshot")));
+    item->setData(0, Qt::UserRole, "screenSnapshot");
+    item = new QTreeWidgetItem(group, QStringList(tr("Screen Recording")));
+    item->setData(0, Qt::UserRole, "screenRecording");
+#endif
 
     // populate the generators
     group = new QTreeWidgetItem(ui->treeWidget, QStringList(tr("Generator")));
@@ -184,6 +190,18 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
 {
     if (current->data(0, Qt::UserRole).isValid()) {
         QString currentData(current->data(0, Qt::UserRole).toString());
+
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+        // Handle screen capture options
+        if (currentData == "screenSnapshot") {
+            done(42); // Custom result code for screen snapshot
+            return;
+        } else if (currentData == "screenRecording") {
+            done(43); // Custom result code for screen recording
+            return;
+        }
+#endif
+
         m_addTimelineButton->setVisible(true);
         for (int i = 0; i < ui->methodTabWidget->count(); i++) {
             QString tabName(ui->methodTabWidget->widget(i)->objectName());
