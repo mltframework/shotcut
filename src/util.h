@@ -104,6 +104,7 @@ public:
     static void isDockerImageCurrentAsync(const QString &imageRef,
                                           QObject *receiver,
                                           std::function<void(bool)> callback);
+    static bool isChromiumAvailable();
 };
 
 #endif // UTIL_H
