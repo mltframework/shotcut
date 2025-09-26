@@ -92,8 +92,7 @@ void ScreenCaptureJob::onOpenTriggered()
 
 void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    Q_UNUSED(exitCode)
-    Q_UNUSED(exitStatus)
+    AbstractJob::onFinished(exitCode, exitStatus);
 
     if (exitCode == 0 && QFileInfo::exists(m_filename)) {
         // Automatically open the captured file

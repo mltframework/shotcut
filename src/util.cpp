@@ -1157,3 +1157,19 @@ void Util::isDockerImageCurrentAsync(const QString &imageRef,
     LOG_DEBUG() << "docker image inspect" << imageRef;
     localProc->start(Settings.dockerPath(), {"image", "inspect", imageRef});
 }
+
+bool Util::isChromiumAvailable()
+{
+    // Check if Chromeium-ish executable is available
+    QProcess proc;
+    proc.start(Settings.chromiumPath(), {"--version"});
+    if (!proc.waitForStarted(1000)) {
+        return false;
+    }
+    // Keep the timeout short to avoid UI stall.
+    if (!proc.waitForFinished(2000)) {
+        proc.kill();
+        return false;
+    }
+    return proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0;
+}

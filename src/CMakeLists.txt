@@ -1,3 +1,5 @@
+find_package(Qt6 REQUIRED COMPONENTS Core)
+
 add_executable(shotcut WIN32 MACOSX_BUNDLE
   abstractproducerwidget.cpp abstractproducerwidget.h
   actions.cpp actions.h
@@ -60,6 +62,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   docks/subtitlesdock.cpp docks/subtitlesdock.h
   docks/timelinedock.cpp docks/timelinedock.h
   FlatpakWrapperGenerator.cpp FlatpakWrapperGenerator.h
+  htmlgenerator.h htmlgenerator.cpp
   jobqueue.cpp jobqueue.h
   jobs/abstractjob.cpp jobs/abstractjob.h
   jobs/bitrateviewerjob.h jobs/bitrateviewerjob.cpp
@@ -68,6 +71,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   jobs/ffmpegjob.cpp jobs/ffmpegjob.h
   jobs/ffprobejob.cpp jobs/ffprobejob.h
   jobs/gopro2gpxjob.cpp jobs/gopro2gpxjob.h
+  jobs/htmlgeneratorjob.cpp jobs/htmlgeneratorjob.h
   jobs/kokorodokijob.cpp jobs/kokorodokijob.h
   jobs/meltjob.cpp jobs/meltjob.h
   jobs/postjobaction.cpp jobs/postjobaction.h
@@ -161,6 +165,8 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/frameratewidget.cpp widgets/frameratewidget.h
   widgets/glaxnimateproducerwidget.cpp widgets/glaxnimateproducerwidget.h
   widgets/glaxnimateproducerwidget.ui
+  widgets/htmlgeneratorwidget.cpp widgets/htmlgeneratorwidget.h
+  widgets/htmlgeneratorwidget.ui
   widgets/imageproducerwidget.cpp widgets/imageproducerwidget.h
   widgets/imageproducerwidget.ui
   widgets/isingwidget.cpp widgets/isingwidget.h
@@ -265,6 +271,7 @@ target_link_libraries(shotcut
   Qt6::QuickControls2
   Qt6::QuickWidgets
   Qt6::Sql
+  Qt6::WebSockets
   Qt6::Widgets
   Qt6::Xml
 )

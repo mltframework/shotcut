@@ -44,6 +44,7 @@ find_package(Qt6 6.4 REQUIRED
   QuickControls2
   QuickWidgets
   Sql
+  WebSockets
   Widgets
   Xml
 )
