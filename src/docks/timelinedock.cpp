@@ -82,7 +82,7 @@ TimelineDock::TimelineDock(QWidget *parent)
     setObjectName("TimelineDock");
     QDockWidget::setWindowTitle(tr("Timeline"));
     resize(400, 300);
-    setMinimumSize(QSize(200, 200));
+    setMinimumSize(QSize(200, 120));
     setAcceptDrops(true);
     QIcon icon = QIcon::fromTheme("view-time-schedule",
                                   QIcon(":/icons/oxygen/32x32/actions/view-time-schedule.png"));
