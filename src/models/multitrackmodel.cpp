@@ -3491,23 +3491,6 @@ bool MultitrackModel::mergeClipWithNext(int trackIndex, int clipIndex, bool dryr
     if (dryrun)
         return true;
 
-    // Consolidate filters
-    QStringList filters{"fadeInVolume",
-                        "fadeOutVolume",
-                        "fadeInBrightness",
-                        "fadeOutBrightness",
-                        "fadeInMovit",
-                        "fadeOutMovit"};
-    for (const auto &s : filters) {
-        QScopedPointer<Mlt::Filter> filter(getFilter(s, clip1.producer));
-        if (filter && filter->is_valid()) {
-            filter.reset(getFilter(s, clip2.producer));
-            if (filter && filter->is_valid()) {
-                clip2.producer->detach(*filter);
-            }
-        }
-    }
-    Mlt::Controller::copyFilters(*clip2.producer, *clip1.producer);
     QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
     QVector<int> roles;
     roles << FadeInRole;
