@@ -42,7 +42,8 @@ HtmlGenerator::~HtmlGenerator()
 {
     if (m_chromeProcess && m_chromeProcess->state() == QProcess::Running) {
         m_chromeProcess->terminate();
-        m_chromeProcess->waitForFinished(3000);
+        m_chromeProcess->waitForFinished(2000);
+        m_chromeProcess->kill();
     }
 }
 
@@ -185,8 +186,8 @@ void HtmlGenerator::onWebSocketConnected()
 
 void HtmlGenerator::onMessageReceived(const QString &message)
 {
-    if (!message.contains("\"data\""))
-        LOG_DEBUG() << "Received message:" << message;
+    // if (!message.contains("\"data\""))
+    //     LOG_DEBUG() << "Received message:" << message;
 
     const auto doc = QJsonDocument::fromJson(message.toUtf8());
     const auto obj = doc.object();
@@ -273,7 +274,7 @@ void HtmlGenerator::captureAnimationFrame()
         return;
     }
 
-    LOG_DEBUG() << "Taking screenshot...";
+    // LOG_DEBUG() << "Taking screenshot...";
     m_pendingScreenshot = true;
 
     QJsonObject params;
@@ -315,6 +316,9 @@ void HtmlGenerator::handleAnimationFrame(const QJsonObject &result)
         const auto currentTime = m_animationElapsed.elapsed();
 
         int delay = std::max(0LL, targetTime - currentTime);
+        if (delay == 0)
+            LOG_DEBUG() << "frame duration" << frameInterval << "delay" << targetTime - currentTime
+                        << "ms";
         QTimer::singleShot(delay, this, &HtmlGenerator::captureAnimationFrame);
     } else {
         completeAnimationCapture();
@@ -396,7 +400,7 @@ int HtmlGenerator::sendCommand(const QString &method, const QJsonObject &params)
     const QJsonDocument doc(command);
     const QString message = doc.toJson(QJsonDocument::Compact);
 
-    LOG_DEBUG() << "Sending command:" << message;
+    // LOG_DEBUG() << "Sending command:" << message;
     m_webSocket->sendTextMessage(message);
 
     return m_messageId++;

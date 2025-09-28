@@ -30,6 +30,11 @@
 #include <QStandardPaths>
 #include <QTemporaryFile>
 
+static double fps()
+{
+    return std::min(15.0, MLT.profile().fps());
+}
+
 HtmlGeneratorJob::HtmlGeneratorJob(const QString &name,
                                    const QString &html,
                                    const QString &outputPath,
@@ -40,7 +45,6 @@ HtmlGeneratorJob::HtmlGeneratorJob(const QString &name,
     , m_outputPath(outputPath)
     , m_duration(duration)
     , m_generator(nullptr)
-    , m_tempDir(nullptr)
     , m_isGeneratingFrames(true)
     , m_previousPercent(0)
 {
@@ -48,7 +52,7 @@ HtmlGeneratorJob::HtmlGeneratorJob(const QString &name,
 
     // Create temporary directory for animation frames
     const auto outDir = QFileInfo(m_outputPath).dir();
-    m_tempDir = new QTemporaryDir(outDir.filePath("shotcut-htmlgen-XXXXXX"));
+    m_tempDir.reset(new QTemporaryDir(outDir.filePath("shotcut-htmlgen-XXXXXX")));
     if (!m_tempDir->isValid()) {
         LOG_ERROR() << "Failed to create temp directory for HTML animation frames:"
                     << m_tempDir->path();
@@ -58,14 +62,6 @@ HtmlGeneratorJob::HtmlGeneratorJob(const QString &name,
     action->setData("Open");
     connect(action, &QAction::triggered, this, &HtmlGeneratorJob::onOpenTriggered);
     m_successActions << action;
-}
-
-HtmlGeneratorJob::~HtmlGeneratorJob()
-{
-    if (m_generator) {
-        m_generator->deleteLater();
-    }
-    delete m_tempDir;
 }
 
 void HtmlGeneratorJob::start()
@@ -90,7 +86,7 @@ void HtmlGeneratorJob::start()
     m_generator = new HtmlGenerator(this);
 
     // Set animation parameters: fps, duration in milliseconds
-    m_generator->setAnimationParameters(MLT.profile().fps(), m_duration);
+    m_generator->setAnimationParameters(fps(), m_duration);
 
     connect(m_generator,
             &HtmlGenerator::imageReady,
@@ -130,8 +126,7 @@ void HtmlGeneratorJob::onAnimationFramesReady()
     const QFileInfo ffmpegPath(shotcutPath, "ffmpeg");
 
     QStringList args;
-    args << "-r" << QString::number(MLT.profile().fps()) << "-i"
-         << m_tempDir->path() + "/frame_%04d.png"
+    args << "-r" << QString::number(fps()) << "-i" << m_tempDir->path() + "/frame_%04d.png"
          << "-codec:v"
          << "utvideo"
          << "-pix_fmt"
@@ -166,9 +161,7 @@ void HtmlGeneratorJob::onReadyRead()
             const auto match = frameRegex.match(msg);
             if (match.hasMatch()) {
                 int currentFrame = match.captured(1).toInt();
-                // Estimate total frames using actual fps from profile
-                double fps = MLT.profile().fps();
-                int totalFrames = qRound((m_duration / 1000.0) * fps);
+                int totalFrames = qRound((m_duration / 1000.0) * fps());
                 int percent = 80 + qRound((currentFrame * 80.0) / totalFrames); // 80-100%
                 if (percent != m_previousPercent) {
                     emit progressUpdated(m_item, percent);

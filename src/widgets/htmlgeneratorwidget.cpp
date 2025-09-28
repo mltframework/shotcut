@@ -191,6 +191,8 @@ void HtmlGeneratorWidget::loadPreset(Mlt::Properties &p)
     const auto line3 = QByteArray::fromBase64(p.get(kLine3Property));
     ui->line3LineEdit->setText(QString::fromUtf8(line3));
     updateTextSectionVisibility();
+    if (ui->line1Label->isVisible())
+        ui->line1LineEdit->setFocus();
 }
 
 void HtmlGeneratorWidget::setProducer(Mlt::Producer *p)
@@ -320,7 +322,7 @@ void HtmlGeneratorWidget::on_videoButton_clicked()
 {
     // Show duration dialog first
     DurationDialog durationDialog(this);
-    durationDialog.setDuration(MLT.profile().fps() * 5); // Default 5 seconds
+    durationDialog.setDuration(MLT.profile().fps() * 10.0);
     if (durationDialog.exec() != QDialog::Accepted) {
         return;
     }

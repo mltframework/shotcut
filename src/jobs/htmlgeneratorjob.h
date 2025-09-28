@@ -33,7 +33,6 @@ public:
                      const QString &outputPath,
                      int duration,
                      QThread::Priority priority = Settings.jobPriority());
-    ~HtmlGeneratorJob() override;
     void start() override;
 
 protected slots:
@@ -49,8 +48,8 @@ private:
     QString m_html;
     QString m_outputPath;
     int m_duration;
-    HtmlGenerator *m_generator;
-    QTemporaryDir *m_tempDir;
+    HtmlGenerator *m_generator; // owned via parent QObject
+    std::unique_ptr<QTemporaryDir> m_tempDir;
     QString m_htmlFilePath;
     bool m_isGeneratingFrames;
     int m_previousPercent;
