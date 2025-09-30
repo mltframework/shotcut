@@ -113,8 +113,8 @@ PYTHON_VERSION_DEFAULT=3.10
 PYTHON_VERSION_DARWIN=3.11
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
 
-QT_VERSION_DEFAULT=6.9.2
-QT_VERSION_DARWIN=6.9.2
+QT_VERSION_DEFAULT=6.8.3
+QT_VERSION_DARWIN=6.8.3
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -1198,7 +1198,7 @@ function install_shotcut_linux {
   cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
   cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
   cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-  cmd install -p -c "$QTDIR"/lib/libQt6{Charts,Core,Core5Compat,DBus,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,WaylandClient,WaylandEglClientHwIntegration,Widgets,Xml,X11Extras,XcbQpa}.so.6 "$FINAL_INSTALL_DIR"/lib
+  cmd install -p -c "$QTDIR"/lib/libQt6{Charts,Core,Core5Compat,DBus,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,WaylandClient,WaylandEglClientHwIntegration,WebSockets,Widgets,Xml,X11Extras,XcbQpa}.so.6 "$FINAL_INSTALL_DIR"/lib
   cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
   cmd install -d "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
   cmd cp -a "$QTDIR"/plugins/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt6

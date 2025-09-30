@@ -7,7 +7,7 @@ on:
     - cron: '0 8 * * *'
 
 env:
-  IMAGE_NAME: mltframework/shotcut-build:qt6.9.2-ubuntu22.04
+  IMAGE_NAME: mltframework/shotcut-build:qt6.8.3-ubuntu22.04
 
 jobs:
   build:

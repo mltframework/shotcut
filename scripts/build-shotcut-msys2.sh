@@ -74,7 +74,7 @@ NV_CODEC_REVISION="sdk/12.0"
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
 PYTHON_VERSION_DLL=$(python3 --version | awk '{split($2, parts, "."); print parts[1]parts[2]}')
 
-QT_VERSION_X64="6.9.2"
+QT_VERSION_X64="6.8.3"
 
 ################################################################################
 # Location of config file - if not overridden on command line
@@ -1227,7 +1227,7 @@ function deploy
 
   log Copying some libs from Qt
   if [ "$DEBUG_BUILD" != "1" -o "$SDK" = "1" ]; then
-    cmd cp -p "$QTDIR"/bin/Qt6{Charts,Core,Core5Compat,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,Widgets,Xml}.dll .
+    cmd cp -p "$QTDIR"/bin/Qt6{Charts,Core,Core5Compat,Gui,Multimedia,Network,OpenGL,OpenGLWidgets,Qml,QmlMeta,QmlModels,QmlWorkerScript,Quick,QuickControls2*,QuickDialogs2,QuickDialogs2QuickImpl,QuickDialogs2Utils,QuickLayouts,QuickTemplates2,QuickWidgets,Sql,Svg,SvgWidgets,UiTools,WebSockets,Widgets,Xml}.dll .
   fi
 
   for lib in *.dll; do
