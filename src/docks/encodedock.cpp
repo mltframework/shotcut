@@ -598,9 +598,12 @@ void EncodeDock::loadPresets()
                 }
                 QStandardItem *item = new QStandardItem(nameParts.join('/'));
                 item->setData(QString(m_presets->get_name(j)));
-                if (preset.get("meta.preset.note"))
+                if (preset.property_exists("meta.preset.note"))
                     item->setToolTip(QStringLiteral("<p>%1</p>")
                                          .arg(QString::fromUtf8(preset.get("meta.preset.note"))));
+                if (preset.property_exists("meta.preset.extension"))
+                    item->setData(QString::fromLatin1(preset.get("meta.preset.extension")),
+                                  Qt::UserRole + 2);
                 parentItem->appendRow(item);
             }
         }
@@ -2285,11 +2288,10 @@ bool PresetsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &sour
         if (filterAcceptsRow(i, index))
             return true;
 
-    return sourceModel()->data(index).toString().contains(filterRegularExpression())
-           || sourceModel()
-                  ->data(index, Qt::ToolTipRole)
-                  .toString()
-                  .contains(filterRegularExpression());
+    const auto s = sourceModel()->data(index).toString()
+                   + sourceModel()->data(index, Qt::ToolTipRole).toString()
+                   + sourceModel()->data(index, Qt::UserRole + 2).toString();
+    return s.contains(filterRegularExpression());
 }
 
 void EncodeDock::on_resetButton_clicked()
