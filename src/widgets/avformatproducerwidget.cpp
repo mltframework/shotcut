@@ -399,6 +399,8 @@ void AvformatProducerWidget::reloadProducerValues()
                     break;
                 case 9:
                 case 10:
+                case 2020:
+                case 2021:
                     csString = "ITU-R BT.2020";
                     break;
                 }
