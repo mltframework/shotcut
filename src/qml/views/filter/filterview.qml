@@ -159,7 +159,7 @@ Rectangle {
         AttachedFilters {
             id: attachedFilters
 
-            property int minimumWidth: application.OS === 'Windows' ? 350 : 250
+            property int minimumWidth: 250
 
             Layout.columnSpan: parent.columns
             Layout.fillWidth: true
