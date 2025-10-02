@@ -1160,17 +1160,7 @@ void Util::isDockerImageCurrentAsync(const QString &imageRef,
 
 bool Util::isChromiumAvailable()
 {
-    // Check if Chromeium-ish executable is available
-    QProcess proc;
-    proc.start(Settings.chromiumPath(),
-               {"--version", "--headless=new", "--no-first-run", "--no-default-browser-check"});
-    if (!proc.waitForStarted(1000)) {
-        return false;
-    }
-    // Keep the timeout short to avoid UI stall.
-    if (!proc.waitForFinished(2000)) {
-        proc.kill();
-        return false;
-    }
-    return proc.exitStatus() == QProcess::NormalExit && proc.exitCode() == 0;
+    // Check if Chromium executable file exists and is executable
+    QFileInfo fileInfo(Settings.chromiumPath());
+    return fileInfo.exists() && fileInfo.isExecutable();
 }
