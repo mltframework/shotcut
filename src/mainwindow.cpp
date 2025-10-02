@@ -5148,7 +5148,6 @@ void MainWindow::on_actionScreenRecording_triggered()
         }
     }
     ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, true);
-    job->start();
     JOBS.add(job);
 #endif
 }

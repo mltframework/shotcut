@@ -31,19 +31,14 @@ ScreenCaptureJob::ScreenCaptureJob(const QString &name, const QString &filename,
     : AbstractJob(name, QThread::NormalPriority)
     , m_filename(filename)
     , m_isRecording(isRecording)
+    , m_isAutoOpen(true)
 {
     QAction *action = new QAction(tr("Open"), this);
     action->setToolTip(tr("Open the capture"));
+    action->setData("Open");
     connect(action, SIGNAL(triggered(bool)), this, SLOT(onOpenTriggered()));
     m_successActions << action;
-
-    // Add stop action for recording jobs
-    if (m_isRecording) {
-        QAction *stopAction = new QAction(tr("Stop Recording"), this);
-        stopAction->setToolTip(tr("Stop the screen recording"));
-        connect(stopAction, &QAction::triggered, this, &ScreenCaptureJob::stop);
-        m_standardActions << stopAction;
-    }
+    m_standardActions.clear();
 }
 
 ScreenCaptureJob::~ScreenCaptureJob() {}
@@ -94,8 +89,9 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     AbstractJob::onFinished(exitCode, exitStatus);
 
-    if (exitCode == 0 && QFileInfo::exists(m_filename)) {
+    if (m_isAutoOpen && exitCode == 0 && QFileInfo::exists(m_filename)) {
         // Automatically open the captured file
+        m_isAutoOpen = false;
         QTimer::singleShot(0, this, [this]() { MAIN.open(m_filename); });
     }
 }

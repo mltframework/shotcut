@@ -40,6 +40,7 @@ private slots:
 private:
     QString m_filename;
     bool m_isRecording;
+    bool m_isAutoOpen;
 };
 
 #endif // SCREENCAPTUREJOB_H
