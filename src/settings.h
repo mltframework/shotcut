@@ -308,6 +308,8 @@ public:
     void setAskFlatpakWrappers(bool b);
     QString dockerPath() const;
     void setDockerPath(const QString &path);
+    QString chromiumPath() const;
+    void setChromiumPath(const QString &path);
 
     // proxy
     bool proxyEnabled() const;

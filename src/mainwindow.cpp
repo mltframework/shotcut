@@ -74,6 +74,7 @@
 #include "widgets/decklinkproducerwidget.h"
 #include "widgets/directshowvideowidget.h"
 #include "widgets/glaxnimateproducerwidget.h"
+#include "widgets/htmlgeneratorwidget.h"
 #include "widgets/imageproducerwidget.h"
 #include "widgets/isingwidget.h"
 #include "widgets/lissajouswidget.h"
@@ -904,13 +905,6 @@ void MainWindow::setupAndConnectDocks()
 
 void MainWindow::setupMenuFile()
 {
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
-    // Add screen capture actions to File > New submenu
-    ui->actionScreenSnapshot->setVisible(true);
-    ui->actionScreenRecording->setVisible(true);
-    ui->menuNew->addAction(ui->actionScreenSnapshot);
-    ui->menuNew->addAction(ui->actionScreenRecording);
-#endif
 #ifdef Q_OS_MAC
     static auto sep = "        ";
 #else
@@ -1528,6 +1522,9 @@ void MainWindow::setupOpenOtherMenu()
             ->setObjectName("glaxnimate");
         otherMenu->addAction(ui->menuNew->actions().constLast());
     }
+    ui->menuNew->addAction(tr("Image/Video from HTML"), this, SLOT(onHtmlGeneratorTriggered()))
+        ->setObjectName("html");
+    otherMenu->addAction(ui->menuNew->actions().constLast());
     if (mltProducers->get_data("noise")) {
         ui->menuNew->addAction(tr("Noise"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("noise");
@@ -1554,6 +1551,8 @@ void MainWindow::setupOpenOtherMenu()
         otherMenu->addAction(ui->menuNew->actions().constLast());
     }
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+    ui->actionScreenSnapshot->setVisible(true);
+    ui->actionScreenRecording->setVisible(true);
     ui->menuNew->addAction(tr("Screen Snapshot"), this, SLOT(on_actionScreenSnapshot_triggered()))
         ->setObjectName("screenSnapshot");
     otherMenu->addAction(ui->menuNew->actions().constLast());
@@ -1579,7 +1578,7 @@ QAction *MainWindow::addLayout(QActionGroup *actionGroup, const QString &name)
     return action;
 }
 
-void MainWindow::open(Mlt::Producer *producer)
+void MainWindow::open(Mlt::Producer *producer, bool play)
 {
     if (!producer->is_valid())
         showStatusMessage(tr("Failed to open "));
@@ -1595,6 +1594,8 @@ void MainWindow::open(Mlt::Producer *producer)
 
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer)) {
+        if (!play)
+            m_player->setPauseAfterOpen(true);
         emit producerOpened();
         if (MLT.isProjectProducer(producer)) {
             m_filterController->motionTrackerModel()->load();
@@ -3878,6 +3879,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         w = new DirectShowVideoWidget(this);
     else if (resource.startsWith("avfoundation:"))
         w = new AvfoundationProducerWidget(this);
+    else if (shotcutProducer == "htmlGenerator")
+        w = new HtmlGeneratorWidget(this);
     else if (service.startsWith("avformat") || shotcutProducer == "avformat")
         w = new AvformatProducerWidget(this);
     else if (MLT.isImageProducer(producer)) {
@@ -5088,36 +5091,39 @@ void MainWindow::on_actionScreenSnapshot_triggered()
     showMinimized();
     QDesktopServices::openUrl({"ms-screenclip:", QUrl::TolerantMode});
 #else
-    const auto path = Settings.savePath() + "/screen.png";
-    QString fileName = QFileDialog::getSaveFileName(this,
-                                                    tr("Capture Screenshot"),
-                                                    path,
-                                                    tr("PNG Files (*.png)"));
-    if (!fileName.isEmpty()) {
+    auto fileName = QmlApplication::getNextProjectFile("screenshot-.png");
+    if (fileName.isEmpty()) {
+        fileName = Settings.savePath() + "/%1.png";
+        fileName = QFileDialog::getSaveFileName(this,
+                                                tr("Screen Snapshot"),
+                                                fileName.arg(tr("screenshot")),
+                                                tr("PNG Files (*.png)"));
+        if (fileName.isEmpty())
+            return;
+
         // Ensure the filename ends with .png
         if (!fileName.endsWith(".png", Qt::CaseInsensitive)) {
             fileName += ".png";
         }
-
-        // Run screencapture command directly
-        QStringList args;
-        args << "-i"
-             << "-t"
-             << "png" << fileName;
-
-        QProcess *process = new QProcess(this);
-        connect(process, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus) {
-            if (exitCode == 0 && QFileInfo::exists(fileName)) {
-                // Automatically open the captured file
-                QTimer::singleShot(500, this, [this, fileName]() { open(fileName); });
-            }
-            process->deleteLater();
-            showNormal();
-        });
-
-        showMinimized();
-        process->start("screencapture", args);
     }
+    // Run screencapture command directly
+    QStringList args;
+    args << "-i"
+         << "-t"
+         << "png" << fileName;
+
+    QProcess *process = new QProcess(this);
+    connect(process, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus) {
+        if (exitCode == 0 && QFileInfo::exists(fileName)) {
+            // Automatically open the captured file
+            QTimer::singleShot(500, this, [this, fileName]() { open(fileName); });
+        }
+        process->deleteLater();
+        showNormal();
+    });
+
+    showMinimized();
+    process->start("screencapture", args);
 #endif
 }
 
@@ -5126,19 +5132,24 @@ void MainWindow::on_actionScreenRecording_triggered()
 #ifdef Q_OS_WIN
     QDesktopServices::openUrl({"ms-screenclip:?type=recording", QUrl::TolerantMode});
 #else
-    const auto path = Settings.savePath() + "/screen.mov";
-    QString fileName
-        = QFileDialog::getSaveFileName(this, tr("Record Screen"), path, tr("MOV Files (*.mov)"));
-    if (!fileName.isEmpty()) {
+    auto fileName = QmlApplication::getNextProjectFile("screen-.mov");
+    if (fileName.isEmpty()) {
+        fileName = Settings.savePath() + "/%1.mov";
+        fileName = QFileDialog::getSaveFileName(this,
+                                                tr("Screen Recording"),
+                                                fileName.arg(tr("screen")),
+                                                tr("MOV Files (*.mov)"));
+        if (fileName.isEmpty())
+            return;
+
         // Ensure the filename ends with .mov
         if (!fileName.endsWith(".mov", Qt::CaseInsensitive)) {
             fileName += ".mov";
         }
-
-        ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, true);
-        job->start();
-        JOBS.add(job);
     }
+    ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, true);
+    job->start();
+    JOBS.add(job);
 #endif
 }
 #endif
@@ -5517,6 +5528,41 @@ void MainWindow::onOpenOtherTriggered()
         onOpenOtherTriggered(new CountProducerWidget(this));
     else if (sender()->objectName() == "blipflash")
         onOpenOtherTriggered(new BlipProducerWidget(this));
+}
+
+void MainWindow::onHtmlGeneratorTriggered()
+{
+    if (!Util::isChromiumAvailable()) {
+        QMessageBox
+            dialog(QMessageBox::Warning,
+                   QApplication::applicationName(),
+                   this->tr("<p>This feature requires Google Chrome, Microsoft Edge, or a "
+                            "Chromium-based browser.</p>"
+                            "<p>If you already installed one it could not be "
+                            "found at the expected location: <tt>%1</tt></p><p>Click <b>OK</b> to "
+                            "continue and locate the program on your system.</p>")
+                       .arg(Settings.chromiumPath()),
+                   QMessageBox::Cancel | QMessageBox::Ok,
+                   this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.setDefaultButton(QMessageBox::Ok);
+        dialog.setEscapeButton(QMessageBox::Cancel);
+        if (QMessageBox::Cancel == dialog.exec())
+            return;
+
+        const auto executable = Util::getExecutable(this);
+        if (executable.isEmpty())
+            return;
+        Settings.setChromiumPath(executable);
+    }
+    // Create a color producer with special property and open it
+    auto producer = new Mlt::Producer(MLT.profile(), "color", "#00000000");
+    producer->set(kShotcutProducerProperty, "htmlGenerator");
+    producer->set("shotcut:color", producer->get("resource"));
+    open(producer, false);
+    m_propertiesDock->show();
+    m_propertiesDock->raise();
+    m_producerWidget.reset();
 }
 
 void MainWindow::on_actionClearRecentOnExit_toggled(bool arg1)

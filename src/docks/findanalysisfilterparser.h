@@ -52,7 +52,7 @@ public:
                     // vidstab requires a filename, which is only available when using a project folder.
                     QString filename = filter->get("filename");
                     if (filename.isEmpty() || filename.endsWith("vidstab.trf")) {
-                        filename = QmlApplication::getNextProjectFile("stab");
+                        filename = QmlApplication::getNextProjectFile("stab-");
                     }
                     if (!filename.isEmpty()) {
                         filter->set("filename", filename.toUtf8().constData());

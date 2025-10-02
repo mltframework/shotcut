@@ -4270,7 +4270,7 @@ void TimelineDock::replaceClipsWithHash(const QString &hash, Mlt::Producer &prod
 void TimelineDock::recordAudio()
 {
     // Get the file name.
-    auto filename = QmlApplication::getNextProjectFile("voiceover.opus");
+    auto filename = QmlApplication::getNextProjectFile("voiceover-.opus");
     if (filename.isEmpty()) {
         QString path = Settings.savePath();
         path.append("/%1.opus");

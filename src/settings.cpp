@@ -1655,3 +1655,21 @@ void ShotcutSettings::setDockerPath(const QString &path)
 {
     settings.setValue("dockerPath", path);
 }
+
+QString ShotcutSettings::chromiumPath() const
+{
+#if defined(Q_OS_MAC)
+    return settings.value("dockerPath", "/Applications/Google Chrome.app").toString();
+#elif defined(Q_OS_WIN)
+    return settings
+        .value("dockerPath", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe")
+        .toString();
+#else
+    return settings.value("chromiumPath", "chromium").toString();
+#endif
+}
+
+void ShotcutSettings::setChromiumPath(const QString &path)
+{
+    settings.setValue("chromiumPath", path);
+}

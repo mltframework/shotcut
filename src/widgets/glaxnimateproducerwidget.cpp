@@ -197,7 +197,7 @@ static void modifyJsonValue(QJsonValue &destValue, const QString &path, const QJ
 Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
 {
     // Get the file name.
-    auto filename = QmlApplication::getNextProjectFile("anim.rawr");
+    auto filename = QmlApplication::getNextProjectFile("anim-.rawr");
     if (filename.isEmpty()) {
         QString path = Settings.savePath();
         path.append("/%1.rawr");

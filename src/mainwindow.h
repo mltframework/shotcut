@@ -64,7 +64,7 @@ public:
 
     static MainWindow &singleton();
     ~MainWindow();
-    void open(Mlt::Producer *producer);
+    void open(Mlt::Producer *producer, bool play = true);
     bool continueModified();
     bool continueJobsRunning();
     QUndoStack *undoStack() const;
@@ -371,6 +371,7 @@ private slots:
     void onOpenOtherTriggered(QWidget *widget);
     void onOpenOtherFinished(int result);
     void onOpenOtherTriggered();
+    void onHtmlGeneratorTriggered();
     void on_actionClearRecentOnExit_toggled(bool arg1);
     void onSceneGraphInitialized();
     void on_actionShowTextUnderIcons_toggled(bool b);

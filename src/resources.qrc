@@ -3,5 +3,12 @@
         <file>resources/glaxnimate.rawr</file>
         <file>resources/qtquickcontrols2-dark.conf</file>
         <file>resources/qtquickcontrols2-light.conf</file>
+        <file>resources/html/folded/body.html</file>
+        <file>resources/html/folded/css</file>
+        <file>resources/html/folded/folded.js</file>
+        <file>resources/html/elastic_stroke/body.html</file>
+        <file>resources/html/elastic_stroke/css</file>
+        <file>resources/html/gold_metal/body.html</file>
+        <file>resources/html/gold_metal/css</file>
     </qresource>
 </RCC>
