@@ -3879,7 +3879,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         w = new DirectShowVideoWidget(this);
     else if (resource.startsWith("avfoundation:"))
         w = new AvfoundationProducerWidget(this);
-    else if (shotcutProducer == "htmlGenerator")
+    else if (QString::fromLatin1(producer->get(kPrivateProducerProperty)) == "htmlGenerator")
         w = new HtmlGeneratorWidget(this);
     else if (service.startsWith("avformat") || shotcutProducer == "avformat")
         w = new AvformatProducerWidget(this);
@@ -5556,8 +5556,7 @@ void MainWindow::onHtmlGeneratorTriggered()
     }
     // Create a color producer with special property and open it
     auto producer = new Mlt::Producer(MLT.profile(), "color", "#00000000");
-    producer->set(kShotcutProducerProperty, "htmlGenerator");
-    producer->set("shotcut:color", producer->get("resource"));
+    producer->set(kPrivateProducerProperty, "htmlGenerator");
     open(producer, false);
     m_propertiesDock->show();
     m_propertiesDock->raise();

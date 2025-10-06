@@ -21,6 +21,8 @@
 #include "mainwindow.h"
 #include "mltcontroller.h"
 #include "settings.h"
+#include "shotcut_mlt_properties.h"
+#include "widgets/htmlgeneratorwidget.h"
 
 #include <QAction>
 #include <QApplication>
@@ -187,11 +189,27 @@ void HtmlGeneratorJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 
     if (exitCode == 0 && QFileInfo::exists(m_outputPath)) {
         // Automatically open the captured file
-        QTimer::singleShot(0, this, [this]() { MAIN.open(m_outputPath); });
+        QTimer::singleShot(0, this, SLOT(onOpenTriggered()));
     }
 }
 
 void HtmlGeneratorJob::onOpenTriggered()
 {
-    MAIN.open(m_outputPath);
+    auto p = new Mlt::Producer(MLT.profile(), m_outputPath.toUtf8().constData());
+    p->set(kPrivateProducerProperty, property(kPrivateProducerProperty).toString().toLatin1());
+    p->set(HtmlGeneratorWidget::kColorProperty,
+           property(HtmlGeneratorWidget::kColorProperty).toByteArray());
+    p->set(HtmlGeneratorWidget::kCssProperty,
+           property(HtmlGeneratorWidget::kCssProperty).toByteArray());
+    p->set(HtmlGeneratorWidget::kBodyProperty,
+           property(HtmlGeneratorWidget::kBodyProperty).toByteArray());
+    p->set(HtmlGeneratorWidget::kJavaScriptProperty,
+           property(HtmlGeneratorWidget::kJavaScriptProperty).toByteArray());
+    p->set(HtmlGeneratorWidget::kLine1Property,
+           property(HtmlGeneratorWidget::kLine1Property).toByteArray());
+    p->set(HtmlGeneratorWidget::kLine2Property,
+           property(HtmlGeneratorWidget::kLine2Property).toByteArray());
+    p->set(HtmlGeneratorWidget::kLine3Property,
+           property(HtmlGeneratorWidget::kLine3Property).toByteArray());
+    MAIN.open(p, false);
 }

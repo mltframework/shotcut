@@ -37,13 +37,13 @@
 #include <QTemporaryFile>
 
 static const QString kTransparent = QObject::tr("transparent", "New > Image/Video From HTML");
-static auto kColorProperty = "shotcut:color";
-static auto kCssProperty = "shotcut:css";
-static auto kBodyProperty = "shotcut:body";
-static auto kJavaScriptProperty = "shotcut:javascript";
-static auto kLine1Property = "shotcut:line1";
-static auto kLine2Property = "shotcut:line2";
-static auto kLine3Property = "shotcut:line3";
+const char *HtmlGeneratorWidget::kColorProperty = "shotcut:color";
+const char *HtmlGeneratorWidget::kCssProperty = "shotcut:css";
+const char *HtmlGeneratorWidget::kBodyProperty = "shotcut:body";
+const char *HtmlGeneratorWidget::kJavaScriptProperty = "shotcut:javascript";
+const char *HtmlGeneratorWidget::kLine1Property = "shotcut:line1";
+const char *HtmlGeneratorWidget::kLine2Property = "shotcut:line2";
+const char *HtmlGeneratorWidget::kLine3Property = "shotcut:line3";
 
 static QString colorToString(const QColor &color)
 {
@@ -201,7 +201,8 @@ void HtmlGeneratorWidget::setProducer(Mlt::Producer *p)
     AbstractProducerWidget::setProducer(p);
     if (!p || !p->is_valid())
         return;
-    const auto mltColor = p->get_color(kColorProperty);
+    const auto mltColor = p->property_exists(kColorProperty) ? p->get_color(kColorProperty)
+                                                             : mlt_color({0, 0, 0, 0});
     const QColor qtColor(mltColor.r, mltColor.g, mltColor.b, mltColor.a);
     ui->colorLabel->setText(colorToString(qtColor));
     ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
@@ -299,7 +300,7 @@ void HtmlGeneratorWidget::on_imageButton_clicked()
         [=](QString outputPath) {
             auto p = new Mlt::Producer(MLT.profile(), outputPath.toUtf8().constData());
             QString color = colorStringToResource(ui->colorLabel->text());
-            p->pass_property(*m_producer, kShotcutProducerProperty);
+            p->pass_property(*m_producer, kPrivateProducerProperty);
             p->set(kColorProperty, color.toLatin1().constData());
             p->set(kCssProperty, ui->cssTextEdit->toPlainText().toUtf8().toBase64().constData());
             p->set(kBodyProperty, ui->bodyTextEdit->toPlainText().toUtf8().toBase64().constData());
@@ -308,6 +309,7 @@ void HtmlGeneratorWidget::on_imageButton_clicked()
             p->set(kLine1Property, ui->line1LineEdit->text().toUtf8().toBase64().constData());
             p->set(kLine2Property, ui->line2LineEdit->text().toUtf8().toBase64().constData());
             p->set(kLine3Property, ui->line3LineEdit->text().toUtf8().toBase64().constData());
+            MLT.setImageDurationFromDefault(p);
             MAIN.open(p, false);
         },
         Qt::QueuedConnection);
@@ -357,6 +359,17 @@ void HtmlGeneratorWidget::on_videoButton_clicked()
                                generateHtml(),
                                outputPath,
                                durationMs);
+    QString color = colorStringToResource(ui->colorLabel->text());
+    job->setProperty(kPrivateProducerProperty,
+                     QString::fromLatin1(m_producer->get(kPrivateProducerProperty)));
+    job->setProperty(kColorProperty, color.toLatin1());
+    job->setProperty(kCssProperty, ui->cssTextEdit->toPlainText().toUtf8().toBase64().constData());
+    job->setProperty(kBodyProperty, ui->bodyTextEdit->toPlainText().toUtf8().toBase64().constData());
+    job->setProperty(kJavaScriptProperty,
+                     ui->javascriptTextEdit->toPlainText().toUtf8().toBase64().constData());
+    job->setProperty(kLine1Property, ui->line1LineEdit->text().toUtf8().toBase64().constData());
+    job->setProperty(kLine2Property, ui->line2LineEdit->text().toUtf8().toBase64().constData());
+    job->setProperty(kLine3Property, ui->line3LineEdit->text().toUtf8().toBase64().constData());
     JOBS.add(job);
 
     MAIN.showStatusMessage(tr("Generating HTML video..."), 3);

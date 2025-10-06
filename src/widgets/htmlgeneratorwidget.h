@@ -31,6 +31,14 @@ class HtmlGeneratorWidget : public QWidget, public AbstractProducerWidget
     Q_OBJECT
 
 public:
+    static const char *kColorProperty;
+    static const char *kCssProperty;
+    static const char *kBodyProperty;
+    static const char *kJavaScriptProperty;
+    static const char *kLine1Property;
+    static const char *kLine2Property;
+    static const char *kLine3Property;
+
     explicit HtmlGeneratorWidget(QWidget *parent = 0);
     ~HtmlGeneratorWidget();
 
