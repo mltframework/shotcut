@@ -72,7 +72,6 @@ void ScreenCaptureJob::stop()
         // For screen recording, try to terminate gracefully first
 #ifdef Q_OS_MAC
         write("q");
-        QTimer::singleShot(1000, this, [this]() { AbstractJob::stop(); });
 #endif
     } else {
         // For screenshots, terminate immediately
