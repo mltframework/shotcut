@@ -48,6 +48,7 @@ Shotcut.KeyframableFilter {
             var index = presetParams.indexOf('argument');
             if (index > -1)
                 presetParams.splice(index, 1);
+            filter.set('argument', '');
             // Set monospace font for typewriter effect
             if (application.OS === 'Windows')
                 filter.set('family', 'Consolas');
@@ -135,7 +136,7 @@ Shotcut.KeyframableFilter {
             id: preset
 
             Layout.columnSpan: 3
-            parameters: textFilterUi.parameterList.concat(['argument', 'typewriter.step_length', 'typewriter.step_sigma', 'typewriter.random_seed', 'typewriter.macro_type', 'typewriter.cursor', 'typewriter.cursor_blink_rate', 'typewriter.cursor_char'])
+            parameters: textFilterUi.parameterList.concat(['typewriter.step_length', 'typewriter.step_sigma', 'typewriter.random_seed', 'typewriter.macro_type', 'typewriter.cursor', 'typewriter.cursor_blink_rate', 'typewriter.cursor_char', 'argument'])
             onBeforePresetLoaded: {
                 filter.resetProperty(textFilterUi.rectProperty);
                 filter.set(textFilterUi.pointSizeProperty, 0);
