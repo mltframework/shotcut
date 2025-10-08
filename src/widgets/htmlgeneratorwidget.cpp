@@ -113,6 +113,32 @@ HtmlGeneratorWidget::HtmlGeneratorWidget(QWidget *parent)
     p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
     ui->preset->savePreset(p, tr("Gold Metal (Image)"));
 
+    f.setFileName(QStringLiteral(":/resources/html/party_time/css"));
+    f.open(QIODevice::ReadOnly);
+    p.set(kCssProperty, f.readAll().toBase64().constData());
+    f.close();
+    f.setFileName(QStringLiteral(":/resources/html/party_time/party_time.js"));
+    f.open(QIODevice::ReadOnly);
+    p.set(kJavaScriptProperty, f.readAll().toBase64().constData());
+    f.close();
+    f.setFileName(QStringLiteral(":/resources/html/party_time/body.html"));
+    f.open(QIODevice::ReadOnly);
+    p.set(kBodyProperty, f.readAll().toBase64().constData());
+    f.close();
+    p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
+    ui->preset->savePreset(p, tr("Party Time (Video)"));
+
+    f.setFileName(QStringLiteral(":/resources/html/three_d/css"));
+    f.open(QIODevice::ReadOnly);
+    p.set(kCssProperty, f.readAll().toBase64().constData());
+    f.close();
+    f.setFileName(QStringLiteral(":/resources/html/three_d/body.html"));
+    f.open(QIODevice::ReadOnly);
+    p.set(kBodyProperty, f.readAll().toBase64().constData());
+    f.close();
+    p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
+    ui->preset->savePreset(p, tr("3D (Image)"));
+
     ui->preset->loadPresets();
 }
 
@@ -240,11 +266,11 @@ QString HtmlGeneratorWidget::generateHtml() const
 <html>
   <head>
     <style>%1</style>
-    <script>%2</script>
   </head>
   <body style="margin: 0; background: %3">
 %4
   </body>
+  <script>%2</script>
 </html>
 )");
     // Format the body text with line inputs using QString::arg()

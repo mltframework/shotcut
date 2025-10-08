@@ -10,5 +10,10 @@
         <file>resources/html/elastic_stroke/css</file>
         <file>resources/html/gold_metal/body.html</file>
         <file>resources/html/gold_metal/css</file>
+        <file>resources/html/party_time/body.html</file>
+        <file>resources/html/party_time/party_time.js</file>
+        <file>resources/html/party_time/css</file>
+        <file>resources/html/three_d/body.html</file>
+        <file>resources/html/three_d/css</file>
     </qresource>
 </RCC>
