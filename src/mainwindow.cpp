@@ -5535,11 +5535,11 @@ void MainWindow::onHtmlGeneratorTriggered()
         QMessageBox
             dialog(QMessageBox::Warning,
                    QApplication::applicationName(),
-                   this->tr("<p>This feature requires Google Chrome, Microsoft Edge, or a "
-                            "Chromium-based browser.</p>"
-                            "<p>If you already installed one it could not be "
-                            "found at the expected location: <tt>%1</tt></p><p>Click <b>OK</b> to "
-                            "continue and locate the program on your system.</p>")
+                   this->tr(
+                           "<p>This feature requires Google Chrome or a Chromium-based browser.</p>"
+                           "<p>If you already installed one it could not be "
+                           "found at the expected location: <tt>%1</tt></p><p>Click <b>OK</b> to "
+                           "continue and locate the program on your system.</p>")
                        .arg(Settings.chromiumPath()),
                    QMessageBox::Cancel | QMessageBox::Ok,
                    this);

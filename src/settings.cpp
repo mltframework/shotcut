@@ -1661,8 +1661,7 @@ QString ShotcutSettings::chromiumPath() const
 #if defined(Q_OS_MAC)
     return settings.value("dockerPath", "/Applications/Google Chrome.app").toString();
 #elif defined(Q_OS_WIN)
-    return settings
-        .value("dockerPath", "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe")
+    return settings.value("chromiumPath", "C:/Program Files/Google/Chrome/Application/chrome.exe")
         .toString();
 #else
     return settings.value("chromiumPath", "chromium").toString();

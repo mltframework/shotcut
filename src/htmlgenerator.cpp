@@ -73,7 +73,8 @@ void HtmlGenerator::launchBrowser(const QString &executablePath,
               // << "--single-process"
               << "--no-first-run"
               << "--no-default-browser-check"
-              << "--allow-file-access-from-files";
+              << "--allow-file-access-from-files"
+              << "--user-data-dir=" + m_tempDir.path();
 
     connect(m_chromeProcess, &QProcess::finished, this, &HtmlGenerator::onChromeProcessFinished);
     connect(m_chromeProcess, &QProcess::errorOccurred, this, &HtmlGenerator::onChromeProcessError);

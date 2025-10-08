@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QProcess>
 #include <QSize>
+#include <QTemporaryDir>
 #include <QTimer>
 #include <QWebSocket>
 
@@ -71,6 +72,7 @@ private:
     bool m_pendingScreenshot = false;
     int m_screenshotMessageId = 0;
     bool m_screenshotCompleted = false;
+    QTemporaryDir m_tempDir;
 
     // Animation recording members
     bool m_animationMode = false;
