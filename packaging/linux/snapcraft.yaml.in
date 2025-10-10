@@ -13,17 +13,17 @@ confinement: classic
 
 apps:
   shotcut:
-    command: Shotcut.app/shotcut
+    command: ./shotcut
   ffmpeg:
-    command: Shotcut.app/ffmpeg
+    command: ./ffmpeg
   ffplay:
-    command: Shotcut.app/ffplay
+    command: ./ffplay
   ffprobe:
-    command: Shotcut.app/ffprobe
+    command: ./ffprobe
   melt:
-    command: Shotcut.app/melt
+    command: ./melt
   glaxnimate:
-    command: Shotcut.app/glaxnimate
+    command: ./glaxnimate
 
 parts:
   shotcut:
