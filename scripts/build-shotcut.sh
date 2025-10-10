@@ -2191,7 +2191,7 @@ End-of-shotcut-wrapper
       cmd rm -rf Shotcut/Shotcut.app/share/doc
       cmd rm -rf Shotcut/Shotcut.app/share/man
     fi
-    cmd tar -cJvf "$tarball" Shotcut
+    cmd tar -C Shotcut -cJvf "$tarball" Shotcut.app
   fi
 
   if [ "$ACTION_CLEANUP" = "1" ]; then

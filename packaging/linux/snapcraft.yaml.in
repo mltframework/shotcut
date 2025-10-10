@@ -30,7 +30,4 @@ parts:
     plugin: dump
     source: '$FILENAME'
     source-type: tar
-    organize:
-      'Shotcut': './'
-      'Shotcut.app/lib/qt5/platformthemes/libqxdgdesktopportal.so': './'
     build-attributes: [no-patchelf]

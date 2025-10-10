@@ -9,7 +9,7 @@ verbose: true
 #    - echo "multiarch-support" >> excludedeblist
                                                                                                                                          
 script:
-  - tar xJ -C usr/bin --strip=2 -f ../../../../scripts/shotcut-linux-x86_64-*.txz
+  - tar -xJ -C usr/bin --strip=1 -f ../../../../scripts/shotcut-linux-x86_64-*.txz
   - cp -p ../../../../icons/shotcut-logo-64.png shotcut.png
   - cp -p ../../../../packaging/linux/org.shotcut.Shotcut.desktop shotcut.desktop
   - desktop-file-edit --set-key=Exec --set-value=shotcut shotcut.desktop
