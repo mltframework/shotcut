@@ -10301,54 +10301,64 @@ Remove the subtitle filter before removing this track.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="25"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="39"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="38"/>
         <source>Type or paste the text here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="48"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="47"/>
         <source>Background color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="61"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="60"/>
         <source>#00000000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="88"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="87"/>
         <source>Simple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="98"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="97"/>
         <source>Rich</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="120"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="104"/>
+        <source>Typewriter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.ui" line="126"/>
         <source>Text attributes are available in the &lt;b&gt;Filters&lt;/b&gt; panel after clicking &lt;b&gt;OK&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="59"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="60"/>
         <source>black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="61"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="62"/>
         <source>transparent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="179"/>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="212"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="181"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="230"/>
         <source>Edit your text using the Filters panel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="214"/>
+        <source>Edit Filters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12856,6 +12866,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="40"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="26"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="37"/>
         <source>Font color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12865,6 +12876,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/outline/meta.qml" line="6"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="32"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="31"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="45"/>
         <source>Outline</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12873,6 +12885,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="52"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="38"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="37"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="53"/>
         <source>Background</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13133,7 +13146,7 @@ IRE: %2</source>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="44"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="43"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="58"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="61"/>
         <source>Opacity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14075,7 +14088,6 @@ IRE: %2</source>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="26"/>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="51"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14789,16 +14801,6 @@ IRE: %2</source>
         <location filename="../src/qml/filters/typewriter/meta.qml" line="23"/>
         <source>type typing cursor terminal console</source>
         <comment>search keywords for the Text: Typewriter video filter</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="37"/>
-        <source>Foreground color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/typewriter/meta.qml" line="44"/>
-        <source>Outline color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

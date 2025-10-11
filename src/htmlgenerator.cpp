@@ -79,6 +79,7 @@ void HtmlGenerator::launchBrowser(const QString &executablePath,
     connect(m_chromeProcess, &QProcess::finished, this, &HtmlGenerator::onChromeProcessFinished);
     connect(m_chromeProcess, &QProcess::errorOccurred, this, &HtmlGenerator::onChromeProcessError);
 
+    LOG_DEBUG() << executablePath + " " + arguments.join(' ');
     m_chromeProcess->start(executablePath, arguments);
 
     if (!m_chromeProcess->waitForStarted(5000)) {

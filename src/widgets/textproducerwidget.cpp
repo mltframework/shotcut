@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024 Meltytech, LLC
+ * Copyright (c) 2018-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 static const QString kTransparent = QObject::tr("transparent", "Open Other > Color");
 static const char *kSimpleFilterName = "dynamicText";
 static const char *kRichFilterName = "richText";
+static const char *kTypewriterFilterName = "typewriter";
 static const int kPointSize = 60;
 
 static QString colorToString(const QColor &color)
@@ -171,6 +172,7 @@ void TextProducerWidget::on_preset_saveClicked()
 Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Producer *p)
 {
     Mlt::Filter *filter = nullptr;
+    auto fgcolor = "#ffffffff";
     if (ui->richRadioButton->isChecked()) {
         filter = new Mlt::Filter(profile, "qtext");
         filter->set(kShotcutFilterProperty, kRichFilterName);
@@ -202,6 +204,22 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
 #endif
         html = html.arg(text);
         filter->set("html", html.toUtf8().constData());
+    } else if (ui->typeWriterRadioButton->isChecked()) {
+        filter = new Mlt::Filter(profile, "qtext");
+        filter->set(kShotcutFilterProperty, kTypewriterFilterName);
+        fgcolor = "#ff00ff00";
+        if (!ui->plainTextEdit->toPlainText().isEmpty())
+            filter->set("argument", ui->plainTextEdit->toPlainText().toUtf8().constData());
+        else
+            filter->set("argument", tr("Edit Filters").toUtf8().constData());
+        filter->set("typewriter", 1);
+        filter->set("typewriter.step_length", 8);
+        filter->set("typewriter.step_sigma", 2);
+        filter->set("typewriter.random_seed", 0);
+        filter->set("typewriter.macro_type", 1);
+        filter->set("typewriter.cursor", 1);
+        filter->set("typewriter.cursor_blink_rate", 25);
+        filter->set("typewriter.cursor_char", '|');
     } else {
         filter = new Mlt::Filter(profile, "dynamictext");
         filter->set(kShotcutFilterProperty, kSimpleFilterName);
@@ -216,7 +234,7 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
 #elif defined(Q_OS_MAC)
     filter->set("family", "Helvetica");
 #endif
-    filter->set("fgcolour", "#ffffffff");
+    filter->set("fgcolour", fgcolor);
     filter->set("bgcolour", "#00000000");
     filter->set("olcolour", "#aa000000");
     filter->set("outline", 3);
