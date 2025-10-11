@@ -34,23 +34,26 @@ Metadata {
         simpleProperties: ['opacity']
         parameters: [
             Parameter {
-                name: qsTr('Foreground color')
+                name: qsTr('Font color')
                 property: 'fgcolour'
-                isCurve: true
+                isCurve: false
+                isColor: true
                 minimum: 0
                 maximum: 1
             },
             Parameter {
-                name: qsTr('Outline color')
+                name: qsTr('Outline')
                 property: 'olcolour'
-                isCurve: true
+                isCurve: false
+                isColor: true
                 minimum: 0
                 maximum: 1
             },
             Parameter {
-                name: qsTr('Background color')
+                name: qsTr('Background')
                 property: 'bgcolour'
-                isCurve: true
+                isCurve: false
+                isColor: true
                 minimum: 0
                 maximum: 1
             },

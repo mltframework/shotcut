@@ -33,9 +33,9 @@ Shotcut.KeyframableFilter {
     }
 
     keyframableParameters: ['fgcolour', 'olcolour', 'bgcolour', 'opacity']
-    startValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.0]
-    middleValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 1.0]
-    endValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.0]
+    startValues: [Qt.rgba(0, 1, 0, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.0]
+    middleValues: [Qt.rgba(0, 1, 0, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 1.0]
+    endValues: [Qt.rgba(0, 1, 0, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.0]
     width: 425
     height: 570
     Component.onCompleted: {
@@ -57,9 +57,9 @@ Shotcut.KeyframableFilter {
             else
                 filter.set('family', 'monospace');
 
-            filter.set('fgcolour', '#ff00ff00'); // Green terminal text
-            filter.set('bgcolour', '#00000000');
-            filter.set('olcolour', '#aa000000');
+            filter.set('fgcolour', Qt.color('#ff00ff00')); // Green terminal text
+            filter.set('bgcolour', Qt.color('#00000000'));
+            filter.set('olcolour', Qt.color('#aa000000'));
             filter.set('opacity', 1.0);
             filter.set('outline', 0);
             filter.set('weight', Font.Normal);
