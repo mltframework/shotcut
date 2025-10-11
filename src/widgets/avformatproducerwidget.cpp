@@ -58,6 +58,10 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     ui->setupUi(this);
     ui->timelineDurationText->setFixedWidth(ui->durationSpinBox->width());
     ui->filenameLabel->setFrame(true);
+#ifndef EXTERNAL_LAUNCHERS
+    delete ui->openWithButton;
+#endif
+
     Util::setColorsToHighlight(ui->filenameLabel, QPalette::Base);
     connect(ui->applySpeedButton, SIGNAL(clicked()), SLOT(on_speedSpinBox_editingFinished()));
     connect(this,

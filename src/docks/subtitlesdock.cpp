@@ -194,7 +194,9 @@ SubtitlesDock::SubtitlesDock(QWidget *parent)
     mainMenu->addAction(Actions["subtitleBurnInAction"]);
     mainMenu->addAction(Actions["subtitleGenerateTextAction"]);
     mainMenu->addAction(Actions["subtitleSpeechToTextAction"]);
+#ifdef EXTERNAL_LAUNCHERS
     mainMenu->addAction(Actions["subtitleTextToSpeechAction"]);
+#endif
     mainMenu->addAction(Actions["subtitleTrackTimelineAction"]);
     mainMenu->addAction(Actions["subtitleShowPrevNextAction"]);
 
@@ -264,10 +266,12 @@ SubtitlesDock::SubtitlesDock(QWidget *parent)
     button->setAutoRaise(true);
     toolbar->addWidget(button);
 
+#ifdef EXTERNAL_LAUNCHERS
     button = new QToolButton;
     button->setDefaultAction(Actions["subtitleTextToSpeechAction"]);
     button->setAutoRaise(true);
     toolbar->addWidget(button);
+#endif
 
     vboxLayout->addWidget(toolbar);
 
@@ -434,12 +438,14 @@ void SubtitlesDock::setupActions()
     connect(action, &QAction::triggered, this, &SubtitlesDock::speechToText);
     Actions.add("subtitleSpeechToTextAction", action, windowTitle());
 
+#ifdef EXTERNAL_LAUNCHERS
     action = new QAction(tr("Text to Speech..."), this);
     action->setToolTip(tr("Convert the current subtitle track to spoken audio."));
     action->setIcon(
         QIcon::fromTheme("text-speak", QIcon(":/icons/oxygen/32x32/actions/text-speak.png")));
     connect(action, &QAction::triggered, this, &SubtitlesDock::textToSpeech);
     Actions.add("subtitleTextToSpeechAction", action, windowTitle());
+#endif
 
     action = new QAction(tr("Track Timeline Cursor"), this);
     action->setToolTip(tr("Track the timeline cursor"));
@@ -1005,7 +1011,9 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["subtitleBurnInAction"]->setEnabled(false);
         Actions["subtitleGenerateTextAction"]->setEnabled(false);
         Actions["subtitleSpeechToTextAction"]->setEnabled(false);
+#ifdef EXTERNAL_LAUNCHERS
         Actions["subtitleTextToSpeechAction"]->setEnabled(false);
+#endif
     } else {
         m_addToTimelineLabel->setVisible(false);
         Actions["subtitleCreateEditItemAction"]->setEnabled(true);
@@ -1014,7 +1022,9 @@ void SubtitlesDock::updateActionAvailablity()
         Actions["SubtitleImportAction"]->setEnabled(true);
         Actions["subtitleAddItemAction"]->setEnabled(true);
         Actions["subtitleSpeechToTextAction"]->setEnabled(true);
+#ifdef EXTERNAL_LAUNCHERS
         Actions["subtitleTextToSpeechAction"]->setEnabled(true);
+#endif
         if (m_model->trackCount() == 0) {
             Actions["subtitleRemoveTrackAction"]->setEnabled(false);
             Actions["SubtitleExportAction"]->setEnabled(false);
@@ -1024,7 +1034,9 @@ void SubtitlesDock::updateActionAvailablity()
             Actions["subtitleSetEndAction"]->setEnabled(false);
             Actions["subtitleBurnInAction"]->setEnabled(false);
             Actions["subtitleGenerateTextAction"]->setEnabled(false);
+#ifdef EXTERNAL_LAUNCHERS
             Actions["subtitleTextToSpeechAction"]->setEnabled(false);
+#endif
         } else {
             Actions["subtitleRemoveTrackAction"]->setEnabled(true);
             Actions["SubtitleExportAction"]->setEnabled(true);

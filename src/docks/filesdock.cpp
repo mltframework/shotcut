@@ -846,6 +846,7 @@ void FilesDock::setupActions()
     });
     Actions.add("filesOpenDefaultAction", action);
 
+#ifdef EXTERNAL_LAUNCHERS
     action = new QAction(tr("Other..."), this);
     action->setEnabled(false);
     connect(m_selectionModel, &QItemSelectionModel::selectionChanged, action, [=]() {
@@ -861,6 +862,7 @@ void FilesDock::setupActions()
     });
     connect(action, &QAction::triggered, this, &FilesDock::onOpenOtherRemove);
     Actions.add("filesOpenWithRemoveAction", action);
+#endif
 
     action = new QAction(tr("Show In File Manager"), this);
     connect(action, &QAction::triggered, this, [=]() {
@@ -1028,6 +1030,7 @@ void FilesDock::addOpenWithMenu(QMenu *menu)
 {
     auto subMenu = menu->addMenu(tr("Open With"));
     subMenu->addAction(Actions["filesOpenDefaultAction"]);
+#ifdef EXTERNAL_LAUNCHERS
     subMenu->addSeparator();
     // custom options
     auto programs = Settings.filesOpenOther(firstSelectedMediaType());
@@ -1043,6 +1046,7 @@ void FilesDock::addOpenWithMenu(QMenu *menu)
     // custom options actions
     subMenu->addAction(Actions["filesOpenWithOtherAction"]);
     subMenu->addAction(Actions["filesOpenWithRemoveAction"]);
+#endif
 }
 
 QString FilesDock::firstSelectedFilePath()

@@ -63,6 +63,7 @@ public:
         Actions.add("notesIncreaseTextSize", action, objectName());
         connect(action, &QAction::triggered, this, [=]() { setZoom(4); });
 
+#ifdef EXTERNAL_LAUNCHERS
         icon = QIcon::fromTheme("text-speak", QIcon(":/icons/oxygen/32x32/actions/text-speak.png"));
         action = new QAction(icon, tr("Text to Speech..."), this);
         addAction(action);
@@ -100,6 +101,7 @@ public:
                 JOBS.add(job);
             });
         });
+#endif
 
         connect(this, &QWidget::customContextMenuRequested, this, [=](const QPoint &pos) {
             std::unique_ptr<QMenu> menu{createStandardContextMenu()};
@@ -157,8 +159,10 @@ NotesDock::NotesDock(QWidget *parent)
     const auto actions = m_textEdit->actions();
     toolbar->addAction(actions.at(0)); // Decrease Text Size
     toolbar->addAction(actions.at(1)); // Increase Text Size
+#ifdef EXTERNAL_LAUNCHERS
     toolbar->addSeparator();
     toolbar->addAction(actions.at(2)); // Text to Speech
+#endif
     layout->addWidget(toolbar, /*stretch*/ 0);
     QDockWidget::setWidget(container);
 

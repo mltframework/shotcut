@@ -1522,8 +1522,10 @@ void MainWindow::setupOpenOtherMenu()
             ->setObjectName("glaxnimate");
         otherMenu->addAction(ui->menuNew->actions().constLast());
     }
+#ifdef EXTERNAL_LAUNCHERS
     ui->menuNew->addAction(tr("Image/Video from HTML"), this, SLOT(onHtmlGeneratorTriggered()))
         ->setObjectName("html");
+#endif
     otherMenu->addAction(ui->menuNew->actions().constLast());
     if (mltProducers->get_data("noise")) {
         ui->menuNew->addAction(tr("Noise"), this, SLOT(onOpenOtherTriggered()))
@@ -1550,7 +1552,7 @@ void MainWindow::setupOpenOtherMenu()
             ->setObjectName("blipflash");
         otherMenu->addAction(ui->menuNew->actions().constLast());
     }
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+#if (defined(Q_OS_MAC) || defined(Q_OS_WIN)) && defined(EXTERNAL_LAUNCHERS)
     ui->actionScreenSnapshot->setVisible(true);
     ui->actionScreenRecording->setVisible(true);
     ui->menuNew->addAction(tr("Screen Snapshot"), this, SLOT(on_actionScreenSnapshot_triggered()))

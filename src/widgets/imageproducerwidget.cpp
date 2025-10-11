@@ -50,6 +50,9 @@ ImageProducerWidget::ImageProducerWidget(QWidget *parent)
     , m_defaultDuration(-1)
 {
     ui->setupUi(this);
+#ifndef EXTERNAL_LAUNCHERS
+    delete ui->openWithButton;
+#endif
     Util::setColorsToHighlight(ui->filenameLabel, QPalette::Base);
 }
 

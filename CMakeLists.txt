@@ -21,6 +21,7 @@ if(WIN32)
   option(WINDOWS_DEPLOY "Install exes/libs directly to prefix (no subdir /bin)" ON)
 endif()
 option(CLANG_FORMAT "Enable Clang Format" ON)
+option(EXTERNAL_LAUNCHERS "Whether include features to launch external programs; for example, this should be off for Flatpak due to sandbox." ON)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 

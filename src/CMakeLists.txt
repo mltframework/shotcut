@@ -285,6 +285,11 @@ target_sources(shotcut PRIVATE ${QML_SRC})
 target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/CuteLogger/include)
 target_compile_definitions(shotcut PRIVATE SHOTCUT_VERSION="${SHOTCUT_VERSION}")
 
+# Add EXTERNAL_LAUNCHERS compile definition when the cache variable is ON
+if(EXTERNAL_LAUNCHERS)
+  target_compile_definitions(shotcut PRIVATE EXTERNAL_LAUNCHERS)
+endif()
+
 if(WIN32)
   # Windows resource
   string(REPLACE . , PRODUCT_VERSION ${PROJECT_VERSION})
