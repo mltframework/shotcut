@@ -1630,7 +1630,7 @@ void AvformatProducerWidget::on_openWithButton_clicked()
     for (const auto &program : programs) {
         auto action = menu.addAction(QFileInfo(program).baseName(), this, [=]() {
             LOG_DEBUG() << program << filePath;
-            if (QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
+            if (Util::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
                 m_watcher.reset(new QFileSystemWatcher({filePath}));
                 connect(m_watcher.get(),
                         &QFileSystemWatcher::fileChanged,
@@ -1664,7 +1664,7 @@ void AvformatProducerWidget::onOpenOtherAdd()
     const auto program = Util::getExecutable(&MAIN);
     if (!program.isEmpty()) {
         LOG_DEBUG() << program << filePath;
-        if (QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
+        if (Util::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
             Settings.setFilesOpenOther(mediaType(), program);
             m_watcher.reset(new QFileSystemWatcher({filePath}));
             connect(m_watcher.get(),

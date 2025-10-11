@@ -42,6 +42,7 @@
 #include <QMediaDevices>
 #include <QMessageBox>
 #include <QProcess>
+#include <QProcessEnvironment>
 #include <QRegularExpression>
 #include <QStandardPaths>
 #include <QStorageInfo>
@@ -1163,4 +1164,17 @@ bool Util::isChromiumAvailable()
     // Check if Chromium executable file exists and is executable
     QFileInfo fileInfo(Settings.chromiumPath());
     return fileInfo.exists() && fileInfo.isExecutable();
+}
+
+bool Util::startDetached(const QString &program, const QStringList &arguments)
+{
+    QProcess process;
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    auto env = QProcessEnvironment::systemEnvironment();
+    env.remove("LD_LIBRARY_PATH");
+    process.setProcessEnvironment(env);
+#endif
+
+    return process.startDetached(program, arguments);
 }

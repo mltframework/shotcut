@@ -105,6 +105,7 @@ public:
                                           QObject *receiver,
                                           std::function<void(bool)> callback);
     static bool isChromiumAvailable();
+    static bool startDetached(const QString &program, const QStringList &arguments);
 };
 
 #endif // UTIL_H

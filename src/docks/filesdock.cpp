@@ -1038,7 +1038,7 @@ void FilesDock::addOpenWithMenu(QMenu *menu)
         auto action = subMenu->addAction(QFileInfo(program).baseName(), this, [=]() {
             const auto filePath = firstSelectedFilePath();
             LOG_DEBUG() << program << filePath;
-            QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)});
+            Util::startDetached(program, {QDir::toNativeSeparators(filePath)});
         });
         action->setObjectName(program);
     }
@@ -1280,7 +1280,7 @@ void FilesDock::onOpenOtherAdd()
 
     const auto program = Util::getExecutable(&MAIN);
     if (!program.isEmpty()) {
-        if (QProcess::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
+        if (Util::startDetached(program, {QDir::toNativeSeparators(filePath)})) {
             Settings.setFilesOpenOther(firstSelectedMediaType(), program);
         }
     }
