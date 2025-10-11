@@ -16,6 +16,7 @@
  */
 
 #include "FlatpakWrapperGenerator.h"
+#include "Logger.h"
 
 #include <QDebug>
 #include <QDir>
@@ -34,6 +35,14 @@ static QString trim(const QString &s)
 QList<AppEntry> FlatpakWrapperGenerator::listInstalledApps() const
 {
     QProcess p;
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    auto env = QProcessEnvironment::systemEnvironment();
+    env.remove("LD_LIBRARY_PATH");
+    LOG_DEBUG() << env.toStringList();
+    p.setProcessEnvironment(env);
+#endif
+
     p.start("/usr/bin/flatpak", {"list", "--app", "--columns=application,branch"});
     if (!p.waitForStarted(5000)) {
         qWarning() << "Failed to start flatpak";

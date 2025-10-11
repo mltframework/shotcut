@@ -79,6 +79,13 @@ void HtmlGenerator::launchBrowser(const QString &executablePath,
     connect(m_chromeProcess, &QProcess::finished, this, &HtmlGenerator::onChromeProcessFinished);
     connect(m_chromeProcess, &QProcess::errorOccurred, this, &HtmlGenerator::onChromeProcessError);
 
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    auto env = QProcessEnvironment::systemEnvironment();
+    env.remove("LD_LIBRARY_PATH");
+    LOG_DEBUG() << env.toStringList();
+    m_chromeProcess->setProcessEnvironment(env);
+#endif
+
     LOG_DEBUG() << executablePath + " " + arguments.join(' ');
     m_chromeProcess->start(executablePath, arguments);
 
