@@ -1664,7 +1664,7 @@ QString ShotcutSettings::chromiumPath() const
     return settings.value("chromiumPath", "C:/Program Files/Google/Chrome/Application/chrome.exe")
         .toString();
 #else
-    return settings.value("chromiumPath", "chromium").toString();
+    return settings.value("chromiumPath", "/usr/bin/chromium-browser").toString();
 #endif
 }
 
