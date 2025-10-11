@@ -37,7 +37,7 @@ Shotcut.KeyframableFilter {
     middleValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 1.0]
     endValues: [Qt.rgba(1, 1, 1, 1), Qt.rgba(0, 0, 0, 2.0 / 3.0), Qt.rgba(0, 0, 0, 0), 0.0]
     width: 425
-    height: 550
+    height: 570
     Component.onCompleted: {
         filter.blockSignals = true;
         filter.set(textFilterUi.middleValue, Qt.rect(0, 0, profile.width, profile.height));
