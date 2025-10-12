@@ -237,7 +237,7 @@ public:
             ShotcutSettings::setAppDataForSession(appDirArg);
         }
         if (parser.isSet(gpuOption))
-            Settings.setPlayerGPU(true);
+            Settings.setProcessingMode(ShotcutSettings::Native10GpuCpu);
         if (!parser.positionalArguments().isEmpty())
             resourceArg = parser.positionalArguments();
 
