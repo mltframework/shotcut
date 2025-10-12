@@ -1223,7 +1223,15 @@ QPoint EncodeDock::addConsumerElement(
         consumerNode.setAttribute("strict", "experimental");
     if (!ui->disableSubtitlesCheckbox->isChecked())
         setSubtitleProperties(consumerNode, service);
-
+    ShotcutSettings::ProcessingMode processingMode = Settings.processingMode();
+    if (processingMode == ShotcutSettings::Native10Cpu
+        || processingMode == ShotcutSettings::Linear10Cpu) {
+        consumerNode.setAttribute("mlt_image_format", "rgba64");
+    }
+    if (processingMode == ShotcutSettings::Linear8Cpu
+        || processingMode == ShotcutSettings::Linear10Cpu) {
+        consumerNode.setAttribute("mlt_color_trc", "linear");
+    }
     return QPoint(consumerNode.hasAttribute("frame_rate_num")
                       ? consumerNode.attribute("frame_rate_num").toInt()
                       : MLT.profile().frame_rate_num(),

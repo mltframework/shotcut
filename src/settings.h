@@ -81,6 +81,7 @@ class ShotcutSettings : public QObject
 public:
     static const qsizetype MaxPath{32767};
     enum TimelineScrolling { NoScrolling, CenterPlayhead, PageScrolling, SmoothScrolling };
+    enum ProcessingMode { Native8Cpu, Linear8Cpu, Native10Cpu, Linear10Cpu, Native10GpuCpu };
 
     static ShotcutSettings &singleton();
     void log();
@@ -124,6 +125,10 @@ public:
     void setExportFrameSuffix(const QString &suffix);
     bool convertAdvanced() const;
     void setConvertAdvanced(bool);
+    ProcessingMode processingMode();
+    void setProcessingMode(ProcessingMode mode);
+    QString processingModeStr(ProcessingMode mode);
+    ProcessingMode processingModeId(const QString &mode);
 
     // encode
     QString encodePath() const;
@@ -149,7 +154,6 @@ public:
     QString playerExternal() const;
     void setPlayerExternal(const QString &);
     bool playerGPU() const;
-    void setPlayerGPU(bool);
     bool playerWarnGPU() const;
     QString playerInterpolation() const;
     void setPlayerInterpolation(const QString &);

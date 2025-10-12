@@ -65,6 +65,7 @@ Controller::Controller()
     LOG_DEBUG() << "begin";
     ::qputenv("MLT_REPOSITORY_DENY", "libmltqt:libmltglaxnimate");
     m_repo = Mlt::Factory::init();
+    m_processingMode = Settings.processingMode();
     resetLocale();
     initFiltersClipboard();
     updateAvformatCaching(0);
@@ -156,6 +157,13 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
             if (!channels)
                 channels = 2;
             m_audioChannels = channels;
+            // Load the processing mode
+            QString mode = newProducer->get(kShotcutProjectProcessingMode);
+            if (mode.isEmpty()) {
+                m_processingMode = ShotcutSettings::Native8Cpu;
+            } else {
+                m_processingMode = Settings.processingModeId(mode);
+            }
         }
         if (Util::isFpsDifferent(profile().fps(), fps)
             || (Settings.playerGPU() && !profile().is_explicit())) {
@@ -482,6 +490,8 @@ bool Controller::saveXML(const QString &filename,
         QString root = withRelativePaths ? QDir::fromNativeSeparators(fi.absolutePath()) : "";
         s.set(kShotcutProjectAudioChannels, m_audioChannels);
         s.set(kShotcutProjectFolder, m_projectFolder.isEmpty() ? 0 : 1);
+        s.set(kShotcutProjectProcessingMode,
+              Settings.processingModeStr(Settings.processingMode()).toUtf8().constData());
         if (!projectNote.isEmpty()) {
             s.set(kShotcutProjectNote, projectNote.toUtf8().constData());
         } else {
@@ -625,6 +635,14 @@ void Controller::setAudioChannels(int audioChannels)
     LOG_DEBUG() << audioChannels;
     if (audioChannels != m_audioChannels) {
         m_audioChannels = audioChannels;
+        restart();
+    }
+}
+
+void Controller::setProcessingMode(ShotcutSettings::ProcessingMode mode)
+{
+    if (m_processingMode != mode) {
+        m_processingMode = mode;
         restart();
     }
 }

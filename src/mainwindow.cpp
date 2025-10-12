@@ -679,6 +679,7 @@ void MainWindow::setupAndConnectDocks()
             m_filterController->motionTrackerModel(),
             &MotionTrackerModel::removeFromService);
     connect(this, SIGNAL(audioChannelsChanged()), m_filterController, SLOT(setProducer()));
+    connect(this, SIGNAL(processingModeChanged()), m_filterController, SLOT(setProducer()));
     connect(m_timelineDock,
             &TimelineDock::trimStarted,
             m_filterController,
@@ -1039,7 +1040,74 @@ MainWindow::~MainWindow()
 void MainWindow::setupSettingsMenu()
 {
     LOG_DEBUG() << "begin";
+
     QActionGroup *group = new QActionGroup(this);
+    ui->actionNative8bitCpu->setData(ShotcutSettings::Native8Cpu);
+    ui->actionLinear8bitCpu->setData(ShotcutSettings::Linear8Cpu);
+    ui->actionNative10bitCpu->setData(ShotcutSettings::Native10Cpu);
+    ui->actionLinear10bitCpu->setData(ShotcutSettings::Linear10Cpu);
+    ui->actionNative10bitGpuCpu->setData(ShotcutSettings::Native10GpuCpu);
+    group->addAction(ui->actionNative8bitCpu);
+    group->addAction(ui->actionLinear8bitCpu);
+    group->addAction(ui->actionNative10bitCpu);
+    group->addAction(ui->actionLinear10bitCpu);
+    group->addAction(ui->actionNative10bitGpuCpu);
+    for (auto a : group->actions()) {
+        ShotcutSettings::ProcessingMode mode = (ShotcutSettings::ProcessingMode) a->data().toInt();
+        if (Settings.processingMode() == mode) {
+            a->setChecked(true);
+            setProcessingMode(mode);
+            break;
+        }
+    }
+    connect(group, &QActionGroup::triggered, this, [&](QAction *action) {
+        ShotcutSettings::ProcessingMode oldMode = Settings.processingMode();
+        ShotcutSettings::ProcessingMode newMode
+            = (ShotcutSettings::ProcessingMode) action->data().toInt();
+        if (oldMode == newMode)
+            return;
+        LOG_INFO() << "Processing Mode" << oldMode << "->" << newMode;
+        if (newMode == ShotcutSettings::Native10GpuCpu) {
+            QMessageBox dialog(QMessageBox::Warning,
+                               qApp->applicationName(),
+                               tr("GPU is experimental and does not work on all computers. "
+                                  "Plan to do some testing after turning this on.\n"
+                                  "At this time, a project created with GPU processing cannot be "
+                                  "converted to a CPU-only project later.\n"
+                                  "Do you want to enable GPU processing and restart Shotcut?"),
+                               QMessageBox::No | QMessageBox::Yes,
+                               this);
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.adjustSize();
+            if (dialog.exec() == QMessageBox::Yes) {
+                Settings.setProcessingMode(newMode);
+                m_exitCode = EXIT_RESTART;
+                QApplication::closeAllWindows();
+            }
+        } else if (oldMode == ShotcutSettings::Native10GpuCpu) {
+            QMessageBox dialog(QMessageBox::Information,
+                               qApp->applicationName(),
+                               tr("Shotcut must restart to disable GPU processing mode.\n"
+                                  "Disable GPU processing and restart?"),
+                               QMessageBox::No | QMessageBox::Yes,
+                               this);
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.adjustSize();
+            if (dialog.exec() == QMessageBox::Yes) {
+                Settings.setProcessingMode(newMode);
+                m_exitCode = EXIT_RESTART;
+                QApplication::closeAllWindows();
+            }
+        } else {
+            setProcessingMode((ShotcutSettings::ProcessingMode) action->data().toInt());
+        }
+    });
+
+    group = new QActionGroup(this);
     group->addAction(ui->actionChannels1);
     group->addAction(ui->actionChannels2);
     group->addAction(ui->actionChannels4);
@@ -1614,12 +1682,12 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker)
 {
     if (checker.needsGPU() && !Settings.playerGPU()) {
         LOG_INFO() << "file uses GPU but GPU not enabled";
-        QMessageBox
-            dialog(QMessageBox::Warning,
-                   qApp->applicationName(),
-                   tr("The file you opened uses GPU effects, but GPU effects are not enabled."),
-                   QMessageBox::Ok,
-                   this);
+        QMessageBox dialog(
+            QMessageBox::Warning,
+            qApp->applicationName(),
+            tr("The file you opened uses GPU processing, but GPU processing mode is not enabled."),
+            QMessageBox::Ok,
+            this);
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Ok);
         dialog.setEscapeButton(QMessageBox::Ok);
@@ -1630,8 +1698,8 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker)
         QMessageBox dialog(QMessageBox::Question,
                            qApp->applicationName(),
                            tr("The file you opened uses CPU effects that are incompatible with GPU "
-                              "effects, but GPU effects are enabled.\n"
-                              "Do you want to disable GPU effects and restart?"),
+                              "effects, but GPU mode is enabled.\n"
+                              "Do you want to disable GPU processing mode and restart?"),
                            QMessageBox::No | QMessageBox::Yes,
                            this);
         dialog.setWindowModality(QmlApplication::dialogModality());
@@ -1639,7 +1707,7 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker)
         dialog.setEscapeButton(QMessageBox::No);
         int r = dialog.exec();
         if (r == QMessageBox::Yes) {
-            ui->actionGPU->setChecked(false);
+            Settings.setProcessingMode(ShotcutSettings::Native8Cpu);
             m_exitCode = EXIT_RESTART;
             QApplication::closeAllWindows();
         }
@@ -1842,6 +1910,34 @@ void MainWindow::setAudioChannels(int channels)
     else if (channels == 6)
         ui->actionChannels6->setChecked(true);
     emit audioChannelsChanged();
+}
+
+void MainWindow::setProcessingMode(ShotcutSettings::ProcessingMode mode)
+{
+    LOG_DEBUG() << mode;
+    if (mode != Settings.processingMode()) {
+        Settings.setProcessingMode(mode);
+    }
+    switch (mode) {
+    case ShotcutSettings::Native8Cpu:
+        ui->actionNative8bitCpu->setChecked(true);
+        break;
+    case ShotcutSettings::Linear8Cpu:
+        ui->actionLinear8bitCpu->setChecked(true);
+        break;
+    case ShotcutSettings::Native10Cpu:
+        ui->actionNative10bitCpu->setChecked(true);
+        break;
+    case ShotcutSettings::Linear10Cpu:
+        ui->actionLinear10bitCpu->setChecked(true);
+        break;
+    case ShotcutSettings::Native10GpuCpu:
+        ui->actionNative10bitGpuCpu->setChecked(true);
+        break;
+    }
+    MLT.videoWidget()->setProperty("processing_mode", mode);
+    MLT.setProcessingMode(mode);
+    emit processingModeChanged();
 }
 
 void MainWindow::showSaveError()
@@ -2090,6 +2186,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         m_player->setPauseAfterOpen(!play || !MLT.isClip());
 
         setAudioChannels(MLT.audioChannels());
+        setProcessingMode(MLT.processingMode());
         if (url.endsWith(".mlt") || url.endsWith(".xml")) {
             if (MLT.producer()->get_int(kShotcutProjectFolder)) {
                 MLT.setProjectFolder(info.absolutePath());
@@ -2294,8 +2391,6 @@ void MainWindow::readPlayerSettings()
     ui->actionScrubAudio->setChecked(Settings.playerScrubAudio());
     if (ui->actionJack)
         ui->actionJack->setChecked(Settings.playerJACK());
-    if (ui->actionGPU)
-        ui->actionGPU->setChecked(Settings.playerGPU());
 
     QString external = Settings.playerExternal();
     bool ok = false;
@@ -2568,7 +2663,6 @@ void MainWindow::writeSettings()
     if (isFullScreen())
         showNormal();
 #endif
-    Settings.setPlayerGPU(ui->actionGPU->isChecked());
     Settings.setWindowGeometry(saveGeometry());
     Settings.setWindowState(saveState());
     Settings.sync();
@@ -4006,11 +4100,11 @@ void MainWindow::on_actionEnterFullScreen_triggered()
 
 void MainWindow::onGpuNotSupported()
 {
-    Settings.setPlayerGPU(false);
-    if (ui->actionGPU) {
-        ui->actionGPU->setChecked(false);
-        ui->actionGPU->setDisabled(true);
+    if (Settings.processingMode() == ShotcutSettings::Native10GpuCpu) {
+        Settings.setProcessingMode(ShotcutSettings::Native8Cpu);
     }
+    ui->actionNative10bitGpuCpu->setChecked(false);
+    ui->actionNative10bitGpuCpu->setDisabled(true);
     LOG_WARNING() << "";
     QMessageBox::critical(this, qApp->applicationName(), tr("GPU effects are not supported"));
 }
@@ -4250,48 +4344,6 @@ void MainWindow::on_actionJack_triggered(bool checked)
             this,
             qApp->applicationName(),
             tr("Failed to connect to JACK.\nPlease verify that JACK is installed and running."));
-    }
-}
-
-void MainWindow::on_actionGPU_triggered(bool checked)
-{
-    if (checked) {
-        QMessageBox dialog(QMessageBox::Warning,
-                           qApp->applicationName(),
-                           tr("GPU effects are experimental and do not work good on all computers. "
-                              "Plan to do some testing after turning this on.\n"
-                              "At this time, a project created with GPU effects cannot be "
-                              "converted to a CPU-only project later."
-                              "\n\n"
-                              "Do you want to enable GPU effects and restart Shotcut?"),
-                           QMessageBox::No | QMessageBox::Yes,
-                           this);
-        dialog.setDefaultButton(QMessageBox::Yes);
-        dialog.setEscapeButton(QMessageBox::No);
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        if (dialog.exec() == QMessageBox::Yes) {
-            m_exitCode = EXIT_RESTART;
-            QApplication::closeAllWindows();
-        } else {
-            ui->actionGPU->setChecked(false);
-        }
-    } else {
-        QMessageBox dialog(QMessageBox::Information,
-                           qApp->applicationName(),
-                           tr("Shotcut must restart to disable GPU effects."
-                              "\n\n"
-                              "Disable GPU effects and restart?"),
-                           QMessageBox::No | QMessageBox::Yes,
-                           this);
-        dialog.setDefaultButton(QMessageBox::Yes);
-        dialog.setEscapeButton(QMessageBox::No);
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        if (dialog.exec() == QMessageBox::Yes) {
-            m_exitCode = EXIT_RESTART;
-            QApplication::closeAllWindows();
-        } else {
-            ui->actionGPU->setChecked(true);
-        }
     }
 }
 
@@ -5675,25 +5727,22 @@ void MainWindow::on_actionClearRecentOnExit_toggled(bool arg1)
 void MainWindow::onSceneGraphInitialized()
 {
     if (Settings.playerGPU() && Settings.playerWarnGPU()) {
-        QMessageBox dialog(QMessageBox::Warning,
-                           qApp->applicationName(),
-                           tr("GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported "
-                              "means do not report bugs about it.\n\n"
-                              "Do you want to disable GPU effects and restart Shotcut?"),
-                           QMessageBox::No | QMessageBox::Yes,
-                           this);
+        QMessageBox
+            dialog(QMessageBox::Warning,
+                   qApp->applicationName(),
+                   tr("GPU processing is EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported "
+                      "means do not report bugs about it.\n\n"
+                      "Do you want to disable GPU processing and restart Shotcut?"),
+                   QMessageBox::No | QMessageBox::Yes,
+                   this);
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
         dialog.setWindowModality(QmlApplication::dialogModality());
         if (dialog.exec() == QMessageBox::Yes) {
-            ui->actionGPU->setChecked(false);
+            Settings.setProcessingMode(ShotcutSettings::Native8Cpu);
             m_exitCode = EXIT_RESTART;
             QApplication::closeAllWindows();
-        } else {
-            ui->actionGPU->setVisible(true);
         }
-    } else {
-        ui->actionGPU->setVisible(true);
     }
     auto videoWidget = (Mlt::VideoWidget *) &(MLT);
     videoWidget->setBlankScene();
