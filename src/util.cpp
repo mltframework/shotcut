@@ -997,6 +997,11 @@ QPair<bool, bool> Util::dockerStatus(const QString &imageName)
 {
     // Check if docker executable is available by running 'docker --version'.
     QProcess proc;
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    auto env = QProcessEnvironment::systemEnvironment();
+    env.remove("LD_LIBRARY_PATH");
+    proc.setProcessEnvironment(env);
+#endif
     proc.start(Settings.dockerPath(), {"--version"});
     if (!proc.waitForStarted(1000)) {
         return qMakePair(false, false);
@@ -1017,6 +1022,11 @@ QPair<bool, bool> Util::dockerStatus(const QString &imageName)
     // Query local images for the given name (may include tag). We avoid pulling.
     // Use 'docker image inspect <imageName>' which returns 0 if present.
     QProcess procImage;
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    env = QProcessEnvironment::systemEnvironment();
+    env.remove("LD_LIBRARY_PATH");
+    procImage.setProcessEnvironment(env);
+#endif
     procImage.start(Settings.dockerPath(), {"image", "inspect", imageName});
     if (!procImage.waitForStarted(1000)) {
         return qMakePair(true, false);
@@ -1057,6 +1067,11 @@ bool Util::isDockerImageCurrent(const QString &imageRef)
 
     // Inspect (local/remote combined behavior) - this is a simplistic approach.
     QProcess localProc;
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    auto env = QProcessEnvironment::systemEnvironment();
+    env.remove("LD_LIBRARY_PATH");
+    localProc.setProcessEnvironment(env);
+#endif
     localProc.start(Settings.dockerPath(), {"image", "inspect", imageRef});
     if (!localProc.waitForStarted(1000) || !localProc.waitForFinished(4000)) {
         if (localProc.state() != QProcess::NotRunning)
@@ -1069,6 +1084,11 @@ bool Util::isDockerImageCurrent(const QString &imageRef)
 
     // Run again expecting remote freshness (will hit registry) without pulling.
     QProcess remoteProc;
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    env = QProcessEnvironment::systemEnvironment();
+    env.remove("LD_LIBRARY_PATH");
+    remoteProc.setProcessEnvironment(env);
+#endif
     remoteProc.start(Settings.dockerPath(), {"manifest", "inspect", imageRef});
     if (!remoteProc.waitForStarted(1000) || !remoteProc.waitForFinished(15000)) {
         if (remoteProc.state() != QProcess::NotRunning)
@@ -1111,6 +1131,13 @@ void Util::isDockerImageCurrentAsync(const QString &imageRef,
 
     // Start with local inspect.
     auto *localProc = new QProcess(receiver);
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    auto env = QProcessEnvironment::systemEnvironment();
+    env.remove("LD_LIBRARY_PATH");
+    localProc->setProcessEnvironment(env);
+#endif
+
     QObject::connect(localProc,
                      &QProcess::errorOccurred,
                      localProc,
@@ -1130,6 +1157,13 @@ void Util::isDockerImageCurrentAsync(const QString &imageRef,
             localProc->deleteLater();
             // Remote manifest inspect regardless; if docker missing it will fail.
             auto *remoteProc = new QProcess(receiver);
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+            auto env = QProcessEnvironment::systemEnvironment();
+            env.remove("LD_LIBRARY_PATH");
+            remoteProc->setProcessEnvironment(env);
+#endif
+
             QObject::connect(remoteProc,
                              &QProcess::errorOccurred,
                              remoteProc,

@@ -27,6 +27,12 @@ DockerPullJob::DockerPullJob(const QString &imageRef, QThread::Priority priority
     , m_imageRef(imageRef)
 {
     setTarget(imageRef);
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    auto env = QProcessEnvironment::systemEnvironment();
+    env.remove("LD_LIBRARY_PATH");
+    setProcessEnvironment(env);
+#endif
 }
 
 DockerPullJob::~DockerPullJob()

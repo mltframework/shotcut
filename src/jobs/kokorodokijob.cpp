@@ -52,6 +52,12 @@ KokorodokiJob::KokorodokiJob(const QString &inputFile,
     action->setData("Open");
     connect(action, &QAction::triggered, this, [this]() { onOpenTriggered(); });
     m_successActions << action;
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    auto env = QProcessEnvironment::systemEnvironment();
+    env.remove("LD_LIBRARY_PATH");
+    setProcessEnvironment(env);
+#endif
 }
 
 KokorodokiJob::~KokorodokiJob()
