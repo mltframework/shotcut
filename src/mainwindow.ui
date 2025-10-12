@@ -963,13 +963,13 @@
   </action>
   <action name="actionExportVideo">
    <property name="text">
-    <string>Video...</string>
+    <string>Video/Audio...</string>
    </property>
    <property name="iconText">
-    <string>Export Video</string>
+    <string>Export Video/Audio</string>
    </property>
    <property name="toolTip">
-    <string>Export Video</string>
+    <string>Export Video/Audio</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+E</string>
