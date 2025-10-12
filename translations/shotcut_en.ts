@@ -2087,14 +2087,10 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <source>Export Video/Audio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/docks/encodedock.cpp" line="1335"/>
         <location filename="../src/docks/encodedock.cpp" line="1848"/>
         <location filename="../src/docks/encodedock.cpp" line="2339"/>
-        <source>Export File</source>
+        <source>Export Video/Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

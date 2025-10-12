@@ -1332,7 +1332,7 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service,
                                    int pass,
                                    const QThread::Priority priority)
 {
-    QString caption = tr("Export File");
+    QString caption = tr("Export Video/Audio");
     if (Util::warnIfNotWritable(target, this, caption))
         return nullptr;
 
@@ -1845,7 +1845,7 @@ void EncodeDock::on_encodeButton_clicked()
 
     QString directory = Settings.encodePath();
     auto projectBaseName = QFileInfo(MAIN.fileName()).completeBaseName();
-    QString caption = seekable ? tr("Export File") : tr("Capture File");
+    QString caption = seekable ? tr("Export Video/Audio") : tr("Capture File");
     if (ui->fromCombo->currentData().toString() == "batch") {
         caption = tr("Export Files");
         MultiFileExportDialog dialog(tr("Export Each Playlist Bin Item"),
@@ -2336,7 +2336,7 @@ void EncodeDock::on_fromCombo_currentIndexChanged(int index)
     auto producer = fromProducer();
     ui->reframeButton->setEnabled(producer && producer == MAIN.multitrack());
     if (MLT.isSeekable(producer))
-        ui->encodeButton->setText(tr("Export File"));
+        ui->encodeButton->setText(tr("Export Video/Audio"));
     else
         ui->encodeButton->setText(tr("Capture File"));
 }
