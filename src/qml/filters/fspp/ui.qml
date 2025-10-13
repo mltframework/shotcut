@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,9 +22,9 @@ import Shotcut.Controls as Shotcut
 Item {
     property int qualityDefault: 5
     property int qpDefault: 10
-    property int strengthDefault: 5
-    property int strengthMin: -15
-    property int strengthMax: 32
+    property real strengthDefault: -13.59
+    property real strengthMin: -15
+    property real strengthMax: 32
 
     function setControls() {
         qpSlider.value = filter.get('av.qp');
