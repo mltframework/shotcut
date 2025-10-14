@@ -156,7 +156,7 @@ void KokorodokiJob::start()
          << "--cpus" << QString::number(std::max(1, QThread::idealThreadCount() - 1)) << "-t"
          << "-e"
          << "SKIP_STARTUP_MSG=1";
-    args << "-v" << QStringLiteral("%1:/mnt").arg(dirPath);
+    args << "-v" << QStringLiteral("%1:/mnt:Z").arg(dirPath);
     args << "-w"
          << "/mnt";
     args << "--rm";
