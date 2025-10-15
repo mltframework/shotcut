@@ -942,7 +942,7 @@ ShotcutSettings::TimelineScrolling ShotcutSettings::timelineScrolling() const
 
 bool ShotcutSettings::timelineAutoAddTracks() const
 {
-    return settings.value("timeline/autoAddTracks", false).toBool();
+    return settings.value("timeline/autoAddTracks", true).toBool();
 }
 
 void ShotcutSettings::setTimelineAutoAddTracks(bool b)
