@@ -92,9 +92,7 @@ void GlaxnimateProducerWidget::on_colorButton_clicked()
         color = QColor(QFileInfo(m_producer->get("background")).baseName());
     }
     QColorDialog::ColorDialogOptions flags = QColorDialog::ShowAlphaChannel;
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    flags = flags | QColorDialog::DontUseNativeDialog;
-#endif
+    flags |= Util::getColorDialogOptions();
     auto newColor = QColorDialog::getColor(color, this, QString(), flags);
     if (newColor.isValid()) {
         auto rgb = newColor;

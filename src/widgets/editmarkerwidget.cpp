@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2024 Meltytech, LLC
+ * Copyright (c) 2021-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -128,9 +128,7 @@ void EditMarkerWidget::on_colorButton_clicked()
 {
     QColor color = QColor(m_colorLabel->text());
     QColorDialog dialog(color);
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    dialog.setOptions(QColorDialog::DontUseNativeDialog);
-#endif
+    dialog.setOptions(Util::getColorDialogOptions());
     dialog.setModal(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {
         auto newColor = dialog.currentColor();

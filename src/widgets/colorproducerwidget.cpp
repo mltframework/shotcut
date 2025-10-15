@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2023 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,9 +75,7 @@ void ColorProducerWidget::on_colorButton_clicked()
         color = QColor(QFileInfo(m_producer->get("resource")).baseName());
     }
     QColorDialog::ColorDialogOptions flags = QColorDialog::ShowAlphaChannel;
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    flags = flags | QColorDialog::DontUseNativeDialog;
-#endif
+    flags |= Util::getColorDialogOptions();
     auto newColor = QColorDialog::getColor(color, this, QString(), flags);
     if (newColor.isValid()) {
         auto rgb = newColor;

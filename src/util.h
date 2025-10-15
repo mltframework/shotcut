@@ -20,6 +20,7 @@
 
 #include <MltProperties.h>
 #include <functional>
+#include <QColorDialog>
 #include <QFileDialog>
 #include <QPair>
 #include <QPalette>
@@ -66,6 +67,7 @@ public:
     static QString getFileHash(const QString &path);
     static QString getHash(Mlt::Properties &properties);
     static bool hasDriveLetter(const QString &path);
+    static QColorDialog::ColorDialogOptions getColorDialogOptions();
     static QFileDialog::Options getFileDialogOptions();
     static bool isMemoryLow();
     static QString removeQueryString(const QString &s);

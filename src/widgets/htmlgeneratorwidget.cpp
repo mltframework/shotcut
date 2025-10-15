@@ -152,9 +152,7 @@ void HtmlGeneratorWidget::on_colorButton_clicked()
     const QColor color = colorStringToResource(ui->colorLabel->text());
     // At this point Qt's colors are misread from CSS and and are stored in Qt as ARGB instead of RGBA
     QColorDialog::ColorDialogOptions flags = QColorDialog::ShowAlphaChannel;
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    flags = flags | QColorDialog::DontUseNativeDialog;
-#endif
+    flags |= Util::getColorDialogOptions();
     // Remap to Qt's color order RGBA
     const QColor qtColor(color.alpha(), color.red(), color.green(), color.blue());
     auto newColor = QColorDialog::getColor(qtColor, this, QString(), flags);

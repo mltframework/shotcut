@@ -467,6 +467,14 @@ bool Util::hasDriveLetter(const QString &path)
     return driveSeparators == ":/" || driveSeparators == ":\\";
 }
 
+QColorDialog::ColorDialogOptions Util::getColorDialogOptions()
+{
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    return QColorDialog::DontUseNativeDialog;
+#endif
+    return QColorDialog::ColorDialogOptions();
+}
+
 QFileDialog::Options Util::getFileDialogOptions()
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)

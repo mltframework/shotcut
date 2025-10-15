@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
  */
 
 #include "colordialog.h"
+#include "util.h"
 
 #include <QColorDialog>
 
@@ -27,9 +28,7 @@ void ColorDialog::open()
 {
     auto color = m_color;
     QColorDialog::ColorDialogOptions flags = QColorDialog::ShowAlphaChannel;
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    flags = flags | QColorDialog::DontUseNativeDialog;
-#endif
+    flags |= Util::getColorDialogOptions();
     auto newColor = QColorDialog::getColor(color, nullptr, m_title, flags);
     if (newColor.isValid()) {
         auto rgb = newColor;
