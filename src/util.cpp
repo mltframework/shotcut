@@ -470,7 +470,7 @@ bool Util::hasDriveLetter(const QString &path)
 QFileDialog::Options Util::getFileDialogOptions()
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    if (qEnvironmentVariableIsSet("SNAP") || qEnvironmentVariableIsSet("GNOME_SHELL_SESSION_MODE")) {
+    if (qEnvironmentVariableIsSet("SNAP")) {
         return QFileDialog::DontUseNativeDialog;
     }
 #endif
