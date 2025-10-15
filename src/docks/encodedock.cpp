@@ -445,9 +445,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
         }
     }
     vcodec = QString::fromLatin1(preset.get("vcodec"));
-    auto resetBframes = !vcodec.contains("nvenc") && !vcodec.endsWith("_amf")
-                        && !vcodec.endsWith("_qsv");
-    onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true, resetBframes);
+    onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true, false);
     on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
     on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
     if (m_extension.isEmpty()) {
@@ -1716,7 +1714,7 @@ void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset, bool res
             }
             ui->advancedTextEdit->setPlainText(newValue);
         }
-        if (resetBframes)
+        if (resetBframes && vcodec.startsWith("hevc_"))
             ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
