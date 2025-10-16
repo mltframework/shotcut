@@ -20,7 +20,7 @@
 #include "toolbarwidget.h"
 #include "windowpicker.h"
 #include <QApplication>
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusObjectPath>
@@ -332,6 +332,7 @@ void ScreenCapture::doCaptureAndSaveImage(const QRect &rect)
 
 bool ScreenCapture::captureImagePortal(const QRect &rect, const QString &outputPath)
 {
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     auto bus = QDBusConnection::sessionBus();
     if (!bus.isConnected()) {
         qWarning() << "DBus session bus not connected";
@@ -421,6 +422,7 @@ bool ScreenCapture::captureImagePortal(const QRect &rect, const QString &outputP
         qWarning() << "Failed to copy portal image from" << srcPath << "to" << outputPath;
         return false;
     }
+#endif
     return true;
 }
 

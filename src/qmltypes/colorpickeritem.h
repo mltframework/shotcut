@@ -37,7 +37,7 @@ signals:
 private slots:
     void screenSelected(const QRect &rect);
     void grabColor();
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     void grabColorDBus();
     void gotColorResponse(uint response, const QVariantMap &results);
 #endif

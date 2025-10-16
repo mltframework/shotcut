@@ -49,7 +49,7 @@ find_package(Qt6 6.4 REQUIRED
   Widgets
   Xml
 )
-if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+if(UNIX AND NOT APPLE)
   find_package(Qt6 6.4 REQUIRED COMPONENTS DBus)
   # X11 for WindowPicker (Linux/X11)
   find_package(X11 REQUIRED)

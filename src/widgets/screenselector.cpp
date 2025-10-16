@@ -58,7 +58,7 @@ void ScreenSelector::setSelectedRect(const QRect &rect)
 
 void ScreenSelector::startSelection(QPoint initialPos)
 {
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     const auto p = MAIN.geometry().center();
     const auto id = MAIN.window()->winId();
     for (auto screen : QGuiApplication::screens()) {

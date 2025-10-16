@@ -283,7 +283,7 @@ target_link_libraries(shotcut
   Qt6::Widgets
   Qt6::Xml
 )
-if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+if(UNIX AND NOT APPLE)
   target_link_libraries(shotcut PRIVATE Qt6::DBus X11::X11)
 endif()
 

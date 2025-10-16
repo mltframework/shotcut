@@ -26,7 +26,7 @@
 #include <QScreen>
 #include <QTimer>
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDBusMetaType>
@@ -39,7 +39,7 @@
 ColorPickerItem::ColorPickerItem(QObject *parent)
     : QObject(parent)
 {
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     qDBusRegisterMetaType<QColor>();
 #endif
 
@@ -51,7 +51,7 @@ ColorPickerItem::ColorPickerItem(QObject *parent)
 void ColorPickerItem::screenSelected(const QRect &rect)
 {
     m_selectedRect = rect;
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     if (m_selector.useDBus())
         QTimer::singleShot(0, this, &ColorPickerItem::grabColorDBus);
     else
@@ -88,7 +88,7 @@ void ColorPickerItem::grabColor()
     emit colorPicked(avgColor);
 }
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 
 QDBusArgument &operator<<(QDBusArgument &arg, const QColor &color)
 {

@@ -22,6 +22,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QScreen>
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 // clang-format off
 extern "C" {
 #include <X11/Xatom.h>
@@ -29,6 +30,7 @@ extern "C" {
 #include <X11/Xutil.h>
 }
 // clang-format on
+#endif
 
 WindowPicker::WindowPicker(QWidget *parent)
     : QWidget(parent,
@@ -68,7 +70,7 @@ QList<WindowPicker::WindowInfo> WindowPicker::getX11Windows()
 {
     QList<WindowInfo> windows;
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     Display *display = XOpenDisplay(nullptr);
     if (!display) {
         qWarning() << "Could not open X display";
