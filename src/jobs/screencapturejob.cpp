@@ -20,6 +20,7 @@
 #include "Logger.h"
 #include "mainwindow.h"
 #include "postjobaction.h"
+#include "settings.h"
 
 #include <QApplication>
 #include <QDir>
@@ -62,46 +63,71 @@ void ScreenCaptureJob::start()
     AbstractJob::start("screencapture", args);
 #else
     QString vcodec("libx264");
-    QString qp("-crf");
     args << "-f"
-         << "x11grab";
+#ifdef Q_OS_WIN
+         << "gdigrab";
+    args << "-offset_x" << QString::number(m_rect.x());
+    args << "-offset_y" << QString::number(m_rect.y());
     args << "-framerate" << QString::number(MLT.profile().fps());
+    args << "-video_size" << QString("%1x%2").arg(m_rect.width()).arg(m_rect.height());
+    args << "-i"
+         << "desktop";
+    args << "-f"
+         << "dshow";
+    args << "-i"
+         << "audio=" + Settings.audioInput();
+    if (Settings.encodeUseHardware() && !Settings.encodeHardware().isEmpty()) {
+        vcodec = "h264_mf";
+        args << "-rate_control"
+             << "quality";
+        args << "-q:v"
+             << "90";
+        args << "-pix_fmt"
+             << "nv12";
+        args << "-hw_encoding"
+             << "true";
+#else
+         << "x11grab";
     args << "-grab_x" << QString::number(m_rect.x());
     args << "-grab_y" << QString::number(m_rect.y());
+    args << "-framerate" << QString::number(MLT.profile().fps());
     args << "-video_size" << QString("%1x%2").arg(m_rect.width()).arg(m_rect.height());
     args << "-i"
          << ":0.0";
     args << "-f"
          << "pulse";
-    args << "-i"
-         << "default";
-
-    if (Settings.encodeUseHardware()) {
-        auto hwCodecs = Settings.encodeHardware();
-        if (hwCodecs.contains("h264_vaapi")) {
-            vcodec = "h264_vaapi";
-            qp = "-qp";
-            args << "-init_hw_device"
-                 << "vaapi=vaapi0:";
-            args << "-filter_hw_device"
-                 << "vaapi0";
-            args << "-vf"
-                 << "format=nv12,hwupload";
-            args << "-quality"
-                 << "1";
-            args << "-rc_mode"
-                 << "CQP";
-        }
+    args << "-i" << Settings.audioInput();
+    if (Settings.encodeUseHardware() && Settings.encodeHardware().contains("h264_vaapi")) {
+        vcodec = "h264_vaapi";
+        args << "-qp"
+             << "18";
+        args << "-init_hw_device"
+             << "vaapi=vaapi0:";
+        args << "-filter_hw_device"
+             << "vaapi0";
+        args << "-vf"
+             << "format=nv12,hwupload";
+        args << "-quality"
+             << "1";
+        args << "-rc_mode"
+             << "CQP";
+#endif
     } else {
+        args << "-crf"
+             << "18";
         args << "-tune"
              << "film";
         args << "-pix_fmt"
              << "yuv420p";
     }
     args << "-codec:v" << vcodec;
-    args << "-profile:v"
-         << "high";
-    args << qp << "18";
+    if (vcodec == "h264_mf") {
+        args << "-profile:v"
+             << "100";
+    } else {
+        args << "-profile:v"
+             << "high";
+    }
     args << "-bf"
          << "2";
     args << "-g" << QString::number(qRound(2.0 * MLT.profile().fps()));

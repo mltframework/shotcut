@@ -5094,10 +5094,6 @@ void MainWindow::on_actionNew_triggered()
 
 void MainWindow::on_actionScreenSnapshot_triggered()
 {
-#ifdef Q_OS_WIN
-    showMinimized();
-    QDesktopServices::openUrl({"ms-screenclip:", QUrl::TolerantMode});
-#else
     auto fileName = QmlApplication::getNextProjectFile("screenshot-.png");
     if (fileName.isEmpty()) {
         fileName = Settings.savePath() + "/%1.png";
@@ -5141,7 +5137,6 @@ void MainWindow::on_actionScreenSnapshot_triggered()
         showNormal();
     });
     m_screenCapture->startSnapshot();
-#endif
 #endif
 }
 

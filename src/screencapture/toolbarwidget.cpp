@@ -70,13 +70,17 @@ ToolbarWidget::ToolbarWidget(QWidget *parent)
     connect(m_fullscreenButton, &QPushButton::clicked, this, &ToolbarWidget::onFullscreenClicked);
     connect(m_rectangleButton, &QPushButton::clicked, this, &ToolbarWidget::onRectangleClicked);
 
-    // Hide window button if on Wayland
-    const bool isWayland = ScreenCapture::isWayland();
-    if (isWayland) {
-        m_windowButton->hide();
-    } else {
+    // Hide window button if on Wayland or Windows
+#ifdef Q_OS_WIN
+    const bool withWindowButton = false;
+#else
+    const bool withWindowButton = ScreenCapture::isWayland();
+#endif
+    if (withWindowButton) {
         layout->addWidget(m_windowButton);
         connect(m_windowButton, &QPushButton::clicked, this, &ToolbarWidget::onWindowClicked);
+    } else {
+        m_windowButton->hide();
     }
 
     // Position at top center of screen
