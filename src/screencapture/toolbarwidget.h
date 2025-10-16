@@ -15,33 +15,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCREENCAPTUREJOB_H
-#define SCREENCAPTUREJOB_H
+#ifndef TOOLBARWIDGET_H
+#define TOOLBARWIDGET_H
 
-#include "abstractjob.h"
+#include <QPushButton>
+#include <QWidget>
 
-#include <QRect>
-#include <QStringList>
+class ScreenCapture;
 
-class ScreenCaptureJob : public AbstractJob
+class ToolbarWidget : public QWidget
 {
     Q_OBJECT
-public:
-    ScreenCaptureJob(const QString &name, const QString &filename, const QRect &captureRect);
-    virtual ~ScreenCaptureJob();
-    void start();
 
-public slots:
-    virtual void stop();
+public:
+    explicit ToolbarWidget(QWidget *parent = nullptr);
+    ~ToolbarWidget();
+
+signals:
+    void captureModeSelected(int mode);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
 
 private slots:
-    void onOpenTriggered();
-    void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void onFullscreenClicked();
+    void onRectangleClicked();
+    void onWindowClicked();
 
 private:
-    QString m_filename;
-    QRect m_rect;
-    bool m_isAutoOpen;
+    QPushButton *m_fullscreenButton;
+    QPushButton *m_rectangleButton;
+    QPushButton *m_windowButton;
 };
 
-#endif // SCREENCAPTUREJOB_H
+#endif // TOOLBARWIDGET_H

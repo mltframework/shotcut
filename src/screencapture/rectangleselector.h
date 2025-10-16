@@ -15,33 +15,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCREENCAPTUREJOB_H
-#define SCREENCAPTUREJOB_H
+#ifndef RECTANGLESELECTOR_H
+#define RECTANGLESELECTOR_H
 
-#include "abstractjob.h"
-
+#include <QPoint>
 #include <QRect>
-#include <QStringList>
+#include <QWidget>
 
-class ScreenCaptureJob : public AbstractJob
+class RectangleSelector : public QWidget
 {
     Q_OBJECT
+
 public:
-    ScreenCaptureJob(const QString &name, const QString &filename, const QRect &captureRect);
-    virtual ~ScreenCaptureJob();
-    void start();
+    explicit RectangleSelector(QWidget *parent = nullptr);
+    ~RectangleSelector();
 
-public slots:
-    virtual void stop();
+signals:
+    void rectangleSelected(const QRect &rect);
+    void canceled();
 
-private slots:
-    void onOpenTriggered();
-    void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
-    QString m_filename;
-    QRect m_rect;
-    bool m_isAutoOpen;
+    QRect getSelectionRect() const;
+
+    QPoint m_startPoint;
+    QPoint m_currentPoint;
+    bool m_selecting;
 };
 
-#endif // SCREENCAPTUREJOB_H
+#endif // RECTANGLESELECTOR_H

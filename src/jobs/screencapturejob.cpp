@@ -27,10 +27,12 @@
 #include <QStandardPaths>
 #include <QTimer>
 
-ScreenCaptureJob::ScreenCaptureJob(const QString &name, const QString &filename, bool isRecording)
+ScreenCaptureJob::ScreenCaptureJob(const QString &name,
+                                   const QString &filename,
+                                   const QRect &captureRect)
     : AbstractJob(name, QThread::NormalPriority)
     , m_filename(filename)
-    , m_isRecording(isRecording)
+    , m_rect(captureRect)
     , m_isAutoOpen(true)
 {
     QAction *action = new QAction(tr("Open"), this);
@@ -51,32 +53,80 @@ void ScreenCaptureJob::start()
 
     QStringList args;
 #ifdef Q_OS_MAC
-    if (m_isRecording) {
-        // For screen recording, use -v for video only
-        args << "-v";
-    } else {
-        // For screenshot, use -i for interactive selection and -t png for PNG format
-        args << "-i"
-             << "-t"
-             << "png";
-    }
+    args << "-C";
+    args << "-g";
+    args << "-k";
+    args << "-v";
     args << m_filename;
     LOG_DEBUG() << "screencapture " + args.join(' ');
     AbstractJob::start("screencapture", args);
+#else
+    QString vcodec("libx264");
+    QString qp("-crf");
+    args << "-f"
+         << "x11grab";
+    args << "-framerate" << QString::number(MLT.profile().fps());
+    args << "-grab_x" << QString::number(m_rect.x());
+    args << "-grab_y" << QString::number(m_rect.y());
+    args << "-video_size" << QString("%1x%2").arg(m_rect.width()).arg(m_rect.height());
+    args << "-i"
+         << ":0.0";
+    args << "-f"
+         << "pulse";
+    args << "-i"
+         << "default";
+
+    if (Settings.encodeUseHardware()) {
+        auto hwCodecs = Settings.encodeHardware();
+        if (hwCodecs.contains("h264_vaapi")) {
+            vcodec = "h264_vaapi";
+            qp = "-qp";
+            args << "-init_hw_device"
+                 << "vaapi=vaapi0:";
+            args << "-filter_hw_device"
+                 << "vaapi0";
+            args << "-vf"
+                 << "format=nv12,hwupload";
+            args << "-quality"
+                 << "1";
+            args << "-rc_mode"
+                 << "CQP";
+        }
+    } else {
+        args << "-tune"
+             << "film";
+        args << "-pix_fmt"
+             << "yuv420p";
+    }
+    args << "-codec:v" << vcodec;
+    args << "-profile:v"
+         << "high";
+    args << qp << "18";
+    args << "-bf"
+         << "2";
+    args << "-g" << QString::number(qRound(2.0 * MLT.profile().fps()));
+    args << "-color_range"
+         << "jpeg";
+    args << "-color_primaries"
+         << "bt709";
+    args << "-color_trc"
+         << "bt709";
+    args << "-colorspace"
+         << "bt709";
+    args << "-y" << m_filename;
+    QString shotcutPath = qApp->applicationDirPath();
+    QFileInfo ffmpegPath(shotcutPath, "ffmpeg");
+    setReadChannel(QProcess::StandardError);
+    LOG_DEBUG() << ffmpegPath.absoluteFilePath() + " " + args.join(' ');
+    AbstractJob::start(ffmpegPath.absoluteFilePath(), args);
 #endif
 }
 
 void ScreenCaptureJob::stop()
 {
-    if (m_isRecording) {
-        // For screen recording, try to terminate gracefully first
-#ifdef Q_OS_MAC
-        write("q");
-#endif
-    } else {
-        // For screenshots, terminate immediately
-        AbstractJob::stop();
-    }
+    // Try to terminate gracefully
+    write("q");
+    QTimer::singleShot(3000, this, [this]() { AbstractJob::stop(); });
 }
 
 void ScreenCaptureJob::onOpenTriggered()

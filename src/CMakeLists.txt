@@ -130,6 +130,14 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   sharedframe.cpp sharedframe.h
   shotcut_mlt_properties.h
   transcoder.cpp transcoder.h
+  screencapture/rectangleselector.cpp
+  screencapture/rectangleselector.h
+  screencapture/screencapture.cpp
+  screencapture/screencapture.h
+  screencapture/toolbarwidget.cpp
+  screencapture/toolbarwidget.h
+  screencapture/windowpicker.cpp
+  screencapture/windowpicker.h
   spatialmedia/box.cpp spatialmedia/box.h
   spatialmedia/container.cpp spatialmedia/container.h
   spatialmedia/mpeg4_container.cpp spatialmedia/mpeg4_container.h
@@ -276,7 +284,7 @@ target_link_libraries(shotcut
   Qt6::Xml
 )
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  target_link_libraries(shotcut PRIVATE Qt6::DBus)
+  target_link_libraries(shotcut PRIVATE Qt6::DBus X11::X11)
 endif()
 
 file(GLOB_RECURSE QML_SRC "qml/*")

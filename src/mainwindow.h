@@ -54,6 +54,7 @@ class KeyframesDock;
 class MarkersDock;
 class NotesDock;
 class SubtitlesDock;
+class ScreenCapture;
 
 class MainWindow : public QMainWindow
 {
@@ -215,6 +216,7 @@ private:
     SubtitlesDock *m_subtitlesDock;
     std::unique_ptr<QWidget> m_producerWidget;
     FilesDock *m_filesDock;
+    ScreenCapture *m_screenCapture;
 
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker &checker);
@@ -350,10 +352,8 @@ private slots:
     void on_actionAppDataSet_triggered();
     void on_actionAppDataShow_triggered();
     void on_actionNew_triggered();
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
     void on_actionScreenSnapshot_triggered();
     void on_actionScreenRecording_triggered();
-#endif
     void on_actionKeyboardShortcuts_triggered();
     void on_actionLayoutLogging_triggered();
     void on_actionLayoutEditing_triggered();
