@@ -20,35 +20,46 @@
 
 #include <QObject>
 
+// 【类说明】：QML编辑菜单组件
+// 【功能】：提供标准编辑操作的上下文菜单
+// 【特性】：支持动态菜单项显示、快捷键配置、只读模式
 class QmlEditMenu : public QObject
 {
     Q_OBJECT
-
+    // 【QML属性】：是否显示纯文本粘贴选项
     Q_PROPERTY(bool showPastePlain MEMBER m_showPastePlain NOTIFY showPastePlainChanged)
+    // 【QML属性】：是否为只读模式（禁用编辑操作）
     Q_PROPERTY(bool readOnly MEMBER m_readOnly NOTIFY readOnlyChanged)
 
 public:
+    // 【构造函数】
     explicit QmlEditMenu(QObject *parent = 0);
 
 signals:
+    // 【信号】：纯文本粘贴选项显示状态改变
     void showPastePlainChanged();
+    // 【信号】：只读模式状态改变
     void readOnlyChanged();
-    void undoTriggered();
-    void redoTriggered();
-    void cutTriggered();
-    void copyTriggered();
-    void pasteTriggered();
-    void pastePlainTriggered();
-    void deleteTriggered();
-    void clearTriggered();
-    void selectAllTriggered();
+    
+    // 编辑操作触发信号
+    void undoTriggered();        // 撤销操作触发
+    void redoTriggered();        // 重做操作触发
+    void cutTriggered();         // 剪切操作触发
+    void copyTriggered();        // 复制操作触发
+    void pasteTriggered();       // 粘贴操作触发
+    void pastePlainTriggered();  // 纯文本粘贴触发
+    void deleteTriggered();      // 删除操作触发
+    void clearTriggered();       // 清空操作触发
+    void selectAllTriggered();   // 全选操作触发
 
 public slots:
+    // 【槽函数】：弹出编辑菜单
+    // 【说明】：在鼠标当前位置显示上下文编辑菜单
     void popup();
 
 private:
-    bool m_showPastePlain;
-    bool m_readOnly;
+    bool m_showPastePlain;  // 控制是否显示纯文本粘贴选项
+    bool m_readOnly;        // 控制是否为只读模式（禁用编辑操作）
 };
 
 #endif // QMLEDITMENU_H
