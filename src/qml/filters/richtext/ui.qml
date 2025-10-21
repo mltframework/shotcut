@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2024 Meltytech, LLC
+ * Copyright (c) 2020-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -254,6 +254,10 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
                 filter.set(startValue, filter.getRect(rectProperty, 0));
             if (filter.animateOut > 0)
                 filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1));
+            if (filter.animateIn <= 0 && filter.animateOut <= 0)
+                // Fixes a bug in versions before 25.10 that saves this property to XML and
+                // breaks full keyframes
+                filter.resetProperty(specialPresetProperty);
         }
         filter.blockSignals = false;
         setControls();
@@ -377,6 +381,7 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
                 filter.startUndoParameterCommand(positionLabel.text);
                 if (checked) {
                     filter.blockSignals = true;
+                    filter.resetProperty(specialPresetProperty);
                     filter.clearSimpleAnimation(rectProperty);
                     filter.blockSignals = false;
                     filter.set(rectProperty, filterRect, getPosition());
@@ -546,6 +551,11 @@ body { font-family:%1; font-size:72pt; font-weight:normal; font-style:normal; co
             id: bgcolorKeyframesButton
             onToggled: {
                 filter.startUndoParameterCommand(backgroundColorLabel.text);
+                if (checked) {
+                    filter.blockSignals = true;
+                    filter.resetProperty(specialPresetProperty);
+                    filter.blockSignals = false;
+                }
                 toggleKeyframes(checked, 'bgcolour', Qt.color(bgColor.value));
                 filter.endUndoCommand();
             }
