@@ -713,53 +713,68 @@
         <translation>Roghchlár Airíonna</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1032"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1017"/>
+        <source>Open With</source>
+        <translation>Oscail Le</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1024"/>
+        <source>Refresh the file in Shotcut if you changed it in another app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1027"/>
+        <source>Reload</source>
+        <translation>Athlódáil</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1049"/>
         <source>Show In Folder</source>
         <translation>Taispeáin I bhFillteán</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1062"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1079"/>
         <source>Extract Subtitles...</source>
         <translation>Bain Fotheidil amach...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1095"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1112"/>
         <source>Reset</source>
         <translation>Athshocraigh</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1100"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1117"/>
         <source>Set Equirectangular...</source>
         <translation>Socraigh Cothrománach...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1105"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1122"/>
         <source>Measure Video Quality...</source>
         <translation>Tomhais Cáilíocht Físeáin...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1113"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1116"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1130"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1133"/>
         <source>Export GPX</source>
         <translation>Easpórtáil GPX</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1121"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1138"/>
         <source>View Bitrate...</source>
         <translation>Amharc ar Ráta Giotán...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1124"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1141"/>
         <source>View Bitrate</source>
         <translation>Amharc ar Ráta Giotán</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1129"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1146"/>
         <source>Show In Files</source>
         <translation>Taispeáin I gComhaid</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1000"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="993"/>
         <source>Convert to Edit-friendly</source>
         <translation>Tiontaigh go Edit-friendly</translation>
     </message>
@@ -769,90 +784,90 @@
         <translation>Raon datha</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1003"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="996"/>
         <source>Convert...</source>
         <translation>Tiontaigh...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1037"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1054"/>
         <source>Copy Full File Path</source>
         <translation>Cóipeáil Conair Iomlán an Chomhaid</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1042"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1059"/>
         <source>More Information...</source>
         <translation>Tuilleadh Eolais...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1047"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1064"/>
         <source>Start Integrity Check Job</source>
         <translation>Tosaigh Post Seiceála Ionracais</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1052"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1069"/>
         <source>Convert to Edit-friendly...</source>
         <translation>Tiontaigh go Éasca le hEagar...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1067"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1084"/>
         <source>Set Creation Time...</source>
         <translation>Socraigh Am Cruthaithe...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1075"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1092"/>
         <source>Disable Proxy</source>
         <translation>Díchumasaigh Seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1080"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1097"/>
         <source>Make Proxy</source>
         <translation>Déan Seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1085"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1102"/>
         <source>Delete Proxy</source>
         <translation>Scrios Seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1090"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1107"/>
         <source>Copy Hash Code</source>
         <translation>Cóipeáil Cód Hash</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="993"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="849"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1003"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="874"/>
         <source>Reverse...</source>
         <translation>Droim ar ais...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="1057"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1121"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="1074"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1146"/>
         <source>Extract Sub-clip...</source>
         <translation>Bain fo-ghearrthóg amach...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="347"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="412"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="370"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="437"/>
         <source>None</source>
         <translation>Dada</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="370"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="393"/>
         <source>unknown (%1)</source>
         <translation>anaithnid (%1)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="440"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="465"/>
         <source>All</source>
         <translation>Gach</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="486"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="511"/>
         <source>(PROXY)</source>
         <translation>(SEACHFHREASTALAÍ)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="529"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="554"/>
         <source>(variable)</source>
         <translation>(athróg)</translation>
     </message>
@@ -862,7 +877,7 @@
         <translation>Seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="134"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="141"/>
         <source> Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, it automatically replaces clips, or you can double-click the job to open it.
@@ -873,102 +888,102 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="769"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="844"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="794"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="869"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Roghnaigh formáid atá éasca le heagarthóireacht thíos agus ansin cliceáil OK chun ainm comhaid a roghnú. Tar éis ainm comhaid a roghnú, cruthaítear post. Nuair a bheidh sé déanta, cliceáil faoi dhó ar an bpost chun é a oscailt.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="964"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="989"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;Gach Comhad (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1009"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1034"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;Gach Comhad (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1026"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1051"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;Gach Comhad (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1079"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1104"/>
         <source>Convert %1</source>
         <translation>Tiontaigh %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1030"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1055"/>
         <source>Reversed</source>
         <translation>Droim ar ais</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1060"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1085"/>
         <source>Reverse canceled</source>
         <translation>Cealaithe droim ar ais</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1089"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1114"/>
         <source>Reverse %1</source>
         <translation>Aisiompaigh %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1458"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1483"/>
         <source>Choose the Other Video</source>
         <translation>Roghnaigh an físeán eile</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1511"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1536"/>
         <source>Measure %1</source>
         <translation>Tomhais %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1120"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1145"/>
         <source>Sub-clip</source>
         <translation>Fo-chlip</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1122"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1147"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Gach Comhad (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1194"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1219"/>
         <source>Extract sub-clip %1</source>
         <translation>Bain fo-ghearrthóg %1 amach</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1213"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1263"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1238"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1288"/>
         <source>Track %1</source>
         <translation>Amhrán %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1215"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1265"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1240"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1290"/>
         <source>Track %1 (%2)</source>
         <translation>Amhrán %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1219"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1244"/>
         <source>Export Subtitles...</source>
         <translation>Easpórtáil Fotheidil...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1221"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1246"/>
         <source>No subtitles found</source>
         <translation>Níor aimsíodh fotheidil ar bith</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1280"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1305"/>
         <source>Extract subtitles %1</source>
         <translation>Bain fotheidil amach %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1393"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1418"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -977,24 +992,44 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1437"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1462"/>
         <source>Set Equirectangular Projection</source>
         <translation>Socraigh Teilgean Cothrománach</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1449"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1474"/>
         <source>Successfully wrote %1</source>
         <translation>D&apos;éirigh le scríobh %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1451"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1476"/>
         <source>An error occurred saving the projection.</source>
         <translation>Tharla earráid agus an teilgean á sábháil.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1571"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1596"/>
         <source>Bitrate %1</source>
         <translation>Ráta giotán %1</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1609"/>
+        <source>System Default</source>
+        <translation>Réamhshocrú an Chórais</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1646"/>
+        <source>Other...</source>
+        <translation>Eile...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1650"/>
+        <source>Remove...</source>
+        <translation>Bain...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1689"/>
+        <source>Remove From Open With</source>
+        <translation>Bain ó oscail le</translation>
     </message>
 </context>
 <context>
@@ -2068,11 +2103,11 @@ i gcomhbhrú ama</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <location filename="../src/docks/encodedock.cpp" line="1332"/>
-        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="1333"/>
+        <location filename="../src/docks/encodedock.cpp" line="1846"/>
         <location filename="../src/docks/encodedock.cpp" line="2337"/>
-        <source>Export File</source>
-        <translation>Easpórtáil Comhad</translation>
+        <source>Export Video/Audio</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1970"/>
@@ -2096,17 +2131,17 @@ i gcomhbhrú ama</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2041"/>
-        <location filename="../src/docks/encodedock.cpp" line="2048"/>
-        <location filename="../src/docks/encodedock.cpp" line="2160"/>
+        <location filename="../src/docks/encodedock.cpp" line="2042"/>
+        <location filename="../src/docks/encodedock.cpp" line="2049"/>
+        <location filename="../src/docks/encodedock.cpp" line="2161"/>
         <source>Stream</source>
         <translation>Sruth</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1828"/>
-        <location filename="../src/docks/encodedock.cpp" line="1929"/>
-        <location filename="../src/docks/encodedock.cpp" line="1939"/>
+        <location filename="../src/docks/encodedock.cpp" line="1829"/>
+        <location filename="../src/docks/encodedock.cpp" line="1930"/>
+        <location filename="../src/docks/encodedock.cpp" line="1940"/>
         <source>Stop Capture</source>
         <translation>Stad Gabháil</translation>
     </message>
@@ -2122,107 +2157,107 @@ i gcomhbhrú ama</translation>
         <translation>Réamhshocrú formáide</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="469"/>
+        <location filename="../src/docks/encodedock.cpp" line="467"/>
         <source>Timeline</source>
         <translation>Amlíne</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="476"/>
-        <location filename="../src/docks/encodedock.cpp" line="482"/>
+        <location filename="../src/docks/encodedock.cpp" line="474"/>
+        <location filename="../src/docks/encodedock.cpp" line="480"/>
         <source>Source</source>
         <translation>Foinse</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="487"/>
-        <location filename="../src/docks/encodedock.cpp" line="494"/>
+        <location filename="../src/docks/encodedock.cpp" line="485"/>
+        <location filename="../src/docks/encodedock.cpp" line="492"/>
         <source>Marker</source>
         <translation>Marcóir</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="505"/>
+        <location filename="../src/docks/encodedock.cpp" line="503"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Ní mór duit luachanna uimhriúla a iontráil le &apos;%1&apos; mar phointe deachúil.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="514"/>
-        <location filename="../src/docks/encodedock.cpp" line="1775"/>
+        <location filename="../src/docks/encodedock.cpp" line="512"/>
         <location filename="../src/docks/encodedock.cpp" line="1776"/>
+        <location filename="../src/docks/encodedock.cpp" line="1777"/>
         <source>Custom</source>
         <translation>Saincheaptha</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="550"/>
+        <location filename="../src/docks/encodedock.cpp" line="548"/>
         <source>Stock</source>
         <translation>Stoc</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="553"/>
+        <location filename="../src/docks/encodedock.cpp" line="551"/>
         <source>Default</source>
         <translation>Réamhshocrú</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1399"/>
+        <location filename="../src/docks/encodedock.cpp" line="1400"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Ní féidir leat scríobh chuig comhad atá i do thionscadal.
 Bain triail eile as le fillteán nó ainm comhaid eile.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1497"/>
+        <location filename="../src/docks/encodedock.cpp" line="1498"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Fuair Shotcut scagairí a dteastaíonn poist anailíse uathu nach bhfuil ar siúl.
 An bhfuil fonn ort na poist anailíse a reáchtáil anois?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="1846"/>
         <location filename="../src/docks/encodedock.cpp" line="2339"/>
         <source>Capture File</source>
         <translation>Comhad Gabhála</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1847"/>
+        <location filename="../src/docks/encodedock.cpp" line="1848"/>
         <source>Export Files</source>
         <translation>Easpórtáil Comhaid</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1862"/>
+        <location filename="../src/docks/encodedock.cpp" line="1863"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Gach Comhad (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1864"/>
+        <location filename="../src/docks/encodedock.cpp" line="1865"/>
         <source>Determined by Export (*)</source>
         <translation>Arna chinneadh ag Easpórtáil (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2036"/>
-        <location filename="../src/docks/encodedock.cpp" line="2058"/>
+        <location filename="../src/docks/encodedock.cpp" line="2037"/>
+        <location filename="../src/docks/encodedock.cpp" line="2059"/>
         <source>Stop Stream</source>
         <translation>Stad Sruth</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2050"/>
+        <location filename="../src/docks/encodedock.cpp" line="2051"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Iontráil an scéim prótacal líonra, seoladh, calafort, agus paraiméadair mar URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2093"/>
+        <location filename="../src/docks/encodedock.cpp" line="2094"/>
         <source>Add Export Preset</source>
         <translation>Cuir Réamhshocraithe Easpórtála Leis</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2137"/>
+        <location filename="../src/docks/encodedock.cpp" line="2138"/>
         <source>Delete Preset</source>
         <translation>Scrios Réamhshocrú</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2138"/>
+        <location filename="../src/docks/encodedock.cpp" line="2139"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>An bhfuil tú cinnte gur mian leat %1 a scriosadh?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2266"/>
+        <location filename="../src/docks/encodedock.cpp" line="2267"/>
         <source>None</source>
         <translation>Dada</translation>
     </message>
@@ -2283,22 +2318,22 @@ Déanfaidh Shotcut iarracht do thionscadal a dheisiú.</translation>
         <translation>Cumraigh Ionchódú crua-earraí</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="472"/>
+        <location filename="../src/docks/encodedock.cpp" line="470"/>
         <source>Current Playlist Bin</source>
         <translation>Bosca Seinmliosta Reatha</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="473"/>
+        <location filename="../src/docks/encodedock.cpp" line="471"/>
         <source>Each Playlist Bin Item</source>
         <translation>Gach mír bosca bruscair seinmliosta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1848"/>
+        <location filename="../src/docks/encodedock.cpp" line="1849"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>Easpórtáil gach mír bosca bruscair seinmliosta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1893"/>
+        <location filename="../src/docks/encodedock.cpp" line="1894"/>
         <source>Export canceled</source>
         <translation>Cealaíodh easpórtáil</translation>
     </message>
@@ -2375,12 +2410,12 @@ Déanfaidh Shotcut iarracht do thionscadal a dheisiú.</translation>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="188"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
-        <translation type="unfinished">Cuir raonta san áireamh (Fad &gt; fhráma 1)?</translation>
+        <translation>Cuir raonta san áireamh (Fad &gt; fhráma 1)?</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="199"/>
         <source>Choose Markers</source>
-        <translation type="unfinished">Roghnaigh Marcóirí</translation>
+        <translation>Roghnaigh Marcóirí</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="211"/>
@@ -2390,12 +2425,12 @@ Déanfaidh Shotcut iarracht do thionscadal a dheisiú.</translation>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="276"/>
         <source>A JavaScript error occurred during export.</source>
-        <translation type="unfinished">Tharla earráid JavaScript le linn easpórtála.</translation>
+        <translation>Tharla earráid JavaScript le linn easpórtála.</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="279"/>
         <source>Failed to open export-chapters.js</source>
-        <translation type="unfinished">Theip ar oscailt export-chapters.js</translation>
+        <translation>Theip ar oscailt export-chapters.js</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="307"/>
@@ -2647,137 +2682,127 @@ Déanfaidh Shotcut iarracht do thionscadal a dheisiú.</translation>
         <translation>Réamhshocrú an Chórais</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="849"/>
+        <location filename="../src/docks/filesdock.cpp" line="850"/>
         <source>Other...</source>
         <translation>Eile...</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="857"/>
+        <location filename="../src/docks/filesdock.cpp" line="858"/>
         <source>Remove...</source>
         <translation>Bain...</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="865"/>
+        <location filename="../src/docks/filesdock.cpp" line="867"/>
         <source>Show In File Manager</source>
         <translation>Taispeáin i mBainisteoir Comhad</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="875"/>
+        <location filename="../src/docks/filesdock.cpp" line="877"/>
         <source>Update Thumbnails</source>
         <translation>Nuashonraigh Mionsamhlacha</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="883"/>
+        <location filename="../src/docks/filesdock.cpp" line="885"/>
         <source>Select All</source>
         <translation>Roghnaigh Uile</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="894"/>
+        <location filename="../src/docks/filesdock.cpp" line="896"/>
         <source>Select None</source>
         <translation>Roghnaigh Dada</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="905"/>
+        <location filename="../src/docks/filesdock.cpp" line="907"/>
         <source>Open Previous</source>
         <translation>Oscail Roimhe Seo</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="917"/>
+        <location filename="../src/docks/filesdock.cpp" line="919"/>
         <source>Open Next</source>
         <translation>Oscail Ar Aghaidh</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="929"/>
+        <location filename="../src/docks/filesdock.cpp" line="931"/>
         <source>Video</source>
         <translation>Físeán</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="930"/>
+        <location filename="../src/docks/filesdock.cpp" line="932"/>
         <source>Show or hide video files</source>
         <translation>Taispeáin nó folaigh comhaid físe</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="935"/>
+        <location filename="../src/docks/filesdock.cpp" line="937"/>
         <source>Audio</source>
         <translation>Fuaime</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="936"/>
+        <location filename="../src/docks/filesdock.cpp" line="938"/>
         <source>Show or hide audio files</source>
         <translation>Taispeáin nó folaigh comhaid fuaime</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="941"/>
+        <location filename="../src/docks/filesdock.cpp" line="943"/>
         <source>Image</source>
         <translation>Íomhá</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="942"/>
+        <location filename="../src/docks/filesdock.cpp" line="944"/>
         <source>Show or hide image files</source>
         <translation>Taispeáin nó folaigh comhaid íomhá</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="947"/>
+        <location filename="../src/docks/filesdock.cpp" line="949"/>
         <source>Other</source>
         <translation>Eile</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="948"/>
+        <location filename="../src/docks/filesdock.cpp" line="950"/>
         <source>Show or hide other kinds of files</source>
         <translation>Taispeáin nó folaigh cineálacha eile comhaid</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="953"/>
+        <location filename="../src/docks/filesdock.cpp" line="955"/>
         <source>Folders</source>
         <translation>Fillteáin</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="954"/>
+        <location filename="../src/docks/filesdock.cpp" line="956"/>
         <source>Hide or show the list of folders</source>
         <translation>Folaigh nó taispeáin liosta na bhfillteán</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="965"/>
+        <location filename="../src/docks/filesdock.cpp" line="967"/>
         <source>Go Up</source>
         <translation>Téigh Suas</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="966"/>
+        <location filename="../src/docks/filesdock.cpp" line="968"/>
         <source>Show the parent folder</source>
         <translation>Taispeáin an máthairfhillteán</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="984"/>
+        <location filename="../src/docks/filesdock.cpp" line="986"/>
         <source>Refresh Folders</source>
         <translation>Athnuaigh Fillteáin</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1005"/>
+        <location filename="../src/docks/filesdock.cpp" line="1007"/>
         <source>Search</source>
         <translation>Cuardach</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1029"/>
+        <location filename="../src/docks/filesdock.cpp" line="1031"/>
         <source>Open With</source>
         <translation>Oscail Le</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1281"/>
-        <source>Executable Files (*.exe);;All Files (*)</source>
-        <translation>Comhaid Inrite (*.exe);; Gach Comhad (*)</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/filesdock.cpp" line="1286"/>
-        <source>Choose Executable</source>
-        <translation>Roghnaigh Inrite</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/filesdock.cpp" line="1310"/>
+        <location filename="../src/docks/filesdock.cpp" line="1301"/>
         <source>Remove From Open With</source>
         <translation>Bain ó oscail le</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/filesdock.cpp" line="1331"/>
+        <location filename="../src/docks/filesdock.cpp" line="1322"/>
         <source>%n item(s)</source>
         <translation>
             <numerusform>%n mír</numerusform>
@@ -2786,22 +2811,22 @@ Déanfaidh Shotcut iarracht do thionscadal a dheisiú.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1373"/>
+        <location filename="../src/docks/filesdock.cpp" line="1364"/>
         <source>Add Location</source>
         <translation>Cuir Suíomh Leis</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1374"/>
+        <location filename="../src/docks/filesdock.cpp" line="1365"/>
         <source>Name</source>
         <translation>Ainm</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1392"/>
+        <location filename="../src/docks/filesdock.cpp" line="1383"/>
         <source>Delete Location</source>
         <translation>Scrios Suíomh</translation>
     </message>
     <message>
-        <location filename="../src/docks/filesdock.cpp" line="1393"/>
+        <location filename="../src/docks/filesdock.cpp" line="1384"/>
         <source>Are you sure you want to remove %1?</source>
         <translation>An bhfuil tú cinnte gur mhaith leat %1 a bhaint?</translation>
     </message>
@@ -3037,12 +3062,12 @@ Déanfaidh Shotcut iarracht do thionscadal a dheisiú.</translation>
 <context>
     <name>GlaxnimateIpcServer</name>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="642"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="640"/>
         <source>Preparing Glaxnimate preview....</source>
         <translation>Réamhamharc Glaxnimate á ullmhú....</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="695"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="693"/>
         <source>The Glaxnimate program was not found.
 
 Click OK to open a file dialog to choose its location.
@@ -3053,7 +3078,7 @@ Cliceáil OK chun dialóg comhaid a oscailt chun a shuíomh a roghnú.
 Cliceáil Cealaigh mura bhfuil Glaxnimate agat.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="705"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="703"/>
         <source>Find Glaxnimate</source>
         <translation>Aimsigh Glaxnimate</translation>
     </message>
@@ -3111,17 +3136,17 @@ Cliceáil Cealaigh mura bhfuil Glaxnimate agat.</translation>
         <translation>trédhearcach</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="204"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="202"/>
         <source>animation</source>
         <translation>beochan</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="205"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="203"/>
         <source>Glaxnimate (*.rawr);;All Files (*)</source>
         <translation>Glaxnimate (*.rawr);; Gach Comhad (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="207"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="205"/>
         <source>New Animation</source>
         <translation>Beochan Nua</translation>
     </message>
@@ -3153,6 +3178,200 @@ Cliceáil chun athrú</translation>
         <source>colors</source>
         <comment>gradient control</comment>
         <translation>dathanna</translation>
+    </message>
+</context>
+<context>
+    <name>HtmlGeneratorJob</name>
+    <message>
+        <location filename="../src/jobs/htmlgeneratorjob.cpp" line="63"/>
+        <source>Open</source>
+        <translation>Oscail</translation>
+    </message>
+</context>
+<context>
+    <name>HtmlGeneratorWidget</name>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>Foirm</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="25"/>
+        <source>HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="79"/>
+        <source>Text</source>
+        <translation>Téacs</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="102"/>
+        <source>Line 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="116"/>
+        <source>Line 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="130"/>
+        <source>Line 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="144"/>
+        <source>Click to expand or collapse the Body section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="150"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="415"/>
+        <source>▶ Body</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="182"/>
+        <source>Background color...</source>
+        <translation>Dath an chúlra...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="195"/>
+        <source>#00000000</source>
+        <translation>#00000000</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="205"/>
+        <source>Click to set color to transparent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="208"/>
+        <source>Transparent</source>
+        <translation>Trédhearcach</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="230"/>
+        <source>Do not include &lt;html&gt;, &lt;head&gt;, or &lt;body&gt; here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="239"/>
+        <source>Click to expand or collapse the CSS section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="245"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="405"/>
+        <source>▶ CSS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="275"/>
+        <source>Type or paste stylesheets here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="284"/>
+        <source>Click to expand or collapse the JavaScript section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="290"/>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="421"/>
+        <source>▶ JavaScript</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="320"/>
+        <source>Type or paste JavaScript code here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="361"/>
+        <source>Generate Image...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.ui" line="368"/>
+        <source>Generate Video...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="88"/>
+        <source>Elastic Stroke (Video)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="103"/>
+        <source>Folded (Image)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="114"/>
+        <source>Gold Metal (Image)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="129"/>
+        <source>Party Time (Video)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="140"/>
+        <source>3D (Image)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="297"/>
+        <source>Generate Image File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="299"/>
+        <source>PNG files (*.png)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="343"/>
+        <source>Generating image...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="367"/>
+        <source>Generate Video File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="369"/>
+        <source>AVI files (*.avi)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="382"/>
+        <source>Generate HTML Video: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="399"/>
+        <source>Generating HTML video...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="405"/>
+        <source>▼ CSS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="415"/>
+        <source>▼ Body</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="421"/>
+        <source>▼ JavaScript</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3213,47 +3432,62 @@ Cliceáil chun athrú</translation>
         <translation>in aghaidh an phictiúr</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="261"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="247"/>
         <source>Properties Menu</source>
         <translation>Roghchlár Airíonna</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="303"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="268"/>
+        <source>Open With</source>
+        <translation>Oscail Le</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="275"/>
+        <source>Refresh the file in Shotcut if you changed it in another app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="278"/>
+        <source>Reload</source>
+        <translation>Athlódáil</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="313"/>
         <source>Copy Full File Path</source>
         <translation>Cóipeáil Conair Iomlán an Chomhaid</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="308"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="318"/>
         <source>Show In Folder</source>
         <translation>Taispeáin I bhFillteán</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="341"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="351"/>
         <source>Show In Files</source>
         <translation>Taispeáin I gComhaid</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="313"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="323"/>
         <source>Set Creation Time...</source>
         <translation>Socraigh Am Cruthaithe...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="321"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="331"/>
         <source>Disable Proxy</source>
         <translation>Díchumasaigh Seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="326"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="336"/>
         <source>Make Proxy</source>
         <translation>Déan Seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="331"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="341"/>
         <source>Delete Proxy</source>
         <translation>Scrios Seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="336"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="346"/>
         <source>Copy Hash Code</source>
         <translation>Cóipeáil Cód Hash</translation>
     </message>
@@ -3268,28 +3502,28 @@ Cliceáil chun athrú</translation>
         <translation>Socraigh Réamhshocrú</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="247"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="356"/>
         <source>Reset</source>
         <translation>Athshocraigh</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="99"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="110"/>
         <source>(PROXY)</source>
         <translation>(Seachfhreastalaí)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="288"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="299"/>
         <source>Getting length of image sequence...</source>
         <translation>Fad seicheamh íomhá á fháil...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="311"/>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="333"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="322"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="344"/>
         <source>Reloading image sequence...</source>
         <translation>Sraith íomhánna á athlódáil...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="466"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="478"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -3298,7 +3532,27 @@ Cliceáil chun athrú</translation>
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="254"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="509"/>
+        <source>System Default</source>
+        <translation>Réamhshocrú an Chórais</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="546"/>
+        <source>Other...</source>
+        <translation>Eile...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="550"/>
+        <source>Remove...</source>
+        <translation>Bain...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="588"/>
+        <source>Remove From Open With</source>
+        <translation>Bain ó oscail le</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="261"/>
         <source>Proxy</source>
         <translation>Seachfhreastalaí</translation>
     </message>
@@ -3954,6 +4208,24 @@ an liosta. Ní stopann sé seo le post reatha. Ar dheis-
     </message>
 </context>
 <context>
+    <name>KokorodokiJob</name>
+    <message>
+        <location filename="../src/jobs/kokorodokijob.cpp" line="51"/>
+        <source>Open</source>
+        <translation>Oscail</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/kokorodokijob.cpp" line="76"/>
+        <source>&lt;p&gt;This feature requires &lt;b&gt;&lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt;&lt;/b&gt;, which provides an installer, and the automatic download of an &lt;b&gt;&lt;big&gt;13.2 GB&lt;/big&gt;&lt;/b&gt; Docker image.&lt;/p&gt;&lt;p&gt;If you already installed Docker it could not be found at the expected location: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;OK&lt;/b&gt; to continue and locate the &lt;tt&gt;docker&lt;/tt&gt; program on your system.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/kokorodokijob.cpp" line="100"/>
+        <source>&lt;p&gt;This feature requires the automatic download of an &lt;b&gt;&lt;big&gt;13.2 GB&lt;/big&gt;&lt;/b&gt; Docker image.&lt;/p&gt;&lt;p&gt;Do you want to continue?&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LissajousWidget</name>
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="14"/>
@@ -4424,7 +4696,7 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="507"/>
-        <location filename="../src/mainwindow.cpp" line="3978"/>
+        <location filename="../src/mainwindow.cpp" line="4009"/>
         <source>Enter Full Screen</source>
         <translation>Iontráil an Scáileán Iomlán</translation>
     </message>
@@ -4435,14 +4707,14 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="531"/>
-        <location filename="../src/mainwindow.cpp" line="405"/>
-        <location filename="../src/mainwindow.cpp" line="2423"/>
+        <location filename="../src/mainwindow.cpp" line="412"/>
+        <location filename="../src/mainwindow.cpp" line="2454"/>
         <source>Properties</source>
         <translation>Airíonna</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="540"/>
-        <location filename="../src/mainwindow.cpp" line="2432"/>
+        <location filename="../src/mainwindow.cpp" line="2463"/>
         <source>Recent</source>
         <translation>le déanaí</translation>
     </message>
@@ -4454,7 +4726,7 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="558"/>
-        <location filename="../src/mainwindow.cpp" line="728"/>
+        <location filename="../src/mainwindow.cpp" line="735"/>
         <source>History</source>
         <translation>Stair</translation>
     </message>
@@ -4521,13 +4793,13 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="715"/>
         <location filename="../src/mainwindow.ui" line="856"/>
-        <location filename="../src/mainwindow.cpp" line="2628"/>
+        <location filename="../src/mainwindow.cpp" line="2659"/>
         <source>Automatic</source>
         <translation>Uathoibríoch</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="726"/>
-        <location filename="../src/mainwindow.ui" line="1200"/>
+        <location filename="../src/mainwindow.ui" line="1222"/>
         <source>None</source>
         <translation>Dada</translation>
     </message>
@@ -4544,7 +4816,7 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="751"/>
-        <location filename="../src/mainwindow.ui" line="1080"/>
+        <location filename="../src/mainwindow.ui" line="1102"/>
         <source>Add...</source>
         <translation>Cuir leis...</translation>
     </message>
@@ -4576,7 +4848,7 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="190"/>
         <location filename="../src/mainwindow.ui" line="800"/>
-        <location filename="../src/mainwindow.cpp" line="2442"/>
+        <location filename="../src/mainwindow.cpp" line="2473"/>
         <source>Timeline</source>
         <translation>Amlíne</translation>
     </message>
@@ -4646,7 +4918,7 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="243"/>
-        <location filename="../src/mainwindow.ui" line="1338"/>
+        <location filename="../src/mainwindow.ui" line="1360"/>
         <source>Player</source>
         <translation>Seinnteoir</translation>
     </message>
@@ -4661,30 +4933,30 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
         <translation>Dún</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1153"/>
+        <location filename="../src/mainwindow.ui" line="1175"/>
         <source>Notes</source>
         <translation>Nótaí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1367"/>
+        <location filename="../src/mainwindow.ui" line="1389"/>
         <source>Markers as Chapters...</source>
         <translation>Marcóirí mar Chaibidlí...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1370"/>
-        <location filename="../src/mainwindow.ui" line="1373"/>
-        <location filename="../src/mainwindow.cpp" line="5923"/>
+        <location filename="../src/mainwindow.ui" line="1392"/>
+        <location filename="../src/mainwindow.ui" line="1395"/>
+        <location filename="../src/mainwindow.cpp" line="6079"/>
         <source>Export Chapters</source>
         <translation>Caibidlí Easpórtála</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1378"/>
+        <location filename="../src/mainwindow.ui" line="1400"/>
         <source>Audio/Video Device...</source>
         <translation>Gléas Fuaime/Físe...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="980"/>
-        <location filename="../src/mainwindow.ui" line="1278"/>
+        <location filename="../src/mainwindow.ui" line="1300"/>
         <source>Set...</source>
         <translation>Socraigh...</translation>
     </message>
@@ -4755,7 +5027,7 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="985"/>
-        <location filename="../src/mainwindow.ui" line="1286"/>
+        <location filename="../src/mainwindow.ui" line="1308"/>
         <source>Show...</source>
         <translation>Taispeáin...</translation>
     </message>
@@ -4781,244 +5053,281 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
         <translation>Comhleá córais</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="966"/>
+        <source>Video/Audio...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="969"/>
+        <location filename="../src/mainwindow.ui" line="972"/>
+        <source>Export Video/Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.ui" line="1011"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="1016"/>
+        <location filename="../src/mainwindow.cpp" line="1556"/>
+        <location filename="../src/mainwindow.cpp" line="5101"/>
+        <source>Screen Snapshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1019"/>
+        <source>Capture a screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.ui" line="1027"/>
+        <location filename="../src/mainwindow.cpp" line="1564"/>
+        <location filename="../src/mainwindow.cpp" line="5152"/>
+        <location filename="../src/mainwindow.cpp" line="5164"/>
+        <location filename="../src/mainwindow.cpp" line="5169"/>
+        <source>Screen Recording</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1030"/>
+        <source>Record the screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1049"/>
         <source>Audio</source>
         <translation>Fuaime</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1030"/>
+        <location filename="../src/mainwindow.ui" line="1052"/>
         <source>Switch to the audio layout</source>
         <translation>Athraigh go dtí an leagan amach fuaime</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1033"/>
+        <location filename="../src/mainwindow.ui" line="1055"/>
         <source>Alt+5</source>
         <translation>Alt+5</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1041"/>
+        <location filename="../src/mainwindow.ui" line="1063"/>
         <source>Logging</source>
         <translation>Logáil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1044"/>
+        <location filename="../src/mainwindow.ui" line="1066"/>
         <source>Switch to the logging layout</source>
         <translation>Athraigh go dtí an leagan amach logála</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1047"/>
+        <location filename="../src/mainwindow.ui" line="1069"/>
         <source>Alt+1</source>
         <translation>Alt+1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1055"/>
+        <location filename="../src/mainwindow.ui" line="1077"/>
         <source>Editing</source>
         <translation>Eagarthóireacht</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1058"/>
+        <location filename="../src/mainwindow.ui" line="1080"/>
         <source>Switch to the editing layout</source>
         <translation>Athraigh go leagan amach na heagarthóireachta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1061"/>
+        <location filename="../src/mainwindow.ui" line="1083"/>
         <source>Alt+2</source>
         <translation>Alt+2</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1069"/>
+        <location filename="../src/mainwindow.ui" line="1091"/>
         <source>FX</source>
         <translation>FX</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1072"/>
+        <location filename="../src/mainwindow.ui" line="1094"/>
         <source>Switch to the effects layout</source>
         <translation>Athraigh go leagan amach na n-éifeachtaí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1075"/>
+        <location filename="../src/mainwindow.ui" line="1097"/>
         <source>Alt+3</source>
         <translation>Alt+3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1099"/>
+        <location filename="../src/mainwindow.ui" line="1121"/>
         <source>New Generator</source>
         <translation>Gineadóir Nua</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1144"/>
+        <location filename="../src/mainwindow.ui" line="1166"/>
         <source>Markers</source>
         <translation>Marcóirí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1162"/>
+        <location filename="../src/mainwindow.ui" line="1184"/>
         <source>Subtitles</source>
         <translation>Fotheidil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1192"/>
+        <location filename="../src/mainwindow.ui" line="1214"/>
         <source>1080p</source>
         <translation>1080p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1222"/>
+        <location filename="../src/mainwindow.ui" line="1244"/>
         <source>Timecode (Drop-Frame)</source>
         <translation>Amchód (Fráma Buail)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1230"/>
+        <location filename="../src/mainwindow.ui" line="1252"/>
         <source>Frames</source>
         <translation>Frámaí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1238"/>
+        <location filename="../src/mainwindow.ui" line="1260"/>
         <source>Clock</source>
         <translation>Clog</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1246"/>
+        <location filename="../src/mainwindow.ui" line="1268"/>
         <source>Timecode (Non-Drop Frame)</source>
         <translation>Amchód (Fráma Neamh-Titim)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1251"/>
+        <location filename="../src/mainwindow.ui" line="1273"/>
         <source>Topics</source>
         <translation>Topaicí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1259"/>
+        <location filename="../src/mainwindow.ui" line="1281"/>
         <source>Synchronization...</source>
         <translation>Sioncrónú...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1262"/>
+        <location filename="../src/mainwindow.ui" line="1284"/>
         <source>Synchronization</source>
         <translation>Sioncrónú</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1270"/>
+        <location filename="../src/mainwindow.ui" line="1292"/>
         <source>Use Proxy</source>
         <translation>Úsáid Seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1281"/>
+        <location filename="../src/mainwindow.ui" line="1303"/>
         <source>Set the proxy storage folder</source>
         <translation>Socraigh an fillteán stórála seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1289"/>
+        <location filename="../src/mainwindow.ui" line="1311"/>
         <source>Show the proxy storage folder</source>
         <translation>Taispeáin an fillteán stórála seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1300"/>
+        <location filename="../src/mainwindow.ui" line="1322"/>
         <source>Use Project Folder</source>
         <translation>Úsáid Fillteán Tionscadail</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1303"/>
+        <location filename="../src/mainwindow.ui" line="1325"/>
         <source>Store proxies in the project folder if defined</source>
         <translation>Stóráil proxies san fhillteán tionscadail má shainmhínítear é</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1311"/>
+        <location filename="../src/mainwindow.ui" line="1333"/>
         <source>Use Hardware Encoder</source>
         <translation>Úsáid Ionchódóir Crua-earraí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1316"/>
+        <location filename="../src/mainwindow.ui" line="1338"/>
         <source>Configure Hardware Encoder...</source>
         <translation>Cumraigh Ionchódóir Crua-earraí...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1327"/>
+        <location filename="../src/mainwindow.ui" line="1349"/>
         <source>Switch to the color layout</source>
         <translation>Athraigh go leagan amach na ndathanna</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1330"/>
+        <location filename="../src/mainwindow.ui" line="1352"/>
         <source>Alt+4</source>
         <translation>Alt+4</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1341"/>
+        <location filename="../src/mainwindow.ui" line="1363"/>
         <source>Switch to the player only layout</source>
         <translation>Athraigh go leagan amach an imreora amháin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1344"/>
+        <location filename="../src/mainwindow.ui" line="1366"/>
         <source>Alt+6</source>
         <translation>Alt+6</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1357"/>
+        <location filename="../src/mainwindow.ui" line="1379"/>
         <source>Playlist Project</source>
         <translation>Tionscadal Seinmliosta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1362"/>
+        <location filename="../src/mainwindow.ui" line="1384"/>
         <source>Clip-only Project</source>
         <translation>Tionscadal Gearrthóg amháin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1383"/>
+        <location filename="../src/mainwindow.ui" line="1405"/>
         <source>Reset...</source>
         <translation>Athshocraigh...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1388"/>
-        <location filename="../src/mainwindow.ui" line="1391"/>
+        <location filename="../src/mainwindow.ui" line="1410"/>
+        <location filename="../src/mainwindow.ui" line="1413"/>
         <source>Backup and Save</source>
         <translation>Cúltaca agus Sábháil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1394"/>
+        <location filename="../src/mainwindow.ui" line="1416"/>
         <source>Ctrl+Alt+S</source>
         <translation>Ctrl+Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1402"/>
+        <location filename="../src/mainwindow.ui" line="1424"/>
         <source>Manually</source>
         <translation>De láimh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1410"/>
+        <location filename="../src/mainwindow.ui" line="1432"/>
         <source>Hourly</source>
         <translation>In aghaidh na huaire</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1418"/>
+        <location filename="../src/mainwindow.ui" line="1440"/>
         <source>Daily</source>
         <translation>Gach lá</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1429"/>
+        <location filename="../src/mainwindow.ui" line="1451"/>
         <source>Weekly</source>
         <translation>Seachtainiúil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1434"/>
+        <location filename="../src/mainwindow.ui" line="1456"/>
         <source>Show Project in Folder</source>
         <translation>Taispeáin Tionscadal i bhFillteán</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1445"/>
+        <location filename="../src/mainwindow.ui" line="1467"/>
         <source>Pause After Seek</source>
         <translation>Sos tar éis lorg</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1454"/>
+        <location filename="../src/mainwindow.ui" line="1476"/>
         <source>Files</source>
         <translation>Comhaid</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1085"/>
-        <location filename="../src/mainwindow.ui" line="1090"/>
+        <location filename="../src/mainwindow.ui" line="1107"/>
+        <location filename="../src/mainwindow.ui" line="1112"/>
         <source>Remove...</source>
         <translation>Bain...</translation>
     </message>
@@ -5038,58 +5347,47 @@ fuaime (0%) nó gearrthóg B fuaime (100%).</translation>
         <translation>Fráma...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="966"/>
-        <source>Video...</source>
-        <translation>Físeán...</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="969"/>
-        <location filename="../src/mainwindow.ui" line="972"/>
-        <source>Export Video</source>
-        <translation>Easpórtáil Físeán</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1016"/>
+        <location filename="../src/mainwindow.ui" line="1038"/>
         <source>Actions and Shortcuts...</source>
         <translation>Gníomhartha agus Aicearraí...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1110"/>
+        <location filename="../src/mainwindow.ui" line="1132"/>
         <source>Clear Recent on Exit</source>
         <translation>Glan Le Déanaí ar Scoir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1118"/>
+        <location filename="../src/mainwindow.ui" line="1140"/>
         <source>Show Text Under Icons</source>
         <translation>Taispeáin Téacs faoi Dheilbhíní</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1126"/>
+        <location filename="../src/mainwindow.ui" line="1148"/>
         <source>Show Small Icons</source>
         <translation>Taispeáin Deilbhíní Beaga</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1135"/>
+        <location filename="../src/mainwindow.ui" line="1157"/>
         <source>Jobs</source>
         <translation>Jabanna</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1170"/>
+        <location filename="../src/mainwindow.ui" line="1192"/>
         <source>540p</source>
         <translation>540p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1181"/>
+        <location filename="../src/mainwindow.ui" line="1203"/>
         <source>720p</source>
         <translation>720p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1211"/>
+        <location filename="../src/mainwindow.ui" line="1233"/>
         <source>360p</source>
         <translation>360p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="151"/>
+        <location filename="../src/mainwindow.cpp" line="158"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
@@ -5098,113 +5396,118 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 Suiteáil é le do bhainisteoir pacáiste. D&apos;fhéadfadh sé a bheith ainmnithe libsdl2-2.0-0, SDL2, nó a leithéid.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1168"/>
+        <location filename="../src/mainwindow.cpp" line="1175"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>Scáileán %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1204"/>
+        <location filename="../src/mainwindow.cpp" line="1211"/>
         <source>Off</source>
         <translation>As</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1207"/>
+        <location filename="../src/mainwindow.cpp" line="1214"/>
         <source>Internal</source>
         <translation>Inmheánach</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1210"/>
+        <location filename="../src/mainwindow.cpp" line="1217"/>
         <source>External</source>
         <translation>Seachtrach</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1233"/>
+        <location filename="../src/mainwindow.cpp" line="1240"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1324"/>
-        <location filename="../src/mainwindow.cpp" line="1502"/>
+        <location filename="../src/mainwindow.ui" line="1346"/>
+        <location filename="../src/mainwindow.cpp" line="1509"/>
         <source>Color</source>
         <translation>Dath</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1506"/>
+        <location filename="../src/mainwindow.cpp" line="1513"/>
         <source>Text</source>
         <translation>Téacs</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1513"/>
+        <location filename="../src/mainwindow.cpp" line="1520"/>
         <source>Animation</source>
         <translation>Beochan</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1518"/>
+        <location filename="../src/mainwindow.cpp" line="1525"/>
+        <source>Image/Video from HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1530"/>
         <source>Noise</source>
         <translation>Torann</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1523"/>
+        <location filename="../src/mainwindow.cpp" line="1535"/>
         <source>Color Bars</source>
         <translation>Barraí Dath</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1528"/>
+        <location filename="../src/mainwindow.cpp" line="1540"/>
         <source>Audio Tone</source>
         <translation>Ton Fuaime</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1533"/>
+        <location filename="../src/mainwindow.cpp" line="1545"/>
         <source>Count</source>
         <translation>Áireamh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1538"/>
+        <location filename="../src/mainwindow.cpp" line="1550"/>
         <source>Blip Flash</source>
         <translation>Flash blip</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1563"/>
-        <location filename="../src/mainwindow.cpp" line="1565"/>
-        <location filename="../src/mainwindow.cpp" line="2003"/>
-        <location filename="../src/mainwindow.cpp" line="2011"/>
+        <location filename="../src/mainwindow.cpp" line="1592"/>
+        <location filename="../src/mainwindow.cpp" line="1594"/>
         <location filename="../src/mainwindow.cpp" line="2034"/>
-        <location filename="../src/mainwindow.cpp" line="2094"/>
-        <location filename="../src/mainwindow.cpp" line="4721"/>
-        <location filename="../src/mainwindow.cpp" line="4734"/>
-        <location filename="../src/mainwindow.cpp" line="5699"/>
+        <location filename="../src/mainwindow.cpp" line="2042"/>
+        <location filename="../src/mainwindow.cpp" line="2065"/>
+        <location filename="../src/mainwindow.cpp" line="2125"/>
+        <location filename="../src/mainwindow.cpp" line="4752"/>
+        <location filename="../src/mainwindow.cpp" line="4765"/>
+        <location filename="../src/mainwindow.cpp" line="5855"/>
         <source>Failed to open </source>
         <translation>Theip ar oscailt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1598"/>
+        <location filename="../src/mainwindow.cpp" line="1629"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.</source>
         <translation>Úsáideann an comhad a d&apos;oscail tú éifeachtaí GPU, ach ní chumasaítear éifeachtaí GPU.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1610"/>
+        <location filename="../src/mainwindow.cpp" line="1641"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>Úsáideann an comhad a d&apos;oscail tú éifeachtaí LAP nach bhfuil comhoiriúnach le héifeachtaí GPU, ach cumasaítear éifeachtaí GPU.
 An bhfuil fonn ort maisíochtaí GPU a dhíchumasú agus a atosú?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1633"/>
+        <location filename="../src/mainwindow.cpp" line="1664"/>
         <source>Repaired</source>
         <translation>Deisithe</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1634"/>
+        <location filename="../src/mainwindow.cpp" line="1665"/>
         <source>Save Repaired XML</source>
         <translation>Sábháil XML Deisithe</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1671"/>
+        <location filename="../src/mainwindow.cpp" line="1702"/>
         <source>Repairing the project failed.</source>
         <translation>Theip ar dheisiú an tionscadail.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1684"/>
+        <location filename="../src/mainwindow.cpp" line="1715"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -5217,22 +5520,22 @@ Má roghnaíonn tú Tá, cruthóidh Shotcut cóip de do thionscadal
 le &quot;- Deisithe&quot; in ainm an chomhaid agus é a oscailt.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1719"/>
+        <location filename="../src/mainwindow.cpp" line="1750"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Tá comhaid uathshábháilte ann. Ar mhaith leat iad a ghnóthú anois?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1791"/>
+        <location filename="../src/mainwindow.cpp" line="1822"/>
         <source>You cannot add a project to itself!</source>
         <translation>Ní féidir leat tionscadal a chur leis féin!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1829"/>
+        <location filename="../src/mainwindow.cpp" line="1860"/>
         <source>There was an error saving. Please try again.</source>
         <translation>Tharla earráid a shábháil. Bain triail eile as.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1914"/>
+        <location filename="../src/mainwindow.cpp" line="1945"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -5241,7 +5544,7 @@ It was made with version </source>
 Rinneadh é le leagan </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1945"/>
+        <location filename="../src/mainwindow.cpp" line="1976"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -5252,48 +5555,48 @@ Dún feidhmchláir eile nó cluaisíní brabhsálaí gréasáin agus bain triail
 Nó Shotcut a shábháil agus a atosú.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1997"/>
+        <location filename="../src/mainwindow.cpp" line="2028"/>
         <source>Opening %1</source>
         <translation>%1 á oscailt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2136"/>
-        <location filename="../src/mainwindow.cpp" line="4708"/>
+        <location filename="../src/mainwindow.cpp" line="2167"/>
+        <location filename="../src/mainwindow.cpp" line="4739"/>
         <source>Open File</source>
         <translation>Oscail Comhad</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2138"/>
+        <location filename="../src/mainwindow.cpp" line="2169"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Gach Comhad (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2406"/>
+        <location filename="../src/mainwindow.cpp" line="2437"/>
         <source>Preferences</source>
         <translation>Sainroghanna</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2416"/>
+        <location filename="../src/mainwindow.cpp" line="2447"/>
         <source>Rename Clip</source>
         <translation>Athainmnigh Gearrthóg</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2425"/>
+        <location filename="../src/mainwindow.cpp" line="2456"/>
         <source>Find</source>
         <translation>Aimsigh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2434"/>
+        <location filename="../src/mainwindow.cpp" line="2465"/>
         <source>Reload</source>
         <translation>Athlódáil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2444"/>
+        <location filename="../src/mainwindow.cpp" line="2475"/>
         <source>Rerun Filter Analysis</source>
         <translation>Athrith Anailís Scagaire</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="2458"/>
+        <location filename="../src/mainwindow.cpp" line="2489"/>
         <source>This will start %n analysis job(s). Continue?</source>
         <translation>
             <numerusform>Cuirfidh sé seo tús le %n post anailíse. Lean ar aghaidh?</numerusform>
@@ -5302,119 +5605,119 @@ Nó Shotcut a shábháil agus a atosú.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2476"/>
+        <location filename="../src/mainwindow.cpp" line="2507"/>
         <source>No filters to analyze.</source>
         <translation>Gan scagairí le hanailísiú.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2617"/>
+        <location filename="../src/mainwindow.cpp" line="2648"/>
         <source>Untitled</source>
         <translation>Gan teideal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2622"/>
+        <location filename="../src/mainwindow.cpp" line="2653"/>
         <source>%1x%2 %3fps %4ch</source>
         <translation>%1x%2 %3fps %4ch</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2649"/>
+        <location filename="../src/mainwindow.cpp" line="2680"/>
         <source>About %1</source>
         <translation>Maidir le %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2778"/>
+        <location filename="../src/mainwindow.cpp" line="2809"/>
         <source>Non-Broadcast</source>
         <translation>Neamh-Chraoladh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2783"/>
+        <location filename="../src/mainwindow.cpp" line="2814"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Scáileán Leathan NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2784"/>
+        <location filename="../src/mainwindow.cpp" line="2815"/>
         <source>DVD Widescreen PAL</source>
         <translation>PAL Scáileán Leathan DVD</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2795"/>
+        <location filename="../src/mainwindow.cpp" line="2826"/>
         <source>Square 1080p 30 fps</source>
         <translation>Cearnóg 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2796"/>
+        <location filename="../src/mainwindow.cpp" line="2827"/>
         <source>Square 1080p 60 fps</source>
         <translation>Cearnóg 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2797"/>
+        <location filename="../src/mainwindow.cpp" line="2828"/>
         <source>Vertical HD 30 fps</source>
         <translation>Ingearach HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2798"/>
+        <location filename="../src/mainwindow.cpp" line="2829"/>
         <source>Vertical HD 60 fps</source>
         <translation>Ingearach HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2799"/>
+        <location filename="../src/mainwindow.cpp" line="2830"/>
         <source>Custom</source>
         <translation>Saincheaptha</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2830"/>
-        <location filename="../src/mainwindow.cpp" line="3125"/>
+        <location filename="../src/mainwindow.cpp" line="2861"/>
+        <location filename="../src/mainwindow.cpp" line="3152"/>
         <source>Saved %1</source>
         <translation>Sábhála %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3116"/>
-        <location filename="../src/mainwindow.cpp" line="3139"/>
-        <location filename="../src/mainwindow.cpp" line="4502"/>
+        <location filename="../src/mainwindow.cpp" line="3143"/>
+        <location filename="../src/mainwindow.cpp" line="3166"/>
+        <location filename="../src/mainwindow.cpp" line="4533"/>
         <source>Save XML</source>
         <translation>Sábháil XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3235"/>
+        <location filename="../src/mainwindow.cpp" line="3262"/>
         <source>Timeline is not loaded</source>
         <translation>Níl an amlíne luchtaithe</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3245"/>
+        <location filename="../src/mainwindow.cpp" line="3272"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation>Raon marcóir gan aimsiú faoin cúrsóir amlíne</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3310"/>
+        <location filename="../src/mainwindow.cpp" line="3337"/>
         <source>There are incomplete jobs.
 Do you still want to exit?</source>
         <translation>Tá poist neamhiomlána ann.
 An bhfuil fonn ort imeacht fós?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3322"/>
+        <location filename="../src/mainwindow.cpp" line="3349"/>
         <source>An export is in progress.
 Do you still want to exit?</source>
         <translation>Tá easpórtáil ar siúl.
 An bhfuil fonn ort imeacht fós?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4504"/>
+        <location filename="../src/mainwindow.cpp" line="4535"/>
         <source>Saved backup %1</source>
         <translation>Cúltaca %1 sábháilte</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3201"/>
+        <location filename="../src/mainwindow.cpp" line="3228"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation>Do you also want to change the Video Mode to %1 x %2?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4157"/>
+        <location filename="../src/mainwindow.cpp" line="4188"/>
         <source>Opened Files</source>
         <translation>Oscail Comhaid</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4239"/>
+        <location filename="../src/mainwindow.cpp" line="4270"/>
         <source>GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.
 At this time, a project created with GPU effects cannot be converted to a CPU-only project later.
 
@@ -5425,84 +5728,109 @@ At this time, a project created with GPU effects cannot be converted to a CPU-on
 Do you want to enable GPU effects and restart Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5343"/>
+        <location filename="../src/mainwindow.cpp" line="5456"/>
         <source>Add To Timeline</source>
         <translation>Cuir le Amlíne</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5899"/>
+        <location filename="../src/mainwindow.cpp" line="6055"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>Cuir raonta san áireamh (Fad &gt; fhráma 1)?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5910"/>
+        <location filename="../src/mainwindow.cpp" line="6066"/>
         <source>Choose Markers</source>
         <translation>Roghnaigh Marcóirí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5927"/>
+        <location filename="../src/mainwindow.cpp" line="6083"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Téacs (*.txt);; Gach Comhad (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5982"/>
+        <location filename="../src/mainwindow.cpp" line="6138"/>
         <source>Failed to open export-chapters.js</source>
         <translation>Theip ar oscailt export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6023"/>
+        <location filename="../src/mainwindow.cpp" line="6179"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation>Athshocróidh sé seo &lt;b&gt;gach&lt;/b&gt; socrú, agus ní mór do Shotcut atosú ina dhiaidh sin.
 An bhfuil fonn ort athshocrú agus atosú anois?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1638"/>
-        <location filename="../src/mainwindow.cpp" line="3143"/>
+        <location filename="../src/mainwindow.cpp" line="1669"/>
+        <location filename="../src/mainwindow.cpp" line="3170"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="474"/>
+        <location filename="../src/mainwindow.cpp" line="481"/>
         <source>View Mode</source>
         <translation>Mód Amharc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3283"/>
+        <location filename="../src/mainwindow.cpp" line="3310"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Athraíodh an tionscadal.
 An bhfuil fonn ort do chuid athruithe a shábháil?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3981"/>
+        <location filename="../src/mainwindow.cpp" line="4012"/>
         <source>Exit Full Screen</source>
         <translation>Scoir den Scáileán Iomlán</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4549"/>
+        <location filename="../src/mainwindow.cpp" line="4580"/>
         <source>Shotcut must restart to change external monitoring.
 Do you want to restart now?</source>
         <translation>Caithfidh Shotcut atosú chun monatóireacht sheachtrach a athrú.
 Ar mhaith leat atosú anois?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5658"/>
+        <location filename="../src/mainwindow.cpp" line="5102"/>
+        <source>screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5103"/>
+        <source>PNG Files (*.png)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5153"/>
+        <source>screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5154"/>
+        <source>MOV Files (*.mov)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5557"/>
+        <source>&lt;p&gt;This feature requires Google Chrome or a Chromium-based browser.&lt;/p&gt;&lt;p&gt;If you already installed one it could not be found at the expected location: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;OK&lt;/b&gt; to continue and locate the program on your system.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5814"/>
         <source>Turn Proxy On</source>
         <translation>Cas an seachfhreastalaí air</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5658"/>
+        <location filename="../src/mainwindow.cpp" line="5814"/>
         <source>Turn Proxy Off</source>
         <translation>Cas an seachfhreastalaí as</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5663"/>
+        <location filename="../src/mainwindow.cpp" line="5819"/>
         <source>Converting</source>
         <translation>Athrú</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5679"/>
+        <location filename="../src/mainwindow.cpp" line="5835"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -5511,98 +5839,98 @@ You must reopen your project after all proxy jobs are finished.</source>
 Ní mór duit do thionscadal a athoscailt tar éis gach post seachfhreastalaí a bheith críochnaithe.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5717"/>
+        <location filename="../src/mainwindow.cpp" line="5873"/>
         <source>Proxy Folder</source>
         <translation>Fillteán Seachfhreastalaí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5735"/>
+        <location filename="../src/mainwindow.cpp" line="5891"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>An bhfuil fonn ort gach comhad a bhogadh ón seanfhillteán go dtí an fillteán nua?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5743"/>
+        <location filename="../src/mainwindow.cpp" line="5899"/>
         <source>Moving Files</source>
         <translation>Comhaid á mbogadh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3993"/>
+        <location filename="../src/mainwindow.cpp" line="4024"/>
         <source>GPU effects are not supported</source>
         <translation>Ní thacaítear le héifeachtaí GPU</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="315"/>
+        <location filename="../src/mainwindow.cpp" line="322"/>
         <source>Set Loop Range</source>
         <translation>Socraigh Raon na Lúibe</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="478"/>
+        <location filename="../src/mainwindow.cpp" line="485"/>
         <source>Thumbnails</source>
         <translation>Mionsamhlacha</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="570"/>
+        <location filename="../src/mainwindow.cpp" line="577"/>
         <source>Scrolling</source>
         <translation>Scrollaigh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1049"/>
+        <location filename="../src/mainwindow.cpp" line="1056"/>
         <source>Audio API</source>
         <translation>API Fuaime</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1070"/>
+        <location filename="../src/mainwindow.cpp" line="1077"/>
         <source>default</source>
         <translation>réamhshocraithe</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1077"/>
+        <location filename="../src/mainwindow.cpp" line="1084"/>
         <source>You must restart Shotcut to change the audio API.
 Do you want to restart now?</source>
         <translation>Ní mór duit Shotcut a atosú chun an API fuaime a athrú.
 An bhfuil fonn ort atosú anois?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1195"/>
+        <location filename="../src/mainwindow.cpp" line="1202"/>
         <source>SDR</source>
         <translation>SDR</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1198"/>
+        <location filename="../src/mainwindow.cpp" line="1205"/>
         <source>HLG HDR</source>
         <translation>HLG HDR</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1224"/>
+        <location filename="../src/mainwindow.cpp" line="1231"/>
         <source>DeckLink Gamma</source>
         <translation>DeckLink Gamma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4013"/>
+        <location filename="../src/mainwindow.cpp" line="4044"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Cliceáil anseo chun leagan nua de Shotcut a sheiceáil.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4128"/>
+        <location filename="../src/mainwindow.cpp" line="4159"/>
         <source>Open Files</source>
         <translation>Oscail Comhaid</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4187"/>
+        <location filename="../src/mainwindow.cpp" line="4218"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Ní mór duit Shotcut a atosú chun aistriú go dtí an teanga nua.
 An bhfuil fonn ort atosú anois?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4230"/>
+        <location filename="../src/mainwindow.cpp" line="4261"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Theip ar cheangal le JACK.
 Deimhnigh le do thoil go bhfuil JACK suiteáilte agus ag rith.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4259"/>
+        <location filename="../src/mainwindow.cpp" line="4290"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -5611,101 +5939,101 @@ Disable GPU effects and restart?</source>
 Díchumasaigh maisíochtaí GPU agus atosaigh?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4481"/>
+        <location filename="../src/mainwindow.cpp" line="4512"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>Ní mór duit %1 a atosú chun athrú go dtí an téama nua.
 An bhfuil fonn ort atosú anois?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4524"/>
+        <location filename="../src/mainwindow.cpp" line="4555"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Déan athbhreithniú ar do thionscadal iomlán tar éis an t-athrú seo a dhéanamh.&lt;/p&gt;&lt;p&gt;Ní Shotcut choigeartú go huathoibríoch rudaí atá íogair do mhéid agus seasamh má athraíonn tú réiteach nó cóimheas gné.&lt;/p&lt;br&gt;D&apos;fhéadfadh uainiú na n-athruithe agus na bpríomhfhrámaí a bheith beagán difriúil má athraíonn tú ráta fráma.&lt;/p&gt;&lt;p&gt;Is smaoineamh maith é &lt;b&gt;Comhad &gt; Cúltaca a úsáid agus Sábháil&lt;/b&gt; roimh an oibríocht seo nó ina dhiaidh.&lt;/p&gt;&lt;p&gt;An bhfuil fonn ort an &lt;b&gt;Mód Físe&lt;/b&gt; a athrú anois?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4538"/>
+        <location filename="../src/mainwindow.cpp" line="4569"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>Ná taispeáin é seo a thuilleadh.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4685"/>
+        <location filename="../src/mainwindow.cpp" line="4716"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>An bhfuil fonn ort seiceáil go huathoibríoch le haghaidh nuashonruithe amach anseo?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4692"/>
+        <location filename="../src/mainwindow.cpp" line="4723"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Ná taispeáin é seo a thuilleadh.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4710"/>
+        <location filename="../src/mainwindow.cpp" line="4741"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Gach Comhad (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4764"/>
+        <location filename="../src/mainwindow.cpp" line="4795"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Ní mór duit Shotcut a atosú chun an modh taispeána a athrú.
 An bhfuil fonn ort atosú anois?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4794"/>
+        <location filename="../src/mainwindow.cpp" line="4825"/>
         <source>Application Log</source>
         <translation>Logchomhad Iarratais</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4797"/>
+        <location filename="../src/mainwindow.cpp" line="4828"/>
         <source>Previous</source>
         <translation>Roimhe Seo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4859"/>
+        <location filename="../src/mainwindow.cpp" line="4890"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Tá leagan shotcut %1 ar fáil! Cliceáil anseo chun é a fháil.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4865"/>
+        <location filename="../src/mainwindow.cpp" line="4896"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Tá an leagan is déanaí de Shotcut á rith agat.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4879"/>
+        <location filename="../src/mainwindow.cpp" line="4910"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Theip ar léamh version.json agus tú ag seiceáil. Cliceáil anseo chun dul chuig an suíomh Gréasáin.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="944"/>
         <location filename="../src/mainwindow.ui" line="947"/>
-        <location filename="../src/mainwindow.cpp" line="4899"/>
+        <location filename="../src/mainwindow.cpp" line="4930"/>
         <source>Export EDL</source>
         <translation>Easpórtáil EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4903"/>
+        <location filename="../src/mainwindow.cpp" line="4934"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);; Gach Comhad (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4950"/>
-        <location filename="../src/mainwindow.cpp" line="5979"/>
+        <location filename="../src/mainwindow.cpp" line="4981"/>
+        <location filename="../src/mainwindow.cpp" line="6135"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Tharla earráid JavaScript le linn easpórtála.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4953"/>
+        <location filename="../src/mainwindow.cpp" line="4984"/>
         <source>Failed to open export-edl.js</source>
         <translation>Theip ar oscailt export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4984"/>
+        <location filename="../src/mainwindow.cpp" line="5015"/>
         <source>Export frame from proxy?</source>
         <translation>Easpórtáil fráma ó sheachfhreastalaí?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4985"/>
+        <location filename="../src/mainwindow.cpp" line="5016"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -5716,49 +6044,49 @@ An bhfuil fonn ort leanúint ar aghaidh fós?</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="955"/>
         <location filename="../src/mainwindow.ui" line="958"/>
-        <location filename="../src/mainwindow.cpp" line="4997"/>
+        <location filename="../src/mainwindow.cpp" line="5028"/>
         <source>Export Frame</source>
         <translation>Easpórtáil Fráma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5003"/>
+        <location filename="../src/mainwindow.cpp" line="5034"/>
         <source>Unable to export frame.</source>
         <translation>Ní féidir fráma a easpórtáil.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5011"/>
+        <location filename="../src/mainwindow.cpp" line="5042"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Ní mór duit Shotcut a atosú chun an chomhadlann sonraí a athrú.
 An bhfuil fonn ort leanúint ar aghaidh?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5022"/>
+        <location filename="../src/mainwindow.cpp" line="5053"/>
         <source>Data Directory</source>
         <translation>Comhadlann Sonraí</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5232"/>
+        <location filename="../src/mainwindow.cpp" line="5345"/>
         <source>Add Custom Layout</source>
         <translation>Cuir Leagan Amach Saincheaptha Leis</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5233"/>
+        <location filename="../src/mainwindow.cpp" line="5346"/>
         <source>Name</source>
         <translation>Ainm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5272"/>
+        <location filename="../src/mainwindow.cpp" line="5385"/>
         <source>Remove Video Mode</source>
         <translation>Bain Mód Físeáin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5289"/>
+        <location filename="../src/mainwindow.cpp" line="5402"/>
         <source>Remove Layout</source>
         <translation>Bain Leagan Amach</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5443"/>
+        <location filename="../src/mainwindow.cpp" line="5599"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -6325,9 +6653,14 @@ Bain triail eile as le fillteán eile.</translation>
 <context>
     <name>NotesDock</name>
     <message>
-        <location filename="../src/docks/notesdock.cpp" line="79"/>
+        <location filename="../src/docks/notesdock.cpp" line="137"/>
         <source>Notes</source>
         <translation>Nótaí</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/notesdock.cpp" line="157"/>
+        <source>Notes Controls</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6349,7 +6682,7 @@ Bain triail eile as le fillteán eile.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="38"/>
-        <location filename="../src/openotherdialog.cpp" line="143"/>
+        <location filename="../src/openotherdialog.cpp" line="149"/>
         <source>Network</source>
         <translation>Líonra</translation>
     </message>
@@ -6360,102 +6693,112 @@ Bain triail eile as le fillteán eile.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="45"/>
-        <location filename="../src/openotherdialog.cpp" line="145"/>
+        <location filename="../src/openotherdialog.cpp" line="151"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="49"/>
-        <location filename="../src/openotherdialog.cpp" line="135"/>
+        <location filename="../src/openotherdialog.cpp" line="141"/>
         <source>Video4Linux</source>
         <translation>Físeán4linux</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="51"/>
-        <location filename="../src/openotherdialog.cpp" line="137"/>
+        <location filename="../src/openotherdialog.cpp" line="143"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="53"/>
-        <location filename="../src/openotherdialog.cpp" line="139"/>
+        <location filename="../src/openotherdialog.cpp" line="145"/>
         <source>ALSA Audio</source>
         <translation>Fuaime ALSA</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="56"/>
         <location filename="../src/openotherdialog.cpp" line="59"/>
-        <location filename="../src/openotherdialog.cpp" line="141"/>
+        <location filename="../src/openotherdialog.cpp" line="147"/>
         <source>Audio/Video Device</source>
         <translation>Gléas Fuaime/Físe</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="64"/>
+        <location filename="../src/openotherdialog.cpp" line="63"/>
+        <source>Screen Snapshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/openotherdialog.cpp" line="65"/>
+        <source>Screen Recording</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/openotherdialog.cpp" line="70"/>
         <source>Generator</source>
         <translation>Gineadóir</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="66"/>
-        <location filename="../src/openotherdialog.cpp" line="147"/>
+        <location filename="../src/openotherdialog.cpp" line="72"/>
+        <location filename="../src/openotherdialog.cpp" line="153"/>
         <source>Color</source>
         <translation>Dath</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="69"/>
+        <location filename="../src/openotherdialog.cpp" line="75"/>
         <source>Text</source>
         <translation>Téacs</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="74"/>
-        <location filename="../src/openotherdialog.cpp" line="149"/>
+        <location filename="../src/openotherdialog.cpp" line="80"/>
+        <location filename="../src/openotherdialog.cpp" line="155"/>
         <source>Animation</source>
         <translation>Beochan</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="78"/>
-        <location filename="../src/openotherdialog.cpp" line="151"/>
+        <location filename="../src/openotherdialog.cpp" line="84"/>
+        <location filename="../src/openotherdialog.cpp" line="157"/>
         <source>Noise</source>
         <translation>Torann</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="82"/>
-        <location filename="../src/openotherdialog.cpp" line="153"/>
+        <location filename="../src/openotherdialog.cpp" line="88"/>
+        <location filename="../src/openotherdialog.cpp" line="159"/>
         <source>Ising</source>
         <translation>Iseach</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="87"/>
-        <location filename="../src/openotherdialog.cpp" line="155"/>
+        <location filename="../src/openotherdialog.cpp" line="93"/>
+        <location filename="../src/openotherdialog.cpp" line="161"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="91"/>
-        <location filename="../src/openotherdialog.cpp" line="157"/>
+        <location filename="../src/openotherdialog.cpp" line="97"/>
+        <location filename="../src/openotherdialog.cpp" line="163"/>
         <source>Plasma</source>
         <translation>Plasma</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="95"/>
-        <location filename="../src/openotherdialog.cpp" line="159"/>
+        <location filename="../src/openotherdialog.cpp" line="101"/>
+        <location filename="../src/openotherdialog.cpp" line="165"/>
         <source>Color Bars</source>
         <translation>Barraí Dath</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="99"/>
-        <location filename="../src/openotherdialog.cpp" line="161"/>
+        <location filename="../src/openotherdialog.cpp" line="105"/>
+        <location filename="../src/openotherdialog.cpp" line="167"/>
         <source>Audio Tone</source>
         <translation>Ton Fuaime</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="103"/>
-        <location filename="../src/openotherdialog.cpp" line="163"/>
+        <location filename="../src/openotherdialog.cpp" line="109"/>
+        <location filename="../src/openotherdialog.cpp" line="169"/>
         <source>Count</source>
         <translation>Áireamh</translation>
     </message>
     <message>
-        <location filename="../src/openotherdialog.cpp" line="107"/>
-        <location filename="../src/openotherdialog.cpp" line="165"/>
+        <location filename="../src/openotherdialog.cpp" line="113"/>
+        <location filename="../src/openotherdialog.cpp" line="171"/>
         <source>Blip Flash</source>
         <translation>Flash blip</translation>
     </message>
@@ -7990,7 +8333,7 @@ p, li { white-space: pre-wrap; }
         <translation>Coigeartaigh gnóthachan/toirt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4140"/>
+        <location filename="../src/mainwindow.cpp" line="4171"/>
         <source>You cannot add a project to itself!</source>
         <translation>Ní féidir leat tionscadal a chur leis féin!</translation>
     </message>
@@ -8001,9 +8344,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/transcoder.cpp" line="95"/>
-        <location filename="../src/util.cpp" line="142"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1044"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1134"/>
+        <location filename="../src/util.cpp" line="146"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1069"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1159"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -8012,22 +8355,22 @@ B&apos;fhéidir nach bhfuil cead agat.
 Bain triail eile as le fillteán eile.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="159"/>
+        <location filename="../src/util.cpp" line="163"/>
         <source>Transition</source>
         <translation>Trasdul</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="161"/>
+        <location filename="../src/util.cpp" line="165"/>
         <source>Track: %1</source>
         <translation>Rian: %1</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="163"/>
+        <location filename="../src/util.cpp" line="167"/>
         <source>Output</source>
         <translation>Aschur</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="326"/>
+        <location filename="../src/util.cpp" line="330"/>
         <source>The value you entered is very similar to the common,
 more standard %1 = %2/1001.
 
@@ -8038,50 +8381,50 @@ níos caighdeánaí %1 =% 2/1001.
 An bhfuil fonn ort %1 =% 2/1001 a úsáid ina ionad?</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="717"/>
+        <location filename="../src/util.cpp" line="729"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Níl ach  %1 MiB de spás saor ag an tiomántán a roghnaigh tú.
 An bhfuil fonn ort leanúint ar aghaidh fós?</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="725"/>
+        <location filename="../src/util.cpp" line="737"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Ná taispeáin é seo a thuilleadh.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="761"/>
+        <location filename="../src/util.cpp" line="773"/>
         <source>unknown (%1)</source>
         <translation>anaithnid (%1)</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="764"/>
+        <location filename="../src/util.cpp" line="776"/>
         <source>NA</source>
         <translation>MAIDIR LE</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="815"/>
+        <location filename="../src/util.cpp" line="827"/>
         <source>This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.</source>
         <translation>Úsáideann an comhad seo saintréithe aistrithe datha %1, a bhféadfadh dathanna míchearta nó gile i Shotcut a bheith mar thoradh air.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="820"/>
+        <location filename="../src/util.cpp" line="832"/>
         <source>This file is variable frame rate, which is not reliable for editing.</source>
         <translation>Is ráta fráma athraitheach é an comhad seo, nach bhfuil iontaofa le haghaidh eagarthóireachta.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="824"/>
+        <location filename="../src/util.cpp" line="836"/>
         <source>This file does not support seeking and cannot be used for editing.</source>
         <translation>Ní thacaíonn an comhad seo le lorg agus ní féidir é a úsáid le haghaidh eagarthóireachta.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="827"/>
+        <location filename="../src/util.cpp" line="839"/>
         <source>This file format (HDV) is not reliable for editing.</source>
         <translation>Níl an fhormáid comhaid seo (HDV) iontaofa le haghaidh eagarthóireachta.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="843"/>
+        <location filename="../src/util.cpp" line="855"/>
         <source> Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, it automatically replaces clips, or you can double-click the job to open it.
@@ -8098,17 +8441,17 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
         <translation>trédhearcach</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3127"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3129"/>
         <source>Drop Files</source>
         <translation>Comhaid Titim</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3134"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3136"/>
         <source>Failed to open </source>
         <translation>Theip ar oscailt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3150"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3152"/>
         <source>Not adding non-seekable file: </source>
         <translation>Gan comhad neamh-in-lorgtha a chur leis: </translation>
     </message>
@@ -8169,7 +8512,7 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
         <translation>trédhearcach</translation>
     </message>
     <message>
-        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="637"/>
+        <location filename="../src/widgets/glaxnimateproducerwidget.cpp" line="635"/>
         <source>Edit With Glaxnimate</source>
         <translation>Cuir in eagar le Glaxnimate</translation>
     </message>
@@ -8336,7 +8679,7 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
         <translation>Bog fotheideal</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/subtitlesdock.cpp" line="504"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="526"/>
         <source>Imported %1 subtitle item(s)</source>
         <translation>
             <numerusform>Iompórtáladh %1 mír fotheideal</numerusform>
@@ -8345,13 +8688,13 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="606"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="621"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="628"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="643"/>
         <source>Importing subtitles...</source>
         <translation>Fotheidil á n- iompórtáil...</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/subtitlesdock.cpp" line="642"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="664"/>
         <source>Imported %n subtitle item(s)</source>
         <translation>
             <numerusform>Iompórtáladh %n mír fotheideal</numerusform>
@@ -8360,8 +8703,8 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="494"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="637"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="516"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="659"/>
         <source>No subtitles found to import</source>
         <translation>Níor aimsíodh fotheidil ar bith le hiompórtáil</translation>
     </message>
@@ -8377,11 +8720,27 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
         <translation>Iarcheangail fotheideal</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1339"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1053"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1143"/>
+        <location filename="../src/docks/encodedock.cpp" line="1340"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1078"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1168"/>
         <source>A job already exists for %1</source>
         <translation>Tá post le haghaidh %1 cheana féin</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/dockerpulljob.cpp" line="26"/>
+        <source>docker pull %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/kokorodokijob.cpp" line="43"/>
+        <source>Text to speech: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="39"/>
+        <source>transparent</source>
+        <comment>New &gt; Image/Video From HTML</comment>
+        <translation>trédhearcach</translation>
     </message>
 </context>
 <context>
@@ -8467,22 +8826,22 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
 <context>
     <name>QmlMarkerMenu</name>
     <message>
-        <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="62"/>
+        <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="63"/>
         <source>Edit...</source>
         <translation>Cuir in eagar...</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="67"/>
+        <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="68"/>
         <source>Delete</source>
         <translation>Scrios</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="72"/>
+        <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="73"/>
         <source>Choose Color...</source>
         <translation>Roghnaigh Dath...</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="86"/>
+        <location filename="../src/qmltypes/qmlmarkermenu.cpp" line="85"/>
         <source>Choose Recent Color</source>
         <translation>Roghnaigh Dath Le Déanaí</translation>
     </message>
@@ -8593,6 +8952,14 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
     </message>
 </context>
 <context>
+    <name>RectangleSelector</name>
+    <message>
+        <location filename="../src/screencapture/rectangleselector.cpp" line="120"/>
+        <source>Click and drag to select an area. Press ESC to cancel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ResourceDialog</name>
     <message>
         <location filename="../src/dialogs/resourcedialog.cpp" line="35"/>
@@ -8676,6 +9043,19 @@ Má tá, roghnaigh formáid thíos agus ansin cliceáil OK chun ainm comhaid a r
         <location filename="../src/controllers/scopecontroller.cpp" line="41"/>
         <source>Scopes</source>
         <translation>Scóip</translation>
+    </message>
+</context>
+<context>
+    <name>ScreenCaptureJob</name>
+    <message>
+        <location filename="../src/jobs/screencapturejob.cpp" line="39"/>
+        <source>Open</source>
+        <translation>Oscail</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/screencapturejob.cpp" line="40"/>
+        <source>Open the capture</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9329,6 +9709,106 @@ Más é 0 an ré, ní chruthófar aon aistriú.</translation>
     </message>
 </context>
 <context>
+    <name>SpeechDialog</name>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="37"/>
+        <source>Text to Speech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="45"/>
+        <source>Language</source>
+        <translation>Teanga</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="48"/>
+        <source>American English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="49"/>
+        <source>British English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="50"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="51"/>
+        <source>French</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="52"/>
+        <source>Hindi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="53"/>
+        <source>Italian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="54"/>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="55"/>
+        <source>Japanese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="56"/>
+        <source>Mandarin Chinese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="70"/>
+        <source>Voice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="79"/>
+        <source>Preview this voice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="121"/>
+        <source>Speed</source>
+        <translation>Luas</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="137"/>
+        <source>Output file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="140"/>
+        <source>Click the button to set the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="157"/>
+        <location filename="../src/dialogs/speechdialog.cpp" line="186"/>
+        <source>Save Audio File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="159"/>
+        <location filename="../src/dialogs/speechdialog.cpp" line="188"/>
+        <source>WAV files (*.wav)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/speechdialog.cpp" line="263"/>
+        <source>(No voices)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SpeedUI</name>
     <message>
         <location filename="../src/qml/filters/speed/SpeedUI.qml" line="96"/>
@@ -9405,335 +9885,345 @@ Más é 0 an ré, ní chruthófar aon aistriú.</translation>
 <context>
     <name>SubtitlesDock</name>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="131"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="177"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="134"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="180"/>
         <source>Subtitles</source>
         <translation>Fotheidil</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="147"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="150"/>
         <source>Add clips to the Timeline to begin editing subtitles.</source>
         <translation>Cuir gearrthóga leis an Amlíne chun tús a chur le fotheidil a eagarthóireacht.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="178"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="181"/>
         <source>Tracks</source>
         <translation>Rianta</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="198"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="204"/>
         <source>Columns</source>
         <translation>Colúin</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="199"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="205"/>
         <source>Start</source>
         <translation>Tosaigh</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="202"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="208"/>
         <source>End</source>
         <translation>Críoch</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="205"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="211"/>
         <source>Duration</source>
         <translation>Fad</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="211"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="217"/>
         <source>Subtitle Controls</source>
         <translation>Rialuithe Fotheideal</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="217"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="223"/>
         <source>Subtitles Menu</source>
         <translation>Roghchlár Fotheidil</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="268"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="281"/>
         <source>Previous</source>
         <translation>Roimhe Seo</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="270"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="283"/>
         <source>Current</source>
         <translation>Reatha</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="272"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="285"/>
         <source>Next</source>
         <translation>Ar aghaidh</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="304"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="317"/>
         <source>Add Subtitle Track</source>
         <translation>Cuir Rian Fotheideal leis</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="307"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="320"/>
         <source>Add a subtitle track</source>
         <translation>Cuir rian fotheideal leis</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="315"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="545"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="328"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="567"/>
         <source>Remove Subtitle Track</source>
         <translation>Bain Fotheideal Rian</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="318"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="331"/>
         <source>Remove this subtitle track</source>
         <translation>Bain an rian fotheideal seo</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="326"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="339"/>
         <source>Edit Subtitle Track</source>
         <translation>Cuir Rian Fotheideal in Eagar</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="329"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="342"/>
         <source>Edit this subtitle track</source>
         <translation>Cuir an rian fotheideal seo in eagar</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="337"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="350"/>
         <source>Import Subtitles From File</source>
         <translation>Iompórtáil Fotheidil Ó Chomhad</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="340"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="353"/>
         <source>Import subtitles from an srt file at the current position</source>
         <translation>Iompórtáil fotheidil ó chomhad srt ag an suíomh reatha</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="348"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="361"/>
         <source>Export Subtitles To File</source>
         <translation>Easpórtáil Fotheidil Go Comhad</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="351"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="364"/>
         <source>Export the current subtitle track to an SRT file</source>
         <translation>Easpórtáil an rian fotheideal reatha go comhad SRT</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="359"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="372"/>
         <source>Create/Edit Subtitle</source>
         <translation>Cruthaigh/Cuir Fotheideal in Eagar</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="363"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="376"/>
         <source>Create or Edit a subtitle at the cursor position.</source>
         <translation>Cruthaigh nó Cuir fotheideal in Eagar ag suíomh an chúrsóra.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="367"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="380"/>
         <source>Add Subtitle Item</source>
         <translation>Cuir Mír Fotheideal leis</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="371"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="384"/>
         <source>Add a subtitle at the cursor position</source>
         <translation>Cuir fotheideal leis ag suíomh an chúrsóra</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="375"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="388"/>
         <source>Remove Subtitle Item</source>
         <translation>Bain Mír Fotheideal</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="379"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="392"/>
         <source>Remove the selected subtitle item</source>
         <translation>Bain an mhír roghnaithe fotheideal</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="383"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="396"/>
         <source>Set Subtitle Start</source>
         <translation>Socraigh Tosaigh Fotheideal</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="388"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="401"/>
         <source>Set the selected subtitle to start at the cursor position</source>
         <translation>Socraigh an fotheideal roghnaithe chun tosú ag suíomh an chúrsóra</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="392"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="405"/>
         <source>Set Subtitle End</source>
         <translation>Socraigh Deireadh Fotheideal</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="397"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="410"/>
         <source>Set the selected subtitle to end at the cursor position</source>
         <translation>Socraigh an fotheideal roghnaithe chun críochnú ag suíomh an chúrsóra</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="401"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="414"/>
         <source>Move Subtitles</source>
         <translation>Bog Fotheidil</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="405"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="418"/>
         <source>Move the selected subtitles to the cursor position</source>
         <translation>Bog na fotheidil roghnaithe go dtí suíomh an chúrsóra</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="409"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="422"/>
         <source>Burn In Subtitles on Output</source>
         <translation>Dóigh Isteach Fotheidil ar Aschur</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="415"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="428"/>
         <source>Generate Text on Timeline</source>
         <translation>Gin Téacs ar Amlíne</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="417"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="430"/>
         <source>Create a new video track on the timeline with text showing these subtitles.</source>
         <translation>Cruthaigh rian físe nua ar an amlíne le téacs a thaispeánann na fotheidil seo.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="421"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="434"/>
         <source>Speech to Text...</source>
         <translation>Óráid go Téacs...</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="422"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="435"/>
         <source>Detect speech and transcribe to a new subtitle track.</source>
         <translation>Braith caint agus tras-scríobh chuig rian nua fotheideal.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="428"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="442"/>
+        <source>Text to Speech...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/subtitlesdock.cpp" line="443"/>
+        <source>Convert the current subtitle track to spoken audio.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/subtitlesdock.cpp" line="450"/>
         <source>Track Timeline Cursor</source>
         <translation>Cúrsóir Amlíne Rian</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="429"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="451"/>
         <source>Track the timeline cursor</source>
         <translation>Rianaigh an cúrsóir amlíne</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="437"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="459"/>
         <source>Show Previous/Next</source>
         <translation>Taispeáin Roimhe/Ar Aghaidh</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="438"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="460"/>
         <source>Show the previous and next subtitles</source>
         <translation>Taispeáin na fotheidil roimhe seo agus na chéad fotheidil eile</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="511"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="533"/>
         <source>Add a clip to the timeline to create subtitles.</source>
         <translation>Cuir gearrthóg leis an amlíne chun fotheidil a chruthú.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1067"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1069"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1089"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1098"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1100"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1120"/>
         <source>Subtitle Track %1</source>
         <translation>Fotheideal Rian %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1131"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1162"/>
         <source>Generate subtitle text on timeline</source>
         <translation>Gin téacs fotheideal ar amlíne</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1132"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1163"/>
         <source>Text style preset</source>
         <translation>Stíl téacs réamhshocraithe</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1134"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1165"/>
         <source>Default subtitle style</source>
         <translation>Stíl fotheideal réamhshocraithe</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1277"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1308"/>
         <source>Extracting Audio</source>
         <translation>Baint Fuaime Amach</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1295"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1326"/>
         <source>Speech to Text</source>
         <translation>Óráid go Téacs</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="522"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="575"/>
-        <location filename="../src/docks/subtitlesdock.cpp" line="1226"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="544"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="597"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="1257"/>
         <source>Subtitle track already exists: %1</source>
         <translation>Tá rian fotheideal ann cheana: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="410"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="423"/>
         <source>Create or edit a Subtitle Burn In filter on the timeline output.</source>
         <translation>Cruthaigh nó cuir scagaire Dóigh Fotheideal in eagar ar aschur an ama ama.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="546"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="568"/>
         <source>This track is in use by a subtitle filter.
 Remove the subtitle filter before removing this track.</source>
         <translation>Tá an rian seo in úsáid ag scagaire fotheideal.
 Bain an scagaire fotheideal roimh an rian seo a bhaint.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="592"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="614"/>
         <source>Import Subtitle File</source>
         <translation>Iompórtáil Fotheideal Comhad</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="594"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="616"/>
         <source>Subtitle Files (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</source>
         <translation>Comhaid Fotheideal (*.srt *.SRT *.vtt *.VTT *.ass *.ASS *.ssa *.SSA)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="602"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="624"/>
         <source>Unable to find subtitle file.</source>
         <translation>Ní féidir an comhad fotheideal a aimsiú.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="650"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="672"/>
         <source>Export SRT File</source>
         <translation>Easpórtáil Comhad SRT</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="652"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="674"/>
         <source>SRT Files (*.srt *.SRT)</source>
         <translation>Comhaid SRT (*.srt *.SRT)</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="717"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="739"/>
         <source>A subtitle already exists at this time.</source>
         <translation>Tá fotheideal ann cheana féin ag an am seo.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="727"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="749"/>
         <source>Not enough space to add subtitle.</source>
         <translation>Níl go leor spáis chun fotheideal a chur leis.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="764"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="786"/>
         <source>Start time can not be after end time.</source>
         <translation>Ní féidir am tosaithe a bheith tar éis am deiridh.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="770"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="792"/>
         <source>Start time can not be before previous subtitle.</source>
         <translation>Ní féidir am tosaithe a bheith roimh an bhfotheideal roimhe seo.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="788"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="810"/>
         <source>End time can not be before start time.</source>
         <translation>Ní féidir am deiridh a bheith roimh am tosaithe.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="795"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="817"/>
         <source>End time can not be after next subtitle.</source>
         <translation>Ní féidir an t-am deiridh a bheith i ndiaidh an chéad fhotheideal eile.</translation>
     </message>
     <message>
-        <location filename="../src/docks/subtitlesdock.cpp" line="817"/>
+        <location filename="../src/docks/subtitlesdock.cpp" line="839"/>
         <source>Unable to move. Subtitles already exist at this time.</source>
         <translation>Ní féidir bogadh. Tá fotheidil ann cheana féin ag an am seo.</translation>
     </message>
@@ -9797,20 +10287,24 @@ Bain an scagaire fotheideal roimh an rian seo a bhaint.</translation>
 <context>
     <name>TextEditor</name>
     <message>
-        <location filename="../src/docks/notesdock.cpp" line="41"/>
+        <location filename="../src/docks/notesdock.cpp" line="53"/>
         <source>Decrease Text Size</source>
         <translation>Laghdú ar Méid an Téacs</translation>
     </message>
     <message>
-        <location filename="../src/docks/notesdock.cpp" line="44"/>
-        <location filename="../src/docks/notesdock.cpp" line="49"/>
+        <location filename="../src/docks/notesdock.cpp" line="46"/>
         <source>Notes</source>
         <translation>Nótaí</translation>
     </message>
     <message>
-        <location filename="../src/docks/notesdock.cpp" line="46"/>
+        <location filename="../src/docks/notesdock.cpp" line="60"/>
         <source>Increase Text Size</source>
         <translation>Méadú Téacs Méid</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/notesdock.cpp" line="68"/>
+        <source>Text to Speech...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9928,55 +10422,65 @@ Bain an scagaire fotheideal roimh an rian seo a bhaint.</translation>
         <translation>Foirm</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="26"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="25"/>
         <source>Text</source>
         <translation>Téacs</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="39"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="38"/>
         <source>Type or paste the text here</source>
         <translation>Clóscríobh nó greamaigh an téacs anseo</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="48"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="47"/>
         <source>Background color...</source>
         <translation>Dath an chúlra...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="61"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="60"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="88"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="87"/>
         <source>Simple</source>
         <translation>Simplí</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="98"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="97"/>
         <source>Rich</source>
         <translation>Saibhir</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.ui" line="120"/>
+        <location filename="../src/widgets/textproducerwidget.ui" line="104"/>
+        <source>Typewriter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.ui" line="126"/>
         <source>Text attributes are available in the &lt;b&gt;Filters&lt;/b&gt; panel after clicking &lt;b&gt;OK&lt;/b&gt;.</source>
         <translation>Tá tréithe téacs ar fáil sa phainéal &lt;b&gt;Filters&lt;/b&gt; tar éis &lt;b&gt;OK&lt;/b&gt;a chliceáil.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="59"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="60"/>
         <source>black</source>
         <translation>dubh</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="61"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="62"/>
         <source>transparent</source>
         <translation>trédhearcach</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.cpp" line="179"/>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="212"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="228"/>
         <source>Edit your text using the Filters panel.</source>
         <translation>Cuir do théacs in eagar ag baint úsáide as an bpainéal Scagairí.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="212"/>
+        <source>Edit Filters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10539,92 +11043,92 @@ Bain an scagaire fotheideal roimh an rian seo a bhaint.</translation>
         <translation>Cuir iolraí leis an amlíne</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2440"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2442"/>
         <source>Ripple delete transition</source>
         <translation>Scrios Ripple trasdul</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2489"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2491"/>
         <source>Lift transition</source>
         <translation>Ardaitheoir trasdul</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2564"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2566"/>
         <source>Cut %1 from timeline</source>
         <translation>Gearr %1 ón amlíne</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2566"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2568"/>
         <source>Remove %1 from timeline</source>
         <translation>Bain %1 den amlíne</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2589"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2591"/>
         <source>Lift %1 from timeline</source>
         <translation>Ardaigh %1 ón amlíne</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2940"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2942"/>
         <source>There is nothing in the Source player.</source>
         <translation>Níl aon rud san imreoir Foinse.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2955"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2957"/>
         <source>You cannot replace a transition.</source>
         <translation>Ní féidir leat trasdul a athsholáthar.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="2985"/>
+        <location filename="../src/docks/timelinedock.cpp" line="2987"/>
         <source>Select a clip in the timeline to create a marker around it</source>
         <translation>Roghnaigh gearrthóg san amlíne chun marcóir a chruthú timpeall air</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3006"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3008"/>
         <source>Added marker: &quot;%1&quot;.</source>
         <translation>Cuireadh marcóir leis: &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3026"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3028"/>
         <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
         <translation>Cuireadh marcóir leis: &quot;%1&quot;. Coinnigh %2 agus tarraing chun raon a chruthú</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3142"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3144"/>
         <source>Failed to open </source>
         <translation>Theip ar oscailt</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3175"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3177"/>
         <source>Dropped Files</source>
         <translation>Comhaid Tite</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3220"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3225"/>
         <source>You cannot freeze a frame of a transition.</source>
         <translation>Ní féidir leat fráma aistrithe a reo.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3239"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3244"/>
         <source>Freeze Frame is not available.</source>
         <translation>Níl Fráma Reoite ar fáil.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3273"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3278"/>
         <source>Insert Freeze Frame</source>
         <translation>Cuir Fráma Reoite isteach</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3277"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3282"/>
         <source>The play head is not over the selected clip.</source>
         <translation>Níl an ceann imeartha os cionn an ghearrthóg roghnaithe.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3647"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3652"/>
         <source>Insert multiple into timeline</source>
         <translation>Cuir iolrach isteach san amlíne</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="3786"/>
+        <location filename="../src/docks/timelinedock.cpp" line="3793"/>
         <source>Overwrite multiple onto timeline</source>
         <translation>Forscríobh iolraí ar amlíne</translation>
     </message>
@@ -10635,7 +11139,7 @@ Bain an scagaire fotheideal roimh an rian seo a bhaint.</translation>
         <translation>Ní féidir leat trasdul a roinnt.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="4224"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4236"/>
         <source>Replace %n timeline clips</source>
         <translation>
             <numerusform>Ionadaigh %n gearrthóg amlíne</numerusform>
@@ -10644,44 +11148,44 @@ Bain an scagaire fotheideal roimh an rian seo a bhaint.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4277"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4289"/>
         <source>voiceover</source>
         <translation>guthú</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4278"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4290"/>
         <source>Opus (*.opus);;All Files (*)</source>
         <translation>Opus (*.opus);;Gach Comhad (*)</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1347"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4280"/>
-        <location filename="../src/docks/timelinedock.cpp" line="4396"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4292"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4408"/>
         <source>Record Audio</source>
         <translation>Taifead Fuaime</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4294"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4306"/>
         <source>Record Audio: %1</source>
         <translation>Taifead Fuaime: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4361"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4373"/>
         <source>Audio Recording In Progress</source>
         <translation>Taifeadadh Fuaime ar Siúl</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4371"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4383"/>
         <source>Record Audio error: check PulseAudio settings</source>
         <translation>Earráid Taifeadta Fuaime: seiceáil socruithe PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4375"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4387"/>
         <source>Record Audio error: choose File &gt; Open Other &gt; Audio/Video Device</source>
         <translation>Taifead Earráid Fuaime: roghnaigh Comhad &gt; Oscail Eile &gt; Gléas Fuaime/Físe</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="4402"/>
+        <location filename="../src/docks/timelinedock.cpp" line="4414"/>
         <source>Saving audio recording...</source>
         <translation>Taifead Earráid Fuaime: roghnaigh Comhad &gt; Oscail Eile &gt; Gléas Fuaime/Físe</translation>
     </message>
@@ -10792,6 +11296,24 @@ Bain an scagaire fotheideal roimh an rian seo a bhaint.</translation>
     </message>
 </context>
 <context>
+    <name>ToolbarWidget</name>
+    <message>
+        <location filename="../src/screencapture/toolbarwidget.cpp" line="36"/>
+        <source>Fullscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/screencapture/toolbarwidget.cpp" line="37"/>
+        <source>Rectangle</source>
+        <translation>Dronuilleog</translation>
+    </message>
+    <message>
+        <location filename="../src/screencapture/toolbarwidget.cpp" line="38"/>
+        <source>Window</source>
+        <translation>Fuinneog</translation>
+    </message>
+</context>
+<context>
     <name>TrackHead</name>
     <message>
         <location filename="../src/qml/views/timeline/TrackHead.qml" line="219"/>
@@ -10842,99 +11364,187 @@ Bain an scagaire fotheideal roimh an rian seo a bhaint.</translation>
         <translation>Modh chumasc</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="38"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="39"/>
         <source>Track: %1</source>
         <translation>Rian: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="45"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="77"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="98"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="130"/>
         <source>None</source>
         <translation>Dada</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="78"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="99"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="131"/>
         <source>Over</source>
         <translation>Thar</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="100"/>
         <source>Add</source>
         <translation>Cuir</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="101"/>
         <source>Saturate</source>
         <translation>Sáithithe</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="102"/>
         <source>Multiply</source>
         <translation>Méadaigh</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="103"/>
         <source>Screen</source>
         <translation>Scáileán</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="61"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="104"/>
         <source>Overlay</source>
         <translation>Forleagan</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="62"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="105"/>
         <source>Darken</source>
         <translation>Dorchaigh</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="106"/>
         <source>Dodge</source>
         <translation>Seachain</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="107"/>
         <source>Burn</source>
         <translation>Dóigh</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="66"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="108"/>
         <source>Hard Light</source>
         <translation>Solas Crua</translation>
     </message>
     <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
+        <source>Source Over</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
+        <source>Destination Over</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
+        <source>Clear</source>
+        <translation>Glan</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
+        <source>Source</source>
+        <translation>Foinse</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
+        <source>Destination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
+        <source>Source In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
+        <source>Destination In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
+        <source>Source Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
+        <source>Destination Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
+        <source>Source Atop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
+        <source>Destination Atop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
+        <source>XOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
+        <source>Plus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="63"/>
+        <source>Lighten</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="64"/>
+        <source>Color Dodge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="65"/>
+        <source>Color Burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="67"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="109"/>
         <source>Soft Light</source>
         <translation>Solas Bog</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="68"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="110"/>
         <source>Difference</source>
         <translation>Difríocht</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="69"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="111"/>
         <source>Exclusion</source>
         <translation>Eisiamh</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="112"/>
         <source>HSL Hue</source>
         <translation>Dath Hue HSL</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="113"/>
         <source>HSL Saturation</source>
         <translation>HSL Sáithiú</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="61"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="114"/>
         <source>HSL Color</source>
         <translation>HSL Dath</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="62"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="115"/>
         <source>HSL Luminosity</source>
         <translation>HSL Loinnir</translation>
     </message>
@@ -11359,6 +11969,30 @@ Cúiteamh Tairisceana: Idirshuíomh frámaí nua ag baint úsáide as cúiteamh 
         <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="58"/>
         <source>Open File</source>
         <translation>Oscail Comhad</translation>
+    </message>
+</context>
+<context>
+    <name>Util</name>
+    <message>
+        <location filename="../src/util.cpp" line="940"/>
+        <source>&lt;p&gt;Do you want use a Flatpak?&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;Yes&lt;/b&gt; to install/update the Flatpak wrapper scripts in
+&lt;b&gt;Files &gt; Home &gt; Flatpaks&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Tip: Add &lt;b&gt;&lt;tt&gt;~/Flatpaks&lt;/tt&gt;&lt;/b&gt; to your &lt;b&gt;&lt;tt&gt;$PATH&lt;/tt&gt;&lt;/b&gt; to make them more convenient on the command line.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="949"/>
+        <source>Do not show this anymore.</source>
+        <translation>Ná taispeáin é seo a thuilleadh.</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="981"/>
+        <source>Executable Files (*.exe);;All Files (*)</source>
+        <translation>Comhaid Inrite (*.exe);; Gach Comhad (*)</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="997"/>
+        <source>Choose Executable</source>
+        <translation>Roghnaigh Inrite</translation>
     </message>
 </context>
 <context>
@@ -11791,6 +12425,14 @@ IRE: %2</translation>
         <location filename="../src/jobs/whisperjob.cpp" line="94"/>
         <source>SRT</source>
         <translation>SRT</translation>
+    </message>
+</context>
+<context>
+    <name>WindowPicker</name>
+    <message>
+        <location filename="../src/screencapture/windowpicker.cpp" line="237"/>
+        <source>Click on a window to select it</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12387,6 +13029,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="40"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="26"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="37"/>
         <source>Font color</source>
         <translation>Dath cló</translation>
     </message>
@@ -12396,6 +13039,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/outline/meta.qml" line="6"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="32"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="31"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="45"/>
         <source>Outline</source>
         <translation>Imlíne</translation>
     </message>
@@ -12404,6 +13048,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="52"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="38"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="37"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="53"/>
         <source>Background</source>
         <translation>Cúlra</translation>
     </message>
@@ -12664,6 +13309,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
         <location filename="../src/qml/filters/subtitle/meta.qml" line="44"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="43"/>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="61"/>
         <source>Opacity</source>
         <translation>Teimhneacht</translation>
     </message>
@@ -13280,17 +13926,6 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="32"/>
         <source>Padding color</source>
         <translation>Dath stuála</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/blend_mode/meta.qml" line="6"/>
-        <source>Blend Mode</source>
-        <translation>Mód Cumaisc</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/blend_mode/meta.qml" line="7"/>
-        <source>blending composite porter duff</source>
-        <comment>search keywords for the Blend Mode video filter</comment>
-        <translation>cumasc ilchodach póirtéir duff</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/meta.qml" line="6"/>
@@ -14320,6 +14955,17 @@ IRE: %2</translation>
         <source>Thickness</source>
         <translation>Tiús</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="22"/>
+        <source>Text: Typewriter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/meta.qml" line="23"/>
+        <source>type typing cursor terminal console</source>
+        <comment>search keywords for the Text: Typewriter video filter</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_affine</name>
@@ -14404,6 +15050,20 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="24"/>
         <source>Height</source>
         <translation>Airde</translation>
+    </message>
+</context>
+<context>
+    <name>meta_cairoblend</name>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/meta_cairoblend.qml" line="6"/>
+        <source>Blend Mode</source>
+        <translation>Mód Cumaisc</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/meta_cairoblend.qml" line="7"/>
+        <source>blending composite porter duff</source>
+        <comment>search keywords for the Blend Mode video filter</comment>
+        <translation>cumasc ilchodach póirtéir duff</translation>
     </message>
 </context>
 <context>
@@ -14804,6 +15464,20 @@ IRE: %2</translation>
     </message>
 </context>
 <context>
+    <name>meta_qtblend</name>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/meta_qtblend.qml" line="6"/>
+        <source>Blend Mode</source>
+        <translation>Mód Cumaisc</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/meta_qtblend.qml" line="7"/>
+        <source>blending composite porter duff</source>
+        <comment>search keywords for the Blend Mode video filter</comment>
+        <translation>cumasc ilchodach póirtéir duff</translation>
+    </message>
+</context>
+<context>
     <name>meta_spectrum</name>
     <message>
         <location filename="../src/qml/filters/spectrum/meta_spectrum.qml" line="7"/>
@@ -15157,7 +15831,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/posterize/ui.qml" line="65"/>
         <location filename="../src/qml/filters/reframe/ui.qml" line="192"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="271"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="275"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="136"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="105"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="37"/>
@@ -15172,6 +15846,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/timer/ui.qml" line="117"/>
         <location filename="../src/qml/filters/tracker/ui.qml" line="109"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="50"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="142"/>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="108"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="70"/>
         <location filename="../src/qml/filters/vibrance/ui.qml" line="81"/>
@@ -15923,6 +16598,7 @@ A úsáidtear chun aimplitiúid iomarcach a cheartú de bharr an raon dinimiciú
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="77"/>
         <location filename="../src/qml/filters/richtext/ui.qml" line="206"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="92"/>
         <source>Lower Third</source>
         <translation>An Tríú Íochtarach</translation>
     </message>
@@ -16069,6 +16745,7 @@ A úsáidtear chun aimplitiúid iomarcach a cheartú de bharr an raon dinimiciú
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="187"/>
         <location filename="../src/qml/filters/gpstext/ui.qml" line="709"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="175"/>
         <source>Text</source>
         <translation>Téacs</translation>
     </message>
@@ -16155,7 +16832,7 @@ A úsáidtear chun aimplitiúid iomarcach a cheartú de bharr an raon dinimiciú
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="390"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="156"/>
         <location filename="../src/qml/filters/reframe/ui.qml" line="222"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="310"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="314"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="188"/>
         <location filename="../src/qml/filters/tracker/ui.qml" line="144"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="146"/>
@@ -16352,19 +17029,16 @@ A úsáidtear chun aimplitiúid iomarcach a cheartú de bharr an raon dinimiciú
         <translation>Oibríocht 1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="50"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="427"/>
         <source>Blend mode</source>
         <translation>Modh chumasc</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="65"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="442"/>
         <source>Over</source>
         <translation>Thar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="447"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="270"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="310"/>
@@ -16373,91 +17047,76 @@ A úsáidtear chun aimplitiúid iomarcach a cheartú de bharr an raon dinimiciú
         <translation>Dada</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="80"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="457"/>
         <source>Saturate</source>
         <translation>Sáithithe</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="85"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="462"/>
         <source>Multiply</source>
         <translation>Méadaigh</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="90"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="467"/>
         <source>Screen</source>
         <translation>Scáileán</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="95"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="472"/>
         <source>Overlay</source>
         <translation>Forleagan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="100"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="477"/>
         <source>Darken</source>
         <translation>Dorchaigh</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="105"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="482"/>
         <source>Dodge</source>
         <translation>Seachain</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="110"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="487"/>
         <source>Burn</source>
         <translation>Dóigh</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="115"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="492"/>
         <source>Hard Light</source>
         <translation>Solas Crua</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="120"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="497"/>
         <source>Soft Light</source>
         <translation>Solas Bog</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="125"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="502"/>
         <source>Difference</source>
         <translation>Difríocht</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="130"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="507"/>
         <source>Exclusion</source>
         <translation>Eisiamh</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="135"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="512"/>
         <source>HSL Hue</source>
         <translation>Dath Hue HSL</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="140"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="517"/>
         <source>HSL Saturation</source>
         <translation>HSL Sáithiú</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="145"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="522"/>
         <source>HSL Color</source>
         <translation>HSL Dath</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="150"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="527"/>
         <source>HSL Luminosity</source>
         <translation>HSL Loinnir</translation>
@@ -16792,7 +17451,6 @@ Cliceáil &quot;Oscail&quot; chun comhad a luchtú.</translation>
         <translation>Cleitíú</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="75"/>
         <location filename="../src/qml/filters/corners/ui.qml" line="675"/>
         <location filename="../src/qml/filters/fisheye/ui.qml" line="480"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="452"/>
@@ -17311,43 +17969,43 @@ Athraigh an claonadh saobhadh barr/taobh</translation>
         <translation>Scrollaigh ar Chlé</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="305"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="309"/>
         <source>Click in the rectangle atop the video to edit the text.</source>
         <translation>Cliceáil ar an dronuilleog ar bharr an fhíse chun an téacs a chur in eagar.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="396"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="401"/>
         <source>Background size</source>
         <translation>Méid an chúlra</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="459"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="464"/>
         <source>Text size</source>
         <translation>Méid an téacs</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="524"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="529"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="310"/>
         <source>Background color</source>
         <translation>Dath an chúlra</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="556"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="566"/>
         <source>Overflow</source>
         <translation>Cur thar maoil</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="570"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="580"/>
         <source>Automatic</source>
         <translation>Uathoibríoch</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="583"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="593"/>
         <source>Visible</source>
         <translation>Infheicthe</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="595"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="605"/>
         <source>Hidden</source>
         <translation>I bhfolach</translation>
     </message>
@@ -18504,6 +19162,7 @@ Gach = 360° + Randamaíodh</translation>
         <location filename="../src/qml/filters/choppy/ui.qml" line="91"/>
         <location filename="../src/qml/filters/nervous/ui.qml" line="65"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="73"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="464"/>
         <source> frames</source>
         <translation>frámaí</translation>
     </message>
@@ -19789,6 +20448,143 @@ Cliceáil chun roghnú, tarraing chun suíomh a athrú</translation>
         <comment>Right surround audio channel</comment>
         <translation>Rs</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="99"/>
+        <source>Terminal Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="317"/>
+        <source>Word by Word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="107"/>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="321"/>
+        <source>Line by Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="247"/>
+        <source>Typewriter rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="250"/>
+        <source>Number of frames between each character, word, or line appearance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="274"/>
+        <source>Rate variation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="277"/>
+        <source>Random variation in timing (0 = no variation).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="301"/>
+        <source>Animation</source>
+        <translation>Beochan</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="304"/>
+        <source>How text appears: character by character, word by word, or line by line.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="313"/>
+        <source>Character by Character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="343"/>
+        <source>Cursor visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="346"/>
+        <source>When to show the blinking cursor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="355"/>
+        <source>No Cursor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="359"/>
+        <source>While Typing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="363"/>
+        <source>Always Visible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="384"/>
+        <source>Cursor shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="387"/>
+        <source>Character to use for the blinking cursor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="398"/>
+        <source>| (Vertical Line)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="402"/>
+        <source>_ (Underscore)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="406"/>
+        <source>█ (Block)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="410"/>
+        <source>▌ (Half Block)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="414"/>
+        <source>▊ (Thick Line)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="418"/>
+        <source>● (Bullet)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="422"/>
+        <source>◆ (Diamond)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="426"/>
+        <source>► (Arrow)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="452"/>
+        <source>Blink rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/typewriter/ui.qml" line="455"/>
+        <source>Number of frames for cursor blink cycle.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ui_av</name>
@@ -19847,6 +20643,104 @@ Cliceáil chun roghnú, tarraing chun suíomh a athrú</translation>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="208"/>
         <source>Height</source>
         <translation>Airde</translation>
+    </message>
+</context>
+<context>
+    <name>ui_cairoblend</name>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="50"/>
+        <source>Blend mode</source>
+        <translation>Modh chumasc</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="65"/>
+        <source>Over</source>
+        <translation>Thar</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="70"/>
+        <source>None</source>
+        <translation>Dada</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="75"/>
+        <source>Add</source>
+        <translation>Cuir</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="80"/>
+        <source>Saturate</source>
+        <translation>Sáithithe</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="85"/>
+        <source>Multiply</source>
+        <translation>Méadaigh</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="90"/>
+        <source>Screen</source>
+        <translation>Scáileán</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="95"/>
+        <source>Overlay</source>
+        <translation>Forleagan</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="100"/>
+        <source>Darken</source>
+        <translation>Dorchaigh</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="105"/>
+        <source>Dodge</source>
+        <translation>Seachain</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="110"/>
+        <source>Burn</source>
+        <translation>Dóigh</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="115"/>
+        <source>Hard Light</source>
+        <translation>Solas Crua</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="120"/>
+        <source>Soft Light</source>
+        <translation>Solas Bog</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="125"/>
+        <source>Difference</source>
+        <translation>Difríocht</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="130"/>
+        <source>Exclusion</source>
+        <translation>Eisiamh</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="135"/>
+        <source>HSL Hue</source>
+        <translation>Dath Hue HSL</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="140"/>
+        <source>HSL Saturation</source>
+        <translation>HSL Sáithiú</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="145"/>
+        <source>HSL Color</source>
+        <translation>HSL Dath</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_cairoblend.qml" line="150"/>
+        <source>HSL Luminosity</source>
+        <translation>HSL Loinnir</translation>
     </message>
 </context>
 <context>
@@ -20202,6 +21096,134 @@ Cliceáil chun roghnú, tarraing chun suíomh a athrú</translation>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="222"/>
         <source>Opacity</source>
         <translation>Teimhneacht</translation>
+    </message>
+</context>
+<context>
+    <name>ui_qtblend</name>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="50"/>
+        <source>Blend mode</source>
+        <translation>Modh chumasc</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="66"/>
+        <source>Source Over</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="71"/>
+        <source>Destination Over</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="76"/>
+        <source>Clear</source>
+        <translation>Glan</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="81"/>
+        <source>Source</source>
+        <translation>Foinse</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="86"/>
+        <source>Destination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="91"/>
+        <source>Source In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="96"/>
+        <source>Destination In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="101"/>
+        <source>Source Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="106"/>
+        <source>Destination Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="111"/>
+        <source>Source Atop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="116"/>
+        <source>Destination Atop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="121"/>
+        <source>XOR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="126"/>
+        <source>Plus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="131"/>
+        <source>Multiply</source>
+        <translation>Méadaigh</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="136"/>
+        <source>Screen</source>
+        <translation>Scáileán</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="141"/>
+        <source>Overlay</source>
+        <translation>Forleagan</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="146"/>
+        <source>Darken</source>
+        <translation>Dorchaigh</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="151"/>
+        <source>Lighten</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="156"/>
+        <source>Color Dodge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="161"/>
+        <source>Color Burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="166"/>
+        <source>Hard Light</source>
+        <translation>Solas Crua</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="171"/>
+        <source>Soft Light</source>
+        <translation>Solas Bog</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="176"/>
+        <source>Difference</source>
+        <translation>Difríocht</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="181"/>
+        <source>Exclusion</source>
+        <translation>Eisiamh</translation>
     </message>
 </context>
 <context>
