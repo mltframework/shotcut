@@ -21,14 +21,25 @@ import Shotcut.Controls as Shotcut
 import org.shotcut.qml as Shotcut
 
 Shotcut.KeyframableFilter {
+    function setComboIndex(combo, current) {
+        for (let i = 0; i < combo.model.count; ++i) {
+            if (combo.model.get(i).value === current) {
+                combo.currentIndex = i;
+                break;
+            }
+        }
+    }
+
     function setControls() {
         textArea.text = filter.get('argument');
         textFilterUi.setControls();
         stepLengthSpinner.value = filter.getDouble('typewriter.step_length');
         stepSigmaSpinner.value = filter.getDouble('typewriter.step_sigma');
-        macroTypeCombo.currentIndex = macroTypeCombo.valueToIndex();
-        cursorCombo.currentIndex = cursorCombo.valueToIndex();
-        cursorCharCombo.currentIndex = cursorCharCombo.valueToIndex();
+        setComboIndex(macroTypeCombo, filter.getDouble('typewriter.macro_type'));
+        setComboIndex(cursorCombo, filter.getDouble('typewriter.cursor'));
+        setComboIndex(cursorCharCombo, filter.get('typewriter.cursor_char'));
+        if (cursorCharCombo.currentIndex === -1)
+            cursorCharCombo.editText = filter.get('typewriter.cursor_char');
         cursorBlinkRateSpinner.value = filter.getDouble('typewriter.cursor_blink_rate');
     }
 
@@ -245,12 +256,14 @@ Shotcut.KeyframableFilter {
             Layout.minimumWidth: 50
             from: 1
             to: 1000
-            value: 8
             onValueModified: filter.set('typewriter.step_length', value)
         }
 
         Shotcut.UndoButton {
-            onClicked: stepLengthSpinner.value = 8
+            onClicked: {
+                filter.set('typewriter.step_length', 8);
+                stepLengthSpinner.value = 8;
+            }
         }
 
         Item {
@@ -270,12 +283,14 @@ Shotcut.KeyframableFilter {
             Layout.minimumWidth: 50
             from: 0
             to: 100
-            value: 2
             onValueModified: filter.set('typewriter.step_sigma', value)
         }
 
         Shotcut.UndoButton {
-            onClicked: stepSigmaSpinner.value = 2
+            onClicked: {
+                filter.set('typewriter.step_sigma', 2);
+                stepSigmaSpinner.value = 2;
+            }
         }
 
         Item {
@@ -310,18 +325,13 @@ Shotcut.KeyframableFilter {
             textRole: 'text'
             valueRole: 'value'
             onActivated: filter.set('typewriter.macro_type', model.get(currentIndex).value)
-
-            function valueToIndex() {
-                var value = filter.get('typewriter.macro_type');
-                for (var i = 0; i < model.count; ++i)
-                    if (model.get(i).value === value)
-                        return i;
-                return 0;
-            }
         }
 
         Shotcut.UndoButton {
-            onClicked: macroTypeCombo.currentIndex = 0
+            onClicked: {
+                filter.set('typewriter.macro_type', 1);
+                macroTypeCombo.currentIndex = 0;
+            }
         }
 
         Item {
@@ -357,18 +367,13 @@ Shotcut.KeyframableFilter {
             textRole: 'text'
             valueRole: 'value'
             onActivated: filter.set('typewriter.cursor', currentValue)
-
-            function valueToIndex() {
-                var value = filter.get('typewriter.cursor');
-                for (var i = 0; i < model.count; ++i)
-                    if (model.get(i).value == value)
-                        return i;
-                return 1;
-            }
         }
 
         Shotcut.UndoButton {
-            onClicked: cursorCombo.currentIndex = 1
+            onClicked: {
+                filter.set('typewriter.cursor', 1);
+                cursorCombo.currentIndex = 1;
+            }
         }
 
         Item {
@@ -387,6 +392,7 @@ Shotcut.KeyframableFilter {
             id: cursorCharCombo
             Layout.minimumWidth: 150
             editable: true
+            currentIndex: -1
             model: ListModel {
                 ListElement {
                     text: qsTr('| (Vertical Line)')
@@ -429,18 +435,13 @@ Shotcut.KeyframableFilter {
                     filter.set('typewriter.cursor_char', editText.charAt(0));
                 }
             }
-
-            function valueToIndex() {
-                var value = filter.get('typewriter.cursor_char');
-                for (var i = 0; i < model.count; ++i)
-                    if (model.get(i).value === value)
-                        return i;
-                return 0;
-            }
         }
 
         Shotcut.UndoButton {
-            onClicked: cursorCharCombo.currentIndex = 0
+            onClicked: {
+                filter.set('typewriter.cursor_char', '|');
+                cursorCharCombo.currentIndex = 0;
+            }
         }
 
         Item {
@@ -460,13 +461,15 @@ Shotcut.KeyframableFilter {
             Layout.minimumWidth: 150
             from: 5
             to: 200
-            value: 25
             suffix: qsTr(' frames')
             onValueModified: filter.set('typewriter.cursor_blink_rate', value)
         }
 
         Shotcut.UndoButton {
-            onClicked: cursorBlinkRateSpinner.value = 25
+            onClicked: {
+                filter.set('typewriter.cursor_blink_rate', 25);
+                cursorBlinkRateSpinner.value = 25;
+            }
         }
 
         Item {
