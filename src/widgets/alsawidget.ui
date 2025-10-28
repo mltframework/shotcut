@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <!-- 
+  AlsaWidget UI定义文件
+  描述ALSA音频输入设备配置界面的布局和控件结构
+  使用QVBoxLayout垂直布局管理所有界面元素
+ -->
  <class>AlsaWidget</class>
  <widget class="QWidget" name="AlsaWidget">
   <property name="geometry">
@@ -13,7 +18,11 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  
+  <!-- 主布局：垂直布局，包含标题、预设、配置表单和底部间距 -->
   <layout class="QVBoxLayout" name="verticalLayout">
+   
+   <!-- 标题区域 -->
    <item>
     <widget class="QLabel" name="label_2">
      <property name="font">
@@ -30,11 +39,17 @@
      </property>
     </widget>
    </item>
+   
+   <!-- 预设管理区域 -->
    <item>
     <widget class="ServicePresetWidget" name="preset" native="true"/>
    </item>
+   
+   <!-- 配置表单区域：使用网格布局排列配置选项 -->
    <item>
     <layout class="QGridLayout" name="gridLayout">
+     
+     <!-- 第一行：水平间距，用于布局对齐 -->
      <item row="0" column="2">
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -48,6 +63,8 @@
        </property>
       </spacer>
      </item>
+     
+     <!-- 第三行第一列：应用按钮 -->
      <item row="2" column="0">
       <widget class="QPushButton" name="applyButton">
        <property name="text">
@@ -55,6 +72,8 @@
        </property>
       </widget>
      </item>
+     
+     <!-- 第一行第一列：PCM设备标签 -->
      <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
@@ -65,6 +84,8 @@
        </property>
       </widget>
      </item>
+     
+     <!-- 第一行第二列：设备名称输入框 -->
      <item row="0" column="1">
       <widget class="QLineEdit" name="lineEdit">
        <property name="text">
@@ -72,6 +93,8 @@
        </property>
       </widget>
      </item>
+     
+     <!-- 第二行第一列：通道数标签 -->
      <item row="1" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
@@ -82,18 +105,22 @@
        </property>
       </widget>
      </item>
+     
+     <!-- 第二行第二列：通道数选择旋钮 -->
      <item row="1" column="1">
       <widget class="QSpinBox" name="alsaChannelsSpinBox">
        <property name="maximum">
-        <number>8</number>
+        <number>8</number>       <!-- 最大支持8通道 -->
        </property>
        <property name="value">
-        <number>2</number>
+        <number>2</number>       <!-- 默认立体声（2通道） -->
        </property>
       </widget>
      </item>
     </layout>
    </item>
+   
+   <!-- 底部弹性间距，确保内容靠上显示 -->
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
@@ -109,19 +136,24 @@
    </item>
   </layout>
  </widget>
+ 
+ <!-- 自定义控件声明 -->
  <customwidgets>
   <customwidget>
    <class>ServicePresetWidget</class>
    <extends>QWidget</extends>
-   <header>widgets/servicepresetwidget.h</header>
-   <container>1</container>
+   <header>widgets/servicepresetwidget.h</header>  <!-- 预设管理控件头文件 -->
+   <container>1</container>  <!-- 标记为容器控件 -->
   </customwidget>
  </customwidgets>
+ 
+ <!-- Tab键焦点顺序定义 -->
  <tabstops>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>alsaChannelsSpinBox</tabstop>
-  <tabstop>applyButton</tabstop>
+  <tabstop>lineEdit</tabstop>        <!-- 第一个焦点：设备输入框 -->
+  <tabstop>alsaChannelsSpinBox</tabstop>  <!-- 第二个焦点：通道数选择 -->
+  <tabstop>applyButton</tabstop>     <!-- 第三个焦点：应用按钮 -->
  </tabstops>
+ 
  <resources/>
  <connections/>
 </ui>
