@@ -343,9 +343,6 @@ bool ScreenCaptureJob::startGnomeScreencast()
             QString filename = reply.argumentAt<1>();
             LOG_DEBUG() << "GNOME Screencast started, success:" << success
                         << "filename:" << filename;
-            // if (success && !filename.isEmpty()) {
-            //     m_filename = filename;
-            // }
         }
         w->deleteLater();
     });

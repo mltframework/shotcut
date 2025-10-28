@@ -5122,7 +5122,9 @@ void MainWindow::on_actionScreenSnapshot_triggered()
     showMinimized();
     process->start("screencapture", args);
 #else
-    m_screenCapture = new ScreenCapture(fileName, ScreenCapture::Interactive, this);
+    const auto mode = ScreenCapture::isWayland() ? ScreenCapture::Fullscreen
+                                                 : ScreenCapture::Interactive;
+    m_screenCapture = new ScreenCapture(fileName, mode, this);
     connect(m_screenCapture, &ScreenCapture::finished, this, [=](bool success) {
         if (success)
             // Automatically open the captured file
@@ -5143,6 +5145,7 @@ void MainWindow::on_actionScreenRecording_triggered()
     filenameExtension = ".mov";
 #else
     bool isGNOMEorKDEonWayland = false;
+    auto mode = ScreenCapture::Interactive;
     // GNOME and KDE have built-in screen recording compatible with Wayland
     if (ScreenCapture::isWayland()) {
         const auto desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP").toLower();
@@ -5150,6 +5153,8 @@ void MainWindow::on_actionScreenRecording_triggered()
                                 || desktop.contains("plasma");
         if (isGNOMEorKDEonWayland)
             filenameExtension = ".webm";
+        if (desktop.contains("kde") || desktop.contains("plasma"))
+            mode = ScreenCapture::Fullscreen;
     } else {
         filenameExtension = ".mp4";
     }
@@ -5209,7 +5214,7 @@ void MainWindow::on_actionScreenRecording_triggered()
         return;
     }
 #endif
-    m_screenCapture = new ScreenCapture(fileName, ScreenCapture::Interactive, this);
+    m_screenCapture = new ScreenCapture(fileName, mode, this);
     connect(m_screenCapture, &ScreenCapture::beginRecording, this, [=](const QRect &rect) {
         ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, rect);
         JOBS.add(job);
