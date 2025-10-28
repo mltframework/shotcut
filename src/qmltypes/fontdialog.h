@@ -21,25 +21,47 @@
 #include <QFont>
 #include <QObject>
 
+// 【类说明】：字体对话框的QML包装类
+// 【功能】：在QML中创建和管理系统字体选择对话框
+// 【特性】：支持字体家族、样式、大小选择，跨平台一致体验
 class FontDialog : public QObject
 {
     Q_OBJECT
+    // 【QML属性】：当前选中的字体，可读写
+    // 【说明】：包含字体家族、大小、样式、粗细等完整字体属性
     Q_PROPERTY(QFont selectedFont READ selectedFont WRITE setSelectedFont NOTIFY selectedFontChanged)
 
 public:
+    // 【构造函数】
+    // 【参数】：parent - 父对象指针，用于Qt对象树管理
     FontDialog(QObject *parent = nullptr);
 
+    // 【可调用方法】：打开字体选择对话框
+    // 【说明】：Q_INVOKABLE宏使该方法可以在QML中直接调用
+    // 【平台差异】：在Unix系统（非macOS）上使用Qt标准对话框而非原生对话框
     Q_INVOKABLE void open();
 
 signals:
+    // 【信号】：用户接受（确认）字体选择时发射
     void accepted();
+    
+    // 【信号】：用户拒绝（取消）字体选择时发射
     void rejected();
+    
+    // 【信号】：选中字体改变时发射，携带新的字体对象
+    // 【参数】：font - 用户选择的新字体，包含所有字体属性
     void selectedFontChanged(const QFont &font);
 
 private:
-    QFont m_font;
+    QFont m_font; // 存储当前选中的字体对象
 
+    // 【私有方法】：获取当前选中的字体
+    // 【返回值】：当前字体对象，包含完整的字体属性信息
     QFont selectedFont() const { return m_font; }
+    
+    // 【私有方法】：设置选中字体，会检查字体是否实际改变
+    // 【参数】：font - 新的字体对象
+    // 【说明】：只有字体真正改变时才更新内部状态并发射信号
     void setSelectedFont(const QFont &font);
 };
 

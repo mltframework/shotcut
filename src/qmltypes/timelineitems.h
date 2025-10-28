@@ -18,6 +18,10 @@
 #ifndef _TIMELINEITEMS_H
 #define _TIMELINEITEMS_H
 
+// 【功能】：注册时间轴相关项目到QML引擎
+// 【说明】：此函数通常在应用程序启动时调用，用于向QML系统注册自定义的时间轴组件
+// 【作用】：使C++实现的时间轴项（如剪辑、转场、轨道等）可以在QML界面中使用
+// 【调用时机】：应用程序初始化阶段，QML引擎创建之后
 void registerTimelineItems();
 
 #endif
