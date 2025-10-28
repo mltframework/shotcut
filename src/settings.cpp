@@ -966,7 +966,7 @@ void ShotcutSettings::setTimelineRectangleSelect(bool b)
 
 bool ShotcutSettings::timelineAdjustGain() const
 {
-    return settings.value("timeline/adjustGain", true).toBool();
+    return settings.value("timeline/adjustGain", false).toBool();
 }
 
 void ShotcutSettings::setTimelineAdjustGain(bool b)
