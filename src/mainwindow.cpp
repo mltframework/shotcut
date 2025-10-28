@@ -5178,6 +5178,7 @@ void MainWindow::on_actionScreenRecording_triggered()
 #ifdef Q_OS_MAC
     ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, QRect());
     JOBS.add(job);
+    return;
 #elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     // On Linux with Wayland and not GNOME or KDE
     if (ScreenCapture::isWayland() && !isGNOMEorKDEonWayland) {

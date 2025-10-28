@@ -30,7 +30,7 @@ public:
     virtual ~DockerPullJob();
 
 public slots:
-    void start();
+    void start() override;
 
 protected slots:
     void onReadyRead() override;

@@ -209,7 +209,10 @@ void ScreenCaptureJob::stop()
 #endif
     // Try to terminate gracefully
     write("q");
-    QTimer::singleShot(3000, this, [this]() { AbstractJob::stop(); });
+    QTimer::singleShot(1000, this, [this]() {
+        if (m_progressTimer.isActive())
+            AbstractJob::stop();
+    });
 }
 
 void ScreenCaptureJob::onOpenTriggered()

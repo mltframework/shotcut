@@ -12,5 +12,9 @@
 	<true/>
 	<key>com.apple.security.device.camera</key>
 	<true/>
+	<key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
+	<array>
+		<string>com.apple.screencapture.interactive</string>
+	</array>
 </dict>
 </plist>
