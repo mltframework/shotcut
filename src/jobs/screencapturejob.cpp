@@ -252,6 +252,8 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
             JOBS.add(remuxJob);
         }
         return;
+    } else if (m_dbusService == DBusService::GNOME) {
+        exitCode = 0; // ignore exit code from sleep
     }
 #endif
     AbstractJob::onFinished(exitCode, exitStatus);
