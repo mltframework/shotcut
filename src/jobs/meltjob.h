@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,15 +46,15 @@ public:
     void setInAndOut(int in, int out);
 
 public slots:
-    void start();
+    void start() override;
     void onViewXmlTriggered();
 
 protected slots:
     virtual void onOpenTiggered();
-    virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void onFinished(int exitCode, QProcess::ExitStatus exitStatus) override;
     void onShowFolderTriggered();
     void onShowInFilesTriggered();
-    void onReadyRead();
+    void onReadyRead() override;
 
 protected:
     QScopedPointer<QTemporaryFile> m_xml;

@@ -60,8 +60,6 @@ void ScreenCaptureJob::start()
 {
     LOG_DEBUG() << "starting screen capture job";
 
-    connect(this, &QProcess::finished, this, &ScreenCaptureJob::onFinished);
-
     // Create and start progress timer
     connect(&m_progressTimer, &QTimer::timeout, this, [=]() {
         auto secs = time().elapsed() / 1000;
@@ -252,8 +250,9 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
             JOBS.add(remuxJob);
         }
         return;
-    } else if (m_dbusService == DBusService::GNOME) {
+    } else if (m_dbusService == DBusService::KDE) {
         exitCode = 0; // ignore exit code from sleep
+        exitStatus = QProcess::NormalExit;
     }
 #endif
     AbstractJob::onFinished(exitCode, exitStatus);

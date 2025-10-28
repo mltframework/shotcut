@@ -32,12 +32,12 @@ class ScreenCaptureJob : public AbstractJob
 public:
     ScreenCaptureJob(const QString &name, const QString &filename, const QRect &captureRect);
     virtual ~ScreenCaptureJob();
-    void start();
-    void stop();
+    void start() override;
+    void stop() override;
 
 private slots:
     void onOpenTriggered();
-    void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void onFinished(int exitCode, QProcess::ExitStatus exitStatus) override;
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     void onDBusRecordingTaken(const QString &fileName);
     void onDBusRecordingFailed();

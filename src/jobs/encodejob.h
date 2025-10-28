@@ -38,7 +38,7 @@ private slots:
     void onEmbedChapters();
 
 protected slots:
-    void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void onFinished(int exitCode, QProcess::ExitStatus exitStatus) override;
 };
 
 #endif // ENCODEJOB_H
