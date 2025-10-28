@@ -225,7 +225,7 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
     m_progressTimer.stop();
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    if (!m_dbusService.isEmpty()) {
+    if (m_dbusService == "gnome") {
         LOG_INFO() << "job succeeeded";
         appendToLog(QStringLiteral("Completed successfully in %1\n")
                         .arg(QTime::fromMSecsSinceStartOfDay(time().elapsed()).toString()));
