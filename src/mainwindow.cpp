@@ -1556,16 +1556,9 @@ void MainWindow::setupOpenOtherMenu()
     ui->menuNew->addAction(tr("Screen Snapshot"), this, SLOT(on_actionScreenSnapshot_triggered()))
         ->setObjectName("screenSnapshot");
     otherMenu->addAction(ui->menuNew->actions().constLast());
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    if (!ScreenCapture::isWayland()) {
-#endif
-        ui->actionScreenRecording->setVisible(true);
-        ui->menuNew
-            ->addAction(tr("Screen Recording"), this, SLOT(on_actionScreenRecording_triggered()))
-            ->setObjectName("screenRecording");
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    }
-#endif
+    ui->actionScreenRecording->setVisible(true);
+    ui->menuNew->addAction(tr("Screen Recording"), this, SLOT(on_actionScreenRecording_triggered()))
+        ->setObjectName("screenRecording");
     otherMenu->addAction(ui->menuNew->actions().constLast());
 #endif
 }
@@ -5142,36 +5135,85 @@ void MainWindow::on_actionScreenSnapshot_triggered()
 
 void MainWindow::on_actionScreenRecording_triggered()
 {
+    QString filenameExtension;
 #ifdef Q_OS_WIN
     QDesktopServices::openUrl({"ms-screenclip:?type=recording", QUrl::TolerantMode});
+    return;
+#elif defined(Q_OS_MAC)
+    filenameExtension = ".mov";
 #else
-    auto fileName = QmlApplication::getNextProjectFile("screen-.mov");
-    if (fileName.isEmpty()) {
-        fileName = Settings.savePath() + "/%1.mov";
-        fileName = QFileDialog::getSaveFileName(this,
-                                                tr("Screen Recording"),
-                                                fileName.arg(tr("screen")),
-                                                tr("MOV Files (*.mov)"));
-        if (fileName.isEmpty())
-            return;
+    bool isGNOMEorKDEonWayland = false;
+    // GNOME and KDE have built-in screen recording compatible with Wayland
+    if (ScreenCapture::isWayland()) {
+        const auto desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP").toLower();
+        isGNOMEorKDEonWayland = desktop.contains("gnome") || desktop.contains("kde")
+                                || desktop.contains("plasma");
+        if (isGNOMEorKDEonWayland)
+            filenameExtension = ".webm";
+    } else {
+        filenameExtension = ".mp4";
+    }
+#endif
+    QString fileName;
+    if (!filenameExtension.isEmpty()) {
+        fileName = QmlApplication::getNextProjectFile("screen-" + filenameExtension);
+        if (fileName.isEmpty()) {
+            fileName = Settings.savePath() + "/%1" + filenameExtension;
+            fileName = QFileDialog::getSaveFileName(this,
+                                                    tr("Screen Recording"),
+                                                    fileName.arg(tr("screen")),
+                                                    QString("%1 %2 (*%3)")
+                                                        .arg(filenameExtension.toUpper(),
+                                                             tr("Files"),
+                                                             filenameExtension));
+            if (fileName.isEmpty())
+                return;
 
-        // Ensure the filename ends with .mov
-        if (!fileName.endsWith(".mov", Qt::CaseInsensitive)) {
-            fileName += ".mov";
+            // Ensure the filename ends with extension
+            if (!fileName.endsWith(filenameExtension, Qt::CaseInsensitive)) {
+                fileName += filenameExtension;
+            }
         }
     }
 #ifdef Q_OS_MAC
     ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, QRect());
     JOBS.add(job);
-#else
+#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    // On Linux with Wayland and not GNOME or KDE
+    if (ScreenCapture::isWayland() && !isGNOMEorKDEonWayland) {
+        // Let user pick a program to use on Wayland and not GNOME or KDE.
+        // OBS Studio (default) supports Wayland.
+        QString exePath = Settings.screenRecorderPath();
+
+        // Check if saved path is still valid
+        if (!exePath.isEmpty() && !QFile::exists(exePath)) {
+            exePath.clear();
+        }
+
+        // If not found, prompt user
+        if (exePath.isEmpty()) {
+            exePath = Util::getExecutable(this);
+            if (exePath.isEmpty()) {
+                return; // User cancelled
+            }
+            Settings.setScreenRecorderPath(exePath);
+        }
+
+        // Launch the screen recorder
+        if (Util::startDetached(exePath, QStringList())) {
+            showStatusMessage(tr("Screen recorder launched"));
+        } else {
+            showStatusMessage(tr("Failed to launch screen recorder"));
+        }
+        return;
+    }
+#endif
     m_screenCapture = new ScreenCapture(fileName, ScreenCapture::Interactive, this);
     connect(m_screenCapture, &ScreenCapture::beginRecording, this, [=](const QRect &rect) {
         ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, rect);
         JOBS.add(job);
     });
     m_screenCapture->startRecording();
-#endif
-#endif
 }
 
 void MainWindow::on_actionKeyboardShortcuts_triggered()

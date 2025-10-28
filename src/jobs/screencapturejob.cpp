@@ -18,8 +18,11 @@
 #include "screencapturejob.h"
 
 #include "Logger.h"
+#include "ffmpegjob.h"
+#include "jobqueue.h"
 #include "mainwindow.h"
 #include "postjobaction.h"
+#include "screencapture/screencapture.h"
 #include "settings.h"
 
 #include <QApplication>
@@ -27,6 +30,13 @@
 #include <QFileInfo>
 #include <QStandardPaths>
 #include <QTimer>
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QDBusPendingCall>
+#include <QDBusPendingCallWatcher>
+#include <QDBusPendingReply>
+#endif
 
 ScreenCaptureJob::ScreenCaptureJob(const QString &name,
                                    const QString &filename,
@@ -52,6 +62,13 @@ void ScreenCaptureJob::start()
 
     connect(this, &QProcess::finished, this, &ScreenCaptureJob::onFinished);
 
+    // Create and start progress timer
+    connect(&m_progressTimer, &QTimer::timeout, this, [=]() {
+        auto secs = time().elapsed() / 1000;
+        emit progressUpdated(m_item, -secs);
+    });
+    m_progressTimer.start(1000); // Update every second
+
     QStringList args;
 #ifdef Q_OS_MAC
     args << "-C";
@@ -62,6 +79,16 @@ void ScreenCaptureJob::start()
     LOG_DEBUG() << "screencapture " + args.join(' ');
     AbstractJob::start("screencapture", args);
 #else
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    // On Linux, check if we're on Wayland and try D-Bus first
+    if (ScreenCapture::isWayland()) {
+        if (startWaylandRecording()) {
+            AbstractJob::start("sleep", {"infinity"});
+            return;
+        }
+        LOG_WARNING() << "Wayland D-Bus recording failed, falling back to ffmpeg (may not work)";
+    }
+#endif
     QString vcodec("libx264");
     args << "-f"
 #ifdef Q_OS_WIN
@@ -150,6 +177,36 @@ void ScreenCaptureJob::start()
 
 void ScreenCaptureJob::stop()
 {
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    if (m_dbusService == "gnome") {
+        // Stop GNOME screencast
+        auto bus = QDBusConnection::sessionBus();
+        QDBusMessage msg = QDBusMessage::createMethodCall("org.gnome.Shell.Screencast",
+                                                          "/org/gnome/Shell/Screencast",
+                                                          "org.gnome.Shell.Screencast",
+                                                          "StopScreencast");
+        QDBusPendingCall async = bus.asyncCall(msg);
+        QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(async, this);
+        connect(watcher,
+                &QDBusPendingCallWatcher::finished,
+                this,
+                [this](QDBusPendingCallWatcher *w) {
+                    QDBusPendingReply<bool> reply = *w;
+                    LOG_DEBUG() << "GNOME Screencast stopped";
+                    // emit finished(this, true);
+                    w->deleteLater();
+                });
+    } else if (m_dbusService == "kde") {
+        // For KDE Spectacle, user stops recording via the Spectacle UI
+        // We just wait for the signals
+        LOG_DEBUG() << "Waiting for KDE Spectacle to finish recording (user controlled)";
+    }
+    if (!m_dbusService.isEmpty()) {
+        AbstractJob::stop();
+        resetKilled();
+        return;
+    }
+#endif
     // Try to terminate gracefully
     write("q");
     QTimer::singleShot(3000, this, [this]() { AbstractJob::stop(); });
@@ -162,6 +219,38 @@ void ScreenCaptureJob::onOpenTriggered()
 
 void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
+    m_progressTimer.stop();
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    if (!m_dbusService.isEmpty()) {
+        LOG_INFO() << "job succeeeded";
+        appendToLog(QStringLiteral("Completed successfully in %1\n")
+                        .arg(QTime::fromMSecsSinceStartOfDay(time().elapsed()).toString()));
+        emit progressUpdated(m_item, 100);
+        emit finished(this, true);
+
+        // Remux the file from Matroska to chosen WebM
+        QFileInfo fileInfo(m_filename);
+        QString inputFileName = fileInfo.path() + "/" + fileInfo.completeBaseName() + ".mkv";
+        if (m_isAutoOpen && QFileInfo::exists(inputFileName)) {
+            m_isAutoOpen = false;
+
+            // Create FFmpeg remux job
+            QStringList args;
+            args << "-i" << inputFileName;
+            args << "-c"
+                 << "copy";
+            args << "-y" << m_filename;
+
+            FfmpegJob *remuxJob = new FfmpegJob(m_filename, args, false);
+            remuxJob->setLabel(tr("Remux %1").arg(fileInfo.fileName()));
+            remuxJob->setPostJobAction(
+                new OpenPostJobAction(inputFileName, m_filename, inputFileName));
+            JOBS.add(remuxJob);
+        }
+        return;
+    }
+#endif
     AbstractJob::onFinished(exitCode, exitStatus);
 
     if (m_isAutoOpen && exitCode == 0 && QFileInfo::exists(m_filename)) {
@@ -170,3 +259,227 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
         QTimer::singleShot(0, this, [this]() { MAIN.open(m_filename); });
     }
 }
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+bool ScreenCaptureJob::startWaylandRecording()
+{
+    // Check desktop environment
+    QString desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP").toLower();
+    LOG_DEBUG() << "XDG_CURRENT_DESKTOP:" << desktop;
+
+    // Try GNOME first
+    if (desktop.contains("gnome")) {
+        if (startGnomeScreencast()) {
+            return true;
+        }
+    }
+
+    // Try KDE
+    if (desktop.contains("kde") || desktop.contains("plasma")) {
+        if (startKdeSpectacle()) {
+            return true;
+        }
+    }
+
+    // If we reach here, neither GNOME nor KDE worked
+    // This shouldn't happen as MainWindow should have launched OBS Studio
+    LOG_ERROR() << "Desktop environment not GNOME or KDE, and fallback not available in job";
+    return false;
+}
+
+bool ScreenCaptureJob::startGnomeScreencast()
+{
+    LOG_DEBUG() << "Attempting GNOME Shell Screencast";
+
+    auto bus = QDBusConnection::sessionBus();
+    if (!bus.isConnected()) {
+        LOG_WARNING() << "DBus session bus not connected";
+        return false;
+    }
+
+    // Check if the service is available
+    QDBusMessage checkMsg = QDBusMessage::createMethodCall("org.gnome.Shell.Screencast",
+                                                           "/org/gnome/Shell/Screencast",
+                                                           "org.freedesktop.DBus.Introspectable",
+                                                           "Introspect");
+    QDBusPendingCall async = bus.asyncCall(checkMsg, 1000);
+    async.waitForFinished();
+    QDBusPendingReply<QString> reply = async;
+    if (reply.isError()) {
+        LOG_WARNING() << "GNOME Shell Screencast service not available:" << reply.error().message();
+        return false;
+    }
+
+    // Prepare options
+    QVariantMap options;
+    options.insert("framerate", static_cast<int>(MLT.profile().fps()));
+    options.insert("draw-cursor", true);
+
+    // Call ScreencastArea
+    LOG_DEBUG() << "Recording region:" << m_rect;
+    auto msg = QDBusMessage::createMethodCall("org.gnome.Shell.Screencast",
+                                              "/org/gnome/Shell/Screencast",
+                                              "org.gnome.Shell.Screencast",
+                                              "ScreencastArea");
+    msg << m_rect.x();
+    msg << m_rect.y();
+    msg << m_rect.width();
+    msg << m_rect.height();
+    QFileInfo fileInfo(m_filename);
+    msg << fileInfo.path() + "/" + fileInfo.completeBaseName() + ".mkv";
+    msg << options;
+    QDBusPendingCall screencastCall = bus.asyncCall(msg);
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(screencastCall, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *w) {
+        QDBusPendingReply<bool, QString> reply = *w;
+        if (reply.isError()) {
+            LOG_ERROR() << "GNOME Screencast call failed:" << reply.error().message();
+            AbstractJob::stop();
+        } else {
+            bool success = reply.argumentAt<0>();
+            QString filename = reply.argumentAt<1>();
+            LOG_DEBUG() << "GNOME Screencast started, success:" << success
+                        << "filename:" << filename;
+            // if (success && !filename.isEmpty()) {
+            //     m_filename = filename;
+            // }
+        }
+        w->deleteLater();
+    });
+
+    m_dbusService = "gnome";
+    LOG_INFO() << "Started GNOME Shell Screencast to:"
+               << fileInfo.path() + "/" + fileInfo.completeBaseName() + ".mkv";
+
+    // Job will be controlled via stop() method
+    return true;
+}
+
+bool ScreenCaptureJob::startKdeSpectacle()
+{
+    LOG_DEBUG() << "Attempting KDE Spectacle recording";
+
+    auto bus = QDBusConnection::sessionBus();
+    if (!bus.isConnected()) {
+        LOG_WARNING() << "DBus session bus not connected";
+        return false;
+    }
+
+    // Connect to RecordingTaken and RecordingFailed signals
+    bool connected = bus.connect("org.kde.Spectacle",
+                                 "/",
+                                 "org.kde.Spectacle",
+                                 "RecordingTaken",
+                                 this,
+                                 SLOT(onDBusRecordingTaken(QString)));
+    if (!connected) {
+        LOG_WARNING() << "Failed to connect to RecordingTaken signal";
+        return false;
+    }
+
+    connected = bus.connect("org.kde.Spectacle",
+                            "/",
+                            "org.kde.Spectacle",
+                            "RecordingFailed",
+                            this,
+                            SLOT(onDBusRecordingFailed()));
+    if (!connected) {
+        LOG_WARNING() << "Failed to connect to RecordingFailed signal";
+        bus.disconnect("org.kde.Spectacle",
+                       "/",
+                       "org.kde.Spectacle",
+                       "RecordingTaken",
+                       this,
+                       SLOT(onDBusRecordingTaken(QString)));
+        return false;
+    }
+
+    // Call RecordRegion for recording
+    LOG_DEBUG() << "Recording region:" << m_rect;
+    auto msg = QDBusMessage::createMethodCall("org.kde.Spectacle",
+                                              "/",
+                                              "org.kde.Spectacle",
+                                              m_rect.isNull() ? "RecordScreen" : "RecordRegion");
+    msg << 1; // includeMousePointer
+    QDBusPendingCall async = bus.asyncCall(msg);
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(async, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *w) {
+        QDBusPendingReply<> reply = *w;
+        if (reply.isError()) {
+            LOG_ERROR() << "KDE Spectacle recording call failed:" << reply.error().message();
+            if (m_rect.isNull()) {
+                AbstractJob::stop();
+            } else {
+                m_rect = QRect();
+                w->deleteLater();
+                startKdeSpectacle();
+            }
+        } else {
+            LOG_DEBUG() << "KDE Spectacle recording initiated";
+        }
+        w->deleteLater();
+    });
+
+    m_dbusService = "kde";
+    LOG_INFO() << "Started KDE Spectacle screen recording";
+
+    return true;
+}
+
+void ScreenCaptureJob::onDBusRecordingTaken(const QString &fileName)
+{
+    LOG_DEBUG() << "Recording taken, file:" << fileName;
+
+    // Move/copy the file to our desired location if different
+    if (!fileName.isEmpty() && fileName != m_filename) {
+        QFile source(fileName);
+        if (QFile::exists(m_filename)) {
+            QFile::remove(m_filename);
+        }
+        if (source.copy(m_filename)) {
+            LOG_INFO() << "Copied recording from" << fileName << "to" << m_filename;
+            source.remove(); // Remove the original
+        } else {
+            LOG_WARNING() << "Failed to copy recording, using original location";
+            m_filename = fileName;
+        }
+    }
+
+    auto bus = QDBusConnection::sessionBus();
+    bus.disconnect("org.kde.Spectacle",
+                   "/",
+                   "org.kde.Spectacle",
+                   "RecordingTaken",
+                   this,
+                   SLOT(onDBusRecordingTaken(QString)));
+    bus.disconnect("org.kde.Spectacle",
+                   "/",
+                   "org.kde.Spectacle",
+                   "RecordingFailed",
+                   this,
+                   SLOT(onDBusRecordingFailed()));
+
+    stop();
+}
+
+void ScreenCaptureJob::onDBusRecordingFailed()
+{
+    LOG_ERROR() << "Recording failed";
+
+    auto bus = QDBusConnection::sessionBus();
+    bus.disconnect("org.kde.Spectacle",
+                   "/",
+                   "org.kde.Spectacle",
+                   "RecordingTaken",
+                   this,
+                   SLOT(onDBusRecordingTaken(QString)));
+    bus.disconnect("org.kde.Spectacle",
+                   "/",
+                   "org.kde.Spectacle",
+                   "RecordingFailed",
+                   this,
+                   SLOT(onDBusRecordingFailed()));
+
+    AbstractJob::stop();
+}
+#endif

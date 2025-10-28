@@ -310,6 +310,8 @@ public:
     void setDockerPath(const QString &path);
     QString chromiumPath() const;
     void setChromiumPath(const QString &path);
+    QString screenRecorderPath() const;
+    void setScreenRecorderPath(const QString &path);
 
     // proxy
     bool proxyEnabled() const;

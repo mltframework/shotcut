@@ -1672,3 +1672,13 @@ void ShotcutSettings::setChromiumPath(const QString &path)
 {
     settings.setValue("chromiumPath", path);
 }
+
+QString ShotcutSettings::screenRecorderPath() const
+{
+    return settings.value("screenRecorderPath", "obs").toString();
+}
+
+void ShotcutSettings::setScreenRecorderPath(const QString &path)
+{
+    settings.setValue("screenRecorderPath", path);
+}

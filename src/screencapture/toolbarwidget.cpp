@@ -74,7 +74,7 @@ ToolbarWidget::ToolbarWidget(QWidget *parent)
 #ifdef Q_OS_WIN
     const bool withWindowButton = false;
 #else
-    const bool withWindowButton = ScreenCapture::isWayland();
+    const bool withWindowButton = !ScreenCapture::isWayland();
 #endif
     if (withWindowButton) {
         layout->addWidget(m_windowButton);

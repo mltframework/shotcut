@@ -195,6 +195,11 @@ void AbstractJob::resume()
     emit progressUpdated(m_item, 0);
 }
 
+void AbstractJob::resetKilled()
+{
+    m_killed = false;
+}
+
 void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     const QTime &time = QTime::fromMSecsSinceStartOfDay(m_totalTime.elapsed());
@@ -254,7 +259,7 @@ void AbstractJob::onStarted()
 void AbstractJob::onProgressUpdated(QStandardItem *, int percent)
 {
     // Start timer on first reported percentage > 0.
-    if (percent > 0 && (percent == 1 || m_startingPercent < 0)) {
+    if (percent == 1 || m_startingPercent < 0) {
         m_estimateTime.restart();
         m_startingPercent = percent;
     }

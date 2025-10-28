@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,6 +97,8 @@ void JobQueue::onProgressUpdated(QStandardItem *standardItem, int percent)
                 if (percent > 2)
                     remaining = time.toString();
                 remaining = QStringLiteral("%1% (%2)").arg(percent).arg(remaining);
+            } else if (percent < 0) {
+                remaining = QTime(0, 0).addSecs(-percent).toString();
             }
             standardItem->setText(remaining);
             standardItem = JOBS.item(standardItem->row(), JobQueue::COLUMN_ICON);

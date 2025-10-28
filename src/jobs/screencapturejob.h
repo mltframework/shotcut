@@ -21,7 +21,10 @@
 #include "abstractjob.h"
 
 #include <QRect>
-#include <QStringList>
+#include <QTimer>
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#include <QDBusConnection>
+#endif
 
 class ScreenCaptureJob : public AbstractJob
 {
@@ -30,18 +33,29 @@ public:
     ScreenCaptureJob(const QString &name, const QString &filename, const QRect &captureRect);
     virtual ~ScreenCaptureJob();
     void start();
-
-public slots:
-    virtual void stop();
+    void stop();
 
 private slots:
     void onOpenTriggered();
     void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    void onDBusRecordingTaken(const QString &fileName);
+    void onDBusRecordingFailed();
+#endif
 
 private:
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    bool startWaylandRecording();
+    bool startGnomeScreencast();
+    bool startKdeSpectacle();
+#endif
     QString m_filename;
     QRect m_rect;
     bool m_isAutoOpen;
+    QTimer m_progressTimer;
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    QString m_dbusService;
+#endif
 };
 
 #endif // SCREENCAPTUREJOB_H
