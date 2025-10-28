@@ -178,7 +178,7 @@ void ScreenCaptureJob::start()
 void ScreenCaptureJob::stop()
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    if (m_dbusService == "gnome") {
+    if (m_dbusService == DBusService::GNOME) {
         // Stop GNOME screencast
         auto bus = QDBusConnection::sessionBus();
         QDBusMessage msg = QDBusMessage::createMethodCall("org.gnome.Shell.Screencast",
@@ -196,12 +196,12 @@ void ScreenCaptureJob::stop()
                     // emit finished(this, true);
                     w->deleteLater();
                 });
-    } else if (m_dbusService == "kde") {
+    } else if (m_dbusService == DBusService::KDE) {
         // For KDE Spectacle, user stops recording via the Spectacle UI
         // We just wait for the signals
         LOG_DEBUG() << "Waiting for KDE Spectacle to finish recording (user controlled)";
     }
-    if (!m_dbusService.isEmpty()) {
+    if (m_dbusService != DBusService::None) {
         AbstractJob::stop();
         resetKilled();
         return;
@@ -225,7 +225,7 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
     m_progressTimer.stop();
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    if (m_dbusService == "gnome") {
+    if (m_dbusService == DBusService::GNOME) {
         LOG_INFO() << "job succeeeded";
         appendToLog(QStringLiteral("Completed successfully in %1\n")
                         .arg(QTime::fromMSecsSinceStartOfDay(time().elapsed()).toString()));
@@ -347,7 +347,7 @@ bool ScreenCaptureJob::startGnomeScreencast()
         w->deleteLater();
     });
 
-    m_dbusService = "gnome";
+    m_dbusService = DBusService::GNOME;
     LOG_INFO() << "Started GNOME Shell Screencast to:"
                << fileInfo.path() + "/" + fileInfo.completeBaseName() + ".mkv";
 
@@ -420,7 +420,7 @@ bool ScreenCaptureJob::startKdeSpectacle()
         w->deleteLater();
     });
 
-    m_dbusService = "kde";
+    m_dbusService = DBusService::KDE;
     LOG_INFO() << "Started KDE Spectacle screen recording";
 
     return true;

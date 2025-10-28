@@ -45,6 +45,7 @@ private slots:
 
 private:
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    enum DBusService { None, GNOME, KDE };
     bool startWaylandRecording();
     bool startGnomeScreencast();
     bool startKdeSpectacle();
@@ -54,7 +55,7 @@ private:
     bool m_isAutoOpen;
     QTimer m_progressTimer;
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    QString m_dbusService;
+    DBusService m_dbusService = DBusService::None;
 #endif
 };
 
