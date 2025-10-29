@@ -259,7 +259,8 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
         if (!m_actualFilename.isEmpty()) {
             m_filename = m_actualFilename;
         }
-    } else if (m_dbusService == DBusService::KDE) {
+    }
+    if (m_dbusService != DBusService::None) {
         exitCode = 0; // ignore exit code from sleep
         exitStatus = QProcess::NormalExit;
     }
