@@ -230,28 +230,35 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
         emit progressUpdated(m_item, 100);
         emit finished(this, true);
 
-        // Remux the file from Matroska to chosen WebM
-        QFileInfo fileInfo(m_filename);
-        QString inputFileName = fileInfo.path() + "/" + fileInfo.completeBaseName() + ".mkv";
-        if (!QFileInfo::exists(inputFileName))
-            inputFileName = fileInfo.path() + "/" + fileInfo.completeBaseName() + ".mkv.webm";
-        if (m_isAutoOpen && QFileInfo::exists(inputFileName)) {
-            m_isAutoOpen = false;
+        if (!m_actualFilename.endsWith(".mp4")) {
+            // Remux the file from Matroska to chosen WebM
+            QFileInfo fileInfo(m_filename);
+            QString inputFileName = m_actualFilename.isEmpty()
+                                        ? fileInfo.path() + "/" + fileInfo.completeBaseName()
+                                              + ".mkv"
+                                        : m_actualFilename;
+            if (m_isAutoOpen && QFileInfo::exists(inputFileName)) {
+                m_isAutoOpen = false;
 
-            // Create FFmpeg remux job
-            QStringList args;
-            args << "-i" << inputFileName;
-            args << "-c"
-                 << "copy";
-            args << "-y" << m_filename;
+                // Create FFmpeg remux job
+                QStringList args;
+                args << "-i" << inputFileName;
+                args << "-c"
+                     << "copy";
+                args << "-y" << m_filename;
 
-            FfmpegJob *remuxJob = new FfmpegJob(m_filename, args, false);
-            remuxJob->setLabel(tr("Remux %1").arg(fileInfo.fileName()));
-            remuxJob->setPostJobAction(
-                new OpenPostJobAction(inputFileName, m_filename, inputFileName));
-            JOBS.add(remuxJob);
+                FfmpegJob *remuxJob = new FfmpegJob(m_filename, args, false);
+                remuxJob->setLabel(tr("Remux %1").arg(fileInfo.fileName()));
+                remuxJob->setPostJobAction(
+                    new OpenPostJobAction(inputFileName, m_filename, inputFileName));
+                JOBS.add(remuxJob);
+
+                return;
+            }
         }
-        return;
+        if (!m_actualFilename.isEmpty()) {
+            m_filename = m_actualFilename;
+        }
     } else if (m_dbusService == DBusService::KDE) {
         exitCode = 0; // ignore exit code from sleep
         exitStatus = QProcess::NormalExit;
@@ -346,6 +353,7 @@ bool ScreenCaptureJob::startGnomeScreencast()
             QString filename = reply.argumentAt<1>();
             LOG_DEBUG() << "GNOME Screencast started, success:" << success
                         << "filename:" << filename;
+            m_actualFilename = filename;
         }
         w->deleteLater();
     });

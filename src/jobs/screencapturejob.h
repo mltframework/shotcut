@@ -51,6 +51,7 @@ private:
     bool startKdeSpectacle();
 #endif
     QString m_filename;
+    QString m_actualFilename;
     QRect m_rect;
     bool m_isAutoOpen;
     QTimer m_progressTimer;
