@@ -233,6 +233,8 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
         // Remux the file from Matroska to chosen WebM
         QFileInfo fileInfo(m_filename);
         QString inputFileName = fileInfo.path() + "/" + fileInfo.completeBaseName() + ".mkv";
+        if (!QFileInfo::exists(inputFileName))
+            inputFileName = fileInfo.path() + "/" + fileInfo.completeBaseName() + ".mkv.webm";
         if (m_isAutoOpen && QFileInfo::exists(inputFileName)) {
             m_isAutoOpen = false;
 
