@@ -159,7 +159,9 @@ void ScreenCapture::startFullscreenRecording()
         return;
     }
 
-    auto physicalRect = applyDevicePixelRatio(screen->geometry());
+    auto physicalRect = screen->geometry();
+    if (!isWayland() || !qEnvironmentVariable("XDG_CURRENT_DESKTOP").toLower().contains("gnome"))
+        physicalRect = applyDevicePixelRatio(screen->geometry());
 
     emit beginRecording(adjustRectForVideo(physicalRect));
 }
