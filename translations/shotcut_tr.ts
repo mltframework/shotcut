@@ -3598,17 +3598,17 @@ Tıkla değiştir</translation>
         <translation>duraklatıldı</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="120"/>
+        <location filename="../src/jobqueue.cpp" line="122"/>
         <source>Elapsed Hours:Minutes:Seconds</source>
         <translation>Geçen Saat:Dakika:Saniye</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="123"/>
+        <location filename="../src/jobqueue.cpp" line="125"/>
         <source>stopped</source>
         <translation>durduruldu</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="126"/>
+        <location filename="../src/jobqueue.cpp" line="128"/>
         <source>failed</source>
         <translation>tamamlanamadı</translation>
     </message>
@@ -4692,7 +4692,7 @@ ya da B parçasının sesini (%100) seçin.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="507"/>
-        <location filename="../src/mainwindow.cpp" line="4009"/>
+        <location filename="../src/mainwindow.cpp" line="4002"/>
         <source>Enter Full Screen</source>
         <translation>Tam ekran yap</translation>
     </message>
@@ -4704,13 +4704,13 @@ ya da B parçasının sesini (%100) seçin.</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="531"/>
         <location filename="../src/mainwindow.cpp" line="412"/>
-        <location filename="../src/mainwindow.cpp" line="2454"/>
+        <location filename="../src/mainwindow.cpp" line="2447"/>
         <source>Properties</source>
         <translation>Özellikler</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="540"/>
-        <location filename="../src/mainwindow.cpp" line="2463"/>
+        <location filename="../src/mainwindow.cpp" line="2456"/>
         <source>Recent</source>
         <translation>Son kullanılanlar</translation>
     </message>
@@ -4789,7 +4789,7 @@ ya da B parçasının sesini (%100) seçin.</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="715"/>
         <location filename="../src/mainwindow.ui" line="856"/>
-        <location filename="../src/mainwindow.cpp" line="2659"/>
+        <location filename="../src/mainwindow.cpp" line="2652"/>
         <source>Automatic</source>
         <translation>Otomatik</translation>
     </message>
@@ -4844,7 +4844,7 @@ ya da B parçasının sesini (%100) seçin.</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="190"/>
         <location filename="../src/mainwindow.ui" line="800"/>
-        <location filename="../src/mainwindow.cpp" line="2473"/>
+        <location filename="../src/mainwindow.cpp" line="2466"/>
         <source>Timeline</source>
         <translation>Zaman akışı</translation>
     </message>
@@ -4941,7 +4941,7 @@ ya da B parçasının sesini (%100) seçin.</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="1392"/>
         <location filename="../src/mainwindow.ui" line="1395"/>
-        <location filename="../src/mainwindow.cpp" line="6079"/>
+        <location filename="../src/mainwindow.cpp" line="6127"/>
         <source>Export Chapters</source>
         <translation>Bölümleri dışa aktar</translation>
     </message>
@@ -5067,7 +5067,7 @@ ya da B parçasının sesini (%100) seçin.</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="1016"/>
         <location filename="../src/mainwindow.cpp" line="1556"/>
-        <location filename="../src/mainwindow.cpp" line="5101"/>
+        <location filename="../src/mainwindow.cpp" line="5094"/>
         <source>Screen Snapshot</source>
         <translation>Ekran görüntüsü</translation>
     </message>
@@ -5078,10 +5078,10 @@ ya da B parçasının sesini (%100) seçin.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1027"/>
-        <location filename="../src/mainwindow.cpp" line="1564"/>
-        <location filename="../src/mainwindow.cpp" line="5152"/>
-        <location filename="../src/mainwindow.cpp" line="5164"/>
-        <location filename="../src/mainwindow.cpp" line="5169"/>
+        <location filename="../src/mainwindow.cpp" line="1560"/>
+        <location filename="../src/mainwindow.cpp" line="5168"/>
+        <location filename="../src/mainwindow.cpp" line="5184"/>
+        <location filename="../src/mainwindow.cpp" line="5219"/>
         <source>Screen Recording</source>
         <translation>Ekran kaydı</translation>
     </message>
@@ -5318,6 +5318,7 @@ ya da B parçasının sesini (%100) seçin.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1476"/>
+        <location filename="../src/mainwindow.cpp" line="5172"/>
         <source>Files</source>
         <translation>Dosyalar</translation>
     </message>
@@ -5463,47 +5464,47 @@ Lütfen paket yöneticinizi kullanarak yükleyin. Libsdl2-2.0-0, SDL2 ya da benz
         <translation>Flaş patlat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1592"/>
-        <location filename="../src/mainwindow.cpp" line="1594"/>
-        <location filename="../src/mainwindow.cpp" line="2034"/>
-        <location filename="../src/mainwindow.cpp" line="2042"/>
-        <location filename="../src/mainwindow.cpp" line="2065"/>
-        <location filename="../src/mainwindow.cpp" line="2125"/>
-        <location filename="../src/mainwindow.cpp" line="4752"/>
-        <location filename="../src/mainwindow.cpp" line="4765"/>
-        <location filename="../src/mainwindow.cpp" line="5855"/>
+        <location filename="../src/mainwindow.cpp" line="1585"/>
+        <location filename="../src/mainwindow.cpp" line="1587"/>
+        <location filename="../src/mainwindow.cpp" line="2027"/>
+        <location filename="../src/mainwindow.cpp" line="2035"/>
+        <location filename="../src/mainwindow.cpp" line="2058"/>
+        <location filename="../src/mainwindow.cpp" line="2118"/>
+        <location filename="../src/mainwindow.cpp" line="4745"/>
+        <location filename="../src/mainwindow.cpp" line="4758"/>
+        <location filename="../src/mainwindow.cpp" line="5903"/>
         <source>Failed to open </source>
         <translation>Açılamadı </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1629"/>
+        <location filename="../src/mainwindow.cpp" line="1622"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.</source>
         <translation>Açtığınız dosya grafik işlemci etkileri kullanıyor ancak grafik işlemci etkileri etkinleştirilmemiş</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1641"/>
+        <location filename="../src/mainwindow.cpp" line="1634"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>Açtığınız dosya grafik işlemci etkileri ile uyumlu olmayan işlemci etkileri kullanıyor. Ancak grafik işlemci etkileri açık.
 Grafik işlemci etkilerini kapatmak ve yeniden başlatmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1664"/>
+        <location filename="../src/mainwindow.cpp" line="1657"/>
         <source>Repaired</source>
         <translation>Onarılmış</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1665"/>
+        <location filename="../src/mainwindow.cpp" line="1658"/>
         <source>Save Repaired XML</source>
         <translation>Onarılan XML dosyasını kaydet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1702"/>
+        <location filename="../src/mainwindow.cpp" line="1695"/>
         <source>Repairing the project failed.</source>
         <translation>Proje onarılamadı.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1715"/>
+        <location filename="../src/mainwindow.cpp" line="1708"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -5517,22 +5518,22 @@ Evet seçeneğine tıkladığınızda Shotcut projenizin bir kopyasını
 oluşturarak adına &quot;- Onarılmış&quot; ekleyecek ve onu açacak.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1750"/>
+        <location filename="../src/mainwindow.cpp" line="1743"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Otomatik olarak kaydedilmiş dosyalar var. Onları şimdi kurtarmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1822"/>
+        <location filename="../src/mainwindow.cpp" line="1815"/>
         <source>You cannot add a project to itself!</source>
         <translation>Bir projeyi kendisine ekleyemezsiniz!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1860"/>
+        <location filename="../src/mainwindow.cpp" line="1853"/>
         <source>There was an error saving. Please try again.</source>
         <translation>Kaydedilirken bir sorun çıktı. Lütfen yeniden deneyin.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1945"/>
+        <location filename="../src/mainwindow.cpp" line="1938"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -5541,7 +5542,7 @@ It was made with version </source>
 Dosya şu sürüm ile hazırlanmış </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1976"/>
+        <location filename="../src/mainwindow.cpp" line="1969"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -5552,167 +5553,167 @@ Lütfen diğer uygulamaları veya tarayıcı sekmelerini kapatarak yeniden deney
 Ya da çalışmanızı kaydedip Shotcut uygulamasını yeniden başlatın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2028"/>
+        <location filename="../src/mainwindow.cpp" line="2021"/>
         <source>Opening %1</source>
         <translation>%1 açılıyor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2167"/>
-        <location filename="../src/mainwindow.cpp" line="4739"/>
+        <location filename="../src/mainwindow.cpp" line="2160"/>
+        <location filename="../src/mainwindow.cpp" line="4732"/>
         <source>Open File</source>
         <translation>Dosya aç</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2169"/>
+        <location filename="../src/mainwindow.cpp" line="2162"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Tüm dosyalar (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2437"/>
+        <location filename="../src/mainwindow.cpp" line="2430"/>
         <source>Preferences</source>
         <translation>Tercihler</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2447"/>
+        <location filename="../src/mainwindow.cpp" line="2440"/>
         <source>Rename Clip</source>
         <translation>Parçayı yeniden adlandır</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2456"/>
+        <location filename="../src/mainwindow.cpp" line="2449"/>
         <source>Find</source>
         <translation>Bul</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2465"/>
+        <location filename="../src/mainwindow.cpp" line="2458"/>
         <source>Reload</source>
         <translation>Yeniden yükle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2475"/>
+        <location filename="../src/mainwindow.cpp" line="2468"/>
         <source>Rerun Filter Analysis</source>
         <translation>Süzgeç incelemesini yeniden yap</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="2489"/>
+        <location filename="../src/mainwindow.cpp" line="2482"/>
         <source>This will start %n analysis job(s). Continue?</source>
         <translation>
             <numerusform>Bu işlem %n inceleme görevini başlatacak. İlerlemek istiyor musunuz?</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2507"/>
+        <location filename="../src/mainwindow.cpp" line="2500"/>
         <source>No filters to analyze.</source>
         <translation>İncelenecek bir süzgeç yok.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2648"/>
+        <location filename="../src/mainwindow.cpp" line="2641"/>
         <source>Untitled</source>
         <translation>Adlandırılmamış</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2653"/>
+        <location filename="../src/mainwindow.cpp" line="2646"/>
         <source>%1x%2 %3fps %4ch</source>
         <translation>%1x%2 %3kare/sn %4knl</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2680"/>
+        <location filename="../src/mainwindow.cpp" line="2673"/>
         <source>About %1</source>
         <translation>%1 hakkında</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2809"/>
+        <location filename="../src/mainwindow.cpp" line="2802"/>
         <source>Non-Broadcast</source>
         <translation>Yayınlanmayacak</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2814"/>
+        <location filename="../src/mainwindow.cpp" line="2807"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD geniş ekran NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2815"/>
+        <location filename="../src/mainwindow.cpp" line="2808"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD geniş ekran PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2826"/>
+        <location filename="../src/mainwindow.cpp" line="2819"/>
         <source>Square 1080p 30 fps</source>
         <translation>Kare 1080p 30 kare/sn</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2827"/>
+        <location filename="../src/mainwindow.cpp" line="2820"/>
         <source>Square 1080p 60 fps</source>
         <translation>Kare 1080p 60 kare/sn</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2828"/>
+        <location filename="../src/mainwindow.cpp" line="2821"/>
         <source>Vertical HD 30 fps</source>
         <translation>Dikey HD 30 kare/sn</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2829"/>
+        <location filename="../src/mainwindow.cpp" line="2822"/>
         <source>Vertical HD 60 fps</source>
         <translation>Dikey HD 60 kare/sn</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2830"/>
+        <location filename="../src/mainwindow.cpp" line="2823"/>
         <source>Custom</source>
         <translation>Özel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2861"/>
-        <location filename="../src/mainwindow.cpp" line="3152"/>
+        <location filename="../src/mainwindow.cpp" line="2854"/>
+        <location filename="../src/mainwindow.cpp" line="3145"/>
         <source>Saved %1</source>
         <translation>%1 kaydedildi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3143"/>
-        <location filename="../src/mainwindow.cpp" line="3166"/>
-        <location filename="../src/mainwindow.cpp" line="4533"/>
+        <location filename="../src/mainwindow.cpp" line="3136"/>
+        <location filename="../src/mainwindow.cpp" line="3159"/>
+        <location filename="../src/mainwindow.cpp" line="4526"/>
         <source>Save XML</source>
         <translation>XML kaydet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3262"/>
+        <location filename="../src/mainwindow.cpp" line="3255"/>
         <source>Timeline is not loaded</source>
         <translation>Zaman akışı yüklenmedi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3272"/>
+        <location filename="../src/mainwindow.cpp" line="3265"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation>Zaman akışı imleci altında aralık işareti bulunamadı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3337"/>
+        <location filename="../src/mainwindow.cpp" line="3330"/>
         <source>There are incomplete jobs.
 Do you still want to exit?</source>
         <translation>Tamamlanmamış görevler var.
 Yine de çıkmak istiyor musunuz? </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3349"/>
+        <location filename="../src/mainwindow.cpp" line="3342"/>
         <source>An export is in progress.
 Do you still want to exit?</source>
         <translation>Sürmekte olan bir dışa aktarma işlemi var.
 Yine de çıkmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4535"/>
+        <location filename="../src/mainwindow.cpp" line="4528"/>
         <source>Saved backup %1</source>
         <translation>Yedek %1 kaydedildi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3228"/>
+        <location filename="../src/mainwindow.cpp" line="3221"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation>Video kipini de %1 x %2 olarak değiştirmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4188"/>
+        <location filename="../src/mainwindow.cpp" line="4181"/>
         <source>Opened Files</source>
         <translation>Açılmış dosyalar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4270"/>
+        <location filename="../src/mainwindow.cpp" line="4263"/>
         <source>GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.
 At this time, a project created with GPU effects cannot be converted to a CPU-only project later.
 
@@ -5723,40 +5724,50 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 Grafik işlemci efektlerini etkinleştirmek ve Shotcut uygulamasını yeniden başlatmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5456"/>
+        <location filename="../src/mainwindow.cpp" line="5210"/>
+        <source>Screen recorder launched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5212"/>
+        <source>Failed to launch screen recorder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5504"/>
         <source>Add To Timeline</source>
         <translation>Zaman akışına ekle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6055"/>
+        <location filename="../src/mainwindow.cpp" line="6103"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>Aralıklar katılsın mı (süre &gt; 1 kare)?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6066"/>
+        <location filename="../src/mainwindow.cpp" line="6114"/>
         <source>Choose Markers</source>
         <translation>İşaretleyicileri seçin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6083"/>
+        <location filename="../src/mainwindow.cpp" line="6131"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Yazı (*.txt);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6138"/>
+        <location filename="../src/mainwindow.cpp" line="6186"/>
         <source>Failed to open export-chapters.js</source>
         <translation>export-chapters.js açılamadı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6179"/>
+        <location filename="../src/mainwindow.cpp" line="6227"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation>Bu işlem &lt;b&gt;tüm&lt;/b&gt; ayarları sıfırlar. Shotcut uygulamasının yeniden başlatılması gerekir.
 Şimdi sıfırlamak ve yeniden başlatmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1669"/>
-        <location filename="../src/mainwindow.cpp" line="3170"/>
+        <location filename="../src/mainwindow.cpp" line="1662"/>
+        <location filename="../src/mainwindow.cpp" line="3163"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
@@ -5766,66 +5777,61 @@ Do you want to reset and restart now?</source>
         <translation>Görünüm kipi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3310"/>
+        <location filename="../src/mainwindow.cpp" line="3303"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projede değişiklikler yapılmış.
 Değişiklikleri kaydetmek ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4012"/>
+        <location filename="../src/mainwindow.cpp" line="4005"/>
         <source>Exit Full Screen</source>
         <translation>Tam ekrandan çık</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4580"/>
+        <location filename="../src/mainwindow.cpp" line="4573"/>
         <source>Shotcut must restart to change external monitoring.
 Do you want to restart now?</source>
         <translation>Dış izlemeyi değiştirmek için Shotcut uygulamasını yeniden başlatmalısınız.
 Şimdi yeniden başlatmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5102"/>
+        <location filename="../src/mainwindow.cpp" line="5095"/>
         <source>screenshot</source>
         <translation>ekran görüntüsü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5103"/>
+        <location filename="../src/mainwindow.cpp" line="5096"/>
         <source>PNG Files (*.png)</source>
         <translation>PNG dosyaları (*.png)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5153"/>
+        <location filename="../src/mainwindow.cpp" line="5169"/>
         <source>screen</source>
         <translation>ekran</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5154"/>
-        <source>MOV Files (*.mov)</source>
-        <translation>MOV dosyaları (*.mov)</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="5557"/>
+        <location filename="../src/mainwindow.cpp" line="5605"/>
         <source>&lt;p&gt;This feature requires Google Chrome or a Chromium-based browser.&lt;/p&gt;&lt;p&gt;If you already installed one it could not be found at the expected location: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;OK&lt;/b&gt; to continue and locate the program on your system.&lt;/p&gt;</source>
         <translation>Bu özellik için Google Chrome ya da bir Chromium temelli tarayıcı gereklidir&lt;p&gt;. &lt;p&gt;Böyle bir tarayıcı zaten kuruluysa beklenen konumda olmayabilir: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;İlerlemek ve sisteminizdeki programı bulmak için &lt;b&gt;Tamam&lt;/b&gt; üzerine tıklayın.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5814"/>
+        <location filename="../src/mainwindow.cpp" line="5862"/>
         <source>Turn Proxy On</source>
         <translation>Vekil dosyayı aç</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5814"/>
+        <location filename="../src/mainwindow.cpp" line="5862"/>
         <source>Turn Proxy Off</source>
         <translation>Vekil dosyayı kapat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5819"/>
+        <location filename="../src/mainwindow.cpp" line="5867"/>
         <source>Converting</source>
         <translation>Dönüştürülüyor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5835"/>
+        <location filename="../src/mainwindow.cpp" line="5883"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -5834,22 +5840,22 @@ You must reopen your project after all proxy jobs are finished.</source>
 Tüm vekil dosya oluşturma işlemleri bittikten sonra projenizi yeniden açmalısınız.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5873"/>
+        <location filename="../src/mainwindow.cpp" line="5921"/>
         <source>Proxy Folder</source>
         <translation>Vekil dosyalar klasörü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5891"/>
+        <location filename="../src/mainwindow.cpp" line="5939"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Eski klasördeki tüm dosyaları yeni klasöre taşımak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5899"/>
+        <location filename="../src/mainwindow.cpp" line="5947"/>
         <source>Moving Files</source>
         <translation>Dosyalar taşınıyor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4024"/>
+        <location filename="../src/mainwindow.cpp" line="4017"/>
         <source>GPU effects are not supported</source>
         <translation>Grafik işlemci etkileri desteklenmiyor </translation>
     </message>
@@ -5901,31 +5907,31 @@ Do you want to restart now?</source>
         <translation>DeckLink Gama</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4044"/>
+        <location filename="../src/mainwindow.cpp" line="4037"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Yeni Shotcut sürümlerini denetlemek için buraya tıklayın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4159"/>
+        <location filename="../src/mainwindow.cpp" line="4152"/>
         <source>Open Files</source>
         <translation>Dosyaları aç</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4218"/>
+        <location filename="../src/mainwindow.cpp" line="4211"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Dil değişikliklerinin etkilili olması için Shotcut uygulamasını
 yeniden başlatmalısınız. Şimdi yeniden başlatmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4261"/>
+        <location filename="../src/mainwindow.cpp" line="4254"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>JACK bağlantısı kurulamadı. 
 Lütfen JACK uygulamasının kurulu ve çalışır durumda olduğunu doğrulayın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4290"/>
+        <location filename="../src/mainwindow.cpp" line="4283"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -5934,101 +5940,101 @@ Disable GPU effects and restart?</source>
 Grafik işlemci etkileri kapatılıp yeniden başlatılsın mı?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4512"/>
+        <location filename="../src/mainwindow.cpp" line="4505"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>Yeni temaya geçmek için %1 uygulamasını yeniden başlatmalısınız.
 Şimdi yeniden başlatmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4555"/>
+        <location filename="../src/mainwindow.cpp" line="4548"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Lütfen bu değişikliği yaptıktan sonra tüm projenizi inceleyin.&lt;/p&gt;&lt;p&gt;Shotcut, çözünürlüğü veya en/boy oranını değiştirdiğinizde boyut ve konuma duyarlı olan şeyleri otomatik olarak ayarlamaz.&lt;/p&lt;br&gt;Kare hızını değiştirirseniz düzenlemelerin ve anahtar karelerin zamanlaması biraz farklı olabilir.&lt;/p&gt;&lt;p&gt;Bu işlemi yapmadan önce &lt;b&gt;Dosya &gt; Yedekleyip kaydet&lt;/b&gt; seçeneğini kullanmanız iyi olur.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Video kipi&lt;/b&gt; seçeneğini değiştirmek istiyor musunuz?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4569"/>
+        <location filename="../src/mainwindow.cpp" line="4562"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>Bunu artık gösterme.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4716"/>
+        <location filename="../src/mainwindow.cpp" line="4709"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Gelecekte güncellemelerin otomatik olarak denetlenmesini ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4723"/>
+        <location filename="../src/mainwindow.cpp" line="4716"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Bunu artık gösterme.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4741"/>
+        <location filename="../src/mainwindow.cpp" line="4734"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4795"/>
+        <location filename="../src/mainwindow.cpp" line="4788"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Görüntüleme yöntemini değiştirmek için Shotcut uygulamasını yeniden başlatmalısınız.
 Şimdi yeniden başlatmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4825"/>
+        <location filename="../src/mainwindow.cpp" line="4818"/>
         <source>Application Log</source>
         <translation>Uygulama günlüğü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4828"/>
+        <location filename="../src/mainwindow.cpp" line="4821"/>
         <source>Previous</source>
         <translation>Önceki</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4890"/>
+        <location filename="../src/mainwindow.cpp" line="4883"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut %1 sürümü yayınlanmış! Almak için buraya tıklayın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4896"/>
+        <location filename="../src/mainwindow.cpp" line="4889"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Güncel Shotcut sürümünü kullanıyorsunuz.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4910"/>
+        <location filename="../src/mainwindow.cpp" line="4903"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Güncelleme denetimi sırasında version.json dosyası okunamadı. Siteye gitmek için buraya tıklayın.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="944"/>
         <location filename="../src/mainwindow.ui" line="947"/>
-        <location filename="../src/mainwindow.cpp" line="4930"/>
+        <location filename="../src/mainwindow.cpp" line="4923"/>
         <source>Export EDL</source>
         <translation>EDL olarak dışa aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4934"/>
+        <location filename="../src/mainwindow.cpp" line="4927"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4981"/>
-        <location filename="../src/mainwindow.cpp" line="6135"/>
+        <location filename="../src/mainwindow.cpp" line="4974"/>
+        <location filename="../src/mainwindow.cpp" line="6183"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Dışa aktarma sırasında bir JavaScript sorunu çıktı.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4984"/>
+        <location filename="../src/mainwindow.cpp" line="4977"/>
         <source>Failed to open export-edl.js</source>
         <translation>export-edl.js açılamadı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5015"/>
+        <location filename="../src/mainwindow.cpp" line="5008"/>
         <source>Export frame from proxy?</source>
         <translation>Kare vekilden dışa aktarılsın mı?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5016"/>
+        <location filename="../src/mainwindow.cpp" line="5009"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -6039,49 +6045,49 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/mainwindow.ui" line="955"/>
         <location filename="../src/mainwindow.ui" line="958"/>
-        <location filename="../src/mainwindow.cpp" line="5028"/>
+        <location filename="../src/mainwindow.cpp" line="5021"/>
         <source>Export Frame</source>
         <translation>Kareyi dışa aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5034"/>
+        <location filename="../src/mainwindow.cpp" line="5027"/>
         <source>Unable to export frame.</source>
         <translation>Kare dışa aktarılamadı.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5042"/>
+        <location filename="../src/mainwindow.cpp" line="5035"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Veri klasörünün değiştirilmesi için Shotcut yeniden başlatılmalı.
 Şimdi yeniden başlatmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5053"/>
+        <location filename="../src/mainwindow.cpp" line="5046"/>
         <source>Data Directory</source>
         <translation>Veri klasörü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5345"/>
+        <location filename="../src/mainwindow.cpp" line="5393"/>
         <source>Add Custom Layout</source>
         <translation>Özel yerleşim ekle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5346"/>
+        <location filename="../src/mainwindow.cpp" line="5394"/>
         <source>Name</source>
         <translation>Ad</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5385"/>
+        <location filename="../src/mainwindow.cpp" line="5433"/>
         <source>Remove Video Mode</source>
         <translation>Görüntü kipini kaldır</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5402"/>
+        <location filename="../src/mainwindow.cpp" line="5450"/>
         <source>Remove Layout</source>
         <translation>Yerleşimi kaldır</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5599"/>
+        <location filename="../src/mainwindow.cpp" line="5647"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -8314,7 +8320,7 @@ p, li { white-space: pre-wrap; }
         <translation>Kazancı/ses düzeyini ayarla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4171"/>
+        <location filename="../src/mainwindow.cpp" line="4164"/>
         <source>You cannot add a project to itself!</source>
         <translation>Bir projeyi kendisine ekleyemezsiniz!</translation>
     </message>
@@ -9021,14 +9027,19 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 <context>
     <name>ScreenCaptureJob</name>
     <message>
-        <location filename="../src/jobs/screencapturejob.cpp" line="39"/>
+        <location filename="../src/jobs/screencapturejob.cpp" line="49"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../src/jobs/screencapturejob.cpp" line="40"/>
+        <location filename="../src/jobs/screencapturejob.cpp" line="50"/>
         <source>Open the capture</source>
         <translation>Yakalamayı aç</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/screencapturejob.cpp" line="249"/>
+        <source>Remux %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

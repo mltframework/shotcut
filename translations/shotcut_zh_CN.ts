@@ -3593,17 +3593,17 @@ Click to change</source>
         <translation>已暂停</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="120"/>
+        <location filename="../src/jobqueue.cpp" line="122"/>
         <source>Elapsed Hours:Minutes:Seconds</source>
         <translation>已运行 时:分:秒</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="123"/>
+        <location filename="../src/jobqueue.cpp" line="125"/>
         <source>stopped</source>
         <translation>已停止</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="126"/>
+        <location filename="../src/jobqueue.cpp" line="128"/>
         <source>failed</source>
         <translation>失败</translation>
     </message>
@@ -4684,7 +4684,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="507"/>
-        <location filename="../src/mainwindow.cpp" line="4009"/>
+        <location filename="../src/mainwindow.cpp" line="4002"/>
         <source>Enter Full Screen</source>
         <translation>进入全屏模式</translation>
     </message>
@@ -4696,13 +4696,13 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="531"/>
         <location filename="../src/mainwindow.cpp" line="412"/>
-        <location filename="../src/mainwindow.cpp" line="2454"/>
+        <location filename="../src/mainwindow.cpp" line="2447"/>
         <source>Properties</source>
         <translation>属性</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="540"/>
-        <location filename="../src/mainwindow.cpp" line="2463"/>
+        <location filename="../src/mainwindow.cpp" line="2456"/>
         <source>Recent</source>
         <translation>最近使用</translation>
     </message>
@@ -4781,7 +4781,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="715"/>
         <location filename="../src/mainwindow.ui" line="856"/>
-        <location filename="../src/mainwindow.cpp" line="2659"/>
+        <location filename="../src/mainwindow.cpp" line="2652"/>
         <source>Automatic</source>
         <translation>自动</translation>
     </message>
@@ -4836,7 +4836,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="190"/>
         <location filename="../src/mainwindow.ui" line="800"/>
-        <location filename="../src/mainwindow.cpp" line="2473"/>
+        <location filename="../src/mainwindow.cpp" line="2466"/>
         <source>Timeline</source>
         <translation>时间线</translation>
     </message>
@@ -4933,7 +4933,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1392"/>
         <location filename="../src/mainwindow.ui" line="1395"/>
-        <location filename="../src/mainwindow.cpp" line="6079"/>
+        <location filename="../src/mainwindow.cpp" line="6127"/>
         <source>Export Chapters</source>
         <translation>导出章节</translation>
     </message>
@@ -5059,7 +5059,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1016"/>
         <location filename="../src/mainwindow.cpp" line="1556"/>
-        <location filename="../src/mainwindow.cpp" line="5101"/>
+        <location filename="../src/mainwindow.cpp" line="5094"/>
         <source>Screen Snapshot</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5070,10 +5070,10 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1027"/>
-        <location filename="../src/mainwindow.cpp" line="1564"/>
-        <location filename="../src/mainwindow.cpp" line="5152"/>
-        <location filename="../src/mainwindow.cpp" line="5164"/>
-        <location filename="../src/mainwindow.cpp" line="5169"/>
+        <location filename="../src/mainwindow.cpp" line="1560"/>
+        <location filename="../src/mainwindow.cpp" line="5168"/>
+        <location filename="../src/mainwindow.cpp" line="5184"/>
+        <location filename="../src/mainwindow.cpp" line="5219"/>
         <source>Screen Recording</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5310,6 +5310,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1476"/>
+        <location filename="../src/mainwindow.cpp" line="5172"/>
         <source>Files</source>
         <translation>文件</translation>
     </message>
@@ -5455,47 +5456,47 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
         <translation>闪光</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1592"/>
-        <location filename="../src/mainwindow.cpp" line="1594"/>
-        <location filename="../src/mainwindow.cpp" line="2034"/>
-        <location filename="../src/mainwindow.cpp" line="2042"/>
-        <location filename="../src/mainwindow.cpp" line="2065"/>
-        <location filename="../src/mainwindow.cpp" line="2125"/>
-        <location filename="../src/mainwindow.cpp" line="4752"/>
-        <location filename="../src/mainwindow.cpp" line="4765"/>
-        <location filename="../src/mainwindow.cpp" line="5855"/>
+        <location filename="../src/mainwindow.cpp" line="1585"/>
+        <location filename="../src/mainwindow.cpp" line="1587"/>
+        <location filename="../src/mainwindow.cpp" line="2027"/>
+        <location filename="../src/mainwindow.cpp" line="2035"/>
+        <location filename="../src/mainwindow.cpp" line="2058"/>
+        <location filename="../src/mainwindow.cpp" line="2118"/>
+        <location filename="../src/mainwindow.cpp" line="4745"/>
+        <location filename="../src/mainwindow.cpp" line="4758"/>
+        <location filename="../src/mainwindow.cpp" line="5903"/>
         <source>Failed to open </source>
         <translation>打开失败</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1629"/>
+        <location filename="../src/mainwindow.cpp" line="1622"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.</source>
         <translation>您打开的文件使用了 GPU 特效，但 GPU 特效并未启用。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1641"/>
+        <location filename="../src/mainwindow.cpp" line="1634"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>您打开的文件使用了与 GPU 特效不兼容的 CPU 特效，但 GPU 特效已启用.
 您希望禁用 GPU 特效并重启吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1664"/>
+        <location filename="../src/mainwindow.cpp" line="1657"/>
         <source>Repaired</source>
         <translation>已修复</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1665"/>
+        <location filename="../src/mainwindow.cpp" line="1658"/>
         <source>Save Repaired XML</source>
         <translation>保存修复的 XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1702"/>
+        <location filename="../src/mainwindow.cpp" line="1695"/>
         <source>Repairing the project failed.</source>
         <translation>修复项目失败。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1715"/>
+        <location filename="../src/mainwindow.cpp" line="1708"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -5506,22 +5507,22 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 如果选择 [是]，Shotcut 将建立一份以“ - 已修复”命名的项目副本并打开该文件。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1750"/>
+        <location filename="../src/mainwindow.cpp" line="1743"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>存在自动保存的文件。您想恢复它们吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1822"/>
+        <location filename="../src/mainwindow.cpp" line="1815"/>
         <source>You cannot add a project to itself!</source>
         <translation>你不能给把一个工程添加给自身！</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1860"/>
+        <location filename="../src/mainwindow.cpp" line="1853"/>
         <source>There was an error saving. Please try again.</source>
         <translation>保存时发生错误，请重试。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1945"/>
+        <location filename="../src/mainwindow.cpp" line="1938"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -5530,7 +5531,7 @@ It was made with version </source>
 它被制作于版本</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1976"/>
+        <location filename="../src/mainwindow.cpp" line="1969"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -5541,167 +5542,167 @@ Or save and restart Shotcut.</source>
 或保存并重新启动Shotcut。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2028"/>
+        <location filename="../src/mainwindow.cpp" line="2021"/>
         <source>Opening %1</source>
         <translation>正在打开 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2167"/>
-        <location filename="../src/mainwindow.cpp" line="4739"/>
+        <location filename="../src/mainwindow.cpp" line="2160"/>
+        <location filename="../src/mainwindow.cpp" line="4732"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2169"/>
+        <location filename="../src/mainwindow.cpp" line="2162"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>所有文件 (*);;MLT XML(*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2437"/>
+        <location filename="../src/mainwindow.cpp" line="2430"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2447"/>
+        <location filename="../src/mainwindow.cpp" line="2440"/>
         <source>Rename Clip</source>
         <translation>重新命名剪辑</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2456"/>
+        <location filename="../src/mainwindow.cpp" line="2449"/>
         <source>Find</source>
         <translation>查找</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2465"/>
+        <location filename="../src/mainwindow.cpp" line="2458"/>
         <source>Reload</source>
         <translation>重新载入</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2475"/>
+        <location filename="../src/mainwindow.cpp" line="2468"/>
         <source>Rerun Filter Analysis</source>
         <translation>重新运行滤镜分析</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="2489"/>
+        <location filename="../src/mainwindow.cpp" line="2482"/>
         <source>This will start %n analysis job(s). Continue?</source>
         <translation>
             <numerusform>这将启动 %n 个分析任务。继续吗？</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2507"/>
+        <location filename="../src/mainwindow.cpp" line="2500"/>
         <source>No filters to analyze.</source>
         <translation>没有可分析的滤镜。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2648"/>
+        <location filename="../src/mainwindow.cpp" line="2641"/>
         <source>Untitled</source>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2653"/>
+        <location filename="../src/mainwindow.cpp" line="2646"/>
         <source>%1x%2 %3fps %4ch</source>
         <translation>%1x%2 %3fps %4ch</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2680"/>
+        <location filename="../src/mainwindow.cpp" line="2673"/>
         <source>About %1</source>
         <translation>关于 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2809"/>
+        <location filename="../src/mainwindow.cpp" line="2802"/>
         <source>Non-Broadcast</source>
         <translation>非广播</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2814"/>
+        <location filename="../src/mainwindow.cpp" line="2807"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2815"/>
+        <location filename="../src/mainwindow.cpp" line="2808"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2826"/>
+        <location filename="../src/mainwindow.cpp" line="2819"/>
         <source>Square 1080p 30 fps</source>
         <translation>正方形 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2827"/>
+        <location filename="../src/mainwindow.cpp" line="2820"/>
         <source>Square 1080p 60 fps</source>
         <translation>正方形 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2828"/>
+        <location filename="../src/mainwindow.cpp" line="2821"/>
         <source>Vertical HD 30 fps</source>
         <translation>垂直 HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2829"/>
+        <location filename="../src/mainwindow.cpp" line="2822"/>
         <source>Vertical HD 60 fps</source>
         <translation>垂直 HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2830"/>
+        <location filename="../src/mainwindow.cpp" line="2823"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2861"/>
-        <location filename="../src/mainwindow.cpp" line="3152"/>
+        <location filename="../src/mainwindow.cpp" line="2854"/>
+        <location filename="../src/mainwindow.cpp" line="3145"/>
         <source>Saved %1</source>
         <translation>已保存 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3143"/>
-        <location filename="../src/mainwindow.cpp" line="3166"/>
-        <location filename="../src/mainwindow.cpp" line="4533"/>
+        <location filename="../src/mainwindow.cpp" line="3136"/>
+        <location filename="../src/mainwindow.cpp" line="3159"/>
+        <location filename="../src/mainwindow.cpp" line="4526"/>
         <source>Save XML</source>
         <translation>保存 XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3262"/>
+        <location filename="../src/mainwindow.cpp" line="3255"/>
         <source>Timeline is not loaded</source>
         <translation>时间线未加载</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3272"/>
+        <location filename="../src/mainwindow.cpp" line="3265"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation>未在时间线光标处找到范围标记点</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3337"/>
+        <location filename="../src/mainwindow.cpp" line="3330"/>
         <source>There are incomplete jobs.
 Do you still want to exit?</source>
         <translation>仍有未完成的任务。
 您确定要退出吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3349"/>
+        <location filename="../src/mainwindow.cpp" line="3342"/>
         <source>An export is in progress.
 Do you still want to exit?</source>
         <translation>一个导出任务正在进行。
 您确定要退出吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4535"/>
+        <location filename="../src/mainwindow.cpp" line="4528"/>
         <source>Saved backup %1</source>
         <translation>保存的备份 %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3228"/>
+        <location filename="../src/mainwindow.cpp" line="3221"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation>是否同时将视频模式改为 %1 x %2？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4188"/>
+        <location filename="../src/mainwindow.cpp" line="4181"/>
         <source>Opened Files</source>
         <translation>打开的文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4270"/>
+        <location filename="../src/mainwindow.cpp" line="4263"/>
         <source>GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.
 At this time, a project created with GPU effects cannot be converted to a CPU-only project later.
 
@@ -5712,40 +5713,50 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 您希望启用 GPU 特效并重启 Shotcut 吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5456"/>
+        <location filename="../src/mainwindow.cpp" line="5210"/>
+        <source>Screen recorder launched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5212"/>
+        <source>Failed to launch screen recorder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5504"/>
         <source>Add To Timeline</source>
         <translation>添加到时间线</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6055"/>
+        <location filename="../src/mainwindow.cpp" line="6103"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>设置范围（持续时间 &gt;1帧）？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6066"/>
+        <location filename="../src/mainwindow.cpp" line="6114"/>
         <source>Choose Markers</source>
         <translation>选择标记点</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6083"/>
+        <location filename="../src/mainwindow.cpp" line="6131"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>文本 (*.txt);;所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6138"/>
+        <location filename="../src/mainwindow.cpp" line="6186"/>
         <source>Failed to open export-chapters.js</source>
         <translation>无法打开 export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6179"/>
+        <location filename="../src/mainwindow.cpp" line="6227"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation>这将重置 &lt;b&gt;所有&lt;/b&gt; 设定，且 Shotcut 在这之后必须重启。
 您想要现在重置并重启吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1669"/>
-        <location filename="../src/mainwindow.cpp" line="3170"/>
+        <location filename="../src/mainwindow.cpp" line="1662"/>
+        <location filename="../src/mainwindow.cpp" line="3163"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
@@ -5755,65 +5766,60 @@ Do you want to reset and restart now?</source>
         <translation>显示模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3310"/>
+        <location filename="../src/mainwindow.cpp" line="3303"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>项目已被修改。
 您想保存您的更改吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4012"/>
+        <location filename="../src/mainwindow.cpp" line="4005"/>
         <source>Exit Full Screen</source>
         <translation>退出全屏模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4580"/>
+        <location filename="../src/mainwindow.cpp" line="4573"/>
         <source>Shotcut must restart to change external monitoring.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5102"/>
+        <location filename="../src/mainwindow.cpp" line="5095"/>
         <source>screenshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5103"/>
+        <location filename="../src/mainwindow.cpp" line="5096"/>
         <source>PNG Files (*.png)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5153"/>
+        <location filename="../src/mainwindow.cpp" line="5169"/>
         <source>screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5154"/>
-        <source>MOV Files (*.mov)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="5557"/>
+        <location filename="../src/mainwindow.cpp" line="5605"/>
         <source>&lt;p&gt;This feature requires Google Chrome or a Chromium-based browser.&lt;/p&gt;&lt;p&gt;If you already installed one it could not be found at the expected location: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;OK&lt;/b&gt; to continue and locate the program on your system.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5814"/>
+        <location filename="../src/mainwindow.cpp" line="5862"/>
         <source>Turn Proxy On</source>
         <translation>启用代理素材</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5814"/>
+        <location filename="../src/mainwindow.cpp" line="5862"/>
         <source>Turn Proxy Off</source>
         <translation>停用代理素材</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5819"/>
+        <location filename="../src/mainwindow.cpp" line="5867"/>
         <source>Converting</source>
         <translation>转换中</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5835"/>
+        <location filename="../src/mainwindow.cpp" line="5883"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -5822,22 +5828,22 @@ You must reopen your project after all proxy jobs are finished.</source>
 完成所有代理工作完后，你需要重新打开项目。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5873"/>
+        <location filename="../src/mainwindow.cpp" line="5921"/>
         <source>Proxy Folder</source>
         <translation>代理素材目录</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5891"/>
+        <location filename="../src/mainwindow.cpp" line="5939"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>是否要将所有文件从旧文件夹移动到新文件夹？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5899"/>
+        <location filename="../src/mainwindow.cpp" line="5947"/>
         <source>Moving Files</source>
         <translation>移动文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4024"/>
+        <location filename="../src/mainwindow.cpp" line="4017"/>
         <source>GPU effects are not supported</source>
         <translation>GPU 特效不被支持</translation>
     </message>
@@ -5889,31 +5895,31 @@ Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4044"/>
+        <location filename="../src/mainwindow.cpp" line="4037"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>点击这里以检查 Shotcut 的新版本。 </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4159"/>
+        <location filename="../src/mainwindow.cpp" line="4152"/>
         <source>Open Files</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4218"/>
+        <location filename="../src/mainwindow.cpp" line="4211"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>您必须重新启动 Shotcut 才能切换到新的语言。
 您想立即重启吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4261"/>
+        <location filename="../src/mainwindow.cpp" line="4254"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>连接 JACK 失败。
 请验证 JACK 已经安装并正在运行。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4290"/>
+        <location filename="../src/mainwindow.cpp" line="4283"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -5922,101 +5928,101 @@ Disable GPU effects and restart?</source>
 禁用 GPU 特效并重启？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4512"/>
+        <location filename="../src/mainwindow.cpp" line="4505"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>必须重新启动%1才能切换到新主题。
 现在要重新启动吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4555"/>
+        <location filename="../src/mainwindow.cpp" line="4548"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
         <translation>&lt;p&gt;请在应用更改后检查您的整个项目。&lt;/p&gt;&lt;p&gt;如果您调整分辨率或纵横比，Shotcut 将不能自动调整对尺寸和位置敏感的属性。&lt;/p&lt;br&gt;如果您还调整了帧速率，编辑和关键帧的时间位置可能会有变动。&lt;/p&gt;&lt;p&gt;在继续之前或之后，建议您先使用&lt;b&gt;文件 &gt; 备份和保存&lt;/b&gt; 。&lt;/p&gt;&lt;p&gt;您现在想更改&lt;b&gt;视频模式&lt;/b&gt; 吗？&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4569"/>
+        <location filename="../src/mainwindow.cpp" line="4562"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>不再显示此消息。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4716"/>
+        <location filename="../src/mainwindow.cpp" line="4709"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>您想要在以后自动检查更新吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4723"/>
+        <location filename="../src/mainwindow.cpp" line="4716"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>不再显示此消息。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4741"/>
+        <location filename="../src/mainwindow.cpp" line="4734"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4795"/>
+        <location filename="../src/mainwindow.cpp" line="4788"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>您必须重新启动 Shotcut 才能更改显示方式。
 您想立即重新启动吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4825"/>
+        <location filename="../src/mainwindow.cpp" line="4818"/>
         <source>Application Log</source>
         <translation>程序日志</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4828"/>
+        <location filename="../src/mainwindow.cpp" line="4821"/>
         <source>Previous</source>
         <translation>前一个</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4890"/>
+        <location filename="../src/mainwindow.cpp" line="4883"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut 版本 %1 可用！按一下这里取得新版本。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4896"/>
+        <location filename="../src/mainwindow.cpp" line="4889"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>当前运行的已经是最新版本的 Shotcut。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4910"/>
+        <location filename="../src/mainwindow.cpp" line="4903"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>检查更新时无法读取 version.json。按一下这里以移至官方网站 </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="944"/>
         <location filename="../src/mainwindow.ui" line="947"/>
-        <location filename="../src/mainwindow.cpp" line="4930"/>
+        <location filename="../src/mainwindow.cpp" line="4923"/>
         <source>Export EDL</source>
         <translation>输出 EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4934"/>
+        <location filename="../src/mainwindow.cpp" line="4927"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4981"/>
-        <location filename="../src/mainwindow.cpp" line="6135"/>
+        <location filename="../src/mainwindow.cpp" line="4974"/>
+        <location filename="../src/mainwindow.cpp" line="6183"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>输出时发生了 JavaScirpt 错误。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4984"/>
+        <location filename="../src/mainwindow.cpp" line="4977"/>
         <source>Failed to open export-edl.js</source>
         <translation>无法打开 export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5015"/>
+        <location filename="../src/mainwindow.cpp" line="5008"/>
         <source>Export frame from proxy?</source>
         <translation>从代理素材导出帧?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5016"/>
+        <location filename="../src/mainwindow.cpp" line="5009"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -6027,49 +6033,49 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/mainwindow.ui" line="955"/>
         <location filename="../src/mainwindow.ui" line="958"/>
-        <location filename="../src/mainwindow.cpp" line="5028"/>
+        <location filename="../src/mainwindow.cpp" line="5021"/>
         <source>Export Frame</source>
         <translation>输出单帧</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5034"/>
+        <location filename="../src/mainwindow.cpp" line="5027"/>
         <source>Unable to export frame.</source>
         <translation>无法输出单帧。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5042"/>
+        <location filename="../src/mainwindow.cpp" line="5035"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>您必须重新启动 Shotcut 才能更改资料目录。
 您想立即重新启动吗？</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5053"/>
+        <location filename="../src/mainwindow.cpp" line="5046"/>
         <source>Data Directory</source>
         <translation>数据目录</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5345"/>
+        <location filename="../src/mainwindow.cpp" line="5393"/>
         <source>Add Custom Layout</source>
         <translation>添加自定义布局</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5346"/>
+        <location filename="../src/mainwindow.cpp" line="5394"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5385"/>
+        <location filename="../src/mainwindow.cpp" line="5433"/>
         <source>Remove Video Mode</source>
         <translation>移除视频模式</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5402"/>
+        <location filename="../src/mainwindow.cpp" line="5450"/>
         <source>Remove Layout</source>
         <translation>移除布局</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5599"/>
+        <location filename="../src/mainwindow.cpp" line="5647"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -8302,7 +8308,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4171"/>
+        <location filename="../src/mainwindow.cpp" line="4164"/>
         <source>You cannot add a project to itself!</source>
         <translation>你不能给把一个工程添加给自身！</translation>
     </message>
@@ -9007,13 +9013,18 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 <context>
     <name>ScreenCaptureJob</name>
     <message>
-        <location filename="../src/jobs/screencapturejob.cpp" line="39"/>
+        <location filename="../src/jobs/screencapturejob.cpp" line="49"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../src/jobs/screencapturejob.cpp" line="40"/>
+        <location filename="../src/jobs/screencapturejob.cpp" line="50"/>
         <source>Open the capture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/screencapturejob.cpp" line="249"/>
+        <source>Remux %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

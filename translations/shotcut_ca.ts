@@ -3250,7 +3250,7 @@ Feu clic per canviar</translation>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="230"/>
         <source>Do not include &lt;html&gt;, &lt;head&gt;, or &lt;body&gt; here</source>
-        <translation type="unfinished"></translation>
+        <translation>No inclogueu &lt;html&gt;, &lt;head&gt;, o &lt;body&gt; aquí</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="239"/>
@@ -3297,22 +3297,22 @@ Feu clic per canviar</translation>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="88"/>
         <source>Elastic Stroke (Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>Traç elàstic (Vídeo)</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="103"/>
         <source>Folded (Image)</source>
-        <translation type="unfinished"></translation>
+        <translation>Plegat (Imatge)</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="114"/>
         <source>Gold Metal (Image)</source>
-        <translation type="unfinished"></translation>
+        <translation>Metall daurat (Imatge)</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="129"/>
         <source>Party Time (Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de festa (Vídeo)</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="140"/>
@@ -3598,17 +3598,17 @@ Feu clic per canviar</translation>
         <translation>en pausa</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="120"/>
+        <location filename="../src/jobqueue.cpp" line="122"/>
         <source>Elapsed Hours:Minutes:Seconds</source>
         <translation>Hores:Minuts:Segons transcorreguts</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="123"/>
+        <location filename="../src/jobqueue.cpp" line="125"/>
         <source>stopped</source>
         <translation>aturat</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="126"/>
+        <location filename="../src/jobqueue.cpp" line="128"/>
         <source>failed</source>
         <translation>fallat</translation>
     </message>
@@ -4692,7 +4692,7 @@ mescla, o tria només l&apos;àudio del clip A
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="507"/>
-        <location filename="../src/mainwindow.cpp" line="4009"/>
+        <location filename="../src/mainwindow.cpp" line="4002"/>
         <source>Enter Full Screen</source>
         <translation>Passa a pantalla completa</translation>
     </message>
@@ -4704,13 +4704,13 @@ mescla, o tria només l&apos;àudio del clip A
     <message>
         <location filename="../src/mainwindow.ui" line="531"/>
         <location filename="../src/mainwindow.cpp" line="412"/>
-        <location filename="../src/mainwindow.cpp" line="2454"/>
+        <location filename="../src/mainwindow.cpp" line="2447"/>
         <source>Properties</source>
         <translation>Propietats</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="540"/>
-        <location filename="../src/mainwindow.cpp" line="2463"/>
+        <location filename="../src/mainwindow.cpp" line="2456"/>
         <source>Recent</source>
         <translation>Fitxers recents</translation>
     </message>
@@ -4789,7 +4789,7 @@ mescla, o tria només l&apos;àudio del clip A
     <message>
         <location filename="../src/mainwindow.ui" line="715"/>
         <location filename="../src/mainwindow.ui" line="856"/>
-        <location filename="../src/mainwindow.cpp" line="2659"/>
+        <location filename="../src/mainwindow.cpp" line="2652"/>
         <source>Automatic</source>
         <translation>Automàtic</translation>
     </message>
@@ -4844,7 +4844,7 @@ mescla, o tria només l&apos;àudio del clip A
     <message>
         <location filename="../src/mainwindow.ui" line="190"/>
         <location filename="../src/mainwindow.ui" line="800"/>
-        <location filename="../src/mainwindow.cpp" line="2473"/>
+        <location filename="../src/mainwindow.cpp" line="2466"/>
         <source>Timeline</source>
         <translation>Línia de temps</translation>
     </message>
@@ -4941,7 +4941,7 @@ mescla, o tria només l&apos;àudio del clip A
     <message>
         <location filename="../src/mainwindow.ui" line="1392"/>
         <location filename="../src/mainwindow.ui" line="1395"/>
-        <location filename="../src/mainwindow.cpp" line="6079"/>
+        <location filename="../src/mainwindow.cpp" line="6127"/>
         <source>Export Chapters</source>
         <translation>Exporta capítols</translation>
     </message>
@@ -5067,7 +5067,7 @@ mescla, o tria només l&apos;àudio del clip A
     <message>
         <location filename="../src/mainwindow.ui" line="1016"/>
         <location filename="../src/mainwindow.cpp" line="1556"/>
-        <location filename="../src/mainwindow.cpp" line="5101"/>
+        <location filename="../src/mainwindow.cpp" line="5094"/>
         <source>Screen Snapshot</source>
         <translation>Captura de pantalla</translation>
     </message>
@@ -5078,10 +5078,10 @@ mescla, o tria només l&apos;àudio del clip A
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1027"/>
-        <location filename="../src/mainwindow.cpp" line="1564"/>
-        <location filename="../src/mainwindow.cpp" line="5152"/>
-        <location filename="../src/mainwindow.cpp" line="5164"/>
-        <location filename="../src/mainwindow.cpp" line="5169"/>
+        <location filename="../src/mainwindow.cpp" line="1560"/>
+        <location filename="../src/mainwindow.cpp" line="5168"/>
+        <location filename="../src/mainwindow.cpp" line="5184"/>
+        <location filename="../src/mainwindow.cpp" line="5219"/>
         <source>Screen Recording</source>
         <translation>Gravació de pantalla</translation>
     </message>
@@ -5318,6 +5318,7 @@ mescla, o tria només l&apos;àudio del clip A
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1476"/>
+        <location filename="../src/mainwindow.cpp" line="5172"/>
         <source>Files</source>
         <translation>Fitxers</translation>
     </message>
@@ -5463,47 +5464,47 @@ Instal·leu-la amb el gestor de paquets. Trobareu aquesta biblioteca amb el nom 
         <translation>Flaix amb so</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1592"/>
-        <location filename="../src/mainwindow.cpp" line="1594"/>
-        <location filename="../src/mainwindow.cpp" line="2034"/>
-        <location filename="../src/mainwindow.cpp" line="2042"/>
-        <location filename="../src/mainwindow.cpp" line="2065"/>
-        <location filename="../src/mainwindow.cpp" line="2125"/>
-        <location filename="../src/mainwindow.cpp" line="4752"/>
-        <location filename="../src/mainwindow.cpp" line="4765"/>
-        <location filename="../src/mainwindow.cpp" line="5855"/>
+        <location filename="../src/mainwindow.cpp" line="1585"/>
+        <location filename="../src/mainwindow.cpp" line="1587"/>
+        <location filename="../src/mainwindow.cpp" line="2027"/>
+        <location filename="../src/mainwindow.cpp" line="2035"/>
+        <location filename="../src/mainwindow.cpp" line="2058"/>
+        <location filename="../src/mainwindow.cpp" line="2118"/>
+        <location filename="../src/mainwindow.cpp" line="4745"/>
+        <location filename="../src/mainwindow.cpp" line="4758"/>
+        <location filename="../src/mainwindow.cpp" line="5903"/>
         <source>Failed to open </source>
         <translation>No s&apos;ha pogut obrir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1629"/>
+        <location filename="../src/mainwindow.cpp" line="1622"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.</source>
         <translation>El fitxer que heu obert utilitza efectes de GPU, però els efectes de GPU no estan habilitats.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1641"/>
+        <location filename="../src/mainwindow.cpp" line="1634"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>El fitxer que heu obert utilitza efectes de la CPU que són incompatibles amb els efectes de la GPU, no obstant això els efectes de la GPU estan habilitats.
 Voleu inhabilitar els efectes de la GPU i reiniciar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1664"/>
+        <location filename="../src/mainwindow.cpp" line="1657"/>
         <source>Repaired</source>
         <translation>Reparat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1665"/>
+        <location filename="../src/mainwindow.cpp" line="1658"/>
         <source>Save Repaired XML</source>
         <translation>Desa XML reparat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1702"/>
+        <location filename="../src/mainwindow.cpp" line="1695"/>
         <source>Repairing the project failed.</source>
         <translation>La reparació del projecte ha fallat.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1715"/>
+        <location filename="../src/mainwindow.cpp" line="1708"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -5516,22 +5517,22 @@ Si trieu Sí, Shotcut crearà una còpia del vostre projecte
 afegint &quot;- Repaired&quot; al nom de fitxer i l&apos;obrirà.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1750"/>
+        <location filename="../src/mainwindow.cpp" line="1743"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Hi ha fitxers d&apos;autorecuperació disponibles. Voleu recuperar-los ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1822"/>
+        <location filename="../src/mainwindow.cpp" line="1815"/>
         <source>You cannot add a project to itself!</source>
         <translation>No podeu afegir un projecte a si mateix!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1860"/>
+        <location filename="../src/mainwindow.cpp" line="1853"/>
         <source>There was an error saving. Please try again.</source>
         <translation>S&apos;ha produït un error en desar. Torneu-ho a intentar.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1945"/>
+        <location filename="../src/mainwindow.cpp" line="1938"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
@@ -5540,7 +5541,7 @@ It was made with version </source>
 Es va fer amb la versió</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1976"/>
+        <location filename="../src/mainwindow.cpp" line="1969"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -5551,48 +5552,48 @@ Tanqueu altres aplicacions o pestanyes del navegador i torneu-ho a provar.
 O deseu i reinicieu el Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2028"/>
+        <location filename="../src/mainwindow.cpp" line="2021"/>
         <source>Opening %1</source>
         <translation>S&apos;està obrint %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2167"/>
-        <location filename="../src/mainwindow.cpp" line="4739"/>
+        <location filename="../src/mainwindow.cpp" line="2160"/>
+        <location filename="../src/mainwindow.cpp" line="4732"/>
         <source>Open File</source>
         <translation>Obre un fitxer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2169"/>
+        <location filename="../src/mainwindow.cpp" line="2162"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>Tots els fitxers (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2437"/>
+        <location filename="../src/mainwindow.cpp" line="2430"/>
         <source>Preferences</source>
         <translation>Preferències</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2447"/>
+        <location filename="../src/mainwindow.cpp" line="2440"/>
         <source>Rename Clip</source>
         <translation>Canvia el nom del clip</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2456"/>
+        <location filename="../src/mainwindow.cpp" line="2449"/>
         <source>Find</source>
         <translation>Troba</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2465"/>
+        <location filename="../src/mainwindow.cpp" line="2458"/>
         <source>Reload</source>
         <translation>Recarrega</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2475"/>
+        <location filename="../src/mainwindow.cpp" line="2468"/>
         <source>Rerun Filter Analysis</source>
         <translation>Torna a executar l&apos;anàlisi de filtres</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="2489"/>
+        <location filename="../src/mainwindow.cpp" line="2482"/>
         <source>This will start %n analysis job(s). Continue?</source>
         <translation>
             <numerusform>Això iniciarà %n tasques d&apos;anàlisi. Voleu continuar?</numerusform>
@@ -5600,119 +5601,119 @@ O deseu i reinicieu el Shotcut.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2507"/>
+        <location filename="../src/mainwindow.cpp" line="2500"/>
         <source>No filters to analyze.</source>
         <translation>No hi ha cap filtre per analitzar.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2648"/>
+        <location filename="../src/mainwindow.cpp" line="2641"/>
         <source>Untitled</source>
         <translation>Sense nom</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2653"/>
+        <location filename="../src/mainwindow.cpp" line="2646"/>
         <source>%1x%2 %3fps %4ch</source>
         <translation>%1x%2 %3fps %4ch</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2680"/>
+        <location filename="../src/mainwindow.cpp" line="2673"/>
         <source>About %1</source>
         <translation>Quant al %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2809"/>
+        <location filename="../src/mainwindow.cpp" line="2802"/>
         <source>Non-Broadcast</source>
         <translation>No difusió</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2814"/>
+        <location filename="../src/mainwindow.cpp" line="2807"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Panoràmic NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2815"/>
+        <location filename="../src/mainwindow.cpp" line="2808"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Panoràmic PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2826"/>
+        <location filename="../src/mainwindow.cpp" line="2819"/>
         <source>Square 1080p 30 fps</source>
         <translation>Rectangular 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2827"/>
+        <location filename="../src/mainwindow.cpp" line="2820"/>
         <source>Square 1080p 60 fps</source>
         <translation>Rectangular 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2828"/>
+        <location filename="../src/mainwindow.cpp" line="2821"/>
         <source>Vertical HD 30 fps</source>
         <translation>Vertical HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2829"/>
+        <location filename="../src/mainwindow.cpp" line="2822"/>
         <source>Vertical HD 60 fps</source>
         <translation>Vertical HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2830"/>
+        <location filename="../src/mainwindow.cpp" line="2823"/>
         <source>Custom</source>
         <translation>Personalitzat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2861"/>
-        <location filename="../src/mainwindow.cpp" line="3152"/>
+        <location filename="../src/mainwindow.cpp" line="2854"/>
+        <location filename="../src/mainwindow.cpp" line="3145"/>
         <source>Saved %1</source>
         <translation>S&apos;ha desat %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3143"/>
-        <location filename="../src/mainwindow.cpp" line="3166"/>
-        <location filename="../src/mainwindow.cpp" line="4533"/>
+        <location filename="../src/mainwindow.cpp" line="3136"/>
+        <location filename="../src/mainwindow.cpp" line="3159"/>
+        <location filename="../src/mainwindow.cpp" line="4526"/>
         <source>Save XML</source>
         <translation>Desa l&apos;XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3262"/>
+        <location filename="../src/mainwindow.cpp" line="3255"/>
         <source>Timeline is not loaded</source>
         <translation>La línia de temps no està carregada</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3272"/>
+        <location filename="../src/mainwindow.cpp" line="3265"/>
         <source>Range marker not found under the timeline cursor</source>
         <translation>No s&apos;ha trobat el marcador de rang sota el cursor de la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3337"/>
+        <location filename="../src/mainwindow.cpp" line="3330"/>
         <source>There are incomplete jobs.
 Do you still want to exit?</source>
         <translation>Hi ha tasques incompletes.
 Encara voleu sortir?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3349"/>
+        <location filename="../src/mainwindow.cpp" line="3342"/>
         <source>An export is in progress.
 Do you still want to exit?</source>
         <translation>S&apos;està fent una exportació.
 Encara voleu sortir?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4535"/>
+        <location filename="../src/mainwindow.cpp" line="4528"/>
         <source>Saved backup %1</source>
         <translation>Còpia de seguretat desada %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3228"/>
+        <location filename="../src/mainwindow.cpp" line="3221"/>
         <source>Do you also want to change the Video Mode to %1 x %2?</source>
         <translation>Voleu canviar el mode de vídeo a %1 x %2?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4188"/>
+        <location filename="../src/mainwindow.cpp" line="4181"/>
         <source>Opened Files</source>
         <translation>Fitxers oberts</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4270"/>
+        <location filename="../src/mainwindow.cpp" line="4263"/>
         <source>GPU effects are experimental and do not work good on all computers. Plan to do some testing after turning this on.
 At this time, a project created with GPU effects cannot be converted to a CPU-only project later.
 
@@ -5723,40 +5724,50 @@ Ara mateix, un projecte creat amb efectes de GPU no es pot convertir a un projec
 Voleu activar els efectes de GPU i reiniciar Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5456"/>
+        <location filename="../src/mainwindow.cpp" line="5210"/>
+        <source>Screen recorder launched</source>
+        <translation>S&apos;ha iniciat la gravadora de pantalla</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5212"/>
+        <source>Failed to launch screen recorder</source>
+        <translation>No s&apos;ha pogut iniciar la gravadora de pantalla</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="5504"/>
         <source>Add To Timeline</source>
         <translation>Afegeix a la línia de temps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6055"/>
+        <location filename="../src/mainwindow.cpp" line="6103"/>
         <source>Include ranges (Duration &gt; 1 frame)?</source>
         <translation>Voleu incloure els rangs (durada &gt; 1 fotograma)?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6066"/>
+        <location filename="../src/mainwindow.cpp" line="6114"/>
         <source>Choose Markers</source>
         <translation>Trieu els marcadors</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6083"/>
+        <location filename="../src/mainwindow.cpp" line="6131"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation>Text (*.txt);;Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6138"/>
+        <location filename="../src/mainwindow.cpp" line="6186"/>
         <source>Failed to open export-chapters.js</source>
         <translation>No s&apos;ha pogut obrir export-chapters.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="6179"/>
+        <location filename="../src/mainwindow.cpp" line="6227"/>
         <source>This will reset &lt;b&gt;all&lt;/b&gt; settings, and Shotcut must restart afterwards.
 Do you want to reset and restart now?</source>
         <translation>Això reinicialitzarà &lt;b&gt;tota&lt;/b&gt; la configuració, i el Shotcut s&apos;haurà de reiniciar després.
 Voleu reinicialitzar i reiniciar ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1669"/>
-        <location filename="../src/mainwindow.cpp" line="3170"/>
+        <location filename="../src/mainwindow.cpp" line="1662"/>
+        <location filename="../src/mainwindow.cpp" line="3163"/>
         <source>MLT XML (*.mlt)</source>
         <translation>XML MLT (*.mlt)</translation>
     </message>
@@ -5766,65 +5777,60 @@ Voleu reinicialitzar i reiniciar ara?</translation>
         <translation>Mode de visualització</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3310"/>
+        <location filename="../src/mainwindow.cpp" line="3303"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>El projecte ha estat modificat.
 Voleu desar-ne els canvis?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4012"/>
+        <location filename="../src/mainwindow.cpp" line="4005"/>
         <source>Exit Full Screen</source>
         <translation>Surt de la pantalla completa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4580"/>
+        <location filename="../src/mainwindow.cpp" line="4573"/>
         <source>Shotcut must restart to change external monitoring.
 Do you want to restart now?</source>
         <translation>Cal reiniciar Shotcut per canviar el monitoratge extern. Voleu reiniciar ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5102"/>
+        <location filename="../src/mainwindow.cpp" line="5095"/>
         <source>screenshot</source>
         <translation>captura de pantalla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5103"/>
+        <location filename="../src/mainwindow.cpp" line="5096"/>
         <source>PNG Files (*.png)</source>
         <translation>Fitxers PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5153"/>
+        <location filename="../src/mainwindow.cpp" line="5169"/>
         <source>screen</source>
         <translation>pantalla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5154"/>
-        <source>MOV Files (*.mov)</source>
-        <translation>Fitxers MOV (*.mov)</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="5557"/>
+        <location filename="../src/mainwindow.cpp" line="5605"/>
         <source>&lt;p&gt;This feature requires Google Chrome or a Chromium-based browser.&lt;/p&gt;&lt;p&gt;If you already installed one it could not be found at the expected location: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;OK&lt;/b&gt; to continue and locate the program on your system.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Aquesta característica requereix Google Chrome o un navegador basat en Chromium.&lt;/p&gt;&lt;p&gt;Si ja n&apos;heu instal·lat un, no es troba a la ubicació esperada:: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;Feu clic a &lt;b&gt;D&apos;acord&lt;/b&gt; per continuar i localitzar el programa al vostre sistema.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5814"/>
+        <location filename="../src/mainwindow.cpp" line="5862"/>
         <source>Turn Proxy On</source>
         <translation>Activa el servidor intermediari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5814"/>
+        <location filename="../src/mainwindow.cpp" line="5862"/>
         <source>Turn Proxy Off</source>
         <translation>Desactiva el servidor intermediari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5819"/>
+        <location filename="../src/mainwindow.cpp" line="5867"/>
         <source>Converting</source>
         <translation>S&apos;està convertint</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5835"/>
+        <location filename="../src/mainwindow.cpp" line="5883"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -5833,22 +5839,22 @@ You must reopen your project after all proxy jobs are finished.</source>
 Heu de reobrir el vostre projecte després que totes les tasques del servidor intermediari hagin acabat.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5873"/>
+        <location filename="../src/mainwindow.cpp" line="5921"/>
         <source>Proxy Folder</source>
         <translation>Carpeta del servidor intermediari</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5891"/>
+        <location filename="../src/mainwindow.cpp" line="5939"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Voleu moure tots els fitxers de la carpeta antiga a la nova?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5899"/>
+        <location filename="../src/mainwindow.cpp" line="5947"/>
         <source>Moving Files</source>
         <translation>S&apos;estan movent els fitxers</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4024"/>
+        <location filename="../src/mainwindow.cpp" line="4017"/>
         <source>GPU effects are not supported</source>
         <translation>Els efectes de la GPU no estan suportats</translation>
     </message>
@@ -5900,31 +5906,31 @@ Voleu reiniciar ara?</translation>
         <translation>Gamma DeckLink</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4044"/>
+        <location filename="../src/mainwindow.cpp" line="4037"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Feu clic per comprovar si existeix una versió més recent de Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4159"/>
+        <location filename="../src/mainwindow.cpp" line="4152"/>
         <source>Open Files</source>
         <translation>Obre fitxers</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4218"/>
+        <location filename="../src/mainwindow.cpp" line="4211"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Heu de reiniciar Shotcut per canviar al nou idioma.
 Voleu reiniciar-lo ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4261"/>
+        <location filename="../src/mainwindow.cpp" line="4254"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Ha fallat la connexió a JACK.
 Verifiqueu que JACK està instal·lat i executant-se.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4290"/>
+        <location filename="../src/mainwindow.cpp" line="4283"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -5933,100 +5939,100 @@ Disable GPU effects and restart?</source>
 Voleu deshabilitar els efectes de GPU i reiniciar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4512"/>
+        <location filename="../src/mainwindow.cpp" line="4505"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>Heu de reiniciar %1 per canviar a un tema nou.
 Voleu reiniciar ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4555"/>
+        <location filename="../src/mainwindow.cpp" line="4548"/>
         <source>&lt;p&gt;Please review your entire project after making this change.&lt;/p&gt;&lt;p&gt;Shotcut does not automatically adjust things that are sensitive to size and position if you change resolution or aspect ratio.&lt;/p&lt;br&gt;The timing of edits and keyframes may be slightly different if you change frame rate.&lt;/p&gt;&lt;p&gt;It is a good idea to use &lt;b&gt;File &gt; Backup and Save&lt;/b&gt; before or after this operation.&lt;/p&gt;&lt;p&gt;Do you want to change the &lt;b&gt;Video Mode&lt;/b&gt; now?&lt;/p&gt;</source>
         <translation>&lt;p&gt;Reviseu tot el projecte després de fer aquest canvi.&lt;/p&gt;El Shotcut no ajusta automàticament aspectes sensibles a la mida i la posició si canvieu la resolució o la relació d&apos;aspecte.&lt;p&gt;Els temps de les edicions i els fotogrames clau poden ser lleugerament diferents si canvieu la velocitat de fotograma.&lt;/p&gt;&lt;p&gt; És un bona idea utilitzar &lt;b&gt;Fitxer &gt; Fes una còpia de seguretat i desa&lt;/b&gt; abans o després d&apos;aquesta operació.&lt;/p&gt;&lt;p&gt; Voleu canviar el &lt;b&gt;mode de vídeo&lt;/b&gt; ara?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4569"/>
+        <location filename="../src/mainwindow.cpp" line="4562"/>
         <source>Do not show this anymore.</source>
         <comment>Change video mode warning dialog</comment>
         <translation>No ho mostris més.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4716"/>
+        <location filename="../src/mainwindow.cpp" line="4709"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Voleu cercar automàticament les actualitzacions en el futur?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4723"/>
+        <location filename="../src/mainwindow.cpp" line="4716"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>No ho mostris més.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4741"/>
+        <location filename="../src/mainwindow.cpp" line="4734"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>XML MLT (*.mlt);;Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4795"/>
+        <location filename="../src/mainwindow.cpp" line="4788"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Heu de reiniciar Shotcut per canviar el mètode de visualització. Voleu reiniciar-lo ara?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4825"/>
+        <location filename="../src/mainwindow.cpp" line="4818"/>
         <source>Application Log</source>
         <translation>Registre de l&apos;aplicació</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4828"/>
+        <location filename="../src/mainwindow.cpp" line="4821"/>
         <source>Previous</source>
         <translation>Anterior</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4890"/>
+        <location filename="../src/mainwindow.cpp" line="4883"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Hi ha disponible la versió %1 de Shotcut! Feu clic aquí per baixar-la.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4896"/>
+        <location filename="../src/mainwindow.cpp" line="4889"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Esteu executant la versió més recent de Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4910"/>
+        <location filename="../src/mainwindow.cpp" line="4903"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Ha fallat la lectura de version.json mentre es comprovava. Feu clic aquí per anar al lloc web.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="944"/>
         <location filename="../src/mainwindow.ui" line="947"/>
-        <location filename="../src/mainwindow.cpp" line="4930"/>
+        <location filename="../src/mainwindow.cpp" line="4923"/>
         <source>Export EDL</source>
         <translation>Exporta l&apos;EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4934"/>
+        <location filename="../src/mainwindow.cpp" line="4927"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Tots els fitxers (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4981"/>
-        <location filename="../src/mainwindow.cpp" line="6135"/>
+        <location filename="../src/mainwindow.cpp" line="4974"/>
+        <location filename="../src/mainwindow.cpp" line="6183"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Hi ha hagut un error de javaScript durant l&apos;exportació.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4984"/>
+        <location filename="../src/mainwindow.cpp" line="4977"/>
         <source>Failed to open export-edl.js</source>
         <translation>No s&apos;ha pogut obrir export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5015"/>
+        <location filename="../src/mainwindow.cpp" line="5008"/>
         <source>Export frame from proxy?</source>
         <translation>Voleu exportar el fotograma del servidor intermediari?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5016"/>
+        <location filename="../src/mainwindow.cpp" line="5009"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -6037,49 +6043,49 @@ Encara voleu continuar?</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="955"/>
         <location filename="../src/mainwindow.ui" line="958"/>
-        <location filename="../src/mainwindow.cpp" line="5028"/>
+        <location filename="../src/mainwindow.cpp" line="5021"/>
         <source>Export Frame</source>
         <translation>Exporta el fotograma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5034"/>
+        <location filename="../src/mainwindow.cpp" line="5027"/>
         <source>Unable to export frame.</source>
         <translation>No es pot exportar el fotograma.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5042"/>
+        <location filename="../src/mainwindow.cpp" line="5035"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Heu de reiniciar Shotcut per canviar el directori de dades.
 Voleu continuar?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5053"/>
+        <location filename="../src/mainwindow.cpp" line="5046"/>
         <source>Data Directory</source>
         <translation>Directori de dades</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5345"/>
+        <location filename="../src/mainwindow.cpp" line="5393"/>
         <source>Add Custom Layout</source>
         <translation>Afegeix una disposició personalitzada</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5346"/>
+        <location filename="../src/mainwindow.cpp" line="5394"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5385"/>
+        <location filename="../src/mainwindow.cpp" line="5433"/>
         <source>Remove Video Mode</source>
         <translation>Suprimeix el mode de vídeo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5402"/>
+        <location filename="../src/mainwindow.cpp" line="5450"/>
         <source>Remove Layout</source>
         <translation>Suprimeix la disposició</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5599"/>
+        <location filename="../src/mainwindow.cpp" line="5647"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -8319,7 +8325,7 @@ p, li { white-space: pre-wrap; }
         <translation>Ajusta el guany/volum</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4171"/>
+        <location filename="../src/mainwindow.cpp" line="4164"/>
         <source>You cannot add a project to itself!</source>
         <translation>No podeu afegir un projecte a si mateix!</translation>
     </message>
@@ -9031,14 +9037,19 @@ En cas afirmatiu, trieu un format i feu clic a D&apos;acord per triar un nom de 
 <context>
     <name>ScreenCaptureJob</name>
     <message>
-        <location filename="../src/jobs/screencapturejob.cpp" line="39"/>
+        <location filename="../src/jobs/screencapturejob.cpp" line="49"/>
         <source>Open</source>
         <translation>Obre</translation>
     </message>
     <message>
-        <location filename="../src/jobs/screencapturejob.cpp" line="40"/>
+        <location filename="../src/jobs/screencapturejob.cpp" line="50"/>
         <source>Open the capture</source>
         <translation>Obre la captura</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/screencapturejob.cpp" line="249"/>
+        <source>Remux %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10070,7 +10081,7 @@ Si la durada és 0, no es crearà cap transició.</translation>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="443"/>
         <source>Convert the current subtitle track to spoken audio.</source>
-        <translation type="unfinished"></translation>
+        <translation>Converteix la pista de subtítols actual a àudio parlat.</translation>
     </message>
     <message>
         <location filename="../src/docks/subtitlesdock.cpp" line="450"/>
@@ -11413,12 +11424,12 @@ Elimineu el filtre de subtítols abans de suprimir aquesta pista.</translation>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
         <source>Source Over</source>
-        <translation type="unfinished"></translation>
+        <translation>Origen superposat</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
         <source>Destination Over</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació superposada</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
@@ -11438,32 +11449,32 @@ Elimineu el filtre de subtítols abans de suprimir aquesta pista.</translation>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
         <source>Source In</source>
-        <translation type="unfinished"></translation>
+        <translation>Origen entrant</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
         <source>Destination In</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació entrant</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
         <source>Source Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Origen sortint</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
         <source>Destination Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació sortint</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
         <source>Source Atop</source>
-        <translation type="unfinished"></translation>
+        <translation>Origen a sobre</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
         <source>Destination Atop</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació a sobre</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
@@ -11473,7 +11484,7 @@ Elimineu el filtre de subtítols abans de suprimir aquesta pista.</translation>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
         <source>Plus</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="63"/>
@@ -20557,12 +20568,12 @@ Feu clic per seleccionar, arrossegueu per canviar la posició</translation>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="452"/>
         <source>Blink rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Freqüència de parpelleig</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="455"/>
         <source>Number of frames for cursor blink cycle.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de fotogrames per al cicle de parpelleig del cursor.</translation>
     </message>
 </context>
 <context>
@@ -21087,12 +21098,12 @@ Feu clic per seleccionar, arrossegueu per canviar la posició</translation>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="66"/>
         <source>Source Over</source>
-        <translation type="unfinished"></translation>
+        <translation>Origen superposat</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="71"/>
         <source>Destination Over</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació superposada</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="76"/>
@@ -21112,32 +21123,32 @@ Feu clic per seleccionar, arrossegueu per canviar la posició</translation>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="91"/>
         <source>Source In</source>
-        <translation type="unfinished"></translation>
+        <translation>Origen entrant</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="96"/>
         <source>Destination In</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació entrant</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="101"/>
         <source>Source Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Origen sortint</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="106"/>
         <source>Destination Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació sortint</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="111"/>
         <source>Source Atop</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació a sobre</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="116"/>
         <source>Destination Atop</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació a sobre</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="121"/>
@@ -21147,7 +21158,7 @@ Feu clic per seleccionar, arrossegueu per canviar la posició</translation>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="126"/>
         <source>Plus</source>
-        <translation type="unfinished"></translation>
+        <translation>Suma</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="131"/>
