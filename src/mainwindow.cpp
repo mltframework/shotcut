@@ -5138,6 +5138,7 @@ void MainWindow::on_actionScreenSnapshot_triggered()
 void MainWindow::on_actionScreenRecording_triggered()
 {
     QString filenameExtension;
+    auto mode = ScreenCapture::Interactive;
 #ifdef Q_OS_WIN
     QDesktopServices::openUrl({"ms-screenclip:?type=recording", QUrl::TolerantMode});
     return;
@@ -5145,16 +5146,15 @@ void MainWindow::on_actionScreenRecording_triggered()
     filenameExtension = ".mov";
 #else
     bool isGNOMEorKDEonWayland = false;
-    auto mode = ScreenCapture::Interactive;
     // GNOME and KDE have built-in screen recording compatible with Wayland
     if (ScreenCapture::isWayland()) {
         const auto desktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP").toLower();
         isGNOMEorKDEonWayland = desktop.contains("gnome") || desktop.contains("kde")
                                 || desktop.contains("plasma");
-        if (isGNOMEorKDEonWayland)
+        if (isGNOMEorKDEonWayland) {
             filenameExtension = ".webm";
-        if (desktop.contains("kde") || desktop.contains("plasma"))
             mode = ScreenCapture::Fullscreen;
+        }
     } else {
         filenameExtension = ".mp4";
     }
