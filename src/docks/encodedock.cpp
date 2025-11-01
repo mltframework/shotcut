@@ -66,6 +66,13 @@ static Mlt::Filter getReframeFilter(Mlt::Service *service)
     return Mlt::Filter();
 }
 
+static bool isHardwareEncoder(const QString &vcodec)
+{
+    return vcodec.endsWith("_amf") || vcodec.endsWith("_mf") || vcodec.endsWith("_nvenc")
+           || vcodec.endsWith("_qsv") || vcodec.endsWith("_vaapi")
+           || vcodec.endsWith("_videotoolbox");
+}
+
 EncodeDock::EncodeDock(QWidget *parent)
     : QDockWidget(parent)
     , ui(new Ui::EncodeDock)
@@ -303,8 +310,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                     other.append("mlt_image_format=rgb");
                 }
                 // Hardware encoder
-                if (vcodec.endsWith("_nvenc") || vcodec.endsWith("_qsv")
-                    || vcodec.endsWith("_vaapi") || vcodec.endsWith("_videotoolbox")) {
+                if (isHardwareEncoder(vcodec)) {
                     value = "p010le";
                 }
             }
@@ -1117,9 +1123,8 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
             else
                 setIfNotSet(p, "threads", ui->videoCodecThreadsSpinner->value());
             if (ui->videoRateControlCombo->currentIndex() != RateControlQuality
-                && !vcodec.contains("nvenc") && !vcodec.endsWith("_amf") && !vcodec.endsWith("_qsv")
-                && !vcodec.endsWith("_videotoolbox") && !vcodec.endsWith("_vaapi")
-                && ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
+                && !isHardwareEncoder(vcodec) && ui->dualPassCheckbox->isEnabled()
+                && ui->dualPassCheckbox->isChecked())
                 setIfNotSet(p, "pass", 1);
             if (ui->scanModeCombo->currentIndex() == 0 && ui->fieldOrderCombo->currentIndex() == 0
                 && vcodec.startsWith("libx264")) {
