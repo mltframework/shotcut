@@ -358,8 +358,16 @@ int VideoWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
-        m_consumer->set("mlt_image_format",
-                        serviceName.startsWith("decklink") ? "yuv422p" : "yuv420p");
+        if (serviceName.startsWith("decklink")) {
+            m_consumer->set("mlt_image_format", "yuv422p");
+        } else if (property("processing_mode").toInt() == ShotcutSettings::Native10Cpu
+                   || property("processing_mode").toInt() == ShotcutSettings::Linear10Cpu) {
+            m_consumer->set("mlt_image_format", "rgba64");
+        } else if (property("processing_mode").toInt() == ShotcutSettings::Linear8Cpu) {
+            m_consumer->set("mlt_image_format", "rgba");
+        } else {
+            m_consumer->set("mlt_image_format", "yuv420p");
+        }
         m_consumer->set("channels", property("audio_channels").toInt());
         if (property("audio_channels").toInt() == 4) {
             m_consumer->set("channel_layout", "quad");
@@ -390,6 +398,12 @@ int VideoWidget::reconfigure(bool isMulti)
         default:
             m_consumer->set("color_trc", "bt709");
             break;
+        }
+        if (property("processing_mode").toInt() == ShotcutSettings::Linear8Cpu
+            || property("processing_mode").toInt() == ShotcutSettings::Linear10Cpu) {
+            m_consumer->set("mlt_color_trc", "linear");
+        } else {
+            m_consumer->clear("mlt_color_trc");
         }
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);
