@@ -1673,7 +1673,7 @@ function configure_compile_install_all {
     for lib in "$FINAL_INSTALL_DIR"/lib/qt6/{egldeviceintegrations,generic,iconengines,imageformats,multimedia,platforminputcontexts,platforms,platformthemes,tls,wayland-decoration-client,wayland-graphics-integration-client,wayland-shell-integration,xcbglintegrations}/*.so; do
       bundle_libs "$lib"
     done
-    for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa,lib/va}/*.so*; do
+    for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt-7,lib/frei0r-1,lib/ladspa,lib/va}/*.so*; do
       bundle_libs "$lib"
     done
     bundle_libs "$FINAL_INSTALL_DIR"/bin/glaxnimate
