@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Meltytech, LLC
+ * Copyright (c) 2023-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,9 +42,9 @@ Window {
     color: dialogPalette.window
     modality: Qt.ApplicationModal
     title: qsTr('Copy Filters')
-    width: 300
+    width: 420
     height: 115
-    minimumWidth: 300
+    minimumWidth: 420
     minimumHeight: 115
     Component.onCompleted: nameField.forceActiveFocus(Qt.TabFocusReason)
     onVisibilityChanged: nameField.text = ''
