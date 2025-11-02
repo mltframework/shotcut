@@ -1335,7 +1335,8 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <location filename="../src/qml/views/filter/CopyFiltersDialog.qml" line="57"/>
         <source>Enter a name to save a filter set, or
 leave blank to use the clipboard:</source>
-        <translation>Vnesite ime, da shranite nabor filtrov, ali pustite prazno za uporabo odložišča:</translation>
+        <translation>Vnesite ime, da shranite nabor filtrov,
+ali pustite prazno za uporabo odložišča:</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/CopyFiltersDialog.qml" line="64"/>
@@ -2095,9 +2096,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <location filename="../src/docks/encodedock.cpp" line="1333"/>
-        <location filename="../src/docks/encodedock.cpp" line="1846"/>
-        <location filename="../src/docks/encodedock.cpp" line="2337"/>
+        <location filename="../src/docks/encodedock.cpp" line="1338"/>
+        <location filename="../src/docks/encodedock.cpp" line="1851"/>
+        <location filename="../src/docks/encodedock.cpp" line="2342"/>
         <source>Export Video/Audio</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2123,166 +2124,166 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2042"/>
-        <location filename="../src/docks/encodedock.cpp" line="2049"/>
-        <location filename="../src/docks/encodedock.cpp" line="2161"/>
+        <location filename="../src/docks/encodedock.cpp" line="2047"/>
+        <location filename="../src/docks/encodedock.cpp" line="2054"/>
+        <location filename="../src/docks/encodedock.cpp" line="2166"/>
         <source>Stream</source>
         <translation>Pretok</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1829"/>
-        <location filename="../src/docks/encodedock.cpp" line="1930"/>
-        <location filename="../src/docks/encodedock.cpp" line="1940"/>
+        <location filename="../src/docks/encodedock.cpp" line="1834"/>
+        <location filename="../src/docks/encodedock.cpp" line="1935"/>
+        <location filename="../src/docks/encodedock.cpp" line="1945"/>
         <source>Stop Capture</source>
         <translation>Ustavi zajem</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="135"/>
+        <location filename="../src/docks/encodedock.cpp" line="142"/>
         <source>Automatic from extension</source>
         <translation>Samodejno iz končnice</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="143"/>
-        <location filename="../src/docks/encodedock.cpp" line="153"/>
+        <location filename="../src/docks/encodedock.cpp" line="150"/>
+        <location filename="../src/docks/encodedock.cpp" line="160"/>
         <source>Default for format</source>
         <translation>Privzeto za format</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="467"/>
+        <location filename="../src/docks/encodedock.cpp" line="473"/>
         <source>Timeline</source>
         <translation>Časovnica</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="474"/>
         <location filename="../src/docks/encodedock.cpp" line="480"/>
+        <location filename="../src/docks/encodedock.cpp" line="486"/>
         <source>Source</source>
         <translation>Vir</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="485"/>
-        <location filename="../src/docks/encodedock.cpp" line="492"/>
+        <location filename="../src/docks/encodedock.cpp" line="491"/>
+        <location filename="../src/docks/encodedock.cpp" line="498"/>
         <source>Marker</source>
         <translation>Označevalnik</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="503"/>
+        <location filename="../src/docks/encodedock.cpp" line="509"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Vnesti morate številske vrednosti, kjer »%1« predstavlja decimalno vejico.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="512"/>
-        <location filename="../src/docks/encodedock.cpp" line="1776"/>
-        <location filename="../src/docks/encodedock.cpp" line="1777"/>
+        <location filename="../src/docks/encodedock.cpp" line="518"/>
+        <location filename="../src/docks/encodedock.cpp" line="1781"/>
+        <location filename="../src/docks/encodedock.cpp" line="1782"/>
         <source>Custom</source>
         <translation>Po meri</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="548"/>
+        <location filename="../src/docks/encodedock.cpp" line="554"/>
         <source>Stock</source>
         <translation>Knjižnica</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="551"/>
+        <location filename="../src/docks/encodedock.cpp" line="557"/>
         <source>Default</source>
         <translation>Privzeto</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1400"/>
+        <location filename="../src/docks/encodedock.cpp" line="1405"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Ni možno pisati v datoteko, ki je v vašem projektu. Poskusite znova z drugo mapo ali imenom datoteke.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1498"/>
+        <location filename="../src/docks/encodedock.cpp" line="1503"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut je našel filtre, ki zahtevajo posle analize, ki se niso zagnali. Ali želite zdaj zagnati posle analize?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1846"/>
-        <location filename="../src/docks/encodedock.cpp" line="2339"/>
+        <location filename="../src/docks/encodedock.cpp" line="1851"/>
+        <location filename="../src/docks/encodedock.cpp" line="2344"/>
         <source>Capture File</source>
         <translation>Snemalna datoteka</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1848"/>
+        <location filename="../src/docks/encodedock.cpp" line="1853"/>
         <source>Export Files</source>
         <translation>Izvozi datoteke</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1863"/>
+        <location filename="../src/docks/encodedock.cpp" line="1868"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Vse datoteke (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1865"/>
+        <location filename="../src/docks/encodedock.cpp" line="1870"/>
         <source>Determined by Export (*)</source>
         <translation>Določeno z izvozom (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2037"/>
-        <location filename="../src/docks/encodedock.cpp" line="2059"/>
+        <location filename="../src/docks/encodedock.cpp" line="2042"/>
+        <location filename="../src/docks/encodedock.cpp" line="2064"/>
         <source>Stop Stream</source>
         <translation>Ustavi pretok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2051"/>
+        <location filename="../src/docks/encodedock.cpp" line="2056"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Vnesite mrežni protokol, naslov, vrata in parametre kot URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2094"/>
+        <location filename="../src/docks/encodedock.cpp" line="2099"/>
         <source>Add Export Preset</source>
         <translation>Dodaj prednastavitev za izvoz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2138"/>
+        <location filename="../src/docks/encodedock.cpp" line="2143"/>
         <source>Delete Preset</source>
         <translation>Izbriši prednastavitve</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2139"/>
+        <location filename="../src/docks/encodedock.cpp" line="2144"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Ali res želite izbrisati %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2267"/>
+        <location filename="../src/docks/encodedock.cpp" line="2272"/>
         <source>None</source>
         <translation>Brez</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2321"/>
+        <location filename="../src/docks/encodedock.cpp" line="2326"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2469"/>
+        <location filename="../src/docks/encodedock.cpp" line="2474"/>
         <source>Detect</source>
         <translation>Zaznaj</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2526"/>
+        <location filename="../src/docks/encodedock.cpp" line="2531"/>
         <source>(auto)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2572"/>
+        <location filename="../src/docks/encodedock.cpp" line="2577"/>
         <source>Detecting hardware encoders...</source>
         <translation>Zaznavanje strojnih kodirnikov ...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2629"/>
+        <location filename="../src/docks/encodedock.cpp" line="2634"/>
         <source>Nothing found</source>
         <translation>Nič ni najdeno</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2631"/>
+        <location filename="../src/docks/encodedock.cpp" line="2636"/>
         <source>Found %1</source>
         <translation>Najdeno: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2854"/>
+        <location filename="../src/docks/encodedock.cpp" line="2859"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2290,42 +2291,42 @@ Shotcut will attempt to repair your project.</source>
         <translation>Vašemu projektu manjka nekaj datotek. Shranite projekt, ga zaprite in znova odprite. Shotcut bo poskušal popraviti vaš projekt.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2903"/>
+        <location filename="../src/docks/encodedock.cpp" line="2908"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2941"/>
+        <location filename="../src/docks/encodedock.cpp" line="2946"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2467"/>
+        <location filename="../src/docks/encodedock.cpp" line="2472"/>
         <source>Configure Hardware Encoding</source>
         <translation>Prilagodi strojno kodiranje</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="470"/>
+        <location filename="../src/docks/encodedock.cpp" line="476"/>
         <source>Current Playlist Bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="471"/>
+        <location filename="../src/docks/encodedock.cpp" line="477"/>
         <source>Each Playlist Bin Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1849"/>
+        <location filename="../src/docks/encodedock.cpp" line="1854"/>
         <source>Export Each Playlist Bin Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1894"/>
+        <location filename="../src/docks/encodedock.cpp" line="1899"/>
         <source>Export canceled</source>
         <translation>Izvoz preklican</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2491"/>
+        <location filename="../src/docks/encodedock.cpp" line="2496"/>
         <source>Export Frames/sec</source>
         <translation>Izvozne sličice/s</translation>
     </message>
@@ -8689,7 +8690,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1340"/>
+        <location filename="../src/docks/encodedock.cpp" line="1345"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1078"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1168"/>
         <source>A job already exists for %1</source>
@@ -9028,7 +9029,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/jobs/screencapturejob.cpp" line="249"/>
+        <location filename="../src/jobs/screencapturejob.cpp" line="251"/>
         <source>Remux %1</source>
         <translation type="unfinished"></translation>
     </message>

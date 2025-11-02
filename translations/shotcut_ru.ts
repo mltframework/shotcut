@@ -720,7 +720,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1024"/>
         <source>Refresh the file in Shotcut if you changed it in another app</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновите файл в Shotcut, если вы изменили его в другом приложении</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1027"/>
@@ -2102,9 +2102,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1960"/>
-        <location filename="../src/docks/encodedock.cpp" line="1333"/>
-        <location filename="../src/docks/encodedock.cpp" line="1846"/>
-        <location filename="../src/docks/encodedock.cpp" line="2337"/>
+        <location filename="../src/docks/encodedock.cpp" line="1338"/>
+        <location filename="../src/docks/encodedock.cpp" line="1851"/>
+        <location filename="../src/docks/encodedock.cpp" line="2342"/>
         <source>Export Video/Audio</source>
         <translation>Экспорт Видео/Аудио</translation>
     </message>
@@ -2130,168 +2130,168 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2000"/>
-        <location filename="../src/docks/encodedock.cpp" line="2042"/>
-        <location filename="../src/docks/encodedock.cpp" line="2049"/>
-        <location filename="../src/docks/encodedock.cpp" line="2161"/>
+        <location filename="../src/docks/encodedock.cpp" line="2047"/>
+        <location filename="../src/docks/encodedock.cpp" line="2054"/>
+        <location filename="../src/docks/encodedock.cpp" line="2166"/>
         <source>Stream</source>
         <translation>Поток</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="2027"/>
-        <location filename="../src/docks/encodedock.cpp" line="1829"/>
-        <location filename="../src/docks/encodedock.cpp" line="1930"/>
-        <location filename="../src/docks/encodedock.cpp" line="1940"/>
+        <location filename="../src/docks/encodedock.cpp" line="1834"/>
+        <location filename="../src/docks/encodedock.cpp" line="1935"/>
+        <location filename="../src/docks/encodedock.cpp" line="1945"/>
         <source>Stop Capture</source>
         <translation>Остановить захват изображения</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="135"/>
+        <location filename="../src/docks/encodedock.cpp" line="142"/>
         <source>Automatic from extension</source>
         <translation>Автоматически по расширению</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="143"/>
-        <location filename="../src/docks/encodedock.cpp" line="153"/>
+        <location filename="../src/docks/encodedock.cpp" line="150"/>
+        <location filename="../src/docks/encodedock.cpp" line="160"/>
         <source>Default for format</source>
         <translation>По умолчанию для формата</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="467"/>
+        <location filename="../src/docks/encodedock.cpp" line="473"/>
         <source>Timeline</source>
         <translation>Шкала времени</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="474"/>
         <location filename="../src/docks/encodedock.cpp" line="480"/>
+        <location filename="../src/docks/encodedock.cpp" line="486"/>
         <source>Source</source>
         <translation>Источник</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="485"/>
-        <location filename="../src/docks/encodedock.cpp" line="492"/>
+        <location filename="../src/docks/encodedock.cpp" line="491"/>
+        <location filename="../src/docks/encodedock.cpp" line="498"/>
         <source>Marker</source>
         <translation>Метка</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="503"/>
+        <location filename="../src/docks/encodedock.cpp" line="509"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Введите числовые значения, используя &apos;%1&apos; как десятичный разделитель.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="512"/>
-        <location filename="../src/docks/encodedock.cpp" line="1776"/>
-        <location filename="../src/docks/encodedock.cpp" line="1777"/>
+        <location filename="../src/docks/encodedock.cpp" line="518"/>
+        <location filename="../src/docks/encodedock.cpp" line="1781"/>
+        <location filename="../src/docks/encodedock.cpp" line="1782"/>
         <source>Custom</source>
         <translation>Пользовательские настройки</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="548"/>
+        <location filename="../src/docks/encodedock.cpp" line="554"/>
         <source>Stock</source>
         <translation>Основные</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="551"/>
+        <location filename="../src/docks/encodedock.cpp" line="557"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1400"/>
+        <location filename="../src/docks/encodedock.cpp" line="1405"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Невозможно записать файл проекта.
 Попробуйте ещё раз, изменив имя файла или папки.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1498"/>
+        <location filename="../src/docks/encodedock.cpp" line="1503"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut обнаружил фильтры, для которых не выполнялся анализ.
 Хотите запустить анализ?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1846"/>
-        <location filename="../src/docks/encodedock.cpp" line="2339"/>
+        <location filename="../src/docks/encodedock.cpp" line="1851"/>
+        <location filename="../src/docks/encodedock.cpp" line="2344"/>
         <source>Capture File</source>
         <translation>Файла захвата</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1848"/>
+        <location filename="../src/docks/encodedock.cpp" line="1853"/>
         <source>Export Files</source>
         <translation>Экспорт файлов</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1863"/>
+        <location filename="../src/docks/encodedock.cpp" line="1868"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1865"/>
+        <location filename="../src/docks/encodedock.cpp" line="1870"/>
         <source>Determined by Export (*)</source>
         <translation>Определить при экспорте  (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2037"/>
-        <location filename="../src/docks/encodedock.cpp" line="2059"/>
+        <location filename="../src/docks/encodedock.cpp" line="2042"/>
+        <location filename="../src/docks/encodedock.cpp" line="2064"/>
         <source>Stop Stream</source>
         <translation>Остановить поток</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2051"/>
+        <location filename="../src/docks/encodedock.cpp" line="2056"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Укажите тип сетевого протокола, адрес, порт, сетевой адрес:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2094"/>
+        <location filename="../src/docks/encodedock.cpp" line="2099"/>
         <source>Add Export Preset</source>
         <translation>Добавить предустановку экспорта</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2138"/>
+        <location filename="../src/docks/encodedock.cpp" line="2143"/>
         <source>Delete Preset</source>
         <translation>Удалить предустановку</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2139"/>
+        <location filename="../src/docks/encodedock.cpp" line="2144"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Вы действительно хотите удалить %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2267"/>
+        <location filename="../src/docks/encodedock.cpp" line="2272"/>
         <source>None</source>
         <translation>Нет</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2321"/>
+        <location filename="../src/docks/encodedock.cpp" line="2326"/>
         <source>KiB (%1s)</source>
         <translation>КиБ (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2469"/>
+        <location filename="../src/docks/encodedock.cpp" line="2474"/>
         <source>Detect</source>
         <translation>Обнаружить</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2526"/>
+        <location filename="../src/docks/encodedock.cpp" line="2531"/>
         <source>(auto)</source>
         <translation>(авто)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2572"/>
+        <location filename="../src/docks/encodedock.cpp" line="2577"/>
         <source>Detecting hardware encoders...</source>
         <translation>Обнаружение аппаратных кодировщиков...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2629"/>
+        <location filename="../src/docks/encodedock.cpp" line="2634"/>
         <source>Nothing found</source>
         <translation>Ничего не найдено</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2631"/>
+        <location filename="../src/docks/encodedock.cpp" line="2636"/>
         <source>Found %1</source>
         <translation>Найден %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2854"/>
+        <location filename="../src/docks/encodedock.cpp" line="2859"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -2302,42 +2302,42 @@ Shotcut will attempt to repair your project.</source>
 Shotcut попытается восстановить проект.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2903"/>
+        <location filename="../src/docks/encodedock.cpp" line="2908"/>
         <source>Aspect ratio does not match project Video Mode, which causes black bars.</source>
         <translation>Соотношение сторон не соответствует Видеорежиму проекта, что приводит к появлению черных полос.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2941"/>
+        <location filename="../src/docks/encodedock.cpp" line="2946"/>
         <source>Frame rate is higher than project Video Mode, which causes frames to repeat.</source>
         <translation>Частота кадров выше, чем в Видеорежиме проекта, что приводит к повторению кадров.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2467"/>
+        <location filename="../src/docks/encodedock.cpp" line="2472"/>
         <source>Configure Hardware Encoding</source>
         <translation>Настроить аппаратное кодирование</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="470"/>
+        <location filename="../src/docks/encodedock.cpp" line="476"/>
         <source>Current Playlist Bin</source>
         <translation>Текущий раздел плейлиста</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="471"/>
+        <location filename="../src/docks/encodedock.cpp" line="477"/>
         <source>Each Playlist Bin Item</source>
         <translation>Каждый элемент раздела плейлиста</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1849"/>
+        <location filename="../src/docks/encodedock.cpp" line="1854"/>
         <source>Export Each Playlist Bin Item</source>
         <translation>Экспортировать каждый элемент раздела плейлиста</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1894"/>
+        <location filename="../src/docks/encodedock.cpp" line="1899"/>
         <source>Export canceled</source>
         <translation>Экспорт отменен</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2491"/>
+        <location filename="../src/docks/encodedock.cpp" line="2496"/>
         <source>Export Frames/sec</source>
         <translation>Экспорт кадр/с</translation>
     </message>
@@ -2379,7 +2379,7 @@ Shotcut попытается восстановить проект.</translation
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="75"/>
         <source>Embed Markers as Chapters...</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить Маркеры из глав...</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="84"/>
@@ -2419,7 +2419,7 @@ Shotcut попытается восстановить проект.</translation
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="211"/>
         <source>Embed Chapters</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить главы</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="276"/>
@@ -3253,12 +3253,12 @@ Click to change</source>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="230"/>
         <source>Do not include &lt;html&gt;, &lt;head&gt;, or &lt;body&gt; here</source>
-        <translation type="unfinished"></translation>
+        <translation>Не включать &lt;html&gt;, &lt;head&gt;, или &lt;body&gt; тут</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="239"/>
         <source>Click to expand or collapse the CSS section</source>
-        <translation type="unfinished"></translation>
+        <translation>Щелкните, чтобы развернуть или свернуть элемент CSS</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="245"/>
@@ -3269,12 +3269,12 @@ Click to change</source>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="275"/>
         <source>Type or paste stylesheets here</source>
-        <translation type="unfinished"></translation>
+        <translation>Наберите или вставьте здесь таблицу стилей</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="284"/>
         <source>Click to expand or collapse the JavaScript section</source>
-        <translation type="unfinished"></translation>
+        <translation>Щелкните, чтобы развернуть или свернуть элемент JavaScript</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="290"/>
@@ -3285,7 +3285,7 @@ Click to change</source>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="320"/>
         <source>Type or paste JavaScript code here</source>
-        <translation type="unfinished"></translation>
+        <translation>Наберите или вставьте здесь код JavaScript</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.ui" line="361"/>
@@ -3300,22 +3300,22 @@ Click to change</source>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="88"/>
         <source>Elastic Stroke (Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>Импульс (Video)</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="103"/>
         <source>Folded (Image)</source>
-        <translation type="unfinished"></translation>
+        <translation>Складывание (изображение)</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="114"/>
         <source>Gold Metal (Image)</source>
-        <translation type="unfinished"></translation>
+        <translation>Золото (изображение)</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="129"/>
         <source>Party Time (Video)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вечеринка (Видео)</translation>
     </message>
     <message>
         <location filename="../src/widgets/htmlgeneratorwidget.cpp" line="140"/>
@@ -3443,7 +3443,7 @@ Click to change</source>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="275"/>
         <source>Refresh the file in Shotcut if you changed it in another app</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновите файл в Shotcut, если вы изменили его в другом приложении</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="278"/>
@@ -4216,12 +4216,12 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/jobs/kokorodokijob.cpp" line="76"/>
         <source>&lt;p&gt;This feature requires &lt;b&gt;&lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt;&lt;/b&gt;, which provides an installer, and the automatic download of an &lt;b&gt;&lt;big&gt;13.2 GB&lt;/big&gt;&lt;/b&gt; Docker image.&lt;/p&gt;&lt;p&gt;If you already installed Docker it could not be found at the expected location: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;OK&lt;/b&gt; to continue and locate the &lt;tt&gt;docker&lt;/tt&gt; program on your system.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Эта функция требует &lt;b&gt;&lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt;&lt;/b&gt;, который предоставляет программу установки и автоматическую загрузку &lt;b&gt;&lt;big&gt;13.2 GB&lt;/big&gt;&lt;/b&gt; образа Docker.&lt;/p&gt;&lt;p&gt;Если вы уже установили Docker и его не удалось найти в: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;Нажмите &lt;b&gt;OK&lt;/b&gt; чтобы продолжить и найти &lt;tt&gt;docker&lt;/tt&gt; в вашей системе.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/jobs/kokorodokijob.cpp" line="100"/>
         <source>&lt;p&gt;This feature requires the automatic download of an &lt;b&gt;&lt;big&gt;13.2 GB&lt;/big&gt;&lt;/b&gt; Docker image.&lt;/p&gt;&lt;p&gt;Do you want to continue?&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Для использования этой функции требуется автоматическая загрузка &lt;b&gt;&lt;big&gt;13.2 GB&lt;/big&gt;&lt;/b&gt; образ Docker.&lt;/p&gt;&lt;p&gt;Вы хотите продолжить?&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -5729,12 +5729,12 @@ Do you want to enable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="5210"/>
         <source>Screen recorder launched</source>
-        <translation type="unfinished"></translation>
+        <translation>Запись экрана запущена</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="5212"/>
         <source>Failed to launch screen recorder</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось запустить запись экрана</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="5504"/>
@@ -5816,7 +5816,7 @@ Do you want to restart now?</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="5605"/>
         <source>&lt;p&gt;This feature requires Google Chrome or a Chromium-based browser.&lt;/p&gt;&lt;p&gt;If you already installed one it could not be found at the expected location: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;OK&lt;/b&gt; to continue and locate the program on your system.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Для использования этой функции требуется Google Chrome или браузер на базе Chromium.&lt;/p&gt;&lt;p&gt;Если вы уже установили один из них и его не удалось найти в: &lt;tt&gt;%1&lt;/tt&gt;&lt;/p&gt;&lt;p&gt;Нажмите &lt;b&gt;OK&lt;/b&gt; для продолжения работы и поиска программы в вашей системе.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="5862"/>
@@ -6663,7 +6663,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/docks/notesdock.cpp" line="157"/>
         <source>Notes Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Управление заметками</translation>
     </message>
 </context>
 <context>
@@ -8724,7 +8724,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>Добавить подзаголовок</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1340"/>
+        <location filename="../src/docks/encodedock.cpp" line="1345"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1078"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1168"/>
         <source>A job already exists for %1</source>
@@ -8733,7 +8733,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/jobs/dockerpulljob.cpp" line="26"/>
         <source>docker pull %1</source>
-        <translation type="unfinished"></translation>
+        <translation>docker pull %1</translation>
     </message>
     <message>
         <location filename="../src/jobs/kokorodokijob.cpp" line="43"/>
@@ -8960,7 +8960,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/screencapture/rectangleselector.cpp" line="120"/>
         <source>Click and drag to select an area. Press ESC to cancel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Щелкните и перетащите, чтобы выбрать область. Нажмите ESC для отмены.</translation>
     </message>
 </context>
 <context>
@@ -9063,9 +9063,9 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>Откройте запись</translation>
     </message>
     <message>
-        <location filename="../src/jobs/screencapturejob.cpp" line="249"/>
+        <location filename="../src/jobs/screencapturejob.cpp" line="251"/>
         <source>Remux %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ремукс %1</translation>
     </message>
 </context>
 <context>
@@ -11309,7 +11309,7 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/screencapture/toolbarwidget.cpp" line="36"/>
         <source>Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Полноэкранное</translation>
     </message>
     <message>
         <location filename="../src/screencapture/toolbarwidget.cpp" line="37"/>
@@ -11442,12 +11442,12 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
         <source>Source Over</source>
-        <translation type="unfinished"></translation>
+        <translation>В конце</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
         <source>Destination Over</source>
-        <translation type="unfinished"></translation>
+        <translation>В конце</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
@@ -11462,37 +11462,37 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
         <source>Destination</source>
-        <translation type="unfinished"></translation>
+        <translation>Точка назначения</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
         <source>Source In</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутри</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
         <source>Destination In</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутри</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
         <source>Source Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Снаружи</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
         <source>Destination Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Снаружи</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
         <source>Source Atop</source>
-        <translation type="unfinished"></translation>
+        <translation>Сверху</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
         <source>Destination Atop</source>
-        <translation type="unfinished"></translation>
+        <translation>Сверху</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
@@ -11512,12 +11512,12 @@ Remove the subtitle filter before removing this track.</source>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="64"/>
         <source>Color Dodge</source>
-        <translation type="unfinished"></translation>
+        <translation>Цветовая петля</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="65"/>
         <source>Color Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Цветовой ожог</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="67"/>
@@ -11986,7 +11986,8 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
         <location filename="../src/util.cpp" line="940"/>
         <source>&lt;p&gt;Do you want use a Flatpak?&lt;/p&gt;&lt;p&gt;Click &lt;b&gt;Yes&lt;/b&gt; to install/update the Flatpak wrapper scripts in
 &lt;b&gt;Files &gt; Home &gt; Flatpaks&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Tip: Add &lt;b&gt;&lt;tt&gt;~/Flatpaks&lt;/tt&gt;&lt;/b&gt; to your &lt;b&gt;&lt;tt&gt;$PATH&lt;/tt&gt;&lt;/b&gt; to make them more convenient on the command line.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Вы хотите использовать Flatpak?&lt;/p&gt;&lt;p&gt;Нажмите &lt;b&gt;Да&lt;/b&gt; чтобы установить/обновить скрипты оболочки Flatpak в
+&lt;b&gt;Файлы &gt; Домашняя папка &gt; Flatpaks&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Совет: Добавьте &lt;b&gt;&lt;tt&gt;~/Flatpaks&lt;/tt&gt;&lt;/b&gt; в переменную &lt;b&gt;&lt;tt&gt;$PATH&lt;/tt&gt;&lt;/b&gt; чтобы сделать их более удобными для управления из командной строки.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="949"/>
@@ -12441,7 +12442,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/screencapture/windowpicker.cpp" line="237"/>
         <source>Click on a window to select it</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажмите на окно, чтобы выделить его</translation>
     </message>
 </context>
 <context>
@@ -12972,7 +12973,7 @@ IRE: %2</translation>
         <location filename="../src/qml/filters/brightness/meta.qml" line="8"/>
         <source>lightness value exposure</source>
         <comment>search keywords for the Brightness video filter</comment>
-        <translation>значение освещённости выдержка</translation>
+        <translation>освещённость и выдержка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="6"/>
@@ -13130,7 +13131,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="41"/>
         <source>Lightness</source>
-        <translation>Светлота</translation>
+        <translation>Освещенность</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="48"/>
@@ -14565,7 +14566,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/vibrance/meta.qml" line="22"/>
         <source>Vibrance</source>
-        <translation>Яркость</translation>
+        <translation>Свечение</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vibrance/meta.qml" line="23"/>
@@ -14776,7 +14777,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="7"/>
         <source>360: Cap Top &amp; Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>360 градусов: Крышка сверху и снизу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="9"/>
@@ -14787,92 +14788,92 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="38"/>
         <source>topStart</source>
-        <translation type="unfinished"></translation>
+        <translation>topStart</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="45"/>
         <source>topEnd</source>
-        <translation type="unfinished"></translation>
+        <translation>topEnd</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="52"/>
         <source>topBlendIn</source>
-        <translation type="unfinished"></translation>
+        <translation>topBlendIn</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="59"/>
         <source>topBlendOut</source>
-        <translation type="unfinished"></translation>
+        <translation>topBlendOut</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="66"/>
         <source>topFadeIn</source>
-        <translation>Верхняя граница затухания</translation>
+        <translation>topFadeIn</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="73"/>
         <source>topBlurWidthStart</source>
-        <translation>начало верхнего размытия по ширине</translation>
+        <translation>topBlurWidthStart</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="80"/>
         <source>topBlurWidthEnd</source>
-        <translation>конец верхнего размытия по ширине</translation>
+        <translation>topBlurWidthEnd</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="87"/>
         <source>topBlurHeightStart</source>
-        <translation>начало верхнего размытия по высоте</translation>
+        <translation>topBlurHeightStart</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="94"/>
         <source>topBlurHeightEnd</source>
-        <translation>конец верхнего размытия по высоте</translation>
+        <translation>topBlurHeightEnd</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="102"/>
         <source>bottomStart</source>
-        <translation type="unfinished"></translation>
+        <translation>bottomStart</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="109"/>
         <source>bottomEnd</source>
-        <translation type="unfinished"></translation>
+        <translation>bottomEnd</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="116"/>
         <source>bottomBlendIn</source>
-        <translation type="unfinished"></translation>
+        <translation>bottomBlendIn</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="123"/>
         <source>bottomBlendOut</source>
-        <translation type="unfinished"></translation>
+        <translation>bottomBlendOut</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="130"/>
         <source>bottomFadeIn</source>
-        <translation>Нижняя граница затухания</translation>
+        <translation>bottomFadeIn</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="137"/>
         <source>bottomBlurWidthStart</source>
-        <translation>начало нижнего размытия по ширине</translation>
+        <translation>bottomBlurWidthStart</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="144"/>
         <source>bottomBlurWidthEnd</source>
-        <translation>конец нижнего размытия по ширине</translation>
+        <translation>bottomBlurWidthEnd</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="151"/>
         <source>bottomBlurHeightStart</source>
-        <translation>начало нижнего размытия по высоте</translation>
+        <translation>bottomBlurHeightStart</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_cap/meta.qml" line="158"/>
         <source>bottomBlurHeightEnd</source>
-        <translation>конец нижнего размытия по высоте</translation>
+        <translation>bottomBlurHeightEnd</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="7"/>
@@ -14908,12 +14909,12 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="46"/>
         <source>blurStart</source>
-        <translation>размывать в полосе экватора</translation>
+        <translation>blurStart</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_wrap/meta.qml" line="53"/>
         <source>blurEnd</source>
-        <translation>размывать на полюсах</translation>
+        <translation>blurEnd</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_zenith_correction/meta.qml" line="7"/>
@@ -14967,13 +14968,13 @@ IRE: %2</translation>
     <message>
         <location filename="../src/qml/filters/typewriter/meta.qml" line="22"/>
         <source>Text: Typewriter</source>
-        <translation type="unfinished"></translation>
+        <translation>Текст: Печатная машинка</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/meta.qml" line="23"/>
         <source>type typing cursor terminal console</source>
         <comment>search keywords for the Text: Typewriter video filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>тип ввода курсор в терминальной консоли</translation>
     </message>
 </context>
 <context>
@@ -20459,39 +20460,39 @@ Click to select, drag to change position</source>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="99"/>
         <source>Terminal Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Стиль Терминала</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="103"/>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="317"/>
         <source>Word by Word</source>
-        <translation type="unfinished"></translation>
+        <translation>Пословно</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="107"/>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="321"/>
         <source>Line by Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Построчно</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="247"/>
         <source>Typewriter rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Скоропечатание</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="250"/>
         <source>Number of frames between each character, word, or line appearance.</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество кадров между появлением каждого символа, слова или строки.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="274"/>
         <source>Rate variation</source>
-        <translation type="unfinished"></translation>
+        <translation>Вариации</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="277"/>
         <source>Random variation in timing (0 = no variation).</source>
-        <translation type="unfinished"></translation>
+        <translation>Случайная вариация времени (0 = без изменений).</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="301"/>
@@ -20501,22 +20502,22 @@ Click to select, drag to change position</source>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="304"/>
         <source>How text appears: character by character, word by word, or line by line.</source>
-        <translation type="unfinished"></translation>
+        <translation>Как отображается текст: посимвольно, пословно или построчно.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="313"/>
         <source>Character by Character</source>
-        <translation type="unfinished"></translation>
+        <translation>Посимвольно</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="343"/>
         <source>Cursor visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Видимость курсора</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="346"/>
         <source>When to show the blinking cursor.</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать мигающий курсор.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="355"/>
@@ -20526,32 +20527,32 @@ Click to select, drag to change position</source>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="359"/>
         <source>While Typing</source>
-        <translation type="unfinished"></translation>
+        <translation>Во время набора текста</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="363"/>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Всегда видимый</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="384"/>
         <source>Cursor shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Форма курсора</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="387"/>
         <source>Character to use for the blinking cursor.</source>
-        <translation type="unfinished"></translation>
+        <translation>Символ, используемый для обозначения мигающего курсора.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="398"/>
         <source>| (Vertical Line)</source>
-        <translation type="unfinished"></translation>
+        <translation>| (Вертикальная линия)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="402"/>
         <source>_ (Underscore)</source>
-        <translation type="unfinished"></translation>
+        <translation>_ (Подчеркивание)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="406"/>
@@ -20586,12 +20587,12 @@ Click to select, drag to change position</source>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="452"/>
         <source>Blink rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Частота мигания</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/typewriter/ui.qml" line="455"/>
         <source>Number of frames for cursor blink cycle.</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество кадров для цикла мигания курсора.</translation>
     </message>
 </context>
 <context>
@@ -21116,12 +21117,12 @@ Click to select, drag to change position</source>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="66"/>
         <source>Source Over</source>
-        <translation type="unfinished"></translation>
+        <translation>В конце</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="71"/>
         <source>Destination Over</source>
-        <translation type="unfinished"></translation>
+        <translation>В конце</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="76"/>
@@ -21136,37 +21137,37 @@ Click to select, drag to change position</source>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="86"/>
         <source>Destination</source>
-        <translation type="unfinished"></translation>
+        <translation>Точка назначения</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="91"/>
         <source>Source In</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутри</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="96"/>
         <source>Destination In</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутри</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="101"/>
         <source>Source Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Снаружи</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="106"/>
         <source>Destination Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Снаружи</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="111"/>
         <source>Source Atop</source>
-        <translation type="unfinished"></translation>
+        <translation>Сверху</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="116"/>
         <source>Destination Atop</source>
-        <translation type="unfinished"></translation>
+        <translation>Сверху</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="121"/>
@@ -21206,12 +21207,12 @@ Click to select, drag to change position</source>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="156"/>
         <source>Color Dodge</source>
-        <translation type="unfinished"></translation>
+        <translation>Цветовая петля</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="161"/>
         <source>Color Burn</source>
-        <translation type="unfinished"></translation>
+        <translation>Цветовой ожог</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui_qtblend.qml" line="166"/>
