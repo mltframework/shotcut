@@ -39,11 +39,13 @@
 
 class TextEditor : public QPlainTextEdit
 {
+    Q_DECLARE_TR_FUNCTIONS(TextEditor)
+
 public:
     explicit TextEditor(QWidget *parent = nullptr)
         : QPlainTextEdit()
     {
-        setObjectName(tr("Notes"));
+        setObjectName("Notes");
         zoomIn(Settings.notesZoom());
         setTabChangesFocus(false);
         setTabStopDistance(fontMetrics().horizontalAdvance("XXXX")); // Tabstop = 4 spaces
