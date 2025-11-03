@@ -24,6 +24,7 @@
 #include <QScreen>
 #include <QVariant>
 
+class QEventLoop;
 class ToolbarWidget;
 class RectangleSelector;
 class WindowPicker;
