@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2024 Meltytech, LLC
+ * Copyright (c) 2020-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -360,6 +360,7 @@ Shotcut.KeyframableFilter {
                 return ratio;
             }
             enabled: Math.abs(profile.aspectRatio - producerAspectRatio()) < 0.000001
+            opacity: enabled ? 1 : 0.5
             function sanitedFilterRect() {
                 let rect = Qt.rect(Math.max(0, filterRect.x), Math.max(0, filterRect.y), filterRect.width, filterRect.height);
                 if (rect.x + rect.width > profile.width)
