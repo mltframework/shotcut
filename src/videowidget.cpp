@@ -358,12 +358,13 @@ int VideoWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
+        int processingMode = property("processing_mode").toInt();
         if (serviceName.startsWith("decklink")) {
             m_consumer->set("mlt_image_format", "yuv422p");
-        } else if (property("processing_mode").toInt() == ShotcutSettings::Native10Cpu
-                   || property("processing_mode").toInt() == ShotcutSettings::Linear10Cpu) {
+        } else if (processingMode == ShotcutSettings::Native10Cpu
+                   || processingMode == ShotcutSettings::Linear10Cpu) {
             m_consumer->set("mlt_image_format", "rgba64");
-        } else if (property("processing_mode").toInt() == ShotcutSettings::Linear8Cpu) {
+        } else if (processingMode == ShotcutSettings::Linear8Cpu) {
             m_consumer->set("mlt_image_format", "rgba");
         } else {
             m_consumer->set("mlt_image_format", "yuv420p");
