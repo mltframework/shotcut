@@ -987,7 +987,9 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
                         setIfNotSet(p,
                                     "vb",
-                                    0); // VP9 needs this to prevent constrained quality mode.
+                                    (vcodec == "libvpx-vp9")
+                                        ? "0" // VP9 needs this to prevent constrained quality mode
+                                        : "100M");
                     } else if (vcodec.endsWith("_vaapi")) {
                         setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
                         setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
@@ -1007,6 +1009,7 @@ Mlt::Properties *EncodeDock::collectProperties(int realtime, bool includeProfile
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
+                        setIfNotSet(p, "vb", qRound(cvbr));
                     } else if (vcodec.endsWith("_qsv")) {
                         setIfNotSet(p, "vb", qRound(cvbr));
                     } else if (vcodec.endsWith("_videotoolbox")) {
