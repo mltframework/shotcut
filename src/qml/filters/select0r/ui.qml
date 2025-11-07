@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2024 Meltytech, LLC
+ * Copyright (c) 2015-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ Item {
     property string edgeParam: '8'
     property double edgeDefault: 0.9
     property string operationParam: '9'
-    property double operationDefault: 0
+    property double operationDefault: 0.5
     property var defaultParameters: [keyColorParam, invertParam, deltaRParam, deltaGParam, deltaBParam, slopeParam, colorspaceParam, shapeParam, edgeParam, operationParam]
 
     function setControls() {
@@ -389,8 +389,8 @@ Item {
 
         Shotcut.UndoButton {
             onClicked: {
-                filter.set(operationParam, operationModel.get(0).value);
-                operationCombo.currentIndex = 0;
+                filter.set(operationParam, operationDefault);
+                operationCombo.currentIndex = 2;
             }
         }
 
