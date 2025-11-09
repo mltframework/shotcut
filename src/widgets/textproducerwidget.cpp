@@ -217,7 +217,7 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
         filter->set("typewriter.macro_type", 1);
         filter->set("typewriter.cursor", 1);
         filter->set("typewriter.cursor_blink_rate", 25);
-        filter->set("typewriter.cursor_char", '|');
+        filter->set("typewriter.cursor_char", "|");
     } else {
         filter = new Mlt::Filter(profile, "dynamictext");
         filter->set(kShotcutFilterProperty, kSimpleFilterName);
@@ -227,16 +227,29 @@ Mlt::Filter *TextProducerWidget::createFilter(Mlt::Profile &profile, Mlt::Produc
             filter->set("argument",
                         tr("Edit your text using the Filters panel.").toUtf8().constData());
     }
+    if (ui->typeWriterRadioButton->isChecked()) {
 #if defined(Q_OS_WIN)
-    filter->set("family", "Verdana");
+        filter->set("family", "Consolas");
 #elif defined(Q_OS_MAC)
-    filter->set("family", "Helvetica");
+        filter->set("family", "Monaco");
+#else
+        filter->set("family", "monospace");
 #endif
+        filter->set("outline", 0);
+        filter->set("weight", QFont::Normal);
+        fgcolor = "#ff00ff00";
+    } else {
+#if defined(Q_OS_WIN)
+        filter->set("family", "Verdana");
+#elif defined(Q_OS_MAC)
+        filter->set("family", "Helvetica");
+#endif
+        filter->set("outline", 3);
+        filter->set("weight", QFont::Bold);
+    }
     filter->set("fgcolour", fgcolor);
     filter->set("bgcolour", "#00000000");
     filter->set("olcolour", "#aa000000");
-    filter->set("outline", 3);
-    filter->set("weight", QFont::Bold * 10);
     filter->set("style", "normal");
     filter->set("shotcut:usePointSize", 1);
     filter->set("shotcut:pointSize", kPointSize);
