@@ -459,7 +459,7 @@ Shotcut.KeyframableFilter {
         Shotcut.DoubleSpinBox {
             id: cursorBlinkRateSpinner
             Layout.minimumWidth: 150
-            from: 5
+            from: 0
             to: 200
             suffix: qsTr(' frames')
             onValueModified: filter.set('typewriter.cursor_blink_rate', value)
