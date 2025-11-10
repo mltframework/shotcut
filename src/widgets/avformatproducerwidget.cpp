@@ -1230,7 +1230,7 @@ void AvformatProducerWidget::on_actionExtractSubtitles_triggered()
     for (int i = 0; i < nb_streams; i++) {
         QString key = QStringLiteral("meta.media.%1.codec.name").arg(i);
         QString codec(m_producer->get(key.toLatin1().constData()));
-        if (codec == "srt") {
+        if (codec == "srt" || codec == "mov_text" || codec == "ssa") {
             subtitleCount++;
             QString langKey = QStringLiteral("meta.attr.%1.stream.language.markup").arg(i);
             QString lang(m_producer->get(langKey.toLatin1().constData()));
@@ -1241,7 +1241,7 @@ void AvformatProducerWidget::on_actionExtractSubtitles_triggered()
             }
         }
     }
-    QString caption = tr("Export Subtitles...");
+    QString caption = tr("Extract Subtitles...");
     if (subtitles.size() <= 0) {
         QMessageBox::warning(this, caption, tr("No subtitles found"));
         return;
@@ -1279,7 +1279,7 @@ void AvformatProducerWidget::on_actionExtractSubtitles_triggered()
         for (int i = 0; i < nb_streams; i++) {
             QString key = QStringLiteral("meta.media.%1.codec.name").arg(i);
             QString codec(m_producer->get(key.toLatin1().constData()));
-            if (codec == "srt") {
+            if (codec == "srt" || codec == "mov_text" || codec == "ssa") {
                 subtitleCount++;
                 QString subText;
                 QString langKey = QStringLiteral("meta.attr.%1.stream.language.markup").arg(i);
