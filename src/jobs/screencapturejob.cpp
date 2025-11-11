@@ -40,11 +40,13 @@
 
 ScreenCaptureJob::ScreenCaptureJob(const QString &name,
                                    const QString &filename,
-                                   const QRect &captureRect)
+                                   const QRect &captureRect,
+                                   bool recordAudio)
     : AbstractJob(name, QThread::NormalPriority)
     , m_filename(filename)
     , m_rect(captureRect)
     , m_isAutoOpen(true)
+    , m_recordAudio(recordAudio)
 {
     QAction *action = new QAction(tr("Open"), this);
     action->setToolTip(tr("Open the capture"));
@@ -97,10 +99,12 @@ void ScreenCaptureJob::start()
     args << "-video_size" << QString("%1x%2").arg(m_rect.width()).arg(m_rect.height());
     args << "-i"
          << "desktop";
-    args << "-f"
-         << "dshow";
-    args << "-i"
-         << "audio=" + Settings.audioInput();
+    if (m_recordAudio) {
+        args << "-f"
+             << "dshow";
+        args << "-i"
+             << "audio=" + Settings.audioInput();
+    }
     if (Settings.encodeUseHardware() && !Settings.encodeHardware().isEmpty()) {
         vcodec = "h264_mf";
         args << "-rate_control"
@@ -119,9 +123,11 @@ void ScreenCaptureJob::start()
     args << "-video_size" << QString("%1x%2").arg(m_rect.width()).arg(m_rect.height());
     args << "-i"
          << ":0.0";
-    args << "-f"
-         << "pulse";
-    args << "-i" << Settings.audioInput();
+    if (m_recordAudio) {
+        args << "-f"
+             << "pulse";
+        args << "-i" << Settings.audioInput();
+    }
     if (Settings.encodeUseHardware() && Settings.encodeHardware().contains("h264_vaapi")) {
         vcodec = "h264_vaapi";
         args << "-qp"

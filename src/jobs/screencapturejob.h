@@ -30,7 +30,10 @@ class ScreenCaptureJob : public AbstractJob
 {
     Q_OBJECT
 public:
-    ScreenCaptureJob(const QString &name, const QString &filename, const QRect &captureRect);
+    ScreenCaptureJob(const QString &name,
+                     const QString &filename,
+                     const QRect &captureRect,
+                     bool recordAudio = true);
     virtual ~ScreenCaptureJob();
     void start() override;
     void stop() override;
@@ -54,6 +57,7 @@ private:
     QString m_actualFilename;
     QRect m_rect;
     bool m_isAutoOpen;
+    bool m_recordAudio;
     QTimer m_progressTimer;
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     DBusService m_dbusService = DBusService::None;

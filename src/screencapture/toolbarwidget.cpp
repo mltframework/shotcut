@@ -17,17 +17,20 @@
 
 #include "toolbarwidget.h"
 #include "screencapture.h"
+#include <QCheckBox>
 #include <QDebug>
 #include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QPushButton>
 #include <QScreen>
+#include <QVBoxLayout>
 
-ToolbarWidget::ToolbarWidget(QWidget *parent)
+ScreenCaptureToolbar::ScreenCaptureToolbar(bool isRecordingMode, QWidget *parent)
     : QWidget(parent,
               Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint
                   | Qt::X11BypassWindowManagerHint)
+    , m_isRecordingMode(isRecordingMode)
 {
     setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -59,16 +62,56 @@ ToolbarWidget::ToolbarWidget(QWidget *parent)
     m_rectangleButton->setStyleSheet(buttonStyle);
     m_windowButton->setStyleSheet(buttonStyle);
 
+    // Create checkboxes
+    m_minimizeCheckbox = new QCheckBox(tr("Minimize Shotcut"), this);
+    m_audioCheckbox = new QCheckBox(tr("Record Audio"), this);
+
+    // Style checkboxes
+    QString checkboxStyle = "QCheckBox {"
+                            "  color: white;"
+                            "  font-size: 12px;"
+                            "  spacing: 5px;"
+                            "}"
+                            "QCheckBox::indicator {"
+                            "  width: 16px;"
+                            "  height: 16px;"
+                            "  border: 1px solid rgba(255, 255, 255, 150);"
+                            "  border-radius: 3px;"
+                            "  background-color: rgba(40, 40, 40, 200);"
+                            "}"
+                            "QCheckBox::indicator:checked {"
+                            "  background-color: rgba(255, 50, 50, 200);"
+                            "  border: 1px solid rgba(255, 255, 255, 200);"
+                            "}"
+                            "QCheckBox::indicator:hover {"
+                            "  border: 1px solid rgba(255, 255, 255, 220);"
+                            "}";
+
+    m_minimizeCheckbox->setStyleSheet(checkboxStyle);
+    m_audioCheckbox->setStyleSheet(checkboxStyle);
+    m_minimizeCheckbox->setChecked(true); // Default to minimize
+    m_audioCheckbox->setChecked(true);    // Default to record audio
+
     // Create layout
-    QHBoxLayout *layout = new QHBoxLayout(this);
-    layout->setContentsMargins(10, 10, 10, 10);
-    layout->setSpacing(10);
-    layout->addWidget(m_fullscreenButton);
-    layout->addWidget(m_rectangleButton);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(10, 10, 10, 10);
+    mainLayout->setSpacing(10);
+
+    // Buttons row
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    buttonLayout->setSpacing(10);
+    buttonLayout->addWidget(m_fullscreenButton);
+    buttonLayout->addWidget(m_rectangleButton);
 
     // Connect signals
-    connect(m_fullscreenButton, &QPushButton::clicked, this, &ToolbarWidget::onFullscreenClicked);
-    connect(m_rectangleButton, &QPushButton::clicked, this, &ToolbarWidget::onRectangleClicked);
+    connect(m_fullscreenButton,
+            &QPushButton::clicked,
+            this,
+            &ScreenCaptureToolbar::onFullscreenClicked);
+    connect(m_rectangleButton,
+            &QPushButton::clicked,
+            this,
+            &ScreenCaptureToolbar::onRectangleClicked);
 
     // Hide window button if on Wayland or Windows
 #ifdef Q_OS_WIN
@@ -77,11 +120,24 @@ ToolbarWidget::ToolbarWidget(QWidget *parent)
     const bool withWindowButton = !ScreenCapture::isWayland();
 #endif
     if (withWindowButton) {
-        layout->addWidget(m_windowButton);
-        connect(m_windowButton, &QPushButton::clicked, this, &ToolbarWidget::onWindowClicked);
+        buttonLayout->addWidget(m_windowButton);
+        connect(m_windowButton, &QPushButton::clicked, this, &ScreenCaptureToolbar::onWindowClicked);
     } else {
         m_windowButton->hide();
     }
+
+    mainLayout->addLayout(buttonLayout);
+
+    // Checkboxes row
+    QHBoxLayout *checkboxLayout = new QHBoxLayout();
+    checkboxLayout->setSpacing(15);
+    checkboxLayout->addWidget(m_minimizeCheckbox);
+    if (m_isRecordingMode) {
+        checkboxLayout->addWidget(m_audioCheckbox);
+    } else {
+        m_audioCheckbox->hide();
+    }
+    mainLayout->addLayout(checkboxLayout);
 
     // Position at top center of screen
     QScreen *screen = QGuiApplication::primaryScreen();
@@ -94,9 +150,9 @@ ToolbarWidget::ToolbarWidget(QWidget *parent)
     }
 }
 
-ToolbarWidget::~ToolbarWidget() {}
+ScreenCaptureToolbar::~ScreenCaptureToolbar() {}
 
-void ToolbarWidget::paintEvent(QPaintEvent *event)
+void ScreenCaptureToolbar::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -109,20 +165,26 @@ void ToolbarWidget::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 }
 
-void ToolbarWidget::onFullscreenClicked()
+void ScreenCaptureToolbar::onFullscreenClicked()
 {
-    emit captureModeSelected(static_cast<int>(ScreenCapture::Fullscreen));
+    emit captureModeSelected(static_cast<int>(ScreenCapture::Fullscreen),
+                             m_minimizeCheckbox->isChecked(),
+                             m_audioCheckbox->isChecked());
     close();
 }
 
-void ToolbarWidget::onRectangleClicked()
+void ScreenCaptureToolbar::onRectangleClicked()
 {
-    emit captureModeSelected(static_cast<int>(ScreenCapture::Rectangle));
+    emit captureModeSelected(static_cast<int>(ScreenCapture::Rectangle),
+                             m_minimizeCheckbox->isChecked(),
+                             m_audioCheckbox->isChecked());
     close();
 }
 
-void ToolbarWidget::onWindowClicked()
+void ScreenCaptureToolbar::onWindowClicked()
 {
-    emit captureModeSelected(static_cast<int>(ScreenCapture::Window));
+    emit captureModeSelected(static_cast<int>(ScreenCapture::Window),
+                             m_minimizeCheckbox->isChecked(),
+                             m_audioCheckbox->isChecked());
     close();
 }

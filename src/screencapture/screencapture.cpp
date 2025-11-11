@@ -42,6 +42,8 @@ ScreenCapture::ScreenCapture(const QString &outputFile, CaptureMode mode, QObjec
     , m_outputFile(outputFile)
     , m_mode(mode)
     , m_isImageMode(false)
+    , m_minimizeShotcut(false)
+    , m_recordAudio(false)
 {}
 
 ScreenCapture::~ScreenCapture() {}
@@ -59,11 +61,16 @@ void ScreenCapture::startRecording()
         startWindowRecording();
         break;
     case Interactive:
-        m_toolbar = std::make_unique<ToolbarWidget>();
+        m_toolbar = std::make_unique<ScreenCaptureToolbar>(true);
         // Toolbar emits int, convert to CaptureMode via lambda for Qt6 typed connect compatibility
-        connect(m_toolbar.get(), &ToolbarWidget::captureModeSelected, this, [this](int mode) {
-            this->onCaptureModeSelected(static_cast<CaptureMode>(mode));
-        });
+        connect(m_toolbar.get(),
+                &ScreenCaptureToolbar::captureModeSelected,
+                this,
+                [this](int mode, bool minimizeShotcut, bool recordAudio) {
+                    this->onCaptureModeSelected(static_cast<CaptureMode>(mode),
+                                                minimizeShotcut,
+                                                recordAudio);
+                });
         m_toolbar->show();
         break;
     }
@@ -85,16 +92,21 @@ void ScreenCapture::startSnapshot()
         break;
     case Interactive:
         // Show toolbar for user to choose mode
-        m_toolbar = std::make_unique<ToolbarWidget>();
-        connect(m_toolbar.get(), &ToolbarWidget::captureModeSelected, this, [this](int mode) {
-            this->onCaptureModeSelected(static_cast<CaptureMode>(mode));
-        });
+        m_toolbar = std::make_unique<ScreenCaptureToolbar>(false);
+        connect(m_toolbar.get(),
+                &ScreenCaptureToolbar::captureModeSelected,
+                this,
+                [this](int mode, bool minimizeShotcut, bool recordAudio) {
+                    this->onCaptureModeSelected(static_cast<CaptureMode>(mode),
+                                                minimizeShotcut,
+                                                recordAudio);
+                });
         m_toolbar->show();
         break;
     }
 }
 
-void ScreenCapture::onCaptureModeSelected(CaptureMode mode)
+void ScreenCapture::onCaptureModeSelected(CaptureMode mode, bool minimizeShotcut, bool recordAudio)
 {
     // Close the toolbar safely after signal processing completes
     if (m_toolbar) {
@@ -104,6 +116,13 @@ void ScreenCapture::onCaptureModeSelected(CaptureMode mode)
     }
 
     m_mode = mode;
+    m_minimizeShotcut = minimizeShotcut;
+    m_recordAudio = recordAudio;
+
+    // Emit minimize signal if requested
+    if (m_minimizeShotcut) {
+        emit this->minimizeShotcut();
+    }
 
     // Continue with the selected mode, respecting image vs video
     if (m_isImageMode) {
@@ -128,7 +147,7 @@ void ScreenCapture::onRectangleSelected(const QRect &rect)
     if (screen)
         newRect &= applyDevicePixelRatio(screen->geometry());
 
-    emit beginRecording(adjustRectForVideo(newRect));
+    emit beginRecording(adjustRectForVideo(newRect), m_recordAudio);
 }
 
 void ScreenCapture::onWindowSelected(const QRect &rect)
@@ -148,7 +167,7 @@ void ScreenCapture::onWindowSelected(const QRect &rect)
     if (screen)
         newRect &= applyDevicePixelRatio(screen->geometry());
 
-    emit beginRecording(adjustRectForVideo(newRect));
+    emit beginRecording(adjustRectForVideo(newRect), m_recordAudio);
 }
 
 void ScreenCapture::startFullscreenRecording()
@@ -163,7 +182,7 @@ void ScreenCapture::startFullscreenRecording()
     if (!isWayland() || !qEnvironmentVariable("XDG_CURRENT_DESKTOP").toLower().contains("gnome"))
         physicalRect = applyDevicePixelRatio(screen->geometry());
 
-    emit beginRecording(adjustRectForVideo(physicalRect));
+    emit beginRecording(adjustRectForVideo(physicalRect), m_recordAudio);
 }
 
 void ScreenCapture::startRectangleRecording()
@@ -293,12 +312,8 @@ void ScreenCapture::captureAndSaveImage(const QRect &rect)
     }
 
     // Defer a bit so the window manager/compositor has time to unmap our UI
-    // before the portal snapshot is taken.
-    if (isWayland()) {
-        QTimer::singleShot(120, this, [this, rect]() { doCaptureAndSaveImage(rect); });
-    } else {
-        doCaptureAndSaveImage(rect);
-    }
+    // before the snapshot is taken.
+    QTimer::singleShot(120, this, [this, rect]() { doCaptureAndSaveImage(rect); });
 }
 
 void ScreenCapture::doCaptureAndSaveImage(const QRect &rect)

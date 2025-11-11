@@ -5102,6 +5102,7 @@ void MainWindow::on_actionScreenSnapshot_triggered()
             fileName += ".png";
         }
     }
+    bool maximized = windowState() & Qt::WindowMaximized;
 #ifdef Q_OS_MAC
     // Run screencapture command directly
     QStringList args;
@@ -5116,7 +5117,10 @@ void MainWindow::on_actionScreenSnapshot_triggered()
             QTimer::singleShot(500, this, [this, fileName]() { open(fileName); });
         }
         process->deleteLater();
-        showNormal();
+        if (maximized)
+            showMaximized();
+        else
+            showNormal();
     });
 
     showMinimized();
@@ -5125,11 +5129,15 @@ void MainWindow::on_actionScreenSnapshot_triggered()
     const auto mode = ScreenCapture::isWayland() ? ScreenCapture::Fullscreen
                                                  : ScreenCapture::Interactive;
     m_screenCapture = new ScreenCapture(fileName, mode, this);
+    connect(m_screenCapture, &ScreenCapture::minimizeShotcut, this, [this]() { showMinimized(); });
     connect(m_screenCapture, &ScreenCapture::finished, this, [=](bool success) {
         if (success)
             // Automatically open the captured file
             QTimer::singleShot(500, this, [this, fileName]() { open(fileName); });
-        showNormal();
+        if (maximized)
+            showMaximized();
+        else
+            showNormal();
     });
     m_screenCapture->startSnapshot();
 #endif
@@ -5181,7 +5189,7 @@ void MainWindow::on_actionScreenRecording_triggered()
         }
     }
 #ifdef Q_OS_MAC
-    ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, QRect());
+    ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, QRect(), true);
     JOBS.add(job);
     return;
 #elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
@@ -5215,10 +5223,15 @@ void MainWindow::on_actionScreenRecording_triggered()
     }
 #endif
     m_screenCapture = new ScreenCapture(fileName, mode, this);
-    connect(m_screenCapture, &ScreenCapture::beginRecording, this, [=](const QRect &rect) {
-        ScreenCaptureJob *job = new ScreenCaptureJob(tr("Screen Recording"), fileName, rect);
-        JOBS.add(job);
-    });
+    connect(m_screenCapture, &ScreenCapture::minimizeShotcut, this, [this]() { showMinimized(); });
+    connect(m_screenCapture,
+            &ScreenCapture::beginRecording,
+            this,
+            [=](const QRect &rect, bool recordAudio) {
+                ScreenCaptureJob *job
+                    = new ScreenCaptureJob(tr("Screen Recording"), fileName, rect, recordAudio);
+                JOBS.add(job);
+            });
     m_screenCapture->startRecording();
 }
 

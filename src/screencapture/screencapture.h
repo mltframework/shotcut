@@ -25,7 +25,7 @@
 #include <QVariant>
 
 class QEventLoop;
-class ToolbarWidget;
+class ScreenCaptureToolbar;
 class RectangleSelector;
 class WindowPicker;
 
@@ -45,11 +45,12 @@ public:
 
 signals:
     void finished(bool success);
-    void beginRecording(const QRect &captureRect);
+    void beginRecording(const QRect &captureRect, bool recordAudio);
     void onSelectionCanceled();
+    void minimizeShotcut();
 
 private slots:
-    void onCaptureModeSelected(CaptureMode mode);
+    void onCaptureModeSelected(CaptureMode mode, bool minimizeShotcut, bool recordAudio);
     void onRectangleSelected(const QRect &rect);
     void onWindowSelected(const QRect &rect);
     void onImageRectangleSelected(const QRect &rect);
@@ -80,8 +81,10 @@ private:
     QString m_outputFile;
     CaptureMode m_mode;
     bool m_isImageMode;
+    bool m_minimizeShotcut;
+    bool m_recordAudio;
 
-    std::unique_ptr<ToolbarWidget> m_toolbar;
+    std::unique_ptr<ScreenCaptureToolbar> m_toolbar;
     std::unique_ptr<RectangleSelector> m_rectangleSelector;
     std::unique_ptr<WindowPicker> m_windowPicker;
 };

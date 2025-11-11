@@ -15,24 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOOLBARWIDGET_H
-#define TOOLBARWIDGET_H
+#ifndef SCREENCAPTURETOOLBAR_H
+#define SCREENCAPTURETOOLBAR_H
 
+#include <QCheckBox>
 #include <QPushButton>
 #include <QWidget>
 
 class ScreenCapture;
 
-class ToolbarWidget : public QWidget
+class ScreenCaptureToolbar : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ToolbarWidget(QWidget *parent = nullptr);
-    ~ToolbarWidget();
+    explicit ScreenCaptureToolbar(bool isRecordingMode, QWidget *parent = nullptr);
+    ~ScreenCaptureToolbar();
 
 signals:
-    void captureModeSelected(int mode);
+    void captureModeSelected(int mode, bool minimizeShotcut, bool recordAudio);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -43,9 +44,12 @@ private slots:
     void onWindowClicked();
 
 private:
+    bool m_isRecordingMode;
     QPushButton *m_fullscreenButton;
     QPushButton *m_rectangleButton;
     QPushButton *m_windowButton;
+    QCheckBox *m_minimizeCheckbox;
+    QCheckBox *m_audioCheckbox;
 };
 
 #endif // TOOLBARWIDGET_H
