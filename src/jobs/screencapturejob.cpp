@@ -128,24 +128,40 @@ void ScreenCaptureJob::start()
              << "pulse";
         args << "-i" << Settings.audioInput();
     }
-    if (Settings.encodeUseHardware() && Settings.encodeHardware().contains("h264_vaapi")) {
-        vcodec = "h264_vaapi";
-        args << "-qp"
-             << "18";
-        args << "-init_hw_device"
-             << "vaapi=vaapi0:";
-        args << "-filter_hw_device"
-             << "vaapi0";
-        args << "-vf"
-             << "format=nv12,hwupload";
-        args << "-quality"
-             << "1";
-        args << "-rc_mode"
-             << "CQP";
+    if (Settings.encodeUseHardware() && !Settings.encodeHardware().isEmpty()) {
+        if (Settings.encodeHardware().contains("h264_nvenc")) {
+            vcodec = "h264_nvenc";
+            args << "-preset"
+                 << "p4";
+            args << "-tune"
+                 << "hq";
+            args << "-rc"
+                 << "vbr";
+            args << "-cq"
+                 << "19";
+            args << "-b:v"
+                 << "0";
+        } else if (Settings.encodeHardware().contains("h264_vaapi")) {
+            vcodec = "h264_vaapi";
+            args << "-qp"
+                 << "18";
+            args << "-init_hw_device"
+                 << "vaapi=vaapi0:";
+            args << "-filter_hw_device"
+                 << "vaapi0";
+            args << "-vf"
+                 << "format=nv12,hwupload";
+            args << "-quality"
+                 << "1";
+            args << "-rc_mode"
+                 << "CQP";
+        }
 #endif
     } else {
         args << "-crf"
              << "18";
+        args << "-preset"
+             << "veryfast";
         args << "-tune"
              << "film";
         args << "-pix_fmt"
