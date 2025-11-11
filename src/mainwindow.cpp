@@ -1516,8 +1516,7 @@ void MainWindow::setupOpenOtherMenu()
         }
     }
     if (mltProducers->get_data("glaxnimate")) {
-        ui->menuNew
-            ->addAction(tr("Animation") + " (Glaxnimate)", this, SLOT(onOpenOtherTriggered()))
+        ui->menuNew->addAction(tr("Drawing/Animation"), this, SLOT(onOpenOtherTriggered()))
             ->setObjectName("glaxnimate");
         otherMenu->addAction(ui->menuNew->actions().constLast());
     }

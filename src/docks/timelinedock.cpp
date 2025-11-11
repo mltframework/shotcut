@@ -1321,7 +1321,7 @@ void TimelineDock::setupActions()
             }
         }
         if (mltProducers->get_data("glaxnimate")) {
-            menu->addAction(tr("Animation") + " (Glaxnimate)", this, SLOT(addGenerator()))
+            menu->addAction(tr("Drawing/Animation"), this, SLOT(addGenerator()))
                 ->setObjectName("glaxnimate");
         }
         if (mltProducers->get_data("noise")) {
