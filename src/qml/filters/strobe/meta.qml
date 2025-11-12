@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Alpha Strobe")
-    keywords: qsTr('strobe alpha', 'search keywords for the Strobe video filter') + ' strobe #rgba'
+    keywords: qsTr('strobe alpha blink', 'search keywords for the Strobe video filter') + ' strobe #rgba'
     mlt_service: "strobe"
     qml: "ui.qml"
 
