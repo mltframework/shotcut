@@ -16,6 +16,7 @@
  */
 
 #include "screencapture.h"
+#include "Logger.h"
 #include "rectangleselector.h"
 #include "toolbarwidget.h"
 #include "windowpicker.h"
@@ -174,7 +175,7 @@ void ScreenCapture::startFullscreenRecording()
 {
     QScreen *screen = QGuiApplication::primaryScreen();
     if (!screen) {
-        qCritical() << "Error: No screen found";
+        LOG_ERROR() << "Error: No screen found";
         return;
     }
 
@@ -202,7 +203,7 @@ void ScreenCapture::startRectangleRecording()
 void ScreenCapture::startWindowRecording()
 {
     if (isWayland()) {
-        qCritical() << "Window capture is not supported on Wayland";
+        LOG_ERROR() << "Window capture is not supported on Wayland";
         return;
     }
     m_windowPicker = std::make_unique<WindowPicker>();
@@ -227,7 +228,7 @@ void ScreenCapture::startFullscreenSnapshot()
 {
     QScreen *screen = QGuiApplication::primaryScreen();
     if (!screen) {
-        qCritical() << "Error: No screen found";
+        LOG_ERROR() << "Error: No screen found";
         return;
     }
 
@@ -252,7 +253,7 @@ void ScreenCapture::startRectangleSnapshot()
 void ScreenCapture::startWindowSnapshot()
 {
     if (isWayland()) {
-        qCritical() << "Window image capture is not supported on Wayland";
+        LOG_ERROR() << "Window image capture is not supported on Wayland";
         return;
     }
     m_windowPicker = std::make_unique<WindowPicker>();
@@ -318,31 +319,31 @@ void ScreenCapture::captureAndSaveImage(const QRect &rect)
 
 void ScreenCapture::doCaptureAndSaveImage(const QRect &rect)
 {
-    qDebug() << "Capturing image:" << rect;
-    qDebug() << "Output file:" << m_outputFile;
+    LOG_DEBUG() << "Capturing image:" << rect;
+    LOG_DEBUG() << "Output file:" << m_outputFile;
 
     if (isWayland()) {
         // Try xdg-desktop-portal first (permission prompt)
         if (captureImagePortal(rect, m_outputFile)) {
-            qDebug() << "Image saved successfully to:" << m_outputFile;
+            LOG_DEBUG() << "Image saved successfully to:" << m_outputFile;
             emit finished(true);
             return;
         }
-        qWarning() << "Portal screenshot failed, will try Qt grabWindow next.";
+        LOG_WARNING() << "Portal screenshot failed, will try Qt grabWindow next.";
     }
 
     QPixmap pixmap = captureScreen(rect);
     if (pixmap.isNull()) {
-        qCritical() << "Failed to capture screen";
+        LOG_ERROR() << "Failed to capture screen";
         emit finished(false);
         return;
     }
 
     if (pixmap.save(m_outputFile)) {
-        qDebug() << "Image saved successfully to:" << m_outputFile;
+        LOG_DEBUG() << "Image saved successfully to:" << m_outputFile;
         emit finished(true);
     } else {
-        qCritical() << "Failed to save image to:" << m_outputFile;
+        LOG_ERROR() << "Failed to save image to:" << m_outputFile;
         emit finished(false);
     }
 }
@@ -352,7 +353,7 @@ bool ScreenCapture::captureImagePortal(const QRect &rect, const QString &outputP
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     auto bus = QDBusConnection::sessionBus();
     if (!bus.isConnected()) {
-        qWarning() << "DBus session bus not connected";
+        LOG_WARNING() << "DBus session bus not connected";
         return false;
     }
 
@@ -379,13 +380,13 @@ bool ScreenCapture::captureImagePortal(const QRect &rect, const QString &outputP
 
     QDBusPendingReply<QDBusObjectPath> reply = watcher.reply();
     if (reply.isError()) {
-        qWarning() << "Portal Screenshot call failed:" << reply.error().message();
+        LOG_WARNING() << "Portal Screenshot call failed:" << reply.error().message();
         return false;
     }
 
     const auto handlePath = reply.value();
     if (handlePath.path().isEmpty()) {
-        qWarning() << "Portal returned empty handle";
+        LOG_WARNING() << "Portal returned empty handle";
         return false;
     }
 
@@ -402,7 +403,7 @@ bool ScreenCapture::captureImagePortal(const QRect &rect, const QString &outputP
                           this,
                           SLOT(onPortalResponse(uint, QVariantMap)));
     if (!ok) {
-        qWarning() << "Failed to connect to portal Response signal";
+        LOG_WARNING() << "Failed to connect to portal Response signal";
         m_portalEventLoop = nullptr;
         return false;
     }
@@ -421,14 +422,14 @@ bool ScreenCapture::captureImagePortal(const QRect &rect, const QString &outputP
                    SLOT(onPortalResponse(uint, QVariantMap)));
 
     if (!m_portalSuccess) {
-        qWarning() << "Portal screenshot failed or timed out";
+        LOG_WARNING() << "Portal screenshot failed or timed out";
         return false;
     }
 
     QUrl url(m_portalUri);
     QString srcPath = url.isValid() && url.scheme() == "file" ? url.toLocalFile() : m_portalUri;
     if (srcPath.isEmpty()) {
-        qWarning() << "Portal provided empty source path";
+        LOG_WARNING() << "Portal provided empty source path";
         return false;
     }
 
@@ -436,7 +437,7 @@ bool ScreenCapture::captureImagePortal(const QRect &rect, const QString &outputP
         QFile::remove(outputPath);
     }
     if (!QFile::copy(srcPath, outputPath)) {
-        qWarning() << "Failed to copy portal image from" << srcPath << "to" << outputPath;
+        LOG_WARNING() << "Failed to copy portal image from" << srcPath << "to" << outputPath;
         return false;
     }
 #endif
@@ -450,7 +451,7 @@ void ScreenCapture::onPortalResponse(uint response, const QVariantMap &results)
         m_portalSuccess = !m_portalUri.isEmpty();
     } else {
         m_portalSuccess = false;
-        qWarning() << "Portal responded with error code" << response;
+        LOG_WARNING() << "Portal responded with error code" << response;
     }
     if (m_portalEventLoop) {
         m_portalEventLoop->quit();
@@ -479,8 +480,8 @@ QRect ScreenCapture::adjustRectForVideo(const QRect &rect)
 
     auto result = QRect(rect.x(), rect.y(), width, height);
     if (result != rect)
-        qDebug() << "Adjusted capture area from" << rect << "to" << result
-                 << "(H.264 requires even dimensions)";
+        LOG_DEBUG() << "Adjusted capture area from" << rect << "to" << result
+                    << "(H.264 requires even dimensions)";
     return result;
 }
 
@@ -489,7 +490,7 @@ QRect ScreenCapture::applyDevicePixelRatio(const QRect &rect)
     // Get the device pixel ratio from the primary screen
     QScreen *screen = QGuiApplication::primaryScreen();
     if (!screen) {
-        qWarning() << "Could not get screen for device pixel ratio";
+        LOG_WARNING() << "Could not get screen for device pixel ratio";
         return rect;
     }
 
@@ -507,9 +508,9 @@ QRect ScreenCapture::applyDevicePixelRatio(const QRect &rect)
 
     QRect logicalRect(logicalX, logicalY, logicalWidth, logicalHeight);
 
-    qDebug() << "Device Pixel Ratio:" << dpr;
-    qDebug() << "Physical rect (from selector):" << rect;
-    qDebug() << "Logical rect (for grabWindow):" << logicalRect;
+    LOG_DEBUG() << "Device Pixel Ratio:" << dpr;
+    LOG_DEBUG() << "Physical rect (from selector):" << rect;
+    LOG_DEBUG() << "Logical rect (for grabWindow):" << logicalRect;
 
     return logicalRect;
 }
@@ -519,7 +520,7 @@ QRect ScreenCapture::invertDevicePixelRatio(const QRect &rect)
     // Get the device pixel ratio from the primary screen
     QScreen *screen = QGuiApplication::primaryScreen();
     if (!screen) {
-        qWarning() << "Could not get screen for device pixel ratio";
+        LOG_WARNING() << "Could not get screen for device pixel ratio";
         return rect;
     }
 
@@ -537,9 +538,9 @@ QRect ScreenCapture::invertDevicePixelRatio(const QRect &rect)
 
     QRect logicalRect(logicalX, logicalY, logicalWidth, logicalHeight);
 
-    qDebug() << "Device Pixel Ratio:" << dpr;
-    qDebug() << "Physical rect (from selector):" << rect;
-    qDebug() << "Logical rect (for grabWindow):" << logicalRect;
+    LOG_DEBUG() << "Device Pixel Ratio:" << dpr;
+    LOG_DEBUG() << "Physical rect (from selector):" << rect;
+    LOG_DEBUG() << "Logical rect (for grabWindow):" << logicalRect;
 
     return logicalRect;
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Meltytech, LLC
+ * Copyright (c) 2024-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  */
 
 #include "subtitlesselectionmodel.h"
-
+#include "Logger.h"
 #include "models/subtitlesmodel.h"
 
 SubtitlesSelectionModel::SubtitlesSelectionModel(QAbstractItemModel *model)
@@ -95,7 +95,7 @@ void SubtitlesSelectionModel::selectRange(int itemIndex)
     if (!itemModelIndex.isValid()) {
         return;
     }
-    qDebug() << m_lastSingleSelection << itemIndex;
+    LOG_DEBUG() << m_lastSingleSelection << itemIndex;
     if (m_lastSingleSelection == -1) {
         select(itemModelIndex,
                QItemSelectionModel::ClearAndSelect | QItemSelectionModel::SelectCurrent

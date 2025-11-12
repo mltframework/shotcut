@@ -29,7 +29,7 @@
 MltClipProducerWidget::MltClipProducerWidget(QWidget *parent)
     : QWidget(parent)
 {
-    qDebug();
+    LOG_DEBUG();
     QVBoxLayout *vlayout = new QVBoxLayout();
     m_nameLabel = new QLabel();
     Util::setColorsToHighlight(m_nameLabel);

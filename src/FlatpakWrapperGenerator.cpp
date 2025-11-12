@@ -45,7 +45,7 @@ QList<AppEntry> FlatpakWrapperGenerator::listInstalledApps() const
 
     p.start("/usr/bin/flatpak", {"list", "--app", "--columns=application,branch"});
     if (!p.waitForStarted(5000)) {
-        qWarning() << "Failed to start flatpak";
+        LOG_WARNING() << "Failed to start flatpak";
         return {};
     }
     p.waitForFinished(10000);
@@ -90,11 +90,11 @@ bool FlatpakWrapperGenerator::generateAllInstalled()
 {
     const QList<AppEntry> apps = listInstalledApps();
     if (apps.isEmpty()) {
-        qWarning() << "No Flatpak apps found or flatpak not available.";
+        LOG_WARNING() << "No Flatpak apps found or flatpak not available.";
         return false;
     }
     if (!ensureOutputDir()) {
-        qWarning() << "Failed to ensure output directory" << m_outputDir;
+        LOG_WARNING() << "Failed to ensure output directory" << m_outputDir;
         return false;
     }
     bool allOk = true;
@@ -108,7 +108,7 @@ bool FlatpakWrapperGenerator::generateAllInstalled()
 bool FlatpakWrapperGenerator::generateFor(const QStringList &appIds)
 {
     if (!ensureOutputDir()) {
-        qWarning() << "Failed to ensure output directory" << m_outputDir;
+        LOG_WARNING() << "Failed to ensure output directory" << m_outputDir;
         return false;
     }
     bool allOk = true;
@@ -126,7 +126,7 @@ QString FlatpakWrapperGenerator::getBranchForAppId(const QString &appId) const
     QProcess p;
     p.start("flatpak", {"info", appId, "--show-branch"});
     if (!p.waitForStarted(5000)) {
-        qWarning() << "Failed to start flatpak for branch query";
+        LOG_WARNING() << "Failed to start flatpak for branch query";
         return QStringLiteral("stable");
     }
     p.waitForFinished(10000);
@@ -163,18 +163,18 @@ bool FlatpakWrapperGenerator::writeWrapper(const AppEntry &app) const
     const QString script = buildWrapperScript(app);
 
     if (QFileInfo::exists(path) && !m_force) {
-        qInfo().noquote() << "Skip (exists):" << path;
+        LOG_INFO() << "Skip (exists):" << path;
         return true;
     }
 
-    qInfo().noquote() << (m_dryRun ? "Would write:" : "Writing:") << path;
+    LOG_INFO() << (m_dryRun ? "Would write:" : "Writing:") << path;
 
     if (m_dryRun)
         return true;
 
     QFile f(path);
     if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
-        qWarning() << "Failed to open for write:" << path;
+        LOG_WARNING() << "Failed to open for write:" << path;
         return false;
     }
     QTextStream ts(&f);

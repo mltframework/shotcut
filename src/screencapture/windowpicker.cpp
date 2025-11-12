@@ -16,6 +16,7 @@
  */
 
 #include "windowpicker.h"
+#include "Logger.h"
 #include <QDebug>
 #include <QGuiApplication>
 #include <QKeyEvent>
@@ -63,7 +64,7 @@ void WindowPicker::detectWindows()
         m_windows = getX11Windows();
     }
 
-    qDebug() << "Found" << m_windows.size() << "windows";
+    LOG_DEBUG() << "Found" << m_windows.size() << "windows";
 }
 
 QList<WindowPicker::WindowInfo> WindowPicker::getX11Windows()
@@ -73,7 +74,7 @@ QList<WindowPicker::WindowInfo> WindowPicker::getX11Windows()
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     Display *display = XOpenDisplay(nullptr);
     if (!display) {
-        qWarning() << "Could not open X display";
+        LOG_WARNING() << "Could not open X display";
         return windows;
     }
 
@@ -174,8 +175,8 @@ QList<WindowPicker::WindowInfo> WindowPicker::getX11Windows()
                                         qRound(physical.y() / dpr),
                                         qRound(physical.width() / dpr),
                                         qRound(physical.height() / dpr));
-                qDebug() << "Window:" << window.title << "Physical:" << physical
-                         << "Logical:" << window.geometry << "DPR:" << dpr;
+                LOG_DEBUG() << "Window:" << window.title << "Physical:" << physical
+                            << "Logical:" << window.geometry << "DPR:" << dpr;
             }
         }
     }

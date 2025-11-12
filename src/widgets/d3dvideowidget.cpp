@@ -348,12 +348,12 @@ QByteArray D3DVideoWidget::compileShader(Stage stage,
                             &bytecode,
                             &errors);
     if (FAILED(hr) || !bytecode) {
-        qWarning("HLSL shader compilation failed: 0x%x", uint(hr));
+        LOG_WARNING("HLSL shader compilation failed: 0x%x", uint(hr));
         if (errors) {
             const QByteArray msg(static_cast<const char *>(errors->GetBufferPointer()),
                                  errors->GetBufferSize());
             errors->Release();
-            qWarning("%s", msg.constData());
+            LOG_WARNING("%s", msg.constData());
         }
         return QByteArray();
     }
