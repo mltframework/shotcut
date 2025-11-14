@@ -400,8 +400,10 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer->set("color_trc", "bt709");
             break;
         }
-        if (property("processing_mode").toInt() == ShotcutSettings::Linear8Cpu
-            || property("processing_mode").toInt() == ShotcutSettings::Linear10Cpu) {
+        if (processingMode == ShotcutSettings::Linear8Cpu
+            || processingMode == ShotcutSettings::Linear10Cpu
+            || (processingMode == ShotcutSettings::Native10GpuCpu
+                && property("decklinkGamma").toInt() != 1)) {
             m_consumer->set("mlt_color_trc", "linear");
         } else {
             m_consumer->clear("mlt_color_trc");

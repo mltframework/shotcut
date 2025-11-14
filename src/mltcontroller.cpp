@@ -159,9 +159,8 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
             m_audioChannels = channels;
             // Load the processing mode
             QString mode = newProducer->get(kShotcutProjectProcessingMode);
-            if (mode.isEmpty()) {
-                m_processingMode = ShotcutSettings::Native8Cpu;
-            } else {
+            if (!mode.isEmpty()) {
+                m_processingMode = Settings.processingModeId(mode);
                 m_processingMode = Settings.processingModeId(mode);
             }
         }
