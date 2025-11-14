@@ -520,7 +520,7 @@ ShotcutSettings::ProcessingMode ShotcutSettings::processingMode()
     } else if (settings.contains("player/gpu2")) {
         // Legacy GPU Mode
         if (settings.value("player/gpu2").toBool()) {
-            return ShotcutSettings::Native10GpuCpu;
+            return ShotcutSettings::Linear10GpuCpu;
         }
     }
     return ShotcutSettings::Native8Cpu;
@@ -543,7 +543,7 @@ QString ShotcutSettings::processingModeStr(ShotcutSettings::ProcessingMode mode)
         return QStringLiteral("Native10Cpu");
     case Linear10Cpu:
         return QStringLiteral("Linear10Cpu");
-    case Native10GpuCpu:
+    case Linear10GpuCpu:
         return QStringLiteral("Native10GpuCpu");
     }
     LOG_ERROR() << "Unknown processing mode" << mode;
@@ -561,7 +561,7 @@ ShotcutSettings::ProcessingMode ShotcutSettings::processingModeId(const QString 
     } else if (mode == QStringLiteral("Linear10Cpu")) {
         return Linear10Cpu;
     } else if (mode == QStringLiteral("Native10GpuCpu")) {
-        return Native10GpuCpu;
+        return Linear10GpuCpu;
     }
     LOG_ERROR() << "Unknown processing mode" << mode;
     return Native8Cpu;
@@ -644,7 +644,7 @@ bool ShotcutSettings::playerGPU() const
     // This is the legacy function for the old GPU mode.
     if (settings.contains("processingMode")) {
         ProcessingMode mode = (ProcessingMode) settings.value("processingMode").toInt();
-        return mode == Native10GpuCpu;
+        return mode == Linear10GpuCpu;
     } else if (settings.contains("player/gpu2")) {
         // Legacy GPU Mode
         return settings.value("player/gpu2").toBool();

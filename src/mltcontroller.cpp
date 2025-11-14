@@ -161,7 +161,6 @@ int Controller::open(const QString &url, const QString &urlToSave, bool skipConv
             QString mode = newProducer->get(kShotcutProjectProcessingMode);
             if (!mode.isEmpty()) {
                 m_processingMode = Settings.processingModeId(mode);
-                m_processingMode = Settings.processingModeId(mode);
             }
         }
         if (Util::isFpsDifferent(profile().fps(), fps)

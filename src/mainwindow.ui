@@ -627,7 +627,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Native 10-bit GPU/CPU (Experimental)</string>
+    <string>Linear 10-bit GPU/CPU (Experimental)</string>
    </property>
   </action>
   <action name="actionChannels1">

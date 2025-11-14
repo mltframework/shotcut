@@ -402,7 +402,7 @@ int VideoWidget::reconfigure(bool isMulti)
         }
         if (processingMode == ShotcutSettings::Linear8Cpu
             || processingMode == ShotcutSettings::Linear10Cpu
-            || (processingMode == ShotcutSettings::Native10GpuCpu
+            || (processingMode == ShotcutSettings::Linear10GpuCpu
                 && property("decklinkGamma").toInt() != 1)) {
             m_consumer->set("mlt_color_trc", "linear");
         } else {

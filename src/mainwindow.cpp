@@ -1046,7 +1046,7 @@ void MainWindow::setupSettingsMenu()
     ui->actionLinear8bitCpu->setData(ShotcutSettings::Linear8Cpu);
     ui->actionNative10bitCpu->setData(ShotcutSettings::Native10Cpu);
     ui->actionLinear10bitCpu->setData(ShotcutSettings::Linear10Cpu);
-    ui->actionNative10bitGpuCpu->setData(ShotcutSettings::Native10GpuCpu);
+    ui->actionNative10bitGpuCpu->setData(ShotcutSettings::Linear10GpuCpu);
     group->addAction(ui->actionNative8bitCpu);
     group->addAction(ui->actionLinear8bitCpu);
     group->addAction(ui->actionNative10bitCpu);
@@ -1067,7 +1067,7 @@ void MainWindow::setupSettingsMenu()
         if (oldMode == newMode)
             return;
         LOG_INFO() << "Processing Mode" << oldMode << "->" << newMode;
-        if (newMode == ShotcutSettings::Native10GpuCpu) {
+        if (newMode == ShotcutSettings::Linear10GpuCpu) {
             QMessageBox dialog(QMessageBox::Warning,
                                qApp->applicationName(),
                                tr("GPU is experimental and does not work on all computers. "
@@ -1086,7 +1086,7 @@ void MainWindow::setupSettingsMenu()
                 m_exitCode = EXIT_RESTART;
                 QApplication::closeAllWindows();
             }
-        } else if (oldMode == ShotcutSettings::Native10GpuCpu) {
+        } else if (oldMode == ShotcutSettings::Linear10GpuCpu) {
             QMessageBox dialog(QMessageBox::Information,
                                qApp->applicationName(),
                                tr("Shotcut must restart to disable GPU processing mode.\n"
@@ -1931,7 +1931,7 @@ void MainWindow::setProcessingMode(ShotcutSettings::ProcessingMode mode)
     case ShotcutSettings::Linear10Cpu:
         ui->actionLinear10bitCpu->setChecked(true);
         break;
-    case ShotcutSettings::Native10GpuCpu:
+    case ShotcutSettings::Linear10GpuCpu:
         ui->actionNative10bitGpuCpu->setChecked(true);
         break;
     }
@@ -4100,7 +4100,7 @@ void MainWindow::on_actionEnterFullScreen_triggered()
 
 void MainWindow::onGpuNotSupported()
 {
-    if (Settings.processingMode() == ShotcutSettings::Native10GpuCpu) {
+    if (Settings.processingMode() == ShotcutSettings::Linear10GpuCpu) {
         Settings.setProcessingMode(ShotcutSettings::Native8Cpu);
     }
     ui->actionNative10bitGpuCpu->setChecked(false);

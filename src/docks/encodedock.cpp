@@ -1230,7 +1230,7 @@ QPoint EncodeDock::addConsumerElement(
     }
     if (processingMode == ShotcutSettings::Linear8Cpu
         || processingMode == ShotcutSettings::Linear10Cpu
-        || processingMode == ShotcutSettings::Native10GpuCpu) {
+        || processingMode == ShotcutSettings::Linear10GpuCpu) {
         consumerNode.setAttribute("mlt_color_trc", "linear");
     }
     return QPoint(consumerNode.hasAttribute("frame_rate_num")
