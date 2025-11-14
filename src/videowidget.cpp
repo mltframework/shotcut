@@ -359,15 +359,22 @@ int VideoWidget::reconfigure(bool isMulti)
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
         int processingMode = property("processing_mode").toInt();
-        if (serviceName.startsWith("decklink")) {
-            m_consumer->set("mlt_image_format", "yuv422p");
-        } else if (processingMode == ShotcutSettings::Native10Cpu
-                   || processingMode == ShotcutSettings::Linear10Cpu) {
-            m_consumer->set("mlt_image_format", "rgba64");
-        } else if (processingMode == ShotcutSettings::Linear8Cpu) {
+        switch (processingMode) {
+        case ShotcutSettings::Linear8Cpu:
             m_consumer->set("mlt_image_format", "rgba");
-        } else {
-            m_consumer->set("mlt_image_format", "yuv420p");
+            break;
+        case ShotcutSettings::Native10Cpu:
+        case ShotcutSettings::Linear10Cpu:
+            m_consumer->set("mlt_image_format", "rgba64");
+            break;
+        case ShotcutSettings::Linear10GpuCpu:
+            // TODO: Change MLT movit to output rgba64
+            m_consumer->set("mlt_image_format", "rgba");
+            break;
+        default: // Native8Cpu
+            m_consumer->set("mlt_image_format",
+                            serviceName.startsWith("decklink") ? "yuv422" : "yuv420p");
+            break;
         }
         m_consumer->set("channels", property("audio_channels").toInt());
         if (property("audio_channels").toInt() == 4) {
