@@ -10,10 +10,10 @@ if(NOT DEFINED SHOTCUT_VERSION)
   string(REGEX REPLACE "0*([0-9]+)" "\\1" SHOTCUT_VERSION "${SHOTCUT_VERSION}")
 endif()
 
-project(shotcut
+project(pyromi
   VERSION ${SHOTCUT_VERSION}
   DESCRIPTION "cross-platform (Qt), open-source (GPLv3) video editor"
-  HOMEPAGE_URL "https://www.shotcut.org"
+  HOMEPAGE_URL "https://www.pyromi.org"
   LANGUAGES CXX
 )
 

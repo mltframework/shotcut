@@ -3,7 +3,7 @@
 <plist version="0.9">
 <dict>
 	<key>CFBundleIconFile</key>
-	<string>shotcut.icns</string>
+	<string>pyromi.icns</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -11,11 +11,11 @@
 	<key>NSHumanReadableCopyright</key>
         <string>Copyright © 2011-2025 Meltytech, LLC</string>
 	<key>CFBundleSignature</key>
-	<string>scut</string>
+	<string>pyro</string>
 	<key>CFBundleExecutable</key>
-	<string>Shotcut</string>
+	<string>Pyromi</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.Meltytech.Shotcut</string>
+	<string>com.pyromi.Pyromi</string>
 	<key>CFBundleVersion</key>
 	<string>@SHOTCUT_VERSION@</string>
 	<key>CFBundleShortVersionString</key>
@@ -27,9 +27,9 @@
     <key>LSMinimumSystemVersion</key>
 	<string>12.0.0</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Shotcut can show and record video</string>
+	<string>Pyromi can show and record video</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Shotcut can monitor and record audio</string>
+	<string>Pyromi can monitor and record audio</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -488,7 +488,7 @@
 				<string>mlt</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>shotcut.icns</string>
+			<string>pyromi.icns</string>
 			<key>CFBundleTypeMIMETypes</key>
 			<array>
 			<string>application/vnd.mlt+xml</string>

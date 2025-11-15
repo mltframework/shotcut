@@ -1,6 +1,6 @@
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
-add_executable(shotcut WIN32 MACOSX_BUNDLE
+add_executable(pyromi WIN32 MACOSX_BUNDLE
   abstractproducerwidget.cpp abstractproducerwidget.h
   actions.cpp actions.h
   autosavefile.cpp autosavefile.h

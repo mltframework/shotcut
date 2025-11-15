@@ -122,7 +122,7 @@ public:
 #ifdef Q_OS_WIN
 #include <winbase.h>
         SetDllDirectoryA(appPath.toLocal8Bit());
-        CreateMutexA(NULL, FALSE, "Meltytech Shotcut Running Mutex");
+        CreateMutexA(NULL, FALSE, "Meltytech Pyromi Running Mutex");
 #else
         dir.cdUp();
 #endif
@@ -137,11 +137,11 @@ public:
         setOrganizationName("Meltytech");
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
         setOrganizationDomain("shotcut.org");
-        setDesktopFileName("org.shotcut.Shotcut");
+        setDesktopFileName("org.pyromi.Pyromi");
 #else
         setOrganizationDomain("meltytech.com");
 #endif
-        setApplicationName("Shotcut");
+        setApplicationName("Pyromi");
         setApplicationVersion(SHOTCUT_VERSION);
 
         // Process command line options.

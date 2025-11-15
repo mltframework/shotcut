@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:rescap3="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities/3" xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10" xmlns:desktop2="http://schemas.microsoft.com/appx/manifest/desktop/windows10/2" xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10" xmlns:wincap3="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities/3" IgnorableNamespaces="uap4 wincap3 rescap3 desktop2 com">
-  <Identity Name="63764Meltytech.Shotcut" ProcessorArchitecture="x64" Publisher="CN=8BAA9DB9-77D3-4EAC-BE1B-8F5F951123CB" Version="19.6.15.0" />
+  <Identity Name="63764Pyromi.Pyromi" ProcessorArchitecture="x64" Publisher="CN=8BAA9DB9-77D3-4EAC-BE1B-8F5F951123CB" Version="19.6.15.0" />
   <Properties>
-    <DisplayName>Shotcut</DisplayName>
-    <PublisherDisplayName>Meltytech</PublisherDisplayName>
+    <DisplayName>Pyromi</DisplayName>
+    <PublisherDisplayName>Pyromi</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Resources>
@@ -50,8 +50,8 @@
     <Capability Name="internetClient" />
   </Capabilities>
   <Applications>
-    <Application Id="Shotcut" Executable="shotcut.exe" EntryPoint="Windows.FullTrustApplication">
-      <uap:VisualElements DisplayName="Shotcut" Description="Shotcut" BackgroundColor="transparent" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png">
+    <Application Id="Pyromi" Executable="pyromi.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements DisplayName="Pyromi" Description="Pyromi" BackgroundColor="transparent" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\Square310x310Logo.png" Square71x71Logo="Assets\Square71x71Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
