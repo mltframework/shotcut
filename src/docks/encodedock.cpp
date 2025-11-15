@@ -298,15 +298,12 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
                 ui->fpsSpinner->setValue(preset.get_double("frame_rate_num")
                                          / preset.get_double("frame_rate_den"));
         } else if (name == "pix_fmt") {
-            // Handle 10 bit encoding with hardware encoder and GPU Effects
+            // Handle 10-bit encoding
             if (value.contains("p10le")) {
-                if (Settings.playerGPU()) {
-                    if (value == "yuva444p10le") {
-                        other.append("mlt_image_format=rgba");
-                    } else {
-                        other.append("mlt_image_format=yuv444p10");
-                    }
-                } else if (!other.contains("mlt_image_format=rgb")) {
+                // Let 8-bit processing modes utilize full range RGB
+                const auto pm = Settings.processingMode();
+                if ((pm == ShotcutSettings::Native8Cpu || pm == ShotcutSettings::Linear8Cpu)
+                    && !other.contains("mlt_image_format=rgb")) {
                     other.append("mlt_image_format=rgb");
                 }
                 // Hardware encoder
@@ -1146,9 +1143,29 @@ void EncodeDock::collectProperties(QDomElement &node, int realtime)
 {
     Mlt::Properties *p = collectProperties(realtime);
     if (p && p->is_valid()) {
-        for (int i = 0; i < p->count(); i++)
+        for (int i = 0; i < p->count(); i++) {
             if (p->get_name(i) && strcmp(p->get_name(i), ""))
                 node.setAttribute(p->get_name(i), p->get(i));
+        }
+
+        const auto processingMode = Settings.processingMode();
+        if (processingMode == ShotcutSettings::Native10Cpu
+            || processingMode == ShotcutSettings::Linear10Cpu
+            || processingMode == ShotcutSettings::Linear10GpuCpu) {
+            if (!p->property_exists("mlt_image_format")) {
+                if (::qstrcmp(p->get("color_trc"), "arib-std-b67"))
+                    node.setAttribute("mlt_image_format", "rgba64");
+                else
+                    node.setAttribute("mlt_image_format", "yuv444p10");
+            }
+        }
+        if (processingMode == ShotcutSettings::Linear8Cpu
+            || processingMode == ShotcutSettings::Linear10Cpu
+            || (processingMode == ShotcutSettings::Linear10GpuCpu
+                && ::qstrcmp(p->get("color_trc"), "arib-std-b67"))) {
+            if (!p->property_exists("mlt_color_trc"))
+                node.setAttribute("mlt_color_trc", "linear");
+        }
     }
     delete p;
 }
@@ -1223,16 +1240,7 @@ QPoint EncodeDock::addConsumerElement(
         consumerNode.setAttribute("strict", "experimental");
     if (!ui->disableSubtitlesCheckbox->isChecked())
         setSubtitleProperties(consumerNode, service);
-    ShotcutSettings::ProcessingMode processingMode = Settings.processingMode();
-    if (processingMode == ShotcutSettings::Native10Cpu
-        || processingMode == ShotcutSettings::Linear10Cpu) {
-        consumerNode.setAttribute("mlt_image_format", "rgba64");
-    }
-    if (processingMode == ShotcutSettings::Linear8Cpu
-        || processingMode == ShotcutSettings::Linear10Cpu
-        || processingMode == ShotcutSettings::Linear10GpuCpu) {
-        consumerNode.setAttribute("mlt_color_trc", "linear");
-    }
+
     return QPoint(consumerNode.hasAttribute("frame_rate_num")
                       ? consumerNode.attribute("frame_rate_num").toInt()
                       : MLT.profile().frame_rate_num(),

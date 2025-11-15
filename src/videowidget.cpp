@@ -368,8 +368,10 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer->set("mlt_image_format", "rgba64");
             break;
         case ShotcutSettings::Linear10GpuCpu:
-            // TODO: Change MLT movit to output rgba64
-            m_consumer->set("mlt_image_format", "rgba");
+            if (serviceName.startsWith("decklink") && property("decklinkGamma").toInt() == 1)
+                m_consumer->set("mlt_image_format", "yuv444p10");
+            else
+                m_consumer->set("mlt_image_format", "rgba64");
             break;
         default: // Native8Cpu
             m_consumer->set("mlt_image_format",
