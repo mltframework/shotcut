@@ -56,9 +56,9 @@ list(TRANSFORM TS_FILES APPEND ".ts")
 
 # lupdate ts files
 file(GLOB_RECURSE SOURCES "${CMAKE_SOURCE_DIR}/src/*")
-qt_add_lupdate(shotcut TS_FILES ${TS_FILES} SOURCES ${SOURCES}
+qt_add_lupdate(pyromi TS_FILES ${TS_FILES} SOURCES ${SOURCES}
     OPTIONS -locations absolute -no-obsolete -recursive)
-add_custom_target(translations DEPENDS shotcut_lupdate)
+add_custom_target(translations DEPENDS pyromi_lupdate)
 
 # generate qm files with lrelease
 qt6_add_translation(QM_FILES ${TS_FILES})
