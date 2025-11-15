@@ -266,7 +266,7 @@ add_custom_target(OTHER_FILES
   ../scripts/staple.sh
 )
 
-target_link_libraries(shotcut
+target_link_libraries(pyromi
   PRIVATE
   CuteLogger
   PkgConfig::mlt++
@@ -284,68 +284,68 @@ target_link_libraries(shotcut
   Qt6::Xml
 )
 if(UNIX AND NOT APPLE)
-  target_link_libraries(shotcut PRIVATE Qt6::DBus X11::X11)
+  target_link_libraries(pyromi PRIVATE Qt6::DBus X11::X11)
 endif()
 
 file(GLOB_RECURSE QML_SRC "qml/*")
-target_sources(shotcut PRIVATE ${QML_SRC})
+target_sources(pyromi PRIVATE ${QML_SRC})
 
-target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/CuteLogger/include)
-target_compile_definitions(shotcut PRIVATE SHOTCUT_VERSION="${SHOTCUT_VERSION}")
+target_include_directories(pyromi PRIVATE ${CMAKE_SOURCE_DIR}/CuteLogger/include)
+target_compile_definitions(pyromi PRIVATE SHOTCUT_VERSION="${SHOTCUT_VERSION}")
 
 # Add EXTERNAL_LAUNCHERS compile definition when the cache variable is ON
 if(EXTERNAL_LAUNCHERS)
-  target_compile_definitions(shotcut PRIVATE EXTERNAL_LAUNCHERS)
+  target_compile_definitions(pyromi PRIVATE EXTERNAL_LAUNCHERS)
 endif()
 
 if(WIN32)
   # Windows resource
   string(REPLACE . , PRODUCT_VERSION ${PROJECT_VERSION})
   configure_file(${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc.in ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
-  target_sources(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
+  target_sources(pyromi PRIVATE ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
 
   # Windows integration features
   # These are not yet available in Qt 6. They plan to make a cross-platform API planned but not yet implemented.
 #  find_package(Qt 6.2 REQUIRED COMPONENTS WinExtras)
-#  target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
-#  target_link_libraries(shotcut PRIVATE Qt6::WinExtras)
-  target_sources(shotcut PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
-  target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
-  target_link_libraries(shotcut PRIVATE d3d11 d3dcompiler)
+#  target_sources(pyromi PRIVATE windowstools.cpp windowstools.h)
+#  target_link_libraries(pyromi PRIVATE Qt6::WinExtras)
+  target_sources(pyromi PRIVATE widgets/d3dvideowidget.h widgets/d3dvideowidget.cpp)
+  target_sources(pyromi PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
+  target_link_libraries(pyromi PRIVATE d3d11 d3dcompiler)
 
   # Runtime exception handler for debug only
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
-    target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)
-    target_link_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/x64/lib)
-    target_link_libraries(shotcut PRIVATE debug exchndl)
+    target_include_directories(pyromi PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)
+    target_link_directories(pyromi PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/x64/lib)
+    target_link_libraries(pyromi PRIVATE debug exchndl)
   endif()
 
   if(WINDOWS_DEPLOY)
-    install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install(TARGETS pyromi RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
   else()
-    target_compile_definitions(shotcut PRIVATE NODEPLOY)
-    install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    target_compile_definitions(pyromi PRIVATE NODEPLOY)
+    install(TARGETS pyromi RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
   endif()
 
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
 else()
-    target_sources(shotcut PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
+    target_sources(pyromi PRIVATE widgets/openglvideowidget.h widgets/openglvideowidget.cpp)
 endif()
 
 if(APPLE)
-  target_sources(shotcut PRIVATE macos.mm macos.h
+  target_sources(pyromi PRIVATE macos.mm macos.h
     widgets/metalvideowidget.h widgets/metalvideowidget.mm)
   string(SUBSTRING ${SHOTCUT_VERSION} 0, 5, SHORT_VERSION)
-  set_target_properties(shotcut PROPERTIES
+  set_target_properties(pyromi PROPERTIES
     OUTPUT_NAME "Shotcut"
     MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/packaging/macos/Info.plist.in)
   find_library(FOUNDATION Foundation)
   find_library(COCOA Cocoa)
-  target_link_libraries(shotcut PRIVATE ${FOUNDATION} ${COCOA})
+  target_link_libraries(pyromi PRIVATE ${FOUNDATION} ${COCOA})
   set(APP_ICON ${CMAKE_SOURCE_DIR}/packaging/macos/shotcut.icns)
-  target_sources(shotcut PRIVATE ${APP_ICON})
+  target_sources(pyromi PRIVATE ${APP_ICON})
   set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
   # Create a symlink to the qml folder after building
@@ -357,7 +357,7 @@ if(APPLE)
     file(CREATE_LINK ${CMAKE_SOURCE_DIR}/voices ${CMAKE_CURRENT_BINARY_DIR}/Shotcut.app/Contents/Resources/shotcut/voices SYMBOLIC)
   endif()
 
-  install(TARGETS shotcut BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install(TARGETS pyromi BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
@@ -369,7 +369,7 @@ if(UNIX AND NOT APPLE)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/filter-sets ${CMAKE_BINARY_DIR}/share/shotcut/filter-sets SYMBOLIC)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/voices ${CMAKE_BINARY_DIR}/share/shotcut/voices SYMBOLIC)
   include(GNUInstallDirs)
-  install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(TARGETS pyromi RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
   install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/filter-sets DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
   install(DIRECTORY ${CMAKE_SOURCE_DIR}/voices DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
