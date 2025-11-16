@@ -358,8 +358,26 @@ int VideoWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
-        m_consumer->set("mlt_image_format",
-                        serviceName.startsWith("decklink") ? "yuv422p" : "yuv420p");
+        int processingMode = property("processing_mode").toInt();
+        switch (processingMode) {
+        case ShotcutSettings::Linear8Cpu:
+            m_consumer->set("mlt_image_format", "rgba");
+            break;
+        case ShotcutSettings::Native10Cpu:
+        case ShotcutSettings::Linear10Cpu:
+            m_consumer->set("mlt_image_format", "rgba64");
+            break;
+        case ShotcutSettings::Linear10GpuCpu:
+            if (serviceName.startsWith("decklink") && property("decklinkGamma").toInt() == 1)
+                m_consumer->set("mlt_image_format", "yuv444p10");
+            else
+                m_consumer->set("mlt_image_format", "rgba64");
+            break;
+        default: // Native8Cpu
+            m_consumer->set("mlt_image_format",
+                            serviceName.startsWith("decklink") ? "yuv422" : "yuv420p");
+            break;
+        }
         m_consumer->set("channels", property("audio_channels").toInt());
         if (property("audio_channels").toInt() == 4) {
             m_consumer->set("channel_layout", "quad");
@@ -390,6 +408,14 @@ int VideoWidget::reconfigure(bool isMulti)
         default:
             m_consumer->set("color_trc", "bt709");
             break;
+        }
+        if (processingMode == ShotcutSettings::Linear8Cpu
+            || processingMode == ShotcutSettings::Linear10Cpu
+            || (processingMode == ShotcutSettings::Linear10GpuCpu
+                && property("decklinkGamma").toInt() != 1)) {
+            m_consumer->set("mlt_color_trc", "linear");
+        } else {
+            m_consumer->clear("mlt_color_trc");
         }
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);
