@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     objectName: 'gradientMap'
     name: qsTr('Gradient Map')
-    keywords: qsTr('color mapping intensity', 'search keywords for the Gradient Map video filter') + ' gradient map gradientmap #rgba'
+    keywords: qsTr('color mapping intensity', 'search keywords for the Gradient Map video filter') + ' gradient map gradientmap #rgba #color'
     mlt_service: 'gradientmap'
     qml: 'ui.qml'
     icon: 'icon.webp'

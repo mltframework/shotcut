@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("White Balance")
-    keywords: qsTr('color correct light temperature neutral', 'search keywords for the White Balance video filter') + ' white balance #rgba'
+    keywords: qsTr('color correct light temperature neutral', 'search keywords for the White Balance video filter') + ' white balance #rgba #color'
     mlt_service: "frei0r.colgate"
     qml: "ui.qml"
     icon: 'icon.webp'

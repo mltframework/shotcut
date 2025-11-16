@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Saturation")
-    keywords: qsTr('color desaturate grayscale chroma', 'search keywords for the Saturation video filter') + ' saturation #rgba'
+    keywords: qsTr('color desaturate grayscale chroma', 'search keywords for the Saturation video filter') + ' saturation #rgba #color'
     mlt_service: "frei0r.saturat0r"
     qml: "ui_frei0r.qml"
     icon: 'icon.webp'

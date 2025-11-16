@@ -38,16 +38,27 @@ Rectangle {
 
     visible: false
     onVisibleChanged: {
-        if (metadatamodel.filter === Shotcut.MetadataModel.FavoritesFilter)
+        switch (metadatamodel.filter) {
+        case Shotcut.MetadataModel.FavoritesFilter:
             favButton.checked = true;
-        else if (metadatamodel.filter === Shotcut.MetadataModel.VideoFilter)
+            break;
+        case Shotcut.MetadataModel.VideoFilter:
             vidButton.checked = true;
-        else if (metadatamodel.filter === Shotcut.MetadataModel.AudioFilter)
+            if (metadatamodel.search === '#color') {
+                vidButton.text = colorMenuItem.text;
+                vidButton.videoFilterType = 'color';
+            }
+            break;
+        case Shotcut.MetadataModel.AudioFilter:
             audButton.checked = true;
-        else if (metadatamodel.filter === Shotcut.MetadataModel.LinkFilter)
+            break;
+        case Shotcut.MetadataModel.LinkFilter:
             lnkButton.checked = true;
-        else if (metadatamodel.filter === Shotcut.MetadataModel.FilterSetFilter)
+            break;
+        case Shotcut.MetadataModel.FilterSetFilter:
             setButton.checked = true;
+            break;
+        }
     }
     color: activePalette.window
 
@@ -74,7 +85,6 @@ Rectangle {
                 focus: true
                 placeholderText: qsTr("search")
                 selectByMouse: true
-                text: metadatamodel.search
                 onTextChanged: {
                     if (length !== 1 && text !== metadatamodel.search)
                         metadatamodel.search = text;
@@ -166,6 +176,7 @@ Rectangle {
                 onClicked: {
                     if (checked) {
                         metadatamodel.filter = Shotcut.MetadataModel.FavoritesFilter;
+                        metadatamodel.search = '';
                         searchField.text = '';
                         checked = true;
                     }
@@ -189,11 +200,19 @@ Rectangle {
                     icon.source: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
                     text: qsTr('Video')
                     ButtonGroup.group: typeGroup
+                    background: Rectangle {
+                        topLeftRadius: 3
+                        bottomLeftRadius: 3
+                        color: vidButton.checked ? activePalette.highlight : activePalette.button
+                        border.color: activePalette.shadow
+                        border.width: vidButton.checked ? 0 : 1
+                    }
                     onClicked: {
                         if (checked) {
+                            searchField.text = '';
                             if (videoFilterType === 'video') {
                                 metadatamodel.filter = Shotcut.MetadataModel.VideoFilter;
-                                searchField.text = '';
+                                metadatamodel.search = '';
                             } else if (videoFilterType === 'gpu') {
                                 metadatamodel.filter = Shotcut.MetadataModel.GPUFilter;
                                 metadatamodel.search = '';
@@ -202,7 +221,7 @@ Rectangle {
                                 metadatamodel.search = '#10bit';
                             } else if (videoFilterType === 'color') {
                                 metadatamodel.filter = Shotcut.MetadataModel.VideoFilter;
-                                metadatamodel.search = 'color';
+                                metadatamodel.search = '#color';
                             } else if (videoFilterType === 'rgba') {
                                 metadatamodel.filter = Shotcut.MetadataModel.VideoFilter;
                                 metadatamodel.search = '#rgba';
@@ -219,17 +238,21 @@ Rectangle {
                     }
                 }
 
-                ToolButton {
+                Shotcut.ToolButton {
                     id: vidMenuButton
 
-                    implicitWidth: 16
+                    implicitWidth: 22
                     implicitHeight: vidButton.height
                     padding: 0
-                    icon.name: 'overwrite'
-                    icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
-                    icon.width: 12
-                    icon.height: 12
+                    text: '▼'
                     onClicked: vidMenu.popup()
+                    background: Rectangle {
+                        topRightRadius: 3
+                        bottomRightRadius: 3
+                        color: vidButton.checked ? activePalette.highlight : activePalette.button
+                        border.color: activePalette.shadow
+                        border.width: vidButton.checked ? 0 : 1
+                    }
 
                     Shotcut.HoverTip {
                         text: qsTr('Video filter options')
@@ -239,23 +262,10 @@ Rectangle {
                         id: vidMenu
 
                         MenuItem {
-                            id: videoMenuItem
-                            text: qsTr('Video')
+                            text: qsTr('All Video')
                             onTriggered: {
                                 vidButton.videoFilterType = 'video';
-                                vidButton.text = text;
-                                vidButton.checked = true;
-                                vidButton.clicked();
-                            }
-                        }
-
-                        MenuItem {
-                            text: qsTr('GPU')
-                            visible: settings.playerGPU
-                            height: visible ? videoMenuItem.height : 0
-                            onTriggered: {
-                                vidButton.videoFilterType = 'gpu';
-                                vidButton.text = text;
+                                vidButton.text = qsTr('Video');
                                 vidButton.checked = true;
                                 vidButton.clicked();
                             }
@@ -272,9 +282,22 @@ Rectangle {
                         }
 
                         MenuItem {
+                            id: colorMenuItem
                             text: qsTr('Color')
                             onTriggered: {
                                 vidButton.videoFilterType = 'color';
+                                vidButton.text = text;
+                                vidButton.checked = true;
+                                vidButton.clicked();
+                            }
+                        }
+
+                        MenuItem {
+                            text: qsTr('GPU')
+                            visible: settings.playerGPU
+                            height: visible ? colorMenuItem.height : 0
+                            onTriggered: {
+                                vidButton.videoFilterType = 'gpu';
                                 vidButton.text = text;
                                 vidButton.checked = true;
                                 vidButton.clicked();

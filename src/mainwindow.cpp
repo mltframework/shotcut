@@ -206,7 +206,6 @@ MainWindow::MainWindow()
     readPlayerSettings();
     configureVideoWidget();
 
-    setupLayoutSwitcher();
     centerLayoutInRemainingToolbarSpace();
 
 #ifndef SHOTCUT_NOUPGRADE
@@ -215,15 +214,12 @@ MainWindow::MainWindow()
         delete ui->actionUpgrade;
 
     setupAndConnectDocks();
-
     setupMenuFile();
     setupMenuView();
-
     connectVideoWidgetSignals();
-
     readWindowSettings();
-
     setupActions();
+    setupLayoutSwitcher();
 
     setFocus();
     setCurrentFile("");
@@ -374,9 +370,12 @@ void MainWindow::setupLayoutSwitcher()
         break;
     case LayoutMode::Color:
         ui->actionLayoutColor->setChecked(true);
+        filterController()->metadataModel()->setFilter(MetadataModel::VideoFilter);
+        filterController()->metadataModel()->setSearch("#color");
         break;
     case LayoutMode::Audio:
         ui->actionLayoutAudio->setChecked(true);
+        filterController()->metadataModel()->setFilter(MetadataModel::AudioFilter);
         break;
     case LayoutMode::PlayerOnly:
         ui->actionLayoutPlayer->setChecked(true);
@@ -4579,6 +4578,16 @@ bool MainWindow::confirmRestartExternalMonitor()
     return dialog.exec() == QMessageBox::Yes;
 }
 
+void MainWindow::resetFilterMenuIfNeeded()
+{
+    // Reset to Favorites if currently set to Color or Audio
+    if (filterController()->metadataModel()->search() == "#color"
+        || filterController()->metadataModel()->filter() == MetadataModel::AudioFilter) {
+        filterController()->metadataModel()->setFilter(MetadataModel::FavoritesFilter);
+        filterController()->metadataModel()->setSearch("");
+    }
+}
+
 void MainWindow::on_actionSystemTheme_triggered()
 {
     Settings.setTheme("system");
@@ -5267,6 +5276,7 @@ void MainWindow::on_actionLayoutLogging_triggered()
         restoreState(state);
     }
     Settings.setWindowState(saveState());
+    resetFilterMenuIfNeeded();
 }
 
 void MainWindow::on_actionLayoutEditing_triggered()
@@ -5284,6 +5294,7 @@ void MainWindow::on_actionLayoutEditing_triggered()
         restoreState(state);
     }
     Settings.setWindowState(saveState());
+    resetFilterMenuIfNeeded();
 }
 
 void MainWindow::on_actionLayoutEffects_triggered()
@@ -5301,6 +5312,7 @@ void MainWindow::on_actionLayoutEffects_triggered()
         restoreState(state);
     }
     Settings.setWindowState(saveState());
+    resetFilterMenuIfNeeded();
 }
 
 void MainWindow::on_actionLayoutColor_triggered()
@@ -5321,6 +5333,9 @@ void MainWindow::on_actionLayoutColor_triggered()
         restoreState(state);
     }
     Settings.setWindowState(saveState());
+    // Set filter menu to Video filters for Color layout
+    filterController()->metadataModel()->setFilter(MetadataModel::VideoFilter);
+    filterController()->metadataModel()->setSearch("#color");
 }
 
 void MainWindow::on_actionLayoutAudio_triggered()
@@ -5341,6 +5356,9 @@ void MainWindow::on_actionLayoutAudio_triggered()
         restoreState(state);
     }
     Settings.setWindowState(saveState());
+    // Set filter menu to Audio filters for Audio layout
+    filterController()->metadataModel()->setFilter(MetadataModel::AudioFilter);
+    filterController()->metadataModel()->setSearch("");
 }
 
 void MainWindow::on_actionLayoutPlayer_triggered()
@@ -5362,6 +5380,7 @@ void MainWindow::on_actionLayoutPlayer_triggered()
         restoreState(state);
     }
     Settings.setWindowState(saveState());
+    resetFilterMenuIfNeeded();
 }
 
 void MainWindow::on_actionLayoutPlaylist_triggered()
@@ -5396,6 +5415,7 @@ void MainWindow::on_actionLayoutClip_triggered()
     m_filtersDock->show();
     m_filtersDock->raise();
     Settings.setWindowState(saveState());
+    resetFilterMenuIfNeeded();
 }
 
 void MainWindow::on_actionLayoutAdd_triggered()
@@ -5432,6 +5452,7 @@ void MainWindow::onLayoutTriggered(QAction *action)
     clearCurrentLayout();
     restoreState(Settings.layoutState(action->text()));
     Settings.setWindowState(saveState());
+    resetFilterMenuIfNeeded();
 }
 
 void MainWindow::on_actionProfileRemove_triggered()

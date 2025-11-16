@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Brightness")
-    keywords: qsTr('lightness value', 'search keywords for the Brightness video filter') + ' brightness #gpu'
+    keywords: qsTr('lightness value', 'search keywords for the Brightness video filter') + ' brightness #gpu #10bit #color'
     objectName: "movitBrightness"
     mlt_service: "movit.opacity"
     needsGPU: true

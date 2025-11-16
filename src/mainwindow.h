@@ -172,6 +172,7 @@ private:
     void backupPeriodically();
     bool confirmProfileChange();
     bool confirmRestartExternalMonitor();
+    void resetFilterMenuIfNeeded();
 
     Ui::MainWindow *ui;
     Player *m_player;

@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Chroma Hold")
-    keywords: qsTr('color hue select choose pick', 'search keywords for the Chroma Hold video filter') + ' chroma hold #yuv #10bit'
+    keywords: qsTr('color hue select choose pick', 'search keywords for the Chroma Hold video filter') + ' chroma hold #yuv #10bit #color'
     mlt_service: 'avfilter.chromahold'
     qml: 'ui.qml'
     icon: 'icon.webp'
