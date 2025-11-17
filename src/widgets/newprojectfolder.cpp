@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2024 Meltytech, LLC
+ * Copyright (c) 2018-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -211,6 +211,14 @@ void NewProjectFolder::on_startButton_clicked()
         QMessageBox::warning(this,
                              ui->newProjectLabel->text(),
                              tr("The project name cannot include a slash."));
+        ui->startButton->setDisabled(true);
+        return;
+    }
+
+    if (projectName.contains('?')) {
+        QMessageBox::warning(this,
+                             ui->newProjectLabel->text(),
+                             tr("The project name cannot include '?'."));
         ui->startButton->setDisabled(true);
         return;
     }
