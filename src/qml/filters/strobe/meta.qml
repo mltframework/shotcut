@@ -7,6 +7,7 @@ Metadata {
     keywords: qsTr('strobe alpha blink', 'search keywords for the Strobe video filter') + ' strobe #rgba'
     mlt_service: "strobe"
     qml: "ui.qml"
+    icon: 'icon.webp'
 
     keyframes {
         allowAnimateIn: true
