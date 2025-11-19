@@ -387,6 +387,10 @@ public:
     double speechSpeed() const;
     void setSpeechSpeed(double speed);
 
+    // Color Dialog
+    void saveCustomColors();
+    void restoreCustomColors();
+
 public slots:
     void reset();
 

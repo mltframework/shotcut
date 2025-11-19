@@ -27,25 +27,36 @@ class ColorDialog : public QObject
     Q_PROPERTY(
         QColor selectedColor READ selectedColor WRITE setSelectedColor NOTIFY selectedColorChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+    Q_PROPERTY(bool showAlpha READ showAlpha WRITE setShowAlpha NOTIFY showAlphaChanged)
 
 public:
     explicit ColorDialog(QObject *parent = nullptr);
 
     Q_INVOKABLE void open();
 
+    // Static convenience method for non-QML usage
+    static QColor getColor(const QColor &initial = Qt::white,
+                           QWidget *parent = nullptr,
+                           const QString &title = QString(),
+                           bool showAlpha = true);
+
 signals:
     void selectedColorChanged(const QColor &color);
     void accepted();
     void titleChanged();
+    void showAlphaChanged();
 
 private:
     QColor m_color;
     QString m_title;
+    bool m_showAlpha = true;
 
     QColor selectedColor() const { return m_color; }
     void setSelectedColor(const QColor &color);
     QString title() const { return m_title; }
     void setTitle(const QString &title);
+    bool showAlpha() const { return m_showAlpha; }
+    void setShowAlpha(bool show);
 };
 
 #endif // COLORDIALOG_H

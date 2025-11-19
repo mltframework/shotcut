@@ -25,12 +25,12 @@
 #include "jobs/htmlgeneratorjob.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
+#include "qmltypes/colordialog.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 
-#include <QColorDialog>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QFont>
@@ -151,19 +151,11 @@ void HtmlGeneratorWidget::on_colorButton_clicked()
 {
     const QColor color = colorStringToResource(ui->colorLabel->text());
     // At this point Qt's colors are misread from CSS and and are stored in Qt as ARGB instead of RGBA
-    QColorDialog::ColorDialogOptions flags = QColorDialog::ShowAlphaChannel;
-    flags |= Util::getColorDialogOptions();
     // Remap to Qt's color order RGBA
     const QColor qtColor(color.alpha(), color.red(), color.green(), color.blue());
-    auto newColor = QColorDialog::getColor(qtColor, this, QString(), flags);
+    auto newColor = ColorDialog::getColor(qtColor, this);
+
     if (newColor.isValid()) {
-        auto rgb = newColor;
-        auto transparent = QColor(0, 0, 0, 0);
-        rgb.setAlpha(color.alpha());
-        if (newColor.alpha() == 0
-            && (rgb != color || (newColor == transparent && color == transparent))) {
-            newColor.setAlpha(255);
-        }
         ui->colorLabel->setText(colorToString(newColor));
         ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                           .arg(Util::textColor(newColor), newColor.name()));

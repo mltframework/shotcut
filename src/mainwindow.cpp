@@ -206,6 +206,9 @@ MainWindow::MainWindow()
     readPlayerSettings();
     configureVideoWidget();
 
+    // Restore custom colors from settings
+    Settings.restoreCustomColors();
+
     centerLayoutInRemainingToolbarSpace();
 
 #ifndef SHOTCUT_NOUPGRADE

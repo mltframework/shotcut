@@ -23,6 +23,7 @@
 #include <QApplication>
 #include <QAudioDevice>
 #include <QColor>
+#include <QColorDialog>
 #include <QDir>
 #include <QFile>
 #include <QLocale>
@@ -1551,6 +1552,36 @@ double ShotcutSettings::speechSpeed() const
 void ShotcutSettings::setSpeechSpeed(double speed)
 {
     settings.setValue("speech/speed", speed);
+}
+
+void ShotcutSettings::saveCustomColors()
+{
+    // QColorDialog supports up to 48 custom colors (16 in older versions)
+    QStringList colorList;
+    for (int i = 0; i < QColorDialog::customCount(); ++i) {
+        QColor color = QColorDialog::customColor(i);
+        if (color.isValid()) {
+            colorList.append(color.name(QColor::HexArgb));
+        } else {
+            colorList.append(QString());
+        }
+    }
+    settings.setValue("colorDialog/customColors", colorList);
+}
+
+void ShotcutSettings::restoreCustomColors()
+{
+    QStringList colorList = settings.value("colorDialog/customColors").toStringList();
+    for (int i = 0; i < colorList.size() && i < QColorDialog::customCount(); ++i) {
+        const QString &colorName = colorList.at(i);
+        if (!colorName.isEmpty()) {
+            QColor color(colorName);
+            if (color.isValid()) {
+                // Use rgba() to preserve alpha channel
+                QColorDialog::setCustomColor(i, color.rgba());
+            }
+        }
+    }
 }
 
 void ShotcutSettings::setWhisperExe(const QString &path)
