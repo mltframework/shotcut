@@ -34,7 +34,8 @@ Metadata {
             Parameter {
                 name: qsTr('Corners')
                 property: 'shotcut:corner1'
-                gangedProperties: ['0', '1', '2', '3', '4', '5', '6', '7', 'shotcut:corner2', 'shotcut:corner3', 'shotcut:corner4']
+                gangedProperties: ['0', '1', '2', '3', '4', '5', '6', '7']
+                gangedRectProperties: ['shotcut:corner1', 'shotcut:corner2', 'shotcut:corner3', 'shotcut:corner4']
             },
             Parameter {
                 name: qsTr('Stretch X')

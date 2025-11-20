@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ class QmlKeyframesParameter : public QObject
     Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
     Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
     Q_PROPERTY(QStringList gangedProperties MEMBER m_gangedProperties NOTIFY changed)
+    Q_PROPERTY(QStringList gangedRectProperties MEMBER m_gangedRectProperties NOTIFY changed)
     Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY changed)
     Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
     Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
@@ -49,6 +50,7 @@ public:
     QString name() const { return m_name; }
     QString property() const { return m_property; }
     QStringList gangedProperties() const { return m_gangedProperties; }
+    QStringList gangedRectProperties() const { return m_gangedRectProperties; }
     bool isCurve() const { return m_isCurve; }
     double minimum() const { return m_minimum; }
     double maximum() const { return m_maximum; }
@@ -64,6 +66,7 @@ private:
     QString m_name;
     QString m_property;
     QStringList m_gangedProperties;
+    QStringList m_gangedRectProperties;
     bool m_isCurve;
     double m_minimum;
     double m_maximum;

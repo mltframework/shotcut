@@ -652,6 +652,10 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                     value = m_filter->getDouble(key, position);
                     m_filter->set(key, value, position, keyframeType);
                 }
+                for (auto &key : parameter->gangedRectProperties()) {
+                    const auto rect = m_filter->getRect(key, position);
+                    m_filter->set(key, rect, position, keyframeType);
+                }
                 m_filter->blockSignals(false);
                 emit keyframeAdded(name, position);
                 m_filter->endUndoCommand();
