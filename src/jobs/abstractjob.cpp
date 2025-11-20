@@ -195,9 +195,9 @@ void AbstractJob::resume()
     emit progressUpdated(m_item, 0);
 }
 
-void AbstractJob::resetKilled()
+void AbstractJob::setKilled(bool killed)
 {
-    m_killed = false;
+    m_killed = killed;
 }
 
 void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
