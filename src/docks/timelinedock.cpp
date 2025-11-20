@@ -3260,6 +3260,7 @@ void TimelineDock::freezeFrame()
         info->frame_out = info->frame_in + fps - 1;
         p.set("length", p.frames_to_time(qRound(MLT.profile().fps() * 3600 * 4), mlt_time_clock));
         p.set_in_and_out(info->frame_in, info->frame_out);
+        MLT.adjustFilters(p);
 
         Mlt::Link link("timeremap");
         link.set_profile(MLT.profile());
