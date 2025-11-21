@@ -358,7 +358,9 @@ int VideoWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
-        int processingMode = property("processing_mode").toInt();
+        const int processingMode = property("processing_mode").toInt();
+        const bool isDeckLinkHLG = serviceName.startsWith("decklink")
+                                   && property("decklinkGamma").toInt() == 1;
         switch (processingMode) {
         case ShotcutSettings::Linear8Cpu:
             m_consumer->set("mlt_image_format", "rgba");
@@ -368,10 +370,7 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer->set("mlt_image_format", "rgba64");
             break;
         case ShotcutSettings::Linear10GpuCpu:
-            if (serviceName.startsWith("decklink") && property("decklinkGamma").toInt() == 1)
-                m_consumer->set("mlt_image_format", "yuv444p10");
-            else
-                m_consumer->set("mlt_image_format", "rgba64");
+            m_consumer->set("mlt_image_format", isDeckLinkHLG ? "yuv444p10" : "rgba64");
             break;
         default: // Native8Cpu
             m_consumer->set("mlt_image_format",
@@ -396,13 +395,10 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer->set("color_trc", "bt470bg");
             break;
         case 2020:
-            switch (property("decklinkGamma").toInt()) {
-            case 1:
+            if (isDeckLinkHLG) {
                 m_consumer->set("color_trc", "arib-std-b67");
-                break;
-            default:
+            } else {
                 m_consumer->clear("color_trc");
-                break;
             }
             break;
         default:
