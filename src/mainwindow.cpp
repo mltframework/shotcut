@@ -1041,11 +1041,22 @@ void MainWindow::setupSettingsMenu()
 {
     LOG_DEBUG() << "begin";
 
+    Mlt::Filter filter(MLT.profile(), "color_transform");
+    if (!filter.is_valid()) {
+        ui->actionLinear8bitCpu->setVisible(false);
+#if LIBMLT_VERSION_INT < ((7 << 16) + (34 << 8))
+        ui->actionNative10bitCpu->setVisible(false);
+#endif
+        ui->actionLinear10bitCpu->setVisible(false);
+    }
     QActionGroup *group = new QActionGroup(this);
     ui->actionNative8bitCpu->setData(ShotcutSettings::Native8Cpu);
-    ui->actionLinear8bitCpu->setData(ShotcutSettings::Linear8Cpu);
-    ui->actionNative10bitCpu->setData(ShotcutSettings::Native10Cpu);
-    ui->actionLinear10bitCpu->setData(ShotcutSettings::Linear10Cpu);
+    if (ui->actionLinear8bitCpu->isVisible())
+        ui->actionLinear8bitCpu->setData(ShotcutSettings::Linear8Cpu);
+    if (ui->actionNative10bitCpu->isVisible())
+        ui->actionNative10bitCpu->setData(ShotcutSettings::Native10Cpu);
+    if (ui->actionLinear10bitCpu->isVisible())
+        ui->actionLinear10bitCpu->setData(ShotcutSettings::Linear10Cpu);
     ui->actionNative10bitGpuCpu->setData(ShotcutSettings::Linear10GpuCpu);
     group->addAction(ui->actionNative8bitCpu);
     group->addAction(ui->actionLinear8bitCpu);
@@ -2186,7 +2197,9 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         m_player->setPauseAfterOpen(!play || !MLT.isClip());
 
         setAudioChannels(MLT.audioChannels());
-        setProcessingMode(MLT.processingMode());
+        Mlt::Filter filter(MLT.profile(), "color_transform");
+        if (filter.is_valid())
+            setProcessingMode(MLT.processingMode());
         if (url.endsWith(".mlt") || url.endsWith(".xml")) {
             if (MLT.producer()->get_int(kShotcutProjectFolder)) {
                 MLT.setProjectFolder(info.absolutePath());
