@@ -136,7 +136,7 @@ Item {
                 }
                 if (tension > 0.0 || (p[2].y < p[1].y && p[2].y > p[3].y) || (p[2].y > p[1].y && p[2].y < p[3].y)) {
                     var t23 = Math.pow(distance(p[2].x, p[2].y, p[3].x, p[3].y), alpha);
-                    m2 = Math.abs(tension) * (p[2].y - p[2].y + t12 * ((p[3].y - p[2].y) / t23 - (p[3].y - p[1].y) / (t12 + t23)));
+                    m2 = Math.abs(tension) * (p[2].y - p[1].y + t12 * ((p[3].y - p[2].y) / t23 - (p[3].y - p[1].y) / (t12 + t23)));
                 }
                 var a = 2.0 * (p[1].y - p[2].y) + m1 + m2;
                 var b = -3.0 * (p[1].y - p[2].y) - m1 - m1 - m2;
