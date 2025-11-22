@@ -39,6 +39,21 @@ static const int kMaximumTrackHeight = 125;
 static const QString kRecentKey("recent");
 static const QString kProjectsKey("projects");
 
+namespace {
+struct ModeMap
+{
+    ShotcutSettings::ProcessingMode id;
+    const char *name;
+};
+static const ModeMap kModeMap[] = {
+    {ShotcutSettings::Native8Cpu, "Native8Cpu"},
+    {ShotcutSettings::Linear8Cpu, "Linear8Cpu"},
+    {ShotcutSettings::Native10Cpu, "Native10Cpu"},
+    {ShotcutSettings::Linear10Cpu, "Linear10Cpu"},
+    {ShotcutSettings::Linear10GpuCpu, "Linear10GpuCpu"},
+};
+} // anonymous namespace
+
 ShotcutSettings &ShotcutSettings::singleton()
 {
     if (!instance) {
@@ -534,17 +549,9 @@ void ShotcutSettings::setProcessingMode(ProcessingMode mode)
 
 QString ShotcutSettings::processingModeStr(ShotcutSettings::ProcessingMode mode)
 {
-    switch (mode) {
-    case Native8Cpu:
-        return QStringLiteral("Native8Cpu");
-    case Linear8Cpu:
-        return QStringLiteral("Linear8Cpu");
-    case Native10Cpu:
-        return QStringLiteral("Native10Cpu");
-    case Linear10Cpu:
-        return QStringLiteral("Linear10Cpu");
-    case Linear10GpuCpu:
-        return QStringLiteral("Linear10GpuCpu");
+    for (const auto &m : kModeMap) {
+        if (m.id == mode)
+            return QString::fromLatin1(m.name);
     }
     LOG_ERROR() << "Unknown processing mode" << mode;
     return QStringLiteral("Native8Cpu");
@@ -552,16 +559,9 @@ QString ShotcutSettings::processingModeStr(ShotcutSettings::ProcessingMode mode)
 
 ShotcutSettings::ProcessingMode ShotcutSettings::processingModeId(const QString &mode)
 {
-    if (mode == QStringLiteral("Native8Cpu")) {
-        return Native8Cpu;
-    } else if (mode == QStringLiteral("Linear8Cpu")) {
-        return Linear8Cpu;
-    } else if (mode == QStringLiteral("Native10Cpu")) {
-        return Native10Cpu;
-    } else if (mode == QStringLiteral("Linear10Cpu")) {
-        return Linear10Cpu;
-    } else if (mode == QStringLiteral("Linear10GpuCpu")) {
-        return Linear10GpuCpu;
+    for (const auto &m : kModeMap) {
+        if (mode == QLatin1String(m.name))
+            return m.id;
     }
     LOG_ERROR() << "Unknown processing mode" << mode;
     return Native8Cpu;
