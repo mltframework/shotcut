@@ -1057,7 +1057,7 @@ void MainWindow::setupSettingsMenu()
         ui->actionNative10bitCpu->setData(ShotcutSettings::Native10Cpu);
     if (ui->actionLinear10bitCpu->isVisible())
         ui->actionLinear10bitCpu->setData(ShotcutSettings::Linear10Cpu);
-    ui->actionNative10bitGpuCpu->setData(ShotcutSettings::Linear10GpuCpu);
+    ui->actionLinear10bitGpuCpu->setData(ShotcutSettings::Linear10GpuCpu);
     if (ui->actionNative8bitCpu->isVisible())
         group->addAction(ui->actionNative8bitCpu);
     if (ui->actionLinear8bitCpu->isVisible())
@@ -1066,10 +1066,10 @@ void MainWindow::setupSettingsMenu()
         group->addAction(ui->actionNative10bitCpu);
     if (ui->actionLinear10bitCpu->isVisible())
         group->addAction(ui->actionLinear10bitCpu);
-    if (ui->actionNative10bitGpuCpu->isVisible())
-        group->addAction(ui->actionNative10bitGpuCpu);
+    if (ui->actionLinear10bitGpuCpu->isVisible())
+        group->addAction(ui->actionLinear10bitGpuCpu);
     for (auto a : group->actions()) {
-        ShotcutSettings::ProcessingMode mode = (ShotcutSettings::ProcessingMode) a->data().toInt();
+        const auto mode = (ShotcutSettings::ProcessingMode) a->data().toInt();
         if (Settings.processingMode() == mode) {
             a->setChecked(true);
             setProcessingMode(mode);
@@ -1077,9 +1077,8 @@ void MainWindow::setupSettingsMenu()
         }
     }
     connect(group, &QActionGroup::triggered, this, [&](QAction *action) {
-        ShotcutSettings::ProcessingMode oldMode = Settings.processingMode();
-        ShotcutSettings::ProcessingMode newMode
-            = (ShotcutSettings::ProcessingMode) action->data().toInt();
+        const auto oldMode = Settings.processingMode();
+        const auto newMode = (ShotcutSettings::ProcessingMode) action->data().toInt();
         if (oldMode == newMode)
             return;
         LOG_INFO() << "Processing Mode" << oldMode << "->" << newMode;
@@ -1103,6 +1102,12 @@ void MainWindow::setupSettingsMenu()
                 m_exitCode = EXIT_RESTART;
                 QApplication::closeAllWindows();
             }
+            for (auto a : action->actionGroup()->actions()) {
+                if (oldMode == a->data().toInt()) {
+                    a->setChecked(true);
+                    break;
+                }
+            }
         } else if (oldMode == ShotcutSettings::Linear10GpuCpu) {
             QMessageBox dialog(QMessageBox::Information,
                                qApp->applicationName(),
@@ -1119,6 +1124,7 @@ void MainWindow::setupSettingsMenu()
                 m_exitCode = EXIT_RESTART;
                 QApplication::closeAllWindows();
             }
+            ui->actionLinear10bitGpuCpu->setChecked(true);
         } else {
             setProcessingMode((ShotcutSettings::ProcessingMode) action->data().toInt());
         }
@@ -1948,7 +1954,7 @@ void MainWindow::setProcessingMode(ShotcutSettings::ProcessingMode mode)
         ui->actionLinear10bitCpu->setChecked(true);
         break;
     case ShotcutSettings::Linear10GpuCpu:
-        ui->actionNative10bitGpuCpu->setChecked(true);
+        ui->actionLinear10bitGpuCpu->setChecked(true);
         break;
     }
     MLT.videoWidget()->setProperty("processing_mode", mode);
@@ -4121,8 +4127,8 @@ void MainWindow::onGpuNotSupported()
     if (Settings.processingMode() == ShotcutSettings::Linear10GpuCpu) {
         Settings.setProcessingMode(ShotcutSettings::Native8Cpu);
     }
-    ui->actionNative10bitGpuCpu->setChecked(false);
-    ui->actionNative10bitGpuCpu->setDisabled(true);
+    ui->actionLinear10bitGpuCpu->setChecked(false);
+    ui->actionLinear10bitGpuCpu->setDisabled(true);
     LOG_WARNING() << "";
     QMessageBox::critical(this, qApp->applicationName(), tr("GPU processing is not supported"));
 }

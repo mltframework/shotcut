@@ -163,7 +163,7 @@
      <addaction name="actionLinear8bitCpu"/>
      <addaction name="actionNative10bitCpu"/>
      <addaction name="actionLinear10bitCpu"/>
-     <addaction name="actionNative10bitGpuCpu"/>
+     <addaction name="actionLinear10bitGpuCpu"/>
     </widget>
     <widget class="QMenu" name="menuLanguage">
      <property name="title">
@@ -622,7 +622,7 @@
     <string>Linear 10-bit CPU</string>
    </property>
   </action>
-  <action name="actionNative10bitGpuCpu">
+  <action name="actionLinear10bitGpuCpu">
    <property name="checkable">
     <bool>true</bool>
    </property>
