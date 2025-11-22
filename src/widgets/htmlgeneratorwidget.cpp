@@ -421,6 +421,8 @@ void HtmlGeneratorWidget::on_bodyToggleButton_toggled(bool checked)
     ui->bodySpacerLabel->setVisible(checked);
     ui->bodyTextEdit->setVisible(checked);
     ui->bodyToggleButton->setText(checked ? tr("▼ Body") : tr("▶ Body"));
+    if (checked)
+        ui->bodyTextEdit->setFocus(Qt::PopupFocusReason);
 }
 
 void HtmlGeneratorWidget::on_javascriptToggleButton_toggled(bool checked)
@@ -449,6 +451,8 @@ void HtmlGeneratorWidget::updateTextSectionVisibility()
     ui->line2LineEdit->setVisible(body.contains("%2"));
     ui->line3Label->setVisible(body.contains("%3"));
     ui->line3LineEdit->setVisible(body.contains("%3"));
+    if (ui->line1LineEdit->isVisible())
+        ui->line1LineEdit->setFocus(Qt::PopupFocusReason);
 }
 
 void HtmlGeneratorWidget::populatePresetIconView()
