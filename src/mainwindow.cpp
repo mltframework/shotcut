@@ -1058,11 +1058,16 @@ void MainWindow::setupSettingsMenu()
     if (ui->actionLinear10bitCpu->isVisible())
         ui->actionLinear10bitCpu->setData(ShotcutSettings::Linear10Cpu);
     ui->actionNative10bitGpuCpu->setData(ShotcutSettings::Linear10GpuCpu);
-    group->addAction(ui->actionNative8bitCpu);
-    group->addAction(ui->actionLinear8bitCpu);
-    group->addAction(ui->actionNative10bitCpu);
-    group->addAction(ui->actionLinear10bitCpu);
-    group->addAction(ui->actionNative10bitGpuCpu);
+    if (ui->actionNative8bitCpu->isVisible())
+        group->addAction(ui->actionNative8bitCpu);
+    if (ui->actionLinear8bitCpu->isVisible())
+        group->addAction(ui->actionLinear8bitCpu);
+    if (ui->actionNative10bitCpu->isVisible())
+        group->addAction(ui->actionNative10bitCpu);
+    if (ui->actionLinear10bitCpu->isVisible())
+        group->addAction(ui->actionLinear10bitCpu);
+    if (ui->actionNative10bitGpuCpu->isVisible())
+        group->addAction(ui->actionNative10bitGpuCpu);
     for (auto a : group->actions()) {
         ShotcutSettings::ProcessingMode mode = (ShotcutSettings::ProcessingMode) a->data().toInt();
         if (Settings.processingMode() == mode) {
