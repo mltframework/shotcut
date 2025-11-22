@@ -1079,15 +1079,16 @@ void MainWindow::setupSettingsMenu()
             return;
         LOG_INFO() << "Processing Mode" << oldMode << "->" << newMode;
         if (newMode == ShotcutSettings::Linear10GpuCpu) {
-            QMessageBox dialog(QMessageBox::Warning,
-                               qApp->applicationName(),
-                               tr("GPU is experimental and does not work on all computers. "
-                                  "Plan to do some testing after turning this on.\n"
-                                  "At this time, a project created with GPU processing cannot be "
-                                  "converted to a CPU-only project later.\n"
-                                  "Do you want to enable GPU processing and restart Shotcut?"),
-                               QMessageBox::No | QMessageBox::Yes,
-                               this);
+            QMessageBox
+                dialog(QMessageBox::Warning,
+                       qApp->applicationName(),
+                       tr("GPU processing is experimental and does not work on all computers. "
+                          "Plan to do some testing after turning this on.\n"
+                          "At this time, a project created with GPU processing cannot be "
+                          "converted to a CPU-only project later.\n"
+                          "Do you want to enable GPU processing and restart Shotcut?"),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
             dialog.setDefaultButton(QMessageBox::Yes);
             dialog.setEscapeButton(QMessageBox::No);
             dialog.setWindowModality(QmlApplication::dialogModality());
@@ -1100,7 +1101,7 @@ void MainWindow::setupSettingsMenu()
         } else if (oldMode == ShotcutSettings::Linear10GpuCpu) {
             QMessageBox dialog(QMessageBox::Information,
                                qApp->applicationName(),
-                               tr("Shotcut must restart to disable GPU processing mode.\n"
+                               tr("Shotcut must restart to disable GPU processing.\n"
                                   "Disable GPU processing and restart?"),
                                QMessageBox::No | QMessageBox::Yes,
                                this);
@@ -1693,26 +1694,25 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker)
 {
     if (checker.needsGPU() && !Settings.playerGPU()) {
         LOG_INFO() << "file uses GPU but GPU not enabled";
-        QMessageBox dialog(
-            QMessageBox::Warning,
-            qApp->applicationName(),
-            tr("The file you opened uses GPU processing, but GPU processing mode is not enabled."),
-            QMessageBox::Ok,
-            this);
+        QMessageBox dialog(QMessageBox::Warning,
+                           qApp->applicationName(),
+                           tr("The file you opened uses GPU processing, which is not enabled."),
+                           QMessageBox::Ok,
+                           this);
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Ok);
         dialog.setEscapeButton(QMessageBox::Ok);
         dialog.exec();
         return false;
     } else if (checker.needsCPU() && Settings.playerGPU()) {
-        LOG_INFO() << "file uses GPU incompatible filters but GPU is enabled";
-        QMessageBox dialog(QMessageBox::Question,
-                           qApp->applicationName(),
-                           tr("The file you opened uses CPU effects that are incompatible with GPU "
-                              "effects, but GPU mode is enabled.\n"
-                              "Do you want to disable GPU processing mode and restart?"),
-                           QMessageBox::No | QMessageBox::Yes,
-                           this);
+        LOG_INFO() << "file uses GPU incompatible filters but GPU processing is enabled";
+        QMessageBox dialog(
+            QMessageBox::Question,
+            qApp->applicationName(),
+            tr("The file you opened uses CPU effects that are incompatible with GPU processing.\n"
+               "Do you want to disable GPU processing and restart?"),
+            QMessageBox::No | QMessageBox::Yes,
+            this);
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
@@ -4119,7 +4119,7 @@ void MainWindow::onGpuNotSupported()
     ui->actionNative10bitGpuCpu->setChecked(false);
     ui->actionNative10bitGpuCpu->setDisabled(true);
     LOG_WARNING() << "";
-    QMessageBox::critical(this, qApp->applicationName(), tr("GPU effects are not supported"));
+    QMessageBox::critical(this, qApp->applicationName(), tr("GPU processing is not supported"));
 }
 
 void MainWindow::onShuttle(float x)
