@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ public:
     void saveDefaultPreset(const Mlt::Properties &);
     void savePreset(const Mlt::Properties &);
     void savePreset(const Mlt::Properties &properties, QString name);
+    void setPreset(const QString &name);
 
 signals:
     void selected(void *properties);

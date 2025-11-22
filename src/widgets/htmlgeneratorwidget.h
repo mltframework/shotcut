@@ -70,10 +70,20 @@ private slots:
 
     void on_bodyTextEdit_textChanged();
 
+    void on_presetIconView_itemClicked(class QListWidgetItem *item);
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
 private:
     QString generateHtml() const;
     void updateTextSectionVisibility();
+    void populatePresetIconView();
+    QString findPresetIconPath(const QString &presetName);
+    void setupIconAnimation(class QListWidgetItem *item, const QString &iconPath);
     Ui::HtmlGeneratorWidget *ui;
+    QList<class QMovie *> m_iconMovies;
+    class QListWidgetItem *m_lastHoveredItem = nullptr;
 };
 
 #endif // TEXTPRODUCERWIDGET_H
