@@ -40,6 +40,21 @@ static const int kMaximumTrackHeight = 125;
 static const QString kRecentKey("recent");
 static const QString kProjectsKey("projects");
 
+namespace {
+struct ModeMap
+{
+    ShotcutSettings::ProcessingMode id;
+    const char *name;
+};
+static const ModeMap kModeMap[] = {
+    {ShotcutSettings::Native8Cpu, "Native8Cpu"},
+    {ShotcutSettings::Linear8Cpu, "Linear8Cpu"},
+    {ShotcutSettings::Native10Cpu, "Native10Cpu"},
+    {ShotcutSettings::Linear10Cpu, "Linear10Cpu"},
+    {ShotcutSettings::Linear10GpuCpu, "Linear10GpuCpu"},
+};
+} // anonymous namespace
+
 ShotcutSettings &ShotcutSettings::singleton()
 {
     if (!instance) {
@@ -514,6 +529,45 @@ void ShotcutSettings::setConvertAdvanced(bool b)
     settings.setValue("convertAdvanced", b);
 }
 
+ShotcutSettings::ProcessingMode ShotcutSettings::processingMode()
+{
+    if (settings.contains("processingMode")) {
+        return (ShotcutSettings::ProcessingMode) settings.value("processingMode").toInt();
+    } else if (settings.contains("player/gpu2")) {
+        // Legacy GPU Mode
+        if (settings.value("player/gpu2").toBool()) {
+            return ShotcutSettings::Linear10GpuCpu;
+        }
+    }
+    return ShotcutSettings::Native8Cpu;
+}
+
+void ShotcutSettings::setProcessingMode(ProcessingMode mode)
+{
+    settings.setValue("processingMode", mode);
+    emit playerGpuChanged();
+}
+
+QString ShotcutSettings::processingModeStr(ShotcutSettings::ProcessingMode mode)
+{
+    for (const auto &m : kModeMap) {
+        if (m.id == mode)
+            return QString::fromLatin1(m.name);
+    }
+    LOG_ERROR() << "Unknown processing mode" << mode;
+    return QStringLiteral("Native8Cpu");
+}
+
+ShotcutSettings::ProcessingMode ShotcutSettings::processingModeId(const QString &mode)
+{
+    for (const auto &m : kModeMap) {
+        if (mode == QLatin1String(m.name))
+            return m.id;
+    }
+    LOG_ERROR() << "Unknown processing mode" << mode;
+    return Native8Cpu;
+}
+
 bool ShotcutSettings::showConvertClipDialog() const
 {
     return settings.value("showConvertClipDialog", true).toBool();
@@ -571,12 +625,6 @@ void ShotcutSettings::setPlayerExternal(const QString &s)
     settings.setValue("player/external", s);
 }
 
-void ShotcutSettings::setPlayerGPU(bool b)
-{
-    settings.setValue("player/gpu2", b);
-    emit playerGpuChanged();
-}
-
 bool ShotcutSettings::playerJACK() const
 {
     return settings.value("player/jack", false).toBool();
@@ -594,7 +642,15 @@ void ShotcutSettings::setPlayerInterpolation(const QString &s)
 
 bool ShotcutSettings::playerGPU() const
 {
-    return settings.value("player/gpu2", false).toBool();
+    // This is the legacy function for the old GPU mode.
+    if (settings.contains("processingMode")) {
+        ProcessingMode mode = (ProcessingMode) settings.value("processingMode").toInt();
+        return mode == Linear10GpuCpu;
+    } else if (settings.contains("player/gpu2")) {
+        // Legacy GPU Mode
+        return settings.value("player/gpu2").toBool();
+    }
+    return false;
 }
 
 bool ShotcutSettings::playerWarnGPU() const
