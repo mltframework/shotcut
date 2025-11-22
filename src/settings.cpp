@@ -544,7 +544,7 @@ QString ShotcutSettings::processingModeStr(ShotcutSettings::ProcessingMode mode)
     case Linear10Cpu:
         return QStringLiteral("Linear10Cpu");
     case Linear10GpuCpu:
-        return QStringLiteral("Native10GpuCpu");
+        return QStringLiteral("Linear10GpuCpu");
     }
     LOG_ERROR() << "Unknown processing mode" << mode;
     return QStringLiteral("Native8Cpu");
@@ -560,7 +560,7 @@ ShotcutSettings::ProcessingMode ShotcutSettings::processingModeId(const QString 
         return Native10Cpu;
     } else if (mode == QStringLiteral("Linear10Cpu")) {
         return Linear10Cpu;
-    } else if (mode == QStringLiteral("Native10GpuCpu")) {
+    } else if (mode == QStringLiteral("Linear10GpuCpu")) {
         return Linear10GpuCpu;
     }
     LOG_ERROR() << "Unknown processing mode" << mode;
