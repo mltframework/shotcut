@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("HSL Range")
     mlt_service: "hslrange"
-    keywords: qsTr('hue saturation lightness color primaries', 'search keywords for the HSL Range video filter') + ' hslrange #rgba'
+    keywords: qsTr('hue saturation lightness color primaries', 'search keywords for the HSL Range video filter') + ' hslrange #rgba #color'
     qml: "ui.qml"
     icon: 'icon.webp'
 

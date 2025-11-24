@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("Contrast")
-    keywords: qsTr('variation value', 'search keywords for the Contrast video filter') + ' contrast #gpu'
+    keywords: qsTr('variation value', 'search keywords for the Contrast video filter') + ' contrast #gpu #10bit #color'
     objectName: "movitContrast"
     mlt_service: "movit.lift_gamma_gain"
     needsGPU: true

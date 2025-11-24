@@ -220,6 +220,7 @@ private:
     bool blankIsSelected();
     bool nothingIsSelected();
     bool isTransition(int trackIndex, int clipIndex);
+    bool isEmptyTrack(Mlt::Playlist &playlist);
     void emitNonSeekableWarning();
     void addTrackIfNeeded(int mltTrackIndex, Mlt::Producer *srcTrack);
     void setupActions();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2024 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,18 +38,27 @@ Rectangle {
 
     visible: false
     onVisibleChanged: {
-        if (metadatamodel.filter === Shotcut.MetadataModel.FavoritesFilter)
+        switch (metadatamodel.filter) {
+        case Shotcut.MetadataModel.FavoritesFilter:
             favButton.checked = true;
-        else if (metadatamodel.filter === Shotcut.MetadataModel.VideoFilter)
+            break;
+        case Shotcut.MetadataModel.VideoFilter:
             vidButton.checked = true;
-        else if (metadatamodel.filter === Shotcut.MetadataModel.AudioFilter)
+            if (metadatamodel.search === '#color') {
+                vidButton.text = colorMenuItem.text;
+                vidButton.videoFilterType = 'color';
+            }
+            break;
+        case Shotcut.MetadataModel.AudioFilter:
             audButton.checked = true;
-        else if (metadatamodel.filter === Shotcut.MetadataModel.LinkFilter)
+            break;
+        case Shotcut.MetadataModel.LinkFilter:
             lnkButton.checked = true;
-        else if (metadatamodel.filter === Shotcut.MetadataModel.FilterSetFilter)
+            break;
+        case Shotcut.MetadataModel.FilterSetFilter:
             setButton.checked = true;
-        else if (metadatamodel.filter === Shotcut.MetadataModel.GPUFilter)
-            gpuButton.checked = true;
+            break;
+        }
     }
     color: activePalette.window
 
@@ -76,7 +85,6 @@ Rectangle {
                 focus: true
                 placeholderText: qsTr("search")
                 selectByMouse: true
-                text: metadatamodel.search
                 onTextChanged: {
                     if (length !== 1 && text !== metadatamodel.search)
                         metadatamodel.search = text;
@@ -159,15 +167,16 @@ Rectangle {
                 id: favButton
 
                 checked: true
-                implicitWidth: settings.playerGPU ? 20 : 80
+                implicitWidth: 80
                 icon.name: 'bookmarks'
                 icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
                 text: qsTr('Favorite')
-                display: settings.playerGPU ? AbstractButton.IconOnly : AbstractButton.TextBesideIcon
+                display: AbstractButton.TextBesideIcon
                 ButtonGroup.group: typeGroup
                 onClicked: {
                     if (checked) {
                         metadatamodel.filter = Shotcut.MetadataModel.FavoritesFilter;
+                        metadatamodel.search = '';
                         searchField.text = '';
                         checked = true;
                     }
@@ -178,47 +187,143 @@ Rectangle {
                 }
             }
 
-            Shotcut.ToggleButton {
-                id: gpuButton
+            RowLayout {
+                spacing: 0
 
-                visible: settings.playerGPU
-                checked: true
-                implicitWidth: 60
-                icon.name: 'cpu'
-                icon.source: 'qrc:///icons/oxygen/32x32/devices/cpu.png'
-                text: 'GPU'
-                ButtonGroup.group: typeGroup
-                onClicked: {
-                    if (checked) {
-                        metadatamodel.filter = Shotcut.MetadataModel.GPUFilter;
-                        searchField.text = '';
-                        checked = true;
+                Shotcut.ToggleButton {
+                    id: vidButton
+
+                    property string videoFilterType: 'video'
+
+                    implicitWidth: 80
+                    icon.name: 'video-television'
+                    icon.source: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
+                    text: qsTr('Video')
+                    ButtonGroup.group: typeGroup
+                    background: Rectangle {
+                        topLeftRadius: 3
+                        bottomLeftRadius: 3
+                        color: vidButton.checked ? activePalette.highlight : activePalette.button
+                        border.color: activePalette.shadow
+                        border.width: vidButton.checked ? 0 : 1
+                    }
+                    onClicked: {
+                        if (checked) {
+                            searchField.text = '';
+                            if (videoFilterType === 'video') {
+                                metadatamodel.filter = Shotcut.MetadataModel.VideoFilter;
+                                metadatamodel.search = '';
+                            } else if (videoFilterType === 'gpu') {
+                                metadatamodel.filter = Shotcut.MetadataModel.GPUFilter;
+                                metadatamodel.search = '';
+                            } else if (videoFilterType === '10bit') {
+                                metadatamodel.filter = Shotcut.MetadataModel.VideoFilter;
+                                metadatamodel.search = '#10bit';
+                            } else if (videoFilterType === 'color') {
+                                metadatamodel.filter = Shotcut.MetadataModel.VideoFilter;
+                                metadatamodel.search = '#color';
+                            } else if (videoFilterType === 'rgba') {
+                                metadatamodel.filter = Shotcut.MetadataModel.VideoFilter;
+                                metadatamodel.search = '#rgba';
+                            } else if (videoFilterType === 'yuv') {
+                                metadatamodel.filter = Shotcut.MetadataModel.VideoFilter;
+                                metadatamodel.search = '#yuv';
+                            }
+                            checked = true;
+                        }
+                    }
+
+                    Shotcut.HoverTip {
+                        text: qsTr('Show video filters')
                     }
                 }
 
-                Shotcut.HoverTip {
-                    text: qsTr('Show GPU video filters')
-                }
-            }
+                Shotcut.ToolButton {
+                    id: vidMenuButton
 
-            Shotcut.ToggleButton {
-                id: vidButton
-
-                implicitWidth: 80
-                icon.name: 'video-television'
-                icon.source: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
-                text: qsTr('Video')
-                ButtonGroup.group: typeGroup
-                onClicked: {
-                    if (checked) {
-                        metadatamodel.filter = Shotcut.MetadataModel.VideoFilter;
-                        searchField.text = '';
-                        checked = true;
+                    implicitWidth: 22
+                    implicitHeight: vidButton.height
+                    padding: 0
+                    text: '▼'
+                    onClicked: vidMenu.popup()
+                    background: Rectangle {
+                        topRightRadius: 3
+                        bottomRightRadius: 3
+                        color: vidButton.checked ? activePalette.highlight : activePalette.button
+                        border.color: activePalette.shadow
+                        border.width: vidButton.checked ? 0 : 1
                     }
-                }
 
-                Shotcut.HoverTip {
-                    text: qsTr('Show video filters')
+                    Shotcut.HoverTip {
+                        text: qsTr('Video filter options')
+                    }
+
+                    Menu {
+                        id: vidMenu
+
+                        MenuItem {
+                            text: qsTr('All Video')
+                            onTriggered: {
+                                vidButton.videoFilterType = 'video';
+                                vidButton.text = qsTr('Video');
+                                vidButton.checked = true;
+                                vidButton.clicked();
+                            }
+                        }
+
+                        MenuItem {
+                            text: qsTr('10-bit')
+                            onTriggered: {
+                                vidButton.videoFilterType = '10bit';
+                                vidButton.text = text;
+                                vidButton.checked = true;
+                                vidButton.clicked();
+                            }
+                        }
+
+                        MenuItem {
+                            id: colorMenuItem
+                            text: qsTr('Color')
+                            onTriggered: {
+                                vidButton.videoFilterType = 'color';
+                                vidButton.text = text;
+                                vidButton.checked = true;
+                                vidButton.clicked();
+                            }
+                        }
+
+                        MenuItem {
+                            text: qsTr('GPU')
+                            visible: settings.playerGPU
+                            height: visible ? colorMenuItem.height : 0
+                            onTriggered: {
+                                vidButton.videoFilterType = 'gpu';
+                                vidButton.text = text;
+                                vidButton.checked = true;
+                                vidButton.clicked();
+                            }
+                        }
+
+                        MenuItem {
+                            text: qsTr('RGBA')
+                            onTriggered: {
+                                vidButton.videoFilterType = 'rgba';
+                                vidButton.text = text;
+                                vidButton.checked = true;
+                                vidButton.clicked();
+                            }
+                        }
+
+                        MenuItem {
+                            text: qsTr('YUV')
+                            onTriggered: {
+                                vidButton.videoFilterType = 'yuv';
+                                vidButton.text = text;
+                                vidButton.checked = true;
+                                vidButton.clicked();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -233,6 +338,7 @@ Rectangle {
                 onClicked: {
                     if (checked) {
                         metadatamodel.filter = Shotcut.MetadataModel.AudioFilter;
+                        metadatamodel.search = '';
                         searchField.text = '';
                         checked = true;
                     }
@@ -255,6 +361,7 @@ Rectangle {
                 onClicked: {
                     if (checked) {
                         metadatamodel.filter = Shotcut.MetadataModel.LinkFilter;
+                        metadatamodel.search = '';
                         searchField.text = '';
                         checked = true;
                     }
@@ -276,6 +383,7 @@ Rectangle {
                 onClicked: {
                     if (checked) {
                         metadatamodel.filter = Shotcut.MetadataModel.FilterSetFilter;
+                        metadatamodel.search = '';
                         searchField.text = '';
                         checked = true;
                     }

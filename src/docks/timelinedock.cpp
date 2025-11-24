@@ -1710,6 +1710,11 @@ bool TimelineDock::isTransition(int trackIndex, int clipIndex)
                   .toBool();
 }
 
+bool TimelineDock::isEmptyTrack(Mlt::Playlist &playlist)
+{
+    return playlist.count() == 1 && playlist.is_blank(0);
+}
+
 void TimelineDock::onWarnTrackLocked()
 {
     emit showStatusMessage(tr("This track is locked"));
@@ -3255,6 +3260,7 @@ void TimelineDock::freezeFrame()
         info->frame_out = info->frame_in + fps - 1;
         p.set("length", p.frames_to_time(qRound(MLT.profile().fps() * 3600 * 4), mlt_time_clock));
         p.set_in_and_out(info->frame_in, info->frame_out);
+        MLT.adjustFilters(p);
 
         Mlt::Link link("timeremap");
         link.set_profile(MLT.profile());
@@ -3847,7 +3853,7 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy, b
             QScopedPointer<Mlt::Producer> producer(m_model.tractor()->track(i));
             if (producer) {
                 Mlt::Playlist track(*producer);
-                if (!(track.count() == 1 && track.is_blank(0))) {
+                if (!isEmptyTrack(track)) {
                     trackIndex = addVideoTrack();
                 }
             }
@@ -3947,6 +3953,9 @@ void TimelineDock::seekPreviousEdit()
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
         if (track) {
             Mlt::Playlist playlist(*track);
+            // Skip empty tracks (tracks with only one blank clip)
+            if (isEmptyTrack(playlist))
+                continue;
             int clipIndex = playlist.get_clip_index_at(m_position);
             if (clipIndex >= 0 && m_position == playlist.clip_start(clipIndex))
                 --clipIndex;
@@ -3971,6 +3980,9 @@ void TimelineDock::seekNextEdit()
         QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
         if (track) {
             Mlt::Playlist playlist(*track);
+            // Skip empty tracks (tracks with only one blank clip)
+            if (isEmptyTrack(playlist))
+                continue;
             int clipIndex = playlist.get_clip_index_at(m_position) + 1;
             if (clipIndex < playlist.count())
                 newPosition = qMin(newPosition, playlist.clip_start(clipIndex));

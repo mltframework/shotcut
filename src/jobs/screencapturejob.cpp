@@ -223,7 +223,7 @@ void ScreenCaptureJob::stop()
     }
     if (m_dbusService != DBusService::None) {
         AbstractJob::stop();
-        resetKilled();
+        setKilled(false);
         return;
     }
 #endif

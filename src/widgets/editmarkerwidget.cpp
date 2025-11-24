@@ -18,12 +18,12 @@
 #include "editmarkerwidget.h"
 
 #include "mltcontroller.h"
+#include "qmltypes/colordialog.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
 #include "util.h"
 #include "widgets/timespinbox.h"
 
-#include <QColorDialog>
 #include <QDebug>
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -127,15 +127,14 @@ void EditMarkerWidget::setValues(
 void EditMarkerWidget::on_colorButton_clicked()
 {
     QColor color = QColor(m_colorLabel->text());
-    QColorDialog dialog(color);
-    dialog.setOptions(Util::getColorDialogOptions());
-    dialog.setModal(QmlApplication::dialogModality());
-    if (dialog.exec() == QDialog::Accepted) {
-        auto newColor = dialog.currentColor();
+    auto newColor = ColorDialog::getColor(color, this, QString(), false);
+
+    if (newColor.isValid()) {
         m_colorLabel->setText(newColor.name(QColor::HexRgb));
         m_colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                         .arg(Util::textColor(newColor), newColor.name()));
     }
+
     emit valuesChanged();
 }
 

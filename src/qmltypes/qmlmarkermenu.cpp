@@ -19,10 +19,9 @@
 
 #include "actions.h"
 #include "docks/timelinedock.h"
+#include "qmltypes/colordialog.h"
 #include "qmltypes/qmlapplication.h"
-#include "util.h"
 
-#include <QColorDialog>
 #include <QLabel>
 #include <QMenu>
 #include <QToolButton>
@@ -73,11 +72,9 @@ void QmlMarkerMenu::popup()
     QAction colorAction(tr("Choose Color..."));
     connect(&colorAction, &QAction::triggered, this, [&]() {
         QColor markerColor = m_timeline->markersModel()->getMarker(m_index).color;
-        QColorDialog colorDialog(markerColor);
-        colorDialog.setOptions(Util::getColorDialogOptions());
-        colorDialog.setModal(QmlApplication::dialogModality());
-        if (colorDialog.exec() == QDialog::Accepted) {
-            m_timeline->markersModel()->setColor(m_index, colorDialog.currentColor());
+        auto newColor = ColorDialog::getColor(markerColor, nullptr, QString(), false);
+        if (newColor.isValid()) {
+            m_timeline->markersModel()->setColor(m_index, newColor);
         }
     });
     menu.addAction(&colorAction);

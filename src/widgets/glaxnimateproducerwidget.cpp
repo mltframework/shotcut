@@ -22,13 +22,13 @@
 #include "dialogs/longuitask.h"
 #include "mainwindow.h"
 #include "mltcontroller.h"
+#include "qmltypes/colordialog.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "videowidget.h"
 
-#include <QColorDialog>
 #include <QFile>
 #include <QFileInfo>
 #include <QFileSystemWatcher>
@@ -91,17 +91,9 @@ void GlaxnimateProducerWidget::on_colorButton_clicked()
     if (m_producer) {
         color = QColor(QFileInfo(m_producer->get("background")).baseName());
     }
-    QColorDialog::ColorDialogOptions flags = QColorDialog::ShowAlphaChannel;
-    flags |= Util::getColorDialogOptions();
-    auto newColor = QColorDialog::getColor(color, this, QString(), flags);
+    auto newColor = ColorDialog::getColor(color, this);
+
     if (newColor.isValid()) {
-        auto rgb = newColor;
-        auto transparent = QColor(0, 0, 0, 0);
-        rgb.setAlpha(color.alpha());
-        if (newColor.alpha() == 0
-            && (rgb != color || (newColor == transparent && color == transparent))) {
-            newColor.setAlpha(255);
-        }
         ui->colorLabel->setText(colorToString(newColor));
         ui->colorLabel->setStyleSheet(QStringLiteral("color: %1; background-color: %2")
                                           .arg(Util::textColor(newColor), newColor.name()));

@@ -155,6 +155,16 @@
      </property>
      <addaction name="actionProfileAutomatic"/>
     </widget>
+    <widget class="QMenu" name="menuProcessingMode">
+     <property name="title">
+      <string>Processing Mode</string>
+     </property>
+     <addaction name="actionNative8bitCpu"/>
+     <addaction name="actionLinear8bitCpu"/>
+     <addaction name="actionNative10bitCpu"/>
+     <addaction name="actionLinear10bitCpu"/>
+     <addaction name="actionLinear10bitGpuCpu"/>
+    </widget>
     <widget class="QMenu" name="menuLanguage">
      <property name="title">
       <string>Language</string>
@@ -287,8 +297,8 @@
      <addaction name="actionBackupWeekly"/>
     </widget>
     <addaction name="actionProject"/>
-    <addaction name="actionGPU"/>
     <addaction name="menuProfile"/>
+    <addaction name="menuProcessingMode"/>
     <addaction name="menuAudioChannels"/>
     <addaction name="menuBackup"/>
     <addaction name="actionUser_Interface"/>
@@ -580,18 +590,44 @@
     <string>Progressive</string>
    </property>
   </action>
-  <action name="actionGPU">
+  <action name="actionNative8bitCpu">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>GPU Effects (unstable)</string>
+    <string>Native 8-bit CPU</string>
    </property>
-   <property name="toolTip">
-    <string>Use GPU filters</string>
+  </action>
+  <action name="actionLinear8bitCpu">
+   <property name="checkable">
+    <bool>true</bool>
    </property>
-   <property name="visible">
-    <bool>false</bool>
+   <property name="text">
+    <string>Linear 8-bit CPU</string>
+   </property>
+  </action>
+  <action name="actionNative10bitCpu">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Native 10-bit CPU</string>
+   </property>
+  </action>
+  <action name="actionLinear10bitCpu">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Linear 10-bit CPU</string>
+   </property>
+  </action>
+  <action name="actionLinear10bitGpuCpu">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Linear 10-bit GPU/CPU (Experimental)</string>
    </property>
   </action>
   <action name="actionChannels1">

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,12 +48,15 @@ void ServicePresetWidget::loadPresets()
     if (dir.cd("presets")) {
         ui->presetCombo->addItems(dir.entryList(QDir::Files));
         QStringList entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Executable);
-        foreach (QString s, entries) {
+        for (const auto &s : std::as_const(entries)) {
             if (s == m_widgetName && dir.cd(s)) {
                 ui->presetCombo->addItem("", "");
                 QStringList entries2 = dir.entryList(QDir::Files | QDir::Readable);
-                foreach (QString s2, entries2)
-                    ui->presetCombo->addItem(s2);
+                for (const auto &s2 : std::as_const(entries2)) {
+                    // Exclude .webp files from presets
+                    if (!s2.endsWith(".webp", Qt::CaseInsensitive))
+                        ui->presetCombo->addItem(s2);
+                }
                 dir.cdUp();
             }
         }
@@ -186,5 +189,15 @@ void ServicePresetWidget::on_deletePresetButton_clicked()
 
         ui->presetCombo->removeItem(ui->presetCombo->currentIndex());
         ui->presetCombo->setCurrentIndex(0);
+    }
+}
+
+void ServicePresetWidget::setPreset(const QString &name)
+{
+    for (int i = 0; i < ui->presetCombo->count(); i++) {
+        if (ui->presetCombo->itemText(i) == name) {
+            ui->presetCombo->setCurrentIndex(i);
+            break;
+        }
     }
 }

@@ -66,6 +66,7 @@ void FfmpegJob::start()
 
 void FfmpegJob::stop()
 {
+    setKilled();
     write("q");
     QTimer::singleShot(3000, this, [this]() { AbstractJob::stop(); });
 }

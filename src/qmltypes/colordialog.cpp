@@ -16,6 +16,7 @@
  */
 
 #include "colordialog.h"
+#include "settings.h"
 #include "util.h"
 
 #include <QColorDialog>
@@ -24,13 +25,23 @@ ColorDialog::ColorDialog(QObject *parent)
     : QObject{parent}
 {}
 
-void ColorDialog::open()
+QColor ColorDialog::getColor(const QColor &initial,
+                             QWidget *parent,
+                             const QString &title,
+                             bool showAlpha)
 {
-    auto color = m_color;
-    QColorDialog::ColorDialogOptions flags = QColorDialog::ShowAlphaChannel;
-    flags |= Util::getColorDialogOptions();
-    auto newColor = QColorDialog::getColor(color, nullptr, m_title, flags);
-    if (newColor.isValid()) {
+    auto flags = Util::getColorDialogOptions();
+    if (showAlpha) {
+        flags |= QColorDialog::ShowAlphaChannel;
+    }
+
+    auto color = initial;
+    auto newColor = QColorDialog::getColor(color, parent, title, flags);
+
+    // Save custom colors to settings after dialog closes
+    Settings.saveCustomColors();
+
+    if (newColor.isValid() && showAlpha) {
         auto rgb = newColor;
         auto transparent = QColor(0, 0, 0, 0);
         rgb.setAlpha(color.alpha());
@@ -38,6 +49,16 @@ void ColorDialog::open()
             && (rgb != color || (newColor == transparent && color == transparent))) {
             newColor.setAlpha(255);
         }
+    }
+
+    return newColor;
+}
+
+void ColorDialog::open()
+{
+    auto newColor = getColor(m_color, nullptr, m_title, m_showAlpha);
+
+    if (newColor.isValid()) {
         setSelectedColor(newColor);
         emit accepted();
     }
@@ -56,5 +77,13 @@ void ColorDialog::setTitle(const QString &title)
     if (title != m_title) {
         m_title = title;
         emit titleChanged();
+    }
+}
+
+void ColorDialog::setShowAlpha(bool show)
+{
+    if (show != m_showAlpha) {
+        m_showAlpha = show;
+        emit showAlphaChanged();
     }
 }

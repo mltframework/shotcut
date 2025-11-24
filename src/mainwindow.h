@@ -115,6 +115,7 @@ public:
 
 signals:
     void audioChannelsChanged();
+    void processingModeChanged();
     void producerOpened(bool withReopen = true);
     void profileChanged();
     void openFailed(QString);
@@ -161,6 +162,7 @@ private:
     bool checkAutoSave(QString &url);
     bool saveRepairedXmlFile(MltXmlChecker &checker, QString &fileName);
     void setAudioChannels(int channels);
+    void setProcessingMode(ShotcutSettings::ProcessingMode mode);
     void showSaveError();
     void setPreviewScale(int scale);
     void setVideoModeMenu();
@@ -172,6 +174,7 @@ private:
     void backupPeriodically();
     bool confirmProfileChange();
     bool confirmRestartExternalMonitor();
+    void resetFilterMenuIfNeeded();
 
     Ui::MainWindow *ui;
     Player *m_player;
@@ -304,7 +307,6 @@ private slots:
     void on_actionBicubic_triggered(bool checked);
     void on_actionHyper_triggered(bool checked);
     void on_actionJack_triggered(bool checked);
-    void on_actionGPU_triggered(bool checked);
     void onExternalTriggered(QAction *);
     void onDecklinkGammaTriggered(QAction *);
     void onKeyerTriggered(QAction *);
