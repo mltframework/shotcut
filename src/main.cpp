@@ -410,7 +410,11 @@ int main(int argc, char **argv)
 #ifdef Q_OS_WIN
     if (::qEnvironmentVariableIsSet("QSG_RHI_BACKEND")) {
 #endif
-        QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));
+        QPixmap splashPixmap(":/icons/favicon-310x310.png");
+        // Scale down the logo if it's too big, e.g., to 128x128 or similar, keeping aspect ratio.
+        // The user mentioned "too big", so we resize it.
+        splashPixmap = splashPixmap.scaled(128, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QSplashScreen splash(splashPixmap);
 
         // Log some basic info.
         LOG_INFO() << "Starting Shotcut version" << SHOTCUT_VERSION;

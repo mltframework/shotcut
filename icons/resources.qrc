@@ -582,5 +582,6 @@
         <file>oxygen-dark/index.theme</file>
         <file>shotcut-logo-320x320.png</file>
         <file>shotcut-logo-64.png</file>
+        <file>favicon-310x310.png</file>
     </qresource>
 </RCC>
