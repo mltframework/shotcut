@@ -108,7 +108,7 @@
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="HtmlGenerator">
+         <widget class="QWidget" name="HTML">
           <property name="geometry">
            <rect>
             <x>0</x>

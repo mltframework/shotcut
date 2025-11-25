@@ -41,7 +41,7 @@
 #include <QTemporaryFile>
 
 static const QString kTransparent = QObject::tr("transparent", "New > Image/Video From HTML");
-static QString kPresetsFolder("HtmlGenerator");
+static QString kPresetsFolder("HTML");
 const char *HtmlGeneratorWidget::kColorProperty = "shotcut:color";
 const char *HtmlGeneratorWidget::kCssProperty = "shotcut:css";
 const char *HtmlGeneratorWidget::kBodyProperty = "shotcut:body";
@@ -85,7 +85,22 @@ HtmlGeneratorWidget::HtmlGeneratorWidget(QWidget *parent)
 
     Mlt::Properties p;
     QFile f;
+    QDir dir(Settings.appDataLocation());
 
+    if (!dir.exists())
+        dir.mkpath(dir.path());
+    if (!dir.cd("presets")) {
+        if (dir.mkdir("presets"))
+            dir.cd("presets");
+    }
+    if (!dir.cd(kPresetsFolder)) {
+        if (dir.mkdir(kPresetsFolder))
+            dir.cd(kPresetsFolder);
+    }
+    QFile::copy(QStringLiteral(":/resources/html/icons/defaults.webp"),
+                dir.filePath(tr("(defaults)") + ".webp"));
+
+    QString name = tr("Elastic Stroke (Video)");
     f.setFileName(QStringLiteral(":/resources/html/elastic_stroke/css"));
     f.open(QIODevice::ReadOnly);
     p.set(kCssProperty, f.readAll().toBase64().constData());
@@ -95,8 +110,11 @@ HtmlGeneratorWidget::HtmlGeneratorWidget(QWidget *parent)
     p.set(kBodyProperty, f.readAll().toBase64().constData());
     f.close();
     p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
-    ui->preset->savePreset(p, tr("Elastic Stroke (Video)"));
+    ui->preset->savePreset(p, name);
+    QFile::copy(QStringLiteral(":/resources/html/elastic_stroke/icon.webp"),
+                dir.filePath(name + ".webp"));
 
+    name = tr("Folded (Image)");
     f.setFileName(QStringLiteral(":/resources/html/folded/css"));
     f.open(QIODevice::ReadOnly);
     p.set(kCssProperty, f.readAll().toBase64().constData());
@@ -110,8 +128,10 @@ HtmlGeneratorWidget::HtmlGeneratorWidget(QWidget *parent)
     p.set(kBodyProperty, f.readAll().toBase64().constData());
     f.close();
     p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
-    ui->preset->savePreset(p, tr("Folded (Image)"));
+    ui->preset->savePreset(p, name);
+    QFile::copy(QStringLiteral(":/resources/html/folded/icon.webp"), dir.filePath(name + ".webp"));
 
+    name = tr("Gold Metal (Image)");
     f.setFileName(QStringLiteral(":/resources/html/gold_metal/css"));
     f.open(QIODevice::ReadOnly);
     p.set(kCssProperty, f.readAll().toBase64().constData());
@@ -121,8 +141,11 @@ HtmlGeneratorWidget::HtmlGeneratorWidget(QWidget *parent)
     p.set(kBodyProperty, f.readAll().toBase64().constData());
     f.close();
     p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
-    ui->preset->savePreset(p, tr("Gold Metal (Image)"));
+    ui->preset->savePreset(p, name);
+    QFile::copy(QStringLiteral(":/resources/html/gold_metal/icon.webp"),
+                dir.filePath(name + ".webp"));
 
+    name = tr("Party Time (Video)");
     f.setFileName(QStringLiteral(":/resources/html/party_time/css"));
     f.open(QIODevice::ReadOnly);
     p.set(kCssProperty, f.readAll().toBase64().constData());
@@ -136,8 +159,11 @@ HtmlGeneratorWidget::HtmlGeneratorWidget(QWidget *parent)
     p.set(kBodyProperty, f.readAll().toBase64().constData());
     f.close();
     p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
-    ui->preset->savePreset(p, tr("Party Time (Video)"));
+    ui->preset->savePreset(p, name);
+    QFile::copy(QStringLiteral(":/resources/html/party_time/icon.webp"),
+                dir.filePath(name + ".webp"));
 
+    name = tr("3D (Image)");
     f.setFileName(QStringLiteral(":/resources/html/three_d/css"));
     f.open(QIODevice::ReadOnly);
     p.set(kCssProperty, f.readAll().toBase64().constData());
@@ -147,7 +173,8 @@ HtmlGeneratorWidget::HtmlGeneratorWidget(QWidget *parent)
     p.set(kBodyProperty, f.readAll().toBase64().constData());
     f.close();
     p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
-    ui->preset->savePreset(p, tr("3D (Image)"));
+    ui->preset->savePreset(p, name);
+    QFile::copy(QStringLiteral(":/resources/html/three_d/icon.webp"), dir.filePath(name + ".webp"));
 
     ui->preset->loadPresets();
     populatePresetIconView();
@@ -222,7 +249,7 @@ void HtmlGeneratorWidget::loadPreset(Mlt::Properties &p)
     const auto line3 = QByteArray::fromBase64(p.get(kLine3Property));
     ui->line3LineEdit->setText(QString::fromUtf8(line3));
     updateTextSectionVisibility();
-    if (ui->line1Label->isVisible())
+    if (ui->line1LineEdit->isVisible())
         ui->line1LineEdit->setFocus();
 }
 
@@ -518,17 +545,6 @@ QString HtmlGeneratorWidget::findPresetIconPath(const QString &presetName)
         dir.cdUp();
         dir.cdUp();
     }
-
-    // If not found, try loading from data directory
-    auto dataDir = QmlApplication::dataDir();
-    dataDir.cd("shotcut");
-    dataDir.cd("html-icons");
-    auto iconPath = dataDir.filePath(iconFileName);
-    if (QFile::exists(iconPath)) {
-        return iconPath;
-    }
-
-    // Return empty string if not found
     return QString();
 }
 
@@ -592,6 +608,9 @@ void HtmlGeneratorWidget::on_presetIconView_itemClicked(QListWidgetItem *item)
 
     // Switch to editor page
     ui->stackedWidget->setCurrentIndex(1);
+
+    if (ui->line1LineEdit->isVisible())
+        ui->line1LineEdit->setFocus(Qt::PopupFocusReason);
 }
 
 bool HtmlGeneratorWidget::eventFilter(QObject *watched, QEvent *event)

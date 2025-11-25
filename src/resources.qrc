@@ -15,5 +15,11 @@
         <file>resources/html/party_time/css</file>
         <file>resources/html/three_d/body.html</file>
         <file>resources/html/three_d/css</file>
+        <file>resources/html/elastic_stroke/icon.webp</file>
+        <file>resources/html/folded/icon.webp</file>
+        <file>resources/html/gold_metal/icon.webp</file>
+        <file>resources/html/party_time/icon.webp</file>
+        <file>resources/html/three_d/icon.webp</file>
+        <file>resources/html/icons/defaults.webp</file>
     </qresource>
 </RCC>
