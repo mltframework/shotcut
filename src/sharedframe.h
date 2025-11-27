@@ -41,7 +41,7 @@ class FrameData;
   same wrapped Mlt::Frame. Therefore, SharedFrame can not provide non-const
   access to any of the frame data. If it is necessary for an object to modify
   the frame data (e.g. to resize the image), then the object must call clone()
-  to receive it's own non-const copy of the frame.
+  to receive its own non-const copy of the frame.
 
   TODO: Consider providing a similar class in Mlt++.
 */

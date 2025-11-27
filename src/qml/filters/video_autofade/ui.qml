@@ -99,7 +99,7 @@ Item {
             Layout.alignment: Qt.AlignRight
 
             Shotcut.HoverTip {
-                text: qsTr('The duration of fade to apply at the begining and end of each clip')
+                text: qsTr('The duration of fade to apply at the beginning and end of each clip')
             }
         }
 
@@ -169,7 +169,7 @@ Item {
             Layout.alignment: Qt.AlignRight
 
             Shotcut.HoverTip {
-                text: qsTr('Status indicator showing when a fade in has occured.')
+                text: qsTr('Status indicator showing when a fade in has occurred.')
             }
         }
 
@@ -199,7 +199,7 @@ Item {
             Layout.alignment: Qt.AlignRight
 
             Shotcut.HoverTip {
-                text: qsTr('Status indicator showing when a fade out has occured.')
+                text: qsTr('Status indicator showing when a fade out has occurred.')
             }
         }
 
