@@ -4,7 +4,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr('Drop Shadow')
-    keywords: qsTr('', 'search keywords for the Drop Shadow video filter') + ' drop shadow #rgba'
+    keywords: qsTr('', 'search keywords for the Drop Shadow video filter') + ' drop shadow #rgba #10bit'
     mlt_service: 'dropshadow'
     icon: 'icon.webp'
     qml: 'ui.qml'

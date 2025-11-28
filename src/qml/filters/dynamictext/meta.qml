@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     objectName: 'dynamicText'
     name: qsTr('Text: Simple')
-    keywords: qsTr('type font timecode timestamp date filename', 'search keywords for the Text: Simple video filter') + ' text: simple #rgba'
+    keywords: qsTr('type font timecode timestamp date filename', 'search keywords for the Text: Simple video filter') + ' text: simple #rgba #10bit'
     mlt_service: 'dynamictext'
     qml: "ui.qml"
     vui: 'vui.qml'

@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("GPS Text")
-    keywords: qsTr('gpx', 'search keywords for the GPS Text video filter') + ' gps text #rgba'
+    keywords: qsTr('gpx', 'search keywords for the GPS Text video filter') + ' gps text #rgba #10bit'
     mlt_service: 'gpstext'
     qml: 'ui.qml'
     vui: 'vui.qml'

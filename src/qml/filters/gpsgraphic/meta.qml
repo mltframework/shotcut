@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr("GPS Graphic")
-    keywords: qsTr('gpx sticker decal gauge map graph speedometer', 'search keywords for the GPS Graphic video filter') + ' gps graphic #rgba'
+    keywords: qsTr('gpx sticker decal gauge map graph speedometer', 'search keywords for the GPS Graphic video filter') + ' gps graphic #rgba #10bit'
     mlt_service: 'gpsgraphic'
     qml: 'ui.qml'
     vui: 'vui.qml'
