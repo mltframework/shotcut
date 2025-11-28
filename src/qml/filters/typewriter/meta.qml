@@ -20,7 +20,7 @@ import org.shotcut.qml
 Metadata {
     type: Metadata.Filter
     name: qsTr('Text: Typewriter')
-    keywords: qsTr('type typing cursor terminal console', 'search keywords for the Text: Typewriter video filter') + ' text: text typewriter #rgba'
+    keywords: qsTr('type typing cursor terminal console', 'search keywords for the Text: Typewriter video filter') + ' text: text typewriter #rgba #10bit'
     mlt_service: 'qtext'
     objectName: 'typewriter'
     qml: 'ui.qml'
