@@ -136,6 +136,7 @@ HtmlGeneratorWidget::HtmlGeneratorWidget(QWidget *parent)
     f.open(QIODevice::ReadOnly);
     p.set(kCssProperty, f.readAll().toBase64().constData());
     f.close();
+    p.clear(kJavaScriptProperty);
     f.setFileName(QStringLiteral(":/resources/html/gold_metal/body.html"));
     f.open(QIODevice::ReadOnly);
     p.set(kBodyProperty, f.readAll().toBase64().constData());
@@ -168,6 +169,7 @@ HtmlGeneratorWidget::HtmlGeneratorWidget(QWidget *parent)
     f.open(QIODevice::ReadOnly);
     p.set(kCssProperty, f.readAll().toBase64().constData());
     f.close();
+    p.clear(kJavaScriptProperty);
     f.setFileName(QStringLiteral(":/resources/html/three_d/body.html"));
     f.open(QIODevice::ReadOnly);
     p.set(kBodyProperty, f.readAll().toBase64().constData());
@@ -175,6 +177,35 @@ HtmlGeneratorWidget::HtmlGeneratorWidget(QWidget *parent)
     p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
     ui->preset->savePreset(p, name);
     QFile::copy(QStringLiteral(":/resources/html/three_d/icon.webp"), dir.filePath(name + ".webp"));
+
+    name = tr("Chrome (Image)");
+    f.setFileName(QStringLiteral(":/resources/html/chrome/css"));
+    f.open(QIODevice::ReadOnly);
+    p.set(kCssProperty, f.readAll().toBase64().constData());
+    f.close();
+    p.clear(kJavaScriptProperty);
+    f.setFileName(QStringLiteral(":/resources/html/chrome/body.html"));
+    f.open(QIODevice::ReadOnly);
+    p.set(kBodyProperty, f.readAll().toBase64().constData());
+    f.close();
+    p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
+    ui->preset->savePreset(p, name);
+    QFile::copy(QStringLiteral(":/resources/html/chrome/icon.webp"), dir.filePath(name + ".webp"));
+
+    name = tr("Neon Flux (Video)");
+    f.setFileName(QStringLiteral(":/resources/html/neon_flux/css"));
+    f.open(QIODevice::ReadOnly);
+    p.set(kCssProperty, f.readAll().toBase64().constData());
+    f.close();
+    p.clear(kJavaScriptProperty);
+    f.setFileName(QStringLiteral(":/resources/html/neon_flux/body.html"));
+    f.open(QIODevice::ReadOnly);
+    p.set(kBodyProperty, f.readAll().toBase64().constData());
+    f.close();
+    p.set(kColorProperty, colorStringToResource(kTransparent).toLatin1().constData());
+    ui->preset->savePreset(p, name);
+    QFile::copy(QStringLiteral(":/resources/html/neon_flux/icon.webp"),
+                dir.filePath(name + ".webp"));
 
     ui->preset->loadPresets();
     populatePresetIconView();

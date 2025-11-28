@@ -1,0 +1,72 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /* Richer 80s Chrome Palette: White, Silver, Warm, and Cool reflections */
+  --highlight: #ffffff;
+  /* Pure white specular highlight */
+  --silver: #bdbdbd;
+  /* Neutral silver base */
+  --warm-reflect: #ff8c00;
+  /* Deep orange/sunset reflection */
+  --cool-reflect: #00bfff;
+  /* Deep sky blue reflection */
+  --violet-shadow: #8a2be2;
+  /* Electric violet for deep shadow */
+  --deep-shadow: #100c08;
+  /* Near-black for maximum contrast */
+}
+
+.wrapper {
+  display: grid;
+  grid-template-areas: 'overlap';
+  place-content: center;
+  text-transform: uppercase;
+  height: 100vh;
+}
+
+.wrapper>div {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: #363833;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 900;
+  font-size: clamp(3em, 12vw, 15rem);
+  grid-area: overlap;
+  letter-spacing: 1px;
+  -webkit-text-stroke: 4px transparent;
+}
+
+div.bg {
+  /* Layer 1 (Background/Bevel): Focus on deep shadows and colored horizon bands */
+  background-image: repeating-linear-gradient(105deg,
+      var(--deep-shadow) 0%,
+      var(--violet-shadow) 2%,
+      var(--cool-reflect) 4%,
+      var(--warm-reflect) 7%,
+      var(--deep-shadow) 10%,
+      var(--silver) 15%);
+  color: transparent;
+  filter: drop-shadow(5px 15px 15px black);
+  transform: scaleY(1.05);
+  transform-origin: top;
+  text-align: center;
+}
+
+div.fg {
+  /* Layer 2 (Foreground/Surface): Focus on the sharp highlight and varied reflections */
+  background-image: linear-gradient(5deg,
+      var(--warm-reflect) 0%,
+      var(--silver) 5%,
+      var(--highlight) 8%,
+      /* SHARP HIGHLIGHT */
+      var(--silver) 10%,
+      var(--cool-reflect) 20%,
+      var(--violet-shadow) 30%,
+      var(--silver) 50%,
+      var(--warm-reflect) 100%);
+  color: transparent;
+  transform: scale(1);
+  text-align: center;
+}

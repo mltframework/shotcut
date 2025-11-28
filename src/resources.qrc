@@ -21,5 +21,11 @@
         <file>resources/html/party_time/icon.webp</file>
         <file>resources/html/three_d/icon.webp</file>
         <file>resources/html/icons/defaults.webp</file>
+        <file>resources/html/chrome/icon.webp</file>
+        <file>resources/html/chrome/body.html</file>
+        <file>resources/html/chrome/css</file>
+        <file>resources/html/neon_flux/icon.webp</file>
+        <file>resources/html/neon_flux/body.html</file>
+        <file>resources/html/neon_flux/css</file>
     </qresource>
 </RCC>
