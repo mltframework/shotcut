@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     objectName: 'spotRemover'
     name: qsTr('Spot Remover')
-    keywords: qsTr('delogo dirt clean watermark', 'search keywords for the Spot Remover video filter') + ' spot remover #rgba #yuv'
+    keywords: qsTr('delogo dirt clean watermark', 'search keywords for the Spot Remover video filter') + ' spot remover #rgba #yuv #10bit'
     mlt_service: 'spot_remover'
     qml: 'ui.qml'
     vui: 'vui.qml'
