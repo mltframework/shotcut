@@ -143,15 +143,6 @@ Shotcut.VuiBase {
             height: video.rect.height
             scale: zoom
 
-            Rectangle {
-                id: background
-
-                x: rectangle.rectangle.x
-                y: rectangle.rectangle.y
-                width: rectangle.rectangle.width
-                height: scrollView.height * rectangle.heightScale
-            }
-
             ScrollView {
                 id: scrollView
 
@@ -166,6 +157,10 @@ Shotcut.VuiBase {
 
                 TextArea {
                     id: textArea
+
+                    background: Rectangle {
+                        id: background
+                    }
 
                     padding: 0
                     textFormat: Qt.RichText
