@@ -113,7 +113,7 @@ PYTHON_VERSION_DEFAULT=3.10
 PYTHON_VERSION_DARWIN=3.11
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
 
-QT_VERSION_DEFAULT=6.10.1
+QT_VERSION_DEFAULT=6.8.3
 QT_VERSION_DARWIN=6.8.3
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
