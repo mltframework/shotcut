@@ -231,9 +231,9 @@ void ScreenCapture::startFullscreenSnapshot()
 #ifdef Q_OS_MAC
     // Use native macOS screencapture command for fullscreen
     QStringList args;
-    args << "-S"  // Fullscreen
-         << "-t" << "png"
-         << m_outputFile;
+    args << "-S" // Fullscreen
+         << "-t"
+         << "png" << m_outputFile;
 
     QProcess *process = new QProcess(this);
     connect(process, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus) {
@@ -273,8 +273,8 @@ void ScreenCapture::startRectangleSnapshot()
     // Use native macOS screencapture command with rectangle selection
     QStringList args;
     args << "-i"
-         << "-t" << "png"
-         << m_outputFile;
+         << "-t"
+         << "png" << m_outputFile;
 
     QProcess *process = new QProcess(this);
     connect(process, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus) {
@@ -316,8 +316,8 @@ void ScreenCapture::startWindowSnapshot()
     // Use native macOS screencapture command with window selection
     QStringList args;
     args << "-W"
-         << "-t" << "png"
-         << m_outputFile;
+         << "-t"
+         << "png" << m_outputFile;
 
     QProcess *process = new QProcess(this);
     connect(process, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus) {

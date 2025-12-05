@@ -302,8 +302,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             if (value.contains("p10le")) {
                 // Let 8-bit processing modes utilize full range RGB
                 const auto pm = Settings.processingMode();
-                if ((pm == ShotcutSettings::Native8Cpu)
-                    && !other.contains("mlt_image_format=rgb")) {
+                if ((pm == ShotcutSettings::Native8Cpu) && !other.contains("mlt_image_format=rgb")) {
                     other.append("mlt_image_format=rgb");
                 }
                 // Hardware encoder
