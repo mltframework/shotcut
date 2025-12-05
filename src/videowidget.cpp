@@ -362,9 +362,6 @@ int VideoWidget::reconfigure(bool isMulti)
         const bool isDeckLinkHLG = serviceName.startsWith("decklink")
                                    && property("decklinkGamma").toInt() == 1;
         switch (processingMode) {
-        case ShotcutSettings::Linear8Cpu:
-            m_consumer->set("mlt_image_format", "rgba");
-            break;
         case ShotcutSettings::Native10Cpu:
         case ShotcutSettings::Linear10Cpu:
             m_consumer->set("mlt_image_format", "rgba64");
@@ -405,8 +402,7 @@ int VideoWidget::reconfigure(bool isMulti)
             m_consumer->set("color_trc", "bt709");
             break;
         }
-        if (processingMode == ShotcutSettings::Linear8Cpu
-            || processingMode == ShotcutSettings::Linear10Cpu
+        if (processingMode == ShotcutSettings::Linear10Cpu
             || (processingMode == ShotcutSettings::Linear10GpuCpu
                 && property("decklinkGamma").toInt() != 1)) {
             m_consumer->set("mlt_color_trc", "linear");

@@ -532,7 +532,13 @@ void ShotcutSettings::setConvertAdvanced(bool b)
 ShotcutSettings::ProcessingMode ShotcutSettings::processingMode()
 {
     if (settings.contains("processingMode")) {
-        return (ShotcutSettings::ProcessingMode) settings.value("processingMode").toInt();
+        auto result = (ShotcutSettings::ProcessingMode) settings.value("processingMode").toInt();
+        if (result == Linear8Cpu) {
+            // No longer supported but kept to prevent unexpected processing behavior going from
+            // beta to release
+            result = Native8Cpu;
+        }
+        return result;
     } else if (settings.contains("player/gpu2")) {
         // Legacy GPU Mode
         if (settings.value("player/gpu2").toBool()) {

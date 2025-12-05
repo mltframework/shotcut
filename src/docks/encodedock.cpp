@@ -302,7 +302,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties &preset)
             if (value.contains("p10le")) {
                 // Let 8-bit processing modes utilize full range RGB
                 const auto pm = Settings.processingMode();
-                if ((pm == ShotcutSettings::Native8Cpu || pm == ShotcutSettings::Linear8Cpu)
+                if ((pm == ShotcutSettings::Native8Cpu)
                     && !other.contains("mlt_image_format=rgb")) {
                     other.append("mlt_image_format=rgb");
                 }
@@ -1159,8 +1159,7 @@ void EncodeDock::collectProperties(QDomElement &node, int realtime)
                     node.setAttribute("mlt_image_format", "yuv444p10");
             }
         }
-        if (processingMode == ShotcutSettings::Linear8Cpu
-            || processingMode == ShotcutSettings::Linear10Cpu
+        if (processingMode == ShotcutSettings::Linear10Cpu
             || (processingMode == ShotcutSettings::Linear10GpuCpu
                 && ::qstrcmp(p->get("color_trc"), "arib-std-b67"))) {
             if (!p->property_exists("mlt_color_trc"))

@@ -1046,7 +1046,6 @@ void MainWindow::setupSettingsMenu()
 
     Mlt::Filter filter(MLT.profile(), "color_transform");
     if (!filter.is_valid()) {
-        ui->actionLinear8bitCpu->setVisible(false);
 #if LIBMLT_VERSION_INT < ((7 << 16) + (34 << 8))
         ui->actionNative10bitCpu->setVisible(false);
 #endif
@@ -1054,8 +1053,6 @@ void MainWindow::setupSettingsMenu()
     }
     QActionGroup *group = new QActionGroup(this);
     ui->actionNative8bitCpu->setData(ShotcutSettings::Native8Cpu);
-    if (ui->actionLinear8bitCpu->isVisible())
-        ui->actionLinear8bitCpu->setData(ShotcutSettings::Linear8Cpu);
     if (ui->actionNative10bitCpu->isVisible())
         ui->actionNative10bitCpu->setData(ShotcutSettings::Native10Cpu);
     if (ui->actionLinear10bitCpu->isVisible())
@@ -1063,8 +1060,6 @@ void MainWindow::setupSettingsMenu()
     ui->actionLinear10bitGpuCpu->setData(ShotcutSettings::Linear10GpuCpu);
     if (ui->actionNative8bitCpu->isVisible())
         group->addAction(ui->actionNative8bitCpu);
-    if (ui->actionLinear8bitCpu->isVisible())
-        group->addAction(ui->actionLinear8bitCpu);
     if (ui->actionNative10bitCpu->isVisible())
         group->addAction(ui->actionNative10bitCpu);
     if (ui->actionLinear10bitCpu->isVisible())
@@ -1946,9 +1941,6 @@ void MainWindow::setProcessingMode(ShotcutSettings::ProcessingMode mode)
     switch (mode) {
     case ShotcutSettings::Native8Cpu:
         ui->actionNative8bitCpu->setChecked(true);
-        break;
-    case ShotcutSettings::Linear8Cpu:
-        ui->actionLinear8bitCpu->setChecked(true);
         break;
     case ShotcutSettings::Native10Cpu:
         ui->actionNative10bitCpu->setChecked(true);

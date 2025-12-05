@@ -160,7 +160,6 @@
       <string>Processing Mode</string>
      </property>
      <addaction name="actionNative8bitCpu"/>
-     <addaction name="actionLinear8bitCpu"/>
      <addaction name="actionNative10bitCpu"/>
      <addaction name="actionLinear10bitCpu"/>
      <addaction name="actionLinear10bitGpuCpu"/>
@@ -596,14 +595,6 @@
    </property>
    <property name="text">
     <string>Native 8-bit CPU</string>
-   </property>
-  </action>
-  <action name="actionLinear8bitCpu">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Linear 8-bit CPU</string>
    </property>
   </action>
   <action name="actionNative10bitCpu">
