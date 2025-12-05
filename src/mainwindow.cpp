@@ -5189,30 +5189,7 @@ void MainWindow::on_actionScreenSnapshot_triggered()
             fileName += ".png";
         }
     }
-    bool maximized = windowState() & Qt::WindowMaximized;
-#ifdef Q_OS_MAC
-    // Run screencapture command directly
-    QStringList args;
-    args << "-i"
-         << "-t"
-         << "png" << fileName;
-
-    QProcess *process = new QProcess(this);
-    connect(process, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus) {
-        if (exitCode == 0 && QFileInfo::exists(fileName)) {
-            // Automatically open the captured file
-            QTimer::singleShot(500, this, [this, fileName]() { open(fileName); });
-        }
-        process->deleteLater();
-        if (maximized)
-            showMaximized();
-        else
-            showNormal();
-    });
-
-    showMinimized();
-    process->start("screencapture", args);
-#else
+    const bool maximized = windowState() & Qt::WindowMaximized;
     const auto mode = ScreenCapture::isWayland() ? ScreenCapture::Fullscreen
                                                  : ScreenCapture::Interactive;
     m_screenCapture = new ScreenCapture(fileName, mode, this);
@@ -5227,7 +5204,6 @@ void MainWindow::on_actionScreenSnapshot_triggered()
             showNormal();
     });
     m_screenCapture->startSnapshot();
-#endif
 }
 
 void MainWindow::on_actionScreenRecording_triggered()

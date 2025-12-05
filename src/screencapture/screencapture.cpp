@@ -21,6 +21,8 @@
 #include "toolbarwidget.h"
 #include "windowpicker.h"
 #include <QApplication>
+#include <QFileInfo>
+#include <QProcess>
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 #include <QDBusConnection>
 #include <QDBusMessage>
@@ -226,6 +228,34 @@ QPixmap ScreenCapture::captureScreen(const QRect &rect)
 
 void ScreenCapture::startFullscreenSnapshot()
 {
+#ifdef Q_OS_MAC
+    // Use native macOS screencapture command for fullscreen
+    QStringList args;
+    args << "-S"  // Fullscreen
+         << "-t" << "png"
+         << m_outputFile;
+
+    QProcess *process = new QProcess(this);
+    connect(process, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus) {
+        const bool success = (exitCode == 0 && QFileInfo::exists(m_outputFile));
+
+        if (!success) {
+            LOG_ERROR() << "Failed to capture fullscreen snapshot";
+            QString stdoutData = QString::fromUtf8(process->readAllStandardOutput());
+            QString stderrData = QString::fromUtf8(process->readAllStandardError());
+            if (!stdoutData.isEmpty()) {
+                LOG_INFO() << "stdout:" << stdoutData;
+            }
+            if (!stderrData.isEmpty()) {
+                LOG_INFO() << "stderr:" << stderrData;
+            }
+        }
+        process->deleteLater();
+        emit finished(success);
+    });
+
+    process->start("screencapture", args);
+#else
     QScreen *screen = QGuiApplication::primaryScreen();
     if (!screen) {
         LOG_ERROR() << "Error: No screen found";
@@ -234,10 +264,39 @@ void ScreenCapture::startFullscreenSnapshot()
 
     // Small delay to let any UI elements disappear
     QTimer::singleShot(100, this, [this, screen]() { captureAndSaveImage(screen->geometry()); });
+#endif
 }
 
 void ScreenCapture::startRectangleSnapshot()
 {
+#ifdef Q_OS_MAC
+    // Use native macOS screencapture command with rectangle selection
+    QStringList args;
+    args << "-i"
+         << "-t" << "png"
+         << m_outputFile;
+
+    QProcess *process = new QProcess(this);
+    connect(process, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus) {
+        const bool success = (exitCode == 0 && QFileInfo::exists(m_outputFile));
+
+        if (!success) {
+            LOG_ERROR() << "Failed to capture rectangle snapshot";
+            QString stdoutData = QString::fromUtf8(process->readAllStandardOutput());
+            QString stderrData = QString::fromUtf8(process->readAllStandardError());
+            if (!stdoutData.isEmpty()) {
+                LOG_INFO() << "stdout:" << stdoutData;
+            }
+            if (!stderrData.isEmpty()) {
+                LOG_INFO() << "stderr:" << stderrData;
+            }
+        }
+        process->deleteLater();
+        emit finished(success);
+    });
+
+    process->start("screencapture", args);
+#else
     m_rectangleSelector = std::make_unique<RectangleSelector>();
     connect(m_rectangleSelector.get(),
             &RectangleSelector::rectangleSelected,
@@ -248,10 +307,39 @@ void ScreenCapture::startRectangleSnapshot()
             this,
             &ScreenCapture::onSelectionCanceled);
     m_rectangleSelector->show();
+#endif
 }
 
 void ScreenCapture::startWindowSnapshot()
 {
+#ifdef Q_OS_MAC
+    // Use native macOS screencapture command with window selection
+    QStringList args;
+    args << "-W"
+         << "-t" << "png"
+         << m_outputFile;
+
+    QProcess *process = new QProcess(this);
+    connect(process, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus) {
+        const bool success = (exitCode == 0 && QFileInfo::exists(m_outputFile));
+
+        if (!success) {
+            LOG_ERROR() << "Failed to capture window snapshot";
+            QString stdoutData = QString::fromUtf8(process->readAllStandardOutput());
+            QString stderrData = QString::fromUtf8(process->readAllStandardError());
+            if (!stdoutData.isEmpty()) {
+                LOG_INFO() << "stdout:" << stdoutData;
+            }
+            if (!stderrData.isEmpty()) {
+                LOG_INFO() << "stderr:" << stderrData;
+            }
+        }
+        process->deleteLater();
+        emit finished(success);
+    });
+
+    process->start("screencapture", args);
+#else
     if (isWayland()) {
         LOG_ERROR() << "Window image capture is not supported on Wayland";
         return;
@@ -262,6 +350,7 @@ void ScreenCapture::startWindowSnapshot()
             this,
             &ScreenCapture::onImageWindowSelected);
     m_windowPicker->show();
+#endif
 }
 
 void ScreenCapture::onImageRectangleSelected(const QRect &rect)
