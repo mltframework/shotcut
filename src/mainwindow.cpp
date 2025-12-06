@@ -4411,10 +4411,11 @@ void MainWindow::onExternalTriggered(QAction *action)
 
     // Automatic not permitted for SDI/HDMI
     if (isExternal && profile.isEmpty()) {
+        auto xml = MLT.XML();
         profile = "atsc_720p_50";
         Settings.setPlayerProfile(profile);
         setProfile(profile);
-        MLT.consumerChanged();
+        MLT.reload(xml);
         foreach (QAction *a, m_profileGroup->actions()) {
             if (a->data() == profile) {
                 a->setChecked(true);
