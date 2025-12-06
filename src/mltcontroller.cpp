@@ -633,7 +633,7 @@ void Controller::setAudioChannels(int audioChannels)
     LOG_DEBUG() << audioChannels;
     if (audioChannels != m_audioChannels) {
         m_audioChannels = audioChannels;
-        restart();
+        consumerChanged();
     }
 }
 
@@ -641,7 +641,7 @@ void Controller::setProcessingMode(ShotcutSettings::ProcessingMode mode)
 {
     if (m_processingMode != mode) {
         m_processingMode = mode;
-        restart();
+        consumerChanged();
     }
 }
 
@@ -891,7 +891,7 @@ void Controller::fixLengthProperties(Service &service)
     parser.start(service);
 }
 
-void Controller::restart(const QString &xml)
+void Controller::reload(const QString &xml)
 {
     if (!m_consumer || !m_consumer->is_valid() || !m_producer || !m_producer->is_valid())
         return;
