@@ -891,7 +891,7 @@ void Controller::fixLengthProperties(Service &service)
     parser.start(service);
 }
 
-void Controller::restart(const QString &xml)
+void Controller::reload(const QString &xml)
 {
     if (!m_consumer || !m_consumer->is_valid() || !m_producer || !m_producer->is_valid())
         return;

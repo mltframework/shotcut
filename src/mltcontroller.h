@@ -122,7 +122,7 @@ public:
     void setIn(int);
     void setOut(int);
     void fixLengthProperties(Service &service);
-    void restart(const QString &xml = "");
+    void reload(const QString &xml);
     void resetURL();
     QImage image(Frame *frame, int width, int height);
     QImage image(Mlt::Producer &producer, int frameNumber, int width, int height);

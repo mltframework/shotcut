@@ -3355,7 +3355,7 @@ void MainWindow::cropSource(const QRectF &rect)
         MLT.setPreviewScale(Settings.playerPreviewScale());
         auto xml = MLT.XML();
         emit profileChanged();
-        MLT.restart(xml);
+        MLT.reload(xml);
     }
     emit producerOpened(false);
 }
@@ -4523,7 +4523,7 @@ void MainWindow::onProfileTriggered(QAction *action)
         // Save the XML to get correct in/out points before profile is changed.
         QString xml = MLT.XML(producer);
         setProfile(action->data().toString());
-        MLT.restart(xml);
+        MLT.reload(xml);
         emit producerOpened(false);
     } else {
         Settings.setPlayerProfile(action->data().toString());
@@ -4561,7 +4561,7 @@ void MainWindow::on_actionAddCustomProfile_triggered()
         // Use the new profile.
         emit profileChanged();
         if (!xml.isEmpty()) {
-            MLT.restart(xml);
+            MLT.reload(xml);
             emit producerOpened(false);
         }
     }
