@@ -59,11 +59,14 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent)
     QTreeWidgetItem *item = new QTreeWidgetItem(group, QStringList(tr("Audio/Video Device")));
     item->setData(0, Qt::UserRole, ui->avfoundationTab->objectName());
 #endif
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+#if defined(EXTERNAL_LAUNCHERS)
     item = new QTreeWidgetItem(group, QStringList(tr("Screen Snapshot")));
     item->setData(0, Qt::UserRole, "screenSnapshot");
-    item = new QTreeWidgetItem(group, QStringList(tr("Screen Recording")));
-    item->setData(0, Qt::UserRole, "screenRecording");
+    if (QSysInfo::productType() == QStringLiteral("windows")
+        && QSysInfo::productVersion() != QStringLiteral("10")) {
+        item = new QTreeWidgetItem(group, QStringList(tr("Screen Recording")));
+        item->setData(0, Qt::UserRole, "screenRecording");
+    }
 #endif
 
     // populate the generators
