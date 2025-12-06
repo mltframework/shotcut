@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Meltytech, LLC
+ * Copyright (c) 2014-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -136,7 +136,7 @@ Item {
             id: slider
 
             minimumValue: 0
-            maximumValue: 100
+            maximumValue: filter.isAtLeastVersion(5) ? 200 : 100
             suffix: ' %'
             onValueChanged: updateFilter(getPosition())
         }

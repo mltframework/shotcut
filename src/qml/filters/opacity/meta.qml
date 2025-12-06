@@ -22,7 +22,7 @@ Metadata {
                 gangedProperties: ['opacity']
                 isCurve: true
                 minimum: 0
-                maximum: 1
+                maximum: filter.isAtLeastVersion(5) ? 2 : 1
             }
         ]
     }
