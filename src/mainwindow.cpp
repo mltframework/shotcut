@@ -4157,7 +4157,7 @@ void MainWindow::on_actionRealtime_triggered(bool checked)
     if (Settings.playerGPU())
         MLT.pause();
     if (MLT.consumer()) {
-        MLT.restart();
+        MLT.consumerChanged();
     }
 }
 
@@ -4169,7 +4169,7 @@ void MainWindow::on_actionProgressive_triggered(bool checked)
     if (MLT.consumer()) {
         MLT.profile().set_progressive(checked);
         MLT.updatePreviewProfile();
-        MLT.restart();
+        MLT.consumerChanged();
     }
     Settings.setPlayerProgressive(checked);
 }
@@ -4414,7 +4414,7 @@ void MainWindow::onExternalTriggered(QAction *action)
         profile = "atsc_720p_50";
         Settings.setPlayerProfile(profile);
         setProfile(profile);
-        MLT.restart();
+        MLT.consumerChanged();
         foreach (QAction *a, m_profileGroup->actions()) {
             if (a->data() == profile) {
                 a->setChecked(true);
@@ -4434,7 +4434,7 @@ void MainWindow::onExternalTriggered(QAction *action)
     MLT.videoWidget()->setProperty("progressive", isProgressive);
     if (MLT.consumer()) {
         MLT.consumer()->set("progressive", isProgressive);
-        MLT.restart();
+        MLT.consumerChanged();
     }
     if (action->data().toString().startsWith("decklink")) {
         if (m_decklinkGammaMenu)

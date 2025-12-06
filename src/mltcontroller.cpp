@@ -633,7 +633,7 @@ void Controller::setAudioChannels(int audioChannels)
     LOG_DEBUG() << audioChannels;
     if (audioChannels != m_audioChannels) {
         m_audioChannels = audioChannels;
-        restart();
+        consumerChanged();
     }
 }
 
@@ -641,7 +641,7 @@ void Controller::setProcessingMode(ShotcutSettings::ProcessingMode mode)
 {
     if (m_processingMode != mode) {
         m_processingMode = mode;
-        restart();
+        consumerChanged();
     }
 }
 
