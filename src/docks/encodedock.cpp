@@ -1158,11 +1158,20 @@ void EncodeDock::collectProperties(QDomElement &node, int realtime)
                     node.setAttribute("mlt_image_format", "yuv444p10");
             }
         }
-        if (processingMode == ShotcutSettings::Linear10Cpu
-            || (processingMode == ShotcutSettings::Linear10GpuCpu
-                && ::qstrcmp(p->get("color_trc"), "arib-std-b67"))) {
+        if ((processingMode == ShotcutSettings::Linear10Cpu
+             || processingMode == ShotcutSettings::Linear10GpuCpu)
+            && ::qstrcmp(p->get("color_trc"), "arib-std-b67")) {
             if (!p->property_exists("mlt_color_trc"))
                 node.setAttribute("mlt_color_trc", "linear");
+
+            // Prevent an 8-bit linear export
+            const auto imageFormat = node.attribute("mlt_image_format");
+            if (node.attribute("mlt_color_trc") == QStringLiteral("linear")
+                && imageFormat != QStringLiteral("rgba64")
+                && imageFormat != QStringLiteral("yuv444p10")
+                && imageFormat != QStringLiteral("yuv420p10")) {
+                node.setAttribute("mlt_image_format", "rgba64");
+            }
         }
     }
     delete p;
