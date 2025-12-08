@@ -899,6 +899,8 @@ void Player::reset()
 
 void Player::onProducerOpened(bool play)
 {
+    if (!MLT.producer() || !MLT.producer()->is_valid())
+        return;
     m_projectWidget->hide();
     m_videoWidget->show();
     m_duration = MLT.producer()->get_length();

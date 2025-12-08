@@ -366,6 +366,7 @@ int VideoWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
+        m_consumer->set("scale", double(Settings.playerPreviewScale()) / MLT.profile().height());
         const int processingMode = property("processing_mode").toInt();
         const bool isDeckLinkHLG = serviceName.startsWith("decklink")
                                    && property("decklinkGamma").toInt() == 1;

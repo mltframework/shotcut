@@ -1207,7 +1207,6 @@ void MainWindow::setupSettingsMenu()
     m_previewScaleGroup->addAction(ui->actionPreview540);
     m_previewScaleGroup->addAction(ui->actionPreview720);
     m_previewScaleGroup->addAction(ui->actionPreview1080);
-    ui->menuPreviewScaling->addAction(ui->actionPreview1080);
 
     group = new QActionGroup(this);
     group->addAction(ui->actionTimeFrames);
@@ -1580,6 +1579,9 @@ void MainWindow::setupSettingsMenu()
     ui->actionProxyUseProjectFolder->setChecked(Settings.proxyUseProjectFolder());
     ui->actionProxyUseHardware->setChecked(Settings.proxyUseHardware());
 
+    // Initialize the preview scaling submenu
+    ui->actionPreviewHardwareDecoder->setChecked(Settings.playerPreviewHardwareDecoder());
+
     LOG_DEBUG() << "end";
 }
 
@@ -1944,6 +1946,7 @@ void MainWindow::setProcessingMode(ShotcutSettings::ProcessingMode mode)
     }
     switch (mode) {
     case ShotcutSettings::Native8Cpu:
+    case ShotcutSettings::Linear8Cpu:
         ui->actionNative8bitCpu->setChecked(true);
         break;
     case ShotcutSettings::Native10Cpu:
@@ -2430,6 +2433,13 @@ void MainWindow::readPlayerSettings()
         ui->actionPreview540->setEnabled(true);
     }
     setPreviewScale(Settings.playerPreviewScale());
+
+    // Set hardware decoder environment variable based on settings
+    if (Settings.playerPreviewHardwareDecoder() && Settings.playerPreviewScale() > 0) {
+        qputenv("MLT_AVFORMAT_HWACCEL", "videotoolbox");
+    } else {
+        qunsetenv("MLT_AVFORMAT_HWACCEL");
+    }
 
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
@@ -5820,6 +5830,24 @@ void MainWindow::on_actionPreview1080_triggered(bool checked)
         setPreviewScale(1080);
         m_player->showIdleStatus();
     }
+}
+
+void MainWindow::on_actionPreviewHardwareDecoder_triggered(bool checked)
+{
+    Settings.setPlayerPreviewHardwareDecoder(checked);
+    if (checked) {
+#if defined(Q_OS_MAC)
+        qputenv("MLT_AVFORMAT_HWACCEL", "videotoolbox");
+#elif defined(Q_OS_WIN)
+        qputenv("MLT_AVFORMAT_HWACCEL", "d3d11va");
+#elif defined(Q_OS_LINUX)
+        qputenv("MLT_AVFORMAT_HWACCEL", "vaapi");
+#endif
+    } else {
+        qunsetenv("MLT_AVFORMAT_HWACCEL");
+    }
+    MLT.reload(QString());
+    emit producerOpened(false);
 }
 
 QUuid MainWindow::timelineClipUuid(int trackIndex, int clipIndex)
