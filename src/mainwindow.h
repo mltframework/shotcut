@@ -385,6 +385,7 @@ private slots:
     void on_actionPreview540_triggered(bool checked);
     void on_actionPreview720_triggered(bool checked);
     void on_actionPreview1080_triggered(bool checked);
+    void on_actionPreviewHardwareDecoder_triggered(bool checked);
     void on_actionTopics_triggered();
     void on_actionSync_triggered();
     void on_actionUseProxy_triggered(bool checked);

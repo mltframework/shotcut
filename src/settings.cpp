@@ -769,6 +769,16 @@ void ShotcutSettings::setPlayerPreviewScale(int i)
     settings.setValue("player/previewScale", i);
 }
 
+bool ShotcutSettings::playerPreviewHardwareDecoder() const
+{
+    return settings.value("player/previewHardwareDecoder", false).toBool();
+}
+
+void ShotcutSettings::setPlayerPreviewHardwareDecoder(bool b)
+{
+    settings.setValue("player/previewHardwareDecoder", b);
+}
+
 int ShotcutSettings::playerVideoDelayMs() const
 {
     return settings.value("player/videoDelayMs", 0).toInt();
