@@ -1776,6 +1776,21 @@ bool Controller::blockRefresh(bool block)
     return m_blockRefresh;
 }
 
+void Controller::configureHardwareDecoder(bool enable)
+{
+    if (enable) {
+#if defined(Q_OS_MAC)
+        qputenv("MLT_AVFORMAT_HWACCEL", "videotoolbox");
+#elif defined(Q_OS_WIN)
+        qputenv("MLT_AVFORMAT_HWACCEL", "d3d11va");
+#elif defined(Q_OS_LINUX)
+        qputenv("MLT_AVFORMAT_HWACCEL", "vaapi");
+#endif
+    } else {
+        qunsetenv("MLT_AVFORMAT_HWACCEL");
+    }
+}
+
 void TransportControl::play(double speed)
 {
     MLT.play(speed);

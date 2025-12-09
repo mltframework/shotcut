@@ -2433,13 +2433,8 @@ void MainWindow::readPlayerSettings()
         ui->actionPreview540->setEnabled(true);
     }
     setPreviewScale(Settings.playerPreviewScale());
-
-    // Set hardware decoder environment variable based on settings
-    if (Settings.playerPreviewHardwareDecoder() && Settings.playerPreviewScale() > 0) {
-        qputenv("MLT_AVFORMAT_HWACCEL", "videotoolbox");
-    } else {
-        qunsetenv("MLT_AVFORMAT_HWACCEL");
-    }
+    MLT.configureHardwareDecoder(Settings.playerPreviewHardwareDecoder()
+                                 && Settings.playerPreviewScale() > 0);
 
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
@@ -5835,17 +5830,7 @@ void MainWindow::on_actionPreview1080_triggered(bool checked)
 void MainWindow::on_actionPreviewHardwareDecoder_triggered(bool checked)
 {
     Settings.setPlayerPreviewHardwareDecoder(checked);
-    if (checked) {
-#if defined(Q_OS_MAC)
-        qputenv("MLT_AVFORMAT_HWACCEL", "videotoolbox");
-#elif defined(Q_OS_WIN)
-        qputenv("MLT_AVFORMAT_HWACCEL", "d3d11va");
-#elif defined(Q_OS_LINUX)
-        qputenv("MLT_AVFORMAT_HWACCEL", "vaapi");
-#endif
-    } else {
-        qunsetenv("MLT_AVFORMAT_HWACCEL");
-    }
+    MLT.configureHardwareDecoder(checked);
     MLT.reload(QString());
     emit producerOpened(false);
 }
