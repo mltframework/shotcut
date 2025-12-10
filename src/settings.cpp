@@ -771,7 +771,7 @@ void ShotcutSettings::setPlayerPreviewScale(int i)
 
 bool ShotcutSettings::playerPreviewHardwareDecoder() const
 {
-    return settings.value("player/previewHardwareDecoder", false).toBool();
+    return settings.value("player/previewHardwareDecoder", true).toBool();
 }
 
 void ShotcutSettings::setPlayerPreviewHardwareDecoder(bool b)
