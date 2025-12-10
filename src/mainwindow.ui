@@ -594,7 +594,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Native 8-bit CPU</string>
+    <string>Native 8-bit CPU (fast, flexible)</string>
    </property>
   </action>
   <action name="actionNative10bitCpu">
@@ -602,7 +602,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Native 10-bit CPU</string>
+    <string>Native 10-bit CPU (slower, better)</string>
    </property>
   </action>
   <action name="actionLinear10bitCpu">
@@ -610,7 +610,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Linear 10-bit CPU</string>
+    <string>Linear 10-bit CPU (slowest, good)</string>
    </property>
   </action>
   <action name="actionLinear10bitGpuCpu">
