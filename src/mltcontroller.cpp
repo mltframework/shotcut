@@ -45,6 +45,7 @@
 #include <QThreadPool>
 #include <QUuid>
 #include <QWidget>
+#include <QtGlobal>
 
 #include <clocale>
 #include <cmath>
@@ -1782,7 +1783,7 @@ void Controller::configureHardwareDecoder(bool enable)
     if (enable) {
         if (!qEnvironmentVariableIsSet(var)) {
 #if defined(Q_OS_MAC)
-        qputenv(var), "videotoolbox");
+            qputenv(var, "videotoolbox");
 #elif defined(Q_OS_WIN)
             qputenv(var, "d3d11va");
 #elif defined(Q_OS_LINUX)
