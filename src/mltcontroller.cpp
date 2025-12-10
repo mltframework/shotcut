@@ -1778,14 +1778,17 @@ bool Controller::blockRefresh(bool block)
 
 void Controller::configureHardwareDecoder(bool enable)
 {
+    const auto var = "MLT_AVFORMAT_HWACCEL";
     if (enable) {
+        if (!qEnvironmentVariableIsSet(var)) {
 #if defined(Q_OS_MAC)
-        qputenv("MLT_AVFORMAT_HWACCEL", "videotoolbox");
+        qputenv(var), "videotoolbox");
 #elif defined(Q_OS_WIN)
-        qputenv("MLT_AVFORMAT_HWACCEL", "d3d11va");
+            qputenv(var, "d3d11va");
 #elif defined(Q_OS_LINUX)
-        qputenv("MLT_AVFORMAT_HWACCEL", "vaapi");
+            qputenv(var, "vaapi");
 #endif
+        }
     } else {
         qunsetenv("MLT_AVFORMAT_HWACCEL");
     }

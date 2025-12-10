@@ -2433,8 +2433,9 @@ void MainWindow::readPlayerSettings()
         ui->actionPreview540->setEnabled(true);
     }
     setPreviewScale(Settings.playerPreviewScale());
-    MLT.configureHardwareDecoder(Settings.playerPreviewHardwareDecoder()
-                                 && Settings.playerPreviewScale() > 0);
+    if (!qEnvironmentVariableIsSet("MLT_AVFORMAT_HWACCEL"))
+        MLT.configureHardwareDecoder(Settings.playerPreviewHardwareDecoder()
+                                     && Settings.playerPreviewScale() > 0);
 
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
