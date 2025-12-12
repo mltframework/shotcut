@@ -1779,7 +1779,7 @@ bool Controller::blockRefresh(bool block)
 
 void Controller::configureHardwareDecoder(bool enable)
 {
-    const auto var = "MLT_AVFORMAT_HWACCEL";
+    auto var = "MLT_AVFORMAT_HWACCEL";
     if (enable) {
         if (!qEnvironmentVariableIsSet(var)) {
 #if defined(Q_OS_MAC)
@@ -1790,6 +1790,9 @@ void Controller::configureHardwareDecoder(bool enable)
             qputenv(var, "vaapi");
 #endif
         }
+        var = "MLT_AVFORMAT_HWACCEL_PPS";
+        if (!qEnvironmentVariableIsSet(var))
+            qputenv(var, "124416000"); // 1080p60
     } else {
         qunsetenv("MLT_AVFORMAT_HWACCEL");
     }
