@@ -1580,7 +1580,11 @@ void MainWindow::setupSettingsMenu()
     ui->actionProxyUseHardware->setChecked(Settings.proxyUseHardware());
 
     // Initialize the preview scaling submenu
+#if LIBMLT_VERSION_INT > ((7 << 16) + (34 << 8))
     ui->actionPreviewHardwareDecoder->setChecked(Settings.playerPreviewHardwareDecoder());
+#else
+    ui->actionPreviewHardwareDecoder->setVisible(false);
+#endif
 
     LOG_DEBUG() << "end";
 }
@@ -2433,9 +2437,9 @@ void MainWindow::readPlayerSettings()
         ui->actionPreview540->setEnabled(true);
     }
     setPreviewScale(Settings.playerPreviewScale());
-    if (!qEnvironmentVariableIsSet("MLT_AVFORMAT_HWACCEL"))
-        MLT.configureHardwareDecoder(Settings.playerPreviewHardwareDecoder()
-                                     && Settings.playerPreviewScale() > 0);
+#if LIBMLT_VERSION_INT > ((7 << 16) + (34 << 8))
+    MLT.configureHardwareDecoder(Settings.playerPreviewHardwareDecoder());
+#endif
 
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
