@@ -2001,6 +2001,8 @@ void MainWindow::setPreviewScale(int scale)
         ui->actionPreviewNone->setChecked(true);
         break;
     }
+
+    const auto changed = scale != Settings.playerPreviewScale();
     MLT.setPreviewScale(scale);
     if (!m_externalGroup->checkedAction()->data().toString().isEmpty()) {
         // DeckLink external monitor
@@ -2008,6 +2010,11 @@ void MainWindow::setPreviewScale(int scale)
     } else {
         // System monitor
         MLT.refreshConsumer();
+    }
+    if (changed) {
+        MLT.configureHardwareDecoder(true);
+        MLT.reload(QString());
+        emit producerOpened(false);
     }
 }
 

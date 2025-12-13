@@ -1791,8 +1791,12 @@ void Controller::configureHardwareDecoder(bool enable)
 #endif
         }
         var = "MLT_AVFORMAT_HWACCEL_PPS";
-        if (!qEnvironmentVariableIsSet(var))
-            qputenv(var, "124416000"); // 1080p60
+        if (Settings.playerPreviewScale() == 0) {
+            if (!qEnvironmentVariableIsSet(var))
+                qputenv(var, "124416000"); // 1080p60
+        } else {
+            qunsetenv(var);
+        }
     } else {
         qunsetenv("MLT_AVFORMAT_HWACCEL");
     }
