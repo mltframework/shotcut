@@ -737,7 +737,7 @@ QVariant MarkersModel::data(const QModelIndex &index, int role) const
             break;
         case COLUMN_DURATION:
             result = QString(
-                m_producer->frames_to_time(marker.end - marker.start + 1, Settings.timeFormat()));
+                m_producer->frames_to_time(marker.end - marker.start, Settings.timeFormat()));
             break;
         default:
             LOG_ERROR() << "Invalid Column" << index.column() << role;

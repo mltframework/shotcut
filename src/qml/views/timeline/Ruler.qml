@@ -86,7 +86,7 @@ Rectangle {
                 msg += "<br>" + application.timeFromFrames(start);
             } else {
                 msg += "<br>" + application.timeFromFrames(start) + " - " + application.timeFromFrames(end);
-                msg += "<br>" + application.timeFromFrames(end - start + 1);
+                msg += "<br>" + application.timeFromFrames(end - start);
             }
             msg += "</center>";
             bubbleHelp.show(msg);

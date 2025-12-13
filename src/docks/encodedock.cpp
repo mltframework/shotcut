@@ -1468,7 +1468,7 @@ MeltJob *EncodeDock::createMeltJob(Mlt::Producer *service,
             markersModel.load(MAIN.multitrack());
             auto marker = markersModel.getMarker(index);
             if (marker.end > marker.start) {
-                job->setInAndOut(marker.start, marker.end);
+                job->setInAndOut(marker.start, marker.end - 1);
             }
         }
     }
