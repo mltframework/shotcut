@@ -3856,8 +3856,7 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
         QIcon::setThemeName(kThemeDark);
-        if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
-            ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-dark.conf");
+        ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-dark.conf");
     } else if (mytheme == "light") {
         QApplication::setStyle(kStyleFusion);
         QPalette palette;
@@ -3880,8 +3879,7 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Disabled, QPalette::Light, Qt::transparent);
         QApplication::setPalette(palette);
         QIcon::setThemeName(kThemeLight);
-        if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF"))
-            ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
+        ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
     } else {
         // Use a macro since this can change on some OS after setStyle(Fusion)
 #define isDark (QGuiApplication::palette().color(QPalette::Text).lightnessF() > 0.5f)
@@ -3918,12 +3916,10 @@ void MainWindow::changeTheme(const QString &theme)
         else
             QIcon::setThemeName(mytheme == kThemeSystemFusion ? kThemeLight : kIconsOxygen);
 
-        if (!::qEnvironmentVariableIsSet("QT_QUICK_CONTROLS_CONF")) {
-            if (!isDark)
-                ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
-            else
-                ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-dark.conf");
-        }
+        if (!isDark)
+            ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-light.conf");
+        else
+            ::qputenv("QT_QUICK_CONTROLS_CONF", ":/resources/qtquickcontrols2-dark.conf");
     }
 #endif
 
