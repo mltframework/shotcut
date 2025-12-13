@@ -4753,11 +4753,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="613"/>
-        <source>Linear 10-bit CPU (slowest, good)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="629"/>
         <source>1 (mono)</source>
         <translation type="unfinished"></translation>
@@ -5057,6 +5052,11 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="160"/>
         <source>Processing Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="613"/>
+        <source>Linear 10-bit CPU (slowest, best)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
