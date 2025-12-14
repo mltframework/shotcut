@@ -1207,7 +1207,6 @@ void MainWindow::setupSettingsMenu()
     m_previewScaleGroup->addAction(ui->actionPreview540);
     m_previewScaleGroup->addAction(ui->actionPreview720);
     m_previewScaleGroup->addAction(ui->actionPreview1080);
-    ui->menuPreviewScaling->addAction(ui->actionPreview1080);
 
     group = new QActionGroup(this);
     group->addAction(ui->actionTimeFrames);
@@ -1580,6 +1579,13 @@ void MainWindow::setupSettingsMenu()
     ui->actionProxyUseProjectFolder->setChecked(Settings.proxyUseProjectFolder());
     ui->actionProxyUseHardware->setChecked(Settings.proxyUseHardware());
 
+    // Initialize the preview scaling submenu
+#if LIBMLT_VERSION_INT > ((7 << 16) + (34 << 8))
+    ui->actionPreviewHardwareDecoder->setChecked(Settings.playerPreviewHardwareDecoder());
+#else
+    ui->actionPreviewHardwareDecoder->setVisible(false);
+#endif
+
     LOG_DEBUG() << "end";
 }
 
@@ -1944,6 +1950,7 @@ void MainWindow::setProcessingMode(ShotcutSettings::ProcessingMode mode)
     }
     switch (mode) {
     case ShotcutSettings::Native8Cpu:
+    case ShotcutSettings::Linear8Cpu:
         ui->actionNative8bitCpu->setChecked(true);
         break;
     case ShotcutSettings::Native10Cpu:
@@ -1994,6 +2001,8 @@ void MainWindow::setPreviewScale(int scale)
         ui->actionPreviewNone->setChecked(true);
         break;
     }
+
+    const auto changed = scale != Settings.playerPreviewScale();
     MLT.setPreviewScale(scale);
     if (!m_externalGroup->checkedAction()->data().toString().isEmpty()) {
         // DeckLink external monitor
@@ -2001,6 +2010,11 @@ void MainWindow::setPreviewScale(int scale)
     } else {
         // System monitor
         MLT.refreshConsumer();
+    }
+    if (changed) {
+        MLT.configureHardwareDecoder(true);
+        MLT.reload(QString());
+        emit producerOpened(false);
     }
 }
 
@@ -2430,6 +2444,9 @@ void MainWindow::readPlayerSettings()
         ui->actionPreview540->setEnabled(true);
     }
     setPreviewScale(Settings.playerPreviewScale());
+#if LIBMLT_VERSION_INT > ((7 << 16) + (34 << 8))
+    MLT.configureHardwareDecoder(Settings.playerPreviewHardwareDecoder());
+#endif
 
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
@@ -5820,6 +5837,14 @@ void MainWindow::on_actionPreview1080_triggered(bool checked)
         setPreviewScale(1080);
         m_player->showIdleStatus();
     }
+}
+
+void MainWindow::on_actionPreviewHardwareDecoder_triggered(bool checked)
+{
+    Settings.setPlayerPreviewHardwareDecoder(checked);
+    MLT.configureHardwareDecoder(checked);
+    MLT.reload(QString());
+    emit producerOpened(false);
 }
 
 QUuid MainWindow::timelineClipUuid(int trackIndex, int clipIndex)
