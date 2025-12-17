@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,9 +49,10 @@ MeltJob::MeltJob(const QString &name,
         connect(action, SIGNAL(triggered()), this, SLOT(onViewXmlTriggered()));
         m_standardActions << action;
         m_xml.reset(Util::writableTemporaryFile(name, "shotcut-XXXXXX.mlt"));
-        m_xml->open();
-        m_xml->write(xml.toUtf8());
-        m_xml->close();
+        if (m_xml->open()) {
+            m_xml->write(xml.toUtf8());
+            m_xml->close();
+        }
     } else {
         // Not an EncodeJob
         QAction *action = new QAction(tr("Open"), this);
@@ -164,10 +165,13 @@ void MeltJob::start()
 
 QString MeltJob::xml()
 {
-    m_xml->open();
-    QString s(m_xml->readAll());
-    m_xml->close();
-    return s;
+    if (m_xml->open()) {
+        QString s(m_xml->readAll());
+        m_xml->close();
+        return s;
+    } else {
+        return QString();
+    }
 }
 
 void MeltJob::setIsStreaming(bool streaming)
