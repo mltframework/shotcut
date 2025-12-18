@@ -1784,6 +1784,8 @@ void Controller::configureHardwareDecoder(bool enable)
         if (!qEnvironmentVariableIsSet(var)) {
 #if defined(Q_OS_MAC)
             qputenv(var, "videotoolbox");
+#elif defined(USE_VULKAN)
+            qputenv(var, "vulkan");
 #elif defined(Q_OS_WIN)
             qputenv(var, "d3d11va");
 #elif defined(Q_OS_LINUX)
