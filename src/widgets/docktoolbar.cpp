@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Meltytech, LLC
+ * Copyright (c) 2022-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ DockToolBar::DockToolBar(const QString &title, QWidget *parent)
     , m_area(Qt::TopToolBarArea)
 {
     setMovable(false);
-    setToolButtonStyle(Qt::ToolButtonFollowStyle);
+    setToolButtonStyle(Qt::ToolButtonIconOnly);
     setFloatable(false);
     setProperty("Movable", QVariant(false));
     updateStyle();
