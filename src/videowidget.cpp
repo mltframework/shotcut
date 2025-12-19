@@ -18,6 +18,7 @@
 #include "videowidget.h"
 
 #include "Logger.h"
+#include "dialogs/durationdialog.h"
 #include "mainwindow.h"
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlutilities.h"
@@ -198,6 +199,13 @@ void VideoWidget::mouseMoveEvent(QMouseEvent *event)
     } else if (!MLT.isSeekableClip()) {
         MAIN.showStatusMessage(tr("You cannot drag a non-seekable source"));
         return;
+    }
+
+    // Cannot show a DurationDialog during mouse drag
+    // This is usually MLT.isLiveProducer(), but that checks for > 1 week,
+    // which is too long for the timeline.
+    if (m_producer->get_playtime() > qRound(profile().fps() * 24 * 3600)) {
+        m_producer->set_in_and_out(0, profile().fps() * 60 - 1);
     }
 
     QDrag *drag = new QDrag(this);
