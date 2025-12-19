@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,7 +62,8 @@ void AudioLevelsTask::start(Mlt::Producer &producer,
                             const QModelIndex &index,
                             bool force)
 {
-    if (Settings.timelineShowWaveforms() && producer.is_valid()) {
+    if (Settings.timelineShowWaveforms() && producer.is_valid()
+        && producer.get_length() < qRound(MLT.profile().fps() * 24 * 3600)) {
         QString serviceName = producer.get("mlt_service");
         if (serviceName == "pixbuf" || serviceName == "qimage" || serviceName == "webvfx"
             || serviceName == "color" || serviceName.startsWith("frei0r")
