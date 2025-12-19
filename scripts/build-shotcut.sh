@@ -1205,8 +1205,6 @@ function install_shotcut_linux {
   cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt6/sqldrivers
   cmd install -d "$FINAL_INSTALL_DIR"/lib/qml
   cmd cp -a "$QTDIR"/qml/{Qt,QtCore,QtQml,QtQuick} "$FINAL_INSTALL_DIR"/lib/qml
-  cmd install -d "$FINAL_INSTALL_DIR"/lib/va
-  cmd install -p -c /usr/lib/x86_64-linux-gnu/dri/*_drv_video.so "$FINAL_INSTALL_DIR"/lib/va
 }
 
 function build_vmaf_darwin {
@@ -1740,70 +1738,75 @@ function bundle_libs
   # See https://github.com/AppImage/pkg2appimage/blob/master/excludelist
   libs=$(ldd "$target" |
     awk '($3  ~ /^\/(lib|usr)\//) &&
-         ($3 !~ /\/libld-linux\./) &&
-         ($3 !~ /\/libld-linux-x86-64\./) &&
-         ($3 !~ /\/libanl\./) &&
          ($3 !~ /\/libBrokenLocale\./) &&
-         ($3 !~ /\/libcidn\./) &&
+         ($3 !~ /\/libEGL\./) &&
+         ($3 !~ /\/libGLX\./) &&
+         ($3 !~ /\/libGL\./) &&
+         ($3 !~ /\/libGLdispatch\./) &&
+         ($3 !~ /\/libICE\./) &&
+         ($3 !~ /\/libSM\./) &&
+         ($3 !~ /\/libX11\./) &&
+         ($3 !~ /\/libanl\./) &&
+         ($3 !~ /\/libasound\./) &&
          ($3 !~ /\/libc\./) &&
+         ($3 !~ /\/libcairo\./) &&
+         ($3 !~ /\/libcidn\./) &&
+         ($3 !~ /\/libcom_err\./) &&
          ($3 !~ /\/libdl\./) &&
+         ($3 !~ /\/libdrm/) &&
+         ($3 !~ /\/libedit\./) &&
+         ($3 !~ /\/libexpat\./) &&
+         ($3 !~ /\/libfontconfig\./) &&
+         ($3 !~ /\/libfreetype\./) &&
+         ($3 !~ /\/libfribidi\./) &&
+         ($3 !~ /\/libgbm\./) &&
+         ($3 !~ /\/libgcc_s\./) &&
+         ($3 !~ /\/libgdk_pixbuf-2.0\./) &&
+         ($3 !~ /\/libgio-2.0\./) &&
+         ($3 !~ /\/libgio\./) &&
+         ($3 !~ /\/libglapi\./) &&
+         ($3 !~ /\/libglib-2.0\./) &&
+         ($3 !~ /\/libgmodule-2.0\./) &&
+         ($3 !~ /\/libgmp\./) &&
+         ($3 !~ /\/libgobject-2.0\./) &&
+         ($3 !~ /\/libgpg-error\./) &&
+         ($3 !~ /\/libharfbuzz\./) &&
+         ($3 !~ /\/libigdmm\./) &&
+         ($3 !~ /\/libjack\./) &&
+         ($3 !~ /\/libld-linux-x86-64\./) &&
+         ($3 !~ /\/libld-linux\./) &&
          ($3 !~ /\/libm\./) &&
+         ($3 !~ /\/libmount\./) &&
          ($3 !~ /\/libmvec\./) &&
          ($3 !~ /\/libnss_compat\./) &&
          ($3 !~ /\/libnss_dns\./) &&
          ($3 !~ /\/libnss_files\./) &&
          ($3 !~ /\/libnss_hesiod\./) &&
-         ($3 !~ /\/libnss_nisplus\./) &&
          ($3 !~ /\/libnss_nis\./) &&
+         ($3 !~ /\/libnss_nisplus\./) &&
+         ($3 !~ /\/libp11-kit\./) &&
+         ($3 !~ /\/libpango-1.0\./) &&
+         ($3 !~ /\/libpangocairo-1.0\./) &&
+         ($3 !~ /\/libpangoft2-1.0\./) &&
+         ($3 !~ /\/libpixman-1\./) &&
          ($3 !~ /\/libpthread\./) &&
          ($3 !~ /\/libresolv\./) &&
          ($3 !~ /\/librt\./) &&
-         ($3 !~ /\/libthread_db\./) &&
-         ($3 !~ /\/libutil\./) &&
          ($3 !~ /\/libstdc\+\+\./) &&
-         ($3 !~ /\/libGL\./) &&
-         ($3 !~ /\/libGLdispatch\./) &&
-         ($3 !~ /\/libGLX\./) &&
-         ($3 !~ /\/libEGL\./) &&
-         ($3 !~ /\/libgmp\./) &&
-         ($3 !~ /\/libgbm\./) &&
-         ($3 !~ /\/libdrm/) &&
-         ($3 !~ /\/libglapi\./) &&
-         ($3 !~ /\/libxcb\./) &&
+         ($3 !~ /\/libthai\./) &&
+         ($3 !~ /\/libthread_db\./) &&
+         ($3 !~ /\/libusb-1.0\./) &&
+         ($3 !~ /\/libutil\./) &&
+         ($3 !~ /\/libuuid\./) &&
+         ($3 !~ /\/libva\./) &&
+         ($3 !~ /\/libva-drm\./) &&
+         ($3 !~ /\/libva-x11\./) &&
+         ($3 !~ /\/libwayland/) \
          ($3 !~ /\/libxcb-dri2\./) &&
          ($3 !~ /\/libxcb-dri3\./) &&
-         ($3 !~ /\/libfribidi\./) &&
-         ($3 !~ /\/libX11\./) &&
-         ($3 !~ /\/libgio\./) &&
-         ($3 !~ /\/libasound\./) &&
-         ($3 !~ /\/libgdk_pixbuf-2.0\./) &&
-         ($3 !~ /\/libfontconfig\./) &&
-         ($3 !~ /\/libthai\./) &&
-         ($3 !~ /\/libfreetype\./) &&
-         ($3 !~ /\/libharfbuzz\./) &&
-         ($3 !~ /\/libcom_err\./) &&
-         ($3 !~ /\/libexpat\./) &&
-         ($3 !~ /\/libgcc_s\./) &&
-         ($3 !~ /\/libglib-2.0\./) &&
-         ($3 !~ /\/libgpg-error\./) &&
-         ($3 !~ /\/libICE\./) &&
-         ($3 !~ /\/libp11-kit\./) &&
-         ($3 !~ /\/libSM\./) &&
-         ($3 !~ /\/libusb-1.0\./) &&
-         ($3 !~ /\/libuuid\./) &&
+         ($3 !~ /\/libxcb\./) &&
          ($3 !~ /\/libz\./) &&
-         ($3 !~ /\/libgobject-2.0\./) &&
-         ($3 !~ /\/libpangoft2-1.0\./) &&
-         ($3 !~ /\/libpangocairo-1.0\./) &&
-         ($3 !~ /\/libpango-1.0\./) &&
-         ($3 !~ /\/libjack\./) &&
          ($3 !~ /nvidia/) &&
-         ($3 !~ /\/libcairo\./) &&
-         ($3 !~ /\/libedit\./) &&
-         ($3 !~ /\/libgio-2.0\./) &&
-         ($3 !~ /\/libgmodule-2.0\./) &&
-         ($3 !~ /\/libpixman-1\./) &&
-         ($3 !~ /\/libwayland/) \
          {print $3}')
   for lib in $libs; do
     basename_lib=$(basename "$lib")
@@ -2084,7 +2087,6 @@ export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 # LADSPA_PATH set, and Shotcut only needs the supplied SWH plugins.
 # export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
 export LADSPA_PATH="\$INSTALL_DIR/lib/ladspa"
-export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
 export MANPATH=\$MANPATH:"\$INSTALL_DIR/share/man"
 export PKG_CONFIG_PATH="\$INSTALL_DIR/lib/pkgconfig":\$PKG_CONFIG_PATH
 export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt6"
@@ -2111,7 +2113,6 @@ export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt-7/profiles"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
-export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
 export PYTHONHOME="\$INSTALL_DIR"
 export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt6"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
@@ -2141,7 +2142,6 @@ export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 # LADSPA_PATH set, and Shotcut only needs the supplied SWH plugins.
 # export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
 export LADSPA_PATH="\$INSTALL_DIR/lib/ladspa"
-export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
 export PYTHONHOME="\$INSTALL_DIR"
 sed --help >/dev/null && export XDG_DATA_DIRS="\$(echo "\$XDG_DATA_DIRS" | sed "s|\$(dirname "\$INSTALL_DIR")||")"
 cd "\$INSTALL_DIR"
