@@ -1801,12 +1801,12 @@ function bundle_libs
          ($3 !~ /\/libva\./) &&
          ($3 !~ /\/libva-drm\./) &&
          ($3 !~ /\/libva-x11\./) &&
-         ($3 !~ /\/libwayland/) \
+         ($3 !~ /\/libwayland/) &&
          ($3 !~ /\/libxcb-dri2\./) &&
          ($3 !~ /\/libxcb-dri3\./) &&
          ($3 !~ /\/libxcb\./) &&
          ($3 !~ /\/libz\./) &&
-         ($3 !~ /nvidia/) &&
+         ($3 !~ /nvidia/) \
          {print $3}')
   for lib in $libs; do
     basename_lib=$(basename "$lib")
