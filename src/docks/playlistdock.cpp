@@ -1375,6 +1375,8 @@ void PlaylistDock::addFiles(int row, const QList<QUrl> &urls)
                     else
                         MAIN.undoStack()->push(
                             new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
+                } else {
+                    continue;
                 }
             }
             if (first) {

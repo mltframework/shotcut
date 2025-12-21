@@ -2363,6 +2363,8 @@ void TimelineDock::append(int trackIndex)
                 durationDialog.setDuration(MLT.profile().fps() * 5);
                 if (durationDialog.exec() == QDialog::Accepted) {
                     producer.set_in_and_out(0, durationDialog.duration() - 1);
+                } else {
+                    return;
                 }
             } else {
                 ProxyManager::generateIfNotExists(producer);
@@ -3166,6 +3168,8 @@ void TimelineDock::handleDrop(int trackIndex, int position, QString xmlOrUrls)
                         durationDialog.setDuration(MLT.profile().fps() * 5);
                         if (durationDialog.exec() == QDialog::Accepted) {
                             producer->set_in_and_out(0, durationDialog.duration() - 1);
+                        } else {
+                            continue;
                         }
                     } else {
                         ProxyManager::generateIfNotExists(*producer);
@@ -3631,6 +3635,8 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
                 durationDialog.setDuration(MLT.profile().fps() * 5);
                 if (durationDialog.exec() == QDialog::Accepted) {
                     producer.set_in_and_out(0, durationDialog.duration() - 1);
+                } else {
+                    return;
                 }
             } else {
                 ProxyManager::generateIfNotExists(producer);
@@ -3763,6 +3769,8 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
                 durationDialog.setDuration(MLT.profile().fps() * 5);
                 if (durationDialog.exec() == QDialog::Accepted) {
                     producer.set_in_and_out(0, durationDialog.duration() - 1);
+                } else {
+                    return;
                 }
             } else {
                 ProxyManager::generateIfNotExists(producer);
