@@ -5108,6 +5108,49 @@ void MainWindow::onVideoWidgetImageReady()
     }
 }
 
+void MainWindow::quickExportFrame()
+{
+    if (!MLT.producer() || !MLT.producer()->is_valid()) {
+        showStatusMessage(tr("No video loaded"));
+        return;
+    }
+    
+    filterController()->setCurrentFilter(QmlFilter::DeselectCurrentFilter);
+    auto *videoWidget = qobject_cast<Mlt::VideoWidget *>(MLT.videoWidget());
+    if (!videoWidget) {
+        showStatusMessage(tr("Unable to access video widget"));
+        return;
+    }
+    
+    QString timecode = MLT.producer()->frame_time(mlt_time_clock);
+    timecode = timecode.replace(":", "_").replace(".", "_");
+    QString filename = QString("Shotcut_%1.png").arg(timecode);
+    
+    QString savePath = Settings.savePath();
+    if (!MLT.projectFolder().isEmpty()) {
+        savePath = MLT.projectFolder();
+    }
+    QString fullPath = QDir(savePath).filePath(filename);
+    
+    MLT.setPreviewScale(0);
+    QImage image = videoWidget->image();
+    
+    if (Settings.playerGPU() || Settings.playerPreviewScale()) {
+        MLT.setPreviewScale(Settings.playerPreviewScale());
+    }
+    
+    if (!image.isNull()) {
+        if (image.save(fullPath, "PNG")) {
+            showStatusMessage(tr("Frame exported: %1").arg(filename), 3);
+            m_recentDock->add(fullPath);
+        } else {
+            showStatusMessage(tr("Failed to export frame"));
+        }
+    } else {
+        showStatusMessage(tr("Unable to capture frame"));
+    }
+}
+
 void MainWindow::on_actionAppDataSet_triggered()
 {
     QMessageBox dialog(QMessageBox::Information,

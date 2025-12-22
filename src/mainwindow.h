@@ -251,6 +251,7 @@ public slots:
     bool on_actionSave_triggered();
     void onCreateOrEditFilterOnOutput(Mlt::Filter *filter, const QStringList &key_properties);
     void showSettingsMenu() const;
+    void quickExportFrame();
 
 private slots:
     void showUpgradePrompt();
