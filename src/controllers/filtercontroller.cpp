@@ -254,12 +254,13 @@ void FilterController::setCurrentFilter(int attachedIndex)
     }
 
     QmlMetadata *meta = m_attachedModel.getMetadata(m_currentFilterIndex);
-    QmlFilter *filter = 0;
+    QmlFilter *filter = nullptr;
     if (meta) {
         emit currentFilterChanged(nullptr, nullptr, QmlFilter::NoCurrentFilter);
-        m_mltService = m_attachedModel.getService(m_currentFilterIndex);
-        if (!m_mltService.is_valid())
+        std::unique_ptr<Mlt::Service> service(m_attachedModel.getService(m_currentFilterIndex));
+        if (!service || !service->is_valid())
             return;
+        m_mltService = *service;
         filter = new QmlFilter(m_mltService, meta);
         filter->setIsNew(m_mltService.get_int(kNewFilterProperty));
         m_mltService.clear(kNewFilterProperty);
