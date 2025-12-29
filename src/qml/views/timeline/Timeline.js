@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2023 Meltytech, LLC
+ * Copyright (c) 2013-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ function scrollIfNeeded(center, continouous) {
 
 function dragging(pos, duration) {
     if (tracksRepeater.count > 0) {
-        let headerHeight = ruler.height
+        let headerHeight = ruler.height + subtitleBar.height
         let i = 0;
         dropTarget.x = pos.x
         dropTarget.width = duration * multitrack.scaleFactor
