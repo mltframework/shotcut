@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2024 Meltytech, LLC
+ * Copyright (c) 2011-2025 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ void ScrubBar::setScale(int maximum)
     }
     m_max = maximum;
     /// m_scale is the pixels per frame ratio
-    m_scale = (double) (width() - 2 * m_margin) / (double) maximum;
+    m_scale = m_max > 0 ? (double) (width() - 2 * m_margin) / (double) m_max : -1;
     if (m_scale == 0)
         m_scale = -1;
     m_secondsPerTick = qMax(qRound(double(m_timecodeWidth * 1.8) / m_scale / m_fps), 1);
