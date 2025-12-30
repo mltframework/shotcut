@@ -260,7 +260,7 @@ void FilterController::setCurrentFilter(int attachedIndex)
         std::unique_ptr<Mlt::Service> service(m_attachedModel.getService(m_currentFilterIndex));
         if (!service || !service->is_valid())
             return;
-        m_mltService = *service;
+        m_mltService = Mlt::Service(service->get_service());
         filter = new QmlFilter(m_mltService, meta);
         filter->setIsNew(m_mltService.get_int(kNewFilterProperty));
         m_mltService.clear(kNewFilterProperty);
