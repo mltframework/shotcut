@@ -56,7 +56,7 @@ if(UNIX AND NOT APPLE)
 endif()
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(mlt++ REQUIRED IMPORTED_TARGET mlt++-7>=7.32.0)
+pkg_check_modules(mlt++ REQUIRED IMPORTED_TARGET mlt++-7>=7.36.0)
 pkg_check_modules(FFTW IMPORTED_TARGET fftw3)
 if(NOT FFTW_FOUND)
   pkg_check_modules(FFTW REQUIRED IMPORTED_TARGET fftw)
