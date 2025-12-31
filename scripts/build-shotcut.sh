@@ -1635,6 +1635,7 @@ function configure_compile_install_subproject {
     elif [ "SVT-AV1" = "$1" ]; then
       replace_rpath SvtAv1Enc
     elif [ "vid.stab" = "$1" ]; then
+      replace_rpath vidstab
       cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
     fi
   fi
@@ -1830,7 +1831,7 @@ function fixlibs()
   trace fixlibs $target
   basename_target=$(basename "$target")
   libs=$(otool -L "$target" |
-    awk '/^\t@rpath\/Qt/ || /^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// || /^\tlibvidstab/ {print $1}')
+    awk '/^\t@rpath\/Qt/ || /^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// {print $1}')
 
   # if the target is a lib, change its id
   if [ $(echo "$1" | grep '\.dylib$') ] || [ $(echo "$1" | grep '\.so$') ]; then
@@ -1917,12 +1918,9 @@ function deploy_mac
   cmd mkdir -p PlugIns/mlt 2>/dev/null
   cmd cp "$FINAL_INSTALL_DIR"/lib/mlt/libmlt*.so PlugIns/mlt
   cmd cp -a "$FINAL_INSTALL_DIR"/share/mlt Resources
-  # Copy libvidstab here temporarily so it can be found by fixlibs.
-  cmd cp -p "$FINAL_INSTALL_DIR"/lib/libvidstab*.dylib .
   for lib in PlugIns/mlt/*; do
     fixlibs "$lib"
   done
-  cmd rm libvidstab*.dylib
 
   # Qt plugins
   log Copying Qt plugins
