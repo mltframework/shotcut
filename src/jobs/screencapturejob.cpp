@@ -244,6 +244,7 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     m_progressTimer.stop();
 
+    LOG_DEBUG() << "screen capture job finished with exit code" << exitCode;
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     if (m_dbusService == DBusService::GNOME) {
         LOG_INFO() << "job succeeeded";

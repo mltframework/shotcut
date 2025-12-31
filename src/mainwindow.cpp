@@ -1643,8 +1643,8 @@ void MainWindow::setupOpenOtherMenu()
     ui->menuNew->addAction(tr("Screen Snapshot"), this, SLOT(on_actionScreenSnapshot_triggered()))
         ->setObjectName("screenSnapshot");
     otherMenu->addAction(ui->menuNew->actions().constLast());
-    if (QSysInfo::productType() == QStringLiteral("windows")
-        && QSysInfo::productVersion() != QStringLiteral("10")) {
+    if (QSysInfo::productType() != QStringLiteral("windows")
+        || QSysInfo::productVersion() != QStringLiteral("10")) {
         ui->actionScreenRecording->setVisible(true);
         ui->menuNew
             ->addAction(tr("Screen Recording"), this, SLOT(on_actionScreenRecording_triggered()))
