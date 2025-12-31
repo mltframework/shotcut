@@ -120,7 +120,10 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
 
     data = d->f.get_data("alpha", size);
     if (alpha && data && d->f.get_int("format") != mlt_image_rgba
-        && d->f.get_int("format") != mlt_image_rgba64) {
+#if LIBMLT_VERSION_INT > ((7 << 16) + (34 << 8))
+        && d->f.get_int("format") != mlt_image_rgba64
+#endif
+    ) {
         if (!size) {
             size = get_image_width() * get_image_height();
         }

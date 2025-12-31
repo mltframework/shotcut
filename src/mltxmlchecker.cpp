@@ -242,10 +242,8 @@ void MltXmlChecker::processProperties()
         checkIncludesSelf(newProperties);
         checkLumaAlphaOver(mlt_service, newProperties);
         checkAudioGain(mlt_service, newProperties);
-#if LIBMLT_VERSION_INT >= ((6 << 16) + (23 << 8))
         replaceWebVfxCropFilters(mlt_service, newProperties);
         replaceWebVfxChoppyFilter(mlt_service, newProperties);
-#endif
         bool proxyEnabled = Settings.proxyEnabled();
         if (proxyEnabled)
             checkForProxy(mlt_service, newProperties);
