@@ -707,7 +707,7 @@ with parallel processing enabled.</string>
                       <number>16</number>
                      </property>
                      <property name="maximum">
-                      <number>8192</number>
+                      <number>8640</number>
                      </property>
                      <property name="singleStep">
                       <number>2</number>
@@ -730,7 +730,7 @@ with parallel processing enabled.</string>
                       <number>1</number>
                      </property>
                      <property name="maximum">
-                      <number>8192</number>
+                      <number>8640</number>
                      </property>
                      <property name="singleStep">
                       <number>2</number>
@@ -903,7 +903,7 @@ with parallel processing enabled.</string>
                       <number>1</number>
                      </property>
                      <property name="maximum">
-                      <number>8192</number>
+                      <number>8640</number>
                      </property>
                      <property name="value">
                       <number>16</number>
@@ -923,7 +923,7 @@ with parallel processing enabled.</string>
                       <number>1</number>
                      </property>
                      <property name="maximum">
-                      <number>8192</number>
+                      <number>8640</number>
                      </property>
                      <property name="value">
                       <number>9</number>
