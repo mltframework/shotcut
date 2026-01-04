@@ -180,6 +180,7 @@ public:
     static bool isTrackProducer(Mlt::Producer &producer);
     static int checkFile(const QString &path);
     bool blockRefresh(bool block);
+    void configureHardwareDecoder(bool enable);
 
     class RefreshBlocker
     {

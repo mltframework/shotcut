@@ -179,6 +179,8 @@ public:
     void setPlayerZoom(float);
     int playerPreviewScale() const;
     void setPlayerPreviewScale(int);
+    bool playerPreviewHardwareDecoder() const;
+    void setPlayerPreviewHardwareDecoder(bool);
     int playerVideoDelayMs() const;
     void setPlayerVideoDelayMs(int);
     double playerJumpSeconds() const;

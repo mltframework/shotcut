@@ -22,6 +22,7 @@ if(WIN32)
 endif()
 option(CLANG_FORMAT "Enable Clang Format" ON)
 option(EXTERNAL_LAUNCHERS "Whether include features to launch external programs; for example, this should be off for Flatpak due to sandbox." ON)
+option(USE_VULKAN "Whether to use Vulkan for hardware video decoding" OFF)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
