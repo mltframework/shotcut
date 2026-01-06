@@ -1747,6 +1747,7 @@ function bundle_libs
          ($3 !~ /\/libICE\./) &&
          ($3 !~ /\/libSM\./) &&
          ($3 !~ /\/libX11\./) &&
+         ($3 !~ /\/libX11-xcb\./) &&
          ($3 !~ /\/libanl\./) &&
          ($3 !~ /\/libasound\./) &&
          ($3 !~ /\/libc\./) &&
@@ -1785,6 +1786,7 @@ function bundle_libs
          ($3 !~ /\/libnss_hesiod\./) &&
          ($3 !~ /\/libnss_nis\./) &&
          ($3 !~ /\/libnss_nisplus\./) &&
+         ($3 !~ /\/libOpenGL\./) &&
          ($3 !~ /\/libp11-kit\./) &&
          ($3 !~ /\/libpango-1.0\./) &&
          ($3 !~ /\/libpangocairo-1.0\./) &&
