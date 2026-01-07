@@ -83,6 +83,7 @@ Item {
             if (filter.animateOut > 0)
                 endValue = filter.getDouble('level', filter.duration - 1);
         }
+        filter.set('rgb_only', 1);
         setControls();
     }
 
