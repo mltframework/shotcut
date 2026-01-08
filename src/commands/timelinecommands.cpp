@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1850,7 +1850,7 @@ ChangeBlendModeCommand::ChangeBlendModeCommand(Mlt::Transition &transition,
 
 void ChangeBlendModeCommand::redo()
 {
-    LOG_DEBUG() << "mode" << m_newMode;
+    LOG_DEBUG() << "mode" << m_propertyName << m_newMode;
     if (!m_newMode.isEmpty()) {
         m_transition.set("disable", 0);
         m_transition.set(m_propertyName.toLatin1().constData(), m_newMode.toUtf8().constData());
@@ -1863,7 +1863,7 @@ void ChangeBlendModeCommand::redo()
 
 void ChangeBlendModeCommand::undo()
 {
-    LOG_DEBUG() << "mode" << m_newMode;
+    LOG_DEBUG() << "mode" << m_propertyName << m_newMode;
     if (!m_oldMode.isEmpty()) {
         m_transition.set("disable", 0);
         m_transition.set(m_propertyName.toLatin1().constData(), m_oldMode.toUtf8().constData());

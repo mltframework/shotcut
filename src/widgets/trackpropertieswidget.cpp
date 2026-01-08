@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 Meltytech, LLC
+ * Copyright (c) 2015-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,8 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track, QWidget *pare
     ui->blendModeCombo->hide();
 
     QScopedPointer<Mlt::Transition> transition(getTransition("qtblend"));
+    if (!transition)
+        transition.reset(getTransition("movit.overlay"));
     if (transition && transition->is_valid()) {
         ui->blendModeCombo->blockSignals(true);
         ui->blendModeCombo->addItem(tr("Source Over"), "0");
@@ -123,18 +125,6 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track, QWidget *pare
             else if (blendMode.isEmpty()) // A newly added track does not set its mode property.
                 blendMode = "normal";
             onModeChanged(blendMode);
-        } else {
-            transition.reset(getTransition("movit.overlay"));
-            if (transition && transition->is_valid()) {
-                ui->blendModeCombo->blockSignals(true);
-                ui->blendModeCombo->addItem(tr("None"), "");
-                ui->blendModeCombo->addItem(tr("Over"), "over");
-                ui->blendModeCombo->blockSignals(false);
-                ui->blendModeLabel->show();
-                ui->blendModeCombo->show();
-                QString blendMode = transition->get_int("disable") ? QString() : "over";
-                onModeChanged(blendMode);
-            }
         }
     }
 }
@@ -176,8 +166,6 @@ void TrackPropertiesWidget::on_blendModeCombo_currentIndexChanged(int index)
 {
     if (index >= 0) {
         QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend"));
-        if (!transition)
-            transition.reset(getTransition("movit.overlay"));
         if (transition && transition->is_valid()) {
             Timeline::ChangeBlendModeCommand *command
                 = new Timeline::ChangeBlendModeCommand(*transition,
@@ -188,6 +176,8 @@ void TrackPropertiesWidget::on_blendModeCombo_currentIndexChanged(int index)
             MAIN.undoStack()->push(command);
         } else {
             transition.reset(getTransition("qtblend"));
+            if (!transition)
+                transition.reset(getTransition("movit.overlay"));
             if (transition && transition->is_valid()) {
                 Timeline::ChangeBlendModeCommand *command
                     = new Timeline::ChangeBlendModeCommand(*transition,

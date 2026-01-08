@@ -438,11 +438,18 @@ void FilterController::setTrackTransitionService(const QString &service)
     if (service == QStringLiteral("qtblend")) {
         m_metadataModel.setHidden("qtBlendMode", false);
         m_metadataModel.setHidden("blendMode", true);
+        m_metadataModel.setHidden("movitBlendMode", true);
     } else if (service == QStringLiteral("frei0r.cairoblend")) {
         m_metadataModel.setHidden("qtBlendMode", true);
         m_metadataModel.setHidden("blendMode", false);
+        m_metadataModel.setHidden("movitBlendMode", true);
+    } else if (service == QStringLiteral("movit.overlay")) {
+        m_metadataModel.setHidden("qtBlendMode", true);
+        m_metadataModel.setHidden("blendMode", true);
+        m_metadataModel.setHidden("movitBlendMode", false);
     } else {
         m_metadataModel.setHidden("qtBlendMode", true);
         m_metadataModel.setHidden("blendMode", true);
+        m_metadataModel.setHidden("movitBlendMode", true);
     }
 }
