@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -509,6 +509,16 @@ void ShotcutSettings::setEncodeHardware(const QStringList &ls)
         settings.setValue("encode/hardware", ls);
 }
 
+bool ShotcutSettings::encodeHardwareDecoder() const
+{
+    return settings.value("encode/hardwareDecoder", false).toBool();
+}
+
+void ShotcutSettings::setEncodeHardwareDecoder(bool b)
+{
+    settings.setValue("encode/hardwareDecoder", b);
+}
+
 bool ShotcutSettings::encodeAdvanced() const
 {
     return settings.value("encode/advanced", false).toBool();
@@ -767,6 +777,16 @@ int ShotcutSettings::playerPreviewScale() const
 void ShotcutSettings::setPlayerPreviewScale(int i)
 {
     settings.setValue("player/previewScale", i);
+}
+
+bool ShotcutSettings::playerPreviewHardwareDecoder() const
+{
+    return settings.value("player/previewHardwareDecoder", true).toBool();
+}
+
+void ShotcutSettings::setPlayerPreviewHardwareDecoder(bool b)
+{
+    settings.setValue("player/previewHardwareDecoder", b);
 }
 
 int ShotcutSettings::playerVideoDelayMs() const

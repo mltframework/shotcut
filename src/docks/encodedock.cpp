@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -161,6 +161,7 @@ EncodeDock::EncodeDock(QWidget *parent)
 
     ui->hwencodeCheckBox->setChecked(Settings.encodeUseHardware()
                                      && !Settings.encodeHardware().isEmpty());
+    ui->hwdecodeCheckBox->setChecked(Settings.encodeHardwareDecoder());
 
     on_resetButton_clicked();
 
@@ -2490,6 +2491,11 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
             properties->set("pix_fmt", "yuv420p10le");
         loadPresetFromProperties(*properties);
     }
+}
+
+void EncodeDock::on_hwdecodeCheckBox_clicked(bool checked)
+{
+    Settings.setEncodeHardwareDecoder(checked);
 }
 
 void EncodeDock::on_hwencodeButton_clicked()

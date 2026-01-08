@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2024 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -118,6 +118,8 @@ private slots:
     void on_advancedButton_clicked(bool checked);
 
     void on_hwencodeCheckBox_clicked(bool checked);
+
+    void on_hwdecodeCheckBox_clicked(bool checked);
 
     void on_advancedCheckBox_clicked(bool checked);
 

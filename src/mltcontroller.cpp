@@ -45,6 +45,7 @@
 #include <QThreadPool>
 #include <QUuid>
 #include <QWidget>
+#include <QtGlobal>
 
 #include <clocale>
 #include <cmath>
@@ -1774,6 +1775,33 @@ bool Controller::blockRefresh(bool block)
 {
     m_blockRefresh = block;
     return m_blockRefresh;
+}
+
+void Controller::configureHardwareDecoder(bool enable)
+{
+    auto var = "MLT_AVFORMAT_HWACCEL";
+    if (enable) {
+        if (!qEnvironmentVariableIsSet(var)) {
+#if defined(Q_OS_MAC)
+            qputenv(var, "videotoolbox");
+#elif defined(USE_VULKAN)
+            qputenv(var, "vulkan");
+#elif defined(Q_OS_WIN)
+            qputenv(var, "d3d11va");
+#elif defined(Q_OS_LINUX)
+            qputenv(var, "vaapi");
+#endif
+        }
+        var = "MLT_AVFORMAT_HWACCEL_PPS";
+        if (Settings.playerPreviewScale() == 0) {
+            if (!qEnvironmentVariableIsSet(var))
+                qputenv(var, "124416000"); // 1080p60
+        } else {
+            qunsetenv(var);
+        }
+    } else {
+        qunsetenv("MLT_AVFORMAT_HWACCEL");
+    }
 }
 
 void TransportControl::play(double speed)

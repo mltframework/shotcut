@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2024 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,6 +139,8 @@ public:
     void setEncodeUseHardware(bool);
     QStringList encodeHardware() const;
     void setEncodeHardware(const QStringList &);
+    bool encodeHardwareDecoder() const;
+    void setEncodeHardwareDecoder(bool);
     bool encodeAdvanced() const;
     void setEncodeAdvanced(bool);
     bool showConvertClipDialog() const;
@@ -179,6 +181,8 @@ public:
     void setPlayerZoom(float);
     int playerPreviewScale() const;
     void setPlayerPreviewScale(int);
+    bool playerPreviewHardwareDecoder() const;
+    void setPlayerPreviewHardwareDecoder(bool);
     int playerVideoDelayMs() const;
     void setPlayerVideoDelayMs(int);
     double playerJumpSeconds() const;

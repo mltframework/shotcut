@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "Logger.h"
 #include "dialogs/textviewerdialog.h"
 #include "mainwindow.h"
+#include "settings.h"
 #include "util.h"
 
 #include <QAction>
@@ -148,14 +149,18 @@ void MeltJob::start()
         args << QStringLiteral("out=%1").arg(m_out);
     }
     LOG_DEBUG() << meltPath.absoluteFilePath() + " " + args.join(' ');
-#ifndef Q_OS_MAC
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+#ifndef Q_OS_MAC
     // These environment variables fix rich text rendering for high DPI
     // fractional or otherwise.
     env.insert("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
     env.insert("QT_SCALE_FACTOR_ROUNDING_POLICY", "PassThrough");
-    setProcessEnvironment(env);
 #endif
+    if (!Settings.encodeHardwareDecoder()) {
+        env.remove("MLT_AVFORMAT_HWACCEL");
+    }
+    env.remove("MLT_AVFORMAT_HWACCEL_PPS");
+    setProcessEnvironment(env);
 #ifdef Q_OS_WIN
     if (m_isStreaming)
         args << "-getc";

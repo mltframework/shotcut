@@ -219,6 +219,9 @@
      <addaction name="actionPreview360"/>
      <addaction name="actionPreview540"/>
      <addaction name="actionPreview720"/>
+     <addaction name="actionPreview1080"/>
+     <addaction name="separator"/>
+     <addaction name="actionPreviewHardwareDecoder"/>
     </widget>
     <widget class="QMenu" name="menuTimeFormat">
      <property name="title">
@@ -1358,6 +1361,14 @@
    </property>
    <property name="text">
     <string>Use Hardware Encoder</string>
+   </property>
+  </action>
+  <action name="actionPreviewHardwareDecoder">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Hardware Decoder</string>
    </property>
   </action>
   <action name="actionProxyConfigureHardware">
