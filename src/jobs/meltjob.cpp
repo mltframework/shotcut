@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2025 Meltytech, LLC
+ * Copyright (c) 2012-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "Logger.h"
 #include "dialogs/textviewerdialog.h"
 #include "mainwindow.h"
+#include "settings.h"
 #include "util.h"
 
 #include <QAction>
@@ -155,7 +156,10 @@ void MeltJob::start()
     env.insert("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
     env.insert("QT_SCALE_FACTOR_ROUNDING_POLICY", "PassThrough");
 #endif
-    env.remove("MLT_AVFORMAT_HWACCEL");
+    if (!Settings.encodeHardwareDecoder()) {
+        env.remove("MLT_AVFORMAT_HWACCEL");
+    }
+    env.remove("MLT_AVFORMAT_HWACCEL_PPS");
     setProcessEnvironment(env);
 #ifdef Q_OS_WIN
     if (m_isStreaming)

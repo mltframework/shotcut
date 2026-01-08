@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2025 Meltytech, LLC
+ * Copyright (c) 2013-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -507,6 +507,16 @@ void ShotcutSettings::setEncodeHardware(const QStringList &ls)
         settings.remove("encode/hardware");
     else
         settings.setValue("encode/hardware", ls);
+}
+
+bool ShotcutSettings::encodeHardwareDecoder() const
+{
+    return settings.value("encode/hardwareDecoder", false).toBool();
+}
+
+void ShotcutSettings::setEncodeHardwareDecoder(bool b)
+{
+    settings.setValue("encode/hardwareDecoder", b);
 }
 
 bool ShotcutSettings::encodeAdvanced() const
