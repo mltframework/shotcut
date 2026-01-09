@@ -74,7 +74,7 @@ NV_CODEC_REVISION="sdk/12.0"
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
 PYTHON_VERSION_DLL=$(python3 --version | awk '{split($2, parts, "."); print parts[1]parts[2]}')
 
-QT_VERSION_X64="6.8.3"
+QT_VERSION_X64="6.10.1"
 
 ################################################################################
 # Location of config file - if not overridden on command line
@@ -906,15 +906,17 @@ function get_subproject {
           if test 0 != $? ; then
               # Found git repo
               debug "Found git repo, will update"
-
-              if ! git diff-index --quiet ${REVISION:-master}; then
-                  die "git repository has local changes, aborting checkout. Consider disabling ACTION_GET in your build config if you want to compile with these changes"
-              fi
-
               feedback_status "Pulling git sources for $1"
               cmd git reset --hard || die "Unable to reset git tree for $1"
-              cmd git checkout master || die "Unable to git checkout master"
-              cmd git --no-pager pull $REPOLOC master || die "Unable to git pull sources for $1"
+              if [ "$1" = "rubberband" ]; then
+                MAIN_GIT_BRANCH=default
+              elif [ "$1" = "bigsh0t" ]; then
+                MAIN_GIT_BRANCH=main
+              else
+                MAIN_GIT_BRANCH=master
+              fi
+              cmd git checkout $MAIN_GIT_BRANCH || die "Unable to git checkout $MAIN_GIT_BRANCH"
+              cmd git --no-pager pull $REPOLOC $MAIN_GIT_BRANCH || die "Unable to git pull sources for $1"
               cmd git checkout $REVISION || die "Unable to git checkout $REVISION"
           else
               # A dir with the expected name, but not a git repo, bailing out
@@ -929,6 +931,18 @@ function get_subproject {
           cmd cd $1 || die "Unable to change to directory $1"
           cmd git checkout --recurse-submodules $REVISION || die "Unable to git checkout $REVISION"
           [ "$SDK" = "1" -a "shotcut" != "$1" -a "mlt" != "$1" ] && cmd rm -rf .git
+      fi
+
+      # Apply FFmpeg patch from the shotcut subproject
+      if test "shotcut" = "$1" ; then
+          PATCH_FILE="$SOURCE_DIR/shotcut/scripts/ffmpeg8-scale_d3d-refleak.patch"
+          PATCH_FILE="/c/Projects/Shotcut/src/shotcut/scripts/ffmpeg8-scale_d3d-refleak.patch"
+          if test -f "$PATCH_FILE" ; then
+              feedback_status "Applying FFmpeg patch"
+              cmd cd "$SOURCE_DIR/FFmpeg" || die "Unable to change to directory $SOURCE_DIR/FFmpeg"
+              cmd patch -p0 -i "$PATCH_FILE" || die "Unable to apply patch $PATCH_FILE for $1"
+              feedback_status "Done applying patch for $1"
+          fi
       fi
   elif test "svn" = "$REPOTYPE" ; then
       # Create subdir if not exist
