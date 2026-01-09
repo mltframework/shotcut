@@ -74,7 +74,7 @@ NV_CODEC_REVISION="sdk/12.0"
 PYTHON_VERSION=$(python3 --version | awk '{split($2, parts, "."); print parts[1] "." parts[2]}')
 PYTHON_VERSION_DLL=$(python3 --version | awk '{split($2, parts, "."); print parts[1]parts[2]}')
 
-QT_VERSION_X64="6.10.1"
+QT_VERSION_X64="6.8.3"
 
 ################################################################################
 # Location of config file - if not overridden on command line
@@ -936,7 +936,6 @@ function get_subproject {
       # Apply FFmpeg patch from the shotcut subproject
       if test "shotcut" = "$1" ; then
           PATCH_FILE="$SOURCE_DIR/shotcut/scripts/ffmpeg8-scale_d3d-refleak.patch"
-          PATCH_FILE="/c/Projects/Shotcut/src/shotcut/scripts/ffmpeg8-scale_d3d-refleak.patch"
           if test -f "$PATCH_FILE" ; then
               feedback_status "Applying FFmpeg patch"
               cmd cd "$SOURCE_DIR/FFmpeg" || die "Unable to change to directory $SOURCE_DIR/FFmpeg"
