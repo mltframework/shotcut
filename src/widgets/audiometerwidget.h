@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2015 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

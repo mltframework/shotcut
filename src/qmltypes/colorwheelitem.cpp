@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2013-2022 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
- * Author: Brian Matherly <code@brianmatherly.com>
  * Some ideas came from Qt-Plus: https://github.com/liuyanghejerry/Qt-Plus
  * and Steinar Gunderson's Movit demo app.
  *
