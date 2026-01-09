@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024-2025 Meltytech, LLC
+ * Copyright (c) 2024-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -286,7 +286,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent)
     textLayout->addWidget(m_nextLabel, 0, 2);
     m_prev = new QTextEdit(this);
     m_prev->setMaximumHeight(textHeight);
-    m_prev->setReadOnly(true);
+    m_prev->setDisabled(true);
     m_prev->setLineWrapMode(QTextEdit::NoWrap);
     textLayout->addWidget(m_prev, 1, 0);
     m_text = new QTextEdit(this);
@@ -298,7 +298,7 @@ SubtitlesDock::SubtitlesDock(QWidget *parent)
     textLayout->addWidget(m_text, 1, 1);
     m_next = new QTextEdit(this);
     m_next->setMaximumHeight(textHeight);
-    m_next->setReadOnly(true);
+    m_next->setDisabled(true);
     m_next->setLineWrapMode(QTextEdit::NoWrap);
     textLayout->addWidget(m_next, 1, 2);
     vboxLayout->addLayout(textLayout);
@@ -930,15 +930,15 @@ void SubtitlesDock::updateTextWidgets()
             m_text->setReadOnly(false);
             if (itemIndex > 0) {
                 item = m_model->getItem(trackIndex, itemIndex - 1);
-                m_prev->setPlaceholderText(QString::fromStdString(item.text));
+                m_prev->setText(QString::fromStdString(item.text));
             } else {
-                m_prev->setPlaceholderText(QString());
+                m_prev->setText(QString());
             }
             if (itemIndex < (m_model->itemCount(trackIndex) - 1)) {
                 item = m_model->getItem(trackIndex, itemIndex + 1);
-                m_next->setPlaceholderText(QString::fromStdString(item.text));
+                m_next->setText(QString::fromStdString(item.text));
             } else {
-                m_next->setPlaceholderText(QString());
+                m_next->setText(QString());
             }
             return;
         } else {
@@ -957,15 +957,15 @@ void SubtitlesDock::updateTextWidgets()
             m_text->setReadOnly(false);
             if (itemIndex > 0) {
                 item = m_model->getItem(trackIndex, itemIndex - 1);
-                m_prev->setPlaceholderText(QString::fromStdString(item.text));
+                m_prev->setText(QString::fromStdString(item.text));
             } else {
-                m_prev->setPlaceholderText(QString());
+                m_prev->setText(QString());
             }
             if (itemIndex < (m_model->itemCount(trackIndex) - 1)) {
                 item = m_model->getItem(trackIndex, itemIndex + 1);
-                m_next->setPlaceholderText(QString::fromStdString(item.text));
+                m_next->setText(QString::fromStdString(item.text));
             } else {
-                m_next->setPlaceholderText(QString());
+                m_next->setText(QString());
             }
         } else {
             m_text->clear();
