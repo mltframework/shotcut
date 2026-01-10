@@ -62,7 +62,7 @@ InsertCommand::InsertCommand(PlaylistModel &model, const QString &xml, int row, 
     , m_xml(xml)
     , m_row(row)
 {
-    setText(QObject::tr("Insert playist item %1").arg(row + 1));
+    setText(QObject::tr("Insert playlist item %1").arg(row + 1));
 }
 
 void InsertCommand::redo()

@@ -247,7 +247,7 @@ void ScreenCaptureJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
     LOG_DEBUG() << "screen capture job finished with exit code" << exitCode;
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     if (m_dbusService == DBusService::GNOME) {
-        LOG_INFO() << "job succeeeded";
+        LOG_INFO() << "job succeeded";
         appendToLog(QStringLiteral("Completed successfully in %1\n")
                         .arg(QTime::fromMSecsSinceStartOfDay(time().elapsed()).toString()));
         emit progressUpdated(m_item, 100);
