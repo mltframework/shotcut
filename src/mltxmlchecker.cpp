@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,10 +60,12 @@ MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_needsCPU(false)
     , m_hasEffects(false)
+    , m_isConverted(false)
     , m_isCorrected(false)
     , m_isUpdated(false)
     , m_decimalPoint('.')
     , m_numericValueChanged(false)
+    , m_isTractorTransition(false)
 {
     m_unlinkedFilesModel.setColumnCount(ColumnCount);
 }
@@ -111,7 +113,7 @@ QXmlStreamReader::Error MltXmlChecker::check(const QString &fileName)
                 }
 
                 readMlt();
-                m_newXml.writeEndElement();
+                m_newXml.writeEndElement(); // </mlt>
                 m_newXml.writeEndDocument();
                 m_isCorrected = m_isCorrected || m_numericValueChanged;
             } else {
@@ -169,7 +171,7 @@ void MltXmlChecker::readMlt()
             m_newXml.writeEndDocument();
             break;
         case QXmlStreamReader::StartElement: {
-            const QString element = m_xml.name().toString();
+            const auto element = m_xml.name().toString();
             isPropertyElement = false;
             if (element == "property") {
                 isPropertyElement = true;
@@ -178,23 +180,39 @@ void MltXmlChecker::readMlt()
                     m_properties << MltProperty(name, m_xml.readElementText());
                 }
             } else {
+                if (element == "tractor")
+                    m_isTractorTransition = false;
                 processProperties();
                 m_newXml.writeStartElement(m_xml.namespaceUri().toString(), element);
-                if (isMltClass(m_xml.name().toString()))
+                if (isMltClass(element))
                     mlt_class = element;
                 checkInAndOutPoints(); // This also copies the attributes.
             }
             break;
         }
-        case QXmlStreamReader::EndElement:
-            if (m_xml.name().toString() != "property") {
+        case QXmlStreamReader::EndElement: {
+            const auto element = m_xml.name().toString();
+            if (element != "property") {
+                if (!m_isTractorTransition && element == "tractor") {
+                    if (m_isConverted) {
+                        m_newXml.writeStartElement("property");
+                        m_newXml.writeAttribute("name", kShotcutProjectProcessingMode);
+                        m_newXml.writeCharacters(m_needsGPU ? "Native8Cpu" : "Linear10GpuCpu");
+                        m_newXml.writeEndElement();
+
+                    } else if (!m_processingMode.isEmpty()) {
+                        m_newXml.writeStartElement("property");
+                        m_newXml.writeAttribute("name", kShotcutProjectProcessingMode);
+                        m_newXml.writeCharacters(m_processingMode);
+                        m_newXml.writeEndElement();
+                    }
+                }
                 processProperties();
                 m_newXml.writeEndElement();
-                if (isMltClass(m_xml.name().toString())) {
+                if (isMltClass(element))
                     mlt_class.clear();
-                }
             }
-            break;
+        } break;
         default:
             break;
         }
@@ -216,6 +234,12 @@ void MltXmlChecker::processProperties()
             m_resource.hash = p.second;
         } else if (p.first.startsWith(kIsProxyProperty)) {
             m_resource.isProxy = true;
+        } else if (p.first == kShotcutProjectProcessingMode) {
+            m_processingMode = p.second;
+            // Exclude it & rewrite at the end of the last tractor
+            continue;
+        } else if (p.first == kShotcutTransitionProperty) {
+            m_isTractorTransition = true;
         } else if (isNumericProperty(p.first)) {
             checkNumericString(p.second);
         } else if (p.first == "resource" && mlt_service == "webvfx" && fixWebVfxPath(p.second)) {
@@ -244,6 +268,7 @@ void MltXmlChecker::processProperties()
         checkAudioGain(mlt_service, newProperties);
         replaceWebVfxCropFilters(mlt_service, newProperties);
         replaceWebVfxChoppyFilter(mlt_service, newProperties);
+        replaceMovitServices(mlt_service, newProperties);
         bool proxyEnabled = Settings.proxyEnabled();
         if (proxyEnabled)
             checkForProxy(mlt_service, newProperties);
@@ -552,6 +577,175 @@ void MltXmlChecker::checkAudioGain(const QString &mlt_service, QVector<MltProper
     }
 }
 
+void MltXmlChecker::replaceMovitServices(QString &mlt_service, QVector<MltProperty> &properties)
+{
+    auto new_mlt_service = mlt_service;
+    QString newFilterName;
+    if (Settings.playerGPU()) {
+        // Only convert the transitions (including track blenders).
+        // CPU filters still work in GPU mode, and the user can chooose to replace them.
+        if (mlt_service == "luma") {
+            new_mlt_service = "movit.luma_mix";
+        } else if (mlt_service == "qtblend") {
+            new_mlt_service = "movit.overlay";
+        }
+    } else {
+        if (mlt_service == "movit.blur") {
+            new_mlt_service = "avfilter.gblur";
+            newFilterName = "blur_gaussian_av";
+            for (auto &p : properties) {
+                if (p.first == "radius") {
+                    p.first = "av.sigma";
+                    properties << MltProperty("av.sigmaV", p.second);
+                    break;
+                }
+            }
+            properties << MltProperty(kShotcutFilterProperty, newFilterName);
+        } else if (mlt_service == "movit.diffusion") {
+            new_mlt_service = "avfilter.smartblur";
+            // not really convertible, but replace with smartblur's defaults
+            for (auto &p : properties) {
+                if (p.first == "radius") {
+                    p.first = "av.luma_radius";
+                    p.second = "2.5";
+                } else if (p.first == "mix") {
+                    p.first = "av.luma_strength";
+                    p.second = "0.5";
+                }
+            }
+            properties << MltProperty("av.chroma_radius", "2.5");
+            properties << MltProperty("av.chroma_strength", "0.5");
+            properties << MltProperty("av.luma_threshold", "3");
+            properties << MltProperty("av.chroma_threshold", "3");
+        } else if (mlt_service == "movit.flip") {
+            new_mlt_service = "avfilter.vflip";
+        } else if (mlt_service == "movit.glow") {
+            new_mlt_service = "frei0r.glow";
+            for (auto &p : properties) {
+                if (p.first == "radius") {
+                    p.first = "0";
+                    p.second = QString::number(p.second.toFloat() / 100.0);
+                    break;
+                }
+            }
+        } else if (mlt_service == "movit.lift_gamma_gain") {
+            new_mlt_service = "lift_gamma_gain";
+            for (auto &p : properties) {
+                if (p.first == kShotcutFilterProperty && p.second == "movitContrast") {
+                    newFilterName = "contrast";
+                    break;
+                }
+            }
+        } else if (mlt_service == "movit.luma_mix") {
+            new_mlt_service = "luma";
+        } else if (mlt_service == "movit.mirror") {
+            new_mlt_service = "avfilter.hflip";
+        } else if (mlt_service == "movit.opacity") {
+            new_mlt_service = "brightness";
+            QString alpha;
+            for (auto &p : properties) {
+                if (p.first == kShotcutFilterProperty) {
+                    if (p.second == "fadeInMovit" || p.second == "fadeOutMovit") {
+                        newFilterName = p.second;
+                        newFilterName.replace("Movit", "Brightness");
+                        for (auto &p2 : properties) {
+                            if (p2.first == "alpha") {
+                                alpha = p2.second;
+                                if (alpha == "-1")
+                                    p2.first = "level";
+                                p2.second = "1";
+                                break;
+                            }
+                        }
+                    } else if (p.second == "movitOpacity") {
+                        newFilterName = "brightnessOpacity";
+                    } else {
+                        // Brightness filter, cause "opacity" to be converted to "level" below
+                        alpha = "1";
+                    }
+                    break;
+                }
+            }
+            if (alpha == "-1") {
+                // Fade opacity
+                for (auto &p : properties) {
+                    if (p.first == "opacity") {
+                        p.first = "alpha";
+                        break;
+                    }
+                }
+            } else if (!alpha.isEmpty()) {
+                // Fade with black
+                for (auto &p : properties) {
+                    if (p.first == "opacity") {
+                        p.first = "level";
+                        break;
+                    }
+                }
+            }
+        } else if (mlt_service == "movit.overlay") {
+            new_mlt_service = "qtblend";
+        } else if (mlt_service == "movit.rect") {
+            new_mlt_service = "affine";
+            newFilterName = "affineSizePosition";
+        } else if (mlt_service == "movit.saturation") {
+            new_mlt_service = "frei0r.saturat0r";
+            for (auto &p : properties) {
+                if (p.first == "saturation") {
+                    p.first = "0";
+                    p.second = QString::number(p.second.toFloat() / 3.0 * 0.375);
+                    break;
+                }
+            }
+        } else if (mlt_service == "movit.sharpen") {
+            new_mlt_service = "frei0r.sharpness";
+            // not really convertible; setting to frei0r filter's default values
+            for (auto &p : properties) {
+                if (p.first == "circle_radius") {
+                    p.first = "0";
+                    p.second = "0.5";
+                } else if (p.first == "gaussian_radius") {
+                    p.first = "1";
+                    p.second = "0.5";
+                }
+            }
+        } else if (mlt_service == "movit.vignette") {
+            new_mlt_service = "vignette";
+            // not really convertible; setting to frei0r filter's default values
+            for (auto &p : properties) {
+                if (p.first == "radius") {
+                    p.first = "0";
+                    p.second = "0.5";
+                } else if (p.first == "inner_radius") {
+                    p.first = "1";
+                    p.second = "0.5";
+                }
+            }
+        } else if (mlt_service == "movit.white_balance") {
+            new_mlt_service = "frei0r.colgate";
+            for (auto &p : properties) {
+                if (p.first == "neutral_color") {
+                    p.first = "0";
+                    p.second = "0.5";
+                } else if (p.first == "color_temperature") {
+                    p.first = "1";
+                    p.second = QString::number(p.second.toFloat() / 15000.0);
+                }
+            }
+        }
+    }
+    if (new_mlt_service != mlt_service) {
+        for (auto &p : properties) {
+            if (p.first == "mlt_service") {
+                p.second = new_mlt_service;
+                m_isConverted = true;
+            } else if (p.first == kShotcutFilterProperty) {
+                p.second = newFilterName;
+            }
+        }
+    }
+}
+
 void MltXmlChecker::checkLumaAlphaOver(const QString &mlt_service,
                                        QVector<MltXmlChecker::MltProperty> &properties)
 {
@@ -575,13 +769,13 @@ void MltXmlChecker::replaceWebVfxCropFilters(QString &mlt_service,
     if (mlt_service == "webvfx") {
         auto isCrop = false;
         for (auto &p : properties) {
-            if (p.first == "shotcut:filter" && p.second == "webvfxCircularFrame") {
+            if (p.first == kShotcutFilterProperty && p.second == "webvfxCircularFrame") {
                 p.second = "cropCircle";
                 properties << MltProperty("circle", "1");
                 m_isUpdated = isCrop = true;
                 break;
             }
-            if (p.first == "shotcut:filter" && p.second == "webvfxClip") {
+            if (p.first == kShotcutFilterProperty && p.second == "webvfxClip") {
                 p.second = "cropRectangle";
                 m_isUpdated = isCrop = true;
                 break;
@@ -612,7 +806,7 @@ void MltXmlChecker::replaceWebVfxChoppyFilter(QString &mlt_service,
         auto isChoppy = false;
         QString shotcutFilter;
         for (auto &p : properties) {
-            if (p.first == "shotcut:filter") {
+            if (p.first == kShotcutFilterProperty) {
                 shotcutFilter = p.second;
                 if (p.second == "webvfxChoppy") {
                     properties.removeOne(p);
@@ -663,7 +857,7 @@ void MltXmlChecker::replaceWebVfxChoppyFilter(QString &mlt_service,
                     break;
                 }
             }
-            properties << MltProperty("shotcut:filter", "richText");
+            properties << MltProperty(kShotcutFilterProperty, "richText");
         }
     }
 }
