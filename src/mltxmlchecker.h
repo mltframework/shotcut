@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2025 Meltytech, LLC
+ * Copyright (c) 2014-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ public:
     bool needsGPU() const { return m_needsGPU; }
     bool needsCPU() const { return m_needsCPU; }
     bool hasEffects() const { return m_hasEffects; }
+    bool isConverted() const { return m_isConverted; }
     bool isCorrected() const { return m_isCorrected; }
     bool isUpdated() const { return m_isUpdated; }
     QTemporaryFile &tempFile() const { return *m_tempFile; }
@@ -69,6 +70,7 @@ private:
     void checkAudioGain(const QString &mlt_service, QVector<MltProperty> &properties);
     void replaceWebVfxCropFilters(QString &mlt_service, QVector<MltProperty> &properties);
     void replaceWebVfxChoppyFilter(QString &mlt_service, QVector<MltProperty> &properties);
+    void replaceMovitServices(QString &mlt_service, QVector<MltProperty> &properties);
     void checkForProxy(const QString &mlt_service, QVector<MltProperty> &properties);
     bool checkMltVersion();
 
@@ -77,6 +79,7 @@ private:
     bool m_needsGPU;
     bool m_needsCPU;
     bool m_hasEffects;
+    bool m_isConverted;
     bool m_isCorrected;
     bool m_isUpdated;
     QChar m_decimalPoint;
@@ -113,6 +116,8 @@ private:
     } m_resource;
     QVersionNumber m_mltVersion;
     QString m_shotcutVersion;
+    QString m_processingMode;
+    bool m_isTractorTransition;
 };
 
 #endif // MLTXMLCHECKER_H

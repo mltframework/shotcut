@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2025 Meltytech, LLC
+ * Copyright (c) 2011-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -160,6 +160,7 @@ private:
     void changeDeinterlacer(bool checked, const char *method);
     void changeInterpolation(bool checked, const char *method);
     bool checkAutoSave(QString &url);
+    bool saveConvertedXmlFile(MltXmlChecker &checker, QString &fileName);
     bool saveRepairedXmlFile(MltXmlChecker &checker, QString &fileName);
     void setAudioChannels(int channels);
     void setProcessingMode(ShotcutSettings::ProcessingMode mode);
@@ -222,7 +223,7 @@ private:
     ScreenCapture *m_screenCapture;
 
 public slots:
-    bool isCompatibleWithGpuMode(MltXmlChecker &checker);
+    bool isCompatibleWithGpuMode(MltXmlChecker &checker, QString &fileName);
     bool isXmlRepaired(MltXmlChecker &checker, QString &fileName);
     bool open(QString url,
               const Mlt::Properties * = nullptr,

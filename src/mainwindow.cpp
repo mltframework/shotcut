@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2025 Meltytech, LLC
+ * Copyright (c) 2011-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1085,9 +1085,7 @@ void MainWindow::setupSettingsMenu()
                 dialog(QMessageBox::Warning,
                        qApp->applicationName(),
                        tr("GPU processing is experimental and does not work on all computers. "
-                          "Plan to do some testing after turning this on.\n"
-                          "At this time, a project created with GPU processing cannot be "
-                          "converted to a CPU-only project later.\n"
+                          "Plan to do some testing after turning this on.\n\n"
                           "Do you want to enable GPU processing and restart Shotcut?"),
                        QMessageBox::No | QMessageBox::Yes,
                        this);
@@ -1709,41 +1707,96 @@ void MainWindow::open(Mlt::Producer *producer, bool play)
     activateWindow();
 }
 
-bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker)
+bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker &checker, QString &fileName)
 {
+    bool result = true;
     if (checker.needsGPU() && !Settings.playerGPU()) {
         LOG_INFO() << "file uses GPU but GPU not enabled";
-        QMessageBox dialog(QMessageBox::Warning,
-                           qApp->applicationName(),
-                           tr("The file you opened uses GPU processing, which is not enabled."),
-                           QMessageBox::Ok,
-                           this);
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        dialog.setDefaultButton(QMessageBox::Ok);
-        dialog.setEscapeButton(QMessageBox::Ok);
-        dialog.exec();
-        return false;
-    } else if (checker.needsCPU() && Settings.playerGPU()) {
-        LOG_INFO() << "file uses GPU incompatible filters but GPU processing is enabled";
         QMessageBox dialog(
             QMessageBox::Question,
             qApp->applicationName(),
-            tr("The file you opened uses CPU effects that are incompatible with GPU processing.\n"
-               "Do you want to disable GPU processing and restart?"),
+            tr("The file you opened uses GPU processing, which is not enabled.\n"
+               "Do you want Shotcut to convert it for CPU? Conversion is an approximation.\n\n"
+               "If you choose Yes, Shotcut will create a copy of your project\n"
+               "with \"- Converted for CPU\" in the file name and open it."),
             QMessageBox::No | QMessageBox::Yes,
             this);
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Yes);
         dialog.setEscapeButton(QMessageBox::No);
+        if (dialog.exec() == QMessageBox::Yes)
+            result = saveConvertedXmlFile(checker, fileName);
+        else
+            result = false;
+    } else if (checker.needsCPU() && Settings.playerGPU()) {
+        LOG_INFO() << "file uses GPU incompatible filters but GPU processing is enabled";
+        QMessageBox dialog(QMessageBox::Question,
+                           qApp->applicationName(),
+                           tr("The file you opened uses CPU processing, which is not enabled.\n"
+                              "Do you want Shotcut to convert it for GPU?\n\n"
+                              "If you choose Yes, Shotcut will create a copy of your project\n"
+                              "with \"- Converted for GPU\" in the file name and open it."),
+                           QMessageBox::No | QMessageBox::Yes,
+                           this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
         int r = dialog.exec();
-        if (r == QMessageBox::Yes) {
-            Settings.setProcessingMode(ShotcutSettings::Native8Cpu);
-            m_exitCode = EXIT_RESTART;
-            QApplication::closeAllWindows();
-        }
-        return false;
+        if (r == QMessageBox::Yes)
+            result = saveConvertedXmlFile(checker, fileName);
+        else
+            result = false;
     }
-    return true;
+    return result;
+}
+
+bool MainWindow::saveConvertedXmlFile(MltXmlChecker &checker, QString &fileName)
+{
+    QFileInfo fi(fileName);
+    const auto convertedStr = Settings.playerGPU() ? tr("Converted for GPU")
+                                                   : tr("Converted for CPU");
+    auto filename = QStringLiteral("%1/%2 - %3.%4")
+                        .arg(fi.path(), fi.completeBaseName(), convertedStr, fi.suffix());
+    auto caption = tr("Save Converted XML");
+    filename = QFileDialog::getSaveFileName(this,
+                                            caption,
+                                            filename,
+                                            tr("MLT XML (*.mlt)"),
+                                            nullptr,
+                                            Util::getFileDialogOptions());
+    if (!filename.isEmpty()) {
+        QFile converted(filename);
+        if (converted.open(QIODevice::WriteOnly) && checker.tempFile().exists()
+            && checker.tempFile().open()) {
+            LOG_INFO() << "converted MLT XML file name" << converted.fileName();
+            QByteArray xml = checker.tempFile().readAll();
+            checker.tempFile().close();
+
+            if (Settings.proxyEnabled()) {
+                auto s = QString::fromUtf8(xml);
+                if (ProxyManager::filterXML(s, QDir::fromNativeSeparators(fi.absolutePath()))) {
+                    xml = s.toUtf8();
+                }
+            }
+
+            qint64 n = converted.write(xml);
+            while (n > 0 && n < xml.size()) {
+                qint64 x = converted.write(xml.right(xml.size() - n));
+                if (x > 0)
+                    n += x;
+                else
+                    n = x;
+            }
+            converted.close();
+            if (n == xml.size()) {
+                fileName = converted.fileName();
+                return true;
+            }
+        }
+        QMessageBox::warning(this, qApp->applicationName(), tr("Converting the project failed."));
+        LOG_WARNING() << "converting failed";
+    }
+    return false;
 }
 
 bool MainWindow::saveRepairedXmlFile(MltXmlChecker &checker, QString &fileName)
@@ -1760,10 +1813,9 @@ bool MainWindow::saveRepairedXmlFile(MltXmlChecker &checker, QString &fileName)
                                             Util::getFileDialogOptions());
     if (!filename.isEmpty()) {
         QFile repaired(filename);
-        repaired.open(QIODevice::WriteOnly);
-        LOG_INFO() << "repaired MLT XML file name" << repaired.fileName();
-        if (checker.tempFile().exists()) {
-            checker.tempFile().open();
+        if (repaired.open(QIODevice::WriteOnly) && checker.tempFile().exists()
+            && checker.tempFile().open()) {
+            LOG_INFO() << "repaired MLT XML file name" << repaired.fileName();
             QByteArray xml = checker.tempFile().readAll();
             checker.tempFile().close();
 
@@ -2152,7 +2204,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         }
         switch (checker.check(url)) {
         case QXmlStreamReader::NoError:
-            if (!isCompatibleWithGpuMode(checker)) {
+            if (!isCompatibleWithGpuMode(checker, url)) {
                 showStatusMessage(tr("Failed to open ").append(url));
                 return true;
             }
@@ -2181,7 +2233,7 @@ bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play,
         modified = checkAutoSave(url);
         if (modified) {
             if (checker.check(url) == QXmlStreamReader::NoError) {
-                if (!isCompatibleWithGpuMode(checker))
+                if (!isCompatibleWithGpuMode(checker, url))
                     return true;
             } else {
                 showStatusMessage(tr("Failed to open ").append(url));
@@ -4835,7 +4887,7 @@ void MainWindow::on_actionOpenXML_triggered()
         QString url = filenames.first();
         MltXmlChecker checker;
         if (checker.check(url) == QXmlStreamReader::NoError) {
-            if (!isCompatibleWithGpuMode(checker))
+            if (!isCompatibleWithGpuMode(checker, url))
                 return;
             isXmlRepaired(checker, url);
         } else {
