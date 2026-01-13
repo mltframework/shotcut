@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2025 Meltytech, LLC
+ * Copyright (c) 2020-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #include "proxymanager.h"
 
 #include "Logger.h"
+#include "dialogs/longuitask.h"
 #include "jobqueue.h"
 #include "jobs/ffmpegjob.h"
 #include "jobs/qimagejob.h"
@@ -765,8 +766,12 @@ public:
 void ProxyManager::generateIfNotExistsAll(Mlt::Producer &producer)
 {
     FindNonProxyProducersParser parser;
+    LongUiTask longTask(QObject::tr("Generating Proxies"));
     parser.start(producer);
+    auto n = parser.producers().size();
+    auto i = 0;
     for (auto &clip : parser.producers()) {
+        longTask.reportProgress(QFileInfo(ProxyManager::resource(clip)).fileName(), i++, n);
         generateIfNotExists(clip, false /* replace */);
     }
 }
