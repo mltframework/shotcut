@@ -3653,6 +3653,7 @@ void MainWindow::onFilesDockTriggered(bool checked)
 
 void MainWindow::onPlaylistCreated()
 {
+    updateWindowTitle();
     if (!playlist() || playlist()->count() == 0)
         return;
     m_player->enableTab(Player::ProjectTabIndex, true);
@@ -4607,6 +4608,7 @@ void MainWindow::onProfileChanged()
         && (m_timelineDock->selection().isEmpty() || m_timelineDock->currentTrack() == -1)) {
         emit m_timelineDock->selected(multitrack());
     }
+    updateWindowTitle();
 }
 
 void MainWindow::on_actionAddCustomProfile_triggered()
