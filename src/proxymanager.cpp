@@ -772,7 +772,7 @@ void ProxyManager::generateIfNotExistsAll(Mlt::Producer &producer)
     auto i = 0;
     for (auto &clip : parser.producers()) {
         longTask.reportProgress(QFileInfo(ProxyManager::resource(clip)).fileName(), i++, n);
-        generateIfNotExists(clip, false /* replace */);
+        generateIfNotExists(clip, true /* replace */);
     }
 }
 

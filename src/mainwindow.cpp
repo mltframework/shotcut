@@ -6035,9 +6035,7 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
                     QMessageBox dialog(
                         QMessageBox::Question,
                         qApp->applicationName(),
-                        tr("Do you want to create missing proxies for every file in this "
-                           "project?\n\n"
-                           "You must reopen your project after all proxy jobs are finished."),
+                        tr("Do you want to create missing proxies for every file in this project?"),
                         QMessageBox::No | QMessageBox::Yes,
                         this);
                     dialog.setWindowModality(QmlApplication::dialogModality());
