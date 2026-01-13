@@ -601,6 +601,14 @@ void MltXmlChecker::replaceMovitServices(QString &mlt_service, QVector<MltProper
                 }
             }
             properties << MltProperty(kShotcutFilterProperty, newFilterName);
+        } else if (mlt_service == "crop") {
+            new_mlt_service = "crop";
+            for (auto &p : properties) {
+                if (p.first == kShotcutFilterProperty) {
+                    properties.removeOne(p);
+                    break;
+                }
+            }
         } else if (mlt_service == "movit.diffusion") {
             new_mlt_service = "avfilter.smartblur";
             // not really convertible, but replace with smartblur's defaults
@@ -688,6 +696,11 @@ void MltXmlChecker::replaceMovitServices(QString &mlt_service, QVector<MltProper
         } else if (mlt_service == "movit.rect") {
             new_mlt_service = "affine";
             newFilterName = "affineSizePosition";
+            for (auto &p : properties) {
+                if (p.first == "fill" || p.first == "distort" || p.first == "rect"
+                    || p.first == "valign" || p.first == "halign")
+                    p.first.prepend("transition.");
+            }
         } else if (mlt_service == "movit.saturation") {
             new_mlt_service = "frei0r.saturat0r";
             for (auto &p : properties) {
@@ -726,7 +739,6 @@ void MltXmlChecker::replaceMovitServices(QString &mlt_service, QVector<MltProper
             for (auto &p : properties) {
                 if (p.first == "neutral_color") {
                     p.first = "0";
-                    p.second = "0.5";
                 } else if (p.first == "color_temperature") {
                     p.first = "1";
                     p.second = QString::number(p.second.toFloat() / 15000.0);
