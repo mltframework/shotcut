@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2025 Meltytech, LLC
+ * Copyright (c) 2011-2026 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -350,7 +350,9 @@ void ScrubBar::updatePixmap()
     if (m_in < 0 && m_out < 0) {
         int i = 1;
         foreach (int pos, m_markers) {
-            int x = l_margin + pos * m_scale * ratio;
+            const int x = l_margin + pos * m_scale * ratio;
+            if (x < 0)
+                continue;
             QString s = QString::number(i++);
             int markerWidth = fontMetrics().horizontalAdvance(s) * 1.5;
             p.fillRect(x, 0, 1, l_height, palette().highlight().color());
