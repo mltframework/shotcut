@@ -5709,7 +5709,7 @@ void MainWindow::onOpenOtherFinished(int result)
         auto trackType = (QLatin1String("ToneProducerWidget") == name) ? AudioTrackType
                                                                        : VideoTrackType;
         auto trackIndex = m_timelineDock->addTrackIfNeeded(trackType);
-        m_timelineDock->overwrite(trackIndex, -1, MLT.XML(producer), true);
+        m_timelineDock->overwrite(trackIndex, -1, MLT.XML(producer), false);
         delete producer;
     }
     if (QLatin1String("TextProducerWidget") == name) {
