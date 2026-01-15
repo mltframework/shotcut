@@ -106,7 +106,10 @@ void ProxyManager::generateVideoProxy(Mlt::Producer &producer,
 
     // Touch file to make it in progress
     QFile file(fileName);
-    file.open(QIODevice::WriteOnly);
+    if (!file.open(QIODevice::WriteOnly)) {
+        LOG_ERROR() << "Failed to open file for writing:" << fileName;
+        return;
+    }
     file.resize(0);
     file.close();
 
@@ -380,7 +383,10 @@ void ProxyManager::generateImageProxy(Mlt::Producer &producer, bool replace)
 
     // Touch file to make it in progress
     QFile file(fileName);
-    file.open(QIODevice::WriteOnly);
+    if (!file.open(QIODevice::WriteOnly)) {
+        LOG_ERROR() << "Failed to open file for writing:" << fileName;
+        return;
+    }
     file.resize(0);
     file.close();
 
@@ -444,7 +450,7 @@ static void processProperties(QXmlStreamWriter &newXml,
         propertiesRef = newProperties;
     }
     // Write all of the property elements
-    for (const auto &p : propertiesRef) {
+    for (auto &p : propertiesRef) {
         newXml.writeStartElement("property");
         newXml.writeAttribute("name", p.first);
         newXml.writeCharacters(p.second);
